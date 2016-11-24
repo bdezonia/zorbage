@@ -155,4 +155,9 @@ public class Float64OrderedField implements OrderedField<Float64OrderedField,Flo
 		b.v = Math.pow(a.v, power);
 	}
 
+	@Override
+	public void abs(Float64Member a, Float64Member b) {
+		b.v = Math.abs(a.v);
+	}
+
 }
