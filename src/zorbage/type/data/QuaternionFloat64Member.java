@@ -24,28 +24,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.algebra;
+package zorbage.type.data;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface EuclideanRing<T extends EuclideanRing<T,U>,U>
-  extends Ring<T,U> // or is it a ring with unity member?
-{
-	void div(U a, U b, U d);
-	void mod(U a, U b, U m);
-	void divMod(U a, U b, U d, U m);
-	void gcd(U a, U b, U c);
-	void lcm(U a, U b, U c);
-	void norm(U a, U b);  // I don't think this is in right part of hierarchy.
-	boolean isEven(U a);
-	boolean isOdd(U a);
+public class QuaternionFloat64Member {
+	double r, i, j, k;
 	
-	// from MathWorld
-	// Norms exist for complex numbers (the complex modulus, sometimes also called the complex norm or simply
-	// "the norm"), Gaussian integers (the same as the complex modulus, but sometimes unfortunately instead defined
-	// to be the absolute square), quaternions (quaternion norm), vectors (vector norms), and matrices (matrix norms).
+	public QuaternionFloat64Member() {
+		r = i = j = k = 0;
+	}
+	
+	public QuaternionFloat64Member(double r, double i, double j, double k) {
+		this.r = r;
+		this.i = i;
+		this.j = j;
+		this.k = k;
+	}
+	
+	public QuaternionFloat64Member(QuaternionFloat64Member value) {
+		r = value.r;
+		i = value.i;
+		j = value.j;
+		k = value.k;
+	}
+
+	public QuaternionFloat64Member(String value) {
+		// parse the same format as toString
+		// accept 1 number as r ( a real )
+		// accept 2 numbers as r, i ( a complex number ?? )
+		// accept 3 numbers as r, i, j ???
+		// accept 4 numbers as r, i, j, k ( a quaternion )
+		throw new IllegalArgumentException("TODO");
+	}
+
+	public double r() { return r; }
+	public double i() { return i; }
+	public double j() { return j; }
+	public double k() { return k; }
+	
+	@Override
+	public String toString() { return "" + r + " " + i + " " + j + " " + k; }
 
 }

@@ -129,5 +129,18 @@ public class ComplexFloat64Field implements Field<ComplexFloat64Field, ComplexFl
 		c.rv = (a.rv * b.rv + a.iv * b.iv) / mod2;
 		c.iv = (a.iv * b.rv - a.rv * b.iv) / mod2;
 	}
+	
+	// TODO - locate in algebra hierarchy
+	//@Override
+	public void conjugate(ComplexFloat64Member a, ComplexFloat64Member b) {
+		b.rv = a.rv;
+		b.iv = -a.iv;
+	}
 
+	// TODO - locate in algebra hierarchy : note that integers have int return type while complex and quat return reals
+	// what do matrices and vectors return. matrix returns a real. vector returns a real.
+	//@Override
+	public void norm(ComplexFloat64Member a, Float64Member b) {  // this declaration would break generics
+		b.v = Math.sqrt(a.rv*a.rv + a.iv*a.iv);
+	}
 }
