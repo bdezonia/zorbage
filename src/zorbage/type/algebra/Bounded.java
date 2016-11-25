@@ -32,6 +32,6 @@ package zorbage.type.algebra;
  *
  */
 public interface Bounded<U> {
-	void max(U a);  // set a to max value of type
-	void min(U a);  // set a to min value of type
+	void maxBound(U a);  // set a to max value of type
+	void minBound(U a);  // set a to min value of type
 }

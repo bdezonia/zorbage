@@ -105,12 +105,12 @@ public class BooleanGroup
 	}
 
 	@Override
-	public void max(BooleanMember a) {
+	public void maxBound(BooleanMember a) {
 		a.v = true;
 	}
 
 	@Override
-	public void min(BooleanMember a) {
+	public void minBound(BooleanMember a) {
 		a.v = false;
 	}
 

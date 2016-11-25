@@ -216,12 +216,12 @@ public class SignedInt32Integer
 	}
 
 	@Override
-	public void max(SignedInt32Member a) {
+	public void maxBound(SignedInt32Member a) {
 		a.v = java.lang.Integer.MAX_VALUE;
 	}
 
 	@Override
-	public void min(SignedInt32Member a) {
+	public void minBound(SignedInt32Member a) {
 		a.v = java.lang.Integer.MIN_VALUE;
 	}
 

@@ -162,12 +162,12 @@ public class Float64OrderedField
 	}
 
 	@Override
-	public void max(Float64Member a) {
+	public void maxBound(Float64Member a) {
 		a.v = Double.MAX_VALUE;
 	}
 
 	@Override
-	public void min(Float64Member a) {
+	public void minBound(Float64Member a) {
 		a.v = Double.MIN_VALUE;
 	}
 
