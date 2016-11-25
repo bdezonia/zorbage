@@ -31,11 +31,11 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Trigonometric<U,V> {
-	void sin(U a, V b);
-	void cos(U a, V b);
-	void tan(U a, V b);
-	void csc(U a, V b);
-	void sec(U a, V b);
-	void cot(U a, V b);
+public interface Trigonometric<U> {
+	void sin(U a, U b);
+	void cos(U a, U b);
+	void tan(U a, U b);
+	void csc(U a, U b);
+	void sec(U a, U b);
+	void cot(U a, U b);
 }

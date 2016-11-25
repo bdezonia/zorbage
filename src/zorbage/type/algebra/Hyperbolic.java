@@ -31,11 +31,11 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Hyperbolic<U,V> {
-	void sinh(U a, V b);
-	void cosh(U a, V b);
-	void tanh(U a, V b);
-	void csch(U a, V b);
-	void sech(U a, V b);
-	void coth(U a, V b);
+public interface Hyperbolic<U> {
+	void sinh(U a, U b);
+	void cosh(U a, U b);
+	void tanh(U a, U b);
+	void csch(U a, U b);
+	void sech(U a, U b);
+	void coth(U a, U b);
 }

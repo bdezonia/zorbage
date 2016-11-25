@@ -51,9 +51,9 @@ public class ComplexFloat64Field
     Norm<ComplexFloat64Member, Float64Member>,
     Constants<ComplexFloat64Member>,
     Exponential<ComplexFloat64Member>,
-    Trigonometric<Float64Member,ComplexFloat64Member>,
+    Trigonometric<ComplexFloat64Member>,
     InverseTrigonometric<ComplexFloat64Member,Float64Member>,
-    Hyperbolic<Float64Member,ComplexFloat64Member>,
+    Hyperbolic<ComplexFloat64Member>,
     InverseHyperbolic<ComplexFloat64Member,Float64Member>,
     Roots<ComplexFloat64Member>,
     Rounding<ComplexFloat64Member>,
@@ -247,62 +247,62 @@ public class ComplexFloat64Field
 	}
 
 	@Override
-	public void sin(Float64Member a, ComplexFloat64Member b) {
+	public void sin(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void cos(Float64Member a, ComplexFloat64Member b) {
+	public void cos(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void tan(Float64Member a, ComplexFloat64Member b) {
+	public void tan(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void csc(Float64Member a, ComplexFloat64Member b) {
+	public void csc(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void sec(Float64Member a, ComplexFloat64Member b) {
+	public void sec(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void cot(Float64Member a, ComplexFloat64Member b) {
+	public void cot(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void sinh(Float64Member a, ComplexFloat64Member b) {
+	public void sinh(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void cosh(Float64Member a, ComplexFloat64Member b) {
+	public void cosh(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void tanh(Float64Member a, ComplexFloat64Member b) {
+	public void tanh(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void csch(Float64Member a, ComplexFloat64Member b) {
+	public void csch(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void sech(Float64Member a, ComplexFloat64Member b) {
+	public void sech(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void coth(Float64Member a, ComplexFloat64Member b) {
+	public void coth(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
