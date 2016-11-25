@@ -59,11 +59,7 @@ public class UnboundedIntInteger
 	@Override
 	public void power(int power, UnboundedIntMember a, UnboundedIntMember b) {
 		if (power < 0) throw new IllegalArgumentException("Cannot get negative powers from integers");
-		BigInteger tmp = BigInteger.ONE;
-		if (power > 0)
-			for (int i = 1; i <= power; i++)
-				tmp = tmp.multiply(a.v);
-		b.v = tmp;
+		b.v = a.v.pow(power);
 	}
 
 	@Override

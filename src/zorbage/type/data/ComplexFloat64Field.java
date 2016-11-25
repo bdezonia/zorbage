@@ -60,7 +60,6 @@ public class ComplexFloat64Field
 
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
-	private static ComplexFloat64Member TMP = new ComplexFloat64Member();
 
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
@@ -70,20 +69,19 @@ public class ComplexFloat64Field
 
 	@Override
 	public void power(int power, ComplexFloat64Member a, ComplexFloat64Member b) {
-		synchronized (TMP) {
-			// okay for power to be negative
-			assign(ONE,TMP);
-			if (power > 0) {
-				for (int i = 1; i <= power; i++)
-					multiply(TMP,a,TMP);
-			}
-			else if (power < 0) {
-				power = -power;
-				for (int i = 1; i <= power; i++)
-					divide(TMP,a,TMP);
-			}
-			assign(TMP, b);
+		// okay for power to be negative
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		assign(ONE,tmp);
+		if (power > 0) {
+			for (int i = 1; i <= power; i++)
+				multiply(tmp,a,tmp);
 		}
+		else if (power < 0) {
+			power = -power;
+			for (int i = 1; i <= power; i++)
+				divide(tmp,a,tmp);
+		}
+		assign(tmp, b);
 	}
 
 	@Override

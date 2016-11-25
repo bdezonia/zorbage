@@ -45,8 +45,6 @@ public class QuaternionFloat64SkewField
     Norm<QuaternionFloat64Member, Float64Member>,
     Constants<QuaternionFloat64Member>
 {
-	private static QuaternionFloat64Member TMP = new QuaternionFloat64Member();
-	
 	@Override
 	public void unity(QuaternionFloat64Member a) {
 		a.r = 1;
@@ -63,9 +61,7 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void power(int power, QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		synchronized (TMP) {
-			// TODO
-		}
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 	}
 
 	@Override
