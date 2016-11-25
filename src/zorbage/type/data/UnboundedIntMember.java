@@ -42,7 +42,7 @@ public class UnboundedIntMember {
 	}
 	
 	public UnboundedIntMember(long value) {
-		v = new BigInteger(new Long(value).toString());
+		v = BigInteger.valueOf(value);
 	}
 	
 	public UnboundedIntMember(BigInteger value) {

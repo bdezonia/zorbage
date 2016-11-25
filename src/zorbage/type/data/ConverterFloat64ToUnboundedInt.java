@@ -37,7 +37,7 @@ public class ConverterFloat64ToUnboundedInt implements Converter<Float64Member, 
 
 	@Override
 	public void convert(Float64Member from, UnboundedIntMember to) {
-		to.v = new BigInteger(new Long((long)from.v).toString());
+		to.v = BigInteger.valueOf((long)from.v);
 	}
 
 	@Override

@@ -26,6 +26,8 @@
  */
 package zorbage.type.data;
 
+import java.math.BigInteger;
+
 /**
  * 
  * @author Barry DeZonia
@@ -35,7 +37,7 @@ public class ConverterSignedInt32ToUnboundedInt implements Converter<SignedInt32
 
 	@Override
 	public void convert(SignedInt32Member from, UnboundedIntMember to) {
-		to.v = new UnboundedIntMember(from.v).v;
+		to.v = BigInteger.valueOf(from.v);
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class ConverterComplexFloat64ToUnboundedInt
 
 	@Override
 	public void convert(ComplexFloat64Member from, UnboundedIntMember to) {
-		to.v = new BigInteger(new Long((long)from.rv).toString());
+		to.v = BigInteger.valueOf((long)from.rv);
 	}
 
 	@Override

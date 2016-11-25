@@ -30,6 +30,8 @@ import java.math.BigInteger;
 
 import zorbage.type.algebra.Integer;
 
+// TODO: BigInteger has some more methods than this class
+
 /**
  * 
  * @author Barry DeZonia
@@ -161,23 +163,14 @@ public class UnboundedIntInteger implements Integer<UnboundedIntInteger, Unbound
 
 	@Override
 	public void gcd(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = gcdHelper(a.v, b.v);
+		c.v = a.v.gcd(b.v);
 	}
 
 	@Override
 	public void lcm(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		BigInteger n = a.v.multiply(b.v).abs();
-		BigInteger d = gcdHelper(a.v, b.v);
+		BigInteger d = a.v.gcd(b.v);
 		c.v = n.divide(d);
-	}
-
-	private BigInteger gcdHelper(BigInteger a, BigInteger b) {
-		while (!b.equals(BigInteger.ZERO)) {
-			BigInteger t = b;
-			b = a.mod(b);
-			a = t;
-		}
-		return a;
 	}
 
 	@Override
@@ -217,26 +210,22 @@ public class UnboundedIntInteger implements Integer<UnboundedIntInteger, Unbound
 
 	@Override
 	public void and(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		// TODO Auto-generated method stub
-		
+		c.v = a.v.and(b.v);
 	}
 
 	@Override
 	public void or(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		// TODO Auto-generated method stub
-		
+		c.v = a.v.or(b.v);
 	}
 
 	@Override
 	public void xor(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		// TODO Auto-generated method stub
-		
+		c.v = a.v.xor(b.v);
 	}
 
 	@Override
 	public void not(UnboundedIntMember a, UnboundedIntMember b) {
-		// TODO Auto-generated method stub
-		
+		b.v = a.v.not();
 	}
 
 }
