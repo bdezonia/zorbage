@@ -30,6 +30,7 @@ import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Field;
 import zorbage.type.algebra.Hyperbolic;
+import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.InverseHyperbolic;
 import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
@@ -55,7 +56,8 @@ public class ComplexFloat64Field
     Hyperbolic<Float64Member,ComplexFloat64Member>,
     InverseHyperbolic<ComplexFloat64Member,Float64Member>,
     Roots<ComplexFloat64Member>,
-    Rounding<ComplexFloat64Member>
+    Rounding<ComplexFloat64Member>,
+    Infinite<ComplexFloat64Member>
 {
 
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
@@ -374,5 +376,15 @@ public class ComplexFloat64Field
 	public void roundNearest(ComplexFloat64Member a, ComplexFloat64Member b) {
 		b.rv = Math.rint(a.rv);
 		b.iv = Math.rint(a.iv);
+	}
+
+	@Override
+	public boolean isNaN(ComplexFloat64Member a) {
+		return Double.isNaN(a.rv*a.iv); // true if either component is NaN
+	}
+
+	@Override
+	public boolean isInfinite(ComplexFloat64Member a) {
+		return Double.isInfinite(a.rv*a.iv); // true if one or both is Inf and neither is NaN
 	}
 }
