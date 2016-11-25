@@ -28,8 +28,16 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Constants;
+import zorbage.type.algebra.Exponential;
+import zorbage.type.algebra.Infinite;
+import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
+import zorbage.type.algebra.Roots;
+import zorbage.type.algebra.Rounding;
+import zorbage.type.algebra.Trigonometric;
+
+// TODO - finish unimplemented methods
 
 /**
  * 
@@ -41,7 +49,13 @@ public class Float64OrderedField
     OrderedField<Float64OrderedField,Float64Member>,
     Bounded<Float64OrderedField,Float64Member>,
     Norm<Float64Member,Float64Member>,
-    Constants<Float64Member>
+    Constants<Float64Member>,
+    Exponential<Float64Member>,
+    Trigonometric<Float64Member,Float64Member>,
+    InverseTrigonometric<Float64Member,Float64Member>,
+    Infinite<Float64Member>,
+    Roots<Float64Member>,
+    Rounding<Float64Member>
 {
 
 	@Override
@@ -181,6 +195,202 @@ public class Float64OrderedField
 	@Override
 	public void E(Float64Member a) {
 		a.v = Math.E;
+	}
+	
+	@Override
+	public void exp(Float64Member a, Float64Member b) {
+		b.v = Math.exp(a.v);
+	}
+
+	@Override
+	public void expm1(Float64Member a, Float64Member b) {
+		b.v = Math.expm1(a.v);
+	}
+
+	@Override
+	public void log(Float64Member a, Float64Member b) {
+		b.v = Math.log(a.v);
+	}
+
+	@Override
+	public void log1p(Float64Member a, Float64Member b) {
+		b.v = Math.log1p(a.v);
+	}
+
+	@Override
+	public void cos(Float64Member a, Float64Member b) {
+		b.v = Math.cos(a.v);
+	}
+
+	@Override
+	public void sin(Float64Member a, Float64Member b) {
+		b.v = Math.sin(a.v);
+	}
+
+	@Override
+	public void tan(Float64Member a, Float64Member b) {
+		b.v = Math.tan(a.v);
+	}
+
+	@Override
+	public void csc(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void sec(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void cot(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void cosh(Float64Member a, Float64Member b) {
+		b.v = Math.cosh(a.v);
+	}
+
+	@Override
+	public void sinh(Float64Member a, Float64Member b) {
+		b.v = Math.sinh(a.v);
+	}
+
+	@Override
+	public void tanh(Float64Member a, Float64Member b) {
+		b.v = Math.tanh(a.v);
+	}
+
+	@Override
+	public void csch(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void sech(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void coth(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void acos(Float64Member a, Float64Member b) {
+		b.v = Math.acos(a.v);
+	}
+
+	@Override
+	public void asin(Float64Member a, Float64Member b) {
+		b.v = Math.asin(a.v);
+	}
+
+	@Override
+	public void atan(Float64Member a, Float64Member b) {
+		b.v = Math.atan(a.v);
+	}
+	
+	@Override
+	public void atan2(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.atan2(a.v, b.v);
+	}
+
+	@Override
+	public void acsc(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void asec(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void acot(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void acosh(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void asinh(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void atanh(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void acsch(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void asech(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void acoth(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public boolean isNaN(Float64Member a) {
+		return Double.isNaN(a.v);
+	}
+
+	@Override
+	public boolean isInfinite(Float64Member a) {
+		return Double.isInfinite(a.v);
+	}
+
+	@Override
+	public void sqrt(Float64Member a, Float64Member b) {
+		b.v = Math.sqrt(a.v);
+	}
+
+	@Override
+	public void cbrt(Float64Member a, Float64Member b) {
+		b.v = Math.cbrt(a.v);
+	}
+
+	@Override
+	public void roundTowardsZero(Float64Member a, Float64Member b) {
+		if (a.v > 0)
+			roundNegative(a, b);
+		else
+			roundPositive(a, b);
+	}
+
+	@Override
+	public void roundAwayFromZero(Float64Member a, Float64Member b) {
+		if (a.v < 0)
+			roundNegative(a, b);
+		else
+			roundPositive(a, b);
+	}
+
+	@Override
+	public void roundPositive(Float64Member a, Float64Member b) {
+		b.v = Math.ceil(a.v);
+	}
+
+	@Override
+	public void roundNegative(Float64Member a, Float64Member b) {
+		b.v = Math.floor(a.v);
+	}
+
+	@Override
+	public void roundNearest(Float64Member a, Float64Member b) {
+		b.v = Math.rint(b.v);
 	}
 
 }

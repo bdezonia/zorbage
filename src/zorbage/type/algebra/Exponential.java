@@ -24,15 +24,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.old;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface BoundsStuff {
-	boolean isNan();
-	boolean isPositiveInfinity();
-	boolean isNegativeInfinity();
+public interface Exponential<T> {
+
+	void exp(T a, T b);
+	void expm1(T a, T b);
+	void log(T a, T b);
+	void log1p(T a, T b);
 }

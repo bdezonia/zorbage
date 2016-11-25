@@ -24,19 +24,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.old;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Trigonometric<T extends Trigonometric<T>> {
-	void sin(T other);
-	void cos(T other);
-	void tan(T other);
-	void sinh(T other);
-	void cosh(T other);
-	void tanh(T other);
-}
+public interface Roots<T> {
 
+	void sqrt(T a, T b);
+	void cbrt(T a, T b);
+}

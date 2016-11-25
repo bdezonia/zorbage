@@ -24,17 +24,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.old;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface RoundingStuff {
-	// TODO - rethink these. There are better rounding mode impls.
-	void trunc();  // is this redundant with floor?
-	void round();
-	void ceil();
-	void floor();
+public interface Rounding<T> {
+	void roundTowardsZero(T a, T b);
+	void roundAwayFromZero(T a, T b);
+	void roundPositive(T a, T b);
+	void roundNegative(T a, T b);
+	void roundNearest(T a, T b);
 }

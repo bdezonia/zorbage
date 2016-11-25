@@ -24,20 +24,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.old;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface InverseTrigonometric<T extends InverseTrigonometric<T,U>,U> {
-	U arcsin(T other);
-	U arccos(T other);
-	U arctan(T other);
-	U arcsinh(T other);
-	U arccosh(T other);
-	U arctanh(T other);
-	U atan2(T a, T b);
+public interface Trigonometric<U,V> {
+	void sin(U a, V b);
+	void cos(U a, V b);
+	void tan(U a, V b);
+	void csc(U a, V b);
+	void sec(U a, V b);
+	void cot(U a, V b);
+	// TODO: hyperbolics into their own interface?
+	void sinh(U a, V b);
+	void cosh(U a, V b);
+	void tanh(U a, V b);
+	void csch(U a, V b);
+	void sech(U a, V b);
+	void coth(U a, V b);
 }
-
