@@ -27,6 +27,7 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.Bounded;
+import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
 
 /**
@@ -34,7 +35,12 @@ import zorbage.type.algebra.OrderedField;
  * @author Barry DeZonia
  *
  */
-public class Float64OrderedField implements OrderedField<Float64OrderedField,Float64Member>, Bounded<Float64OrderedField,Float64Member> {
+public class Float64OrderedField
+  implements
+    OrderedField<Float64OrderedField,Float64Member>,
+    Bounded<Float64OrderedField,Float64Member>,
+    Norm<Float64Member,Float64Member>
+{
 
 	@Override
 	public boolean isEqual(Float64Member a, Float64Member b) {
@@ -157,6 +163,11 @@ public class Float64OrderedField implements OrderedField<Float64OrderedField,Flo
 
 	@Override
 	public void abs(Float64Member a, Float64Member b) {
+		b.v = Math.abs(a.v);
+	}
+
+	@Override
+	public void norm(Float64Member a, Float64Member b) {
 		b.v = Math.abs(a.v);
 	}
 

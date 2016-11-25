@@ -39,10 +39,6 @@ public class Float64Member {
 		v = 0;
 	}
 	
-	public Float64Member(int value) {
-		v = value;
-	}
-	
 	public Float64Member(double value) {
 		v = value;
 	}

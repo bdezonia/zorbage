@@ -43,7 +43,7 @@ public class ConverterUnboundedIntToComplexFloat64
 
 	@Override
 	public boolean isLossy() {
-		return false;
+		return true;
 	}
 
 	@Override

@@ -26,9 +26,8 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.SkewField;
-
-// TODO: why no norm()? is Euclidean stuff okay to add algebraically
 
 // TODO: do I need to add conjugate() to alg hierarchy?
 
@@ -40,7 +39,9 @@ import zorbage.type.algebra.SkewField;
  *
  */
 public class QuaternionFloat64SkewField
-  implements SkewField<QuaternionFloat64SkewField,QuaternionFloat64Member>
+  implements
+    SkewField<QuaternionFloat64SkewField,QuaternionFloat64Member>,
+    Norm<QuaternionFloat64Member, Float64Member>
 {
 
 	@Override
@@ -134,7 +135,8 @@ public class QuaternionFloat64SkewField
 		// TODO
 		
 	}
-	
+
+	@Override
 	public void norm(QuaternionFloat64Member a, Float64Member b) {
 		// TODO
 		

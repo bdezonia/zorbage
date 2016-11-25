@@ -32,14 +32,13 @@ package zorbage.type.algebra;
  *
  */
 public interface EuclideanRing<T extends EuclideanRing<T,U>,U>
-  extends Ring<T,U> // or is it a ring with unity member?
+  extends Norm<U,U>, Ring<T,U> // or is it a ring with unity member?
 {
 	void div(U a, U b, U d);
 	void mod(U a, U b, U m);
 	void divMod(U a, U b, U d, U m);
 	void gcd(U a, U b, U c);
 	void lcm(U a, U b, U c);
-	void norm(U a, U b);  // I don't think this is in right part of hierarchy.
 	boolean isEven(U a);
 	boolean isOdd(U a);
 	

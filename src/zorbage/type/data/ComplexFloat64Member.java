@@ -40,26 +40,6 @@ public class ComplexFloat64Member {
 		iv = 0;
 	}
 	
-	public ComplexFloat64Member(byte value) {
-		rv = value;
-		iv = 0;
-	}
-	
-	public ComplexFloat64Member(short value) {
-		rv = value;
-		iv = 0;
-	}
-	
-	public ComplexFloat64Member(int value) {
-		rv = value;
-		iv = 0;
-	}
-	
-	public ComplexFloat64Member(float value) {
-		rv = value;
-		iv = 0;
-	}
-	
 	public ComplexFloat64Member(double value) {
 		rv = value;
 		iv = 0;

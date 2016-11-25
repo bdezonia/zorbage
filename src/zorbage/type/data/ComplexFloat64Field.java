@@ -27,16 +27,19 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.Field;
+import zorbage.type.algebra.Norm;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ComplexFloat64Field implements Field<ComplexFloat64Field, ComplexFloat64Member> {
+public class ComplexFloat64Field
+  implements Field<ComplexFloat64Field, ComplexFloat64Member>, Norm<ComplexFloat64Member, Float64Member>
+{
 
-	protected static ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
-	protected static ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	private static ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
+	private static ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
@@ -137,9 +140,7 @@ public class ComplexFloat64Field implements Field<ComplexFloat64Field, ComplexFl
 		b.iv = -a.iv;
 	}
 
-	// TODO - locate in algebra hierarchy : note that integers have int return type while complex and quat return reals
-	// what do matrices and vectors return. matrix returns a real. vector returns a real.
-	//@Override
+	@Override
 	public void norm(ComplexFloat64Member a, Float64Member b) {  // this declaration would break generics
 		b.v = Math.sqrt(a.rv*a.rv + a.iv*a.iv);
 	}

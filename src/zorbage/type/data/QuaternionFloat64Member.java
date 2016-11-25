@@ -38,6 +38,8 @@ public class QuaternionFloat64Member {
 		r = i = j = k = 0;
 	}
 	
+	// TODO do I want more ctors? 1 double = real? 2 doubles = complex?
+	
 	public QuaternionFloat64Member(double r, double i, double j, double k) {
 		this.r = r;
 		this.i = i;

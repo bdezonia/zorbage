@@ -37,7 +37,7 @@ import zorbage.type.algebra.Integer;
  */
 public class UnboundedIntInteger implements Integer<UnboundedIntInteger, UnboundedIntMember> {
 
-	protected static BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
+	private static BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	
 	@Override
 	public void abs(UnboundedIntMember a, UnboundedIntMember b) {
