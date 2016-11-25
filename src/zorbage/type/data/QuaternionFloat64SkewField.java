@@ -61,7 +61,7 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void power(int power, QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		//QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 	}
 
 	@Override

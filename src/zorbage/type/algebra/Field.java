@@ -31,7 +31,7 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Field<T extends Field<T,U>,U> extends IntegralDomain<T,U>, Invertible<T,U>
+public interface Field<T extends Field<T,U>,U> extends IntegralDomain<T,U>, Invertible<U>
 {
 	//note: while in a field multiplication does commute
 }

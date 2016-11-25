@@ -31,7 +31,7 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Invertible<T extends Invertible<T,U>, U> {
+public interface Invertible<U> {
 	void invert(U a, U b); // multiplicative inverse
 	void divide(U a, U b, U c);
 }
