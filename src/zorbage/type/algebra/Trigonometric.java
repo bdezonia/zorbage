@@ -38,11 +38,4 @@ public interface Trigonometric<U,V> {
 	void csc(U a, V b);
 	void sec(U a, V b);
 	void cot(U a, V b);
-	// TODO: hyperbolics into their own interface?
-	void sinh(U a, V b);
-	void cosh(U a, V b);
-	void tanh(U a, V b);
-	void csch(U a, V b);
-	void sech(U a, V b);
-	void coth(U a, V b);
 }

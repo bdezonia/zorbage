@@ -29,6 +29,8 @@ package zorbage.type.data;
 import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Field;
+import zorbage.type.algebra.Hyperbolic;
+import zorbage.type.algebra.InverseHyperbolic;
 import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.Roots;
@@ -50,6 +52,8 @@ public class ComplexFloat64Field
     Exponential<ComplexFloat64Member>,
     Trigonometric<Float64Member,ComplexFloat64Member>,
     InverseTrigonometric<ComplexFloat64Member,Float64Member>,
+    Hyperbolic<Float64Member,ComplexFloat64Member>,
+    InverseHyperbolic<ComplexFloat64Member,Float64Member>,
     Roots<ComplexFloat64Member>,
     Rounding<ComplexFloat64Member>
 {

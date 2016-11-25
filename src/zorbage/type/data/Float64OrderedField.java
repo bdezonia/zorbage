@@ -29,7 +29,9 @@ package zorbage.type.data;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Exponential;
+import zorbage.type.algebra.Hyperbolic;
 import zorbage.type.algebra.Infinite;
+import zorbage.type.algebra.InverseHyperbolic;
 import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
@@ -53,6 +55,8 @@ public class Float64OrderedField
     Exponential<Float64Member>,
     Trigonometric<Float64Member,Float64Member>,
     InverseTrigonometric<Float64Member,Float64Member>,
+    Hyperbolic<Float64Member,Float64Member>,
+    InverseHyperbolic<Float64Member,Float64Member>,
     Infinite<Float64Member>,
     Roots<Float64Member>,
     Rounding<Float64Member>
