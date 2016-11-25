@@ -66,7 +66,7 @@ public class Test {
 		System.out.println(a.value() + " plus " + b.value() + " equals " + sum.value());
 	}
 	
-	public static <T extends IntegralDomain<T,U> & Ordered<T,U>, U> void workWithOrderedIntegralDomain(T g) {
+	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void workWithOrderedIntegralDomain(T g) {
 		U a = g.construct();
 		g.unity(a);
 		U b = g.construct();
@@ -79,7 +79,7 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 	
-	public static <T extends IntegralDomain<T,U> & Ordered<T,U>, U> void workWithOrderedIntegralDomainAndStrings(T g) {
+	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void workWithOrderedIntegralDomainAndStrings(T g) {
 		U a = g.construct("1040");
 		U b = g.construct("160");
 		U c = g.construct();

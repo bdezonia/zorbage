@@ -43,7 +43,7 @@ public class BooleanGroup
   implements
     Group<BooleanGroup, BooleanMember>,
     Bounded<BooleanMember>,
-    Ordered<BooleanGroup,BooleanMember>,
+    Ordered<BooleanMember>,
     LogicalOperations<BooleanMember>{
 
 	@Override

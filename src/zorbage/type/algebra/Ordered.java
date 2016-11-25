@@ -31,7 +31,7 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Ordered<T extends Ordered<T,U>,U> {
+public interface Ordered<U> {
 	boolean isLess(U a, U b); 
 	boolean isLessEqual(U a, U b); 
 	boolean isGreater(U a, U b); 

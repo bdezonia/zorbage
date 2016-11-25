@@ -32,7 +32,7 @@ package zorbage.type.algebra;
  *
  */
 public interface OrderedField<T extends OrderedField<T,U>,U>
-  extends Field<T,U>, Ordered<T,U>
+  extends Field<T,U>, Ordered<U>
 {
 	void abs(U a, U b); // also in OrderedIntegralDomain
 }
