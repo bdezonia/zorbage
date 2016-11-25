@@ -27,6 +27,7 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.Bounded;
+import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
 
@@ -39,7 +40,8 @@ public class Float64OrderedField
   implements
     OrderedField<Float64OrderedField,Float64Member>,
     Bounded<Float64OrderedField,Float64Member>,
-    Norm<Float64Member,Float64Member>
+    Norm<Float64Member,Float64Member>,
+    Constants<Float64Member>
 {
 
 	@Override
@@ -169,6 +171,16 @@ public class Float64OrderedField
 	@Override
 	public void norm(Float64Member a, Float64Member b) {
 		b.v = Math.abs(a.v);
+	}
+
+	@Override
+	public void PI(Float64Member a) {
+		a.v = Math.PI;
+	}
+
+	@Override
+	public void E(Float64Member a) {
+		a.v = Math.E;
 	}
 
 }

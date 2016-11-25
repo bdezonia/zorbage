@@ -26,6 +26,7 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Field;
 import zorbage.type.algebra.Norm;
 
@@ -35,7 +36,10 @@ import zorbage.type.algebra.Norm;
  *
  */
 public class ComplexFloat64Field
-  implements Field<ComplexFloat64Field, ComplexFloat64Member>, Norm<ComplexFloat64Member, Float64Member>
+  implements
+    Field<ComplexFloat64Field, ComplexFloat64Member>,
+    Norm<ComplexFloat64Member, Float64Member>,
+    Constants<ComplexFloat64Member>
 {
 
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
@@ -146,6 +150,18 @@ public class ComplexFloat64Field
 
 	@Override
 	public void norm(ComplexFloat64Member a, Float64Member b) {  // this declaration would break generics
-		b.v = Math.sqrt(a.rv*a.rv + a.iv*a.iv);
+		b.v = Math.hypot(a.rv,a.iv);
+	}
+
+	@Override
+	public void PI(ComplexFloat64Member a) {
+		a.rv = Math.PI;
+		a.iv = 0;
+	}
+
+	@Override
+	public void E(ComplexFloat64Member a) {
+		a.rv = Math.E;
+		a.iv = 0;
 	}
 }

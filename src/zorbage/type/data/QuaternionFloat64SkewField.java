@@ -26,6 +26,7 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.SkewField;
 
@@ -41,12 +42,17 @@ import zorbage.type.algebra.SkewField;
 public class QuaternionFloat64SkewField
   implements
     SkewField<QuaternionFloat64SkewField,QuaternionFloat64Member>,
-    Norm<QuaternionFloat64Member, Float64Member>
+    Norm<QuaternionFloat64Member, Float64Member>,
+    Constants<QuaternionFloat64Member>
 {
 	private static QuaternionFloat64Member TMP = new QuaternionFloat64Member();
 	
 	@Override
 	public void unity(QuaternionFloat64Member a) {
+		a.r = 1;
+		a.i = 0;
+		a.j = 0;
+		a.k = 0;
 	}
 
 	@Override
@@ -64,8 +70,10 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void zero(QuaternionFloat64Member z) {
-		// TODO Auto-generated method stub
-		
+		z.r = 0;
+		z.i = 0;
+		z.j = 0;
+		z.k = 0;
 	}
 
 	@Override
@@ -142,5 +150,21 @@ public class QuaternionFloat64SkewField
 	public void norm(QuaternionFloat64Member a, Float64Member b) {
 		// TODO
 		
+	}
+
+	@Override
+	public void PI(QuaternionFloat64Member a) {
+		a.r = Math.PI;
+		a.i = 0;
+		a.j = 0;
+		a.k = 0;
+	}
+
+	@Override
+	public void E(QuaternionFloat64Member a) {
+		a.r = Math.E;
+		a.i = 0;
+		a.j = 0;
+		a.k = 0;
 	}
 }
