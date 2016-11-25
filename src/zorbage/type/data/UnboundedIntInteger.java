@@ -39,7 +39,7 @@ import zorbage.type.algebra.Integer;
  */
 public class UnboundedIntInteger implements Integer<UnboundedIntInteger, UnboundedIntMember> {
 
-	private static BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
+	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	
 	@Override
 	public void abs(UnboundedIntMember a, UnboundedIntMember b) {
@@ -54,10 +54,11 @@ public class UnboundedIntInteger implements Integer<UnboundedIntInteger, Unbound
 	@Override
 	public void power(int power, UnboundedIntMember a, UnboundedIntMember b) {
 		if (power < 0) throw new IllegalArgumentException("Cannot get negative powers from integers");
-		b.v = BigInteger.ONE;
+		BigInteger tmp = BigInteger.ONE;
 		if (power > 0)
 			for (int i = 1; i <= power; i++)
-				b.v = b.v.multiply(a.v);
+				tmp = tmp.multiply(a.v);
+		b.v = tmp;
 	}
 
 	@Override

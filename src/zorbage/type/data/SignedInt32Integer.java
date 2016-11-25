@@ -80,11 +80,12 @@ public class SignedInt32Integer implements Integer<SignedInt32Integer, SignedInt
 	public void power(int power, SignedInt32Member a, SignedInt32Member b) {
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		b.v = 1;
+		int tmp = 1;
 		if (power > 0) {
 			for (int i = 1; i <= power; i++)
-				b.v = b.v * a.v;
+				tmp = tmp * a.v;
 		}
+		b.v = tmp;
 	}
 
 	@Override
