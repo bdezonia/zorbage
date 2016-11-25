@@ -38,5 +38,7 @@ public interface Ordered<T extends Ordered<T,U>,U> {
 	boolean isGreaterEqual(U a, U b);
 	int compare(U a, U b);
 	int signum(U a);
+	void min(U a, U b, U c);
+	void max(U a, U b, U c);
 }
 

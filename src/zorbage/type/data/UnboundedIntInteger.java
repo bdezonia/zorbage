@@ -28,6 +28,7 @@ package zorbage.type.data;
 
 import java.math.BigInteger;
 
+import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Integer;
 
 // TODO: BigInteger has some more methods than this class
@@ -37,7 +38,11 @@ import zorbage.type.algebra.Integer;
  * @author Barry DeZonia
  *
  */
-public class UnboundedIntInteger implements Integer<UnboundedIntInteger, UnboundedIntMember> {
+public class UnboundedIntInteger
+  implements
+    Integer<UnboundedIntInteger, UnboundedIntMember>,
+    BitOperations<UnboundedIntMember>
+{
 
 	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	
@@ -200,33 +205,43 @@ public class UnboundedIntInteger implements Integer<UnboundedIntInteger, Unbound
 	}
 
 	@Override
-	public void shiftLeft(UnboundedIntMember a, UnboundedIntMember b) {
+	public void bitShiftLeft(UnboundedIntMember a, UnboundedIntMember b) {
 		b.v = a.v.shiftLeft(1);
 	}
 
 	@Override
-	public void shiftRight(UnboundedIntMember a, UnboundedIntMember b) {
+	public void bitShiftRight(UnboundedIntMember a, UnboundedIntMember b) {
 		b.v = a.v.shiftRight(1);
 	}
 
 	@Override
-	public void and(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+	public void bitAnd(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		c.v = a.v.and(b.v);
 	}
 
 	@Override
-	public void or(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+	public void bitOr(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		c.v = a.v.or(b.v);
 	}
 
 	@Override
-	public void xor(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+	public void bitXor(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		c.v = a.v.xor(b.v);
 	}
 
 	@Override
-	public void not(UnboundedIntMember a, UnboundedIntMember b) {
+	public void bitNot(UnboundedIntMember a, UnboundedIntMember b) {
 		b.v = a.v.not();
+	}
+
+	@Override
+	public void min(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		c.v = a.v.min(b.v);
+	}
+
+	@Override
+	public void max(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		c.v = a.v.max(b.v);
 	}
 
 }

@@ -26,6 +26,7 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 
@@ -34,7 +35,12 @@ import zorbage.type.algebra.Integer;
  * @author Barry DeZonia
  *
  */
-public class SignedInt32Integer implements Integer<SignedInt32Integer, SignedInt32Member>, Bounded<SignedInt32Integer, SignedInt32Member> {
+public class SignedInt32Integer
+  implements
+    Integer<SignedInt32Integer, SignedInt32Member>,
+    Bounded<SignedInt32Member>,
+    BitOperations<SignedInt32Member>
+{
 
 	@Override
 	public boolean isEqual(SignedInt32Member a, SignedInt32Member b) {
@@ -220,37 +226,47 @@ public class SignedInt32Integer implements Integer<SignedInt32Integer, SignedInt
 	}
 
 	@Override
-	public void and(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+	public void bitAnd(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
 		c.v = a.v & b.v;
 	}
 
 	@Override
-	public void or(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+	public void bitOr(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
 		c.v = a.v | b.v;
 	}
 
 	@Override
-	public void xor(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+	public void bitXor(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
 		c.v = a.v ^ b.v;
 	}
 
 	@Override
-	public void not(SignedInt32Member a, SignedInt32Member b) {
+	public void bitNot(SignedInt32Member a, SignedInt32Member b) {
 		b.v = ~a.v;
 	}
 
 	@Override
-	public void shiftLeft(SignedInt32Member a, SignedInt32Member b) {
+	public void bitShiftLeft(SignedInt32Member a, SignedInt32Member b) {
 		b.v = a.v << 1;
 	}
 
 	@Override
-	public void shiftRight(SignedInt32Member a, SignedInt32Member b) {
+	public void bitShiftRight(SignedInt32Member a, SignedInt32Member b) {
 		b.v = a.v >> 1;
 	}
 
-	public void shiftRightFillZero(SignedInt32Member a, SignedInt32Member b) {
+	public void bitShiftRightFillZero(SignedInt32Member a, SignedInt32Member b) {
 		b.v = a.v >>> 1;
+	}
+
+	@Override
+	public void min(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+		c.v = Math.min(a.v, b.v);
+	}
+
+	@Override
+	public void max(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+		c.v = Math.max(a.v, b.v);
 	}
 
 }

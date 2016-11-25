@@ -31,7 +31,7 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Bounded<T extends Bounded<T,U>, U> {
+public interface Bounded<U> {
 	void max(U a);  // set a to max value of type
 	void min(U a);  // set a to min value of type
 }

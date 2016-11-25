@@ -31,9 +31,9 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Logical<T,U> {
-	void and(U a, U b, U c);
-	void or(U a, U b, U c);
-	void xor(U a, U b, U c);
-	void not(U a, U b);
+public interface LogicalOperations<U> {
+	void logicalAnd(U a, U b, U c);
+	void logicalOr(U a, U b, U c);
+	void logicalXor(U a, U b, U c);
+	void logicalNot(U a, U b);
 }

@@ -28,7 +28,7 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Group;
-import zorbage.type.algebra.Logical;
+import zorbage.type.algebra.LogicalOperations;
 import zorbage.type.algebra.Ordered;
 
 // TODO - do I need a BitType that is stored within an int? Or just use BooleanMember? toString to return false/true
@@ -42,27 +42,27 @@ import zorbage.type.algebra.Ordered;
 public class BooleanGroup
   implements
     Group<BooleanGroup, BooleanMember>,
-    Bounded<BooleanGroup,BooleanMember>,
+    Bounded<BooleanMember>,
     Ordered<BooleanGroup,BooleanMember>,
-    Logical<BooleanGroup,BooleanMember>{
+    LogicalOperations<BooleanMember>{
 
 	@Override
-	public void and(BooleanMember a, BooleanMember b, BooleanMember c) {
+	public void logicalAnd(BooleanMember a, BooleanMember b, BooleanMember c) {
 		c.v = a.v && b.v;
 	}
 
 	@Override
-	public void or(BooleanMember a, BooleanMember b, BooleanMember c) {
+	public void logicalOr(BooleanMember a, BooleanMember b, BooleanMember c) {
 		c.v = a.v || b.v;
 	}
 
 	@Override
-	public void xor(BooleanMember a, BooleanMember b, BooleanMember c) {
+	public void logicalXor(BooleanMember a, BooleanMember b, BooleanMember c) {
 		c.v = a.v ^ b.v;
 	}
 
 	@Override
-	public void not(BooleanMember a, BooleanMember b) {
+	public void logicalNot(BooleanMember a, BooleanMember b) {
 		b.v = !a.v;
 	}
 	
@@ -142,6 +142,22 @@ public class BooleanGroup
 	@Override
 	public void assign(BooleanMember from, BooleanMember to) {
 		to.v = from.v;
+	}
+
+	@Override
+	public void min(BooleanMember a, BooleanMember b, BooleanMember c) {
+		if (isLess(a, b))
+			c.v = a.v;
+		else
+			c.v = b.v;
+	}
+
+	@Override
+	public void max(BooleanMember a, BooleanMember b, BooleanMember c) {
+		if (isGreater(a, b))
+			c.v = a.v;
+		else
+			c.v = b.v;
 	}
 
 }

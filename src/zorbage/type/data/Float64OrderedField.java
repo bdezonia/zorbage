@@ -49,7 +49,7 @@ import zorbage.type.algebra.Trigonometric;
 public class Float64OrderedField
   implements
     OrderedField<Float64OrderedField,Float64Member>,
-    Bounded<Float64OrderedField,Float64Member>,
+    Bounded<Float64Member>,
     Norm<Float64Member,Float64Member>,
     Constants<Float64Member>,
     Exponential<Float64Member>,
@@ -395,6 +395,16 @@ public class Float64OrderedField
 	@Override
 	public void roundNearest(Float64Member a, Float64Member b) {
 		b.v = Math.rint(b.v);
+	}
+
+	@Override
+	public void min(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.min(a.v, b.v);
+	}
+
+	@Override
+	public void max(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.max(a.v, b.v);
 	}
 
 }
