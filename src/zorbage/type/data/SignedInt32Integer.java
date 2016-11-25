@@ -185,7 +185,6 @@ public class SignedInt32Integer implements Integer<SignedInt32Integer, SignedInt
 
 	@Override
 	public void norm(SignedInt32Member a, SignedInt32Member b) {
-		// TODO: is this the correct definition of norm?
 		b.v = Math.abs(a.v);
 	}
 
@@ -217,6 +216,40 @@ public class SignedInt32Integer implements Integer<SignedInt32Integer, SignedInt
 	@Override
 	public void min(SignedInt32Member a) {
 		a.v = java.lang.Integer.MIN_VALUE;
+	}
+
+	@Override
+	public void and(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+		c.v = a.v & b.v;
+	}
+
+	@Override
+	public void or(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+		c.v = a.v | b.v;
+	}
+
+	@Override
+	public void xor(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+		c.v = a.v ^ b.v;
+	}
+
+	@Override
+	public void not(SignedInt32Member a, SignedInt32Member b) {
+		b.v = ~a.v;
+	}
+
+	@Override
+	public void shiftLeft(SignedInt32Member a, SignedInt32Member b) {
+		b.v = a.v << 1;
+	}
+
+	@Override
+	public void shiftRight(SignedInt32Member a, SignedInt32Member b) {
+		b.v = a.v >> 1;
+	}
+
+	public void shiftRightFillZero(SignedInt32Member a, SignedInt32Member b) {
+		b.v = a.v >>> 1;
 	}
 
 }

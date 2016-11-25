@@ -205,4 +205,38 @@ public class UnboundedIntInteger implements Integer<UnboundedIntInteger, Unbound
 		b.v = a.v.add(BigInteger.ONE);
 	}
 
+	@Override
+	public void shiftLeft(UnboundedIntMember a, UnboundedIntMember b) {
+		b.v = a.v.shiftLeft(1);
+	}
+
+	@Override
+	public void shiftRight(UnboundedIntMember a, UnboundedIntMember b) {
+		b.v = a.v.shiftRight(1);
+	}
+
+	@Override
+	public void and(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void or(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void xor(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void not(UnboundedIntMember a, UnboundedIntMember b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
