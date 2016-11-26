@@ -56,9 +56,11 @@ public class ComplexFloat64Member {
 	}
 
 	public ComplexFloat64Member(String value) {
-		throw new IllegalArgumentException("Unimplemented");
-		//rv = Double.parseDouble(1st string value);
-		//iv = Double.parseDouble(2nd string value if present else 0);
+		String[] strs = value.trim().split("\\s+");
+		rv = Double.parseDouble(strs[0]);
+		if (strs.length > 1) {
+			iv = Double.parseDouble(strs[1]);
+		}
 	}
 
 	public double rvalue() { return rv; }

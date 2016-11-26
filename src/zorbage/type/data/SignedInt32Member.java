@@ -48,7 +48,8 @@ public class SignedInt32Member {
 	}
 	
 	public SignedInt32Member(String value) {
-		v = Integer.parseInt(value);
+		String[] strs = value.trim().split("\\s+");
+		v = Integer.parseInt(strs[0]);
 	}
 
 	public int value() { return v; }

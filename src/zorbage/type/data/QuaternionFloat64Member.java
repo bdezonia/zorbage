@@ -57,12 +57,15 @@ public class QuaternionFloat64Member {
 	}
 
 	public QuaternionFloat64Member(String value) {
-		// parse the same format as toString
-		// accept 1 number as r ( a real )
-		// accept 2 numbers as r, i ( a complex number ?? )
-		// accept 3 numbers as r, i, j ???
-		// accept 4 numbers as r, i, j, k ( a quaternion )
-		throw new IllegalArgumentException("TODO");
+		String[] strs = value.trim().split("\\s+");
+
+		for (int x = 0; x < 4 && x < strs.length; x++) {
+		  double d = Double.parseDouble(strs[x]);
+		  if (x == 0) r = d;
+		  else if (x == 1) i = d;
+		  else if (x == 2) j = d;
+		  else if (x == 3) k = d;
+		}
 	}
 
 	public double r() { return r; }

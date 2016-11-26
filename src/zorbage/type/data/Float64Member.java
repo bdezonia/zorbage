@@ -48,7 +48,8 @@ public class Float64Member {
 	}
 
 	public Float64Member(String value) {
-		v = Double.parseDouble(value);
+		String[] strs = value.trim().split("\\s+");
+		v = Double.parseDouble(strs[0]);
 	}
 
 	public double value() { return v; }

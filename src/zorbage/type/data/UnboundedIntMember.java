@@ -54,7 +54,8 @@ public class UnboundedIntMember {
 	}
 	
 	public UnboundedIntMember(String value) {
-		v = new BigInteger(value);
+		String[] strs = value.trim().split("\\s+");
+		v = new BigInteger(strs[0]);
 	}
 
 	public BigInteger value() { return v; }

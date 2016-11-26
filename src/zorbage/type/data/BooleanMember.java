@@ -16,7 +16,10 @@ public class BooleanMember {
 	}
 	
 	public BooleanMember(String value) {
-		v = java.lang.Boolean.parseBoolean(value);
+		String[] strs = value.trim().split("\\s+");
+		if (strs[0] == "0") v = false;
+		else if (strs[0] == "1") v = true;
+		else v = java.lang.Boolean.parseBoolean(strs[0]);
 	}
 
 	public boolean value() { return v; }
