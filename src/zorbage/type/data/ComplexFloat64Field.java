@@ -26,6 +26,7 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Field;
@@ -57,7 +58,8 @@ public class ComplexFloat64Field
     InverseHyperbolic<ComplexFloat64Member,Float64Member>,
     Roots<ComplexFloat64Member>,
     Rounding<ComplexFloat64Member>,
-    Infinite<ComplexFloat64Member>
+    Infinite<ComplexFloat64Member>,
+    Conjugate<ComplexFloat64Member>
 {
 
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
@@ -157,8 +159,7 @@ public class ComplexFloat64Field
 		c.iv = (a.iv * b.rv - a.rv * b.iv) / mod2;
 	}
 	
-	// TODO - locate in algebra hierarchy
-	//@Override
+	@Override
 	public void conjugate(ComplexFloat64Member a, ComplexFloat64Member b) {
 		b.rv = a.rv;
 		b.iv = -a.iv;

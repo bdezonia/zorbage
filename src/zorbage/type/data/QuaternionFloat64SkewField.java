@@ -26,13 +26,10 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.SkewField;
-
-// TODO: do I need to add conjugate() to alg hierarchy?
-
-// note that this is a biquaternion and might not be what is desired
 
 /**
  * 
@@ -43,51 +40,68 @@ public class QuaternionFloat64SkewField
   implements
     SkewField<QuaternionFloat64SkewField,QuaternionFloat64Member>,
     Norm<QuaternionFloat64Member, Float64Member>,
-    Constants<QuaternionFloat64Member>
+    Constants<QuaternionFloat64Member>,
+    Conjugate<QuaternionFloat64Member>
 {
+	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
+	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
+	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
+	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
+	
 	@Override
 	public void unity(QuaternionFloat64Member a) {
-		a.r = 1;
-		a.i = 0;
-		a.j = 0;
-		a.k = 0;
+		assign(ONE, a);
 	}
 
 	@Override
 	public void multiply(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		// TODO Auto-generated method stub
-		
+		c.r = a.r*b.r - a.i*b.i - a.j*b.j - a.k*b.k;
+		c.i = a.r*b.i + a.i*b.r + a.j*b.k - a.k*b.j;
+		c.j = a.r*b.j - a.i*b.k + a.j*b.r + a.k*b.i;
+		c.k = a.r*b.k + a.i*b.j - a.j*b.i + a.k*b.r;
 	}
 
 	@Override
 	public void power(int power, QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		//QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		// okay for power to be negative
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		assign(ONE,tmp);
+		if (power > 0) {
+			for (int i = 1; i <= power; i++)
+				multiply(tmp,a,tmp);
+		}
+		else if (power < 0) {
+			power = -power;
+			for (int i = 1; i <= power; i++)
+				divide(tmp,a,tmp);
+		}
+		assign(tmp, b);
 	}
 
 	@Override
 	public void zero(QuaternionFloat64Member z) {
-		z.r = 0;
-		z.i = 0;
-		z.j = 0;
-		z.k = 0;
+		assign(ZERO, z);
 	}
 
 	@Override
 	public void negate(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO Auto-generated method stub
-		
+		subtract(ZERO, a, b);
 	}
 
 	@Override
 	public void add(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		// TODO Auto-generated method stub
-		
+		c.r = a.r + b.r;
+		c.i = a.i + b.i;
+		c.j = a.j + b.j;
+		c.k = a.k + b.k;
 	}
 
 	@Override
 	public void subtract(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		// TODO Auto-generated method stub
-		
+		c.r = a.r - b.r;
+		c.i = a.i - b.i;
+		c.j = a.j - b.j;
+		c.k = a.k - b.k;
 	}
 
 	@Override
@@ -125,42 +139,42 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void invert(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO Auto-generated method stub
-		
+		QuaternionFloat64Member c = new QuaternionFloat64Member();
+		QuaternionFloat64Member scale = new QuaternionFloat64Member();
+		Float64Member nval = new Float64Member();
+		norm(a, nval);
+		scale.r = (1.0 / (nval.v * nval.v));
+		conjugate(a, c);
+		multiply(scale, c, b);
 	}
 
 	@Override
 	public void divide(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		// TODO Auto-generated method stub
-		
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		invert(b,tmp);
+		multiply(a, tmp, c);
 	}
 
-	// TODO - locate in algebra hierarchy
-	//@Override
+	@Override
 	public void conjugate(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO
-		
+		b.r = a.r;
+		b.i = -a.i;
+		b.j = -a.j;
+		b.k = -a.k;
 	}
 
 	@Override
 	public void norm(QuaternionFloat64Member a, Float64Member b) {
-		// TODO
-		
+		b.v = Math.sqrt(a.r*a.r + a.i*a.i + a.j*a.j + a.k*a.k);
 	}
 
 	@Override
 	public void PI(QuaternionFloat64Member a) {
-		a.r = Math.PI;
-		a.i = 0;
-		a.j = 0;
-		a.k = 0;
+		assign(PI, a);
 	}
 
 	@Override
 	public void E(QuaternionFloat64Member a) {
-		a.r = Math.E;
-		a.i = 0;
-		a.j = 0;
-		a.k = 0;
+		assign(E, a);
 	}
 }

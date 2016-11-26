@@ -24,53 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
-
-// TODO - do we nest Float64Members inside Quat<Float64Member>? Is this even possible?
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class QuaternionFloat64Member {
-	double r, i, j, k;
-	
-	public QuaternionFloat64Member() {
-		r = i = j = k = 0;
-	}
-	
-	// TODO do I want more ctors? 1 double = real? 2 doubles = complex?
-	
-	public QuaternionFloat64Member(double r, double i, double j, double k) {
-		this.r = r;
-		this.i = i;
-		this.j = j;
-		this.k = k;
-	}
-	
-	public QuaternionFloat64Member(QuaternionFloat64Member value) {
-		r = value.r;
-		i = value.i;
-		j = value.j;
-		k = value.k;
-	}
+public interface Conjugate<T> {
 
-	public QuaternionFloat64Member(String value) {
-		// parse the same format as toString
-		// accept 1 number as r ( a real )
-		// accept 2 numbers as r, i ( a complex number ?? )
-		// accept 3 numbers as r, i, j ???
-		// accept 4 numbers as r, i, j, k ( a quaternion )
-		throw new IllegalArgumentException("TODO");
-	}
-
-	public double r() { return r; }
-	public double i() { return i; }
-	public double j() { return j; }
-	public double k() { return k; }
-	
-	@Override
-	public String toString() { return "" + r + " " + i + " " + j + " " + k; }
-
+	void conjugate(T a, T b);
 }
