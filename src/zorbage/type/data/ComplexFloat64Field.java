@@ -64,6 +64,8 @@ public class ComplexFloat64Field
 
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	private static final ComplexFloat64Member PI = new ComplexFloat64Member(Math.PI,0);
+	private static final ComplexFloat64Member E = new ComplexFloat64Member(Math.E,0);
 
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
@@ -172,14 +174,12 @@ public class ComplexFloat64Field
 
 	@Override
 	public void PI(ComplexFloat64Member a) {
-		a.rv = Math.PI;
-		a.iv = 0;
+		assign(PI, a);
 	}
 
 	@Override
 	public void E(ComplexFloat64Member a) {
-		a.rv = Math.E;
-		a.iv = 0;
+		assign(E, a);
 	}
 
 	@Override
@@ -381,11 +381,13 @@ public class ComplexFloat64Field
 
 	@Override
 	public boolean isNaN(ComplexFloat64Member a) {
-		return Double.isNaN(a.rv*a.iv); // true if either component is NaN
+		// true if either component is NaN
+		return Double.isNaN(a.rv) || Double.isNaN(a.iv);
 	}
 
 	@Override
 	public boolean isInfinite(ComplexFloat64Member a) {
-		return Double.isInfinite(a.rv*a.iv); // true if one or both is Inf and neither is NaN
+		// true if neither is NaN and one or both is Inf
+		return !isNaN(a) && (Double.isInfinite(a.rv) || Double.isInfinite(a.iv));
 	}
 }
