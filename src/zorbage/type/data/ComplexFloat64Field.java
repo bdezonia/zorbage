@@ -198,21 +198,6 @@ public class ComplexFloat64Field
 	}
 
 	@Override
-	public void acsc(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void asec(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void acot(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
 	public void asinh(ComplexFloat64Member a, Float64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
@@ -224,21 +209,6 @@ public class ComplexFloat64Field
 
 	@Override
 	public void atanh(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void acsch(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void asech(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void acoth(ComplexFloat64Member a, Float64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
@@ -263,21 +233,6 @@ public class ComplexFloat64Field
 	}
 
 	@Override
-	public void csc(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void sec(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void cot(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
 	public void sinh(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
@@ -289,21 +244,6 @@ public class ComplexFloat64Field
 
 	@Override
 	public void tanh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void csch(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void sech(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void coth(ComplexFloat64Member a, ComplexFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 

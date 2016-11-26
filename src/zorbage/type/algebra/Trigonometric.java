@@ -35,7 +35,4 @@ public interface Trigonometric<U> {
 	void sin(U a, U b);
 	void cos(U a, U b);
 	void tan(U a, U b);
-	void csc(U a, U b);
-	void sec(U a, U b);
-	void cot(U a, U b);
 }
