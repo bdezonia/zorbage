@@ -39,8 +39,6 @@ import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
 
-// TODO - finish unimplemented methods
-
 /**
  * 
  * @author Barry DeZonia
@@ -236,19 +234,25 @@ public class Float64OrderedField
 		b.v = Math.tan(a.v);
 	}
 
+	// ref: internet
+
 	@Override
 	public void csc(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 1.0 / Math.sin(a.v);
 	}
 	
+	// ref: internet
+
 	@Override
 	public void sec(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 1.0 / Math.cos(a.v);
 	}
 	
+	// ref: internet
+
 	@Override
 	public void cot(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 1.0 / Math.tan(a.v);
 	}
 	
 	@Override
@@ -266,19 +270,25 @@ public class Float64OrderedField
 		b.v = Math.tanh(a.v);
 	}
 
+	// ref: internet
+
 	@Override
 	public void csch(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 1.0 / Math.sinh(a.v);
 	}
 	
+	// ref: internet
+
 	@Override
 	public void sech(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 1.0 / Math.cosh(a.v);
 	}
-	
+
+	// ref: internet
+
 	@Override
 	public void coth(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 1.0 / Math.tanh(a.v);
 	}
 	
 	@Override
@@ -301,49 +311,79 @@ public class Float64OrderedField
 		c.v = Math.atan2(a.v, b.v);
 	}
 
+	// reference: Wolfram Alpha
+
 	@Override
 	public void acsc(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		// acsc(x) = asin(1/x)
+		Float64Member tmp = new Float64Member(1 / a.v);
+		asin(tmp, b);
 	}
+
+	// reference: Wolfram Alpha
 	
 	@Override
 	public void asec(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		// asec(x) = acos(1/x)
+		Float64Member tmp = new Float64Member(1 / a.v);
+		acos(tmp, b);
 	}
 	
+	// reference: Wolfram Alpha
+
 	@Override
 	public void acot(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		// acot(x) = atan(1/x)
+		Float64Member tmp = new Float64Member(1 / a.v);
+		atan(tmp, b);
 	}
 	
+	// reference: Mathworld
+
 	@Override
 	public void acosh(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = Math.log(a.v + Math.sqrt(a.v*a.v - 1));
 	}
+
+	// reference: Wolfram Alpha
 
 	@Override
 	public void asinh(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = Math.log(a.v + Math.sqrt(a.v*a.v + 1));
 	}
+
+	// reference: Wolfram Alpha
 
 	@Override
 	public void atanh(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		b.v = 0.5 * (-Math.log(1 - a.v) + Math.log(1 + a.v));
 	}
+
+	// reference: Wolfram Alpha
 	
 	@Override
 	public void acsch(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		// acsch(x) = asinh(1/x)
+		Float64Member tmp = new Float64Member(1 / a.v);
+		asinh(tmp, b);
 	}
 
+	// reference: Wolfram Alpha
+	
 	@Override
 	public void asech(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		// asech(x) = acosh(1/x)
+		Float64Member tmp = new Float64Member(1 / a.v);
+		acosh(tmp, b);
 	}
 
+	// reference: Wolfram Alpha
+	
 	@Override
 	public void acoth(Float64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		// acoth(x) = atanh(1/x)
+		Float64Member tmp = new Float64Member(1 / a.v);
+		atanh(tmp, b);
 	}
 
 	@Override
