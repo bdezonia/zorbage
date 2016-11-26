@@ -39,8 +39,7 @@ import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
 
-// Some algorithms from:
-//   Handbook of Mathematics and Computational Science, Harris & Stocker, Springer, 2006
+// TODO - finish unimplemented methods
 
 /**
  * 
@@ -238,6 +237,21 @@ public class Float64OrderedField
 	}
 
 	@Override
+	public void csc(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void sec(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void cot(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
 	public void cosh(Float64Member a, Float64Member b) {
 		b.v = Math.cosh(a.v);
 	}
@@ -252,6 +266,21 @@ public class Float64OrderedField
 		b.v = Math.tanh(a.v);
 	}
 
+	@Override
+	public void csch(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void sech(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void coth(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
 	@Override
 	public void acos(Float64Member a, Float64Member b) {
 		b.v = Math.acos(a.v);
@@ -273,13 +302,28 @@ public class Float64OrderedField
 	}
 
 	@Override
+	public void acsc(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void asec(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
+	public void acot(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	@Override
 	public void acosh(Float64Member a, Float64Member b) {
-		b.v = (Math.pow(Math.E, a.v) + Math.pow(Math.E, -a.v)) / 2.0;
+		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
 	public void asinh(Float64Member a, Float64Member b) {
-		b.v = (Math.pow(Math.E, a.v) - Math.pow(Math.E, -a.v)) / 2.0;
+		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
@@ -287,6 +331,21 @@ public class Float64OrderedField
 		throw new IllegalArgumentException("TODO");
 	}
 	
+	@Override
+	public void acsch(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void asech(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void acoth(Float64Member a, Float64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
 	@Override
 	public boolean isNaN(Float64Member a) {
 		return Double.isNaN(a.v);

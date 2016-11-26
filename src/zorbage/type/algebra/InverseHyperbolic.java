@@ -35,4 +35,7 @@ public interface InverseHyperbolic<U, V> {
 	void asinh(U a, V b);
 	void acosh(U a, V b);
 	void atanh(U a, V b);
+	void acsch(U a, V b);
+	void asech(U a, V b);
+	void acoth(U a, V b);
 }
