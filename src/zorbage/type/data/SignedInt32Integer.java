@@ -246,17 +246,17 @@ public class SignedInt32Integer
 	}
 
 	@Override
-	public void bitShiftLeft(SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v << 1;
+	public void bitShiftLeft(int count, SignedInt32Member a, SignedInt32Member b) {
+		b.v = a.v << count;
 	}
 
 	@Override
-	public void bitShiftRight(SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v >> 1;
+	public void bitShiftRight(int count, SignedInt32Member a, SignedInt32Member b) {
+		b.v = a.v >> count;
 	}
 
-	public void bitShiftRightFillZero(SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v >>> 1;
+	public void bitShiftRightFillZero(int count, SignedInt32Member a, SignedInt32Member b) {
+		b.v = a.v >>> count;
 	}
 
 	@Override

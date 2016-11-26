@@ -37,6 +37,6 @@ public interface BitOperations<T> {
 	void bitOr(T a, T b, T c);
 	void bitXor(T a, T b, T c);
 	void bitNot(T a, T b);
-	void bitShiftLeft(T a, T b);
-	void bitShiftRight(T a, T b);
+	void bitShiftLeft(int count, T a, T b);
+	void bitShiftRight(int count, T a, T b);
 }

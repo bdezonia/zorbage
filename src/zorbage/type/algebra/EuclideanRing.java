@@ -41,10 +41,4 @@ public interface EuclideanRing<T extends EuclideanRing<T,U>,U>
 	void lcm(U a, U b, U c);
 	boolean isEven(U a);
 	boolean isOdd(U a);
-	
-	// from MathWorld
-	// Norms exist for complex numbers (the complex modulus, sometimes also called the complex norm or simply
-	// "the norm"), Gaussian integers (the same as the complex modulus, but sometimes unfortunately instead defined
-	// to be the absolute square), quaternions (quaternion norm), vectors (vector norms), and matrices (matrix norms).
-
 }

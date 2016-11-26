@@ -201,13 +201,13 @@ public class UnboundedIntInteger
 	}
 
 	@Override
-	public void bitShiftLeft(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.shiftLeft(1);
+	public void bitShiftLeft(int count, UnboundedIntMember a, UnboundedIntMember b) {
+		b.v = a.v.shiftLeft(count);
 	}
 
 	@Override
-	public void bitShiftRight(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.shiftRight(1);
+	public void bitShiftRight(int count, UnboundedIntMember a, UnboundedIntMember b) {
+		b.v = a.v.shiftRight(count);
 	}
 
 	@Override

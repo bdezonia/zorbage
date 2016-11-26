@@ -91,7 +91,4 @@ public class Notes {
 	 */
 	
 	// TODO: do I make boolean methods in Hierarchy instead map to BooleanMembers?
-	
-	// TODO: do I get rid of synchronized methods by using inline temps with hopes optimizer eliminates them?
-	
 }
