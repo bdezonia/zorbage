@@ -1,6 +1,10 @@
 package zorbage.type.data;
 
 public class BooleanMember {
+	
+	private static final String ZERO = "0";
+	private static final String ONE = "1";
+
 	boolean v;
 	
 	public BooleanMember() {
@@ -17,13 +21,13 @@ public class BooleanMember {
 	
 	public BooleanMember(String value) {
 		String[] strs = value.trim().split("\\s+");
-		if (strs[0] == "0") v = false;
-		else if (strs[0] == "1") v = true;
+		if (strs[0] == ZERO) v = false;
+		else if (strs[0] == ONE) v = true;
 		else v = java.lang.Boolean.parseBoolean(strs[0]);
 	}
 
 	public boolean value() { return v; }
 	
 	@Override
-	public String toString() { return "" + v; }
+	public String toString() { if (v) return ONE; else return ZERO; }
 }

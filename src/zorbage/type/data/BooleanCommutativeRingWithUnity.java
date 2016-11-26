@@ -27,7 +27,7 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.Bounded;
-import zorbage.type.algebra.Group;
+import zorbage.type.algebra.CommutativeRingWithUnity;
 import zorbage.type.algebra.LogicalOperations;
 import zorbage.type.algebra.Ordered;
 
@@ -39,9 +39,9 @@ import zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class BooleanGroup
+public class BooleanCommutativeRingWithUnity
   implements
-    Group<BooleanGroup, BooleanMember>,
+    CommutativeRingWithUnity<BooleanCommutativeRingWithUnity, BooleanMember>,
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,
     LogicalOperations<BooleanMember>{
@@ -146,18 +146,60 @@ public class BooleanGroup
 
 	@Override
 	public void min(BooleanMember a, BooleanMember b, BooleanMember c) {
-		if (isLess(a, b))
-			c.v = a.v;
-		else
-			c.v = b.v;
+		c.v = isLess(a,b) ? a.v : b.v;
 	}
 
 	@Override
 	public void max(BooleanMember a, BooleanMember b, BooleanMember c) {
-		if (isGreater(a, b))
-			c.v = a.v;
+		c.v = isGreater(a,b) ? a.v : b.v;
+	}
+
+	@Override
+	public void multiply(BooleanMember a, BooleanMember b, BooleanMember c) {
+		c.v = a.v && b.v;
+	}
+
+	@Override
+	public void power(int power, BooleanMember a, BooleanMember b) {
+		if (power < 0)
+			throw new IllegalArgumentException("booleans cannot handle negative powers");
+		if (power == 0)
+			b.v = true;
 		else
+			b.v = a.v;
+	}
+
+	@Override
+	public void zero(BooleanMember z) {
+		z.v = false;
+	}
+
+	@Override
+	public void negate(BooleanMember a, BooleanMember b) {
+		b.v = !a.v;
+	}
+
+	@Override
+	public void add(BooleanMember a, BooleanMember b, BooleanMember c) {
+		if (a.v) {
+			c.v = !b.v; // includes overflow case
+		} else { // a.v == false
 			c.v = b.v;
+		}
+	}
+
+	@Override
+	public void subtract(BooleanMember a, BooleanMember b, BooleanMember c) {
+		if (a.v) {
+			c.v = !b.v;
+		} else { // a.v == false
+			c.v = b.v; // includes underflow case
+		}
+	}
+
+	@Override
+	public void unity(BooleanMember a) {
+		a.v = true;
 	}
 
 }
