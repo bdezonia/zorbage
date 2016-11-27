@@ -35,6 +35,7 @@ import zorbage.type.algebra.InverseHyperbolic;
 import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
+import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
@@ -57,6 +58,7 @@ public class Float64OrderedField
     InverseHyperbolic<Float64Member,Float64Member>,
     Infinite<Float64Member>,
     Roots<Float64Member>,
+    Power<Float64Member>,
     Rounding<Float64Member>
 {
 
@@ -445,6 +447,11 @@ public class Float64OrderedField
 	@Override
 	public void max(Float64Member a, Float64Member b, Float64Member c) {
 		c.v = Math.max(a.v, b.v);
+	}
+
+	@Override
+	public void pow(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.pow(a.v, b.v);
 	}
 
 }

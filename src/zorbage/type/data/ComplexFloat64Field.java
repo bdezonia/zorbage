@@ -35,6 +35,7 @@ import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.InverseHyperbolic;
 import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
+import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
@@ -57,6 +58,7 @@ public class ComplexFloat64Field
     Hyperbolic<ComplexFloat64Member>,
     InverseHyperbolic<ComplexFloat64Member,Float64Member>,
     Roots<ComplexFloat64Member>,
+    Power<ComplexFloat64Member>,
     Rounding<ComplexFloat64Member>,
     Infinite<ComplexFloat64Member>,
     Conjugate<ComplexFloat64Member>
@@ -389,5 +391,14 @@ public class ComplexFloat64Field
 	public boolean isInfinite(ComplexFloat64Member a) {
 		// true if neither is NaN and one or both is Inf
 		return !isNaN(a) && (Double.isInfinite(a.rv) || Double.isInfinite(a.iv));
+	}
+
+	@Override
+	public void pow(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+		ComplexFloat64Member logA = new ComplexFloat64Member();
+		ComplexFloat64Member bLogA = new ComplexFloat64Member();
+		log(a, logA);
+		multiply(b, logA, bLogA);
+		exp(bLogA, c);
 	}
 }
