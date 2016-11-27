@@ -31,11 +31,11 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface InverseHyperbolic<U, V> {
-	void asinh(U a, V b);
-	void acosh(U a, V b);
-	void atanh(U a, V b);
-	void acsch(U a, V b);
-	void asech(U a, V b);
-	void acoth(U a, V b);
+public interface InverseHyperbolic<U> {
+	void asinh(U a, U b);
+	void acosh(U a, U b);
+	void atanh(U a, U b);
+	void acsch(U a, U b);
+	void asech(U a, U b);
+	void acoth(U a, U b);
 }

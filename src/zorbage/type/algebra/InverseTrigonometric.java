@@ -31,13 +31,11 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface InverseTrigonometric<U,V> {
-	void asin(U a, V b);
-	void acos(U a, V b);
-	void atan(U a, V b);
-	void acsc(U a, V b);
-	void asec(U a, V b);
-	void acot(U a, V b);
-	// TODO - does this make sense for Complex and other types?
-	void atan2(U a, U b, V c);
+public interface InverseTrigonometric<U> {
+	void asin(U a, U b);
+	void acos(U a, U b);
+	void atan(U a, U b);
+	void acsc(U a, U b);
+	void asec(U a, U b);
+	void acot(U a, U b);
 }

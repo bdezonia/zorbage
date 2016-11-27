@@ -24,6 +24,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
+// Note: some code here adapted from Imglib2 code written by Barry DeZonia
+//
+// * ImgLib2: a general-purpose, multidimensional image processing library.
+// * Copyright (C) 2009 - 2013 Stephan Preibisch, Tobias Pietzsch, Barry DeZonia,
+// * Stephan Saalfeld, Albert Cardona, Curtis Rueden, Christian Dietz, Jean-Yves
+// * Tinevez, Johannes Schindelin, Lee Kamentsky, Larry Lindsey, Grant Harris,
+// * Mark Hiner, Aivar Grislis, Martin Horn, Nick Perry, Michael Zinsmaier,
+// * Steffen Jaensch, Jan Funke, Mark Longair, and Dimiter Prodanov.
+
+
 package zorbage.type.data;
 
 import zorbage.type.algebra.Conjugate;
@@ -40,8 +51,6 @@ import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
 
-//TODO - finish unimplemented methods
-
 /**
  * 
  * @author Barry DeZonia
@@ -54,9 +63,9 @@ public class ComplexFloat64Field
     Constants<ComplexFloat64Member>,
     Exponential<ComplexFloat64Member>,
     Trigonometric<ComplexFloat64Member>,
-    InverseTrigonometric<ComplexFloat64Member,Float64Member>,
+    InverseTrigonometric<ComplexFloat64Member>,
     Hyperbolic<ComplexFloat64Member>,
-    InverseHyperbolic<ComplexFloat64Member,Float64Member>,
+    InverseHyperbolic<ComplexFloat64Member>,
     Roots<ComplexFloat64Member>,
     Power<ComplexFloat64Member>,
     Rounding<ComplexFloat64Member>,
@@ -64,10 +73,18 @@ public class ComplexFloat64Field
     Conjugate<ComplexFloat64Member>
 {
 
-	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
+	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
+	private static final ComplexFloat64Member MINUS_ONE = new ComplexFloat64Member(-1,0);
 	private static final ComplexFloat64Member PI = new ComplexFloat64Member(Math.PI,0);
 	private static final ComplexFloat64Member E = new ComplexFloat64Member(Math.E,0);
+	private static final ComplexFloat64Member ONE_HALF = new ComplexFloat64Member(0.5,0);
+	private static final ComplexFloat64Member I = new ComplexFloat64Member(0,1);
+	private static final ComplexFloat64Member I_OVER_TWO = new ComplexFloat64Member(0,0.5);
+	private static final ComplexFloat64Member TWO_I = new ComplexFloat64Member(0,2);
+	private static final ComplexFloat64Member MINUS_I = new ComplexFloat64Member(0,-1);
+	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
 
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
@@ -185,158 +202,363 @@ public class ComplexFloat64Field
 	}
 
 	@Override
-	public void asin(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void asin(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member ia = new ComplexFloat64Member();
+		ComplexFloat64Member aSquared = new ComplexFloat64Member();
+		ComplexFloat64Member miniSum = new ComplexFloat64Member();
+		ComplexFloat64Member root = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member logSum = new ComplexFloat64Member();
+		
+		multiply(I, a, ia);
+		multiply(a, a, aSquared);
+		subtract(ONE, aSquared, miniSum);
+		pow(miniSum, ONE_HALF, root);
+		add(ia, root, sum);
+		log(sum, logSum);
+		multiply(MINUS_I, logSum, b);
 	}
 
 	@Override
-	public void acos(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void acos(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member aSquared = new ComplexFloat64Member();
+		ComplexFloat64Member miniSum = new ComplexFloat64Member();
+		ComplexFloat64Member root = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member logSum = new ComplexFloat64Member();
+
+		multiply(a, a,aSquared);
+		subtract(aSquared, ONE, miniSum);
+		pow(miniSum, ONE_HALF, root);
+		add(a, root, sum);
+		log(sum, logSum);
+		multiply(MINUS_I, logSum, b);
 	}
 
 	@Override
-	public void atan(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void atan(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member ia = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+		ComplexFloat64Member quotient = new ComplexFloat64Member();
+		ComplexFloat64Member log = new ComplexFloat64Member();
+		
+		multiply(I, a, ia);
+		add(ONE, ia, sum);
+		subtract(ONE, ia, diff);
+		divide(sum, diff, quotient);
+		log(quotient, log);
+		multiply(MINUS_I_OVER_TWO, log, b);
 	}
 
 	@Override
-	public void acsc(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void acsc(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member recipA = new ComplexFloat64Member();
+		
+		invert(a, recipA);
+		asin(recipA, b);
 	}
 
 	@Override
-	public void asec(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void asec(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member recipA = new ComplexFloat64Member();
+		
+		invert(a, recipA);
+		acos(recipA, b);
 	}
 
 	@Override
-	public void acot(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void acot(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member ia = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+		ComplexFloat64Member quotient = new ComplexFloat64Member();
+		ComplexFloat64Member log = new ComplexFloat64Member();
+
+		multiply(I, a, ia);
+		add(ia, ONE, sum);
+		subtract(ia, ONE, diff);
+		divide(sum, diff, quotient);
+		log(quotient, log);
+		multiply(I_OVER_TWO, log, b);
 	}
 
 	@Override
-	public void asinh(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void asinh(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member aSquared = new ComplexFloat64Member();
+		ComplexFloat64Member miniSum = new ComplexFloat64Member();
+		ComplexFloat64Member root = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+
+		multiply(a, a, aSquared);
+		add(aSquared, ONE, miniSum);
+		pow(miniSum, ONE_HALF, root);
+		add(a, root, sum);
+		log(sum, b);
 	}
 
 	@Override
-	public void acosh(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void acosh(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member aSquared = new ComplexFloat64Member();
+		ComplexFloat64Member miniSum = new ComplexFloat64Member();
+		ComplexFloat64Member root = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+
+		multiply(a, a, aSquared);
+		subtract(aSquared, ONE, miniSum);
+		pow(miniSum, ONE_HALF, root);
+		add(a, root, sum);
+		log(sum, b);
 	}
 
 	@Override
-	public void atanh(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void atanh(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+		ComplexFloat64Member quotient = new ComplexFloat64Member();
+		ComplexFloat64Member log = new ComplexFloat64Member();
+
+		add(ONE, a, sum);
+		subtract(ONE, a, diff);
+		divide(sum, diff, quotient);
+		log(quotient, log);
+		multiply(ONE_HALF, log, b);
 	}
 
 	@Override
-	public void acsch(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void acsch(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member recipA = new ComplexFloat64Member();
+
+		invert(a, recipA);
+		asinh(recipA, b);
 	}
 
 	@Override
-	public void asech(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+	public void asech(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member recipA = new ComplexFloat64Member();
+
+		invert(a, recipA);
+		acosh(recipA, b);
 	}
 
 	@Override
-	public void acoth(ComplexFloat64Member a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
+	public void acoth(ComplexFloat64Member a, ComplexFloat64Member b) {
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+		ComplexFloat64Member quotient = new ComplexFloat64Member();
+		ComplexFloat64Member log = new ComplexFloat64Member();
 
-	@Override
-	public void atan2(ComplexFloat64Member a, ComplexFloat64Member b, Float64Member c) {
-		throw new IllegalArgumentException("TODO");
+		add(a, ONE, sum);
+		subtract(a, ONE, diff);
+		divide(sum, diff, quotient);
+		log(quotient, log);
+		multiply(ONE_HALF, log, b);
 	}
 
 	@Override
 	public void sin(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member IA = new ComplexFloat64Member();
+		ComplexFloat64Member minusIA = new ComplexFloat64Member();
+		ComplexFloat64Member expIA = new ComplexFloat64Member();
+		ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+
+		multiply(a, I, IA);
+		multiply(a, MINUS_I, minusIA);
+		exp(IA, expIA);
+		exp(minusIA, expMinusIA);
+		subtract(expIA, expMinusIA, diff);
+		divide(diff, TWO_I, b);
 	}
 
 	@Override
 	public void cos(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member IA = new ComplexFloat64Member();
+		ComplexFloat64Member minusIA = new ComplexFloat64Member();
+		ComplexFloat64Member expIA = new ComplexFloat64Member();
+		ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+
+		multiply(a, I, IA);
+		multiply(a, MINUS_I, minusIA);
+		exp(IA, expIA);
+		exp(minusIA, expMinusIA);
+		add(expIA, expMinusIA, sum);
+		divide(sum, TWO, b);
 	}
 
 	@Override
 	public void tan(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member sin = new ComplexFloat64Member();
+		ComplexFloat64Member cos = new ComplexFloat64Member();
+
+		sin(a, sin);
+		cos(a, cos);
+		divide(sin, cos, b);
 	}
 
 	@Override
 	public void csc(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member sin = new ComplexFloat64Member();
+
+		sin(a, sin);
+		invert(sin, b);
 	}
 
 	@Override
 	public void sec(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member cos = new ComplexFloat64Member();
+
+		cos(a, cos);
+		invert(cos, b);
 	}
 
 	@Override
 	public void cot(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member tan = new ComplexFloat64Member();
+
+		tan(a, tan);
+		invert(tan, b);
 	}
 
 	@Override
 	public void sinh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member expA = new ComplexFloat64Member();
+		ComplexFloat64Member minusA = new ComplexFloat64Member();
+		ComplexFloat64Member expMinusA = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+
+		exp(a, expA);
+		multiply(a, MINUS_ONE, minusA);
+		exp(minusA, expMinusA);
+		subtract(expA, expMinusA, diff);
+		divide(diff, TWO, b);
 	}
 
 	@Override
 	public void cosh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member expA = new ComplexFloat64Member();
+		ComplexFloat64Member minusA = new ComplexFloat64Member();
+		ComplexFloat64Member expMinusA = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+
+		exp(a, expA);
+		multiply(a, MINUS_ONE, minusA);
+		exp(minusA, expMinusA);
+		add(expA, expMinusA, sum);
+		divide(sum, TWO, b);
 	}
 
 	@Override
 	public void tanh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member sinh = new ComplexFloat64Member();
+		ComplexFloat64Member cosh = new ComplexFloat64Member();
+
+		sinh(a, sinh);
+		cosh(a, cosh);
+		divide(sinh, cosh, b);
 	}
 
 	@Override
 	public void csch(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member sinh = new ComplexFloat64Member();
+
+		sinh(a, sinh);
+		invert(sinh, b);
 	}
 
 	@Override
 	public void sech(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member cosh = new ComplexFloat64Member();
+
+		cosh(a, cosh);
+		invert(cosh, b);
 	}
 
 	@Override
 	public void coth(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member tanh = new ComplexFloat64Member();
+
+		tanh(a, tanh);
+		invert(tanh, b);
 	}
 
 	@Override
 	public void exp(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		double constant = Math.exp(a.rv);
+		b.rv = constant * Math.cos(a.iv);
+		b.iv = constant * Math.sin(a.iv);
 	}
 
+	// TODO: make an accurate implementation
+	
 	@Override
 	public void expm1(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member tmp = new ComplexFloat64Member(0.5,0);
+		exp(a, tmp);
+		subtract(tmp, ONE, b);
 	}
 
 	@Override
 	public void log(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		double modulus = Math.hypot(a.rv, a.iv);
+		double argument = getArgument(a);
+		b.rv = Math.log(modulus);
+		b.iv = getPrincipalArgument(argument);
+	}
+	
+	private double getArgument(ComplexFloat64Member a) {
+		double x = a.rv;
+		double y = a.iv;
+		double theta;
+		if (x == 0) {
+			if (y > 0)
+				theta = Math.PI / 2;
+			else if (y < 0)
+				theta = -Math.PI / 2;
+			else // y == 0 : theta indeterminate
+				theta = Double.NaN;
+		}
+		else if (y == 0) {
+			if (x > 0)
+				theta = 0;
+			else // (x < 0)
+				theta = Math.PI;
+		}
+		else // x && y both != 0
+			theta = Math.atan2(y,x);
+		
+		return theta;
+	}
+	
+	private double getPrincipalArgument(double angle) {
+		double arg = angle;
+		while (arg <= -Math.PI) arg += 2*Math.PI;
+		while (arg > Math.PI) arg -= 2*Math.PI;
+		return arg;
 	}
 
+	// TODO: make an accurate implementation
+	
 	@Override
 	public void log1p(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member tmp = new ComplexFloat64Member(0.5,0);
+		add(a, ONE, tmp);
+		log(tmp, b);
 	}
 
 	@Override
 	public void sqrt(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member tmp = new ComplexFloat64Member(0.5,0);
+		pow(a,tmp,b);
 	}
 
+	// TODO: make an accurate implementation
+	
 	@Override
 	public void cbrt(ComplexFloat64Member a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64Member tmp = new ComplexFloat64Member(1.0/3,0);
+		pow(a,tmp,b);
 	}
 
 	@Override

@@ -53,9 +53,9 @@ public class Float64OrderedField
     Constants<Float64Member>,
     Exponential<Float64Member>,
     Trigonometric<Float64Member>,
-    InverseTrigonometric<Float64Member,Float64Member>,
+    InverseTrigonometric<Float64Member>,
     Hyperbolic<Float64Member>,
-    InverseHyperbolic<Float64Member,Float64Member>,
+    InverseHyperbolic<Float64Member>,
     Infinite<Float64Member>,
     Roots<Float64Member>,
     Power<Float64Member>,
@@ -308,7 +308,6 @@ public class Float64OrderedField
 		b.v = Math.atan(a.v);
 	}
 	
-	@Override
 	public void atan2(Float64Member a, Float64Member b, Float64Member c) {
 		c.v = Math.atan2(a.v, b.v);
 	}
