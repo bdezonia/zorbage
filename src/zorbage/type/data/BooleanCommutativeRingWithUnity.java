@@ -31,8 +31,9 @@ import zorbage.type.algebra.CommutativeRingWithUnity;
 import zorbage.type.algebra.LogicalOperations;
 import zorbage.type.algebra.Ordered;
 
-// TODO - do I need a BitType that is stored within an int? Or just use BooleanMember? toString to return false/true
-// or 1/0 ?
+// TODO - do I need a BitType that is stored within an int? Or just use BooleanMember?
+
+// I want BooleanMembers to be saveable as true/false and as 1/0 depending upon the Container type
 
 /**
  * 
@@ -179,6 +180,11 @@ public class BooleanCommutativeRingWithUnity
 		b.v = !a.v;
 	}
 
+	// overflow possible: not sure if I like the placement of this class in the algebra hierarchy.
+	//   Maybe it points out a new type that hase zero() and unity() but not msubtract() or add().
+	//   Also note if we support the overflowers then the type should add pred() and succ(). And
+	//   maybe also the BitOperations
+	
 	@Override
 	public void add(BooleanMember a, BooleanMember b, BooleanMember c) {
 		if (a.v) {
@@ -188,6 +194,11 @@ public class BooleanCommutativeRingWithUnity
 		}
 	}
 
+	// underflow possible: not sure if I like the placement of this class in the algebra hierarchy.
+	//   Maybe it points out a new type that hase zero() and unity() but not msubtract() or add().
+	//   Also note if we support the overflowers then the type should add pred() and succ(). And
+	//   maybe also the BitOperations
+	
 	@Override
 	public void subtract(BooleanMember a, BooleanMember b, BooleanMember c) {
 		if (a.v) {
