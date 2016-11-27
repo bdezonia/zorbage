@@ -452,5 +452,36 @@ public class Float64OrderedField
 	public void pow(Float64Member a, Float64Member b, Float64Member c) {
 		c.v = Math.pow(a.v, b.v);
 	}
+	
+	public void copySign(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.copySign(a.v, b.v);
+	}
+	
+	public void IEEEremainder(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.IEEEremainder(a.v, b.v);
+	}
 
+	public void log10(Float64Member a, Float64Member b, Float64Member c) {
+		b.v = Math.log10(a.v);
+	}
+	
+	public void nextAfter(Float64Member a, Float64Member b, Float64Member c) {
+		c.v = Math.nextAfter(a.v, b.v);
+	}
+	
+	public void nextUp(Float64Member a, Float64Member b) {
+		b.v = Math.nextUp(a.v);
+	}
+	
+	public void toDegrees(Float64Member a, Float64Member b) {
+		b.v = Math.toDegrees(a.v);
+	}
+	
+	public void toRadians(Float64Member a, Float64Member b) {
+		b.v = Math.toRadians(a.v);
+	}
+	
+	public void ulp(Float64Member a, Float64Member b) {
+		b.v = Math.ulp(a.v);
+	}	
 }
