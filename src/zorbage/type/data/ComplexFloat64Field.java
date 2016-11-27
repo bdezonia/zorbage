@@ -553,18 +553,12 @@ public class ComplexFloat64Field
 		pow(a,tmp,b);
 	}
 
-	// Note: BDZ attempt at a more accurate cbrt() implementation.
+	// TODO: make an accurate implementation
+	
 	@Override
 	public void cbrt(ComplexFloat64Member a, ComplexFloat64Member b) {
-		double x = 1.0 / 3;
-		double y = Math.nextUp(x);
-		ComplexFloat64Member tmpX = new ComplexFloat64Member(x,0);
-		ComplexFloat64Member tmpY = new ComplexFloat64Member(y,0);
-		pow(a,tmpX,tmpX);
-		pow(a,tmpY,tmpY);
-		// TODO: do average or do (2*x + y)/3? I'm averaging.
-		b.rv = (tmpX.rv + tmpY.rv) / 2;
-		b.iv = (tmpX.iv + tmpY.iv) / 2;
+		ComplexFloat64Member tmp = new ComplexFloat64Member(1.0/3,0);
+		pow(a,tmp,b);
 	}
 
 	@Override
