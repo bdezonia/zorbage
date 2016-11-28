@@ -49,47 +49,47 @@ public class BooleanCommutativeRingWithUnity
 
 	@Override
 	public void logicalAnd(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.v = a.v && b.v;
+		c.setV(a.v() && b.v());
 	}
 
 	@Override
 	public void logicalOr(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.v = a.v || b.v;
+		c.setV(a.v() || b.v());
 	}
 
 	@Override
 	public void logicalXor(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.v = a.v ^ b.v;
+		c.setV(a.v() ^ b.v());
 	}
 
 	@Override
 	public void logicalNot(BooleanMember a, BooleanMember b) {
-		b.v = !a.v;
+		b.setV(!a.v());
 	}
 	
 	// not an override
 	public void ternary(BooleanMember a, BooleanMember b, BooleanMember c, BooleanMember d) {
-		d.v = a.v ? b.v : c.v;
+		d.setV(a.v() ? b.v() : c.v());
 	}
 
 	@Override
 	public boolean isLess(BooleanMember a, BooleanMember b) {
-		return !a.v && b.v;
+		return !a.v() && b.v();
 	}
 
 	@Override
 	public boolean isLessEqual(BooleanMember a, BooleanMember b) {
-		return !a.v;
+		return !a.v();
 	}
 
 	@Override
 	public boolean isGreater(BooleanMember a, BooleanMember b) {
-		return a.v && !b.v;
+		return a.v() && !b.v();
 	}
 
 	@Override
 	public boolean isGreaterEqual(BooleanMember a, BooleanMember b) {
-		return a.v;
+		return a.v();
 	}
 
 	@Override
@@ -101,28 +101,28 @@ public class BooleanCommutativeRingWithUnity
 
 	@Override
 	public int signum(BooleanMember a) {
-		if (a.v) return 1;
+		if (a.v()) return 1;
 		return 0;
 	}
 
 	@Override
 	public void maxBound(BooleanMember a) {
-		a.v = true;
+		a.setV(true);
 	}
 
 	@Override
 	public void minBound(BooleanMember a) {
-		a.v = false;
+		a.setV(false);
 	}
 
 	@Override
 	public boolean isEqual(BooleanMember a, BooleanMember b) {
-		return a.v == b.v;
+		return a.v() == b.v();
 	}
 
 	@Override
 	public boolean isNotEqual(BooleanMember a, BooleanMember b) {
-		return a.v != b.v;
+		return a.v() != b.v();
 	}
 
 	@Override
@@ -142,22 +142,22 @@ public class BooleanCommutativeRingWithUnity
 
 	@Override
 	public void assign(BooleanMember from, BooleanMember to) {
-		to.v = from.v;
+		to.setV(from.v());
 	}
 
 	@Override
 	public void min(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.v = isLess(a,b) ? a.v : b.v;
+		c.setV(isLess(a,b) ? a.v() : b.v());
 	}
 
 	@Override
 	public void max(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.v = isGreater(a,b) ? a.v : b.v;
+		c.setV(isGreater(a,b) ? a.v() : b.v());
 	}
 
 	@Override
 	public void multiply(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.v = a.v && b.v;
+		c.setV(a.v() && b.v());
 	}
 
 	@Override
@@ -165,19 +165,19 @@ public class BooleanCommutativeRingWithUnity
 		if (power < 0)
 			throw new IllegalArgumentException("booleans cannot handle negative powers");
 		if (power == 0)
-			b.v = true;
+			b.setV(true);
 		else
-			b.v = a.v;
+			b.setV(a.v());
 	}
 
 	@Override
-	public void zero(BooleanMember z) {
-		z.v = false;
+	public void zero(BooleanMember a) {
+		a.setV(false);
 	}
 
 	@Override
 	public void negate(BooleanMember a, BooleanMember b) {
-		b.v = !a.v;
+		b.setV(!a.v());
 	}
 
 	// overflow possible: not sure if I like the placement of this class in the algebra hierarchy.
@@ -187,10 +187,10 @@ public class BooleanCommutativeRingWithUnity
 	
 	@Override
 	public void add(BooleanMember a, BooleanMember b, BooleanMember c) {
-		if (a.v) {
-			c.v = !b.v; // includes overflow case
+		if (a.v()) {
+			c.setV(!b.v()); // includes overflow case
 		} else { // a.v == false
-			c.v = b.v;
+			c.setV(b.v());
 		}
 	}
 
@@ -201,16 +201,16 @@ public class BooleanCommutativeRingWithUnity
 	
 	@Override
 	public void subtract(BooleanMember a, BooleanMember b, BooleanMember c) {
-		if (a.v) {
-			c.v = !b.v;
+		if (a.v()) {
+			c.setV(!b.v());
 		} else { // a.v == false
-			c.v = b.v; // includes underflow case
+			c.setV(b.v()); // includes underflow case
 		}
 	}
 
 	@Override
 	public void unity(BooleanMember a) {
-		a.v = true;
+		a.setV(true);
 	}
 
 }

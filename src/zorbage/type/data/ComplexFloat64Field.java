@@ -88,8 +88,8 @@ public class ComplexFloat64Field
 
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		c.rv = a.rv * b.rv - a.iv * b.iv;
-		c.iv = a.iv * b.rv + a.rv * b.iv;
+		c.setR( a.r() * b.r() - a.i() * b.i() );
+		c.setI( a.i() * b.r() + a.r() * b.i() );
 	}
 
 	@Override
@@ -110,36 +110,36 @@ public class ComplexFloat64Field
 	}
 
 	@Override
-	public void zero(ComplexFloat64Member z) {
-		assign(ZERO,z);
+	public void zero(ComplexFloat64Member a) {
+		assign(ZERO,a);
 	}
 
 	@Override
 	public void negate(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.rv = -a.rv;
-		b.iv = -a.iv;
+		b.setR( -a.r() );
+		b.setI( -a.i() );
 	}
 
 	@Override
 	public void add(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		c.rv = a.rv + b.rv;
-		c.iv = a.iv + b.iv;
+		c.setR( a.r() + b.r() );
+		c.setI( a.i() + b.i() );
 	}
 
 	@Override
 	public void subtract(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		c.rv = a.rv - b.rv;
-		c.iv = a.iv - b.iv;
+		c.setR( a.r() - b.r() );
+		c.setI( a.i() - b.i() );
 	}
 
 	@Override
 	public boolean isEqual(ComplexFloat64Member a, ComplexFloat64Member b) {
-		return a.rv == b.rv && a.iv == b.iv;
+		return a.r() == b.r() && a.i() == b.i();
 	}
 
 	@Override
 	public boolean isNotEqual(ComplexFloat64Member a, ComplexFloat64Member b) {
-		return a.rv != b.rv || a.iv != b.iv;
+		return a.r() != b.r() || a.i() != b.i();
 	}
 
 	@Override
@@ -159,8 +159,8 @@ public class ComplexFloat64Field
 
 	@Override
 	public void assign(ComplexFloat64Member from, ComplexFloat64Member to) {
-		to.rv = from.rv;
-		to.iv = from.iv;
+		to.setR( from.r() );
+		to.setI( from.i() );
 	}
 
 	@Override
@@ -175,20 +175,20 @@ public class ComplexFloat64Field
 
 	@Override
 	public void divide(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		double mod2 = b.rv * b.rv + b.iv * b.iv;
-		c.rv = (a.rv * b.rv + a.iv * b.iv) / mod2;
-		c.iv = (a.iv * b.rv - a.rv * b.iv) / mod2;
+		double mod2 = b.r() * b.r() + b.i() * b.i();
+		c.setR( (a.r() * b.r() + a.i() * b.i()) / mod2 );
+		c.setI( (a.i() * b.r() - a.r() * b.i()) / mod2 );
 	}
 	
 	@Override
 	public void conjugate(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.rv = a.rv;
-		b.iv = -a.iv;
+		b.setR( a.r() );
+		b.setI( -a.i() );
 	}
 
 	@Override
 	public void norm(ComplexFloat64Member a, Float64Member b) {  // this declaration would break generics
-		b.v = Math.hypot(a.rv,a.iv);
+		b.setV( Math.hypot(a.r(),a.i()) );
 	}
 
 	@Override
@@ -485,9 +485,9 @@ public class ComplexFloat64Field
 
 	@Override
 	public void exp(ComplexFloat64Member a, ComplexFloat64Member b) {
-		double constant = Math.exp(a.rv);
-		b.rv = constant * Math.cos(a.iv);
-		b.iv = constant * Math.sin(a.iv);
+		double constant = Math.exp(a.r());
+		b.setR( constant * Math.cos(a.i()) );
+		b.setI( constant * Math.sin(a.i()) );
 	}
 
 	// TODO: make an accurate implementation
@@ -501,15 +501,15 @@ public class ComplexFloat64Field
 
 	@Override
 	public void log(ComplexFloat64Member a, ComplexFloat64Member b) {
-		double modulus = Math.hypot(a.rv, a.iv);
+		double modulus = Math.hypot(a.r(), a.i());
 		double argument = getArgument(a);
-		b.rv = Math.log(modulus);
-		b.iv = getPrincipalArgument(argument);
+		b.setR( Math.log(modulus) );
+		b.setI( getPrincipalArgument(argument) );
 	}
 	
 	private double getArgument(ComplexFloat64Member a) {
-		double x = a.rv;
-		double y = a.iv;
+		double x = a.r();
+		double y = a.i();
 		double theta;
 		if (x == 0) {
 			if (y > 0)
@@ -563,56 +563,56 @@ public class ComplexFloat64Field
 
 	@Override
 	public void roundTowardsZero(ComplexFloat64Member a, ComplexFloat64Member b) {
-		if (a.rv < 0)
-			b.rv = Math.ceil(a.rv);
+		if (a.r() < 0)
+			b.setR( Math.ceil(a.r()) );
 		else
-			b.rv = Math.floor(a.rv);
-		if (a.iv < 0)
-			b.iv = Math.ceil(a.iv);
+			b.setR( Math.floor(a.r()) );
+		if (a.i() < 0)
+			b.setI( Math.ceil(a.i()) );
 		else
-			b.iv = Math.floor(a.iv);
+			b.setI( Math.floor(a.i()) );
 	}
 
 	@Override
 	public void roundAwayFromZero(ComplexFloat64Member a, ComplexFloat64Member b) {
-		if (a.rv > 0)
-			b.rv = Math.ceil(a.rv);
+		if (a.r() > 0)
+			b.setR( Math.ceil(a.r()) );
 		else
-			b.rv = Math.floor(a.rv);
-		if (a.iv > 0)
-			b.iv = Math.ceil(a.iv);
+			b.setR( Math.floor(a.r()) );
+		if (a.i() > 0)
+			b.setI( Math.ceil(a.i()) );
 		else
-			b.iv = Math.floor(a.iv);
+			b.setI( Math.floor(a.i()) );
 	}
 
 	@Override
 	public void roundNegative(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.rv = Math.floor(a.rv);
-		b.iv = Math.floor(a.iv);
+		b.setR( Math.floor(a.r()) );
+		b.setI( Math.floor(a.i()) );
 	}
 
 	@Override
 	public void roundPositive(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.rv = Math.ceil(a.rv);
-		b.iv = Math.ceil(a.iv);
+		b.setR( Math.ceil(a.r()) );
+		b.setI( Math.ceil(a.i()) );
 	}
 
 	@Override
 	public void roundNearest(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.rv = Math.rint(a.rv);
-		b.iv = Math.rint(a.iv);
+		b.setR( Math.rint(a.r()) );
+		b.setI( Math.rint(a.i()) );
 	}
 
 	@Override
 	public boolean isNaN(ComplexFloat64Member a) {
 		// true if either component is NaN
-		return Double.isNaN(a.rv) || Double.isNaN(a.iv);
+		return Double.isNaN(a.r()) || Double.isNaN(a.i());
 	}
 
 	@Override
 	public boolean isInfinite(ComplexFloat64Member a) {
 		// true if neither is NaN and one or both is Inf
-		return !isNaN(a) && (Double.isInfinite(a.rv) || Double.isInfinite(a.iv));
+		return !isNaN(a) && (Double.isInfinite(a.r()) || Double.isInfinite(a.i()));
 	}
 
 	@Override

@@ -48,48 +48,48 @@ public class UnboundedIntInteger
 	
 	@Override
 	public void abs(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.abs();
+		b.setV( a.v().abs() );
 	}
 
 	@Override
 	public void multiply(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.multiply(b.v);
+		c.setV( a.v().multiply(b.v()) );
 	}
 
 	@Override
 	public void power(int power, UnboundedIntMember a, UnboundedIntMember b) {
 		if (power < 0) throw new IllegalArgumentException("Cannot get negative powers from integers");
-		b.v = a.v.pow(power);
+		b.setV( a.v().pow(power) );
 	}
 
 	@Override
-	public void zero(UnboundedIntMember z) {
-		z.v = BigInteger.ZERO;
+	public void zero(UnboundedIntMember a) {
+		a.setV( BigInteger.ZERO );
 	}
 
 	@Override
 	public void negate(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.negate();
+		b.setV( a.v().negate() );
 	}
 
 	@Override
 	public void add(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.add(b.v);
+		c.setV( a.v().add(b.v()) );
 	}
 
 	@Override
 	public void subtract(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.subtract(b.v);
+		c.setV( a.v().subtract(b.v()) );
 	}
 
 	@Override
 	public boolean isEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v) == 0;
+		return a.v().compareTo(b.v()) == 0;
 	}
 
 	@Override
 	public boolean isNotEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v) != 0;
+		return a.v().compareTo(b.v()) != 0;
 	}
 
 	@Override
@@ -109,52 +109,52 @@ public class UnboundedIntInteger
 
 	@Override
 	public void assign(UnboundedIntMember from, UnboundedIntMember to) {
-		to.v = from.v;
+		to.setV( from.v() );
 	}
 
 	@Override
 	public void unity(UnboundedIntMember a) {
-		a.v = BigInteger.ONE;
+		a.setV( BigInteger.ONE );
 	}
 
 	@Override
 	public boolean isLess(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v) < 0;
+		return a.v().compareTo(b.v()) < 0;
 	}
 
 	@Override
 	public boolean isLessEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v) < 1;
+		return a.v().compareTo(b.v()) < 1;
 	}
 
 	@Override
 	public boolean isGreater(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v) > 0;
+		return a.v().compareTo(b.v()) > 0;
 	}
 
 	@Override
 	public boolean isGreaterEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v) >= 0;
+		return a.v().compareTo(b.v()) >= 0;
 	}
 
 	@Override
 	public int compare(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v.compareTo(b.v);
+		return a.v().compareTo(b.v());
 	}
 
 	@Override
 	public int signum(UnboundedIntMember a) {
-		return a.v.signum();
+		return a.v().signum();
 	}
 
 	@Override
 	public void div(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember d) {
-		d.v = a.v.divide(b.v);
+		d.setV( a.v().divide(b.v()) );
 	}
 
 	@Override
 	public void mod(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember m) {
-		m.v = a.v.mod(b.v);
+		m.setV( a.v().mod(b.v()) );
 	}
 
 	@Override
@@ -165,79 +165,79 @@ public class UnboundedIntInteger
 
 	@Override
 	public void gcd(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.gcd(b.v);
+		c.setV( a.v().gcd(b.v()) );
 	}
 
 	@Override
 	public void lcm(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		BigInteger n = a.v.multiply(b.v).abs();
-		BigInteger d = a.v.gcd(b.v);
-		c.v = n.divide(d);
+		BigInteger n = a.v().multiply(b.v()).abs();
+		BigInteger d = a.v().gcd(b.v());
+		c.setV( n.divide(d) );
 	}
 
 	@Override
 	public void norm(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.abs();
+		b.setV( a.v().abs() );
 	}
 
 	@Override
 	public boolean isEven(UnboundedIntMember a) {
-		return a.v.mod(TWO).equals(BigInteger.ZERO);
+		return a.v().mod(TWO).equals(BigInteger.ZERO);
 	}
 
 	@Override
 	public boolean isOdd(UnboundedIntMember a) {
-		return a.v.mod(TWO).equals(BigInteger.ONE);
+		return a.v().mod(TWO).equals(BigInteger.ONE);
 	}
 
 	@Override
 	public void pred(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.subtract(BigInteger.ONE);
+		b.setV( a.v().subtract(BigInteger.ONE) );
 	}
 
 	@Override
 	public void succ(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.add(BigInteger.ONE);
+		b.setV( a.v().add(BigInteger.ONE) );
 	}
 
 	@Override
 	public void bitShiftLeft(int count, UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.shiftLeft(count);
+		b.setV( a.v().shiftLeft(count) );
 	}
 
 	@Override
 	public void bitShiftRight(int count, UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.shiftRight(count);
+		b.setV( a.v().shiftRight(count) );
 	}
 
 	@Override
 	public void bitAnd(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.and(b.v);
+		c.setV( a.v().and(b.v()) );
 	}
 
 	@Override
 	public void bitOr(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.or(b.v);
+		c.setV( a.v().or(b.v()) );
 	}
 
 	@Override
 	public void bitXor(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.xor(b.v);
+		c.setV( a.v().xor(b.v()) );
 	}
 
 	@Override
 	public void bitNot(UnboundedIntMember a, UnboundedIntMember b) {
-		b.v = a.v.not();
+		b.setV( a.v().not() );
 	}
 
 	@Override
 	public void min(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.min(b.v);
+		c.setV( a.v().min(b.v()) );
 	}
 
 	@Override
 	public void max(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.v = a.v.max(b.v);
+		c.setV( a.v().max(b.v()) );
 	}
 
 }

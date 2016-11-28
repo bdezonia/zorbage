@@ -33,8 +33,8 @@ package zorbage.type.data;
  * @author Barry DeZonia
  *
  */
-public class QuaternionFloat64Member {
-	double r, i, j, k;
+public final class QuaternionFloat64Member {
+	private double r, i, j, k;
 	
 	public QuaternionFloat64Member() {
 		r = i = j = k = 0;
@@ -72,6 +72,10 @@ public class QuaternionFloat64Member {
 	public double i() { return i; }
 	public double j() { return j; }
 	public double k() { return k; }
+	public void setR(double val) { r = val; }
+	public void setI(double val) { i = val; }
+	public void setJ(double val) { j = val; }
+	public void setK(double val) { k = val; }
 	
 	@Override
 	public String toString() { return "" + r + " " + i + " " + j + " " + k; }

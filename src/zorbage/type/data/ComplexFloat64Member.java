@@ -31,42 +31,44 @@ package zorbage.type.data;
  * @author Barry DeZonia
  *
  */
-public class ComplexFloat64Member {
+public final class ComplexFloat64Member {
 	
-	double rv, iv;
+	private double r, i;
 	
 	public ComplexFloat64Member() {
-		rv = 0;
-		iv = 0;
+		r = 0;
+		i = 0;
 	}
 	
 	public ComplexFloat64Member(double value) {
-		rv = value;
-		iv = 0;
+		r = value;
+		i = 0;
 	}
 	
 	public ComplexFloat64Member(double rvalue, double ivalue) {
-		rv = rvalue;
-		iv = ivalue;
+		r = rvalue;
+		i = ivalue;
 	}
 	
 	public ComplexFloat64Member(ComplexFloat64Member value) {
-		rv = value.rv;
-		iv = value.iv;
+		r = value.r;
+		i = value.i;
 	}
 
 	public ComplexFloat64Member(String value) {
 		String[] strs = value.trim().split("\\s+");
-		rv = Double.parseDouble(strs[0]);
+		r = Double.parseDouble(strs[0]);
 		if (strs.length > 1) {
-			iv = Double.parseDouble(strs[1]);
+			i = Double.parseDouble(strs[1]);
 		}
 	}
 
-	public double rvalue() { return rv; }
-	public double ivalue() { return iv; }
-	
-	@Override
-	public String toString() { return "" + rv + " " + iv; }
+	public double r() { return r; }
+	public double i() { return i; }
+    public void setR(double val) { r = val; }	
+    public void setI(double val) { i = val; }	
+
+    @Override
+	public String toString() { return "" + r + " " + i; }
 
 }

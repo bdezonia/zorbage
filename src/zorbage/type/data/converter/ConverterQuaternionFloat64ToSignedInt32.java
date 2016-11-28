@@ -24,37 +24,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
+package zorbage.type.data.converter;
+
+import zorbage.type.data.QuaternionFloat64Member;
+import zorbage.type.data.SignedInt32Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterSignedInt32ToComplexFloat64
-  implements Converter<SignedInt32Member, ComplexFloat64Member>
+public class ConverterQuaternionFloat64ToSignedInt32
+  implements Converter<QuaternionFloat64Member, SignedInt32Member>
 {
 
 	@Override
-	public void convert(SignedInt32Member from, ComplexFloat64Member to) {
-		to.rv = from.v;
-		to.iv = 0;
+	public void convert(QuaternionFloat64Member from, SignedInt32Member to) {
+		to.setV( (int) from.r() );
 	}
 
 	@Override
 	public boolean isLossy() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public Class<?> fromClass() {
-		return SignedInt32Member.class;
+		return QuaternionFloat64Member.class;
 	}
 
 	@Override
 	public Class<?> toClass() {
-		// TODO Auto-generated method stub
-		return null;
+		return SignedInt32Member.class;
 	}
 
 }

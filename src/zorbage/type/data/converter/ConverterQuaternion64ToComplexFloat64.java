@@ -24,20 +24,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
+package zorbage.type.data.converter;
+
+import zorbage.type.data.ComplexFloat64Member;
+import zorbage.type.data.QuaternionFloat64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterQuaternionFloat64ToFloat64
-  implements Converter<QuaternionFloat64Member, Float64Member>
+public class ConverterQuaternion64ToComplexFloat64
+  implements Converter<QuaternionFloat64Member, ComplexFloat64Member>
 {
 
 	@Override
-	public void convert(QuaternionFloat64Member from, Float64Member to) {
-		to.v = from.r;
+	public void convert(QuaternionFloat64Member from, ComplexFloat64Member to) {
+		to.setR( from.r() );
+		to.setI( from.i() );
 	}
 
 	@Override
@@ -52,7 +56,7 @@ public class ConverterQuaternionFloat64ToFloat64
 
 	@Override
 	public Class<?> toClass() {
-		return Float64Member.class;
+		return ComplexFloat64Member.class;
 	}
 
 }

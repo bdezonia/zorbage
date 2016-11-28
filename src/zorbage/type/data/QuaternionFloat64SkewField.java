@@ -55,10 +55,15 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void multiply(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		c.r = a.r*b.r - a.i*b.i - a.j*b.j - a.k*b.k;
-		c.i = a.r*b.i + a.i*b.r + a.j*b.k - a.k*b.j;
-		c.j = a.r*b.j - a.i*b.k + a.j*b.r + a.k*b.i;
-		c.k = a.r*b.k + a.i*b.j - a.j*b.i + a.k*b.r;
+		// for safety must use tmps
+		double r = a.r()*b.r() - a.i()*b.i() - a.j()*b.j() - a.k()*b.k();
+		double i = a.r()*b.i() + a.i()*b.r() + a.j()*b.k() - a.k()*b.j();
+		double j = a.r()*b.j() - a.i()*b.k() + a.j()*b.r() + a.k()*b.i();
+		double k = a.r()*b.k() + a.i()*b.j() - a.j()*b.i() + a.k()*b.r();
+		c.setR( r );
+		c.setI( i );
+		c.setJ( j );
+		c.setK( k );
 	}
 
 	@Override
@@ -79,8 +84,8 @@ public class QuaternionFloat64SkewField
 	}
 
 	@Override
-	public void zero(QuaternionFloat64Member z) {
-		assign(ZERO, z);
+	public void zero(QuaternionFloat64Member a) {
+		assign(ZERO, a);
 	}
 
 	@Override
@@ -90,23 +95,23 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void add(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		c.r = a.r + b.r;
-		c.i = a.i + b.i;
-		c.j = a.j + b.j;
-		c.k = a.k + b.k;
+		c.setR( a.r() + b.r() );
+		c.setI( a.i() + b.i() );
+		c.setJ( a.j() + b.j() );
+		c.setK( a.k() + b.k() );
 	}
 
 	@Override
 	public void subtract(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		c.r = a.r - b.r;
-		c.i = a.i - b.i;
-		c.j = a.j - b.j;
-		c.k = a.k - b.k;
+		c.setR( a.r() - b.r() );
+		c.setI( a.i() - b.i() );
+		c.setJ( a.j() - b.j() );
+		c.setK( a.k() - b.k() );
 	}
 
 	@Override
 	public boolean isEqual(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		return a.r == b.r && a.i == b.i && a.j == b.j && a.k == b.k;
+		return a.r() == b.r() && a.i() == b.i() && a.j() == b.j() && a.k() == b.k();
 	}
 
 	@Override
@@ -131,10 +136,10 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void assign(QuaternionFloat64Member from, QuaternionFloat64Member to) {
-		to.r = from.r;
-		to.i = from.i;
-		to.j = from.j;
-		to.k = from.k;
+		to.setR( from.r() );
+		to.setI( from.i() );
+		to.setJ( from.j() );
+		to.setK( from.k() );
 	}
 
 	@Override
@@ -143,7 +148,7 @@ public class QuaternionFloat64SkewField
 		QuaternionFloat64Member scale = new QuaternionFloat64Member();
 		Float64Member nval = new Float64Member();
 		norm(a, nval);
-		scale.r = (1.0 / (nval.v * nval.v));
+		scale.setR( (1.0 / (nval.v() * nval.v())) );
 		conjugate(a, c);
 		multiply(scale, c, b);
 	}
@@ -157,15 +162,15 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void conjugate(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		b.r = a.r;
-		b.i = -a.i;
-		b.j = -a.j;
-		b.k = -a.k;
+		b.setR( a.r() );
+		b.setI( -a.i() );
+		b.setJ( -a.j() );
+		b.setK( -a.k() );
 	}
 
 	@Override
 	public void norm(QuaternionFloat64Member a, Float64Member b) {
-		b.v = Math.sqrt(a.r*a.r + a.i*a.i + a.j*a.j + a.k*a.k);
+		b.setV( Math.sqrt(a.r()*a.r() + a.i()*a.i() + a.j()*a.j() + a.k()*a.k()) );
 	}
 
 	@Override

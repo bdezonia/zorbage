@@ -1,11 +1,11 @@
 package zorbage.type.data;
 
-public class BooleanMember {
+public final class BooleanMember {
 	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
 
-	boolean v;
+	private boolean v;
 	
 	public BooleanMember() {
 		v = false;
@@ -26,7 +26,8 @@ public class BooleanMember {
 		else v = java.lang.Boolean.parseBoolean(strs[0]);
 	}
 
-	public boolean value() { return v; }
+	public boolean v() { return v; }
+	public void setV(boolean val) { v = val; }
 	
 	@Override
 	public String toString() { if (v) return ONE; else return ZERO; }

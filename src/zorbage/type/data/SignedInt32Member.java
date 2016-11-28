@@ -31,9 +31,9 @@ package zorbage.type.data;
  * @author Barry DeZonia
  *
  */
-public class SignedInt32Member {
+public final class SignedInt32Member {
 
-	int v;
+	private int v;
 	
 	public SignedInt32Member() {
 		v = 0;
@@ -52,7 +52,8 @@ public class SignedInt32Member {
 		v = Integer.parseInt(strs[0]);
 	}
 
-	public int value() { return v; }
+	public int v() { return v; }
+	public void setV(int val) { v = val; }
 	
 	@Override
 	public String toString() { return "" + v; }

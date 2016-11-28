@@ -35,7 +35,7 @@ import java.math.BigInteger;
  */
 public class UnboundedIntMember {
 
-	BigInteger v;
+	private BigInteger v;
 	
 	public UnboundedIntMember() {
 		v = BigInteger.ZERO;
@@ -58,7 +58,8 @@ public class UnboundedIntMember {
 		v = new BigInteger(strs[0]);
 	}
 
-	public BigInteger value() { return v; }
+	public BigInteger v() { return v; }
+	public void setV(BigInteger val) { v = val; }
 	
 	@Override
 	public String toString() { return "" + v; }

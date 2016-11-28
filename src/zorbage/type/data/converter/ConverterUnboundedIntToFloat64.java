@@ -24,36 +24,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
+package zorbage.type.data.converter;
+
+import zorbage.type.data.Float64Member;
+import zorbage.type.data.UnboundedIntMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterFloat64ToComplexFloat64
-  implements Converter<Float64Member,ComplexFloat64Member>
-{
+public class ConverterUnboundedIntToFloat64 implements Converter<UnboundedIntMember, Float64Member> {
 
 	@Override
-	public void convert(Float64Member from, ComplexFloat64Member to) {
-		to.rv = from.v;
-		to.iv = 0;
+	public void convert(UnboundedIntMember from, Float64Member to) {
+		to.setV( from.v().doubleValue() );
 	}
 
 	@Override
 	public boolean isLossy() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public Class<?> fromClass() {
-		return Float64Member.class;
+		return UnboundedIntMember.class;
 	}
 
 	@Override
 	public Class<?> toClass() {
-		return ComplexFloat64Member.class;
+		return Float64Member.class;
 	}
 
 }

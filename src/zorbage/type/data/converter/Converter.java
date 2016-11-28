@@ -24,35 +24,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
+package zorbage.type.data.converter;
+
+// TODO: build a static tree like structure that finds conversions between types by lookup or chain building as needed
+
+// TODO: imagine we can convert between reals and complexes, sometimes lossy
+
+// TODO: the converters should make isLossy a boolean returned by convert() which signifies whether precision was
+//   lost or not during the conversion.
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterComplexFloat64ToFloat64
-  implements Converter<ComplexFloat64Member,Float64Member>
-{
+public interface Converter<U,V> {
 
-	@Override
-	public void convert(ComplexFloat64Member from, Float64Member to) {
-		to.v = from.rv;
-	}
-
-	@Override
-	public boolean isLossy() {
-		return true;
-	}
-
-	@Override
-	public Class<?> fromClass() {
-		return ComplexFloat64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return Float64Member.class;
-	}
-
+	void convert(U from, V to);
+	boolean isLossy();
+	Class<?> fromClass();
+	Class<?> toClass();
+	
 }

@@ -50,7 +50,7 @@ public class Test {
 
 		g.add(a,b,sum);
 		  
-		System.out.println(a.value() + " plus " + b.value() + " equals " + sum.value());
+		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
 	public static void workWithFloats() {
@@ -63,7 +63,7 @@ public class Test {
 
 		g.add(a,b,sum);
 		  
-		System.out.println(a.value() + " plus " + b.value() + " equals " + sum.value());
+		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
 	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void workWithOrderedIntegralDomain(T g) {

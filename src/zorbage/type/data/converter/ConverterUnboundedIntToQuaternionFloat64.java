@@ -24,18 +24,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
+package zorbage.type.data.converter;
+
+import zorbage.type.data.QuaternionFloat64Member;
+import zorbage.type.data.UnboundedIntMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterUnboundedIntToSignedInt32 implements Converter<UnboundedIntMember, SignedInt32Member> {
+public class ConverterUnboundedIntToQuaternionFloat64
+  implements Converter<UnboundedIntMember, QuaternionFloat64Member>
+{
 
 	@Override
-	public void convert(UnboundedIntMember from, SignedInt32Member to) {
-		to.v = from.v.intValue();
+	public void convert(UnboundedIntMember from, QuaternionFloat64Member to) {
+		to.setR( from.v().doubleValue() );
 	}
 
 	@Override
@@ -50,7 +55,7 @@ public class ConverterUnboundedIntToSignedInt32 implements Converter<UnboundedIn
 
 	@Override
 	public Class<?> toClass() {
-		return SignedInt32Member.class;
+		return QuaternionFloat64Member.class;
 	}
 
 }

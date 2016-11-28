@@ -24,18 +24,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
+package zorbage.type.data.converter;
+
+import zorbage.type.data.SignedInt32Member;
+import zorbage.type.data.UnboundedIntMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterUnboundedIntToFloat64 implements Converter<UnboundedIntMember, Float64Member> {
+public class ConverterUnboundedIntToSignedInt32 implements Converter<UnboundedIntMember, SignedInt32Member> {
 
 	@Override
-	public void convert(UnboundedIntMember from, Float64Member to) {
-		to.v = from.v.doubleValue();
+	public void convert(UnboundedIntMember from, SignedInt32Member to) {
+		to.setV( from.v().intValue() );
 	}
 
 	@Override
@@ -50,7 +53,7 @@ public class ConverterUnboundedIntToFloat64 implements Converter<UnboundedIntMem
 
 	@Override
 	public Class<?> toClass() {
-		return Float64Member.class;
+		return SignedInt32Member.class;
 	}
 
 }

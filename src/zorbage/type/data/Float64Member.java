@@ -31,9 +31,9 @@ package zorbage.type.data;
  * @author Barry DeZonia
  *
  */
-public class Float64Member {
+public final class Float64Member {
 
-	double v;
+	private double v;
 	
 	public Float64Member() {
 		v = 0;
@@ -52,7 +52,8 @@ public class Float64Member {
 		v = Double.parseDouble(strs[0]);
 	}
 
-	public double value() { return v; }
+	public double v() { return v; }
+	public void setV(double val) { v = val; }
 	
 	@Override
 	public String toString() { return "" + v; }

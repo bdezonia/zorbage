@@ -44,12 +44,12 @@ public class SignedInt32Integer
 
 	@Override
 	public boolean isEqual(SignedInt32Member a, SignedInt32Member b) {
-		return a.v == b.v;
+		return a.v() == b.v();
 	}
 
 	@Override
 	public boolean isNotEqual(SignedInt32Member a, SignedInt32Member b) {
-		return a.v != b.v;
+		return a.v() != b.v();
 	}
 
 	@Override
@@ -69,17 +69,17 @@ public class SignedInt32Integer
 
 	@Override
 	public void assign(SignedInt32Member from, SignedInt32Member to) {
-		to.v = from.v;
+		to.setV( from.v() );
 	}
 
 	@Override
 	public void abs(SignedInt32Member a, SignedInt32Member b) {
-		b.v = Math.abs(a.v);
+		b.setV( Math.abs(a.v()) );
 	}
 
 	@Override
 	public void multiply(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = a.v * b.v;
+		c.setV( a.v() * b.v() );
 	}
 
 	@Override
@@ -89,78 +89,78 @@ public class SignedInt32Integer
 		int tmp = 1;
 		if (power > 0) {
 			for (int i = 1; i <= power; i++)
-				tmp = tmp * a.v;
+				tmp = tmp * a.v();
 		}
-		b.v = tmp;
+		b.setV(tmp);
 	}
 
 	@Override
-	public void zero(SignedInt32Member z) {
-		z.v = 0;
+	public void zero(SignedInt32Member a) {
+		a.setV( 0 );
 	}
 
 	@Override
 	public void negate(SignedInt32Member a, SignedInt32Member b) {
-		b.v = -a.v;
+		b.setV( -a.v() );
 	}
 
 	@Override
 	public void add(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = a.v + b.v;
+		c.setV( a.v() + b.v() );
 	}
 
 	@Override
 	public void subtract(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = a.v - b.v;
+		c.setV( a.v() - b.v() );
 	}
 
 	@Override
 	public void unity(SignedInt32Member a) {
-		a.v = 1;
+		a.setV( 1 );
 	}
 
 	@Override
 	public boolean isLess(SignedInt32Member a, SignedInt32Member b) {
-		return a.v < b.v;
+		return a.v() < b.v();
 	}
 
 	@Override
 	public boolean isLessEqual(SignedInt32Member a, SignedInt32Member b) {
-		return a.v <= b.v;
+		return a.v() <= b.v();
 	}
 
 	@Override
 	public boolean isGreater(SignedInt32Member a, SignedInt32Member b) {
-		return a.v > b.v;
+		return a.v() > b.v();
 	}
 
 	@Override
 	public boolean isGreaterEqual(SignedInt32Member a, SignedInt32Member b) {
-		return a.v >= b.v;
+		return a.v() >= b.v();
 	}
 
 	@Override
 	public int compare(SignedInt32Member a, SignedInt32Member b) {
-		if (a.v < b.v) return -1;
-		if (a.v > b.v) return 1;
+		if (a.v() < b.v()) return -1;
+		if (a.v() > b.v()) return 1;
 		return 0;
 	}
 
 	@Override
 	public int signum(SignedInt32Member a) {
-		if (a.v < 0) return -1;
-		if (a.v > 0) return 1;
+		if (a.v() < 0) return -1;
+		if (a.v() > 0) return 1;
 		return 0;
 	}
 
 	@Override
 	public void div(SignedInt32Member a, SignedInt32Member b, SignedInt32Member d) {
-		d.v = a.v / b.v;
+		d.setV( a.v() / b.v() );
 	}
 
 	@Override
 	public void mod(SignedInt32Member a, SignedInt32Member b, SignedInt32Member m) {
-		m.v = a.v % b.v;
+		m.setV( a.v() % b.v() );
 	}
 
 	@Override
@@ -171,14 +171,14 @@ public class SignedInt32Integer
 
 	@Override
 	public void gcd(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = gcdHelper(a.v, b.v);
+		c.setV( gcdHelper(a.v(), b.v()) );
 	}
 
 	@Override
 	public void lcm(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		int n = Math.abs(a.v * b.v);
-		int d = gcdHelper(a.v, b.v);
-		c.v = n / d;
+		int n = Math.abs(a.v() * b.v());
+		int d = gcdHelper(a.v(), b.v());
+		c.setV( n / d );
 	}
 
 	private int gcdHelper(int a, int b) {
@@ -192,81 +192,81 @@ public class SignedInt32Integer
 
 	@Override
 	public void norm(SignedInt32Member a, SignedInt32Member b) {
-		b.v = Math.abs(a.v);
+		b.setV( Math.abs(a.v()) );
 	}
 
 	@Override
 	public boolean isEven(SignedInt32Member a) {
-		return a.v % 2 == 0;
+		return a.v() % 2 == 0;
 	}
 
 	@Override
 	public boolean isOdd(SignedInt32Member a) {
-		return a.v % 2 == 1;
+		return a.v() % 2 == 1;
 	}
 
 	@Override
 	public void pred(SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v - 1;
+		b.setV( a.v() - 1 );
 	}
 
 	@Override
 	public void succ(SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v + 1;
+		b.setV( a.v() + 1 );
 	}
 
 	@Override
 	public void maxBound(SignedInt32Member a) {
-		a.v = java.lang.Integer.MAX_VALUE;
+		a.setV( java.lang.Integer.MAX_VALUE );
 	}
 
 	@Override
 	public void minBound(SignedInt32Member a) {
-		a.v = java.lang.Integer.MIN_VALUE;
+		a.setV( java.lang.Integer.MIN_VALUE );
 	}
 
 	@Override
 	public void bitAnd(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = a.v & b.v;
+		c.setV( a.v() & b.v() );
 	}
 
 	@Override
 	public void bitOr(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = a.v | b.v;
+		c.setV( a.v() | b.v() );
 	}
 
 	@Override
 	public void bitXor(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = a.v ^ b.v;
+		c.setV( a.v() ^ b.v() );
 	}
 
 	@Override
 	public void bitNot(SignedInt32Member a, SignedInt32Member b) {
-		b.v = ~a.v;
+		b.setV( ~a.v() );
 	}
 
 	@Override
 	public void bitShiftLeft(int count, SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v << count;
+		b.setV( a.v() << count );
 	}
 
 	@Override
 	public void bitShiftRight(int count, SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v >> count;
+		b.setV( a.v() >> count );
 	}
 
 	public void bitShiftRightFillZero(int count, SignedInt32Member a, SignedInt32Member b) {
-		b.v = a.v >>> count;
+		b.setV( a.v() >>> count );
 	}
 
 	@Override
 	public void min(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = Math.min(a.v, b.v);
+		c.setV( Math.min(a.v(), b.v()) );
 	}
 
 	@Override
 	public void max(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.v = Math.max(a.v, b.v);
+		c.setV( Math.max(a.v(), b.v()) );
 	}
 
 }
