@@ -33,7 +33,7 @@ import java.math.BigInteger;
  * @author Barry DeZonia
  *
  */
-public class UnboundedIntMember {
+public final class UnboundedIntMember {
 
 	private BigInteger v;
 	
