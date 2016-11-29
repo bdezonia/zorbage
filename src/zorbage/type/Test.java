@@ -32,6 +32,7 @@ import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
 import zorbage.type.data.SignedInt32Member;
+import zorbage.type.data.converter.Converter;
 
 /**
  * 
@@ -89,6 +90,16 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 
+	// TODO here: a method to scale data by 1.4
+	//
+	//public static <T extends IntegralDomain<T,U>, U> void scaleByConstant(T g, U value, Float64Member constant) {
+	//	Converter<U,Float64Member> toFloat = ;
+	//  toFloat.convert();
+	//  f.multiply(value, constant, value);
+	//  fromFloat.convert();
+	//	Converter<Float64Member,U> fromFloat = ;
+	//}
+	
 	public static void main(String[] args) {
 		workWithInts();
 		workWithFloats();
