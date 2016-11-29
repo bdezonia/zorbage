@@ -88,8 +88,11 @@ public class ComplexFloat64Field
 
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		c.setR( a.r() * b.r() - a.i() * b.i() );
-		c.setI( a.i() * b.r() + a.r() * b.i() );
+		// for safety must use tmps
+		double r = a.r()*b.r() - a.i()*b.i();
+		double i = a.i()*b.r() + a.r()*b.i();
+		c.setR( r );
+		c.setI( i );
 	}
 
 	@Override
@@ -175,9 +178,12 @@ public class ComplexFloat64Field
 
 	@Override
 	public void divide(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		double mod2 = b.r() * b.r() + b.i() * b.i();
-		c.setR( (a.r() * b.r() + a.i() * b.i()) / mod2 );
-		c.setI( (a.i() * b.r() - a.r() * b.i()) / mod2 );
+		// for safety must use tmps
+		double mod2 = b.r()*b.r() + b.i()*b.i();
+		double r = (a.r()*b.r() + a.i()*b.i()) / mod2;
+		double i = (a.i()*b.r() - a.r()*b.i()) / mod2;
+		c.setR( r );
+		c.setI( i );
 	}
 	
 	@Override
@@ -187,7 +193,7 @@ public class ComplexFloat64Field
 	}
 
 	@Override
-	public void norm(ComplexFloat64Member a, Float64Member b) {  // this declaration would break generics
+	public void norm(ComplexFloat64Member a, Float64Member b) {
 		b.setV( Math.hypot(a.r(),a.i()) );
 	}
 
