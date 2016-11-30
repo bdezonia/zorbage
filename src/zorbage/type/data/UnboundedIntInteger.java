@@ -31,8 +31,6 @@ import java.math.BigInteger;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Integer;
 
-// TODO: BigInteger has some more methods than this class
-
 /**
  * 
  * @author Barry DeZonia
@@ -43,7 +41,6 @@ public class UnboundedIntInteger
     Integer<UnboundedIntInteger, UnboundedIntMember>,
     BitOperations<UnboundedIntMember>
 {
-
 	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	
 	@Override
@@ -159,8 +156,9 @@ public class UnboundedIntInteger
 
 	@Override
 	public void divMod(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember d, UnboundedIntMember m) {
-		div(a,b,d);
-		mod(a,b,m);
+		BigInteger[] results = a.v().divideAndRemainder(b.v());
+		d.setV(results[0]);
+		m.setV(results[1]);
 	}
 
 	@Override
@@ -239,5 +237,53 @@ public class UnboundedIntInteger
 	public void max(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		c.setV( a.v().max(b.v()) );
 	}
+
+	public void andNot(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		c.setV( a.v().andNot(b.v()));
+	}
+	
+	public void bitCount(UnboundedIntMember a, SignedInt32Member b) {
+		b.setV( a.v().bitCount() );
+	}
+	
+	public void bitLength(UnboundedIntMember a, SignedInt32Member b) {
+		b.setV( a.v().bitLength() );
+	}
+	
+	public void getLowestSetBit(UnboundedIntMember a, SignedInt32Member b) {
+		b.setV( a.v().getLowestSetBit() );
+	}
+	
+	public void clearBit(int n, UnboundedIntMember a, UnboundedIntMember b) {
+		b.setV( a.v().clearBit(n) );
+	}
+	
+	public void flipBit(int n, UnboundedIntMember a, UnboundedIntMember b) {
+		b.setV( a.v().flipBit(n) );
+	}
+	
+	public void bitCount(int certainty, UnboundedIntMember a, BooleanMember b) {
+		b.setV( a.v().isProbablePrime(certainty) );
+	}
+	
+	public void modInverse(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		c.setV( a.v().modInverse(b.v()) );
+	}
+	
+	public void modPow(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c, UnboundedIntMember d) {
+		d.setV( a.v().modPow(b.v(), c.v()) );
+	}
+	
+	public void nextProbablePrime(UnboundedIntMember a, UnboundedIntMember b) {
+		b.setV( a.v().nextProbablePrime() );
+	}
+	
+	public void setBit(int n, UnboundedIntMember a, UnboundedIntMember b) {
+		b.setV( a.v().setBit(n) );
+	}
+	
+	public void testBit(int n, UnboundedIntMember a, BooleanMember b) {
+		b.setV( a.v().testBit(n) );
+	}	
 
 }
