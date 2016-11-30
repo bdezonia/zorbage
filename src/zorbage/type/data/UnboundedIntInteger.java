@@ -262,7 +262,7 @@ public class UnboundedIntInteger
 		b.setV( a.v().flipBit(n) );
 	}
 	
-	public void bitCount(int certainty, UnboundedIntMember a, BooleanMember b) {
+	public void isProbablePrime(int certainty, UnboundedIntMember a, BooleanMember b) {
 		b.setV( a.v().isProbablePrime(certainty) );
 	}
 	
