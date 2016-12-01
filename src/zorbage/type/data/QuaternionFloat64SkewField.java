@@ -28,7 +28,9 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
+import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
+import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 
 /**
@@ -39,9 +41,11 @@ import zorbage.type.algebra.SkewField;
 public class QuaternionFloat64SkewField
   implements
     SkewField<QuaternionFloat64SkewField,QuaternionFloat64Member>,
-    Norm<QuaternionFloat64Member, Float64Member>,
     Constants<QuaternionFloat64Member>,
-    Conjugate<QuaternionFloat64Member>
+    Norm<QuaternionFloat64Member, Float64Member>,
+    Conjugate<QuaternionFloat64Member>,
+    Infinite<QuaternionFloat64Member>,
+    Rounding<QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
@@ -181,5 +185,81 @@ public class QuaternionFloat64SkewField
 	@Override
 	public void E(QuaternionFloat64Member a) {
 		assign(E, a);
+	}
+
+	@Override
+	public void roundTowardsZero(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		if (a.r() < 0)
+			b.setR( Math.ceil(a.r()) );
+		else
+			b.setR( Math.floor(a.r()) );
+		if (a.i() < 0)
+			b.setI( Math.ceil(a.i()) );
+		else
+			b.setI( Math.floor(a.i()) );
+		if (a.j() < 0)
+			b.setJ( Math.ceil(a.j()) );
+		else
+			b.setJ( Math.floor(a.j()) );
+		if (a.k() < 0)
+			b.setK( Math.ceil(a.k()) );
+		else
+			b.setK( Math.floor(a.k()) );
+	}
+
+	@Override
+	public void roundAwayFromZero(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		if (a.r() > 0)
+			b.setR( Math.ceil(a.r()) );
+		else
+			b.setR( Math.floor(a.r()) );
+		if (a.i() > 0)
+			b.setI( Math.ceil(a.i()) );
+		else
+			b.setI( Math.floor(a.i()) );
+		if (a.j() > 0)
+			b.setJ( Math.ceil(a.j()) );
+		else
+			b.setJ( Math.floor(a.j()) );
+		if (a.k() > 0)
+			b.setK( Math.ceil(a.k()) );
+		else
+			b.setK( Math.floor(a.k()) );
+	}
+
+	@Override
+	public void roundPositive(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		b.setR( Math.ceil(a.r()) );
+		b.setI( Math.ceil(a.i()) );
+		b.setJ( Math.ceil(a.j()) );
+		b.setK( Math.ceil(a.k()) );
+	}
+
+	@Override
+	public void roundNegative(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		b.setR( Math.floor(a.r()) );
+		b.setI( Math.floor(a.i()) );
+		b.setJ( Math.floor(a.j()) );
+		b.setK( Math.floor(a.k()) );
+	}
+
+	@Override
+	public void roundNearest(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		b.setR( Math.rint(a.r()) );
+		b.setI( Math.rint(a.i()) );
+		b.setJ( Math.rint(a.j()) );
+		b.setK( Math.rint(a.k()) );
+	}
+
+	@Override
+	public boolean isNaN(QuaternionFloat64Member a) {
+		return Double.isNaN(a.r()) || Double.isNaN(a.i()) || Double.isNaN(a.j()) || Double.isNaN(a.k());
+	}
+
+	@Override
+	public boolean isInfinite(QuaternionFloat64Member a) {
+		return
+			!isNaN(a) &&
+			(Double.isInfinite(a.r()) || Double.isInfinite(a.i()) || Double.isInfinite(a.j()) || Double.isInfinite(a.k()));
 	}
 }
