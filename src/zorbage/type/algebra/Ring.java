@@ -31,7 +31,9 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Ring<T extends Ring<T,U>,U> extends AdditiveGroup<T,U>
+public interface Ring<T extends Ring<T,U>,U>
+  extends
+    AdditiveGroup<T,U>
 {
   void multiply(U a, U b, U c);
   void power(int power, U a, U b);  // implementations decide if power arg can be negative

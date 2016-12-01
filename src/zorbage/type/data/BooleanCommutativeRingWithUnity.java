@@ -45,7 +45,8 @@ public class BooleanCommutativeRingWithUnity
     CommutativeRingWithUnity<BooleanCommutativeRingWithUnity, BooleanMember>,
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,
-    LogicalOperations<BooleanMember>{
+    LogicalOperations<BooleanMember>
+{
 
 	@Override
 	public void logicalAnd(BooleanMember a, BooleanMember b, BooleanMember c) {

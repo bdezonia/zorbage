@@ -32,6 +32,8 @@ package zorbage.type.algebra;
  *
  */
 public interface EuclideanDomain<T extends EuclideanDomain<T,U>,U>
-  extends IntegralDomain<T,U>, EuclideanRing<T,U>
+  extends
+    IntegralDomain<T,U>,
+    EuclideanRing<T,U>
 {
 }

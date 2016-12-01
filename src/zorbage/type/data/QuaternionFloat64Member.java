@@ -34,6 +34,7 @@ package zorbage.type.data;
  *
  */
 public final class QuaternionFloat64Member {
+
 	private double r, i, j, k;
 	
 	public QuaternionFloat64Member() {

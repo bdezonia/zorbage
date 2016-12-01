@@ -32,7 +32,8 @@ package zorbage.type.algebra;
  *
  */
 public interface IntegralDomain<T extends IntegralDomain<T,U>,U>
-  extends CommutativeRingWithUnity<T,U>
+  extends
+    CommutativeRingWithUnity<T,U>
 {
 // has cancellation property
 }

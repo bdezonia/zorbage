@@ -32,7 +32,9 @@ package zorbage.type.algebra;
  *
  */
 public interface EuclideanRing<T extends EuclideanRing<T,U>,U>
-  extends Norm<U,U>, Ring<T,U> // or is it a ring with unity member?
+  extends
+    Norm<U,U>,
+    Ring<T,U> // or is it a ring with unity member?
 {
 	void div(U a, U b, U d);
 	void mod(U a, U b, U m);

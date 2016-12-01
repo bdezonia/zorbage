@@ -31,7 +31,10 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface AdditiveGroup<T extends AdditiveGroup<T,U>, U> extends Group<T,U> {
+public interface AdditiveGroup<T extends AdditiveGroup<T,U>, U>
+  extends
+    Group<T,U>
+{
 	void zero(U a);                // setZero()
 	void negate(U a, U b);         // additive inverse
 	void add(U a, U b, U c);

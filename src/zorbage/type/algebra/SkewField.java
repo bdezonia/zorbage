@@ -32,7 +32,9 @@ package zorbage.type.algebra;
  *
  */
 public interface SkewField<T extends SkewField<T,U>,U>
-	extends RingWithUnity<T,U>, Invertible<U>
+  extends
+    RingWithUnity<T,U>,
+    Invertible<U>
 {
 	//note: in a skew field multiplication does not commute
 }

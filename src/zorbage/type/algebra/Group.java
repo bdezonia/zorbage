@@ -31,7 +31,8 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Group<T extends Group<T,U>, U>{
+public interface Group<T extends Group<T,U>, U>
+{
 	
 	boolean isEqual(U a, U b);
 	boolean isNotEqual(U a, U b);

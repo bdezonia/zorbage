@@ -31,6 +31,9 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface RingWithUnity<T extends RingWithUnity<T,U>,U> extends Ring<T,U> {
+public interface RingWithUnity<T extends RingWithUnity<T,U>,U>
+  extends
+    Ring<T,U>
+{
 	void unity(U a);  // setOne()
 }

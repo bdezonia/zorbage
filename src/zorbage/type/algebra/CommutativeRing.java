@@ -31,6 +31,9 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface CommutativeRing<T extends CommutativeRing<T,U>, U> extends Ring<T,U> {
+public interface CommutativeRing<T extends CommutativeRing<T,U>, U>
+  extends
+    Ring<T,U>
+{
 	// multiplication commutes
 }

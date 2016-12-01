@@ -32,7 +32,10 @@ package zorbage.type.algebra;
  *
  */
 public interface Integer<T extends Integer<T,U>,U>
-  extends OrderedIntegralDomain<T,U>, EuclideanDomain<T,U>, BitOperations<U>
+  extends
+    OrderedIntegralDomain<T,U>,
+    EuclideanDomain<T,U>,
+    BitOperations<U>
 {
 	void pred(U a, U b);
 	void succ(U a, U b);
