@@ -70,7 +70,7 @@ public class Notes {
 	 * 
 	 * Do we need a Real type instead of Float64 using OrderedField? Do I need a Complex type?
 	 * 
-	 * How to handle constants like PI, E, and all kinds of others like ones from Gnu Scientific Library? Naybe we
+	 * How to handle constants like PI, E, and all kinds of others like ones from Gnu Scientific Library? Maybe we
 	 * just construct them as constants. But how can algebraic based code access them? Passed in as arguments?
 	 * Or we break into single interfaces that can be implemented like E(U a) and generics of method signature can
 	 * say U extends E?
@@ -91,4 +91,28 @@ public class Notes {
 	 */
 	
 	// TODO: do I make boolean methods in Hierarchy instead map to BooleanMembers?
+	
+	//idea: a numeric string type like json
+	//tensor = [?]
+	//matrix = [vector, vector, vector]
+	//vector = [number, number, number]
+	//number = int | real | complex | quaternion ( | octonion? )
+	//int = \d+ or even based like ffff_16 or 777_8
+	//real = \d+.\d+ | exponential_form
+	//complex = ( real , real )
+	//quaternion = ( real, real, real, real) or (complex, complex, complex, complex)
+	//
+	//a string parser ignores what it must to recognize the first number found setting
+	//missing components to 0
+	// it could range check and set elems outside range to max or min or range if needed
+	// it would round if that made sense
+	//a bit type would parse 10000 as 1
+	//a quat type would parse 10000 as (10000,0,0,0)
+	
+	// TODO a BigDecimal based class
+	
+	// Have Vectors and Matrices and Tensors whose subelements are any numeric type.
+	// Make complex double type be Complex<DoubleType>. This likely hurts efficiency.
+	// But I can rewrite this in a different language. Also Matrix<Quaternion<Float32Type>>, etc.
+	
 }
