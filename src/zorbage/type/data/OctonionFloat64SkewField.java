@@ -455,7 +455,7 @@ public class OctonionFloat64SkewField
 	
 	@Override
 	public void norm(OctonionFloat64Member a, Float64Member b) {
-		b.setV( norm2(a) );
+		b.setV( Math.sqrt( norm2(a) ) );
 	}
 
 	private double norm2(OctonionFloat64Member a) {
