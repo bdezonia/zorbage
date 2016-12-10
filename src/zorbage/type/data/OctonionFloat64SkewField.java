@@ -57,33 +57,164 @@ public class OctonionFloat64SkewField
 
 	@Override
 	public void unity(OctonionFloat64Member a) {
-		a.setR(1);
-		a.setI(0);
-		a.setJ(0);
-		a.setK(0);
-		a.setL(0);
-		a.setI0(0);
-		a.setJ0(0);
-		a.setK0(0);
+		assign(ONE, a);
 	}
 
 	@Override
 	public void multiply(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		// TODO crap this will be a pain
 		/*
 		 
-			×	e0	e1	e2	e3	e4	e5	e6	e7
-			e0	e0	e1	e2	e3	e4	e5	e6	e7
-			e1	e1	−e0	e3	−e2	e5	−e4	−e7	e6
-			e2	e2	−e3	−e0	e1	e6	e7	−e4	−e5
-			e3	e3	e2	−e1	−e0	e7	−e6	e5	−e4
-			e4	e4	−e5	−e6	−e7	−e0	e1	e2	e3
-			e5	e5	e4	−e7	e6	−e1	−e0	−e3	e2
-			e6	e6	e7	e4	−e5	−e2	e3	−e0	−e1
-			e7	e7	−e6	e5	e4	−e3	−e2	e1	−e0
+			×	r	i	j	k	l	i0	j0	k0
+				==============================
+			r	r	i	j	k	l	i0	j0	k0
+			i	i	−r	k	−j	i0	−l	−k0	j0
+			j	j	−k	−r	i	j0	k0	−l	−i0
+			k	k	j	−i	−r	k0	−j0	i0	−l
+			l	l	−i0	−j0	−k0	−r	i	j	k
+			i0	i0	l	−k0	j0	−i	−r	−k	j
+			j0	j0	k0	l	−i0	−j	k	−r	−i
+			k0	k0	−j0	i0	l	−k	−j	i	−r
 
 		 */
+		OctonionFloat64Member tmp = new OctonionFloat64Member(ZERO);
+
+		// r * r = r
+		tmp.setR(a.r() * b.r());
+		// r * i = i
+		tmp.setI(a.r() * b.i());
+		// r * j = j
+		tmp.setJ(a.r() * b.j());
+		// r * k = k
+		tmp.setK(a.r() * b.k());
+		// r * l = l
+		tmp.setL(a.r() * b.l());
+		// r * i0 = i0
+		tmp.setI0(a.r() * b.i0());
+		// r * j0 = j0
+		tmp.setJ0(a.r() * b.j0());
+		// r * k0 = k0
+		tmp.setK0(a.r() * b.k0());
+
+		// i * r = i
+		tmp.setI(tmp.i() + a.i() * b.r());
+		// i * i = −r
+		tmp.setR(tmp.r() - a.i() * b.i());
+		// i * j = k
+		tmp.setK(tmp.k() + a.i() * b.j());
+		// i * k = −j
+		tmp.setJ(tmp.j() - a.i() * b.k());
+		// i * l = i0
+		tmp.setI0(tmp.i0() + a.i() * b.l());
+		// i * i0 = −l
+		tmp.setL(tmp.l() - a.i() * b.i0());
+		// i * j0 = −k0
+		tmp.setK0(tmp.k0() - a.i() * b.j0());
+		// i * k0 = j0
+		tmp.setJ0(tmp.j0() + a.i() * b.k0());
+
+		// j * r = j
+		tmp.setJ(tmp.j() + a.j() * b.r());
+		// j * i = −k
+		tmp.setK(tmp.k() - a.j() * b.i());
+		// j * j = −r
+		tmp.setR(tmp.r() - a.j() * b.j());
+		// j * k = i
+		tmp.setI(tmp.i() + a.j() * b.k());
+		// j * l = j0
+		tmp.setJ0(tmp.j0() + a.j() * b.l());
+		// j * i0 = k0
+		tmp.setK0(tmp.k0() + a.j() * b.i0());
+		// j * j0 = −l
+		tmp.setL(tmp.l() - a.j() * b.j0());
+		// j * k0 = -i0
+		tmp.setI0(tmp.i0() - a.j() * b.k0());
+
+		// k * r = k
+		tmp.setK(tmp.k() + a.k() * b.r());
+		// k * i = j
+		tmp.setJ(tmp.j() + a.k() * b.i());
+		// k * j = −i
+		tmp.setI(tmp.i() - a.k() * b.j());
+		// k * k = −r
+		tmp.setR(tmp.r() - a.k() * b.k());
+		// k * l = k0
+		tmp.setK0(tmp.k0() + a.k() * b.l());
+		// k * i0 = −j0
+		tmp.setJ0(tmp.j0() - a.k() * b.i0());
+		// k * j0 = i0
+		tmp.setI0(tmp.i0() + a.k() * b.j0());
+		// k * k0 = −l
+		tmp.setL(tmp.l() - a.k() * b.k0());
+ 
+		// l * r = l
+		tmp.setL(tmp.l() + a.l() * b.r());
+		// l * i = −i0
+		tmp.setI0(tmp.i0() - a.l() * b.i());
+		// l * j = −j0
+		tmp.setJ0(tmp.j0() - a.l() * b.j());
+		// l * k = −k0
+		tmp.setK0(tmp.k0() - a.l() * b.k());
+		// l * l = −r
+		tmp.setR(tmp.r() - a.l() * b.l());
+		// l * i0 = i
+		tmp.setI(tmp.i() + a.l() * b.i0());
+		// l * j0 = j
+		tmp.setJ(tmp.j() + a.l() * b.j0());
+		// l * k0 = k
+		tmp.setK(tmp.k() + a.l() * b.k0());
+
+		// i0 * r = i0
+		tmp.setI0(tmp.i0() + a.i0() * b.r());
+		// i0 * i = l
+		tmp.setL(tmp.l() + a.i0() * b.i());
+		// i0 * j = −k0
+		tmp.setK0(tmp.k0() - a.i0() * b.j());
+		// i0 * k = j0
+		tmp.setJ0(tmp.j0() + a.i0() * b.k());
+		// i0 * l = −i
+		tmp.setI(tmp.i() - a.i0() * b.l());
+		// i0 * i0 = −r
+		tmp.setR(tmp.r() - a.i0() * b.i0());
+		// i0 * j0 = −k
+		tmp.setK(tmp.k() - a.i0() * b.j0());
+		// i0 * k0 = j
+		tmp.setJ(tmp.j() + a.i0() * b.k0());
 		
+		// j0 * r = j0
+		tmp.setJ0(tmp.j0() + a.j0() * b.r());
+		// j0 * i = k0
+		tmp.setK0(tmp.k0() + a.j0() * b.i());
+		// j0 * j = l
+		tmp.setL(tmp.l() + a.j0() * b.j());
+		// j0 * k = −i0
+		tmp.setI0(tmp.i0() - a.j0() * b.k());
+		// j0 * l = −j
+		tmp.setJ(tmp.j() - a.j0() * b.l());
+		// j0 * i0 = k
+		tmp.setK(tmp.k() + a.j0() * b.i0());
+		// j0 * j0 = −r
+		tmp.setR(tmp.r() - a.j0() * b.j0());
+		// j0 * k0 = −i
+		tmp.setI(tmp.i() - a.j0() * b.k0());
+		
+		// k0 * r = k0
+		tmp.setK0(tmp.k0() + a.k0() * b.r());
+		// k0 * i = −j0
+		tmp.setJ0(tmp.j0() - a.k0() * b.i());
+		// k0 * j = i0
+		tmp.setI0(tmp.i0() + a.k0() * b.j());
+		// k0 * k = l
+		tmp.setL(tmp.l() + a.k0() * b.k());
+		// k0 * l = −k
+		tmp.setK(tmp.k() - a.k0() * b.l());
+		// k0 * i0 = −j
+		tmp.setJ(tmp.j() - a.k0() * b.i0());
+		// k0 * j0 = i
+		tmp.setI(tmp.i() + a.k0() * b.j0());
+		// k0 * k0 = −r
+		tmp.setR(tmp.r() - a.k0() * b.k0());
+		
+		assign(tmp, c);
 	}
 
 	@Override
@@ -179,9 +310,7 @@ public class OctonionFloat64SkewField
 
 	@Override
 	public void invert(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Float64Member tmp = new Float64Member();
-		norm(a, tmp);
-		double norm2 = tmp.v() * tmp.v();
+		double norm2 = norm2(a);
 		conjugate(a, b);
 		b.setR( b.r() / norm2 );
 		b.setI( b.i() / norm2 );
@@ -326,14 +455,14 @@ public class OctonionFloat64SkewField
 	
 	@Override
 	public void norm(OctonionFloat64Member a, Float64Member b) {
-		b.setV(
-			Math.sqrt(
-				a.r()*a.r() + a.i()*a.i() + a.j()*a.j() + a.k()*a.k() +
-				a.l()*a.l() + a.i0()*a.i0() + a.j0()*a.j0() + a.k0()*a.k0()
-			)
-		);
+		b.setV( norm2(a) );
 	}
 
+	private double norm2(OctonionFloat64Member a) {
+		return a.r()*a.r() + a.i()*a.i() + a.j()*a.j() + a.k()*a.k() +
+				a.l()*a.l() + a.i0()*a.i0() + a.j0()*a.j0() + a.k0()*a.k0();
+	}
+	
 	@Override
 	public void conjugate(OctonionFloat64Member a, OctonionFloat64Member b) {
 		b.setR(a.r());
