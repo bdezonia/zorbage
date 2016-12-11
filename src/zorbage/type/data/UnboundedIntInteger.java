@@ -121,7 +121,7 @@ public class UnboundedIntInteger
 
 	@Override
 	public boolean isLessEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) < 1;
+		return a.v().compareTo(b.v()) <= 0;
 	}
 
 	@Override

@@ -144,7 +144,7 @@ public class Float64OrderedField
 
 	@Override
 	public boolean isGreaterEqual(Float64Member a, Float64Member b) {
-		return a.v() > b.v();
+		return a.v() >= b.v();
 	}
 
 	@Override
