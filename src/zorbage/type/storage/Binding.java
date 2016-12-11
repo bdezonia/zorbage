@@ -41,7 +41,7 @@ public class Binding<U> {
 	public Binding(U value, Storage<U> storage) {
 		this.value = value;
 		this.storage = storage;
-		beforeStart();
+		beforeFirst();
 	}
 	
 	public void get() {
@@ -73,11 +73,11 @@ public class Binding<U> {
 	public void fwd(long steps) { pos += steps; }
 	public void back(long steps) { pos -= steps; }
 	
-	public void beyondEnd() {
+	public void afterLast() {
 		pos = storage.size();
 	}
 	
-	public void beforeStart() {
+	public void beforeFirst() {
 		pos = -1;
 	}
 	

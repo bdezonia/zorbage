@@ -130,7 +130,7 @@ public class Test {
 			value.setV(i++);
 			binding.put();
 		}
-		binding.beyondEnd();
+		binding.afterLast();
 		while (binding.hasPrev()) {
 			binding.back();
 			binding.get();
