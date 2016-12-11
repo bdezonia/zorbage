@@ -36,7 +36,7 @@ import zorbage.type.data.converter.Converter;
 import zorbage.type.data.converter.ConverterFloat64ToSignedInt32;
 import zorbage.type.data.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.storage.Binding;
-import zorbage.type.storage.SignedInt32ArrayStorage;
+import zorbage.type.storage.ArrayStorageSignedInt32;
 
 /**
  * 
@@ -121,7 +121,7 @@ public class Test {
 	
 	public static void testBindings() {
 		SignedInt32Member value = new SignedInt32Member();
-		SignedInt32ArrayStorage storage = new SignedInt32ArrayStorage(10);
+		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
 		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
@@ -143,7 +143,7 @@ public class Test {
 	// Scale a collection of Int32s by a floating point number
 	public static void testGroupOfConversions() {
 		SignedInt32Member value = new SignedInt32Member();
-		SignedInt32ArrayStorage storage = new SignedInt32ArrayStorage(10);
+		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
 		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;

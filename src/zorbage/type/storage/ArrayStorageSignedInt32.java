@@ -34,13 +34,13 @@ import zorbage.type.data.SignedInt32Member;
  *
  * @param <U>
  */
-public class SignedInt32ArrayStorage
+public class ArrayStorageSignedInt32
 	implements Storage<SignedInt32Member>
 {
 
 	private final int[] data;
 	
-	public SignedInt32ArrayStorage(long size) {
+	public ArrayStorageSignedInt32(long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorage cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
