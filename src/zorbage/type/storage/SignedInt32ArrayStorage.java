@@ -38,8 +38,7 @@ public class SignedInt32ArrayStorage
 	implements Storage<SignedInt32Member>
 {
 
-	private int[] data = null;
-	private int size = 0;
+	private final int[] data;
 	
 	public SignedInt32ArrayStorage(long size) {
 		if (size < 0)
@@ -47,7 +46,6 @@ public class SignedInt32ArrayStorage
 		if (size > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("ArrayStorage cannot handle such a large request");
 		this.data = new int[(int)size];
-		this.size = data.length;
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class SignedInt32ArrayStorage
 	
 	@Override
 	public long size() {
-		return size;
+		return data.length;
 	}
 
 }
