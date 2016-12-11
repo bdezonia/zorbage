@@ -123,6 +123,7 @@ public class Test {
 		SignedInt32Member value = new SignedInt32Member();
 		SignedInt32ArrayStorage storage = new SignedInt32ArrayStorage(10);
 		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
+		// build the initial test data
 		int i = 0;
 		while (binding.hasNext()) {
 			binding.fwd();
@@ -130,9 +131,47 @@ public class Test {
 			value.setV(i++);
 			binding.put();
 		}
+		// visit the data in reverse order
 		binding.afterLast();
 		while (binding.hasPrev()) {
 			binding.back();
+			binding.get();
+			System.out.println("element " + binding.pos() + " equals " + value.v());
+		}
+	}
+
+	// Scale a collection of Int32s by a floating point number
+	public static void testGroupOfConversions() {
+		SignedInt32Member value = new SignedInt32Member();
+		SignedInt32ArrayStorage storage = new SignedInt32ArrayStorage(10);
+		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
+		// build the initial test data
+		int i = 0;
+		while (binding.hasNext()) {
+			binding.fwd();
+			binding.get();
+			value.setV(i++);
+			binding.put();
+		}
+		// scale it by 6.3
+		Float64OrderedField g = new Float64OrderedField();
+		ConverterSignedInt32ToFloat64 toFloat = new ConverterSignedInt32ToFloat64();
+		ConverterFloat64ToSignedInt32 fromFloat = new ConverterFloat64ToSignedInt32(); // TODO make a rounding converter
+		Float64Member scale = new Float64Member(6.3);
+		Float64Member tmp = new Float64Member();
+		binding.beforeFirst();
+		while (binding.hasNext()) {
+			binding.fwd();
+			binding.get();
+			toFloat.convert(value, tmp);
+			g.multiply(tmp, scale, tmp);
+			fromFloat.convert(tmp, value);
+			binding.put();
+		}
+		// print it out
+		binding.beforeFirst();
+		while (binding.hasNext()) {
+			binding.fwd();
 			binding.get();
 			System.out.println("element " + binding.pos() + " equals " + value.v());
 		}
@@ -147,5 +186,6 @@ public class Test {
 		testOrderedIntegralDomainAndStrings(new Float64OrderedField());
 		testConversion();
 		testBindings();
+		testGroupOfConversions();
 	}
 }
