@@ -33,6 +33,8 @@ import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
 import zorbage.type.data.SignedInt32Member;
 import zorbage.type.data.converter.Converter;
+import zorbage.type.data.converter.ConverterFloat64ToSignedInt32;
+import zorbage.type.data.converter.ConverterSignedInt32ToFloat64;
 
 /**
  * 
@@ -90,15 +92,30 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 
-	// TODO here: a method to scale data by 1.4
+	// TODO here: scale a whole collection of items with the two converters
 	//
-	//public static <T extends IntegralDomain<T,U>, U> void scaleByConstant(T g, U value, Float64Member constant) {
-	//	Converter<U,Float64Member> toFloat = ;
-	//  toFloat.convert();
-	//  f.multiply(value, constant, value);
-	//  fromFloat.convert();
-	//	Converter<Float64Member,U> fromFloat = ;
-	//}
+	public static <U> void scaleByConstant(U value, Float64Member constant,
+			Converter<U, Float64Member> toFloat, Converter<Float64Member, U> fromFloat)
+	{
+		IntegralDomain<Float64OrderedField,Float64Member> g = new Float64OrderedField();
+		Float64Member tmp = new Float64Member();
+		toFloat.convert(value, tmp);
+		g.multiply(tmp, constant, tmp);
+		fromFloat.convert(tmp, value);
+	}
+	
+	public static void testConversion() {
+		int v = 1000;
+		double scale = 1.4;
+		SignedInt32Member value = new SignedInt32Member(v);
+		scaleByConstant(
+			value,
+			new Float64Member(scale),
+			new ConverterSignedInt32ToFloat64(),
+			new ConverterFloat64ToSignedInt32()
+		);
+		System.out.println("scaling " + v + " by " + scale + " equals " + value.v());
+	}
 	
 	public static void main(String[] args) {
 		workWithInts();
@@ -107,5 +124,6 @@ public class Test {
 		workWithOrderedIntegralDomain(new Float64OrderedField());
 		workWithOrderedIntegralDomainAndStrings(new SignedInt32Integer());
 		workWithOrderedIntegralDomainAndStrings(new Float64OrderedField());
+		testConversion();
 	}
 }

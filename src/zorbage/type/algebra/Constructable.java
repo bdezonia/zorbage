@@ -30,11 +30,10 @@ package zorbage.type.algebra;
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public interface Group<T extends Group<T,U>, U>
-  extends Constructable<U>
-{
-	boolean isEqual(U a, U b);
-	boolean isNotEqual(U a, U b);
-	void assign(U from, U to);
+public interface Constructable<U> {
+	U construct();
+	U construct(U other);
+	U construct(String s);
 }
