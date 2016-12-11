@@ -35,6 +35,8 @@ import zorbage.type.data.SignedInt32Member;
 import zorbage.type.data.converter.Converter;
 import zorbage.type.data.converter.ConverterFloat64ToSignedInt32;
 import zorbage.type.data.converter.ConverterSignedInt32ToFloat64;
+import zorbage.type.storage.Binding;
+import zorbage.type.storage.SignedInt32ArrayStorage;
 
 /**
  * 
@@ -43,7 +45,7 @@ import zorbage.type.data.converter.ConverterSignedInt32ToFloat64;
  */
 public class Test {
 	
-	public static void workWithInts() {
+	public static void testInts() {
 		  
 		SignedInt32Integer g = new SignedInt32Integer();
 		  
@@ -56,7 +58,7 @@ public class Test {
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
-	public static void workWithFloats() {
+	public static void testFloats() {
 		  
 		Float64OrderedField g = new Float64OrderedField();
 		  
@@ -69,7 +71,7 @@ public class Test {
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
-	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void workWithOrderedIntegralDomain(T g) {
+	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void testOrderedIntegralDomain(T g) {
 		U a = g.construct();
 		g.unity(a);
 		U b = g.construct();
@@ -82,7 +84,7 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 	
-	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void workWithOrderedIntegralDomainAndStrings(T g) {
+	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void testOrderedIntegralDomainAndStrings(T g) {
 		U a = g.construct("1040");
 		U b = g.construct("160");
 		U c = g.construct();
@@ -117,13 +119,33 @@ public class Test {
 		System.out.println("scaling " + v + " by " + scale + " equals " + value.v());
 	}
 	
+	public static void testBindings() {
+		SignedInt32Member value = new SignedInt32Member();
+		SignedInt32ArrayStorage storage = new SignedInt32ArrayStorage(10);
+		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
+		int i = 0;
+		while (binding.hasNext()) {
+			binding.fwd();
+			binding.get();
+			value.setV(i++);
+			binding.put();
+		}
+		binding.beyondEnd();
+		while (binding.hasPrev()) {
+			binding.back();
+			binding.get();
+			System.out.println("element " + binding.pos() + " equals " + value.v());
+		}
+	}
+
 	public static void main(String[] args) {
-		workWithInts();
-		workWithFloats();
-		workWithOrderedIntegralDomain(new SignedInt32Integer());
-		workWithOrderedIntegralDomain(new Float64OrderedField());
-		workWithOrderedIntegralDomainAndStrings(new SignedInt32Integer());
-		workWithOrderedIntegralDomainAndStrings(new Float64OrderedField());
+		testInts();
+		testFloats();
+		testOrderedIntegralDomain(new SignedInt32Integer());
+		testOrderedIntegralDomain(new Float64OrderedField());
+		testOrderedIntegralDomainAndStrings(new SignedInt32Integer());
+		testOrderedIntegralDomainAndStrings(new Float64OrderedField());
 		testConversion();
+		testBindings();
 	}
 }
