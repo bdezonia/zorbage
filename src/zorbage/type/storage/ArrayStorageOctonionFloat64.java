@@ -51,26 +51,28 @@ public class ArrayStorageOctonionFloat64
 
 	@Override
 	public void put(long index, OctonionFloat64Member value) {
-		data[((int)index)*8 + 0] = value.r();
-		data[((int)index)*8 + 1] = value.i();
-		data[((int)index)*8 + 2] = value.j();
-		data[((int)index)*8 + 3] = value.k();
-		data[((int)index)*8 + 4] = value.l();
-		data[((int)index)*8 + 5] = value.i0();
-		data[((int)index)*8 + 6] = value.j0();
-		data[((int)index)*8 + 7] = value.k0();
+		final int idx = ((int) index) * 8;
+		data[idx    ] = value.r();
+		data[idx + 1] = value.i();
+		data[idx + 2] = value.j();
+		data[idx + 3] = value.k();
+		data[idx + 4] = value.l();
+		data[idx + 5] = value.i0();
+		data[idx + 6] = value.j0();
+		data[idx + 7] = value.k0();
 	}
 
 	@Override
 	public void get(long index, OctonionFloat64Member value) {
-		value.setR(data[((int)index)*8 + 0]);
-		value.setI(data[((int)index)*8 + 1]);
-		value.setJ(data[((int)index)*8 + 2]);
-		value.setK(data[((int)index)*8 + 3]);
-		value.setL(data[((int)index)*8 + 4]);
-		value.setI0(data[((int)index)*8 + 5]);
-		value.setJ0(data[((int)index)*8 + 6]);
-		value.setK0(data[((int)index)*8 + 7]);
+		final int idx = ((int) index) * 8;
+		value.setR(  data[idx    ] );
+		value.setI(  data[idx + 1] );
+		value.setJ(  data[idx + 2] );
+		value.setK(  data[idx + 3] );
+		value.setL(  data[idx + 4] );
+		value.setI0( data[idx + 5] );
+		value.setJ0( data[idx + 6] );
+		value.setK0( data[idx + 7] );
 	}
 	
 	@Override

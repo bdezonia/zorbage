@@ -56,24 +56,25 @@ public class ArrayStorageBit
 	@Override
 	public void put(long index, BooleanMember value) {
 		synchronized (data) {
-			long bucket = data[(int)index / 64];
-			long mask = 1l << (index % 64);
+			final int idx = (int)index / 64;
+			long bucket = data[idx];
+			final long mask = 1l << (index % 64);
 			if (value.v()) {
 				bucket = bucket | mask;
 			}
 			else {
 				bucket = bucket & ~mask;
 			}
-			data[(int)index / 64] = bucket;
+			data[idx] = bucket;
 		}
 	}
 
 	@Override
 	public void get(long index, BooleanMember value) {
 		synchronized (data) {
-			long bucket = data[(int)index / 64];
-			long mask = 1l << (index % 64);
-			long bit = bucket & mask;
+			final long bucket = data[(int)index / 64];
+			final long mask = 1l << (index % 64);
+			final long bit = bucket & mask;
 			value.setV(bit > 0);
 		}
 	}

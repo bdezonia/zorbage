@@ -51,18 +51,20 @@ public class ArrayStorageQuaternionFloat64
 
 	@Override
 	public void put(long index, QuaternionFloat64Member value) {
-		data[((int)index)*4 + 0] = value.r();
-		data[((int)index)*4 + 1] = value.i();
-		data[((int)index)*4 + 2] = value.j();
-		data[((int)index)*4 + 3] = value.k();
+		final int idx = ((int) index) * 4;
+		data[idx    ] = value.r();
+		data[idx + 1] = value.i();
+		data[idx + 2] = value.j();
+		data[idx + 3] = value.k();
 	}
 
 	@Override
 	public void get(long index, QuaternionFloat64Member value) {
-		value.setR(data[((int)index)*4 + 0]);
-		value.setI(data[((int)index)*4 + 1]);
-		value.setJ(data[((int)index)*4 + 2]);
-		value.setK(data[((int)index)*4 + 3]);
+		final int idx = ((int) index) * 4;
+		value.setR(data[idx + 0]);
+		value.setI(data[idx + 1]);
+		value.setJ(data[idx + 2]);
+		value.setK(data[idx + 3]);
 	}
 	
 	@Override

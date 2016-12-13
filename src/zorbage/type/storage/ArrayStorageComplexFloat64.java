@@ -51,14 +51,16 @@ public class ArrayStorageComplexFloat64
 
 	@Override
 	public void put(long index, ComplexFloat64Member value) {
-		data[((int)index)*2] = value.r();
-		data[((int)index)*2 + 1] = value.i();
+		final int idx = ((int) index) * 2;
+		data[idx] = value.r();
+		data[idx + 1] = value.i();
 	}
 
 	@Override
 	public void get(long index, ComplexFloat64Member value) {
-		value.setR(data[((int)index)*2]);
-		value.setI(data[((int)index)*2 + 1]);
+		final int idx = ((int) index) * 2;
+		value.setR(data[idx]);
+		value.setI(data[idx + 1]);
 	}
 	
 	@Override
