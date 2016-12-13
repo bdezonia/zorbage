@@ -57,11 +57,12 @@ public class ArrayStorageBit
 	public void put(long index, BooleanMember value) {
 		synchronized (data) {
 			long bucket = data[(int)index / 64];
+			long mask = 1l << (index % 64);
 			if (value.v()) {
-				bucket = bucket | (1 << (index % 64));
+				bucket = bucket | mask;
 			}
 			else {
-				bucket = bucket & ~(1 << (index % 64));
+				bucket = bucket & ~mask;
 			}
 			data[(int)index / 64] = bucket;
 		}
@@ -71,7 +72,8 @@ public class ArrayStorageBit
 	public void get(long index, BooleanMember value) {
 		synchronized (data) {
 			long bucket = data[(int)index / 64];
-			long bit = bucket & (1 << (index % 64));
+			long mask = 1l << (index % 64);
+			long bit = bucket & mask;
 			value.setV(bit > 0);
 		}
 	}
