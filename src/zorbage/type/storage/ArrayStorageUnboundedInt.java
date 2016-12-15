@@ -26,6 +26,8 @@
  */
 package zorbage.type.storage;
 
+import java.math.BigInteger;
+
 import zorbage.type.data.UnboundedIntMember;
 
 /**
@@ -38,27 +40,27 @@ public class ArrayStorageUnboundedInt
 	implements Storage<UnboundedIntMember>
 {
 
-	private final UnboundedIntMember[] data;
+	private final BigInteger[] data;
 	
 	public ArrayStorageUnboundedInt(long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorage cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("ArrayStorage cannot handle such a large request");
-		this.data = new UnboundedIntMember[(int)size];
+		this.data = new BigInteger[(int)size];
 		for (int i = 0; i < data.length; i++) {
-			data[i] = new UnboundedIntMember();
+			data[i] = BigInteger.ZERO;
 		}
 	}
 
 	@Override
 	public void put(long index, UnboundedIntMember value) {
-		data[(int)index].setV( value.v() );
+		data[(int)index] = value.v();
 	}
 
 	@Override
 	public void get(long index, UnboundedIntMember value) {
-		value.setV(data[(int)index].v());
+		value.setV(data[(int)index]);
 	}
 	
 	@Override
