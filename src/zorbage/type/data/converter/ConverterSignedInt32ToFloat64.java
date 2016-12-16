@@ -46,14 +46,4 @@ public class ConverterSignedInt32ToFloat64 implements Converter<SignedInt32Membe
 		return false;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return SignedInt32Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return Float64Member.class;
-	}
-
 }

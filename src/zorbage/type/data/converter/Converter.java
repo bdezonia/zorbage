@@ -28,8 +28,6 @@ package zorbage.type.data.converter;
 
 // TODO: build a static tree like structure that finds conversions between types by lookup or chain building as needed
 
-// TODO: imagine we can convert between reals and complexes, sometimes lossy
-
 // TODO: the converters should make isLossy a boolean returned by convert() which signifies whether precision was
 //   lost or not during the conversion.
 
@@ -42,7 +40,5 @@ public interface Converter<U,V> {
 
 	void convert(U from, V to);
 	boolean isLossy();
-	Class<?> fromClass();
-	Class<?> toClass();
-	
+
 }

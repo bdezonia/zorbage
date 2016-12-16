@@ -49,14 +49,4 @@ public class ConverterQuaternion64ToComplexFloat64
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return QuaternionFloat64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return ComplexFloat64Member.class;
-	}
-
 }

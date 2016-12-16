@@ -48,14 +48,4 @@ public class ConverterUnboundedIntToQuaternionFloat64
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return UnboundedIntMember.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return QuaternionFloat64Member.class;
-	}
-
 }

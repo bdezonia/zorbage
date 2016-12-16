@@ -51,14 +51,4 @@ public class ConverterSignedInt32ToQuaternionFloat64
 		return false;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return SignedInt32Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return QuaternionFloat64Member.class;
-	}
-
 }

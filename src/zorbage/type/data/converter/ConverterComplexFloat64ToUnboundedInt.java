@@ -50,14 +50,4 @@ public class ConverterComplexFloat64ToUnboundedInt
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return ComplexFloat64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return UnboundedIntMember.class;
-	}
-
 }

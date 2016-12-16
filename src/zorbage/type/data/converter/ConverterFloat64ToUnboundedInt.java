@@ -48,14 +48,4 @@ public class ConverterFloat64ToUnboundedInt implements Converter<Float64Member, 
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return Float64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return UnboundedIntMember.class;
-	}
-
 }

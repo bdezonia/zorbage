@@ -49,15 +49,4 @@ public class ConverterSignedInt32ToComplexFloat64
 		return false;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return SignedInt32Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

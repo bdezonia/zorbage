@@ -48,14 +48,4 @@ public class ConverterSignedInt32ToUnboundedInt implements Converter<SignedInt32
 		return false;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return SignedInt32Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return UnboundedIntMember.class;
-	}
-
 }

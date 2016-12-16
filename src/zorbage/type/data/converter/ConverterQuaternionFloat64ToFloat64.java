@@ -48,14 +48,4 @@ public class ConverterQuaternionFloat64ToFloat64
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return QuaternionFloat64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return Float64Member.class;
-	}
-
 }

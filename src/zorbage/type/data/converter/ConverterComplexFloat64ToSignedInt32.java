@@ -48,14 +48,4 @@ public class ConverterComplexFloat64ToSignedInt32
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return ComplexFloat64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return SignedInt32Member.class;
-	}
-
 }

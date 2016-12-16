@@ -48,14 +48,4 @@ public class ConverterComplexFloat64ToFloat64
 		return true;
 	}
 
-	@Override
-	public Class<?> fromClass() {
-		return ComplexFloat64Member.class;
-	}
-
-	@Override
-	public Class<?> toClass() {
-		return Float64Member.class;
-	}
-
 }
