@@ -35,7 +35,7 @@ package zorbage.type.algebra;
  * @param <V> The matrix element invertible ring used for manipulating matrix elements
  * @param <W> The matrix element type: e.g. Float64Member
  */
-public interface Matrix<T extends RingWithUnity<T,U>, U,
+public interface MatrixRing<T extends RingWithUnity<T,U>, U,
                         V extends RingWithUnity<V,W> & Invertible<W>, W>
   extends
     Norm<U,W>,

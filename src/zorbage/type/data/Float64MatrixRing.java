@@ -30,7 +30,7 @@ package zorbage.type.data;
 // It could use ordered field and an ArrayStorageFloat64. Might want more than ArrayStorage too for
 // really giant matrices (or sparse matrices?). I guess this is an optimized implementation.
 
-import zorbage.type.algebra.Matrix;
+import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
 
 /**
@@ -38,12 +38,12 @@ import zorbage.type.algebra.RingWithUnity;
  * @author Barry DeZonia
  *
  */
-public class Float64Matrix
+public class Float64MatrixRing
   implements
-    RingWithUnity<Float64Matrix, Float64MatrixMember>,
-    Matrix<Float64Matrix, Float64MatrixMember, Float64OrderedField, Float64Member>
+    RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
+    MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
 {
-	public Float64Matrix() {
+	public Float64MatrixRing() {
 	}
 	
 	@Override
