@@ -38,16 +38,16 @@ import zorbage.type.algebra.RingWithUnity;
  * @author Barry DeZonia
  *
  */
-public class MatrixFloat64
+public class Float64Matrix
   implements
-    RingWithUnity<MatrixFloat64, MatrixFloat64Member>,
-    Matrix<MatrixFloat64, MatrixFloat64Member, Float64OrderedField, Float64Member>
+    RingWithUnity<Float64Matrix, Float64MatrixMember>,
+    Matrix<Float64Matrix, Float64MatrixMember, Float64OrderedField, Float64Member>
 {
-	public MatrixFloat64() {
+	public Float64Matrix() {
 	}
 	
 	@Override
-	public void norm(MatrixFloat64Member a, Float64Member b) {
+	public void norm(Float64MatrixMember a, Float64Member b) {
 		throw new IllegalArgumentException("TODO");
 		// TODO
 		// MathWorld.com
@@ -56,7 +56,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void roundTowardsZero(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void roundTowardsZero(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
@@ -74,7 +74,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void roundAwayFromZero(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void roundAwayFromZero(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
@@ -92,7 +92,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void roundPositive(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void roundPositive(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
@@ -107,7 +107,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void roundNegative(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void roundNegative(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
@@ -122,7 +122,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void roundNearest(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void roundNearest(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
@@ -137,7 +137,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public boolean isNaN(MatrixFloat64Member a) {
+	public boolean isNaN(Float64MatrixMember a) {
 		Float64Member value1 = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
@@ -150,7 +150,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public boolean isInfinite(MatrixFloat64Member a) {
+	public boolean isInfinite(Float64MatrixMember a) {
 		if (isNaN(a)) return false;
 		Float64Member value1 = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
@@ -164,12 +164,12 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void conjugate(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void conjugate(Float64MatrixMember a, Float64MatrixMember b) {
 		assign(a, b); // nothing to do for a real matrix
 	}
 
 	@Override
-	public void transpose(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void transpose(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a.rows() == a.cols() && a.rows() == b.rows() && a.cols() == b.cols())
 			assign(a,b);
 		else {
@@ -187,12 +187,12 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void conjugateTranspose(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void conjugateTranspose(Float64MatrixMember a, Float64MatrixMember b) {
 		transpose(a,b);
 	}
 
 	@Override
-	public void det(MatrixFloat64Member a, Float64Member b) {
+	public void det(Float64MatrixMember a, Float64Member b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("determinant only defined for square matrices");
 		// TODO
@@ -201,7 +201,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void multiply(MatrixFloat64Member a, MatrixFloat64Member b, MatrixFloat64Member c) {
+	public void multiply(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
 		int rows = a.rows();
@@ -226,7 +226,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void power(int power, MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void power(int power, Float64MatrixMember a, Float64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
 		if (power < 0)
@@ -238,8 +238,8 @@ public class MatrixFloat64
 		else if (power == 1)
 			assign(a,b);
 		else { // power >= 2
-			MatrixFloat64Member tmp = new MatrixFloat64Member(a);
-			MatrixFloat64Member tmp2 = new MatrixFloat64Member();
+			Float64MatrixMember tmp = new Float64MatrixMember(a);
+			Float64MatrixMember tmp2 = new Float64MatrixMember();
 			for (int i = 2; i <= power; i++) {
 				multiply(a, tmp, tmp2);
 				assign(tmp2, tmp);
@@ -249,7 +249,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void zero(MatrixFloat64Member a) {
+	public void zero(Float64MatrixMember a) {
 		Float64Member zero = new Float64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
@@ -259,7 +259,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void negate(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public void negate(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
@@ -274,7 +274,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void add(MatrixFloat64Member a, MatrixFloat64Member b, MatrixFloat64Member c) {
+	public void add(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
@@ -293,7 +293,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public void subtract(MatrixFloat64Member a, MatrixFloat64Member b, MatrixFloat64Member c) {
+	public void subtract(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (c != a && c != b) {
@@ -312,7 +312,7 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public boolean isEqual(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public boolean isEqual(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a == b) return true;
 		if (a.rows() != b.rows()) return false;
 		if (a.cols() != b.cols()) return false;
@@ -329,12 +329,12 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public boolean isNotEqual(MatrixFloat64Member a, MatrixFloat64Member b) {
+	public boolean isNotEqual(Float64MatrixMember a, Float64MatrixMember b) {
 		return !isEqual(a, b);
 	}
 
 	@Override
-	public void assign(MatrixFloat64Member from, MatrixFloat64Member to) {
+	public void assign(Float64MatrixMember from, Float64MatrixMember to) {
 		if (to == from) return;
 		Float64Member tmp = new Float64Member();
 		to.init(from.rows(), from.cols());
@@ -347,22 +347,22 @@ public class MatrixFloat64
 	}
 
 	@Override
-	public MatrixFloat64Member construct() {
-		return new MatrixFloat64Member();
+	public Float64MatrixMember construct() {
+		return new Float64MatrixMember();
 	}
 
 	@Override
-	public MatrixFloat64Member construct(MatrixFloat64Member other) {
-		return new MatrixFloat64Member(other);
+	public Float64MatrixMember construct(Float64MatrixMember other) {
+		return new Float64MatrixMember(other);
 	}
 
 	@Override
-	public MatrixFloat64Member construct(String s) {
-		return new MatrixFloat64Member(s);
+	public Float64MatrixMember construct(String s) {
+		return new Float64MatrixMember(s);
 	}
 
 	@Override
-	public void unity(MatrixFloat64Member a) {
+	public void unity(Float64MatrixMember a) {
 		zero(a);
 		Float64Member one = new Float64Member(1);
 		for (int i = 0; i < Math.min(a.rows(), a.cols()); i++) {

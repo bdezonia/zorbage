@@ -31,26 +31,26 @@ package zorbage.type.data;
  * @author Barry DeZonia
  *
  */
-public final class MatrixFloat64Member {
+public final class Float64MatrixMember {
 
 	private double[] data;
 	private int rows;
 	private int cols;
 	
-	public MatrixFloat64Member() {
+	public Float64MatrixMember() {
 		rows = -1;
 		cols = -1;
 		init(0,0);
 	}
 	
-	public MatrixFloat64Member(MatrixFloat64Member other) {
+	public Float64MatrixMember(Float64MatrixMember other) {
 		init(other.rows,other.cols);
 		for (int i = 0; i < data.length; i++) {
 			data[i] = other.data[i];
 		}
 	}
 	
-	public MatrixFloat64Member(String s) {
+	public Float64MatrixMember(String s) {
 		throw new IllegalArgumentException("to be implemented");
 	}
 	
