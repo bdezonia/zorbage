@@ -94,8 +94,6 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 
-	// TODO here: scale a whole collection of items with the two converters
-	//
 	public static <U> void scaleByConstant(U value, Float64Member constant,
 			Converter<U, Float64Member> toFloat, Converter<Float64Member, U> fromFloat)
 	{
