@@ -68,6 +68,16 @@ public final class ComplexFloat64Member {
     public void setR(double val) { r = val; }	
     public void setI(double val) { i = val; }	
 
+    public void get(ComplexFloat64Member other) {
+    	other.r = r;
+    	other.i = i;
+    }
+
+    public void set(ComplexFloat64Member other) {
+    	r = other.r;
+    	i = other.i;
+    }
+    
     @Override
 	public String toString() { return "" + r + " " + i; }
 

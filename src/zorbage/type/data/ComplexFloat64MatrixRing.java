@@ -39,7 +39,7 @@ public class ComplexFloat64MatrixRing
 		RingWithUnity<ComplexFloat64MatrixRing, ComplexFloat64MatrixMember>,
 		MatrixRing<ComplexFloat64MatrixRing, ComplexFloat64MatrixMember, ComplexFloat64Field, ComplexFloat64Member>
 {
-	private ComplexFloat64Field g = new ComplexFloat64Field();
+	private static final ComplexFloat64Field g = new ComplexFloat64Field();
 	
 	public ComplexFloat64MatrixRing() {	}
 

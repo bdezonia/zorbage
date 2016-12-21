@@ -96,6 +96,28 @@ public class OctonionFloat64Member {
 	public void setJ0(double val) { j0 = val; }
 	public void setK0(double val) { k0 = val; }
 	
+	public void set(OctonionFloat64Member other) {
+		r = other.r;
+		i = other.i;
+		j = other.j;
+		k = other.k;
+		l = other.l;
+		i0 = other.i0;
+		j0 = other.j0;
+		k0 = other.k0;
+	}
+
+	public void get(OctonionFloat64Member other) {
+		other.r = r;
+		other.i = i;
+		other.j = j;
+		other.k = k;
+		other.l = l;
+		other.i0 = i0;
+		other.j0 = j0;
+		other.k0 = k0;
+	}
+
 	@Override
 	public String toString() { return "" + r + " " + i + " " + j + " " + k + " " + l + " " + i0 + " " + j0 + " " + k0; }
 

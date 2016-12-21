@@ -55,6 +55,14 @@ public final class Float64Member {
 	public double v() { return v; }
 	public void setV(double val) { v = val; }
 	
+	public void set(Float64Member other) {
+		v = other.v;
+	}
+
+	public void get(Float64Member other) {
+		other.v = v;
+	}
+	
 	@Override
 	public String toString() { return "" + v; }
 

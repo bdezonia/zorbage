@@ -78,6 +78,20 @@ public final class QuaternionFloat64Member {
 	public void setJ(double val) { j = val; }
 	public void setK(double val) { k = val; }
 	
+	public void set(QuaternionFloat64Member other) {
+		r = other.r;
+		i = other.i;
+		j = other.j;
+		k = other.k;
+	}
+
+	public void get(QuaternionFloat64Member other) {
+		other.r = r;
+		other.i = i;
+		other.j = j;
+		other.k = k;
+	}
+	
 	@Override
 	public String toString() { return "" + r + " " + i + " " + j + " " + k; }
 

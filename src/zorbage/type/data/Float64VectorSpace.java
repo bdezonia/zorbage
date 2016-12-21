@@ -138,7 +138,7 @@ public class Float64VectorSpace
 		if (!compatible(3,a) || !compatible(3,b))
 			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
 		Float64VectorMember tmp = new Float64VectorMember(new double[3]);
-		tmp.setV(0, a.v(1)*b.v(2) - a.v(2)*b.v(2));
+		tmp.setV(0, a.v(1)*b.v(2) - a.v(2)*b.v(1));
 		tmp.setV(1, a.v(2)*b.v(0) - a.v(0)*b.v(2));
 		tmp.setV(2, a.v(0)*b.v(1) - a.v(1)*b.v(0));
 		assign(tmp, c);

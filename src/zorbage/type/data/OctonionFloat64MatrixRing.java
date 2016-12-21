@@ -39,7 +39,7 @@ public class OctonionFloat64MatrixRing
 		RingWithUnity<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember>,
 		MatrixRing<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember, OctonionFloat64SkewField, OctonionFloat64Member>
 {
-	private OctonionFloat64SkewField g = new OctonionFloat64SkewField();
+	private static final OctonionFloat64SkewField g = new OctonionFloat64SkewField();
 	
 	public OctonionFloat64MatrixRing() { }
 
