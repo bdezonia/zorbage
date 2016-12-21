@@ -50,11 +50,9 @@ public final class QuaternionFloat64MatrixMember {
 		cols = -1;
 		init(other.rows(),other.cols());
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				other.v(r, c, value);
-				setV(r, c, value);
-			}
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
 		}
 	}
 	
@@ -74,6 +72,12 @@ public final class QuaternionFloat64MatrixMember {
 		
 		if (((long)r)*c != storage.size()) {
 			storage = new ArrayStorageQuaternionFloat64(((long)r)*c);
+		}
+		else {
+			QuaternionFloat64Member zero = new QuaternionFloat64Member();
+			for (long i = 0; i < storage.size(); i++) {
+				storage.put(i, zero);
+			}
 		}
 	}
 	
