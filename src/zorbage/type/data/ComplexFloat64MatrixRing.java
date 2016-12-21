@@ -362,4 +362,15 @@ public class ComplexFloat64MatrixRing
 		}
 	}
 
+	@Override
+	public void invert(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void divide(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+		// invert and multiply
+		throw new IllegalArgumentException("TODO");
+	}
+
 }

@@ -362,4 +362,15 @@ public class OctonionFloat64MatrixRing
 		}
 	}
 
+	@Override
+	public void invert(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+		// invert and multiply
+		throw new IllegalArgumentException("TODO");
+	}
+
 }

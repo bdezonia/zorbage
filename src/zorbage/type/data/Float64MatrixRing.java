@@ -369,4 +369,15 @@ public class Float64MatrixRing
 			a.setV(i, i, one);
 		}
 	}
+
+	@Override
+	public void invert(Float64MatrixMember a, Float64MatrixMember b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+		// invert and multiply
+		throw new IllegalArgumentException("TODO");
+	}
 }

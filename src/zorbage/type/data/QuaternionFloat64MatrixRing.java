@@ -362,4 +362,17 @@ public class QuaternionFloat64MatrixRing
 		}
 	}
 
+	@Override
+	public void invert(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void divide(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b,
+			QuaternionFloat64MatrixMember c)
+	{
+		// invert and multiply
+		throw new IllegalArgumentException("TODO");
+	}
+
 }
