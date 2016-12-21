@@ -48,7 +48,6 @@ public final class Float64VectorMember {
 		storage = new ArrayStorageFloat64(vals.length);
 		Float64Member value = new Float64Member();
 		for (int i = 0; i < vals.length; i++) {
-			storage.get(i, value);
 			value.setV(vals[i]);
 			storage.put(i,  value);
 		}

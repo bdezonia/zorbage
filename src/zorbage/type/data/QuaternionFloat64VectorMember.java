@@ -45,7 +45,7 @@ public final class QuaternionFloat64VectorMember {
 	}
 	
 	public QuaternionFloat64VectorMember(double[] vals) {
-		storage = new ArrayStorageQuaternionFloat64(vals.length);
+		storage = new ArrayStorageQuaternionFloat64(vals.length/4);
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (int i = 0; i < vals.length/4; i++) {
 			value.setR(vals[4*i]);

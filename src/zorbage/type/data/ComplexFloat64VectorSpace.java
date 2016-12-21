@@ -176,7 +176,7 @@ public class ComplexFloat64VectorSpace
 		// kludgy: 3 dim only. treating lower dim vectors as having zeroes in other positions.
 		if (!compatible(3,a) || !compatible(3,b))
 			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
-		ComplexFloat64VectorMember tmp = new ComplexFloat64VectorMember(new double[3], new double[3]);
+		ComplexFloat64VectorMember tmp = new ComplexFloat64VectorMember(new double[3*2]);
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
 		ComplexFloat64Member term1 = new ComplexFloat64Member();
@@ -257,7 +257,7 @@ public class ComplexFloat64VectorSpace
 	public void vectorTripleProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c,
 			ComplexFloat64VectorMember d)
 	{
-		ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3], new double[3]);
+		ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3*2]);
 		crossProduct(b, c, b_cross_c);
 		crossProduct(a, b_cross_c, d);
 	}
@@ -266,7 +266,7 @@ public class ComplexFloat64VectorSpace
 	public void scalarTripleProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c,
 			ComplexFloat64Member d)
 	{
-		ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3], new double[3]);
+		ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3*2]);
 		crossProduct(b, c, b_cross_c);
 		dotProduct(a, b_cross_c, d);
 	}

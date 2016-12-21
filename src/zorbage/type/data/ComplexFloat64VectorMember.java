@@ -44,15 +44,12 @@ public final class ComplexFloat64VectorMember {
 		storage = new ArrayStorageComplexFloat64(0);
 	}
 	
-	public ComplexFloat64VectorMember(double[] rvals, double[] ivals) {
-		if (rvals.length != ivals.length)
-			throw new IllegalArgumentException("unmatched input lengths to vector constructor");
-		storage = new ArrayStorageComplexFloat64(rvals.length);
+	public ComplexFloat64VectorMember(double[] vals) {
+		storage = new ArrayStorageComplexFloat64(vals.length / 2);
 		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (int i = 0; i < rvals.length; i++) {
-			storage.get(i, value);
-			value.setR(rvals[i]);
-			value.setI(ivals[i]);
+		for (int i = 0; i < vals.length/2; i++) {
+			value.setR(vals[2*i]);
+			value.setI(vals[2*i+1]);
 			storage.put(i,  value);
 		}
 	}

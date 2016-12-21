@@ -45,7 +45,7 @@ public final class OctonionFloat64VectorMember {
 	}
 	
 	public OctonionFloat64VectorMember(double[] vals) {
-		storage = new ArrayStorageOctonionFloat64(vals.length);
+		storage = new ArrayStorageOctonionFloat64(vals.length/8);
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (int i = 0; i < vals.length/8; i++) {
 			value.setR(vals[8*i]);
