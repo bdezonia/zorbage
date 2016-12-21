@@ -33,7 +33,7 @@ package zorbage.type.algebra;
  */
 public interface RingWithUnity<T extends RingWithUnity<T,U>,U>
   extends
-    Ring<T,U>
+    Ring<T,U>,
+    Unity<U>
 {
-	void unity(U a);  // setOne()
 }

@@ -27,6 +27,7 @@
 package zorbage.type.math;
 
 import zorbage.type.algebra.Invertible;
+import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.storage.Storage;
 
@@ -37,7 +38,7 @@ import zorbage.type.storage.Storage;
  * @param <T>
  * @param <U>
  */
-public class Average<T extends AdditiveGroup<T,U> & Invertible<U>, U> {
+public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U> {
 
 	private T g;
 
@@ -45,10 +46,12 @@ public class Average<T extends AdditiveGroup<T,U> & Invertible<U>, U> {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<U> storage, U one, U result) {
+	public void calculate(Storage<U> storage, U result) {
 		U sum = g.construct();
 		U count = g.construct();
 		U tmp = g.construct();
+		U one = g.construct();
+		g.unity(one);
 		for (long l = 0; l < storage.size(); l++) {
 			storage.get(l, tmp);
 			g.add(sum, tmp, sum);
