@@ -94,7 +94,7 @@ public class ComplexFloat64VectorSpace
 		int max = Math.max(a.length(), b.length());
 		for (int i = 0; i < max; i++) {
 			a.v(i, atmp);
-		    b.v(i, btmp);
+			b.v(i, btmp);
 			if (g.isNotEqual(atmp, btmp))
 				return false;
 		}
@@ -185,7 +185,7 @@ public class ComplexFloat64VectorSpace
 		a.v(2, atmp);
 		b.v(1, btmp);
 		g.multiply(atmp, btmp, term2);
-		g.subtract(term1,  term2,  t);
+		g.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
@@ -193,7 +193,7 @@ public class ComplexFloat64VectorSpace
 		a.v(0, atmp);
 		b.v(2, btmp);
 		g.multiply(atmp, btmp, term2);
-		g.subtract(term1,  term2,  t);
+		g.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
@@ -201,7 +201,7 @@ public class ComplexFloat64VectorSpace
 		a.v(1, atmp);
 		b.v(0, btmp);
 		g.multiply(atmp, btmp, term2);
-		g.subtract(term1,  term2,  t);
+		g.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -247,7 +247,7 @@ public class ComplexFloat64VectorSpace
 		a.v(0, atmp);
 		b.v(1, btmp);
 		g.multiply(atmp, btmp, term2);
-		g.add(term1,  term2,  c);
+		g.add(term1, term2, c);
 	}
 
 	@Override
