@@ -24,24 +24,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
+package zorbage.type.converter;
 
 import zorbage.type.data.ComplexFloat64Member;
-import zorbage.type.data.UnboundedIntMember;
+import zorbage.type.data.SignedInt32Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterUnboundedIntToComplexFloat64 
-  implements Converter<UnboundedIntMember,ComplexFloat64Member>
+public class ConverterComplexFloat64ToSignedInt32 
+  implements Converter<ComplexFloat64Member,SignedInt32Member>
 {
 
 	@Override
-	public void convert(UnboundedIntMember from, ComplexFloat64Member to) {
-		to.setR( from.v().doubleValue() );
-		to.setI( 0 );
+	public void convert(ComplexFloat64Member from, SignedInt32Member to) {
+		to.setV( (int) from.r() );
 	}
 
 	@Override

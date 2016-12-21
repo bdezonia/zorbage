@@ -24,29 +24,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
+package zorbage.type.converter;
 
 import zorbage.type.data.ComplexFloat64Member;
-import zorbage.type.data.QuaternionFloat64Member;
+import zorbage.type.data.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterQuaternion64ToComplexFloat64
-  implements Converter<QuaternionFloat64Member, ComplexFloat64Member>
+public class ConverterFloat64ToComplexFloat64
+  implements Converter<Float64Member,ComplexFloat64Member>
 {
 
 	@Override
-	public void convert(QuaternionFloat64Member from, ComplexFloat64Member to) {
-		to.setR( from.r() );
-		to.setI( from.i() );
+	public void convert(Float64Member from, ComplexFloat64Member to) {
+		to.setR( from.v() );
+		to.setI( 0 );
 	}
 
 	@Override
 	public boolean isLossy() {
-		return true;
+		return false;
 	}
 
 }

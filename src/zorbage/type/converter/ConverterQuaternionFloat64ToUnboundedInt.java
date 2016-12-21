@@ -24,7 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
+package zorbage.type.converter;
+
+import java.math.BigInteger;
 
 import zorbage.type.data.QuaternionFloat64Member;
 import zorbage.type.data.UnboundedIntMember;
@@ -34,13 +36,13 @@ import zorbage.type.data.UnboundedIntMember;
  * @author Barry DeZonia
  *
  */
-public class ConverterUnboundedIntToQuaternionFloat64
-  implements Converter<UnboundedIntMember, QuaternionFloat64Member>
+public class ConverterQuaternionFloat64ToUnboundedInt
+  implements Converter<QuaternionFloat64Member, UnboundedIntMember>
 {
 
 	@Override
-	public void convert(UnboundedIntMember from, QuaternionFloat64Member to) {
-		to.setR( from.v().doubleValue() );
+	public void convert(QuaternionFloat64Member from, UnboundedIntMember to) {
+		to.setV( BigInteger.valueOf((long)from.r()) );
 	}
 
 	@Override

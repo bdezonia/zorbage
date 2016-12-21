@@ -24,30 +24,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
+package zorbage.type.converter;
 
-import java.math.BigInteger;
-
+import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.data.QuaternionFloat64Member;
-import zorbage.type.data.UnboundedIntMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterQuaternionFloat64ToUnboundedInt
-  implements Converter<QuaternionFloat64Member, UnboundedIntMember>
+public class ConverterComplexFloat64ToQuaternionFloat64
+  implements Converter<ComplexFloat64Member, QuaternionFloat64Member>
 {
 
 	@Override
-	public void convert(QuaternionFloat64Member from, UnboundedIntMember to) {
-		to.setV( BigInteger.valueOf((long)from.r()) );
+	public void convert(ComplexFloat64Member from, QuaternionFloat64Member to) {
+		to.setR( from.r() );
+		to.setI( from.i() );
+		to.setJ( 0 );
+		to.setK( 0 );
 	}
 
 	@Override
 	public boolean isLossy() {
-		return true;
+		return false;
 	}
 
 }

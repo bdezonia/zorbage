@@ -24,25 +24,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
-
-import java.math.BigInteger;
+package zorbage.type.converter;
 
 import zorbage.type.data.ComplexFloat64Member;
-import zorbage.type.data.UnboundedIntMember;
+import zorbage.type.data.QuaternionFloat64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterComplexFloat64ToUnboundedInt
-  implements Converter<ComplexFloat64Member, UnboundedIntMember>
+public class ConverterQuaternion64ToComplexFloat64
+  implements Converter<QuaternionFloat64Member, ComplexFloat64Member>
 {
 
 	@Override
-	public void convert(ComplexFloat64Member from, UnboundedIntMember to) {
-		to.setV( BigInteger.valueOf((long)from.r()) );
+	public void convert(QuaternionFloat64Member from, ComplexFloat64Member to) {
+		to.setR( from.r() );
+		to.setI( from.i() );
 	}
 
 	@Override

@@ -24,28 +24,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
+package zorbage.type.converter;
 
-import java.math.BigInteger;
-
+import zorbage.type.data.QuaternionFloat64Member;
 import zorbage.type.data.SignedInt32Member;
-import zorbage.type.data.UnboundedIntMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConverterSignedInt32ToUnboundedInt implements Converter<SignedInt32Member, UnboundedIntMember> {
+public class ConverterQuaternionFloat64ToSignedInt32
+  implements Converter<QuaternionFloat64Member, SignedInt32Member>
+{
 
 	@Override
-	public void convert(SignedInt32Member from, UnboundedIntMember to) {
-		to.setV( BigInteger.valueOf(from.v()) );
+	public void convert(QuaternionFloat64Member from, SignedInt32Member to) {
+		to.setV( (int) from.r() );
 	}
 
 	@Override
 	public boolean isLossy() {
-		return false;
+		return true;
 	}
 
 }

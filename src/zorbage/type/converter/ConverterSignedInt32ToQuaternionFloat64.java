@@ -24,21 +24,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.converter;
+package zorbage.type.converter;
 
-// TODO: build a static tree like structure that finds conversions between types by lookup or chain building as needed
-
-// TODO: the converters should make isLossy a boolean returned by convert() which signifies whether precision was
-//   lost or not during the conversion.
+import zorbage.type.data.QuaternionFloat64Member;
+import zorbage.type.data.SignedInt32Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Converter<U,V> {
+public class ConverterSignedInt32ToQuaternionFloat64
+  implements Converter<SignedInt32Member, QuaternionFloat64Member>
+{
 
-	void convert(U from, V to);
-	boolean isLossy();
+	@Override
+	public void convert(SignedInt32Member from, QuaternionFloat64Member to) {
+		to.setR( from.v() );
+		to.setI( 0 );
+		to.setJ( 0 );
+		to.setK( 0 );
+	}
+
+	@Override
+	public boolean isLossy() {
+		return false;
+	}
 
 }

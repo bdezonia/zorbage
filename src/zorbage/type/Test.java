@@ -28,13 +28,13 @@ package zorbage.type;
 
 import zorbage.type.algebra.IntegralDomain;
 import zorbage.type.algebra.Ordered;
+import zorbage.type.converter.Converter;
+import zorbage.type.converter.ConverterFloat64ToSignedInt32;
+import zorbage.type.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
 import zorbage.type.data.SignedInt32Member;
-import zorbage.type.data.converter.Converter;
-import zorbage.type.data.converter.ConverterFloat64ToSignedInt32;
-import zorbage.type.data.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.storage.Binding;
 import zorbage.type.storage.ArrayStorageSignedInt32;
 
