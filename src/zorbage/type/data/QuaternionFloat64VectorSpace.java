@@ -36,5 +36,7 @@ package zorbage.type.data;
 public class QuaternionFloat64VectorSpace {}
 /*
 PROBLEM: QuaternionSkewField is not a Field. Can't construct VectorSpace on it. Can this be relaxed?
+We can define a module over a division ring that satisfies much of linear algebra.
+https://en.wikipedia.org/wiki/Division_ring
 TODO copy contents of ComplexFloat64VectorSpace.
 */
