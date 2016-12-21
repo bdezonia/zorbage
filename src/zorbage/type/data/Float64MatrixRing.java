@@ -39,11 +39,9 @@ public class Float64MatrixRing
 		RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
 		MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
 {
-	private Float64OrderedField g;
+	private Float64OrderedField g = new Float64OrderedField();
 	
-	public Float64MatrixRing(Float64OrderedField g) {
-		this.g = g;
-	}
+	public Float64MatrixRing() { }
 
 	@Override
 	public void multiply(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {

@@ -39,11 +39,9 @@ public class OctonionFloat64MatrixRing
 		RingWithUnity<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember>,
 		MatrixRing<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember, OctonionFloat64SkewField, OctonionFloat64Member>
 {
-	private OctonionFloat64SkewField g;
+	private OctonionFloat64SkewField g = new OctonionFloat64SkewField();
 	
-	public OctonionFloat64MatrixRing(OctonionFloat64SkewField g) {
-		this.g = g;
-	}
+	public OctonionFloat64MatrixRing() { }
 
 	@Override
 	public void multiply(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {

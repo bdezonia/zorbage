@@ -39,11 +39,9 @@ public class QuaternionFloat64MatrixRing
 		RingWithUnity<QuaternionFloat64MatrixRing, QuaternionFloat64MatrixMember>,
 		MatrixRing<QuaternionFloat64MatrixRing, QuaternionFloat64MatrixMember, QuaternionFloat64SkewField, QuaternionFloat64Member>
 {
-	private QuaternionFloat64SkewField g;
+	private QuaternionFloat64SkewField g = new QuaternionFloat64SkewField();
 	
-	public QuaternionFloat64MatrixRing(QuaternionFloat64SkewField g) {
-		this.g = g;
-	}
+	public QuaternionFloat64MatrixRing() { }
 
 	@Override
 	public void multiply(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
