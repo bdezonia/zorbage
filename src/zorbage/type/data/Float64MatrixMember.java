@@ -91,6 +91,17 @@ public final class Float64MatrixMember {
 		storage.put(index, value);
 	}
 	
+	
+	public void set(Float64MatrixMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	public void get(Float64MatrixMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+
 	@Override
 	public String toString() {
 		throw new IllegalArgumentException("TODO");

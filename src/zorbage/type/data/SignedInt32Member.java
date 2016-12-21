@@ -55,6 +55,15 @@ public final class SignedInt32Member {
 	public int v() { return v; }
 	public void setV(int val) { v = val; }
 	
+	
+	public void set(SignedInt32Member other) {
+		v = other.v;
+	}
+	
+	public void get(SignedInt32Member other) {
+		other.v = v;
+	}
+
 	@Override
 	public String toString() { return "" + v; }
 }

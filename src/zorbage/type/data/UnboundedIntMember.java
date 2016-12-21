@@ -61,6 +61,15 @@ public final class UnboundedIntMember {
 	public BigInteger v() { return v; }
 	public void setV(BigInteger val) { v = val; }
 	
+	
+	public void set(UnboundedIntMember other) {
+		v = other.v;
+	}
+	
+	public void get(UnboundedIntMember other) {
+		other.v = v;
+	}
+
 	@Override
 	public String toString() { return "" + v; }
 	

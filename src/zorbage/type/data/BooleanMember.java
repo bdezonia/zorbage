@@ -29,6 +29,14 @@ public final class BooleanMember {
 	public boolean v() { return v; }
 	public void setV(boolean val) { v = val; }
 	
+	public void set(BooleanMember other) {
+		v = other.v;
+	}
+	
+	public void get(BooleanMember other) {
+		other.v = v;
+	}
+
 	@Override
 	public String toString() { if (v) return ONE; else return ZERO; }
 }

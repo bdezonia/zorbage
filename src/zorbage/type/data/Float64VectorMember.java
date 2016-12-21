@@ -69,6 +69,17 @@ public final class Float64VectorMember {
 		v[i] = val;
 	}
 	
+	
+	public void set(Float64VectorMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	public void get(Float64VectorMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+
 	public int length() { return v.length; }
 	
 	@Override

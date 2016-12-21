@@ -92,6 +92,16 @@ public final class ComplexFloat64VectorMember {
 		storage.put(i, v);
 	}
 	
+	public void set(ComplexFloat64VectorMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	public void get(ComplexFloat64VectorMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+	
 	public int length() { return (int) storage.size(); }
 	
 	@Override

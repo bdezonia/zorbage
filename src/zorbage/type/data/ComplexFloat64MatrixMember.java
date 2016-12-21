@@ -91,6 +91,32 @@ public final class ComplexFloat64MatrixMember {
 		storage.put(index, value);
 	}
 	
+	public void set(ComplexFloat64MatrixMember other) {
+		if (this == other) return;
+		rows = other.rows;
+		cols = other.cols;
+		if (storage.size() != other.storage.size())
+			storage = new ArrayStorageComplexFloat64(other.storage.size());
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
+		}
+	}
+	
+	public void get(ComplexFloat64MatrixMember other) {
+		if (this == other) return;
+		other.rows = rows;
+		other.cols = cols;
+		if (storage.size() != other.storage.size())
+			other.storage = new ArrayStorageComplexFloat64(storage.size());
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			other.storage.put(i, value);
+		}
+	}
+	
 	@Override
 	public String toString() {
 		throw new IllegalArgumentException("TODO");

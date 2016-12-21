@@ -79,6 +79,7 @@ public final class QuaternionFloat64Member {
 	public void setK(double val) { k = val; }
 	
 	public void set(QuaternionFloat64Member other) {
+		if (this == other) return;
 		r = other.r;
 		i = other.i;
 		j = other.j;
@@ -86,6 +87,7 @@ public final class QuaternionFloat64Member {
 	}
 
 	public void get(QuaternionFloat64Member other) {
+		if (this == other) return;
 		other.r = r;
 		other.i = i;
 		other.j = j;

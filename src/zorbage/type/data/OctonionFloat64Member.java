@@ -97,6 +97,7 @@ public class OctonionFloat64Member {
 	public void setK0(double val) { k0 = val; }
 	
 	public void set(OctonionFloat64Member other) {
+		if (this == other) return;
 		r = other.r;
 		i = other.i;
 		j = other.j;
@@ -108,6 +109,7 @@ public class OctonionFloat64Member {
 	}
 
 	public void get(OctonionFloat64Member other) {
+		if (this == other) return;
 		other.r = r;
 		other.i = i;
 		other.j = j;

@@ -81,16 +81,27 @@ public final class QuaternionFloat64MatrixMember {
 		}
 	}
 	
-	void v(int r, int c, QuaternionFloat64Member value) {
+	public void v(int r, int c, QuaternionFloat64Member value) {
 		long index = ((long)r) * rows + c;
 		storage.get(index, value);
 	}
 	
-	void setV(int r, int c, QuaternionFloat64Member value) {
+	public void setV(int r, int c, QuaternionFloat64Member value) {
 		long index = ((long)r) * rows + c;
 		storage.put(index, value);
 	}
 	
+	
+	public void set(QuaternionFloat64MatrixMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	public void get(QuaternionFloat64MatrixMember other) {
+		if (this == other) return;
+		throw new IllegalArgumentException("TODO");
+	}
+
 	@Override
 	public String toString() {
 		throw new IllegalArgumentException("TODO");
