@@ -37,44 +37,67 @@ public class Float64VectorSpace
   implements
     VectorSpace<Float64VectorSpace,Float64VectorMember,Float64OrderedField,Float64Member>
 {
+	private static final Float64Member ZERO = new Float64Member(0);
+	private static final Float64OrderedField g = new Float64OrderedField();
 
 	@Override
 	public void zero(Float64VectorMember a) {
 		for (int i = 0; i < a.length(); i++)
-			a.setV(i, 0);
+			a.setV(i, ZERO);
 	}
 
 	@Override
 	public void negate(Float64VectorMember a, Float64VectorMember b) {
+		Float64Member tmp = new Float64Member();
 		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++)
-			b.setV(i, -a.v(i));
+		for (int i = 0; i < max; i++) {
+			a.v(i, tmp);
+			g.negate(tmp, tmp);
+			b.setV(i, tmp);
+		}
 	}
 
 	@Override
 	public void add(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
 		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++)
-			c.setV(i, a.v(i) + b.v(i));
+		for (int i = 0; i < max; i++) {
+			a.v(i, atmp);
+			b.v(i, btmp);
+			g.add(atmp, btmp, btmp);
+			c.setV(i, btmp);
+		}
 		for (int i = max; i < c.length(); i++)
-			c.setV(i, 0);
+			c.setV(i, ZERO);
 	}
 
 	@Override
 	public void subtract(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
 		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++)
-			c.setV(i, a.v(i) - b.v(i));
+		for (int i = 0; i < max; i++) {
+			a.v(i, atmp);
+			b.v(i, btmp);
+			g.subtract(atmp, btmp, btmp);
+			c.setV(i, btmp);
+		}
 		for (int i = max; i < c.length(); i++)
-			c.setV(i, 0);
+			c.setV(i, ZERO);
 	}
 
 	@Override
 	public boolean isEqual(Float64VectorMember a, Float64VectorMember b) {
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
 		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++)
-			if (a.v(i) != b.v(i))
+		for (int i = 0; i < max; i++) {
+			a.v(i, atmp);
+			b.v(i, btmp);
+			if (g.isNotEqual(atmp, btmp))
 				return false;
+		}
 		return true;
 	}
 
@@ -100,35 +123,44 @@ public class Float64VectorSpace
 
 	@Override
 	public void assign(Float64VectorMember from, Float64VectorMember to) {
+		Float64Member tmp = new Float64Member();
 		for (int i = 0; i < from.length(); i++) {
-			to.setV(i, from.v(i));
+			from.v(i, tmp);
+			to.setV(i, tmp);
 		}
 		for (int i = from.length(); i < to.length(); i++) {
-			to.setV(i, 0);
+			to.setV(i, ZERO);
 		}
 	}
 
 	@Override
 	public void norm(Float64VectorMember a, Float64Member b) {
-		double norm2 = 0;
+		Float64Member tmp = new Float64Member();
+		Float64Member norm2 = new Float64Member(0);
 		for (int i = 0; i < a.length(); i++) {
-			double tmp = a.v(i);
-			norm2 += tmp * tmp;
+			a.v(i,  tmp);
+			g.multiply(tmp, tmp, tmp);
+			g.add(norm2, tmp, norm2);
 		}
-		double norm = Math.sqrt(norm2);
+		double norm = Math.sqrt(norm2.v());
 		b.setV(norm);
 	}
 
 	@Override
 	public void scale(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+		Float64Member tmp = new Float64Member();
 		// two loops minimizes memory allocations
 		int min = Math.min(a.length(), b.length());
 		for (int i = 0; i < min; i++) {
-			b.setV(i, scalar.v() * a.v(i));
+			a.v(i, tmp);
+			g.multiply(scalar, tmp, tmp);
+			b.setV(i, tmp);
 		}
 		int max = Math.max(a.length(), b.length());
 		for (int i = min; i < max; i++) {
-			b.setV(i, scalar.v() * a.v(i));
+			a.v(i, tmp);
+			g.multiply(scalar, tmp, tmp);
+			b.setV(i, tmp);
 		}
 	}
 
@@ -138,27 +170,61 @@ public class Float64VectorSpace
 		if (!compatible(3,a) || !compatible(3,b))
 			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
 		Float64VectorMember tmp = new Float64VectorMember(new double[3]);
-		tmp.setV(0, a.v(1)*b.v(2) - a.v(2)*b.v(1));
-		tmp.setV(1, a.v(2)*b.v(0) - a.v(0)*b.v(2));
-		tmp.setV(2, a.v(0)*b.v(1) - a.v(1)*b.v(0));
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member term1 = new Float64Member();
+		Float64Member term2 = new Float64Member();
+		Float64Member t = new Float64Member();
+		a.v(1, atmp);
+		b.v(2, btmp);
+		g.multiply(atmp, btmp, term1);
+		a.v(2, atmp);
+		b.v(1, btmp);
+		g.multiply(atmp, btmp, term2);
+		g.subtract(term1, term2, t);
+		tmp.setV(0, t);
+		a.v(2, atmp);
+		b.v(0, btmp);
+		g.multiply(atmp, btmp, term1);
+		a.v(0, atmp);
+		b.v(2, btmp);
+		g.multiply(atmp, btmp, term2);
+		g.subtract(term1, term2, t);
+		tmp.setV(1, t);
+		a.v(0, atmp);
+		b.v(1, btmp);
+		g.multiply(atmp, btmp, term1);
+		a.v(1, atmp);
+		b.v(0, btmp);
+		g.multiply(atmp, btmp, term2);
+		g.subtract(term1, term2, t);
+		tmp.setV(2, t);
 		assign(tmp, c);
 	}
 
 	private boolean compatible(int dim, Float64VectorMember v) {
+		Float64Member tmp = new Float64Member();
 		for (int i = dim; i < v.length(); i++) {
-			if (v.v(i) != 0)
+			v.v(i, tmp);
+			if (g.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
 	}
+
 	@Override
 	public void dotProduct(Float64VectorMember a, Float64VectorMember b, Float64Member c) {
 		int min = Math.min(a.length(), b.length());
-		double sum = 0;
+		Float64Member sum = new Float64Member(0);
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
 		for (int i = 0; i < min; i++) {
-			sum += a.v(i) * b.v(i);
+			a.v(i, atmp);
+			b.v(i, btmp);
+			g.multiply(atmp, btmp, btmp);
+			g.add(sum, btmp, sum);
 		}
-		c.setV(sum);
+		c.set(sum);
 	}
 
 	@Override
@@ -166,7 +232,18 @@ public class Float64VectorSpace
 		// kludgy: 2 dim only. treating lower dim vectors as having zeroes in other positions.
 		if (!compatible(2,a) || !compatible(2,b))
 			throw new UnsupportedOperationException("vector perp dot product defined for 2 dimensions");
-		c.setV(-a.v(1)*b.v(0) + a.v(0)*b.v(1));
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member term1 = new Float64Member();
+		Float64Member term2 = new Float64Member();
+		a.v(1, atmp);
+		b.v(0, btmp);
+		g.negate(atmp, atmp);
+		g.multiply(atmp, btmp, term1);
+		a.v(0, atmp);
+		b.v(1, btmp);
+		g.multiply(atmp, btmp, term2);
+		g.add(term1, term2, c);
 	}
 
 	@Override

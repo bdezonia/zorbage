@@ -26,6 +26,8 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.storage.ArrayStorageFloat64;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,54 +35,84 @@ package zorbage.type.data;
  */
 public final class Float64VectorMember {
 
-	private double[] v;
+	private ArrayStorageFloat64 storage;
+	private static final Float64OrderedField g = new Float64OrderedField();
+	private static final Float64Member ZERO = new Float64Member(0); 
 	
 	public Float64VectorMember() {
-		v = new double[0];
+		storage = new ArrayStorageFloat64(0);
 	}
 	
 	public Float64VectorMember(double[] vals) {
-		v = new double[vals.length];
-		for (int i = 0; i < vals.length; i++)
-			v[i] = vals[i];
+		storage = new ArrayStorageFloat64(vals.length);
+		Float64Member value = new Float64Member();
+		for (int i = 0; i < vals.length; i++) {
+			storage.get(i, value);
+			value.setV(vals[i]);
+			storage.put(i,  value);
+		}
 	}
 	
-	public Float64VectorMember(Float64VectorMember value) {
-		v = new double[value.v.length];
-		for (int i = 0; i < value.v.length; i++)
-			v[i] = value.v[i];
+	public Float64VectorMember(Float64VectorMember other) {
+		storage = new ArrayStorageFloat64(other.storage.size());
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i,  value);
+		}
 	}
 	
 	public Float64VectorMember(String value) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
-	public double v(int i) { if (i < v.length) return v[i]; else return 0; }
+	public void v(int i, Float64Member v) {
+		if (i < storage.size()) {
+			storage.get(i, v);
+		}
+		else {
+			g.zero(v);
+		}
+	}
 
-	public void setV(int i, double val) {
-		if (i >= v.length) {
-			if (val == 0) return;
-			double[] tmp = v;
-			v = new double[i+1];
-			for (int j = 0; j < tmp.length; j++) {
-				v[j] = tmp[j];
+	public void setV(int i, Float64Member v) {
+		if (i >= storage.size()) {
+			if (g.isEqual(v, ZERO)) return;
+			ArrayStorageFloat64 tmp = storage;
+			storage = new ArrayStorageFloat64(i+1);
+			Float64Member value = new Float64Member();
+			for (long j = 0; j < tmp.size(); j++) {
+				tmp.get(j, value);
+				storage.put(j, value);
 			}
 		}
-		v[i] = val;
+		storage.put(i, v);
 	}
 	
 	
 	public void set(Float64VectorMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		if (storage.size() != other.storage.size())
+			storage = new ArrayStorageFloat64(other.storage.size());
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
+		}
 	}
 	
 	public void get(Float64VectorMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		if (storage.size() != other.storage.size())
+			other.storage = new ArrayStorageFloat64(storage.size());
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			other.storage.put(i, value);
+		}
 	}
 
-	public int length() { return v.length; }
+	public int length() { return (int) storage.size(); }
 	
 	@Override
 	public String toString() { throw new IllegalArgumentException("Not yet implemented"); }
