@@ -35,7 +35,7 @@ import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
 import zorbage.type.data.SignedInt32Member;
-import zorbage.type.storage.Binding;
+import zorbage.type.storage.Accessor;
 import zorbage.type.storage.ArrayStorageSignedInt32;
 
 /**
@@ -120,7 +120,7 @@ public class Test {
 	public static void testBindings() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
-		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
+		Accessor<SignedInt32Member> binding = new Accessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (binding.hasNext()) {
@@ -142,7 +142,7 @@ public class Test {
 	public static void testGroupOfConversions() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
-		Binding<SignedInt32Member> binding = new Binding<SignedInt32Member>(value, storage);
+		Accessor<SignedInt32Member> binding = new Accessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (binding.hasNext()) {

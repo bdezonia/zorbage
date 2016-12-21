@@ -32,13 +32,13 @@ package zorbage.type.storage;
  *
  * @param <U>
  */
-public class Binding<U> {
+public class Accessor<U> {
 	
 	private U value;
 	private Storage<U> storage;
 	private long pos;
 
-	public Binding(U value, Storage<U> storage) {
+	public Accessor(U value, Storage<U> storage) {
 		this.value = value;
 		this.storage = storage;
 		beforeFirst();
