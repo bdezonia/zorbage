@@ -40,11 +40,6 @@ public final class ComplexFloat64Member {
 		i = 0;
 	}
 	
-	public ComplexFloat64Member(double value) {
-		r = value;
-		i = 0;
-	}
-	
 	public ComplexFloat64Member(double rvalue, double ivalue) {
 		r = rvalue;
 		i = ivalue;

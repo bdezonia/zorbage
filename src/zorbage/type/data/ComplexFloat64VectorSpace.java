@@ -37,13 +37,13 @@ public class ComplexFloat64VectorSpace
   implements
     VectorSpace<ComplexFloat64VectorSpace,ComplexFloat64VectorMember,ComplexFloat64Field,ComplexFloat64Member>
 {
-	private static final ComplexFloat64Member zero = new ComplexFloat64Member(0,0);
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Field g = new ComplexFloat64Field();
 	
 	@Override
 	public void zero(ComplexFloat64VectorMember a) {
 		for (int i = 0; i < a.length(); i++)
-			a.setV(i, zero);
+			a.setV(i, ZERO);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ComplexFloat64VectorSpace
 			c.setV(i, btmp);
 		}
 		for (int i = max; i < c.length(); i++)
-			c.setV(i, zero);
+			c.setV(i, ZERO);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class ComplexFloat64VectorSpace
 			c.setV(i, btmp);
 		}
 		for (int i = max; i < c.length(); i++)
-			c.setV(i, zero);
+			c.setV(i, ZERO);
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class ComplexFloat64VectorSpace
 			to.setV(i, tmp);
 		}
 		for (int i = from.length(); i < to.length(); i++) {
-			to.setV(i, zero);
+			to.setV(i, ZERO);
 		}
 	}
 
@@ -210,7 +210,7 @@ public class ComplexFloat64VectorSpace
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (g.isNotEqual(tmp, zero))
+			if (g.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;

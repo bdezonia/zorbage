@@ -40,6 +40,7 @@ public class OctonionFloat64MatrixRing
 		MatrixRing<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember, OctonionFloat64SkewField, OctonionFloat64Member>
 {
 	private static final OctonionFloat64SkewField g = new OctonionFloat64SkewField();
+	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
 	public OctonionFloat64MatrixRing() { }
 
@@ -93,10 +94,9 @@ public class OctonionFloat64MatrixRing
 
 	@Override
 	public void zero(OctonionFloat64MatrixMember a) {
-		OctonionFloat64Member zero = new OctonionFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.setV(row, col, zero);
+				a.setV(row, col, ZERO);
 			}
 		}
 	}

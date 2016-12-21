@@ -39,6 +39,7 @@ public class Float64MatrixRing
 		RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
 		MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
 {
+	private static final Float64Member ZERO = new Float64Member(0);
 	private static final Float64OrderedField g = new Float64OrderedField();
 	
 	public Float64MatrixRing() { }
@@ -93,10 +94,9 @@ public class Float64MatrixRing
 
 	@Override
 	public void zero(Float64MatrixMember a) {
-		Float64Member zero = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.setV(row, col, zero);
+				a.setV(row, col, ZERO);
 			}
 		}
 	}

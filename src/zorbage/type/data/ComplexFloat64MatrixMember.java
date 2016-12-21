@@ -35,6 +35,8 @@ import zorbage.type.storage.ArrayStorageComplexFloat64;
  */
 public final class ComplexFloat64MatrixMember {
 	
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	
 	private ArrayStorageComplexFloat64 storage;
 	private int rows;
 	private int cols;
@@ -74,9 +76,8 @@ public final class ComplexFloat64MatrixMember {
 			storage = new ArrayStorageComplexFloat64(((long)r)*c);
 		}
 		else {
-			ComplexFloat64Member zero = new ComplexFloat64Member();
 			for (long i = 0; i < storage.size(); i++) {
-				storage.put(i, zero);
+				storage.put(i, ZERO);
 			}
 		}
 	}

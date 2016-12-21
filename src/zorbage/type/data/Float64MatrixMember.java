@@ -35,6 +35,8 @@ import zorbage.type.storage.ArrayStorageFloat64;
  */
 public final class Float64MatrixMember {
 	
+	private static final Float64Member ZERO = new Float64Member(0);
+
 	private ArrayStorageFloat64 storage;
 	private int rows;
 	private int cols;
@@ -74,9 +76,8 @@ public final class Float64MatrixMember {
 			storage = new ArrayStorageFloat64(((long)r)*c);
 		}
 		else {
-			Float64Member zero = new Float64Member();
 			for (long i = 0; i < storage.size(); i++) {
-				storage.put(i, zero);
+				storage.put(i, ZERO);
 			}
 		}
 	}
@@ -94,12 +95,28 @@ public final class Float64MatrixMember {
 	
 	public void set(Float64MatrixMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		rows = other.rows;
+		cols = other.cols;
+		if (storage.size() != other.storage.size())
+			storage = new ArrayStorageFloat64(other.storage.size());
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
+		}
 	}
 	
 	public void get(Float64MatrixMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		other.rows = rows;
+		other.cols = cols;
+		if (storage.size() != other.storage.size())
+			other.storage = new ArrayStorageFloat64(storage.size());
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			other.storage.put(i, value);
+		}
 	}
 
 	@Override

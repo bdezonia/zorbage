@@ -35,6 +35,8 @@ import zorbage.type.storage.ArrayStorageQuaternionFloat64;
  */
 public final class QuaternionFloat64MatrixMember {
 	
+	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
+
 	private ArrayStorageQuaternionFloat64 storage;
 	private int rows;
 	private int cols;
@@ -74,9 +76,8 @@ public final class QuaternionFloat64MatrixMember {
 			storage = new ArrayStorageQuaternionFloat64(((long)r)*c);
 		}
 		else {
-			QuaternionFloat64Member zero = new QuaternionFloat64Member();
 			for (long i = 0; i < storage.size(); i++) {
-				storage.put(i, zero);
+				storage.put(i, ZERO);
 			}
 		}
 	}
@@ -91,17 +92,32 @@ public final class QuaternionFloat64MatrixMember {
 		storage.put(index, value);
 	}
 	
-	
 	public void set(QuaternionFloat64MatrixMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		rows = other.rows;
+		cols = other.cols;
+		if (storage.size() != other.storage.size())
+			storage = new ArrayStorageQuaternionFloat64(other.storage.size());
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
+		}
 	}
 	
 	public void get(QuaternionFloat64MatrixMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		other.rows = rows;
+		other.cols = cols;
+		if (storage.size() != other.storage.size())
+			other.storage = new ArrayStorageQuaternionFloat64(storage.size());
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			other.storage.put(i, value);
+		}
 	}
-
+	
 	@Override
 	public String toString() {
 		throw new IllegalArgumentException("TODO");

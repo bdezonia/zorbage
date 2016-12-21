@@ -40,6 +40,7 @@ public class QuaternionFloat64MatrixRing
 		MatrixRing<QuaternionFloat64MatrixRing, QuaternionFloat64MatrixMember, QuaternionFloat64SkewField, QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64SkewField g = new QuaternionFloat64SkewField();
+	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
 	public QuaternionFloat64MatrixRing() { }
 
@@ -93,10 +94,9 @@ public class QuaternionFloat64MatrixRing
 
 	@Override
 	public void zero(QuaternionFloat64MatrixMember a) {
-		QuaternionFloat64Member zero = new QuaternionFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.setV(row, col, zero);
+				a.setV(row, col, ZERO);
 			}
 		}
 	}

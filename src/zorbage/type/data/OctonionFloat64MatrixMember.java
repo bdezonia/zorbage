@@ -35,6 +35,8 @@ import zorbage.type.storage.ArrayStorageOctonionFloat64;
  */
 public final class OctonionFloat64MatrixMember {
 	
+	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
+
 	private ArrayStorageOctonionFloat64 storage;
 	private int rows;
 	private int cols;
@@ -74,9 +76,8 @@ public final class OctonionFloat64MatrixMember {
 			storage = new ArrayStorageOctonionFloat64(((long)r)*c);
 		}
 		else {
-			OctonionFloat64Member zero = new OctonionFloat64Member();
 			for (long i = 0; i < storage.size(); i++) {
-				storage.put(i, zero);
+				storage.put(i, ZERO);
 			}
 		}
 	}
@@ -93,12 +94,28 @@ public final class OctonionFloat64MatrixMember {
 	
 	public void set(OctonionFloat64MatrixMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		rows = other.rows;
+		cols = other.cols;
+		if (storage.size() != other.storage.size())
+			storage = new ArrayStorageOctonionFloat64(other.storage.size());
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
+		}
 	}
 	
 	public void get(OctonionFloat64MatrixMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		other.rows = rows;
+		other.cols = cols;
+		if (storage.size() != other.storage.size())
+			other.storage = new ArrayStorageOctonionFloat64(storage.size());
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			other.storage.put(i, value);
+		}
 	}
 	
 	@Override

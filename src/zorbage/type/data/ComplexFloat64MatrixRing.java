@@ -39,6 +39,7 @@ public class ComplexFloat64MatrixRing
 		RingWithUnity<ComplexFloat64MatrixRing, ComplexFloat64MatrixMember>,
 		MatrixRing<ComplexFloat64MatrixRing, ComplexFloat64MatrixMember, ComplexFloat64Field, ComplexFloat64Member>
 {
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Field g = new ComplexFloat64Field();
 	
 	public ComplexFloat64MatrixRing() {	}
@@ -93,10 +94,9 @@ public class ComplexFloat64MatrixRing
 
 	@Override
 	public void zero(ComplexFloat64MatrixMember a) {
-		ComplexFloat64Member zero = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.setV(row, col, zero);
+				a.setV(row, col, ZERO);
 			}
 		}
 	}

@@ -37,7 +37,7 @@ public final class ComplexFloat64VectorMember {
 
 	private ArrayStorageComplexFloat64 storage;
 	private static final ComplexFloat64Field g = new ComplexFloat64Field();
-	private static final ComplexFloat64Member zero = new ComplexFloat64Member(0); 
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 	
 	public ComplexFloat64VectorMember() {
 		storage = new ArrayStorageComplexFloat64(0);
@@ -80,7 +80,7 @@ public final class ComplexFloat64VectorMember {
 
 	public void setV(int i, ComplexFloat64Member v) {
 		if (i >= storage.size()) {
-			if (g.isEqual(v, zero)) return;
+			if (g.isEqual(v, ZERO)) return;
 			ArrayStorageComplexFloat64 tmp = storage;
 			storage = new ArrayStorageComplexFloat64(i+1);
 			ComplexFloat64Member value = new ComplexFloat64Member();
@@ -94,14 +94,26 @@ public final class ComplexFloat64VectorMember {
 	
 	public void set(ComplexFloat64VectorMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		if (storage.size() != other.storage.size())
+			storage = new ArrayStorageComplexFloat64(other.storage.size());
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
+		}
 	}
 	
 	public void get(ComplexFloat64VectorMember other) {
 		if (this == other) return;
-		throw new IllegalArgumentException("TODO");
+		if (storage.size() != other.storage.size())
+			other.storage = new ArrayStorageComplexFloat64(storage.size());
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			other.storage.put(i, value);
+		}
 	}
-	
+
 	public int length() { return (int) storage.size(); }
 	
 	@Override
