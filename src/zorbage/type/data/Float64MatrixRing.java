@@ -109,7 +109,7 @@ public class Float64MatrixRing
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				tmp.setV(-tmp.v());
+				g.negate(tmp,tmp);
 				b.setV(row, col, tmp);
 			}
 		}

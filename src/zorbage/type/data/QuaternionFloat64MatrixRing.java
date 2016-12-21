@@ -109,8 +109,7 @@ public class QuaternionFloat64MatrixRing
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				tmp.setR(-tmp.r());
-				tmp.setI(-tmp.i());
+				g.negate(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
