@@ -39,10 +39,11 @@ public class ComplexFloat64MatrixRing
 		RingWithUnity<ComplexFloat64MatrixRing, ComplexFloat64MatrixMember>,
 		MatrixRing<ComplexFloat64MatrixRing, ComplexFloat64MatrixMember, ComplexFloat64Field, ComplexFloat64Member>
 {
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Field g = new ComplexFloat64Field();
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
-	public ComplexFloat64MatrixRing() {	}
+	public ComplexFloat64MatrixRing() {
+	}
 
 	@Override
 	public void multiply(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {

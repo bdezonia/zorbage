@@ -86,6 +86,9 @@ public class ComplexFloat64Field
 	private static final ComplexFloat64Member MINUS_I = new ComplexFloat64Member(0,-1);
 	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
 
+	public ComplexFloat64Field() {
+	}
+	
 	@Override
 	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
 		// for safety must use tmps

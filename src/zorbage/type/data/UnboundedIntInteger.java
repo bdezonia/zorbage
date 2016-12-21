@@ -42,7 +42,10 @@ public class UnboundedIntInteger
     BitOperations<UnboundedIntMember>
 {
 	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
-	
+
+	public UnboundedIntInteger() {
+	}
+
 	@Override
 	public void abs(UnboundedIntMember a, UnboundedIntMember b) {
 		b.setV( a.v().abs() );

@@ -62,6 +62,9 @@ public class Float64OrderedField
     Rounding<Float64Member>
 {
 
+	public Float64OrderedField() {
+	}
+	
 	@Override
 	public boolean isEqual(Float64Member a, Float64Member b) {
 		return a.v() == b.v();

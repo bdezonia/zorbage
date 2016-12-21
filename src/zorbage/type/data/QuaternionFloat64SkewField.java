@@ -52,6 +52,9 @@ public class QuaternionFloat64SkewField
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	
+	public QuaternionFloat64SkewField() {
+	}
+	
 	@Override
 	public void unity(QuaternionFloat64Member a) {
 		assign(ONE, a);

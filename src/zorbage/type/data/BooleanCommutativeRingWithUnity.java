@@ -48,6 +48,9 @@ public class BooleanCommutativeRingWithUnity
     LogicalOperations<BooleanMember>
 {
 
+	public BooleanCommutativeRingWithUnity() {
+	}
+	
 	@Override
 	public void logicalAnd(BooleanMember a, BooleanMember b, BooleanMember c) {
 		c.setV(a.v() && b.v());

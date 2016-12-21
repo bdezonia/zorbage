@@ -37,9 +37,12 @@ public class Float64VectorSpace
   implements
     VectorSpace<Float64VectorSpace,Float64VectorMember,Float64OrderedField,Float64Member>
 {
-	private static final Float64Member ZERO = new Float64Member(0);
 	private static final Float64OrderedField g = new Float64OrderedField();
+	private static final Float64Member ZERO = new Float64Member(0);
 
+	public Float64VectorSpace() {
+	}
+	
 	@Override
 	public void zero(Float64VectorMember a) {
 		for (int i = 0; i < a.length(); i++)

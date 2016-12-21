@@ -42,6 +42,9 @@ public class SignedInt32Integer
     BitOperations<SignedInt32Member>
 {
 
+	public SignedInt32Integer() {
+	}
+	
 	@Override
 	public boolean isEqual(SignedInt32Member a, SignedInt32Member b) {
 		return a.v() == b.v();

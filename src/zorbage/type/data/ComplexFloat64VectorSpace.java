@@ -37,8 +37,11 @@ public class ComplexFloat64VectorSpace
   implements
     VectorSpace<ComplexFloat64VectorSpace,ComplexFloat64VectorMember,ComplexFloat64Field,ComplexFloat64Member>
 {
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Field g = new ComplexFloat64Field();
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	
+	public ComplexFloat64VectorSpace() {
+	}
 	
 	@Override
 	public void zero(ComplexFloat64VectorMember a) {

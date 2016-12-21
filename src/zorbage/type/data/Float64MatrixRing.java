@@ -39,8 +39,8 @@ public class Float64MatrixRing
 		RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
 		MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
 {
-	private static final Float64Member ZERO = new Float64Member(0);
 	private static final Float64OrderedField g = new Float64OrderedField();
+	private static final Float64Member ZERO = new Float64Member(0);
 	
 	public Float64MatrixRing() { }
 

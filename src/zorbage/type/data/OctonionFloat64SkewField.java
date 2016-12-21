@@ -55,6 +55,9 @@ public class OctonionFloat64SkewField
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 
+	public OctonionFloat64SkewField() {
+	}
+	
 	@Override
 	public void unity(OctonionFloat64Member a) {
 		assign(ONE, a);
