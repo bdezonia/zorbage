@@ -77,13 +77,18 @@ public final class ComplexFloat64MatrixMember {
 		}
 	}
 	
-	void v(int r, int c, ComplexFloat64Member value) {
+	public void v(int r, int c, ComplexFloat64Member value) {
 		long index = ((long)r) * rows + c;
 		storage.get(index, value);
 	}
 	
-	void setV(int r, int c, ComplexFloat64Member value) {
+	public void setV(int r, int c, ComplexFloat64Member value) {
 		long index = ((long)r) * rows + c;
 		storage.put(index, value);
+	}
+	
+	@Override
+	public String toString() {
+		throw new IllegalArgumentException("TODO");
 	}
 }
