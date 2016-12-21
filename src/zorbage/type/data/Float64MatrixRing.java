@@ -26,10 +26,6 @@
  */
 package zorbage.type.data;
 
-// TODO: this impl does not use Float64OrderedField. It also assumes storage is in memory doubles.
-// It could use ordered field and an ArrayStorageFloat64. Might want more than ArrayStorage too for
-// really giant matrices (or sparse matrices?). I guess this is an optimized implementation.
-
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
 
@@ -39,165 +35,14 @@ import zorbage.type.algebra.RingWithUnity;
  *
  */
 public class Float64MatrixRing
-  implements
-    RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
-    MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
+	implements
+		RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
+		MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
 {
-	public Float64MatrixRing() {
-	}
+	private Float64OrderedField g;
 	
-	@Override
-	public void norm(Float64MatrixMember a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
-		// TODO
-		// MathWorld.com
-		// The spectral norm ||A||_2, which is the square root of the maximum eigenvalue of A^(H)A
-		// (where A^(H) is the conjugate transpose), is often referred to as "the" matrix norm.
-	}
-
-	@Override
-	public void roundTowardsZero(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b) {
-			b.init(a.rows(), a.cols());
-		}
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				if (value1.v() > 0)
-					value1.setV(Math.floor(value1.v()));
-				else
-					value1.setV(Math.ceil(value1.v()));
-				b.setV(row, col, value1);
-			}
-		}
-	}
-
-	@Override
-	public void roundAwayFromZero(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b) {
-			b.init(a.rows(), a.cols());
-		}
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				if (value1.v() < 0)
-					value1.setV(Math.floor(value1.v()));
-				else
-					value1.setV(Math.ceil(value1.v()));
-				b.setV(row, col, value1);
-			}
-		}
-	}
-
-	@Override
-	public void roundPositive(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b) {
-			b.init(a.rows(), a.cols());
-		}
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				value1.setV(Math.ceil(value1.v()));
-				b.setV(row, col, value1);
-			}
-		}
-	}
-
-	@Override
-	public void roundNegative(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b) {
-			b.init(a.rows(), a.cols());
-		}
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				value1.setV(Math.floor(value1.v()));
-				b.setV(row, col, value1);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearest(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b) {
-			b.init(a.rows(), a.cols());
-		}
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				value1.setV(Math.rint(value1.v()));
-				b.setV(row, col, value1);
-			}
-		}
-	}
-
-	@Override
-	public boolean isNaN(Float64MatrixMember a) {
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				if (Double.isNaN(value1.v()))
-					return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isInfinite(Float64MatrixMember a) {
-		if (isNaN(a)) return false;
-		Float64Member value1 = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				if (Double.isInfinite(value1.v()))
-					return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public void conjugate(Float64MatrixMember a, Float64MatrixMember b) {
-		assign(a, b); // nothing to do for a real matrix
-	}
-
-	@Override
-	public void transpose(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a.rows() == a.cols() && a.rows() == b.rows() && a.cols() == b.cols())
-			assign(a,b);
-		else {
-			if (a == b)
-				throw new IllegalArgumentException("cannot do an in place transpose of a non-square matrix");
-			b.init(a.cols(), a.rows());
-			Float64Member value = new Float64Member();
-			for (int r = 0; r < a.rows(); r++) {
-				for (int c = 0; c < a.cols(); c++) {
-					a.v(r, c, value);
-					b.setV(c, r, value);
-				}				
-			}
-		}
-	}
-
-	@Override
-	public void conjugateTranspose(Float64MatrixMember a, Float64MatrixMember b) {
-		transpose(a,b);
-	}
-
-	@Override
-	public void det(Float64MatrixMember a, Float64Member b) {
-		if (a.rows() != a.cols())
-			throw new IllegalArgumentException("determinant only defined for square matrices");
-		// TODO
-		// reduce to row echelon form and get the trace: I think that is enough. Maybe sign wrong?
-		throw new IllegalArgumentException("TODO");
+	public Float64MatrixRing(Float64OrderedField g) {
+		this.g = g;
 	}
 
 	@Override
@@ -210,16 +55,16 @@ public class Float64MatrixRing
 		Float64Member sum = new Float64Member();
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
+		Float64Member term = new Float64Member();
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
-				double s = 0;
+				g.zero(sum);
 				for (int i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					double term = atmp.v() * btmp.v();
-					s += term;
+					g.multiply(atmp, btmp, term);
+					g.add(sum, term, sum);
 				}
-				sum.setV(s);
 				c.setV(row, col, sum);
 			}
 		}
@@ -251,24 +96,23 @@ public class Float64MatrixRing
 	@Override
 	public void zero(Float64MatrixMember a) {
 		Float64Member zero = new Float64Member();
-		for (int r = 0; r < a.rows(); r++) {
-			for (int c = 0; c < a.cols(); c++) {
-				a.setV(r,c,zero);
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.setV(row, col, zero);
 			}
 		}
 	}
 
 	@Override
 	public void negate(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b) {
+		Float64Member tmp = new Float64Member();
+		if (a != b)
 			b.init(a.rows(), a.cols());
-		}
-		Float64Member value = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value);
-				value.setV(-value.v());
-				b.setV(row, col, value);
+				a.v(row, col, tmp);
+				tmp.setV(-tmp.v());
+				b.setV(row, col, tmp);
 			}
 		}
 	}
@@ -280,14 +124,15 @@ public class Float64MatrixRing
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		Float64Member value1 = new Float64Member();
-		Float64Member value2 = new Float64Member();
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				b.v(row, col, value2);
-				value1.setV(value1.v() + value2.v());
-				c.setV(row, col, value1);
+				a.v(row, col, atmp);
+				b.v(row, col, btmp);
+				g.add(atmp, btmp, tmp);
+				c.setV(row, col, tmp);
 			}
 		}
 	}
@@ -299,14 +144,15 @@ public class Float64MatrixRing
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		Float64Member value1 = new Float64Member();
-		Float64Member value2 = new Float64Member();
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, value1);
-				b.v(row, col, value2);
-				value1.setV(value1.v() - value2.v());
-				c.setV(row, col, value1);
+				a.v(row, col, atmp);
+				b.v(row, col, btmp);
+				g.subtract(atmp, btmp, tmp);
+				c.setV(row, col, tmp);
 			}
 		}
 	}
@@ -316,13 +162,14 @@ public class Float64MatrixRing
 		if (a == b) return true;
 		if (a.rows() != b.rows()) return false;
 		if (a.cols() != b.cols()) return false;
-		Float64Member avalue = new Float64Member();
-		Float64Member bvalue = new Float64Member();
+		Float64Member value1 = new Float64Member();
+		Float64Member value2 = new Float64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
-				a.v(r, c, avalue);
-				b.v(r, c, bvalue);
-				if (avalue.v() != bvalue.v()) return false;
+				a.v(r, c, value1);
+				b.v(r, c, value2);
+				if (g.isNotEqual(value1, value2))
+					return false;
 			}
 		}
 		return true;
@@ -335,13 +182,13 @@ public class Float64MatrixRing
 
 	@Override
 	public void assign(Float64MatrixMember from, Float64MatrixMember to) {
-		if (to == from) return;
-		Float64Member tmp = new Float64Member();
+		if (from == to) return;
 		to.init(from.rows(), from.cols());
-		for (int r = 0; r < from.rows(); r++) {
-			for (int c = 0; c < from.cols(); c++) {
-				from.v(r, c, tmp);
-				to.setV(r, c, tmp);
+		Float64Member tmp = new Float64Member();
+		for (int row = 0; row < from.rows(); row++) {
+			for (int col = 0; col < from.cols(); col++) {
+				from.v(row, col, tmp);
+				to.setV(row, col, tmp);
 			}
 		}
 	}
@@ -362,9 +209,140 @@ public class Float64MatrixRing
 	}
 
 	@Override
+	public void norm(Float64MatrixMember a, Float64Member b) {
+		// TODO
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void roundTowardsZero(Float64MatrixMember a, Float64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		Float64Member tmp = new Float64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundTowardsZero(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
+	public void roundAwayFromZero(Float64MatrixMember a, Float64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		Float64Member tmp = new Float64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundAwayFromZero(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
+	public void roundPositive(Float64MatrixMember a, Float64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		Float64Member tmp = new Float64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundPositive(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
+	public void roundNegative(Float64MatrixMember a, Float64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		Float64Member tmp = new Float64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundNegative(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
+	public void roundNearest(Float64MatrixMember a, Float64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		Float64Member tmp = new Float64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundNearest(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
+	public boolean isNaN(Float64MatrixMember a) {
+		Float64Member value = new Float64Member();
+		for (int r = 0; r < a.rows(); r++) {
+			for (int c = 0; c < a.cols(); c++) {
+				a.v(r, c, value);
+				if (g.isNaN(value))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isInfinite(Float64MatrixMember a) {
+		Float64Member value = new Float64Member();
+		for (int r = 0; r < a.rows(); r++) {
+			for (int c = 0; c < a.cols(); c++) {
+				a.v(r, c, value);
+				if (g.isInfinite(value))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void conjugate(Float64MatrixMember a, Float64MatrixMember b) {
+		assign(a, b);
+	}
+
+	@Override
+	public void transpose(Float64MatrixMember a, Float64MatrixMember b) {
+		Float64Member value = new Float64Member();
+		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
+		b.init(a.cols(), a.rows());
+		for (int r = 0; r < a.rows(); r++) {
+			for (int c = 0; c < a.cols(); c++) {
+				a.v(r,  c, value);
+				b.setV(c, r, value);
+			}
+		}
+	}
+
+	@Override
+	public void conjugateTranspose(Float64MatrixMember a, Float64MatrixMember b) {
+		transpose(a, b);
+	}
+
+	@Override
+	public void det(Float64MatrixMember a, Float64Member b) {
+		// TODO
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
 	public void unity(Float64MatrixMember a) {
-		zero(a);
 		Float64Member one = new Float64Member(1);
+		zero(a);
 		for (int i = 0; i < Math.min(a.rows(), a.cols()); i++) {
 			a.setV(i, i, one);
 		}
@@ -380,4 +358,5 @@ public class Float64MatrixRing
 		// invert and multiply
 		throw new IllegalArgumentException("TODO");
 	}
+
 }

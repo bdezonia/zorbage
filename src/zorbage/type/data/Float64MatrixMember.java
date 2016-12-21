@@ -26,14 +26,16 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.storage.ArrayStorageFloat64;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public final class Float64MatrixMember {
-
-	private double[] data;
+	
+	private ArrayStorageFloat64 storage;
 	private int rows;
 	private int cols;
 	
@@ -44,42 +46,53 @@ public final class Float64MatrixMember {
 	}
 	
 	public Float64MatrixMember(Float64MatrixMember other) {
-		init(other.rows,other.cols);
-		for (int i = 0; i < data.length; i++) {
-			data[i] = other.data[i];
+		rows = -1;
+		cols = -1;
+		init(other.rows(),other.cols());
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			other.storage.get(i, value);
+			storage.put(i, value);
 		}
 	}
 	
 	public Float64MatrixMember(String s) {
-		throw new IllegalArgumentException("to be implemented");
+		throw new IllegalArgumentException("TODO");
 	}
 	
-	public int rows() {
-		return rows;
-	}
+	public int rows() { return rows; }
 
-	public int cols() {
-		return cols;
+	public int cols() { return cols; }
+
+	public void init(int r, int c) {
+		if (rows != r || cols != c) {
+			rows = r;
+			cols = c;
+		}
+		
+		if (((long)r)*c != storage.size()) {
+			storage = new ArrayStorageFloat64(((long)r)*c);
+		}
+		else {
+			Float64Member zero = new Float64Member();
+			for (long i = 0; i < storage.size(); i++) {
+				storage.put(i, zero);
+			}
+		}
 	}
 	
 	public void v(int r, int c, Float64Member value) {
-		value.setV(data[rows*r + c]);
-	}
-
-	public void setV(int r, int c, Float64Member value) {
-		data[rows*r + c] = value.v();
+		long index = ((long)r) * rows + c;
+		storage.get(index, value);
 	}
 	
-	public void init(int rows, int cols) {
-		if (this.rows != rows || this.cols != cols) {
-			this.rows = rows;
-			this.cols = cols;
-		}
-		if (this.data.length != rows*cols) {
-			this.data = new double[rows*cols];
-		}
-		else {
-			for (int i = 0; i < data.length; i++) this.data[i] = 0;
-		}
+	public void setV(int r, int c, Float64Member value) {
+		long index = ((long)r) * rows + c;
+		storage.put(index, value);
+	}
+	
+	@Override
+	public String toString() {
+		throw new IllegalArgumentException("TODO");
 	}
 }
