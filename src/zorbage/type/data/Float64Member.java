@@ -26,10 +26,7 @@
  */
 package zorbage.type.data;
 
-import zorbage.type.parse.ComplexNumberRepresentation;
-import zorbage.type.parse.NumberRepresentation;
 import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.QuaternionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
 /**
@@ -55,25 +52,8 @@ public final class Float64Member {
 
 	public Float64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		Object val = rep.firstValue();
-		if (val instanceof NumberRepresentation) {
-			NumberRepresentation v = (NumberRepresentation) val;
-			this.v = v.v().doubleValue();
-		}
-		else if (val instanceof ComplexNumberRepresentation) {
-			ComplexNumberRepresentation v = (ComplexNumberRepresentation) val;
-			this.v = v.r().doubleValue();
-		}
-		else if (val instanceof QuaternionRepresentation) {
-			QuaternionRepresentation v = (QuaternionRepresentation) val;
-			this.v = v.r().doubleValue();
-		}
-		else if (val instanceof OctonionRepresentation) {
-			OctonionRepresentation v = (OctonionRepresentation) val;
-			this.v = v.r().doubleValue();
-		}
-		else
-			throw new IllegalArgumentException("unknown numeric type in float 64 parse");
+		OctonionRepresentation val = rep.firstValue();
+		v = val.r().doubleValue();
 	}
 
 	public double v() { return v; }

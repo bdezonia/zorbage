@@ -28,10 +28,7 @@ package zorbage.type.data;
 
 import java.math.BigDecimal;
 
-import zorbage.type.parse.ComplexNumberRepresentation;
-import zorbage.type.parse.NumberRepresentation;
 import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.QuaternionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
 /**
@@ -66,25 +63,8 @@ public final class BooleanMember {
 			// fall through to numeric code
 		}
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		Object val = rep.firstValue();
-		if (val instanceof NumberRepresentation) {
-			NumberRepresentation r = (NumberRepresentation) val;
-			v = !r.v().equals(BigDecimal.ZERO);
-		}
-		else if (val instanceof ComplexNumberRepresentation) {
-			ComplexNumberRepresentation r = (ComplexNumberRepresentation) val;
-			v = !r.r().equals(BigDecimal.ZERO);
-		}
-		else if (val instanceof QuaternionRepresentation) {
-			QuaternionRepresentation r = (QuaternionRepresentation) val;
-			v = !r.r().equals(BigDecimal.ZERO);
-		}
-		else if (val instanceof OctonionRepresentation) {
-			OctonionRepresentation r = (OctonionRepresentation) val;
-			v = !r.r().equals(BigDecimal.ZERO);
-		}
-		else
-			throw new IllegalArgumentException("unknown numeric type in boolean parse");
+		OctonionRepresentation val = rep.firstValue();
+		v = !val.r().equals(BigDecimal.ZERO);
 	}
 
 	public boolean v() { return v; }

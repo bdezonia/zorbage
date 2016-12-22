@@ -26,10 +26,7 @@
  */
 package zorbage.type.data;
 
-import zorbage.type.parse.ComplexNumberRepresentation;
-import zorbage.type.parse.NumberRepresentation;
 import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.QuaternionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
 // TODO - do we nest Float64Members inside Quat<Float64Member>? Is this even possible?
@@ -47,8 +44,6 @@ public final class QuaternionFloat64Member {
 		r = i = j = k = 0;
 	}
 	
-	// TODO do I want more ctors? 1 double = real? 2 doubles = complex?
-	
 	public QuaternionFloat64Member(double r, double i, double j, double k) {
 		this.r = r;
 		this.i = i;
@@ -65,34 +60,11 @@ public final class QuaternionFloat64Member {
 
 	public QuaternionFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		Object val = rep.firstValue();
-		if (val instanceof NumberRepresentation) {
-			NumberRepresentation v = (NumberRepresentation) val;
-			r = v.v().doubleValue();
-			i = j = k = 0;
-		}
-		else if (val instanceof ComplexNumberRepresentation) {
-			ComplexNumberRepresentation v = (ComplexNumberRepresentation) val;
-			r = v.r().doubleValue();
-			i = v.i().doubleValue();
-			j = k = 0;
-		}
-		else if (val instanceof QuaternionRepresentation) {
-			QuaternionRepresentation v = (QuaternionRepresentation) val;
-			r = v.r().doubleValue();
-			i = v.i().doubleValue();
-			j = v.j().doubleValue();
-			k = v.k().doubleValue();
-		}
-		else if (val instanceof OctonionRepresentation) {
-			OctonionRepresentation v = (OctonionRepresentation) val;
-			r = v.r().doubleValue();
-			i = v.i().doubleValue();
-			j = v.j().doubleValue();
-			k = v.k().doubleValue();
-		}
-		else
-			throw new IllegalArgumentException("unknown numeric type in quaternion float 64 parse");
+		OctonionRepresentation val = rep.firstValue();
+		r = val.r().doubleValue();
+		i = val.i().doubleValue();
+		j = val.j().doubleValue();
+		k = val.k().doubleValue();
 	}
 
 	public double r() { return r; }

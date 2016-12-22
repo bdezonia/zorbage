@@ -37,26 +37,25 @@ import java.util.List;
  */
 public class TensorStringRepresentation {
 	private long[] dimensions;
-	private List<Object> elements;
+	private List<OctonionRepresentation> elements;
 	
 	public TensorStringRepresentation(String s) {
 		String[] strs = s.trim().split("\\s+");
 		dimensions = new long[]{1};
-		elements = new ArrayList<Object>();
-		elements.add(new NumberRepresentation(BigDecimal.TEN));
+		elements = new ArrayList<OctonionRepresentation>();
+		elements.add(new OctonionRepresentation(BigDecimal.TEN, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+												BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO));
 	}
 	
 	public long[] dimensions() {
-		// TODO: fix me
-		return new long[]{1};
+		return dimensions;
 	}
 	
-	public Object value(long[] index) {
-		// TODO: fix me
-		return (NumberRepresentation)firstValue();
+	public OctonionRepresentation value(long[] index) {
+		return firstValue();
 	}
 	
-	public Object firstValue() {
+	public OctonionRepresentation firstValue() {
 		return elements.get(0);
 	}
 }

@@ -26,10 +26,7 @@
  */
 package zorbage.type.data;
 
-import zorbage.type.parse.ComplexNumberRepresentation;
-import zorbage.type.parse.NumberRepresentation;
 import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.QuaternionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
 /**
@@ -44,8 +41,6 @@ public class OctonionFloat64Member {
 	public OctonionFloat64Member() {
 		r = i = j = k = l = i0 = j0 = k0 = 0;
 	}
-	
-	// TODO do I want more ctors? 1 double = real? 2 doubles = complex? etc.
 	
 	public OctonionFloat64Member(double r, double i, double j, double k, double l, double i0, double j0, double k0) {
 		this.r = r;
@@ -71,39 +66,15 @@ public class OctonionFloat64Member {
 
 	public OctonionFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		Object val = rep.firstValue();
-		if (val instanceof NumberRepresentation) {
-			NumberRepresentation v = (NumberRepresentation) val;
-			r = v.v().doubleValue();
-			i = j = k = l = i0 = j0 = k0 = 0;
-		}
-		else if (val instanceof ComplexNumberRepresentation) {
-			ComplexNumberRepresentation v = (ComplexNumberRepresentation) val;
-			r = v.r().doubleValue();
-			i = v.i().doubleValue();
-			j = k = l = i0 = j0 = k0 = 0;
-		}
-		else if (val instanceof QuaternionRepresentation) {
-			QuaternionRepresentation v = (QuaternionRepresentation) val;
-			r = v.r().doubleValue();
-			i = v.i().doubleValue();
-			j = v.j().doubleValue();
-			k = v.k().doubleValue();
-			l = i0 = j0 = k0 = 0;
-		}
-		else if (val instanceof OctonionRepresentation) {
-			OctonionRepresentation v = (OctonionRepresentation) val;
-			r = v.r().doubleValue();
-			i = v.i().doubleValue();
-			j = v.j().doubleValue();
-			k = v.k().doubleValue();
-			l = v.l().doubleValue();
-			i0 = v.i0().doubleValue();
-			j0 = v.j0().doubleValue();
-			k0 = v.k0().doubleValue();
-		}
-		else
-			throw new IllegalArgumentException("unknown numeric type in octonion float 64 parse");
+		OctonionRepresentation val = rep.firstValue();
+		r = val.r().doubleValue();
+		i = val.i().doubleValue();
+		j = val.j().doubleValue();
+		k = val.k().doubleValue();
+		l = val.l().doubleValue();
+		i0 = val.i0().doubleValue();
+		j0 = val.j0().doubleValue();
+		k0 = val.k0().doubleValue();
 	}
 
 	public double r() { return r; }

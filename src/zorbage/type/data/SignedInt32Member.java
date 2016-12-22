@@ -26,10 +26,7 @@
  */
 package zorbage.type.data;
 
-import zorbage.type.parse.ComplexNumberRepresentation;
-import zorbage.type.parse.NumberRepresentation;
 import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.QuaternionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
 /**
@@ -55,25 +52,8 @@ public final class SignedInt32Member {
 	
 	public SignedInt32Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		Object val = rep.firstValue();
-		if (val instanceof NumberRepresentation) {
-			NumberRepresentation v = (NumberRepresentation) val;
-			this.v = v.v().intValue();
-		}
-		else if (val instanceof ComplexNumberRepresentation) {
-			ComplexNumberRepresentation v = (ComplexNumberRepresentation) val;
-			this.v = v.r().intValue();
-		}
-		else if (val instanceof QuaternionRepresentation) {
-			QuaternionRepresentation v = (QuaternionRepresentation) val;
-			this.v = v.r().intValue();
-		}
-		else if (val instanceof OctonionRepresentation) {
-			OctonionRepresentation v = (OctonionRepresentation) val;
-			this.v = v.r().intValue();
-		}
-		else
-			throw new IllegalArgumentException("unknown numeric type in signed int 32 parse");
+		OctonionRepresentation val = rep.firstValue();
+		v = val.r().intValue();
 	}
 
 	public int v() { return v; }

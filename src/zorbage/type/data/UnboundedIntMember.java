@@ -28,10 +28,7 @@ package zorbage.type.data;
 
 import java.math.BigInteger;
 
-import zorbage.type.parse.ComplexNumberRepresentation;
-import zorbage.type.parse.NumberRepresentation;
 import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.QuaternionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
 /**
@@ -61,25 +58,8 @@ public final class UnboundedIntMember {
 	
 	public UnboundedIntMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		Object val = rep.firstValue();
-		if (val instanceof NumberRepresentation) {
-			NumberRepresentation v = (NumberRepresentation) val;
-			this.v = v.v().toBigInteger();
-		}
-		else if (val instanceof ComplexNumberRepresentation) {
-			ComplexNumberRepresentation v = (ComplexNumberRepresentation) val;
-			this.v = v.r().toBigInteger();
-		}
-		else if (val instanceof QuaternionRepresentation) {
-			QuaternionRepresentation v = (QuaternionRepresentation) val;
-			this.v = v.r().toBigInteger();
-		}
-		else if (val instanceof OctonionRepresentation) {
-			OctonionRepresentation v = (OctonionRepresentation) val;
-			this.v = v.r().toBigInteger();
-		}
-		else
-			throw new IllegalArgumentException("unknown numeric type in unbounded int parse");
+		OctonionRepresentation val = rep.firstValue();
+		v = val.r().toBigInteger();
 	}
 
 	public BigInteger v() { return v; }
