@@ -24,19 +24,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
-
-//import zorbage.type.algebra.VectorSpace;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T> the module for the elements
+ * @param <U> the module member type for the module
+ * @param <V> the ring for the coefficients
+ * @param <W> the coefficient member type for the coefficients
  */
-public class QuaternionFloat64VectorSpace {}
-/*
-PROBLEM: QuaternionSkewField is not a Field. Can't construct VectorSpace on it. Can this be relaxed?
-We can define a module over a division ring that satisfies much of linear algebra.
-https://en.wikipedia.org/wiki/Division_ring
-TODO copy contents of ComplexFloat64VectorSpace.
-*/
+public interface RModule<T extends RModule<T,U,V,W>, U, V extends Ring<V,W>, W>
+  extends
+    AdditiveGroup<T,U>,
+    Norm<U,W>,
+    Products<U,W>
+{
+	// TODO: I don't know how accurate these definitions are. They work.
+	// See http://mathworld.wolfram.com/Module.html
+}

@@ -33,18 +33,18 @@ import zorbage.type.storage.ArrayStorageQuaternionFloat64;
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat64VectorMember {
+public final class QuaternionFloat64RModuleMember {
 
 	private static final QuaternionFloat64SkewField g = new QuaternionFloat64SkewField();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
 	private ArrayStorageQuaternionFloat64 storage;
 	
-	public QuaternionFloat64VectorMember() {
+	public QuaternionFloat64RModuleMember() {
 		storage = new ArrayStorageQuaternionFloat64(0);
 	}
 	
-	public QuaternionFloat64VectorMember(double[] vals) {
+	public QuaternionFloat64RModuleMember(double[] vals) {
 		storage = new ArrayStorageQuaternionFloat64(vals.length/4);
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (int i = 0; i < vals.length/4; i++) {
@@ -56,7 +56,7 @@ public final class QuaternionFloat64VectorMember {
 		}
 	}
 	
-	public QuaternionFloat64VectorMember(QuaternionFloat64VectorMember other) {
+	public QuaternionFloat64RModuleMember(QuaternionFloat64RModuleMember other) {
 		storage = new ArrayStorageQuaternionFloat64(other.storage.size());
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -65,7 +65,7 @@ public final class QuaternionFloat64VectorMember {
 		}
 	}
 	
-	public QuaternionFloat64VectorMember(String value) {
+	public QuaternionFloat64RModuleMember(String value) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
@@ -92,7 +92,7 @@ public final class QuaternionFloat64VectorMember {
 		storage.put(i, v);
 	}
 	
-	public void set(QuaternionFloat64VectorMember other) {
+	public void set(QuaternionFloat64RModuleMember other) {
 		if (this == other) return;
 		if (storage.size() != other.storage.size())
 			storage = new ArrayStorageQuaternionFloat64(other.storage.size());
@@ -103,7 +103,7 @@ public final class QuaternionFloat64VectorMember {
 		}
 	}
 	
-	public void get(QuaternionFloat64VectorMember other) {
+	public void get(QuaternionFloat64RModuleMember other) {
 		if (this == other) return;
 		if (storage.size() != other.storage.size())
 			other.storage = new ArrayStorageQuaternionFloat64(storage.size());

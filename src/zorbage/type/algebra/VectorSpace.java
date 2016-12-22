@@ -38,13 +38,7 @@ package zorbage.type.algebra;
 public interface VectorSpace<T extends VectorSpace<T,U,V,W>, U, V extends Field<V,W>, W>
   extends
     AdditiveGroup<T,U>,
-    Norm<U,W>
+    Norm<U,W>,
+    Products<U,W>
 {
-	void scale(W scalar, U a, U b);
-	void crossProduct(U a, U b, U c);
-	void dotProduct(U a, U b, W c);
-	void perpDotProduct(U a, U b, W c);
-	//void vectorDirectProduct(U a, U b, Tensor c); // TODO
-	void vectorTripleProduct(U a, U b, U c, U d);
-	void scalarTripleProduct(U a, U b, U c, W d);
 }

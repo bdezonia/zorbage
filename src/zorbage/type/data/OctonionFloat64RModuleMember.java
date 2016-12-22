@@ -33,18 +33,18 @@ import zorbage.type.storage.ArrayStorageOctonionFloat64;
  * @author Barry DeZonia
  *
  */
-public final class OctonionFloat64VectorMember {
+public final class OctonionFloat64RModuleMember {
 
 	private static final OctonionFloat64SkewField g = new OctonionFloat64SkewField();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
 	private ArrayStorageOctonionFloat64 storage;
 	
-	public OctonionFloat64VectorMember() {
+	public OctonionFloat64RModuleMember() {
 		storage = new ArrayStorageOctonionFloat64(0);
 	}
 	
-	public OctonionFloat64VectorMember(double[] vals) {
+	public OctonionFloat64RModuleMember(double[] vals) {
 		storage = new ArrayStorageOctonionFloat64(vals.length/8);
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (int i = 0; i < vals.length/8; i++) {
@@ -60,7 +60,7 @@ public final class OctonionFloat64VectorMember {
 		}
 	}
 	
-	public OctonionFloat64VectorMember(OctonionFloat64VectorMember other) {
+	public OctonionFloat64RModuleMember(OctonionFloat64RModuleMember other) {
 		storage = new ArrayStorageOctonionFloat64(other.storage.size());
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -69,7 +69,7 @@ public final class OctonionFloat64VectorMember {
 		}
 	}
 	
-	public OctonionFloat64VectorMember(String value) {
+	public OctonionFloat64RModuleMember(String value) {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 
@@ -96,7 +96,7 @@ public final class OctonionFloat64VectorMember {
 		storage.put(i, v);
 	}
 	
-	public void set(OctonionFloat64VectorMember other) {
+	public void set(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		if (storage.size() != other.storage.size())
 			storage = new ArrayStorageOctonionFloat64(other.storage.size());
@@ -107,7 +107,7 @@ public final class OctonionFloat64VectorMember {
 		}
 	}
 	
-	public void get(OctonionFloat64VectorMember other) {
+	public void get(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		if (storage.size() != other.storage.size())
 			other.storage = new ArrayStorageOctonionFloat64(storage.size());

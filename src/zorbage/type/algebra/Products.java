@@ -24,19 +24,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data;
-
-//import zorbage.type.algebra.VectorSpace;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public class OctonionFloat64VectorSpace {}
-/*
-PROBLEM: OctonionSkewField is not a Field. Can't construct VectorSpace on it. Can this be relaxed?
-We can define a module over a division ring that satisfies much of linear algebra.
-https://en.wikipedia.org/wiki/Division_ring
-TODO copy contents of ComplexFloat64VectorSpace.
-*/
+public interface Products<U,W> {
+	void scale(W scalar, U a, U b);
+	void crossProduct(U a, U b, U c);
+	void dotProduct(U a, U b, W c);
+	void perpDotProduct(U a, U b, W c);
+	//void vectorDirectProduct(U a, U b, Tensor c); // TODO implement Tensor support and rename for rmodules
+	void vectorTripleProduct(U a, U b, U c, U d); // TODO rename from vector to something for both vectors and rmodules
+	void scalarTripleProduct(U a, U b, U c, W d); // TODO rename from scalar to something for both vectors and rmodules
+}
