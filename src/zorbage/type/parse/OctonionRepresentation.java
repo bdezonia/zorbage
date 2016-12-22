@@ -40,6 +40,14 @@ public class OctonionRepresentation {
 	public OctonionRepresentation(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k,
 			BigDecimal l, BigDecimal i0, BigDecimal j0, BigDecimal k0)
 	{
+		if (r == null) r = BigDecimal.ZERO;
+		if (i == null) i = BigDecimal.ZERO;
+		if (j == null) j = BigDecimal.ZERO;
+		if (k == null) k = BigDecimal.ZERO;
+		if (l == null) l = BigDecimal.ZERO;
+		if (i0 == null) i0 = BigDecimal.ZERO;
+		if (j0 == null) j0 = BigDecimal.ZERO;
+		if (k0 == null) k0 = BigDecimal.ZERO;
 		this.r = r;
 		this.i = i;
 		this.j = j;

@@ -55,7 +55,7 @@ public final class ComplexFloat64Member {
 
 	public ComplexFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
+		OctonionRepresentation val = rep.firstNumberValue();
 		r = val.r().doubleValue();
 		i = val.i().doubleValue();
 	}

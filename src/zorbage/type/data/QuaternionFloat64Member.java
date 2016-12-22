@@ -60,7 +60,7 @@ public final class QuaternionFloat64Member {
 
 	public QuaternionFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
+		OctonionRepresentation val = rep.firstNumberValue();
 		r = val.r().doubleValue();
 		i = val.i().doubleValue();
 		j = val.j().doubleValue();

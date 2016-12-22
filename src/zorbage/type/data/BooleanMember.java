@@ -63,7 +63,7 @@ public final class BooleanMember {
 			// fall through to numeric code
 		}
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
+		OctonionRepresentation val = rep.firstNumberValue();
 		v = !val.r().equals(BigDecimal.ZERO);
 	}
 

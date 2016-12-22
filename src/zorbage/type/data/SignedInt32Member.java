@@ -52,7 +52,7 @@ public final class SignedInt32Member {
 	
 	public SignedInt32Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
+		OctonionRepresentation val = rep.firstNumberValue();
 		v = val.r().intValue();
 	}
 
