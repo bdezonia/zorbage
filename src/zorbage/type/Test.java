@@ -38,6 +38,10 @@ import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
 import zorbage.type.data.SignedInt32Member;
 import zorbage.type.math.Average;
+import zorbage.type.math.Max;
+import zorbage.type.math.Median;
+import zorbage.type.math.Min;
+import zorbage.type.math.Sum;
 import zorbage.type.storage.Accessor;
 import zorbage.type.storage.ArrayStorageFloat64;
 import zorbage.type.storage.ArrayStorageSignedInt32;
@@ -198,6 +202,86 @@ public class Test {
 		System.out.println("Average value = " + result.v());
 	}
 	
+	public static void testMedian() {
+		Float64OrderedField g = new Float64OrderedField();
+		Float64Member value = new Float64Member();
+		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		// build the initial test data
+		int i = 0;
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
+			value.setV(i++);
+			accessor.put();
+		}
+		Median<Float64OrderedField,Float64Member> a = new Median<Float64OrderedField,Float64Member>(g);
+		Float64Member result = new Float64Member();
+		a.calculate(storage, result);
+		System.out.println("Median value = " + result.v());
+	}
+
+	public static void testMin() {
+		Float64OrderedField g = new Float64OrderedField();
+		Float64Member value = new Float64Member();
+		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		// build the initial test data
+		int i = 0;
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
+			value.setV(i++);
+			accessor.put();
+		}
+		Min<Float64OrderedField,Float64Member> a = new Min<Float64OrderedField,Float64Member>(g);
+		Float64Member result = new Float64Member();
+		Float64Member max = new Float64Member();
+		g.maxBound(max);
+		a.calculate(storage, max, result);
+		System.out.println("Minimum value = " + result.v());
+	}
+
+	public static void testMax() {
+		Float64OrderedField g = new Float64OrderedField();
+		Float64Member value = new Float64Member();
+		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		// build the initial test data
+		int i = 0;
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
+			value.setV(i++);
+			accessor.put();
+		}
+		Max<Float64OrderedField,Float64Member> a = new Max<Float64OrderedField,Float64Member>(g);
+		Float64Member result = new Float64Member();
+		Float64Member min = new Float64Member();
+		g.minBound(min);
+		a.calculate(storage, min, result);
+		System.out.println("Maximum value = " + result.v());
+	}
+
+	public static void testSum() {
+		Float64Member value = new Float64Member();
+		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		// build the initial test data
+		int i = 0;
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
+			value.setV(i++);
+			accessor.put();
+		}
+		Sum<Float64OrderedField,Float64Member> a =
+				new Sum<Float64OrderedField,Float64Member>(new Float64OrderedField());
+		Float64Member result = new Float64Member();
+		a.calculate(storage, result);
+		System.out.println("Sum value = " + result.v());
+	}
+
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
@@ -209,5 +293,9 @@ public class Test {
 		testAccessor();
 		testGroupOfConversions();
 		testAverage();
+		testMedian();
+		testMin();
+		testMax();
+		testSum();
 	}
 }
