@@ -56,15 +56,15 @@ public final class BooleanMember {
 	}
 	
 	public BooleanMember(String value) {
-		try {
-			v = Boolean.parseBoolean(value);
-			return;
-		} catch (Exception e) {
-			// fall through to numeric code
+		if (value.equalsIgnoreCase("true"))
+			v = true;
+		else if (value.equalsIgnoreCase("false"))
+			v = false;
+		else {
+			TensorStringRepresentation rep = new TensorStringRepresentation(value);
+			OctonionRepresentation val = rep.firstNumberValue();
+			v = !val.r().equals(BigDecimal.ZERO);
 		}
-		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstNumberValue();
-		v = !val.r().equals(BigDecimal.ZERO);
 	}
 
 	public boolean v() { return v; }

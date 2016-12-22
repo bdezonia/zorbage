@@ -26,6 +26,10 @@
  */
 package zorbage.type.data;
 
+import java.util.List;
+
+import zorbage.type.parse.OctonionRepresentation;
+import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageComplexFloat64;
 
 /**
@@ -59,7 +63,19 @@ public final class ComplexFloat64MatrixMember {
 	}
 	
 	public ComplexFloat64MatrixMember(String s) {
-		throw new IllegalArgumentException("TODO");
+		TensorStringRepresentation rep = new TensorStringRepresentation(s);
+		List<OctonionRepresentation> data = rep.firstMatrixValues();
+		int[] dimensions = rep.dimensions();
+		rows = -1;
+		cols = -1;
+		init(dimensions[1],dimensions[0]);
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		for (int i = 0; i < storage.size(); i++) {
+			OctonionRepresentation val = data.get(i);
+			tmp.setR(val.r().doubleValue());
+			tmp.setI(val.i().doubleValue());
+			storage.put(i, tmp);
+		}
 	}
 	
 	public int rows() { return rows; }

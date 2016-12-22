@@ -129,6 +129,8 @@ public class TensorStringRepresentation {
 	// numbers = number | number , numbers
     // number = num | ( 1-8 csv nums )
 	// num = +|- digits . digits
+	//
+	// [[1,0,0][0,0,0]]	
 	
 	private void tensor(List<Character> input) {
 		int ptr;
@@ -139,7 +141,7 @@ public class TensorStringRepresentation {
 			ptr = number(input,0);
 		}
 		if (ptr != input.size())
-			throw new IllegalArgumentException("illegal input: characters beyond end");
+			throw new IllegalArgumentException("illegal input: end = "+ input.size() + " and ptr at " + ptr);
 	}
 	
 	private int numberGroups(List<Character> input, int ptr) {
@@ -185,6 +187,7 @@ public class TensorStringRepresentation {
 				if (input.get(ptr) == ',')
 					ptr++;
 			}
+			ptr = ptr + 2; // skip ')'
 		}
 		else {
 			ptr = num(input, ptr);

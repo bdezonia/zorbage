@@ -33,6 +33,7 @@ import zorbage.type.algebra.Unity;
 import zorbage.type.converter.Converter;
 import zorbage.type.converter.ConverterFloat64ToSignedInt32;
 import zorbage.type.converter.ConverterSignedInt32ToFloat64;
+import zorbage.type.data.BooleanMember;
 import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
@@ -282,6 +283,40 @@ public class Test {
 		System.out.println("Sum value = " + result.v());
 	}
 
+	public static void testParsing() {
+		BooleanMember b;
+		b = new BooleanMember("false");
+		System.out.println("b should be false and is " + b.v());
+		b = new BooleanMember("true");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("1");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("0");
+		System.out.println("b should be false and is " + b.v());
+		b = new BooleanMember("2");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("3.4");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("-3.4");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("+3.4");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("(1,0)");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("(0,1)");
+		System.out.println("b should be false and is " + b.v());
+		b = new BooleanMember("[0]");
+		System.out.println("b should be false and is " + b.v());
+		b = new BooleanMember("[1]");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("[1,0,0]");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("[[1,0,0][0,0,0]]");
+		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("[[[1,0,0][0,0,0]][[0,0,0][0,0,0]]]");
+		System.out.println("b should be true and is " + b.v());
+	}
+	
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
@@ -297,5 +332,6 @@ public class Test {
 		testMin();
 		testMax();
 		testSum();
+		testParsing();
 	}
 }
