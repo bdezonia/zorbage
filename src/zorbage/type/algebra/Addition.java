@@ -30,19 +30,11 @@ package zorbage.type.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <T> The matrix ring for manipulating matrix types
- * @param <U> The matrix type: e.g. Float64MatrixMember
- * @param <V> The matrix element ring with unity used for manipulating matrix elements
- * @param <W> The matrix element type: e.g. Float64Member
  */
-public interface MatrixRing<T extends RingWithUnity<T,U>, U,
-                        V extends RingWithUnity<V,W>, W>  // TODO W needs to be Invertible?
-  extends
-    Norm<U,W>,
-    Rounding<U>,
-    Infinite<U>,
-    Conjugate<U>,
-    Invertible<U>,
-    MatrixOps<U,W>
+public interface Addition<U>
 {
+	void zero(U a);                // setZero()
+	void negate(U a, U b);         // additive inverse
+	void add(U a, U b, U c);
+	void subtract(U a, U b, U c);
 }

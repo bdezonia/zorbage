@@ -34,7 +34,7 @@ package zorbage.type.algebra;
 public interface OrderedIntegralDomain<T extends OrderedIntegralDomain<T,U>, U>
   extends
     IntegralDomain<T,U>,
-    Ordered<U>
+    Ordered<U>,
+    AbsoluteValue<U>
 {
-  void abs(U a, U b); // also in OrderedField
 }

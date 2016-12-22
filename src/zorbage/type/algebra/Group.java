@@ -32,9 +32,8 @@ package zorbage.type.algebra;
  *
  */
 public interface Group<T extends Group<T,U>, U>
-  extends Constructable<U>
+  extends
+    Constructable<U>,
+    Equality<U>
 {
-	boolean isEqual(U a, U b);
-	boolean isNotEqual(U a, U b);
-	void assign(U from, U to);
 }
