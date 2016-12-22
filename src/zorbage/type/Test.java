@@ -37,7 +37,9 @@ import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64OrderedField;
 import zorbage.type.data.SignedInt32Integer;
 import zorbage.type.data.SignedInt32Member;
+import zorbage.type.math.Average;
 import zorbage.type.storage.Accessor;
+import zorbage.type.storage.ArrayStorageFloat64;
 import zorbage.type.storage.ArrayStorageSignedInt32;
 
 /**
@@ -177,6 +179,25 @@ public class Test {
 		}
 	}
 
+	public static void testAverage() {
+		Float64Member value = new Float64Member();
+		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		// build the initial test data
+		int i = 0;
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
+			value.setV(i++);
+			accessor.put();
+		}
+		Average<Float64OrderedField,Float64Member> a =
+				new Average<Float64OrderedField,Float64Member>(new Float64OrderedField());
+		Float64Member result = new Float64Member();
+		a.calculate(storage, result);
+		System.out.println("Average value = " + result.v());
+	}
+	
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
@@ -187,5 +208,6 @@ public class Test {
 		testConversion();
 		testAccessor();
 		testGroupOfConversions();
+		testAverage();
 	}
 }
