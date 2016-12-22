@@ -26,8 +26,10 @@
  */
 package zorbage.type;
 
+import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.IntegralDomain;
 import zorbage.type.algebra.Ordered;
+import zorbage.type.algebra.Unity;
 import zorbage.type.converter.Converter;
 import zorbage.type.converter.ConverterFloat64ToSignedInt32;
 import zorbage.type.converter.ConverterSignedInt32ToFloat64;
@@ -71,7 +73,7 @@ public class Test {
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
-	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void testOrderedIntegralDomain(T g) {
+	public static <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T g) {
 		U a = g.construct();
 		g.unity(a);
 		U b = g.construct();
@@ -84,7 +86,7 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 	
-	public static <T extends IntegralDomain<T,U> & Ordered<U>, U> void testOrderedIntegralDomainAndStrings(T g) {
+	public static <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2Strings(T g) {
 		U a = g.construct("1040");
 		U b = g.construct("160");
 		U c = g.construct();
@@ -117,24 +119,24 @@ public class Test {
 		System.out.println("scaling " + v + " by " + scale + " equals " + value.v());
 	}
 	
-	public static void testBindings() {
+	public static void testAccessor() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
-		Accessor<SignedInt32Member> binding = new Accessor<SignedInt32Member>(value, storage);
+		Accessor<SignedInt32Member> accessor = new Accessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
-		while (binding.hasNext()) {
-			binding.fwd();
-			binding.get();
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
 			value.setV(i++);
-			binding.put();
+			accessor.put();
 		}
 		// visit the data in reverse order
-		binding.afterLast();
-		while (binding.hasPrev()) {
-			binding.back();
-			binding.get();
-			System.out.println("element " + binding.pos() + " equals " + value.v());
+		accessor.afterLast();
+		while (accessor.hasPrev()) {
+			accessor.back();
+			accessor.get();
+			System.out.println("element " + accessor.pos() + " equals " + value.v());
 		}
 	}
 
@@ -142,14 +144,14 @@ public class Test {
 	public static void testGroupOfConversions() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
-		Accessor<SignedInt32Member> binding = new Accessor<SignedInt32Member>(value, storage);
+		Accessor<SignedInt32Member> accessor = new Accessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
-		while (binding.hasNext()) {
-			binding.fwd();
-			binding.get();
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
 			value.setV(i++);
-			binding.put();
+			accessor.put();
 		}
 		// scale it by 6.3
 		Float64OrderedField g = new Float64OrderedField();
@@ -157,33 +159,33 @@ public class Test {
 		ConverterFloat64ToSignedInt32 fromFloat = new ConverterFloat64ToSignedInt32(); // TODO make a rounding converter
 		Float64Member scale = new Float64Member(6.3);
 		Float64Member tmp = new Float64Member();
-		binding.beforeFirst();
-		while (binding.hasNext()) {
-			binding.fwd();
-			binding.get();
+		accessor.beforeFirst();
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
 			toFloat.convert(value, tmp);
 			g.multiply(tmp, scale, tmp);
 			fromFloat.convert(tmp, value);
-			binding.put();
+			accessor.put();
 		}
 		// print it out
-		binding.beforeFirst();
-		while (binding.hasNext()) {
-			binding.fwd();
-			binding.get();
-			System.out.println("element " + binding.pos() + " equals " + value.v());
+		accessor.beforeFirst();
+		while (accessor.hasNext()) {
+			accessor.fwd();
+			accessor.get();
+			System.out.println("element " + accessor.pos() + " equals " + value.v());
 		}
 	}
 
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
-		testOrderedIntegralDomain(new SignedInt32Integer());
-		testOrderedIntegralDomain(new Float64OrderedField());
-		testOrderedIntegralDomainAndStrings(new SignedInt32Integer());
-		testOrderedIntegralDomainAndStrings(new Float64OrderedField());
+		test1(new SignedInt32Integer());
+		test1(new Float64OrderedField());
+		test2Strings(new SignedInt32Integer());
+		test2Strings(new Float64OrderedField());
 		testConversion();
-		testBindings();
+		testAccessor();
 		testGroupOfConversions();
 	}
 }
