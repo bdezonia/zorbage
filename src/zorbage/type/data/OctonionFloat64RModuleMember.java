@@ -45,17 +45,19 @@ public final class OctonionFloat64RModuleMember {
 	}
 	
 	public OctonionFloat64RModuleMember(double[] vals) {
-		storage = new ArrayStorageOctonionFloat64(vals.length/8);
+		final int count = vals.length / 8;
+		storage = new ArrayStorageOctonionFloat64(count);
 		OctonionFloat64Member value = new OctonionFloat64Member();
-		for (int i = 0; i < vals.length/8; i++) {
-			value.setR(vals[8*i]);
-			value.setI(vals[8*i + 1]);
-			value.setJ(vals[8*i + 2]);
-			value.setK(vals[8*i + 3]);
-			value.setL(vals[8*i + 4]);
-			value.setI0(vals[8*i + 5]);
-			value.setJ0(vals[8*i + 6]);
-			value.setK0(vals[8*i + 7]);
+		for (int i = 0; i < count; i++) {
+			final int index = 8*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			value.setL(vals[index + 4]);
+			value.setI0(vals[index + 5]);
+			value.setJ0(vals[index + 6]);
+			value.setK0(vals[index + 7]);
 			storage.put(i,  value);
 		}
 	}

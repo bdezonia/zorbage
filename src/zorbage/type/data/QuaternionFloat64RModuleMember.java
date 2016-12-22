@@ -45,13 +45,15 @@ public final class QuaternionFloat64RModuleMember {
 	}
 	
 	public QuaternionFloat64RModuleMember(double[] vals) {
-		storage = new ArrayStorageQuaternionFloat64(vals.length/4);
+		final int count = vals.length / 4;
+		storage = new ArrayStorageQuaternionFloat64(count);
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (int i = 0; i < vals.length/4; i++) {
-			value.setR(vals[4*i]);
-			value.setI(vals[4*i + 1]);
-			value.setJ(vals[4*i + 2]);
-			value.setK(vals[4*i + 3]);
+		for (int i = 0; i < count; i++) {
+			final int index = 4*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
 			storage.put(i,  value);
 		}
 	}

@@ -45,11 +45,13 @@ public final class ComplexFloat64VectorMember {
 	}
 	
 	public ComplexFloat64VectorMember(double[] vals) {
-		storage = new ArrayStorageComplexFloat64(vals.length / 2);
+		final int count = vals.length / 2;
+		storage = new ArrayStorageComplexFloat64(count);
 		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (int i = 0; i < vals.length/2; i++) {
-			value.setR(vals[2*i]);
-			value.setI(vals[2*i+1]);
+		for (int i = 0; i < count; i++) {
+			final int index = 2*i;
+			value.setR(vals[index]);
+			value.setI(vals[index+1]);
 			storage.put(i,  value);
 		}
 	}
