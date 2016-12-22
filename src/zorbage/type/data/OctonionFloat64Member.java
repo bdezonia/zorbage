@@ -26,6 +26,12 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.parse.ComplexNumberRepresentation;
+import zorbage.type.parse.NumberRepresentation;
+import zorbage.type.parse.OctonionRepresentation;
+import zorbage.type.parse.QuaternionRepresentation;
+import zorbage.type.parse.TensorStringRepresentation;
+
 /**
  * 
  * @author Barry DeZonia
@@ -64,19 +70,40 @@ public class OctonionFloat64Member {
 	}
 
 	public OctonionFloat64Member(String value) {
-		String[] strs = value.trim().split("\\s+");
-
-		for (int x = 0; x < 8 && x < strs.length; x++) {
-		  double d = Double.parseDouble(strs[x]);
-		  if (x == 0) r = d;
-		  else if (x == 1) i = d;
-		  else if (x == 2) j = d;
-		  else if (x == 3) k = d;
-		  else if (x == 4) l = d;
-		  else if (x == 5) i0 = d;
-		  else if (x == 6) j0 = d;
-		  else if (x == 7) k0 = d;
+		TensorStringRepresentation rep = new TensorStringRepresentation(value);
+		Object val = rep.firstValue();
+		if (val instanceof NumberRepresentation) {
+			NumberRepresentation v = (NumberRepresentation) val;
+			r = v.v().doubleValue();
+			i = j = k = l = i0 = j0 = k0 = 0;
 		}
+		else if (val instanceof ComplexNumberRepresentation) {
+			ComplexNumberRepresentation v = (ComplexNumberRepresentation) val;
+			r = v.r().doubleValue();
+			i = v.i().doubleValue();
+			j = k = l = i0 = j0 = k0 = 0;
+		}
+		else if (val instanceof QuaternionRepresentation) {
+			QuaternionRepresentation v = (QuaternionRepresentation) val;
+			r = v.r().doubleValue();
+			i = v.i().doubleValue();
+			j = v.j().doubleValue();
+			k = v.k().doubleValue();
+			l = i0 = j0 = k0 = 0;
+		}
+		else if (val instanceof OctonionRepresentation) {
+			OctonionRepresentation v = (OctonionRepresentation) val;
+			r = v.r().doubleValue();
+			i = v.i().doubleValue();
+			j = v.j().doubleValue();
+			k = v.k().doubleValue();
+			l = v.l().doubleValue();
+			i0 = v.i0().doubleValue();
+			j0 = v.j0().doubleValue();
+			k0 = v.k0().doubleValue();
+		}
+		else
+			throw new IllegalArgumentException("unknown numeric type in octonion float 64 parse");
 	}
 
 	public double r() { return r; }
