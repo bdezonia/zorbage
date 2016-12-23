@@ -53,11 +53,13 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 		this.g = g;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void put(long index, U value) {
 		g.assign(value, (U)data[(int)index]);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void get(long index, U value) {
 		g.assign((U)data[(int)index], value);
