@@ -27,10 +27,8 @@
 package zorbage.type;
 
 import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.IntegralDomain;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
-import zorbage.type.converter.Converter;
 import zorbage.type.converter.ConverterFloat64ToSignedInt32;
 import zorbage.type.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.data.BooleanMember;
@@ -93,7 +91,7 @@ public class Test {
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
 	}
 	
-	public static <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2Strings(T g) {
+	public static <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2(T g) {
 		U a = g.construct("1040");
 		U b = g.construct("160");
 		U c = g.construct();
@@ -101,29 +99,6 @@ public class Test {
 		System.out.println(a.toString() + " plus " + b.toString() + " equals " + c.toString());
 		System.out.println(a.toString() + " equals " + b.toString() + " : " + g.isEqual(a, b));
 		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
-	}
-
-	public static <U> void scaleByConstant(U value, Float64Member constant,
-			Converter<U, Float64Member> toFloat, Converter<Float64Member, U> fromFloat)
-	{
-		IntegralDomain<Float64OrderedField,Float64Member> g = new Float64OrderedField();
-		Float64Member tmp = new Float64Member();
-		toFloat.convert(value, tmp);
-		g.multiply(tmp, constant, tmp);
-		fromFloat.convert(tmp, value);
-	}
-	
-	public static void testConversion() {
-		int v = 1000;
-		double scale = 1.4;
-		SignedInt32Member value = new SignedInt32Member(v);
-		scaleByConstant(
-			value,
-			new Float64Member(scale),
-			new ConverterSignedInt32ToFloat64(),
-			new ConverterFloat64ToSignedInt32()
-		);
-		System.out.println("scaling " + v + " by " + scale + " equals " + value.v());
 	}
 	
 	public static void testAccessor() {
@@ -322,9 +297,8 @@ public class Test {
 		testFloats();
 		test1(new SignedInt32Integer());
 		test1(new Float64OrderedField());
-		test2Strings(new SignedInt32Integer());
-		test2Strings(new Float64OrderedField());
-		testConversion();
+		test2(new SignedInt32Integer());
+		test2(new Float64OrderedField());
 		testAccessor();
 		testGroupOfConversions();
 		testAverage();
