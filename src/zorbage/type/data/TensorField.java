@@ -10,6 +10,8 @@ import zorbage.type.algebra.Trigonometric;
 
 //do I skip Vector and Matrix and even Scalar?
 
+// TODO: make one tensor/member pair for each of float64, complex64, quat64, oct64
+// TODO: determine if this is a field or something else or two things for float/complex vs. quat/oct
 
 class TensorField
   implements
