@@ -30,6 +30,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: capture regular dimensions during parsing
+
 /**
  * 
  * @author Barry DeZonia
@@ -44,6 +46,7 @@ public class TensorStringRepresentation {
 		elements = new ArrayList<OctonionRepresentation>();
 		dimensions = determineDimensions(s);
 		gatherNumbers(s);
+		// TODO: if numbers.length != numElems(dims) throw exception
 	}
 	
 	public int[] dimensions() {
@@ -63,6 +66,20 @@ public class TensorStringRepresentation {
 		return elements.get(0);
 	}
 	
+	public int firstVectorDimension() {
+		int dim = 1;
+		if (dimensions.length >= 0) dim = dimensions[0];
+		return dim;
+	}
+
+	public List<OctonionRepresentation> firstVectorValues() {
+		int count = firstVectorDimension();
+		List<OctonionRepresentation> vectorElements = new ArrayList<OctonionRepresentation>(count);
+		for (int i = 0; i < count; i++)
+			vectorElements.add(elements.get(i));
+		return vectorElements;
+	}
+
 	public int[] firstMatrixDimensions() {
 		int[] dims = new int[]{1,1};
 		if (dimensions.length >= 0) dims[0] = dimensions[0];
@@ -124,8 +141,8 @@ public class TensorStringRepresentation {
 	*/
 	
 	// tensor = number | numberGroups
-	// numberGroups = [ numberGroup ]
-	// numberGroup = numbers | [ numberGroup ]
+	// numberGroups = [ numberGroup ] | nothing
+	// numberGroup = numbers | numberGroups
 	// numbers = number | number , numbers
     // number = num | ( 1-8 csv nums )
 	// num = +|- digits . digits
@@ -146,13 +163,13 @@ public class TensorStringRepresentation {
 	
 	private int numberGroups(List<Character> input, int ptr) {
 		if (input.get(ptr) == '[') {
-			ptr = numberGroup(input, ptr+1);
+			ptr = numberGroup(input, ptr);
 			if (input.get(ptr) != ']')
 				throw new IllegalArgumentException("1");
-			else return ptr+1;
+			return ptr+1;
 		}
 		else
-			throw new IllegalArgumentException("2");
+			return ptr;
 	}
 	
 	private int numberGroup(List<Character> input, int ptr) {
@@ -161,10 +178,10 @@ public class TensorStringRepresentation {
 			if (input.get(ptr) != ']')
 				throw new IllegalArgumentException("number group not terminated correctly");
 			else
-				return ptr + 1;
+				return ptr;
 		}
 		else
-			return numbers(input, ptr);
+			return numberGroups(input, ptr);
 	}
 	
 	private int numbers(List<Character> input, int ptr) {
@@ -200,20 +217,21 @@ public class TensorStringRepresentation {
 	private int num(List<Character> input, int ptr) {
 		StringBuilder buff = new StringBuilder();
 		do {
-			char ch = input.get(ptr);
-			if (ch == '+') {
-				ptr++;
-			}
-			else if (ch == '-' || ch == '.' || Character.isDigit(ch)) {
-				buff.append(ch);
-				ptr++;
+			if (ptr == input.size()) break;
+			char ch = input.get(ptr++);
+			// parse between number delimiters
+			// could append non-legal chars but let BigDecimal constructor handle it
+			// hopefully this allows +/- Inf and NaN
+			// (NOPE: BigD can't handle these but does support sci notation)
+			if ((ch == ')') || (ch == ',') || (ch == ']')) {
+				ptr--;
+				break;
 			}
 			else
-				break;
-			if (ptr == input.size())
-				break;
-		}
+				buff.append(ch);
+			}
 		while (true);
+		System.out.println("number being parsed = "+buff.toString());
 		tmp = new BigDecimal(buff.toString());
 		return ptr;
 	}

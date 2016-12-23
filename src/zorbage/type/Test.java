@@ -276,6 +276,8 @@ public class Test {
 		System.out.println("b should be true and is " + b.v());
 		b = new BooleanMember("+3.4");
 		System.out.println("b should be true and is " + b.v());
+		b = new BooleanMember("1.2e+05");
+		System.out.println("b should be true and is " + b.v());
 		b = new BooleanMember("(1,0)");
 		System.out.println("b should be true and is " + b.v());
 		b = new BooleanMember("(0,1)");
