@@ -30,7 +30,6 @@ import java.util.List;
 
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
-import zorbage.type.storage.ArrayStorageOctonionFloat64;
 import zorbage.type.storage.ArrayStorageQuaternionFloat64;
 
 /**

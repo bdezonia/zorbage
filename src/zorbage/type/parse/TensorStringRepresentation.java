@@ -62,6 +62,8 @@ public class TensorStringRepresentation {
 		return elements.get(idx);
 	}
 	
+	public List<OctonionRepresentation> values() { return elements; }
+	
 	public OctonionRepresentation firstNumberValue() {
 		return elements.get(0);
 	}
