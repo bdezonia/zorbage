@@ -36,9 +36,20 @@ import zorbage.type.data.SignedInt32Member;
  */
 public class ConverterFloat64ToSignedInt32Round implements Converter<Float64Member, SignedInt32Member>{
 
+	private final boolean even;
+	
+	public ConverterFloat64ToSignedInt32Round(boolean even) {
+		this.even = even;
+	}
+	
 	@Override
 	public void convert(Float64Member from, SignedInt32Member to) {
-		to.setV( (int) Math.round(from.v()) );
+		double v = from.v();
+		if (even)
+			v = Math.rint(v);
+		else
+			v = Math.round(v);
+		to.setV( (int) v );
 	}
 
 	@Override

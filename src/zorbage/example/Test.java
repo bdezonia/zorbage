@@ -138,7 +138,7 @@ public class Test {
 		// scale it by 6.3
 		Float64OrderedField g = new Float64OrderedField();
 		ConverterSignedInt32ToFloat64 toFloat = new ConverterSignedInt32ToFloat64();
-		ConverterFloat64ToSignedInt32Round fromFloat = new ConverterFloat64ToSignedInt32Round();
+		ConverterFloat64ToSignedInt32Round fromFloat = new ConverterFloat64ToSignedInt32Round(false);
 		Float64Member scale = new Float64Member(6.3);
 		Float64Member tmp = new Float64Member();
 		accessor.beforeFirst();
