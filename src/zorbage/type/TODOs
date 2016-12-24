@@ -1,6 +1,5 @@
 Examples
-  FFT
-  UnsignedIntMember
+  UnboundedIntMember
   Parsing all kinds of types
   Mandelbrot explorer
   Game of life
@@ -15,7 +14,7 @@ Other needs
   Add more types: short, byte, 12 bit, etc
   Add tests
   polynomials
-  group ring
+  group ring, modules
   vector direct product creating tensors
   many many more converters needed
     1 per type combo
@@ -23,4 +22,5 @@ Other needs
     extract i, j, k, l, i0, j0, k0
   improve exp() and log() accuracy near 1.0 / - 1.0
   big decimal type needed?
+  a tensor like class that can support quats and octs not as vector spaces but rmodules
   

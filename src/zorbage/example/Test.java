@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type;
+package zorbage.example;
 
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Ordered;
@@ -295,6 +295,7 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
+		new DFTExample().run();
 		testInts();
 		testFloats();
 		test1(new SignedInt32Integer());
