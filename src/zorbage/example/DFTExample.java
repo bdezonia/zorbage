@@ -108,13 +108,14 @@ public class DFTExample {
 		ComplexFloat64Member MINUS_2 = new ComplexFloat64Member(-2,0);
 		ComplexFloat64Member E = new ComplexFloat64Member();
 		ComplexFloat64Member PI = new ComplexFloat64Member();
+		
 		g.E(E);
 		g.PI(PI);
 		for (int u = 0; u < input.size(); u++) {
 			g.zero(sum);
 			uTmp.setR(u);
 			for (int x = 0; x < input.size(); x++) {
-				fOfX.setR(x);
+				input.get(x, fOfX);
 				xTmp.setR(x);
 				g.multiply(MINUS_2, PI, power);
 				g.multiply(power, I, power);
