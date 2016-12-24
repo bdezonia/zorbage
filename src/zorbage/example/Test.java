@@ -29,7 +29,7 @@ package zorbage.example;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
-import zorbage.type.converter.ConverterFloat64ToSignedInt32;
+import zorbage.type.converter.ConverterFloat64ToSignedInt32Round;
 import zorbage.type.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.data.BooleanMember;
 import zorbage.type.data.Float64Member;
@@ -138,7 +138,7 @@ public class Test {
 		// scale it by 6.3
 		Float64OrderedField g = new Float64OrderedField();
 		ConverterSignedInt32ToFloat64 toFloat = new ConverterSignedInt32ToFloat64();
-		ConverterFloat64ToSignedInt32 fromFloat = new ConverterFloat64ToSignedInt32(); // TODO make a rounding converter
+		ConverterFloat64ToSignedInt32Round fromFloat = new ConverterFloat64ToSignedInt32Round();
 		Float64Member scale = new Float64Member(6.3);
 		Float64Member tmp = new Float64Member();
 		accessor.beforeFirst();

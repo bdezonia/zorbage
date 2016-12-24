@@ -94,10 +94,11 @@ public class DFTExample {
 	
 	// https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node228.html
 	
+	// TODO: a small tweak to this method would eliminate the need for a temp array of complexes
+
 	private void dft(Storage<ComplexFloat64Member> input, Storage<ComplexFloat64Member> output) {
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
 		ComplexFloat64Member fOfX = new ComplexFloat64Member();
-		ComplexFloat64Member N = new ComplexFloat64Member(input.size(), 0);
 		ComplexFloat64Member sum = new ComplexFloat64Member();
 		ComplexFloat64Member term = new ComplexFloat64Member();
 		ComplexFloat64Member multiplier = new ComplexFloat64Member();
@@ -106,11 +107,13 @@ public class DFTExample {
 		ComplexFloat64Member xTmp = new ComplexFloat64Member();
 		ComplexFloat64Member I = new ComplexFloat64Member(0,1);
 		ComplexFloat64Member MINUS_2 = new ComplexFloat64Member(-2,0);
+		ComplexFloat64Member N = new ComplexFloat64Member(input.size(), 0);
 		ComplexFloat64Member E = new ComplexFloat64Member();
 		ComplexFloat64Member PI = new ComplexFloat64Member();
 		
 		g.E(E);
 		g.PI(PI);
+		
 		for (int u = 0; u < input.size(); u++) {
 			g.zero(sum);
 			uTmp.setR(u);
