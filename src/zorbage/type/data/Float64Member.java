@@ -68,6 +68,10 @@ public final class Float64Member {
 	}
 	
 	@Override
-	public String toString() { return "" + v; }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(v);
+		return builder.toString();
+	}
 
 }

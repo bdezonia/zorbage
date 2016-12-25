@@ -145,7 +145,7 @@ public final class Float64MatrixMember {
 				if (c != 0)
 					builder.append(',');
 				v(r, c, tmp);
-				builder.append(tmp.v());
+				builder.append(tmp.toString());
 			}
 			builder.append(']');
 		}

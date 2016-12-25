@@ -142,6 +142,18 @@ public final class OctonionFloat64RModuleMember {
 	public int length() { return (int) storage.size(); }
 	
 	@Override
-	public String toString() { throw new IllegalArgumentException("Not yet implemented"); }
+	public String toString() { 
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		for (int i = 0; i < storage.size(); i++) {
+			if (i != 0)
+				builder.append(',');
+			v(i, tmp);
+			builder.append(tmp.toString());
+		}
+		builder.append(']');
+		return builder.toString();
+	}
 
 }

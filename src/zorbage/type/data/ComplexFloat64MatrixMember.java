@@ -145,11 +145,7 @@ public final class ComplexFloat64MatrixMember {
 				if (c != 0)
 					builder.append(',');
 				v(r, c, tmp);
-				builder.append('(');
-				builder.append(tmp.r());
-				builder.append(',');
-				builder.append(tmp.i());
-				builder.append(')');
+				builder.append(tmp.toString());
 			}
 			builder.append(']');
 		}

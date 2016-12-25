@@ -151,23 +151,7 @@ public final class OctonionFloat64MatrixMember {
 				if (c != 0)
 					builder.append(',');
 				v(r, c, tmp);
-				builder.append('(');
-				builder.append(tmp.r());
-				builder.append(',');
-				builder.append(tmp.i());
-				builder.append(',');
-				builder.append(tmp.j());
-				builder.append(',');
-				builder.append(tmp.k());
-				builder.append(',');
-				builder.append(tmp.l());
-				builder.append(',');
-				builder.append(tmp.i0());
-				builder.append(',');
-				builder.append(tmp.j0());
-				builder.append(',');
-				builder.append(tmp.k0());
-				builder.append(')');
+				builder.append(tmp.toString());
 			}
 			builder.append(']');
 		}

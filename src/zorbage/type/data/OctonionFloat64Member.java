@@ -119,6 +119,26 @@ public class OctonionFloat64Member {
 	}
 
 	@Override
-	public String toString() { return "" + r + " " + i + " " + j + " " + k + " " + l + " " + i0 + " " + j0 + " " + k0; }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append('(');
+		builder.append(r);
+		builder.append(',');
+		builder.append(i);
+		builder.append(',');
+		builder.append(j);
+		builder.append(',');
+		builder.append(k);
+		builder.append(',');
+		builder.append(l);
+		builder.append(',');
+		builder.append(i0);
+		builder.append(',');
+		builder.append(j0);
+		builder.append(',');
+		builder.append(k0);
+		builder.append(')');
+		return builder.toString();
+	}
 
 }
