@@ -34,14 +34,14 @@ import zorbage.type.data.SignedInt32Member;
  * @author Barry DeZonia
  *
  */
-public class ConverterFloat64ToSignedInt32Round implements Converter<Float64Member, SignedInt32Member>{
+public class ConverterFloat64ToSignedInt32Rint implements Converter<Float64Member, SignedInt32Member>{
 
-	public ConverterFloat64ToSignedInt32Round() {
+	public ConverterFloat64ToSignedInt32Rint() {
 	}
 	
 	@Override
 	public void convert(Float64Member from, SignedInt32Member to) {
-		to.setV( (int) Math.round( from.v() ) );
+		to.setV( (int) Math.rint( from.v() ) );
 	}
 
 	@Override
