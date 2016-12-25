@@ -142,6 +142,36 @@ public final class OctonionFloat64MatrixMember {
 	
 	@Override
 	public String toString() {
-		throw new IllegalArgumentException("TODO");
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		for (int r = 0; r < rows; r++) {
+			builder.append('[');
+			for (int c = 0; c < cols; c++) {
+				if (c != 0)
+					builder.append(',');
+				v(r, c, tmp);
+				builder.append('(');
+				builder.append(tmp.r());
+				builder.append(',');
+				builder.append(tmp.i());
+				builder.append(',');
+				builder.append(tmp.j());
+				builder.append(',');
+				builder.append(tmp.k());
+				builder.append(',');
+				builder.append(tmp.l());
+				builder.append(',');
+				builder.append(tmp.i0());
+				builder.append(',');
+				builder.append(tmp.j0());
+				builder.append(',');
+				builder.append(tmp.k0());
+				builder.append(')');
+			}
+			builder.append(']');
+		}
+		builder.append(']');
+		return builder.toString();
 	}
 }

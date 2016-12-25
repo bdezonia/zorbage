@@ -136,6 +136,20 @@ public final class Float64MatrixMember {
 
 	@Override
 	public String toString() {
-		throw new IllegalArgumentException("TODO");
+		Float64Member tmp = new Float64Member();
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		for (int r = 0; r < rows; r++) {
+			builder.append('[');
+			for (int c = 0; c < cols; c++) {
+				if (c != 0)
+					builder.append(',');
+				v(r, c, tmp);
+				builder.append(tmp.v());
+			}
+			builder.append(']');
+		}
+		builder.append(']');
+		return builder.toString();
 	}
 }
