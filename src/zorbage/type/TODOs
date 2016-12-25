@@ -7,11 +7,14 @@ Examples
 Other needs
   Multiplying together vectors, matrices, and tensors
   Choose round nearest: rint() vs. round()
-  Flesh out tensor classes
+  Fix and flesh out tensor classes
   Matrices: norm, det, invert
   Storage: multidimension facades
   Fix numeric parsing
-  Add more types: short, byte, 12 bit, etc
+  Add more types:
+    native long, short, byte, float32, plus complex32
+    bit: 2, 4, 12, 20, 24, 128
+    int types above made both signed and unsigned
   Add tests
   polynomials
   group ring, modules
@@ -23,4 +26,8 @@ Other needs
   improve exp() and log() accuracy near 1.0 / - 1.0
   big decimal type needed?
   a tensor like class that can support quats and octs not as vector spaces but rmodules
+  storage containers should be able to duplicate themselves
+  number bases: instead of zero and unity need faster ways to construct numbers besides strings
+  implement all type toString() methods like matrices, tensors, vectors
+  find all TODOs in code and implement
   
