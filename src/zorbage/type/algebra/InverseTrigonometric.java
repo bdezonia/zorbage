@@ -35,7 +35,7 @@ public interface InverseTrigonometric<U> {
 	void asin(U a, U b);
 	void acos(U a, U b);
 	void atan(U a, U b);
-	void acsc(U a, U b);
-	void asec(U a, U b);
-	void acot(U a, U b);
+	//void acsc(U a, U b);
+	//void asec(U a, U b);
+	//void acot(U a, U b);
 }

@@ -44,19 +44,19 @@ class TensorField
 	@Override
 	public void tan(TensorMember a, TensorMember b) {}
 	
-	@Override
+	//@Override
 	public void csc(TensorMember a, TensorMember b) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	//@Override
 	public void sec(TensorMember a, TensorMember b) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	//@Override
 	public void cot(TensorMember a, TensorMember b) {
 		// TODO Auto-generated method stub
 		
@@ -71,19 +71,19 @@ class TensorField
 	@Override
 	public void tanh(TensorMember a, TensorMember b) {}
 
-	@Override
+	//@Override
 	public void csch(TensorMember a, TensorMember b) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	//@Override
 	public void sech(TensorMember a, TensorMember b) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	//@Override
 	public void coth(TensorMember a, TensorMember b) {
 		// TODO Auto-generated method stub
 		

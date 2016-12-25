@@ -260,7 +260,7 @@ public class ComplexFloat64Field
 		multiply(MINUS_I_OVER_TWO, log, b);
 	}
 
-	@Override
+	//@Override
 	public void acsc(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member recipA = new ComplexFloat64Member();
 		
@@ -268,7 +268,7 @@ public class ComplexFloat64Field
 		asin(recipA, b);
 	}
 
-	@Override
+	//@Override
 	public void asec(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member recipA = new ComplexFloat64Member();
 		
@@ -276,7 +276,7 @@ public class ComplexFloat64Field
 		acos(recipA, b);
 	}
 
-	@Override
+	//@Override
 	public void acot(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member ia = new ComplexFloat64Member();
 		ComplexFloat64Member sum = new ComplexFloat64Member();
@@ -334,7 +334,7 @@ public class ComplexFloat64Field
 		multiply(ONE_HALF, log, b);
 	}
 
-	@Override
+	//@Override
 	public void acsch(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member recipA = new ComplexFloat64Member();
 
@@ -342,7 +342,7 @@ public class ComplexFloat64Field
 		asinh(recipA, b);
 	}
 
-	@Override
+	//@Override
 	public void asech(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member recipA = new ComplexFloat64Member();
 
@@ -350,7 +350,7 @@ public class ComplexFloat64Field
 		acosh(recipA, b);
 	}
 
-	@Override
+	//@Override
 	public void acoth(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member sum = new ComplexFloat64Member();
 		ComplexFloat64Member diff = new ComplexFloat64Member();
@@ -406,7 +406,7 @@ public class ComplexFloat64Field
 		divide(sin, cos, b);
 	}
 
-	@Override
+	//@Override
 	public void csc(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member sin = new ComplexFloat64Member();
 
@@ -414,7 +414,7 @@ public class ComplexFloat64Field
 		invert(sin, b);
 	}
 
-	@Override
+	//@Override
 	public void sec(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member cos = new ComplexFloat64Member();
 
@@ -422,7 +422,7 @@ public class ComplexFloat64Field
 		invert(cos, b);
 	}
 
-	@Override
+	//@Override
 	public void cot(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member tan = new ComplexFloat64Member();
 
@@ -468,7 +468,7 @@ public class ComplexFloat64Field
 		divide(sinh, cosh, b);
 	}
 
-	@Override
+	//@Override
 	public void csch(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member sinh = new ComplexFloat64Member();
 
@@ -476,7 +476,7 @@ public class ComplexFloat64Field
 		invert(sinh, b);
 	}
 
-	@Override
+	//@Override
 	public void sech(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member cosh = new ComplexFloat64Member();
 
@@ -484,7 +484,7 @@ public class ComplexFloat64Field
 		invert(cosh, b);
 	}
 
-	@Override
+	//@Override
 	public void coth(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member tanh = new ComplexFloat64Member();
 

@@ -241,21 +241,21 @@ public class Float64OrderedField
 
 	// ref: internet
 
-	@Override
+	//@Override
 	public void csc(Float64Member a, Float64Member b) {
 		b.setV( 1.0 / Math.sin(a.v()) );
 	}
 	
 	// ref: internet
 
-	@Override
+	//@Override
 	public void sec(Float64Member a, Float64Member b) {
 		b.setV( 1.0 / Math.cos(a.v()) );
 	}
 	
 	// ref: internet
 
-	@Override
+	//@Override
 	public void cot(Float64Member a, Float64Member b) {
 		b.setV( 1.0 / Math.tan(a.v()) );
 	}
@@ -277,21 +277,21 @@ public class Float64OrderedField
 
 	// ref: internet
 
-	@Override
+	//@Override
 	public void csch(Float64Member a, Float64Member b) {
 		b.setV( 1.0 / Math.sinh(a.v()) );
 	}
 	
 	// ref: internet
 
-	@Override
+	//@Override
 	public void sech(Float64Member a, Float64Member b) {
 		b.setV( 1.0 / Math.cosh(a.v()) );
 	}
 
 	// ref: internet
 
-	@Override
+	//@Override
 	public void coth(Float64Member a, Float64Member b) {
 		b.setV( 1.0 / Math.tanh(a.v()) );
 	}
@@ -317,7 +317,7 @@ public class Float64OrderedField
 
 	// reference: Wolfram Alpha
 
-	@Override
+	//@Override
 	public void acsc(Float64Member a, Float64Member b) {
 		// acsc(x) = asin(1/x)
 		Float64Member tmp = new Float64Member(1 / a.v());
@@ -326,7 +326,7 @@ public class Float64OrderedField
 
 	// reference: Wolfram Alpha
 	
-	@Override
+	//@Override
 	public void asec(Float64Member a, Float64Member b) {
 		// asec(x) = acos(1/x)
 		Float64Member tmp = new Float64Member(1 / a.v());
@@ -335,7 +335,7 @@ public class Float64OrderedField
 	
 	// reference: Wolfram Alpha
 
-	@Override
+	// @Override
 	public void acot(Float64Member a, Float64Member b) {
 		// acot(x) = atan(1/x)
 		Float64Member tmp = new Float64Member(1 / a.v());
@@ -365,7 +365,7 @@ public class Float64OrderedField
 
 	// reference: Wolfram Alpha
 	
-	@Override
+	//@Override
 	public void acsch(Float64Member a, Float64Member b) {
 		// acsch(x) = asinh(1/x)
 		Float64Member tmp = new Float64Member(1 / a.v());
@@ -374,7 +374,7 @@ public class Float64OrderedField
 
 	// reference: Wolfram Alpha
 	
-	@Override
+	//@Override
 	public void asech(Float64Member a, Float64Member b) {
 		// asech(x) = acosh(1/x)
 		Float64Member tmp = new Float64Member(1 / a.v());
@@ -383,7 +383,7 @@ public class Float64OrderedField
 
 	// reference: Wolfram Alpha
 	
-	@Override
+	//@Override
 	public void acoth(Float64Member a, Float64Member b) {
 		// acoth(x) = atanh(1/x)
 		Float64Member tmp = new Float64Member(1 / a.v());
