@@ -5,6 +5,7 @@ Examples
   Game of life
   
 Other needs
+  make all int[] indices into long[] indices
   Multiplying together vectors, matrices, and tensors
   Choose round nearest: rint() vs. round()
   Fix and flesh out tensor classes

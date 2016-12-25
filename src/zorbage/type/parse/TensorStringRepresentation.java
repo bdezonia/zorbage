@@ -53,11 +53,12 @@ public class TensorStringRepresentation {
 		return dimensions;
 	}
 
-	// TODO: this is tricky. what order?
 	public OctonionRepresentation value(int[] index) {
 		int idx = 0;
-		for (int i = index.length-1; i >= 0; i--) {
-			
+		int increment = 1;
+		for (int i = 0; i < index.length; i++) {
+			idx += index[i] * increment;
+			increment *= dimensions[i];
 		}
 		return elements.get(idx);
 	}
