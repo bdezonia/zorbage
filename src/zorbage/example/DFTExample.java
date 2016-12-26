@@ -30,7 +30,6 @@ import zorbage.type.converter.ConverterSignedInt32ToComplexFloat64;
 import zorbage.type.data.ComplexFloat64Field;
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.data.SignedInt32Member;
-import zorbage.type.storage.Accessor;
 import zorbage.type.storage.ArrayStorageComplexFloat64;
 import zorbage.type.storage.ArrayStorageSignedInt32;
 import zorbage.type.storage.Storage;
@@ -48,10 +47,8 @@ public class DFTExample {
 		final int size = 20;
 		Storage<SignedInt32Member> inputData = makeIntData(size);
 		fillIntData(inputData);
-		Storage<ComplexFloat64Member> inputComplexData = makeComplexData(size);
 		Storage<ComplexFloat64Member> outputComplexData = makeComplexData(size);
-		convert(inputData, inputComplexData);
-		dft(inputComplexData, outputComplexData);
+		dft(inputData, outputComplexData);
 	}
 	
 	
@@ -73,30 +70,12 @@ public class DFTExample {
 		}
 	}
 	
-	private void convert(Storage<SignedInt32Member> input, Storage<ComplexFloat64Member> output) {
-		SignedInt32Member integer = new SignedInt32Member();
-		ComplexFloat64Member complex = new ComplexFloat64Member();
-		ConverterSignedInt32ToComplexFloat64 converter = new ConverterSignedInt32ToComplexFloat64();
-
-		// an example of higher level access to data
-
-		Accessor<SignedInt32Member> acc1 = new Accessor<SignedInt32Member>(integer, input);
-		Accessor<ComplexFloat64Member> acc2 = new Accessor<ComplexFloat64Member>(complex, output);
-		
-		while (acc1.hasNext() && acc2.hasNext()) {
-			acc1.fwd();
-			acc2.fwd();
-			acc1.get();
-			converter.convert(integer, complex);
-			acc2.put();
-		}
-	}
-	
 	// https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node228.html
 	
 	// TODO: a small tweak to this method would eliminate the need for a temp array of complexes
 
-	private void dft(Storage<ComplexFloat64Member> input, Storage<ComplexFloat64Member> output) {
+	private void dft(Storage<SignedInt32Member> input, Storage<ComplexFloat64Member> output) {
+		ConverterSignedInt32ToComplexFloat64 converter = new ConverterSignedInt32ToComplexFloat64();
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
 		ComplexFloat64Member fOfX = new ComplexFloat64Member();
 		ComplexFloat64Member sum = new ComplexFloat64Member();
@@ -110,6 +89,7 @@ public class DFTExample {
 		ComplexFloat64Member N = new ComplexFloat64Member(input.size(), 0);
 		ComplexFloat64Member E = new ComplexFloat64Member();
 		ComplexFloat64Member PI = new ComplexFloat64Member();
+		SignedInt32Member in = new SignedInt32Member();
 		
 		g.E(E);
 		g.PI(PI);
@@ -118,7 +98,8 @@ public class DFTExample {
 			g.zero(sum);
 			uTmp.setR(u);
 			for (int x = 0; x < input.size(); x++) {
-				input.get(x, fOfX);
+				input.get(x, in);
+				converter.convert(in, fOfX);
 				xTmp.setR(x);
 				g.multiply(MINUS_2, PI, power);
 				g.multiply(power, I, power);
