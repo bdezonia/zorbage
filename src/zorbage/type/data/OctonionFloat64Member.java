@@ -34,7 +34,7 @@ import zorbage.type.parse.TensorStringRepresentation;
  * @author Barry DeZonia
  *
  */
-public class OctonionFloat64Member {
+public final class OctonionFloat64Member {
 
 	private double r, i, j, k, l, i0, j0, k0;
 	

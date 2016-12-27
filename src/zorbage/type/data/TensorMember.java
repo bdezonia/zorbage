@@ -7,7 +7,7 @@ import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageFloat64;
 
-public class TensorMember {
+public final class TensorMember {
 
 	private int[] dims;
 	private ArrayStorageFloat64 storage;
