@@ -248,6 +248,14 @@ public class QuaternionFloat64SkewField
 
 	@Override
 	public void roundNearest(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		b.setR( Math.round(a.r()) );
+		b.setI( Math.round(a.i()) );
+		b.setJ( Math.round(a.j()) );
+		b.setK( Math.round(a.k()) );
+	}
+
+	@Override
+	public void roundNearestEven(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		b.setR( Math.rint(a.r()) );
 		b.setI( Math.rint(a.i()) );
 		b.setJ( Math.rint(a.j()) );

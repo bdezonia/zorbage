@@ -283,6 +283,20 @@ public class QuaternionFloat64MatrixRing
 	}
 
 	@Override
+	public void roundNearestEven(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundNearestEven(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
 	public boolean isNaN(QuaternionFloat64MatrixMember a) {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (int r = 0; r < a.rows(); r++) {

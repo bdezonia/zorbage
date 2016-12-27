@@ -6,8 +6,7 @@ Examples
   
 Other needs
   make all int[] indices into long[] indices
-  Multiplying together vectors, matrices, and tensors: roundNearest() vs roundNearestEven()
-  Choose round nearest: rint() vs. round()
+  Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
   Matrices: norm, det, invert
   Storage: multidimension facades
@@ -34,4 +33,7 @@ Other needs
   add random() to all numeric float classes generating vales between 0 and 1 for all components
   implement Power(U,U.U) where it makes sense. also sqrt and cbrt part of Power interface?
   since all the numeric types need a multidim safe hypot method implement one
+    take from here for 2d and modify? http://www.netlib.org/fdlibm/index.html  
+    this was accurate: modify?
+      double h5 = Math.abs(Math.max(x, y)) * Math.sqrt(1 + Math.pow(Math.max(x, y) / Math.min(x, y), 2));
   

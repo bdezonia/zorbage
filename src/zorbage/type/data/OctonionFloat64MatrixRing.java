@@ -283,6 +283,20 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
+	public void roundNearestEven(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundNearestEven(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
 	public boolean isNaN(OctonionFloat64MatrixMember a) {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (int r = 0; r < a.rows(); r++) {

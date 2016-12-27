@@ -608,6 +608,12 @@ public class ComplexFloat64Field
 
 	@Override
 	public void roundNearest(ComplexFloat64Member a, ComplexFloat64Member b) {
+		b.setR( Math.round(a.r()) );
+		b.setI( Math.round(a.i()) );
+	}
+
+	@Override
+	public void roundNearestEven(ComplexFloat64Member a, ComplexFloat64Member b) {
 		b.setR( Math.rint(a.r()) );
 		b.setI( Math.rint(a.i()) );
 	}

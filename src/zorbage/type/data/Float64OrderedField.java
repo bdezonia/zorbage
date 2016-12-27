@@ -438,6 +438,11 @@ public class Float64OrderedField
 
 	@Override
 	public void roundNearest(Float64Member a, Float64Member b) {
+		b.setV( Math.round(b.v()) );
+	}
+
+	@Override
+	public void roundNearestEven(Float64Member a, Float64Member b) {
 		b.setV( Math.rint(b.v()) );
 	}
 

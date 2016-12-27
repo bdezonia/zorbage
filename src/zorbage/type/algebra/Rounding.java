@@ -37,4 +37,5 @@ public interface Rounding<T> {
 	void roundPositive(T a, T b);
 	void roundNegative(T a, T b);
 	void roundNearest(T a, T b);
+	void roundNearestEven(T a, T b);
 }

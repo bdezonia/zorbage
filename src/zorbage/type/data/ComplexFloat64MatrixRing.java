@@ -284,6 +284,20 @@ public class ComplexFloat64MatrixRing
 	}
 
 	@Override
+	public void roundNearestEven(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+		if (a != b)
+			b.init(a.rows(), a.cols());
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, tmp);
+				g.roundNearestEven(tmp, tmp);
+				b.setV(row, col, tmp);
+			}
+		}
+	}
+
+	@Override
 	public boolean isNaN(ComplexFloat64MatrixMember a) {
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (int r = 0; r < a.rows(); r++) {

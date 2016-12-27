@@ -430,6 +430,18 @@ public class OctonionFloat64SkewField
 
 	@Override
 	public void roundNearest(OctonionFloat64Member a, OctonionFloat64Member b) {
+		b.setR( Math.round(a.r()) );
+		b.setI( Math.round(a.i()) );
+		b.setJ( Math.round(a.j()) );
+		b.setK( Math.round(a.k()) );
+		b.setL( Math.round(a.l()) );
+		b.setI0( Math.round(a.i0()) );
+		b.setJ0( Math.round(a.j0()) );
+		b.setK0( Math.round(a.k0()) );
+	}
+
+	@Override
+	public void roundNearestEven(OctonionFloat64Member a, OctonionFloat64Member b) {
 		b.setR( Math.rint(a.r()) );
 		b.setI( Math.rint(a.i()) );
 		b.setJ( Math.rint(a.j()) );
