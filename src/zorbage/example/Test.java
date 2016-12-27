@@ -293,7 +293,7 @@ public class Test {
 		b = new BooleanMember("[[[1,0,0][0,0,0]][[0,0,0][0,0,0]]]");
 		System.out.println("b should be true and is " + b.v());
 	}
-	
+
 	public static void main(String[] args) {
 		new DFTExample().run();
 		testInts();
@@ -311,4 +311,5 @@ public class Test {
 		testSum();
 		testParsing();
 	}
+
 }
