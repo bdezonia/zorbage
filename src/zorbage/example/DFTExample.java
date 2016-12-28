@@ -72,8 +72,6 @@ public class DFTExample {
 	
 	// https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node228.html
 	
-	// TODO: a small tweak to this method would eliminate the need for a temp array of complexes
-
 	private void dft(Storage<SignedInt32Member> input, Storage<ComplexFloat64Member> output) {
 		ConverterSignedInt32ToComplexFloat64 converter = new ConverterSignedInt32ToComplexFloat64();
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
