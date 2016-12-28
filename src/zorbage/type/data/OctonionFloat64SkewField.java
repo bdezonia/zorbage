@@ -470,12 +470,32 @@ public class OctonionFloat64SkewField
 	
 	@Override
 	public void norm(OctonionFloat64Member a, Float64Member b) {
-		b.setV( Math.sqrt( norm2(a) ) );
+		b.setV( norm(a) );
 	}
 
+	private double norm(OctonionFloat64Member a) {
+		// a hypot()-like implementation that avoids overflow
+		double max = Math.max(Math.abs(a.r()), Math.abs(a.i()));
+		max = Math.max(max, Math.abs(a.j()));
+		max = Math.max(max, Math.abs(a.k()));
+		max = Math.max(max, Math.abs(a.l()));
+		max = Math.max(max, Math.abs(a.i0()));
+		max = Math.max(max, Math.abs(a.j0()));
+		max = Math.max(max, Math.abs(a.k0()));
+		double sum = (a.r()/max) * (a.r()/max);
+		sum += (a.i()/max) * (a.i()/max);
+		sum += (a.j()/max) * (a.j()/max);
+		sum += (a.k()/max) * (a.k()/max);
+		sum += (a.l()/max) * (a.l()/max);
+		sum += (a.i0()/max) * (a.i0()/max);
+		sum += (a.j0()/max) * (a.j0()/max);
+		sum += (a.k0()/max) * (a.k0()/max);
+		return max * Math.sqrt(sum);
+	}
+	
 	private double norm2(OctonionFloat64Member a) {
-		return a.r()*a.r() + a.i()*a.i() + a.j()*a.j() + a.k()*a.k() +
-				a.l()*a.l() + a.i0()*a.i0() + a.j0()*a.j0() + a.k0()*a.k0();
+		double norm = norm(a);
+		return norm * norm;
 	}
 	
 	@Override
