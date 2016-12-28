@@ -28,9 +28,8 @@ package zorbage.type.parse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-// TODO: capture regular dimensions during parsing
 
 /**
  * 
@@ -43,10 +42,14 @@ public class TensorStringRepresentation {
 	private BigDecimal tmp;
 	
 	public TensorStringRepresentation(String s) {
+		System.out.println("START PARSE " + s + " and size == " + s.length());
+		List<Character> chars = preprocessCharacters(s);
+		dimensions = determineDimensions(chars);
+		System.out.println("  Parsed dims = " + Arrays.toString(dimensions));
 		elements = new ArrayList<OctonionRepresentation>();
-		dimensions = determineDimensions(s);
-		gatherNumbers(s);
-		// TODO: if numbers.length != numElems(dims) throw exception
+		gatherNumbers(chars);
+		if (elements.size() != numElems(dimensions))
+			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 	}
 	
 	public int[] dimensions() {
@@ -99,19 +102,87 @@ public class TensorStringRepresentation {
 		return matrixElements;
 	}
 	
-	private int[] determineDimensions(String s) {
-		// TODO: fix me
-		return new int[]{1};
+	private int numElems(int[] dims) {
+		int sz = 1;
+		for (int dim : dims) sz *= dim;
+		return sz;
 	}
-	
-	private void gatherNumbers(String s) {
+
+	private List<Character> preprocessCharacters(String s) {
 		List<Character> chars = new ArrayList<Character>();
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 			if (!Character.isWhitespace(c))
 				chars.add(c);
 		}
-		tensor(chars);
+		return chars;
+	}
+
+	// ugly but works
+	
+	private int[] determineDimensions(List<Character> chars) {
+		List<Integer> reverseDims = new ArrayList<Integer>();
+		int unmatchedBrackets = 0;
+		int innermostDim = 1;
+		boolean inOct = false;
+		for (int i = 0; i < chars.size(); i++) {
+			char ch = chars.get(i);
+			if (ch == '[') {
+				innermostDim = 1;
+				if (unmatchedBrackets < reverseDims.size())
+					reverseDims.set(unmatchedBrackets, reverseDims.get(unmatchedBrackets) + 1);
+				else
+					reverseDims.add(Integer.valueOf(1));
+				unmatchedBrackets++;
+			}
+			else if (ch == ']') {
+				unmatchedBrackets--;
+				if (unmatchedBrackets < 0)
+					throw new IllegalArgumentException("unexpected ] bracket in number parsing at index " + i + " of string " + Arrays.toString(chars.toArray()));
+			}
+			else if (ch == '(')
+				inOct = true;
+			else if (ch == ')')
+				inOct = false;
+			else if (ch == ',' && inOct == false)
+				innermostDim++;
+				
+		}
+		if (unmatchedBrackets != 0)
+			throw new IllegalArgumentException("unmatched [ ] brackets in tensor definition");
+		reverseDims.add(innermostDim);
+		int[] dims = new int[reverseDims.size()];
+		int x = 0;
+		for (int i = reverseDims.size()-1; i >= 0; i--)
+			dims[x++] = reverseDims.get(i);
+		if ((dims.length > 1) && (dims[dims.length-1] == 1)) {
+			int[] tmp = new int[dims.length-1];
+			for (int i = 0; i < tmp.length; i++)
+				tmp[i] = dims[i];
+			dims = tmp;
+		}
+		return dims;
+	}
+
+	private int findNextNumber(List<Character> chars, int ptr) {
+		do {
+			if (ptr >= chars.size()) return chars.size();
+			char ch = chars.get(ptr);
+			if (ch == '[' || ch == ']' || ch == ',')
+				ptr++;
+			else
+				return ptr;
+		} while (true);
+	}
+	
+	private void gatherNumbers(List<Character> chars) {
+		//tensor(chars);
+		int ptr = 0;
+		while (ptr < chars.size()) {
+			ptr = findNextNumber(chars, ptr);
+			if (ptr < chars.size())
+				ptr = number(chars, ptr);
+		}
 	}
 
 	/*
@@ -144,11 +215,11 @@ public class TensorStringRepresentation {
 	*/
 	
 	// tensor = number | numberGroups
-	// numberGroups = [ numberGroup ] | nothing
+	// numberGroups = [ numberGroups ] | numbers
 	// numberGroup = numbers | numberGroups
 	// numbers = number | number , numbers
     // number = num | ( 1-8 csv nums )
-	// num = +|- digits . digits
+	// num = +|- digits . digits 1.4e+05 etc.
 	//
 	// [[1,0,0][0,0,0]]	
 	
@@ -160,21 +231,24 @@ public class TensorStringRepresentation {
 		else {
 			ptr = number(input,0);
 		}
-		if (ptr != input.size())
+		if (ptr < input.size())
 			throw new IllegalArgumentException("illegal input: end = "+ input.size() + " and ptr at " + ptr);
 	}
 	
 	private int numberGroups(List<Character> input, int ptr) {
+//		System.out.println("  numberGroups and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
 		if (input.get(ptr) == '[') {
-			ptr = numberGroup(input, ptr);
+			ptr = numberGroups(input, ptr+1);
+			//if (input.get(ptr) == '[')
+			//	ptr = numberGroups(input, ptr+1);
 			if (input.get(ptr) != ']')
-				throw new IllegalArgumentException("1");
+				throw new IllegalArgumentException("unterminated numberGroup");
 			return ptr+1;
 		}
 		else
-			return ptr;
+			return numbers(input, ptr);
 	}
-	
+/*	
 	private int numberGroup(List<Character> input, int ptr) {
 		if (input.get(ptr) == '[') {
 			ptr = numbers(input, ptr+1);
@@ -186,8 +260,9 @@ public class TensorStringRepresentation {
 		else
 			return numberGroups(input, ptr);
 	}
-	
+*/	
 	private int numbers(List<Character> input, int ptr) {
+//		System.out.println("  numbers and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
 		ptr = number(input, ptr);
 		if (input.get(ptr) != ',')
 			return ptr;
@@ -196,6 +271,7 @@ public class TensorStringRepresentation {
 	}
 	
 	private int number(List<Character> input, int ptr) {
+//		System.out.println("  number and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
 		BigDecimal[] vals = new BigDecimal[8];
 		if (input.get(ptr) == '(') {
 			int count = 0;
@@ -218,6 +294,7 @@ public class TensorStringRepresentation {
 	}
 	
 	private int num(List<Character> input, int ptr) {
+		System.out.println("  num and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
 		StringBuilder buff = new StringBuilder();
 		do {
 			if (ptr == input.size()) break;
@@ -234,7 +311,7 @@ public class TensorStringRepresentation {
 				buff.append(ch);
 			}
 		while (true);
-		System.out.println("number being parsed = "+buff.toString());
+		System.out.println("  number being parsed = "+buff.toString());
 		tmp = new BigDecimal(buff.toString());
 		return ptr;
 	}
