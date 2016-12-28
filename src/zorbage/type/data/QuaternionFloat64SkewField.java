@@ -28,6 +28,7 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
+import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.Rounding;
@@ -45,12 +46,15 @@ public class QuaternionFloat64SkewField
     Norm<QuaternionFloat64Member, Float64Member>,
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,
-    Rounding<QuaternionFloat64Member>
+    Rounding<QuaternionFloat64Member>,
+    Exponential<QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
+	private static final Float64VectorSpace g1 = new Float64VectorSpace();
+	private static final Float64OrderedField g2 = new Float64OrderedField();
 	
 	public QuaternionFloat64SkewField() {
 	}
@@ -272,5 +276,52 @@ public class QuaternionFloat64SkewField
 		return
 			!isNaN(a) &&
 			(Double.isInfinite(a.r()) || Double.isInfinite(a.i()) || Double.isInfinite(a.j()) || Double.isInfinite(a.k()));
+	}
+
+	@Override
+	public void exp(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		double constant = Math.exp(a.r());
+		Float64VectorMember v = new Float64VectorMember(new double[]{a.i(), a.j(), a.k()});
+		Float64Member norm = new Float64Member(); 
+		g1.norm(v, norm);
+		double scale1 = Math.cos(norm.v());
+		double scale2 = Math.sin(norm.v());
+		Float64Member tmp = new Float64Member(); 
+		b.setR(constant * scale1);
+		v.v(0, tmp);
+		b.setI(constant * (tmp.v() / norm.v()) * scale2);
+		v.v(1, tmp);
+		b.setJ(constant * (tmp.v() / norm.v()) * scale2);
+		v.v(2, tmp);
+		b.setK(constant * (tmp.v() / norm.v()) * scale2);
+	}
+
+	@Override
+	public void expm1(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void log(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		Float64Member norm = new Float64Member(); 
+		Float64Member term = new Float64Member(); 
+		Float64Member tmp = new Float64Member(); 
+		Float64VectorMember v = new Float64VectorMember(new double[]{a.i(), a.j(), a.k()});
+		norm(a, norm);
+		Float64Member multiplier = new Float64Member(a.r() / norm.v());
+		g1.scale(multiplier, v, v);
+		g2.acos(multiplier, term);
+		b.setR(Math.log(norm.v()));
+		v.v(0, tmp);
+		b.setI(tmp.v() * term.v());
+		v.v(1, tmp);
+		b.setJ(tmp.v() * term.v());
+		v.v(2, tmp);
+		b.setK(tmp.v() * term.v());
+	}
+
+	@Override
+	public void log1p(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
 	}
 }
