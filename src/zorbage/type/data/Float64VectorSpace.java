@@ -138,14 +138,21 @@ public class Float64VectorSpace
 
 	@Override
 	public void norm(Float64VectorMember a, Float64Member b) {
+		Float64Member max = new Float64Member();
 		Float64Member tmp = new Float64Member();
 		Float64Member norm2 = new Float64Member(0);
+		max.setV(Double.NEGATIVE_INFINITY);
 		for (int i = 0; i < a.length(); i++) {
 			a.v(i,  tmp);
+			max.setV(Math.max(Math.abs(tmp.v()), max.v()));
+		}
+		for (int i = 0; i < a.length(); i++) {
+			a.v(i,  tmp);
+			g.divide(tmp, max, tmp);
 			g.multiply(tmp, tmp, tmp);
 			g.add(norm2, tmp, norm2);
 		}
-		double norm = Math.sqrt(norm2.v());
+		double norm = max.v() * Math.sqrt(norm2.v());
 		b.setV(norm);
 	}
 
