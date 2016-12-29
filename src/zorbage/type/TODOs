@@ -14,7 +14,7 @@ Other needs
   Add more types:
     native long, short, byte, float32, plus complex32
     bit: 2, 4, 12, 20, 24, 128
-    int types above made both signed and unsigned
+    int types above as both signed and unsigned
   Add tests
   polynomials
   group ring, modules
@@ -28,12 +28,7 @@ Other needs
   a tensor like class that can support quats and octs not as vector spaces but rmodules
   storage containers should be able to duplicate themselves
   number bases: instead of zero and unity need faster ways to construct numbers besides strings
-  implement all type toString() methods like matrices, tensors, vectors
+  implement all type toString() methods for tensors
   find all TODOs in code and implement
-  add random() to all numeric float classes generating vales between 0 and 1 for all components
+  add random() to all numeric float classes generating values between 0 and 1 for all components
   implement Power(U,U.U) where it makes sense. also sqrt and cbrt part of Power interface?
-  since all the numeric types need a multidim safe hypot method implement one
-    take from here for 2d and modify? http://www.netlib.org/fdlibm/index.html  
-    this was accurate: modify?
-      double h5 = Math.abs(Math.max(x, y)) * Math.sqrt(1 + Math.pow(Math.max(x, y) / Math.min(x, y), 2));
-  
