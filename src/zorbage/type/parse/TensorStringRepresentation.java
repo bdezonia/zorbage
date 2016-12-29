@@ -42,12 +42,13 @@ public class TensorStringRepresentation {
 	private BigDecimal tmp;
 	
 	public TensorStringRepresentation(String s) {
-		System.out.println("START PARSE " + s + " and size == " + s.length());
+		//System.out.println("START PARSE " + s + " and size == " + s.length());
 		List<Character> chars = preprocessCharacters(s);
 		dimensions = determineDimensions(chars);
-		System.out.println("  Parsed dims = " + Arrays.toString(dimensions));
+		//System.out.println("  Parsed dims = " + Arrays.toString(dimensions));
 		elements = new ArrayList<OctonionRepresentation>();
 		gatherNumbers(chars);
+		//System.out.println("  Read " + elements.size() + " elements");
 		if (elements.size() != numElems(dimensions))
 			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 	}
@@ -146,10 +147,16 @@ public class TensorStringRepresentation {
 				inOct = false;
 			else if (ch == ',' && inOct == false)
 				innermostDim++;
-				
 		}
 		if (unmatchedBrackets != 0)
 			throw new IllegalArgumentException("unmatched [ ] brackets in tensor definition");
+		for (int i = reverseDims.size()-1; i > 0; i--) {
+			int sz = 1;
+			for (int j = 0; j < i; j++) {
+				sz *= reverseDims.get(j);
+			}
+			reverseDims.set(i, reverseDims.get(i) / sz);
+		}
 		reverseDims.add(innermostDim);
 		int[] dims = new int[reverseDims.size()];
 		int x = 0;
@@ -185,43 +192,12 @@ public class TensorStringRepresentation {
 		}
 	}
 
-	/*
-
-	[
-	 [1,2],
-	 [3,4]
-	]
-	
-	4
-	
-	[
-	  [
-	    [
-	      1, 2, 3
-	    ]
-	    [
-	      4, 5, 6
-	    ]
-	  ]
-	  [
-	    [
-	      2, 4, 6
-	    ]
-	    [
-	      1, 3, 5
-	    ]
-	  ]
-	]
-	*/
-	
 	// tensor = number | numberGroups
 	// numberGroups = [ numberGroups ] | numbers
 	// numberGroup = numbers | numberGroups
 	// numbers = number | number , numbers
     // number = num | ( 1-8 csv nums )
 	// num = +|- digits . digits 1.4e+05 etc.
-	//
-	// [[1,0,0][0,0,0]]	
 	
 	private void tensor(List<Character> input) {
 		int ptr;
@@ -294,7 +270,7 @@ public class TensorStringRepresentation {
 	}
 	
 	private int num(List<Character> input, int ptr) {
-		System.out.println("  num and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
+		//System.out.println("  num and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
 		StringBuilder buff = new StringBuilder();
 		do {
 			if (ptr == input.size()) break;
@@ -309,9 +285,8 @@ public class TensorStringRepresentation {
 			}
 			else
 				buff.append(ch);
-			}
-		while (true);
-		System.out.println("  number being parsed = "+buff.toString());
+		} while (true);
+		//System.out.println("  number being parsed = "+buff.toString());
 		tmp = new BigDecimal(buff.toString());
 		return ptr;
 	}
