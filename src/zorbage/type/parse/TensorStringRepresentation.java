@@ -42,13 +42,10 @@ public class TensorStringRepresentation {
 	private BigDecimal tmp;
 	
 	public TensorStringRepresentation(String s) {
-		//System.out.println("START PARSE " + s + " and size == " + s.length());
 		List<Character> chars = preprocessCharacters(s);
 		dimensions = determineDimensions(chars);
-		//System.out.println("  Parsed dims = " + Arrays.toString(dimensions));
 		elements = new ArrayList<OctonionRepresentation>();
-		gatherNumbers(chars);
-		//System.out.println("  Read " + elements.size() + " elements");
+		gatherOctonions(chars);
 		if (elements.size() != numElems(dimensions))
 			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 	}
@@ -69,7 +66,7 @@ public class TensorStringRepresentation {
 	
 	public List<OctonionRepresentation> values() { return elements; }
 	
-	public OctonionRepresentation firstNumberValue() {
+	public OctonionRepresentation firstValue() {
 		return elements.get(0);
 	}
 	
@@ -182,13 +179,13 @@ public class TensorStringRepresentation {
 		} while (true);
 	}
 	
-	private void gatherNumbers(List<Character> chars) {
+	private void gatherOctonions(List<Character> chars) {
 		//tensor(chars);
 		int ptr = 0;
 		while (ptr < chars.size()) {
 			ptr = findNextNumber(chars, ptr);
 			if (ptr < chars.size())
-				ptr = number(chars, ptr);
+				ptr = octonion(chars, ptr);
 		}
 	}
 
@@ -199,60 +196,12 @@ public class TensorStringRepresentation {
     // number = num | ( 1-8 csv nums )
 	// num = +|- digits . digits 1.4e+05 etc.
 	
-	private void tensor(List<Character> input) {
-		int ptr;
-		if (input.get(0) == '[') {
-			ptr = numberGroups(input, 0);
-		}
-		else {
-			ptr = number(input,0);
-		}
-		if (ptr < input.size())
-			throw new IllegalArgumentException("illegal input: end = "+ input.size() + " and ptr at " + ptr);
-	}
-	
-	private int numberGroups(List<Character> input, int ptr) {
-//		System.out.println("  numberGroups and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
-		if (input.get(ptr) == '[') {
-			ptr = numberGroups(input, ptr+1);
-			//if (input.get(ptr) == '[')
-			//	ptr = numberGroups(input, ptr+1);
-			if (input.get(ptr) != ']')
-				throw new IllegalArgumentException("unterminated numberGroup");
-			return ptr+1;
-		}
-		else
-			return numbers(input, ptr);
-	}
-/*	
-	private int numberGroup(List<Character> input, int ptr) {
-		if (input.get(ptr) == '[') {
-			ptr = numbers(input, ptr+1);
-			if (input.get(ptr) != ']')
-				throw new IllegalArgumentException("number group not terminated correctly");
-			else
-				return ptr;
-		}
-		else
-			return numberGroups(input, ptr);
-	}
-*/	
-	private int numbers(List<Character> input, int ptr) {
-//		System.out.println("  numbers and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
-		ptr = number(input, ptr);
-		if (input.get(ptr) != ',')
-			return ptr;
-		else
-			return numbers(input, ptr+1);
-	}
-	
-	private int number(List<Character> input, int ptr) {
-//		System.out.println("  number and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
+	private int octonion(List<Character> input, int ptr) {
 		BigDecimal[] vals = new BigDecimal[8];
 		if (input.get(ptr) == '(') {
 			int count = 0;
 			while (input.get(ptr+1) != ')') {
-				ptr = num(input, ptr+1);
+				ptr = number(input, ptr+1);
 				if (count < 8) {
 					vals[count++] = tmp;
 				}
@@ -262,15 +211,14 @@ public class TensorStringRepresentation {
 			ptr = ptr + 2; // skip ')'
 		}
 		else {
-			ptr = num(input, ptr);
+			ptr = number(input, ptr);
 			vals[0] = tmp;
 		}
 		elements.add(new OctonionRepresentation(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7]));
 		return ptr;
 	}
 	
-	private int num(List<Character> input, int ptr) {
-		//System.out.println("  num and ptr == " + ptr + " and char = " + (ptr == input.size() ? "EOL" : input.get(ptr)));
+	private int number(List<Character> input, int ptr) {
 		StringBuilder buff = new StringBuilder();
 		do {
 			if (ptr == input.size()) break;
@@ -286,7 +234,6 @@ public class TensorStringRepresentation {
 			else
 				buff.append(ch);
 		} while (true);
-		//System.out.println("  number being parsed = "+buff.toString());
 		tmp = new BigDecimal(buff.toString());
 		return ptr;
 	}

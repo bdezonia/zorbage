@@ -52,7 +52,7 @@ public final class Float64Member {
 
 	public Float64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstNumberValue();
+		OctonionRepresentation val = rep.firstValue();
 		v = val.r().doubleValue();
 	}
 

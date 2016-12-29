@@ -58,7 +58,7 @@ public final class UnboundedIntMember {
 	
 	public UnboundedIntMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstNumberValue();
+		OctonionRepresentation val = rep.firstValue();
 		v = val.r().toBigInteger();
 	}
 

@@ -66,7 +66,7 @@ public final class OctonionFloat64Member {
 
 	public OctonionFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstNumberValue();
+		OctonionRepresentation val = rep.firstValue();
 		r = val.r().doubleValue();
 		i = val.i().doubleValue();
 		j = val.j().doubleValue();
