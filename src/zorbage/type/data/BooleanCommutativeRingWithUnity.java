@@ -30,6 +30,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.CommutativeRingWithUnity;
 import zorbage.type.algebra.LogicalOperations;
 import zorbage.type.algebra.Ordered;
+import zorbage.type.algebra.Random;
 
 // TODO - do I need a BitType that is stored within an int? Or just use BooleanMember?
 
@@ -45,8 +46,11 @@ public class BooleanCommutativeRingWithUnity
     CommutativeRingWithUnity<BooleanCommutativeRingWithUnity, BooleanMember>,
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,
-    LogicalOperations<BooleanMember>
+    LogicalOperations<BooleanMember>,
+    Random<BooleanMember>
 {
+	
+	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 
 	public BooleanCommutativeRingWithUnity() {
 	}
@@ -215,6 +219,11 @@ public class BooleanCommutativeRingWithUnity
 	@Override
 	public void unity(BooleanMember a) {
 		a.setV(true);
+	}
+
+	@Override
+	public void random(BooleanMember a) {
+		a.setV(rng.nextDouble() >= 0.5);
 	}
 
 }

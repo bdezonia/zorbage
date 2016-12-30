@@ -29,6 +29,7 @@ package zorbage.type.data;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
+import zorbage.type.algebra.Random;
 
 /**
  * 
@@ -39,9 +40,12 @@ public class SignedInt32Integer
   implements
     Integer<SignedInt32Integer, SignedInt32Member>,
     Bounded<SignedInt32Member>,
-    BitOperations<SignedInt32Member>
+    BitOperations<SignedInt32Member>,
+    Random<SignedInt32Member>
 {
 
+	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	
 	public SignedInt32Integer() {
 	}
 	
@@ -270,6 +274,11 @@ public class SignedInt32Integer
 	@Override
 	public void max(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
 		c.setV( Math.max(a.v(), b.v()) );
+	}
+
+	@Override
+	public void random(SignedInt32Member a) {
+		a.setV(rng.nextInt());
 	}
 
 }
