@@ -223,7 +223,7 @@ public class BooleanCommutativeRingWithUnity
 
 	@Override
 	public void random(BooleanMember a) {
-		a.setV(rng.nextDouble() >= 0.5);
+		a.setV(rng.nextBoolean());
 	}
 
 }
