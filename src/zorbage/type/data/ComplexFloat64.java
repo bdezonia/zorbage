@@ -57,9 +57,9 @@ import zorbage.type.algebra.Trigonometric;
  * @author Barry DeZonia
  *
  */
-public class ComplexFloat64Field
+public class ComplexFloat64
   implements
-    Field<ComplexFloat64Field, ComplexFloat64Member>,
+    Field<ComplexFloat64, ComplexFloat64Member>,
     Norm<ComplexFloat64Member, Float64Member>,
     Constants<ComplexFloat64Member>,
     Exponential<ComplexFloat64Member>,
@@ -90,7 +90,7 @@ public class ComplexFloat64Field
 	private static final ComplexFloat64Member MINUS_I = new ComplexFloat64Member(0,-1);
 	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
 
-	public ComplexFloat64Field() {
+	public ComplexFloat64() {
 	}
 	
 	@Override

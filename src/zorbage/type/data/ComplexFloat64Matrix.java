@@ -34,27 +34,28 @@ import zorbage.type.algebra.RingWithUnity;
  * @author Barry DeZonia
  *
  */
-public class Float64MatrixRing
+public class ComplexFloat64Matrix
 	implements
-		RingWithUnity<Float64MatrixRing, Float64MatrixMember>,
-		MatrixRing<Float64MatrixRing, Float64MatrixMember, Float64OrderedField, Float64Member>
+		RingWithUnity<ComplexFloat64Matrix, ComplexFloat64MatrixMember>,
+		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64, ComplexFloat64Member>
 {
-	private static final Float64OrderedField g = new Float64OrderedField();
-	private static final Float64Member ZERO = new Float64Member(0);
+	private static final ComplexFloat64 g = new ComplexFloat64();
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
-	public Float64MatrixRing() { }
+	public ComplexFloat64Matrix() {
+	}
 
 	@Override
-	public void multiply(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+	public void multiply(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
 		int rows = a.rows();
 		int cols = b.cols();
 		int common = a.cols(); 
-		Float64Member sum = new Float64Member();
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member term = new Float64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member atmp = new ComplexFloat64Member();
+		ComplexFloat64Member btmp = new ComplexFloat64Member();
+		ComplexFloat64Member term = new ComplexFloat64Member();
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				g.zero(sum);
@@ -70,7 +71,7 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void power(int power, Float64MatrixMember a, Float64MatrixMember b) {
+	public void power(int power, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
 		if (power < 0)
@@ -82,8 +83,8 @@ public class Float64MatrixRing
 		else if (power == 1)
 			assign(a,b);
 		else { // power >= 2
-			Float64MatrixMember tmp = new Float64MatrixMember(a);
-			Float64MatrixMember tmp2 = new Float64MatrixMember();
+			ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember(a);
+			ComplexFloat64MatrixMember tmp2 = new ComplexFloat64MatrixMember();
 			for (int i = 2; i <= power; i++) {
 				multiply(a, tmp, tmp2);
 				assign(tmp2, tmp);
@@ -93,7 +94,7 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void zero(Float64MatrixMember a) {
+	public void zero(ComplexFloat64MatrixMember a) {
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.setV(row, col, ZERO);
@@ -102,8 +103,8 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void negate(Float64MatrixMember a, Float64MatrixMember b) {
-		Float64Member tmp = new Float64Member();
+	public void negate(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		for (int row = 0; row < a.rows(); row++) {
@@ -116,15 +117,15 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void add(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+	public void add(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member atmp = new ComplexFloat64Member();
+		ComplexFloat64Member btmp = new ComplexFloat64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
@@ -136,15 +137,15 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void subtract(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+	public void subtract(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member atmp = new ComplexFloat64Member();
+		ComplexFloat64Member btmp = new ComplexFloat64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
@@ -156,12 +157,12 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public boolean isEqual(Float64MatrixMember a, Float64MatrixMember b) {
+	public boolean isEqual(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a == b) return true;
 		if (a.rows() != b.rows()) return false;
 		if (a.cols() != b.cols()) return false;
-		Float64Member value1 = new Float64Member();
-		Float64Member value2 = new Float64Member();
+		ComplexFloat64Member value1 = new ComplexFloat64Member();
+		ComplexFloat64Member value2 = new ComplexFloat64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
@@ -174,15 +175,15 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public boolean isNotEqual(Float64MatrixMember a, Float64MatrixMember b) {
+	public boolean isNotEqual(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		return !isEqual(a, b);
 	}
 
 	@Override
-	public void assign(Float64MatrixMember from, Float64MatrixMember to) {
+	public void assign(ComplexFloat64MatrixMember from, ComplexFloat64MatrixMember to) {
 		if (from == to) return;
 		to.init(from.rows(), from.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < from.rows(); row++) {
 			for (int col = 0; col < from.cols(); col++) {
 				from.v(row, col, tmp);
@@ -192,31 +193,31 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public Float64MatrixMember construct() {
-		return new Float64MatrixMember();
+	public ComplexFloat64MatrixMember construct() {
+		return new ComplexFloat64MatrixMember();
 	}
 
 	@Override
-	public Float64MatrixMember construct(Float64MatrixMember other) {
-		return new Float64MatrixMember(other);
+	public ComplexFloat64MatrixMember construct(ComplexFloat64MatrixMember other) {
+		return new ComplexFloat64MatrixMember(other);
 	}
 
 	@Override
-	public Float64MatrixMember construct(String s) {
-		return new Float64MatrixMember(s);
+	public ComplexFloat64MatrixMember construct(String s) {
+		return new ComplexFloat64MatrixMember(s);
 	}
 
 	@Override
-	public void norm(Float64MatrixMember a, Float64Member b) {
+	public void norm(ComplexFloat64MatrixMember a, ComplexFloat64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void roundTowardsZero(Float64MatrixMember a, Float64MatrixMember b) {
+	public void roundTowardsZero(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -227,10 +228,10 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void roundAwayFromZero(Float64MatrixMember a, Float64MatrixMember b) {
+	public void roundAwayFromZero(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -241,10 +242,10 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void roundPositive(Float64MatrixMember a, Float64MatrixMember b) {
+	public void roundPositive(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -255,10 +256,10 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void roundNegative(Float64MatrixMember a, Float64MatrixMember b) {
+	public void roundNegative(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -269,10 +270,10 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void roundNearest(Float64MatrixMember a, Float64MatrixMember b) {
+	public void roundNearest(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -283,10 +284,10 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void roundNearestEven(Float64MatrixMember a, Float64MatrixMember b) {
+	public void roundNearestEven(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -297,8 +298,8 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public boolean isNaN(Float64MatrixMember a) {
-		Float64Member value = new Float64Member();
+	public boolean isNaN(ComplexFloat64MatrixMember a) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
@@ -310,8 +311,8 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public boolean isInfinite(Float64MatrixMember a) {
-		Float64Member value = new Float64Member();
+	public boolean isInfinite(ComplexFloat64MatrixMember a) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
@@ -323,13 +324,24 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void conjugate(Float64MatrixMember a, Float64MatrixMember b) {
-		assign(a, b);
+	public void conjugate(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+		ComplexFloat64Member atmp = new ComplexFloat64Member();
+		ComplexFloat64Member btmp = new ComplexFloat64Member();
+		if (a != b) {
+			b.init(a.rows(), a.cols());
+		}
+		for (int row = 0; row < a.rows(); row++) {
+			for (int col = 0; col < a.cols(); col++) {
+				a.v(row, col, atmp);
+				g.conjugate(atmp, btmp);
+				b.setV(row, col, btmp);
+			}
+		}
 	}
 
 	@Override
-	public void transpose(Float64MatrixMember a, Float64MatrixMember b) {
-		Float64Member value = new Float64Member();
+	public void transpose(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
 		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
 		b.init(a.cols(), a.rows());
 		for (int r = 0; r < a.rows(); r++) {
@@ -341,19 +353,21 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void conjugateTranspose(Float64MatrixMember a, Float64MatrixMember b) {
-		transpose(a, b);
+	public void conjugateTranspose(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+		ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember();
+		conjugate(a, tmp);
+		transpose(tmp, b);
 	}
 
 	@Override
-	public void det(Float64MatrixMember a, Float64Member b) {
+	public void det(ComplexFloat64MatrixMember a, ComplexFloat64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void unity(Float64MatrixMember a) {
-		Float64Member one = new Float64Member(1);
+	public void unity(ComplexFloat64MatrixMember a) {
+		ComplexFloat64Member one = new ComplexFloat64Member(1, 0);
 		zero(a);
 		for (int i = 0; i < Math.min(a.rows(), a.cols()); i++) {
 			a.setV(i, i, one);
@@ -361,12 +375,12 @@ public class Float64MatrixRing
 	}
 
 	@Override
-	public void invert(Float64MatrixMember a, Float64MatrixMember b) {
+	public void invert(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+	public void divide(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
 		// invert and multiply
 		throw new IllegalArgumentException("TODO");
 	}

@@ -39,7 +39,7 @@ import zorbage.type.storage.ArrayStorageOctonionFloat64;
  */
 public final class OctonionFloat64RModuleMember {
 
-	private static final OctonionFloat64SkewField g = new OctonionFloat64SkewField();
+	private static final OctonionFloat64 g = new OctonionFloat64();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
 	private ArrayStorageOctonionFloat64 storage;

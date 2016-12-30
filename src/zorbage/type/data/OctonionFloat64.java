@@ -41,9 +41,9 @@ import zorbage.type.algebra.SkewField;
  *
  */
 //TODO: is it really a skewfield or something else?  Multiplication is not associative
-public class OctonionFloat64SkewField
+public class OctonionFloat64
   implements
-    SkewField<OctonionFloat64SkewField, OctonionFloat64Member>,
+    SkewField<OctonionFloat64, OctonionFloat64Member>,
     Conjugate<OctonionFloat64Member>,
     Norm<OctonionFloat64Member,Float64Member>,
     Infinite<OctonionFloat64Member>,
@@ -58,7 +58,7 @@ public class OctonionFloat64SkewField
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 
-	public OctonionFloat64SkewField() {
+	public OctonionFloat64() {
 	}
 	
 	@Override

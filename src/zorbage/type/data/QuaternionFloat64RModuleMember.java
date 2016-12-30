@@ -39,7 +39,7 @@ import zorbage.type.storage.ArrayStorageQuaternionFloat64;
  */
 public final class QuaternionFloat64RModuleMember {
 
-	private static final QuaternionFloat64SkewField g = new QuaternionFloat64SkewField();
+	private static final QuaternionFloat64 g = new QuaternionFloat64();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
 	private ArrayStorageQuaternionFloat64 storage;

@@ -34,15 +34,15 @@ import zorbage.type.algebra.RingWithUnity;
  * @author Barry DeZonia
  *
  */
-public class QuaternionFloat64MatrixRing
+public class QuaternionFloat64Matrix
 	implements
-		RingWithUnity<QuaternionFloat64MatrixRing, QuaternionFloat64MatrixMember>,
-		MatrixRing<QuaternionFloat64MatrixRing, QuaternionFloat64MatrixMember, QuaternionFloat64SkewField, QuaternionFloat64Member>
+		RingWithUnity<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember>,
+		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64, QuaternionFloat64Member>
 {
-	private static final QuaternionFloat64SkewField g = new QuaternionFloat64SkewField();
+	private static final QuaternionFloat64 g = new QuaternionFloat64();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
-	public QuaternionFloat64MatrixRing() { }
+	public QuaternionFloat64Matrix() { }
 
 	@Override
 	public void multiply(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {

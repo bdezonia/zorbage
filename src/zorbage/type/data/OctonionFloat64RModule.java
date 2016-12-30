@@ -35,9 +35,9 @@ import zorbage.type.algebra.RModule;
  */
 public class OctonionFloat64RModule
   implements
-    RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64SkewField,OctonionFloat64Member>
+    RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64,OctonionFloat64Member>
 {
-	private static final OctonionFloat64SkewField g = new OctonionFloat64SkewField();
+	private static final OctonionFloat64 g = new OctonionFloat64();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
 	public OctonionFloat64RModule() {

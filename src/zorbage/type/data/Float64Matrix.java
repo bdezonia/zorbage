@@ -34,27 +34,27 @@ import zorbage.type.algebra.RingWithUnity;
  * @author Barry DeZonia
  *
  */
-public class OctonionFloat64MatrixRing
+public class Float64Matrix
 	implements
-		RingWithUnity<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember>,
-		MatrixRing<OctonionFloat64MatrixRing, OctonionFloat64MatrixMember, OctonionFloat64SkewField, OctonionFloat64Member>
+		RingWithUnity<Float64Matrix, Float64MatrixMember>,
+		MatrixRing<Float64Matrix, Float64MatrixMember, Float64, Float64Member>
 {
-	private static final OctonionFloat64SkewField g = new OctonionFloat64SkewField();
-	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
+	private static final Float64 g = new Float64();
+	private static final Float64Member ZERO = new Float64Member(0);
 	
-	public OctonionFloat64MatrixRing() { }
+	public Float64Matrix() { }
 
 	@Override
-	public void multiply(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+	public void multiply(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
 		int rows = a.rows();
 		int cols = b.cols();
 		int common = a.cols(); 
-		OctonionFloat64Member sum = new OctonionFloat64Member();
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		OctonionFloat64Member term = new OctonionFloat64Member();
+		Float64Member sum = new Float64Member();
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member term = new Float64Member();
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				g.zero(sum);
@@ -70,7 +70,7 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void power(int power, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void power(int power, Float64MatrixMember a, Float64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
 		if (power < 0)
@@ -82,8 +82,8 @@ public class OctonionFloat64MatrixRing
 		else if (power == 1)
 			assign(a,b);
 		else { // power >= 2
-			OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember(a);
-			OctonionFloat64MatrixMember tmp2 = new OctonionFloat64MatrixMember();
+			Float64MatrixMember tmp = new Float64MatrixMember(a);
+			Float64MatrixMember tmp2 = new Float64MatrixMember();
 			for (int i = 2; i <= power; i++) {
 				multiply(a, tmp, tmp2);
 				assign(tmp2, tmp);
@@ -93,7 +93,7 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void zero(OctonionFloat64MatrixMember a) {
+	public void zero(Float64MatrixMember a) {
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.setV(row, col, ZERO);
@@ -102,29 +102,29 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void negate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+	public void negate(Float64MatrixMember a, Float64MatrixMember b) {
+		Float64Member tmp = new Float64Member();
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.negate(tmp, tmp);
+				g.negate(tmp,tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void add(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+	public void add(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
@@ -136,15 +136,15 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void subtract(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+	public void subtract(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member atmp = new Float64Member();
+		Float64Member btmp = new Float64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
@@ -156,12 +156,12 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public boolean isEqual(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public boolean isEqual(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a == b) return true;
 		if (a.rows() != b.rows()) return false;
 		if (a.cols() != b.cols()) return false;
-		OctonionFloat64Member value1 = new OctonionFloat64Member();
-		OctonionFloat64Member value2 = new OctonionFloat64Member();
+		Float64Member value1 = new Float64Member();
+		Float64Member value2 = new Float64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
@@ -174,15 +174,15 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public boolean isNotEqual(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public boolean isNotEqual(Float64MatrixMember a, Float64MatrixMember b) {
 		return !isEqual(a, b);
 	}
 
 	@Override
-	public void assign(OctonionFloat64MatrixMember from, OctonionFloat64MatrixMember to) {
+	public void assign(Float64MatrixMember from, Float64MatrixMember to) {
 		if (from == to) return;
 		to.init(from.rows(), from.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < from.rows(); row++) {
 			for (int col = 0; col < from.cols(); col++) {
 				from.v(row, col, tmp);
@@ -192,31 +192,31 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public OctonionFloat64MatrixMember construct() {
-		return new OctonionFloat64MatrixMember();
+	public Float64MatrixMember construct() {
+		return new Float64MatrixMember();
 	}
 
 	@Override
-	public OctonionFloat64MatrixMember construct(OctonionFloat64MatrixMember other) {
-		return new OctonionFloat64MatrixMember(other);
+	public Float64MatrixMember construct(Float64MatrixMember other) {
+		return new Float64MatrixMember(other);
 	}
 
 	@Override
-	public OctonionFloat64MatrixMember construct(String s) {
-		return new OctonionFloat64MatrixMember(s);
+	public Float64MatrixMember construct(String s) {
+		return new Float64MatrixMember(s);
 	}
 
 	@Override
-	public void norm(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
+	public void norm(Float64MatrixMember a, Float64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void roundTowardsZero(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void roundTowardsZero(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -227,10 +227,10 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void roundAwayFromZero(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void roundAwayFromZero(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -241,10 +241,10 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void roundPositive(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void roundPositive(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -255,10 +255,10 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void roundNegative(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void roundNegative(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -269,10 +269,10 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void roundNearest(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void roundNearest(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -283,10 +283,10 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void roundNearestEven(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void roundNearestEven(Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		Float64Member tmp = new Float64Member();
 		for (int row = 0; row < a.rows(); row++) {
 			for (int col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -297,8 +297,8 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public boolean isNaN(OctonionFloat64MatrixMember a) {
-		OctonionFloat64Member value = new OctonionFloat64Member();
+	public boolean isNaN(Float64MatrixMember a) {
+		Float64Member value = new Float64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
@@ -310,8 +310,8 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public boolean isInfinite(OctonionFloat64MatrixMember a) {
-		OctonionFloat64Member value = new OctonionFloat64Member();
+	public boolean isInfinite(Float64MatrixMember a) {
+		Float64Member value = new Float64Member();
 		for (int r = 0; r < a.rows(); r++) {
 			for (int c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
@@ -323,24 +323,13 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void conjugate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		if (a != b) {
-			b.init(a.rows(), a.cols());
-		}
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				g.conjugate(atmp, btmp);
-				b.setV(row, col, btmp);
-			}
-		}
+	public void conjugate(Float64MatrixMember a, Float64MatrixMember b) {
+		assign(a, b);
 	}
 
 	@Override
-	public void transpose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		OctonionFloat64Member value = new OctonionFloat64Member();
+	public void transpose(Float64MatrixMember a, Float64MatrixMember b) {
+		Float64Member value = new Float64Member();
 		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
 		b.init(a.cols(), a.rows());
 		for (int r = 0; r < a.rows(); r++) {
@@ -352,21 +341,19 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void conjugateTranspose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember();
-		conjugate(a, tmp);
-		transpose(tmp, b);
+	public void conjugateTranspose(Float64MatrixMember a, Float64MatrixMember b) {
+		transpose(a, b);
 	}
 
 	@Override
-	public void det(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
+	public void det(Float64MatrixMember a, Float64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void unity(OctonionFloat64MatrixMember a) {
-		OctonionFloat64Member one = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
+	public void unity(Float64MatrixMember a) {
+		Float64Member one = new Float64Member(1);
 		zero(a);
 		for (int i = 0; i < Math.min(a.rows(), a.cols()); i++) {
 			a.setV(i, i, one);
@@ -374,12 +361,12 @@ public class OctonionFloat64MatrixRing
 	}
 
 	@Override
-	public void invert(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void invert(Float64MatrixMember a, Float64MatrixMember b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		// invert and multiply
 		throw new IllegalArgumentException("TODO");
 	}
