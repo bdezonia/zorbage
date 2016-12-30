@@ -31,6 +31,7 @@ import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
+import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 
@@ -47,8 +48,12 @@ public class QuaternionFloat64SkewField
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,
     Rounding<QuaternionFloat64Member>,
-    Exponential<QuaternionFloat64Member>
+    Exponential<QuaternionFloat64Member>,
+    Random<QuaternionFloat64Member>
 {
+	
+	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
@@ -331,6 +336,14 @@ public class QuaternionFloat64SkewField
 	@Override
 	public void log1p(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void random(QuaternionFloat64Member a) {
+		a.setR(rng.nextDouble());
+		a.setI(rng.nextDouble());
+		a.setJ(rng.nextDouble());
+		a.setK(rng.nextDouble());
 	}
 	
 	/*

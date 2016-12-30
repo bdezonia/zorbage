@@ -36,6 +36,7 @@ import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
 import zorbage.type.algebra.Power;
+import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
@@ -59,9 +60,12 @@ public class Float64OrderedField
     Infinite<Float64Member>,
     Roots<Float64Member>,
     Power<Float64Member>,
-    Rounding<Float64Member>
+    Rounding<Float64Member>,
+    Random<Float64Member>
 {
 
+	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	
 	public Float64OrderedField() {
 	}
 	
@@ -491,5 +495,10 @@ public class Float64OrderedField
 	
 	public void ulp(Float64Member a, Float64Member b) {
 		b.setV( Math.ulp(a.v()) );
+	}
+
+	@Override
+	public void random(Float64Member a) {
+		a.setV(rng.nextDouble());
 	}	
 }

@@ -30,6 +30,7 @@ import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
+import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 
@@ -47,9 +48,11 @@ public class OctonionFloat64SkewField
     Norm<OctonionFloat64Member,Float64Member>,
     Infinite<OctonionFloat64Member>,
     Rounding<OctonionFloat64Member>,
-    Constants<OctonionFloat64Member>
+    Constants<OctonionFloat64Member>,
+    Random<OctonionFloat64Member>
 {
 
+	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
@@ -518,6 +521,18 @@ public class OctonionFloat64SkewField
 	@Override
 	public void E(OctonionFloat64Member a) {
 		assign(E, a);
+	}
+	
+	@Override
+	public void random(OctonionFloat64Member a) {
+		a.setR(rng.nextDouble());
+		a.setI(rng.nextDouble());
+		a.setJ(rng.nextDouble());
+		a.setK(rng.nextDouble());
+		a.setL(rng.nextDouble());
+		a.setI0(rng.nextDouble());
+		a.setJ0(rng.nextDouble());
+		a.setK0(rng.nextDouble());
 	}
 
 	/*

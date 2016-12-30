@@ -47,6 +47,7 @@ import zorbage.type.algebra.InverseHyperbolic;
 import zorbage.type.algebra.InverseTrigonometric;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.Power;
+import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
@@ -70,9 +71,12 @@ public class ComplexFloat64Field
     Power<ComplexFloat64Member>,
     Rounding<ComplexFloat64Member>,
     Infinite<ComplexFloat64Member>,
-    Conjugate<ComplexFloat64Member>
+    Conjugate<ComplexFloat64Member>,
+    Random<ComplexFloat64Member>
 {
 
+	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
@@ -637,5 +641,11 @@ public class ComplexFloat64Field
 		log(a, logA);
 		multiply(b, logA, bLogA);
 		exp(bLogA, c);
+	}
+
+	@Override
+	public void random(ComplexFloat64Member a) {
+		a.setR(rng.nextDouble());
+		a.setI(rng.nextDouble());
 	}
 }
