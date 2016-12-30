@@ -36,14 +36,14 @@ import zorbage.type.algebra.Integer;
  * @author Barry DeZonia
  *
  */
-public class UnboundedIntInteger
+public class UnboundedIntGroup
   implements
-    Integer<UnboundedIntInteger, UnboundedIntMember>,
+    Integer<UnboundedIntGroup, UnboundedIntMember>,
     BitOperations<UnboundedIntMember>
 {
 	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 
-	public UnboundedIntInteger() {
+	public UnboundedIntGroup() {
 	}
 
 	@Override

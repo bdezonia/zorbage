@@ -33,8 +33,8 @@ import zorbage.type.converter.ConverterFloat64ToSignedInt32Round;
 import zorbage.type.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.data.BooleanMember;
 import zorbage.type.data.Float64Member;
-import zorbage.type.data.Float64;
-import zorbage.type.data.SignedInt32Integer;
+import zorbage.type.data.Float64Group;
+import zorbage.type.data.SignedInt32Group;
 import zorbage.type.data.SignedInt32Member;
 import zorbage.type.math.Average;
 import zorbage.type.math.Max;
@@ -54,7 +54,7 @@ public class Test {
 	
 	public static void testInts() {
 		  
-		SignedInt32Integer g = new SignedInt32Integer();
+		SignedInt32Group g = new SignedInt32Group();
 		  
 		SignedInt32Member a = new SignedInt32Member(1);
 		SignedInt32Member b = new SignedInt32Member(4);
@@ -67,7 +67,7 @@ public class Test {
 	
 	public static void testFloats() {
 		  
-		Float64 g = new Float64();
+		Float64Group g = new Float64Group();
 		  
 		Float64Member a = new Float64Member(1.1);
 		Float64Member b = new Float64Member(4.2);
@@ -136,7 +136,7 @@ public class Test {
 			accessor.put();
 		}
 		// scale it by 6.3
-		Float64 g = new Float64();
+		Float64Group g = new Float64Group();
 		ConverterSignedInt32ToFloat64 toFloat = new ConverterSignedInt32ToFloat64();
 		ConverterFloat64ToSignedInt32Round fromFloat = new ConverterFloat64ToSignedInt32Round();
 		Float64Member scale = new Float64Member(6.3);
@@ -171,15 +171,15 @@ public class Test {
 			value.setV(i++);
 			accessor.put();
 		}
-		Average<Float64,Float64Member> a =
-				new Average<Float64,Float64Member>(new Float64());
+		Average<Float64Group,Float64Member> a =
+				new Average<Float64Group,Float64Member>(new Float64Group());
 		Float64Member result = new Float64Member();
 		a.calculate(storage, result);
 		System.out.println("Average value = " + result.v());
 	}
 	
 	public static void testMedian() {
-		Float64 g = new Float64();
+		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
 		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
@@ -191,14 +191,14 @@ public class Test {
 			value.setV(i++);
 			accessor.put();
 		}
-		Median<Float64,Float64Member> a = new Median<Float64,Float64Member>(g);
+		Median<Float64Group,Float64Member> a = new Median<Float64Group,Float64Member>(g);
 		Float64Member result = new Float64Member();
 		a.calculate(storage, result);
 		System.out.println("Median value = " + result.v());
 	}
 
 	public static void testMin() {
-		Float64 g = new Float64();
+		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
 		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
@@ -210,7 +210,7 @@ public class Test {
 			value.setV(i++);
 			accessor.put();
 		}
-		Min<Float64,Float64Member> a = new Min<Float64,Float64Member>(g);
+		Min<Float64Group,Float64Member> a = new Min<Float64Group,Float64Member>(g);
 		Float64Member result = new Float64Member();
 		Float64Member max = new Float64Member();
 		g.maxBound(max);
@@ -219,7 +219,7 @@ public class Test {
 	}
 
 	public static void testMax() {
-		Float64 g = new Float64();
+		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
 		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
@@ -231,7 +231,7 @@ public class Test {
 			value.setV(i++);
 			accessor.put();
 		}
-		Max<Float64,Float64Member> a = new Max<Float64,Float64Member>(g);
+		Max<Float64Group,Float64Member> a = new Max<Float64Group,Float64Member>(g);
 		Float64Member result = new Float64Member();
 		Float64Member min = new Float64Member();
 		g.minBound(min);
@@ -251,8 +251,8 @@ public class Test {
 			value.setV(i++);
 			accessor.put();
 		}
-		Sum<Float64,Float64Member> a =
-				new Sum<Float64,Float64Member>(new Float64());
+		Sum<Float64Group,Float64Member> a =
+				new Sum<Float64Group,Float64Member>(new Float64Group());
 		Float64Member result = new Float64Member();
 		a.calculate(storage, result);
 		System.out.println("Sum value = " + result.v());
@@ -298,10 +298,10 @@ public class Test {
 		new DFTExample().run();
 		testInts();
 		testFloats();
-		test1(new SignedInt32Integer());
-		test1(new Float64());
-		test2(new SignedInt32Integer());
-		test2(new Float64());
+		test1(new SignedInt32Group());
+		test1(new Float64Group());
+		test2(new SignedInt32Group());
+		test2(new Float64Group());
 		testAccessor();
 		testGroupOfConversions();
 		testAverage();

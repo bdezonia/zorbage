@@ -35,9 +35,9 @@ import zorbage.type.algebra.RModule;
  */
 public class QuaternionFloat64RModule
   implements
-    RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64,QuaternionFloat64Member>
+    RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Group,QuaternionFloat64Member>
 {
-	private static final QuaternionFloat64 g = new QuaternionFloat64();
+	private static final QuaternionFloat64Group g = new QuaternionFloat64Group();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
 	public QuaternionFloat64RModule() {

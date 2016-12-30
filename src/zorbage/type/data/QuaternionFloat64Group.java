@@ -40,9 +40,9 @@ import zorbage.type.algebra.SkewField;
  * @author Barry DeZonia
  *
  */
-public class QuaternionFloat64
+public class QuaternionFloat64Group
   implements
-    SkewField<QuaternionFloat64,QuaternionFloat64Member>,
+    SkewField<QuaternionFloat64Group,QuaternionFloat64Member>,
     Constants<QuaternionFloat64Member>,
     Norm<QuaternionFloat64Member, Float64Member>,
     Conjugate<QuaternionFloat64Member>,
@@ -59,9 +59,9 @@ public class QuaternionFloat64
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	private static final Float64Vector g1 = new Float64Vector();
-	private static final Float64 g2 = new Float64();
+	private static final Float64Group g2 = new Float64Group();
 	
-	public QuaternionFloat64() {
+	public QuaternionFloat64Group() {
 	}
 	
 	@Override

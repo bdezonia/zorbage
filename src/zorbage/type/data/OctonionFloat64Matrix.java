@@ -37,9 +37,9 @@ import zorbage.type.algebra.RingWithUnity;
 public class OctonionFloat64Matrix
 	implements
 		RingWithUnity<OctonionFloat64Matrix, OctonionFloat64MatrixMember>,
-		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64, OctonionFloat64Member>
+		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>
 {
-	private static final OctonionFloat64 g = new OctonionFloat64();
+	private static final OctonionFloat64Group g = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
 	public OctonionFloat64Matrix() { }

@@ -46,9 +46,9 @@ import zorbage.type.algebra.Trigonometric;
  * @author Barry DeZonia
  *
  */
-public class Float64
+public class Float64Group
   implements
-    OrderedField<Float64,Float64Member>,
+    OrderedField<Float64Group,Float64Member>,
     Bounded<Float64Member>,
     Norm<Float64Member,Float64Member>,
     Constants<Float64Member>,
@@ -66,7 +66,7 @@ public class Float64
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
-	public Float64() {
+	public Float64Group() {
 	}
 	
 	@Override

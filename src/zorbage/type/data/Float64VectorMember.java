@@ -39,7 +39,7 @@ import zorbage.type.storage.ArrayStorageFloat64;
  */
 public final class Float64VectorMember {
 
-	private static final Float64 g = new Float64();
+	private static final Float64Group g = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0); 
 
 	private ArrayStorageFloat64 storage;

@@ -36,9 +36,9 @@ import zorbage.type.algebra.Random;
  * @author Barry DeZonia
  *
  */
-public class SignedInt32Integer
+public class SignedInt32Group
   implements
-    Integer<SignedInt32Integer, SignedInt32Member>,
+    Integer<SignedInt32Group, SignedInt32Member>,
     Bounded<SignedInt32Member>,
     BitOperations<SignedInt32Member>,
     Random<SignedInt32Member>
@@ -46,7 +46,7 @@ public class SignedInt32Integer
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
-	public SignedInt32Integer() {
+	public SignedInt32Group() {
 	}
 	
 	@Override

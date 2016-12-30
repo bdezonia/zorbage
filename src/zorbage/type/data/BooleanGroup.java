@@ -41,9 +41,9 @@ import zorbage.type.algebra.Random;
  * @author Barry DeZonia
  *
  */
-public class Boolean
+public class BooleanGroup
   implements
-    CommutativeRingWithUnity<Boolean, BooleanMember>,
+    CommutativeRingWithUnity<BooleanGroup, BooleanMember>,
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,
     LogicalOperations<BooleanMember>,
@@ -52,7 +52,7 @@ public class Boolean
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 
-	public Boolean() {
+	public BooleanGroup() {
 	}
 	
 	@Override

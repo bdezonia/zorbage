@@ -37,9 +37,9 @@ import zorbage.type.algebra.RingWithUnity;
 public class ComplexFloat64Matrix
 	implements
 		RingWithUnity<ComplexFloat64Matrix, ComplexFloat64MatrixMember>,
-		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64, ComplexFloat64Member>
+		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>
 {
-	private static final ComplexFloat64 g = new ComplexFloat64();
+	private static final ComplexFloat64Group g = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	public ComplexFloat64Matrix() {

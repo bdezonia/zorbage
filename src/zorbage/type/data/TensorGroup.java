@@ -13,9 +13,9 @@ import zorbage.type.algebra.Trigonometric;
 // TODO: make one tensor/member pair for each of float64, complex64, quat64, oct64
 // TODO: determine if this is a field or something else or two things for float/complex vs. quat/oct
 
-class TensorField
+class TensorGroup
   implements
-    Field<TensorField,TensorMember>, // TODO: does this make sense
+    Field<TensorGroup,TensorMember>, // TODO: does this make sense
     Hyperbolic<TensorMember>,  // TODO: does this make sense?
     Trigonometric<TensorMember>  // TODO: does this make sense?
 {

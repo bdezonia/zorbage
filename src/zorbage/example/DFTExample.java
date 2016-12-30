@@ -27,7 +27,7 @@
 package zorbage.example;
 
 import zorbage.type.converter.ConverterSignedInt32ToComplexFloat64;
-import zorbage.type.data.ComplexFloat64;
+import zorbage.type.data.ComplexFloat64Group;
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.data.SignedInt32Member;
 import zorbage.type.storage.ArrayStorageComplexFloat64;
@@ -41,7 +41,7 @@ import zorbage.type.storage.Storage;
  */
 public class DFTExample {
 
-	private ComplexFloat64 g = new ComplexFloat64();
+	private ComplexFloat64Group g = new ComplexFloat64Group();
 	
 	public void run() {
 		final int size = 20;

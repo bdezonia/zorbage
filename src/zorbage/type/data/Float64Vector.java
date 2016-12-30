@@ -35,9 +35,9 @@ import zorbage.type.algebra.VectorSpace;
  */
 public class Float64Vector
   implements
-    VectorSpace<Float64Vector,Float64VectorMember,Float64,Float64Member>
+    VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>
 {
-	private static final Float64 g = new Float64();
+	private static final Float64Group g = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0);
 
 	public Float64Vector() {
