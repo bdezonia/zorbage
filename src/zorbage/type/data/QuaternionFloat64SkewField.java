@@ -332,4 +332,133 @@ public class QuaternionFloat64SkewField
 	public void log1p(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
+	
+	/*
+	 * From boost library headers:
+
+        // transcendentals
+        // (please see the documentation)
+        
+        
+        template<typename T>
+        inline quaternion<T>                    exp(quaternion<T> const & q)
+        {
+            using    ::std::exp;
+            using    ::std::cos;
+            
+            using    ::boost::math::sinc_pi;
+            
+            T    u = exp(real(q));
+            
+            T    z = abs(unreal(q));
+            
+            T    w = sinc_pi(z);
+            
+            return(u*quaternion<T>(cos(z),
+                w*q.R_component_2(), w*q.R_component_3(),
+                w*q.R_component_4()));
+        }
+        
+        
+        template<typename T>
+        inline quaternion<T>                    cos(quaternion<T> const & q)
+        {
+            using    ::std::sin;
+            using    ::std::cos;
+            using    ::std::cosh;
+            
+            using    ::boost::math::sinhc_pi;
+            
+            T    z = abs(unreal(q));
+            
+            T    w = -sin(q.real())*sinhc_pi(z);
+            
+            return(quaternion<T>(cos(q.real())*cosh(z),
+                w*q.R_component_2(), w*q.R_component_3(),
+                w*q.R_component_4()));
+        }
+        
+        
+        template<typename T>
+        inline quaternion<T>                    sin(quaternion<T> const & q)
+        {
+            using    ::std::sin;
+            using    ::std::cos;
+            using    ::std::cosh;
+            
+            using    ::boost::math::sinhc_pi;
+            
+            T    z = abs(unreal(q));
+            
+            T    w = +cos(q.real())*sinhc_pi(z);
+            
+            return(quaternion<T>(sin(q.real())*cosh(z),
+                w*q.R_component_2(), w*q.R_component_3(),
+                w*q.R_component_4()));
+        }
+        
+        
+        template<typename T>
+        inline quaternion<T>                    tan(quaternion<T> const & q)
+        {
+            return(sin(q)/cos(q));
+        }
+        
+        
+        template<typename T>
+        inline quaternion<T>                    cosh(quaternion<T> const & q)
+        {
+            return((exp(+q)+exp(-q))/static_cast<T>(2));
+        }
+        
+        
+        template<typename T>
+        inline quaternion<T>                    sinh(quaternion<T> const & q)
+        {
+            return((exp(+q)-exp(-q))/static_cast<T>(2));
+        }
+        
+        
+        template<typename T>
+        inline quaternion<T>                    tanh(quaternion<T> const & q)
+        {
+            return(sinh(q)/cosh(q));
+        }
+        
+        
+        template<typename T>
+        quaternion<T>                            pow(quaternion<T> const & q,
+                                                    int n)
+        {
+            if        (n > 1)
+            {
+                int    m = n>>1;
+                
+                quaternion<T>    result = pow(q, m);
+                
+                result *= result;
+                
+                if    (n != (m<<1))
+                {
+                    result *= q; // n odd
+                }
+                
+                return(result);
+            }
+            else if    (n == 1)
+            {
+                return(q);
+            }
+            else if    (n == 0)
+            {
+                return(quaternion<T>(static_cast<T>(1)));
+            }
+            else    // n < 0
+            {
+                return(pow(quaternion<T>(static_cast<T>(1))/q,-n));
+            }
+        }
+  
+
+	 */
 }

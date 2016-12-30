@@ -520,4 +520,133 @@ public class OctonionFloat64SkewField
 		assign(E, a);
 	}
 
+	/*
+	 * From boost library headers
+       template<typename T>
+        inline octonion<T>                        exp(octonion<T> const & o)
+        {
+            using    ::std::exp;
+            using    ::std::cos;
+            
+            using    ::boost::math::sinc_pi;
+            
+            T    u = exp(real(o));
+            
+            T    z = abs(unreal(o));
+            
+            T    w = sinc_pi(z);
+            
+            return(u*octonion<T>(cos(z),
+                w*o.R_component_2(), w*o.R_component_3(),
+                w*o.R_component_4(), w*o.R_component_5(),
+                w*o.R_component_6(), w*o.R_component_7(),
+                w*o.R_component_8()));
+        }
+        
+        
+        template<typename T>
+        inline octonion<T>                        cos(octonion<T> const & o)
+        {
+            using    ::std::sin;
+            using    ::std::cos;
+            using    ::std::cosh;
+            
+            using    ::boost::math::sinhc_pi;
+            
+            T    z = abs(unreal(o));
+            
+            T    w = -sin(o.real())*sinhc_pi(z);
+            
+            return(octonion<T>(cos(o.real())*cosh(z),
+                w*o.R_component_2(), w*o.R_component_3(),
+                w*o.R_component_4(), w*o.R_component_5(),
+                w*o.R_component_6(), w*o.R_component_7(),
+                w*o.R_component_8()));
+        }
+        
+        
+        template<typename T>
+        inline octonion<T>                        sin(octonion<T> const & o)
+        {
+            using    ::std::sin;
+            using    ::std::cos;
+            using    ::std::cosh;
+            
+            using    ::boost::math::sinhc_pi;
+            
+            T    z = abs(unreal(o));
+            
+            T    w = +cos(o.real())*sinhc_pi(z);
+            
+            return(octonion<T>(sin(o.real())*cosh(z),
+                w*o.R_component_2(), w*o.R_component_3(),
+                w*o.R_component_4(), w*o.R_component_5(),
+                w*o.R_component_6(), w*o.R_component_7(),
+                w*o.R_component_8()));
+        }
+        
+        
+        template<typename T>
+        inline octonion<T>                        tan(octonion<T> const & o)
+        {
+            return(sin(o)/cos(o));
+        }
+        
+        
+        template<typename T>
+        inline octonion<T>                        cosh(octonion<T> const & o)
+        {
+            return((exp(+o)+exp(-o))/static_cast<T>(2));
+        }
+        
+        
+        template<typename T>
+        inline octonion<T>                        sinh(octonion<T> const & o)
+        {
+            return((exp(+o)-exp(-o))/static_cast<T>(2));
+        }
+        
+        
+        template<typename T>
+        inline octonion<T>                        tanh(octonion<T> const & o)
+        {
+            return(sinh(o)/cosh(o));
+        }
+        
+        
+        template<typename T>
+        octonion<T>                                pow(octonion<T> const & o,
+                                                    int n)
+        {
+            if        (n > 1)
+            {
+                int    m = n>>1;
+                
+                octonion<T>    result = pow(o, m);
+                
+                result *= result;
+                
+                if    (n != (m<<1))
+                {
+                    result *= o; // n odd
+                }
+                
+                return(result);
+            }
+            else if    (n == 1)
+            {
+                return(o);
+            }
+            else if    (n == 0)
+            {
+                return(octonion<T>(static_cast<T>(1)));
+            }
+            else    // n < 0
+            {
+                return(pow(octonion<T>(static_cast<T>(1))/o,-n));
+            }
+        }
+        
+      
+	 */
 }
