@@ -29,11 +29,13 @@ package zorbage.type.data;
 import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
 import zorbage.type.algebra.Exponential;
+import zorbage.type.algebra.Hyperbolic;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
+import zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -48,14 +50,17 @@ public class QuaternionFloat64Group
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,
     Rounding<QuaternionFloat64Member>,
+    Random<QuaternionFloat64Member>,
     Exponential<QuaternionFloat64Member>,
-    Random<QuaternionFloat64Member>
+    Trigonometric<QuaternionFloat64Member>,
+    Hyperbolic<QuaternionFloat64Member>
 {
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
+	private static final QuaternionFloat64Member TWO = new QuaternionFloat64Member(2,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	private static final Float64Vector g1 = new Float64Vector();
@@ -354,6 +359,60 @@ public class QuaternionFloat64Group
 	public void unreal(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		assign(a, b);
 		b.setR(0);
+	}
+
+	@Override
+	public void sinh(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		QuaternionFloat64Member negA = new QuaternionFloat64Member();
+		QuaternionFloat64Member sum = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+		negate(a, negA);
+		exp(a, tmp1);
+		exp(negA, tmp2);
+		subtract(tmp1, tmp2, sum);
+		divide(sum, TWO, b);
+	}
+
+	@Override
+	public void cosh(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		QuaternionFloat64Member negA = new QuaternionFloat64Member();
+		QuaternionFloat64Member sum = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+		negate(a, negA);
+		exp(a, tmp1);
+		exp(negA, tmp2);
+		add(tmp1, tmp2, sum);
+		divide(sum, TWO, b);
+    }
+
+	@Override
+	public void tanh(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		QuaternionFloat64Member n = new QuaternionFloat64Member();
+		QuaternionFloat64Member d = new QuaternionFloat64Member();
+		sinh(a, n);
+		cosh(a, d);
+		divide(n, d, b);
+	}
+
+	@Override
+	public void sin(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void cos(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void tan(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		QuaternionFloat64Member n = new QuaternionFloat64Member();
+		QuaternionFloat64Member d = new QuaternionFloat64Member();
+		sin(a, n);
+		cos(a, d);
+		divide(n, d, b);
 	}
 
 	/*

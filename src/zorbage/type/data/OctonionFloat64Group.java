@@ -28,11 +28,14 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
+import zorbage.type.algebra.Exponential;
+import zorbage.type.algebra.Hyperbolic;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
+import zorbage.type.algebra.Trigonometric;
 
 
 /**
@@ -49,14 +52,18 @@ public class OctonionFloat64Group
     Infinite<OctonionFloat64Member>,
     Rounding<OctonionFloat64Member>,
     Constants<OctonionFloat64Member>,
-    Random<OctonionFloat64Member>
+    Random<OctonionFloat64Member>,
+    Exponential<OctonionFloat64Member>,
+    Trigonometric<OctonionFloat64Member>,
+    Hyperbolic<OctonionFloat64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
-	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member TWO = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
 
 	public OctonionFloat64Group() {
 	}
@@ -542,6 +549,80 @@ public class OctonionFloat64Group
 	public void unreal(OctonionFloat64Member a, OctonionFloat64Member b) {
 		assign(a, b);
 		b.setR(0);
+	}
+
+	@Override
+	public void sinh(OctonionFloat64Member a, OctonionFloat64Member b) {
+		OctonionFloat64Member negA = new OctonionFloat64Member();
+		OctonionFloat64Member sum = new OctonionFloat64Member();
+		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
+		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+		negate(a, negA);
+		exp(a, tmp1);
+		exp(negA, tmp2);
+		subtract(tmp1, tmp2, sum);
+		divide(sum, TWO, b);
+	}
+
+	@Override
+	public void cosh(OctonionFloat64Member a, OctonionFloat64Member b) {
+		OctonionFloat64Member negA = new OctonionFloat64Member();
+		OctonionFloat64Member sum = new OctonionFloat64Member();
+		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
+		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+		negate(a, negA);
+		exp(a, tmp1);
+		exp(negA, tmp2);
+		add(tmp1, tmp2, sum);
+		divide(sum, TWO, b);
+    }
+
+	@Override
+	public void tanh(OctonionFloat64Member a, OctonionFloat64Member b) {
+		OctonionFloat64Member n = new OctonionFloat64Member();
+		OctonionFloat64Member d = new OctonionFloat64Member();
+		sinh(a, n);
+		cosh(a, d);
+		divide(n, d, b);
+	}
+
+	@Override
+	public void sin(OctonionFloat64Member a, OctonionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void cos(OctonionFloat64Member a, OctonionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void tan(OctonionFloat64Member a, OctonionFloat64Member b) {
+		OctonionFloat64Member n = new OctonionFloat64Member();
+		OctonionFloat64Member d = new OctonionFloat64Member();
+		sin(a, n);
+		cos(a, d);
+		divide(n, d, b);
+	}
+
+	@Override
+	public void exp(OctonionFloat64Member a, OctonionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void expm1(OctonionFloat64Member a, OctonionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void log(OctonionFloat64Member a, OctonionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void log1p(OctonionFloat64Member a, OctonionFloat64Member b) {
+		throw new IllegalArgumentException("TODO");
 	}
 	
 	/*
