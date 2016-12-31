@@ -346,6 +346,16 @@ public class QuaternionFloat64Group
 		a.setK(rng.nextDouble());
 	}
 	
+
+	public void real(QuaternionFloat64Member a, Float64Member b) {
+		b.setV(a.r());
+	}
+	
+	public void unreal(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		assign(a, b);
+		b.setR(0);
+	}
+
 	/*
 	 * From boost library headers:
 

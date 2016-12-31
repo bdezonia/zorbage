@@ -648,4 +648,12 @@ public class ComplexFloat64Group
 		a.setR(rng.nextDouble());
 		a.setI(rng.nextDouble());
 	}
+
+	public void real(ComplexFloat64Member a, Float64Member b) {
+		b.setV(a.r());
+	}
+	
+	public void unreal(ComplexFloat64Member a, Float64Member b) {
+		b.setV(a.i());
+	}
 }

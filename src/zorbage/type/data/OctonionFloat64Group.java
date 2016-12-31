@@ -535,6 +535,15 @@ public class OctonionFloat64Group
 		a.setK0(rng.nextDouble());
 	}
 
+	public void real(OctonionFloat64Member a, Float64Member b) {
+		b.setV(a.r());
+	}
+	
+	public void unreal(OctonionFloat64Member a, OctonionFloat64Member b) {
+		assign(a, b);
+		b.setR(0);
+	}
+	
 	/*
 	 * From boost library headers
        template<typename T>
