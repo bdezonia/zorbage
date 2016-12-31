@@ -9,8 +9,8 @@ Other needs
   Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
   Matrices: norm, det, invert
+  Quats and octs: sin, cos, exp, log
   Storage: multidimension facades
-  Fix numeric parsing
   Add more types:
     native long, short, byte, float32, plus complex32
     bit: 2, 4, 12, 20, 24, 128
@@ -32,3 +32,5 @@ Other needs
   find all TODOs in code and implement
   add random() to all numeric float classes generating values between 0 and 1 for all components
   implement Power(U,U.U) where it makes sense. also sqrt and cbrt part of Power interface?
+  power(int, a, b): minimize number of multiplies via recursion. see boost hpp code for quats and octs.
+    implement this for all numeric types.

@@ -611,20 +611,10 @@ public class OctonionFloat64Group
 	}
 
 	@Override
-	public void expm1(OctonionFloat64Member a, OctonionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
 	public void log(OctonionFloat64Member a, OctonionFloat64Member b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
-	@Override
-	public void log1p(OctonionFloat64Member a, OctonionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-	
 	/*
 	 * From boost library headers
        template<typename T>

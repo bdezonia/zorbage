@@ -213,7 +213,6 @@ public class Float64Group
 		b.setV( Math.exp(a.v()) );
 	}
 
-	@Override
 	public void expm1(Float64Member a, Float64Member b) {
 		b.setV( Math.expm1(a.v()) );
 	}
@@ -223,7 +222,6 @@ public class Float64Group
 		b.setV( Math.log(a.v()) );
 	}
 
-	@Override
 	public void log1p(Float64Member a, Float64Member b) {
 		b.setV( Math.log1p(a.v()) );
 	}

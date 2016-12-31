@@ -505,7 +505,6 @@ public class ComplexFloat64Group
 
 	// TODO: make an accurate implementation
 	
-	@Override
 	public void expm1(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member(0.5,0);
 		exp(a, tmp);
@@ -553,7 +552,6 @@ public class ComplexFloat64Group
 
 	// TODO: make an accurate implementation
 	
-	@Override
 	public void log1p(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member(0.5,0);
 		add(a, ONE, tmp);

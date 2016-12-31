@@ -34,7 +34,7 @@ package zorbage.type.algebra;
 public interface Exponential<T> {
 
 	void exp(T a, T b);
-	void expm1(T a, T b);
+	//void expm1(T a, T b);
 	void log(T a, T b);
-	void log1p(T a, T b);
+	//void log1p(T a, T b);
 }

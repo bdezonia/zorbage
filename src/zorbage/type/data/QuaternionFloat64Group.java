@@ -315,11 +315,6 @@ public class QuaternionFloat64Group
 	}
 
 	@Override
-	public void expm1(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
 	public void log(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		Float64Member norm = new Float64Member(); 
 		Float64Member term = new Float64Member(); 
@@ -336,11 +331,6 @@ public class QuaternionFloat64Group
 		b.setJ(tmp.v() * term.v());
 		v.v(2, tmp);
 		b.setK(tmp.v() * term.v());
-	}
-
-	@Override
-	public void log1p(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
@@ -415,6 +405,15 @@ public class QuaternionFloat64Group
 		divide(n, d, b);
 	}
 
+	// for log()
+	// http://math.stackexchange.com/questions/2552/the-logarithm-of-quaternion
+	// also wikipedia
+	// if q = a + bi + cj + dk = a + v
+	// then log q = log || q || + (v / || v ||) * acos(a / || q ||)
+	
+	//http://www.lce.hut.fi/~ssarkka/pub/quat.pdf
+	// power: q1^q2 = exp(log(q1) ∗ q2).
+	
 	/*
 	 * From boost library headers:
 
