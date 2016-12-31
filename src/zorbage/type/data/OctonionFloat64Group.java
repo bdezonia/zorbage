@@ -252,8 +252,6 @@ public class OctonionFloat64Group
 		assign(ZERO, a);
 	}
 
-	// TODO: scale coeffs by -1 or multiply by (-1,0,0,0,0,0,0,0)? Same with Quats and Complexes.
-	
 	@Override
 	public void negate(OctonionFloat64Member a, OctonionFloat64Member b) {
 		subtract(ZERO, a, b);
@@ -588,12 +586,34 @@ public class OctonionFloat64Group
 
 	@Override
 	public void sin(OctonionFloat64Member a, OctonionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		Float64Member z = new Float64Member();
+		unreal(a, b);
+		norm(b, z); // TODO or abs() whatever that is in boost
+		double w = Math.cos(a.r())*Float64Group.sinhc_pi(z.v());
+		b.setR(Math.sin(a.r())*Math.cosh(z.v()));
+		b.setI(w*a.i());
+		b.setJ(w*a.j());
+		b.setK(w*a.k());
+		b.setL(w*a.l());
+		b.setI0(w*a.i0());
+		b.setJ0(w*a.j0());
+		b.setK0(w*a.k0());
 	}
 
 	@Override
 	public void cos(OctonionFloat64Member a, OctonionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		Float64Member z = new Float64Member();
+		unreal(a, b);
+		norm(b, z); // TODO or abs() whatever that is in boost
+		double w = -Math.sin(a.r())*Float64Group.sinhc_pi(z.v());
+		b.setR(Math.cos(a.r())*Math.cosh(z.v()));
+		b.setI(w*a.i());
+		b.setJ(w*a.j());
+		b.setK(w*a.k());
+		b.setL(w*a.l());
+		b.setI0(w*a.i0());
+		b.setJ0(w*a.j0());
+		b.setK0(w*a.k0());
 	}
 
 	@Override
@@ -612,6 +632,7 @@ public class OctonionFloat64Group
 
 	@Override
 	public void log(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// I have yet to find a reference that gives the definition of this operation
 		throw new IllegalArgumentException("TODO");
 	}
 

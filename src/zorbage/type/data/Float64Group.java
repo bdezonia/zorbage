@@ -498,5 +498,35 @@ public class Float64Group
 	@Override
 	public void random(Float64Member a) {
 		a.setV(rng.nextDouble());
-	}	
+	}
+	
+	// adopted from boost library
+
+	public static double sinhc_pi(double x) {
+		double taylor_0_bound = Math.ulp(1.0);
+		double taylor_2_bound = Math.sqrt(taylor_0_bound);
+		double taylor_n_bound = Math.sqrt(taylor_2_bound);
+
+		if (Math.abs(x) >= taylor_n_bound) {
+			return(Math.sinh(x)/x);
+		}
+		else {
+			// approximation by taylor series in x at 0 up to order 0
+			double result = 1;
+			if (Math.abs(x) >= taylor_0_bound) {
+				double    x2 = x*x;
+
+				// approximation by taylor series in x at 0 up to order 2
+				result += x2/6;
+		
+				if (Math.abs(x) >= taylor_2_bound) {
+					// approximation by taylor series in x at 0 up to order 4
+					result += (x2*x2)/120;
+				}
+			}
+			
+			return(result);
+		}
+	}
+
 }
