@@ -388,12 +388,26 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void sin(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		Float64Member z = new Float64Member();
+		unreal(a, b);
+		norm(b, z); // TODO or abs() whatever that is in boost
+		double w = Math.cos(a.r())*sinhc_pi(z.v());
+		b.setR(Math.sin(a.r())*Math.cosh(z.v()));
+		b.setI(w*a.i());
+		b.setJ(w*a.j());
+		b.setK(w*a.k());
 	}
 
 	@Override
 	public void cos(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
+		Float64Member z = new Float64Member();
+		unreal(a, b);
+		norm(b, z); // TODO or abs() whatever that is in boost
+		double w = -Math.sin(a.r())*sinhc_pi(z.v());
+		b.setR(Math.cos(a.r())*Math.cosh(z.v()));
+		b.setI(w*a.i());
+		b.setJ(w*a.j());
+		b.setK(w*a.k());
 	}
 
 	@Override
@@ -405,6 +419,34 @@ public class QuaternionFloat64Group
 		divide(n, d, b);
 	}
 
+	// adopted from boost library
+	public double sinhc_pi(double x) {
+		double taylor_0_bound = Math.ulp(1.0);
+		double taylor_2_bound = Math.sqrt(taylor_0_bound);
+		double taylor_n_bound = Math.sqrt(taylor_2_bound);
+
+		if (Math.abs(x) >= taylor_n_bound) {
+			return(Math.sinh(x)/x);
+		}
+		else {
+			// approximation by taylor series in x at 0 up to order 0
+			double result = 1;
+			if (Math.abs(x) >= taylor_0_bound) {
+				double    x2 = x*x;
+
+				// approximation by taylor series in x at 0 up to order 2
+				result += x2/6;
+		
+				if (Math.abs(x) >= taylor_2_bound) {
+					// approximation by taylor series in x at 0 up to order 4
+					result += (x2*x2)/120;
+				}
+			}
+			
+			return(result);
+		}
+	}
+	
 	// for log()
 	// http://math.stackexchange.com/questions/2552/the-logarithm-of-quaternion
 	// also wikipedia
