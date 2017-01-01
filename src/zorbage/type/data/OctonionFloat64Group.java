@@ -587,8 +587,9 @@ public class OctonionFloat64Group
 	@Override
 	public void sin(OctonionFloat64Member a, OctonionFloat64Member b) {
 		Float64Member z = new Float64Member();
-		unreal(a, b);
-		norm(b, z); // TODO or abs() whatever that is in boost
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		unreal(a, tmp);
+		norm(tmp, z); // TODO or abs() whatever that is in boost
 		double w = Math.cos(a.r())*Float64Group.sinhc_pi(z.v());
 		b.setR(Math.sin(a.r())*Math.cosh(z.v()));
 		b.setI(w*a.i());
@@ -603,8 +604,9 @@ public class OctonionFloat64Group
 	@Override
 	public void cos(OctonionFloat64Member a, OctonionFloat64Member b) {
 		Float64Member z = new Float64Member();
-		unreal(a, b);
-		norm(b, z); // TODO or abs() whatever that is in boost
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		unreal(a, tmp);
+		norm(tmp, z); // TODO or abs() whatever that is in boost
 		double w = -Math.sin(a.r())*Float64Group.sinhc_pi(z.v());
 		b.setR(Math.cos(a.r())*Math.cosh(z.v()));
 		b.setI(w*a.i());
@@ -628,9 +630,10 @@ public class OctonionFloat64Group
 	@Override
 	public void exp(OctonionFloat64Member a, OctonionFloat64Member b) {
 		Float64Member z = new Float64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		double u = Math.exp(a.r());
-		unreal(a, b);
-		norm(b, z); // TODO or abs() whatever that is in boost
+		unreal(a, tmp);
+		norm(tmp, z); // TODO or abs() whatever that is in boost
 		double w = Float64Group.sinc_pi(z.v());
 		b.setR(u * Math.cos(z.v()));
 		b.setI(u * w * a.i());
