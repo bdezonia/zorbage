@@ -49,7 +49,7 @@ public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & 
 		this.g = g;
 	}
 	
-	public void calculate(Storage<U> storage, U result) {
+	public void calculate(Storage<?,U> storage, U result) {
 		localStorage = new ArrayStorageGeneric<T,U>(storage.size(), g);
 		U tmp = g.construct();
 		U tmp2 = g.construct();

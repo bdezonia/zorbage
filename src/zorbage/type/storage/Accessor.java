@@ -35,10 +35,10 @@ package zorbage.type.storage;
 public class Accessor<U> {
 	
 	private U value;
-	private Storage<U> storage;
+	private Storage<?,U> storage;
 	private long pos;
 
-	public Accessor(U value, Storage<U> storage) {
+	public Accessor(U value, Storage<?,U> storage) {
 		this.value = value;
 		this.storage = storage;
 		beforeFirst();

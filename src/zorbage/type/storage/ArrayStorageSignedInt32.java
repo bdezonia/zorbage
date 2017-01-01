@@ -35,7 +35,7 @@ import zorbage.type.data.SignedInt32Member;
  * @param <U>
  */
 public class ArrayStorageSignedInt32
-	implements Storage<SignedInt32Member>
+	implements Storage<ArrayStorageSignedInt32,SignedInt32Member>
 {
 
 	private final int[] data;
@@ -61,6 +61,14 @@ public class ArrayStorageSignedInt32
 	@Override
 	public long size() {
 		return data.length;
+	}
+
+	@Override
+	public ArrayStorageSignedInt32 duplicate() {
+		ArrayStorageSignedInt32 s = new ArrayStorageSignedInt32(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

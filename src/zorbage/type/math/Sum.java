@@ -44,7 +44,7 @@ public class Sum<T extends AdditiveGroup<T,U>, U> {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<U> storage, U result) {
+	public void calculate(Storage<?,U> storage, U result) {
 		g.zero(result);
 		U tmp = g.construct();
 		for (long l = 0; l < storage.size(); l++) {

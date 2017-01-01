@@ -26,7 +26,6 @@ Other needs
   improve exp() and log() accuracy near 1.0 / - 1.0
   big decimal type needed?
   a tensor like class that can support quats and octs not as vector spaces but rmodules
-  storage containers should be able to duplicate themselves
   number bases: instead of zero and unity need faster ways to construct numbers besides strings
   implement all type toString() methods for tensors
   find all TODOs in code and implement

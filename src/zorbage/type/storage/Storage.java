@@ -32,9 +32,10 @@ package zorbage.type.storage;
  *
  * @param <U>
  */
-public interface Storage<T> {
+public interface Storage<T extends Storage<T,U>, U> {
 	
-	void put(long index, T value);
-	void get(long index, T value);
+	void put(long index, U value);
+	void get(long index, U value);
 	long size();
+	T duplicate();
 }

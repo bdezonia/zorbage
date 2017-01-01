@@ -35,7 +35,7 @@ import zorbage.type.data.QuaternionFloat64Member;
  * @param <U>
  */
 public class ArrayStorageQuaternionFloat64
-	implements Storage<QuaternionFloat64Member>
+	implements Storage<ArrayStorageQuaternionFloat64,QuaternionFloat64Member>
 {
 
 	private final double[] data;
@@ -70,6 +70,14 @@ public class ArrayStorageQuaternionFloat64
 	@Override
 	public long size() {
 		return data.length/4;
+	}
+
+	@Override
+	public ArrayStorageQuaternionFloat64 duplicate() {
+		ArrayStorageQuaternionFloat64 s = new ArrayStorageQuaternionFloat64(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

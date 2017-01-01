@@ -46,7 +46,7 @@ public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U>
 		this.g = g;
 	}
 	
-	public void calculate(Storage<U> storage, U result) {
+	public void calculate(Storage<?,U> storage, U result) {
 		U sum = g.construct();
 		U count = g.construct();
 		U tmp = g.construct();

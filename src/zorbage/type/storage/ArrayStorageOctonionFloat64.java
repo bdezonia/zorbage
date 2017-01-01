@@ -35,7 +35,7 @@ import zorbage.type.data.OctonionFloat64Member;
  * @param <U>
  */
 public class ArrayStorageOctonionFloat64
-	implements Storage<OctonionFloat64Member>
+	implements Storage<ArrayStorageOctonionFloat64,OctonionFloat64Member>
 {
 
 	private final double[] data;
@@ -78,6 +78,14 @@ public class ArrayStorageOctonionFloat64
 	@Override
 	public long size() {
 		return data.length/8;
+	}
+
+	@Override
+	public ArrayStorageOctonionFloat64 duplicate() {
+		ArrayStorageOctonionFloat64 s = new ArrayStorageOctonionFloat64(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

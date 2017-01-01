@@ -37,7 +37,7 @@ import zorbage.type.data.UnboundedIntMember;
  * @param <U>
  */
 public class ArrayStorageUnboundedInt
-	implements Storage<UnboundedIntMember>
+	implements Storage<ArrayStorageUnboundedInt,UnboundedIntMember>
 {
 
 	private final BigInteger[] data;
@@ -66,6 +66,14 @@ public class ArrayStorageUnboundedInt
 	@Override
 	public long size() {
 		return data.length;
+	}
+
+	@Override
+	public ArrayStorageUnboundedInt duplicate() {
+		ArrayStorageUnboundedInt s = new ArrayStorageUnboundedInt(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

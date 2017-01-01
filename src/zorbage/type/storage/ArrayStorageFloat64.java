@@ -35,7 +35,7 @@ import zorbage.type.data.Float64Member;
  * @param <U>
  */
 public class ArrayStorageFloat64
-	implements Storage<Float64Member>
+	implements Storage<ArrayStorageFloat64,Float64Member>
 {
 
 	private final double[] data;
@@ -61,6 +61,14 @@ public class ArrayStorageFloat64
 	@Override
 	public long size() {
 		return data.length;
+	}
+
+	@Override
+	public ArrayStorageFloat64 duplicate() {
+		ArrayStorageFloat64 s = new ArrayStorageFloat64(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

@@ -35,7 +35,7 @@ import zorbage.type.data.BooleanMember;
  * @param <U>
  */
 public class ArrayStorageBit
-	implements Storage<BooleanMember>
+	implements Storage<ArrayStorageBit,BooleanMember>
 {
 
 	private final long[] data;
@@ -82,6 +82,14 @@ public class ArrayStorageBit
 	@Override
 	public long size() {
 		return size;
+	}
+
+	@Override
+	public ArrayStorageBit duplicate() {
+		ArrayStorageBit s = new ArrayStorageBit(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

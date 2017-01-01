@@ -45,22 +45,22 @@ public class DFTExample {
 	
 	public void run() {
 		final int size = 20;
-		Storage<SignedInt32Member> inputData = makeIntData(size);
+		Storage<?,SignedInt32Member> inputData = makeIntData(size);
 		fillIntData(inputData);
-		Storage<ComplexFloat64Member> outputComplexData = makeComplexData(size);
+		Storage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
 		dft(inputData, outputComplexData);
 	}
 	
 	
-	private Storage<SignedInt32Member> makeIntData(int size) {
+	private Storage<?,SignedInt32Member> makeIntData(int size) {
 		return new ArrayStorageSignedInt32(size);
 	}
 	
-	private Storage<ComplexFloat64Member> makeComplexData(int size) {
+	private Storage<?,ComplexFloat64Member> makeComplexData(int size) {
 		return new ArrayStorageComplexFloat64(size);
 	}
 	
-	private void fillIntData(Storage<SignedInt32Member> input) {
+	private void fillIntData(Storage<?,SignedInt32Member> input) {
 		// an example of straight index access to low level data
 		SignedInt32Member value = new SignedInt32Member();
 		int count = 0;
@@ -72,7 +72,7 @@ public class DFTExample {
 	
 	// https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node228.html
 	
-	private void dft(Storage<SignedInt32Member> input, Storage<ComplexFloat64Member> output) {
+	private void dft(Storage<?,SignedInt32Member> input, Storage<?,ComplexFloat64Member> output) {
 		ConverterSignedInt32ToComplexFloat64 converter = new ConverterSignedInt32ToComplexFloat64();
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
 		ComplexFloat64Member fOfX = new ComplexFloat64Member();

@@ -45,7 +45,7 @@ public class Min<T extends Group<T,U> & Ordered<U>, U> {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<U> storage, U max, U result) {
+	public void calculate(Storage<?,U> storage, U max, U result) {
 		g.assign(max, result);
 		U tmp = g.construct();
 		for (long l = 0; l < storage.size(); l++) {

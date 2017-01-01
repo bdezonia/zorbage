@@ -35,7 +35,7 @@ import zorbage.type.data.ComplexFloat64Member;
  * @param <U>
  */
 public class ArrayStorageComplexFloat64
-	implements Storage<ComplexFloat64Member>
+	implements Storage<ArrayStorageComplexFloat64,ComplexFloat64Member>
 {
 
 	private final double[] data;
@@ -66,6 +66,14 @@ public class ArrayStorageComplexFloat64
 	@Override
 	public long size() {
 		return data.length/2;
+	}
+
+	@Override
+	public ArrayStorageComplexFloat64 duplicate() {
+		ArrayStorageComplexFloat64 s = new ArrayStorageComplexFloat64(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
 	}
 
 }

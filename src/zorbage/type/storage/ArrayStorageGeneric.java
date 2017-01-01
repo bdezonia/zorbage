@@ -35,7 +35,7 @@ import zorbage.type.algebra.Group;
  * @param <U>
  */
 public class ArrayStorageGeneric<T extends Group<T,U>,U>
-	implements Storage<U>
+	implements Storage<ArrayStorageGeneric<T,U>,U>
 {
 
 	private final Object[] data;
@@ -68,6 +68,15 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 	@Override
 	public long size() {
 		return data.length;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayStorageGeneric<T,U> duplicate() {
+		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),g);
+		for (int i = 0; i < data.length; i++)
+			g.assign((U)data[i], (U)s.data[i]);
+		return s;
 	}
 
 }
