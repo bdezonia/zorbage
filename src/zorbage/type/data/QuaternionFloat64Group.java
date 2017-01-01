@@ -298,15 +298,15 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void exp(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-        Float64Member z = new Float64Member();
+		Float64Member z = new Float64Member();
 		double u = Math.exp(a.r());
 		unreal(a, b);
 		norm(b, z); // TODO or abs() whatever that is in boost
-        double w = Float64Group.sinc_pi(z.v());
-        b.setR(u * Math.cos(z.v()));
-        b.setI(u * w * a.i());
-        b.setJ(u * w * a.j());
-        b.setK(u * w * a.k());
+		double w = Float64Group.sinc_pi(z.v());
+		b.setR(u * Math.cos(z.v()));
+		b.setI(u * w * a.i());
+		b.setJ(u * w * a.j());
+		b.setK(u * w * a.k());
 	}
 
 	@Override

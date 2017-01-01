@@ -627,19 +627,19 @@ public class OctonionFloat64Group
 
 	@Override
 	public void exp(OctonionFloat64Member a, OctonionFloat64Member b) {
-        Float64Member z = new Float64Member();
+		Float64Member z = new Float64Member();
 		double u = Math.exp(a.r());
 		unreal(a, b);
 		norm(b, z); // TODO or abs() whatever that is in boost
-        double w = Float64Group.sinc_pi(z.v());
-        b.setR(u * Math.cos(z.v()));
-        b.setI(u * w * a.i());
-        b.setJ(u * w * a.j());
-        b.setK(u * w * a.k());
-        b.setL(u * w * a.l());
-        b.setI0(u * w * a.i0());
-        b.setJ0(u * w * a.j0());
-        b.setK0(u * w * a.k0());
+		double w = Float64Group.sinc_pi(z.v());
+		b.setR(u * Math.cos(z.v()));
+		b.setI(u * w * a.i());
+		b.setJ(u * w * a.j());
+		b.setK(u * w * a.k());
+		b.setL(u * w * a.l());
+		b.setI0(u * w * a.i0());
+		b.setJ0(u * w * a.j0());
+		b.setK0(u * w * a.k0());
 	}
 
 	@Override
