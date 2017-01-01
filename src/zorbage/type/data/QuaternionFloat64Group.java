@@ -298,20 +298,15 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void exp(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		double constant = Math.exp(a.r());
-		Float64VectorMember v = new Float64VectorMember(new double[]{a.i(), a.j(), a.k()});
-		Float64Member norm = new Float64Member(); 
-		g1.norm(v, norm);
-		double scale1 = Math.cos(norm.v());
-		double scale2 = Math.sin(norm.v());
-		Float64Member tmp = new Float64Member(); 
-		b.setR(constant * scale1);
-		v.v(0, tmp);
-		b.setI(constant * (tmp.v() / norm.v()) * scale2);
-		v.v(1, tmp);
-		b.setJ(constant * (tmp.v() / norm.v()) * scale2);
-		v.v(2, tmp);
-		b.setK(constant * (tmp.v() / norm.v()) * scale2);
+        Float64Member z = new Float64Member();
+		double u = Math.exp(a.r());
+		unreal(a, b);
+		norm(b, z); // TODO or abs() whatever that is in boost
+        double w = Float64Group.sinc_pi(z.v());
+        b.setR(u * Math.cos(z.v()));
+        b.setI(u * w * a.i());
+        b.setJ(u * w * a.j());
+        b.setK(u * w * a.k());
 	}
 
 	@Override
