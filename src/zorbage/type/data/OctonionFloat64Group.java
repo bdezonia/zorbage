@@ -691,12 +691,12 @@ public class OctonionFloat64Group
 				double signum = Math.signum(factor);
 				result.setR(r);
 				if (result.i() == 0) result.setI(signum * result.i()); else result.setI(factor * result.i());
-				if (result.j() == 0) result.setI(signum * result.j()); else result.setI(factor * result.j());
-				if (result.k() == 0) result.setI(signum * result.k()); else result.setI(factor * result.k());
-				if (result.l() == 0) result.setI(signum * result.l()); else result.setI(factor * result.l());
-				if (result.i0() == 0) result.setI(signum * result.i0()); else result.setI(factor * result.i0());
-				if (result.j0() == 0) result.setI(signum * result.j0()); else result.setI(factor * result.j0());
-				if (result.k0() == 0) result.setI(signum * result.k0()); else result.setI(factor * result.k0());
+				if (result.j() == 0) result.setJ(signum * result.j()); else result.setJ(factor * result.j());
+				if (result.k() == 0) result.setK(signum * result.k()); else result.setK(factor * result.k());
+				if (result.l() == 0) result.setL(signum * result.l()); else result.setL(factor * result.l());
+				if (result.i0() == 0) result.setI0(signum * result.i0()); else result.setI0(factor * result.i0());
+				if (result.j0() == 0) result.setJ0(signum * result.j0()); else result.setJ0(factor * result.j0());
+				if (result.k0() == 0) result.setK0(signum * result.k0()); else result.setK0(factor * result.k0());
 			}
 		}
 		else {
