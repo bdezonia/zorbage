@@ -9,7 +9,6 @@ Other needs
   Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
   Matrices: norm, det, invert
-  Octs: log
   Storage: multidimension facades
   Add more types:
     native long, short, byte, float32, plus complex32
@@ -32,3 +31,5 @@ Other needs
   implement Power(U,U.U) where it makes sense. also sqrt and cbrt part of Power interface?
   power(int, a, b): minimize number of multiplies via recursion. see boost hpp code for quats and octs.
     implement this for all numeric types.
+  real/unreal as part of hierarchy. at least unreal.
+  make sure all math ops can safely work if (a,b,c) params collide. use extra tmps and assign().

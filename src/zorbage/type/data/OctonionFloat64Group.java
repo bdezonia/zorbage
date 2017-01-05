@@ -64,6 +64,7 @@ public class OctonionFloat64Group
 	private static final OctonionFloat64Member TWO = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
+	private static final ComplexFloat64Group g = new ComplexFloat64Group();
 
 	public OctonionFloat64Group() {
 	}
@@ -474,8 +475,6 @@ public class OctonionFloat64Group
 				Double.isInfinite(a.j0()) || Double.isInfinite(a.k0()) );
 	}
 
-	// TODO need generalized and accurate hypot() method for quats and octs
-	
 	@Override
 	public void norm(OctonionFloat64Member a, Float64Member b) {
 		b.setV( norm(a) );
@@ -645,12 +644,73 @@ public class OctonionFloat64Group
 		b.setK0(u * w * a.k0());
 	}
 
+	// reference: https://ece.uwaterloo.ca/~dwharder/C++/CQOST/src/Octonion.cpp
+	//   not sure about this. could not find other reference.
 	@Override
 	public void log(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// I have yet to find a reference that gives the definition of this operation
-		throw new IllegalArgumentException("TODO");
+		double factor;
+		OctonionFloat64Member unreal = new OctonionFloat64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		Float64Member norm = new Float64Member();
+		assign(a, b); // this should be safe if two variables or one
+		unreal(a, unreal);
+		norm(unreal, norm);
+		tmp.setR(a.r());
+		tmp.setI(norm.v());
+		g.log(tmp, tmp);
+		if ( norm.v() == 0.0 ) {
+			factor = tmp.i();
+		} else {
+			factor = tmp.i() / norm.v();
+		}
+
+		multiplier(tmp.r(), factor, b);
 	}
 
+	/*
+	 
+		Here is a source for some methods:
+		
+		https://ece.uwaterloo.ca/~dwharder/C++/CQOST/src/Octonion.cpp
+	  
+	 */
+	
+	private void multiplier(double r, double factor, OctonionFloat64Member result) {
+		if ( Double.isNaN( factor ) || Double.isInfinite( factor ) ) {
+			if ( result.i() == 0 && result.j() == 0 && result.k() == 0 ) {
+				result.setR(r);
+				result.setI(result.i() * factor);
+				result.setJ(result.j() * factor);
+				result.setK(result.k() * factor);
+				result.setL(result.l() * factor);
+				result.setI0(result.i0() * factor);
+				result.setJ0(result.j0() * factor);
+				result.setK0(result.k0() * factor);
+			}
+			else {
+				double signum = Math.signum(factor);
+				result.setR(r);
+				if (result.i() == 0) result.setI(signum * result.i()); else result.setI(factor * result.i());
+				if (result.j() == 0) result.setI(signum * result.j()); else result.setI(factor * result.j());
+				if (result.k() == 0) result.setI(signum * result.k()); else result.setI(factor * result.k());
+				if (result.l() == 0) result.setI(signum * result.l()); else result.setI(factor * result.l());
+				if (result.i0() == 0) result.setI(signum * result.i0()); else result.setI(factor * result.i0());
+				if (result.j0() == 0) result.setI(signum * result.j0()); else result.setI(factor * result.j0());
+				if (result.k0() == 0) result.setI(signum * result.k0()); else result.setI(factor * result.k0());
+			}
+		}
+		else {
+			result.setR(r);
+			result.setI(result.i() * factor);
+			result.setJ(result.j() * factor);
+			result.setK(result.k() * factor);
+			result.setL(result.l() * factor);
+			result.setI0(result.i0() * factor);
+			result.setJ0(result.j0() * factor);
+			result.setK0(result.k0() * factor);
+		}
+	}
+	
 	/*
 	 * From boost library headers
        template<typename T>
