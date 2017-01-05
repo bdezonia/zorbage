@@ -5,6 +5,7 @@ Examples
   Game of life
   
 Other needs
+  maven
   make all int[] indices into long[] indices
   Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
