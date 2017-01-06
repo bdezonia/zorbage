@@ -44,7 +44,7 @@ public class DFTExample {
 	private ComplexFloat64Group g = new ComplexFloat64Group();
 	
 	public void run() {
-		final int size = 20;
+		final int size = 500;
 		Storage<?,SignedInt32Member> inputData = makeIntData(size);
 		fillIntData(inputData);
 		Storage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
@@ -70,7 +70,9 @@ public class DFTExample {
 		}
 	}
 	
-	// https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node228.html
+	// algorithm from https://users.cs.cf.ac.uk/Dave.Marshall/Multimedia/node228.html
+	
+	// note this could be further optimized by doing some multiplication in reals rather than complexes
 	
 	private void dft(Storage<?,SignedInt32Member> input, Storage<?,ComplexFloat64Member> output) {
 		ConverterSignedInt32ToComplexFloat64 converter = new ConverterSignedInt32ToComplexFloat64();

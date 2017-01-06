@@ -26,6 +26,8 @@
  */
 package zorbage.example;
 
+import java.util.Arrays;
+
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
@@ -295,7 +297,15 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
-		new DFTExample().run();
+		long[] timings = new long[20];
+		long x = System.currentTimeMillis();
+		for (int i = 0; i < timings.length; i++) {
+			new DFTExample().run();
+			long y = System.currentTimeMillis();
+			timings[i] = y - x;
+			x = y;
+		}
+		System.out.println(Arrays.toString(timings));
 		testInts();
 		testFloats();
 		test1(new SignedInt32Group());
