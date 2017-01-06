@@ -296,7 +296,7 @@ public class Test {
 		System.out.println("b should be true and is " + b.v());
 	}
 
-	public static void main(String[] args) {
+	public static void testSpeed() {
 		long[] timings = new long[20];
 		long x = System.currentTimeMillis();
 		for (int i = 0; i < timings.length; i++) {
@@ -306,6 +306,9 @@ public class Test {
 			x = y;
 		}
 		System.out.println(Arrays.toString(timings));
+	}
+	
+	public static void main(String[] args) {
 		testInts();
 		testFloats();
 		test1(new SignedInt32Group());
@@ -320,6 +323,7 @@ public class Test {
 		testMax();
 		testSum();
 		testParsing();
+		testSpeed();
 	}
 
 }
