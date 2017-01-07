@@ -26,7 +26,6 @@
  */
 package zorbage.example;
 
-import zorbage.type.converter.ConverterSignedInt32ToComplexFloat64;
 import zorbage.type.data.ComplexFloat64Group;
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.data.SignedInt32Member;
@@ -75,7 +74,6 @@ public class DFTExample {
 	// note this could be further optimized by doing some multiplication in reals rather than complexes
 	
 	private void dft(Storage<?,SignedInt32Member> input, Storage<?,ComplexFloat64Member> output) {
-		ConverterSignedInt32ToComplexFloat64 converter = new ConverterSignedInt32ToComplexFloat64();
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
 		ComplexFloat64Member fOfX = new ComplexFloat64Member();
 		ComplexFloat64Member sum = new ComplexFloat64Member();
@@ -99,7 +97,7 @@ public class DFTExample {
 			uTmp.setR(u);
 			for (int x = 0; x < input.size(); x++) {
 				input.get(x, in);
-				converter.convert(in, fOfX);
+				fOfX.setR(in.v());
 				xTmp.setR(x);
 				g.multiply(MINUS_2, PI, power);
 				g.multiply(power, I, power);

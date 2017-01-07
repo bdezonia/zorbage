@@ -31,8 +31,6 @@ import java.util.Arrays;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
-import zorbage.type.converter.ConverterFloat64ToSignedInt32Round;
-import zorbage.type.converter.ConverterSignedInt32ToFloat64;
 import zorbage.type.data.BooleanMember;
 import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64Group;
@@ -139,17 +137,15 @@ public class Test {
 		}
 		// scale it by 6.3
 		Float64Group g = new Float64Group();
-		ConverterSignedInt32ToFloat64 toFloat = new ConverterSignedInt32ToFloat64();
-		ConverterFloat64ToSignedInt32Round fromFloat = new ConverterFloat64ToSignedInt32Round();
 		Float64Member scale = new Float64Member(6.3);
 		Float64Member tmp = new Float64Member();
 		accessor.beforeFirst();
 		while (accessor.hasNext()) {
 			accessor.fwd();
 			accessor.get();
-			toFloat.convert(value, tmp);
+			tmp.setV(value.v());
 			g.multiply(tmp, scale, tmp);
-			fromFloat.convert(tmp, value);
+			value.setV((int)Math.round(tmp.v()));
 			accessor.put();
 		}
 		// print it out
