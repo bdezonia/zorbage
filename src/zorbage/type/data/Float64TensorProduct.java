@@ -26,83 +26,83 @@
  */
 package zorbage.type.data;
 
-import zorbage.type.algebra.ModuleTensorProduct;
+import zorbage.type.algebra.TensorProduct;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Float64ModuleTensorProduct implements ModuleTensorProduct<Float64ModuleTensorProduct,Float64ModuleTensorProductMember,Float64Group,Float64Member>
+public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>
 {
 
 	@Override
-	public Float64ModuleTensorProductMember construct() {
-		return new Float64ModuleTensorProductMember();
+	public Float64TensorProductMember construct() {
+		return new Float64TensorProductMember();
 	}
 
 	@Override
-	public Float64ModuleTensorProductMember construct(Float64ModuleTensorProductMember other) {
-		return new Float64ModuleTensorProductMember(other);
+	public Float64TensorProductMember construct(Float64TensorProductMember other) {
+		return new Float64TensorProductMember(other);
 	}
 
 	@Override
-	public Float64ModuleTensorProductMember construct(String s) {
-		return new Float64ModuleTensorProductMember(s);
+	public Float64TensorProductMember construct(String s) {
+		return new Float64TensorProductMember(s);
 	}
 
 	@Override
-	public boolean isEqual(Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b) {
+	public boolean isEqual(Float64TensorProductMember a, Float64TensorProductMember b) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean isNotEqual(Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b) {
+	public boolean isNotEqual(Float64TensorProductMember a, Float64TensorProductMember b) {
 		return !isEqual(a,b);
 	}
 
 	@Override
-	public void assign(Float64ModuleTensorProductMember from, Float64ModuleTensorProductMember to) {
+	public void assign(Float64TensorProductMember from, Float64TensorProductMember to) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void zero(Float64ModuleTensorProductMember a) {
+	public void zero(Float64TensorProductMember a) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void negate(Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b) {
+	public void negate(Float64TensorProductMember a, Float64TensorProductMember b) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void add(Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b,
-			Float64ModuleTensorProductMember c) {
+	public void add(Float64TensorProductMember a, Float64TensorProductMember b,
+			Float64TensorProductMember c) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void subtract(Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b,
-			Float64ModuleTensorProductMember c) {
+	public void subtract(Float64TensorProductMember a, Float64TensorProductMember b,
+			Float64TensorProductMember c) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void multiply(Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b,
-			Float64ModuleTensorProductMember c) {
+	public void multiply(Float64TensorProductMember a, Float64TensorProductMember b,
+			Float64TensorProductMember c) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void power(int power, Float64ModuleTensorProductMember a, Float64ModuleTensorProductMember b) {
+	public void power(int power, Float64TensorProductMember a, Float64TensorProductMember b) {
 		// is this wrong? should the class be invertible?
 		if (power < 0)
 			throw new IllegalArgumentException("negative power not allowed");
@@ -111,7 +111,7 @@ public class Float64ModuleTensorProduct implements ModuleTensorProduct<Float64Mo
 			unity(b);
 		}
 		else {
-			Float64ModuleTensorProductMember tmp = new Float64ModuleTensorProductMember();
+			Float64TensorProductMember tmp = new Float64TensorProductMember();
 			assign(a,tmp);
 			for (int i = 2; i <= power; i++) {
 				multiply(a, tmp, tmp);
@@ -121,8 +121,20 @@ public class Float64ModuleTensorProduct implements ModuleTensorProduct<Float64Mo
 	}
 
 	@Override
-	public void unity(Float64ModuleTensorProductMember result) {
+	public void unity(Float64TensorProductMember result) {
 		throw new IllegalArgumentException("TODO");
+	}
+
+	@Override
+	public void invert(Float64TensorProductMember a, Float64TensorProductMember b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void divide(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

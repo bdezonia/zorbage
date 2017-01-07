@@ -37,25 +37,25 @@ import zorbage.type.storage.ArrayStorageFloat64;
  * @author Barry DeZonia
  *
  */
-public final class Float64ModuleTensorProductMember {
+public final class Float64TensorProductMember {
 
 	private ArrayStorageFloat64 storage;
 	private int[] dims;
 	private int[] multipliers;
 	
-	public Float64ModuleTensorProductMember() {
+	public Float64TensorProductMember() {
 		dims = new int[0];
 		storage = new ArrayStorageFloat64(0);
 		multipliers = calcMultipliers();
 	}
 
-	public Float64ModuleTensorProductMember(Float64ModuleTensorProductMember other) { 
+	public Float64TensorProductMember(Float64TensorProductMember other) { 
 		dims = other.dims.clone();
 		storage = other.storage.duplicate();
 		multipliers = calcMultipliers();
 	}
 	
-	public Float64ModuleTensorProductMember(String s) {
+	public Float64TensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		List<OctonionRepresentation> data = rep.values();
 		storage = new ArrayStorageFloat64(data.size());
