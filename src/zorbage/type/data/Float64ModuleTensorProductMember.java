@@ -41,15 +41,18 @@ public final class Float64ModuleTensorProductMember {
 
 	private ArrayStorageFloat64 storage;
 	private int[] dims;
+	private int[] multipliers;
 	
 	public Float64ModuleTensorProductMember() {
 		dims = new int[0];
 		storage = new ArrayStorageFloat64(0);
+		multipliers = calcMultipliers();
 	}
 
 	public Float64ModuleTensorProductMember(Float64ModuleTensorProductMember other) { 
 		dims = other.dims.clone();
 		storage = other.storage.duplicate();
+		multipliers = calcMultipliers();
 	}
 	
 	public Float64ModuleTensorProductMember(String s) {
@@ -57,6 +60,7 @@ public final class Float64ModuleTensorProductMember {
 		List<OctonionRepresentation> data = rep.values();
 		storage = new ArrayStorageFloat64(data.size());
 		dims = rep.dimensions().clone();
+		multipliers = calcMultipliers();
 		Float64Member tmp = new Float64Member();
 		for (int i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
@@ -76,41 +80,103 @@ public final class Float64ModuleTensorProductMember {
 	public void dims(int[] d) {
 		if (d.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		for (int i = 0; i < d.length; i++)
+		for (int i = 0; i < d.length; i++) {
 			d[i] = dims[i];
+		}
 	}
 	
-	public void setDims(int[] dims) {
-		long count = count(dims);
-		if (count != count(this.dims)) {
-			storage = new ArrayStorageFloat64(count);
+	public void setDims(int[] newDims) {
+		int newCount = numElems(newDims);
+		if (newCount != storage.size()) {
+			storage = new ArrayStorageFloat64(newCount);
 		}
-		this.dims = dims.clone();
+		else {
+			Float64Member zero = new Float64Member();
+			for (int i = 0; i < storage.size(); i++) {
+				storage.put(i, zero);
+			}
+		}
+		dims = newDims.clone();
+		multipliers = calcMultipliers();
+	}
+	
+	public int numElems() {
+		return (int) storage.size();
+	}
+	
+	public void v(int index, Float64Member value) {
+		if (index < 0 || index >= storage.size())
+			throw new IllegalArgumentException("invald index in tensor member");
+		storage.get(index, value);
 	}
 	
 	public void v(int[] index, Float64Member value) {
 		if (index.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		long idx = indexToLong(index);
+		int idx = indexToInt(index);
 		storage.get(idx, value);
+	}
+	
+	public void setV(int index, Float64Member value) {
+		if (index < 0 || index >= storage.size())
+			throw new IllegalArgumentException("invald index in tensor member");
+		storage.put(index, value);
 	}
 	
 	public void setV(int[] index, Float64Member value) {
 		if (index.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		long idx = indexToLong(index);
+		int idx = indexToInt(index);
 		storage.put(idx, value);
 	}
 	
+	// TODO: finish me
 	@Override
 	public String toString() {
-		throw new IllegalArgumentException("TODO float64 tensor member toString()"); // TODO
+		StringBuilder builder = new StringBuilder();
+		// iterate values/indices and write numbers, brackets, and commas in correct order
+		// something recursive?
+		Float64Member tmp = new Float64Member();
+		int[] index = new int[this.dims.length];
+		// [2,2,2] dims
+		// [0,0,0]  [[[num
+		// [1,0,0]  [[[num,num
+		// [0,1,0]  [[[num,num][num
+		// [1,1,0]  [[[num,num][num,num
+		// [0,0,1]  [[[num,num][num,num]][[num
+		// [1,0,1]  [[[num,num][num,num]][[num,num
+		// [0,1,1]  [[[num,num][num,num]][[num,num][num
+		// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			intToIndex(i, index);
+			int j = 0;
+			while (j < index.length && index[j++] == 0)
+				builder.append('[');
+			if (index[0] != 0)
+				builder.append(',');
+			builder.append(tmp.v());
+			j = 0;
+			while (j < index.length && index[j] == (dims[j++]-1))
+				builder.append(']');
+		}
+		return builder.toString();
+	}
+
+	private int[] calcMultipliers() {
+		if (dims.length == 0) return new int[0];
+		int[] result = new int[dims.length-1];
+		int mult = 1;
+		for (int i = 0; i < result.length; i++) {
+			result[i] = mult;
+			mult *= dims[i];
+		}
+		return result;
 	}
 	
-	private long count(int[] dims) {
-		if (dims.length == 0)
-			return 0;
-		long count = 1;
+	private int numElems(int[] dims) {
+		if (dims.length == 0) return 0;
+		int count = 1;
 		for (int d : dims) {
 			count *= d;
 		}
@@ -122,10 +188,10 @@ public final class Float64ModuleTensorProductMember {
 	 * idx = [1,2,3]
 	 * long = 3*5*4 + 2*4 + 1;
 	 */
-	private long indexToLong(int[] idx) {
+	private int indexToInt(int[] idx) {
 		if (idx.length == 0) return 0;
-		long index = 0;
-		long mult = 1;
+		int index = 0;
+		int mult = 1;
 		for (int i = 0; i < idx.length; i++) {
 			index += mult * idx[i];
 			mult *= dims[i];
@@ -133,16 +199,12 @@ public final class Float64ModuleTensorProductMember {
 		return index;
 	}
 
-	/*
-	private void longToIndex(long idx, int[] result) {
+	private void intToIndex(int idx, int[] result) {
 		if (result.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		long mult = 1;
-		for (int i = 0; i < result.length; i++) {
-			idx -= mult * (idx % dims[i]);
-			mult *= dims[i];
-		wrong wrong wrong	
+		for (int i = result.length-1; i >= 0; i--) {
+			result[i] = idx / multipliers[i];
+			idx = idx % multipliers[i];
 		}
 	}
-	*/
 }
