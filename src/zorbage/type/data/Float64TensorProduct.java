@@ -26,6 +26,25 @@
  */
 package zorbage.type.data;
 
+
+//note that many implementations of tensors on the internet treat them as generalized matrices.
+//they do not worry about upper and lower indices or even matching shapes. They do element by
+//element ops like sin() of each elem.
+
+//do I skip Vector and Matrix and even Scalar?
+
+//TODO: make one tensor/member pair for each of float64, complex64, quat64, oct64
+//TODO: determine if this is a field or something else or two things for float/complex vs. quat/oct
+
+// this implies it is an OrderedField. Do tensors have an ordering? abs() exists in TensorFlow.
+//@Override
+//public void abs(TensorMember a, TensorMember b) {}
+// tensorflow also has trigonometric and hyperbolic
+
+//public void contract(int i, int j, TensorMember a, TensorMember b, TensorMember c) {}
+//public void takeDiagonal(TensorMember a, Object b) {} // change Object to Vector
+//many more
+
 import zorbage.type.algebra.TensorProduct;
 
 /**

@@ -32,6 +32,11 @@ import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageFloat64;
 
+
+// rank
+// dimension
+// upper and lower indices
+
 /**
  * 
  * @author Barry DeZonia
