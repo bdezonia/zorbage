@@ -19,11 +19,6 @@ Other needs
   polynomials
   group ring, modules
   vector direct product creating tensors
-  many many more converters needed
-    later edit: wrong. we can elim all converters I think
-    1 per type combo
-    additional for float based types: add all the rounding methods
-    extract i, j, k, l, i0, j0, k0
   improve exp() and log() accuracy near 1.0 / - 1.0
   big decimal type needed?
   number bases: instead of zero and unity need faster ways to construct numbers besides strings
