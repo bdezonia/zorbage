@@ -104,19 +104,10 @@ public class ComplexFloat64Group
 
 	@Override
 	public void power(int power, ComplexFloat64Member a, ComplexFloat64Member b) {
-		// okay for power to be negative
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		assign(ONE,tmp);
-		if (power > 0) {
-			for (int i = 1; i <= power; i++)
-				multiply(tmp,a,tmp);
-		}
-		else if (power < 0) {
-			power = -power;
-			for (int i = 1; i <= power; i++)
-				divide(tmp,a,tmp);
-		}
-		assign(tmp, b);
+		double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
+		double nTheta = power * getArgument(a);
+		b.setR(rToTheN * Math.cos(nTheta));
+		b.setI(rToTheN * Math.sin(nTheta));
 	}
 
 	@Override
