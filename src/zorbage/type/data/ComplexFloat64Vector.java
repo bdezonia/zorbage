@@ -151,6 +151,12 @@ public class ComplexFloat64Vector
 		//ComplexFloat64Member norm = Math.sqrt(norm2); // TODO this is the tricky part
 		//b.set(norm);
 		// is a norm of a complex vector a complex number or a real number? read.
+
+		// TODO
+		//   i think we want a hermitian norm and also for quats and octs
+		//   you calc math.sqrt((conj v) dot v)
+		//   i think it is a real number but maybe not
+		//   if not then need power(real, a, b) support for the four types (1, 2, 4, 8 dims)
 	}
 
 	@Override

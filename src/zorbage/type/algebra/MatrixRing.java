@@ -26,6 +26,8 @@
  */
 package zorbage.type.algebra;
 
+// TODO: matrices and tensors live in a vector space
+
 /**
  * 
  * @author Barry DeZonia
