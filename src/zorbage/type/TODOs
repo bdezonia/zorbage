@@ -18,6 +18,7 @@ Other needs
   Add tests
   polynomials
   group ring, modules
+  functions of a real variable as a vector space
   vector direct product creating tensors
   improve exp() and log() accuracy near 1.0 / - 1.0
   big decimal type needed?
@@ -28,3 +29,5 @@ Other needs
     implement this for all numeric types.
   real/unreal as part of hierarchy. at least unreal.
   make sure all math ops can safely work if (a,b,c) params collide. use extra tmps and assign().
+  check: IEEE 754 might specify that a num with one component inf and any nan might be considered inf.
+    This affects complex, quat, and oct. Now I assume a nan overrides all.
