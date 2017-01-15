@@ -271,4 +271,14 @@ public class QuaternionFloat64RModule
 		dotProduct(a, b_cross_c, d);
 	}
 
+	@Override
+	public void conjugate(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		for (int i = 0; i < a.length(); i++) {
+			a.v(i, tmp);
+			g.conjugate(tmp, tmp);
+			b.setV(i, tmp);
+		}
+	}
+
 }

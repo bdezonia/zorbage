@@ -39,6 +39,7 @@ public interface VectorSpace<T extends VectorSpace<T,U,V,W>, U, V extends Field<
   extends
     AdditiveGroup<T,U>,
     Norm<U,W>,
-    Products<U,W>
+    Products<U,W>,
+    Conjugate<U>
 {
 }

@@ -271,4 +271,14 @@ public class OctonionFloat64RModule
 		dotProduct(a, b_cross_c, d);
 	}
 
+	@Override
+	public void conjugate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		for (int i = 0; i < a.length(); i++) {
+			a.v(i, tmp);
+			g.conjugate(tmp, tmp);
+			b.setV(i, tmp);
+		}
+	}
+
 }

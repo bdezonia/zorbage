@@ -274,4 +274,9 @@ public class Float64Vector
 		dotProduct(a, b_cross_c, d);
 	}
 
+	@Override
+	public void conjugate(Float64VectorMember a, Float64VectorMember b) {
+		assign(a,b);
+	}
+
 }

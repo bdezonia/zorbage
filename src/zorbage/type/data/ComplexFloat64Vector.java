@@ -271,4 +271,14 @@ public class ComplexFloat64Vector
 		dotProduct(a, b_cross_c, d);
 	}
 
+	@Override
+	public void conjugate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		for (int i = 0; i < a.length(); i++) {
+			a.v(i, tmp);
+			g.conjugate(tmp, tmp);
+			b.setV(i, tmp);
+		}
+	}
+
 }
