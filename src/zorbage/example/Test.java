@@ -36,6 +36,8 @@ import zorbage.type.data.Float64Member;
 import zorbage.type.data.Float64Group;
 import zorbage.type.data.SignedInt32Group;
 import zorbage.type.data.SignedInt32Member;
+import zorbage.type.data.UnboundedIntGroup;
+import zorbage.type.data.UnboundedIntMember;
 import zorbage.type.math.Average;
 import zorbage.type.math.Max;
 import zorbage.type.math.Median;
@@ -76,6 +78,18 @@ public class Test {
 		g.add(a,b,sum);
 		  
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
+	}
+	
+	public static void testHugeNumbers() {
+		UnboundedIntGroup g = new UnboundedIntGroup();
+		  
+		UnboundedIntMember a = new UnboundedIntMember(Long.MAX_VALUE);
+		UnboundedIntMember b = new UnboundedIntMember(44);
+		UnboundedIntMember product = new UnboundedIntMember();
+
+		g.multiply(a,b,product);
+		  
+		System.out.println(a.v() + " times " + b.v() + " equals " + product.v());
 	}
 	
 	public static <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T g) {
@@ -307,6 +321,7 @@ public class Test {
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
+		testHugeNumbers();
 		test1(new SignedInt32Group());
 		test1(new Float64Group());
 		test2(new SignedInt32Group());
