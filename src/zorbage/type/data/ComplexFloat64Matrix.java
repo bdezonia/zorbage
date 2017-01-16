@@ -74,8 +74,18 @@ public class ComplexFloat64Matrix
 	public void power(int power, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
-		if (power < 0)
-			throw new IllegalArgumentException("power cannot be negative for matricies");
+		if (power < 0) {
+			power = -power;
+			ComplexFloat64MatrixMember aInv = new ComplexFloat64MatrixMember();
+			invert(a, aInv);
+			ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember(aInv);
+			ComplexFloat64MatrixMember tmp2 = new ComplexFloat64MatrixMember();
+			for (int i = 2; i <= power; i++) {
+				multiply(tmp, aInv, tmp2);
+				assign(tmp2, tmp);
+			}
+			assign(tmp, b);
+		}
 		else if (power == 0) {
 			b.init(a.rows(), a.cols());
 			unity(b);
@@ -86,10 +96,10 @@ public class ComplexFloat64Matrix
 			ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember(a);
 			ComplexFloat64MatrixMember tmp2 = new ComplexFloat64MatrixMember();
 			for (int i = 2; i <= power; i++) {
-				multiply(a, tmp, tmp2);
+				multiply(tmp, a, tmp2);
 				assign(tmp2, tmp);
 			}
-			assign(tmp2, b);
+			assign(tmp, b);
 		}
 	}
 

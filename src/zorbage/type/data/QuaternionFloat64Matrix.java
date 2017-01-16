@@ -73,8 +73,18 @@ public class QuaternionFloat64Matrix
 	public void power(int power, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
-		if (power < 0)
-			throw new IllegalArgumentException("power cannot be negative for matricies");
+		if (power < 0) {
+			power = -power;
+			QuaternionFloat64MatrixMember aInv = new QuaternionFloat64MatrixMember();
+			invert(a, aInv);
+			QuaternionFloat64MatrixMember tmp = new QuaternionFloat64MatrixMember(aInv);
+			QuaternionFloat64MatrixMember tmp2 = new QuaternionFloat64MatrixMember();
+			for (int i = 2; i <= power; i++) {
+				multiply(tmp, aInv, tmp2);
+				assign(tmp2, tmp);
+			}
+			assign(tmp, b);
+		}
 		else if (power == 0) {
 			b.init(a.rows(), a.cols());
 			unity(b);
@@ -85,10 +95,10 @@ public class QuaternionFloat64Matrix
 			QuaternionFloat64MatrixMember tmp = new QuaternionFloat64MatrixMember(a);
 			QuaternionFloat64MatrixMember tmp2 = new QuaternionFloat64MatrixMember();
 			for (int i = 2; i <= power; i++) {
-				multiply(a, tmp, tmp2);
+				multiply(tmp, a, tmp2);
 				assign(tmp2, tmp);
 			}
-			assign(tmp2, b);
+			assign(tmp, b);
 		}
 	}
 

@@ -73,8 +73,20 @@ public class Float64Matrix
 	public void power(int power, Float64MatrixMember a, Float64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
-		if (power < 0)
-			throw new IllegalArgumentException("power cannot be negative for matricies");
+		if (a.rows() != a.cols())
+			throw new IllegalArgumentException("power requires a square matrix as input");
+		if (power < 0) {
+			power = -power;
+			Float64MatrixMember aInv = new Float64MatrixMember();
+			invert(a, aInv);
+			Float64MatrixMember tmp = new Float64MatrixMember(aInv);
+			Float64MatrixMember tmp2 = new Float64MatrixMember();
+			for (int i = 2; i <= power; i++) {
+				multiply(tmp, aInv, tmp2);
+				assign(tmp2, tmp);
+			}
+			assign(tmp, b);
+		}
 		else if (power == 0) {
 			b.init(a.rows(), a.cols());
 			unity(b);
@@ -85,10 +97,10 @@ public class Float64Matrix
 			Float64MatrixMember tmp = new Float64MatrixMember(a);
 			Float64MatrixMember tmp2 = new Float64MatrixMember();
 			for (int i = 2; i <= power; i++) {
-				multiply(a, tmp, tmp2);
+				multiply(tmp, a, tmp2);
 				assign(tmp2, tmp);
 			}
-			assign(tmp2, b);
+			assign(tmp, b);
 		}
 	}
 

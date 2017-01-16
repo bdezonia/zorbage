@@ -73,8 +73,18 @@ public class OctonionFloat64Matrix
 	public void power(int power, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
-		if (power < 0)
-			throw new IllegalArgumentException("power cannot be negative for matricies");
+		if (power < 0) {
+			power = -power;
+			OctonionFloat64MatrixMember aInv = new OctonionFloat64MatrixMember();
+			invert(a, aInv);
+			OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember(aInv);
+			OctonionFloat64MatrixMember tmp2 = new OctonionFloat64MatrixMember();
+			for (int i = 2; i <= power; i++) {
+				multiply(tmp, aInv, tmp2);
+				assign(tmp2, tmp);
+			}
+			assign(tmp, b);
+		}
 		else if (power == 0) {
 			b.init(a.rows(), a.cols());
 			unity(b);
@@ -85,10 +95,10 @@ public class OctonionFloat64Matrix
 			OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember(a);
 			OctonionFloat64MatrixMember tmp2 = new OctonionFloat64MatrixMember();
 			for (int i = 2; i <= power; i++) {
-				multiply(a, tmp, tmp2);
+				multiply(tmp, a, tmp2);
 				assign(tmp2, tmp);
 			}
-			assign(tmp2, b);
+			assign(tmp, b);
 		}
 	}
 
