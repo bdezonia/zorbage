@@ -52,8 +52,8 @@ public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U>
 		U tmp = g.construct();
 		U one = g.construct();
 		g.unity(one);
-		for (long l = 0; l < storage.size(); l++) {
-			storage.get(l, tmp);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
 			g.add(sum, tmp, sum);
 			g.add(count, one, count);
 		}

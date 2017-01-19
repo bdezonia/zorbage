@@ -48,8 +48,8 @@ public class Max<T extends Group<T,U> & Ordered<U>, U> {
 	public void calculate(Storage<?,U> storage, U min, U result) {
 		g.assign(min, result);
 		U tmp = g.construct();
-		for (long l = 0; l < storage.size(); l++) {
-			storage.get(l, tmp);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
 			if (g.isGreater(tmp, result)) {
 				g.assign(tmp, result);
 			}
