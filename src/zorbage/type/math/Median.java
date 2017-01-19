@@ -30,7 +30,6 @@ import zorbage.type.algebra.Invertible;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.storage.ArrayStorageGeneric;
 import zorbage.type.storage.Storage;
 
 /**
@@ -43,14 +42,14 @@ import zorbage.type.storage.Storage;
 public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & Unity<U>, U> {
 
 	private T g;
-	private ArrayStorageGeneric<T,U> localStorage; // Note: limited to Integer.MAX_VALUE entries
+	private Storage<?,U> localStorage;
 
 	public Median(T g) {
 		this.g = g;
 	}
 	
 	public void calculate(Storage<?,U> storage, U result) {
-		localStorage = new ArrayStorageGeneric<T,U>(storage.size(), g);
+		localStorage = storage.duplicate();
 		U tmp = g.construct();
 		U tmp2 = g.construct();
 		U tmp3 = g.construct();
