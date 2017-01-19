@@ -63,8 +63,8 @@ public class MedianI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordere
 				localStorage.get(j, jVal);
 				if (g.isLess(jVal, iVal)) {
 					g.assign(iVal, tmp);
-					localStorage.put(i, jVal);
-					localStorage.put(j, tmp);
+					localStorage.set(i, jVal);
+					localStorage.set(j, tmp);
 				}
 			}
 			

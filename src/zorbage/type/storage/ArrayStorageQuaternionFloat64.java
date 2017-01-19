@@ -50,7 +50,7 @@ public class ArrayStorageQuaternionFloat64
 	}
 
 	@Override
-	public void put(long index, QuaternionFloat64Member value) {
+	public void set(long index, QuaternionFloat64Member value) {
 		final int idx = ((int) index) * 4;
 		data[idx    ] = value.r();
 		data[idx + 1] = value.i();

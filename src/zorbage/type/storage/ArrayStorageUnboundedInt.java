@@ -54,7 +54,7 @@ public class ArrayStorageUnboundedInt
 	}
 
 	@Override
-	public void put(long index, UnboundedIntMember value) {
+	public void set(long index, UnboundedIntMember value) {
 		data[(int)index] = value.v();
 	}
 

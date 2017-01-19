@@ -70,7 +70,7 @@ public final class Float64TensorProductMember {
 		for (int i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setV(val.r().doubleValue());
-			storage.put(i, tmp);
+			storage.set(i, tmp);
 		}
 	}
 	
@@ -98,7 +98,7 @@ public final class Float64TensorProductMember {
 		else {
 			Float64Member zero = new Float64Member();
 			for (int i = 0; i < storage.size(); i++) {
-				storage.put(i, zero);
+				storage.set(i, zero);
 			}
 		}
 		dims = newDims.clone();
@@ -125,14 +125,14 @@ public final class Float64TensorProductMember {
 	public void setV(int index, Float64Member value) {
 		if (index < 0 || index >= storage.size())
 			throw new IllegalArgumentException("invald index in tensor member");
-		storage.put(index, value);
+		storage.set(index, value);
 	}
 	
 	public void setV(int[] index, Float64Member value) {
 		if (index.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
 		int idx = indexToInt(index);
-		storage.put(idx, value);
+		storage.set(idx, value);
 	}
 	
 	// TODO: finish me

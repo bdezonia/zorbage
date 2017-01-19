@@ -54,7 +54,7 @@ public class ArrayStorageBit
 	}
 
 	@Override
-	public void put(long index, BooleanMember value) {
+	public void set(long index, BooleanMember value) {
 		synchronized (data) {
 			final int idx = (int)index / 64;
 			long bucket = data[idx];

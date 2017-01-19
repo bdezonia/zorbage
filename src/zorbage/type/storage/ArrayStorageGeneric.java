@@ -55,7 +55,7 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void put(long index, U value) {
+	public void set(long index, U value) {
 		g.assign(value, (U)data[(int)index]);
 	}
 

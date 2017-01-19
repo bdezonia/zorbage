@@ -58,7 +58,7 @@ public final class Float64MatrixMember {
 		Float64Member value = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i, value);
+			storage.set(i, value);
 		}
 	}
 	
@@ -73,7 +73,7 @@ public final class Float64MatrixMember {
 		for (int i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setV(val.r().doubleValue());
-			storage.put(i, tmp);
+			storage.set(i, tmp);
 		}
 	}
 	
@@ -92,7 +92,7 @@ public final class Float64MatrixMember {
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {
-				storage.put(i, ZERO);
+				storage.set(i, ZERO);
 			}
 		}
 	}
@@ -104,7 +104,7 @@ public final class Float64MatrixMember {
 	
 	public void setV(int r, int c, Float64Member value) {
 		long index = ((long)r) * rows + c;
-		storage.put(index, value);
+		storage.set(index, value);
 	}
 	
 	
@@ -117,7 +117,7 @@ public final class Float64MatrixMember {
 		Float64Member value = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i, value);
+			storage.set(i, value);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public final class Float64MatrixMember {
 		Float64Member value = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			other.storage.put(i, value);
+			other.storage.set(i, value);
 		}
 	}
 

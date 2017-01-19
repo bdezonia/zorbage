@@ -50,7 +50,7 @@ public class ArrayStorageOctonionFloat64
 	}
 
 	@Override
-	public void put(long index, OctonionFloat64Member value) {
+	public void set(long index, OctonionFloat64Member value) {
 		final int idx = ((int) index) * 8;
 		data[idx    ] = value.r();
 		data[idx + 1] = value.i();

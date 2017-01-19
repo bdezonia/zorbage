@@ -62,7 +62,7 @@ public final class OctonionFloat64RModuleMember {
 			value.setI0(vals[index + 5]);
 			value.setJ0(vals[index + 6]);
 			value.setK0(vals[index + 7]);
-			storage.put(i,  value);
+			storage.set(i,  value);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public final class OctonionFloat64RModuleMember {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i,  value);
+			storage.set(i,  value);
 		}
 	}
 	
@@ -90,7 +90,7 @@ public final class OctonionFloat64RModuleMember {
 			tmp.setI0(val.i0().doubleValue());
 			tmp.setJ0(val.j0().doubleValue());
 			tmp.setK0(val.k0().doubleValue());
-			storage.put(i, tmp);
+			storage.set(i, tmp);
 		}
 	}
 
@@ -111,10 +111,10 @@ public final class OctonionFloat64RModuleMember {
 			OctonionFloat64Member value = new OctonionFloat64Member();
 			for (long j = 0; j < tmp.size(); j++) {
 				tmp.get(j, value);
-				storage.put(j, value);
+				storage.set(j, value);
 			}
 		}
-		storage.put(i, v);
+		storage.set(i, v);
 	}
 	
 	public void set(OctonionFloat64RModuleMember other) {
@@ -124,7 +124,7 @@ public final class OctonionFloat64RModuleMember {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i, value);
+			storage.set(i, value);
 		}
 	}
 	
@@ -135,7 +135,7 @@ public final class OctonionFloat64RModuleMember {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			other.storage.put(i, value);
+			other.storage.set(i, value);
 		}
 	}
 

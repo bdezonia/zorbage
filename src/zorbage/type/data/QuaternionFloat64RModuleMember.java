@@ -58,7 +58,7 @@ public final class QuaternionFloat64RModuleMember {
 			value.setI(vals[index + 1]);
 			value.setJ(vals[index + 2]);
 			value.setK(vals[index + 3]);
-			storage.put(i,  value);
+			storage.set(i,  value);
 		}
 	}
 	
@@ -67,7 +67,7 @@ public final class QuaternionFloat64RModuleMember {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i,  value);
+			storage.set(i,  value);
 		}
 	}
 	
@@ -82,7 +82,7 @@ public final class QuaternionFloat64RModuleMember {
 			tmp.setI(val.i().doubleValue());
 			tmp.setJ(val.j().doubleValue());
 			tmp.setK(val.k().doubleValue());
-			storage.put(i, tmp);
+			storage.set(i, tmp);
 		}
 	}
 
@@ -103,10 +103,10 @@ public final class QuaternionFloat64RModuleMember {
 			QuaternionFloat64Member value = new QuaternionFloat64Member();
 			for (long j = 0; j < tmp.size(); j++) {
 				tmp.get(j, value);
-				storage.put(j, value);
+				storage.set(j, value);
 			}
 		}
-		storage.put(i, v);
+		storage.set(i, v);
 	}
 	
 	public void set(QuaternionFloat64RModuleMember other) {
@@ -116,7 +116,7 @@ public final class QuaternionFloat64RModuleMember {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i, value);
+			storage.set(i, value);
 		}
 	}
 	
@@ -127,7 +127,7 @@ public final class QuaternionFloat64RModuleMember {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			other.storage.put(i, value);
+			other.storage.set(i, value);
 		}
 	}
 

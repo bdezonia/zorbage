@@ -49,7 +49,7 @@ public class ArrayStorageFloat64
 	}
 
 	@Override
-	public void put(long index, Float64Member value) {
+	public void set(long index, Float64Member value) {
 		data[(int)index] = value.v();
 	}
 

@@ -49,7 +49,7 @@ public class ArrayStorageBoolean
 	}
 
 	@Override
-	public void put(long index, BooleanMember value) {
+	public void set(long index, BooleanMember value) {
 		data[(int)index] = value.v();
 	}
 

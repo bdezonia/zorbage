@@ -34,7 +34,7 @@ package zorbage.type.storage;
  */
 public interface Storage<T extends Storage<T,U>, U> {
 	
-	void put(long index, U value);
+	void set(long index, U value);
 	void get(long index, U value);
 	long size();
 	T duplicate();

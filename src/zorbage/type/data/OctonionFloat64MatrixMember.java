@@ -58,7 +58,7 @@ public final class OctonionFloat64MatrixMember {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i, value);
+			storage.set(i, value);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public final class OctonionFloat64MatrixMember {
 			tmp.setI0(val.i0().doubleValue());
 			tmp.setJ0(val.j0().doubleValue());
 			tmp.setK0(val.k0().doubleValue());
-			storage.put(i, tmp);
+			storage.set(i, tmp);
 		}
 	}
 	
@@ -99,7 +99,7 @@ public final class OctonionFloat64MatrixMember {
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {
-				storage.put(i, ZERO);
+				storage.set(i, ZERO);
 			}
 		}
 	}
@@ -111,7 +111,7 @@ public final class OctonionFloat64MatrixMember {
 	
 	public void setV(int r, int c, OctonionFloat64Member value) {
 		long index = ((long)r) * rows + c;
-		storage.put(index, value);
+		storage.set(index, value);
 	}
 	
 	public void set(OctonionFloat64MatrixMember other) {
@@ -123,7 +123,7 @@ public final class OctonionFloat64MatrixMember {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			other.storage.get(i, value);
-			storage.put(i, value);
+			storage.set(i, value);
 		}
 	}
 	
@@ -136,7 +136,7 @@ public final class OctonionFloat64MatrixMember {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			other.storage.put(i, value);
+			other.storage.set(i, value);
 		}
 	}
 	

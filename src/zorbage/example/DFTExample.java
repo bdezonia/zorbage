@@ -65,7 +65,7 @@ public class DFTExample {
 		int count = 0;
 		for (int i = 0; i < input.size(); i++) {
 			value.setV(count++);
-			input.put(i, value);
+			input.set(i, value);
 		}
 	}
 	
@@ -109,7 +109,7 @@ public class DFTExample {
 				g.add(sum, term, sum);
 			}
 			g.divide(sum, N, FofU);
-			output.put(u, FofU);
+			output.set(u, FofU);
 		}
 	}
 

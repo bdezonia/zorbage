@@ -49,7 +49,7 @@ public class Accessor<U> {
 	}
 	
 	public void put() {
-		storage.put(pos, value);
+		storage.set(pos, value);
 	}
 	
 	public boolean hasNext() {

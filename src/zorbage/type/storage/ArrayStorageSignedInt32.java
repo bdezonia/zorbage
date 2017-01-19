@@ -49,7 +49,7 @@ public class ArrayStorageSignedInt32
 	}
 
 	@Override
-	public void put(long index, SignedInt32Member value) {
+	public void set(long index, SignedInt32Member value) {
 		data[(int)index] = value.v();
 	}
 
