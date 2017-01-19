@@ -30,3 +30,5 @@ Other needs
   make sure all math ops can safely work if (a,b,c) params collide. use extra tmps and assign().
   check: IEEE 754 might specify that a num with one component inf and any nan might be considered inf.
     This affects complex, quat, and oct. Now I assume a nan overrides all.
+  complex numbers: polar constructors
+  quotient/remainder as well as div/mod
