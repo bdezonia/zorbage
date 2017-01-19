@@ -49,31 +49,27 @@ public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & 
 	}
 	
 	public void calculate(Storage<?,U> storage, U result) {
-		localStorage = storage.duplicate();
+		U iVal = g.construct();
+		U jVal = g.construct();
 		U tmp = g.construct();
-		U tmp2 = g.construct();
-		U tmp3 = g.construct();
 		U one = g.construct();
+		U sum = g.construct();
 		g.unity(one);
-		for (long l = 0; l < storage.size(); l++) {
-			storage.get(l, tmp);
-			localStorage.put(l, tmp);
-		}
+		localStorage = storage.duplicate();
 		// TODO: change from bubble sort to quick sort
 		for (long i = 0; i < localStorage.size()-1; i++) {
-			localStorage.get(i, tmp);
+			localStorage.get(i, iVal);
 			for (long j = i+1; j < localStorage.size(); j++) {
-				localStorage.get(j, tmp2);
-				if (g.isLess(tmp2, tmp)) {
-					g.assign(tmp, tmp3);
-					localStorage.put(i, tmp2);
-					localStorage.put(j, tmp3);
+				localStorage.get(j, jVal);
+				if (g.isLess(jVal, iVal)) {
+					g.assign(iVal, tmp);
+					localStorage.put(i, jVal);
+					localStorage.put(j, tmp);
 				}
 			}
 			
 		}
 		if (storage.size() % 2 == 0) {
-			U sum = g.construct();
 			localStorage.get(storage.size()/2 - 1, tmp);
 			g.add(sum, tmp, sum);
 			localStorage.get(storage.size()/2, tmp);
