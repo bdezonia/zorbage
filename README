@@ -1,5 +1,5 @@
 Zorbage: an algebraic data hierarchy for use in numeric processing
 
 Goals:
-  1) make it possible to define reusable numeric algorithms
-  2) numeric computing in Java in an efficient manner
+  1) to provide the framework for reusable numeric algorithms
+  2) to support numeric computing in Java in an efficient manner
