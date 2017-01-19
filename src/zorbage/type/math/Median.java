@@ -69,17 +69,17 @@ public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & 
 			}
 			
 		}
-		if (storage.size() % 2 == 0) {
-			localStorage.get(storage.size()/2 - 1, tmp);
+		if (localStorage.size() % 2 == 0) {
+			localStorage.get(localStorage.size()/2 - 1, tmp);
 			g.add(sum, tmp, sum);
-			localStorage.get(storage.size()/2, tmp);
+			localStorage.get(localStorage.size()/2, tmp);
 			g.add(sum, tmp, sum);
 			U count = g.construct();
 			g.add(one, one, count);
 			g.divide(sum, count, result);
 		}
 		else {
-			localStorage.get(storage.size()/2, result);
+			localStorage.get(localStorage.size()/2, result);
 		}
 	}
 }
