@@ -24,79 +24,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.math;
+package zorbage.type.operation;
 
-import zorbage.type.algebra.Group;
-import zorbage.type.algebra.Ordered;
+import zorbage.type.algebra.Unity;
+import zorbage.type.algebra.AdditiveGroup;
+import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.storage.Storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
+ * @param <U>
  */
-public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
+public class AverageI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity<U>, U> {
 
 	private T g;
-	
-	public Sort(T g) {
+
+	public AverageI(T g) {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage) {
-		qsort(storage, 0, storage.size() -1);
-	}
-	
-	private void qsort(Storage<?,U> storage, long left, long right) {
-		if (left < right) {
-			long pivotPoint = partition(storage,left,right);
-			qsort(storage,left,pivotPoint-1);
-			qsort(storage,pivotPoint+1,right);
-		}
-	}
-
-
-	private long partition(Storage<?,U> storage, long left, long right) {
-		U tmp1 = g.construct();
-		U tmp2 = g.construct();
-		
-		U pivotValue = g.construct();
-		storage.get(left, pivotValue);
-
-		long leftmark = left+1;
-		long rightmark = right;
-	
-		boolean done = false;
-		while (!done) {
-	
-			while (true) {
-				if (leftmark > rightmark) break;
-				storage.get(leftmark, tmp1);
-				if (g.isGreater(tmp1, pivotValue)) break;
-				leftmark++;
-			}
-	
-			while (true) {
-				storage.get(rightmark, tmp1);
-				if (g.isLess(tmp1, pivotValue)) break;
-				if (rightmark < leftmark) break;
-				rightmark--;
-			}
-	
-			if (rightmark < leftmark)
-				done = true;
-			else {
-				storage.get(leftmark, tmp1);
-				storage.get(rightmark, tmp2);
-				storage.set(leftmark,tmp2);
-				storage.set(rightmark, tmp1);
-			}
-		}
-		storage.get(left, tmp1);
-		storage.get(rightmark, tmp2);
-		storage.set(left,tmp2);
-		storage.set(rightmark, tmp1);
-
-		return rightmark;
+	public void calculate(Storage<?,U> storage, U result) {
+		SumCount<T,U> sumCount = new SumCount<T, U>(g);
+		U sum = g.construct();
+		U count = g.construct();
+		sumCount.calculate(storage, sum, count);
+		g.div(sum, count, result);
 	}
 }

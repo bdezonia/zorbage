@@ -24,8 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.math;
+package zorbage.type.operation;
 
+import zorbage.type.algebra.Invertible;
+import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.storage.Storage;
 
@@ -36,20 +38,19 @@ import zorbage.type.storage.Storage;
  * @param <T>
  * @param <U>
  */
-public class Sum<T extends AdditiveGroup<T,U>, U> {
+public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U> {
 
 	private T g;
 
-	public Sum(T g) {
+	public Average(T g) {
 		this.g = g;
 	}
 	
 	public void calculate(Storage<?,U> storage, U result) {
-		g.zero(result);
-		U tmp = g.construct();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			g.add(result, tmp, result);
-		}
+		SumCount<T,U> sumCount = new SumCount<T, U>(g);
+		U sum = g.construct();
+		U count = g.construct();
+		sumCount.calculate(storage, sum, count);
+		g.divide(sum, count, result);
 	}
 }

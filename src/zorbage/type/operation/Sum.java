@@ -24,10 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.math;
+package zorbage.type.operation;
 
-import zorbage.type.algebra.Ordered;
-import zorbage.type.algebra.Group;
+import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.storage.Storage;
 
 /**
@@ -37,22 +36,20 @@ import zorbage.type.storage.Storage;
  * @param <T>
  * @param <U>
  */
-public class Max<T extends Group<T,U> & Ordered<U>, U> {
+public class Sum<T extends AdditiveGroup<T,U>, U> {
 
 	private T g;
 
-	public Max(T g) {
+	public Sum(T g) {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U min, U result) {
-		g.assign(min, result);
+	public void calculate(Storage<?,U> storage, U result) {
+		g.zero(result);
 		U tmp = g.construct();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			if (g.isGreater(tmp, result)) {
-				g.assign(tmp, result);
-			}
+			g.add(result, tmp, result);
 		}
 	}
 }

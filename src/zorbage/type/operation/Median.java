@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.math;
+package zorbage.type.operation;
 
 import zorbage.type.algebra.Invertible;
+import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.storage.Storage;
@@ -38,19 +39,34 @@ import zorbage.type.storage.Storage;
  * @param <T>
  * @param <U>
  */
-public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U> {
+public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & Unity<U>, U> {
 
 	private T g;
+	private Storage<?,U> localStorage;
 
-	public Average(T g) {
+	public Median(T g) {
 		this.g = g;
 	}
 	
 	public void calculate(Storage<?,U> storage, U result) {
-		SumCount<T,U> sumCount = new SumCount<T, U>(g);
+		U tmp = g.construct();
+		U one = g.construct();
 		U sum = g.construct();
 		U count = g.construct();
-		sumCount.calculate(storage, sum, count);
-		g.divide(sum, count, result);
+		g.unity(one);
+		localStorage = storage.duplicate();
+		Sort<T,U> sort = new Sort<T,U>(g);
+		sort.calculate(localStorage);
+		if (localStorage.size() % 2 == 0) {
+			localStorage.get(localStorage.size()/2 - 1, tmp);
+			g.add(sum, tmp, sum);
+			localStorage.get(localStorage.size()/2, tmp);
+			g.add(sum, tmp, sum);
+			g.add(one, one, count);
+			g.divide(sum, count, result);
+		}
+		else {
+			localStorage.get(localStorage.size()/2, result);
+		}
 	}
 }
