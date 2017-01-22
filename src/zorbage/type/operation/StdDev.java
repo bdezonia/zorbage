@@ -26,11 +26,30 @@
  */
 package zorbage.type.operation;
 
+import zorbage.type.algebra.AdditiveGroup;
+import zorbage.type.algebra.IntegralDivision;
+import zorbage.type.algebra.Invertible;
+import zorbage.type.algebra.Multiplication;
+import zorbage.type.algebra.Roots;
+import zorbage.type.algebra.Unity;
+import zorbage.type.storage.Storage;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class StdDev {
+public class StdDev<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U>, U> {
 
+	private T g;
+	
+	public StdDev(T g) {
+		this.g = g;
+	}
+	
+	public void calculate(Storage<?,U> storage, U result) {
+		Variance<T,U> var = new Variance<T,U>(g);
+		var.calculate(storage, result);
+		g.sqrt(result, result);
+	}
 }
