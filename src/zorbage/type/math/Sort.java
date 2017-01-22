@@ -26,47 +26,39 @@
  */
 package zorbage.type.math;
 
+import zorbage.type.algebra.Group;
 import zorbage.type.algebra.Ordered;
-import zorbage.type.algebra.Unity;
-import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.storage.Storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class MedianI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordered<U> & Unity<U>, U> {
+public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 
 	private T g;
-	private Storage<?,U> localStorage;
-
-	public MedianI(T g) {
+	
+	public Sort(T g) {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U result) {
+	public void calculate(Storage<?,U> storage) {
 		U tmp = g.construct();
-		U one = g.construct();
-		U sum = g.construct();
-		U count = g.construct();
-		g.unity(one);
-		localStorage = storage.duplicate();
-		Sort<T,U> sort = new Sort<T,U>(g);
-		sort.calculate(localStorage);
-		if (localStorage.size() % 2 == 0) {
-			localStorage.get(localStorage.size()/2 - 1, tmp);
-			g.add(sum, tmp, sum);
-			localStorage.get(localStorage.size()/2, tmp);
-			g.add(sum, tmp, sum);
-			g.add(one, one, count);
-			g.div(sum, count, result);
-		}
-		else {
-			localStorage.get(localStorage.size()/2, result);
+		U iVal = g.construct();
+		U jVal = g.construct();
+		// TODO: change from bubble sort to quick sort
+		for (long i = 0; i < storage.size()-1; i++) {
+			storage.get(i, iVal);
+			for (long j = i+1; j < storage.size(); j++) {
+				storage.get(j, jVal);
+				if (g.isLess(jVal, iVal)) {
+					g.assign(iVal, tmp);
+					storage.set(i, jVal);
+					storage.set(j, tmp);
+				}
+			}
+			
 		}
 	}
 }
