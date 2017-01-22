@@ -26,31 +26,33 @@
  */
 package zorbage.type.math;
 
-import zorbage.type.algebra.Invertible;
-import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
+import zorbage.type.algebra.Unity;
 import zorbage.type.storage.Storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U> {
+public class SumCount<T extends AdditiveGroup<T,U> & Unity<U>, U> {
 
 	private T g;
-
-	public Average(T g) {
+	
+	public SumCount(T g) {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U result) {
-		SumCount<T,U> sumCount = new SumCount<T, U>(g);
-		U sum = g.construct();
-		U count = g.construct();
-		sumCount.calculate(storage, sum, count);
-		g.divide(sum, count, result);
+	public void calculate(Storage<?,U> storage, U sum, U count) {
+		U tmp = g.construct();
+		U one = g.construct();
+		g.unity(one);
+		g.zero(sum);
+		g.zero(count);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			g.add(sum, tmp, sum);
+			g.add(count, one, count);
+		}
 	}
 }

@@ -47,16 +47,10 @@ public class AverageI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity
 	}
 	
 	public void calculate(Storage<?,U> storage, U result) {
+		SumCount<T,U> sumCount = new SumCount<T, U>(g);
 		U sum = g.construct();
 		U count = g.construct();
-		U tmp = g.construct();
-		U one = g.construct();
-		g.unity(one);
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			g.add(sum, tmp, sum);
-			g.add(count, one, count);
-		}
+		sumCount.calculate(storage, sum, count);
 		g.div(sum, count, result);
 	}
 }
