@@ -44,21 +44,59 @@ public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 	}
 	
 	public void calculate(Storage<?,U> storage) {
-		U tmp = g.construct();
-		U iVal = g.construct();
-		U jVal = g.construct();
-		// TODO: change from bubble sort to quick sort
-		for (long i = 0; i < storage.size()-1; i++) {
-			storage.get(i, iVal);
-			for (long j = i+1; j < storage.size(); j++) {
-				storage.get(j, jVal);
-				if (g.isLess(jVal, iVal)) {
-					g.assign(iVal, tmp);
-					storage.set(i, jVal);
-					storage.set(j, tmp);
-				}
-			}
-			
+		qsort(storage, 0, storage.size() -1);
+	}
+	
+	private void qsort(Storage<?,U> storage, long left, long right) {
+		if (left < right) {
+			long pivotPoint = partition(storage,left,right);
+			qsort(storage,left,pivotPoint-1);
+			qsort(storage,pivotPoint+1,right);
 		}
+	}
+
+
+	private long partition(Storage<?,U> storage, long left, long right) {
+		U tmp1 = g.construct();
+		U tmp2 = g.construct();
+		
+		U pivotValue = g.construct();
+		storage.get(left, pivotValue);
+
+		long leftmark = left+1;
+		long rightmark = right;
+	
+		boolean done = false;
+		while (!done) {
+	
+			while (true) {
+				if (leftmark > rightmark) break;
+				storage.get(leftmark, tmp1);
+				if (g.isGreater(tmp1, pivotValue)) break;
+				leftmark++;
+			}
+	
+			while (true) {
+				storage.get(rightmark, tmp1);
+				if (g.isLess(tmp1, pivotValue)) break;
+				if (rightmark < leftmark) break;
+				rightmark--;
+			}
+	
+			if (rightmark < leftmark)
+				done = true;
+			else {
+				storage.get(leftmark, tmp1);
+				storage.get(rightmark, tmp2);
+				storage.set(leftmark,tmp2);
+				storage.set(rightmark, tmp1);
+			}
+		}
+		storage.get(left, tmp1);
+		storage.get(rightmark, tmp2);
+		storage.set(left,tmp2);
+		storage.set(rightmark, tmp1);
+
+		return rightmark;
 	}
 }
