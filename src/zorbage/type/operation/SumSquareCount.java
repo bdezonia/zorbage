@@ -27,37 +27,35 @@
 package zorbage.type.operation;
 
 import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.Invertible;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Unity;
 import zorbage.type.storage.Storage;
-
-// TODO Make a std dev class that is sqrt of variance
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Variance<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U> {
+public class SumSquareCount<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U>,U> {
 
 	private T g;
 	
-	public Variance(T g) {
+	public SumSquareCount(T g) {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U result) {
-		U avg = g.construct();
-		U sum = g.construct();
-		U count = g.construct();
+	public void calculate(Storage<?,U> storage, U avg, U sumSqDevs, U count) {
+		U tmp = g.construct();
 		U one = g.construct();
 		g.unity(one);
-		Average<T, U> mean = new Average<T,U>(g);
-		mean.calculate(storage, avg);
-		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(g);
-		sumSq.calculate(storage, avg, sum, count);
-		g.subtract(count, one, count);
-		g.divide(sum, count, result);
+		g.zero(sumSqDevs);
+		g.zero(count);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			g.subtract(tmp, avg, tmp);
+			g.multiply(tmp, tmp, tmp);
+			g.add(sumSqDevs, tmp, sumSqDevs);
+			g.add(count, one, count);
+		}
 	}
 }

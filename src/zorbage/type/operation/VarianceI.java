@@ -27,7 +27,7 @@
 package zorbage.type.operation;
 
 import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.Invertible;
+import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Unity;
 import zorbage.type.storage.Storage;
@@ -39,11 +39,11 @@ import zorbage.type.storage.Storage;
  * @author Barry DeZonia
  *
  */
-public class Variance<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U> {
+public class VarianceI<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & IntegralDivision<U>, U> {
 
 	private T g;
 	
-	public Variance(T g) {
+	public VarianceI(T g) {
 		this.g = g;
 	}
 	
@@ -53,11 +53,11 @@ public class Variance<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U
 		U count = g.construct();
 		U one = g.construct();
 		g.unity(one);
-		Average<T, U> mean = new Average<T,U>(g);
+		AverageI<T,U> mean = new AverageI<T,U>(g);
 		mean.calculate(storage, avg);
 		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(g);
 		sumSq.calculate(storage, avg, sum, count);
 		g.subtract(count, one, count);
-		g.divide(sum, count, result);
+		g.div(sum, count, result);
 	}
 }
