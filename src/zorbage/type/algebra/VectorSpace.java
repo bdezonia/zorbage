@@ -39,7 +39,18 @@ public interface VectorSpace<T extends VectorSpace<T,U,V,W>, U, V extends Field<
   extends
     AdditiveGroup<T,U>,
     Norm<U,W>,
-    Products<U,W>,
+    Products<U,W>,  // TODO: not necessarily true of all vector spaces?
     Conjugate<U>
 {
+	// closed under vector addition
+	// closed under scalar multiplication
+	// u,v,w vectors, k,l scalars
+	//   u + (v + w) = (u + v) + w
+	//   u + v = v + u
+	//   v + 0 = v
+	//   v + (-v) = 0
+	//   k(u + v) = ku + kv
+	//   (k+l) v = kv + lv
+	//   (kl)v = k(lv)
+	//   1(v) = v
 }
