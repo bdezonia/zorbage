@@ -54,7 +54,8 @@ import zorbage.type.algebra.TensorProduct;
  */
 public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>
 {
-
+	private Float64Group g = new Float64Group();
+	
 	@Override
 	public Float64TensorProductMember construct() {
 		return new Float64TensorProductMember();
@@ -72,8 +73,18 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 
 	@Override
 	public boolean isEqual(Float64TensorProductMember a, Float64TensorProductMember b) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!shapesMatch(a,b))
+			return false;
+		Float64Member aTmp = new Float64Member();
+		Float64Member bTmp = new Float64Member();
+		int numElems = a.numElems();
+		for (int i = 0; i < numElems; i++) {
+			a.v(i, aTmp);
+			b.v(i, bTmp);
+			if (g.isNotEqual(aTmp, bTmp))
+				return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -83,77 +94,140 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 
 	@Override
 	public void assign(Float64TensorProductMember from, Float64TensorProductMember to) {
-		// TODO Auto-generated method stub
-		
+		Float64Member tmp = new Float64Member();
+		int[] dims = new int[from.numDims()];
+		from.dims(dims);
+		to.setDims(dims);
+		int numElems = from.numElems();
+		for (int i = 0; i < numElems; i++) {
+			from.v(i, tmp);
+			to.setV(i, tmp);
+		}
 	}
 
 	@Override
 	public void zero(Float64TensorProductMember a) {
-		// TODO Auto-generated method stub
-		
+		Float64Member tmp = new Float64Member();
+		g.zero(tmp);
+		int numElems = a.numElems();
+		for (int i = 0; i < numElems; i++) {
+			a.setV(i, tmp);
+		}
 	}
 
 	@Override
 	public void negate(Float64TensorProductMember a, Float64TensorProductMember b) {
-		// TODO Auto-generated method stub
-		
+		Float64Member tmp = new Float64Member();
+		assign(a,b);
+		int numElems = b.numElems();
+		for (int i = 0; i < numElems; i++) {
+			b.v(i, tmp);
+			g.negate(tmp, tmp);
+			b.setV(i, tmp);
+		}
 	}
 
 	@Override
 	public void add(Float64TensorProductMember a, Float64TensorProductMember b,
 			Float64TensorProductMember c) {
-		// TODO Auto-generated method stub
-		
+		if (!shapesMatch(a,b))
+			throw new IllegalArgumentException("tensor add shape mismatch");
+		Float64Member aTmp = new Float64Member();
+		Float64Member bTmp = new Float64Member();
+		Float64Member cTmp = new Float64Member();
+		int numElems = a.numElems();
+		for (int i = 0; i < numElems; i++) {
+			a.v(i, aTmp);
+			b.v(i, bTmp);
+			g.add(aTmp, bTmp, cTmp);
+			c.setV(i, cTmp);
+		}
 	}
 
 	@Override
 	public void subtract(Float64TensorProductMember a, Float64TensorProductMember b,
 			Float64TensorProductMember c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void multiply(Float64TensorProductMember a, Float64TensorProductMember b,
-			Float64TensorProductMember c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void power(int power, Float64TensorProductMember a, Float64TensorProductMember b) {
-		// is this wrong? should the class be invertible?
-		if (power < 0)
-			throw new IllegalArgumentException("negative power not allowed");
-		else if (power == 0) {
-			assign(a,b);
-			unity(b);
-		}
-		else {
-			Float64TensorProductMember tmp = new Float64TensorProductMember();
-			assign(a,tmp);
-			for (int i = 2; i <= power; i++) {
-				multiply(a, tmp, tmp);
-			}
-			assign(tmp, b);
+		if (!shapesMatch(a,b))
+			throw new IllegalArgumentException("tensor subtract shape mismatch");
+		Float64Member aTmp = new Float64Member();
+		Float64Member bTmp = new Float64Member();
+		Float64Member cTmp = new Float64Member();
+		int numElems = a.numElems();
+		for (int i = 0; i < numElems; i++) {
+			a.v(i, aTmp);
+			b.v(i, bTmp);
+			g.subtract(aTmp, bTmp, cTmp);
+			c.setV(i, cTmp);
 		}
 	}
 
 	@Override
-	public void unity(Float64TensorProductMember result) {
-		throw new IllegalArgumentException("TODO");
-	}
-
-	@Override
-	public void invert(Float64TensorProductMember a, Float64TensorProductMember b) {
+	public void norm(Float64TensorProductMember a, Float64Member b) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void divide(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+	public void scale(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
+		Float64Member tmp = new Float64Member();
+		assign(a,b);
+		for (int i = 0; i < b.numElems(); i++) {
+			b.v(i, tmp);
+			g.multiply(scalar, tmp, tmp);
+			b.setV(i, tmp);
+		}
+	}
+
+	@Override
+	public void crossProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
+	public void dotProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64Member c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void perpDotProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64Member c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void vectorTripleProduct(Float64TensorProductMember a, Float64TensorProductMember b,
+			Float64TensorProductMember c, Float64TensorProductMember d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void scalarTripleProduct(Float64TensorProductMember a, Float64TensorProductMember b,
+			Float64TensorProductMember c, Float64Member d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void conjugate(Float64TensorProductMember a, Float64TensorProductMember b) {
+		assign(a,b);
+		// real so nothing left to do
+	}
+
+	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
+		int numDims = a.numDims();
+		if (numDims != b.numDims())
+			return false;
+		int[] aDims = new int[numDims];
+		int[] bDims = new int[numDims];
+		a.dims(aDims);
+		b.dims(bDims);
+		for (int i = 0; i < numDims; i++) {
+			if (aDims[i] != bDims[i])
+				return false;
+		}
+		return true;
+	}
 }

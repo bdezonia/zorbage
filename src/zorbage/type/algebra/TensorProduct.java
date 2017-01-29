@@ -37,7 +37,7 @@ package zorbage.type.algebra;
  */
 public interface TensorProduct<T extends TensorProduct<T,U,V,W>, U, V extends Field<V,W>, W>
   extends
-    Field<T,U> // correct? vector space instead? investigate
+    VectorSpace<T,U,V,W>
 {
 	// covariant derivative?
 	// other things?
