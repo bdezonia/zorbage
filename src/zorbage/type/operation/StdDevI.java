@@ -28,7 +28,6 @@ package zorbage.type.operation;
 
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.IntegralDivision;
-import zorbage.type.algebra.Invertible;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Unity;
