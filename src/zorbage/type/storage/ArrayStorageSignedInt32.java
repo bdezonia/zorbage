@@ -42,9 +42,9 @@ public class ArrayStorageSignedInt32
 	
 	public ArrayStorageSignedInt32(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorage cannot handle a negative request");
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorage cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle such a large request");
 		this.data = new int[(int)size];
 	}
 

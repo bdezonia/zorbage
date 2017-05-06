@@ -42,9 +42,9 @@ public class ArrayStorageQuaternionFloat64
 	
 	public ArrayStorageQuaternionFloat64(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorage cannot handle a negative request");
+			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / 4))
-			throw new IllegalArgumentException("ArrayStorage cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle such a large request");
 		this.data = new double[(int)(size * 4)];
 	}
 

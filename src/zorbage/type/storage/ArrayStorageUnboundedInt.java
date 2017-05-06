@@ -44,9 +44,9 @@ public class ArrayStorageUnboundedInt
 	
 	public ArrayStorageUnboundedInt(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorage cannot handle a negative request");
+			throw new IllegalArgumentException("ArrayStorageUnboundedInt cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorage cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageUnboundedInt cannot handle such a large request");
 		this.data = new BigInteger[(int)size];
 		for (int i = 0; i < data.length; i++) {
 			data[i] = BigInteger.ZERO;
