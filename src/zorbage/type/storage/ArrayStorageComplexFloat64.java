@@ -41,12 +41,11 @@ public class ArrayStorageComplexFloat64
 	private final double[] data;
 	
 	public ArrayStorageComplexFloat64(long size) {
-		size = size * 2;
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorage cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
+		if (size > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException("ArrayStorage cannot handle such a large request");
-		this.data = new double[(int)size];
+		this.data = new double[(int)(size*2)];
 	}
 
 	@Override
