@@ -23,7 +23,7 @@ Other needs
   big decimal type needed?
   number bases: instead of zero and unity need faster ways to construct numbers besides strings
   find all TODOs in code and implement
-  implement Power(U,U.U) where it makes sense. also sqrt and cbrt part of Power interface?
+  implement Power(U,U,U) where it makes sense. also sqrt and cbrt part of Power interface?
   power(int, a, b): minimize number of multiplies via recursion. see boost hpp code for quats and octs.
     implement this for all numeric types.
   real/unreal as part of hierarchy. at least unreal.
@@ -32,4 +32,6 @@ Other needs
     This affects complex, quat, and oct. Now I assume a nan overrides all.
   complex numbers: polar constructors
   quotient/remainder as well as div/mod
-  
+  make interface DimensionallyConstructable to support things like
+    defining arrays and matrices and tensors with specified shape
+  make Constructible interfaces from primitive types
