@@ -59,7 +59,7 @@ public class MultiDimAccessor<T extends LinearStorage<T,U>,U> {
 	}
 
 	public void resetDimensions(long[] newDims) {
-		if (dimsSize(dims) != storage.size())
+		if (dimsSize(newDims) != storage.size())
 			throw new IllegalArgumentException("MultiDimAccessor has been given conflicting sizes");
 		dims = newDims.clone();
 	}
