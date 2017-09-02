@@ -45,4 +45,4 @@ Other needs
     between them be better identified and implemented to make general algos more likely?
   numerical algorithms put in place: matrix algebra, odes, pdes, interpolation, etc.
   underflow avoidance on sqrt calls
-  
+  bessel functions, legendre functions, airy functions, others
