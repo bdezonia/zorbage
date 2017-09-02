@@ -44,8 +44,9 @@ public class FileStorageComplexFloat64
 	// 1) finish
 	// 2) multiple buffer support
 	// 3) add low level array access to Array storage classes so can do block reads/writes
+	// 4) make BUFFERESIZE configurable
 	
-	private static final int BUFFERSIZE = 512;
+	private static final long BUFFERSIZE = 512;
 	private long numElements;
 	private ArrayStorageComplexFloat64 buffer;
 	private File fileData;
@@ -61,7 +62,9 @@ public class FileStorageComplexFloat64
 		this.dirty = false;
 		this.buffer = new ArrayStorageComplexFloat64(BUFFERSIZE);
 		this.filename = filename;  // test that we can make this file
-		//this.fileData = fileOfZerosOfSize(numElements + BUFFERSIZE);
+		// if file exists use the data in it
+		// if the file is new set it all to zero
+		//this.fileData = fileOfSize(8 byte long + numElements * sizeof element + BUFFERSIZE * sizeof element);
 	}
 	
 	public FileStorageComplexFloat64(String existingFilename) {
@@ -119,7 +122,7 @@ public class FileStorageComplexFloat64
 			throw new IllegalArgumentException("index out of bounds");
 		if (index < loadedIndex || index > loadedIndex + BUFFERSIZE) {
 			if (dirty) flush();
-			// read file data into array using sizeof() maybe
+			// read file data into array using sizeof() maybe and skipping 1st eight bytes
 		}
 	}
 	

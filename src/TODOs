@@ -45,3 +45,4 @@ Other needs
   underflow avoidance on sqrt calls
   bessel functions, legendre functions, airy functions, others
   some of the type classes rely on ArrayStorage. break this dependence to support huge math operations
+  make vectors, rmodules, matrices use multidimaccessor
