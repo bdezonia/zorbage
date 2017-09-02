@@ -26,7 +26,13 @@
  */
 package zorbage.type.storage.linear.file;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.storage.LinearStorage;
@@ -41,7 +47,7 @@ public class FileStorageComplexFloat64
 	implements LinearStorage<FileStorageComplexFloat64,ComplexFloat64Member>
 {
 	// TODO
-	// 1) finish
+	// 1) finish: use RandomAccessFile
 	// 2) multiple buffer support
 	// 3) add low level array access to Array storage classes so can do block reads/writes
 	// 4) make BUFFERESIZE configurable
@@ -49,27 +55,39 @@ public class FileStorageComplexFloat64
 	private static final long BUFFERSIZE = 512;
 	private long numElements;
 	private ArrayStorageComplexFloat64 buffer;
-	private File fileData;
-	private String filename;
+	private File file;
 	private boolean dirty;
 	private long loadedIndex;
-
 	
-	public FileStorageComplexFloat64(long numElements, String filename) {
+	public FileStorageComplexFloat64(long numElements, File f) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
 		this.numElements = numElements;
 		this.dirty = false;
 		this.buffer = new ArrayStorageComplexFloat64(BUFFERSIZE);
-		this.filename = filename;  // test that we can make this file
-		// if file exists use the data in it
+		this.file = f;
 		// if the file is new set it all to zero
-		//this.fileData = fileOfSize(8 byte long + numElements * sizeof element + BUFFERSIZE * sizeof element);
+		if (!f.exists()) {
+			try { 
+			    FileOutputStream fileOutputStream = new FileOutputStream(f);
+			    DataOutputStream str = new DataOutputStream(fileOutputStream);
+			    str.writeLong(numElements);
+			    for (long l = 0; l < (numElements + BUFFERSIZE)* 2; l++) {
+			    	str.writeDouble(0);
+			    }
+			    str.close();
+			} catch (Exception e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
 	}
 	
-	public FileStorageComplexFloat64(String existingFilename) {
-		// TODO
-		// also how to know num elements unless stored as a long at the front of the file?
+	public FileStorageComplexFloat64(long numElements) throws IOException {
+		this(numElements, File.createTempFile("Storage", ".storage"));
+	}
+	
+	public FileStorageComplexFloat64(File f) throws IOException {
+		this(findNumElem(f), f);
 	}
 	
 	@Override
@@ -93,7 +111,13 @@ public class FileStorageComplexFloat64
 	@Override
 	public FileStorageComplexFloat64 duplicate() {
 		flush();
-		FileStorageComplexFloat64 other = new FileStorageComplexFloat64(numElements, tmpFilename());
+		File tmpfile = null;
+		try {
+			tmpfile = File.createTempFile("Storage", ".storage");
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		FileStorageComplexFloat64 other = new FileStorageComplexFloat64(numElements, tmpfile);
 		other.buffer = buffer.duplicate();
 		other.dirty = dirty;
 		other.loadedIndex = loadedIndex;
@@ -102,32 +126,91 @@ public class FileStorageComplexFloat64
 	}
 	
 	public String filename() {
-		return filename;
+		return file.getAbsolutePath();
 	}
 	
-	public void setFilename(String filename) {
+	public void setFilename(String filename) throws IOException {
 		flush();
-		// rename file on disk and point to it
-		this.filename = filename;
+		if (!file.renameTo(new File(filename)))
+			throw new IOException("Can't rename file from " + file.getAbsolutePath() + " to " + filename);
 	}
+	
+	// TODO - make this part of the storage api. users should tell storage when they are done with it.
+	// Using finalize() for this is problematic.
 	
 	public void flush() {
 		if (!dirty) return;
-		// write buffer to file using sizeof() maybe
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.skip(8l + (loadedIndex/BUFFERSIZE)*BUFFERSIZE*2*8);
+			DataOutputStream dis = new DataOutputStream(fos);
+			for (long i = 0; i < BUFFERSIZE; i++) {
+				buffer.get(i, tmp);
+				dis.writeDouble(tmp.r());
+				dis.writeDouble(tmp.i());
+			}
+			dis.close();
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 		dirty = false;
 	}
+
+	// it's optional to call this
+	
+	public void dispose() {
+		// close stream
+		// and delete file
+		file.deleteOnExit();
+	}
+
+	// TODO: improve performance. use java 8. use nio? save open read write stream?
 	
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
 		if (index < loadedIndex || index > loadedIndex + BUFFERSIZE) {
-			if (dirty) flush();
-			// read file data into array using sizeof() maybe and skipping 1st eight bytes
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			if (dirty)
+				flush();
+			// read file data into array using sizeof() and skipping 1st eight bytes
+			try {
+				FileInputStream fis = new FileInputStream(file);
+				fis.skip(8l + (index/BUFFERSIZE)*BUFFERSIZE*2*8);
+				DataInputStream dis = new DataInputStream(fis);
+				for (long i = 0; i < BUFFERSIZE; i++) {
+					double real = dis.readDouble();
+					double imag = dis.readDouble();
+					tmp.setR(real);
+					tmp.setI(imag);
+					buffer.set(i, tmp);
+				}
+				dis.close();
+			} catch (Exception e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+			loadedIndex = index;
 		}
 	}
 	
-	private String tmpFilename() {
-		// TODO implement me: generate a temp file name
-		return "something";
+	private static long findNumElem(File f) throws IOException {
+		DataInputStream str = null;
+		long val = 0;
+		try {
+			InputStream fileInputStream = new FileInputStream(f);
+			str = new DataInputStream(fileInputStream);
+			val = str.readLong();
+		} catch (Exception e) {
+			throw new IOException(e.getMessage());
+		}
+		try {
+			if (str != null)
+				str.close();
+		} catch (Exception e) {
+			throw new IOException(e.getMessage());
+		}
+		return val;
 	}
+	
 }
