@@ -26,7 +26,7 @@ Other needs
     implement this for all numeric types.
   real/unreal as part of hierarchy. at least unreal.
   make sure all math ops can safely work if (a,b,c) params collide. use extra tmps and assign().
-  check: IEEE 754 might specify that a num with one component inf and any nan might be considered inf.
+  check: IEEE 754 might specify that a num with one component inf and any nan might be considered inf. apache commons math4 copies my implementation.
     This affects complex, quat, and oct. Now I assume a nan overrides all.
   complex numbers: polar constructors
   quotient/remainder as well as div/mod
@@ -46,3 +46,6 @@ Other needs
   bessel functions, legendre functions, airy functions, others
   some of the type classes rely on ArrayStorage. break this dependence to support huge math operations
   make vectors, rmodules, matrices use multidimaccessor
+  apache commons math4 does a lot of things my code does
+    it doesn't have all of algebra hierarchy and it doesn't have quats and octs
+    and it doesn't handle huge datasets
