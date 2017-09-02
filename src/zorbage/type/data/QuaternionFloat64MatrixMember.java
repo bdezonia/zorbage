@@ -26,11 +26,10 @@
  */
 package zorbage.type.data;
 
-import java.util.List;
-
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageQuaternionFloat64;
+import zorbage.util.BigList;
 
 /**
  * 
@@ -42,8 +41,8 @@ public final class QuaternionFloat64MatrixMember {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
 	private ArrayStorageQuaternionFloat64 storage;
-	private int rows;
-	private int cols;
+	private long rows;
+	private long cols;
 	
 	public QuaternionFloat64MatrixMember() {
 		rows = -1;
@@ -64,13 +63,13 @@ public final class QuaternionFloat64MatrixMember {
 	
 	public QuaternionFloat64MatrixMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
-		List<OctonionRepresentation> data = rep.firstMatrixValues();
-		int[] dimensions = rep.dimensions();
+		BigList<OctonionRepresentation> data = rep.firstMatrixValues();
+		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
 		init(dimensions[1],dimensions[0]);
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());
@@ -80,18 +79,18 @@ public final class QuaternionFloat64MatrixMember {
 		}
 	}
 	
-	public int rows() { return rows; }
+	public long rows() { return rows; }
 
-	public int cols() { return cols; }
+	public long cols() { return cols; }
 
-	public void init(int r, int c) {
+	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
 			cols = c;
 		}
 		
-		if (((long)r)*c != storage.size()) {
-			storage = new ArrayStorageQuaternionFloat64(((long)r)*c);
+		if (r*c != storage.size()) {
+			storage = new ArrayStorageQuaternionFloat64(r*c);
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {
@@ -100,13 +99,13 @@ public final class QuaternionFloat64MatrixMember {
 		}
 	}
 	
-	public void v(int r, int c, QuaternionFloat64Member value) {
-		long index = ((long)r) * rows + c;
+	public void v(long r, long c, QuaternionFloat64Member value) {
+		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
-	public void setV(int r, int c, QuaternionFloat64Member value) {
-		long index = ((long)r) * rows + c;
+	public void setV(long r, long c, QuaternionFloat64Member value) {
+		long index = r * rows + c;
 		storage.set(index, value);
 	}
 	
@@ -141,9 +140,9 @@ public final class QuaternionFloat64MatrixMember {
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int r = 0; r < rows; r++) {
+		for (long r = 0; r < rows; r++) {
 			builder.append('[');
-			for (int c = 0; c < cols; c++) {
+			for (long c = 0; c < cols; c++) {
 				if (c != 0)
 					builder.append(',');
 				v(r, c, tmp);

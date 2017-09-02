@@ -77,8 +77,8 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 			return false;
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
-		int numElems = a.numElems();
-		for (int i = 0; i < numElems; i++) {
+		long numElems = a.numElems();
+		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
 			if (g.isNotEqual(aTmp, bTmp))
@@ -95,11 +95,11 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 	@Override
 	public void assign(Float64TensorProductMember from, Float64TensorProductMember to) {
 		Float64Member tmp = new Float64Member();
-		int[] dims = new int[from.numDims()];
+		long[] dims = new long[from.numDims()];
 		from.dims(dims);
 		to.setDims(dims);
-		int numElems = from.numElems();
-		for (int i = 0; i < numElems; i++) {
+		long numElems = from.numElems();
+		for (long i = 0; i < numElems; i++) {
 			from.v(i, tmp);
 			to.setV(i, tmp);
 		}
@@ -109,8 +109,8 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 	public void zero(Float64TensorProductMember a) {
 		Float64Member tmp = new Float64Member();
 		g.zero(tmp);
-		int numElems = a.numElems();
-		for (int i = 0; i < numElems; i++) {
+		long numElems = a.numElems();
+		for (long i = 0; i < numElems; i++) {
 			a.setV(i, tmp);
 		}
 	}
@@ -119,8 +119,8 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 	public void negate(Float64TensorProductMember a, Float64TensorProductMember b) {
 		Float64Member tmp = new Float64Member();
 		assign(a,b);
-		int numElems = b.numElems();
-		for (int i = 0; i < numElems; i++) {
+		long numElems = b.numElems();
+		for (long i = 0; i < numElems; i++) {
 			b.v(i, tmp);
 			g.negate(tmp, tmp);
 			b.setV(i, tmp);
@@ -135,8 +135,8 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
-		int numElems = a.numElems();
-		for (int i = 0; i < numElems; i++) {
+		long numElems = a.numElems();
+		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
 			g.add(aTmp, bTmp, cTmp);
@@ -152,8 +152,8 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
-		int numElems = a.numElems();
-		for (int i = 0; i < numElems; i++) {
+		long numElems = a.numElems();
+		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
 			g.subtract(aTmp, bTmp, cTmp);
@@ -171,7 +171,7 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 	public void scale(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
 		Float64Member tmp = new Float64Member();
 		assign(a,b);
-		for (int i = 0; i < b.numElems(); i++) {
+		for (long i = 0; i < b.numElems(); i++) {
 			b.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
@@ -220,8 +220,8 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 		int numDims = a.numDims();
 		if (numDims != b.numDims())
 			return false;
-		int[] aDims = new int[numDims];
-		int[] bDims = new int[numDims];
+		long[] aDims = new long[numDims];
+		long[] bDims = new long[numDims];
 		a.dims(aDims);
 		b.dims(bDims);
 		for (int i = 0; i < numDims; i++) {

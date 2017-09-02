@@ -26,11 +26,10 @@
  */
 package zorbage.type.data;
 
-import java.util.List;
-
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageQuaternionFloat64;
+import zorbage.util.BigList;
 
 /**
  * 
@@ -73,7 +72,7 @@ public final class QuaternionFloat64RModuleMember {
 	
 	public QuaternionFloat64RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		List<OctonionRepresentation> data = rep.firstVectorValues();
+		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageQuaternionFloat64(data.size());
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (int i = 0; i < storage.size(); i++) {

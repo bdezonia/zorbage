@@ -31,32 +31,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import zorbage.util.BigList;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public class TensorStringRepresentation {
-	private int[] dimensions;
-	private List<OctonionRepresentation> elements;
+	private long[] dimensions;
+	private BigList<OctonionRepresentation> elements;
 	private BigDecimal tmp;
 	
 	public TensorStringRepresentation(String s) {
 		List<Character> chars = preprocessCharacters(s);
 		dimensions = determineDimensions(chars);
-		elements = new ArrayList<OctonionRepresentation>();
+		elements = new BigList<OctonionRepresentation>();
 		gatherOctonions(chars);
 		if (elements.size() != numElems(dimensions))
 			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 	}
 	
-	public int[] dimensions() {
+	public long[] dimensions() {
 		return dimensions;
 	}
 
-	public OctonionRepresentation value(int[] index) {
-		int idx = 0;
-		int increment = 1;
+	public OctonionRepresentation value(long[] index) {
+		long idx = 0;
+		long increment = 1;
 		for (int i = 0; i < index.length; i++) {
 			idx += index[i] * increment;
 			increment *= dimensions[i];
@@ -64,45 +66,45 @@ public class TensorStringRepresentation {
 		return elements.get(idx);
 	}
 	
-	public List<OctonionRepresentation> values() { return elements; }
+	public BigList<OctonionRepresentation> values() { return elements; }
 	
 	public OctonionRepresentation firstValue() {
 		return elements.get(0);
 	}
 	
-	public int firstVectorDimension() {
-		int dim = 1;
+	public long firstVectorDimension() {
+		long dim = 1;
 		if (dimensions.length >= 0) dim = dimensions[0];
 		return dim;
 	}
 
-	public List<OctonionRepresentation> firstVectorValues() {
-		int count = firstVectorDimension();
-		List<OctonionRepresentation> vectorElements = new ArrayList<OctonionRepresentation>(count);
-		for (int i = 0; i < count; i++)
-			vectorElements.add(elements.get(i));
+	public BigList<OctonionRepresentation> firstVectorValues() {
+		long count = firstVectorDimension();
+		BigList<OctonionRepresentation> vectorElements = new BigList<OctonionRepresentation>(count);
+		for (long i = 0; i < count; i++)
+			vectorElements.set(i,elements.get(i));
 		return vectorElements;
 	}
 
-	public int[] firstMatrixDimensions() {
-		int[] dims = new int[]{1,1};
+	public long[] firstMatrixDimensions() {
+		long[] dims = new long[]{1,1};
 		if (dimensions.length >= 0) dims[0] = dimensions[0];
 		if (dimensions.length >= 1) dims[1] = dimensions[1];
 		return dims;
 	}
 	
-	public List<OctonionRepresentation> firstMatrixValues() {
-		int[] dims = firstMatrixDimensions();
-		int count = dims[0] * dims[1];
-		List<OctonionRepresentation> matrixElements = new ArrayList<OctonionRepresentation>(count);
-		for (int i = 0; i < count; i++)
-			matrixElements.add(elements.get(i));
+	public BigList<OctonionRepresentation> firstMatrixValues() {
+		long[] dims = firstMatrixDimensions();
+		long count = dims[0] * dims[1];
+		BigList<OctonionRepresentation> matrixElements = new BigList<OctonionRepresentation>(count);
+		for (long i = 0; i < count; i++)
+			matrixElements.set(i,elements.get(i));
 		return matrixElements;
 	}
 	
-	private int numElems(int[] dims) {
-		int sz = 1;
-		for (int dim : dims) sz *= dim;
+	private long numElems(long[] dims) {
+		long sz = 1;
+		for (long dim : dims) sz *= dim;
 		return sz;
 	}
 
@@ -118,8 +120,8 @@ public class TensorStringRepresentation {
 
 	// ugly but works
 	
-	private int[] determineDimensions(List<Character> chars) {
-		List<Integer> reverseDims = new ArrayList<Integer>();
+	private long[] determineDimensions(List<Character> chars) {
+		List<Long> reverseDims = new ArrayList<Long>();
 		int unmatchedBrackets = 0;
 		int innermostDim = 1;
 		boolean inOct = false;
@@ -130,7 +132,7 @@ public class TensorStringRepresentation {
 				if (unmatchedBrackets < reverseDims.size())
 					reverseDims.set(unmatchedBrackets, reverseDims.get(unmatchedBrackets) + 1);
 				else
-					reverseDims.add(Integer.valueOf(1));
+					reverseDims.add(Long.valueOf(1));
 				unmatchedBrackets++;
 			}
 			else if (ch == ']') {
@@ -148,19 +150,19 @@ public class TensorStringRepresentation {
 		if (unmatchedBrackets != 0)
 			throw new IllegalArgumentException("unmatched [ ] brackets in tensor definition");
 		for (int i = reverseDims.size()-1; i > 0; i--) {
-			int sz = 1;
+			long sz = 1;
 			for (int j = 0; j < i; j++) {
 				sz *= reverseDims.get(j);
 			}
 			reverseDims.set(i, reverseDims.get(i) / sz);
 		}
-		reverseDims.add(innermostDim);
-		int[] dims = new int[reverseDims.size()];
+		reverseDims.add((long)innermostDim);
+		long[] dims = new long[reverseDims.size()];
 		int x = 0;
 		for (int i = reverseDims.size()-1; i >= 0; i--)
 			dims[x++] = reverseDims.get(i);
 		if ((dims.length > 1) && (dims[dims.length-1] == 1)) {
-			int[] tmp = new int[dims.length-1];
+			long[] tmp = new long[dims.length-1];
 			for (int i = 0; i < tmp.length; i++)
 				tmp[i] = dims[i];
 			dims = tmp;

@@ -52,8 +52,8 @@ public class OctonionFloat64RModule
 	@Override
 	public void negate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
 			b.setV(i, tmp);
@@ -64,14 +64,14 @@ public class OctonionFloat64RModule
 	public void add(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		for (int i = max; i < c.length(); i++)
+		for (long i = max; i < c.length(); i++)
 			c.setV(i, ZERO);
 	}
 
@@ -79,14 +79,14 @@ public class OctonionFloat64RModule
 	public void subtract(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		for (int i = max; i < c.length(); i++)
+		for (long i = max; i < c.length(); i++)
 			c.setV(i, ZERO);
 	}
 
@@ -94,8 +94,8 @@ public class OctonionFloat64RModule
 	public boolean isEqual(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			if (g.isNotEqual(atmp, btmp))
@@ -127,11 +127,11 @@ public class OctonionFloat64RModule
 	@Override
 	public void assign(OctonionFloat64RModuleMember from, OctonionFloat64RModuleMember to) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (int i = 0; i < from.length(); i++) {
+		for (long i = 0; i < from.length(); i++) {
 			from.v(i, tmp);
 			to.setV(i, tmp);
 		}
-		for (int i = from.length(); i < to.length(); i++) {
+		for (long i = from.length(); i < to.length(); i++) {
 			to.setV(i, ZERO);
 		}
 	}
@@ -157,14 +157,14 @@ public class OctonionFloat64RModule
 	public void scale(OctonionFloat64Member scalar, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		// two loops minimizes memory allocations
-		int min = Math.min(a.length(), b.length());
-		for (int i = 0; i < min; i++) {
+		long min = Math.min(a.length(), b.length());
+		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		int max = Math.max(a.length(), b.length());
-		for (int i = min; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
@@ -221,11 +221,11 @@ public class OctonionFloat64RModule
 	
 	@Override
 	public void dotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-		int min = Math.min(a.length(), b.length());
+		long min = Math.min(a.length(), b.length());
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		for (int i = 0; i < min; i++) {
+		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.multiply(atmp, btmp, btmp);

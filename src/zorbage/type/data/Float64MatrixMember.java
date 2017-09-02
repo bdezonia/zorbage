@@ -26,11 +26,10 @@
  */
 package zorbage.type.data;
 
-import java.util.List;
-
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageFloat64;
+import zorbage.util.BigList;
 
 /**
  * 
@@ -42,8 +41,8 @@ public final class Float64MatrixMember {
 	private static final Float64Member ZERO = new Float64Member(0);
 
 	private ArrayStorageFloat64 storage;
-	private int rows;
-	private int cols;
+	private long rows;
+	private long cols;
 	
 	public Float64MatrixMember() {
 		rows = -1;
@@ -64,8 +63,8 @@ public final class Float64MatrixMember {
 	
 	public Float64MatrixMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
-		List<OctonionRepresentation> data = rep.firstMatrixValues();
-		int[] dimensions = rep.dimensions();
+		BigList<OctonionRepresentation> data = rep.firstMatrixValues();
+		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
 		init(dimensions[1],dimensions[0]);
@@ -77,18 +76,18 @@ public final class Float64MatrixMember {
 		}
 	}
 	
-	public int rows() { return rows; }
+	public long rows() { return rows; }
 
-	public int cols() { return cols; }
+	public long cols() { return cols; }
 
-	public void init(int r, int c) {
+	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
 			cols = c;
 		}
 		
-		if (((long)r)*c != storage.size()) {
-			storage = new ArrayStorageFloat64(((long)r)*c);
+		if (r*c != storage.size()) {
+			storage = new ArrayStorageFloat64(r*c);
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {
@@ -97,13 +96,13 @@ public final class Float64MatrixMember {
 		}
 	}
 	
-	public void v(int r, int c, Float64Member value) {
-		long index = ((long)r) * rows + c;
+	public void v(long r, long c, Float64Member value) {
+		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
-	public void setV(int r, int c, Float64Member value) {
-		long index = ((long)r) * rows + c;
+	public void setV(long r, long c, Float64Member value) {
+		long index = r * rows + c;
 		storage.set(index, value);
 	}
 	

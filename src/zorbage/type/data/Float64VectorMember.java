@@ -26,11 +26,10 @@
  */
 package zorbage.type.data;
 
-import java.util.List;
-
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageFloat64;
+import zorbage.util.BigList;
 
 /**
  * 
@@ -68,7 +67,7 @@ public final class Float64VectorMember {
 	
 	public Float64VectorMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		List<OctonionRepresentation> data = rep.firstVectorValues();
+		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageFloat64(data.size());
 		Float64Member tmp = new Float64Member();
 		for (int i = 0; i < storage.size(); i++) {

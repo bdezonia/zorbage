@@ -26,11 +26,10 @@
  */
 package zorbage.type.data;
 
-import java.util.List;
-
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageOctonionFloat64;
+import zorbage.util.BigList;
 
 /**
  * 
@@ -77,10 +76,10 @@ public final class OctonionFloat64RModuleMember {
 	
 	public OctonionFloat64RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		List<OctonionRepresentation> data = rep.firstVectorValues();
+		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageOctonionFloat64(data.size());
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());
@@ -94,7 +93,7 @@ public final class OctonionFloat64RModuleMember {
 		}
 	}
 
-	public void v(int i, OctonionFloat64Member v) {
+	public void v(long i, OctonionFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
@@ -103,7 +102,7 @@ public final class OctonionFloat64RModuleMember {
 		}
 	}
 
-	public void setV(int i, OctonionFloat64Member v) {
+	public void setV(long i, OctonionFloat64Member v) {
 		if (i >= storage.size()) {
 			if (g.isEqual(v, ZERO)) return;
 			ArrayStorageOctonionFloat64 tmp = storage;
@@ -139,14 +138,14 @@ public final class OctonionFloat64RModuleMember {
 		}
 	}
 
-	public int length() { return (int) storage.size(); }
+	public long length() { return storage.size(); }
 	
 	@Override
 	public String toString() { 
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			if (i != 0)
 				builder.append(',');
 			v(i, tmp);

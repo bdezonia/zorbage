@@ -48,17 +48,17 @@ public class Float64Matrix
 	public void multiply(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
-		int rows = a.rows();
-		int cols = b.cols();
-		int common = a.cols(); 
+		long rows = a.rows();
+		long cols = b.cols();
+		long common = a.cols(); 
 		Float64Member sum = new Float64Member();
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
 		Float64Member term = new Float64Member();
-		for (int row = 0; row < rows; row++) {
-			for (int col = 0; col < cols; col++) {
+		for (long row = 0; row < rows; row++) {
+			for (long col = 0; col < cols; col++) {
 				g.zero(sum);
-				for (int i = 0; i < common; i++) {
+				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
 					g.multiply(atmp, btmp, term);
@@ -106,8 +106,8 @@ public class Float64Matrix
 
 	@Override
 	public void zero(Float64MatrixMember a) {
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.setV(row, col, ZERO);
 			}
 		}
@@ -118,8 +118,8 @@ public class Float64Matrix
 		Float64Member tmp = new Float64Member();
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.negate(tmp,tmp);
 				b.setV(row, col, tmp);
@@ -137,8 +137,8 @@ public class Float64Matrix
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
 				g.add(atmp, btmp, tmp);
@@ -157,8 +157,8 @@ public class Float64Matrix
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
 				g.subtract(atmp, btmp, tmp);
@@ -174,8 +174,8 @@ public class Float64Matrix
 		if (a.cols() != b.cols()) return false;
 		Float64Member value1 = new Float64Member();
 		Float64Member value2 = new Float64Member();
-		for (int r = 0; r < a.rows(); r++) {
-			for (int c = 0; c < a.cols(); c++) {
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
 				if (g.isNotEqual(value1, value2))
@@ -195,8 +195,8 @@ public class Float64Matrix
 		if (from == to) return;
 		to.init(from.rows(), from.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < from.rows(); row++) {
-			for (int col = 0; col < from.cols(); col++) {
+		for (long row = 0; row < from.rows(); row++) {
+			for (long col = 0; col < from.cols(); col++) {
 				from.v(row, col, tmp);
 				to.setV(row, col, tmp);
 			}
@@ -229,8 +229,8 @@ public class Float64Matrix
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
@@ -243,8 +243,8 @@ public class Float64Matrix
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
@@ -257,8 +257,8 @@ public class Float64Matrix
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
@@ -271,8 +271,8 @@ public class Float64Matrix
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
@@ -285,8 +285,8 @@ public class Float64Matrix
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
@@ -299,8 +299,8 @@ public class Float64Matrix
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
-		for (int row = 0; row < a.rows(); row++) {
-			for (int col = 0; col < a.cols(); col++) {
+		for (long row = 0; row < a.rows(); row++) {
+			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
 				g.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
@@ -311,8 +311,8 @@ public class Float64Matrix
 	@Override
 	public boolean isNaN(Float64MatrixMember a) {
 		Float64Member value = new Float64Member();
-		for (int r = 0; r < a.rows(); r++) {
-			for (int c = 0; c < a.cols(); c++) {
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
 				if (g.isNaN(value))
 					return true;
@@ -324,8 +324,8 @@ public class Float64Matrix
 	@Override
 	public boolean isInfinite(Float64MatrixMember a) {
 		Float64Member value = new Float64Member();
-		for (int r = 0; r < a.rows(); r++) {
-			for (int c = 0; c < a.cols(); c++) {
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
 				if (g.isInfinite(value))
 					return true;
@@ -344,8 +344,8 @@ public class Float64Matrix
 		Float64Member value = new Float64Member();
 		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
 		b.init(a.cols(), a.rows());
-		for (int r = 0; r < a.rows(); r++) {
-			for (int c = 0; c < a.cols(); c++) {
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
 				a.v(r,  c, value);
 				b.setV(c, r, value);
 			}
@@ -367,7 +367,7 @@ public class Float64Matrix
 	public void unity(Float64MatrixMember a) {
 		Float64Member one = new Float64Member(1);
 		zero(a);
-		for (int i = 0; i < Math.min(a.rows(), a.cols()); i++) {
+		for (long i = 0; i < Math.min(a.rows(), a.cols()); i++) {
 			a.setV(i, i, one);
 		}
 	}

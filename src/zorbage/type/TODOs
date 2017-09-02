@@ -5,7 +5,6 @@ Examples
   
 Other needs
   maven
-  make all int[] indices into long[] indices
   Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
   Matrices: norm (more than one kind), det, invert

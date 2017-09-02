@@ -26,11 +26,10 @@
  */
 package zorbage.type.data;
 
-import java.util.List;
-
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.ArrayStorageComplexFloat64;
+import zorbage.util.BigList;
 
 /**
  * 
@@ -42,8 +41,8 @@ public final class ComplexFloat64MatrixMember {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	private ArrayStorageComplexFloat64 storage;
-	private int rows;
-	private int cols;
+	private long rows;
+	private long cols;
 	
 	public ComplexFloat64MatrixMember() {
 		rows = -1;
@@ -64,13 +63,13 @@ public final class ComplexFloat64MatrixMember {
 	
 	public ComplexFloat64MatrixMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
-		List<OctonionRepresentation> data = rep.firstMatrixValues();
-		int[] dimensions = rep.dimensions();
+		BigList<OctonionRepresentation> data = rep.firstMatrixValues();
+		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
 		init(dimensions[1],dimensions[0]);
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());
@@ -78,17 +77,17 @@ public final class ComplexFloat64MatrixMember {
 		}
 	}
 	
-	public int rows() { return rows; }
+	public long rows() { return rows; }
 
-	public int cols() { return cols; }
+	public long cols() { return cols; }
 
-	public void init(int r, int c) {
+	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
 			cols = c;
 		}
 		
-		if (((long)r)*c != storage.size()) {
+		if (r*c != storage.size()) {
 			storage = new ArrayStorageComplexFloat64(((long)r)*c);
 		}
 		else {
@@ -98,13 +97,13 @@ public final class ComplexFloat64MatrixMember {
 		}
 	}
 	
-	public void v(int r, int c, ComplexFloat64Member value) {
-		long index = ((long)r) * rows + c;
+	public void v(long r, long c, ComplexFloat64Member value) {
+		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
-	public void setV(int r, int c, ComplexFloat64Member value) {
-		long index = ((long)r) * rows + c;
+	public void setV(long r, long c, ComplexFloat64Member value) {
+		long index = r * rows + c;
 		storage.set(index, value);
 	}
 	
@@ -139,9 +138,9 @@ public final class ComplexFloat64MatrixMember {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int r = 0; r < rows; r++) {
+		for (long r = 0; r < rows; r++) {
 			builder.append('[');
-			for (int c = 0; c < cols; c++) {
+			for (long c = 0; c < cols; c++) {
 				if (c != 0)
 					builder.append(',');
 				v(r, c, tmp);
