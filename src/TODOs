@@ -8,7 +8,6 @@ Other needs
   Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
   Matrices: norm (more than one kind), det, invert
-  Storage: multidimension facades
   Add more types:
     native long, short, byte, float32, plus complex32 and quat32 and oct32
     bit: 2, 4, 12, 20, 24, 128

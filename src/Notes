@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type;
+//package zorbage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Notes {
+//public class Notes {
 
 	/*
 	 * Motivation
@@ -115,4 +115,4 @@ public class Notes {
 	// Make complex double type be Complex<DoubleType>. This likely hurts efficiency.
 	// But I can rewrite this in a different language. Also Matrix<Quaternion<Float32Type>>, etc.
 	
-}
+//}
