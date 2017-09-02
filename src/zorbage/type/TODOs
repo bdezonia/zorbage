@@ -35,3 +35,14 @@ Other needs
   make interface DimensionallyConstructable to support things like
     defining arrays and matrices and tensors with specified shape
   make Constructible interfaces from primitive types
+  there are numerous kinds of norms. can embed a default impl for some types. but should implement
+    families of reusable norm implementations
+  group hierarchy could be multithreaded
+  must finish tensor classes
+  must finish octonion classes
+  must finish rmodule classes
+  does a strong differentiation between rmodule and vector hurt reuse? can the shared concepts
+    between them be better identified and implemented to make general algos more likely?
+  numerical algorithms put in place: matrix algebra, odes, pdes, interpolation, etc.
+  underflow avoidance on sqrt calls
+  
