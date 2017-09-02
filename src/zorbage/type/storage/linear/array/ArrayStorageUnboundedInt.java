@@ -24,9 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.OctonionFloat64Member;
+import java.math.BigInteger;
+
+import zorbage.type.data.UnboundedIntMember;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -34,54 +37,41 @@ import zorbage.type.data.OctonionFloat64Member;
  *
  * @param <U>
  */
-public class ArrayStorageOctonionFloat64
-	implements Storage<ArrayStorageOctonionFloat64,OctonionFloat64Member>
+public class ArrayStorageUnboundedInt
+	implements LinearStorage<ArrayStorageUnboundedInt,UnboundedIntMember>
 {
 
-	private final double[] data;
+	private final BigInteger[] data;
 	
-	public ArrayStorageOctonionFloat64(long size) {
+	public ArrayStorageUnboundedInt(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageOctonionFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / 8))
-			throw new IllegalArgumentException("ArrayStorageOctonionfloat64 can handle at most " + (Integer.MAX_VALUE / 8) + " octonionfloat64s");
-		this.data = new double[(int)(size*8)];
+			throw new IllegalArgumentException("ArrayStorageUnboundedInt cannot handle a negative request");
+		if (size > Integer.MAX_VALUE)
+			throw new IllegalArgumentException("ArrayStorageUnboundedInt can handle at most " + Integer.MAX_VALUE + " unboundedints");
+		this.data = new BigInteger[(int)size];
+		for (int i = 0; i < data.length; i++) {
+			data[i] = BigInteger.ZERO;
+		}
 	}
 
 	@Override
-	public void set(long index, OctonionFloat64Member value) {
-		final int idx = ((int) index) * 8;
-		data[idx    ] = value.r();
-		data[idx + 1] = value.i();
-		data[idx + 2] = value.j();
-		data[idx + 3] = value.k();
-		data[idx + 4] = value.l();
-		data[idx + 5] = value.i0();
-		data[idx + 6] = value.j0();
-		data[idx + 7] = value.k0();
+	public void set(long index, UnboundedIntMember value) {
+		data[(int)index] = value.v();
 	}
 
 	@Override
-	public void get(long index, OctonionFloat64Member value) {
-		final int idx = ((int) index) * 8;
-		value.setR(  data[idx    ] );
-		value.setI(  data[idx + 1] );
-		value.setJ(  data[idx + 2] );
-		value.setK(  data[idx + 3] );
-		value.setL(  data[idx + 4] );
-		value.setI0( data[idx + 5] );
-		value.setJ0( data[idx + 6] );
-		value.setK0( data[idx + 7] );
+	public void get(long index, UnboundedIntMember value) {
+		value.setV(data[(int)index]);
 	}
 	
 	@Override
 	public long size() {
-		return data.length/8;
+		return data.length;
 	}
 
 	@Override
-	public ArrayStorageOctonionFloat64 duplicate() {
-		ArrayStorageOctonionFloat64 s = new ArrayStorageOctonionFloat64(size());
+	public ArrayStorageUnboundedInt duplicate() {
+		ArrayStorageUnboundedInt s = new ArrayStorageUnboundedInt(size());
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

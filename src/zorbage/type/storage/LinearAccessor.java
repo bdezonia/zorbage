@@ -26,49 +26,60 @@
  */
 package zorbage.type.storage;
 
-import zorbage.type.data.SignedInt32Member;
-
 /**
  * 
  * @author Barry DeZonia
  *
  * @param <U>
  */
-public class ArrayStorageSignedInt32
-	implements Storage<ArrayStorageSignedInt32,SignedInt32Member>
-{
-
-	private final int[] data;
+public class LinearAccessor<U> {
 	
-	public ArrayStorageSignedInt32(long size) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + Integer.MAX_VALUE + " signedint32s");
-		this.data = new int[(int)size];
-	}
+	private U value;
+	private LinearStorage<?,U> storage;
+	private long pos;
 
-	@Override
-	public void set(long index, SignedInt32Member value) {
-		data[(int)index] = value.v();
-	}
-
-	@Override
-	public void get(long index, SignedInt32Member value) {
-		value.setV(data[(int)index]);
+	public LinearAccessor(U value, LinearStorage<?,U> storage) {
+		this.value = value;
+		this.storage = storage;
+		beforeFirst();
 	}
 	
-	@Override
-	public long size() {
-		return data.length;
+	public void get() {
+		storage.get(pos, value);
 	}
-
-	@Override
-	public ArrayStorageSignedInt32 duplicate() {
-		ArrayStorageSignedInt32 s = new ArrayStorageSignedInt32(size());
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
-		return s;
+	
+	public void put() {
+		storage.set(pos, value);
 	}
-
+	
+	public boolean hasNext() {
+		return (pos+1) >= 0 && (pos+1) < storage.size();
+	}
+	
+	public boolean hasPrev() {
+		return (pos-1) >= 0 && (pos-1) < storage.size();
+	}
+	
+	public boolean hasNext(long steps) {
+		return (pos+steps) >= 0 && (pos+steps) < storage.size();
+	}
+	
+	public boolean hasPrev(long steps) {
+		return (pos-steps) >= 0 && (pos-steps) < storage.size();
+	}
+	
+	public void fwd() { pos++; }
+	public void back() { pos--; }
+	public void fwd(long steps) { pos += steps; }
+	public void back(long steps) { pos -= steps; }
+	
+	public void afterLast() {
+		pos = storage.size();
+	}
+	
+	public void beforeFirst() {
+		pos = -1;
+	}
+	
+	public long pos() { return pos; }
 }

@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.Float64Member;
+import zorbage.type.algebra.Group;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -34,28 +35,35 @@ import zorbage.type.data.Float64Member;
  *
  * @param <U>
  */
-public class ArrayStorageFloat64
-	implements Storage<ArrayStorageFloat64,Float64Member>
+public class ArrayStorageGeneric<T extends Group<T,U>,U>
+	implements LinearStorage<ArrayStorageGeneric<T,U>,U>
 {
 
-	private final double[] data;
+	private final Object[] data;
+	private final T g;
 	
-	public ArrayStorageFloat64(long size) {
+	public ArrayStorageGeneric(long size, T g) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
+			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + Integer.MAX_VALUE + " float64s");
-		this.data = new double[(int)size];
+			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
+		this.data = new Object[(int)size];
+		for (int i = 0; i < size; i++) {
+			this.data[i] = g.construct();
+		}
+		this.g = g;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void set(long index, Float64Member value) {
-		data[(int)index] = value.v();
+	public void set(long index, U value) {
+		g.assign(value, (U)data[(int)index]);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void get(long index, Float64Member value) {
-		value.setV(data[(int)index]);
+	public void get(long index, U value) {
+		g.assign((U)data[(int)index], value);
 	}
 	
 	@Override
@@ -63,11 +71,12 @@ public class ArrayStorageFloat64
 		return data.length;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayStorageFloat64 duplicate() {
-		ArrayStorageFloat64 s = new ArrayStorageFloat64(size());
+	public ArrayStorageGeneric<T,U> duplicate() {
+		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),g);
 		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+			g.assign((U)data[i], (U)s.data[i]);
 		return s;
 	}
 

@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.algebra.Group;
+import zorbage.type.data.BooleanMember;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -34,48 +35,61 @@ import zorbage.type.algebra.Group;
  *
  * @param <U>
  */
-public class ArrayStorageGeneric<T extends Group<T,U>,U>
-	implements Storage<ArrayStorageGeneric<T,U>,U>
+public class ArrayStorageBit
+	implements LinearStorage<ArrayStorageBit,BooleanMember>
 {
 
-	private final Object[] data;
-	private final T g;
+	private final long[] data;
+	private final long size;
 	
-	public ArrayStorageGeneric(long size, T g) {
+	public ArrayStorageBit(long size) {
+	
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
-		this.data = new Object[(int)size];
-		for (int i = 0; i < size; i++) {
-			this.data[i] = g.construct();
+			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
+		if (size > 64l * Integer.MAX_VALUE)
+			throw new IllegalArgumentException("ArrayStorageBit can handle at most " + (64l * Integer.MAX_VALUE) + " bits");
+		int count = (int)(size / 64);
+		if (count % 64 > 0) count += 1;
+		this.data = new long[count];
+		this.size = size;
+	}
+
+	@Override
+	public void set(long index, BooleanMember value) {
+		synchronized (data) {
+			final int idx = (int)index / 64;
+			long bucket = data[idx];
+			final long mask = 1l << (index % 64);
+			if (value.v()) {
+				bucket = bucket | mask;
+			}
+			else {
+				bucket = bucket & ~mask;
+			}
+			data[idx] = bucket;
 		}
-		this.g = g;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public void set(long index, U value) {
-		g.assign(value, (U)data[(int)index]);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void get(long index, U value) {
-		g.assign((U)data[(int)index], value);
+	public void get(long index, BooleanMember value) {
+		synchronized (data) {
+			final long bucket = data[(int)index / 64];
+			final long mask = 1l << (index % 64);
+			final long bit = bucket & mask;
+			value.setV(bit > 0);
+		}
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return size;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayStorageGeneric<T,U> duplicate() {
-		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),g);
+	public ArrayStorageBit duplicate() {
+		ArrayStorageBit s = new ArrayStorageBit(size());
 		for (int i = 0; i < data.length; i++)
-			g.assign((U)data[i], (U)s.data[i]);
+			s.data[i] = data[i];
 		return s;
 	}
 

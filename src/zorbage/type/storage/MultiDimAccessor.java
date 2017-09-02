@@ -30,56 +30,77 @@ package zorbage.type.storage;
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  * @param <U>
  */
-public class Accessor<U> {
+public class MultiDimAccessor<T extends LinearStorage<T,U>,U> {
 	
-	private U value;
-	private Storage<?,U> storage;
-	private long pos;
-
-	public Accessor(U value, Storage<?,U> storage) {
-		this.value = value;
+	private T storage;
+	private long[] dims;
+	
+	public MultiDimAccessor(long[] dims, T storage) {
+		this.dims = dims.clone();
 		this.storage = storage;
-		beforeFirst();
+		if (dimsSize(dims) != storage.size())
+			throw new IllegalArgumentException("MultiDimAccessor has been given conflicting sizes");
+	}
+
+	public T storage() { return storage; }
+	
+	public int numDimensions() {
+		return dims.length;
 	}
 	
-	public void get() {
-		storage.get(pos, value);
+	public void getDimensions(long[] dims) {
+		if (dims.length != this.dims.length)
+			throw new IllegalArgumentException("target dims are not the correct size");
+		for (int i = 0; i < this.dims.length; i++)
+			dims[i] = this.dims[i];
+	}
+
+	public void resetDimensions(long[] newDims) {
+		if (dimsSize(dims) != storage.size())
+			throw new IllegalArgumentException("MultiDimAccessor has been given conflicting sizes");
+		dims = newDims.clone();
 	}
 	
-	public void put() {
-		storage.set(pos, value);
+	public void set(long[] index, U v) {
+		long idx = indexToLong(index);
+		storage.set(idx, v);
 	}
 	
-	public boolean hasNext() {
-		return (pos+1) >= 0 && (pos+1) < storage.size();
+	public void get(long[] index, U v) {
+		long idx = indexToLong(index);
+		storage.get(idx, v);
 	}
 	
-	public boolean hasPrev() {
-		return (pos-1) >= 0 && (pos-1) < storage.size();
+	public long numElements() {
+		return storage.size();
 	}
 	
-	public boolean hasNext(long steps) {
-		return (pos+steps) >= 0 && (pos+steps) < storage.size();
+	private long dimsSize(long[] dims) {
+		if (dims.length == 0) return 0;
+		long l = 1;
+		for (long sz : dims) {
+			l *= sz;
+		}
+		return l;
 	}
 	
-	public boolean hasPrev(long steps) {
-		return (pos-steps) >= 0 && (pos-steps) < storage.size();
+	/*
+	 * dims = [4,5,6]
+	 * idx = [1,2,3]
+	 * long = 3*5*4 + 2*4 + 1;
+	 */
+	private long indexToLong(long[] idx) {
+		if (idx.length == 0) return 0;
+		long index = 0;
+		long mult = 1;
+		for (int i = 0; i < idx.length; i++) {
+			index += mult * idx[i];
+			mult *= dims[i];
+		}
+		return index;
 	}
-	
-	public void fwd() { pos++; }
-	public void back() { pos--; }
-	public void fwd(long steps) { pos += steps; }
-	public void back(long steps) { pos -= steps; }
-	
-	public void afterLast() {
-		pos = storage.size();
-	}
-	
-	public void beforeFirst() {
-		pos = -1;
-	}
-	
-	public long pos() { return pos; }
+
 }

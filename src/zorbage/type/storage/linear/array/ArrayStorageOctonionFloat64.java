@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.QuaternionFloat64Member;
+import zorbage.type.data.OctonionFloat64Member;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -34,46 +35,54 @@ import zorbage.type.data.QuaternionFloat64Member;
  *
  * @param <U>
  */
-public class ArrayStorageQuaternionFloat64
-	implements Storage<ArrayStorageQuaternionFloat64,QuaternionFloat64Member>
+public class ArrayStorageOctonionFloat64
+	implements LinearStorage<ArrayStorageOctonionFloat64,OctonionFloat64Member>
 {
 
 	private final double[] data;
 	
-	public ArrayStorageQuaternionFloat64(long size) {
+	public ArrayStorageOctonionFloat64(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / 4))
-			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 can handle at most " + (Integer.MAX_VALUE / 4) + " quaternionfloat64s");
-		this.data = new double[(int)(size * 4)];
+			throw new IllegalArgumentException("ArrayStorageOctonionFloat64 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException("ArrayStorageOctonionfloat64 can handle at most " + (Integer.MAX_VALUE / 8) + " octonionfloat64s");
+		this.data = new double[(int)(size*8)];
 	}
 
 	@Override
-	public void set(long index, QuaternionFloat64Member value) {
-		final int idx = ((int) index) * 4;
+	public void set(long index, OctonionFloat64Member value) {
+		final int idx = ((int) index) * 8;
 		data[idx    ] = value.r();
 		data[idx + 1] = value.i();
 		data[idx + 2] = value.j();
 		data[idx + 3] = value.k();
+		data[idx + 4] = value.l();
+		data[idx + 5] = value.i0();
+		data[idx + 6] = value.j0();
+		data[idx + 7] = value.k0();
 	}
 
 	@Override
-	public void get(long index, QuaternionFloat64Member value) {
-		final int idx = ((int) index) * 4;
-		value.setR(data[idx    ]);
-		value.setI(data[idx + 1]);
-		value.setJ(data[idx + 2]);
-		value.setK(data[idx + 3]);
+	public void get(long index, OctonionFloat64Member value) {
+		final int idx = ((int) index) * 8;
+		value.setR(  data[idx    ] );
+		value.setI(  data[idx + 1] );
+		value.setJ(  data[idx + 2] );
+		value.setK(  data[idx + 3] );
+		value.setL(  data[idx + 4] );
+		value.setI0( data[idx + 5] );
+		value.setJ0( data[idx + 6] );
+		value.setK0( data[idx + 7] );
 	}
 	
 	@Override
 	public long size() {
-		return data.length/4;
+		return data.length/8;
 	}
 
 	@Override
-	public ArrayStorageQuaternionFloat64 duplicate() {
-		ArrayStorageQuaternionFloat64 s = new ArrayStorageQuaternionFloat64(size());
+	public ArrayStorageOctonionFloat64 duplicate() {
+		ArrayStorageOctonionFloat64 s = new ArrayStorageOctonionFloat64(size());
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

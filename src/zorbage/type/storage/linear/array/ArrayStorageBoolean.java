@@ -24,11 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import java.math.BigInteger;
-
-import zorbage.type.data.UnboundedIntMember;
+import zorbage.type.data.BooleanMember;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -36,30 +35,27 @@ import zorbage.type.data.UnboundedIntMember;
  *
  * @param <U>
  */
-public class ArrayStorageUnboundedInt
-	implements Storage<ArrayStorageUnboundedInt,UnboundedIntMember>
+public class ArrayStorageBoolean
+	implements LinearStorage<ArrayStorageBoolean,BooleanMember>
 {
 
-	private final BigInteger[] data;
+	private final boolean[] data;
 	
-	public ArrayStorageUnboundedInt(long size) {
+	public ArrayStorageBoolean(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageUnboundedInt cannot handle a negative request");
+			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageUnboundedInt can handle at most " + Integer.MAX_VALUE + " unboundedints");
-		this.data = new BigInteger[(int)size];
-		for (int i = 0; i < data.length; i++) {
-			data[i] = BigInteger.ZERO;
-		}
+			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + Integer.MAX_VALUE + " booleans");
+		this.data = new boolean[(int)size];
 	}
 
 	@Override
-	public void set(long index, UnboundedIntMember value) {
+	public void set(long index, BooleanMember value) {
 		data[(int)index] = value.v();
 	}
 
 	@Override
-	public void get(long index, UnboundedIntMember value) {
+	public void get(long index, BooleanMember value) {
 		value.setV(data[(int)index]);
 	}
 	
@@ -69,8 +65,8 @@ public class ArrayStorageUnboundedInt
 	}
 
 	@Override
-	public ArrayStorageUnboundedInt duplicate() {
-		ArrayStorageUnboundedInt s = new ArrayStorageUnboundedInt(size());
+	public ArrayStorageBoolean duplicate() {
+		ArrayStorageBoolean s = new ArrayStorageBoolean(size());
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

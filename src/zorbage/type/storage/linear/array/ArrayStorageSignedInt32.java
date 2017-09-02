@@ -24,7 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
+
+import zorbage.type.data.SignedInt32Member;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -32,10 +35,41 @@ package zorbage.type.storage;
  *
  * @param <U>
  */
-public interface Storage<T extends Storage<T,U>, U> {
+public class ArrayStorageSignedInt32
+	implements LinearStorage<ArrayStorageSignedInt32,SignedInt32Member>
+{
+
+	private final int[] data;
 	
-	void set(long index, U value);
-	void get(long index, U value);
-	long size();
-	T duplicate();
+	public ArrayStorageSignedInt32(long size) {
+		if (size < 0)
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
+		if (size > Integer.MAX_VALUE)
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + Integer.MAX_VALUE + " signedint32s");
+		this.data = new int[(int)size];
+	}
+
+	@Override
+	public void set(long index, SignedInt32Member value) {
+		data[(int)index] = value.v();
+	}
+
+	@Override
+	public void get(long index, SignedInt32Member value) {
+		value.setV(data[(int)index]);
+	}
+	
+	@Override
+	public long size() {
+		return data.length;
+	}
+
+	@Override
+	public ArrayStorageSignedInt32 duplicate() {
+		ArrayStorageSignedInt32 s = new ArrayStorageSignedInt32(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
+	}
+
 }

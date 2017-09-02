@@ -29,9 +29,9 @@ package zorbage.example;
 import zorbage.type.data.ComplexFloat64Group;
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.data.SignedInt32Member;
-import zorbage.type.storage.ArrayStorageComplexFloat64;
-import zorbage.type.storage.ArrayStorageSignedInt32;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
+import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 
 /**
  * 
@@ -44,22 +44,22 @@ public class DFTExample {
 	
 	public void run() {
 		final int size = 500;
-		Storage<?,SignedInt32Member> inputData = makeIntData(size);
+		LinearStorage<?,SignedInt32Member> inputData = makeIntData(size);
 		fillIntData(inputData);
-		Storage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
+		LinearStorage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
 		dft(inputData, outputComplexData);
 	}
 	
 	
-	private Storage<?,SignedInt32Member> makeIntData(int size) {
+	private LinearStorage<?,SignedInt32Member> makeIntData(int size) {
 		return new ArrayStorageSignedInt32(size);
 	}
 	
-	private Storage<?,ComplexFloat64Member> makeComplexData(int size) {
+	private LinearStorage<?,ComplexFloat64Member> makeComplexData(int size) {
 		return new ArrayStorageComplexFloat64(size);
 	}
 	
-	private void fillIntData(Storage<?,SignedInt32Member> input) {
+	private void fillIntData(LinearStorage<?,SignedInt32Member> input) {
 		// an example of straight index access to low level data
 		SignedInt32Member value = new SignedInt32Member();
 		int count = 0;
@@ -73,7 +73,7 @@ public class DFTExample {
 	
 	// note this could be further optimized by doing some multiplication in reals rather than complexes
 	
-	private void dft(Storage<?,SignedInt32Member> input, Storage<?,ComplexFloat64Member> output) {
+	private void dft(LinearStorage<?,SignedInt32Member> input, LinearStorage<?,ComplexFloat64Member> output) {
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
 		ComplexFloat64Member fOfX = new ComplexFloat64Member();
 		ComplexFloat64Member sum = new ComplexFloat64Member();

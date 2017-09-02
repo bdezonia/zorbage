@@ -28,7 +28,7 @@ package zorbage.type.operation;
 
 import zorbage.type.algebra.Group;
 import zorbage.type.algebra.Ordered;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -43,11 +43,11 @@ public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage) {
+	public void calculate(LinearStorage<?,U> storage) {
 		qsort(storage, 0, storage.size() -1);
 	}
 	
-	private void qsort(Storage<?,U> storage, long left, long right) {
+	private void qsort(LinearStorage<?,U> storage, long left, long right) {
 		if (left < right) {
 			long pivotPoint = partition(storage,left,right);
 			qsort(storage,left,pivotPoint-1);
@@ -56,7 +56,7 @@ public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 	}
 
 
-	private long partition(Storage<?,U> storage, long left, long right) {
+	private long partition(LinearStorage<?,U> storage, long left, long right) {
 		U tmp1 = g.construct();
 		U tmp2 = g.construct();
 		

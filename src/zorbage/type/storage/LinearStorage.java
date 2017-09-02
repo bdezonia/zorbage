@@ -26,53 +26,16 @@
  */
 package zorbage.type.storage;
 
-import zorbage.type.data.ComplexFloat64Member;
-
 /**
  * 
  * @author Barry DeZonia
  *
  * @param <U>
  */
-public class ArrayStorageComplexFloat64
-	implements Storage<ArrayStorageComplexFloat64,ComplexFloat64Member>
-{
-
-	private final double[] data;
+public interface LinearStorage<T extends LinearStorage<T,U>, U> {
 	
-	public ArrayStorageComplexFloat64(long size) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageComplexFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / 2))
-			throw new IllegalArgumentException("ArrayStorageComplexFloat64 can handle at most " + (Integer.MAX_VALUE / 2) + " complexfloat64s");
-		this.data = new double[(int)(size*2)];
-	}
-
-	@Override
-	public void set(long index, ComplexFloat64Member value) {
-		final int idx = ((int) index) * 2;
-		data[idx] = value.r();
-		data[idx + 1] = value.i();
-	}
-
-	@Override
-	public void get(long index, ComplexFloat64Member value) {
-		final int idx = ((int) index) * 2;
-		value.setR(data[idx]);
-		value.setI(data[idx + 1]);
-	}
-	
-	@Override
-	public long size() {
-		return data.length/2;
-	}
-
-	@Override
-	public ArrayStorageComplexFloat64 duplicate() {
-		ArrayStorageComplexFloat64 s = new ArrayStorageComplexFloat64(size());
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
-		return s;
-	}
-
+	void set(long index, U value);
+	void get(long index, U value);
+	long size();
+	T duplicate();
 }

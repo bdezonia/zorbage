@@ -28,7 +28,7 @@ package zorbage.type.data;
 
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
-import zorbage.type.storage.ArrayStorageFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import zorbage.util.BigList;
 
 

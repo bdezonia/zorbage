@@ -28,7 +28,7 @@ package zorbage.type.operation;
 
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Group;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class Min<T extends Group<T,U> & Ordered<U>, U> {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U max, U result) {
+	public void calculate(LinearStorage<?,U> storage, U max, U result) {
 		g.assign(max, result);
 		U tmp = g.construct();
 		for (long i = 0; i < storage.size(); i++) {

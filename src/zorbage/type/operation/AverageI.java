@@ -29,7 +29,7 @@ package zorbage.type.operation;
 import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.IntegralDivision;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class AverageI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U result) {
+	public void calculate(LinearStorage<?,U> storage, U result) {
 		SumCount<T,U> sumCount = new SumCount<T, U>(g);
 		U sum = g.construct();
 		U count = g.construct();

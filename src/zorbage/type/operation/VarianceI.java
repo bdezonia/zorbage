@@ -30,7 +30,7 @@ import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Unity;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
 
 // TODO Make a std dev class that is sqrt of variance
 
@@ -47,7 +47,7 @@ public class VarianceI<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U result) {
+	public void calculate(LinearStorage<?,U> storage, U result) {
 		U avg = g.construct();
 		U sum = g.construct();
 		U count = g.construct();

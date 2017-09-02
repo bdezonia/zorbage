@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.BooleanMember;
+import zorbage.type.data.Float64Member;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -34,27 +35,27 @@ import zorbage.type.data.BooleanMember;
  *
  * @param <U>
  */
-public class ArrayStorageBoolean
-	implements Storage<ArrayStorageBoolean,BooleanMember>
+public class ArrayStorageFloat64
+	implements LinearStorage<ArrayStorageFloat64,Float64Member>
 {
 
-	private final boolean[] data;
+	private final double[] data;
 	
-	public ArrayStorageBoolean(long size) {
+	public ArrayStorageFloat64(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
+			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + Integer.MAX_VALUE + " booleans");
-		this.data = new boolean[(int)size];
+			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + Integer.MAX_VALUE + " float64s");
+		this.data = new double[(int)size];
 	}
 
 	@Override
-	public void set(long index, BooleanMember value) {
+	public void set(long index, Float64Member value) {
 		data[(int)index] = value.v();
 	}
 
 	@Override
-	public void get(long index, BooleanMember value) {
+	public void get(long index, Float64Member value) {
 		value.setV(data[(int)index]);
 	}
 	
@@ -64,8 +65,8 @@ public class ArrayStorageBoolean
 	}
 
 	@Override
-	public ArrayStorageBoolean duplicate() {
-		ArrayStorageBoolean s = new ArrayStorageBoolean(size());
+	public ArrayStorageFloat64 duplicate() {
+		ArrayStorageFloat64 s = new ArrayStorageFloat64(size());
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

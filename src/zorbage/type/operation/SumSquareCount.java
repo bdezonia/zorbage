@@ -29,7 +29,7 @@ package zorbage.type.operation;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Unity;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -44,7 +44,7 @@ public class SumSquareCount<T extends AdditiveGroup<T,U> & Multiplication<U> & U
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U avg, U sumSqDevs, U count) {
+	public void calculate(LinearStorage<?,U> storage, U avg, U sumSqDevs, U count) {
 		U tmp = g.construct();
 		U one = g.construct();
 		g.unity(one);

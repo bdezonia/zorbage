@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.BooleanMember;
+import zorbage.type.data.QuaternionFloat64Member;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -34,59 +35,46 @@ import zorbage.type.data.BooleanMember;
  *
  * @param <U>
  */
-public class ArrayStorageBit
-	implements Storage<ArrayStorageBit,BooleanMember>
+public class ArrayStorageQuaternionFloat64
+	implements LinearStorage<ArrayStorageQuaternionFloat64,QuaternionFloat64Member>
 {
 
-	private final long[] data;
-	private final long size;
+	private final double[] data;
 	
-	public ArrayStorageBit(long size) {
-	
+	public ArrayStorageQuaternionFloat64(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
-		if (size > 64l * Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageBit can handle at most " + (64l * Integer.MAX_VALUE) + " bits");
-		int count = (int)(size / 64);
-		if (count % 64 > 0) count += 1;
-		this.data = new long[count];
-		this.size = size;
+			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 can handle at most " + (Integer.MAX_VALUE / 4) + " quaternionfloat64s");
+		this.data = new double[(int)(size * 4)];
 	}
 
 	@Override
-	public void set(long index, BooleanMember value) {
-		synchronized (data) {
-			final int idx = (int)index / 64;
-			long bucket = data[idx];
-			final long mask = 1l << (index % 64);
-			if (value.v()) {
-				bucket = bucket | mask;
-			}
-			else {
-				bucket = bucket & ~mask;
-			}
-			data[idx] = bucket;
-		}
+	public void set(long index, QuaternionFloat64Member value) {
+		final int idx = ((int) index) * 4;
+		data[idx    ] = value.r();
+		data[idx + 1] = value.i();
+		data[idx + 2] = value.j();
+		data[idx + 3] = value.k();
 	}
 
 	@Override
-	public void get(long index, BooleanMember value) {
-		synchronized (data) {
-			final long bucket = data[(int)index / 64];
-			final long mask = 1l << (index % 64);
-			final long bit = bucket & mask;
-			value.setV(bit > 0);
-		}
+	public void get(long index, QuaternionFloat64Member value) {
+		final int idx = ((int) index) * 4;
+		value.setR(data[idx    ]);
+		value.setI(data[idx + 1]);
+		value.setJ(data[idx + 2]);
+		value.setK(data[idx + 3]);
 	}
 	
 	@Override
 	public long size() {
-		return size;
+		return data.length/4;
 	}
 
 	@Override
-	public ArrayStorageBit duplicate() {
-		ArrayStorageBit s = new ArrayStorageBit(size());
+	public ArrayStorageQuaternionFloat64 duplicate() {
+		ArrayStorageQuaternionFloat64 s = new ArrayStorageQuaternionFloat64(size());
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

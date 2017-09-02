@@ -30,7 +30,7 @@ import zorbage.type.algebra.Invertible;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
 import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.storage.Storage;
+import zorbage.type.storage.LinearStorage;
 
 /**
  * 
@@ -42,13 +42,13 @@ import zorbage.type.storage.Storage;
 public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & Unity<U>, U> {
 
 	private T g;
-	private Storage<?,U> localStorage;
+	private LinearStorage<?,U> localStorage;
 
 	public Median(T g) {
 		this.g = g;
 	}
 	
-	public void calculate(Storage<?,U> storage, U result) {
+	public void calculate(LinearStorage<?,U> storage, U result) {
 		U tmp = g.construct();
 		U one = g.construct();
 		U sum = g.construct();

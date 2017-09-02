@@ -43,9 +43,9 @@ import zorbage.type.operation.Max;
 import zorbage.type.operation.Median;
 import zorbage.type.operation.Min;
 import zorbage.type.operation.Sum;
-import zorbage.type.storage.Accessor;
-import zorbage.type.storage.ArrayStorageFloat64;
-import zorbage.type.storage.ArrayStorageSignedInt32;
+import zorbage.type.storage.LinearAccessor;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 
 /**
  * 
@@ -118,7 +118,7 @@ public class Test {
 	public static void testAccessor() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
-		Accessor<SignedInt32Member> accessor = new Accessor<SignedInt32Member>(value, storage);
+		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {
@@ -140,7 +140,7 @@ public class Test {
 	public static void testGroupOfConversions() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
-		Accessor<SignedInt32Member> accessor = new Accessor<SignedInt32Member>(value, storage);
+		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {
@@ -174,7 +174,7 @@ public class Test {
 	public static void testAverage() {
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
-		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {
@@ -194,7 +194,7 @@ public class Test {
 		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
-		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {
@@ -213,7 +213,7 @@ public class Test {
 		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
-		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {
@@ -234,7 +234,7 @@ public class Test {
 		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
-		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {
@@ -254,7 +254,7 @@ public class Test {
 	public static void testSum() {
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
-		Accessor<Float64Member> accessor = new Accessor<Float64Member>(value, storage);
+		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
 		while (accessor.hasNext()) {

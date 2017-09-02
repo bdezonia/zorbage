@@ -24,40 +24,56 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.operation;
+package zorbage.type.storage.linear.array;
 
-import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.Invertible;
-import zorbage.type.algebra.Multiplication;
-import zorbage.type.algebra.Unity;
+import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.storage.LinearStorage;
-
-// TODO Make a std dev class that is sqrt of variance
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public class Variance<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U> {
+public class ArrayStorageComplexFloat64
+	implements LinearStorage<ArrayStorageComplexFloat64,ComplexFloat64Member>
+{
 
-	private T g;
+	private final double[] data;
 	
-	public Variance(T g) {
-		this.g = g;
+	public ArrayStorageComplexFloat64(long size) {
+		if (size < 0)
+			throw new IllegalArgumentException("ArrayStorageComplexFloat64 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException("ArrayStorageComplexFloat64 can handle at most " + (Integer.MAX_VALUE / 2) + " complexfloat64s");
+		this.data = new double[(int)(size*2)];
+	}
+
+	@Override
+	public void set(long index, ComplexFloat64Member value) {
+		final int idx = ((int) index) * 2;
+		data[idx] = value.r();
+		data[idx + 1] = value.i();
+	}
+
+	@Override
+	public void get(long index, ComplexFloat64Member value) {
+		final int idx = ((int) index) * 2;
+		value.setR(data[idx]);
+		value.setI(data[idx + 1]);
 	}
 	
-	public void calculate(LinearStorage<?,U> storage, U result) {
-		U avg = g.construct();
-		U sum = g.construct();
-		U count = g.construct();
-		U one = g.construct();
-		g.unity(one);
-		Average<T, U> mean = new Average<T,U>(g);
-		mean.calculate(storage, avg);
-		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(g);
-		sumSq.calculate(storage, avg, sum, count);
-		g.subtract(count, one, count);
-		g.divide(sum, count, result);
+	@Override
+	public long size() {
+		return data.length/2;
 	}
+
+	@Override
+	public ArrayStorageComplexFloat64 duplicate() {
+		ArrayStorageComplexFloat64 s = new ArrayStorageComplexFloat64(size());
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
+	}
+
 }
