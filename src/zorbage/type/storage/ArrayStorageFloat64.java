@@ -44,7 +44,7 @@ public class ArrayStorageFloat64
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + Integer.MAX_VALUE + " float64s");
 		this.data = new double[(int)size];
 	}
 

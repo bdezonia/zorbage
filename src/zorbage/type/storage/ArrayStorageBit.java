@@ -46,7 +46,7 @@ public class ArrayStorageBit
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
 		if (size > 64l * Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageBit cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageBit can handle at most " + (64l * Integer.MAX_VALUE) + " bits");
 		int count = (int)(size / 64);
 		if (count % 64 > 0) count += 1;
 		this.data = new long[count];

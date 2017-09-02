@@ -44,7 +44,7 @@ public class ArrayStorageOctonionFloat64
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageOctonionFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / 8))
-			throw new IllegalArgumentException("ArrayStorageOctonionFloat64 cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageOctonionfloat64 can handle at most " + (Integer.MAX_VALUE / 8) + " octonionfloat64s");
 		this.data = new double[(int)(size*8)];
 	}
 

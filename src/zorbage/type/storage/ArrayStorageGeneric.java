@@ -45,7 +45,7 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
 		this.data = new Object[(int)size];
 		for (int i = 0; i < size; i++) {
 			this.data[i] = g.construct();

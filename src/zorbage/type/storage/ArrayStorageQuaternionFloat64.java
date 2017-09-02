@@ -44,7 +44,7 @@ public class ArrayStorageQuaternionFloat64
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / 4))
-			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 can handle at most " + (Integer.MAX_VALUE / 4) + " quaternionfloat64s");
 		this.data = new double[(int)(size * 4)];
 	}
 

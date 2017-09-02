@@ -44,7 +44,7 @@ public class ArrayStorageBoolean
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle such a large request");
+			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + Integer.MAX_VALUE + " booleans");
 		this.data = new boolean[(int)size];
 	}
 
