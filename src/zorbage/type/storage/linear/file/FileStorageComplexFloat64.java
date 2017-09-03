@@ -29,7 +29,6 @@ package zorbage.type.storage.linear.file;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.math.BigInteger;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -181,7 +180,7 @@ public class FileStorageComplexFloat64
 	}
 
 	// TODO: improve performance. use java 8. use nio?
-	public static int loads = 0;
+
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");

@@ -26,8 +26,6 @@
  */
 package zorbage.type.storage.linear.array;
 
-import java.math.BigInteger;
-
 import zorbage.type.data.QuaternionFloat64Member;
 import zorbage.type.storage.LinearStorage;
 import zorbage.util.Fraction;
