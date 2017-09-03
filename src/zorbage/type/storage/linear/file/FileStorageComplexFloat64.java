@@ -26,13 +26,14 @@
  */
 package zorbage.type.storage.linear.file;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.storage.LinearStorage;
@@ -47,10 +48,9 @@ public class FileStorageComplexFloat64
 	implements LinearStorage<FileStorageComplexFloat64,ComplexFloat64Member>
 {
 	// TODO
-	// 1) finish: use RandomAccessFile
-	// 2) multiple buffer support
-	// 3) add low level array access to Array storage classes so can do block reads/writes
-	// 4) make BUFFERESIZE configurable
+	// 1) multiple buffer support
+	// 2) add low level array access to Array storage classes so can do block reads/writes
+	// 3) make BUFFERESIZE configurable
 	
 	private static final long BUFFERSIZE = 512;
 	private long numElements;
@@ -69,13 +69,12 @@ public class FileStorageComplexFloat64
 		// if the file is new set it all to zero
 		if (!f.exists()) {
 			try { 
-			    FileOutputStream fileOutputStream = new FileOutputStream(f);
-			    DataOutputStream str = new DataOutputStream(fileOutputStream);
-			    str.writeLong(numElements);
-			    for (long l = 0; l < (numElements + BUFFERSIZE)* 2; l++) {
-			    	str.writeDouble(0);
-			    }
-			    str.close();
+				RandomAccessFile raf = new RandomAccessFile(f, "w");
+				raf.writeLong(numElements);
+				for (long l = 0; l < (numElements + BUFFERSIZE)* 2; l++) {
+					raf.writeDouble(0);
+				}
+				raf.close();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -111,18 +110,24 @@ public class FileStorageComplexFloat64
 	@Override
 	public FileStorageComplexFloat64 duplicate() {
 		flush();
-		File tmpfile = null;
 		try {
-			tmpfile = File.createTempFile("Storage", ".storage");
+			File tmpfile = File.createTempFile("Storage", ".storage");
+			FileStorageComplexFloat64 other = new FileStorageComplexFloat64(numElements, tmpfile);
+			other.buffer = buffer.duplicate();
+			other.dirty = dirty;
+			other.loadedIndex = loadedIndex;
+		    Path FROM = Paths.get(file.getAbsolutePath());
+		    Path TO = Paths.get(tmpfile.getAbsolutePath());
+		    //overwrite existing file, if exists
+		    CopyOption[] options = new CopyOption[]{
+		      StandardCopyOption.REPLACE_EXISTING,
+		      StandardCopyOption.COPY_ATTRIBUTES
+		    }; 
+		    Files.copy(FROM, TO, options);
+			return other;
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		FileStorageComplexFloat64 other = new FileStorageComplexFloat64(numElements, tmpfile);
-		other.buffer = buffer.duplicate();
-		other.dirty = dirty;
-		other.loadedIndex = loadedIndex;
-		// duplicate file data
-		return other;
 	}
 	
 	public String filename() {
@@ -142,15 +147,14 @@ public class FileStorageComplexFloat64
 		if (!dirty) return;
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		try {
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.skip(8l + (loadedIndex/BUFFERSIZE)*BUFFERSIZE*2*8);
-			DataOutputStream dis = new DataOutputStream(fos);
+			RandomAccessFile raf = new RandomAccessFile(file, "w");
+			raf.seek(8l + (loadedIndex/BUFFERSIZE)*BUFFERSIZE*2*8);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
-				dis.writeDouble(tmp.r());
-				dis.writeDouble(tmp.i());
+				raf.writeDouble(tmp.r());
+				raf.writeDouble(tmp.i());
 			}
-			dis.close();
+			raf.close();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -160,12 +164,10 @@ public class FileStorageComplexFloat64
 	// it's optional to call this
 	
 	public void dispose() {
-		// close stream
-		// and delete file
 		file.deleteOnExit();
 	}
 
-	// TODO: improve performance. use java 8. use nio? save open read write stream?
+	// TODO: improve performance. use java 8. use nio?
 	
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
@@ -176,17 +178,16 @@ public class FileStorageComplexFloat64
 				flush();
 			// read file data into array using sizeof() and skipping 1st eight bytes
 			try {
-				FileInputStream fis = new FileInputStream(file);
-				fis.skip(8l + (index/BUFFERSIZE)*BUFFERSIZE*2*8);
-				DataInputStream dis = new DataInputStream(fis);
+				RandomAccessFile raf = new RandomAccessFile(file, "r");
+				raf.seek(8l + (index/BUFFERSIZE)*BUFFERSIZE*2*8);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					double real = dis.readDouble();
-					double imag = dis.readDouble();
+					double real = raf.readDouble();
+					double imag = raf.readDouble();
 					tmp.setR(real);
 					tmp.setI(imag);
 					buffer.set(i, tmp);
 				}
-				dis.close();
+				raf.close();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -195,18 +196,11 @@ public class FileStorageComplexFloat64
 	}
 	
 	private static long findNumElem(File f) throws IOException {
-		DataInputStream str = null;
 		long val = 0;
 		try {
-			InputStream fileInputStream = new FileInputStream(f);
-			str = new DataInputStream(fileInputStream);
-			val = str.readLong();
-		} catch (Exception e) {
-			throw new IOException(e.getMessage());
-		}
-		try {
-			if (str != null)
-				str.close();
+			RandomAccessFile raf = new RandomAccessFile(f, "r");
+			val = raf.readLong();
+			raf.close();
 		} catch (Exception e) {
 			throw new IOException(e.getMessage());
 		}
