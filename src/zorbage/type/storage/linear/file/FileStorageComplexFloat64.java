@@ -57,7 +57,7 @@ public class FileStorageComplexFloat64
 	private ArrayStorageComplexFloat64 buffer;
 	private File file;
 	private boolean dirty;
-	private long loadedIndex;
+	private long pageIndex;
 	
 	public FileStorageComplexFloat64(long numElements, File f) {
 		if (numElements < 0)
@@ -65,11 +65,12 @@ public class FileStorageComplexFloat64
 		this.numElements = numElements;
 		this.dirty = false;
 		this.buffer = new ArrayStorageComplexFloat64(BUFFERSIZE);
+		this.pageIndex = numElements;
 		this.file = f;
 		// if the file is new set it all to zero
-		if (!f.exists()) {
+		if (!f.exists() || f.length() == 0) {
 			try { 
-				RandomAccessFile raf = new RandomAccessFile(f, "w");
+				RandomAccessFile raf = new RandomAccessFile(f, "rw");
 				raf.writeLong(numElements);
 				for (long l = 0; l < (numElements + BUFFERSIZE)* 2; l++) {
 					raf.writeDouble(0);
@@ -115,7 +116,7 @@ public class FileStorageComplexFloat64
 			FileStorageComplexFloat64 other = new FileStorageComplexFloat64(numElements, tmpfile);
 			other.buffer = buffer.duplicate();
 			other.dirty = dirty;
-			other.loadedIndex = loadedIndex;
+			other.pageIndex = pageIndex;
 		    Path FROM = Paths.get(file.getAbsolutePath());
 		    Path TO = Paths.get(tmpfile.getAbsolutePath());
 		    //overwrite existing file, if exists
@@ -147,8 +148,8 @@ public class FileStorageComplexFloat64
 		if (!dirty) return;
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		try {
-			RandomAccessFile raf = new RandomAccessFile(file, "w");
-			raf.seek(8l + (loadedIndex/BUFFERSIZE)*BUFFERSIZE*2*8);
+			RandomAccessFile raf = new RandomAccessFile(file, "rw");
+			raf.seek(8l + (pageIndex/BUFFERSIZE)*BUFFERSIZE*2*8);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
 				raf.writeDouble(tmp.r());
@@ -172,7 +173,7 @@ public class FileStorageComplexFloat64
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		if (index < loadedIndex || index > loadedIndex + BUFFERSIZE) {
+		if (index < pageIndex || index > pageIndex + BUFFERSIZE) {
 			ComplexFloat64Member tmp = new ComplexFloat64Member();
 			if (dirty)
 				flush();
@@ -189,9 +190,10 @@ public class FileStorageComplexFloat64
 				}
 				raf.close();
 			} catch (Exception e) {
+				System.out.println(e);
 				throw new IllegalArgumentException(e.getMessage());
 			}
-			loadedIndex = index;
+			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
 	}
 	
