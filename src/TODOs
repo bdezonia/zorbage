@@ -48,7 +48,7 @@ Other needs
   make vectors, rmodules, matrices use multidimaccessor
   apache commons math4 does a lot of things my code does
     it doesn't have all of algebra hierarchy and it doesn't have quats and octs
-    and it doesn't handle huge datasets
+    and it doesn't handle huge datasets and it might be slow due to lots of memory allocation
 
 Make FileStorage. Have an encoder that reads/writes from/to numeric types.
 Then can have matrices with a FileStorage strategy rather than an array
@@ -71,4 +71,5 @@ Make an abstraction that assigns values and use it.
 Use elementSize() as part of encoders to make them more generic and simplify FileStorage classes
 Sparse vector/matrix/tensor storage
 Constructible from simple inputs: (long), (long,long), (long[]), same with doubles
-String constructors: how about character stream constructors instead
+  take a storage strategy: array, file, bufferedfile?, sparse
+String constructors for numeric types: how about character stream constructors instead
