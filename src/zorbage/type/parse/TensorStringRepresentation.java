@@ -123,7 +123,7 @@ public class TensorStringRepresentation {
 	private long[] determineDimensions(List<Character> chars) {
 		List<Long> reverseDims = new ArrayList<Long>();
 		int unmatchedBrackets = 0;
-		int innermostDim = 1;
+		long innermostDim = 1;
 		boolean inOct = false;
 		for (int i = 0; i < chars.size(); i++) {
 			char ch = chars.get(i);
@@ -156,7 +156,7 @@ public class TensorStringRepresentation {
 			}
 			reverseDims.set(i, reverseDims.get(i) / sz);
 		}
-		reverseDims.add((long)innermostDim);
+		reverseDims.add(innermostDim);
 		long[] dims = new long[reverseDims.size()];
 		int x = 0;
 		for (int i = reverseDims.size()-1; i >= 0; i--)

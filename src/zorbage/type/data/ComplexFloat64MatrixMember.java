@@ -88,7 +88,7 @@ public final class ComplexFloat64MatrixMember {
 		}
 		
 		if (r*c != storage.size()) {
-			storage = new ArrayStorageComplexFloat64(((long)r)*c);
+			storage = new ArrayStorageComplexFloat64(r*c);
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {

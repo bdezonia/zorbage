@@ -68,3 +68,4 @@ ComplexFloat64 array encoder
     v.setR(array[index + 0];
     v.setI(array[index + 1];
 Make an abstraction that assigns values and use it.
+Sparse vector/matrix/tensor storage
