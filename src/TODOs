@@ -73,3 +73,8 @@ Sparse vector/matrix/tensor storage
 Constructible from simple inputs: (long), (long,long), (long[]), same with doubles
   take a storage strategy: array, file, bufferedfile?, sparse
 String constructors for numeric types: how about character stream constructors instead
+I don't like how file storage class has a dispose() and flush() method. Someone who uses a file
+  backed data structure using a more general facade may not know those methods exist or may not
+  be able to determine an appropriate time to call them. If we didn't allow saving of data and
+  passing in a filename then we could always dispose and never worry about flushing.
+Make more FileStorage classes for each type.
