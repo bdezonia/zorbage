@@ -30,6 +30,7 @@ import java.math.BigInteger;
 
 import zorbage.type.data.UnboundedIntMember;
 import zorbage.type.storage.LinearStorage;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -42,6 +43,8 @@ public class ArrayStorageUnboundedInt
 {
 
 	private final BigInteger[] data;
+	
+	public static final Fraction BYTESIZE = Fraction.VARIABLE;
 	
 	public ArrayStorageUnboundedInt(long size) {
 		if (size < 0)
@@ -75,6 +78,11 @@ public class ArrayStorageUnboundedInt
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
+	}
+
+	@Override
+	public Fraction elementSize() {
+		return BYTESIZE;
 	}
 
 }

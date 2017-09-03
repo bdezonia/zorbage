@@ -26,8 +26,11 @@
  */
 package zorbage.type.storage.linear.array;
 
+import java.math.BigInteger;
+
 import zorbage.type.data.BooleanMember;
 import zorbage.type.storage.LinearStorage;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,6 +43,8 @@ public class ArrayStorageBoolean
 {
 
 	private final boolean[] data;
+	
+	public static final Fraction BYTESIZE = new Fraction(1);
 	
 	public ArrayStorageBoolean(long size) {
 		if (size < 0)
@@ -70,6 +75,11 @@ public class ArrayStorageBoolean
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
+	}
+
+	@Override
+	public Fraction elementSize() {
+		return BYTESIZE;
 	}
 
 }

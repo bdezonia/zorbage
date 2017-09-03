@@ -26,8 +26,11 @@
  */
 package zorbage.type.storage.linear.array;
 
+import java.math.BigInteger;
+
 import zorbage.type.data.OctonionFloat64Member;
 import zorbage.type.storage.LinearStorage;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,6 +43,8 @@ public class ArrayStorageOctonionFloat64
 {
 
 	private final double[] data;
+	
+	public static final Fraction BYTESIZE = new Fraction(64);
 	
 	public ArrayStorageOctonionFloat64(long size) {
 		if (size < 0)
@@ -86,6 +91,11 @@ public class ArrayStorageOctonionFloat64
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
+	}
+
+	@Override
+	public Fraction elementSize() {
+		return BYTESIZE;
 	}
 
 }

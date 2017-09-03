@@ -29,6 +29,7 @@ package zorbage.type.storage.linear.file;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigInteger;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +39,7 @@ import java.nio.file.StandardCopyOption;
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -48,16 +50,18 @@ public class FileStorageComplexFloat64
 	implements LinearStorage<FileStorageComplexFloat64,ComplexFloat64Member>
 {
 	// TODO
-	// 1) multiple buffer support
-	// 2) add low level array access to Array storage classes so can do block reads/writes
-	// 3) make BUFFERESIZE configurable
+	// 1) add low level array access to Array storage classes so can do block reads/writes
+	// 2) make BUFFERSIZE and numBuffers configurable
 	
-	private static final long BUFFERSIZE = 512;
 	private long numElements;
 	private ArrayStorageComplexFloat64 buffer;
 	private File file;
 	private boolean dirty;
 	private long pageIndex;
+	
+	private static final long BUFFERSIZE = 10;
+
+	public static final Fraction BYTESIZE = ArrayStorageComplexFloat64.BYTESIZE;
 	
 	public FileStorageComplexFloat64(long numElements, File f) {
 		if (numElements < 0)
@@ -71,14 +75,18 @@ public class FileStorageComplexFloat64
 		if (!f.exists() || f.length() == 0) {
 			try { 
 				RandomAccessFile raf = new RandomAccessFile(f, "rw");
-				raf.writeLong(numElements);
-				for (long l = 0; l < (numElements + BUFFERSIZE)* 2; l++) {
+				for (long l = 0; l < (numElements * 2); l++) {
 					raf.writeDouble(0);
 				}
 				raf.close();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
+		}
+		else {
+			// TODO: what if someone passes in populated file whose size does not equal numelements? Test
+			if (file.length() != numElements*BYTESIZE.n())
+				throw new IllegalArgumentException("passed in file does not have correct size");
 		}
 	}
 	
@@ -153,7 +161,7 @@ public class FileStorageComplexFloat64
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		try {
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek(8l + (pageIndex/BUFFERSIZE)*BUFFERSIZE*2*8);
+			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
 				raf.writeDouble(tmp.r());
@@ -173,18 +181,19 @@ public class FileStorageComplexFloat64
 	}
 
 	// TODO: improve performance. use java 8. use nio?
-	
+	public static int loads = 0;
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
 		if (index < pageIndex || index >= pageIndex + BUFFERSIZE) {
 			ComplexFloat64Member tmp = new ComplexFloat64Member();
-			if (dirty)
+			if (dirty) {
 				flush();
+			}
 			// read file data into array using sizeof() and skipping 1st eight bytes
 			try {
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek(8l + (index/BUFFERSIZE)*BUFFERSIZE*2*8);
+				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
 				for (long i = 0; i < BUFFERSIZE; i++) {
 					double real = raf.readDouble();
 					double imag = raf.readDouble();
@@ -201,16 +210,11 @@ public class FileStorageComplexFloat64
 		}
 	}
 	
-	private static long findNumElem(File f) throws IOException {
-		long val = 0;
-		try {
-			RandomAccessFile raf = new RandomAccessFile(f, "r");
-			val = raf.readLong();
-			raf.close();
-		} catch (Exception e) {
-			throw new IOException(e.getMessage());
-		}
-		return val;
+	private static long findNumElem(File f) {
+		return f.length() / BYTESIZE.n();
 	}
 	
+	public Fraction elementSize() {
+		return BYTESIZE;
+	}
 }

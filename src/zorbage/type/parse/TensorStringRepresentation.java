@@ -122,7 +122,7 @@ public class TensorStringRepresentation {
 	
 	private long[] determineDimensions(List<Character> chars) {
 		List<Long> reverseDims = new ArrayList<Long>();
-		int unmatchedBrackets = 0;
+		int unmatchedBrackets = 0;  // TODO: does this need to be a long?
 		long innermostDim = 1;
 		boolean inOct = false;
 		for (int i = 0; i < chars.size(); i++) {

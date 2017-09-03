@@ -26,8 +26,11 @@
  */
 package zorbage.type.storage.linear.array;
 
+import java.math.BigInteger;
+
 import zorbage.type.data.QuaternionFloat64Member;
 import zorbage.type.storage.LinearStorage;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,6 +43,8 @@ public class ArrayStorageQuaternionFloat64
 {
 
 	private final double[] data;
+	
+	public static final Fraction BYTESIZE = new Fraction(32);
 	
 	public ArrayStorageQuaternionFloat64(long size) {
 		if (size < 0)
@@ -78,6 +83,11 @@ public class ArrayStorageQuaternionFloat64
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
+	}
+
+	@Override
+	public Fraction elementSize() {
+		return BYTESIZE;
 	}
 
 }

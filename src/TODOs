@@ -68,4 +68,7 @@ ComplexFloat64 array encoder
     v.setR(array[index + 0];
     v.setI(array[index + 1];
 Make an abstraction that assigns values and use it.
+Use elementSize() as part of encoders to make them more generic and simplify FileStorage classes
 Sparse vector/matrix/tensor storage
+Constructible from simple inputs: (long), (long,long), (long[]), same with doubles
+String constructors: how about character stream constructors instead

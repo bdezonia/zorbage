@@ -26,8 +26,11 @@
  */
 package zorbage.type.storage.linear.array;
 
+import java.math.BigInteger;
+
 import zorbage.type.algebra.Group;
 import zorbage.type.storage.LinearStorage;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -41,6 +44,8 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 
 	private final Object[] data;
 	private final T g;
+	
+	public static final Fraction BYTESIZE = Fraction.UNKNOWN;
 	
 	public ArrayStorageGeneric(long size, T g) {
 		if (size < 0)
@@ -78,6 +83,11 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 		for (int i = 0; i < data.length; i++)
 			g.assign((U)data[i], (U)s.data[i]);
 		return s;
+	}
+
+	@Override
+	public Fraction elementSize() {
+		return BYTESIZE;
 	}
 
 }

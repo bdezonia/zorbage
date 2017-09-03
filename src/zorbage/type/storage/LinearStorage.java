@@ -26,6 +26,8 @@
  */
 package zorbage.type.storage;
 
+import zorbage.util.Fraction;
+
 /**
  * 
  * @author Barry DeZonia
@@ -38,4 +40,5 @@ public interface LinearStorage<T extends LinearStorage<T,U>, U> {
 	void get(long index, U value);
 	long size();
 	T duplicate();
+	Fraction elementSize();
 }

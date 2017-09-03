@@ -26,8 +26,11 @@
  */
 package zorbage.type.storage.linear.array;
 
+import java.math.BigInteger;
+
 import zorbage.type.data.ComplexFloat64Member;
 import zorbage.type.storage.LinearStorage;
+import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,6 +43,8 @@ public class ArrayStorageComplexFloat64
 {
 
 	private final double[] data;
+	
+	public static final Fraction BYTESIZE = new Fraction(16);
 	
 	public ArrayStorageComplexFloat64(long size) {
 		if (size < 0)
@@ -74,6 +79,11 @@ public class ArrayStorageComplexFloat64
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
+	}
+
+	@Override
+	public Fraction elementSize() {
+		return BYTESIZE;
 	}
 
 }
