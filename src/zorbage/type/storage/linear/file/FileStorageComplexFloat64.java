@@ -137,8 +137,12 @@ public class FileStorageComplexFloat64
 	
 	public void setFilename(String filename) throws IOException {
 		flush();
-		if (!file.renameTo(new File(filename)))
+		File newFile = new File(filename);
+		if (!file.renameTo(newFile))
 			throw new IOException("Can't rename file from " + file.getAbsolutePath() + " to " + filename);
+		file = newFile;
+		if (file.getAbsolutePath() != filename)
+			throw new IOException("Existing file object did not change name");
 	}
 	
 	// TODO - make this part of the storage api. users should tell storage when they are done with it.
@@ -173,7 +177,7 @@ public class FileStorageComplexFloat64
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		if (index < pageIndex || index > pageIndex + BUFFERSIZE) {
+		if (index < pageIndex || index >= pageIndex + BUFFERSIZE) {
 			ComplexFloat64Member tmp = new ComplexFloat64Member();
 			if (dirty)
 				flush();
