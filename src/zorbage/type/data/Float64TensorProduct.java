@@ -108,7 +108,7 @@ public class Float64TensorProduct
 		Float64Member tmp = new Float64Member();
 		long[] dims = new long[from.numDims()];
 		from.dims(dims);
-		to.setDims(dims);
+		to.init(dims);
 		long numElems = from.numElems();
 		for (long i = 0; i < numElems; i++) {
 			from.v(i, tmp);

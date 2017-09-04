@@ -47,6 +47,8 @@ import zorbage.util.BigList;
  */
 public final class Float64TensorProductMember {
 
+	private static final Float64Member ZERO = new Float64Member(0);
+
 	private LinearStorage<?,Float64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
@@ -95,6 +97,24 @@ public final class Float64TensorProductMember {
 			storage = new FileStorageFloat64(numElems(nd));
 		}
 	}
+
+	public void set(Float64TensorProductMember other) {
+		if (this == other) return;
+		dims = other.dims.clone();
+		multipliers = other.multipliers.clone();
+		storage = other.storage.duplicate();
+		m = other.m;
+		s = other.s;
+	}
+	
+	public void get(Float64TensorProductMember other) {
+		if (this == other) return;
+		other.dims = dims.clone();
+		other.multipliers = multipliers.clone();
+		other.storage = storage.duplicate();
+		other.m = m;
+		other.s = s;
+	}
 	
 	public int numDims() {
 		return dims.length;
@@ -112,17 +132,23 @@ public final class Float64TensorProductMember {
 		}
 	}
 	
-	public void setDims(long[] newDims) {
-		long newCount = numElems(newDims);
-		if (newCount != storage.size()) {
-			throw new IllegalArgumentException("will not allow storage size change");
-		}
-		Float64Member zero = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.set(i, zero);
-		}
+	public void init(long[] newDims) {
 		dims = newDims.clone();
 		multipliers = calcMultipliers();
+		long newCount = numElems(newDims);
+		if (newCount != storage.size()) {
+			if (s == StorageConstruction.ARRAY) {
+				storage = new ArrayStorageFloat64(newCount);
+			}
+			else {
+				storage = new FileStorageFloat64(newCount);
+			}
+		}
+		else {
+			for (long i = 0; i < storage.size(); i++) {
+				storage.set(i, ZERO);
+			}
+		}
 	}
 	
 	public long numElems() {

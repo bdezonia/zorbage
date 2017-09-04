@@ -42,7 +42,7 @@ import zorbage.util.BigList;
  */
 public final class OctonionFloat64MatrixMember {
 	
-	//private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
+	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
 	private LinearStorage<?,OctonionFloat64Member> storage;
 	private long rows;
@@ -107,7 +107,11 @@ public final class OctonionFloat64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		if (s == StorageConstruction.ARRAY)
+		if (storage != null && storage.size() == r*c) {
+			for (long i = 0; i < storage.size(); i++)
+				storage.set(i, ZERO);
+		}
+		else if (s == StorageConstruction.ARRAY)
 			storage = new ArrayStorageOctonionFloat64(r*c);
 		else
 			storage = new FileStorageOctonionFloat64(r*c);

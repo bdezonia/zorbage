@@ -79,3 +79,5 @@ String constructors of numeric types default to DENSE ARRAY. Maybe allow mem sto
 FileStorage classes only support float64s. expand to include ints, bools, etc.
 The constructors for storage may duplicate others. Due to time lags this is not necessarily
   threadsafe. Obtain locks.
+use vector/rmodule init() inside their own operations: c.init(targetSize). this is cuz vectors
+  no longer autosize.

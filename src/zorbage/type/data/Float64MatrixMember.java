@@ -42,7 +42,7 @@ import zorbage.util.BigList;
  */
 public final class Float64MatrixMember {
 	
-	//private static final Float64Member ZERO = new Float64Member(0);
+	private static final Float64Member ZERO = new Float64Member(0);
 
 	private LinearStorage<?,Float64Member> storage;
 	private long rows;
@@ -100,12 +100,14 @@ public final class Float64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		if (s == StorageConstruction.ARRAY) {
+		if (storage != null && storage.size() == r*c) {
+			for (long i = 0; i < storage.size(); i++)
+				storage.set(i, ZERO);
+		}
+		else if (s == StorageConstruction.ARRAY)
 			storage = new ArrayStorageFloat64(r*c);
-		}
-		else {
+		else
 			storage = new FileStorageFloat64(r*c);
-		}
 	}
 	
 	public void v(long r, long c, Float64Member value) {

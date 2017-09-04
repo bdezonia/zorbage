@@ -42,7 +42,7 @@ import zorbage.util.BigList;
  */
 public final class QuaternionFloat64MatrixMember {
 	
-	//private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
+	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
 	private LinearStorage<?,QuaternionFloat64Member> storage;
 	private long rows;
@@ -103,7 +103,11 @@ public final class QuaternionFloat64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		if (s == StorageConstruction.ARRAY)
+		if (storage != null && storage.size() == r*c) {
+			for (long i = 0; i < storage.size(); i++)
+				storage.set(i, ZERO);
+		}
+		else if (s == StorageConstruction.ARRAY)
 			storage = new ArrayStorageQuaternionFloat64(r*c);
 		else
 			storage = new FileStorageQuaternionFloat64(r*c);

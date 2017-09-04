@@ -43,7 +43,7 @@ import zorbage.util.BigList;
 public final class QuaternionFloat64RModuleMember {
 
 	private static final QuaternionFloat64Group g = new QuaternionFloat64Group();
-	//private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
+	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
 	private LinearStorage<?,QuaternionFloat64Member> storage;
 	private MemoryConstruction m;
@@ -147,4 +147,17 @@ public final class QuaternionFloat64RModuleMember {
 		return builder.toString();
 	}
 
+	public void init(long size) {
+		if (storage == null || storage.size() != size) {
+			if (s == StorageConstruction.ARRAY)
+				storage = new ArrayStorageQuaternionFloat64(size);
+			else
+				storage = new FileStorageQuaternionFloat64(size);
+		}
+		else {
+			for (long i = 0; i < storage.size(); i++) {
+				storage.set(i, ZERO);
+			}
+		}
+	}
 }

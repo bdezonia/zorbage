@@ -43,7 +43,7 @@ import zorbage.util.BigList;
 public final class ComplexFloat64VectorMember {
 
 	private static final ComplexFloat64Group g = new ComplexFloat64Group();
-	//private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
 	private LinearStorage<?,ComplexFloat64Member> storage;
 	private MemoryConstruction m;
@@ -142,6 +142,20 @@ public final class ComplexFloat64VectorMember {
 		}
 		builder.append(']');
 		return builder.toString();
+	}
+	
+	public void init(long size) {
+		if (storage == null || storage.size() != size) {
+			if (s == StorageConstruction.ARRAY)
+				storage = new ArrayStorageComplexFloat64(size);
+			else
+				storage = new FileStorageComplexFloat64(size);
+		}
+		else {
+			for (long i = 0; i < storage.size(); i++) {
+				storage.set(i, ZERO);
+			}
+		}
 	}
 
 }
