@@ -24,18 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.algebra;
-
-import zorbage.type.ctor.Constructible0d;
-import zorbage.type.ctor.ConstructibleString;
-import zorbage.type.ctor.ConstructibleU;
+package zorbage.type.ctor;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface Constructable<U> extends Constructible0d<U>, ConstructibleU<U>, ConstructibleString<U>
-{
+public interface ConstructibleU<U> {
+	U construct(U other);
 }
