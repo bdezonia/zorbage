@@ -30,9 +30,6 @@ Other needs
     This affects complex, quat, and oct. Now I assume a nan overrides all.
   complex numbers: polar constructors
   quotient/remainder as well as div/mod
-  make interface DimensionallyConstructable to support things like
-    defining arrays and matrices and tensors with specified shape
-  make Constructible interfaces from primitive types
   there are numerous kinds of norms. can embed a default impl for some types. but should implement
     families of reusable norm implementations
   group hierarchy could be multithreaded
@@ -70,8 +67,7 @@ ComplexFloat64 array encoder
 Make an abstraction that assigns values and use it.
 Use elementSize() as part of encoders to make them more generic and simplify FileStorage classes
 Sparse vector/matrix/tensor storage
-Constructible from simple inputs: (long), (long,long), (long[]), same with doubles
-  take a storage strategy: array, file, bufferedfile?, sparse
+Constructibles take a storage strategy: array, file, bufferedfile?, sparse
 String constructors for numeric types: how about character stream constructors instead
 I don't like how file storage class has a dispose() and flush() method. Someone who uses a file
   backed data structure using a more general facade may not know those methods exist or may not
