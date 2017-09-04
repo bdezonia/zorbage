@@ -39,7 +39,7 @@ import zorbage.util.BigList;
 public final class Float64VectorMember {
 
 	private static final Float64Group g = new Float64Group();
-	private static final Float64Member ZERO = new Float64Member(0); 
+	//private static final Float64Member ZERO = new Float64Member(0); 
 
 	private ArrayStorageFloat64 storage;
 	
@@ -77,7 +77,11 @@ public final class Float64VectorMember {
 		}
 	}
 
-	public void v(int i, Float64Member v) {
+	public Float64VectorMember(long d1) {
+		storage = new ArrayStorageFloat64(d1);
+	}
+	
+	public void v(long i, Float64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
@@ -86,17 +90,7 @@ public final class Float64VectorMember {
 		}
 	}
 
-	public void setV(int i, Float64Member v) {
-		if (i >= storage.size()) {
-			if (g.isEqual(v, ZERO)) return;
-			ArrayStorageFloat64 tmp = storage;
-			storage = new ArrayStorageFloat64(i+1);
-			Float64Member value = new Float64Member();
-			for (long j = 0; j < tmp.size(); j++) {
-				tmp.get(j, value);
-				storage.set(j, value);
-			}
-		}
+	public void setV(long i, Float64Member v) {
 		storage.set(i, v);
 	}
 	
@@ -123,14 +117,14 @@ public final class Float64VectorMember {
 		}
 	}
 
-	public int length() { return (int) storage.size(); }
+	public long length() { return storage.size(); }
 	
 	@Override
 	public String toString() {
 		Float64Member tmp = new Float64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			if (i != 0)
 				builder.append(',');
 			v(i, tmp);

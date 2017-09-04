@@ -73,6 +73,12 @@ public final class Float64TensorProductMember {
 		}
 	}
 	
+	public Float64TensorProductMember(long[] nd) {
+		storage = new ArrayStorageFloat64(numElems(nd));
+		dims = nd.clone();
+		multipliers = calcMultipliers();
+	}
+	
 	public int numDims() {
 		return dims.length;
 	}

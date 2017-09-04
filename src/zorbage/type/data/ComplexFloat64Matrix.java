@@ -28,6 +28,7 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
+import zorbage.type.ctor.Constructible2dLong;
 
 /**
  * 
@@ -37,7 +38,8 @@ import zorbage.type.algebra.RingWithUnity;
 public class ComplexFloat64Matrix
 	implements
 		RingWithUnity<ComplexFloat64Matrix, ComplexFloat64MatrixMember>,
-		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>
+		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>,
+		Constructible2dLong<ComplexFloat64MatrixMember>
 {
 	private static final ComplexFloat64Group g = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
@@ -215,6 +217,11 @@ public class ComplexFloat64Matrix
 	@Override
 	public ComplexFloat64MatrixMember construct(String s) {
 		return new ComplexFloat64MatrixMember(s);
+	}
+
+	@Override
+	public ComplexFloat64MatrixMember construct(long d1, long d2) {
+		return new ComplexFloat64MatrixMember(d1, d2);
 	}
 
 	@Override

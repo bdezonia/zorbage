@@ -28,6 +28,7 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
+import zorbage.type.ctor.Constructible2dLong;
 
 /**
  * 
@@ -37,7 +38,8 @@ import zorbage.type.algebra.RingWithUnity;
 public class QuaternionFloat64Matrix
 	implements
 		RingWithUnity<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember>,
-		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Group, QuaternionFloat64Member>
+		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Group, QuaternionFloat64Member>,
+		Constructible2dLong<QuaternionFloat64MatrixMember>
 {
 	private static final QuaternionFloat64Group g = new QuaternionFloat64Group();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
@@ -214,6 +216,11 @@ public class QuaternionFloat64Matrix
 	@Override
 	public QuaternionFloat64MatrixMember construct(String s) {
 		return new QuaternionFloat64MatrixMember(s);
+	}
+
+	@Override
+	public QuaternionFloat64MatrixMember construct(long d1, long d2) {
+		return new QuaternionFloat64MatrixMember(d1, d2);
 	}
 
 	@Override

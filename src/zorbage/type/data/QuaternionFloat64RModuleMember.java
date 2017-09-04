@@ -39,7 +39,7 @@ import zorbage.util.BigList;
 public final class QuaternionFloat64RModuleMember {
 
 	private static final QuaternionFloat64Group g = new QuaternionFloat64Group();
-	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
+	//private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
 	private ArrayStorageQuaternionFloat64 storage;
 	
@@ -85,7 +85,11 @@ public final class QuaternionFloat64RModuleMember {
 		}
 	}
 
-	public void v(int i, QuaternionFloat64Member v) {
+	public QuaternionFloat64RModuleMember(long d1) {
+		storage = new ArrayStorageQuaternionFloat64(d1);
+	}
+	
+	public void v(long i, QuaternionFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
@@ -94,17 +98,7 @@ public final class QuaternionFloat64RModuleMember {
 		}
 	}
 
-	public void setV(int i, QuaternionFloat64Member v) {
-		if (i >= storage.size()) {
-			if (g.isEqual(v, ZERO)) return;
-			ArrayStorageQuaternionFloat64 tmp = storage;
-			storage = new ArrayStorageQuaternionFloat64(i+1);
-			QuaternionFloat64Member value = new QuaternionFloat64Member();
-			for (long j = 0; j < tmp.size(); j++) {
-				tmp.get(j, value);
-				storage.set(j, value);
-			}
-		}
+	public void setV(long i, QuaternionFloat64Member v) {
 		storage.set(i, v);
 	}
 	
@@ -130,14 +124,14 @@ public final class QuaternionFloat64RModuleMember {
 		}
 	}
 
-	public int length() { return (int) storage.size(); }
+	public long length() { return storage.size(); }
 	
 	@Override
 	public String toString() {
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			if (i != 0)
 				builder.append(',');
 			v(i, tmp);

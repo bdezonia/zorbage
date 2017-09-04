@@ -83,6 +83,12 @@ public final class OctonionFloat64MatrixMember {
 		}
 	}
 	
+	public OctonionFloat64MatrixMember(long d1, long d2) {
+		rows = -1;
+		cols = -1;
+		init(d2,d1);
+	}
+	
 	public long rows() { return rows; }
 
 	public long cols() { return cols; }

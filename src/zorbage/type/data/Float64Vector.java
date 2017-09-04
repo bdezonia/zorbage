@@ -27,6 +27,7 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.VectorSpace;
+import zorbage.type.ctor.Constructible1dLong;
 
 /**
  * 
@@ -35,7 +36,8 @@ import zorbage.type.algebra.VectorSpace;
  */
 public class Float64Vector
   implements
-    VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>
+    VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>,
+    Constructible1dLong<Float64VectorMember>
 {
 	private static final Float64Group g = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0);
@@ -45,15 +47,15 @@ public class Float64Vector
 	
 	@Override
 	public void zero(Float64VectorMember a) {
-		for (int i = 0; i < a.length(); i++)
+		for (long i = 0; i < a.length(); i++)
 			a.setV(i, ZERO);
 	}
 
 	@Override
 	public void negate(Float64VectorMember a, Float64VectorMember b) {
 		Float64Member tmp = new Float64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
 			b.setV(i, tmp);
@@ -64,14 +66,14 @@ public class Float64Vector
 	public void add(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		for (int i = max; i < c.length(); i++)
+		for (long i = max; i < c.length(); i++)
 			c.setV(i, ZERO);
 	}
 
@@ -79,14 +81,14 @@ public class Float64Vector
 	public void subtract(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		for (int i = max; i < c.length(); i++)
+		for (long i = max; i < c.length(); i++)
 			c.setV(i, ZERO);
 	}
 
@@ -94,8 +96,8 @@ public class Float64Vector
 	public boolean isEqual(Float64VectorMember a, Float64VectorMember b) {
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			if (g.isNotEqual(atmp, btmp))
@@ -125,13 +127,18 @@ public class Float64Vector
 	}
 
 	@Override
+	public Float64VectorMember construct(long d1) {
+		return new Float64VectorMember(d1);
+	}
+
+	@Override
 	public void assign(Float64VectorMember from, Float64VectorMember to) {
 		Float64Member tmp = new Float64Member();
-		for (int i = 0; i < from.length(); i++) {
+		for (long i = 0; i < from.length(); i++) {
 			from.v(i, tmp);
 			to.setV(i, tmp);
 		}
-		for (int i = from.length(); i < to.length(); i++) {
+		for (long i = from.length(); i < to.length(); i++) {
 			to.setV(i, ZERO);
 		}
 	}
@@ -142,11 +149,11 @@ public class Float64Vector
 		Float64Member tmp = new Float64Member();
 		Float64Member norm2 = new Float64Member(0);
 		max.setV(Double.NEGATIVE_INFINITY);
-		for (int i = 0; i < a.length(); i++) {
+		for (long i = 0; i < a.length(); i++) {
 			a.v(i,  tmp);
 			max.setV(Math.max(Math.abs(tmp.v()), max.v()));
 		}
-		for (int i = 0; i < a.length(); i++) {
+		for (long i = 0; i < a.length(); i++) {
 			a.v(i,  tmp);
 			g.divide(tmp, max, tmp);
 			g.multiply(tmp, tmp, tmp);
@@ -160,14 +167,14 @@ public class Float64Vector
 	public void scale(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
 		Float64Member tmp = new Float64Member();
 		// two loops minimizes memory allocations
-		int min = Math.min(a.length(), b.length());
-		for (int i = 0; i < min; i++) {
+		long min = Math.min(a.length(), b.length());
+		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		int max = Math.max(a.length(), b.length());
-		for (int i = min; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
@@ -224,11 +231,11 @@ public class Float64Vector
 
 	@Override
 	public void dotProduct(Float64VectorMember a, Float64VectorMember b, Float64Member c) {
-		int min = Math.min(a.length(), b.length());
+		long min = Math.min(a.length(), b.length());
 		Float64Member sum = new Float64Member(0);
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		for (int i = 0; i < min; i++) {
+		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.multiply(atmp, btmp, btmp);

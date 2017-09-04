@@ -27,6 +27,7 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.VectorSpace;
+import zorbage.type.ctor.Constructible1dLong;
 
 /**
  * 
@@ -35,7 +36,8 @@ import zorbage.type.algebra.VectorSpace;
  */
 public class ComplexFloat64Vector
   implements
-    VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>
+    VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
+    Constructible1dLong<ComplexFloat64VectorMember>
 {
 	private static final ComplexFloat64Group g = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
@@ -52,8 +54,8 @@ public class ComplexFloat64Vector
 	@Override
 	public void negate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
 			b.setV(i, tmp);
@@ -64,14 +66,14 @@ public class ComplexFloat64Vector
 	public void add(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		for (int i = max; i < c.length(); i++)
+		for (long i = max; i < c.length(); i++)
 			c.setV(i, ZERO);
 	}
 
@@ -79,14 +81,14 @@ public class ComplexFloat64Vector
 	public void subtract(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		for (int i = max; i < c.length(); i++)
+		for (long i = max; i < c.length(); i++)
 			c.setV(i, ZERO);
 	}
 
@@ -94,8 +96,8 @@ public class ComplexFloat64Vector
 	public boolean isEqual(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		int max = Math.max(a.length(), b.length());
-		for (int i = 0; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			if (g.isNotEqual(atmp, btmp))
@@ -125,13 +127,18 @@ public class ComplexFloat64Vector
 	}
 
 	@Override
+	public ComplexFloat64VectorMember construct(long d1) {
+		return new ComplexFloat64VectorMember(d1);
+	}
+
+	@Override
 	public void assign(ComplexFloat64VectorMember from, ComplexFloat64VectorMember to) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (int i = 0; i < from.length(); i++) {
+		for (long i = 0; i < from.length(); i++) {
 			from.v(i, tmp);
 			to.setV(i, tmp);
 		}
-		for (int i = from.length(); i < to.length(); i++) {
+		for (long i = from.length(); i < to.length(); i++) {
 			to.setV(i, ZERO);
 		}
 	}
@@ -163,14 +170,14 @@ public class ComplexFloat64Vector
 	public void scale(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		// two loops minimizes memory allocations
-		int min = Math.min(a.length(), b.length());
-		for (int i = 0; i < min; i++) {
+		long min = Math.min(a.length(), b.length());
+		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		int max = Math.max(a.length(), b.length());
-		for (int i = min; i < max; i++) {
+		long max = Math.max(a.length(), b.length());
+		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
@@ -215,9 +222,9 @@ public class ComplexFloat64Vector
 		assign(tmp, c);
 	}
 
-	private boolean compatible(int dim, ComplexFloat64VectorMember v) {
+	private boolean compatible(long dim, ComplexFloat64VectorMember v) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (int i = dim; i < v.length(); i++) {
+		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
 			if (g.isNotEqual(tmp, ZERO))
 				return false;
@@ -227,11 +234,11 @@ public class ComplexFloat64Vector
 	
 	@Override
 	public void dotProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
-		int min = Math.min(a.length(), b.length());
+		long min = Math.min(a.length(), b.length());
 		ComplexFloat64Member sum = new ComplexFloat64Member(0,0);
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		for (int i = 0; i < min; i++) {
+		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			g.multiply(atmp, btmp, btmp);
@@ -280,7 +287,7 @@ public class ComplexFloat64Vector
 	@Override
 	public void conjugate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (int i = 0; i < a.length(); i++) {
+		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
 			g.conjugate(tmp, tmp);
 			b.setV(i, tmp);

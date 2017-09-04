@@ -27,6 +27,7 @@
 package zorbage.type.data;
 
 import zorbage.type.algebra.RModule;
+import zorbage.type.ctor.Constructible1dLong;
 
 /**
  * 
@@ -35,7 +36,8 @@ import zorbage.type.algebra.RModule;
  */
 public class OctonionFloat64RModule
   implements
-    RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>
+    RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
+    Constructible1dLong<OctonionFloat64RModuleMember>
 {
 	private static final OctonionFloat64Group g = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
@@ -45,7 +47,7 @@ public class OctonionFloat64RModule
 	
 	@Override
 	public void zero(OctonionFloat64RModuleMember a) {
-		for (int i = 0; i < a.length(); i++)
+		for (long i = 0; i < a.length(); i++)
 			a.setV(i, ZERO);
 	}
 
@@ -122,6 +124,11 @@ public class OctonionFloat64RModule
 	@Override
 	public OctonionFloat64RModuleMember construct(String s) {
 		return new OctonionFloat64RModuleMember(s);
+	}
+
+	@Override
+	public OctonionFloat64RModuleMember construct(long d1) {
+		return new OctonionFloat64RModuleMember(d1);
 	}
 
 	@Override
@@ -274,7 +281,7 @@ public class OctonionFloat64RModule
 	@Override
 	public void conjugate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (int i = 0; i < a.length(); i++) {
+		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
 			g.conjugate(tmp, tmp);
 			b.setV(i, tmp);

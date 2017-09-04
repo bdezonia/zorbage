@@ -76,6 +76,12 @@ public final class Float64MatrixMember {
 		}
 	}
 	
+	public Float64MatrixMember(long d1, long d2) {
+		rows = -1;
+		cols = -1;
+		init(d2, d1);
+	}
+	
 	public long rows() { return rows; }
 
 	public long cols() { return cols; }
@@ -138,9 +144,9 @@ public final class Float64MatrixMember {
 		Float64Member tmp = new Float64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int r = 0; r < rows; r++) {
+		for (long r = 0; r < rows; r++) {
 			builder.append('[');
-			for (int c = 0; c < cols; c++) {
+			for (long c = 0; c < cols; c++) {
 				if (c != 0)
 					builder.append(',');
 				v(r, c, tmp);

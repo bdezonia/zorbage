@@ -39,7 +39,7 @@ import zorbage.util.BigList;
 public final class ComplexFloat64VectorMember {
 
 	private static final ComplexFloat64Group g = new ComplexFloat64Group();
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
+	//private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
 	private ArrayStorageComplexFloat64 storage;
 	
@@ -73,7 +73,7 @@ public final class ComplexFloat64VectorMember {
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageComplexFloat64(data.size());
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());
@@ -81,7 +81,11 @@ public final class ComplexFloat64VectorMember {
 		}
 	}
 
-	public void v(int i, ComplexFloat64Member v) {
+	public ComplexFloat64VectorMember(long d1) {
+		storage = new ArrayStorageComplexFloat64(d1);
+	}
+	
+	public void v(long i, ComplexFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
@@ -90,17 +94,7 @@ public final class ComplexFloat64VectorMember {
 		}
 	}
 
-	public void setV(int i, ComplexFloat64Member v) {
-		if (i >= storage.size()) {
-			if (g.isEqual(v, ZERO)) return;
-			ArrayStorageComplexFloat64 tmp = storage;
-			storage = new ArrayStorageComplexFloat64(i+1);
-			ComplexFloat64Member value = new ComplexFloat64Member();
-			for (long j = 0; j < tmp.size(); j++) {
-				tmp.get(j, value);
-				storage.set(j, value);
-			}
-		}
+	public void setV(long i, ComplexFloat64Member v) {
 		storage.set(i, v);
 	}
 	
@@ -126,7 +120,7 @@ public final class ComplexFloat64VectorMember {
 		}
 	}
 
-	public int length() { return (int) storage.size(); }
+	public long length() { return storage.size(); }
 	
 	@Override
 	public String toString() {

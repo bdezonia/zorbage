@@ -28,6 +28,7 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
+import zorbage.type.ctor.Constructible2dLong;
 
 /**
  * 
@@ -37,7 +38,8 @@ import zorbage.type.algebra.RingWithUnity;
 public class OctonionFloat64Matrix
 	implements
 		RingWithUnity<OctonionFloat64Matrix, OctonionFloat64MatrixMember>,
-		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>
+		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>,
+		Constructible2dLong<OctonionFloat64MatrixMember>
 {
 	private static final OctonionFloat64Group g = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
@@ -214,6 +216,11 @@ public class OctonionFloat64Matrix
 	@Override
 	public OctonionFloat64MatrixMember construct(String s) {
 		return new OctonionFloat64MatrixMember(s);
+	}
+
+	@Override
+	public OctonionFloat64MatrixMember construct(long d1, long d2) {
+		return new OctonionFloat64MatrixMember(d2, d1);
 	}
 
 	@Override

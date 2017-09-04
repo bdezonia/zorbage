@@ -46,13 +46,17 @@ package zorbage.type.data;
 //many more
 
 import zorbage.type.algebra.TensorProduct;
+import zorbage.type.ctor.ConstructibleNdLong;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>
+public class Float64TensorProduct
+	implements
+		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
+		ConstructibleNdLong<Float64TensorProductMember>
 {
 	private Float64Group g = new Float64Group();
 	
@@ -69,6 +73,11 @@ public class Float64TensorProduct implements TensorProduct<Float64TensorProduct,
 	@Override
 	public Float64TensorProductMember construct(String s) {
 		return new Float64TensorProductMember(s);
+	}
+
+	@Override
+	public Float64TensorProductMember construct(long[] nd) {
+		return new Float64TensorProductMember(nd);
 	}
 
 	@Override
