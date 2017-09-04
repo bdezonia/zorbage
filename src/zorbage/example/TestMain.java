@@ -52,7 +52,7 @@ import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
  * @author Barry DeZonia
  *
  */
-public class Test {
+public class TestMain {
 	
 	public static void testInts() {
 		  
@@ -307,7 +307,7 @@ public class Test {
 	}
 
 	public static void testFileStorage() {
-		new FileStorage().run();
+		new FileStorageExample().run();
 		System.out.println("tested file backed data storage");
 	}
 	
@@ -321,6 +321,10 @@ public class Test {
 			x = y;
 		}
 		System.out.println(Arrays.toString(timings));
+	}
+
+	public static void testSize() {
+		new BigMatrixExample().run();
 	}
 	
 	public static void main(String[] args) {
@@ -341,6 +345,7 @@ public class Test {
 		testParsing();
 		testFileStorage();
 		testSpeed();
+		//testSize(); // very slow
 	}
 
 }

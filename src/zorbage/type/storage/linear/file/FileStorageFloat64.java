@@ -57,7 +57,7 @@ public class FileStorageFloat64
 	private boolean dirty;
 	private long pageIndex;
 	
-	private static final long BUFFERSIZE = 128;
+	private static final long BUFFERSIZE = 2048;
 
 	public static final Fraction BYTESIZE = ArrayStorageFloat64.BYTESIZE;
 	

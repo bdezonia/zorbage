@@ -34,12 +34,12 @@ import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
  * @author Barry DeZonia
  *
  */
-public class FileStorage {
+public class FileStorageExample {
 
 	public void run() {
 		ComplexFloat64Member v = new ComplexFloat64Member();
 		
-		FileStorageComplexFloat64 store = new FileStorageComplexFloat64(600);
+		FileStorageComplexFloat64 store = new FileStorageComplexFloat64(4000);
 		
 		for (long i = 0; i < store.size(); i++) {
 			v.setR(i);
