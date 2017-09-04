@@ -73,6 +73,9 @@ I don't like how file storage class has a dispose() and flush() method. Someone 
   be able to determine an appropriate time to call them. If we didn't allow saving of data and
   passing in a filename then we could always dispose and never worry about flushing.
 Make more FileStorage classes for each type.
-Remove much duplication in FileStorage classes
+Remove much duplication in FileStorage classes and maybe data type/group classes
 Support sparse allocation method
-String constctors of numeric types default to DENSE ARRAY. Maybe allow mem storage params.
+String constructors of numeric types default to DENSE ARRAY. Maybe allow mem storage params.
+FileStorage classes only support float64s. expand to include ints, bools, etc.
+The constructors for storage may duplicate others. Due to time lags this is not necessarily
+  threadsafe. Obtain locks.
