@@ -74,7 +74,8 @@ public class FileStorageComplexFloat64
 		if (!f.exists() || f.length() == 0) {
 			try { 
 				RandomAccessFile raf = new RandomAccessFile(f, "rw");
-				for (long l = 0; l < (numElements * 2); l++) {
+				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
+					raf.writeDouble(0);
 					raf.writeDouble(0);
 				}
 				raf.close();
@@ -84,7 +85,7 @@ public class FileStorageComplexFloat64
 		}
 		else {
 			// TODO: what if someone passes in populated file whose size does not equal numelements? Test
-			if (file.length() != numElements*BYTESIZE.n())
+			if (file.length() != (numElements + BUFFERSIZE) * BYTESIZE.n())
 				throw new IllegalArgumentException("passed in file does not have correct size");
 		}
 	}
@@ -189,15 +190,13 @@ public class FileStorageComplexFloat64
 			if (dirty) {
 				flush();
 			}
-			// read file data into array using sizeof() and skipping 1st eight bytes
+			// read file data into array using sizeof()
 			try {
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					double real = raf.readDouble();
-					double imag = raf.readDouble();
-					tmp.setR(real);
-					tmp.setI(imag);
+					tmp.setR(raf.readDouble());
+					tmp.setI(raf.readDouble());
 					buffer.set(i, tmp);
 				}
 				raf.close();

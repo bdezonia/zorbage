@@ -20,12 +20,12 @@ public class FileStorage {
 		
 		for (long i = 0; i < store.size(); i++) {
 			v.setR(i);
-			v.setI(i);
+			v.setI(i+1);
 			store.set(i, v);
 		}
 		for (long i = 0; i < store.size(); i++) {
 			store.get(i, v);
-			if ((v.r() != i) || (v.i() != i))
+			if ((v.r() != i) || (v.i() != i+1))
 				System.out.println("Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
 		}
 		store.flush();
@@ -39,7 +39,7 @@ public class FileStorage {
 		}
 		for (long i = 0; i < store.size(); i++) {
 			store.get(i, v);
-			if ((v.r() != i) || (v.i() != i))
+			if ((v.r() != i) || (v.i() != i+1))
 				System.out.println("Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
 		}
 		
@@ -50,12 +50,12 @@ public class FileStorage {
 		}
 		for (long i = 0; i < store.size(); i++) {
 			v.setR(i);
-			v.setI(i);
+			v.setI(i+1);
 			store.set(i, v);
 		}
 		for (long i = 0; i < store.size(); i++) {
 			store.get(i, v);
-			if ((v.r() != i) || (v.i() != i))
+			if ((v.r() != i) || (v.i() != i+1))
 				System.out.println("Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
 		}
 		store.flush();
@@ -67,14 +67,14 @@ public class FileStorage {
 		}
 		for (long i = 0; i < store.size(); i++) {
 			store.get(i, v);
-			if ((v.r() != i) || (v.i() != i))
+			if ((v.r() != i) || (v.i() != i+1))
 				System.out.println("Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
 		}
 		
 		FileStorageComplexFloat64 dup = store.duplicate();
 		for (long i = 0; i < dup.size(); i++) {
 			dup.get(i, v);
-			if ((v.r() != i) || (v.i() != i))
+			if ((v.r() != i) || (v.i() != i+1))
 				System.out.println("Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
 		}
 		
