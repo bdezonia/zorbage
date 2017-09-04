@@ -29,6 +29,8 @@ package zorbage.type.data;
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
 import zorbage.type.ctor.Constructible2dLong;
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -221,8 +223,8 @@ public class Float64Matrix
 	}
 
 	@Override
-	public Float64MatrixMember construct(long d1, long d2) {
-		return new Float64MatrixMember(d2, d1);
+	public Float64MatrixMember construct(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+		return new Float64MatrixMember(m, s, d1, d2);
 	}
 
 	@Override

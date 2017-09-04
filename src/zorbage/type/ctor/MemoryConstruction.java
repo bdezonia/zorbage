@@ -31,6 +31,7 @@ package zorbage.type.ctor;
  * @author Barry DeZonia
  *
  */
-public interface ConstructibleNdLong<U> {
-	U construct(MemoryConstruction m, StorageConstruction s, long[] nd);
+public enum MemoryConstruction {
+
+	DENSE, SPARSE;  // TODO: this enum not supported yet
 }

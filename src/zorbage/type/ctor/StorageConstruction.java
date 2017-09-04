@@ -31,6 +31,7 @@ package zorbage.type.ctor;
  * @author Barry DeZonia
  *
  */
-public interface ConstructibleNdLong<U> {
-	U construct(MemoryConstruction m, StorageConstruction s, long[] nd);
+public enum StorageConstruction {
+
+	ARRAY, FILE;
 }

@@ -29,6 +29,8 @@ package zorbage.type.data;
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
 import zorbage.type.ctor.Constructible2dLong;
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -220,8 +222,8 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public ComplexFloat64MatrixMember construct(long d1, long d2) {
-		return new ComplexFloat64MatrixMember(d1, d2);
+	public ComplexFloat64MatrixMember construct(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+		return new ComplexFloat64MatrixMember(m, s, d1, d2);
 	}
 
 	@Override

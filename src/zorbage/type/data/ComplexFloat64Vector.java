@@ -28,6 +28,8 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.VectorSpace;
 import zorbage.type.ctor.Constructible1dLong;
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -127,8 +129,8 @@ public class ComplexFloat64Vector
 	}
 
 	@Override
-	public ComplexFloat64VectorMember construct(long d1) {
-		return new ComplexFloat64VectorMember(d1);
+	public ComplexFloat64VectorMember construct(MemoryConstruction m, StorageConstruction s, long d1) {
+		return new ComplexFloat64VectorMember(m, s, d1);
 	}
 
 	@Override

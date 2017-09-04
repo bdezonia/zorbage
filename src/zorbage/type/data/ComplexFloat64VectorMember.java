@@ -26,9 +26,13 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
+import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -41,15 +45,21 @@ public final class ComplexFloat64VectorMember {
 	private static final ComplexFloat64Group g = new ComplexFloat64Group();
 	//private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
-	private ArrayStorageComplexFloat64 storage;
+	private LinearStorage<?,ComplexFloat64Member> storage;
+	private MemoryConstruction m;
+	private StorageConstruction s;
 	
 	public ComplexFloat64VectorMember() {
 		storage = new ArrayStorageComplexFloat64(0);
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 	}
 	
 	public ComplexFloat64VectorMember(double[] vals) {
 		final int count = vals.length / 2;
 		storage = new ArrayStorageComplexFloat64(count);
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 2*i;
@@ -60,18 +70,17 @@ public final class ComplexFloat64VectorMember {
 	}
 	
 	public ComplexFloat64VectorMember(ComplexFloat64VectorMember other) {
-		storage = new ArrayStorageComplexFloat64(other.storage.size());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i,  value);
-		}
+		storage = other.storage.duplicate();
+		m = other.m;
+		s = other.s;
 	}
 	
 	public ComplexFloat64VectorMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageComplexFloat64(data.size());
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
@@ -81,8 +90,14 @@ public final class ComplexFloat64VectorMember {
 		}
 	}
 
-	public ComplexFloat64VectorMember(long d1) {
-		storage = new ArrayStorageComplexFloat64(d1);
+	public ComplexFloat64VectorMember(MemoryConstruction m, StorageConstruction s, long d1) {
+		this.m = m;
+		this.s = s;
+		if (s == StorageConstruction.ARRAY)
+			storage = new ArrayStorageComplexFloat64(d1);
+		else
+			storage = new FileStorageComplexFloat64(d1);
+			
 	}
 	
 	public void v(long i, ComplexFloat64Member v) {
@@ -100,24 +115,16 @@ public final class ComplexFloat64VectorMember {
 	
 	public void set(ComplexFloat64VectorMember other) {
 		if (this == other) return;
-		if (storage.size() != other.storage.size())
-			storage = new ArrayStorageComplexFloat64(other.storage.size());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		storage = other.storage.duplicate();
+		m = other.m;
+		s = other.s;
 	}
 	
 	public void get(ComplexFloat64VectorMember other) {
 		if (this == other) return;
-		if (storage.size() != other.storage.size())
-			other.storage = new ArrayStorageComplexFloat64(storage.size());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			other.storage.set(i, value);
-		}
+		other.storage = storage.duplicate();
+		other.m = m;
+		other.s = s;
 	}
 
 	public long length() { return storage.size(); }

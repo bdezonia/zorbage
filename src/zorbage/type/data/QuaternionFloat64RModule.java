@@ -28,6 +28,8 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.RModule;
 import zorbage.type.ctor.Constructible1dLong;
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -127,8 +129,8 @@ public class QuaternionFloat64RModule
 	}
 
 	@Override
-	public QuaternionFloat64RModuleMember construct(long d1) {
-		return new QuaternionFloat64RModuleMember(d1);
+	public QuaternionFloat64RModuleMember construct(MemoryConstruction m, StorageConstruction s, long d1) {
+		return new QuaternionFloat64RModuleMember(m, s, d1);
 	}
 
 	@Override

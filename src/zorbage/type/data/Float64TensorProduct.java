@@ -47,6 +47,8 @@ package zorbage.type.data;
 
 import zorbage.type.algebra.TensorProduct;
 import zorbage.type.ctor.ConstructibleNdLong;
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -76,8 +78,8 @@ public class Float64TensorProduct
 	}
 
 	@Override
-	public Float64TensorProductMember construct(long[] nd) {
-		return new Float64TensorProductMember(nd);
+	public Float64TensorProductMember construct(MemoryConstruction m, StorageConstruction s, long[] nd) {
+		return new Float64TensorProductMember(m, s, nd);
 	}
 
 	@Override

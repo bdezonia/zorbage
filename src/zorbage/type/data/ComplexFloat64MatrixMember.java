@@ -26,9 +26,13 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
+import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -38,27 +42,28 @@ import zorbage.util.BigList;
  */
 public final class ComplexFloat64MatrixMember {
 	
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	//private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
-	private ArrayStorageComplexFloat64 storage;
+	private LinearStorage<?,ComplexFloat64Member> storage;
 	private long rows;
 	private long cols;
+	private MemoryConstruction m;
+	private StorageConstruction s;
 	
 	public ComplexFloat64MatrixMember() {
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 		init(0,0);
 	}
 	
 	public ComplexFloat64MatrixMember(ComplexFloat64MatrixMember other) {
-		rows = -1;
-		cols = -1;
-		init(other.rows(),other.cols());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		rows = other.rows;
+		cols = other.cols;
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public ComplexFloat64MatrixMember(String s) {
@@ -67,6 +72,8 @@ public final class ComplexFloat64MatrixMember {
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		this.s = StorageConstruction.ARRAY;
 		init(dimensions[1],dimensions[0]);
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -77,9 +84,11 @@ public final class ComplexFloat64MatrixMember {
 		}
 	}
 	
-	public ComplexFloat64MatrixMember(long d1, long d2) {
+	public ComplexFloat64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
+		this.m = m;
+		this.s = s;
 		init(d2, d1);
 	}
 	
@@ -92,15 +101,11 @@ public final class ComplexFloat64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		
-		if (r*c != storage.size()) {
+	
+		if (s == StorageConstruction.ARRAY)
 			storage = new ArrayStorageComplexFloat64(r*c);
-		}
-		else {
-			for (long i = 0; i < storage.size(); i++) {
-				storage.set(i, ZERO);
-			}
-		}
+		else
+			storage = new FileStorageComplexFloat64(r*c);
 	}
 	
 	public void v(long r, long c, ComplexFloat64Member value) {
@@ -117,26 +122,20 @@ public final class ComplexFloat64MatrixMember {
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		if (storage.size() != other.storage.size())
-			storage = new ArrayStorageComplexFloat64(other.storage.size());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		// TODO: do we keep our mem/store strategies or adopt the other's
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public void get(ComplexFloat64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		if (storage.size() != other.storage.size())
-			other.storage = new ArrayStorageComplexFloat64(storage.size());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			other.storage.set(i, value);
-		}
+		// TODO: do we keep our mem/store strategies or adopt the other's
+		other.m = m;
+		other.s = s;
+		other.storage = storage.duplicate();
 	}
 	
 	@Override

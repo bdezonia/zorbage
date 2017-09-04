@@ -26,9 +26,13 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -38,27 +42,28 @@ import zorbage.util.BigList;
  */
 public final class Float64MatrixMember {
 	
-	private static final Float64Member ZERO = new Float64Member(0);
+	//private static final Float64Member ZERO = new Float64Member(0);
 
-	private ArrayStorageFloat64 storage;
+	private LinearStorage<?,Float64Member> storage;
 	private long rows;
 	private long cols;
+	private MemoryConstruction m;
+	private StorageConstruction s;
 	
 	public Float64MatrixMember() {
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 		init(0,0);
 	}
 	
 	public Float64MatrixMember(Float64MatrixMember other) {
-		rows = -1;
-		cols = -1;
-		init(other.rows(),other.cols());
-		Float64Member value = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		rows = other.rows;
+		cols = other.cols;
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public Float64MatrixMember(String s) {
@@ -67,6 +72,8 @@ public final class Float64MatrixMember {
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		this.s = StorageConstruction.ARRAY;
 		init(dimensions[1],dimensions[0]);
 		Float64Member tmp = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -76,9 +83,11 @@ public final class Float64MatrixMember {
 		}
 	}
 	
-	public Float64MatrixMember(long d1, long d2) {
+	public Float64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
+		this.m = m;
+		this.s = s;
 		init(d2, d1);
 	}
 	
@@ -91,14 +100,11 @@ public final class Float64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		
-		if (r*c != storage.size()) {
+		if (s == StorageConstruction.ARRAY) {
 			storage = new ArrayStorageFloat64(r*c);
 		}
 		else {
-			for (long i = 0; i < storage.size(); i++) {
-				storage.set(i, ZERO);
-			}
+			storage = new FileStorageFloat64(r*c);
 		}
 	}
 	
@@ -117,26 +123,18 @@ public final class Float64MatrixMember {
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		if (storage.size() != other.storage.size())
-			storage = new ArrayStorageFloat64(other.storage.size());
-		Float64Member value = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public void get(Float64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		if (storage.size() != other.storage.size())
-			other.storage = new ArrayStorageFloat64(storage.size());
-		Float64Member value = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			other.storage.set(i, value);
-		}
+		other.m = m;
+		other.s = s;
+		other.storage = storage.duplicate();
 	}
 
 	@Override

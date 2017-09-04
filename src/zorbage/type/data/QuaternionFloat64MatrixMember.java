@@ -26,9 +26,13 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageQuaternionFloat64;
+import zorbage.type.storage.linear.file.FileStorageQuaternionFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -38,27 +42,28 @@ import zorbage.util.BigList;
  */
 public final class QuaternionFloat64MatrixMember {
 	
-	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
+	//private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
-	private ArrayStorageQuaternionFloat64 storage;
+	private LinearStorage<?,QuaternionFloat64Member> storage;
 	private long rows;
 	private long cols;
+	private MemoryConstruction m;
+	private StorageConstruction s;
 	
 	public QuaternionFloat64MatrixMember() {
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 		init(0,0);
 	}
 	
 	public QuaternionFloat64MatrixMember(QuaternionFloat64MatrixMember other) {
-		rows = -1;
-		cols = -1;
-		init(other.rows(),other.cols());
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		storage = other.storage.duplicate();
+		rows = other.rows;
+		cols = other.cols;
+		m = other.m;
+		s = other.s;
 	}
 	
 	public QuaternionFloat64MatrixMember(String s) {
@@ -67,7 +72,9 @@ public final class QuaternionFloat64MatrixMember {
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
-		init(dimensions[1],dimensions[0]);
+		m = MemoryConstruction.DENSE;
+		this.s = StorageConstruction.ARRAY;
+		init(dimensions[1], dimensions[0]);
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
@@ -79,10 +86,12 @@ public final class QuaternionFloat64MatrixMember {
 		}
 	}
 	
-	public QuaternionFloat64MatrixMember(long d1, long d2) {
+	public QuaternionFloat64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
-		init(d2, d1);
+		this.m = m;
+		this.s = s;
+		init(d2,d1);
 	}
 	
 	public long rows() { return rows; }
@@ -94,15 +103,10 @@ public final class QuaternionFloat64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		
-		if (r*c != storage.size()) {
+		if (s == StorageConstruction.ARRAY)
 			storage = new ArrayStorageQuaternionFloat64(r*c);
-		}
-		else {
-			for (long i = 0; i < storage.size(); i++) {
-				storage.set(i, ZERO);
-			}
-		}
+		else
+			storage = new FileStorageQuaternionFloat64(r*c);
 	}
 	
 	public void v(long r, long c, QuaternionFloat64Member value) {
@@ -119,26 +123,18 @@ public final class QuaternionFloat64MatrixMember {
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		if (storage.size() != other.storage.size())
-			storage = new ArrayStorageQuaternionFloat64(other.storage.size());
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public void get(QuaternionFloat64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		if (storage.size() != other.storage.size())
-			other.storage = new ArrayStorageQuaternionFloat64(storage.size());
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			other.storage.set(i, value);
-		}
+		other.m = m;
+		other.s = s;
+		other.storage = storage.duplicate();
 	}
 	
 	@Override

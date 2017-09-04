@@ -32,5 +32,5 @@ package zorbage.type.ctor;
  *
  */
 public interface Constructible2dLong<U> {
-	U construct(long d1, long d2);
+	U construct(MemoryConstruction m, StorageConstruction s, long d1, long d2);
 }

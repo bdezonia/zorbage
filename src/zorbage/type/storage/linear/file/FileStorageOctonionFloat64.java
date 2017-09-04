@@ -34,9 +34,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import zorbage.type.data.ComplexFloat64Member;
+import zorbage.type.data.OctonionFloat64Member;
 import zorbage.type.storage.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageOctonionFloat64;
 import zorbage.util.Fraction;
 
 /**
@@ -44,29 +44,29 @@ import zorbage.util.Fraction;
  * @author Barry DeZonia
  *
  */
-public class FileStorageComplexFloat64
-	implements LinearStorage<FileStorageComplexFloat64,ComplexFloat64Member>
+public class FileStorageOctonionFloat64
+	implements LinearStorage<FileStorageOctonionFloat64,OctonionFloat64Member>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
 	// 2) make BUFFERSIZE and numBuffers configurable
 	
 	private long numElements;
-	private ArrayStorageComplexFloat64 buffer;
+	private ArrayStorageOctonionFloat64 buffer;
 	private File file;
 	private boolean dirty;
 	private long pageIndex;
 	
 	private static final long BUFFERSIZE = 128;
 
-	public static final Fraction BYTESIZE = ArrayStorageComplexFloat64.BYTESIZE;
+	public static final Fraction BYTESIZE = ArrayStorageOctonionFloat64.BYTESIZE;
 	
-	public FileStorageComplexFloat64(long numElements) {
+	public FileStorageOctonionFloat64(long numElements) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
 		this.numElements = numElements;
 		this.dirty = false;
-		this.buffer = new ArrayStorageComplexFloat64(BUFFERSIZE);
+		this.buffer = new ArrayStorageOctonionFloat64(BUFFERSIZE);
 		this.pageIndex = numElements;
 		try { 
 			this.file = File.createTempFile("Storage", ".storage");
@@ -74,6 +74,12 @@ public class FileStorageComplexFloat64
 			if (!file.exists() || file.length() == 0) {
 				RandomAccessFile raf = new RandomAccessFile(file, "rw");
 				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
+					raf.writeDouble(0);
+					raf.writeDouble(0);
+					raf.writeDouble(0);
+					raf.writeDouble(0);
+					raf.writeDouble(0);
+					raf.writeDouble(0);
 					raf.writeDouble(0);
 					raf.writeDouble(0);
 				}
@@ -87,14 +93,14 @@ public class FileStorageComplexFloat64
 	}
 	
 	@Override
-	public void set(long index, ComplexFloat64Member value) {
+	public void set(long index, OctonionFloat64Member value) {
 		load(index);
 		buffer.set(index % BUFFERSIZE, value);
 		dirty = true;
 	}
 
 	@Override
-	public void get(long index, ComplexFloat64Member value) {
+	public void get(long index, OctonionFloat64Member value) {
 		load(index);
 		buffer.get(index % BUFFERSIZE, value);
 	}
@@ -105,10 +111,10 @@ public class FileStorageComplexFloat64
 	}
 
 	@Override
-	public FileStorageComplexFloat64 duplicate() {
+	public FileStorageOctonionFloat64 duplicate() {
 		flush();
 		try {
-			FileStorageComplexFloat64 other = new FileStorageComplexFloat64(numElements);
+			FileStorageOctonionFloat64 other = new FileStorageOctonionFloat64(numElements);
 			other.buffer = buffer.duplicate();
 			other.dirty = dirty;
 			other.pageIndex = pageIndex;
@@ -128,7 +134,7 @@ public class FileStorageComplexFloat64
 	
 	private void flush() {
 		if (!dirty) return;
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		try {
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
 			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
@@ -136,6 +142,12 @@ public class FileStorageComplexFloat64
 				buffer.get(i, tmp);
 				raf.writeDouble(tmp.r());
 				raf.writeDouble(tmp.i());
+				raf.writeDouble(tmp.j());
+				raf.writeDouble(tmp.k());
+				raf.writeDouble(tmp.l());
+				raf.writeDouble(tmp.i0());
+				raf.writeDouble(tmp.j0());
+				raf.writeDouble(tmp.k0());
 			}
 			raf.close();
 		} catch (Exception e) {
@@ -150,7 +162,7 @@ public class FileStorageComplexFloat64
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
 		if (index < pageIndex || index >= pageIndex + BUFFERSIZE) {
-			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
 			if (dirty) {
 				flush();
 			}
@@ -161,6 +173,12 @@ public class FileStorageComplexFloat64
 				for (long i = 0; i < BUFFERSIZE; i++) {
 					tmp.setR(raf.readDouble());
 					tmp.setI(raf.readDouble());
+					tmp.setJ(raf.readDouble());
+					tmp.setK(raf.readDouble());
+					tmp.setL(raf.readDouble());
+					tmp.setI0(raf.readDouble());
+					tmp.setJ0(raf.readDouble());
+					tmp.setK0(raf.readDouble());
 					buffer.set(i, tmp);
 				}
 				raf.close();

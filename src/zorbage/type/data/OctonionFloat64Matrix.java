@@ -29,6 +29,8 @@ package zorbage.type.data;
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
 import zorbage.type.ctor.Constructible2dLong;
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -219,8 +221,8 @@ public class OctonionFloat64Matrix
 	}
 
 	@Override
-	public OctonionFloat64MatrixMember construct(long d1, long d2) {
-		return new OctonionFloat64MatrixMember(d2, d1);
+	public OctonionFloat64MatrixMember construct(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+		return new OctonionFloat64MatrixMember(m, s, d1, d2);
 	}
 
 	@Override

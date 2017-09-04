@@ -26,9 +26,13 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 import zorbage.util.BigList;
 
 
@@ -43,20 +47,26 @@ import zorbage.util.BigList;
  */
 public final class Float64TensorProductMember {
 
-	private ArrayStorageFloat64 storage;
+	private LinearStorage<?,Float64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
+	private MemoryConstruction m;
+	private StorageConstruction s;
 	
 	public Float64TensorProductMember() {
 		dims = new long[0];
 		storage = new ArrayStorageFloat64(0);
 		multipliers = calcMultipliers();
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 	}
 
 	public Float64TensorProductMember(Float64TensorProductMember other) { 
 		dims = other.dims.clone();
 		storage = other.storage.duplicate();
 		multipliers = calcMultipliers();
+		m = other.m;
+		s = other.s;
 	}
 	
 	public Float64TensorProductMember(String s) {
@@ -65,6 +75,8 @@ public final class Float64TensorProductMember {
 		storage = new ArrayStorageFloat64(data.size());
 		dims = rep.dimensions().clone();
 		multipliers = calcMultipliers();
+		m = MemoryConstruction.DENSE;
+		this.s = StorageConstruction.ARRAY;
 		Float64Member tmp = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
@@ -73,10 +85,15 @@ public final class Float64TensorProductMember {
 		}
 	}
 	
-	public Float64TensorProductMember(long[] nd) {
-		storage = new ArrayStorageFloat64(numElems(nd));
+	public Float64TensorProductMember(MemoryConstruction m, StorageConstruction s, long[] nd) {
 		dims = nd.clone();
 		multipliers = calcMultipliers();
+		if (s == StorageConstruction.ARRAY) {
+			storage = new ArrayStorageFloat64(numElems(nd));
+		}
+		else {
+			storage = new FileStorageFloat64(numElems(nd));
+		}
 	}
 	
 	public int numDims() {
@@ -98,13 +115,11 @@ public final class Float64TensorProductMember {
 	public void setDims(long[] newDims) {
 		long newCount = numElems(newDims);
 		if (newCount != storage.size()) {
-			storage = new ArrayStorageFloat64(newCount);
+			throw new IllegalArgumentException("will not allow storage size change");
 		}
-		else {
-			Float64Member zero = new Float64Member();
-			for (long i = 0; i < storage.size(); i++) {
-				storage.set(i, zero);
-			}
+		Float64Member zero = new Float64Member();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.set(i, zero);
 		}
 		dims = newDims.clone();
 		multipliers = calcMultipliers();

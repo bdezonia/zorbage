@@ -26,9 +26,13 @@
  */
 package zorbage.type.data;
 
+import zorbage.type.ctor.MemoryConstruction;
+import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageOctonionFloat64;
+import zorbage.type.storage.linear.file.FileStorageOctonionFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -38,27 +42,28 @@ import zorbage.util.BigList;
  */
 public final class OctonionFloat64MatrixMember {
 	
-	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
+	//private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
-	private ArrayStorageOctonionFloat64 storage;
+	private LinearStorage<?,OctonionFloat64Member> storage;
 	private long rows;
 	private long cols;
+	private MemoryConstruction m;
+	private StorageConstruction s;
 	
 	public OctonionFloat64MatrixMember() {
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
 		init(0,0);
 	}
 	
 	public OctonionFloat64MatrixMember(OctonionFloat64MatrixMember other) {
-		rows = -1;
-		cols = -1;
-		init(other.rows(),other.cols());
-		OctonionFloat64Member value = new OctonionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		rows = other.rows;
+		cols = other.cols;
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public OctonionFloat64MatrixMember(String s) {
@@ -67,6 +72,8 @@ public final class OctonionFloat64MatrixMember {
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
+		m = MemoryConstruction.DENSE;
+		this.s = StorageConstruction.ARRAY;
 		init(dimensions[1],dimensions[0]);
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -83,9 +90,11 @@ public final class OctonionFloat64MatrixMember {
 		}
 	}
 	
-	public OctonionFloat64MatrixMember(long d1, long d2) {
+	public OctonionFloat64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
+		this.m = m;
+		this.s = s;
 		init(d2,d1);
 	}
 	
@@ -98,15 +107,10 @@ public final class OctonionFloat64MatrixMember {
 			rows = r;
 			cols = c;
 		}
-		
-		if (r*c != storage.size()) {
+		if (s == StorageConstruction.ARRAY)
 			storage = new ArrayStorageOctonionFloat64(r*c);
-		}
-		else {
-			for (long i = 0; i < storage.size(); i++) {
-				storage.set(i, ZERO);
-			}
-		}
+		else
+			storage = new FileStorageOctonionFloat64(r*c);
 	}
 	
 	public void v(long r, long c, OctonionFloat64Member value) {
@@ -123,26 +127,18 @@ public final class OctonionFloat64MatrixMember {
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		if (storage.size() != other.storage.size())
-			storage = new ArrayStorageOctonionFloat64(other.storage.size());
-		OctonionFloat64Member value = new OctonionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			other.storage.get(i, value);
-			storage.set(i, value);
-		}
+		m = other.m;
+		s = other.s;
+		storage = other.storage.duplicate();
 	}
 	
 	public void get(OctonionFloat64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		if (storage.size() != other.storage.size())
-			other.storage = new ArrayStorageOctonionFloat64(storage.size());
-		OctonionFloat64Member value = new OctonionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			other.storage.set(i, value);
-		}
+		other.m = m;
+		other.s = s;
+		other.storage = storage.duplicate();
 	}
 	
 	@Override
