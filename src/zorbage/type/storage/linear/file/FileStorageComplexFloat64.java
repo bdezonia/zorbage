@@ -209,7 +209,7 @@ public class FileStorageComplexFloat64
 	}
 	
 	private static long findNumElem(File f) {
-		return f.length() / BYTESIZE.n();
+		return (f.length() / BYTESIZE.n()) - BUFFERSIZE;
 	}
 	
 	public Fraction elementSize() {
