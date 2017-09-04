@@ -216,9 +216,9 @@ public class OctonionFloat64RModule
 		assign(tmp, c);
 	}
 
-	private boolean compatible(int dim, OctonionFloat64RModuleMember v) {
+	private boolean compatible(long dim, OctonionFloat64RModuleMember v) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (int i = dim; i < v.length(); i++) {
+		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
 			if (g.isNotEqual(tmp, ZERO))
 				return false;

@@ -216,9 +216,9 @@ public class QuaternionFloat64RModule
 		assign(tmp, c);
 	}
 
-	private boolean compatible(int dim, QuaternionFloat64RModuleMember v) {
+	private boolean compatible(long dim, QuaternionFloat64RModuleMember v) {
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (int i = dim; i < v.length(); i++) {
+		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
 			if (g.isNotEqual(tmp, ZERO))
 				return false;

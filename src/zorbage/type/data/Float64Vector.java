@@ -219,9 +219,9 @@ public class Float64Vector
 		assign(tmp, c);
 	}
 
-	private boolean compatible(int dim, Float64VectorMember v) {
+	private boolean compatible(long dim, Float64VectorMember v) {
 		Float64Member tmp = new Float64Member();
-		for (int i = dim; i < v.length(); i++) {
+		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
 			if (g.isNotEqual(tmp, ZERO))
 				return false;
