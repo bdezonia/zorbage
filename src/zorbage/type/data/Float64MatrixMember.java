@@ -69,7 +69,7 @@ public final class Float64MatrixMember {
 		cols = -1;
 		init(dimensions[1],dimensions[0]);
 		Float64Member tmp = new Float64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setV(val.r().doubleValue());
 			storage.set(i, tmp);

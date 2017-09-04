@@ -127,7 +127,7 @@ public final class ComplexFloat64VectorMember {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			if (i != 0)
 				builder.append(',');
 			v(i, tmp);

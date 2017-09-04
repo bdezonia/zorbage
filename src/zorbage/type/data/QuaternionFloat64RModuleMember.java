@@ -75,7 +75,7 @@ public final class QuaternionFloat64RModuleMember {
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageQuaternionFloat64(data.size());
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());

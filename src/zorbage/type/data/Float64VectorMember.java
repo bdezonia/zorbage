@@ -70,7 +70,7 @@ public final class Float64VectorMember {
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageFloat64(data.size());
 		Float64Member tmp = new Float64Member();
-		for (int i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setV(val.r().doubleValue());
 			storage.set(i, tmp);
