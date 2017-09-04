@@ -67,10 +67,12 @@ ComplexFloat64 array encoder
 Make an abstraction that assigns values and use it.
 Use elementSize() as part of encoders to make them more generic and simplify FileStorage classes
 Sparse vector/matrix/tensor storage
-Constructibles take a storage strategy: array, file, bufferedfile?, sparse
 String constructors for numeric types: how about character stream constructors instead
 I don't like how file storage class has a dispose() and flush() method. Someone who uses a file
   backed data structure using a more general facade may not know those methods exist or may not
   be able to determine an appropriate time to call them. If we didn't allow saving of data and
   passing in a filename then we could always dispose and never worry about flushing.
 Make more FileStorage classes for each type.
+Remove much duplication in FileStorage classes
+Support sparse allocation method
+String constctors of numeric types default to DENSE ARRAY. Maybe allow mem storage params.
