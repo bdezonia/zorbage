@@ -40,7 +40,7 @@ import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
  */
 public class DFTExample {
 
-	private ComplexFloat64Group g = new ComplexFloat64Group();
+	private ComplexFloat64Group cdbl = new ComplexFloat64Group();
 	
 	public void run() {
 		final int size = 500;
@@ -89,26 +89,26 @@ public class DFTExample {
 		ComplexFloat64Member PI = new ComplexFloat64Member();
 		SignedInt32Member in = new SignedInt32Member();
 		
-		g.E(E);
-		g.PI(PI);
+		cdbl.E(E);
+		cdbl.PI(PI);
 		
 		for (int u = 0; u < input.size(); u++) {
-			g.zero(sum);
+			cdbl.zero(sum);
 			uTmp.setR(u);
 			for (int x = 0; x < input.size(); x++) {
 				input.get(x, in);
 				fOfX.setR(in.v());
 				xTmp.setR(x);
-				g.multiply(MINUS_2, PI, power);
-				g.multiply(power, I, power);
-				g.multiply(power, xTmp, power);
-				g.multiply(power, uTmp, power);
-				g.divide(power, N, power);
-				g.exp(power, multiplier);
-				g.multiply(fOfX, multiplier, term);
-				g.add(sum, term, sum);
+				cdbl.multiply(MINUS_2, PI, power);
+				cdbl.multiply(power, I, power);
+				cdbl.multiply(power, xTmp, power);
+				cdbl.multiply(power, uTmp, power);
+				cdbl.divide(power, N, power);
+				cdbl.exp(power, multiplier);
+				cdbl.multiply(fOfX, multiplier, term);
+				cdbl.add(sum, term, sum);
 			}
-			g.divide(sum, N, FofU);
+			cdbl.divide(sum, N, FofU);
 			output.set(u, FofU);
 		}
 	}
