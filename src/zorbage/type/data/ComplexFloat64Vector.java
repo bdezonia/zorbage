@@ -56,7 +56,7 @@ public class ComplexFloat64Vector
 	@Override
 	public void negate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
@@ -68,7 +68,7 @@ public class ComplexFloat64Vector
 	public void add(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -83,7 +83,7 @@ public class ComplexFloat64Vector
 	public void subtract(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -98,7 +98,7 @@ public class ComplexFloat64Vector
 	public boolean isEqual(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -172,13 +172,13 @@ public class ComplexFloat64Vector
 	public void scale(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		// two loops minimizes memory allocations
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
@@ -236,7 +236,7 @@ public class ComplexFloat64Vector
 	
 	@Override
 	public void dotProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		ComplexFloat64Member sum = new ComplexFloat64Member(0,0);
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();

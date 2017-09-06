@@ -56,7 +56,7 @@ public class Float64Vector
 	@Override
 	public void negate(Float64VectorMember a, Float64VectorMember b) {
 		Float64Member tmp = new Float64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
@@ -68,7 +68,7 @@ public class Float64Vector
 	public void add(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -83,7 +83,7 @@ public class Float64Vector
 	public void subtract(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -98,7 +98,7 @@ public class Float64Vector
 	public boolean isEqual(Float64VectorMember a, Float64VectorMember b) {
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -169,13 +169,13 @@ public class Float64Vector
 	public void scale(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
 		Float64Member tmp = new Float64Member();
 		// two loops minimizes memory allocations
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
@@ -233,7 +233,7 @@ public class Float64Vector
 
 	@Override
 	public void dotProduct(Float64VectorMember a, Float64VectorMember b, Float64Member c) {
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		Float64Member sum = new Float64Member(0);
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();

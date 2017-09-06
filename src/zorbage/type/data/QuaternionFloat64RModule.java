@@ -56,7 +56,7 @@ public class QuaternionFloat64RModule
 	@Override
 	public void negate(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
@@ -68,7 +68,7 @@ public class QuaternionFloat64RModule
 	public void add(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64RModuleMember c) {
 		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
 		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -83,7 +83,7 @@ public class QuaternionFloat64RModule
 	public void subtract(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64RModuleMember c) {
 		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
 		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -98,7 +98,7 @@ public class QuaternionFloat64RModule
 	public boolean isEqual(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
 		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
 		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -166,13 +166,13 @@ public class QuaternionFloat64RModule
 	public void scale(QuaternionFloat64Member scalar, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		// two loops minimizes memory allocations
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
@@ -230,7 +230,7 @@ public class QuaternionFloat64RModule
 	
 	@Override
 	public void dotProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64Member c) {
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
 		QuaternionFloat64Member btmp = new QuaternionFloat64Member();

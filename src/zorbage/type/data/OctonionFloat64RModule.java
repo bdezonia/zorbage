@@ -56,7 +56,7 @@ public class OctonionFloat64RModule
 	@Override
 	public void negate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			g.negate(tmp, tmp);
@@ -68,7 +68,7 @@ public class OctonionFloat64RModule
 	public void add(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -83,7 +83,7 @@ public class OctonionFloat64RModule
 	public void subtract(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -98,7 +98,7 @@ public class OctonionFloat64RModule
 	public boolean isEqual(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
@@ -166,13 +166,13 @@ public class OctonionFloat64RModule
 	public void scale(OctonionFloat64Member scalar, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		// two loops minimizes memory allocations
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
-		long max = Math.max(a.length(), b.length());
+		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
 			g.multiply(scalar, tmp, tmp);
@@ -230,7 +230,7 @@ public class OctonionFloat64RModule
 	
 	@Override
 	public void dotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-		long min = Math.min(a.length(), b.length());
+		final long min = Math.min(a.length(), b.length());
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
