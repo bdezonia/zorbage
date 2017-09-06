@@ -43,7 +43,7 @@ public class ComplexFloat64Matrix
 		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>,
 		Constructible2dLong<ComplexFloat64MatrixMember>
 {
-	private static final ComplexFloat64Group g = new ComplexFloat64Group();
+	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	public ComplexFloat64Matrix() {
@@ -62,12 +62,12 @@ public class ComplexFloat64Matrix
 		ComplexFloat64Member term = new ComplexFloat64Member();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				g.zero(sum);
+				cdbl.zero(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					g.multiply(atmp, btmp, term);
-					g.add(sum, term, sum);
+					cdbl.multiply(atmp, btmp, term);
+					cdbl.add(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}
@@ -124,7 +124,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.negate(tmp,tmp);
+				cdbl.negate(tmp,tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -144,7 +144,7 @@ public class ComplexFloat64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				g.add(atmp, btmp, tmp);
+				cdbl.add(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -164,7 +164,7 @@ public class ComplexFloat64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				g.subtract(atmp, btmp, tmp);
+				cdbl.subtract(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -181,7 +181,7 @@ public class ComplexFloat64Matrix
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (g.isNotEqual(value1, value2))
+				if (cdbl.isNotEqual(value1, value2))
 					return false;
 			}
 		}
@@ -240,7 +240,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundTowardsZero(tmp, tmp);
+				cdbl.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -254,7 +254,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundAwayFromZero(tmp, tmp);
+				cdbl.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -268,7 +268,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundPositive(tmp, tmp);
+				cdbl.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -282,7 +282,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNegative(tmp, tmp);
+				cdbl.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -296,7 +296,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNearest(tmp, tmp);
+				cdbl.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -310,7 +310,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNearestEven(tmp, tmp);
+				cdbl.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -322,7 +322,7 @@ public class ComplexFloat64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (g.isNaN(value))
+				if (cdbl.isNaN(value))
 					return true;
 			}
 		}
@@ -335,7 +335,7 @@ public class ComplexFloat64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (g.isInfinite(value))
+				if (cdbl.isInfinite(value))
 					return true;
 			}
 		}
@@ -352,7 +352,7 @@ public class ComplexFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				g.conjugate(atmp, btmp);
+				cdbl.conjugate(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}

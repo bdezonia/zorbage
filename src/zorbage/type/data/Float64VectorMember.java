@@ -42,7 +42,7 @@ import zorbage.util.BigList;
  */
 public final class Float64VectorMember {
 
-	private static final Float64Group g = new Float64Group();
+	private static final Float64Group dbl = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0); 
 
 	private LinearStorage<?,Float64Member> storage;
@@ -100,7 +100,7 @@ public final class Float64VectorMember {
 			storage.get(i, v);
 		}
 		else {
-			g.zero(v);
+			dbl.zero(v);
 		}
 	}
 

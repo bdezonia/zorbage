@@ -39,19 +39,19 @@ import zorbage.type.storage.LinearStorage;
  */
 public class Min<T extends Group<T,U> & Ordered<U>, U> {
 
-	private T g;
+	private T grp;
 
-	public Min(T g) {
-		this.g = g;
+	public Min(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U max, U result) {
-		g.assign(max, result);
-		U tmp = g.construct();
+		grp.assign(max, result);
+		U tmp = grp.construct();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			if (g.isLess(tmp, result)) {
-				g.assign(tmp, result);
+			if (grp.isLess(tmp, result)) {
+				grp.assign(tmp, result);
 			}
 		}
 	}

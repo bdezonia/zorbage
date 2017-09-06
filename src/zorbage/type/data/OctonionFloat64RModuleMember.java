@@ -42,7 +42,7 @@ import zorbage.util.BigList;
  */
 public final class OctonionFloat64RModuleMember {
 
-	private static final OctonionFloat64Group g = new OctonionFloat64Group();
+	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
 	private LinearStorage<?,OctonionFloat64Member> storage;
@@ -116,7 +116,7 @@ public final class OctonionFloat64RModuleMember {
 			storage.get(i, v);
 		}
 		else {
-			g.zero(v);
+			odbl.zero(v);
 		}
 	}
 

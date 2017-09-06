@@ -41,7 +41,7 @@ public class Float64Vector
     VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>,
     Constructible1dLong<Float64VectorMember>
 {
-	private static final Float64Group g = new Float64Group();
+	private static final Float64Group dbl = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0);
 
 	public Float64Vector() {
@@ -59,7 +59,7 @@ public class Float64Vector
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			g.negate(tmp, tmp);
+			dbl.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class Float64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.add(atmp, btmp, btmp);
+			dbl.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class Float64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.subtract(atmp, btmp, btmp);
+			dbl.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class Float64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (g.isNotEqual(atmp, btmp))
+			if (dbl.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -157,9 +157,9 @@ public class Float64Vector
 		}
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i,  tmp);
-			g.divide(tmp, max, tmp);
-			g.multiply(tmp, tmp, tmp);
-			g.add(norm2, tmp, norm2);
+			dbl.divide(tmp, max, tmp);
+			dbl.multiply(tmp, tmp, tmp);
+			dbl.add(norm2, tmp, norm2);
 		}
 		double norm = max.v() * Math.sqrt(norm2.v());
 		b.setV(norm);
@@ -172,13 +172,13 @@ public class Float64Vector
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			dbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			dbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -196,27 +196,27 @@ public class Float64Vector
 		Float64Member t = new Float64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		g.multiply(atmp, btmp, term1);
+		dbl.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		dbl.multiply(atmp, btmp, term2);
+		dbl.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		g.multiply(atmp, btmp, term1);
+		dbl.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		dbl.multiply(atmp, btmp, term2);
+		dbl.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term1);
+		dbl.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		dbl.multiply(atmp, btmp, term2);
+		dbl.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -225,7 +225,7 @@ public class Float64Vector
 		Float64Member tmp = new Float64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (g.isNotEqual(tmp, ZERO))
+			if (dbl.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -240,8 +240,8 @@ public class Float64Vector
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.multiply(atmp, btmp, btmp);
-			g.add(sum, btmp, sum);
+			dbl.multiply(atmp, btmp, btmp);
+			dbl.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -257,12 +257,12 @@ public class Float64Vector
 		Float64Member term2 = new Float64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		g.negate(atmp, atmp);
-		g.multiply(atmp, btmp, term1);
+		dbl.negate(atmp, atmp);
+		dbl.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.add(term1, term2, c);
+		dbl.multiply(atmp, btmp, term2);
+		dbl.add(term1, term2, c);
 	}
 
 	@Override

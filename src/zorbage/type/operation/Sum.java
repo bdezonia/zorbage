@@ -38,18 +38,18 @@ import zorbage.type.storage.LinearStorage;
  */
 public class Sum<T extends AdditiveGroup<T,U>, U> {
 
-	private T g;
+	private T grp;
 
-	public Sum(T g) {
-		this.g = g;
+	public Sum(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		g.zero(result);
-		U tmp = g.construct();
+		grp.zero(result);
+		U tmp = grp.construct();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			g.add(result, tmp, result);
+			grp.add(result, tmp, result);
 		}
 	}
 }

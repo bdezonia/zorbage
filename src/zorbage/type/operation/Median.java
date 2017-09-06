@@ -41,29 +41,29 @@ import zorbage.type.storage.LinearStorage;
  */
 public class Median<T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & Unity<U>, U> {
 
-	private T g;
+	private T grp;
 	private LinearStorage<?,U> localStorage;
 
-	public Median(T g) {
-		this.g = g;
+	public Median(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		U tmp = g.construct();
-		U one = g.construct();
-		U sum = g.construct();
-		U count = g.construct();
-		g.unity(one);
+		U tmp = grp.construct();
+		U one = grp.construct();
+		U sum = grp.construct();
+		U count = grp.construct();
+		grp.unity(one);
 		localStorage = storage.duplicate();
-		Sort<T,U> sort = new Sort<T,U>(g);
+		Sort<T,U> sort = new Sort<T,U>(grp);
 		sort.calculate(localStorage);
 		if (localStorage.size() % 2 == 0) {
 			localStorage.get(localStorage.size()/2 - 1, tmp);
-			g.add(sum, tmp, sum);
+			grp.add(sum, tmp, sum);
 			localStorage.get(localStorage.size()/2, tmp);
-			g.add(sum, tmp, sum);
-			g.add(one, one, count);
-			g.divide(sum, count, result);
+			grp.add(sum, tmp, sum);
+			grp.add(one, one, count);
+			grp.divide(sum, count, result);
 		}
 		else {
 			localStorage.get(localStorage.size()/2, result);

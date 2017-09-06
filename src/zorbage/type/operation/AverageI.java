@@ -40,17 +40,17 @@ import zorbage.type.storage.LinearStorage;
  */
 public class AverageI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity<U>, U> {
 
-	private T g;
+	private T grp;
 
-	public AverageI(T g) {
-		this.g = g;
+	public AverageI(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		SumCount<T,U> sumCount = new SumCount<T, U>(g);
-		U sum = g.construct();
-		U count = g.construct();
+		SumCount<T,U> sumCount = new SumCount<T, U>(grp);
+		U sum = grp.construct();
+		U count = grp.construct();
 		sumCount.calculate(storage, sum, count);
-		g.div(sum, count, result);
+		grp.div(sum, count, result);
 	}
 }

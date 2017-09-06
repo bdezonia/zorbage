@@ -43,7 +43,7 @@ public class OctonionFloat64Matrix
 		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>,
 		Constructible2dLong<OctonionFloat64MatrixMember>
 {
-	private static final OctonionFloat64Group g = new OctonionFloat64Group();
+	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
 	public OctonionFloat64Matrix() { }
@@ -61,12 +61,12 @@ public class OctonionFloat64Matrix
 		OctonionFloat64Member term = new OctonionFloat64Member();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				g.zero(sum);
+				odbl.zero(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					g.multiply(atmp, btmp, term);
-					g.add(sum, term, sum);
+					odbl.multiply(atmp, btmp, term);
+					odbl.add(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}
@@ -123,7 +123,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.negate(tmp, tmp);
+				odbl.negate(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -143,7 +143,7 @@ public class OctonionFloat64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				g.add(atmp, btmp, tmp);
+				odbl.add(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -163,7 +163,7 @@ public class OctonionFloat64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				g.subtract(atmp, btmp, tmp);
+				odbl.subtract(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -180,7 +180,7 @@ public class OctonionFloat64Matrix
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (g.isNotEqual(value1, value2))
+				if (odbl.isNotEqual(value1, value2))
 					return false;
 			}
 		}
@@ -239,7 +239,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundTowardsZero(tmp, tmp);
+				odbl.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -253,7 +253,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundAwayFromZero(tmp, tmp);
+				odbl.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -267,7 +267,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundPositive(tmp, tmp);
+				odbl.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -281,7 +281,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNegative(tmp, tmp);
+				odbl.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -295,7 +295,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNearest(tmp, tmp);
+				odbl.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -309,7 +309,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNearestEven(tmp, tmp);
+				odbl.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -321,7 +321,7 @@ public class OctonionFloat64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (g.isNaN(value))
+				if (odbl.isNaN(value))
 					return true;
 			}
 		}
@@ -334,7 +334,7 @@ public class OctonionFloat64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (g.isInfinite(value))
+				if (odbl.isInfinite(value))
 					return true;
 			}
 		}
@@ -351,7 +351,7 @@ public class OctonionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				g.conjugate(atmp, btmp);
+				odbl.conjugate(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}

@@ -60,7 +60,7 @@ public class Float64TensorProduct
 		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
 		ConstructibleNdLong<Float64TensorProductMember>
 {
-	private Float64Group g = new Float64Group();
+	private Float64Group dbl = new Float64Group();
 	
 	@Override
 	public Float64TensorProductMember construct() {
@@ -92,7 +92,7 @@ public class Float64TensorProduct
 		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			if (g.isNotEqual(aTmp, bTmp))
+			if (dbl.isNotEqual(aTmp, bTmp))
 				return false;
 		}
 		return true;
@@ -119,7 +119,7 @@ public class Float64TensorProduct
 	@Override
 	public void zero(Float64TensorProductMember a) {
 		Float64Member tmp = new Float64Member();
-		g.zero(tmp);
+		dbl.zero(tmp);
 		long numElems = a.numElems();
 		for (long i = 0; i < numElems; i++) {
 			a.setV(i, tmp);
@@ -133,7 +133,7 @@ public class Float64TensorProduct
 		long numElems = b.numElems();
 		for (long i = 0; i < numElems; i++) {
 			b.v(i, tmp);
-			g.negate(tmp, tmp);
+			dbl.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -150,7 +150,7 @@ public class Float64TensorProduct
 		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			g.add(aTmp, bTmp, cTmp);
+			dbl.add(aTmp, bTmp, cTmp);
 			c.setV(i, cTmp);
 		}
 	}
@@ -167,7 +167,7 @@ public class Float64TensorProduct
 		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			g.subtract(aTmp, bTmp, cTmp);
+			dbl.subtract(aTmp, bTmp, cTmp);
 			c.setV(i, cTmp);
 		}
 	}
@@ -184,7 +184,7 @@ public class Float64TensorProduct
 		assign(a,b);
 		for (long i = 0; i < b.numElems(); i++) {
 			b.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			dbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

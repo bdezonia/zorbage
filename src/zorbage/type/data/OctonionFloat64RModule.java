@@ -41,7 +41,7 @@ public class OctonionFloat64RModule
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
     Constructible1dLong<OctonionFloat64RModuleMember>
 {
-	private static final OctonionFloat64Group g = new OctonionFloat64Group();
+	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
 	public OctonionFloat64RModule() {
@@ -59,7 +59,7 @@ public class OctonionFloat64RModule
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			g.negate(tmp, tmp);
+			odbl.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.add(atmp, btmp, btmp);
+			odbl.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.subtract(atmp, btmp, btmp);
+			odbl.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (g.isNotEqual(atmp, btmp))
+			if (odbl.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -169,13 +169,13 @@ public class OctonionFloat64RModule
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			odbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			odbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -193,27 +193,27 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member t = new OctonionFloat64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		g.multiply(atmp, btmp, term1);
+		odbl.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		odbl.multiply(atmp, btmp, term2);
+		odbl.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		g.multiply(atmp, btmp, term1);
+		odbl.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		odbl.multiply(atmp, btmp, term2);
+		odbl.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term1);
+		odbl.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		odbl.multiply(atmp, btmp, term2);
+		odbl.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -222,7 +222,7 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (g.isNotEqual(tmp, ZERO))
+			if (odbl.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -237,8 +237,8 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.multiply(atmp, btmp, btmp);
-			g.add(sum, btmp, sum);
+			odbl.multiply(atmp, btmp, btmp);
+			odbl.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -254,12 +254,12 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member term2 = new OctonionFloat64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		g.negate(atmp, atmp);
-		g.multiply(atmp, btmp, term1);
+		odbl.negate(atmp, atmp);
+		odbl.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.add(term1, term2, c);
+		odbl.multiply(atmp, btmp, term2);
+		odbl.add(term1, term2, c);
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
-			g.conjugate(tmp, tmp);
+			odbl.conjugate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

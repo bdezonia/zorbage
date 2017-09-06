@@ -37,10 +37,10 @@ import zorbage.type.storage.LinearStorage;
  */
 public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 
-	private T g;
+	private T grp;
 	
-	public Sort(T g) {
-		this.g = g;
+	public Sort(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage) {
@@ -57,10 +57,10 @@ public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 
 
 	private long partition(LinearStorage<?,U> storage, long left, long right) {
-		U tmp1 = g.construct();
-		U tmp2 = g.construct();
+		U tmp1 = grp.construct();
+		U tmp2 = grp.construct();
 		
-		U pivotValue = g.construct();
+		U pivotValue = grp.construct();
 		storage.get(left, pivotValue);
 
 		long leftmark = left+1;
@@ -72,13 +72,13 @@ public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 			while (true) {
 				if (leftmark > rightmark) break;
 				storage.get(leftmark, tmp1);
-				if (g.isGreater(tmp1, pivotValue)) break;
+				if (grp.isGreater(tmp1, pivotValue)) break;
 				leftmark++;
 			}
 	
 			while (true) {
 				storage.get(rightmark, tmp1);
-				if (g.isLess(tmp1, pivotValue)) break;
+				if (grp.isLess(tmp1, pivotValue)) break;
 				if (rightmark < leftmark) break;
 				rightmark--;
 			}

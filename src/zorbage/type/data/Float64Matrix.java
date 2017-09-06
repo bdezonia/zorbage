@@ -43,7 +43,7 @@ public class Float64Matrix
 		MatrixRing<Float64Matrix, Float64MatrixMember, Float64Group, Float64Member>,
 		Constructible2dLong<Float64MatrixMember>
 {
-	private static final Float64Group g = new Float64Group();
+	private static final Float64Group dbl = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0);
 	
 	public Float64Matrix() { }
@@ -61,12 +61,12 @@ public class Float64Matrix
 		Float64Member term = new Float64Member();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				g.zero(sum);
+				dbl.zero(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					g.multiply(atmp, btmp, term);
-					g.add(sum, term, sum);
+					dbl.multiply(atmp, btmp, term);
+					dbl.add(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}
@@ -125,7 +125,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.negate(tmp,tmp);
+				dbl.negate(tmp,tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -145,7 +145,7 @@ public class Float64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				g.add(atmp, btmp, tmp);
+				dbl.add(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -165,7 +165,7 @@ public class Float64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				g.subtract(atmp, btmp, tmp);
+				dbl.subtract(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -182,7 +182,7 @@ public class Float64Matrix
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (g.isNotEqual(value1, value2))
+				if (dbl.isNotEqual(value1, value2))
 					return false;
 			}
 		}
@@ -241,7 +241,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundTowardsZero(tmp, tmp);
+				dbl.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -255,7 +255,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundAwayFromZero(tmp, tmp);
+				dbl.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -269,7 +269,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundPositive(tmp, tmp);
+				dbl.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -283,7 +283,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNegative(tmp, tmp);
+				dbl.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -297,7 +297,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNearest(tmp, tmp);
+				dbl.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -311,7 +311,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				g.roundNearestEven(tmp, tmp);
+				dbl.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -323,7 +323,7 @@ public class Float64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (g.isNaN(value))
+				if (dbl.isNaN(value))
 					return true;
 			}
 		}
@@ -336,7 +336,7 @@ public class Float64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (g.isInfinite(value))
+				if (dbl.isInfinite(value))
 					return true;
 			}
 		}

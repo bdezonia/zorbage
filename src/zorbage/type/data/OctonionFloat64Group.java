@@ -64,7 +64,7 @@ public class OctonionFloat64Group
 	private static final OctonionFloat64Member TWO = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
-	private static final ComplexFloat64Group g = new ComplexFloat64Group();
+	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 
 	public OctonionFloat64Group() {
 	}
@@ -657,7 +657,7 @@ public class OctonionFloat64Group
 		norm(unreal, norm);
 		tmp.setR(a.r());
 		tmp.setI(norm.v());
-		g.log(tmp, tmp);
+		cdbl.log(tmp, tmp);
 		if ( norm.v() == 0.0 ) {
 			factor = tmp.i();
 		} else {

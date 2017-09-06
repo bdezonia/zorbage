@@ -40,15 +40,15 @@ import zorbage.type.storage.LinearStorage;
  */
 public class StdDev<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U>, U> {
 
-	private T g;
+	private T grp;
 	
-	public StdDev(T g) {
-		this.g = g;
+	public StdDev(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		Variance<T,U> var = new Variance<T,U>(g);
+		Variance<T,U> var = new Variance<T,U>(grp);
 		var.calculate(storage, result);
-		g.sqrt(result, result);
+		grp.sqrt(result, result);
 	}
 }

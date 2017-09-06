@@ -41,32 +41,32 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 {
 
 	private final Object[] data;
-	private final T g;
+	private final T grp;
 	
 	public static final Fraction BYTESIZE = Fraction.UNKNOWN;
 	
-	public ArrayStorageGeneric(long size, T g) {
+	public ArrayStorageGeneric(long size, T grp) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
 		this.data = new Object[(int)size];
 		for (int i = 0; i < size; i++) {
-			this.data[i] = g.construct();
+			this.data[i] = grp.construct();
 		}
-		this.g = g;
+		this.grp = grp;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void set(long index, U value) {
-		g.assign(value, (U)data[(int)index]);
+		grp.assign(value, (U)data[(int)index]);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void get(long index, U value) {
-		g.assign((U)data[(int)index], value);
+		grp.assign((U)data[(int)index], value);
 	}
 	
 	@Override
@@ -77,9 +77,9 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayStorageGeneric<T,U> duplicate() {
-		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),g);
+		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),grp);
 		for (int i = 0; i < data.length; i++)
-			g.assign((U)data[i], (U)s.data[i]);
+			grp.assign((U)data[i], (U)s.data[i]);
 		return s;
 	}
 

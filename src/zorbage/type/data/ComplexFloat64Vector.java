@@ -41,7 +41,7 @@ public class ComplexFloat64Vector
     VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
     Constructible1dLong<ComplexFloat64VectorMember>
 {
-	private static final ComplexFloat64Group g = new ComplexFloat64Group();
+	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	public ComplexFloat64Vector() {
@@ -59,7 +59,7 @@ public class ComplexFloat64Vector
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			g.negate(tmp, tmp);
+			cdbl.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.add(atmp, btmp, btmp);
+			cdbl.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.subtract(atmp, btmp, btmp);
+			cdbl.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (g.isNotEqual(atmp, btmp))
+			if (cdbl.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -175,13 +175,13 @@ public class ComplexFloat64Vector
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			cdbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			g.multiply(scalar, tmp, tmp);
+			cdbl.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -199,27 +199,27 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member t = new ComplexFloat64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		g.multiply(atmp, btmp, term1);
+		cdbl.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		cdbl.multiply(atmp, btmp, term2);
+		cdbl.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		g.multiply(atmp, btmp, term1);
+		cdbl.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		cdbl.multiply(atmp, btmp, term2);
+		cdbl.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term1);
+		cdbl.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.subtract(term1, term2, t);
+		cdbl.multiply(atmp, btmp, term2);
+		cdbl.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -228,7 +228,7 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (g.isNotEqual(tmp, ZERO))
+			if (cdbl.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -243,8 +243,8 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			g.multiply(atmp, btmp, btmp);
-			g.add(sum, btmp, sum);
+			cdbl.multiply(atmp, btmp, btmp);
+			cdbl.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -260,12 +260,12 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member term2 = new ComplexFloat64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		g.negate(atmp, atmp);
-		g.multiply(atmp, btmp, term1);
+		cdbl.negate(atmp, atmp);
+		cdbl.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		g.multiply(atmp, btmp, term2);
-		g.add(term1, term2, c);
+		cdbl.multiply(atmp, btmp, term2);
+		cdbl.add(term1, term2, c);
 	}
 
 	@Override
@@ -291,7 +291,7 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
-			g.conjugate(tmp, tmp);
+			cdbl.conjugate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

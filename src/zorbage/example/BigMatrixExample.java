@@ -43,22 +43,22 @@ public class BigMatrixExample {
 	public void run() {
 		System.out.println("Making a huge virtual matrix > 2 gig entries");
 		Float64Matrix mat = new Float64Matrix();
-		Float64Group flt = new Float64Group();
+		Float64Group dbl = new Float64Group();
 		Float64MatrixMember m = mat.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
 		mat.unity(m);
-		Float64Member value = flt.construct();
-		Float64Member zero = flt.construct();
-		Float64Member one = flt.construct();
-		flt.unity(one);
+		Float64Member value = dbl.construct();
+		Float64Member zero = dbl.construct();
+		Float64Member one = dbl.construct();
+		dbl.unity(one);
 		for (long r = 0; r < m.rows(); r++) {
 			for (long c = 0; c < m.cols(); c++) {
 				m.v(r, c, value);
 				if (r == c) {
-					if (!flt.isEqual(value, one))
+					if (!dbl.isEqual(value, one))
 						System.out.println("data mismatch error: not one");
 				}
 				else {
-					if (!flt.isEqual(value, zero))
+					if (!dbl.isEqual(value, zero))
 						System.out.println("data mismatch error: not zero");
 				}
 			}

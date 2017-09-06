@@ -38,24 +38,24 @@ import zorbage.type.storage.LinearStorage;
  */
 public class SumSquareCount<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U>,U> {
 
-	private T g;
+	private T grp;
 	
-	public SumSquareCount(T g) {
-		this.g = g;
+	public SumSquareCount(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U avg, U sumSqDevs, U count) {
-		U tmp = g.construct();
-		U one = g.construct();
-		g.unity(one);
-		g.zero(sumSqDevs);
-		g.zero(count);
+		U tmp = grp.construct();
+		U one = grp.construct();
+		grp.unity(one);
+		grp.zero(sumSqDevs);
+		grp.zero(count);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			g.subtract(tmp, avg, tmp);
-			g.multiply(tmp, tmp, tmp);
-			g.add(sumSqDevs, tmp, sumSqDevs);
-			g.add(count, one, count);
+			grp.subtract(tmp, avg, tmp);
+			grp.multiply(tmp, tmp, tmp);
+			grp.add(sumSqDevs, tmp, sumSqDevs);
+			grp.add(count, one, count);
 		}
 	}
 }

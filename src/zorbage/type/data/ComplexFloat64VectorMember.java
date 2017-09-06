@@ -42,7 +42,7 @@ import zorbage.util.BigList;
  */
 public final class ComplexFloat64VectorMember {
 
-	private static final ComplexFloat64Group g = new ComplexFloat64Group();
+	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
 	private LinearStorage<?,ComplexFloat64Member> storage;
@@ -105,7 +105,7 @@ public final class ComplexFloat64VectorMember {
 			storage.get(i, v);
 		}
 		else {
-			g.zero(v);
+			cdbl.zero(v);
 		}
 	}
 

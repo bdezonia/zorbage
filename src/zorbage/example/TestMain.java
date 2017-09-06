@@ -56,63 +56,63 @@ public class TestMain {
 	
 	public static void testInts() {
 		  
-		SignedInt32Group g = new SignedInt32Group();
+		SignedInt32Group int32 = new SignedInt32Group();
 		  
 		SignedInt32Member a = new SignedInt32Member(1);
 		SignedInt32Member b = new SignedInt32Member(4);
 		SignedInt32Member sum = new SignedInt32Member(99);
 
-		g.add(a,b,sum);
+		int32.add(a,b,sum);
 		  
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
 	public static void testFloats() {
 		  
-		Float64Group g = new Float64Group();
+		Float64Group dbl = new Float64Group();
 		  
 		Float64Member a = new Float64Member(1.1);
 		Float64Member b = new Float64Member(4.2);
 		Float64Member sum = new Float64Member(99.3);
 
-		g.add(a,b,sum);
+		dbl.add(a,b,sum);
 		  
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
 	public static void testHugeNumbers() {
-		UnboundedIntGroup g = new UnboundedIntGroup();
+		UnboundedIntGroup huge = new UnboundedIntGroup();
 		  
 		UnboundedIntMember a = new UnboundedIntMember(Long.MAX_VALUE);
 		UnboundedIntMember b = new UnboundedIntMember(44);
 		UnboundedIntMember product = new UnboundedIntMember();
 
-		g.multiply(a,b,product);
+		huge.multiply(a,b,product);
 		  
 		System.out.println(a.v() + " times " + b.v() + " equals " + product.v());
 	}
 	
-	public static <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T g) {
-		U a = g.construct();
-		g.unity(a);
-		U b = g.construct();
-		g.zero(b);
-		g.add(a, a, b);
-		U c = g.construct();
-		g.add(a, b, c);
+	public static <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T grp) {
+		U a = grp.construct();
+		grp.unity(a);
+		U b = grp.construct();
+		grp.zero(b);
+		grp.add(a, a, b);
+		U c = grp.construct();
+		grp.add(a, b, c);
 		System.out.println(a.toString() + " plus " + b.toString() + " equals " + c.toString());
-		System.out.println(a.toString() + " equals " + b.toString() + " : " + g.isEqual(a, b));
-		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
+		System.out.println(a.toString() + " equals " + b.toString() + " : " + grp.isEqual(a, b));
+		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + grp.isGreater(a, b));
 	}
 	
-	public static <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2(T g) {
-		U a = g.construct("1040");
-		U b = g.construct("160");
-		U c = g.construct();
-		g.add(a, b, c);
+	public static <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2(T grp) {
+		U a = grp.construct("1040");
+		U b = grp.construct("160");
+		U c = grp.construct();
+		grp.add(a, b, c);
 		System.out.println(a.toString() + " plus " + b.toString() + " equals " + c.toString());
-		System.out.println(a.toString() + " equals " + b.toString() + " : " + g.isEqual(a, b));
-		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + g.isGreater(a, b));
+		System.out.println(a.toString() + " equals " + b.toString() + " : " + grp.isEqual(a, b));
+		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + grp.isGreater(a, b));
 	}
 	
 	public static void testAccessor() {
@@ -150,7 +150,7 @@ public class TestMain {
 			accessor.put();
 		}
 		// scale it by 6.3
-		Float64Group g = new Float64Group();
+		Float64Group dbl = new Float64Group();
 		Float64Member scale = new Float64Member(6.3);
 		Float64Member tmp = new Float64Member();
 		accessor.beforeFirst();
@@ -158,7 +158,7 @@ public class TestMain {
 			accessor.fwd();
 			accessor.get();
 			tmp.setV(value.v());
-			g.multiply(tmp, scale, tmp);
+			dbl.multiply(tmp, scale, tmp);
 			value.setV((int)Math.round(tmp.v()));
 			accessor.put();
 		}
@@ -210,7 +210,7 @@ public class TestMain {
 	}
 
 	public static void testMin() {
-		Float64Group g = new Float64Group();
+		Float64Group dbl = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
@@ -222,16 +222,16 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Min<Float64Group,Float64Member> a = new Min<Float64Group,Float64Member>(g);
+		Min<Float64Group,Float64Member> a = new Min<Float64Group,Float64Member>(dbl);
 		Float64Member result = new Float64Member();
 		Float64Member max = new Float64Member();
-		g.maxBound(max);
+		dbl.maxBound(max);
 		a.calculate(storage, max, result);
 		System.out.println("Minimum value = " + result.v());
 	}
 
 	public static void testMax() {
-		Float64Group g = new Float64Group();
+		Float64Group dbl = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
@@ -243,10 +243,10 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Max<Float64Group,Float64Member> a = new Max<Float64Group,Float64Member>(g);
+		Max<Float64Group,Float64Member> a = new Max<Float64Group,Float64Member>(dbl);
 		Float64Member result = new Float64Member();
 		Float64Member min = new Float64Member();
-		g.minBound(min);
+		dbl.minBound(min);
 		a.calculate(storage, min, result);
 		System.out.println("Maximum value = " + result.v());
 	}

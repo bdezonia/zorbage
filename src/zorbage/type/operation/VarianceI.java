@@ -41,23 +41,23 @@ import zorbage.type.storage.LinearStorage;
  */
 public class VarianceI<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & IntegralDivision<U>, U> {
 
-	private T g;
+	private T grp;
 	
-	public VarianceI(T g) {
-		this.g = g;
+	public VarianceI(T grp) {
+		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		U avg = g.construct();
-		U sum = g.construct();
-		U count = g.construct();
-		U one = g.construct();
-		g.unity(one);
-		AverageI<T,U> mean = new AverageI<T,U>(g);
+		U avg = grp.construct();
+		U sum = grp.construct();
+		U count = grp.construct();
+		U one = grp.construct();
+		grp.unity(one);
+		AverageI<T,U> mean = new AverageI<T,U>(grp);
 		mean.calculate(storage, avg);
-		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(g);
+		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(grp);
 		sumSq.calculate(storage, avg, sum, count);
-		g.subtract(count, one, count);
-		g.div(sum, count, result);
+		grp.subtract(count, one, count);
+		grp.div(sum, count, result);
 	}
 }
