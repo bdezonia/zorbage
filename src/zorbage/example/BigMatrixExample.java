@@ -1,3 +1,29 @@
+/*
+ * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ *
+ * Copyright (C) 2016-2017 Barry DeZonia
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 package zorbage.example;
 
 import zorbage.type.ctor.MemoryConstruction;
@@ -7,27 +33,32 @@ import zorbage.type.data.Float64Matrix;
 import zorbage.type.data.Float64MatrixMember;
 import zorbage.type.data.Float64Member;
 
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
 public class BigMatrixExample {
 
 	public void run() {
 		System.out.println("Making a huge virtual matrix > 2 gig entries");
-		Float64Matrix g = new Float64Matrix();
-		Float64Group g2 = new Float64Group();
-		Float64MatrixMember m =
-			new Float64MatrixMember(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
-		g.unity(m);
-		Float64Member one = new Float64Member(1);
-		Float64Member zero = new Float64Member(0);
-		Float64Member value = new Float64Member();
+		Float64Matrix mat = new Float64Matrix();
+		Float64Group flt = new Float64Group();
+		Float64MatrixMember m = mat.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
+		mat.unity(m);
+		Float64Member value = flt.construct();
+		Float64Member zero = flt.construct();
+		Float64Member one = flt.construct();
+		flt.unity(one);
 		for (long r = 0; r < m.rows(); r++) {
 			for (long c = 0; c < m.cols(); c++) {
 				m.v(r, c, value);
 				if (r == c) {
-					if (!g2.isEqual(value, one))
+					if (!flt.isEqual(value, one))
 						System.out.println("data mismatch error: not one");
 				}
 				else {
-					if (!g2.isEqual(value, zero))
+					if (!flt.isEqual(value, zero))
 						System.out.println("data mismatch error: not zero");
 				}
 			}
