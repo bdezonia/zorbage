@@ -63,7 +63,7 @@ public class DFTExample {
 		// an example of straight index access to low level data
 		SignedInt32Member value = new SignedInt32Member();
 		int count = 0;
-		for (int i = 0; i < input.size(); i++) {
+		for (long i = 0; i < input.size(); i++) {
 			value.setV(count++);
 			input.set(i, value);
 		}
@@ -92,10 +92,10 @@ public class DFTExample {
 		cdbl.E(E);
 		cdbl.PI(PI);
 		
-		for (int u = 0; u < input.size(); u++) {
+		for (long u = 0; u < input.size(); u++) {
 			cdbl.zero(sum);
 			uTmp.setR(u);
-			for (int x = 0; x < input.size(); x++) {
+			for (long x = 0; x < input.size(); x++) {
 				input.get(x, in);
 				fOfX.setR(in.v());
 				xTmp.setR(x);
