@@ -385,9 +385,10 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void unity(QuaternionFloat64MatrixMember a) {
-		QuaternionFloat64Member one = new QuaternionFloat64Member(1, 0, 0, 0);
+		final QuaternionFloat64Member one = new QuaternionFloat64Member(1, 0, 0, 0);
 		zero(a);
-		for (long i = 0; i < Math.min(a.rows(), a.cols()); i++) {
+		final long minDim = Math.min(a.rows(), a.cols());
+		for (long i = 0; i < minDim; i++) {
 			a.setV(i, i, one);
 		}
 	}

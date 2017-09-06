@@ -374,9 +374,10 @@ public class Float64Matrix
 
 	@Override
 	public void unity(Float64MatrixMember a) {
-		Float64Member one = new Float64Member(1);
+		final Float64Member one = new Float64Member(1);
 		zero(a);
-		for (long i = 0; i < Math.min(a.rows(), a.cols()); i++) {
+		final long minDim = Math.min(a.rows(), a.cols());
+		for (long i = 0; i < minDim; i++) {
 			a.setV(i, i, one);
 		}
 	}
