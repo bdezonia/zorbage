@@ -37,30 +37,55 @@ import zorbage.type.data.QuaternionFloat64Member;
  */
 public class QuaternionExample {
 
+	private boolean near(double d1, double d2) {
+		return Math.abs(d1-d2) < 0.000000000000001;
+	}
+	
 	public void run() {
 		QuaternionFloat64Group qdbl = new QuaternionFloat64Group();
 		
-		QuaternionFloat64Member q = qdbl.construct();
+		QuaternionFloat64Member q1 = qdbl.construct();
 		
 		// TODO define a ctor that takes four doubles
-		q.setR(1);
-		q.setI(-2);
-		q.setJ(3);
-		q.setK(2);
+		q1.setR(1);
+		q1.setI(-2);
+		q1.setJ(3);
+		q1.setK(2);
 		
 		Float64Member tmp = new Float64Member();
 		
-		qdbl.norm(q, tmp);
+		qdbl.norm(q1, tmp);
 		
 		System.out.println("Quaternion 1st norm test is correct: " + (tmp.v() == (3*Math.sqrt(2))));
 		
-		q.setR(11);
-		q.setI(-2);
-		q.setJ(0);
-		q.setK(-2);
+		QuaternionFloat64Member q2 = qdbl.construct();
 
-		qdbl.norm(q, tmp);
+		q2.setR(11);
+		q2.setI(-2);
+		q2.setJ(0);
+		q2.setK(-2);
+
+		qdbl.norm(q2, tmp);
 
 		System.out.println("Quaternion 2nd norm test is correct: " + (tmp.v() == (Math.sqrt(129))));
+		
+		QuaternionFloat64Member q3 = qdbl.construct();
+
+		qdbl.add(q1, q2, q3);
+		
+		System.out.println("Quaternion add worked: " + ((q1.r()+q2.r() == q3.r()) && (q1.i()+q2.i() == q3.i()) && (q1.j()+q2.j() == q3.j()) && (q1.k()+q2.k() == q3.k())));
+		
+		qdbl.subtract(q1, q2, q3);
+
+		System.out.println("Quaternion subtract worked: " + ((q1.r()-q2.r() == q3.r()) && (q1.i()-q2.i() == q3.i()) && (q1.j()-q2.j() == q3.j()) && (q1.k()-q2.k() == q3.k())));
+
+		qdbl.multiply(q1, q2, q3);
+		
+		System.out.println("Quaternion multiply worked: " + ((q3.r() == 11) && (q3.i() == -30) && (q3.j() == 25) && (q3.k() == 26)));
+		
+		qdbl.divide(q3, q2, q1);
+
+		System.out.println("Quaternion divide worked: " + (near(q1.r(),1) && near(q1.i(),-2) && near(q1.j(),3) && near(q1.k(),2)));
+		
 	}
 }
