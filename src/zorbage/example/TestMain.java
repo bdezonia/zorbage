@@ -327,10 +327,15 @@ public class TestMain {
 		new BigMatrixExample().run();
 	}
 	
+	public static void testQuats() {
+		new QuaternionExample().run();
+	}
+	
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
 		testHugeNumbers();
+		testQuats();
 		test1(new SignedInt32Group());
 		test1(new Float64Group());
 		test2(new SignedInt32Group());
