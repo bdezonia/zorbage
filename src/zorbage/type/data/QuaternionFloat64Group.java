@@ -63,8 +63,8 @@ public class QuaternionFloat64Group
 	private static final QuaternionFloat64Member TWO = new QuaternionFloat64Member(2,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
-	private static final Float64Vector g1 = new Float64Vector();
-	private static final Float64Group g2 = new Float64Group();
+	private static final Float64Vector dblvec = new Float64Vector();
+	private static final Float64Group dbl = new Float64Group();
 	
 	public QuaternionFloat64Group() {
 	}
@@ -318,8 +318,8 @@ public class QuaternionFloat64Group
 		Float64VectorMember v = new Float64VectorMember(new double[]{a.i(), a.j(), a.k()});
 		norm(a, norm);
 		Float64Member multiplier = new Float64Member(a.r() / norm.v());
-		g1.scale(multiplier, v, v);
-		g2.acos(multiplier, term);
+		dblvec.scale(multiplier, v, v);
+		dbl.acos(multiplier, term);
 		b.setR(Math.log(norm.v()));
 		v.v(0, tmp);
 		b.setI(tmp.v() * term.v());
