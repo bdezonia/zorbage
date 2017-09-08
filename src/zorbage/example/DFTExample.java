@@ -29,7 +29,7 @@ package zorbage.example;
 import zorbage.type.data.float64.ComplexFloat64Group;
 import zorbage.type.data.float64.ComplexFloat64Member;
 import zorbage.type.data.int32.SignedInt32Member;
-import zorbage.type.storage.LinearStorage;
+import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
 import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 

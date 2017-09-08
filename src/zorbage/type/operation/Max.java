@@ -27,8 +27,8 @@
 package zorbage.type.operation;
 
 import zorbage.type.algebra.Ordered;
+import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.algebra.Group;
-import zorbage.type.storage.LinearStorage;
 
 /**
  * 

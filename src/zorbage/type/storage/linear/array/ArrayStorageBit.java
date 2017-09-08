@@ -27,7 +27,7 @@
 package zorbage.type.storage.linear.array;
 
 import zorbage.type.data.bool.BooleanMember;
-import zorbage.type.storage.LinearStorage;
+import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
 /**

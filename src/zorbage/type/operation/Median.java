@@ -29,8 +29,8 @@ package zorbage.type.operation;
 import zorbage.type.algebra.Invertible;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
+import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.storage.LinearStorage;
 
 /**
  * 

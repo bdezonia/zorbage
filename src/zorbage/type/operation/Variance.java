@@ -30,7 +30,7 @@ import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Invertible;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Unity;
-import zorbage.type.storage.LinearStorage;
+import zorbage.type.storage.linear.LinearStorage;
 
 // TODO Make a std dev class that is sqrt of variance
 

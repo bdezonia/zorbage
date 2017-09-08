@@ -30,7 +30,7 @@ import zorbage.type.ctor.MemoryConstruction;
 import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
-import zorbage.type.storage.LinearStorage;
+import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
 import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
 import zorbage.util.BigList;

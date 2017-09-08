@@ -31,7 +31,7 @@ import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Unity;
-import zorbage.type.storage.LinearStorage;
+import zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 

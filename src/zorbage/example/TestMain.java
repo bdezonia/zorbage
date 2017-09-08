@@ -43,7 +43,7 @@ import zorbage.type.operation.Max;
 import zorbage.type.operation.Median;
 import zorbage.type.operation.Min;
 import zorbage.type.operation.Sum;
-import zorbage.type.storage.LinearAccessor;
+import zorbage.type.storage.linear.LinearAccessor;
 import zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 

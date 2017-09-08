@@ -27,9 +27,9 @@
 package zorbage.type.operation;
 
 import zorbage.type.algebra.Unity;
+import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.IntegralDivision;
-import zorbage.type.storage.LinearStorage;
 
 /**
  * 
