@@ -24,64 +24,66 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear.array;
+package zorbage.type.data.float64;
 
-import zorbage.type.data.float64.ComplexFloat64Member;
-import zorbage.type.storage.LinearStorage;
-import zorbage.util.Fraction;
+import zorbage.type.parse.OctonionRepresentation;
+import zorbage.type.parse.TensorStringRepresentation;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class ArrayStorageComplexFloat64
-	implements LinearStorage<ArrayStorageComplexFloat64,ComplexFloat64Member>
-{
-
-	private final double[] data;
+public final class ComplexFloat64Member {
 	
-	public static final Fraction BYTESIZE = new Fraction(16);
+	private double r, i;
 	
-	public ArrayStorageComplexFloat64(long size) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageComplexFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / 2))
-			throw new IllegalArgumentException("ArrayStorageComplexFloat64 can handle at most " + (Integer.MAX_VALUE / 2) + " complexfloat64s");
-		this.data = new double[(int)(size*2)];
-	}
-
-	@Override
-	public void set(long index, ComplexFloat64Member value) {
-		final int idx = ((int) index) * 2;
-		data[idx] = value.r();
-		data[idx + 1] = value.i();
-	}
-
-	@Override
-	public void get(long index, ComplexFloat64Member value) {
-		final int idx = ((int) index) * 2;
-		value.setR(data[idx]);
-		value.setI(data[idx + 1]);
+	public ComplexFloat64Member() {
+		r = 0;
+		i = 0;
 	}
 	
-	@Override
-	public long size() {
-		return data.length/2;
+	public ComplexFloat64Member(double rvalue, double ivalue) {
+		r = rvalue;
+		i = ivalue;
+	}
+	
+	public ComplexFloat64Member(ComplexFloat64Member value) {
+		r = value.r;
+		i = value.i;
 	}
 
-	@Override
-	public ArrayStorageComplexFloat64 duplicate() {
-		ArrayStorageComplexFloat64 s = new ArrayStorageComplexFloat64(size());
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
-		return s;
+	public ComplexFloat64Member(String value) {
+		TensorStringRepresentation rep = new TensorStringRepresentation(value);
+		OctonionRepresentation val = rep.firstValue();
+		r = val.r().doubleValue();
+		i = val.i().doubleValue();
 	}
 
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
-	}
+	public double r() { return r; }
+	public double i() { return i; }
+    public void setR(double val) { r = val; }	
+    public void setI(double val) { i = val; }	
+
+    public void get(ComplexFloat64Member other) {
+    	other.r = r;
+    	other.i = i;
+    }
+
+    public void set(ComplexFloat64Member other) {
+    	r = other.r;
+    	i = other.i;
+    }
+    
+    @Override
+	public String toString() {
+    	StringBuilder builder = new StringBuilder();
+    	builder.append('(');
+    	builder.append(r);
+    	builder.append(',');
+    	builder.append(i);
+    	builder.append(')');
+    	return builder.toString();
+    }
 
 }

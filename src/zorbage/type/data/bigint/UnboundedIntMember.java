@@ -24,64 +24,57 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear.array;
+package zorbage.type.data.bigint;
 
-import zorbage.type.data.float64.ComplexFloat64Member;
-import zorbage.type.storage.LinearStorage;
-import zorbage.util.Fraction;
+import java.math.BigInteger;
+
+import zorbage.type.parse.OctonionRepresentation;
+import zorbage.type.parse.TensorStringRepresentation;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class ArrayStorageComplexFloat64
-	implements LinearStorage<ArrayStorageComplexFloat64,ComplexFloat64Member>
-{
+public final class UnboundedIntMember {
 
-	private final double[] data;
+	private BigInteger v;
 	
-	public static final Fraction BYTESIZE = new Fraction(16);
-	
-	public ArrayStorageComplexFloat64(long size) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageComplexFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / 2))
-			throw new IllegalArgumentException("ArrayStorageComplexFloat64 can handle at most " + (Integer.MAX_VALUE / 2) + " complexfloat64s");
-		this.data = new double[(int)(size*2)];
-	}
-
-	@Override
-	public void set(long index, ComplexFloat64Member value) {
-		final int idx = ((int) index) * 2;
-		data[idx] = value.r();
-		data[idx + 1] = value.i();
-	}
-
-	@Override
-	public void get(long index, ComplexFloat64Member value) {
-		final int idx = ((int) index) * 2;
-		value.setR(data[idx]);
-		value.setI(data[idx + 1]);
+	public UnboundedIntMember() {
+		v = BigInteger.ZERO;
 	}
 	
-	@Override
-	public long size() {
-		return data.length/2;
+	public UnboundedIntMember(long value) {
+		v = BigInteger.valueOf(value);
+	}
+	
+	public UnboundedIntMember(BigInteger value) {
+		v = value;
+	}
+	
+	public UnboundedIntMember(UnboundedIntMember value) {
+		v = value.v;
+	}
+	
+	public UnboundedIntMember(String value) {
+		TensorStringRepresentation rep = new TensorStringRepresentation(value);
+		OctonionRepresentation val = rep.firstValue();
+		v = val.r().toBigInteger();
+	}
+
+	public BigInteger v() { return v; }
+	public void setV(BigInteger val) { v = val; }
+	
+	
+	public void set(UnboundedIntMember other) {
+		v = other.v;
+	}
+	
+	public void get(UnboundedIntMember other) {
+		other.v = v;
 	}
 
 	@Override
-	public ArrayStorageComplexFloat64 duplicate() {
-		ArrayStorageComplexFloat64 s = new ArrayStorageComplexFloat64(size());
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
-		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
-	}
-
+	public String toString() { return "" + v; }
+	
 }

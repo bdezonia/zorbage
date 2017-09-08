@@ -26,7 +26,7 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.Float64Member;
+import zorbage.type.data.float64.Float64Member;
 import zorbage.type.storage.LinearStorage;
 import zorbage.util.Fraction;
 

@@ -26,7 +26,7 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.SignedInt32Member;
+import zorbage.type.data.int32.SignedInt32Member;
 import zorbage.type.storage.LinearStorage;
 import zorbage.util.Fraction;
 

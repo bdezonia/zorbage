@@ -26,7 +26,7 @@
  */
 package zorbage.example;
 
-import zorbage.type.data.ComplexFloat64Member;
+import zorbage.type.data.float64.ComplexFloat64Member;
 import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
 
 /**

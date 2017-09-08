@@ -28,7 +28,7 @@ package zorbage.type.storage.linear.array;
 
 import java.math.BigInteger;
 
-import zorbage.type.data.UnboundedIntMember;
+import zorbage.type.data.bigint.UnboundedIntMember;
 import zorbage.type.storage.LinearStorage;
 import zorbage.util.Fraction;
 
