@@ -94,12 +94,12 @@ public class SignedInt16Group
 	public void power(int power, SignedInt16Member a, SignedInt16Member b) {
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		short tmp = 1;
+		int tmp = 1;
 		if (power > 0) {
 			for (int i = 1; i <= power; i++)
-				tmp = (short)(tmp * a.v());
+				tmp = tmp * a.v();
 		}
-		b.setV(tmp);
+		b.setV( (short) tmp );
 	}
 
 	@Override
