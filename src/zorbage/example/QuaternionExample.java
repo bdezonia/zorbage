@@ -26,9 +26,9 @@
  */
 package zorbage.example;
 
-import zorbage.type.data.float64.Float64Member;
-import zorbage.type.data.float64.QuaternionFloat64Group;
-import zorbage.type.data.float64.QuaternionFloat64Member;
+import zorbage.type.data.float64.quaternion.QuaternionFloat64Group;
+import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
+import zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 

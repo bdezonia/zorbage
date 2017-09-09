@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.real;
 
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.

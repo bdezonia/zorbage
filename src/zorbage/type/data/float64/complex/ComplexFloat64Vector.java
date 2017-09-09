@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.complex;
 
 import zorbage.type.algebra.VectorSpace;
 import zorbage.type.ctor.Constructible1dLong;

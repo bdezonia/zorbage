@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.quaternion;
 
 import zorbage.type.algebra.RModule;
 import zorbage.type.ctor.Constructible1dLong;

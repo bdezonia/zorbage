@@ -35,7 +35,7 @@
 // * Steffen Jaensch, Jan Funke, Mark Longair, and Dimiter Prodanov.
 
 
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.complex;
 
 import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
@@ -51,6 +51,7 @@ import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
+import zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 

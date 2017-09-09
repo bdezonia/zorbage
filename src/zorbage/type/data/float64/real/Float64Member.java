@@ -24,86 +24,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.real;
 
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
-
-// TODO - do we nest Float64Members inside Quat<Float64Member>? Is this even possible?
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat64Member {
+public final class Float64Member {
 
-	private double r, i, j, k;
+	private double v;
 	
-	public QuaternionFloat64Member() {
-		r = i = j = k = 0;
+	public Float64Member() {
+		v = 0;
 	}
 	
-	public QuaternionFloat64Member(double r, double i, double j, double k) {
-		this.r = r;
-		this.i = i;
-		this.j = j;
-		this.k = k;
+	public Float64Member(double value) {
+		v = value;
 	}
 	
-	public QuaternionFloat64Member(QuaternionFloat64Member value) {
-		r = value.r;
-		i = value.i;
-		j = value.j;
-		k = value.k;
+	public Float64Member(Float64Member value) {
+		v = value.v;
 	}
 
-	public QuaternionFloat64Member(String value) {
+	public Float64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		r = val.r().doubleValue();
-		i = val.i().doubleValue();
-		j = val.j().doubleValue();
-		k = val.k().doubleValue();
+		v = val.r().doubleValue();
 	}
 
-	public double r() { return r; }
-	public double i() { return i; }
-	public double j() { return j; }
-	public double k() { return k; }
-	public void setR(double val) { r = val; }
-	public void setI(double val) { i = val; }
-	public void setJ(double val) { j = val; }
-	public void setK(double val) { k = val; }
+	public double v() { return v; }
+	public void setV(double val) { v = val; }
 	
-	public void set(QuaternionFloat64Member other) {
-		if (this == other) return;
-		r = other.r;
-		i = other.i;
-		j = other.j;
-		k = other.k;
+	public void set(Float64Member other) {
+		v = other.v;
 	}
 
-	public void get(QuaternionFloat64Member other) {
-		if (this == other) return;
-		other.r = r;
-		other.i = i;
-		other.j = j;
-		other.k = k;
+	public void get(Float64Member other) {
+		other.v = v;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append('(');
-		builder.append(r);
-		builder.append(',');
-		builder.append(i);
-		builder.append(',');
-		builder.append(j);
-		builder.append(',');
-		builder.append(k);
-		builder.append(')');
+		builder.append(v);
 		return builder.toString();
 	}
 

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.octonion;
 
 import zorbage.type.algebra.MatrixRing;
 import zorbage.type.algebra.RingWithUnity;
@@ -37,37 +37,36 @@ import zorbage.type.ctor.StorageConstruction;
  * @author Barry DeZonia
  *
  */
-public class ComplexFloat64Matrix
+public class OctonionFloat64Matrix
 	implements
-		RingWithUnity<ComplexFloat64Matrix, ComplexFloat64MatrixMember>,
-		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>,
-		Constructible2dLong<ComplexFloat64MatrixMember>
+		RingWithUnity<OctonionFloat64Matrix, OctonionFloat64MatrixMember>,
+		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>,
+		Constructible2dLong<OctonionFloat64MatrixMember>
 {
-	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
+	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
-	public ComplexFloat64Matrix() {
-	}
+	public OctonionFloat64Matrix() { }
 
 	@Override
-	public void multiply(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+	public void multiply(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
 		long rows = a.rows();
 		long cols = b.cols();
 		long common = a.cols(); 
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		ComplexFloat64Member term = new ComplexFloat64Member();
+		OctonionFloat64Member sum = new OctonionFloat64Member();
+		OctonionFloat64Member atmp = new OctonionFloat64Member();
+		OctonionFloat64Member btmp = new OctonionFloat64Member();
+		OctonionFloat64Member term = new OctonionFloat64Member();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				cdbl.zero(sum);
+				odbl.zero(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					cdbl.multiply(atmp, btmp, term);
-					cdbl.add(sum, term, sum);
+					odbl.multiply(atmp, btmp, term);
+					odbl.add(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}
@@ -75,15 +74,15 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void power(int power, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void power(int power, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
 		if (power < 0) {
 			power = -power;
-			ComplexFloat64MatrixMember aInv = new ComplexFloat64MatrixMember();
+			OctonionFloat64MatrixMember aInv = new OctonionFloat64MatrixMember();
 			invert(a, aInv);
-			ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember(aInv);
-			ComplexFloat64MatrixMember tmp2 = new ComplexFloat64MatrixMember();
+			OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember(aInv);
+			OctonionFloat64MatrixMember tmp2 = new OctonionFloat64MatrixMember();
 			for (int i = 2; i <= power; i++) {
 				multiply(tmp, aInv, tmp2);
 				assign(tmp2, tmp);
@@ -97,8 +96,8 @@ public class ComplexFloat64Matrix
 		else if (power == 1)
 			assign(a,b);
 		else { // power >= 2
-			ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember(a);
-			ComplexFloat64MatrixMember tmp2 = new ComplexFloat64MatrixMember();
+			OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember(a);
+			OctonionFloat64MatrixMember tmp2 = new OctonionFloat64MatrixMember();
 			for (int i = 2; i <= power; i++) {
 				multiply(tmp, a, tmp2);
 				assign(tmp2, tmp);
@@ -108,7 +107,7 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void zero(ComplexFloat64MatrixMember a) {
+	public void zero(OctonionFloat64MatrixMember a) {
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.setV(row, col, ZERO);
@@ -117,71 +116,71 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void negate(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+	public void negate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.negate(tmp,tmp);
+				odbl.negate(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void add(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+	public void add(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member atmp = new OctonionFloat64Member();
+		OctonionFloat64Member btmp = new OctonionFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				cdbl.add(atmp, btmp, tmp);
+				odbl.add(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void subtract(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+	public void subtract(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (c != a && c != b) {
 			c.init(a.rows(), a.cols());
 		}
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member atmp = new OctonionFloat64Member();
+		OctonionFloat64Member btmp = new OctonionFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				cdbl.subtract(atmp, btmp, tmp);
+				odbl.subtract(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public boolean isEqual(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public boolean isEqual(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a == b) return true;
 		if (a.rows() != b.rows()) return false;
 		if (a.cols() != b.cols()) return false;
-		ComplexFloat64Member value1 = new ComplexFloat64Member();
-		ComplexFloat64Member value2 = new ComplexFloat64Member();
+		OctonionFloat64Member value1 = new OctonionFloat64Member();
+		OctonionFloat64Member value2 = new OctonionFloat64Member();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (cdbl.isNotEqual(value1, value2))
+				if (odbl.isNotEqual(value1, value2))
 					return false;
 			}
 		}
@@ -189,15 +188,15 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public boolean isNotEqual(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public boolean isNotEqual(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		return !isEqual(a, b);
 	}
 
 	@Override
-	public void assign(ComplexFloat64MatrixMember from, ComplexFloat64MatrixMember to) {
+	public void assign(OctonionFloat64MatrixMember from, OctonionFloat64MatrixMember to) {
 		if (from == to) return;
 		to.init(from.rows(), from.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < from.rows(); row++) {
 			for (long col = 0; col < from.cols(); col++) {
 				from.v(row, col, tmp);
@@ -207,122 +206,122 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public ComplexFloat64MatrixMember construct() {
-		return new ComplexFloat64MatrixMember();
+	public OctonionFloat64MatrixMember construct() {
+		return new OctonionFloat64MatrixMember();
 	}
 
 	@Override
-	public ComplexFloat64MatrixMember construct(ComplexFloat64MatrixMember other) {
-		return new ComplexFloat64MatrixMember(other);
+	public OctonionFloat64MatrixMember construct(OctonionFloat64MatrixMember other) {
+		return new OctonionFloat64MatrixMember(other);
 	}
 
 	@Override
-	public ComplexFloat64MatrixMember construct(String s) {
-		return new ComplexFloat64MatrixMember(s);
+	public OctonionFloat64MatrixMember construct(String s) {
+		return new OctonionFloat64MatrixMember(s);
 	}
 
 	@Override
-	public ComplexFloat64MatrixMember construct(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
-		return new ComplexFloat64MatrixMember(m, s, d1, d2);
+	public OctonionFloat64MatrixMember construct(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+		return new OctonionFloat64MatrixMember(m, s, d1, d2);
 	}
 
 	@Override
-	public void norm(ComplexFloat64MatrixMember a, ComplexFloat64Member b) {
+	public void norm(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void roundTowardsZero(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void roundTowardsZero(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.roundTowardsZero(tmp, tmp);
+				odbl.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void roundAwayFromZero(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void roundAwayFromZero(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.roundAwayFromZero(tmp, tmp);
+				odbl.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void roundPositive(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void roundPositive(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.roundPositive(tmp, tmp);
+				odbl.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void roundNegative(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void roundNegative(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.roundNegative(tmp, tmp);
+				odbl.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void roundNearest(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void roundNearest(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.roundNearest(tmp, tmp);
+				odbl.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public void roundNearestEven(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void roundNearestEven(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				cdbl.roundNearestEven(tmp, tmp);
+				odbl.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
 	}
 
 	@Override
-	public boolean isNaN(ComplexFloat64MatrixMember a) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
+	public boolean isNaN(OctonionFloat64MatrixMember a) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (cdbl.isNaN(value))
+				if (odbl.isNaN(value))
 					return true;
 			}
 		}
@@ -330,12 +329,12 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public boolean isInfinite(ComplexFloat64MatrixMember a) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
+	public boolean isInfinite(OctonionFloat64MatrixMember a) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (cdbl.isInfinite(value))
+				if (odbl.isInfinite(value))
 					return true;
 			}
 		}
@@ -343,24 +342,24 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void conjugate(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
+	public void conjugate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+		OctonionFloat64Member atmp = new OctonionFloat64Member();
+		OctonionFloat64Member btmp = new OctonionFloat64Member();
 		if (a != b) {
 			b.init(a.rows(), a.cols());
 		}
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				cdbl.conjugate(atmp, btmp);
+				odbl.conjugate(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}
 	}
 
 	@Override
-	public void transpose(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
+	public void transpose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
 		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
 		b.init(a.cols(), a.rows());
 		for (long r = 0; r < a.rows(); r++) {
@@ -372,21 +371,21 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void conjugateTranspose(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember();
+	public void conjugateTranspose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+		OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember();
 		conjugate(a, tmp);
 		transpose(tmp, b);
 	}
 
 	@Override
-	public void det(ComplexFloat64MatrixMember a, ComplexFloat64Member b) {
+	public void det(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void unity(ComplexFloat64MatrixMember a) {
-		final ComplexFloat64Member one = new ComplexFloat64Member(1, 0);
+	public void unity(OctonionFloat64MatrixMember a) {
+		final OctonionFloat64Member one = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
 		zero(a);
 		final long minDim = Math.min(a.rows(), a.cols());
 		for (long i = 0; i < minDim; i++) {
@@ -395,12 +394,12 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void invert(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void invert(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		throw new IllegalArgumentException("TODO");
 	}
 
 	@Override
-	public void divide(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		// invert and multiply
 		throw new IllegalArgumentException("TODO");
 	}

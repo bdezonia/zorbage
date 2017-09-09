@@ -28,10 +28,10 @@ package zorbage.example;
 
 import zorbage.type.ctor.MemoryConstruction;
 import zorbage.type.ctor.StorageConstruction;
-import zorbage.type.data.float64.Float64Group;
-import zorbage.type.data.float64.Float64Matrix;
-import zorbage.type.data.float64.Float64MatrixMember;
-import zorbage.type.data.float64.Float64Member;
+import zorbage.type.data.float64.real.Float64Group;
+import zorbage.type.data.float64.real.Float64Matrix;
+import zorbage.type.data.float64.real.Float64MatrixMember;
+import zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 

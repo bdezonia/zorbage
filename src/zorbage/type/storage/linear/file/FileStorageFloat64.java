@@ -34,7 +34,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import zorbage.type.data.float64.Float64Member;
+import zorbage.type.data.float64.real.Float64Member;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import zorbage.util.Fraction;

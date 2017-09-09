@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.quaternion;
 
 import zorbage.type.algebra.Conjugate;
 import zorbage.type.algebra.Constants;
@@ -36,6 +36,10 @@ import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 import zorbage.type.algebra.Trigonometric;
+import zorbage.type.data.float64.real.Float64Group;
+import zorbage.type.data.float64.real.Float64Member;
+import zorbage.type.data.float64.real.Float64Vector;
+import zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 

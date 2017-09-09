@@ -24,15 +24,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64;
+package zorbage.type.data.float64.octonion;
 
 import zorbage.type.ctor.MemoryConstruction;
 import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import zorbage.type.storage.linear.file.FileStorageFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageOctonionFloat64;
+import zorbage.type.storage.linear.file.FileStorageOctonionFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -40,83 +40,98 @@ import zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class Float64VectorMember {
+public final class OctonionFloat64RModuleMember {
 
-	private static final Float64Group dbl = new Float64Group();
-	private static final Float64Member ZERO = new Float64Member(0); 
+	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
+	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
-	private LinearStorage<?,Float64Member> storage;
+	private LinearStorage<?,OctonionFloat64Member> storage;
 	private MemoryConstruction m;
 	private StorageConstruction s;
 	
-	public Float64VectorMember() {
-		storage = new ArrayStorageFloat64(0);
+	public OctonionFloat64RModuleMember() {
+		storage = new ArrayStorageOctonionFloat64(0);
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 	}
 	
-	public Float64VectorMember(double[] vals) {
-		storage = new ArrayStorageFloat64(vals.length);
+	public OctonionFloat64RModuleMember(double[] vals) {
+		final int count = vals.length / 8;
+		storage = new ArrayStorageOctonionFloat64(count);
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
-		Float64Member value = new Float64Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		for (int i = 0; i < count; i++) {
+			final int index = 8*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			value.setL(vals[index + 4]);
+			value.setI0(vals[index + 5]);
+			value.setJ0(vals[index + 6]);
+			value.setK0(vals[index + 7]);
 			storage.set(i,  value);
 		}
 	}
 	
-	public Float64VectorMember(Float64VectorMember other) {
+	public OctonionFloat64RModuleMember(OctonionFloat64RModuleMember other) {
 		storage = other.storage.duplicate();
 		m = other.m;
 		s = other.s;
 	}
 	
-	public Float64VectorMember(String value) {
+	public OctonionFloat64RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
-		storage = new ArrayStorageFloat64(data.size());
+		storage = new ArrayStorageOctonionFloat64(data.size());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
-		Float64Member tmp = new Float64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
-			tmp.setV(val.r().doubleValue());
+			tmp.setR(val.r().doubleValue());
+			tmp.setI(val.i().doubleValue());
+			tmp.setJ(val.j().doubleValue());
+			tmp.setK(val.k().doubleValue());
+			tmp.setL(val.l().doubleValue());
+			tmp.setI0(val.i0().doubleValue());
+			tmp.setJ0(val.j0().doubleValue());
+			tmp.setK0(val.k0().doubleValue());
 			storage.set(i, tmp);
 		}
 	}
 
-	public Float64VectorMember(MemoryConstruction m, StorageConstruction s, long d1) {
+	public OctonionFloat64RModuleMember(MemoryConstruction m, StorageConstruction s, long d1) {
 		this.m = m;
 		this.s = s;
 		if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageFloat64(d1);
+			storage = new ArrayStorageOctonionFloat64(d1);
 		else
-			storage = new FileStorageFloat64(d1);
+			storage = new FileStorageOctonionFloat64(d1);
 	}
 	
-	public void v(long i, Float64Member v) {
+	public void v(long i, OctonionFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
 		else {
-			dbl.zero(v);
+			odbl.zero(v);
 		}
 	}
 
-	public void setV(long i, Float64Member v) {
+	public void setV(long i, OctonionFloat64Member v) {
 		storage.set(i, v);
 	}
 	
-	
-	public void set(Float64VectorMember other) {
+	public void set(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
 		m = other.m;
 		s = other.s;
 	}
 	
-	public void get(Float64VectorMember other) {
+	public void get(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
 		other.m = m;
@@ -126,8 +141,8 @@ public final class Float64VectorMember {
 	public long length() { return storage.size(); }
 	
 	@Override
-	public String toString() {
-		Float64Member tmp = new Float64Member();
+	public String toString() { 
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
 		for (long i = 0; i < storage.size(); i++) {
@@ -143,9 +158,9 @@ public final class Float64VectorMember {
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
-				storage = new ArrayStorageFloat64(size);
+				storage = new ArrayStorageOctonionFloat64(size);
 			else
-				storage = new FileStorageFloat64(size);
+				storage = new FileStorageOctonionFloat64(size);
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {
@@ -153,5 +168,4 @@ public final class Float64VectorMember {
 			}
 		}
 	}
-
 }
