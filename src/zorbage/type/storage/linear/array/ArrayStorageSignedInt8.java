@@ -34,7 +34,6 @@ import zorbage.util.Fraction;
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
 public class ArrayStorageSignedInt8
 	implements LinearStorage<ArrayStorageSignedInt8,SignedInt8Member>
