@@ -21,9 +21,9 @@ Other needs
   big decimal type needed?
   number bases: instead of zero and unity need faster ways to construct numbers besides strings
   find all TODOs in code and implement
-  implement Power(U,U,U) where it makes sense. also sqrt and cbrt part of Power interface?
+  power<u> might not be in right place in hierarchy
   power(int, a, b): minimize number of multiplies via recursion. see boost hpp code for quats and octs.
-    implement this for all numeric types.
+    implement this for all numeric types. (Later note: i can't see how this is fewer multiplies)
   real/unreal as part of hierarchy. at least unreal.
   make sure all math ops can safely work if (a,b,c) params collide. use extra tmps and assign().
   check: IEEE 754 might specify that a num with one component inf and any nan might be considered inf. apache commons math4 copies my implementation.
@@ -78,3 +78,6 @@ The constructors for storage may duplicate others. Due to time lags this is not 
 use vector/rmodule init() inside their own operations: c.init(targetSize). this is cuz vectors
   no longer autosize.
 Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost, other fortran classics
+  Boost headers for complex and quats can give valuable design ideas. Need a ref for octs.
+  http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
+0^0 should be nan or throw an exception. right now it returns 1.

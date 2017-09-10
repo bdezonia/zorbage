@@ -30,6 +30,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.CommutativeRingWithUnity;
 import zorbage.type.algebra.LogicalOperations;
 import zorbage.type.algebra.Ordered;
+import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
 
 // TODO - do I need a BitType that is stored within an int? Or just use BooleanMember?
@@ -47,7 +48,8 @@ public class BooleanGroup
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,
     LogicalOperations<BooleanMember>,
-    Random<BooleanMember>
+    Random<BooleanMember>,
+    Power<BooleanMember>
 {
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -224,6 +226,12 @@ public class BooleanGroup
 	@Override
 	public void random(BooleanMember a) {
 		a.setV(rng.nextBoolean());
+	}
+
+	@Override
+	public void pow(BooleanMember a, BooleanMember b, BooleanMember c) {
+		int p = b.v() ? 1 : 0;
+		power(p, a, c);
 	}
 
 }

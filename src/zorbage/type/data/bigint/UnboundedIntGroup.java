@@ -289,6 +289,19 @@ public class UnboundedIntGroup
 	
 	public void testBit(int n, UnboundedIntMember a, BooleanMember b) {
 		b.setV( a.v().testBit(n) );
+	}
+
+	@Override
+	public void pow(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+		int cmp = b.v().compareTo(BigInteger.ZERO);
+		if (cmp < 0)
+			throw new IllegalArgumentException("negative powers not supported for unbounded ints");
+		else if (cmp == 0)
+			c.setV(BigInteger.ONE);
+		else if (b.v().compareTo(BigInteger.valueOf(java.lang.Integer.MAX_VALUE)) > 0)
+			throw new IllegalArgumentException("very large powers not supported for unbounded ints");
+		else
+			c.setV(a.v().pow(b.v().intValue()));
 	}	
 
 }

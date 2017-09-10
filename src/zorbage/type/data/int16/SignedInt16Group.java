@@ -282,4 +282,9 @@ public class SignedInt16Group
 		a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0xffff)));  // TODO should this be 0x10000?
 	}
 
+	@Override
+	public void pow(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
+		power(b.v(), a, c);
+	}
+
 }

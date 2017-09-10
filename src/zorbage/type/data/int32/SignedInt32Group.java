@@ -281,4 +281,9 @@ public class SignedInt32Group
 		a.setV(rng.nextInt());
 	}
 
+	@Override
+	public void pow(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+		power(b.v(), a, c);
+	}
+
 }

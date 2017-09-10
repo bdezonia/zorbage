@@ -32,6 +32,7 @@ import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Hyperbolic;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
+import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
@@ -59,7 +60,8 @@ public class OctonionFloat64Group
     Random<OctonionFloat64Member>,
     Exponential<OctonionFloat64Member>,
     Trigonometric<OctonionFloat64Member>,
-    Hyperbolic<OctonionFloat64Member>
+    Hyperbolic<OctonionFloat64Member>,
+    Power<OctonionFloat64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -713,6 +715,12 @@ public class OctonionFloat64Group
 			result.setJ0(result.j0() * factor);
 			result.setK0(result.k0() * factor);
 		}
+	}
+
+	@Override
+	public void pow(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
+		// TODO
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
 	/*

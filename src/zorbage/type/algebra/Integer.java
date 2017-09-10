@@ -36,6 +36,7 @@ public interface Integer<T extends Integer<T,U>,U>
     OrderedIntegralDomain<T,U>,
     EuclideanDomain<T,U>,
     BitOperations<U>,
-    PredSucc<U>
+    PredSucc<U>,
+    Power<U>
 {
 }

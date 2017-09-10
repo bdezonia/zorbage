@@ -29,6 +29,7 @@ package zorbage.type.data.int64;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
+import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int64.SignedInt64Member;
 
@@ -42,7 +43,8 @@ public class SignedInt64Group
     Integer<SignedInt64Group, SignedInt64Member>,
     Bounded<SignedInt64Member>,
     BitOperations<SignedInt64Member>,
-    Random<SignedInt64Member>
+    Random<SignedInt64Member>,
+    Power<SignedInt64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -280,6 +282,16 @@ public class SignedInt64Group
 	@Override
 	public void random(SignedInt64Member a) {
 		a.setV(rng.nextLong());
+	}
+
+	@Override
+	public void pow(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
+		if (b.v() < 0)
+			throw new IllegalArgumentException("Cannot get negative powers from int64s");
+		else if (b.v() > java.lang.Integer.MAX_VALUE)
+			throw new IllegalArgumentException("very large powers not supported for int64s");
+		else
+			power((int)b.v(), a, c);
 	}
 
 }

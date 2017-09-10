@@ -32,6 +32,7 @@ import zorbage.type.algebra.Exponential;
 import zorbage.type.algebra.Hyperbolic;
 import zorbage.type.algebra.Infinite;
 import zorbage.type.algebra.Norm;
+import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
@@ -57,7 +58,8 @@ public class QuaternionFloat64Group
     Random<QuaternionFloat64Member>,
     Exponential<QuaternionFloat64Member>,
     Trigonometric<QuaternionFloat64Member>,
-    Hyperbolic<QuaternionFloat64Member>
+    Hyperbolic<QuaternionFloat64Member>,
+    Power<QuaternionFloat64Member>
 {
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -419,6 +421,12 @@ public class QuaternionFloat64Group
 		sin(a, n);
 		cos(a, d);
 		divide(n, d, b);
+	}
+
+	@Override
+	public void pow(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
+		// TODO
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	

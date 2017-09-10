@@ -282,4 +282,9 @@ public class SignedInt8Group
 		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0xff)));  // TODO should this be 0x100?
 	}
 
+	@Override
+	public void pow(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+		power(b.v(), a, c);
+	}
+
 }
