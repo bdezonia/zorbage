@@ -99,7 +99,7 @@ public class SignedInt8Group
 			for (int i = 1; i <= power; i++)
 				tmp = tmp * a.v();
 		}
-		b.setV((byte)tmp);
+		b.setV((byte)tmp);  // TODO: is this correct working in ints vs. bytes?
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public class SignedInt8Group
 
 	@Override
 	public void random(SignedInt8Member a) {
-		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0xff)));
+		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0xff)));  // TODO should this be 0x100?
 	}
 
 }

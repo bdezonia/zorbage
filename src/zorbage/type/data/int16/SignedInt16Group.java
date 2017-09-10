@@ -99,7 +99,7 @@ public class SignedInt16Group
 			for (int i = 1; i <= power; i++)
 				tmp = tmp * a.v();
 		}
-		b.setV( (short) tmp );
+		b.setV( (short) tmp );  // TODO: is this correct working in ints vs. shorts?
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public class SignedInt16Group
 
 	@Override
 	public void random(SignedInt16Member a) {
-		a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0xffff)));
+		a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0xffff)));  // TODO should this be 0x10000?
 	}
 
 }

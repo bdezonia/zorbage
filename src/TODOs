@@ -77,3 +77,4 @@ The constructors for storage may duplicate others. Due to time lags this is not 
   threadsafe. Obtain locks.
 use vector/rmodule init() inside their own operations: c.init(targetSize). this is cuz vectors
   no longer autosize.
+Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost, other fortran classics
