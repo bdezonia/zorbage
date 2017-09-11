@@ -37,10 +37,11 @@ package zorbage.type.algebra;
  */
 public interface VectorSpace<T extends VectorSpace<T,U,V,W>, U, V extends Field<V,W>, W>
   extends
-    AdditiveGroup<T,U>,
-    Norm<U,W>,
-    Products<U,W>,  // TODO: not necessarily true of all vector spaces?
-    Conjugate<U>
+  	RModule<T,U,V,W>
+    //AdditiveGroup<T,U>,
+    //Norm<U,W>,
+    //Products<U,W>,  // TODO: not necessarily true of all vector spaces?
+    //Conjugate<U>
 {
 	// closed under vector addition
 	// closed under scalar multiplication
