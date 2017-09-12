@@ -32,8 +32,6 @@ import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Unity;
 import zorbage.type.storage.linear.LinearStorage;
 
-// TODO Make a std dev class that is sqrt of variance
-
 /**
  * 
  * @author Barry DeZonia
