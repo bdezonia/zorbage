@@ -279,7 +279,7 @@ public class SignedInt16Group
 
 	@Override
 	public void random(SignedInt16Member a) {
-		a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0xffff)));  // TODO should this be 0x10000?
+		a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0x10000)));
 	}
 
 	@Override

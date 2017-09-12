@@ -279,7 +279,7 @@ public class SignedInt8Group
 
 	@Override
 	public void random(SignedInt8Member a) {
-		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0xff)));  // TODO should this be 0x100?
+		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
 	}
 
 	@Override
