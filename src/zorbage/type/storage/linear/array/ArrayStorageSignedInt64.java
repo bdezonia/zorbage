@@ -26,7 +26,6 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.int64.SignedInt64Member;
 import zorbage.type.storage.coder.LongCoder;
 import zorbage.type.storage.linear.LinearStorage;
 
@@ -36,7 +35,7 @@ import zorbage.type.storage.linear.LinearStorage;
  *
  */
 public class ArrayStorageSignedInt64<U extends LongCoder<U>>
-	implements LinearStorage<ArrayStorageSignedInt64<U>,SignedInt64Member>
+	implements LinearStorage<ArrayStorageSignedInt64<U>,U>
 {
 
 	private final U type;
@@ -52,13 +51,13 @@ public class ArrayStorageSignedInt64<U extends LongCoder<U>>
 	}
 
 	@Override
-	public void set(long index, SignedInt64Member value) {
-		data[(int)(index * type.longCount())] = value.v();
+	public void set(long index, U value) {
+		value.toArray(data, (int)(index * type.longCount()));
 	}
 
 	@Override
-	public void get(long index, SignedInt64Member value) {
-		value.setV(data[(int)(index * type.longCount())]);
+	public void get(long index, U value) {
+		value.toValue(data, (int)(index * type.longCount()));
 	}
 	
 	@Override

@@ -26,7 +26,6 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.int32.SignedInt32Member;
 import zorbage.type.storage.coder.IntCoder;
 import zorbage.type.storage.linear.LinearStorage;
 
@@ -36,7 +35,7 @@ import zorbage.type.storage.linear.LinearStorage;
  *
  */
 public class ArrayStorageSignedInt32<U extends IntCoder<U>>
-	implements LinearStorage<ArrayStorageSignedInt32<U>,SignedInt32Member>
+	implements LinearStorage<ArrayStorageSignedInt32<U>,U>
 {
 
 	private final U type;
@@ -52,13 +51,13 @@ public class ArrayStorageSignedInt32<U extends IntCoder<U>>
 	}
 
 	@Override
-	public void set(long index, SignedInt32Member value) {
-		data[(int)(index * type.intCount())] = value.v();
+	public void set(long index, U value) {
+		value.toArray(data, (int)(index * type.intCount()));
 	}
 
 	@Override
-	public void get(long index, SignedInt32Member value) {
-		value.setV(data[(int)(index * type.intCount())]);
+	public void get(long index, U value) {
+		value.toValue(data, (int)(index * type.intCount()));
 	}
 	
 	@Override

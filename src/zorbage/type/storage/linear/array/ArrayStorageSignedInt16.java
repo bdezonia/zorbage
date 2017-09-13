@@ -26,7 +26,6 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.int16.SignedInt16Member;
 import zorbage.type.storage.coder.ShortCoder;
 import zorbage.type.storage.linear.LinearStorage;
 
@@ -36,7 +35,7 @@ import zorbage.type.storage.linear.LinearStorage;
  *
  */
 public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
-	implements LinearStorage<ArrayStorageSignedInt16<U>,SignedInt16Member>
+	implements LinearStorage<ArrayStorageSignedInt16<U>,U>
 {
 
 	private final U type;
@@ -52,13 +51,13 @@ public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
 	}
 
 	@Override
-	public void set(long index, SignedInt16Member value) {
-		data[(int)(index * type.shortCount())] = value.v();
+	public void set(long index, U value) {
+		value.toArray(data, (int)index * type.shortCount());
 	}
 
 	@Override
-	public void get(long index, SignedInt16Member value) {
-		value.setV(data[(int)(index * type.shortCount())]);
+	public void get(long index, U value) {
+		value.toValue(data, (int)index * type.shortCount());
 	}
 	
 	@Override
