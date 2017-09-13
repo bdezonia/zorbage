@@ -26,16 +26,21 @@
  */
 package zorbage.type.data.float64.real;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.DoubleCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class Float64Member {
-
+public final class Float64Member
+	implements DoubleCoder<Float64Member>
+{
 	private double v;
 	
 	public Float64Member() {
@@ -57,6 +62,7 @@ public final class Float64Member {
 	}
 
 	public double v() { return v; }
+
 	public void setV(double val) { v = val; }
 	
 	public void set(Float64Member other) {
@@ -72,6 +78,31 @@ public final class Float64Member {
 		StringBuilder builder = new StringBuilder();
 		builder.append(v);
 		return builder.toString();
+	}
+
+	@Override
+	public int doubleCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(double[] arr, int index, Float64Member value) {
+		value.v = arr[index];
+	}
+
+	@Override
+	public void valueToArray(double[] arr, int index, Float64Member value) {
+		arr[index] = value.v;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, Float64Member value) throws IOException {
+		value.v = raf.readDouble();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, Float64Member value) throws IOException {
+		raf.writeDouble(value.v);
 	}
 
 }

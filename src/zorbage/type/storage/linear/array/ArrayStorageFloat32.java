@@ -26,7 +26,7 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
+import zorbage.type.storage.coder.FloatCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
@@ -36,48 +36,42 @@ import zorbage.util.Fraction;
  *
  * @param <U>
  */
-public class ArrayStorageQuaternionFloat64
-	implements LinearStorage<ArrayStorageQuaternionFloat64,QuaternionFloat64Member>
+public class ArrayStorageFloat32<U extends FloatCoder<U>>
+	implements LinearStorage<ArrayStorageFloat32<U>, U>
 {
-
-	private final double[] data;
+	private final U type;
 	
-	public static final Fraction BYTESIZE = new Fraction(32);
+	private final float[] data;
 	
-	public ArrayStorageQuaternionFloat64(long size) {
+	public static final Fraction BYTESIZE = new Fraction(1);
+	
+	public ArrayStorageFloat32(long size, U type) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / 4))
-			throw new IllegalArgumentException("ArrayStorageQuaternionFloat64 can handle at most " + (Integer.MAX_VALUE / 4) + " quaternionfloat64s");
-		this.data = new double[(int)(size * 4)];
+			throw new IllegalArgumentException("ArrayStorageFloat32 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.floatCount()))
+			throw new IllegalArgumentException("ArrayStorageFloat32 can handle at most " + (Integer.MAX_VALUE / type.floatCount()) + " floats");
+		this.data = new float[(int)size];
+		this.type = type;
 	}
 
 	@Override
-	public void set(long index, QuaternionFloat64Member value) {
-		final int idx = ((int) index) * 4;
-		data[idx    ] = value.r();
-		data[idx + 1] = value.i();
-		data[idx + 2] = value.j();
-		data[idx + 3] = value.k();
+	public void set(long index, U value) {
+		value.valueToArray(data, (int)index, value);
 	}
 
 	@Override
-	public void get(long index, QuaternionFloat64Member value) {
-		final int idx = ((int) index) * 4;
-		value.setR(data[idx    ]);
-		value.setI(data[idx + 1]);
-		value.setJ(data[idx + 2]);
-		value.setK(data[idx + 3]);
+	public void get(long index, U value) {
+		value.arrayToValue(data, (int)index, value);
 	}
 	
 	@Override
 	public long size() {
-		return data.length/4;
+		return data.length / type.floatCount();
 	}
 
 	@Override
-	public ArrayStorageQuaternionFloat64 duplicate() {
-		ArrayStorageQuaternionFloat64 s = new ArrayStorageQuaternionFloat64(size());
+	public ArrayStorageFloat32<U> duplicate() {
+		ArrayStorageFloat32<U> s = new ArrayStorageFloat32<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

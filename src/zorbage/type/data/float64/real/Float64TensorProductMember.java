@@ -57,7 +57,7 @@ public final class Float64TensorProductMember {
 	
 	public Float64TensorProductMember() {
 		dims = new long[0];
-		storage = new ArrayStorageFloat64(0);
+		storage = new ArrayStorageFloat64<Float64Member>(0, new Float64Member());
 		multipliers = calcMultipliers();
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
@@ -74,7 +74,7 @@ public final class Float64TensorProductMember {
 	public Float64TensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
-		storage = new ArrayStorageFloat64(data.size());
+		storage = new ArrayStorageFloat64<Float64Member>(data.size(), new Float64Member());
 		dims = rep.dimensions().clone();
 		multipliers = calcMultipliers();
 		m = MemoryConstruction.DENSE;
@@ -91,10 +91,10 @@ public final class Float64TensorProductMember {
 		dims = nd.clone();
 		multipliers = calcMultipliers();
 		if (s == StorageConstruction.ARRAY) {
-			storage = new ArrayStorageFloat64(numElems(nd));
+			storage = new ArrayStorageFloat64<Float64Member>(numElems(nd), new Float64Member());
 		}
 		else {
-			storage = new FileStorageFloat64(numElems(nd));
+			storage = new FileStorageFloat64<Float64Member>(numElems(nd), new Float64Member());
 		}
 	}
 
@@ -138,10 +138,10 @@ public final class Float64TensorProductMember {
 		long newCount = numElems(newDims);
 		if (newCount != storage.size()) {
 			if (s == StorageConstruction.ARRAY) {
-				storage = new ArrayStorageFloat64(newCount);
+				storage = new ArrayStorageFloat64<Float64Member>(newCount, new Float64Member());
 			}
 			else {
-				storage = new FileStorageFloat64(newCount);
+				storage = new FileStorageFloat64<Float64Member>(newCount, new Float64Member());
 			}
 		}
 		else {

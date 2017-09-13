@@ -31,8 +31,8 @@ import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageOctonionFloat64;
-import zorbage.type.storage.linear.file.FileStorageOctonionFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -112,9 +112,9 @@ public final class OctonionFloat64MatrixMember {
 				storage.set(i, ZERO);
 		}
 		else if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageOctonionFloat64(r*c);
+			storage = new ArrayStorageFloat64<OctonionFloat64Member>(r*c, new OctonionFloat64Member());
 		else
-			storage = new FileStorageOctonionFloat64(r*c);
+			storage = new FileStorageFloat64<OctonionFloat64Member>(r*c, new OctonionFloat64Member());
 	}
 	
 	public void v(long r, long c, OctonionFloat64Member value) {

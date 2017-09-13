@@ -31,8 +31,8 @@ import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageQuaternionFloat64;
-import zorbage.type.storage.linear.file.FileStorageQuaternionFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -50,14 +50,14 @@ public final class QuaternionFloat64RModuleMember {
 	private StorageConstruction s;
 	
 	public QuaternionFloat64RModuleMember() {
-		storage = new ArrayStorageQuaternionFloat64(0);
+		storage = new ArrayStorageFloat64<QuaternionFloat64Member>(0, new QuaternionFloat64Member());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 	}
 	
 	public QuaternionFloat64RModuleMember(double[] vals) {
 		final int count = vals.length / 4;
-		storage = new ArrayStorageQuaternionFloat64(count);
+		storage = new ArrayStorageFloat64<QuaternionFloat64Member>(count, new QuaternionFloat64Member());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
@@ -80,7 +80,7 @@ public final class QuaternionFloat64RModuleMember {
 	public QuaternionFloat64RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
-		storage = new ArrayStorageQuaternionFloat64(data.size());
+		storage = new ArrayStorageFloat64<QuaternionFloat64Member>(data.size(), new QuaternionFloat64Member());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
@@ -98,9 +98,9 @@ public final class QuaternionFloat64RModuleMember {
 		this.m = m;
 		this.s = s;
 		if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageQuaternionFloat64(d1);
+			storage = new ArrayStorageFloat64<QuaternionFloat64Member>(d1, new QuaternionFloat64Member());
 		else
-			storage = new FileStorageQuaternionFloat64(d1);
+			storage = new FileStorageFloat64<QuaternionFloat64Member>(d1, new QuaternionFloat64Member());
 	}
 	
 	public void v(long i, QuaternionFloat64Member v) {
@@ -150,9 +150,9 @@ public final class QuaternionFloat64RModuleMember {
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
-				storage = new ArrayStorageQuaternionFloat64(size);
+				storage = new ArrayStorageFloat64<QuaternionFloat64Member>(size, new QuaternionFloat64Member());
 			else
-				storage = new FileStorageQuaternionFloat64(size);
+				storage = new FileStorageFloat64<QuaternionFloat64Member>(size, new QuaternionFloat64Member());
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {

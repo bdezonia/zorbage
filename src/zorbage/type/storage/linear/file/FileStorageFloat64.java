@@ -34,7 +34,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import zorbage.type.data.float64.real.Float64Member;
+import zorbage.type.storage.coder.DoubleCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import zorbage.util.Fraction;
@@ -44,30 +44,32 @@ import zorbage.util.Fraction;
  * @author Barry DeZonia
  *
  */
-public class FileStorageFloat64
-	implements LinearStorage<FileStorageFloat64,Float64Member>
+public class FileStorageFloat64<U extends DoubleCoder<U>>
+	implements LinearStorage<FileStorageFloat64<U>,U>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
 	// 2) make BUFFERSIZE and numBuffers configurable
 	
 	private long numElements;
-	private ArrayStorageFloat64 buffer;
+	private ArrayStorageFloat64<U> buffer;
 	private File file;
 	private boolean dirty;
 	private long pageIndex;
+	private final U type;
 	
 	private static final long BUFFERSIZE = 2048;
 
 	public static final Fraction BYTESIZE = ArrayStorageFloat64.BYTESIZE;
 	
-	public FileStorageFloat64(long numElements) {
+	public FileStorageFloat64(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
 		this.numElements = numElements;
 		this.dirty = false;
-		this.buffer = new ArrayStorageFloat64(BUFFERSIZE);
+		this.buffer = new ArrayStorageFloat64<U>(BUFFERSIZE,type);
 		this.pageIndex = numElements;
+		this.type = type;
 		try { 
 			this.file = File.createTempFile("Storage", ".storage");
 			// if the file is new set it all to zero
@@ -86,14 +88,14 @@ public class FileStorageFloat64
 	}
 	
 	@Override
-	public void set(long index, Float64Member value) {
+	public void set(long index, U value) {
 		load(index);
 		buffer.set(index % BUFFERSIZE, value);
 		dirty = true;
 	}
 
 	@Override
-	public void get(long index, Float64Member value) {
+	public void get(long index, U value) {
 		load(index);
 		buffer.get(index % BUFFERSIZE, value);
 	}
@@ -104,10 +106,10 @@ public class FileStorageFloat64
 	}
 
 	@Override
-	public FileStorageFloat64 duplicate() {
+	public FileStorageFloat64<U> duplicate() {
 		flush();
 		try {
-			FileStorageFloat64 other = new FileStorageFloat64(numElements);
+			FileStorageFloat64<U> other = new FileStorageFloat64<U>(numElements,type);
 			other.buffer = buffer.duplicate();
 			other.dirty = dirty;
 			other.pageIndex = pageIndex;
@@ -127,13 +129,12 @@ public class FileStorageFloat64
 	
 	private void flush() {
 		if (!dirty) return;
-		Float64Member tmp = new Float64Member();
 		try {
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
 			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
 			for (long i = 0; i < BUFFERSIZE; i++) {
-				buffer.get(i, tmp);
-				raf.writeDouble(tmp.v());
+				buffer.get(i, type);
+				type.valueToFile(raf, type);
 			}
 			raf.close();
 		} catch (Exception e) {
@@ -148,7 +149,6 @@ public class FileStorageFloat64
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
 		if (index < pageIndex || index >= pageIndex + BUFFERSIZE) {
-			Float64Member tmp = new Float64Member();
 			if (dirty) {
 				flush();
 			}
@@ -157,8 +157,8 @@ public class FileStorageFloat64
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.setV(raf.readDouble());
-					buffer.set(i, tmp);
+					type.fileToValue(raf, type);
+					buffer.set(i, type);
 				}
 				raf.close();
 			} catch (Exception e) {

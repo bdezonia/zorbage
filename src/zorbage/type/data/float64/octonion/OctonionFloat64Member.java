@@ -26,15 +26,21 @@
  */
 package zorbage.type.data.float64.octonion;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.DoubleCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class OctonionFloat64Member {
+public final class OctonionFloat64Member
+	implements DoubleCoder<OctonionFloat64Member>
+{
 
 	private double r, i, j, k, l, i0, j0, k0;
 	
@@ -78,20 +84,35 @@ public final class OctonionFloat64Member {
 	}
 
 	public double r() { return r; }
+	
 	public double i() { return i; }
+	
 	public double j() { return j; }
+	
 	public double k() { return k; }
+	
 	public double l() { return l; }
+	
 	public double i0() { return i0; }
+	
 	public double j0() { return j0; }
+	
 	public double k0() { return k0; }
+	
 	public void setR(double val) { r = val; }
+	
 	public void setI(double val) { i = val; }
+	
 	public void setJ(double val) { j = val; }
+	
 	public void setK(double val) { k = val; }
+	
 	public void setL(double val) { l = val; }
+	
 	public void setI0(double val) { i0 = val; }
+	
 	public void setJ0(double val) { j0 = val; }
+	
 	public void setK0(double val) { k0 = val; }
 	
 	public void set(OctonionFloat64Member other) {
@@ -139,6 +160,59 @@ public final class OctonionFloat64Member {
 		builder.append(k0);
 		builder.append(')');
 		return builder.toString();
+	}
+
+	@Override
+	public int doubleCount() {
+		return 8;
+	}
+
+	@Override
+	public void arrayToValue(double[] arr, int index, OctonionFloat64Member value) {
+		value.r = arr[index];
+		value.i = arr[index+1];
+		value.j = arr[index+2];
+		value.k = arr[index+3];
+		value.l = arr[index+4];
+		value.i0 = arr[index+5];
+		value.j0 = arr[index+6];
+		value.k0 = arr[index+7];
+	}
+
+	@Override
+	public void valueToArray(double[] arr, int index, OctonionFloat64Member value) {
+		arr[index] = value.r;
+		arr[index+1] = value.i;
+		arr[index+2] = value.j;
+		arr[index+3] = value.k;
+		arr[index+4] = value.l;
+		arr[index+5] = value.i0;
+		arr[index+6] = value.j0;
+		arr[index+7] = value.k0;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, OctonionFloat64Member value) throws IOException {
+		value.r = raf.readDouble();
+		value.i = raf.readDouble();
+		value.j = raf.readDouble();
+		value.k = raf.readDouble();
+		value.l = raf.readDouble();
+		value.i0 = raf.readDouble();
+		value.j0 = raf.readDouble();
+		value.k0 = raf.readDouble();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, OctonionFloat64Member value) throws IOException {
+		raf.writeDouble(r);
+		raf.writeDouble(i);
+		raf.writeDouble(j);
+		raf.writeDouble(k);
+		raf.writeDouble(l);
+		raf.writeDouble(i0);
+		raf.writeDouble(j0);
+		raf.writeDouble(k0);
 	}
 
 }

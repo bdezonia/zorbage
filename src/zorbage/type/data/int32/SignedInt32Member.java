@@ -26,15 +26,21 @@
  */
 package zorbage.type.data.int32;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.IntCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class SignedInt32Member {
+public final class SignedInt32Member
+	implements IntCoder<SignedInt32Member>
+{
 
 	private int v;
 	
@@ -57,6 +63,7 @@ public final class SignedInt32Member {
 	}
 
 	public int v() { return v; }
+
 	public void setV(int val) { v = val; }
 	
 	
@@ -70,4 +77,30 @@ public final class SignedInt32Member {
 
 	@Override
 	public String toString() { return "" + v; }
+
+	@Override
+	public int intCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(int[] arr, int index, SignedInt32Member value) {
+		value.v = arr[index];
+	}
+
+	@Override
+	public void valueToArray(int[] arr, int index, SignedInt32Member value) {
+		arr[index] = value.v;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, SignedInt32Member value) throws IOException {
+		value.v = raf.readInt();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, SignedInt32Member value) throws IOException {
+		raf.writeInt(value.v);
+	}
+
 }

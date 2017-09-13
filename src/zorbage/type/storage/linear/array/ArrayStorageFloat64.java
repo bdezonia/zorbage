@@ -26,7 +26,7 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.float64.real.Float64Member;
+import zorbage.type.storage.coder.DoubleCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
@@ -36,40 +36,42 @@ import zorbage.util.Fraction;
  *
  * @param <U>
  */
-public class ArrayStorageFloat64
-	implements LinearStorage<ArrayStorageFloat64,Float64Member>
+public class ArrayStorageFloat64<U extends DoubleCoder<U>>
+	implements LinearStorage<ArrayStorageFloat64<U>, U>
 {
-
+	private final U type;
+	
 	private final double[] data;
 	
-	public static final Fraction BYTESIZE = new Fraction(8);
+	public static final Fraction BYTESIZE = new Fraction(1);
 	
-	public ArrayStorageFloat64(long size) {
+	public ArrayStorageFloat64(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + Integer.MAX_VALUE + " float64s");
+		if (size > (Integer.MAX_VALUE / type.doubleCount()))
+			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " booleans");
 		this.data = new double[(int)size];
+		this.type = type;
 	}
 
 	@Override
-	public void set(long index, Float64Member value) {
-		data[(int)index] = value.v();
+	public void set(long index, U value) {
+		value.valueToArray(data, (int)index, value);
 	}
 
 	@Override
-	public void get(long index, Float64Member value) {
-		value.setV(data[(int)index]);
+	public void get(long index, U value) {
+		value.arrayToValue(data, (int)index, value);
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return data.length / type.doubleCount();
 	}
 
 	@Override
-	public ArrayStorageFloat64 duplicate() {
-		ArrayStorageFloat64 s = new ArrayStorageFloat64(size());
+	public ArrayStorageFloat64<U> duplicate() {
+		ArrayStorageFloat64<U> s = new ArrayStorageFloat64<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
@@ -77,7 +79,7 @@ public class ArrayStorageFloat64
 
 	@Override
 	public Fraction elementSize() {
-		return new Fraction(8);
+		return BYTESIZE;
 	}
 
 }

@@ -26,7 +26,7 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.bool.BooleanMember;
+import zorbage.type.storage.coder.BooleanCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
@@ -36,40 +36,42 @@ import zorbage.util.Fraction;
  *
  * @param <U>
  */
-public class ArrayStorageBoolean
-	implements LinearStorage<ArrayStorageBoolean,BooleanMember>
+public class ArrayStorageBoolean<U extends BooleanCoder<U>>
+	implements LinearStorage<ArrayStorageBoolean<U>, U>
 {
-
+	private final U type;
+	
 	private final boolean[] data;
 	
 	public static final Fraction BYTESIZE = new Fraction(1);
 	
-	public ArrayStorageBoolean(long size) {
+	public ArrayStorageBoolean(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + Integer.MAX_VALUE + " booleans");
+		if (size > (Integer.MAX_VALUE / type.booleanCount()))
+			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " booleans");
 		this.data = new boolean[(int)size];
+		this.type = type;
 	}
 
 	@Override
-	public void set(long index, BooleanMember value) {
-		data[(int)index] = value.v();
+	public void set(long index, U value) {
+		value.valueToArray(data, (int)index, value);
 	}
 
 	@Override
-	public void get(long index, BooleanMember value) {
-		value.setV(data[(int)index]);
+	public void get(long index, U value) {
+		value.arrayToValue(data, (int)index, value);
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return data.length / type.booleanCount();
 	}
 
 	@Override
-	public ArrayStorageBoolean duplicate() {
-		ArrayStorageBoolean s = new ArrayStorageBoolean(size());
+	public ArrayStorageBoolean<U> duplicate() {
+		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

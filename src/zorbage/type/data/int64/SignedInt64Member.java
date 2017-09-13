@@ -26,15 +26,21 @@
  */
 package zorbage.type.data.int64;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.LongCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class SignedInt64Member {
+public final class SignedInt64Member
+	implements LongCoder<SignedInt64Member>
+{
 
 	private long v;
 	
@@ -57,6 +63,7 @@ public final class SignedInt64Member {
 	}
 
 	public long v() { return v; }
+
 	public void setV(long val) { v = val; }
 	
 	
@@ -70,4 +77,30 @@ public final class SignedInt64Member {
 
 	@Override
 	public String toString() { return "" + v; }
+
+	@Override
+	public int longCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(long[] arr, int index, SignedInt64Member value) {
+		value.v = arr[index];
+	}
+
+	@Override
+	public void valueToArray(long[] arr, int index, SignedInt64Member value) {
+		arr[index] = value.v;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, SignedInt64Member value) throws IOException {
+		value.v = raf.readLong();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, SignedInt64Member value) throws IOException {
+		raf.writeLong(value.v);
+	}
+
 }

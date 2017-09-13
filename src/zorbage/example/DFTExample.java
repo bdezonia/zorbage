@@ -30,7 +30,7 @@ import zorbage.type.data.float64.complex.ComplexFloat64Group;
 import zorbage.type.data.float64.complex.ComplexFloat64Member;
 import zorbage.type.data.int32.SignedInt32Member;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 
 /**
@@ -56,7 +56,7 @@ public class DFTExample {
 	}
 	
 	private LinearStorage<?,ComplexFloat64Member> makeComplexData(int size) {
-		return new ArrayStorageComplexFloat64(size);
+		return new ArrayStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
 	}
 	
 	private void fillIntData(LinearStorage<?,SignedInt32Member> input) {

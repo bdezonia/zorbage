@@ -27,7 +27,7 @@
 package zorbage.example;
 
 import zorbage.type.data.float64.complex.ComplexFloat64Member;
-import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class FileStorageExample {
 	public void run() {
 		ComplexFloat64Member v = new ComplexFloat64Member();
 		
-		FileStorageComplexFloat64 store = new FileStorageComplexFloat64(4000);
+		FileStorageFloat64<ComplexFloat64Member> store = new FileStorageFloat64<ComplexFloat64Member>(4000, new ComplexFloat64Member());
 		
 		for (long i = 0; i < store.size(); i++) {
 			v.setR(i);
@@ -52,7 +52,7 @@ public class FileStorageExample {
 				System.out.println("A: Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
 		}
 		
-		FileStorageComplexFloat64 dup = store.duplicate();
+		FileStorageFloat64<ComplexFloat64Member> dup = store.duplicate();
 		for (long i = 0; i < dup.size(); i++) {
 			dup.get(i, v);
 			if ((v.r() != i) || (v.i() != i+1))

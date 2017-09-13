@@ -31,8 +31,8 @@ import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageComplexFloat64;
-import zorbage.type.storage.linear.file.FileStorageComplexFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -106,9 +106,9 @@ public final class ComplexFloat64MatrixMember {
 				storage.set(i, ZERO);
 		}
 		else if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageComplexFloat64(r*c);
+			storage = new ArrayStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
 		else
-			storage = new FileStorageComplexFloat64(r*c);
+			storage = new FileStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
 	}
 	
 	public void v(long r, long c, ComplexFloat64Member value) {

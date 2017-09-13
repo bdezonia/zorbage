@@ -50,13 +50,13 @@ public final class Float64VectorMember {
 	private StorageConstruction s;
 	
 	public Float64VectorMember() {
-		storage = new ArrayStorageFloat64(0);
+		storage = new ArrayStorageFloat64<Float64Member>(0, new Float64Member());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 	}
 	
 	public Float64VectorMember(double[] vals) {
-		storage = new ArrayStorageFloat64(vals.length);
+		storage = new ArrayStorageFloat64<Float64Member>(vals.length, new Float64Member());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 		Float64Member value = new Float64Member();
@@ -75,7 +75,7 @@ public final class Float64VectorMember {
 	public Float64VectorMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
-		storage = new ArrayStorageFloat64(data.size());
+		storage = new ArrayStorageFloat64<Float64Member>(data.size(), new Float64Member());
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
 		Float64Member tmp = new Float64Member();
@@ -90,9 +90,9 @@ public final class Float64VectorMember {
 		this.m = m;
 		this.s = s;
 		if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageFloat64(d1);
+			storage = new ArrayStorageFloat64<Float64Member>(d1, new Float64Member());
 		else
-			storage = new FileStorageFloat64(d1);
+			storage = new FileStorageFloat64<Float64Member>(d1, new Float64Member());
 	}
 	
 	public void v(long i, Float64Member v) {
@@ -143,9 +143,9 @@ public final class Float64VectorMember {
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
-				storage = new ArrayStorageFloat64(size);
+				storage = new ArrayStorageFloat64<Float64Member>(size, new Float64Member());
 			else
-				storage = new FileStorageFloat64(size);
+				storage = new FileStorageFloat64<Float64Member>(size, new Float64Member());
 		}
 		else {
 			for (long i = 0; i < storage.size(); i++) {

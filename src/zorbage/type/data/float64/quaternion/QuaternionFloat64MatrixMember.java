@@ -31,8 +31,8 @@ import zorbage.type.ctor.StorageConstruction;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageQuaternionFloat64;
-import zorbage.type.storage.linear.file.FileStorageQuaternionFloat64;
+import zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import zorbage.type.storage.linear.file.FileStorageFloat64;
 import zorbage.util.BigList;
 
 /**
@@ -108,9 +108,9 @@ public final class QuaternionFloat64MatrixMember {
 				storage.set(i, ZERO);
 		}
 		else if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageQuaternionFloat64(r*c);
+			storage = new ArrayStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
 		else
-			storage = new FileStorageQuaternionFloat64(r*c);
+			storage = new FileStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
 	}
 	
 	public void v(long r, long c, QuaternionFloat64Member value) {

@@ -173,7 +173,7 @@ public class TestMain {
 
 	public static void testAverage() {
 		Float64Member value = new Float64Member();
-		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
@@ -193,7 +193,7 @@ public class TestMain {
 	public static void testMedian() {
 		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
-		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
@@ -212,7 +212,7 @@ public class TestMain {
 	public static void testMin() {
 		Float64Group dbl = new Float64Group();
 		Float64Member value = new Float64Member();
-		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
@@ -233,7 +233,7 @@ public class TestMain {
 	public static void testMax() {
 		Float64Group dbl = new Float64Group();
 		Float64Member value = new Float64Member();
-		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;
@@ -253,7 +253,7 @@ public class TestMain {
 
 	public static void testSum() {
 		Float64Member value = new Float64Member();
-		ArrayStorageFloat64 storage = new ArrayStorageFloat64(10);
+		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		int i = 0;

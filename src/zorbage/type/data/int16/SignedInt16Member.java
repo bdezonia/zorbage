@@ -26,15 +26,21 @@
  */
 package zorbage.type.data.int16;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.ShortCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class SignedInt16Member {
+public final class SignedInt16Member
+	implements ShortCoder<SignedInt16Member>
+{
 
 	private short v;
 	
@@ -57,6 +63,7 @@ public final class SignedInt16Member {
 	}
 
 	public short v() { return v; }
+	
 	public void setV(short val) { v = val; }
 	
 	
@@ -70,4 +77,30 @@ public final class SignedInt16Member {
 
 	@Override
 	public String toString() { return "" + v; }
+
+	@Override
+	public int shortCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(short[] arr, int index, SignedInt16Member value) {
+		value.v = arr[index];
+	}
+
+	@Override
+	public void valueToArray(short[] arr, int index, SignedInt16Member value) {
+		arr[index] = value.v;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, SignedInt16Member value) throws IOException {
+		value.v = raf.readShort();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, SignedInt16Member value) throws IOException {
+		raf.writeShort(value.v);
+	}
+
 }

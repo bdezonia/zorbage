@@ -26,18 +26,23 @@
  */
 package zorbage.type.data.bool;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.BitCoder;
+import zorbage.type.storage.coder.BooleanCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class BooleanMember {
-	
+public final class BooleanMember
+	implements BitCoder<BooleanMember>, BooleanCoder<BooleanMember>
+{	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
 
@@ -68,6 +73,7 @@ public final class BooleanMember {
 	}
 
 	public boolean v() { return v; }
+	
 	public void setV(boolean val) { v = val; }
 	
 	public void set(BooleanMember other) {
@@ -80,4 +86,61 @@ public final class BooleanMember {
 
 	@Override
 	public String toString() { if (v) return ONE; else return ZERO; }
+
+	@Override
+	public int booleanCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(boolean[] arr, int index, BooleanMember value) {
+		value.v = arr[index];
+	}
+
+	@Override
+	public void valueToArray(boolean[] arr, int index, BooleanMember value) {
+		arr[index] = value.v;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, BooleanMember value) throws IOException {
+		value.v = raf.readBoolean();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, BooleanMember value) throws IOException {
+		raf.writeBoolean(value.v);
+	}
+
+	@Override
+	public int bitCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(long[] arr, int index, BooleanMember value) {
+		synchronized (arr) {
+			final int bIndex = index / 64; // storage limited to Integer.MAX_VALUE size (not * 64)
+			final int shift = index % 64;
+			long bucket = arr[bIndex];
+			value.v = (bucket & (1l << shift)) > 0;
+		}
+	}
+
+	@Override
+	public void valueToArray(long[] arr, int index, BooleanMember value) {
+		synchronized (arr) {
+			final int bIndex = index / 64; // storage limited to Integer.MAX_VALUE size (not * 64)
+			final int shift = index % 64;
+			long bucket = arr[bIndex];
+			if (value.v) {
+				bucket |= (1l << shift);
+			}
+			else {
+				bucket &= ~(1l << shift);
+			}
+			arr[bIndex] = bucket;
+		}
+	}
+
 }

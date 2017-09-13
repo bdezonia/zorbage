@@ -26,15 +26,21 @@
  */
 package zorbage.type.data.int8;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.ByteCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class SignedInt8Member {
+public final class SignedInt8Member
+	implements ByteCoder<SignedInt8Member>
+{
 
 	private byte v;
 	
@@ -57,6 +63,7 @@ public final class SignedInt8Member {
 	}
 
 	public byte v() { return v; }
+
 	public void setV(byte val) { v = val; }
 	
 	
@@ -70,4 +77,30 @@ public final class SignedInt8Member {
 
 	@Override
 	public String toString() { return "" + v; }
+
+	@Override
+	public int byteCount() {
+		return 1;
+	}
+
+	@Override
+	public void arrayToValue(byte[] arr, int index, SignedInt8Member value) {
+		value.v = arr[index];
+	}
+
+	@Override
+	public void valueToArray(byte[] arr, int index, SignedInt8Member value) {
+		arr[index] = value.v;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, SignedInt8Member value) throws IOException {
+		value.v = raf.readByte();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, SignedInt8Member value) throws IOException {
+		raf.writeByte(value.v);
+	}
+
 }

@@ -105,9 +105,9 @@ public final class Float64MatrixMember {
 				storage.set(i, ZERO);
 		}
 		else if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageFloat64(r*c);
+			storage = new ArrayStorageFloat64<Float64Member>(r*c, new Float64Member());
 		else
-			storage = new FileStorageFloat64(r*c);
+			storage = new FileStorageFloat64<Float64Member>(r*c, new Float64Member());
 	}
 	
 	public void v(long r, long c, Float64Member value) {

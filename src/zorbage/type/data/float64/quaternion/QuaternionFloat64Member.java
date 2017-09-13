@@ -26,8 +26,12 @@
  */
 package zorbage.type.data.float64.quaternion;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.DoubleCoder;
 
 // TODO - do we nest Float64Members inside Quat<Float64Member>? Is this even possible?
 
@@ -36,7 +40,9 @@ import zorbage.type.parse.TensorStringRepresentation;
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat64Member {
+public final class QuaternionFloat64Member 
+	implements DoubleCoder<QuaternionFloat64Member>
+{
 
 	private double r, i, j, k;
 	
@@ -68,12 +74,19 @@ public final class QuaternionFloat64Member {
 	}
 
 	public double r() { return r; }
+	
 	public double i() { return i; }
+	
 	public double j() { return j; }
+	
 	public double k() { return k; }
+	
 	public void setR(double val) { r = val; }
+	
 	public void setI(double val) { i = val; }
+	
 	public void setJ(double val) { j = val; }
+	
 	public void setK(double val) { k = val; }
 	
 	public void set(QuaternionFloat64Member other) {
@@ -105,6 +118,43 @@ public final class QuaternionFloat64Member {
 		builder.append(k);
 		builder.append(')');
 		return builder.toString();
+	}
+
+	@Override
+	public int doubleCount() {
+		return 4;
+	}
+
+	@Override
+	public void arrayToValue(double[] arr, int index, QuaternionFloat64Member value) {
+		value.r = arr[index];
+		value.i = arr[index+1];
+		value.j = arr[index+2];
+		value.k = arr[index+3];
+	}
+
+	@Override
+	public void valueToArray(double[] arr, int index, QuaternionFloat64Member value) {
+		arr[index] = value.r;
+		arr[index+1] = value.i;
+		arr[index+2] = value.j;
+		arr[index+3] = value.k;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, QuaternionFloat64Member value) throws IOException {
+		value.r = raf.readDouble();
+		value.i = raf.readDouble();
+		value.j = raf.readDouble();
+		value.k = raf.readDouble();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, QuaternionFloat64Member value) throws IOException {
+		raf.writeDouble(value.r);
+		raf.writeDouble(value.i);
+		raf.writeDouble(value.j);
+		raf.writeDouble(value.k);
 	}
 
 }

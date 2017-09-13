@@ -26,16 +26,21 @@
  */
 package zorbage.type.data.float64.complex;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
+import zorbage.type.storage.coder.DoubleCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class ComplexFloat64Member {
-	
+public final class ComplexFloat64Member
+	implements DoubleCoder<ComplexFloat64Member>
+{
 	private double r, i;
 	
 	public ComplexFloat64Member() {
@@ -61,8 +66,11 @@ public final class ComplexFloat64Member {
 	}
 
 	public double r() { return r; }
+	
 	public double i() { return i; }
-    public void setR(double val) { r = val; }	
+	
+    public void setR(double val) { r = val; }
+    
     public void setI(double val) { i = val; }	
 
     public void get(ComplexFloat64Member other) {
@@ -85,5 +93,34 @@ public final class ComplexFloat64Member {
     	builder.append(')');
     	return builder.toString();
     }
+
+	@Override
+	public int doubleCount() {
+		return 2;
+	}
+
+	@Override
+	public void arrayToValue(double[] arr, int index, ComplexFloat64Member value) {
+		value.r = arr[index];
+		value.i = arr[index+1];
+	}
+
+	@Override
+	public void valueToArray(double[] arr, int index, ComplexFloat64Member value) {
+		arr[index] = value.r;
+		arr[index+1] = value.i;
+	}
+
+	@Override
+	public void fileToValue(RandomAccessFile raf, ComplexFloat64Member value) throws IOException {
+		value.r = raf.readDouble();
+		value.i = raf.readDouble();
+	}
+
+	@Override
+	public void valueToFile(RandomAccessFile raf, ComplexFloat64Member value) throws IOException {
+		raf.writeDouble(value.r);
+		raf.writeDouble(value.i);
+	}
 
 }
