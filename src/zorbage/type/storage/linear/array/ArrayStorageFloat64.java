@@ -50,18 +50,18 @@ public class ArrayStorageFloat64<U extends DoubleCoder<U>>
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.doubleCount()))
 			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " booleans");
-		this.data = new double[(int)size];
+		this.data = new double[(int)size * type.doubleCount()];
 		this.type = type;
 	}
 
 	@Override
 	public void set(long index, U value) {
-		value.valueToArray(data, (int)index, value);
+		value.valueToArray(data, (int)(index * type.doubleCount()), value);
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.arrayToValue(data, (int)index, value);
+		value.arrayToValue(data, (int)(index * type.doubleCount()), value);
 	}
 	
 	@Override

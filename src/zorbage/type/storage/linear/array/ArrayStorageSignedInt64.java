@@ -27,6 +27,7 @@
 package zorbage.type.storage.linear.array;
 
 import zorbage.type.data.int64.SignedInt64Member;
+import zorbage.type.storage.coder.LongCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
@@ -35,40 +36,42 @@ import zorbage.util.Fraction;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt64
-	implements LinearStorage<ArrayStorageSignedInt64,SignedInt64Member>
+public class ArrayStorageSignedInt64<U extends LongCoder<U>>
+	implements LinearStorage<ArrayStorageSignedInt64<U>,SignedInt64Member>
 {
 
+	private final U type;
 	private final long[] data;
 	
 	public static final Fraction BYTESIZE = new Fraction(8);
 	
-	public ArrayStorageSignedInt64(long size) {
+	public ArrayStorageSignedInt64(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + Integer.MAX_VALUE + " signedint64s");
-		this.data = new long[(int)size];
+		if (size > (Integer.MAX_VALUE / type.longCount()))
+			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " signedint64s");
+		this.data = new long[(int)size * type.longCount()];
+		this.type = type;
 	}
 
 	@Override
 	public void set(long index, SignedInt64Member value) {
-		data[(int)index] = value.v();
+		data[(int)(index * type.longCount())] = value.v();
 	}
 
 	@Override
 	public void get(long index, SignedInt64Member value) {
-		value.setV(data[(int)index]);
+		value.setV(data[(int)(index * type.longCount())]);
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return data.length / type.longCount();
 	}
 
 	@Override
-	public ArrayStorageSignedInt64 duplicate() {
-		ArrayStorageSignedInt64 s = new ArrayStorageSignedInt64(size());
+	public ArrayStorageSignedInt64<U> duplicate() {
+		ArrayStorageSignedInt64<U> s = new ArrayStorageSignedInt64<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

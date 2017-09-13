@@ -27,6 +27,7 @@
 package zorbage.type.storage.linear.array;
 
 import zorbage.type.data.int16.SignedInt16Member;
+import zorbage.type.storage.coder.ShortCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
@@ -35,40 +36,42 @@ import zorbage.util.Fraction;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt16
-	implements LinearStorage<ArrayStorageSignedInt16,SignedInt16Member>
+public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
+	implements LinearStorage<ArrayStorageSignedInt16<U>,SignedInt16Member>
 {
 
+	private final U type;
 	private final short[] data;
 	
 	public static final Fraction BYTESIZE = new Fraction(2);
 	
-	public ArrayStorageSignedInt16(long size) {
+	public ArrayStorageSignedInt16(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + Integer.MAX_VALUE + " signedint16s");
-		this.data = new short[(int)size];
+		if (size > (Integer.MAX_VALUE / type.shortCount()))
+			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " signedint16s");
+		this.type = type;
+		this.data = new short[(int)size * type.shortCount()];
 	}
 
 	@Override
 	public void set(long index, SignedInt16Member value) {
-		data[(int)index] = value.v();
+		data[(int)(index * type.shortCount())] = value.v();
 	}
 
 	@Override
 	public void get(long index, SignedInt16Member value) {
-		value.setV(data[(int)index]);
+		value.setV(data[(int)(index * type.shortCount())]);
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return data.length / type.shortCount();
 	}
 
 	@Override
-	public ArrayStorageSignedInt16 duplicate() {
-		ArrayStorageSignedInt16 s = new ArrayStorageSignedInt16(size());
+	public ArrayStorageSignedInt16<U> duplicate() {
+		ArrayStorageSignedInt16<U> s = new ArrayStorageSignedInt16<U>(size(),type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

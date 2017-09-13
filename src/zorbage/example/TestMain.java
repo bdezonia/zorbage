@@ -117,7 +117,7 @@ public class TestMain {
 	
 	public static void testAccessor() {
 		SignedInt32Member value = new SignedInt32Member();
-		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
+		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(10, new SignedInt32Member());
 		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;
@@ -139,7 +139,7 @@ public class TestMain {
 	// Scale a collection of Int32s by a floating point number
 	public static void testGroupOfConversions() {
 		SignedInt32Member value = new SignedInt32Member();
-		ArrayStorageSignedInt32 storage = new ArrayStorageSignedInt32(10);
+		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(10, new SignedInt32Member());
 		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;

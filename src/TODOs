@@ -80,3 +80,8 @@ Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost, other fort
   http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
 0^0 should be nan or throw an exception. right now it returns 1.
 rmodules have right and left subtypes: see that AWchap3.pdf file I downloaded
+are type oriented array storage not including last element when size is not evenly divisible into typeCount()
+FileStorage has a non thread safe U reuse (in type) and on duplication it is made worse
+check all array allocations that type.intCount() included
+check ctor error messages for array storage that they say objects instead of signedint32 etc.
+get rid of elementSize()

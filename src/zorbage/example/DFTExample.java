@@ -52,7 +52,7 @@ public class DFTExample {
 	
 	
 	private LinearStorage<?,SignedInt32Member> makeIntData(int size) {
-		return new ArrayStorageSignedInt32(size);
+		return new ArrayStorageSignedInt32<SignedInt32Member>(size, new SignedInt32Member());
 	}
 	
 	private LinearStorage<?,ComplexFloat64Member> makeComplexData(int size) {

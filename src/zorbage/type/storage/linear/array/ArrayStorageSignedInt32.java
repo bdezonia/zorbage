@@ -27,6 +27,7 @@
 package zorbage.type.storage.linear.array;
 
 import zorbage.type.data.int32.SignedInt32Member;
+import zorbage.type.storage.coder.IntCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.util.Fraction;
 
@@ -35,40 +36,42 @@ import zorbage.util.Fraction;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt32
-	implements LinearStorage<ArrayStorageSignedInt32,SignedInt32Member>
+public class ArrayStorageSignedInt32<U extends IntCoder<U>>
+	implements LinearStorage<ArrayStorageSignedInt32<U>,SignedInt32Member>
 {
 
+	private final U type;
 	private final int[] data;
 	
 	public static final Fraction BYTESIZE = new Fraction(4);
 	
-	public ArrayStorageSignedInt32(long size) {
+	public ArrayStorageSignedInt32(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + Integer.MAX_VALUE + " signedint32s");
-		this.data = new int[(int)size];
+		if (size > (Integer.MAX_VALUE / type.intCount()))
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + (Integer.MAX_VALUE / type.intCount()) + " signedint32s");
+		this.type = type;
+		this.data = new int[(int)size * type.intCount()];
 	}
 
 	@Override
 	public void set(long index, SignedInt32Member value) {
-		data[(int)index] = value.v();
+		data[(int)(index * type.intCount())] = value.v();
 	}
 
 	@Override
 	public void get(long index, SignedInt32Member value) {
-		value.setV(data[(int)index]);
+		value.setV(data[(int)(index * type.intCount())]);
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return data.length / type.intCount();
 	}
 
 	@Override
-	public ArrayStorageSignedInt32 duplicate() {
-		ArrayStorageSignedInt32 s = new ArrayStorageSignedInt32(size());
+	public ArrayStorageSignedInt32<U> duplicate() {
+		ArrayStorageSignedInt32<U> s = new ArrayStorageSignedInt32<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
