@@ -29,7 +29,6 @@ package zorbage.type.storage.linear.array;
 import zorbage.type.data.int32.SignedInt32Member;
 import zorbage.type.storage.coder.IntCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -42,8 +41,6 @@ public class ArrayStorageSignedInt32<U extends IntCoder<U>>
 
 	private final U type;
 	private final int[] data;
-	
-	public static final Fraction BYTESIZE = new Fraction(4);
 	
 	public ArrayStorageSignedInt32(long size, U type) {
 		if (size < 0)
@@ -75,11 +72,6 @@ public class ArrayStorageSignedInt32<U extends IntCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

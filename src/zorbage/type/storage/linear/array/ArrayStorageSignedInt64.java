@@ -29,7 +29,6 @@ package zorbage.type.storage.linear.array;
 import zorbage.type.data.int64.SignedInt64Member;
 import zorbage.type.storage.coder.LongCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -43,15 +42,13 @@ public class ArrayStorageSignedInt64<U extends LongCoder<U>>
 	private final U type;
 	private final long[] data;
 	
-	public static final Fraction BYTESIZE = new Fraction(8);
-	
 	public ArrayStorageSignedInt64(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.longCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " signedint64s");
-		this.data = new long[(int)size * type.longCount()];
 		this.type = type;
+		this.data = new long[(int)size * type.longCount()];
 	}
 
 	@Override
@@ -75,11 +72,6 @@ public class ArrayStorageSignedInt64<U extends LongCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

@@ -28,7 +28,6 @@ package zorbage.type.storage.linear.array;
 
 import zorbage.type.storage.coder.DoubleCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,18 +39,15 @@ public class ArrayStorageFloat64<U extends DoubleCoder<U>>
 	implements LinearStorage<ArrayStorageFloat64<U>, U>
 {
 	private final U type;
-	
 	private final double[] data;
-	
-	public static final Fraction BYTESIZE = new Fraction(1);
 	
 	public ArrayStorageFloat64(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.doubleCount()))
 			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " booleans");
-		this.data = new double[(int)size * type.doubleCount()];
 		this.type = type;
+		this.data = new double[(int)size * type.doubleCount()];
 	}
 
 	@Override
@@ -75,11 +71,6 @@ public class ArrayStorageFloat64<U extends DoubleCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

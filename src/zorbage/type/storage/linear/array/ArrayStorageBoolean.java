@@ -28,7 +28,6 @@ package zorbage.type.storage.linear.array;
 
 import zorbage.type.storage.coder.BooleanCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,18 +39,15 @@ public class ArrayStorageBoolean<U extends BooleanCoder<U>>
 	implements LinearStorage<ArrayStorageBoolean<U>, U>
 {
 	private final U type;
-	
 	private final boolean[] data;
-	
-	public static final Fraction BYTESIZE = new Fraction(1);
 	
 	public ArrayStorageBoolean(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.booleanCount()))
 			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " booleans");
-		this.data = new boolean[(int)size * type.booleanCount()];
 		this.type = type;
+		this.data = new boolean[(int)size * type.booleanCount()];
 	}
 
 	@Override
@@ -75,11 +71,6 @@ public class ArrayStorageBoolean<U extends BooleanCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

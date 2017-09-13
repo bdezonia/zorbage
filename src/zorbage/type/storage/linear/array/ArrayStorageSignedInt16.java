@@ -29,7 +29,6 @@ package zorbage.type.storage.linear.array;
 import zorbage.type.data.int16.SignedInt16Member;
 import zorbage.type.storage.coder.ShortCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -42,8 +41,6 @@ public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
 
 	private final U type;
 	private final short[] data;
-	
-	public static final Fraction BYTESIZE = new Fraction(2);
 	
 	public ArrayStorageSignedInt16(long size, U type) {
 		if (size < 0)
@@ -75,11 +72,6 @@ public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

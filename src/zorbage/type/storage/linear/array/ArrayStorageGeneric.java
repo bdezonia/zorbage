@@ -28,7 +28,6 @@ package zorbage.type.storage.linear.array;
 
 import zorbage.type.algebra.Group;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,21 +39,19 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 	implements LinearStorage<ArrayStorageGeneric<T,U>,U>
 {
 
-	private final Object[] data;
 	private final T grp;
-	
-	public static final Fraction BYTESIZE = Fraction.UNKNOWN;
+	private final Object[] data;
 	
 	public ArrayStorageGeneric(long size, T grp) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
+		this.grp = grp;
 		this.data = new Object[(int)size];
 		for (int i = 0; i < size; i++) {
 			this.data[i] = grp.construct();
 		}
-		this.grp = grp;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -81,11 +78,6 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 		for (int i = 0; i < data.length; i++)
 			grp.assign((U)data[i], (U)s.data[i]);
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

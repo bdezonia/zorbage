@@ -84,4 +84,5 @@ are type oriented array storage not including last element when size is not even
 FileStorage has a non thread safe U reuse (in type) and on duplication it is made worse
 check all array allocations that type.intCount() included
 check ctor error messages for array storage that they say objects instead of signedint32 etc.
-get rid of elementSize()
+make arraybit support multibit value encodings
+get rid of value.x(value) in storage code

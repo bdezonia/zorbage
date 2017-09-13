@@ -28,7 +28,6 @@ package zorbage.type.storage.linear.array;
 
 import zorbage.type.data.bool.BooleanMember;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -42,8 +41,6 @@ public class ArrayStorageBit
 
 	private final long[] data;
 	private final long size;
-	
-	public static final Fraction BYTESIZE = new Fraction(1,64);
 	
 	public ArrayStorageBit(long size) {
 	
@@ -96,9 +93,4 @@ public class ArrayStorageBit
 		return s;
 	}
 	
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
-	}
-
 }

@@ -28,7 +28,6 @@ package zorbage.type.storage.linear.array;
 
 import zorbage.type.storage.coder.ByteCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -42,15 +41,13 @@ public class ArrayStorageSignedInt8<U extends ByteCoder<U>>
 	private final U type;
 	private final byte[] data;
 	
-	public static final Fraction BYTESIZE = new Fraction(1);
-	
 	public ArrayStorageSignedInt8(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt8 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.byteCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt8 can handle at most " + (Integer.MAX_VALUE / type.byteCount()) + " signedint8s");
-		this.data = new byte[(int)size * type.byteCount()];
 		this.type = type;
+		this.data = new byte[(int)size * type.byteCount()];
 	}
 
 	@Override
@@ -74,11 +71,6 @@ public class ArrayStorageSignedInt8<U extends ByteCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }

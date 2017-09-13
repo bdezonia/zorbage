@@ -37,7 +37,6 @@ import java.nio.file.StandardCopyOption;
 import zorbage.type.storage.coder.DoubleCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -51,25 +50,23 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 	// 1) add low level array access to Array storage classes so can do block reads/writes
 	// 2) make BUFFERSIZE and numBuffers configurable
 	
+	private final U type;
 	private long numElements;
 	private ArrayStorageFloat64<U> buffer;
 	private File file;
 	private boolean dirty;
 	private long pageIndex;
-	private final U type;
 	
 	private static final long BUFFERSIZE = 2048;
 
-	public static final Fraction BYTESIZE = ArrayStorageFloat64.BYTESIZE;
-	
 	public FileStorageFloat64(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
+		this.type = type;
 		this.numElements = numElements;
 		this.dirty = false;
 		this.buffer = new ArrayStorageFloat64<U>(BUFFERSIZE,type);
 		this.pageIndex = numElements;
-		this.type = type;
 		try { 
 			this.file = File.createTempFile("Storage", ".storage");
 			// if the file is new set it all to zero
@@ -131,7 +128,7 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 		if (!dirty) return;
 		try {
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
+			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.doubleCount()*8);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, type);
 				type.valueToFile(raf, type);
@@ -155,7 +152,7 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 			// read file data into array using sizeof()
 			try {
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*BYTESIZE.n());
+				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.doubleCount()*8);
 				for (long i = 0; i < BUFFERSIZE; i++) {
 					type.fileToValue(raf, type);
 					buffer.set(i, type);
@@ -167,9 +164,5 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 			}
 			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
-	}
-	
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 }

@@ -28,7 +28,6 @@ package zorbage.type.storage.linear.array;
 
 import zorbage.type.storage.coder.FloatCoder;
 import zorbage.type.storage.linear.LinearStorage;
-import zorbage.util.Fraction;
 
 /**
  * 
@@ -40,18 +39,15 @@ public class ArrayStorageFloat32<U extends FloatCoder<U>>
 	implements LinearStorage<ArrayStorageFloat32<U>, U>
 {
 	private final U type;
-	
 	private final float[] data;
-	
-	public static final Fraction BYTESIZE = new Fraction(1);
 	
 	public ArrayStorageFloat32(long size, U type) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat32 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.floatCount()))
 			throw new IllegalArgumentException("ArrayStorageFloat32 can handle at most " + (Integer.MAX_VALUE / type.floatCount()) + " floats");
-		this.data = new float[(int)size * type.floatCount()];
 		this.type = type;
+		this.data = new float[(int)size * type.floatCount()];
 	}
 
 	@Override
@@ -75,11 +71,6 @@ public class ArrayStorageFloat32<U extends FloatCoder<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
-	}
-
-	@Override
-	public Fraction elementSize() {
-		return BYTESIZE;
 	}
 
 }
