@@ -46,7 +46,7 @@ public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.shortCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " signedint16s");
+			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " short based entities");
 		this.type = type;
 		this.data = new short[(int)size * type.shortCount()];
 	}

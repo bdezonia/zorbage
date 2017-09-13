@@ -45,7 +45,7 @@ public class ArrayStorageBoolean<U extends BooleanCoder<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.booleanCount()))
-			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " booleans");
+			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " boolean based entities");
 		this.type = type;
 		this.data = new boolean[(int)size * type.booleanCount()];
 	}

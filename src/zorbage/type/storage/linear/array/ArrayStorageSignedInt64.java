@@ -46,7 +46,7 @@ public class ArrayStorageSignedInt64<U extends LongCoder<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.longCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " signedint64s");
+			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " long based entities");
 		this.type = type;
 		this.data = new long[(int)size * type.longCount()];
 	}

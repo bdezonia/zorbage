@@ -46,7 +46,7 @@ public class ArrayStorageSignedInt32<U extends IntCoder<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.intCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + (Integer.MAX_VALUE / type.intCount()) + " signedint32s");
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + (Integer.MAX_VALUE / type.intCount()) + " int based entities");
 		this.type = type;
 		this.data = new int[(int)size * type.intCount()];
 	}
