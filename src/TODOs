@@ -44,30 +44,9 @@ Other needs
   apache commons math4 does a lot of things my code does
     it doesn't have all of algebra hierarchy and it doesn't have quats and octs
     and it doesn't handle huge datasets and it might be slow due to lots of memory allocation
-
-Make FileStorage. Have an encoder that reads/writes from/to numeric types.
-Then can have matrices with a FileStorage strategy rather than an array
-storage stategy.
-ComplexFloat64 file encoder:
-  toStore:
-    raf.writeDouble(v.r());
-    raf.writeDouble(v.i());
-  toValue
-    v.setR(raf.readDouble());
-    v.setI(raf.readDouble());
-ComplexFloat64 array encoder
-  toStore:
-    array[index + 0] = v.r();
-    array[index + 1] = v.i();
-  toValue
-    v.setR(array[index + 0];
-    v.setI(array[index + 1];
-Make an abstraction that assigns values and use it.
-Use elementSize() as part of encoders to make them more generic and simplify FileStorage classes
 Sparse vector/matrix/tensor storage
 String constructors for numeric types: how about character stream constructors instead
-Make more FileStorage classes for each type.
-Remove much duplication in FileStorage classes and maybe data type/group classes
+Remove much duplication in FileStorage classes when they are done
 Support sparse allocation method
 String constructors of numeric types default to DENSE ARRAY. Maybe allow mem storage params.
 The constructors for storage may duplicate others. Due to time lags this is not necessarily
