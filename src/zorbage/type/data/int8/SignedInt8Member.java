@@ -84,23 +84,23 @@ public final class SignedInt8Member
 	}
 
 	@Override
-	public void arrayToValue(byte[] arr, int index, SignedInt8Member value) {
-		value.v = arr[index];
+	public void toValue(byte[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public void valueToArray(byte[] arr, int index, SignedInt8Member value) {
-		arr[index] = value.v;
+	public void toArray(byte[] arr, int index) {
+		arr[index] = v;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, SignedInt8Member value) throws IOException {
-		value.v = raf.readByte();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readByte();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, SignedInt8Member value) throws IOException {
-		raf.writeByte(value.v);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeByte(v);
 	}
 
 }

@@ -84,23 +84,23 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public void arrayToValue(short[] arr, int index, SignedInt16Member value) {
-		value.v = arr[index];
+	public void toValue(short[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public void valueToArray(short[] arr, int index, SignedInt16Member value) {
-		arr[index] = value.v;
+	public void toArray(short[] arr, int index) {
+		arr[index] = v;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, SignedInt16Member value) throws IOException {
-		value.v = raf.readShort();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readShort();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, SignedInt16Member value) throws IOException {
-		raf.writeShort(value.v);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeShort(v);
 	}
 
 }

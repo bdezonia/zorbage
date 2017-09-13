@@ -84,23 +84,23 @@ public final class SignedInt32Member
 	}
 
 	@Override
-	public void arrayToValue(int[] arr, int index, SignedInt32Member value) {
-		value.v = arr[index];
+	public void toValue(int[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public void valueToArray(int[] arr, int index, SignedInt32Member value) {
-		arr[index] = value.v;
+	public void toArray(int[] arr, int index) {
+		arr[index] = v;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, SignedInt32Member value) throws IOException {
-		value.v = raf.readInt();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readInt();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, SignedInt32Member value) throws IOException {
-		raf.writeInt(value.v);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeInt(v);
 	}
 
 }

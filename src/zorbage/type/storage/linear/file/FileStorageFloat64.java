@@ -131,7 +131,7 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.doubleCount()*8);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, type);
-				type.valueToFile(raf, type);
+				type.toFile(raf);
 			}
 			raf.close();
 		} catch (Exception e) {
@@ -154,7 +154,7 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.doubleCount()*8);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					type.fileToValue(raf, type);
+					type.toValue(raf);
 					buffer.set(i, type);
 				}
 				raf.close();

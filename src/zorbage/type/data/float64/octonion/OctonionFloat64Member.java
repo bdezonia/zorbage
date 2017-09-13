@@ -168,43 +168,43 @@ public final class OctonionFloat64Member
 	}
 
 	@Override
-	public void arrayToValue(double[] arr, int index, OctonionFloat64Member value) {
-		value.r = arr[index];
-		value.i = arr[index+1];
-		value.j = arr[index+2];
-		value.k = arr[index+3];
-		value.l = arr[index+4];
-		value.i0 = arr[index+5];
-		value.j0 = arr[index+6];
-		value.k0 = arr[index+7];
+	public void toValue(double[] arr, int index) {
+		r = arr[index];
+		i = arr[index+1];
+		j = arr[index+2];
+		k = arr[index+3];
+		l = arr[index+4];
+		i0 = arr[index+5];
+		j0 = arr[index+6];
+		k0 = arr[index+7];
 	}
 
 	@Override
-	public void valueToArray(double[] arr, int index, OctonionFloat64Member value) {
-		arr[index] = value.r;
-		arr[index+1] = value.i;
-		arr[index+2] = value.j;
-		arr[index+3] = value.k;
-		arr[index+4] = value.l;
-		arr[index+5] = value.i0;
-		arr[index+6] = value.j0;
-		arr[index+7] = value.k0;
+	public void toArray(double[] arr, int index) {
+		arr[index] = r;
+		arr[index+1] = i;
+		arr[index+2] = j;
+		arr[index+3] = k;
+		arr[index+4] = l;
+		arr[index+5] = i0;
+		arr[index+6] = j0;
+		arr[index+7] = k0;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, OctonionFloat64Member value) throws IOException {
-		value.r = raf.readDouble();
-		value.i = raf.readDouble();
-		value.j = raf.readDouble();
-		value.k = raf.readDouble();
-		value.l = raf.readDouble();
-		value.i0 = raf.readDouble();
-		value.j0 = raf.readDouble();
-		value.k0 = raf.readDouble();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		r = raf.readDouble();
+		i = raf.readDouble();
+		j = raf.readDouble();
+		k = raf.readDouble();
+		l = raf.readDouble();
+		i0 = raf.readDouble();
+		j0 = raf.readDouble();
+		k0 = raf.readDouble();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, OctonionFloat64Member value) throws IOException {
+	public void toFile(RandomAccessFile raf) throws IOException {
 		raf.writeDouble(r);
 		raf.writeDouble(i);
 		raf.writeDouble(j);

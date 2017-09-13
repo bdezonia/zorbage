@@ -93,23 +93,23 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void arrayToValue(boolean[] arr, int index, BooleanMember value) {
-		value.v = arr[index];
+	public void toValue(boolean[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public void valueToArray(boolean[] arr, int index, BooleanMember value) {
-		arr[index] = value.v;
+	public void toArray(boolean[] arr, int index) {
+		arr[index] = v;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, BooleanMember value) throws IOException {
-		value.v = raf.readBoolean();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readBoolean();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, BooleanMember value) throws IOException {
-		raf.writeBoolean(value.v);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeBoolean(v);
 	}
 
 	@Override
@@ -118,22 +118,22 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void arrayToValue(long[] arr, int index, BooleanMember value) {
+	public void toValue(long[] arr, int index) {
 		synchronized (arr) {
 			final int bIndex = index / 64; // storage limited to Integer.MAX_VALUE size (not * 64)
 			final int shift = index % 64;
 			long bucket = arr[bIndex];
-			value.v = (bucket & (1l << shift)) > 0;
+			v = (bucket & (1l << shift)) > 0;
 		}
 	}
 
 	@Override
-	public void valueToArray(long[] arr, int index, BooleanMember value) {
+	public void toArray(long[] arr, int index) {
 		synchronized (arr) {
 			final int bIndex = index / 64; // storage limited to Integer.MAX_VALUE size (not * 64)
 			final int shift = index % 64;
 			long bucket = arr[bIndex];
-			if (value.v) {
+			if (v) {
 				bucket |= (1l << shift);
 			}
 			else {

@@ -100,27 +100,27 @@ public final class ComplexFloat64Member
 	}
 
 	@Override
-	public void arrayToValue(double[] arr, int index, ComplexFloat64Member value) {
-		value.r = arr[index];
-		value.i = arr[index+1];
+	public void toValue(double[] arr, int index) {
+		r = arr[index];
+		i = arr[index+1];
 	}
 
 	@Override
-	public void valueToArray(double[] arr, int index, ComplexFloat64Member value) {
-		arr[index] = value.r;
-		arr[index+1] = value.i;
+	public void toArray(double[] arr, int index) {
+		arr[index] = r;
+		arr[index+1] = i;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, ComplexFloat64Member value) throws IOException {
-		value.r = raf.readDouble();
-		value.i = raf.readDouble();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		r = raf.readDouble();
+		i = raf.readDouble();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, ComplexFloat64Member value) throws IOException {
-		raf.writeDouble(value.r);
-		raf.writeDouble(value.i);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeDouble(r);
+		raf.writeDouble(i);
 	}
 
 }

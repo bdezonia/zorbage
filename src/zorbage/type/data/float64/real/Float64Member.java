@@ -86,23 +86,23 @@ public final class Float64Member
 	}
 
 	@Override
-	public void arrayToValue(double[] arr, int index, Float64Member value) {
-		value.v = arr[index];
+	public void toValue(double[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public void valueToArray(double[] arr, int index, Float64Member value) {
-		arr[index] = value.v;
+	public void toArray(double[] arr, int index) {
+		arr[index] = v;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, Float64Member value) throws IOException {
-		value.v = raf.readDouble();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readDouble();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, Float64Member value) throws IOException {
-		raf.writeDouble(value.v);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeDouble(v);
 	}
 
 }

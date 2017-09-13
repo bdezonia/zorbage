@@ -6,8 +6,8 @@ import java.io.RandomAccessFile;
 public interface FloatCoder<V> {
 
 	int floatCount();
-	void arrayToValue(float[] arr, int index, V value);
-	void valueToArray(float[] arr, int index, V value);
-	void fileToValue(RandomAccessFile raf, V value) throws IOException;
-	void valueToFile(RandomAccessFile raf, V value) throws IOException;
+	void toValue(float[] arr, int index);
+	void toArray(float[] arr, int index);
+	void toValue(RandomAccessFile raf) throws IOException;
+	void toFile(RandomAccessFile raf) throws IOException;
 }

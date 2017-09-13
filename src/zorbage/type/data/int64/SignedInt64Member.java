@@ -84,23 +84,23 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public void arrayToValue(long[] arr, int index, SignedInt64Member value) {
-		value.v = arr[index];
+	public void toValue(long[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public void valueToArray(long[] arr, int index, SignedInt64Member value) {
-		arr[index] = value.v;
+	public void toArray(long[] arr, int index) {
+		arr[index] = v;
 	}
 
 	@Override
-	public void fileToValue(RandomAccessFile raf, SignedInt64Member value) throws IOException {
-		value.v = raf.readLong();
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readLong();
 	}
 
 	@Override
-	public void valueToFile(RandomAccessFile raf, SignedInt64Member value) throws IOException {
-		raf.writeLong(value.v);
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeLong(v);
 	}
 
 }
