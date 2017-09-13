@@ -73,7 +73,9 @@ public class FileStorageFloat64<U extends DoubleCoder<U>>
 			if (!file.exists() || file.length() == 0) {
 				RandomAccessFile raf = new RandomAccessFile(file, "rw");
 				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
-					raf.writeDouble(0);
+					for (int i = 0; i < type.doubleCount(); i++) {
+						raf.writeDouble(0);
+					}
 				}
 				raf.close();
 			}
