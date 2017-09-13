@@ -83,5 +83,5 @@ FileStorage has a non thread safe U reuse (in type) and on duplication it is mad
 make arraybit support multibit value encodings
 do LU decomp algorithm example to test out api: example code can be found on my desktop
 FileStorage classes only support float64s. expand to include ints, bools, etc.
-Add some unsigned types
+Add some unsigned types and some bit types like 4 and 12
 Notice that any type can also implement the ByteCoder interface
