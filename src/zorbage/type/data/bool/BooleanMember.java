@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.BitCoder;
@@ -41,7 +42,7 @@ import zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public final class BooleanMember
-	implements BitCoder<BooleanMember>, BooleanCoder<BooleanMember>
+	implements BitCoder<BooleanMember>, BooleanCoder<BooleanMember>, Allocatable<BooleanMember>
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -141,6 +142,11 @@ public final class BooleanMember
 			}
 			arr[bIndex] = bucket;
 		}
+	}
+
+	@Override
+	public BooleanMember allocate() {
+		return new BooleanMember();
 	}
 
 }

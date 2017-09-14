@@ -29,6 +29,7 @@ package zorbage.type.data.float64.octonion;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -39,7 +40,7 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class OctonionFloat64Member
-	implements DoubleCoder<OctonionFloat64Member>
+	implements DoubleCoder<OctonionFloat64Member>, Allocatable<OctonionFloat64Member>
 {
 
 	private double r, i, j, k, l, i0, j0, k0;
@@ -213,6 +214,11 @@ public final class OctonionFloat64Member
 		raf.writeDouble(i0);
 		raf.writeDouble(j0);
 		raf.writeDouble(k0);
+	}
+
+	@Override
+	public OctonionFloat64Member allocate() {
+		return new OctonionFloat64Member();
 	}
 
 }

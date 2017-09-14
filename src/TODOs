@@ -58,9 +58,12 @@ Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost, other fort
   http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
 0^0 should be nan or throw an exception. right now it returns 1.
 rmodules have right and left subtypes: see that AWchap3.pdf file I downloaded
-FileStorage has a non thread safe U reuse (in type) and on duplication it is made worse
 make arraybit support multibit value encodings
 do LU decomp algorithm example to test out api: example code can be found on my desktop
-FileStorage classes only support float64s. expand to include ints, bools, etc.
 Add some unsigned types and some bit types like 4 and 12. And 128 bit ints and maybe floats.
-Notice that any type can also implement the ByteCoder interface
+Notice that any type can also implement the ByteCoder interface. But not variable sized?
+FileStorage classes: eliminate duplication
+Add a saveTo(filename) method that will allow one to flush buffer and encode data to a file.
+  Maybe also a constructor from a filename. The ctor would have to calc how big the file is
+  in type.elements() and then read the file and append a BUFFER page to the end.
+I should write Imglib test code to do the DFT example and time compare them.

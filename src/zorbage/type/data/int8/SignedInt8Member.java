@@ -29,6 +29,7 @@ package zorbage.type.data.int8;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.ByteCoder;
@@ -39,7 +40,7 @@ import zorbage.type.storage.coder.ByteCoder;
  *
  */
 public final class SignedInt8Member
-	implements ByteCoder<SignedInt8Member>
+	implements ByteCoder<SignedInt8Member>, Allocatable<SignedInt8Member>
 {
 
 	private byte v;
@@ -101,6 +102,11 @@ public final class SignedInt8Member
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
 		raf.writeByte(v);
+	}
+
+	@Override
+	public SignedInt8Member allocate() {
+		return new SignedInt8Member();
 	}
 
 }

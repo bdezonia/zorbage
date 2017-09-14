@@ -29,6 +29,7 @@ package zorbage.type.data.int64;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.LongCoder;
@@ -39,7 +40,7 @@ import zorbage.type.storage.coder.LongCoder;
  *
  */
 public final class SignedInt64Member
-	implements LongCoder<SignedInt64Member>
+	implements LongCoder<SignedInt64Member>, Allocatable<SignedInt64Member>
 {
 
 	private long v;
@@ -101,6 +102,11 @@ public final class SignedInt64Member
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
 		raf.writeLong(v);
+	}
+
+	@Override
+	public SignedInt64Member allocate() {
+		return new SignedInt64Member();
 	}
 
 }

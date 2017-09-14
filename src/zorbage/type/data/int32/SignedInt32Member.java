@@ -29,6 +29,7 @@ package zorbage.type.data.int32;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.IntCoder;
@@ -39,7 +40,7 @@ import zorbage.type.storage.coder.IntCoder;
  *
  */
 public final class SignedInt32Member
-	implements IntCoder<SignedInt32Member>
+	implements IntCoder<SignedInt32Member>, Allocatable<SignedInt32Member>
 {
 
 	private int v;
@@ -101,6 +102,11 @@ public final class SignedInt32Member
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
 		raf.writeInt(v);
+	}
+
+	@Override
+	public SignedInt32Member allocate() {
+		return new SignedInt32Member();
 	}
 
 }

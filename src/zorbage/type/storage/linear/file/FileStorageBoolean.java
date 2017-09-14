@@ -34,6 +34,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.storage.coder.BooleanCoder;
 import zorbage.type.storage.linear.LinearStorage;
 import zorbage.type.storage.linear.array.ArrayStorageBoolean;
@@ -43,7 +44,7 @@ import zorbage.type.storage.linear.array.ArrayStorageBoolean;
  * @author Barry DeZonia
  *
  */
-public class FileStorageBoolean<U extends BooleanCoder<U>>
+public class FileStorageBoolean<U extends BooleanCoder<U> & Allocatable<U>>
 	implements LinearStorage<FileStorageBoolean<U>,U>
 {
 	// TODO
@@ -62,7 +63,7 @@ public class FileStorageBoolean<U extends BooleanCoder<U>>
 	public FileStorageBoolean(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
-		this.type = type;
+		this.type = type.allocate();
 		this.numElements = numElements;
 		this.dirty = false;
 		this.buffer = new ArrayStorageBoolean<U>(BUFFERSIZE,type);
@@ -129,11 +130,12 @@ public class FileStorageBoolean<U extends BooleanCoder<U>>
 	private void flush() {
 		if (!dirty) return;
 		try {
+			U tmp = type.allocate();
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
 			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.booleanCount()*1);
 			for (long i = 0; i < BUFFERSIZE; i++) {
-				buffer.get(i, type);
-				type.toFile(raf);
+				buffer.get(i, tmp);
+				tmp.toFile(raf);
 			}
 			raf.close();
 		} catch (Exception e) {
@@ -153,11 +155,12 @@ public class FileStorageBoolean<U extends BooleanCoder<U>>
 			}
 			// read file data into array using sizeof()
 			try {
+				U tmp = type.allocate();
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.booleanCount()*1);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					type.toValue(raf);
-					buffer.set(i, type);
+					tmp.toValue(raf);
+					buffer.set(i, tmp);
 				}
 				raf.close();
 			} catch (Exception e) {

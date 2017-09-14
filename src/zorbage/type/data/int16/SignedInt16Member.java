@@ -29,6 +29,7 @@ package zorbage.type.data.int16;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.ShortCoder;
@@ -39,7 +40,7 @@ import zorbage.type.storage.coder.ShortCoder;
  *
  */
 public final class SignedInt16Member
-	implements ShortCoder<SignedInt16Member>
+	implements ShortCoder<SignedInt16Member>, Allocatable<SignedInt16Member>
 {
 
 	private short v;
@@ -101,6 +102,11 @@ public final class SignedInt16Member
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
 		raf.writeShort(v);
+	}
+
+	@Override
+	public SignedInt16Member allocate() {
+		return new SignedInt16Member();
 	}
 
 }

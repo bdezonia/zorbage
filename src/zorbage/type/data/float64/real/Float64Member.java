@@ -29,6 +29,7 @@ package zorbage.type.data.float64.real;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -39,7 +40,7 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class Float64Member
-	implements DoubleCoder<Float64Member>
+	implements DoubleCoder<Float64Member>, Allocatable<Float64Member>
 {
 	private double v;
 	
@@ -103,6 +104,11 @@ public final class Float64Member
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
 		raf.writeDouble(v);
+	}
+
+	@Override
+	public Float64Member allocate() {
+		return new Float64Member();
 	}
 
 }
