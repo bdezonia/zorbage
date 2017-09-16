@@ -14,7 +14,9 @@ Other needs
     int types above as both signed and unsigned
   Add tests
   polynomials
-  group ring, modules
+  gaussian integers
+    are they integers? do they not divide?
+  group ring, modules (and l and r versions)
   functions of a real variable as a vector space
   vector direct product creating tensors
   improve exp() and log() accuracy near 1.0 / - 1.0
@@ -42,12 +44,13 @@ Other needs
   some of the type classes rely on ArrayStorage. break this dependence to support huge math operations
   make vectors, rmodules, matrices use multidimaccessor
   apache commons math4 does a lot of things my code does
-    it doesn't have all of algebra hierarchy and it doesn't have quats and octs
-    and it doesn't handle huge datasets and it might be slow due to lots of memory allocation
+    it doesn't have all of algebra hierarchy and it doesn't have octs or all the
+    data types I support and it doesn't handle huge datasets and it might be slow
+    due to lots of memory allocation
 Sparse vector/matrix/tensor storage
 String constructors for numeric types: how about character stream constructors instead
 Remove much duplication in FileStorage classes when they are done
-Support sparse allocation method
+Support sparse allocation methods
 String constructors of numeric types default to DENSE ARRAY. Maybe allow mem storage params.
 The constructors for storage may duplicate others. Due to time lags this is not necessarily
   threadsafe. Obtain locks.
@@ -63,7 +66,23 @@ do LU decomp algorithm example to test out api: example code can be found on my 
 Add some unsigned types and some bit types like 4 and 12. And 128 bit ints and maybe floats.
 Notice that any type can also implement the ByteCoder interface. But not variable sized?
 FileStorage classes: eliminate duplication
-Add a saveTo(filename) method that will allow one to flush buffer and encode data to a file.
+  Add a saveTo(filename) method that will allow one to flush buffer and encode data to a file.
   Maybe also a constructor from a filename. The ctor would have to calc how big the file is
   in type.elements() and then read the file and append a BUFFER page to the end.
-I should write Imglib test code to do the DFT example and time compare them.
+Write Imglib2 test code to do the DFT example and time compare them.
+ArrayStorage and FileStorage: are their ways to eliminate down to two classes?
+Do i need to look at nio? Do I need to think about streams rather than arrays and RAFs?
+ArrayBit Storage: flesh out
+General ArrayStorage: takes U, at runtime defines what kind of coder it uses
+  and allocates one. Goes from big sizes to little. And ints to floats within that.
+  General algos can then be written. Can do the same for general FileStorage.
+Some types could be bit encodable but also byte encodable with extra bits to byte
+  boundaries set to zero.
+Do bit types store ints/longs internally for math and then & with mask on set and
+  get? Can I write 128 bit math easilmake with two longs and look for overflows and
+  underflows and predictably use result to make correct bit code?
+Do I make all types have constructors from all or some primitive types so I can
+  generic code that can use primitives? Otherwise the code is ugly.
+How do you store matrices? byte encoder and store row and col count first? This
+  is a serialization issue. Should think of how java approaches this.
+Also character stream enocoding. Can use my numeric string format.
