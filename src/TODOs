@@ -72,12 +72,8 @@ FileStorage classes: eliminate duplication
 Write Imglib2 test code to do the DFT example and time compare them.
   Did so. My code is a little more elegant, complete (has complex exp()), and a teensy bit
   faster (1-3 millisecs).
-ArrayStorage and FileStorage: are their ways to eliminate down to two classes?
 Do i need to look at nio? Do I need to think about streams rather than arrays and RAFs?
 ArrayBit Storage: flesh out
-General ArrayStorage: takes U, at runtime defines what kind of coder it uses
-  and allocates one. Goes from big sizes to little. And ints to floats within that.
-  General algos can then be written. Can do the same for general FileStorage.
 Some types could be bit encodable but also byte encodable with extra bits to byte
   boundaries set to zero.
 Do bit types store ints/longs internally for math and then & with mask on set and
