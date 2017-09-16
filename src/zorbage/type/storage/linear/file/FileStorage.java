@@ -68,7 +68,7 @@ public class FileStorage {
 		
 		// TODO: add bitCoder when it is done
 		
-		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
+		throw new IllegalArgumentException("Unsupported type in FileStorage");
 	}
 
 }
