@@ -70,6 +70,8 @@ FileStorage classes: eliminate duplication
   Maybe also a constructor from a filename. The ctor would have to calc how big the file is
   in type.elements() and then read the file and append a BUFFER page to the end.
 Write Imglib2 test code to do the DFT example and time compare them.
+  Did so. My code is a little more elegant, complete (has complex exp()), and a teensy bit
+  faster (1-3 millisecs).
 ArrayStorage and FileStorage: are their ways to eliminate down to two classes?
 Do i need to look at nio? Do I need to think about streams rather than arrays and RAFs?
 ArrayBit Storage: flesh out
@@ -79,10 +81,11 @@ General ArrayStorage: takes U, at runtime defines what kind of coder it uses
 Some types could be bit encodable but also byte encodable with extra bits to byte
   boundaries set to zero.
 Do bit types store ints/longs internally for math and then & with mask on set and
-  get? Can I write 128 bit math easilmake with two longs and look for overflows and
-  underflows and predictably use result to make correct bit code?
+  get? Can I write 128 bit math easily using two longs and look for overflows and
+  underflows and predictably use result to make correct bit code? Maybe imglib2 has
+  this type. Investigate.
 Do I make all types have constructors from all or some primitive types so I can
   generic code that can use primitives? Otherwise the code is ugly.
 How do you store matrices? byte encoder and store row and col count first? This
   is a serialization issue. Should think of how java approaches this.
-Also character stream enocoding. Can use my numeric string format.
+Also character stream encoding. Can use my numeric string format.
