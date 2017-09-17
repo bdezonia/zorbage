@@ -45,6 +45,12 @@ public class ArrayStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
 	static <U> LinearStorage<?,U> allocate(long size, U type) {
+
+		// Best if first: maybe preferred by bit types over other encodings for
+		//   space reasons
+		if (type instanceof BitCoder<?>) {
+			return (LinearStorage<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
+		}
 		if (type instanceof DoubleCoder<?>) {
 			return (LinearStorage<?,U>) new ArrayStorageFloat64(size, (DoubleCoder<U>)type);
 		}
@@ -60,14 +66,13 @@ public class ArrayStorage {
 		if (type instanceof ShortCoder<?>) {
 			return (LinearStorage<?,U>) new ArrayStorageSignedInt16(size, (ShortCoder<U>)type);
 		}
-		if (type instanceof ByteCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder<U>)type);
-		}
 		if (type instanceof BooleanCoder<?>) {
 			return (LinearStorage<?,U>) new ArrayStorageBoolean(size, (BooleanCoder<U>)type);
 		}
-		if (type instanceof BitCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
+		// Best if last as many types might support Bytes by default but prefer
+		// other types for speed
+		if (type instanceof ByteCoder<?>) {
+			return (LinearStorage<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder<U>)type);
 		}
 		
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");

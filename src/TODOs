@@ -119,3 +119,7 @@ RGB could be a BitCoder of three 8 bit values
   or 2 longs in BitCoder impl. How is RGB a numeric type? What algebra
   does it support? Maybe as a test make a 4 bit unsigned type and a 132
   bit unsigned type.
+Make a general Storage allocator that compares size to max ram and allocates
+  to files or arrays as appropriate. If Bit them force array.
+FileStorage bit is possible but slow. It could do file reads and then
+  file writes.

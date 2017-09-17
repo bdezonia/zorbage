@@ -59,14 +59,16 @@ public class FileStorage {
 		if (type instanceof ShortCoder<?>) {
 			return (LinearStorage<?,U>) new FileStorageSignedInt16(size, (ShortCoder<U>)type);
 		}
-		if (type instanceof ByteCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageSignedInt8(size, (ByteCoder<U>)type);
-		}
 		if (type instanceof BooleanCoder<?>) {
 			return (LinearStorage<?,U>) new FileStorageBoolean(size, (BooleanCoder<U>)type);
 		}
+		// Best if close to last as types may define Bytes as a last ditch approach
+		if (type instanceof ByteCoder<?>) {
+			return (LinearStorage<?,U>) new FileStorageSignedInt8(size, (ByteCoder<U>)type);
+		}
 		
-		// TODO: add bitCoder when it is done
+		// TODO: add bitCoder when it is done. It should certainly be last as it will
+		//   do files reads as well as writes and thus will be slowest.
 		
 		throw new IllegalArgumentException("Unsupported type in FileStorage");
 	}
