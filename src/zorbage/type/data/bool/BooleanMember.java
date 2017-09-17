@@ -120,24 +120,20 @@ public final class BooleanMember
 
 	@Override
 	public void toValue(long[] arr, int index, int offset) {
-		synchronized (arr) {
-			final long bucket = arr[index];
-			v = (bucket & (1l << offset)) > 0;
-		}
+		final long bucket = arr[index];
+		v = (bucket & (1l << offset)) > 0;
 	}
 
 	@Override
 	public void toArray(long[] arr, int index, int offset) {
-		synchronized (arr) {
-			long bucket = arr[index];
-			if (v) {
-				bucket |= (1l << offset);
-			}
-			else {
-				bucket &= ~(1l << offset);
-			}
-			arr[index] = bucket;
+		long bucket = arr[index];
+		if (v) {
+			bucket |= (1l << offset);
 		}
+		else {
+			bucket &= ~(1l << offset);
+		}
+		arr[index] = bucket;
 	}
 
 	@Override
