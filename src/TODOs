@@ -9,7 +9,7 @@ Other needs
   Fix and flesh out tensor classes
   Matrices: norm (more than one kind), det, invert
   Add more types:
-    native long, short, byte, float32, plus complex32 and quat32 and oct32
+    float32 and complex32 and quat32 and oct32
     bit: 2, 4, 12, 20, 24, 128
     int types above as both signed and unsigned
   Add tests
@@ -21,67 +21,96 @@ Other needs
   vector direct product creating tensors
   improve exp() and log() accuracy near 1.0 / - 1.0
   big decimal type needed?
-  number bases: instead of zero and unity need faster ways to construct numbers besides strings
+  number bases: instead of zero and unity need faster ways to construct
+    numbers besides strings
   find all TODOs in code and implement
   power<u> might not be in right place in hierarchy
-  power(int, a, b): minimize number of multiplies via recursion. see boost hpp code for quats and octs.
-    implement this for all numeric types. (Later note: i can't see how this is fewer multiplies)
+  power(int, a, b): minimize number of multiplies via recursion. see
+    boost hpp code for quats and octs.
+    implement this for all numeric types. (Later note: i can't see how
+    this is fewer multiplies)
   real/unreal as part of hierarchy. at least unreal.
-  make sure all math ops can safely work if (a,b,c) params collide. use extra tmps and assign().
-  check: IEEE 754 might specify that a num with one component inf and any nan might be considered inf. apache commons math4 copies my implementation.
-    This affects complex, quat, and oct. Now I assume a nan overrides all.
+  make sure all math ops can safely work if (a,b,c) params collide. use
+   extra tmps and assign().
+  check: IEEE 754 might specify that a num with one component inf and
+    any nan might be considered inf. apache commons math4 copies my
+    implementation. This affects complex, quat, and oct. Now I assume a
+    nan overrides all.
   complex numbers: polar constructors
   quotient/remainder as well as div/mod
-  there are numerous kinds of norms. can embed a default impl for some types. but should implement
-    families of reusable norm implementations
+  there are numerous kinds of norms. can embed a default impl for some
+    types. but should implement families of reusable norm implementations
   group hierarchy could be multithreaded
   must finish tensor classes
   must finish octonion classes
   must finish rmodule classes
-  numerical algorithms put in place: matrix algebra, odes, pdes, interpolation, etc.
+  numerical algorithms put in place: matrix algebra, odes, pdes,
+    interpolation, etc.
   underflow avoidance on sqrt calls
   bessel functions, legendre functions, airy functions, others
-  some of the type classes rely on ArrayStorage. break this dependence to support huge math operations
+  some of the type classes rely on ArrayStorage. break this dependence
+    to support huge math operations
   make vectors, rmodules, matrices use multidimaccessor
   apache commons math4 does a lot of things my code does
-    it doesn't have all of algebra hierarchy and it doesn't have octs or all the
-    data types I support and it doesn't handle huge datasets and it might be slow
-    due to lots of memory allocation
+    it doesn't have all of algebra hierarchy and it doesn't have octs or
+    all the data types I support and it doesn't handle huge datasets and
+    it might be slow due to lots of memory allocation
 Sparse vector/matrix/tensor storage
-String constructors for numeric types: how about character stream constructors instead
+String constructors for numeric types: how about character stream
+  constructors instead
 Remove much duplication in FileStorage classes when they are done
 Support sparse allocation methods
-String constructors of numeric types default to DENSE ARRAY. Maybe allow mem storage params.
-The constructors for storage may duplicate others. Due to time lags this is not necessarily
-  threadsafe. Obtain locks.
-use vector/rmodule init() inside their own operations: c.init(targetSize). this is cuz vectors
-  no longer autosize.
-Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost, other fortran classics
-  Boost headers for complex and quats can give valuable design ideas. Need a ref for octs.
-  http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
+String constructors of numeric types default to DENSE ARRAY. Maybe allow
+  mem storage params.
+The constructors for storage may duplicate others. Due to time lags this
+  is not necessarily threadsafe. Obtain locks.
+use vector/rmodule init() inside their own operations: c.init(targetSize).
+  this is cuz vectors no longer autosize.
+Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost,
+  other fortran classics
+  Boost headers for complex and quats can give valuable design ideas.
+    Need a ref for octs.
+    http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
 0^0 should be nan or throw an exception. right now it returns 1.
-rmodules have right and left subtypes: see that AWchap3.pdf file I downloaded
+rmodules have right and left subtypes: see that AWchap3.pdf file I
+  downloaded
 make arraybit support multibit value encodings
-do LU decomp algorithm example to test out api: example code can be found on my desktop
-Add some unsigned types and some bit types like 4 and 12. And 128 bit ints and maybe floats.
-Notice that any type can also implement the ByteCoder interface. But not variable sized?
+do LU decomp algorithm example to test out api: example code can be
+  found on my desktop
+Add some unsigned types and some bit types like 4 and 12. And 128 bit
+  ints and maybe my floating point implementation.
+Notice that any type can also implement the ByteCoder interface. But not
+  variable sized?
 FileStorage classes: eliminate duplication
-  Add a saveTo(filename) method that will allow one to flush buffer and encode data to a file.
-  Maybe also a constructor from a filename. The ctor would have to calc how big the file is
-  in type.elements() and then read the file and append a BUFFER page to the end.
+  Add a saveTo(filename) method that will allow one to flush buffer and
+    encode data to a file.
+  Maybe also a constructor from a filename. The ctor would have to calc
+    how big the file is in type.elements() and then read the file and
+    append a BUFFER page to the end.
 Write Imglib2 test code to do the DFT example and time compare them.
-  Did so. My code is a little more elegant, complete (has complex exp()), and a teensy bit
-  faster (1-3 millisecs).
-Do i need to look at nio? Do I need to think about streams rather than arrays and RAFs?
+  Did so. My code is a little more elegant, is more complete (has
+  complex exp() defined), and a teensy bit faster (1-3 millisecs).
+Do i need to look at nio? Do I need to think about streams rather than
+  arrays and RAFs?
 ArrayBit Storage: flesh out
-Some types could be bit encodable but also byte encodable with extra bits to byte
-  boundaries set to zero.
-Do bit types store ints/longs internally for math and then & with mask on set and
-  get? Can I write 128 bit math easily using two longs and look for overflows and
-  underflows and predictably use result to make correct bit code? Maybe imglib2 has
-  this type. Investigate.
-Do I make all types have constructors from all or some primitive types so I can
-  generic code that can use primitives? Otherwise the code is ugly.
-How do you store matrices? byte encoder and store row and col count first? This
-  is a serialization issue. Should think of how java approaches this.
+Some types could be bit encodable but also byte encodable with extra
+  bits set to zero to byte boundaries.
+Do bit types store ints/longs internally for math and then & with mask
+  on set and get? Can I write 128 bit math easily using two longs and
+  look for overflows and underflows and predictably use result to make
+  correct bit code? Maybe imglib2 has this type. Investigate. Imglib
+  uses BigInteger. This is avoidable. Multiply and divide using my
+  boolean logic book definitions
+Do I make all types have constructors from all or some primitive types
+  so I can make generic code that can use primitives? Otherwise the code
+  is ugly.
+How do you store matrices? byte encoder and store row and col count
+  first? This is a serialization issue. Should think of how java
+  approaches this.
 Also character stream encoding. Can use my numeric string format.
+Support unsigned int types for all defined int types
+Support 128-bit type. Start with a 16 bit two byte type that I can
+ exhaustively
+  test for add, sub, mul, div. Then substitute two longs with appropriate
+  constants. Note that it can a LongCoder type.
+It's becoming more apparent that all types should implement ByteCoder.
