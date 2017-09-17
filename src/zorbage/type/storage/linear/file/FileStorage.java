@@ -43,7 +43,7 @@ import zorbage.type.storage.linear.LinearStorage;
 public class FileStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	static <U> LinearStorage<?,U> allocate(long size, U type) {
+	public static <U> LinearStorage<?,U> allocate(long size, U type) {
 		if (type instanceof DoubleCoder<?>) {
 			return (LinearStorage<?,U>) new FileStorageFloat64(size, (DoubleCoder<U>)type);
 		}

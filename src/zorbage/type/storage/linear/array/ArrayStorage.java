@@ -44,7 +44,7 @@ import zorbage.type.storage.linear.LinearStorage;
 public class ArrayStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	static <U> LinearStorage<?,U> allocate(long size, U type) {
+	public static <U> LinearStorage<?,U> allocate(long size, U type) {
 
 		// Best if first: maybe preferred by bit types over other encodings for
 		//   space reasons
