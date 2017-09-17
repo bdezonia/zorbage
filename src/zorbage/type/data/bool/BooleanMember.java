@@ -119,28 +119,24 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void toValue(long[] arr, int index) {
+	public void toValue(long[] arr, int index, int offset) {
 		synchronized (arr) {
-			final int bIndex = index / 64; // storage limited to Integer.MAX_VALUE size (not * 64)
-			final int shift = index % 64;
-			long bucket = arr[bIndex];
-			v = (bucket & (1l << shift)) > 0;
+			final long bucket = arr[index];
+			v = (bucket & (1l << offset)) > 0;
 		}
 	}
 
 	@Override
-	public void toArray(long[] arr, int index) {
+	public void toArray(long[] arr, int index, int offset) {
 		synchronized (arr) {
-			final int bIndex = index / 64; // storage limited to Integer.MAX_VALUE size (not * 64)
-			final int shift = index % 64;
-			long bucket = arr[bIndex];
+			long bucket = arr[index];
 			if (v) {
-				bucket |= (1l << shift);
+				bucket |= (1l << offset);
 			}
 			else {
-				bucket &= ~(1l << shift);
+				bucket &= ~(1l << offset);
 			}
-			arr[bIndex] = bucket;
+			arr[index] = bucket;
 		}
 	}
 

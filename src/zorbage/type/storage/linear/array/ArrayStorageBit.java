@@ -26,7 +26,8 @@
  */
 package zorbage.type.storage.linear.array;
 
-import zorbage.type.data.bool.BooleanMember;
+import zorbage.type.ctor.Allocatable;
+import zorbage.type.storage.coder.BitCoder;
 import zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -35,49 +36,39 @@ import zorbage.type.storage.linear.LinearStorage;
  *
  * @param <U>
  */
-public class ArrayStorageBit
-	implements LinearStorage<ArrayStorageBit,BooleanMember>
+public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
+	implements LinearStorage<ArrayStorageBit<U>,U>
 {
-
+	private final U type;
 	private final long[] data;
 	private final long size;
 	
-	public ArrayStorageBit(long size) {
+	public ArrayStorageBit(long size, U type) {
 	
+		final long totalBits = 64l * Integer.MAX_VALUE / type.bitCount();
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
-		if (size > 64l * Integer.MAX_VALUE)
+		if (size > totalBits)
 			throw new IllegalArgumentException("ArrayStorageBit can handle at most " + (64l * Integer.MAX_VALUE) + " bits");
-		int count = (int)(size / 64);
-		if (count % 64 > 0) count += 1;
+		int count = (int)(totalBits / 64);
+		if (totalBits % 64 > 0) count += 1;
+		this.type = type.allocate();
 		this.data = new long[count];
 		this.size = size;
 	}
 
 	@Override
-	public void set(long index, BooleanMember value) {
-		synchronized (data) {
-			final int idx = (int)index / 64;
-			long bucket = data[idx];
-			final long mask = 1l << (index % 64);
-			if (value.v()) {
-				bucket = bucket | mask;
-			}
-			else {
-				bucket = bucket & ~mask;
-			}
-			data[idx] = bucket;
-		}
+	public void set(long index, U value) {
+		final int bucketStart = (int)(index * type.bitCount() / 64l);
+		final int bucketOffset = (int)((index * type.bitCount()) % 64l);
+		value.toArray(data, bucketStart, bucketOffset);
 	}
 
 	@Override
-	public void get(long index, BooleanMember value) {
-		synchronized (data) {
-			final long bucket = data[(int)index / 64];
-			final long mask = 1l << (index % 64);
-			final long bit = bucket & mask;
-			value.setV(bit > 0);
-		}
+	public void get(long index, U value) {
+		final int bucketStart = (int)(index * type.bitCount() / 64l);
+		final int bucketOffset = (int)((index * type.bitCount()) % 64l);
+		value.toValue(data, bucketStart, bucketOffset);
 	}
 	
 	@Override
@@ -86,8 +77,8 @@ public class ArrayStorageBit
 	}
 
 	@Override
-	public ArrayStorageBit duplicate() {
-		ArrayStorageBit s = new ArrayStorageBit(size());
+	public ArrayStorageBit<U> duplicate() {
+		ArrayStorageBit<U> s = new ArrayStorageBit<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

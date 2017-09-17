@@ -114,3 +114,4 @@ Support 128-bit type. Start with a 16 bit two byte type that I can
   test for add, sub, mul, div. Then substitute two longs with appropriate
   constants. Note that it can a LongCoder type.
 It's becoming more apparent that all types should implement ByteCoder.
+RGB could be a BitCoder of three 8 bit values
