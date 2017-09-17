@@ -59,8 +59,9 @@ public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
 
 	@Override
 	public void set(long index, U value) {
-		final int bucketStart = (int)(index * type.bitCount() / 64l);
-		final int bucketOffset = (int)((index * type.bitCount()) % 64l);
+		final long bitIndex = index * type.bitCount();
+		final int bucketStart = (int)(bitIndex / 64);
+		final int bucketOffset = (int)(bitIndex % 64);
 		synchronized (data) {
 			value.toArray(data, bucketStart, bucketOffset);
 		}
@@ -68,8 +69,9 @@ public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
-		final int bucketStart = (int)(index * type.bitCount() / 64l);
-		final int bucketOffset = (int)((index * type.bitCount()) % 64l);
+		final long bitIndex = index * type.bitCount();
+		final int bucketStart = (int)(bitIndex / 64);
+		final int bucketOffset = (int)(bitIndex % 64);
 		synchronized (data) {
 			value.toValue(data, bucketStart, bucketOffset);
 		}
