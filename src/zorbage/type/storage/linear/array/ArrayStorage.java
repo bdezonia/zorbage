@@ -26,6 +26,7 @@
  */
 package zorbage.type.storage.linear.array;
 
+import zorbage.type.storage.coder.BitCoder;
 import zorbage.type.storage.coder.BooleanCoder;
 import zorbage.type.storage.coder.ByteCoder;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -65,8 +66,9 @@ public class ArrayStorage {
 		if (type instanceof BooleanCoder<?>) {
 			return (LinearStorage<?,U>) new ArrayStorageBoolean(size, (BooleanCoder<U>)type);
 		}
-		
-		// TODO: add bitCoder when it is done
+		if (type instanceof BitCoder<?>) {
+			return (LinearStorage<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
+		}
 		
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
 	}

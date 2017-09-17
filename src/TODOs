@@ -115,3 +115,7 @@ Support 128-bit type. Start with a 16 bit two byte type that I can
   constants. Note that it can a LongCoder type.
 It's becoming more apparent that all types should implement ByteCoder.
 RGB could be a BitCoder of three 8 bit values
+  This might be a good test of BitCoder. BitCount = 24. Read or write 1
+  or 2 longs in BitCoder impl. How is RGB a numeric type? What algebra
+  does it support? Maybe as a test make a 4 bit unsigned type and a 132
+  bit unsigned type.
