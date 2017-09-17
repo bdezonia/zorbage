@@ -41,6 +41,5 @@ public class Storage {
 			return FileStorage.allocate(numElements, type);
 		else
 			return ArrayStorage.allocate(numElements, type);
-		}
 	}
 }
