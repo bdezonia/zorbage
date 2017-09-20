@@ -128,4 +128,4 @@ Types should specify a preferred order of encoding choices so storage
   allocation is optimal. Then types can implement a ton of coder
   interfaces.
 Does matrix unity update items in a slow way for file based storage?
-  
+Test that the speed of sinAndCos and sinhAndTanh is worthwhile for actual data.
