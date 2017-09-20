@@ -393,12 +393,32 @@ public class ComplexFloat64Group
 	}
 
 	@Override
+	public void sinAndCos(ComplexFloat64Member a, ComplexFloat64Member s, ComplexFloat64Member c) {
+		ComplexFloat64Member IA = new ComplexFloat64Member();
+		ComplexFloat64Member minusIA = new ComplexFloat64Member();
+		ComplexFloat64Member expIA = new ComplexFloat64Member();
+		ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member diff = new ComplexFloat64Member();
+
+		multiply(a, I, IA);
+		multiply(a, MINUS_I, minusIA);
+		exp(IA, expIA);
+		exp(minusIA, expMinusIA);
+		
+		subtract(expIA, expMinusIA, diff);
+		divide(diff, TWO_I, s);
+
+		add(expIA, expMinusIA, sum);
+		divide(sum, TWO, c);
+	}
+	
+	@Override
 	public void tan(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member sin = new ComplexFloat64Member();
 		ComplexFloat64Member cos = new ComplexFloat64Member();
 
-		sin(a, sin);
-		cos(a, cos);
+		sinAndCos(a, sin, cos);
 		divide(sin, cos, b);
 	}
 

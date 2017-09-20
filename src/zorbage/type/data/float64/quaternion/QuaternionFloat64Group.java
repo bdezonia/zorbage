@@ -415,12 +415,18 @@ public class QuaternionFloat64Group
 	}
 
 	@Override
+	public void sinAndCos(QuaternionFloat64Member a, QuaternionFloat64Member s, QuaternionFloat64Member c) {
+		// TODO : implement a speedup
+		sin(a,s);
+		cos(a,c);
+	}
+	
+	@Override
 	public void tan(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		QuaternionFloat64Member n = new QuaternionFloat64Member();
-		QuaternionFloat64Member d = new QuaternionFloat64Member();
-		sin(a, n);
-		cos(a, d);
-		divide(n, d, b);
+		QuaternionFloat64Member sin = new QuaternionFloat64Member();
+		QuaternionFloat64Member cos = new QuaternionFloat64Member();
+		sinAndCos(a, sin, cos);
+		divide(sin, cos, b);
 	}
 
 	@Override

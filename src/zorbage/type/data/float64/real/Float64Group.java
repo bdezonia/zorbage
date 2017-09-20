@@ -69,6 +69,7 @@ public class Float64Group
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
 	private static final double taylor_n_bound = Math.sqrt(taylor_2_bound);
+	private static final double TWO_PI = Math.PI * 2;
 	
 	public Float64Group() {
 	}
@@ -238,6 +239,19 @@ public class Float64Group
 	@Override
 	public void sin(Float64Member a, Float64Member b) {
 		b.setV( Math.sin(a.v()) );
+	}
+
+	@Override
+	public void sinAndCos(Float64Member a, Float64Member s, Float64Member c) {
+		double arg = a.v();
+		while (arg < 0) arg += TWO_PI;
+		while (arg >= TWO_PI) arg += TWO_PI;
+		double cosine = Math.cos(arg);
+		double sine = Math.sqrt(1 - cosine * cosine);
+		if (arg > Math.PI)
+			sine = -sine;
+		s.setV( sine );
+		c.setV( cosine );
 	}
 
 	@Override

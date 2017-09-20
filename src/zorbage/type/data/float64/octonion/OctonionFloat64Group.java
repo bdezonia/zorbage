@@ -624,12 +624,18 @@ public class OctonionFloat64Group
 	}
 
 	@Override
+	public void sinAndCos(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
+		// TODO : implement a speedup
+		sin(a,s);
+		cos(a,c);
+	}
+	
+	@Override
 	public void tan(OctonionFloat64Member a, OctonionFloat64Member b) {
-		OctonionFloat64Member n = new OctonionFloat64Member();
-		OctonionFloat64Member d = new OctonionFloat64Member();
-		sin(a, n);
-		cos(a, d);
-		divide(n, d, b);
+		OctonionFloat64Member sin = new OctonionFloat64Member();
+		OctonionFloat64Member cos = new OctonionFloat64Member();
+		sinAndCos(a, sin, cos);
+		divide(sin, cos, b);
 	}
 
 	@Override
