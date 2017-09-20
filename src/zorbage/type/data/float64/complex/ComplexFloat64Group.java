@@ -372,6 +372,7 @@ public class ComplexFloat64Group
 		multiply(a, MINUS_I, minusIA);
 		exp(IA, expIA);
 		exp(minusIA, expMinusIA);
+		
 		subtract(expIA, expMinusIA, diff);
 		divide(diff, TWO_I, b);
 	}
@@ -388,6 +389,7 @@ public class ComplexFloat64Group
 		multiply(a, MINUS_I, minusIA);
 		exp(IA, expIA);
 		exp(minusIA, expMinusIA);
+		
 		add(expIA, expMinusIA, sum);
 		divide(sum, TWO, b);
 	}
@@ -456,6 +458,7 @@ public class ComplexFloat64Group
 		exp(a, expA);
 		multiply(a, MINUS_ONE, minusA);
 		exp(minusA, expMinusA);
+		
 		subtract(expA, expMinusA, diff);
 		divide(diff, TWO, b);
 	}
@@ -470,17 +473,35 @@ public class ComplexFloat64Group
 		exp(a, expA);
 		multiply(a, MINUS_ONE, minusA);
 		exp(minusA, expMinusA);
+		
 		add(expA, expMinusA, sum);
 		divide(sum, TWO, b);
 	}
 
 	@Override
+	public void sinhAndCosh(ComplexFloat64Member a, ComplexFloat64Member s, ComplexFloat64Member c) {
+		ComplexFloat64Member expA = new ComplexFloat64Member();
+		ComplexFloat64Member minusA = new ComplexFloat64Member();
+		ComplexFloat64Member expMinusA = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+
+		exp(a, expA);
+		multiply(a, MINUS_ONE, minusA);
+		exp(minusA, expMinusA);
+		
+		subtract(expA, expMinusA, sum);
+		divide(sum, TWO, s);
+
+		add(expA, expMinusA, sum);
+		divide(sum, TWO, c);
+	}
+	
+	@Override
 	public void tanh(ComplexFloat64Member a, ComplexFloat64Member b) {
 		ComplexFloat64Member sinh = new ComplexFloat64Member();
 		ComplexFloat64Member cosh = new ComplexFloat64Member();
 
-		sinh(a, sinh);
-		cosh(a, cosh);
+		sinhAndCosh(a, sinh, cosh);
 		divide(sinh, cosh, b);
 	}
 

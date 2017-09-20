@@ -560,9 +560,11 @@ public class OctonionFloat64Group
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
 		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+	
 		negate(a, negA);
 		exp(a, tmp1);
 		exp(negA, tmp2);
+		
 		subtract(tmp1, tmp2, sum);
 		divide(sum, TWO, b);
 	}
@@ -573,20 +575,39 @@ public class OctonionFloat64Group
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
 		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+		
 		negate(a, negA);
 		exp(a, tmp1);
 		exp(negA, tmp2);
+		
 		add(tmp1, tmp2, sum);
 		divide(sum, TWO, b);
     }
 
 	@Override
+	public void sinhAndCosh(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
+		OctonionFloat64Member negA = new OctonionFloat64Member();
+		OctonionFloat64Member sum = new OctonionFloat64Member();
+		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
+		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+
+		negate(a, negA);
+		exp(a, tmp1);
+		exp(negA, tmp2);
+
+		subtract(tmp1, tmp2, sum);
+		divide(sum, TWO, s);
+
+		add(tmp1, tmp2, sum);
+		divide(sum, TWO, c);
+	}
+	
+	@Override
 	public void tanh(OctonionFloat64Member a, OctonionFloat64Member b) {
-		OctonionFloat64Member n = new OctonionFloat64Member();
-		OctonionFloat64Member d = new OctonionFloat64Member();
-		sinh(a, n);
-		cosh(a, d);
-		divide(n, d, b);
+		OctonionFloat64Member s = new OctonionFloat64Member();
+		OctonionFloat64Member c = new OctonionFloat64Member();
+		sinhAndCosh(a, s, c);
+		divide(s, c, b);
 	}
 
 	@Override

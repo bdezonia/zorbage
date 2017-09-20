@@ -34,6 +34,7 @@ package zorbage.type.algebra;
 public interface Hyperbolic<U> {
 	void sinh(U a, U b);
 	void cosh(U a, U b);
+	void sinhAndCosh(U a, U s, U c);
 	void tanh(U a, U b);
 	//void csch(U a, U b);
 	//void sech(U a, U b);

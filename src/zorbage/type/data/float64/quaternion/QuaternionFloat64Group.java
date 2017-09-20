@@ -359,9 +359,11 @@ public class QuaternionFloat64Group
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+
 		negate(a, negA);
 		exp(a, tmp1);
 		exp(negA, tmp2);
+		
 		subtract(tmp1, tmp2, sum);
 		divide(sum, TWO, b);
 	}
@@ -372,20 +374,39 @@ public class QuaternionFloat64Group
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+		
 		negate(a, negA);
 		exp(a, tmp1);
 		exp(negA, tmp2);
+		
 		add(tmp1, tmp2, sum);
 		divide(sum, TWO, b);
     }
 
 	@Override
+	public void sinhAndCosh(QuaternionFloat64Member a, QuaternionFloat64Member s, QuaternionFloat64Member c) {
+		QuaternionFloat64Member negA = new QuaternionFloat64Member();
+		QuaternionFloat64Member sum = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+		
+		negate(a, negA);
+		exp(a, tmp1);
+		exp(negA, tmp2);
+		
+		subtract(tmp1, tmp2, sum);
+		divide(sum, TWO, s);
+
+		add(tmp1, tmp2, sum);
+		divide(sum, TWO, c);
+	}
+	
+	@Override
 	public void tanh(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		QuaternionFloat64Member n = new QuaternionFloat64Member();
-		QuaternionFloat64Member d = new QuaternionFloat64Member();
-		sinh(a, n);
-		cosh(a, d);
-		divide(n, d, b);
+		QuaternionFloat64Member s = new QuaternionFloat64Member();
+		QuaternionFloat64Member c = new QuaternionFloat64Member();
+		sinhAndCosh(a, s, c);
+		divide(s, c, b);
 	}
 
 	@Override

@@ -291,6 +291,13 @@ public class Float64Group
 	}
 
 	@Override
+	public void sinhAndCosh(Float64Member a, Float64Member s, Float64Member c) {
+		// YODO - is there a speedup?
+		sinh(a, s);
+		cosh(a, c);
+	}
+	
+	@Override
 	public void tanh(Float64Member a, Float64Member b) {
 		b.setV( Math.tanh(a.v()) );
 	}
