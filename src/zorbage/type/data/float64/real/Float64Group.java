@@ -246,8 +246,14 @@ public class Float64Group
 		double arg = a.v() % TWO_PI;  // this might be faster than some while (arg < 0 || arg >= TWO_PI) loops
 		double cosine = Math.cos(arg);
 		double sine = Math.sqrt(1 - cosine * cosine);
-		if (arg > Math.PI)
-			sine = -sine;
+		if ( arg < 0) {
+			if (arg < -Math.PI)
+				sine = -sine;
+		}
+		else { // arg >= 0
+			if (arg > Math.PI)
+				sine = -sine;
+		}
 		s.setV( sine );
 		c.setV( cosine );
 	}
