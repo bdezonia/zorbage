@@ -243,9 +243,7 @@ public class Float64Group
 
 	@Override
 	public void sinAndCos(Float64Member a, Float64Member s, Float64Member c) {
-		double arg = a.v();
-		while (arg < 0) arg += TWO_PI;
-		while (arg >= TWO_PI) arg -= TWO_PI;
+		double arg = a.v() % TWO_PI;  // this might be faster than some while (arg < 0 || arg >= TWO_PI) loops
 		double cosine = Math.cos(arg);
 		double sine = Math.sqrt(1 - cosine * cosine);
 		if (arg > Math.PI)
