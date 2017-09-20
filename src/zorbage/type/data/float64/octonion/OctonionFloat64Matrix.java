@@ -386,10 +386,13 @@ public class OctonionFloat64Matrix
 	@Override
 	public void unity(OctonionFloat64MatrixMember a) {
 		final OctonionFloat64Member one = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
-		zero(a);
-		final long minDim = Math.min(a.rows(), a.cols());
-		for (long i = 0; i < minDim; i++) {
-			a.setV(i, i, one);
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
+				if (r == c)
+					a.setV(r, c, one);
+				else
+					a.setV(r, c, ZERO);
+			}
 		}
 	}
 

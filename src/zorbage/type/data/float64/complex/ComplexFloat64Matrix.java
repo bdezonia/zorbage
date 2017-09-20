@@ -387,10 +387,13 @@ public class ComplexFloat64Matrix
 	@Override
 	public void unity(ComplexFloat64MatrixMember a) {
 		final ComplexFloat64Member one = new ComplexFloat64Member(1, 0);
-		zero(a);
-		final long minDim = Math.min(a.rows(), a.cols());
-		for (long i = 0; i < minDim; i++) {
-			a.setV(i, i, one);
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
+				if (r == c)
+					a.setV(r, c, one);
+				else
+					a.setV(r, c, ZERO);
+			}
 		}
 	}
 
