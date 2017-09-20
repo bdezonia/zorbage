@@ -124,3 +124,8 @@ FileStorage bit is possible but slow. It could do file reads and then
 LUDecomposition for multiple types: (float, comp, quat, oct)
   This would require a bool within(U,U) method. Also maybe not possible
   because it requires an Ordered relation?
+Types should specify a preferred order of encoding choices so storage
+  allocation is optimal. Then types can implement a ton of coder
+  interfaces.
+Does matrix unity update items in a slow way for file based storage?
+  
