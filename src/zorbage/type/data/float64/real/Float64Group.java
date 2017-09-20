@@ -292,7 +292,7 @@ public class Float64Group
 
 	@Override
 	public void sinhAndCosh(Float64Member a, Float64Member s, Float64Member c) {
-		// YODO - is there a speedup?
+		// TODO - is there a speedup?
 		sinh(a, s);
 		cosh(a, c);
 	}
