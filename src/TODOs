@@ -131,8 +131,13 @@ Test that the speed of sinAndCos and sinhAndTanh is worthwhile for actual data.
   Also test their accuracy (i.e. sinAndcos might round a little)
 Resurrect PointSet ideas? Useful for multidim access.
 Resurrect Function ideas? Useful for TextSpecified PointSets and Functions
-Implement other logical sampling methods: intersection, difference, complement?
+Implement SamplingComplement code? Need bounds? Need universal and empty?
 add bounds for samplings? translate and maybe scale and maybe rotate them?
 Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
   LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
+Use real samplings to sample a real region and integer samplings to sample a
+  integer region
+Regions likely need bounds. Samplings might not.
+Fix all the unfinished contains() methods in real grid sampling code
+Revisit all todos noted in sampling code
