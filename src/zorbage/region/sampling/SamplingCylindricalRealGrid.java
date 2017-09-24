@@ -81,7 +81,7 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 		
 		@Override
 		public boolean hasNext() {
-			return tr < rCount || ttheta < thetaCount || tz < zCount;
+			return !(tr == rCount-1 && ttheta == thetaCount-1 && tz == zCount-1);
 		}
 
 		// TODO will the origin be counted multiple times?

@@ -76,7 +76,7 @@ public class SamplingCartesianIntegerGrid implements Sampling<IntegerIndex> {
 		
 		private Iterator() {
 			index = minPt.duplicate();
-			index.set(0, index.get(0) - 1);
+			index.set(0, index.get(0) - 1); // Note: this will fail if index.get(0) == Long.MIN_VALUE
 		}
 		
 		@Override

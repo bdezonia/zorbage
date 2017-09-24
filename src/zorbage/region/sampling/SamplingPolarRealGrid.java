@@ -76,7 +76,7 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 		
 		@Override
 		public boolean hasNext() {
-			return tr < rCount || ttheta < thetaCount;
+			return !(tr == rCount-1 && ttheta == thetaCount-1);
 		}
 
 		// TODO will the origin be counted multiple times?
