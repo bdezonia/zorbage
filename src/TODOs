@@ -128,6 +128,9 @@ Types should specify a preferred order of encoding choices so storage
   allocation is optimal. Then types can implement a ton of coder
   interfaces.
 Test that the speed of sinAndCos and sinhAndTanh is worthwhile for actual data.
-  Also test their accuracy (i.e. sinAndcos night round a little)
+  Also test their accuracy (i.e. sinAndcos might round a little)
 Resurrect PointSet ideas? Useful for multidim access.
 Resurrect Function ideas? Useful for TextSpecified PointSets and Functions
+Implement spherical grid sampling and cylindrical grid sampling
+Implement other logical sampling methods: intersection, difference, complement?
+add bounds for samplings? translate and maybe scale and maybe rotate them?

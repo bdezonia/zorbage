@@ -31,7 +31,7 @@ package zorbage.region.sampling;
  * @author Barry DeZonia
  *
  */
-public class SamplingPolarRealGrid implements Sampling<double[]> {
+public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 
 	private final double r, dr, theta, dtheta;
 	private final int rCount, thetaCount;
@@ -53,18 +53,18 @@ public class SamplingPolarRealGrid implements Sampling<double[]> {
 	}
 
 	@Override
-	public boolean contains(double[] samplePoint) {
-		if (samplePoint.length != 2)
+	public boolean contains(RealIndex samplePoint) {
+		if (samplePoint.numDimensions() != 2)
 			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public SamplingIterator<double[]> iterator() {
+	public SamplingIterator<RealIndex> iterator() {
 		return new Iterator();
 	}
 	
-	private class Iterator implements SamplingIterator<double[]> {
+	private class Iterator implements SamplingIterator<RealIndex> {
 
 		private int tr;
 		private int ttheta;
@@ -82,8 +82,8 @@ public class SamplingPolarRealGrid implements Sampling<double[]> {
 		// TODO will the origin be counted multiple times?
 		
 		@Override
-		public void next(double[] value) {
-			if (value.length != 2)
+		public void next(RealIndex value) {
+			if (value.numDimensions() != 2)
 				throw new IllegalArgumentException("value does not have correct dimensions");
 			tr++;
 			if (tr >= rCount) {
@@ -94,8 +94,8 @@ public class SamplingPolarRealGrid implements Sampling<double[]> {
 			}
 			final double radius = r + tr*dr;
 			final double angle = theta + ttheta*dtheta;
-			value[0] = Math.cos(angle) * radius;  // xcoord
-			value[1] = Math.sin(angle) * radius;  // ycoord
+			value.set(0, Math.cos(angle) * radius);  // xcoord
+			value.set(1, Math.sin(angle) * radius);  // ycoord
 		}
 		
 	}
