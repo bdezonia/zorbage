@@ -40,7 +40,7 @@ public class SamplingUnion<T extends Duplicatable<T> & Dimensioned & Settable<T>
 	
 	public SamplingUnion(Sampling<T> first, Sampling<T> second, T example) {
 		if (first.numDimensions() != second.numDimensions())
-			throw new IllegalArgumentException("num dimensions do not match in OrSampling");
+			throw new IllegalArgumentException("num dimensions do not match in SamplingUnion");
 		if (first.numDimensions() != example.numDimensions())
 			throw new IllegalArgumentException("example index does not have correct dimensions");
 		this.first = first;

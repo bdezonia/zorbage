@@ -32,15 +32,15 @@ package zorbage.region.sampling;
  *
  * @param <T>
  */
-public class SamplingIntersection<T extends Duplicatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
+public class SamplingDifference<T extends Duplicatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
 
 	private final Sampling<T> first;
 	private final Sampling<T> second;
 	private final T example;
 	
-	public SamplingIntersection(Sampling<T> first, Sampling<T> second, T example) {
+	public SamplingDifference(Sampling<T> first, Sampling<T> second, T example) {
 		if (first.numDimensions() != second.numDimensions())
-			throw new IllegalArgumentException("num dimensions do not match in SamplingIntersection");
+			throw new IllegalArgumentException("num dimensions do not match in SamplingDifference");
 		if (first.numDimensions() != example.numDimensions())
 			throw new IllegalArgumentException("example index does not have correct dimensions");
 		this.first = first;
@@ -55,7 +55,7 @@ public class SamplingIntersection<T extends Duplicatable<T> & Dimensioned & Sett
 
 	@Override
 	public boolean contains(T samplePoint) {
-		return first.contains(samplePoint) && second.contains(samplePoint);
+		return first.contains(samplePoint) && !second.contains(samplePoint);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class SamplingIntersection<T extends Duplicatable<T> & Dimensioned & Sett
 		private boolean positionToNext() {
 			while (iter1.hasNext()) {
 				iter1.next(index);
-				if (second.contains(index)) {
+				if (!second.contains(index)) {
 					cached = true;
 					return true;
 				}
