@@ -24,61 +24,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.util;
+package zorbage.region;
+
+import zorbage.region.sampling.RealIndex;
+import zorbage.util.RealUtils;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RealUtils {
+public class RegionCircle implements Region<RealIndex> {
 
-	private RealUtils() { }
+	private final double cx, cy, radius;
 	
-	public static boolean near(float f1, float f2, float tol) {
-		if (tol < 0) throw new IllegalArgumentException("negative tolerance given");
-		return Math.abs(f1-f2) <= tol;
-	}
-
-	public static boolean near(double f1, double f2, double tol) {
-		if (tol < 0) throw new IllegalArgumentException("negative tolerance given");
-		return Math.abs(f1-f2) <= tol;
+	public RegionCircle(double cx, double cy, double radius) {
+		this.cx = cx;
+		this.cy = cy;
+		this.radius = radius;
 	}
 	
-	public static double distance1d(double x1, double x2) {
-		return Math.abs(x2-x1);
+	@Override
+	public int numDimensions() {
+		return 2;
 	}
 
-	// TODO: protect from underflow
-	
-	public static double distance2d(double x1, double y1, double x2, double y2) {
-		double dx = Math.abs(x2 - x1);
-		double dy = Math.abs(y2 - y1);
-		double max = Math.max(dx, dy);
-		if (max == 0) return 0;
-		dx /= max;
-		dy /= max;
-		return max * Math.sqrt(dx*dx + dy*dy);
+	@Override
+	public boolean contains(RealIndex samplePoint) {
+		if (samplePoint.numDimensions() != 2)
+			throw new IllegalArgumentException("incorrect dimensions of sample point in RegionCircle");
+		return RealUtils.distance2d(samplePoint.get(0), samplePoint.get(1), cx, cy) <= radius;
 	}
 
-	// TODO: protect from underflow
-	
-	public static double distance3d(double x1, double y1, double z1, double x2, double y2, double z2) {
-		double dx = Math.abs(x2 - x1);
-		double dy = Math.abs(y2 - y1);
-		double dz = Math.abs(z2 - z1);
-		double max = Math.max(dx, dy);
-		max = Math.max(max, dz);
-		if (max == 0) return 0;
-		dx /= max;
-		dy /= max;
-		dz /= max;
-		return max * Math.sqrt(dx*dx + dy*dy + dz*dz);
-	}
-
-	// TODO: protect from underflow
-	
-	public static double distanceNd(double[] p1, double[] p2) {
-		throw new UnsupportedOperationException("TODO");
-	}
 }

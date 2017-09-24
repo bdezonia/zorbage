@@ -136,8 +136,6 @@ add bounds for samplings? translate and maybe scale and maybe rotate them?
 Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
   LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
-Use real samplings to sample a real region and integer samplings to sample a
-  integer region
 Regions likely need bounds. Samplings might not.
 Fix all the unfinished contains() methods in real grid sampling code
 Revisit all todos noted in sampling code
@@ -146,3 +144,4 @@ Also make Gettable like Settable but opposite
 Make types implement settable and gettable
 Make some types implement Dimensioned
 Coalesce Duplicatable and Allocatable maybe. Or one extends the other.
+How do you using Samplings with Regions. Should be able to sample a region easily.

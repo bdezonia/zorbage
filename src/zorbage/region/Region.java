@@ -24,61 +24,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.util;
+package zorbage.region;
+
+import zorbage.region.sampling.Dimensioned;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  */
-public class RealUtils {
-
-	private RealUtils() { }
+public interface Region<T> extends Dimensioned {
 	
-	public static boolean near(float f1, float f2, float tol) {
-		if (tol < 0) throw new IllegalArgumentException("negative tolerance given");
-		return Math.abs(f1-f2) <= tol;
-	}
-
-	public static boolean near(double f1, double f2, double tol) {
-		if (tol < 0) throw new IllegalArgumentException("negative tolerance given");
-		return Math.abs(f1-f2) <= tol;
-	}
+	boolean contains(T samplePoint);
 	
-	public static double distance1d(double x1, double x2) {
-		return Math.abs(x2-x1);
-	}
-
-	// TODO: protect from underflow
-	
-	public static double distance2d(double x1, double y1, double x2, double y2) {
-		double dx = Math.abs(x2 - x1);
-		double dy = Math.abs(y2 - y1);
-		double max = Math.max(dx, dy);
-		if (max == 0) return 0;
-		dx /= max;
-		dy /= max;
-		return max * Math.sqrt(dx*dx + dy*dy);
-	}
-
-	// TODO: protect from underflow
-	
-	public static double distance3d(double x1, double y1, double z1, double x2, double y2, double z2) {
-		double dx = Math.abs(x2 - x1);
-		double dy = Math.abs(y2 - y1);
-		double dz = Math.abs(z2 - z1);
-		double max = Math.max(dx, dy);
-		max = Math.max(max, dz);
-		if (max == 0) return 0;
-		dx /= max;
-		dy /= max;
-		dz /= max;
-		return max * Math.sqrt(dx*dx + dy*dy + dz*dz);
-	}
-
-	// TODO: protect from underflow
-	
-	public static double distanceNd(double[] p1, double[] p2) {
-		throw new UnsupportedOperationException("TODO");
-	}
 }
