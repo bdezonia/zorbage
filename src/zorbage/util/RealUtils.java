@@ -78,7 +78,25 @@ public class RealUtils {
 
 	// TODO: protect from underflow
 	
-	public static double distanceNd(double[] p1, double[] p2) {
-		throw new UnsupportedOperationException("TODO");
+	public static double distanceNd(double[] p1, double[] p2, double[] scratchSpace) {
+		if (p1.length != p2.length || p1.length != scratchSpace.length)
+			throw new IllegalArgumentException("mismatched dimenions in distanceNd()");
+		if (p1.length == 0) return 0;
+		for (int i = 0; i < p1.length; i++) {
+			scratchSpace[i] = Math.abs(p2[i] - p1[i]);
+		}
+		double max = scratchSpace[0];
+		for (int i = 1; i < p1.length; i++) {
+			max = Math.max(max, scratchSpace[i]);
+		}
+		if (max == 0) return 0;
+		for (int i = 0; i < p1.length; i++) {
+			scratchSpace[i] /= max;
+		}
+		double sumSq = 0;
+		for (int i = 0; i < p1.length; i++) {
+			sumSq += scratchSpace[i] * scratchSpace[i];
+		}
+		return max * Math.sqrt(sumSq);
 	}
 }
