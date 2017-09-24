@@ -36,7 +36,11 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 	private final double r, dr, theta, dtheta, z, dz;
 	private final int rCount, thetaCount, zCount;
 	
-	public SamplingCylindricalRealGrid(double r, double dr, int rCount, double theta, double dtheta, int thetaCount, double z, double dz, int zCount) {
+	public SamplingCylindricalRealGrid(
+			double r, double dr, int rCount,
+			double theta, double dtheta, int thetaCount,
+			double z, double dz, int zCount)
+	{
 		this.r = r;
 		this.dr = dr;
 		this.theta = theta;
@@ -103,7 +107,7 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 			}
 			final double radius = r + tr*dr;
 			final double angle = theta + ttheta*dtheta;
-			final double height = z +tz*dz;
+			final double height = z + tz*dz;
 			value.set(0, Math.cos(angle) * radius);  // xcoord
 			value.set(1, Math.sin(angle) * radius);  // ycoord
 			value.set(2, height);  // zcoord

@@ -36,7 +36,10 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 	private final double r, dr, theta, dtheta;
 	private final int rCount, thetaCount;
 	
-	public SamplingPolarRealGrid(double r, double dr, int rCount, double theta, double dtheta, int thetaCount) {
+	public SamplingPolarRealGrid(
+			double r, double dr, int rCount,
+			double theta, double dtheta, int thetaCount)
+	{
 		this.r = r;
 		this.dr = dr;
 		this.theta = theta;

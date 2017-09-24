@@ -75,8 +75,11 @@ public class SamplingCartesianIntegerGrid implements Sampling<IntegerIndex> {
 		private final IntegerIndex index;
 		
 		private Iterator() {
+			// Note: the last line in this method will fail if coord[0] == Long.MIN_VALUE
+			if (minPt.get(0) == Long.MIN_VALUE)
+				throw new IllegalArgumentException("cannot handle min point at Long.MIN_VALUE");
 			index = minPt.duplicate();
-			index.set(0, index.get(0) - 1); // Note: this will fail if index.get(0) == Long.MIN_VALUE
+			index.set(0, index.get(0) - 1);
 		}
 		
 		@Override
