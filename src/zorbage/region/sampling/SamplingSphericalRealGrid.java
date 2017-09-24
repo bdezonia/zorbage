@@ -31,27 +31,27 @@ package zorbage.region.sampling;
  * @author Barry DeZonia
  *
  */
-public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
+public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 
-	private final double r, dr, theta, dtheta, z, dz;
-	private final int rCount, thetaCount, zCount;
+	private final double r, dr, theta, dtheta, phi, dphi;
+	private final int rCount, thetaCount, phiCount;
 	
-	public SamplingCylindricalRealGrid(
+	public SamplingSphericalRealGrid(
 			double r, double dr, int rCount,
 			double theta, double dtheta, int thetaCount,
-			double z, double dz, int zCount)
+			double phi, double dphi, int phiCount)
 	{
 		this.r = r;
 		this.dr = dr;
 		this.theta = theta;
 		this.dtheta = dtheta;
-		this.z = z;
-		this.dz = dz;
+		this.phi = phi;
+		this.dphi = dphi;
 		this.rCount = rCount;
 		this.thetaCount = thetaCount;
-		this.zCount = zCount;
-		if (rCount < 1 || thetaCount < 1 || zCount < 1)
-			throw new IllegalArgumentException("counts must be >= 1 in cylindrical grid");
+		this.phiCount = phiCount;
+		if (rCount < 1 || thetaCount < 1 || phiCount < 1)
+			throw new IllegalArgumentException("counts must be >= 1 in spherical grid");
 	}
 	
 	@Override
@@ -75,17 +75,17 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 
 		private int tr;
 		private int ttheta;
-		private int tz;
+		private int tphi;
 		
 		private Iterator() {
 			tr = -1;
 			ttheta = 0;
-			tz = 0;
+			tphi = 0;
 		}
 		
 		@Override
 		public boolean hasNext() {
-			return !(tr == rCount-1 && ttheta == thetaCount-1 && tz == zCount-1);
+			return !(tr == rCount-1 && ttheta == thetaCount-1 && tphi == phiCount-1);
 		}
 
 		// TODO will the origin be counted multiple times?
@@ -100,19 +100,18 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 				ttheta++;
 				if (ttheta >= thetaCount) {
 					ttheta = 0;
-					tz++;
-					if (tz >= zCount)
+					tphi++;
+					if (tphi >= phiCount)
 						throw new IllegalArgumentException("next() called when do not hasNext()");
 				}
 			}
 			final double radius = r + tr*dr;
-			final double angle = theta + ttheta*dtheta;
-			final double height = z + tz*dz;
-			value.set(0, Math.cos(angle) * radius);  // xcoord
-			value.set(1, Math.sin(angle) * radius);  // ycoord
-			value.set(2, height);  // zcoord
+			final double angleTheta = theta + ttheta*dtheta;
+			final double anglePhi = phi + tphi*dphi;
+			value.set(0, Math.sin(angleTheta) * Math.cos(anglePhi) * radius);  // xcoord
+			value.set(1, Math.sin(angleTheta) * Math.sin(anglePhi) * radius);  // ycoord
+			value.set(2, Math.cos(anglePhi) * radius);  // zcoord		}
 		}
-		
 	}
 
 }
