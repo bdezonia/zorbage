@@ -32,13 +32,13 @@ package zorbage.region.sampling;
  *
  * @param <T>
  */
-public class SamplingUnion<T extends Duplicatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
+public class SamplingIntersection<T extends Duplicatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
 
 	private final Sampling<T> first;
 	private final Sampling<T> second;
 	private final T example;
 	
-	public SamplingUnion(Sampling<T> first, Sampling<T> second, T example) {
+	public SamplingIntersection(Sampling<T> first, Sampling<T> second, T example) {
 		if (first.numDimensions() != second.numDimensions())
 			throw new IllegalArgumentException("num dimensions do not match in OrSampling");
 		if (first.numDimensions() != example.numDimensions())
@@ -55,7 +55,7 @@ public class SamplingUnion<T extends Duplicatable<T> & Dimensioned & Settable<T>
 
 	@Override
 	public boolean contains(T samplePoint) {
-		return first.contains(samplePoint) || second.contains(samplePoint);
+		return first.contains(samplePoint) && second.contains(samplePoint);
 	}
 
 	@Override
@@ -66,26 +66,19 @@ public class SamplingUnion<T extends Duplicatable<T> & Dimensioned & Settable<T>
 	private class Iterator implements SamplingIterator<T> {
 
 		private final SamplingIterator<T> iter1;
-		private final SamplingIterator<T> iter2;
 		private final T index;
 		private boolean cached;
 		
 		private Iterator() {
 			iter1 = first.iterator();
-			iter2 = second.iterator();
 			index = example.duplicate();
 			cached = false;
 		}
 
 		private boolean positionToNext() {
-			if (iter1.hasNext()) {
+			while (iter1.hasNext()) {
 				iter1.next(index);
-				cached = true;
-				return true;
-			}
-			while (iter2.hasNext()) {
-				iter2.next(index);
-				if (!first.contains(index)) {
+				if (second.contains(index)) {
 					cached = true;
 					return true;
 				}
