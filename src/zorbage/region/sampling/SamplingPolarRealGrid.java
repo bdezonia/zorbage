@@ -70,7 +70,7 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 		private int ttheta;
 		
 		private Iterator() {
-			tr = 0;
+			tr = -1;
 			ttheta = 0;
 		}
 		
