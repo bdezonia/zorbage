@@ -36,10 +36,12 @@ public class RealUtils {
 	private RealUtils() { }
 	
 	public static boolean near(float f1, float f2, float tol) {
-		return Math.abs(f1-f2) <= Math.abs(tol);
+		if (tol < 0) throw new IllegalArgumentException("negative tolerance given");
+		return Math.abs(f1-f2) <= tol;
 	}
 
 	public static boolean near(double f1, double f2, double tol) {
-		return Math.abs(f1-f2) <= Math.abs(tol);
+		if (tol < 0) throw new IllegalArgumentException("negative tolerance given");
+		return Math.abs(f1-f2) <= tol;
 	}
 }
