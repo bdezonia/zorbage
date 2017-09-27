@@ -89,15 +89,19 @@ public class FileStorageBoolean<U extends BooleanCoder<U> & Allocatable<U>>
 	
 	@Override
 	public void set(long index, U value) {
-		load(index);
-		buffer.set(index % BUFFERSIZE, value);
-		dirty = true;
+		synchronized (this) {
+			load(index);
+			buffer.set(index % BUFFERSIZE, value);
+			dirty = true;
+		}
 	}
 
 	@Override
 	public void get(long index, U value) {
-		load(index);
-		buffer.get(index % BUFFERSIZE, value);
+		synchronized (this) {
+			load(index);
+			buffer.get(index % BUFFERSIZE, value);
+		}
 	}
 
 	@Override
@@ -107,23 +111,25 @@ public class FileStorageBoolean<U extends BooleanCoder<U> & Allocatable<U>>
 
 	@Override
 	public FileStorageBoolean<U> duplicate() {
-		flush();
-		try {
-			FileStorageBoolean<U> other = new FileStorageBoolean<U>(numElements,type);
-			other.buffer = buffer.duplicate();
-			other.dirty = dirty;
-			other.pageIndex = pageIndex;
-		    Path FROM = Paths.get(file.getAbsolutePath());
-		    Path TO = Paths.get(other.file.getAbsolutePath());
-		    //overwrite existing file, if exists
-		    CopyOption[] options = new CopyOption[]{
-		      StandardCopyOption.REPLACE_EXISTING,
-		      StandardCopyOption.COPY_ATTRIBUTES
-		    }; 
-		    Files.copy(FROM, TO, options);
-			return other;
-		} catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
+		synchronized (this) {
+			flush();
+			try {
+				FileStorageBoolean<U> other = new FileStorageBoolean<U>(numElements,type);
+				other.buffer = buffer.duplicate();
+				other.dirty = dirty;
+				other.pageIndex = pageIndex;
+				Path FROM = Paths.get(file.getAbsolutePath());
+				Path TO = Paths.get(other.file.getAbsolutePath());
+				//overwrite existing file, if exists
+				CopyOption[] options = new CopyOption[]{
+						StandardCopyOption.REPLACE_EXISTING,
+						StandardCopyOption.COPY_ATTRIBUTES
+				}; 
+				Files.copy(FROM, TO, options);
+				return other;
+			} catch (Exception e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
 		}
 	}
 	
