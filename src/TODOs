@@ -63,11 +63,11 @@ Support sparse allocation methods
 String constructors of numeric types default to DENSE ARRAY. Maybe allow
   mem storage params.
 The constructors for storage may duplicate others. Due to time lags this
-  is not necessarily threadsafe. Obtain locks.
+  is not necessarily threadsafe. Obtain locks. Done for file storage classes.
 use vector/rmodule init() inside their own operations: c.init(targetSize).
   this is cuz vectors no longer autosize.
 Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost,
-  other fortran classics
+  other fortran classics, apache commons
   Boost headers for complex and quats can give valuable design ideas.
     Need a ref for octs.
     http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
@@ -145,3 +145,6 @@ Make types implement settable and gettable
 Make some types implement Dimensioned
 Coalesce Duplicatable and Allocatable maybe. Or one extends the other.
 How do you using Samplings with Regions. Should be able to sample a region easily.
+Right now file storage classes lock their whole buffer. we should block single
+  indices at a time so that multiple threads can access the container at one time
+  and not cause page faults or slow synchronization.
