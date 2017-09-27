@@ -26,6 +26,8 @@
  */
 package zorbage.region.sampling;
 
+import zorbage.util.RealUtils;
+
 /**
  * 
  * @author Barry DeZonia
@@ -57,12 +59,17 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 		return numD;
 	}
 	
+	// TODO - write tests
+	
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != numD)
 			throw new IllegalArgumentException("contains() expects input point to have same dimension as sampling");
-		// TODO: do I lay on a grid point
-		throw new IllegalArgumentException("TODO - do I lay on a grid point");
+		for (int i = 0; i < numD; i++) {
+			if (!RealUtils.near((samplePoint.get(i) - minPt.get(i)) % ((maxPt.get(i)-minPt.get(i)) / dimCounts.get(i)), 0, 0.00000000001))
+				return false;
+		}
+		return true;
 	}
 
 	@Override

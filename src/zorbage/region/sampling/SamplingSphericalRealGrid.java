@@ -26,6 +26,8 @@
  */
 package zorbage.region.sampling;
 
+import zorbage.util.RealUtils;
+
 /**
  * 
  * @author Barry DeZonia
@@ -59,11 +61,55 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 		return 3;
 	}
 
+	// TODO - write tests
+	//   Not confident in definition of theta and phi from x,y,z
+	
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != 3)
 			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
-		throw new UnsupportedOperationException("TODO");
+		double x = samplePoint.get(0);
+		double y = samplePoint.get(1);
+		double z = samplePoint.get(2);
+		double r1 = this.r;
+		double r2 = this.r + dr*rCount;
+		double r = RealUtils.distance3d(0, 0, 0, x, y, z);
+		if (r < Math.min(r1, r2) - 0.00000000001) return false;
+		if (r > Math.max(r1, r2) + 0.00000000001) return false;
+		if (!RealUtils.near((r - this.r) % dr, 0, 0.00000000001)) return false;
+		double theta = Math.acos(z/r);
+		double theta1 = this.theta;
+		double theta2 = this.theta + dtheta * thetaCount;
+		while (theta < 0) theta += Math.PI * 2;
+		while (theta1 < 0) theta1 += Math.PI * 2;
+		while (theta2 < 0) theta2 += Math.PI * 2;
+		if (theta1 < theta2) {
+			if (theta > theta2 + 0.00000000001) return false;
+			if (theta < theta1 - 0.00000000001) return false;
+			if (!RealUtils.near((theta - theta1) % dtheta, 0, 0.00000000001)) return false;
+		}
+		else { // theta1 > theta2 since thetaCount >= 1
+			if (theta > theta1 + 0.00000000001) return false;
+			if (theta < theta2 - 0.00000000001) return false;
+			if (!RealUtils.near((theta - theta2) % dtheta, 0, 0.00000000001)) return false;
+		}
+		double phi = Math.atan2(y,x);
+		double phi1 = this.phi;
+		double phi2 = this.phi + dphi*phiCount;
+		while (phi < 0) phi += Math.PI * 2;
+		while (phi1 < 0) phi1 += Math.PI * 2;
+		while (phi2 < 0) phi2 += Math.PI * 2;
+		if (phi1 < phi2) {
+			if (phi > phi2 + 0.00000000001) return false;
+			if (phi < phi1 - 0.00000000001) return false;
+			if (!RealUtils.near((phi - phi1) % dphi, 0, 0.00000000001)) return false;
+		}
+		else { // phi2 < phi1 since phiCount > 0
+			if (phi > phi1 + 0.00000000001) return false;
+			if (phi < phi2 - 0.00000000001) return false;
+			if (!RealUtils.near((phi - phi2) % dphi, 0, 0.00000000001)) return false;
+		}
+		return true;
 	}
 
 	@Override

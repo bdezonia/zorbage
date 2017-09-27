@@ -26,6 +26,8 @@
  */
 package zorbage.region.sampling;
 
+import zorbage.util.RealUtils;
+
 /**
  * 
  * @author Barry DeZonia
@@ -59,11 +61,43 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 		return 3;
 	}
 
+	// TODO - write tests
+	
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != 3)
 			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
-		throw new UnsupportedOperationException("TODO");
+		double x = samplePoint.get(0);
+		double y = samplePoint.get(1);
+		double z = samplePoint.get(2);
+		double z1 = this.z;
+		double z2 = this.z + dz*zCount;
+		if (z < Math.min(z1, z2) - 0.00000000001) return false;
+		if (z > Math.max(z1, z2) + 0.00000000001) return false;
+		if (!RealUtils.near((z - this.z) % dz, 0, 0.00000000001)) return false;
+		double r1 = this.r;
+		double r2 = this.r + dr*rCount;
+		double r = RealUtils.distance3d(0, 0, 0, x, y, z);
+		if (r < Math.min(r1, r2) - 0.00000000001) return false;
+		if (r > Math.max(r1, r2) + 0.00000000001) return false;
+		if (!RealUtils.near((r - this.r) % dr, 0, 0.00000000001)) return false;
+		double theta = Math.atan2(y, x);
+		double theta1 = this.theta;
+		double theta2 = this.theta + dtheta * thetaCount;
+		while (theta < 0) theta += Math.PI * 2;
+		while (theta1 < 0) theta1 += Math.PI * 2;
+		while (theta2 < 0) theta2 += Math.PI * 2;
+		if (theta1 < theta2) {
+			if (theta > theta2 + 0.00000000001) return false;
+			if (theta < theta1 - 0.00000000001) return false;
+			if (!RealUtils.near((theta - theta1) % dtheta, 0, 0.00000000001)) return false;
+		}
+		else { // theta1 > theta2 since thetaCount >= 1
+			if (theta > theta1 + 0.00000000001) return false;
+			if (theta < theta2 - 0.00000000001) return false;
+			if (!RealUtils.near((theta - theta2) % dtheta, 0, 0.00000000001)) return false;
+		}
+		return true;
 	}
 
 	@Override

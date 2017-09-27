@@ -137,7 +137,7 @@ Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
   LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
 Regions likely need bounds. Samplings might not.
-Fix all the unfinished contains() methods in real grid sampling code
+Test all the contains() methods in real grid sampling code
 Revisit all todos noted in sampling code
 Relocate some sampling interfaces into type algebra
 Also make Gettable like Settable but opposite
