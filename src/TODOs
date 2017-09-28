@@ -156,3 +156,6 @@ How do you using Samplings with Regions. Should be able to sample a region easil
 Right now file storage classes lock their whole buffer. we should block single
   indices at a time so that multiple threads can access the container at one time
   and not cause page faults or slow synchronization.
+I don't think I need bounds of samplings. One can iterate a sampling and calc
+  bounds. I might need bounds for regions. One could take a region, get its
+  bounds, generate a grid sampling on the bounds, and sample the region.
