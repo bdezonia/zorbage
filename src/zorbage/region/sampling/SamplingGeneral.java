@@ -71,6 +71,25 @@ public class SamplingGeneral<U extends Duplicatable<U> & Dimensioned & Settable<
 		return new Iterator();
 	}
 	
+	/**
+	 * Create a SamplingGeneral from any Sampling.
+	 * 
+	 * @param other
+	 * @param type
+	 * @return
+	 */
+	public static <T extends Settable<T> & Duplicatable<T> & Dimensioned>
+		SamplingGeneral<T> create(Sampling<T> other, T scratch)
+	{
+		SamplingGeneral<T> sampling = new SamplingGeneral<T>(other.numDimensions());
+		SamplingIterator<T> iter = other.iterator();
+		while (iter.hasNext()) {
+			iter.next(scratch);
+			sampling.add(scratch);
+		}
+		return sampling;
+	}
+	
 	private class Iterator implements SamplingIterator<U> {
 
 		private final java.util.Iterator<U> iter = points.iterator();
