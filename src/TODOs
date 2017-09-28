@@ -112,7 +112,7 @@ Support unsigned int types for all defined int types
 Support 128-bit type. Start with a 16 bit two byte type that I can
  exhaustively
   test for add, sub, mul, div. Then substitute two longs with appropriate
-  constants. Note that it can a LongCoder type.
+  constants. Note that it can be a LongCoder type.
 It's becoming more apparent that all types should implement ByteCoder.
 RGB could be a BitCoder of three 8 bit values
   This might be a good test of BitCoder. BitCount = 24. Read or write 1
@@ -133,6 +133,14 @@ Resurrect PointSet ideas? Useful for multidim access.
 Resurrect Function ideas? Useful for TextSpecified PointSets and Functions
 Implement SamplingComplement code? Need bounds? Need universal and empty?
 add bounds for samplings? translate and maybe scale and maybe rotate them?
+  Ideally there would be a sampling that transforms a real sampling to a
+  different space. Thus you could specify simple cylindrical coords and
+  then transform it to locate a cylindrical grid in any orientation in
+  3d space. Then can throw (x,y,z) coords at it and the contains() method
+  for the transformable grid code would transform into space local to
+  embedded 3d cylindrical grid and uses those local coords to query the
+  contains() method of the cylindrical grid. This is cool but requires
+  some thought in how to clearly specify an embedding of grid in 3d space.
 Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
   LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
