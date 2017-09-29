@@ -38,4 +38,6 @@ public interface Region<T> extends Dimensioned {
 	
 	boolean contains(T samplePoint);
 	
+	void bounds(T min, T max);
+	
 }

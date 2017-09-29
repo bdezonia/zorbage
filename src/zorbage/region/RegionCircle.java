@@ -39,6 +39,8 @@ public class RegionCircle implements Region<RealIndex> {
 	private final double cx, cy, radius;
 	
 	public RegionCircle(double cx, double cy, double radius) {
+		if (radius < 0)
+			throw new IllegalArgumentException("negative radius in RegionCircle");
 		this.cx = cx;
 		this.cy = cy;
 		this.radius = radius;
@@ -52,8 +54,18 @@ public class RegionCircle implements Region<RealIndex> {
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != 2)
-			throw new IllegalArgumentException("incorrect dimensions of sample point in RegionCircle");
+			throw new IllegalArgumentException("incorrect dimensions of sample point in RegionCircle::contains()");
 		return RealUtils.distance2d(samplePoint.get(0), samplePoint.get(1), cx, cy) <= radius;
+	}
+
+	@Override
+	public void bounds(RealIndex min, RealIndex max) {
+		if (min.numDimensions() != 2 || max.numDimensions() != 2)
+			throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::bounds()");
+		min.set(0, cx - radius);
+		min.set(1, cy - radius);
+		max.set(0, cx + radius);
+		max.set(1, cy + radius);
 	}
 
 }
