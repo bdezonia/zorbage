@@ -31,7 +31,7 @@ package zorbage.region.sampling;
  * @author Barry DeZonia
  *
  */
-public class IntegerIndex implements Duplicatable<IntegerIndex>, Dimensioned, Settable<IntegerIndex> {
+public class IntegerIndex implements Duplicatable<IntegerIndex>, Dimensioned, Settable<IntegerIndex>, Bounded<IntegerIndex> {
 	
 	private final long[] index;
 	
@@ -82,5 +82,29 @@ public class IntegerIndex implements Duplicatable<IntegerIndex>, Dimensioned, Se
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void setMax() {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Long.MAX_VALUE;
+	}
+
+	@Override
+	public void setMin() {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Long.MIN_VALUE;
+	}
+
+	@Override
+	public void updateMin(IntegerIndex tmp) {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Math.min(index[i], tmp.get(i));
+	}
+
+	@Override
+	public void updateMax(IntegerIndex tmp) {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Math.max(index[i], tmp.get(i));
 	}
 }

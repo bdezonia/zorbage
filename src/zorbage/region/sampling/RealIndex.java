@@ -31,7 +31,7 @@ package zorbage.region.sampling;
  * @author Barry DeZonia
  *
  */
-public class RealIndex implements Duplicatable<RealIndex>, Dimensioned, Settable<RealIndex> {
+public class RealIndex implements Duplicatable<RealIndex>, Dimensioned, Settable<RealIndex>, Bounded<RealIndex> {
 	
 	private final double[] index;
 	
@@ -82,5 +82,29 @@ public class RealIndex implements Duplicatable<RealIndex>, Dimensioned, Settable
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void setMax() {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Double.MAX_VALUE;
+	}
+
+	@Override
+	public void setMin() {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Double.MIN_VALUE;
+	}
+
+	@Override
+	public void updateMin(RealIndex tmp) {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Math.min(index[i], tmp.get(i));
+	}
+
+	@Override
+	public void updateMax(RealIndex tmp) {
+		for (int i = 0; i < index.length; i++)
+			index[i] = Math.max(index[i], tmp.get(i));
 	}
 }
