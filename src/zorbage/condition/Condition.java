@@ -24,61 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.bigint;
-
-import java.math.BigInteger;
-
-import zorbage.type.algebra.Gettable;
-import zorbage.type.algebra.Settable;
-import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.TensorStringRepresentation;
+package zorbage.condition;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class UnboundedIntMember implements Settable<UnboundedIntMember>, Gettable<UnboundedIntMember> {
-
-	private BigInteger v;
-	
-	public UnboundedIntMember() {
-		v = BigInteger.ZERO;
-	}
-	
-	public UnboundedIntMember(long value) {
-		v = BigInteger.valueOf(value);
-	}
-	
-	public UnboundedIntMember(BigInteger value) {
-		v = value;
-	}
-	
-	public UnboundedIntMember(UnboundedIntMember value) {
-		v = value.v;
-	}
-	
-	public UnboundedIntMember(String value) {
-		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
-		v = val.r().toBigInteger();
-	}
-
-	public BigInteger v() { return v; }
-
-	public void setV(BigInteger val) { v = val; }
-	
-	@Override
-	public void set(UnboundedIntMember other) {
-		v = other.v;
-	}
-	
-	@Override
-	public void get(UnboundedIntMember other) {
-		other.v = v;
-	}
-
-	@Override
-	public String toString() { return "" + v; }
-	
+public interface Condition<T> {
+	boolean isTrue(T value);
 }

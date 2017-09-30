@@ -24,13 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region.sampling;
+package zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  */
-public interface Condition<T> {
-	boolean isTrue(T value);
+public interface Gettable<T> {
+	void get(T other);
 }

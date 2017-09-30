@@ -28,6 +28,8 @@ package zorbage.region.sampling;
 
 import java.util.ArrayList;
 
+import zorbage.type.algebra.Settable;
+
 /**
  * 
  * @author Barry DeZonia

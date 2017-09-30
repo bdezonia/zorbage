@@ -29,6 +29,8 @@ package zorbage.type.data.float64.real;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -40,7 +42,7 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class Float64Member
-	implements DoubleCoder<Float64Member>, Allocatable<Float64Member>
+	implements DoubleCoder<Float64Member>, Allocatable<Float64Member>, Settable<Float64Member>, Gettable<Float64Member>
 {
 	private double v;
 	
@@ -65,11 +67,13 @@ public final class Float64Member
 	public double v() { return v; }
 
 	public void setV(double val) { v = val; }
-	
+
+	@Override
 	public void set(Float64Member other) {
 		v = other.v;
 	}
 
+	@Override
 	public void get(Float64Member other) {
 		other.v = v;
 	}

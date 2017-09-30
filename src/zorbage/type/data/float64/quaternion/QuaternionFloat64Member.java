@@ -29,6 +29,8 @@ package zorbage.type.data.float64.quaternion;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -42,7 +44,8 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class QuaternionFloat64Member 
-	implements DoubleCoder<QuaternionFloat64Member>, Allocatable<QuaternionFloat64Member>
+	implements DoubleCoder<QuaternionFloat64Member>, Allocatable<QuaternionFloat64Member>,
+		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>
 {
 
 	private double r, i, j, k;
@@ -90,6 +93,7 @@ public final class QuaternionFloat64Member
 	
 	public void setK(double val) { k = val; }
 	
+	@Override
 	public void set(QuaternionFloat64Member other) {
 		if (this == other) return;
 		r = other.r;
@@ -98,6 +102,7 @@ public final class QuaternionFloat64Member
 		k = other.k;
 	}
 
+	@Override
 	public void get(QuaternionFloat64Member other) {
 		if (this == other) return;
 		other.r = r;

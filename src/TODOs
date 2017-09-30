@@ -160,4 +160,3 @@ I don't think I need bounds of samplings. One can iterate a sampling and calc
   bounds, generate a grid sampling on the bounds, and sample the region.
 Can I make real grid samplings more generic and use byte[], or short[], or float[]
   as well? Not just long[] and double[].
-Conditional Sampling. Real or integer.

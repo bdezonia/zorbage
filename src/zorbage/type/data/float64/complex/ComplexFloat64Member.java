@@ -29,6 +29,8 @@ package zorbage.type.data.float64.complex;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -40,7 +42,8 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class ComplexFloat64Member
-	implements DoubleCoder<ComplexFloat64Member>, Allocatable<ComplexFloat64Member>
+	implements DoubleCoder<ComplexFloat64Member>, Allocatable<ComplexFloat64Member>,
+		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>
 {
 	private double r, i;
 	
@@ -74,11 +77,13 @@ public final class ComplexFloat64Member
     
     public void setI(double val) { i = val; }	
 
+    @Override
     public void get(ComplexFloat64Member other) {
     	other.r = r;
     	other.i = i;
     }
 
+    @Override
     public void set(ComplexFloat64Member other) {
     	r = other.r;
     	i = other.i;

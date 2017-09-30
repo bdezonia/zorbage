@@ -29,6 +29,8 @@ package zorbage.type.data.int32;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -40,7 +42,7 @@ import zorbage.type.storage.coder.IntCoder;
  *
  */
 public final class SignedInt32Member
-	implements IntCoder<SignedInt32Member>, Allocatable<SignedInt32Member>
+	implements IntCoder<SignedInt32Member>, Allocatable<SignedInt32Member>, Settable<SignedInt32Member>, Gettable<SignedInt32Member>
 {
 
 	private int v;
@@ -67,11 +69,12 @@ public final class SignedInt32Member
 
 	public void setV(int val) { v = val; }
 	
-	
+	@Override
 	public void set(SignedInt32Member other) {
 		v = other.v;
 	}
 	
+	@Override
 	public void get(SignedInt32Member other) {
 		other.v = v;
 	}

@@ -29,6 +29,8 @@ package zorbage.type.data.int8;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -40,7 +42,7 @@ import zorbage.type.storage.coder.ByteCoder;
  *
  */
 public final class SignedInt8Member
-	implements ByteCoder<SignedInt8Member>, Allocatable<SignedInt8Member>
+	implements ByteCoder<SignedInt8Member>, Allocatable<SignedInt8Member>, Settable<SignedInt8Member>, Gettable<SignedInt8Member>
 {
 
 	private byte v;
@@ -67,11 +69,12 @@ public final class SignedInt8Member
 
 	public void setV(byte val) { v = val; }
 	
-	
+	@Override
 	public void set(SignedInt8Member other) {
 		v = other.v;
 	}
 	
+	@Override
 	public void get(SignedInt8Member other) {
 		other.v = v;
 	}

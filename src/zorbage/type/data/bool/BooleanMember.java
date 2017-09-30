@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -42,7 +44,8 @@ import zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public final class BooleanMember
-	implements BitCoder<BooleanMember>, BooleanCoder<BooleanMember>, Allocatable<BooleanMember>
+	implements BitCoder<BooleanMember>, BooleanCoder<BooleanMember>, Allocatable<BooleanMember>,
+		Settable<BooleanMember>, Gettable<BooleanMember>
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -77,10 +80,12 @@ public final class BooleanMember
 	
 	public void setV(boolean val) { v = val; }
 	
+	@Override
 	public void set(BooleanMember other) {
 		v = other.v;
 	}
 	
+	@Override
 	public void get(BooleanMember other) {
 		other.v = v;
 	}

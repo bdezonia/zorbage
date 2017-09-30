@@ -29,6 +29,8 @@ package zorbage.type.data.int16;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.type.algebra.Gettable;
+import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
@@ -40,7 +42,7 @@ import zorbage.type.storage.coder.ShortCoder;
  *
  */
 public final class SignedInt16Member
-	implements ShortCoder<SignedInt16Member>, Allocatable<SignedInt16Member>
+	implements ShortCoder<SignedInt16Member>, Allocatable<SignedInt16Member>, Settable<SignedInt16Member>, Gettable<SignedInt16Member>
 {
 
 	private short v;
@@ -67,11 +69,12 @@ public final class SignedInt16Member
 	
 	public void setV(short val) { v = val; }
 	
-	
+	@Override
 	public void set(SignedInt16Member other) {
 		v = other.v;
 	}
 	
+	@Override
 	public void get(SignedInt16Member other) {
 		other.v = v;
 	}
