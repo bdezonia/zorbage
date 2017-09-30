@@ -62,12 +62,14 @@ Remove much duplication in FileStorage classes when they are done
 Support sparse allocation methods
 String constructors of numeric types default to DENSE ARRAY. Maybe allow
   mem storage params.
-The constructors for storage may duplicate others. Due to time lags this
-  is not necessarily threadsafe. Obtain locks. Done for file storage classes.
+The constructors/duplicators for storage may duplicate other storage
+  classes. Due to time lags this is not necessarily threadsafe. Obtain
+  locks. Done for file storage classes. (Do the storage classes implement
+  Duplicatable interface?)
 use vector/rmodule init() inside their own operations: c.init(targetSize).
   this is cuz vectors no longer autosize.
 Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost,
-  other fortran classics, apache commons
+  other fortran classics, apache commons, jscience
   Boost headers for complex and quats can give valuable design ideas.
     Need a ref for octs.
     http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
@@ -119,8 +121,8 @@ RGB could be a BitCoder of three 8 bit values
   or 2 longs in BitCoder impl. How is RGB a numeric type? What algebra
   does it support? Maybe as a test make a 4 bit unsigned type and a 132
   bit unsigned type.
-FileStorage bit is possible but slow. It could do file reads and then
-  file writes.
+FileStorage bit is possible but slow. It could do file reads and rewind
+  and then file writes.
 LUDecomposition for multiple types: (float, comp, quat, oct)
   This would require a bool within(U,U) method. Also maybe not possible
   because it requires an Ordered relation?
@@ -130,7 +132,6 @@ Types should specify a preferred order of encoding choices so storage
 Test that the speed of sinAndCos and sinhAndTanh is worthwhile for actual data.
   Also test their accuracy (i.e. sinAndcos might round a little)
 Resurrect Function ideas? Useful for TextSpecified PointSets and Functions
-Implement SamplingComplement code? Need bounds? Need universal and empty?
 add bounds for samplings? translate and maybe scale and maybe rotate them?
   Ideally there would be a sampling that transforms a real sampling to a
   different space. Thus you could specify simple cylindrical coords and
@@ -144,7 +145,9 @@ Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
   LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
 Regions likely need bounds. Samplings might not.
-Test all the contains() methods in real grid sampling code
+Test all the contains() methods in real grid sampling code. Make tolerance
+  an internal constant or a passable parameter. Or calc a tol from dx, dy, dz
+  and counts.
 Revisit all todos noted in sampling code
 Make some types implement Dimensioned
 How do you using Samplings with Regions. Should be able to sample a region easily.
@@ -156,3 +159,42 @@ I don't think I need bounds of samplings. One can iterate a sampling and calc
   bounds, generate a grid sampling on the bounds, and sample the region.
 Can I make real grid samplings more generic and use byte[], or short[], or float[]
   as well? Not just long[] and double[].
+Text specified region or sampling. The text can be multiple equations with &&
+  clauses. A grid spacing included. Note the && could just be supported with two
+  text specified regions or samplings and calced via a sampling intersection. So
+  maybe not a great idea.
+The goal is to get back to text specified functions and samplings/regions.
+  Need to write an equation language and a parser again.
+What improvements can I make to Function idea? One input? Multiple? None?
+  How do I make the groups that are real/complex/quat/oct function spaces?
+Weird idea: make a group with methods that are static Functions that implement
+  the group methods. So dbl.multiply.compute(a,b,c); The definition of groups
+  reuses the Function idea. And one can pass around functions as first class
+  objects if needed. This implies Function1<a>, Function2<a,b>, Function3<a,b,c>,
+  and can support any num and type of params. A procedural approach to java
+  with all pass by reference and efficient. But also functional. And supporting
+  more than the typical primitive types.
+Do I need to locate regions and samplings in algebra hierarchy and define
+  their group? This would eliminate the double definition of Bounded.
+Tricky definition: the function that takes an average. It has to take
+  as input a set of functions that match in param count and type. And
+  then applied for a snapshot of params to the full set and added and
+  divided. How do you define the strong type if the declaration where the
+  input params vary. In a functional language you can partially apply
+  the inputs and really every function takes 1 param or really 0 params
+  and a context of other function values. ImageJ takes an Object ... approach
+  which requires casting at some level to populate params of plugins.
+I have purposely not made things like Matrix<Float64Member> and
+  Matrix<Float32Member> to facilitate simple optimization. This results in
+  some code duplication.
+Constructors are functions like function1, function2, etc. that take
+  various parameters and return a type. A group can define the ctors
+  it provides.
+Conditions can be like functions and ctors: condition1, condition2, etc.
+Make and, or, xor, and not conditions. How does previous line affect these?
+Do we get rid of rigid algebraic type hierarchy and define skewfield for
+  intance to have multiply function and x function and y function etc.
+  Then Octonions aren't quite a skewfield. But they support most of it's
+  operations and can be passed to methods that use a subset of skewfield
+  operations.
+I can write this library in C++ for efficiency.
