@@ -26,6 +26,8 @@
  */
 package zorbage.region.sampling;
 
+import zorbage.type.ctor.Duplicatable;
+
 /**
  * 
  * @author Barry DeZonia

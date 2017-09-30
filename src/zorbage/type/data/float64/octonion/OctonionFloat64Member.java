@@ -119,6 +119,7 @@ public final class OctonionFloat64Member
 	
 	public void setK0(double val) { k0 = val; }
 	
+	@Override
 	public void set(OctonionFloat64Member other) {
 		if (this == other) return;
 		r = other.r;
@@ -131,6 +132,7 @@ public final class OctonionFloat64Member
 		k0 = other.k0;
 	}
 
+	@Override
 	public void get(OctonionFloat64Member other) {
 		if (this == other) return;
 		other.r = r;

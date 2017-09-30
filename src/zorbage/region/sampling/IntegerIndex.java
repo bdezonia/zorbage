@@ -27,6 +27,7 @@
 package zorbage.region.sampling;
 
 import zorbage.type.algebra.Settable;
+import zorbage.type.ctor.Duplicatable;
 
 /**
  * 
