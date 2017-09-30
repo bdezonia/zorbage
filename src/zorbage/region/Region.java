@@ -26,7 +26,7 @@
  */
 package zorbage.region;
 
-import zorbage.region.sampling.Dimensioned;
+import zorbage.type.algebra.Dimensioned;
 
 /**
  * 
