@@ -54,6 +54,20 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 		}
 	}
 
+	public SamplingCartesianRealGrid(RealIndex point1, RealIndex point2, IntegerIndex counts) {
+		if ((point1.numDimensions() != point2.numDimensions()) || (point1.numDimensions() != counts.numDimensions()))
+			throw new IllegalArgumentException("mismatched dimensions of input points");
+		numD = point1.numDimensions();
+		minPt = point1.allocate();
+		maxPt = point1.allocate();
+		dimCounts = counts.allocate();
+		for (int i = 0; i < numD; i++) {
+			minPt.set(i, Math.min(point1.get(i), point2.get(i)));
+			maxPt.set(i, Math.max(point1.get(i), point2.get(i)));
+			dimCounts.set(i, Math.abs(counts.get(i)));
+		}
+	}
+
 	@Override
 	public int numDimensions() {
 		return numD;

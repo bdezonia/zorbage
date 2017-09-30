@@ -42,13 +42,7 @@ public class SamplingComplement implements Sampling<IntegerIndex> {
 		IntegerIndex min = new IntegerIndex(sampling.numDimensions());
 		IntegerIndex max = new IntegerIndex(sampling.numDimensions());
 		Bounds.find(sampling, min, max);
-		long[] mn = new long[min.numDimensions()];
-		long[] mx = new long[max.numDimensions()];
-		for (int i = 0; i < numDimensions(); i++) {
-			mn[i] = min.get(i);
-			mx[i] = max.get(i);
-		}
-		Sampling<IntegerIndex> volume = new SamplingCartesianIntegerGrid(mn, mx);
+		Sampling<IntegerIndex> volume = new SamplingCartesianIntegerGrid(min, max);
 		this.difference = new SamplingDifference<IntegerIndex>(volume, sampling, min);
 	}
 	

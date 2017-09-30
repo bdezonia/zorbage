@@ -49,6 +49,18 @@ public class SamplingCartesianIntegerGrid implements Sampling<IntegerIndex> {
 		}
 	}
 
+	public SamplingCartesianIntegerGrid(IntegerIndex point1, IntegerIndex point2) {
+		if (point1.numDimensions() != point2.numDimensions())
+			throw new IllegalArgumentException("mismatched dimensions of input points");
+		numD = point1.numDimensions();
+		minPt = point1.allocate();
+		maxPt = point1.allocate();
+		for (int i = 0; i < numD; i++) {
+			minPt.set(i, Math.min(point1.get(i), point2.get(i)));
+			maxPt.set(i, Math.max(point1.get(i), point2.get(i)));
+		}
+	}
+
 	@Override
 	public int numDimensions() {
 		return numD;
