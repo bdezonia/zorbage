@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -42,7 +43,9 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class ComplexFloat64Member
-	implements DoubleCoder<ComplexFloat64Member>, Allocatable<ComplexFloat64Member>,
+	implements
+		DoubleCoder<ComplexFloat64Member>,
+		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>
 {
 	private double r, i;
@@ -132,6 +135,11 @@ public final class ComplexFloat64Member
 	@Override
 	public ComplexFloat64Member allocate() {
 		return new ComplexFloat64Member();
+	}
+
+	@Override
+	public ComplexFloat64Member duplicate() {
+		return new ComplexFloat64Member(this);
 	}
 
 }

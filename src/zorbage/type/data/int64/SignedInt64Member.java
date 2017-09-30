@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.LongCoder;
@@ -42,7 +43,10 @@ import zorbage.type.storage.coder.LongCoder;
  *
  */
 public final class SignedInt64Member
-	implements LongCoder<SignedInt64Member>, Allocatable<SignedInt64Member>, Settable<SignedInt64Member>, Gettable<SignedInt64Member>
+	implements
+		LongCoder<SignedInt64Member>,
+		Allocatable<SignedInt64Member>, Duplicatable<SignedInt64Member>,
+		Settable<SignedInt64Member>, Gettable<SignedInt64Member>
 {
 
 	private long v;
@@ -110,6 +114,11 @@ public final class SignedInt64Member
 	@Override
 	public SignedInt64Member allocate() {
 		return new SignedInt64Member();
+	}
+
+	@Override
+	public SignedInt64Member duplicate() {
+		return new SignedInt64Member(this);
 	}
 
 }

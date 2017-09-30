@@ -27,7 +27,9 @@
 package zorbage.region.sampling;
 
 import zorbage.type.algebra.Dimensioned;
+import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.ctor.Duplicatable;
 
 /**
@@ -35,8 +37,11 @@ import zorbage.type.ctor.Duplicatable;
  * @author Barry DeZonia
  *
  */
-public class IntegerIndex implements Duplicatable<IntegerIndex>, Dimensioned, Settable<IntegerIndex>, Bounded<IntegerIndex> {
-	
+public class IntegerIndex
+	implements
+		Allocatable<IntegerIndex>, Duplicatable<IntegerIndex>, Dimensioned,
+		Settable<IntegerIndex>, Gettable<IntegerIndex>, Bounded<IntegerIndex>
+{
 	private final long[] index;
 	
 	public IntegerIndex(int numDims) {
@@ -53,6 +58,14 @@ public class IntegerIndex implements Duplicatable<IntegerIndex>, Dimensioned, Se
 			throw new IllegalArgumentException("mismatched dims in set()");
 		for (int i = 0; i < index.length; i++)
 			index[i] = other.index[i];
+	}
+	
+	@Override
+	public void get(IntegerIndex other) {
+		if (index.length != other.index.length)
+			throw new IllegalArgumentException("mismatched dims in get()");
+		for (int i = 0; i < index.length; i++)
+			other.index[i] = index[i];
 	}
 	
 	public void set(int dim, long value) {
@@ -110,5 +123,10 @@ public class IntegerIndex implements Duplicatable<IntegerIndex>, Dimensioned, Se
 	public void updateMax(IntegerIndex tmp) {
 		for (int i = 0; i < index.length; i++)
 			index[i] = Math.max(index[i], tmp.get(i));
+	}
+
+	@Override
+	public IntegerIndex allocate() {
+		return new IntegerIndex(index.length);
 	}
 }

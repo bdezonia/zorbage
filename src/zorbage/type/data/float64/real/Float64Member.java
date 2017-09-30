@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -42,7 +43,10 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class Float64Member
-	implements DoubleCoder<Float64Member>, Allocatable<Float64Member>, Settable<Float64Member>, Gettable<Float64Member>
+	implements
+		DoubleCoder<Float64Member>,
+		Allocatable<Float64Member>, Duplicatable<Float64Member>,
+		Settable<Float64Member>, Gettable<Float64Member>
 {
 	private double v;
 	
@@ -113,6 +117,11 @@ public final class Float64Member
 	@Override
 	public Float64Member allocate() {
 		return new Float64Member();
+	}
+
+	@Override
+	public Float64Member duplicate() {
+		return new Float64Member(this);
 	}
 
 }

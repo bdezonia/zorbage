@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.ByteCoder;
@@ -42,7 +43,10 @@ import zorbage.type.storage.coder.ByteCoder;
  *
  */
 public final class SignedInt8Member
-	implements ByteCoder<SignedInt8Member>, Allocatable<SignedInt8Member>, Settable<SignedInt8Member>, Gettable<SignedInt8Member>
+	implements
+		ByteCoder<SignedInt8Member>,
+		Allocatable<SignedInt8Member>, Duplicatable<SignedInt8Member>,
+		Settable<SignedInt8Member>, Gettable<SignedInt8Member>
 {
 
 	private byte v;
@@ -110,6 +114,11 @@ public final class SignedInt8Member
 	@Override
 	public SignedInt8Member allocate() {
 		return new SignedInt8Member();
+	}
+
+	@Override
+	public SignedInt8Member duplicate() {
+		return new SignedInt8Member(this);
 	}
 
 }

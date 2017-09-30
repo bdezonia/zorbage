@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.BitCoder;
@@ -44,7 +45,9 @@ import zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public final class BooleanMember
-	implements BitCoder<BooleanMember>, BooleanCoder<BooleanMember>, Allocatable<BooleanMember>,
+	implements
+		BitCoder<BooleanMember>, BooleanCoder<BooleanMember>,
+		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>
 {	
 	private static final String ZERO = "0";
@@ -146,4 +149,8 @@ public final class BooleanMember
 		return new BooleanMember();
 	}
 
+	@Override
+	public BooleanMember duplicate() {
+		return new BooleanMember(this);
+	}
 }

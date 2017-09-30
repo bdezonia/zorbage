@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -42,7 +43,9 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class OctonionFloat64Member
-	implements DoubleCoder<OctonionFloat64Member>, Allocatable<OctonionFloat64Member>,
+	implements 
+		DoubleCoder<OctonionFloat64Member>,
+		Allocatable<OctonionFloat64Member>, Duplicatable<OctonionFloat64Member>,
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>
 {
 
@@ -224,6 +227,11 @@ public final class OctonionFloat64Member
 	@Override
 	public OctonionFloat64Member allocate() {
 		return new OctonionFloat64Member();
+	}
+
+	@Override
+	public OctonionFloat64Member duplicate() {
+		return new OctonionFloat64Member(this);
 	}
 
 }

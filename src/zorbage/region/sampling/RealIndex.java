@@ -27,7 +27,9 @@
 package zorbage.region.sampling;
 
 import zorbage.type.algebra.Dimensioned;
+import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
+import zorbage.type.ctor.Allocatable;
 import zorbage.type.ctor.Duplicatable;
 
 /**
@@ -35,8 +37,11 @@ import zorbage.type.ctor.Duplicatable;
  * @author Barry DeZonia
  *
  */
-public class RealIndex implements Duplicatable<RealIndex>, Dimensioned, Settable<RealIndex>, Bounded<RealIndex> {
-	
+public class RealIndex
+	implements
+		Allocatable<RealIndex>, Duplicatable<RealIndex>, Dimensioned,
+		Settable<RealIndex>, Gettable<RealIndex>, Bounded<RealIndex>
+{
 	private final double[] index;
 	
 	public RealIndex(int numDims) {
@@ -53,6 +58,14 @@ public class RealIndex implements Duplicatable<RealIndex>, Dimensioned, Settable
 			throw new IllegalArgumentException("mismatched dims in set()");
 		for (int i = 0; i < index.length; i++)
 			index[i] = other.index[i];
+	}
+	
+	@Override
+	public void get(RealIndex other) {
+		if (index.length != other.index.length)
+			throw new IllegalArgumentException("mismatched dims in get()");
+		for (int i = 0; i < index.length; i++)
+			other.index[i] = index[i];
 	}
 	
 	public void set(int dim, double value) {
@@ -110,5 +123,10 @@ public class RealIndex implements Duplicatable<RealIndex>, Dimensioned, Settable
 	public void updateMax(RealIndex tmp) {
 		for (int i = 0; i < index.length; i++)
 			index[i] = Math.max(index[i], tmp.get(i));
+	}
+
+	@Override
+	public RealIndex allocate() {
+		return new RealIndex(index.length);
 	}
 }

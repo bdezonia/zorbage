@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.IntCoder;
@@ -42,7 +43,10 @@ import zorbage.type.storage.coder.IntCoder;
  *
  */
 public final class SignedInt32Member
-	implements IntCoder<SignedInt32Member>, Allocatable<SignedInt32Member>, Settable<SignedInt32Member>, Gettable<SignedInt32Member>
+	implements
+		IntCoder<SignedInt32Member>,
+		Allocatable<SignedInt32Member>, Duplicatable<SignedInt32Member>,
+		Settable<SignedInt32Member>, Gettable<SignedInt32Member>
 {
 
 	private int v;
@@ -110,6 +114,11 @@ public final class SignedInt32Member
 	@Override
 	public SignedInt32Member allocate() {
 		return new SignedInt32Member();
+	}
+
+	@Override
+	public SignedInt32Member duplicate() {
+		return new SignedInt32Member(this);
 	}
 
 }

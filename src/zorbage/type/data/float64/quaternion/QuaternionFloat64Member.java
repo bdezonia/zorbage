@@ -32,6 +32,7 @@ import java.io.RandomAccessFile;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.DoubleCoder;
@@ -44,7 +45,9 @@ import zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class QuaternionFloat64Member 
-	implements DoubleCoder<QuaternionFloat64Member>, Allocatable<QuaternionFloat64Member>,
+	implements
+		DoubleCoder<QuaternionFloat64Member>,
+		Allocatable<QuaternionFloat64Member>, Duplicatable<QuaternionFloat64Member>,
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>
 {
 
@@ -166,6 +169,11 @@ public final class QuaternionFloat64Member
 	@Override
 	public QuaternionFloat64Member allocate() {
 		return new QuaternionFloat64Member();
+	}
+
+	@Override
+	public QuaternionFloat64Member duplicate() {
+		return new QuaternionFloat64Member(this);
 	}
 
 }

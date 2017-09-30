@@ -30,6 +30,8 @@ import java.math.BigInteger;
 
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
+import zorbage.type.ctor.Allocatable;
+import zorbage.type.ctor.Duplicatable;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 
@@ -38,8 +40,11 @@ import zorbage.type.parse.TensorStringRepresentation;
  * @author Barry DeZonia
  *
  */
-public final class UnboundedIntMember implements Settable<UnboundedIntMember>, Gettable<UnboundedIntMember> {
-
+public final class UnboundedIntMember
+	implements
+		Allocatable<UnboundedIntMember>, Duplicatable<UnboundedIntMember>,
+		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>
+{
 	private BigInteger v;
 	
 	public UnboundedIntMember() {
@@ -80,5 +85,15 @@ public final class UnboundedIntMember implements Settable<UnboundedIntMember>, G
 
 	@Override
 	public String toString() { return "" + v; }
+
+	@Override
+	public UnboundedIntMember duplicate() {
+		return new UnboundedIntMember(this);
+	}
+
+	@Override
+	public UnboundedIntMember allocate() {
+		return new UnboundedIntMember();
+	}
 	
 }
