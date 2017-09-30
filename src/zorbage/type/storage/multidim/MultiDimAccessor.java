@@ -26,6 +26,7 @@
  */
 package zorbage.type.storage.multidim;
 
+import zorbage.type.algebra.Dimensioned;
 import zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -35,8 +36,10 @@ import zorbage.type.storage.linear.LinearStorage;
  * @param <T>
  * @param <U>
  */
-public class MultiDimAccessor<T extends LinearStorage<T,U>,U> {
-	
+public class MultiDimAccessor<T extends LinearStorage<T,U>,U>
+	implements
+		Dimensioned
+{
 	private T storage;
 	private long[] dims;
 	
@@ -48,7 +51,8 @@ public class MultiDimAccessor<T extends LinearStorage<T,U>,U> {
 	}
 
 	public T storage() { return storage; }
-	
+
+	@Override
 	public int numDimensions() {
 		return dims.length;
 	}
