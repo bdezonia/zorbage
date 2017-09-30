@@ -158,3 +158,6 @@ Right now file storage classes lock their whole buffer. we should block single
 I don't think I need bounds of samplings. One can iterate a sampling and calc
   bounds. I might need bounds for regions. One could take a region, get its
   bounds, generate a grid sampling on the bounds, and sample the region.
+Can I make real grid samplings more generic and use byte[], or short[], or float[]
+  as well? Not just long[] and double[].
+Conditional Sampling. Real or integer.
