@@ -28,7 +28,7 @@ package zorbage.region.sampling;
 
 import zorbage.type.algebra.Dimensioned;
 import zorbage.type.algebra.Settable;
-import zorbage.type.ctor.Duplicatable;
+import zorbage.type.ctor.Allocatable;
 
 /**
  * 
@@ -36,7 +36,7 @@ import zorbage.type.ctor.Duplicatable;
  *
  * @param <T>
  */
-public class SamplingDifference<T extends Duplicatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
+public class SamplingDifference<T extends Allocatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
 
 	private final Sampling<T> first;
 	private final Sampling<T> second;
@@ -49,7 +49,7 @@ public class SamplingDifference<T extends Duplicatable<T> & Dimensioned & Settab
 			throw new IllegalArgumentException("example index does not have correct dimensions");
 		this.first = first;
 		this.second = second;
-		this.example = example.duplicate();
+		this.example = example.allocate();
 	}
 	
 	@Override
@@ -75,7 +75,7 @@ public class SamplingDifference<T extends Duplicatable<T> & Dimensioned & Settab
 		
 		private Iterator() {
 			iter1 = first.iterator();
-			index = example.duplicate();
+			index = example.allocate();
 			cached = false;
 		}
 

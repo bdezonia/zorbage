@@ -29,14 +29,14 @@ package zorbage.region.sampling;
 import zorbage.condition.Condition;
 import zorbage.type.algebra.Dimensioned;
 import zorbage.type.algebra.Settable;
-import zorbage.type.ctor.Duplicatable;
+import zorbage.type.ctor.Allocatable;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class SamplingConditional<T extends Duplicatable<T> & Settable<T> & Dimensioned>
+public class SamplingConditional<T extends Allocatable<T> & Settable<T> & Dimensioned>
 	implements Sampling<T>
 {
 	private final Condition<T> condition;
@@ -46,7 +46,7 @@ public class SamplingConditional<T extends Duplicatable<T> & Settable<T> & Dimen
 	public SamplingConditional(Condition<T> condition, Sampling<T> sampling, T example) {
 		this.condition = condition;
 		this.sampling = sampling;
-		this.example = example.duplicate();
+		this.example = example.allocate();
 	}
 	
 	@Override
@@ -69,7 +69,7 @@ public class SamplingConditional<T extends Duplicatable<T> & Settable<T> & Dimen
 	private class Iterator implements SamplingIterator<T> {
 
 		private SamplingIterator<T> iter1 = sampling.iterator();
-		private T index = example.duplicate();
+		private T index = example.allocate();
 		private boolean cached = false;
 		
 		private boolean positionToNext() {

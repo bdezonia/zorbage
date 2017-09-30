@@ -27,7 +27,7 @@
 package zorbage.region.sampling;
 
 import zorbage.type.algebra.Dimensioned;
-import zorbage.type.ctor.Duplicatable;
+import zorbage.type.ctor.Allocatable;
 
 /**
  * 
@@ -35,8 +35,12 @@ import zorbage.type.ctor.Duplicatable;
  *
  */
 public class Bounds {
+	
+	private Bounds() {
+		// don't instantiate
+	}
 
-	public static <U extends Duplicatable<U> & Dimensioned & Bounded<U>>
+	public static <U extends Allocatable<U> & Dimensioned & Bounded<U>>
 		void find(Sampling<U> sampling, U min, U max)
 	{
 		if (min.numDimensions() != sampling.numDimensions() ||
@@ -45,7 +49,7 @@ public class Bounds {
 		min.setMax();
 		max.setMin();
 		SamplingIterator<U> iter = sampling.iterator();
-		U tmp = min.duplicate();
+		U tmp = min.allocate();
 		while (iter.hasNext()) {
 			iter.next(tmp);
 			min.updateMin(tmp);
