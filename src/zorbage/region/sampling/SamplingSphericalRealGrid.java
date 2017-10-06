@@ -38,6 +38,10 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 	private final double r, dr, theta, dtheta, phi, dphi;
 	private final int rCount, thetaCount, phiCount;
 	
+	// TODO: calc me from grid cell size
+	
+	private final double TOL = 0.000001;
+	
 	public SamplingSphericalRealGrid(
 			double r, double dr, int rCount,
 			double theta, double dtheta, int thetaCount,
@@ -74,9 +78,9 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 		double r1 = this.r;
 		double r2 = this.r + dr*rCount;
 		double r = RealUtils.distance3d(0, 0, 0, x, y, z);
-		if (r < Math.min(r1, r2) - 0.00000000001) return false;
-		if (r > Math.max(r1, r2) + 0.00000000001) return false;
-		if (!RealUtils.near((r - this.r) % dr, 0, 0.00000000001)) return false;
+		if (r < Math.min(r1, r2) - TOL) return false;
+		if (r > Math.max(r1, r2) + TOL) return false;
+		if (!RealUtils.near((r - this.r) % dr, 0, TOL)) return false;
 		double theta = Math.acos(z/r);
 		double theta1 = this.theta;
 		double theta2 = this.theta + dtheta * thetaCount;
@@ -84,14 +88,14 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 		while (theta1 < 0) theta1 += Math.PI * 2;
 		while (theta2 < 0) theta2 += Math.PI * 2;
 		if (theta1 < theta2) {
-			if (theta > theta2 + 0.00000000001) return false;
-			if (theta < theta1 - 0.00000000001) return false;
-			if (!RealUtils.near((theta - theta1) % dtheta, 0, 0.00000000001)) return false;
+			if (theta > theta2 + TOL) return false;
+			if (theta < theta1 - TOL) return false;
+			if (!RealUtils.near((theta - theta1) % dtheta, 0, TOL)) return false;
 		}
 		else { // theta1 > theta2 since thetaCount >= 1
-			if (theta > theta1 + 0.00000000001) return false;
-			if (theta < theta2 - 0.00000000001) return false;
-			if (!RealUtils.near((theta - theta2) % dtheta, 0, 0.00000000001)) return false;
+			if (theta > theta1 + TOL) return false;
+			if (theta < theta2 - TOL) return false;
+			if (!RealUtils.near((theta - theta2) % dtheta, 0, TOL)) return false;
 		}
 		double phi = Math.atan2(y,x);
 		double phi1 = this.phi;
@@ -100,14 +104,14 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 		while (phi1 < 0) phi1 += Math.PI * 2;
 		while (phi2 < 0) phi2 += Math.PI * 2;
 		if (phi1 < phi2) {
-			if (phi > phi2 + 0.00000000001) return false;
-			if (phi < phi1 - 0.00000000001) return false;
-			if (!RealUtils.near((phi - phi1) % dphi, 0, 0.00000000001)) return false;
+			if (phi > phi2 + TOL) return false;
+			if (phi < phi1 - TOL) return false;
+			if (!RealUtils.near((phi - phi1) % dphi, 0, TOL)) return false;
 		}
 		else { // phi2 < phi1 since phiCount > 0
-			if (phi > phi1 + 0.00000000001) return false;
-			if (phi < phi2 - 0.00000000001) return false;
-			if (!RealUtils.near((phi - phi2) % dphi, 0, 0.00000000001)) return false;
+			if (phi > phi1 + TOL) return false;
+			if (phi < phi2 - TOL) return false;
+			if (!RealUtils.near((phi - phi2) % dphi, 0, TOL)) return false;
 		}
 		return true;
 	}

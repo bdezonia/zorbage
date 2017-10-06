@@ -40,6 +40,10 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 	private final RealIndex maxPt;
 	private final IntegerIndex dimCounts;
 	
+	// TODO: calc me from grid cell size
+	
+	private final double TOL = 0.000001;
+	
 	public SamplingCartesianRealGrid(double[] point1, double[] point2, long[] counts) {
 		if ((point1.length != point2.length) || (point1.length != counts.length))
 			throw new IllegalArgumentException("mismatched dimensions of input points");
@@ -80,7 +84,7 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 		if (samplePoint.numDimensions() != numD)
 			throw new IllegalArgumentException("contains() expects input point to have same dimension as sampling");
 		for (int i = 0; i < numD; i++) {
-			if (!RealUtils.near((samplePoint.get(i) - minPt.get(i)) % ((maxPt.get(i)-minPt.get(i)) / dimCounts.get(i)), 0, 0.00000000001))
+			if (!RealUtils.near((samplePoint.get(i) - minPt.get(i)) % ((maxPt.get(i)-minPt.get(i)) / dimCounts.get(i)), 0, TOL))
 				return false;
 		}
 		return true;
