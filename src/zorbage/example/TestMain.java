@@ -330,6 +330,10 @@ public class TestMain {
 	public static void testQuats() {
 		new QuaternionExample().run();
 	}
+
+	public static void testLUMatrix() {
+		new LUDecompExample().run();
+	}
 	
 	public static void main(String[] args) {
 		testInts();
@@ -351,6 +355,7 @@ public class TestMain {
 		testFileStorage();
 		testSpeed();
 		//testSize(); // very slow
+		testLUMatrix();
 	}
 
 }
