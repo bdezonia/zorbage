@@ -201,3 +201,4 @@ I can write this library in C++ for efficiency.
 Make Storage class allocate method look at how big the request is and
   how big the type is and how much ram is available and allocate an
   ArrayStorage or a FileStorage as needed.
+Test LUDecomp example

@@ -356,6 +356,9 @@ public class TestMain {
 		testSpeed();
 		//testSize(); // very slow
 		testLUMatrix();
+		
+		// TODO when go from byte backed to long backed will need to remove this test due to speed
+		// new NumberTest().run();
 	}
 
 }
