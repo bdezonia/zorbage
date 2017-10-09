@@ -357,7 +357,7 @@ public class UnsignedInt128Group
 		if (count < 0)
 			bitShiftRight(Math.abs(count), a, b);
 		else if (count > 127)
-			assign(b, UnsignedInt128Member.ZERO);
+			assign(UnsignedInt128Member.ZERO, b);
 		else {
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
 			for (int i = 0; i < count; i++) {
@@ -374,7 +374,7 @@ public class UnsignedInt128Group
 		if (count < 0)
 			bitShiftLeft(Math.abs(count), a, b);
 		else if (count > 127)
-			assign(b, UnsignedInt128Member.ZERO);
+			assign(UnsignedInt128Member.ZERO, b);
 		else {
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
 			for (int i = 0; i < count; i++) {
