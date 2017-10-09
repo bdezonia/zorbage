@@ -45,7 +45,9 @@ public class UnsignedInt128Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	
+	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
+	private static final UnsignedInt128Member ONE = new UnsignedInt128Member((byte)0,(byte)1);
+
 	@Override
 	public UnsignedInt128Member construct() {
 		return new UnsignedInt128Member();
@@ -138,7 +140,7 @@ public class UnsignedInt128Group
 	public void power(int power, UnsignedInt128Member a, UnsignedInt128Member b) {
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		UnsignedInt128Member tmp = new UnsignedInt128Member(UnsignedInt128Member.ONE);
+		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
 		if (power > 0) {
 			for (int i = 1; i <= power; i++)
 				multiply(tmp, a, tmp);
@@ -215,7 +217,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public int signum(UnsignedInt128Member a) {
-		return compare(a,UnsignedInt128Member.ZERO);
+		return compare(a,ZERO);
 	}
 
 	@Override
@@ -246,7 +248,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void div(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d) {
-		if (isEqual(b, UnsignedInt128Member.ZERO))
+		if (isEqual(b, ZERO))
 			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
 		// TODO Auto-generated method stub
 		throw new IllegalArgumentException("not implemented yet");
@@ -254,7 +256,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void mod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member m) {
-		if (isEqual(b, UnsignedInt128Member.ZERO))
+		if (isEqual(b, ZERO))
 			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
 		// TODO Auto-generated method stub
 		throw new IllegalArgumentException("not implemented yet");
@@ -264,7 +266,7 @@ public class UnsignedInt128Group
 	
 	@Override
 	public void divMod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
-		if (isEqual(b, UnsignedInt128Member.ZERO))
+		if (isEqual(b, ZERO))
 			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
 		div(a,b,d);
 		mod(a,b,m);
@@ -296,23 +298,23 @@ public class UnsignedInt128Group
 
 	@Override
 	public void pred(UnsignedInt128Member a, UnsignedInt128Member b) {
-		subtract(a,UnsignedInt128Member.ONE,b);
+		subtract(a,ONE,b);
 	}
 
 	@Override
 	public void succ(UnsignedInt128Member a, UnsignedInt128Member b) {
-		add(a,UnsignedInt128Member.ONE,b);
+		add(a,ONE,b);
 	}
 
 	@Override
 	public void pow(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		int cmp = compare(b,UnsignedInt128Member.ZERO);
+		int cmp = compare(b,ZERO);
 		if (cmp < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		UnsignedInt128Member tmp = new UnsignedInt128Member(UnsignedInt128Member.ONE);
+		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
 		if (cmp > 0) {
 			UnsignedInt128Member pow = new UnsignedInt128Member(b);
-			while (compare(pow, UnsignedInt128Member.ZERO) > 0) {
+			while (compare(pow, ZERO) > 0) {
 				multiply(tmp, a, tmp);
 				pred(pow,pow);
 			}
@@ -357,7 +359,7 @@ public class UnsignedInt128Group
 		if (count < 0)
 			bitShiftRight(Math.abs(count), a, b);
 		else if (count > 127)
-			assign(UnsignedInt128Member.ZERO, b);
+			assign(ZERO, b);
 		else {
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
 			for (int i = 0; i < count; i++) {
@@ -374,7 +376,7 @@ public class UnsignedInt128Group
 		if (count < 0)
 			bitShiftLeft(Math.abs(count), a, b);
 		else if (count > 127)
-			assign(UnsignedInt128Member.ZERO, b);
+			assign(ZERO, b);
 		else {
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
 			for (int i = 0; i < count; i++) {
@@ -416,7 +418,7 @@ public class UnsignedInt128Group
 		UnsignedInt128Member aTmp = new UnsignedInt128Member(a);
 		UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
 		UnsignedInt128Member t = new UnsignedInt128Member();
-		while (compare(bTmp, UnsignedInt128Member.ZERO) != 0) {
+		while (compare(bTmp, ZERO) != 0) {
 			assign(bTmp, t);
 			mod(aTmp,bTmp,bTmp);
 			assign(t, aTmp);

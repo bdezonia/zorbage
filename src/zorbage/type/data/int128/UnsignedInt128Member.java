@@ -51,8 +51,6 @@ public final class UnsignedInt128Member
 {
 	//static final BigInteger MAX = new BigInteger("340282366920938463463374607431768211456");
 	static final BigInteger MAX = new BigInteger("65536");
-	public static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
-	public static final UnsignedInt128Member ONE = new UnsignedInt128Member((byte)0,(byte)1);
 
 	// TODO convert byte references to long references
 	
@@ -78,7 +76,7 @@ public final class UnsignedInt128Member
 		setV(r);
 	}
 
-	private UnsignedInt128Member(byte hi, byte lo) {
+	UnsignedInt128Member(byte hi, byte lo) {
 		this.lo = lo;
 		this.hi = hi;
 	}

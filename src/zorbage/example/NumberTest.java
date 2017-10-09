@@ -51,12 +51,13 @@ public class NumberTest {
 	private void addOneAndVTest() {
 		ArrayList<Long> list = new ArrayList<Long>();
 		
+		UnsignedInt128Member zero = uint128.construct();
 		UnsignedInt128Member min = uint128.construct();
 		UnsignedInt128Member max = uint128.construct();
 		uint128.minBound(min);
 		uint128.maxBound(max);
 		
-		if (!uint128.isEqual(min, UnsignedInt128Member.ZERO))
+		if (!uint128.isEqual(min, zero))
 			System.out.println("min bound is wrong!!!!!!!");
 		
 		UnsignedInt128Member v = uint128.construct();
@@ -67,7 +68,7 @@ public class NumberTest {
 		list.add(v.v().longValue());
 
 		uint128.succ(v, v);
-		if (uint128.isEqual(v, UnsignedInt128Member.ZERO))
+		if (uint128.isEqual(v, zero))
 			System.out.println("OVERFLOW WAS CORRECT");
 		else
 			System.out.println("OVERFLOW WAS WRONG "+v.v());

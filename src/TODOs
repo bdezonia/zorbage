@@ -202,3 +202,4 @@ Make Storage class allocate method look at how big the request is and
   how big the type is and how much ram is available and allocate an
   ArrayStorage or a FileStorage as needed.
 Test LUDecomp example
+When done writing 128 bit unsigned integers test speed versus imglib
