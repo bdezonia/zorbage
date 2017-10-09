@@ -44,6 +44,15 @@ public class UnsignedInt128Group
 		Random<UnsignedInt128Member>
 {
 
+	// TODO
+	// 1) subtract
+	// 2) multiply
+	// 3) div
+	// 4) mod
+	// 5) convert byte references and constants to long references and constants
+	// 6) speed test versus imglib
+	// 7) optimize methods
+	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
 	private static final UnsignedInt128Member ONE = new UnsignedInt128Member((byte)0,(byte)1);
