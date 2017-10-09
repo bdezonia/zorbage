@@ -52,7 +52,14 @@ public final class UnsignedInt128Member
 	//static final BigInteger MAX = new BigInteger("340282366920938463463374607431768211456");
 	static final BigInteger MAX = new BigInteger("65536");
 
-	// TODO convert byte references to long references
+	// TODO
+	// 1) subtract
+	// 2) multiply
+	// 3) div
+	// 4) mod
+	// 5) convert byte references and constants to long references and constants
+	// 6) speed test versus imglib
+	// 7) optimize methods
 	
 	byte lo, hi; // package access is necessary so group can manipulate values
 	
