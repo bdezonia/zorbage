@@ -141,6 +141,8 @@ add bounds for samplings? translate and maybe scale and maybe rotate them?
   embedded 3d cylindrical grid and uses those local coords to query the
   contains() method of the cylindrical grid. This is cool but requires
   some thought in how to clearly specify an embedding of grid in 3d space.
+  One thought: you embed a grid in 3d space by taking a point and three
+  orthonormal direction vectors giving positive x,y,z axes.
 Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
   LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
