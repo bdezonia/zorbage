@@ -203,3 +203,9 @@ Make Storage class allocate method look at how big the request is and
   ArrayStorage or a FileStorage as needed.
 Test LUDecomp example
 When done writing 128 bit unsigned integers test speed versus imglib
+Can I optimize 128 bit by just adding/subtracting the pieces and predict
+  the carrys/borrows? test.
+Instead of condition2<a,b>, condition3<a,b,c>, etc. do condition<tuple2<a,b>>.
+  This is just a maybe idea. Haskell has tuple1, tuple2, etc. up to like
+  17. It's okay if I do that too. Just not sure I want to.
+  problem with condition1, condition2: multiple and or not xor classes
