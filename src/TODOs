@@ -77,8 +77,6 @@ Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost,
 rmodules have right and left subtypes: see that AWchap3.pdf file I
   downloaded
 make arraybit support multibit value encodings
-do LU decomp algorithm example to test out api: example code can be
-  found on my desktop
 Add some unsigned types and some bit types like 4 and 12. And 128 bit
   ints and maybe my floating point implementation.
 Notice that any type can also implement the ByteCoder interface. But not
@@ -203,7 +201,6 @@ I can write this library in C++ for efficiency.
 Make Storage class allocate method look at how big the request is and
   how big the type is and how much ram is available and allocate an
   ArrayStorage or a FileStorage as needed.
-Test LUDecomp example
 When done writing 128 bit unsigned integers test speed versus imglib
 Can I optimize 128 bit by just adding/subtracting the pieces and predict
   the carrys/borrows? test.
