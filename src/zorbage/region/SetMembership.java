@@ -26,16 +26,14 @@
  */
 package zorbage.region;
 
-import zorbage.type.algebra.Dimensioned;
-
 /**
  * 
  * @author Barry DeZonia
  *
  * @param <T>
  */
-public interface Region<T> extends Dimensioned, SetMembership<T> {
+public interface SetMembership<T> {
 	
-	void bounds(T min, T max);
+	boolean contains(T value);
 	
 }

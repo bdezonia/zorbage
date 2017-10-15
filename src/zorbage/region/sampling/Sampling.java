@@ -26,6 +26,7 @@
  */
 package zorbage.region.sampling;
 
+import zorbage.region.SetMembership;
 import zorbage.type.algebra.Dimensioned;
 
 /**
@@ -34,9 +35,7 @@ import zorbage.type.algebra.Dimensioned;
  *
  * @param <T>
  */
-public interface Sampling<T> extends Dimensioned {
-	
-	boolean contains(T samplePoint);
+public interface Sampling<T> extends Dimensioned, SetMembership<T> {
 	
 	SamplingIterator<T> iterator();
 
