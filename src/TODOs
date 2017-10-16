@@ -193,7 +193,7 @@ Constructors are functions like function1, function2, etc. that take
 Conditions can be like functions and ctors: condition1, condition2, etc.
 How does previous line affect my current definitions of and or not classses?
 Do we get rid of rigid algebraic type hierarchy and define skewfield for
-  intance to have multiply function and x function and y function etc.
+  instance to have multiply function and x function and y function etc.
   Then Octonions aren't quite a skewfield. But they support most of it's
   operations and can be passed to methods that use a subset of skewfield
   operations.
@@ -209,3 +209,4 @@ Instead of condition2<a,b>, condition3<a,b,c>, etc. do condition<tuple2<a,b>>.
   17. It's okay if I do that too. Just not sure I want to.
   problem with condition1, condition2: multiple and or not xor classes
 Notice that Condition<T> and SetMembership<T> are essentially the same concept.
+Support more coord system grids: look up types in engineering and math books
