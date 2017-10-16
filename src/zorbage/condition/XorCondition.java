@@ -46,7 +46,7 @@ public class XorCondition<T> implements Condition<T> {
 	public boolean isTrue(T value) {
 		boolean aResult = a.isTrue(value);
 		boolean bResult = b.isTrue(value);
-		return (aResult && !bResult) || (bResult && !aResult);
+		return (aResult && !bResult) || (!aResult && bResult);
 	}
 
 }
