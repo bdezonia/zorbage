@@ -175,7 +175,7 @@ Weird idea: make a group with methods that are (static?) Functions that
   approach to java with all pass by reference and efficient. But also functional.
   And supporting more than the typical primitive types.
 Do I need to locate regions and samplings in algebra hierarchy and define
-  their group? This would eliminate the double definition of Bounded.
+  their group?
 Tricky definition: the function that takes an average. It has to take
   as input a set of functions that match in param count and type. And
   then applied for a snapshot of params to the full set and added and
@@ -191,7 +191,7 @@ Constructors are functions like function1, function2, etc. that take
   various parameters and return a type. A group can define the ctors
   it provides.
 Conditions can be like functions and ctors: condition1, condition2, etc.
-Make and, or, xor, and not conditions. How does previous line affect these?
+How does previous line affect my current definitions of and or not classses?
 Do we get rid of rigid algebraic type hierarchy and define skewfield for
   intance to have multiply function and x function and y function etc.
   Then Octonions aren't quite a skewfield. But they support most of it's
@@ -208,3 +208,4 @@ Instead of condition2<a,b>, condition3<a,b,c>, etc. do condition<tuple2<a,b>>.
   This is just a maybe idea. Haskell has tuple1, tuple2, etc. up to like
   17. It's okay if I do that too. Just not sure I want to.
   problem with condition1, condition2: multiple and or not xor classes
+Notice that Condition<T> and SetMembership<T> are essentially the same concept.
