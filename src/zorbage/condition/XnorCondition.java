@@ -25,26 +25,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 package zorbage.condition;
-
 /**
  * 
  * @author Barry DeZonia
  *
  * @param <T>
  */
-public class AndNotCondition<T> implements Condition<T> {
+public class XnorCondition<T> implements Condition<T> {
 
 	private final Condition<T> a;
 	private final Condition<T> b;
 	
-	public AndNotCondition(Condition<T> a, Condition<T> b) {
+	public XnorCondition(Condition<T> a, Condition<T> b) {
 		this.a = a;
 		this.b = b;
 	}
 	
 	@Override
 	public boolean isTrue(T value) {
-		return a.isTrue(value) && !b.isTrue(value);
+		boolean aResult = a.isTrue(value);
+		boolean bResult = b.isTrue(value);
+		return (aResult && bResult) || (!aResult && !bResult);
 	}
 
 }
