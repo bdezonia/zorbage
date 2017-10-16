@@ -40,7 +40,7 @@ import zorbage.type.ctor.Duplicatable;
 public class RealIndex
 	implements
 		Allocatable<RealIndex>, Duplicatable<RealIndex>, Dimensioned,
-		Settable<RealIndex>, Gettable<RealIndex>, Bounded<RealIndex>
+		Settable<RealIndex>, Gettable<RealIndex>, SupportsBoundsCalc<RealIndex>
 {
 	private final double[] index;
 	

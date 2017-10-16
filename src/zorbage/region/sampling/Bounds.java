@@ -40,7 +40,7 @@ public class Bounds {
 		// don't instantiate
 	}
 
-	public static <U extends Allocatable<U> & Dimensioned & Bounded<U>>
+	public static <U extends Allocatable<U> & Dimensioned & SupportsBoundsCalc<U>>
 		void find(Sampling<U> sampling, U min, U max)
 	{
 		if (min.numDimensions() != sampling.numDimensions() ||

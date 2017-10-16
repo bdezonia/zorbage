@@ -34,7 +34,7 @@ package zorbage.region.sampling;
  *
  * @param <U>
  */
-public interface Bounded<U> {
+public interface SupportsBoundsCalc<U> {
 
 	void setMax();
 	void setMin();

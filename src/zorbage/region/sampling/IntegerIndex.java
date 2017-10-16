@@ -40,7 +40,7 @@ import zorbage.type.ctor.Duplicatable;
 public class IntegerIndex
 	implements
 		Allocatable<IntegerIndex>, Duplicatable<IntegerIndex>, Dimensioned,
-		Settable<IntegerIndex>, Gettable<IntegerIndex>, Bounded<IntegerIndex>
+		Settable<IntegerIndex>, Gettable<IntegerIndex>, SupportsBoundsCalc<IntegerIndex>
 {
 	private final long[] index;
 	
