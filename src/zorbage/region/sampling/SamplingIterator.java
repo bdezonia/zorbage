@@ -27,6 +27,8 @@
 package zorbage.region.sampling;
 
 /**
+ * {@link SamplingIterator} defines how to iterate {@link Sampling}s. Each Sampling
+ * should fill the T value passed to next().
  * 
  * @author Barry DeZonia
  *

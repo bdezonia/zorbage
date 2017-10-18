@@ -31,6 +31,8 @@ import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 
 /**
+ * {@link SamplingSymmetricDifference} is a {@link Sampling} that iterates the set of points
+ * that are disjoint between two other Samplings. (A-B) U (B-A),
  * 
  * @author Barry DeZonia
  *

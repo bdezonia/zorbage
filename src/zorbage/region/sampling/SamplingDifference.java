@@ -32,6 +32,10 @@ import zorbage.type.ctor.Allocatable;
 
 /**
  * 
+ * {@link SamplingDifference} is a {@link Sampling} that includes the points of a first Sampling
+ * that are not present in a second Sampling. Sometimes known as a complement of A with respect to
+ * B. This class should not be confused with {@link SamplingComplement}.
+ * 
  * @author Barry DeZonia
  *
  * @param <T>

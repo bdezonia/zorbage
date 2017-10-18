@@ -29,6 +29,10 @@ package zorbage.region.sampling;
 import zorbage.util.RealUtils;
 
 /**
+ * {@link SamplingPolarGrid} is a 2-d {@link Sampling} in real polar space.
+ * It defines the grid origin's r, and theta coordinates plus spacings and
+ * counts. This allows one to build polar coordinate grids that are partially
+ * complete if so desired.
  * 
  * @author Barry DeZonia
  *

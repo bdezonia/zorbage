@@ -32,6 +32,8 @@ import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 
 /**
+ * {@link SamplingConditional} is a {@link Sampling} that includes the points of another
+ * Sampling that match a specified {@link Condition}.
  * 
  * @author Barry DeZonia
  *

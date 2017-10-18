@@ -28,6 +28,9 @@ package zorbage.region.sampling;
 
 /**
  * 
+ * {@link SamplingCartesianIntegerGrid } is an n-dimensional {@link Sampling} that spans a user
+ * defined region of Euclidean space. It is defined by two n-dimensional integer space points. 
+ * 
  * @author Barry DeZonia
  *
  */

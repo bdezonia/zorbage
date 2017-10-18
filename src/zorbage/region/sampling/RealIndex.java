@@ -33,6 +33,8 @@ import zorbage.type.ctor.Allocatable;
 import zorbage.type.ctor.Duplicatable;
 
 /**
+ * {@link RealIndex} defines an n-dimensional real space point. Uses doubles as the basis
+ * rather than floats;
  * 
  * @author Barry DeZonia
  *

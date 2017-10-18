@@ -29,7 +29,8 @@ package zorbage.region.sampling;
 /**
  * SamplingComplement is a sampling that represents the difference
  * between a sampling's bounds and it's actual members. This kind of
- * relationship only works well in integer indexed space.
+ * relationship only works well in integer indexed space.  This class
+ * should not be confused with {@link SamplingDifference}.
  * 
  * @author Barry DeZonia
  *

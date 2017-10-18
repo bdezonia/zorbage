@@ -33,6 +33,8 @@ import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Duplicatable;
 
 /**
+ * {@link SamplingGeneral} is a {@link Sampling} where the point coordinates are added
+ * individually and can include grids of any shape.
  * 
  * @author Barry DeZonia
  *
@@ -76,7 +78,7 @@ public class SamplingGeneral<U extends Duplicatable<U> & Dimensioned & Settable<
 	}
 	
 	/**
-	 * Create a SamplingGeneral from any Sampling.
+	 * Create a {@link SamplingGeneral} from any other (possibly compound) {@link Sampling}.
 	 * 
 	 * @param other
 	 * @param type

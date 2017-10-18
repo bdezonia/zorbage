@@ -31,6 +31,8 @@ import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 
 /**
+ * {@link SamplingUnion} is a {@link Sampling} that iterates the set of points
+ * that make up the sum of the two sets of points of two other Samplings. A U B,
  * 
  * @author Barry DeZonia
  *

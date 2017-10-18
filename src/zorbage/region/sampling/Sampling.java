@@ -30,6 +30,8 @@ import zorbage.region.SetMembership;
 import zorbage.type.algebra.Dimensioned;
 
 /**
+ * {@link Sampling} defines the base class for samplings of all types. It
+ * is defines a set membership method and an iterator method.
  * 
  * @author Barry DeZonia
  *

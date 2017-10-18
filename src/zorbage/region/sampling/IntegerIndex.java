@@ -33,7 +33,9 @@ import zorbage.type.ctor.Allocatable;
 import zorbage.type.ctor.Duplicatable;
 
 /**
- * 
+ * {@link IntegerIndex} defines an n-dimensional integer space point. Uses longs as the basis
+ * rather than ints;
+ *
  * @author Barry DeZonia
  *
  */

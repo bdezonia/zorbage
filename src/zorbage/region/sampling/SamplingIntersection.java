@@ -31,6 +31,8 @@ import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 
 /**
+ * {@link SamplingIntersection} is a {@link Sampling} that iterated the set of points
+ * common to two other Samplings.
  * 
  * @author Barry DeZonia
  *

@@ -30,6 +30,10 @@ import zorbage.util.RealUtils;
 
 /**
  * 
+ * {@link SamplingCartesianRealGrid } is an n-dimensional {@link Sampling} that spans a user
+ * defined region of Euclidean space. It is defined by two n-dimensional real space points and
+ * a set of n counts that determine the spacing along each dimensions.
+ * 
  * @author Barry DeZonia
  *
  */

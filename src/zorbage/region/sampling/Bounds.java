@@ -30,7 +30,8 @@ import zorbage.type.algebra.Dimensioned;
 import zorbage.type.ctor.Allocatable;
 
 /**
- * 
+ * {@link Bounds} is a private class with a static public calculation method for finding
+ * the real or integer space bounds of a {@link Sampling}.
  * @author Barry DeZonia
  *
  */
@@ -40,6 +41,13 @@ public class Bounds {
 		// don't instantiate
 	}
 
+	/**
+	 * Find the bounds of a sampling.
+	 * 
+	 * @param sampling
+	 * @param min
+	 * @param max
+	 */
 	public static <U extends Allocatable<U> & Dimensioned & SupportsBoundsCalc<U>>
 		void find(Sampling<U> sampling, U min, U max)
 	{
