@@ -53,6 +53,7 @@ public class LUDecompExample {
 		Float64MatrixMember a = dblMat.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
 		dbl.unity(val);
 		a.setV(0, 0, val);
+		a.setV(0, 1, val);
 		a.setV(1, 1, val);
 		a.setV(1, 2, val);
 		a.setV(2, 0, val);
@@ -77,82 +78,82 @@ public class LUDecompExample {
 		
 		final long n = x.length();
 		
-        // decomposition of matrix
+		// decomposition of matrix
 
 		Float64MatrixMember lu = dblMat.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-        Float64Member sum = dbl.construct();
-        Float64Member value1 = dbl.construct();
-        Float64Member value2 = dbl.construct();
-        Float64Member term = dbl.construct();
-        Float64Member tmp = dbl.construct();
-        for (long i = 0; i < n; i++)
-        {
-            for (long j = i; j < n; j++)
-            {
-                sum.setV(0);
-                for (long k = 0; k < i; k++) {
-                	dbl.add(sum, term, sum);
-                    lu.v(i, k, value1);
-                    lu.v(k, j, value2);
-                    dbl.add(value1, value2, term);
-                	dbl.add(sum, term, sum);
-                }
-                a.v(i, j, term);
-                dbl.subtract(term, sum, term);
-                lu.setV(i, j, term);
-            }
-            for (long j = i + 1; j < n; j++)
-            {
-                sum.setV(0);
-                for (long k = 0; k < i; k++) {
-                	lu.v(j, k, value1);
-                	lu.v(k, i, value2);
-                	dbl.multiply(value1, value2, term);
-                	dbl.add(sum, term, sum);
-                }
-                dbl.unity(value1);
-                dbl.divide(value1, tmp, value1);
-                a.v(j, i, tmp);
-                dbl.subtract(tmp, sum, value2);
-                dbl.multiply(value1, value2, term);
-                lu.setV(j, i, term);
-            }
-        }
-        
-        // find solution of Ly = b
-        Float64VectorMember y = dblVec.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
-        for (long i = 0; i < n; i++)
-        {
-            sum.setV(0);
-            for (long k = 0; k < i; k++) {
-            	lu.v(i, k, value1);
-            	y.v(k, value2);
-            	dbl.multiply(value1, value2, term);
-            	dbl.add(sum, term, sum);
-            }
-            b.v(i, value1);
-            dbl.subtract(value1, sum, term);
-            y.setV(i, term);
-        }
+		Float64Member sum = dbl.construct();
+		Float64Member value1 = dbl.construct();
+		Float64Member value2 = dbl.construct();
+		Float64Member term = dbl.construct();
+		Float64Member tmp = dbl.construct();
+		for (long i = 0; i < n; i++)
+		{
+			for (long j = i; j < n; j++)
+			{
+				sum.setV(0);
+				for (long k = 0; k < i; k++) {
+					lu.v(i, k, value1);
+					lu.v(k, j, value2);
+					dbl.multiply(value1, value2, term);
+					dbl.add(sum, term, sum);
+				}
+				a.v(i, j, term);
+				dbl.subtract(term, sum, term);
+				lu.setV(i, j, term);
+			}
+			for (long j = i + 1; j < n; j++)
+			{
+				sum.setV(0);
+				for (long k = 0; k < i; k++) {
+					lu.v(j, k, value1);
+					lu.v(k, i, value2);
+					dbl.multiply(value1, value2, term);
+					dbl.add(sum, term, sum);
+				}
+				dbl.unity(value1);
+				lu.v(i, i, tmp);
+				dbl.divide(value1, tmp, value1);
+				a.v(j, i, tmp);
+				dbl.subtract(tmp, sum, value2);
+				dbl.multiply(value1, value2, term);
+				lu.setV(j, i, term);
+			}
+		}
 
-        // find solution of Ux = y
-        for (long i = n - 1; i >= 0; i--)
-        {
-            sum.setV(0);
-            for (long k = i + 1; k < n; k++) {
-            	lu.v(i, k, value1);
-            	x.v(k, value2);
-            	dbl.multiply(value1, value2, term);
-            	dbl.add(sum, term, sum);
-            }
-            dbl.unity(tmp);
-            lu.v(i, i, value1);
-            dbl.divide(tmp, value1, value1);
-            y.v(i, value2);
-            dbl.subtract(value2, sum, value2);
-            dbl.multiply(value1, value2, term);
-            x.setV(i, term);
-        }
+		// find solution of Ly = b
+		Float64VectorMember y = dblVec.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		for (long i = 0; i < n; i++)
+		{
+			sum.setV(0);
+			for (long k = 0; k < i; k++) {
+				lu.v(i, k, value1);
+				y.v(k, value2);
+				dbl.multiply(value1, value2, term);
+				dbl.add(sum, term, sum);
+			}
+			b.v(i, value1);
+			dbl.subtract(value1, sum, term);
+			y.setV(i, term);
+		}
+
+		// find solution of Ux = y
+		for (long i = n - 1; i >= 0; i--)
+		{
+			sum.setV(0);
+			for (long k = i + 1; k < n; k++) {
+				lu.v(i, k, value1);
+				x.v(k, value2);
+				dbl.multiply(value1, value2, term);
+				dbl.add(sum, term, sum);
+			}
+			dbl.unity(tmp);
+			lu.v(i, i, value1);
+			dbl.divide(tmp, value1, value1);
+			y.v(i, value2);
+			dbl.subtract(value2, sum, value2);
+			dbl.multiply(value1, value2, term);
+			x.setV(i, term);
+		}
 	}
 
 }
