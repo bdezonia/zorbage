@@ -81,6 +81,8 @@ public class RealUtils {
 	public static double distanceNd(double[] p1, double[] p2, double[] scratchSpace) {
 		if (p1.length != p2.length || p1.length != scratchSpace.length)
 			throw new IllegalArgumentException("mismatched dimenions in distanceNd()");
+		if (p1 == scratchSpace || p2 == scratchSpace)
+			throw new IllegalArgumentException("scratch space must be dofferent from inputs");
 		if (p1.length == 0) return 0;
 		for (int i = 0; i < p1.length; i++) {
 			scratchSpace[i] = Math.abs(p2[i] - p1[i]);
