@@ -29,6 +29,7 @@ package zorbage.example;
 import zorbage.type.data.float64.quaternion.QuaternionFloat64Group;
 import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import zorbage.type.data.float64.real.Float64Member;
+import zorbage.util.RealUtils;
 
 /**
  * 
@@ -37,11 +38,9 @@ import zorbage.type.data.float64.real.Float64Member;
  */
 public class QuaternionExample {
 
-	private boolean near(double d1, double d2) {
-		return Math.abs(d1-d2) < 0.000000000000001;
-	}
-	
 	public void run() {
+		final double tol = 0.000000000001;
+		
 		QuaternionFloat64Group qdbl = new QuaternionFloat64Group();
 		
 		QuaternionFloat64Member q1 = qdbl.construct();
@@ -85,7 +84,7 @@ public class QuaternionExample {
 		
 		qdbl.divide(q3, q2, q1);
 
-		System.out.println("Quaternion divide worked: " + (near(q1.r(),1) && near(q1.i(),-2) && near(q1.j(),3) && near(q1.k(),2)));
+		System.out.println("Quaternion divide worked: " + (RealUtils.near(q1.r(),1,tol) && RealUtils.near(q1.i(),-2, tol) && RealUtils.near(q1.j(),3,tol) && RealUtils.near(q1.k(),2,tol)));
 		
 	}
 }
