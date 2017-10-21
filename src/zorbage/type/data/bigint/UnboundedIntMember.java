@@ -84,7 +84,7 @@ public final class UnboundedIntMember
 	}
 
 	@Override
-	public String toString() { return "" + v; }
+	public String toString() { return v.toString(); }
 
 	@Override
 	public UnboundedIntMember duplicate() {

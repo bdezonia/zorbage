@@ -84,7 +84,7 @@ public final class SignedInt8Member
 	}
 
 	@Override
-	public String toString() { return "" + v; }
+	public String toString() { return String.valueOf(v); }
 
 	@Override
 	public int byteCount() {
