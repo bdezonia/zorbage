@@ -84,9 +84,7 @@ public final class Float64Member
 	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(v);
-		return builder.toString();
+		return String.valueOf(v);
 	}
 
 	@Override
