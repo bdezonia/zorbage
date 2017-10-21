@@ -212,3 +212,6 @@ Notice that Condition<T> and SetMembership<T> are essentially the same concept.
 Support more coord system grids: look up types in engineering and math books
 Use apache commons to write my DFT example. Test speed and memory use between
   the two libraries
+add more operations: skew, kurtosis, other moments, etc.
+FileStorage: have multiple buffers and configurable or calculated buffer sizes
+  based upon numElements and percents etc.
