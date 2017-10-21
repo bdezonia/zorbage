@@ -26,6 +26,7 @@
  */
 package zorbage.region;
 
+import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Dimensioned;
 
 /**
@@ -34,8 +35,6 @@ import zorbage.type.algebra.Dimensioned;
  *
  * @param <T>
  */
-public interface Region<T> extends Dimensioned, SetMembership<T> {
-	
-	void bounds(T min, T max);
+public interface Region<T> extends Dimensioned, SetMembership<T>, Bounded<T> {
 	
 }

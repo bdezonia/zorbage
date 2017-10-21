@@ -59,13 +59,19 @@ public class RegionCircle implements Region<RealIndex> {
 	}
 
 	@Override
-	public void bounds(RealIndex min, RealIndex max) {
-		if (min.numDimensions() != 2 || max.numDimensions() != 2)
-			throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::bounds()");
-		min.set(0, cx - radius);
-		min.set(1, cy - radius);
+	public void maxBound(RealIndex max) {
+		if (max.numDimensions() != 2)
+			throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::maxBound()");
 		max.set(0, cx + radius);
 		max.set(1, cy + radius);
+	}
+
+	@Override
+	public void minBound(RealIndex min) {
+		if (min.numDimensions() != 2)
+			throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::minBound()");
+		min.set(0, cx - radius);
+		min.set(1, cy - radius);
 	}
 
 }
