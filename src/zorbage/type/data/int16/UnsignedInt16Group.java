@@ -24,75 +24,75 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.int8;
+package zorbage.type.data.int16;
 
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
-import zorbage.type.data.int8.UnsignedInt8Member;
+import zorbage.type.data.int16.UnsignedInt16Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class UnsignedInt8Group
+public class UnsignedInt16Group
   implements
-    Integer<UnsignedInt8Group, UnsignedInt8Member>,
-    Bounded<UnsignedInt8Member>,
-    BitOperations<UnsignedInt8Member>,
-    Random<UnsignedInt8Member>
+    Integer<UnsignedInt16Group, UnsignedInt16Member>,
+    Bounded<UnsignedInt16Member>,
+    BitOperations<UnsignedInt16Member>,
+    Random<UnsignedInt16Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	private static final UnsignedInt8Member ZERO = new UnsignedInt8Member();
+	private static final UnsignedInt16Member ZERO = new UnsignedInt16Member();
 	
-	public UnsignedInt8Group() {
+	public UnsignedInt16Group() {
 	}
 	
 	@Override
-	public boolean isEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public boolean isEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
 		return a.v == b.v;
 	}
 
 	@Override
-	public boolean isNotEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public boolean isNotEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
 		return a.v != b.v;
 	}
 
 	@Override
-	public UnsignedInt8Member construct() {
-		return new UnsignedInt8Member();
+	public UnsignedInt16Member construct() {
+		return new UnsignedInt16Member();
 	}
 
 	@Override
-	public UnsignedInt8Member construct(UnsignedInt8Member other) {
-		return new UnsignedInt8Member(other);
+	public UnsignedInt16Member construct(UnsignedInt16Member other) {
+		return new UnsignedInt16Member(other);
 	}
 
 	@Override
-	public UnsignedInt8Member construct(String s) {
-		return new UnsignedInt8Member(s);
+	public UnsignedInt16Member construct(String s) {
+		return new UnsignedInt16Member(s);
 	}
 
 	@Override
-	public void assign(UnsignedInt8Member from, UnsignedInt8Member to) {
+	public void assign(UnsignedInt16Member from, UnsignedInt16Member to) {
 		to.setV( from.v );
 	}
 
 	@Override
-	public void abs(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void abs(UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( a.v );
 	}
 
 	@Override
-	public void multiply(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void multiply(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( a.v() * b.v() );
 	}
 
 	@Override
-	public void power(int power, UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void power(int power, UnsignedInt16Member a, UnsignedInt16Member b) {
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		int tmp = 1;
@@ -105,52 +105,52 @@ public class UnsignedInt8Group
 	}
 
 	@Override
-	public void zero(UnsignedInt8Member a) {
+	public void zero(UnsignedInt16Member a) {
 		a.setV( 0 );
 	}
 
 	@Override
-	public void negate(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void negate(UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( a.v ); // TODO ignoring since no negative representations
 	}
 
 	@Override
-	public void add(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void add(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( a.v + b.v );
 	}
 
 	@Override
-	public void subtract(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void subtract(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( a.v - b.v );
 	}
 
 	@Override
-	public void unity(UnsignedInt8Member a) {
+	public void unity(UnsignedInt16Member a) {
 		a.setV( 1 );
 	}
 
 	@Override
-	public boolean isLess(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public boolean isLess(UnsignedInt16Member a, UnsignedInt16Member b) {
 		return compare(a,b) < 0;
 	}
 
 	@Override
-	public boolean isLessEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public boolean isLessEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
 		return compare(a,b) <= 0;
 	}
 
 	@Override
-	public boolean isGreater(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public boolean isGreater(UnsignedInt16Member a, UnsignedInt16Member b) {
 		return compare(a,b) > 0;
 	}
 
 	@Override
-	public boolean isGreaterEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public boolean isGreaterEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
 		return compare(a,b) >= 0;
 	}
 
 	@Override
-	public int compare(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public int compare(UnsignedInt16Member a, UnsignedInt16Member b) {
 		int av = a.v();
 		int bv = b.v();
 		if (av < bv) return -1;
@@ -159,22 +159,22 @@ public class UnsignedInt8Group
 	}
 
 	@Override
-	public int signum(UnsignedInt8Member a) {
+	public int signum(UnsignedInt16Member a) {
 		return compare(a,ZERO);
 	}
 
 	@Override
-	public void div(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member d) {
+	public void div(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member d) {
 		d.setV( a.v() / b.v() );
 	}
 
 	@Override
-	public void mod(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member m) {
+	public void mod(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member m) {
 		m.setV( a.v() % b.v() );
 	}
 
 	@Override
-	public void divMod(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member d, UnsignedInt8Member m) {
+	public void divMod(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member d, UnsignedInt16Member m) {
 		div(a,b,d);
 		mod(a,b,m);
 	}
@@ -182,14 +182,14 @@ public class UnsignedInt8Group
 	// TODO: is this right?
 	
 	@Override
-	public void gcd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void gcd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( gcdHelper(a.v(), b.v()) );
 	}
 
 	// TODO: is this right?
 
 	@Override
-	public void lcm(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void lcm(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		int av = a.v();
 		int bv = b.v();
 		int n = Math.abs(av * bv);
@@ -209,26 +209,26 @@ public class UnsignedInt8Group
 	}
 
 	@Override
-	public void norm(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void norm(UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( a.v );
 	}
 
 	@Override
-	public boolean isEven(UnsignedInt8Member a) {
+	public boolean isEven(UnsignedInt16Member a) {
 		return a.v % 2 == 0;
 	}
 
 	@Override
-	public boolean isOdd(UnsignedInt8Member a) {
+	public boolean isOdd(UnsignedInt16Member a) {
 		return a.v % 2 == 1;
 	}
 
 	// TODO: test
 	
 	@Override
-	public void pred(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void pred(UnsignedInt16Member a, UnsignedInt16Member b) {
 		if (a.v == 0)
-			b.setV(255);
+			b.setV(0xffff);
 		else
 			b.setV( a.v() - 1 );
 	}
@@ -236,7 +236,7 @@ public class UnsignedInt8Group
 	// TODO: test
 	
 	@Override
-	public void succ(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void succ(UnsignedInt16Member a, UnsignedInt16Member b) {
 		if (a.v == -1)
 			b.setV(0);
 		else
@@ -244,66 +244,66 @@ public class UnsignedInt8Group
 	}
 
 	@Override
-	public void maxBound(UnsignedInt8Member a) {
-		a.setV( 255 );
+	public void maxBound(UnsignedInt16Member a) {
+		a.setV( 0xffff );
 	}
 
 	@Override
-	public void minBound(UnsignedInt8Member a) {
+	public void minBound(UnsignedInt16Member a) {
 		a.setV( 0 );
 	}
 
 	@Override
-	public void bitAnd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void bitAnd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( a.v & b.v );
 	}
 
 	@Override
-	public void bitOr(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void bitOr(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( a.v | b.v );
 	}
 
 	@Override
-	public void bitXor(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void bitXor(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( a.v ^ b.v );
 	}
 
 	@Override
-	public void bitNot(UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void bitNot(UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( ~a.v );
 	}
 
 	@Override
-	public void bitShiftLeft(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void bitShiftLeft(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( a.v() << count );
 	}
 
 	@Override
-	public void bitShiftRight(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void bitShiftRight(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( a.v() >> count );
 	}
 
-	public void bitShiftRightFillZero(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
+	public void bitShiftRightFillZero(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
 		b.setV( a.v() >>> count );
 	}
 
 	@Override
-	public void min(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void min(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( Math.min(a.v(), b.v()) );
 	}
 
 	@Override
-	public void max(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void max(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		c.setV( Math.max(a.v(), b.v()) );
 	}
 
 	@Override
-	public void random(UnsignedInt8Member a) {
-		a.setV( rng.nextInt(0x100) );
+	public void random(UnsignedInt16Member a) {
+		a.setV( rng.nextInt(0x10000) );
 	}
 
 	@Override
-	public void pow(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+	public void pow(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		power(b.v(), a, c);
 	}
 
