@@ -216,3 +216,6 @@ add more operations: skew, kurtosis, other moments, etc.
 FileStorage: have multiple buffers and configurable or calculated buffer sizes
   based upon numElements and percents etc.
 Constructible interfaces could instead derive from Function interfaces
+Minimize use of BigInteger math in UnsignedInt32Group class. Two's complement
+  math may rescue me.
+Must write a lot of tests for the numeric types

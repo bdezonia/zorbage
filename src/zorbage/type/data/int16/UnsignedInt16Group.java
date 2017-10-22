@@ -78,12 +78,12 @@ public class UnsignedInt16Group
 
 	@Override
 	public void assign(UnsignedInt16Member from, UnsignedInt16Member to) {
-		to.setV( from.v );
+		to.set(from);
 	}
 
 	@Override
 	public void abs(UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( a.v );
+		assign(a, b);
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public class UnsignedInt16Group
 
 	@Override
 	public void norm(UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( a.v );
+		assign(a, b);
 	}
 
 	@Override

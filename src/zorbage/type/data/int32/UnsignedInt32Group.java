@@ -78,12 +78,12 @@ public class UnsignedInt32Group
 
 	@Override
 	public void assign(UnsignedInt32Member from, UnsignedInt32Member to) {
-		to.setV( from.v );
+		to.set( from );
 	}
 
 	@Override
 	public void abs(UnsignedInt32Member a, UnsignedInt32Member b) {
-		b.setV( a.v );
+		assign(a,b);
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public class UnsignedInt32Group
 
 	@Override
 	public void norm(UnsignedInt32Member a, UnsignedInt32Member b) {
-		b.setV( a.v );
+		assign(a,b);
 	}
 
 	@Override

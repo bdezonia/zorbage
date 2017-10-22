@@ -87,7 +87,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void abs(UnsignedInt64Member a, UnsignedInt64Member b) {
-		b.set(a);
+		assign(a, b);
 	}
 
 	@Override
@@ -216,7 +216,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void norm(UnsignedInt64Member a, UnsignedInt64Member b) {
-		b.v = a.v;
+		assign(a,b);
 	}
 
 	@Override

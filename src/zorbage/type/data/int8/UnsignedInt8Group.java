@@ -78,12 +78,12 @@ public class UnsignedInt8Group
 
 	@Override
 	public void assign(UnsignedInt8Member from, UnsignedInt8Member to) {
-		to.setV( from.v );
+		to.set( from );
 	}
 
 	@Override
 	public void abs(UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( a.v );
+		assign(a,b);
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public class UnsignedInt8Group
 
 	@Override
 	public void norm(UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( a.v );
+		assign(a,b);
 	}
 
 	@Override
