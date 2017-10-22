@@ -205,9 +205,9 @@ When done writing 128 bit unsigned integers test speed versus imglib
 Can I optimize 128 bit by just adding/subtracting the pieces and predict
   the carrys/borrows? test.
 Instead of condition2<a,b>, condition3<a,b,c>, etc. do condition<tuple2<a,b>>.
-  This is just a maybe idea. Haskell has tuple1, tuple2, etc. up to like
+  This is just a maybe idea. Haskell has tuple2, tuple3, etc. up to like
   17. It's okay if I do that too. Just not sure I want to.
-  problem with condition1, condition2: multiple and or not xor classes
+  problem with condition1, condition2: the need for multiple and or not xor classes
 Notice that Condition<T> and SetMembership<T> are essentially the same concept.
 Support more coord system grids: look up types in engineering and math books
 Use apache commons to write my DFT example. Test speed and memory use between
