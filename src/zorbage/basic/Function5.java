@@ -39,6 +39,6 @@ package zorbage.basic;
  */
 public interface Function5<A,B,C,D,E,F> {
 
-	A compute(B b, C c, D d, E e, F f);
+	A call(B b, C c, D d, E e, F f);
 	
 }

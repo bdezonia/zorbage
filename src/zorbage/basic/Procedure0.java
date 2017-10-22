@@ -33,6 +33,6 @@ package zorbage.basic;
  */
 public interface Procedure0 {
 
-	void compute();
+	void call();
 	
 }

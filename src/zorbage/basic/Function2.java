@@ -36,6 +36,6 @@ package zorbage.basic;
  */
 public interface Function2<A,B,C> {
 
-	A compute(B b, C c);
+	A call(B b, C c);
 
 }

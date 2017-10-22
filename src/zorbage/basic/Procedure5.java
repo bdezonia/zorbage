@@ -38,6 +38,6 @@ package zorbage.basic;
  */
 public interface Procedure5<A,B,C,D,E> {
 
-	void compute(A a, B b, C c, D d, E e);
+	void call(A a, B b, C c, D d, E e);
 	
 }

@@ -42,6 +42,6 @@ package zorbage.basic;
  */
 public interface Procedure9<A,B,C,D,E,F,G,H,I> {
 
-	void compute(A a, B b, C c, D d, E e, F f, G g, H h, I i);
+	void call(A a, B b, C c, D d, E e, F f, G g, H h, I i);
 	
 }

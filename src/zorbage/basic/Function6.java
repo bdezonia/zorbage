@@ -40,6 +40,6 @@ package zorbage.basic;
  */
 public interface Function6<A,B,C,D,E,F,G> {
 
-	A compute(B b, C c, D d, E e, F f, G g);
+	A call(B b, C c, D d, E e, F f, G g);
 	
 }
