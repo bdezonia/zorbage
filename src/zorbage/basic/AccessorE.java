@@ -30,7 +30,7 @@ package zorbage.basic;
  * 
  * @author Barry DeZonia
  *
- * @param <A>
+ * @param <E>
  */
 public interface AccessorE<E> {
 
