@@ -27,6 +27,8 @@
 package zorbage.type.ctor;
 
 /**
+ * Being {@link Duplicatable} implies that the class can construct another object of its own class
+ * with data values duplicated.
  * 
  * @author Barry DeZonia
  *

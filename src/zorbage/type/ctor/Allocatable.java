@@ -27,7 +27,9 @@
 package zorbage.type.ctor;
 
 /**
- * 
+ * Being {@link Allocatable} implies that the class can construct another object of its own class
+ * with data values in a default (null/zero) state.
+ *  
  * @author Barry DeZonia
  *
  * @param <U>
