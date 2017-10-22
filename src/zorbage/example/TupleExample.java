@@ -43,17 +43,17 @@ public class TupleExample {
 	 */
 	public void run( ) {
 		Tuple2<Integer,Float> tuple2 =
-				new Tuple2<Integer,Float>(1,1.0f);
+				new Tuple2<Integer,Float>(1,7.0f);
 		
 		Tuple5<Integer,Float,Double,Character,Short> tuple5 =
-				new Tuple5<Integer,Float,Double,Character,Short>(1,1.0f,5.7,'f',(short)33);
+				new Tuple5<Integer,Float,Double,Character,Short>(9,13.0f,5.7,'f',(short)33);
 		
 		method(tuple2);
 		
 		method(tuple5);
 	}
 	
-	private <T extends AccessorA<A> & AccessorB<B>,A,B> void method(T tuple) {
-		System.out.println("In here");
+	private <T extends AccessorA<Integer> & AccessorB<Float>> void method(T tuple) {
+		System.out.println("first is " + tuple.a() + " and second is " + tuple.b());
 	}
 }

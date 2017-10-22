@@ -335,6 +335,10 @@ public class TestMain {
 		new LUDecompExample().run();
 	}
 	
+	public static void testTuples() {
+		new TupleExample().run();
+	}
+	
 	public static void main(String[] args) {
 		testInts();
 		testFloats();
@@ -356,6 +360,7 @@ public class TestMain {
 		testSpeed();
 		//testSize(); // very slow
 		testLUMatrix();
+		testTuples();
 		
 		// TODO when go from byte backed to long backed will need to remove this test due to speed
 		// new NumberTest().run();
