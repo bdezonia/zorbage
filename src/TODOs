@@ -27,8 +27,7 @@ Other needs
   power<u> might not be in right place in hierarchy
   power(int, a, b): minimize number of multiplies via recursion. see
     boost hpp code for quats and octs.
-    implement this for all numeric types. (Later note: i can't see how
-    this is fewer multiplies)
+    implement this for all numeric types
   real/unreal as part of hierarchy. at least unreal.
   make sure all math ops can safely work if (a,b,c) params collide. use
    extra tmps and assign().
@@ -223,3 +222,23 @@ Write more Functions, Procedures, Accessors, and Tuples. Beyond 10 params.
   Note that combining tuples and funcs/procs we support 100 params right now.
 Somehow replace ctor interfaces with Functions? Not sure I want to. But ctors
   are unwieldy right now. 
+With Proc and Func interfaces in place I think it makes sense to define a macro
+  language that can be parsed and interpreted as a Proc or Func. I could use a
+  subset of that language to define parsable Functions (i.e. text specified).
+  It should support reals. complexes, quats, and octs. Each of these have different
+  capabilities and can be passed to different functions so must take care.
+  Also support vectors, matrices, and tensors. With my string language I can.
+String language may need to change a little: replace [] with {} so that macro
+  language does not collide with other math concepts that could use [].
+Need out of bounds conventions (and methods) for multidim and linear access.
+Do I make Tuple and Proc and Func more generic? Like Tuple could be one type
+  with N elements and querying less 0 <= x < N returns the elment and >= N
+  throws an exception. Not strongly typed but each param has a .class associated
+  with it so can safely cast. This approach could be used for Proc and Func as
+  well. Cleaner but how performant is it? In the case of a Condition it might
+  have to check the shape of the tuple on every invocation. Or it just queries
+  the n things it cares about. But must cast every arg. For func and proc the
+  macro language idea would prefer the generic approach with runtime checks.
+Default values for functions/procedures can be defined in the code of such
+  things. So if null comes in the code defines the value. It's not a feature
+  as much as its a practice.
