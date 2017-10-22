@@ -42,10 +42,11 @@ public class NumberTest {
 	private UnsignedInt128Group uint128 = new UnsignedInt128Group();
 	
 	public void run() {
-		addOneAndVTest();
-		addFullRangeTest();
-		setVTest();
-		compareTest();
+	//	addOneAndVTest();
+	//	addFullRangeTest();
+	//	setVTest();
+	//	compareTest();
+		versusTest();
 	}
 	
 	private void addOneAndVTest() {
@@ -148,6 +149,29 @@ public class NumberTest {
 			}
 		}
 		System.out.println("End full range test");
+	}
+	
+	private void versusTest() {
+		long a = System.currentTimeMillis();
+		
+		UnsignedInt128Group grp = new UnsignedInt128Group();
+		UnsignedInt128Member v = grp.construct();
+		UnsignedInt128Member one = grp.construct();
+		grp.unity(one);
+		for (int i = 0; i < 65536; i++) {
+			grp.add(v, one, v);
+		}
+
+		long b = System.currentTimeMillis();
+
+		BigInteger vb = BigInteger.ZERO;
+		for (int i = 0; i < 65536; i++) {
+			vb = vb.add(BigInteger.ONE);
+		}
+		
+		long c = System.currentTimeMillis();
+		
+		System.out.println("mine " + (b-a) + " theirs " + (c-b));
 	}
 
 }
