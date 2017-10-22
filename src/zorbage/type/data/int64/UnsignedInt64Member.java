@@ -50,8 +50,8 @@ public final class UnsignedInt64Member
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>
 {
 
-	private static final BigInteger UPPER = new BigInteger("0x8000000000000000");
-	private static final BigInteger MODULUS = new BigInteger("0x10000000000000000");
+	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
+	private static final BigInteger MODULUS = new BigInteger("10000000000000000",16);
 
 	long v;
 	
