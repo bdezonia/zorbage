@@ -111,7 +111,7 @@ public class UnsignedInt8Group
 
 	@Override
 	public void negate(UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( a.v ); // TODO ignoring since no negative representations
+		assign(a,b); // ignore
 	}
 
 	@Override

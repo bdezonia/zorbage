@@ -112,7 +112,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void negate(UnsignedInt64Member a, UnsignedInt64Member b) {
-		b.set(a);  // TODO ignoring since no negative representations
+		assign(a,b); // ignore
 	}
 
 	@Override

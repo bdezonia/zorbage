@@ -111,7 +111,7 @@ public class UnsignedInt16Group
 
 	@Override
 	public void negate(UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( a.v ); // TODO ignoring since no negative representations
+		assign(a,b); // ignore
 	}
 
 	@Override

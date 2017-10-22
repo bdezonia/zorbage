@@ -219,8 +219,7 @@ Constructible interfaces could instead derive from Function interfaces
 Minimize use of BigInteger math in UnsignedInt32Group class. Two's complement
   math may rescue me.
 Must write a lot of tests for the numeric types
-Write an example that passes Tuple2,3,4,5 to code that expects AccA and AccB
-Write more Functions, Procedures, Accessors, and Tuples. Beyond 5 params.
+Write more Functions, Procedures, Accessors, and Tuples. Beyond 10 params.
+  Note that combining tuples and funcs/procs we support 100 params right now.
 Somehow replace ctor interfaces with Functions? Not sure I want to. But ctors
   are unwieldy right now. 
-Make unsigned types consistent in definition of negate: do an assign()

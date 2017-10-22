@@ -111,7 +111,7 @@ public class UnsignedInt32Group
 
 	@Override
 	public void negate(UnsignedInt32Member a, UnsignedInt32Member b) {
-		b.setV( a.v ); // TODO ignoring since no negative representations
+		assign(a,b); // ignore
 	}
 
 	@Override

@@ -97,8 +97,7 @@ public class UnsignedInt128Group
 	
 	@Override
 	public void negate(UnsignedInt128Member a, UnsignedInt128Member b) {
-		// TODO: do nothing instead of exception?
-		throw new IllegalArgumentException("cannot negate unsigned number");
+		assign(a,b); // ignore
 	}
 
 	@Override
