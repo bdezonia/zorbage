@@ -230,6 +230,8 @@ With Proc and Func interfaces in place I think it makes sense to define a macro
   Also support vectors, matrices, and tensors. With my string language I can.
 String language may need to change a little: replace [] with {} so that macro
   language does not collide with other math concepts that could use [].
+  Later edit: replace () with {}. Parentheses are valuable to equation grammars
+  in many ways.
 Need out of bounds conventions (and methods) for multidim and linear access.
 Do I make Tuple and Proc and Func more generic? Like Tuple could be one type
   with N elements and querying less 0 <= x < N returns the elment and >= N
