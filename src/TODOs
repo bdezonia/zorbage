@@ -215,3 +215,4 @@ Use apache commons to write my DFT example. Test speed and memory use between
 add more operations: skew, kurtosis, other moments, etc.
 FileStorage: have multiple buffers and configurable or calculated buffer sizes
   based upon numElements and percents etc.
+Constructible interfaces could instead derive from Function interfaces
