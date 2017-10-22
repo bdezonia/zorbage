@@ -56,7 +56,7 @@ public final class UnsignedInt8Member
 	}
 	
 	public UnsignedInt8Member(int value) {
-		v = (byte) (0xff & value);
+		v = (byte) value;
 	}
 	
 	public UnsignedInt8Member(UnsignedInt8Member value) {
@@ -67,7 +67,7 @@ public final class UnsignedInt8Member
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		int x = val.r().intValue();
-		v = (byte) (0xff & x);
+		v = (byte) x;
 	}
 
 	public int v() { return v & 0xff; }
@@ -88,7 +88,7 @@ public final class UnsignedInt8Member
 
 	@Override
 	public String toString() {
-		return String.valueOf(v & 0xff);
+		return String.valueOf(v());
 	}
 
 	@Override

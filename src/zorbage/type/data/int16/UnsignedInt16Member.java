@@ -56,7 +56,7 @@ public final class UnsignedInt16Member
 	}
 	
 	public UnsignedInt16Member(int value) {
-		v = (short) (0xffff & value);
+		v = (short) value;
 	}
 	
 	public UnsignedInt16Member(UnsignedInt16Member value) {
@@ -67,7 +67,7 @@ public final class UnsignedInt16Member
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		int x = val.r().intValue();
-		v = (short) (0xffff & x);
+		v = (short) x;
 	}
 
 	public int v() { return v & 0xffff; }
@@ -88,7 +88,7 @@ public final class UnsignedInt16Member
 
 	@Override
 	public String toString() {
-		return String.valueOf(v & 0xffff);
+		return String.valueOf(v());
 	}
 
 	@Override

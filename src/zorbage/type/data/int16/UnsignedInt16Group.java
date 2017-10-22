@@ -194,7 +194,7 @@ public class UnsignedInt16Group
 		int bv = b.v();
 		int n = Math.abs(av * bv);
 		int d = gcdHelper(av, bv);
-		c.setV( (byte)(n / d) );
+		c.setV( n / d );
 	}
 
 	// TODO: is this right?
