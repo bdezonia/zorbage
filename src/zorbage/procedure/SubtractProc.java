@@ -26,24 +26,44 @@
  */
 package zorbage.procedure;
 
+import zorbage.basic.procedure.Procedure2;
 import zorbage.basic.procedure.Procedure3;
 import zorbage.groups.G;
 import zorbage.type.data.float64.real.Float64Member;
-
-// TODO: this does not have the benefit of procedures adding other procedures. This is just
-//   variables added to other variables. Adnabe did this better. Think more about this.
-// Later edit: look at AddProc class.
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Add implements Procedure3<Float64Member,Float64Member,Float64Member> {
+public class SubtractProc implements Procedure3<Float64Member,Float64Member,Float64Member> {
 
+	private final Procedure2<Float64Member,Float64Member> p1;
+	private final Procedure2<Float64Member,Float64Member> p2;
+    
+    private static final ThreadLocal<Float64Member> x =
+        new ThreadLocal<Float64Member>() {
+            @Override protected Float64Member initialValue() {
+                return new Float64Member();
+        }
+    };
+    private static final ThreadLocal<Float64Member> y =
+            new ThreadLocal<Float64Member>() {
+                @Override protected Float64Member initialValue() {
+                    return new Float64Member();
+            }
+        };
+    
+	public SubtractProc(Procedure2<Float64Member,Float64Member> p1, Procedure2<Float64Member,Float64Member> p2) {
+		this.p1 = p1;
+		this.p2 = p2;
+	}
+	
 	@Override
 	public void call(Float64Member a, Float64Member b, Float64Member c) {
-		G.DBL.add(a, b, c);
+		p1.call(a, x.get());
+		p2.call(b, y.get());
+		G.DBL.subtract(x.get(), y.get(), c);
 	}
 
 }

@@ -244,3 +244,13 @@ Do I make Tuple and Proc and Func more generic? Like Tuple could be one type
 Default values for functions/procedures can be defined in the code of such
   things. So if null comes in the code defines the value. It's not a feature
   as much as its a practice.
+AddProc is one level higher than Add which uses primitives only. AddProc uses
+  procedures and threadlocal variables. Do we want to change all simple procedures
+  like sin, cos, etc. to use this approach? A parser certainly would need that.
+How to combine strong generic typing with parsed code which has procedures of
+  varying parameter types? Also have Add(3 octs), Add(3 floats), etc. Also want
+  to Add(Oct, Real, Oct) etc. Really? Which component are we adding the Real to?
+  By default the 1st/real component. But how can you add 5 to the imag component?
+  Maybe we index numbers. Real[1], Complex[2], Quat[4], Oct[8]. And have
+  Add(Num, Index, Value, ResultNum). Its an error to assign ResultNum[i] if value
+  is nonzero and i > num components available in ResultNum.
