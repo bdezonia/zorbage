@@ -41,18 +41,19 @@ public class SubtractProc implements Procedure3<Float64Member,Float64Member,Floa
 	private final Procedure2<Float64Member,Float64Member> p1;
 	private final Procedure2<Float64Member,Float64Member> p2;
     
-    private static final ThreadLocal<Float64Member> x =
-        new ThreadLocal<Float64Member>() {
-            @Override protected Float64Member initialValue() {
-                return new Float64Member();
-        }
-    };
-    private static final ThreadLocal<Float64Member> y =
-            new ThreadLocal<Float64Member>() {
-                @Override protected Float64Member initialValue() {
-                    return new Float64Member();
-            }
-        };
+	private static final ThreadLocal<Float64Member> x =
+			new ThreadLocal<Float64Member>() {
+				@Override protected Float64Member initialValue() {
+					return new Float64Member();
+				}
+			};
+
+	private static final ThreadLocal<Float64Member> y =
+			new ThreadLocal<Float64Member>() {
+				@Override protected Float64Member initialValue() {
+					return new Float64Member();
+				}
+			};
     
 	public SubtractProc(Procedure2<Float64Member,Float64Member> p1, Procedure2<Float64Member,Float64Member> p2) {
 		this.p1 = p1;

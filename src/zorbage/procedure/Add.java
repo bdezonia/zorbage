@@ -30,10 +30,6 @@ import zorbage.basic.procedure.Procedure3;
 import zorbage.groups.G;
 import zorbage.type.data.float64.real.Float64Member;
 
-// TODO: this does not have the benefit of procedures adding other procedures. This is just
-//   variables added to other variables. Adnabe did this better. Think more about this.
-// Later edit: look at AddProc class.
-
 /**
  * 
  * @author Barry DeZonia
