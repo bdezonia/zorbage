@@ -93,7 +93,8 @@ Do i need to look at nio? Do I need to think about streams rather than
   arrays and RAFs?
 ArrayBit Storage: flesh out
 Some types could be bit encodable but also byte encodable with extra
-  bits set to zero to byte boundaries.
+  bits set to zero to byte boundaries. For instance a 12-bit number
+  could be encoded as two bytes
 Do bit types store ints/longs internally for math and then & with mask
   on set and get? Can I write 128 bit math easily using two longs and
   look for overflows and underflows and predictably use result to make
@@ -109,9 +110,8 @@ How do you store matrices? byte encoder and store row and col count
 Also character stream encoding. Can use my numeric string format.
 Support unsigned int types for all defined int types
 Support 128-bit type. Start with a 16 bit two byte type that I can
- exhaustively
-  test for add, sub, mul, div. Then substitute two longs with appropriate
-  constants. Note that it can be a LongCoder type.
+ exhaustively test for add, sub, mul, div. Then substitute two longs
+ with appropriate constants. Note that it can be a LongCoder type.
 It's becoming more apparent that all types should implement ByteCoder.
 RGB could be a BitCoder of three 8 bit values
   This might be a good test of BitCoder. BitCount = 24. Read or write 1
@@ -127,7 +127,8 @@ Types should specify a preferred order of encoding choices so storage
   allocation is optimal. Then types can implement a ton of coder
   interfaces.
 Test that the speed of sinAndCos and sinhAndTanh is worthwhile for actual data.
-  Also test their accuracy (i.e. sinAndcos might round a little)
+  Also test their accuracy (i.e. sinAndcos might round a little). Can
+  sinhAndTanh do a 1.0 - x relation like sinAndCos?
 Resurrect Function ideas? Useful for TextSpecified PointSets and Functions
 add bounds for samplings? translate and maybe scale and maybe rotate them?
   Ideally there would be a sampling that transforms a real sampling to a
@@ -139,11 +140,15 @@ add bounds for samplings? translate and maybe scale and maybe rotate them?
   contains() method of the cylindrical grid. This is cool but requires
   some thought in how to clearly specify an embedding of grid in 3d space.
   One thought: you embed a grid in 3d space by taking a point and three
-  orthonormal direction vectors giving positive x,y,z axes.
+  orthonormal direction vectors giving positive x,y,z axes. Orthonormal
+  might be unnecessary. Projective might be good enough.
 Have a Region interface which is like Sampling interface but it does not
   have iterator. Make RegionUnion etc. parallel to samplings. It may contain
-  LongIndex and RealIndex checking simultaneously. contains() is simplified greatly.
-Regions likely need bounds. Samplings might not.
+  LongIndex and RealIndex checking simultaneously. contains() is simplified
+  greatly.
+Regions likely need bounds. Samplings might not. If I make AND OR etc.
+  operations with Regions do I need to calculate intersection boundaries?
+  Or can I fake it and just use contains()?
 Test all the contains() methods in real grid sampling code. Make tolerance
   an internal constant or a passable parameter. Or calc a tol from dx, dy, dz
   and counts.
@@ -190,7 +195,7 @@ Constructors are functions like function1, function2, etc. that take
   various parameters and return a type. A group can define the ctors
   it provides.
 Conditions can be like functions and ctors: condition1, condition2, etc.
-How does previous line affect my current definitions of and or not classses?
+How does previous line affect my current definitions of and or not classes?
 Do we get rid of rigid algebraic type hierarchy and define skewfield for
   instance to have multiply function and x function and y function etc.
   Then Octonions aren't quite a skewfield. But they support most of it's
@@ -230,17 +235,18 @@ With Proc and Func interfaces in place I think it makes sense to define a macro
   Also support vectors, matrices, and tensors. With my string language I can.
 String language may need to change a little: replace [] with {} so that macro
   language does not collide with other math concepts that could use [].
-  Later edit: replace () with {}. Parentheses are valuable to equation grammars
-  in many ways.
+  Later edit: I think I really mean replace () with {}. Parentheses are valuable
+  to equation grammars in many ways.
 Need out of bounds conventions (and methods) for multidim and linear access.
 Do I make Tuple and Proc and Func more generic? Like Tuple could be one type
-  with N elements and querying less 0 <= x < N returns the elment and >= N
+  with N elements and querying less 0 <= x < N returns the element and >= N
   throws an exception. Not strongly typed but each param has a .class associated
   with it so can safely cast. This approach could be used for Proc and Func as
   well. Cleaner but how performant is it? In the case of a Condition it might
   have to check the shape of the tuple on every invocation. Or it just queries
   the n things it cares about. But must cast every arg. For func and proc the
   macro language idea would prefer the generic approach with runtime checks.
+  But right now the tuples are compile time typed.
 Default values for functions/procedures can be defined in the code of such
   things. So if null comes in the code defines the value. It's not a feature
   as much as its a practice.
@@ -255,4 +261,5 @@ How to combine strong generic typing with parsed code which has procedures of
   Add(Num, Index, Value, ResultNum). Its an error to assign ResultNum[i] if value
   is nonzero and i > num components available in ResultNum.
 Constant class: should be a proc for n = 0 to +inf params. A ton of Constant classes?
-  Whats a good solution?
+  Whats a good solution? In qdiffle I said it could handle any dimensionality. This
+  approach makes some sense.
