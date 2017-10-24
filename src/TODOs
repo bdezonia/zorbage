@@ -254,3 +254,5 @@ How to combine strong generic typing with parsed code which has procedures of
   Maybe we index numbers. Real[1], Complex[2], Quat[4], Oct[8]. And have
   Add(Num, Index, Value, ResultNum). Its an error to assign ResultNum[i] if value
   is nonzero and i > num components available in ResultNum.
+Constant class: should be a proc for n = 0 to +inf params. A ton of Constant classes?
+  Whats a good solution?
