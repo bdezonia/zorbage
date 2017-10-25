@@ -190,6 +190,10 @@ public class Float64Group
 
 	@Override
 	public void power(int power, Float64Member a, Float64Member b) {
+		if (power == 0 && a.v() == 0) {
+			b.setV(Double.NaN);
+			return;
+		}
 		b.setV( Math.pow(a.v(), power) );
 	}
 

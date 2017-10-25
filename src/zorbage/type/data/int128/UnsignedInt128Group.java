@@ -146,6 +146,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void power(int power, UnsignedInt128Member a, UnsignedInt128Member b) {
+		if (power == 0 && isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);

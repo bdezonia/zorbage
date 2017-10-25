@@ -97,6 +97,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void power(int power, UnsignedInt64Member a, UnsignedInt64Member b) {
+		if (power == 0 && a.v == 0) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		else if (power == 0)

@@ -70,6 +70,7 @@ public class OctonionFloat64Group
 	private static final OctonionFloat64Member TWO = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member NaN = new OctonionFloat64Member(Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN);
 	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 
 	public OctonionFloat64Group() {
@@ -239,6 +240,10 @@ public class OctonionFloat64Group
 
 	@Override
 	public void power(int power, OctonionFloat64Member a, OctonionFloat64Member b) {
+		if (power == 0 && isEqual(a, ZERO)) {
+			assign(NaN, b);
+			return;
+		}
 		// okay for power to be negative
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		assign(ONE,tmp);

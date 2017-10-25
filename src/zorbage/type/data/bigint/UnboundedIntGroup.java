@@ -60,6 +60,7 @@ public class UnboundedIntGroup
 
 	@Override
 	public void power(int power, UnboundedIntMember a, UnboundedIntMember b) {
+		if (power == 0 && a.v() == BigInteger.ZERO) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0) throw new IllegalArgumentException("Cannot get negative powers from integers");
 		b.setV( a.v().pow(power) );
 	}

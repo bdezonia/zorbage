@@ -91,6 +91,7 @@ public class ComplexFloat64Matrix
 			assign(tmp, b);
 		}
 		else if (power == 0) {
+			//TODO if (isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
 			b.init(a.rows(), a.cols());
 			unity(b);
 		}

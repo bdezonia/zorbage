@@ -94,6 +94,7 @@ public class SignedInt64Group
 
 	@Override
 	public void power(int power, SignedInt64Member a, SignedInt64Member b) {
+		if (power == 0 && a.v() == 0) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		long tmp = 1;

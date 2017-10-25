@@ -174,8 +174,10 @@ public class BooleanGroup
 	public void power(int power, BooleanMember a, BooleanMember b) {
 		if (power < 0)
 			throw new IllegalArgumentException("booleans cannot handle negative powers");
-		if (power == 0)
+		if (power == 0) {
+			if (a.v() == false) throw new IllegalArgumentException("0^0 is not a number");
 			b.setV(true);
+		}
 		else
 			b.setV(a.v());
 	}

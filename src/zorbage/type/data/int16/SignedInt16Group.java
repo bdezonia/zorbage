@@ -92,6 +92,7 @@ public class SignedInt16Group
 
 	@Override
 	public void power(int power, SignedInt16Member a, SignedInt16Member b) {
+		if (power == 0 && a.v() == 0) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		int tmp = 1;

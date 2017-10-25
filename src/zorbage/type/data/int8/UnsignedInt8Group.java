@@ -93,6 +93,7 @@ public class UnsignedInt8Group
 
 	@Override
 	public void power(int power, UnsignedInt8Member a, UnsignedInt8Member b) {
+		if (power == 0 && a.v == 0) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		int tmp = 1;

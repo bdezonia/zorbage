@@ -90,6 +90,7 @@ public class ComplexFloat64Group
 	private static final ComplexFloat64Member TWO_I = new ComplexFloat64Member(0,2);
 	private static final ComplexFloat64Member MINUS_I = new ComplexFloat64Member(0,-1);
 	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
+	private static final ComplexFloat64Member NaN = new ComplexFloat64Member(Double.NaN,Double.NaN);
 
 	public ComplexFloat64Group() {
 	}
@@ -105,6 +106,10 @@ public class ComplexFloat64Group
 
 	@Override
 	public void power(int power, ComplexFloat64Member a, ComplexFloat64Member b) {
+		if (power == 0 && isEqual(a, ZERO)) {
+			assign(NaN, b);
+			return;
+		}
 		double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
 		double nTheta = power * getArgument(a);
 		b.setR(rToTheN * Math.cos(nTheta));

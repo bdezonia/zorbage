@@ -69,6 +69,7 @@ public class QuaternionFloat64Group
 	private static final QuaternionFloat64Member TWO = new QuaternionFloat64Member(2,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
+	private static final QuaternionFloat64Member NaN = new QuaternionFloat64Member(Double.NaN,Double.NaN,Double.NaN,Double.NaN);
 	private static final Float64Vector dblvec = new Float64Vector();
 	private static final Float64Group dbl = new Float64Group();
 	
@@ -95,6 +96,10 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void power(int power, QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		if (power == 0 && isEqual(a, ZERO)) {
+			assign(NaN, b);
+			return;
+		}
 		// okay for power to be negative
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		assign(ONE,tmp);

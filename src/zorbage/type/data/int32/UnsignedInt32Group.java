@@ -93,6 +93,7 @@ public class UnsignedInt32Group
 
 	@Override
 	public void power(int power, UnsignedInt32Member a, UnsignedInt32Member b) {
+		if (power == 0 && a.v == 0) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		long tmp = 1;
