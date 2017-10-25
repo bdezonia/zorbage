@@ -263,3 +263,4 @@ How to combine strong generic typing with parsed code which has procedures of
 Constant class: should be a proc for n = 0 to +inf params. A ton of Constant classes?
   Whats a good solution? In qdiffle I said it could handle any dimensionality. This
   approach makes some sense.
+I could probably make a generic gcdHelper algorithm and reuse it in all integral types.
