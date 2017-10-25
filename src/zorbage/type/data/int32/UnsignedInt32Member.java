@@ -70,7 +70,7 @@ public final class UnsignedInt32Member
 		v = (int) x;
 	}
 
-	public long v() { return v & 0xffffffff; }
+	public long v() { return v & 0xffffffffL; }
 
 	public void setV(long val) {
 		v = (int) val;
