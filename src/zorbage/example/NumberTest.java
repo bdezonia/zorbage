@@ -44,11 +44,36 @@ public class NumberTest {
 	public void run() {
 	//	addOneAndVTest();
 	//	addFullRangeTest();
-//	subtractOneAndVTest();
-	subtractFullRangeTest();
+	//subtractOneAndVTest();
+	//subtractFullRangeTest();
+		multiplyFullRangeTest();
 	//	setVTest();
 	//	compareTest();
 		versusTest();
+	}
+	
+	private void multiplyFullRangeTest() {
+		System.out.println("Testing 128-bit unsigned multiply");
+		UnsignedInt128Member a = new UnsignedInt128Member();
+		UnsignedInt128Member b = new UnsignedInt128Member();
+		UnsignedInt128Member c = new UnsignedInt128Member();
+		BigInteger bigI, bigJ, max = BigInteger.valueOf(65536);
+		for (int i = 0; i < 65536; i++) {
+			//System.out.println("Pass "+i);
+			bigI = BigInteger.valueOf(i);
+			a.setV(bigI);
+			for (int j = 0; j < 65536; j++) {
+				bigJ = BigInteger.valueOf(j);
+				b.setV(bigJ);
+				uint128.multiply(a, b, c);
+				if (bigI.multiply(bigJ).mod(max).equals(c.v()))
+					;
+				else {
+					System.out.println("multiply failed: i "+i+" j "+j+" prod "+c.v().toString());
+				}
+			}			
+		}
+		System.out.println("  done");
 	}
 	
 	private void addOneAndVTest() {
@@ -191,7 +216,7 @@ public class NumberTest {
 		UnsignedInt128Member b = uint128.construct();
 		UnsignedInt128Member c = uint128.construct();
 		BigInteger max = BigInteger.valueOf(65536);
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 1; i++) {  // TODO: more than 1
 			System.out.println("Pass "+i);
 			a.setV(BigInteger.valueOf(i));
 			for (int j = 0; j < 65536; j++) {

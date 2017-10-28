@@ -46,12 +46,11 @@ public class UnsignedInt128Group
 
 	// TODO
 	// 1) subtract
-	// 2) multiply
-	// 3) div
-	// 4) mod
-	// 5) convert byte references and constants to long references and constants
-	// 6) speed test versus imglib
-	// 7) optimize methods
+	// 2) div
+	// 3) mod
+	// 4) convert byte references and constants to long references and constants
+	// 5) speed test versus imglib
+	// 6) optimize methods
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
@@ -140,8 +139,21 @@ public class UnsignedInt128Group
 
 	@Override
 	public void multiply(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("not implemented yet");
+		UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
+		UnsignedInt128Member tmp = new UnsignedInt128Member();
+		UnsignedInt128Member part = new UnsignedInt128Member();
+		int shift = 0;
+		// quick test for difference from 0: skip compare()
+		while (!(bTmp.hi == 0 && bTmp.lo == 0)) {
+			if ((bTmp.lo & 1) > 0) {
+				assign(a, part);
+				bitShiftLeft(shift, part, part);
+				add(tmp, part, tmp);
+			}
+			shiftRightOneBit(bTmp);
+			shift++;
+		}
+		assign(tmp,c);
 	}
 
 	@Override
