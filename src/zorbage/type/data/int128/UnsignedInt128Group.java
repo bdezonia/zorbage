@@ -159,8 +159,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void unity(UnsignedInt128Member result) {
-		result.lo = 1;
-		result.hi = 0;
+		assign(ONE, result);
 	}
 
 	@Override

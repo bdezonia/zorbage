@@ -44,6 +44,8 @@ public class NumberTest {
 	public void run() {
 	//	addOneAndVTest();
 	//	addFullRangeTest();
+//	subtractOneAndVTest();
+	subtractFullRangeTest();
 	//	setVTest();
 	//	compareTest();
 		versusTest();
@@ -67,6 +69,7 @@ public class NumberTest {
 			uint128.succ(v, v);
 		}
 		list.add(v.v().longValue());
+		System.out.println("Array list is this long: "+list.size());
 
 		uint128.succ(v, v);
 		if (uint128.isEqual(v, zero))
@@ -77,7 +80,37 @@ public class NumberTest {
 			if (list.get(i).longValue() != i)
 				System.out.println("index "+i+" equals "+list.get(i).longValue());
 		}
+	}
+
+	private void subtractOneAndVTest() {
+		ArrayList<Long> list = new ArrayList<Long>();
+		
+		UnsignedInt128Member zero = uint128.construct();
+		UnsignedInt128Member min = uint128.construct();
+		UnsignedInt128Member max = uint128.construct();
+		uint128.minBound(min);
+		uint128.maxBound(max);
+		
+		if (!uint128.isEqual(min, zero))
+			System.out.println("min bound is wrong!!!!!!!");
+		
+		UnsignedInt128Member v = new UnsignedInt128Member(max);
+		while (uint128.isGreater(v, zero)) {
+			list.add(v.v().longValue());
+			uint128.pred(v, v);
+		}
+		list.add(v.v().longValue());
 		System.out.println("Array list is this long: "+list.size());
+
+		uint128.pred(v, v);
+		if (uint128.isEqual(v, max))
+			System.out.println("UNDERFLOW WAS CORRECT");
+		else
+			System.out.println("UNDERFLOW WAS WRONG "+v.v());
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).longValue() != (65535-i))
+				System.out.println("index "+(65535-i)+" equals "+list.get(i).longValue());
+		}
 	}
 
 	private void setVTest() {
@@ -138,14 +171,35 @@ public class NumberTest {
 		UnsignedInt128Member a = uint128.construct();
 		UnsignedInt128Member b = uint128.construct();
 		UnsignedInt128Member c = uint128.construct();
+		BigInteger max = BigInteger.valueOf(65536);
 		for (int i = 0; i < 65536; i++) {
 			System.out.println("Pass "+i);
 			a.setV(BigInteger.valueOf(i));
 			for (int j = 0; j < 65536; j++) {
 				b.setV(BigInteger.valueOf(j));
 				uint128.add(a,b,c);
-				if (!(a.v().add(b.v()).mod(BigInteger.valueOf(65536)).equals(c.v())))
+				if (!(a.v().add(b.v()).mod(max).equals(c.v())))
 					System.out.println("addition problem : a " + a.v() + " b " + b.v() + " c " + c.v());
+			}
+		}
+		System.out.println("End full range test");
+	}
+	
+	private void subtractFullRangeTest() {
+		System.out.println("Start full range test");
+		UnsignedInt128Member a = uint128.construct();
+		UnsignedInt128Member b = uint128.construct();
+		UnsignedInt128Member c = uint128.construct();
+		BigInteger max = BigInteger.valueOf(65536);
+		for (int i = 0; i < 1; i++) {
+			System.out.println("Pass "+i);
+			a.setV(BigInteger.valueOf(i));
+			for (int j = 0; j < 65536; j++) {
+				b.setV(BigInteger.valueOf(j));
+				uint128.subtract(a,b,c);
+				// TODO I'M WRONG - FIXME
+				if (!(a.v().subtract(b.v()).mod(max).equals(c.v())))
+					System.out.println("subtraction problem : a " + a.v() + " b " + b.v() + " c " + c.v());
 			}
 		}
 		System.out.println("End full range test");
