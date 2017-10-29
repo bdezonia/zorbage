@@ -274,11 +274,8 @@ public class UnsignedInt128Group
 
 	@Override
 	public void mod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member m) {
-		UnsignedInt128Member sum = new UnsignedInt128Member();
 		UnsignedInt128Member d = new UnsignedInt128Member();
-		div(a,b,d);
-		multiply(b,d,sum);
-		subtract(a,sum,m);
+		divMod(a,b,d,m);
 	}
 
 	@Override
