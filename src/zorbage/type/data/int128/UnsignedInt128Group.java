@@ -47,10 +47,9 @@ public class UnsignedInt128Group
 	// TODO
 	// 1) subtract
 	// 2) div
-	// 3) mod
-	// 4) convert byte references and constants to long references and constants
-	// 5) speed test versus imglib
-	// 6) optimize methods
+	// 3) convert byte references and constants to long references and constants
+	// 4) speed test versus imglib
+	// 5) optimize methods
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
@@ -143,8 +142,7 @@ public class UnsignedInt128Group
 		UnsignedInt128Member tmp = new UnsignedInt128Member();
 		UnsignedInt128Member part = new UnsignedInt128Member();
 		int shift = 0;
-		// quick test for difference from 0: skip compare()
-		while (!(bTmp.hi == 0 && bTmp.lo == 0)) {
+		while (isNotEqual(bTmp,ZERO)) {
 			if ((bTmp.lo & 1) > 0) {
 				assign(a, part);
 				bitShiftLeft(shift, part, part);
@@ -276,20 +274,19 @@ public class UnsignedInt128Group
 
 	@Override
 	public void mod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member m) {
-		if (isEqual(b, ZERO))
-			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("not implemented yet");
+		UnsignedInt128Member sum = new UnsignedInt128Member();
+		UnsignedInt128Member d = new UnsignedInt128Member();
+		div(a,b,d);
+		multiply(b,d,sum);
+		subtract(a,sum,m);
 	}
 
-	// TODO: improve performance
-	
 	@Override
 	public void divMod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
-		if (isEqual(b, ZERO))
-			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
+		UnsignedInt128Member sum = new UnsignedInt128Member();
 		div(a,b,d);
-		mod(a,b,m);
+		multiply(b,d,sum);
+		subtract(a,sum,m);
 	}
 
 	@Override
