@@ -59,8 +59,8 @@ public final class UnsignedInt64Member
 		v = 0;
 	}
 	
-	public UnsignedInt64Member(long value) {
-		v = value;
+	public UnsignedInt64Member(BigInteger value) {
+		setV(value);
 	}
 	
 	public UnsignedInt64Member(UnsignedInt64Member value) {
