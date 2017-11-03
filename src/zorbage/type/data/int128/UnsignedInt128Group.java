@@ -437,6 +437,6 @@ public class UnsignedInt128Group
 			mod(aTmp,bTmp,bTmp);
 			assign(t, aTmp);
 		}
-		assign(a, c);
+		assign(aTmp, c);
 	}
 }
