@@ -92,11 +92,6 @@ public final class UnsignedInt128Member
 	// expensive but shouldn't need to call very often
 	
 	public void setV(BigInteger val) {
-		// TODO: rather than exceptions put in some default conversion behavior?
-		if (val.compareTo(BigInteger.ZERO) < 0)
-			throw new IllegalArgumentException("value is < 0 in UnsignedInt128Member");
-		if (val.compareTo(MAX) >= 0)
-			throw new IllegalArgumentException("value is >= "+MAX+" in UnsignedInt128Member");
 		lo = BigInteger.valueOf(127).and(val).byteValue();
 		hi = BigInteger.valueOf(256*127).and(val).shiftRight(8).byteValue();
 		if (val.testBit(7))
