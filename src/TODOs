@@ -127,9 +127,9 @@ LUDecomposition for multiple types: (float, comp, quat, oct)
 Types should specify a preferred order of encoding choices so storage
   allocation is optimal. Then types can implement a ton of coder
   interfaces.
-Test that the speed of sinAndCos and sinhAndTanh is worthwhile for actual data.
+Test that the speed of sinAndCos and sinhAndCosh is worthwhile for actual data.
   Also test their accuracy (i.e. sinAndcos might round a little). Can
-  sinhAndTanh do a 1.0 - x relation like sinAndCos?
+  sinhAndCosh do a 1.0 - x relation like sinAndCos?
 Resurrect Function ideas? Useful for TextSpecified PointSets and Functions
 add bounds for samplings? translate and maybe scale and maybe rotate them?
   Ideally there would be a sampling that transforms a real sampling to a
