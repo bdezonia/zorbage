@@ -37,6 +37,7 @@ import zorbage.type.algebra.Norm;
 import zorbage.type.algebra.OrderedField;
 import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
+import zorbage.type.algebra.RealUnreal;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
@@ -61,7 +62,8 @@ public class Float64Group
     Roots<Float64Member>,
     Power<Float64Member>,
     Rounding<Float64Member>,
-    Random<Float64Member>
+    Random<Float64Member>,
+    RealUnreal<Float64Member,Float64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -531,6 +533,16 @@ public class Float64Group
 	@Override
 	public void random(Float64Member a) {
 		a.setV(rng.nextDouble());
+	}
+	
+	@Override
+	public void real(Float64Member a, Float64Member b) {
+		b.setV(a.v());
+	}
+	
+	@Override
+	public void unreal(Float64Member a, Float64Member b) {
+		b.setV(0);
 	}
 	
 	// adopted from boost library
