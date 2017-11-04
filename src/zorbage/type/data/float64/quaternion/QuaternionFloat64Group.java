@@ -442,9 +442,24 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void sinAndCos(QuaternionFloat64Member a, QuaternionFloat64Member s, QuaternionFloat64Member c) {
-		// TODO : implement a speedup
-		sin(a,s);
-		cos(a,c);
+		Float64Member z = new Float64Member();
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		unreal(a, tmp);
+		norm(tmp, z); // TODO or abs() whatever that is in boost
+		double cos = Math.cos(a.r());
+		double sin = Math.sin(a.r());
+		double sinhc_pi = Float64Group.sinhc_pi(z.v());
+		double cosh = Math.cosh(z.v());
+		double ws = cos * sinhc_pi;
+		double wc = -sin * sinhc_pi;
+		s.setR(sin * cosh);
+		s.setI(ws * a.i());
+		s.setJ(ws * a.j());
+		s.setK(ws * a.k());
+		c.setR(cos * cosh);
+		c.setI(wc * a.i());
+		c.setJ(wc * a.j());
+		c.setK(wc * a.k());
 	}
 	
 	@Override
