@@ -37,7 +37,7 @@ import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 import zorbage.type.algebra.Trigonometric;
-import zorbage.type.algebra.Unreal;
+import zorbage.type.algebra.RealUnreal;
 import zorbage.type.data.float64.real.Float64Group;
 import zorbage.type.data.float64.real.Float64Member;
 
@@ -59,7 +59,7 @@ public class QuaternionFloat64Group
     Trigonometric<QuaternionFloat64Member>,
     Hyperbolic<QuaternionFloat64Member>,
     Power<QuaternionFloat64Member>,
-    Unreal<QuaternionFloat64Member>
+    RealUnreal<QuaternionFloat64Member,Float64Member>
 {
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -348,6 +348,7 @@ public class QuaternionFloat64Group
 	}
 	
 
+	@Override
 	public void real(QuaternionFloat64Member a, Float64Member b) {
 		b.setV(a.r());
 	}

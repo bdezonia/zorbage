@@ -51,7 +51,7 @@ import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Roots;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.Trigonometric;
-import zorbage.type.algebra.Unreal;
+import zorbage.type.algebra.RealUnreal;
 import zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -75,7 +75,7 @@ public class ComplexFloat64Group
     Infinite<ComplexFloat64Member>,
     Conjugate<ComplexFloat64Member>,
     Random<ComplexFloat64Member>,
-    Unreal<ComplexFloat64Member>
+    RealUnreal<ComplexFloat64Member,Float64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -686,6 +686,7 @@ public class ComplexFloat64Group
 		a.setI(rng.nextDouble());
 	}
 
+	@Override
 	public void real(ComplexFloat64Member a, Float64Member b) {
 		b.setV(a.r());
 	}

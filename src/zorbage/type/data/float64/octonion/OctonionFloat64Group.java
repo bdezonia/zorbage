@@ -37,7 +37,7 @@ import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 import zorbage.type.algebra.Trigonometric;
-import zorbage.type.algebra.Unreal;
+import zorbage.type.algebra.RealUnreal;
 import zorbage.type.data.float64.complex.ComplexFloat64Group;
 import zorbage.type.data.float64.complex.ComplexFloat64Member;
 import zorbage.type.data.float64.real.Float64Group;
@@ -63,7 +63,7 @@ public class OctonionFloat64Group
     Trigonometric<OctonionFloat64Member>,
     Hyperbolic<OctonionFloat64Member>,
     Power<OctonionFloat64Member>,
-    Unreal<OctonionFloat64Member>
+    RealUnreal<OctonionFloat64Member,Float64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -552,6 +552,7 @@ public class OctonionFloat64Group
 		a.setK0(rng.nextDouble());
 	}
 
+	@Override
 	public void real(OctonionFloat64Member a, Float64Member b) {
 		b.setV(a.r());
 	}

@@ -31,6 +31,7 @@ package zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Unreal<U> {
+public interface RealUnreal<U,V> {
+	void real(U a, V b);
 	void unreal(U a, U b);
 }
