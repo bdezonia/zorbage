@@ -39,6 +39,7 @@ import zorbage.type.algebra.SkewField;
 import zorbage.type.algebra.Trigonometric;
 import zorbage.type.data.float64.complex.ComplexFloat64Group;
 import zorbage.type.data.float64.complex.ComplexFloat64Member;
+import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import zorbage.type.data.float64.real.Float64Group;
 import zorbage.type.data.float64.real.Float64Member;
 
@@ -651,9 +652,32 @@ public class OctonionFloat64Group
 
 	@Override
 	public void sinAndCos(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
-		// TODO : implement a speedup
-		sin(a,s);
-		cos(a,c);
+		Float64Member z = new Float64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		unreal(a, tmp);
+		norm(tmp, z); // TODO or abs() whatever that is in boost
+		double cos = Math.cos(a.r());
+		double sin = Math.sin(a.r());
+		double sinhc_pi = Float64Group.sinhc_pi(z.v());
+		double cosh = Math.cosh(z.v());
+		double ws = cos * sinhc_pi;
+		double wc = -sin * sinhc_pi;
+		s.setR(sin * cosh);
+		s.setI(ws * a.i());
+		s.setJ(ws * a.j());
+		s.setK(ws * a.k());
+		s.setL(ws * a.l());
+		s.setI0(ws * a.i0());
+		s.setJ0(ws * a.j0());
+		s.setK0(ws * a.k0());
+		c.setR(cos * cosh);
+		c.setI(wc * a.i());
+		c.setJ(wc * a.j());
+		c.setK(wc * a.k());
+		c.setL(wc * a.l());
+		c.setI0(wc * a.i0());
+		c.setJ0(wc * a.j0());
+		c.setK0(wc * a.k0());
 	}
 	
 	@Override
