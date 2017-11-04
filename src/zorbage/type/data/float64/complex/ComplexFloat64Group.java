@@ -591,7 +591,7 @@ public class ComplexFloat64Group
 	// TODO: make an accurate implementation
 	
 	public void log1p(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member(0.5,0);
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		add(a, ONE, tmp);
 		log(tmp, b);
 	}
