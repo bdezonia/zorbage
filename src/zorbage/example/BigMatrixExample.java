@@ -26,10 +26,9 @@
  */
 package zorbage.example;
 
+import zorbage.groups.G;
 import zorbage.type.ctor.MemoryConstruction;
 import zorbage.type.ctor.StorageConstruction;
-import zorbage.type.data.float64.real.Float64Group;
-import zorbage.type.data.float64.real.Float64Matrix;
 import zorbage.type.data.float64.real.Float64MatrixMember;
 import zorbage.type.data.float64.real.Float64Member;
 
@@ -42,23 +41,21 @@ public class BigMatrixExample {
 
 	public void run() {
 		System.out.println("Making a huge virtual matrix > 2 gig entries");
-		Float64Matrix mat = new Float64Matrix();
-		Float64Group dbl = new Float64Group();
-		Float64MatrixMember m = mat.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
-		mat.unity(m);
-		Float64Member value = dbl.construct();
-		Float64Member zero = dbl.construct();
-		Float64Member one = dbl.construct();
-		dbl.unity(one);
+		Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
+		G.DBL_MAT.unity(m);
+		Float64Member value = G.DBL.construct();
+		Float64Member zero = G.DBL.construct();
+		Float64Member one = G.DBL.construct();
+		G.DBL.unity(one);
 		for (long r = 0; r < m.rows(); r++) {
 			for (long c = 0; c < m.cols(); c++) {
 				m.v(r, c, value);
 				if (r == c) {
-					if (!dbl.isEqual(value, one))
+					if (!G.DBL.isEqual(value, one))
 						System.out.println("data mismatch error: not one");
 				}
 				else {
-					if (!dbl.isEqual(value, zero))
+					if (!G.DBL.isEqual(value, zero))
 						System.out.println("data mismatch error: not zero");
 				}
 			}

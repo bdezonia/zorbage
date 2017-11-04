@@ -29,7 +29,7 @@ package zorbage.example;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import zorbage.type.data.int128.UnsignedInt128Group;
+import zorbage.groups.G;
 import zorbage.type.data.int128.UnsignedInt128Member;
 
 /**
@@ -38,8 +38,6 @@ import zorbage.type.data.int128.UnsignedInt128Member;
  *
  */
 public class NumberTest {
-	
-	private UnsignedInt128Group uint128 = new UnsignedInt128Group();
 	
 	public void run() {
 	//	addOneAndVTest();
@@ -65,7 +63,7 @@ public class NumberTest {
 			for (int j = 0; j < 65536; j++) {
 				bigJ = BigInteger.valueOf(j);
 				b.setV(bigJ);
-				uint128.multiply(a, b, c);
+				G.UINT128.multiply(a, b, c);
 				if (bigI.multiply(bigJ).mod(max).equals(c.v()))
 					;
 				else {
@@ -79,25 +77,25 @@ public class NumberTest {
 	private void addOneAndVTest() {
 		ArrayList<Long> list = new ArrayList<Long>();
 		
-		UnsignedInt128Member zero = uint128.construct();
-		UnsignedInt128Member min = uint128.construct();
-		UnsignedInt128Member max = uint128.construct();
-		uint128.minBound(min);
-		uint128.maxBound(max);
+		UnsignedInt128Member zero = G.UINT128.construct();
+		UnsignedInt128Member min = G.UINT128.construct();
+		UnsignedInt128Member max = G.UINT128.construct();
+		G.UINT128.minBound(min);
+		G.UINT128.maxBound(max);
 		
-		if (!uint128.isEqual(min, zero))
+		if (!G.UINT128.isEqual(min, zero))
 			System.out.println("min bound is wrong!!!!!!!");
 		
-		UnsignedInt128Member v = uint128.construct();
-		while (uint128.isLess(v, max)) {
+		UnsignedInt128Member v = G.UINT128.construct();
+		while (G.UINT128.isLess(v, max)) {
 			list.add(v.v().longValue());
-			uint128.succ(v, v);
+			G.UINT128.succ(v, v);
 		}
 		list.add(v.v().longValue());
 		System.out.println("Array list is this long: "+list.size());
 
-		uint128.succ(v, v);
-		if (uint128.isEqual(v, zero))
+		G.UINT128.succ(v, v);
+		if (G.UINT128.isEqual(v, zero))
 			System.out.println("OVERFLOW WAS CORRECT");
 		else
 			System.out.println("OVERFLOW WAS WRONG "+v.v());
@@ -110,25 +108,25 @@ public class NumberTest {
 	private void subtractOneAndVTest() {
 		ArrayList<Long> list = new ArrayList<Long>();
 		
-		UnsignedInt128Member zero = uint128.construct();
-		UnsignedInt128Member min = uint128.construct();
-		UnsignedInt128Member max = uint128.construct();
-		uint128.minBound(min);
-		uint128.maxBound(max);
+		UnsignedInt128Member zero = G.UINT128.construct();
+		UnsignedInt128Member min = G.UINT128.construct();
+		UnsignedInt128Member max = G.UINT128.construct();
+		G.UINT128.minBound(min);
+		G.UINT128.maxBound(max);
 		
-		if (!uint128.isEqual(min, zero))
+		if (!G.UINT128.isEqual(min, zero))
 			System.out.println("min bound is wrong!!!!!!!");
 		
 		UnsignedInt128Member v = new UnsignedInt128Member(max);
-		while (uint128.isGreater(v, zero)) {
+		while (G.UINT128.isGreater(v, zero)) {
 			list.add(v.v().longValue());
-			uint128.pred(v, v);
+			G.UINT128.pred(v, v);
 		}
 		list.add(v.v().longValue());
 		System.out.println("Array list is this long: "+list.size());
 
-		uint128.pred(v, v);
-		if (uint128.isEqual(v, max))
+		G.UINT128.pred(v, v);
+		if (G.UINT128.isEqual(v, max))
 			System.out.println("UNDERFLOW WAS CORRECT");
 		else
 			System.out.println("UNDERFLOW WAS WRONG "+v.v());
@@ -140,7 +138,7 @@ public class NumberTest {
 
 	private void setVTest() {
 		System.out.println("Start setVTest()");
-		UnsignedInt128Member v = uint128.construct();
+		UnsignedInt128Member v = G.UINT128.construct();
 		for (int i = 0; i < 65536; i++) {
 			v.setV(BigInteger.valueOf(i));
 			if (v.v().longValue() != i)
@@ -153,13 +151,13 @@ public class NumberTest {
 		System.out.println("Start compareTest()");
 		ArrayList<UnsignedInt128Member> list = new ArrayList<UnsignedInt128Member>();
 		
-		UnsignedInt128Member v = uint128.construct();
-		UnsignedInt128Member max = uint128.construct();
-		uint128.maxBound(max);
+		UnsignedInt128Member v = G.UINT128.construct();
+		UnsignedInt128Member max = G.UINT128.construct();
+		G.UINT128.maxBound(max);
 		
-		while (uint128.isLess(v, max)) {
+		while (G.UINT128.isLess(v, max)) {
 			list.add(v.duplicate());
-			uint128.succ(v, v);
+			G.UINT128.succ(v, v);
 		}
 		list.add(v.duplicate());
 
@@ -167,24 +165,24 @@ public class NumberTest {
 			UnsignedInt128Member x = list.get(i);
 			if (i >= 1) {
 				UnsignedInt128Member y = list.get(i-1);
-				if (!uint128.isGreater(x, y))
+				if (!G.UINT128.isGreater(x, y))
 					System.out.println("successor is not greater than current");
-				if (uint128.isLessEqual(x, y))
+				if (G.UINT128.isLessEqual(x, y))
 					System.out.println("x is less equal to y! x " + x.v() + " y " + y.v());
 			}
-			if (!uint128.isEqual(x,x))
+			if (!G.UINT128.isEqual(x,x))
 				System.out.println("x is not equal to itself a " + x.v());
-			if (uint128.isNotEqual(x,x))
+			if (G.UINT128.isNotEqual(x,x))
 				System.out.println("x is not equal to itself b " + x.v());
-			if (!uint128.isGreaterEqual(x,x))
+			if (!G.UINT128.isGreaterEqual(x,x))
 				System.out.println("x is not greater equal to itself " + x.v());
-			if (!uint128.isLessEqual(x,x))
+			if (!G.UINT128.isLessEqual(x,x))
 				System.out.println("x is not less equal to itself " + x.v());
 			if (i < list.size()-1) {
 				UnsignedInt128Member y = list.get(i+1);
-				if (!uint128.isLess(x, y))
+				if (!G.UINT128.isLess(x, y))
 					System.out.println("predecessor is not less than current");
-				if (uint128.isGreaterEqual(x, y))
+				if (G.UINT128.isGreaterEqual(x, y))
 					System.out.println("x is greater equal to y! x " + x.v() + " y " + y.v());
 			}
 		}
@@ -193,16 +191,16 @@ public class NumberTest {
 	
 	private void addFullRangeTest() {
 		System.out.println("Start full range test");
-		UnsignedInt128Member a = uint128.construct();
-		UnsignedInt128Member b = uint128.construct();
-		UnsignedInt128Member c = uint128.construct();
+		UnsignedInt128Member a = G.UINT128.construct();
+		UnsignedInt128Member b = G.UINT128.construct();
+		UnsignedInt128Member c = G.UINT128.construct();
 		BigInteger max = BigInteger.valueOf(65536);
 		for (int i = 0; i < 65536; i++) {
 			System.out.println("Pass "+i);
 			a.setV(BigInteger.valueOf(i));
 			for (int j = 0; j < 65536; j++) {
 				b.setV(BigInteger.valueOf(j));
-				uint128.add(a,b,c);
+				G.UINT128.add(a,b,c);
 				if (!(a.v().add(b.v()).mod(max).equals(c.v())))
 					System.out.println("addition problem : a " + a.v() + " b " + b.v() + " c " + c.v());
 			}
@@ -212,16 +210,16 @@ public class NumberTest {
 	
 	private void subtractFullRangeTest() {
 		System.out.println("Start full range test");
-		UnsignedInt128Member a = uint128.construct();
-		UnsignedInt128Member b = uint128.construct();
-		UnsignedInt128Member c = uint128.construct();
+		UnsignedInt128Member a = G.UINT128.construct();
+		UnsignedInt128Member b = G.UINT128.construct();
+		UnsignedInt128Member c = G.UINT128.construct();
 		BigInteger max = BigInteger.valueOf(65536);
 		for (int i = 0; i < 1; i++) {  // TODO: more than 1
 			System.out.println("Pass "+i);
 			a.setV(BigInteger.valueOf(i));
 			for (int j = 0; j < 65536; j++) {
 				b.setV(BigInteger.valueOf(j));
-				uint128.subtract(a,b,c);
+				G.UINT128.subtract(a,b,c);
 				// TODO I'M WRONG - FIXME
 				if (!(a.v().subtract(b.v()).mod(max).equals(c.v())))
 					System.out.println("subtraction problem : a " + a.v() + " b " + b.v() + " c " + c.v());
@@ -233,12 +231,11 @@ public class NumberTest {
 	private void versusTest() {
 		long a = System.currentTimeMillis();
 		
-		UnsignedInt128Group grp = new UnsignedInt128Group();
-		UnsignedInt128Member v = grp.construct();
-		UnsignedInt128Member one = grp.construct();
-		grp.unity(one);
+		UnsignedInt128Member v = G.UINT128.construct();
+		UnsignedInt128Member one = G.UINT128.construct();
+		G.UINT128.unity(one);
 		for (int i = 0; i < 65536; i++) {
-			grp.add(v, one, v);
+			G.UINT128.add(v, one, v);
 		}
 
 		long b = System.currentTimeMillis();

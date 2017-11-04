@@ -26,13 +26,11 @@
  */
 package zorbage.example;
 
+import zorbage.groups.G;
 import zorbage.type.ctor.MemoryConstruction;
 import zorbage.type.ctor.StorageConstruction;
-import zorbage.type.data.float64.real.Float64Group;
-import zorbage.type.data.float64.real.Float64Matrix;
 import zorbage.type.data.float64.real.Float64MatrixMember;
 import zorbage.type.data.float64.real.Float64Member;
-import zorbage.type.data.float64.real.Float64Vector;
 import zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
@@ -42,16 +40,12 @@ import zorbage.type.data.float64.real.Float64VectorMember;
  */
 public class LUDecompExample {
 
-	Float64Matrix dblMat = new Float64Matrix();
-	Float64Vector dblVec = new Float64Vector();
-	Float64Group dbl = new Float64Group();
-
 	public void run() {
 		
-		Float64Member val = dbl.construct();
+		Float64Member val = G.DBL.construct();
 
-		Float64MatrixMember a = dblMat.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
-		dbl.unity(val);
+		Float64MatrixMember a = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
+		G.DBL.unity(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
 		a.setV(1, 1, val);
@@ -59,7 +53,7 @@ public class LUDecompExample {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		Float64VectorMember b = dblVec.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		Float64VectorMember b = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 		val.setV(4);
 		b.setV(0, val);
 		val.setV(10);
@@ -67,7 +61,7 @@ public class LUDecompExample {
 		val.setV(20);
 		b.setV(2, val);
 		
-		Float64VectorMember x = dblVec.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
 		run(a,b,x);
 
@@ -80,12 +74,12 @@ public class LUDecompExample {
 		
 		// decomposition of matrix
 
-		Float64MatrixMember lu = dblMat.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-		Float64Member sum = dbl.construct();
-		Float64Member value1 = dbl.construct();
-		Float64Member value2 = dbl.construct();
-		Float64Member term = dbl.construct();
-		Float64Member tmp = dbl.construct();
+		Float64MatrixMember lu = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
+		Float64Member sum = G.DBL.construct();
+		Float64Member value1 = G.DBL.construct();
+		Float64Member value2 = G.DBL.construct();
+		Float64Member term = G.DBL.construct();
+		Float64Member tmp = G.DBL.construct();
 		for (long i = 0; i < n; i++)
 		{
 			for (long j = i; j < n; j++)
@@ -94,11 +88,11 @@ public class LUDecompExample {
 				for (long k = 0; k < i; k++) {
 					lu.v(i, k, value1);
 					lu.v(k, j, value2);
-					dbl.multiply(value1, value2, term);
-					dbl.add(sum, term, sum);
+					G.DBL.multiply(value1, value2, term);
+					G.DBL.add(sum, term, sum);
 				}
 				a.v(i, j, term);
-				dbl.subtract(term, sum, term);
+				G.DBL.subtract(term, sum, term);
 				lu.setV(i, j, term);
 			}
 			for (long j = i + 1; j < n; j++)
@@ -107,32 +101,32 @@ public class LUDecompExample {
 				for (long k = 0; k < i; k++) {
 					lu.v(j, k, value1);
 					lu.v(k, i, value2);
-					dbl.multiply(value1, value2, term);
-					dbl.add(sum, term, sum);
+					G.DBL.multiply(value1, value2, term);
+					G.DBL.add(sum, term, sum);
 				}
-				dbl.unity(value1);
+				G.DBL.unity(value1);
 				lu.v(i, i, tmp);
-				dbl.divide(value1, tmp, value1);
+				G.DBL.divide(value1, tmp, value1);
 				a.v(j, i, tmp);
-				dbl.subtract(tmp, sum, value2);
-				dbl.multiply(value1, value2, term);
+				G.DBL.subtract(tmp, sum, value2);
+				G.DBL.multiply(value1, value2, term);
 				lu.setV(j, i, term);
 			}
 		}
 
 		// find solution of Ly = b
-		Float64VectorMember y = dblVec.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		Float64VectorMember y = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
 			sum.setV(0);
 			for (long k = 0; k < i; k++) {
 				lu.v(i, k, value1);
 				y.v(k, value2);
-				dbl.multiply(value1, value2, term);
-				dbl.add(sum, term, sum);
+				G.DBL.multiply(value1, value2, term);
+				G.DBL.add(sum, term, sum);
 			}
 			b.v(i, value1);
-			dbl.subtract(value1, sum, term);
+			G.DBL.subtract(value1, sum, term);
 			y.setV(i, term);
 		}
 
@@ -143,15 +137,15 @@ public class LUDecompExample {
 			for (long k = i + 1; k < n; k++) {
 				lu.v(i, k, value1);
 				x.v(k, value2);
-				dbl.multiply(value1, value2, term);
-				dbl.add(sum, term, sum);
+				G.DBL.multiply(value1, value2, term);
+				G.DBL.add(sum, term, sum);
 			}
-			dbl.unity(tmp);
+			G.DBL.unity(tmp);
 			lu.v(i, i, value1);
-			dbl.divide(tmp, value1, value1);
+			G.DBL.divide(tmp, value1, value1);
 			y.v(i, value2);
-			dbl.subtract(value2, sum, value2);
-			dbl.multiply(value1, value2, term);
+			G.DBL.subtract(value2, sum, value2);
+			G.DBL.multiply(value1, value2, term);
 			x.setV(i, term);
 		}
 	}

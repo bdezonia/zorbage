@@ -28,15 +28,14 @@ package zorbage.example;
 
 import java.util.Arrays;
 
+import zorbage.groups.G;
 import zorbage.type.algebra.AdditiveGroup;
 import zorbage.type.algebra.Ordered;
 import zorbage.type.algebra.Unity;
-import zorbage.type.data.bigint.UnboundedIntGroup;
 import zorbage.type.data.bigint.UnboundedIntMember;
 import zorbage.type.data.bool.BooleanMember;
 import zorbage.type.data.float64.real.Float64Group;
 import zorbage.type.data.float64.real.Float64Member;
-import zorbage.type.data.int32.SignedInt32Group;
 import zorbage.type.data.int32.SignedInt32Member;
 import zorbage.type.operation.Average;
 import zorbage.type.operation.Max;
@@ -56,38 +55,32 @@ public class TestMain {
 	
 	public static void testInts() {
 		  
-		SignedInt32Group int32 = new SignedInt32Group();
-		  
 		SignedInt32Member a = new SignedInt32Member(1);
 		SignedInt32Member b = new SignedInt32Member(4);
 		SignedInt32Member sum = new SignedInt32Member(99);
 
-		int32.add(a,b,sum);
+		G.INT32.add(a,b,sum);
 		  
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
 	public static void testFloats() {
 		  
-		Float64Group dbl = new Float64Group();
-		  
 		Float64Member a = new Float64Member(1.1);
 		Float64Member b = new Float64Member(4.2);
 		Float64Member sum = new Float64Member(99.3);
 
-		dbl.add(a,b,sum);
+		G.DBL.add(a,b,sum);
 		  
 		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
 	}
 	
 	public static void testHugeNumbers() {
-		UnboundedIntGroup huge = new UnboundedIntGroup();
-		  
 		UnboundedIntMember a = new UnboundedIntMember(Long.MAX_VALUE);
 		UnboundedIntMember b = new UnboundedIntMember(44);
 		UnboundedIntMember product = new UnboundedIntMember();
 
-		huge.multiply(a,b,product);
+		G.BIGINT.multiply(a,b,product);
 		  
 		System.out.println(a.v() + " times " + b.v() + " equals " + product.v());
 	}
@@ -150,7 +143,6 @@ public class TestMain {
 			accessor.put();
 		}
 		// scale it by 6.3
-		Float64Group dbl = new Float64Group();
 		Float64Member scale = new Float64Member(6.3);
 		Float64Member tmp = new Float64Member();
 		accessor.beforeFirst();
@@ -158,7 +150,7 @@ public class TestMain {
 			accessor.fwd();
 			accessor.get();
 			tmp.setV(value.v());
-			dbl.multiply(tmp, scale, tmp);
+			G.DBL.multiply(tmp, scale, tmp);
 			value.setV((int)Math.round(tmp.v()));
 			accessor.put();
 		}
@@ -183,15 +175,13 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Average<Float64Group,Float64Member> a =
-				new Average<Float64Group,Float64Member>(new Float64Group());
+		Average<Float64Group,Float64Member> a = new Average<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		a.calculate(storage, result);
 		System.out.println("Average value = " + result.v());
 	}
 	
 	public static void testMedian() {
-		Float64Group g = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
@@ -203,14 +193,13 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Median<Float64Group,Float64Member> a = new Median<Float64Group,Float64Member>(g);
+		Median<Float64Group,Float64Member> a = new Median<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		a.calculate(storage, result);
 		System.out.println("Median value = " + result.v());
 	}
 
 	public static void testMin() {
-		Float64Group dbl = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
@@ -222,16 +211,15 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Min<Float64Group,Float64Member> a = new Min<Float64Group,Float64Member>(dbl);
+		Min<Float64Group,Float64Member> a = new Min<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		Float64Member max = new Float64Member();
-		dbl.maxBound(max);
+		G.DBL.maxBound(max);
 		a.calculate(storage, max, result);
 		System.out.println("Minimum value = " + result.v());
 	}
 
 	public static void testMax() {
-		Float64Group dbl = new Float64Group();
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
@@ -243,10 +231,10 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Max<Float64Group,Float64Member> a = new Max<Float64Group,Float64Member>(dbl);
+		Max<Float64Group,Float64Member> a = new Max<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		Float64Member min = new Float64Member();
-		dbl.minBound(min);
+		G.DBL.minBound(min);
 		a.calculate(storage, min, result);
 		System.out.println("Maximum value = " + result.v());
 	}
@@ -263,8 +251,7 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Sum<Float64Group,Float64Member> a =
-				new Sum<Float64Group,Float64Member>(new Float64Group());
+		Sum<Float64Group,Float64Member> a = new Sum<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		a.calculate(storage, result);
 		System.out.println("Sum value = " + result.v());
@@ -344,10 +331,10 @@ public class TestMain {
 		testFloats();
 		testHugeNumbers();
 		testQuats();
-		test1(new SignedInt32Group());
-		test1(new Float64Group());
-		test2(new SignedInt32Group());
-		test2(new Float64Group());
+		test1(G.INT32);
+		test1(G.DBL);
+		test2(G.INT32);
+		test2(G.DBL);
 		testAccessor();
 		testGroupOfConversions();
 		testAverage();

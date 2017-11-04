@@ -26,7 +26,7 @@
  */
 package zorbage.example;
 
-import zorbage.type.data.float64.complex.ComplexFloat64Group;
+import zorbage.groups.G;
 import zorbage.type.data.float64.complex.ComplexFloat64Member;
 import zorbage.type.data.int32.SignedInt32Member;
 import zorbage.type.storage.linear.LinearStorage;
@@ -40,8 +40,6 @@ import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
  */
 public class DFTExample {
 
-	private ComplexFloat64Group cdbl = new ComplexFloat64Group();
-	
 	public void run() {
 		final int size = 500;
 		LinearStorage<?,SignedInt32Member> inputData = makeIntData(size);
@@ -89,26 +87,26 @@ public class DFTExample {
 		ComplexFloat64Member PI = new ComplexFloat64Member();
 		SignedInt32Member in = new SignedInt32Member();
 		
-		cdbl.E(E);
-		cdbl.PI(PI);
+		G.CDBL.E(E);
+		G.CDBL.PI(PI);
 		
 		for (long u = 0; u < input.size(); u++) {
-			cdbl.zero(sum);
+			G.CDBL.zero(sum);
 			uTmp.setR(u);
 			for (long x = 0; x < input.size(); x++) {
 				input.get(x, in);
 				fOfX.setR(in.v());
 				xTmp.setR(x);
-				cdbl.multiply(MINUS_2, PI, power);
-				cdbl.multiply(power, I, power);
-				cdbl.multiply(power, xTmp, power);
-				cdbl.multiply(power, uTmp, power);
-				cdbl.divide(power, N, power);
-				cdbl.exp(power, multiplier);
-				cdbl.multiply(fOfX, multiplier, term);
-				cdbl.add(sum, term, sum);
+				G.CDBL.multiply(MINUS_2, PI, power);
+				G.CDBL.multiply(power, I, power);
+				G.CDBL.multiply(power, xTmp, power);
+				G.CDBL.multiply(power, uTmp, power);
+				G.CDBL.divide(power, N, power);
+				G.CDBL.exp(power, multiplier);
+				G.CDBL.multiply(fOfX, multiplier, term);
+				G.CDBL.add(sum, term, sum);
 			}
-			cdbl.divide(sum, N, FofU);
+			G.CDBL.divide(sum, N, FofU);
 			output.set(u, FofU);
 		}
 	}

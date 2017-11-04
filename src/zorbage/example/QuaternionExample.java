@@ -26,7 +26,7 @@
  */
 package zorbage.example;
 
-import zorbage.type.data.float64.quaternion.QuaternionFloat64Group;
+import zorbage.groups.G;
 import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import zorbage.type.data.float64.real.Float64Member;
 import zorbage.util.RealUtils;
@@ -41,9 +41,7 @@ public class QuaternionExample {
 	public void run() {
 		final double tol = 0.000000000001;
 		
-		QuaternionFloat64Group qdbl = new QuaternionFloat64Group();
-		
-		QuaternionFloat64Member q1 = qdbl.construct();
+		QuaternionFloat64Member q1 = G.QDBL.construct();
 		
 		// TODO define a ctor that takes four doubles
 		q1.setR(1);
@@ -53,36 +51,36 @@ public class QuaternionExample {
 		
 		Float64Member tmp = new Float64Member();
 		
-		qdbl.norm(q1, tmp);
+		G.QDBL.norm(q1, tmp);
 		
 		System.out.println("Quaternion 1st norm test is correct: " + (tmp.v() == (3*Math.sqrt(2))));
 		
-		QuaternionFloat64Member q2 = qdbl.construct();
+		QuaternionFloat64Member q2 = G.QDBL.construct();
 
 		q2.setR(11);
 		q2.setI(-2);
 		q2.setJ(0);
 		q2.setK(-2);
 
-		qdbl.norm(q2, tmp);
+		G.QDBL.norm(q2, tmp);
 
 		System.out.println("Quaternion 2nd norm test is correct: " + (tmp.v() == (Math.sqrt(129))));
 		
-		QuaternionFloat64Member q3 = qdbl.construct();
+		QuaternionFloat64Member q3 = G.QDBL.construct();
 
-		qdbl.add(q1, q2, q3);
+		G.QDBL.add(q1, q2, q3);
 		
 		System.out.println("Quaternion add worked: " + ((q1.r()+q2.r() == q3.r()) && (q1.i()+q2.i() == q3.i()) && (q1.j()+q2.j() == q3.j()) && (q1.k()+q2.k() == q3.k())));
 		
-		qdbl.subtract(q1, q2, q3);
+		G.QDBL.subtract(q1, q2, q3);
 
 		System.out.println("Quaternion subtract worked: " + ((q1.r()-q2.r() == q3.r()) && (q1.i()-q2.i() == q3.i()) && (q1.j()-q2.j() == q3.j()) && (q1.k()-q2.k() == q3.k())));
 
-		qdbl.multiply(q1, q2, q3);
+		G.QDBL.multiply(q1, q2, q3);
 		
 		System.out.println("Quaternion multiply worked: " + ((q3.r() == 11) && (q3.i() == -30) && (q3.j() == 25) && (q3.k() == 26)));
 		
-		qdbl.divide(q3, q2, q1);
+		G.QDBL.divide(q3, q2, q1);
 
 		System.out.println("Quaternion divide worked: " + (RealUtils.near(q1.r(),1,tol) && RealUtils.near(q1.i(),-2, tol) && RealUtils.near(q1.j(),3,tol) && RealUtils.near(q1.k(),2,tol)));
 		
