@@ -325,19 +325,19 @@ public class QuaternionFloat64Group
 	public void log(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		Float64Member norm = new Float64Member(); 
 		Float64Member term = new Float64Member(); 
-		Float64Member tmp = new Float64Member(); 
-		Float64VectorMember v = new Float64VectorMember(new double[]{a.i(), a.j(), a.k()});
+		Float64Member v1 = new Float64Member();
+		Float64Member v2 = new Float64Member();
+		Float64Member v3 = new Float64Member();
 		norm(a, norm);
 		Float64Member multiplier = new Float64Member(a.r() / norm.v());
-		dblvec.scale(multiplier, v, v);
+		v1.setV(a.i() * multiplier.v());
+		v2.setV(a.j() * multiplier.v());
+		v3.setV(a.k() * multiplier.v());
 		dbl.acos(multiplier, term);
 		b.setR(Math.log(norm.v()));
-		v.v(0, tmp);
-		b.setI(tmp.v() * term.v());
-		v.v(1, tmp);
-		b.setJ(tmp.v() * term.v());
-		v.v(2, tmp);
-		b.setK(tmp.v() * term.v());
+		b.setI(v1.v() * term.v());
+		b.setJ(v2.v() * term.v());
+		b.setK(v3.v() * term.v());
 	}
 
 	@Override
@@ -360,6 +360,7 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void sinh(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		// TODO adapted from Complex64Group: might be wrong
 		QuaternionFloat64Member negA = new QuaternionFloat64Member();
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
@@ -375,6 +376,7 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void cosh(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		// TODO adapted from Complex64Group: might be wrong
 		QuaternionFloat64Member negA = new QuaternionFloat64Member();
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
@@ -390,6 +392,7 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void sinhAndCosh(QuaternionFloat64Member a, QuaternionFloat64Member s, QuaternionFloat64Member c) {
+		// TODO adapted from Complex64Group: might be wrong
 		QuaternionFloat64Member negA = new QuaternionFloat64Member();
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp1 = new QuaternionFloat64Member();
@@ -420,11 +423,15 @@ public class QuaternionFloat64Group
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		unreal(a, tmp);
 		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double w = Math.cos(a.r())*Float64Group.sinhc_pi(z.v());
-		b.setR(Math.sin(a.r())*Math.cosh(z.v()));
-		b.setI(w*a.i());
-		b.setJ(w*a.j());
-		b.setK(w*a.k());
+		double cos = Math.cos(a.r());
+		double sin = Math.sin(a.r());
+		double sinhc_pi = Float64Group.sinhc_pi(z.v());
+		double cosh = Math.cosh(z.v());
+		double ws = cos * sinhc_pi;
+		b.setR(sin * cosh);
+		b.setI(ws * a.i());
+		b.setJ(ws * a.j());
+		b.setK(ws * a.k());
 	}
 
 	@Override
@@ -433,11 +440,15 @@ public class QuaternionFloat64Group
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		unreal(a, tmp);
 		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double w = -Math.sin(a.r())*Float64Group.sinhc_pi(z.v());
-		b.setR(Math.cos(a.r())*Math.cosh(z.v()));
-		b.setI(w*a.i());
-		b.setJ(w*a.j());
-		b.setK(w*a.k());
+		double cos = Math.cos(a.r());
+		double sin = Math.sin(a.r());
+		double sinhc_pi = Float64Group.sinhc_pi(z.v());
+		double cosh = Math.cosh(z.v());
+		double wc = -sin * sinhc_pi;
+		b.setR(cos * cosh);
+		b.setI(wc * a.i());
+		b.setJ(wc * a.j());
+		b.setK(wc * a.k());
 	}
 
 	@Override

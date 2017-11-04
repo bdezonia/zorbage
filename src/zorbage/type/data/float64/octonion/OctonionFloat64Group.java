@@ -39,7 +39,6 @@ import zorbage.type.algebra.SkewField;
 import zorbage.type.algebra.Trigonometric;
 import zorbage.type.data.float64.complex.ComplexFloat64Group;
 import zorbage.type.data.float64.complex.ComplexFloat64Member;
-import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import zorbage.type.data.float64.real.Float64Group;
 import zorbage.type.data.float64.real.Float64Member;
 
@@ -562,6 +561,7 @@ public class OctonionFloat64Group
 
 	@Override
 	public void sinh(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// TODO adapted from Complex64Group: might be wrong
 		OctonionFloat64Member negA = new OctonionFloat64Member();
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
@@ -577,6 +577,7 @@ public class OctonionFloat64Group
 
 	@Override
 	public void cosh(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// TODO adapted from Complex64Group: might be wrong
 		OctonionFloat64Member negA = new OctonionFloat64Member();
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
@@ -592,6 +593,7 @@ public class OctonionFloat64Group
 
 	@Override
 	public void sinhAndCosh(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
+		// TODO adapted from Complex64Group: might be wrong
 		OctonionFloat64Member negA = new OctonionFloat64Member();
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
@@ -622,15 +624,19 @@ public class OctonionFloat64Group
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		unreal(a, tmp);
 		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double w = Math.cos(a.r())*Float64Group.sinhc_pi(z.v());
-		b.setR(Math.sin(a.r())*Math.cosh(z.v()));
-		b.setI(w*a.i());
-		b.setJ(w*a.j());
-		b.setK(w*a.k());
-		b.setL(w*a.l());
-		b.setI0(w*a.i0());
-		b.setJ0(w*a.j0());
-		b.setK0(w*a.k0());
+		double cos = Math.cos(a.r());
+		double sin = Math.sin(a.r());
+		double sinhc_pi = Float64Group.sinhc_pi(z.v());
+		double cosh = Math.cosh(z.v());
+		double ws = cos * sinhc_pi;
+		b.setR(sin * cosh);
+		b.setI(ws * a.i());
+		b.setJ(ws * a.j());
+		b.setK(ws * a.k());
+		b.setL(ws * a.l());
+		b.setI0(ws * a.i0());
+		b.setJ0(ws * a.j0());
+		b.setK0(ws * a.k0());
 	}
 
 	@Override
@@ -639,15 +645,19 @@ public class OctonionFloat64Group
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		unreal(a, tmp);
 		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double w = -Math.sin(a.r())*Float64Group.sinhc_pi(z.v());
-		b.setR(Math.cos(a.r())*Math.cosh(z.v()));
-		b.setI(w*a.i());
-		b.setJ(w*a.j());
-		b.setK(w*a.k());
-		b.setL(w*a.l());
-		b.setI0(w*a.i0());
-		b.setJ0(w*a.j0());
-		b.setK0(w*a.k0());
+		double cos = Math.cos(a.r());
+		double sin = Math.sin(a.r());
+		double sinhc_pi = Float64Group.sinhc_pi(z.v());
+		double cosh = Math.cosh(z.v());
+		double wc = -sin * sinhc_pi;
+		b.setR(cos * cosh);
+		b.setI(wc * a.i());
+		b.setJ(wc * a.j());
+		b.setK(wc * a.k());
+		b.setL(wc * a.l());
+		b.setI0(wc * a.i0());
+		b.setJ0(wc * a.j0());
+		b.setK0(wc * a.k0());
 	}
 
 	@Override
