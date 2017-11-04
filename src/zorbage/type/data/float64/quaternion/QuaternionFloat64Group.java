@@ -37,10 +37,9 @@ import zorbage.type.algebra.Random;
 import zorbage.type.algebra.Rounding;
 import zorbage.type.algebra.SkewField;
 import zorbage.type.algebra.Trigonometric;
+import zorbage.type.algebra.Unreal;
 import zorbage.type.data.float64.real.Float64Group;
 import zorbage.type.data.float64.real.Float64Member;
-import zorbage.type.data.float64.real.Float64Vector;
-import zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 
@@ -59,7 +58,8 @@ public class QuaternionFloat64Group
     Exponential<QuaternionFloat64Member>,
     Trigonometric<QuaternionFloat64Member>,
     Hyperbolic<QuaternionFloat64Member>,
-    Power<QuaternionFloat64Member>
+    Power<QuaternionFloat64Member>,
+    Unreal<QuaternionFloat64Member>
 {
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -70,7 +70,6 @@ public class QuaternionFloat64Group
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	private static final QuaternionFloat64Member NaN = new QuaternionFloat64Member(Double.NaN,Double.NaN,Double.NaN,Double.NaN);
-	private static final Float64Vector dblvec = new Float64Vector();
 	private static final Float64Group dbl = new Float64Group();
 	
 	public QuaternionFloat64Group() {
@@ -353,6 +352,7 @@ public class QuaternionFloat64Group
 		b.setV(a.r());
 	}
 	
+	@Override
 	public void unreal(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		assign(a, b);
 		b.setR(0);
