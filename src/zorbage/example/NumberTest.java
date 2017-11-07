@@ -44,7 +44,7 @@ public class NumberTest {
 	//	addFullRangeTest();
 	//subtractOneAndVTest();
 	//subtractFullRangeTest();
-		multiplyFullRangeTest();
+	//	multiplyFullRangeTest();
 	//	setVTest();
 	//	compareTest();
 		versusTest();
