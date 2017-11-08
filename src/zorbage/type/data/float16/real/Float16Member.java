@@ -165,7 +165,7 @@ public final class Float16Member
 	private static double fraction(int significand) {
 		double result = 0;
 		double frac = 0.5;
-		int mask = 1024;
+		int mask = 512;
 		while (mask > 0) {
 			if ((significand & mask) > 0)
 				result += frac;
