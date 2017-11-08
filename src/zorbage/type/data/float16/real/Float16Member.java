@@ -52,14 +52,6 @@ public final class Float16Member
 {
 	private short v;
 	
-	public static short toFloat16(double value) {
-		throw new IllegalArgumentException("TODO");
-	}
-	
-	public static double toDouble(short value) {
-		throw new IllegalArgumentException("TODO");
-	}
-	
 	public Float16Member() {
 		v = 0;
 	}
@@ -131,4 +123,56 @@ public final class Float16Member
 	public Float16Member duplicate() {
 		return new Float16Member(this);
 	}
+
+	static short toFloat16(double value) {
+		throw new IllegalArgumentException("TODO");
+	}
+	
+	static double toDouble(short value) {
+		int exponent = ((value & 0b0111110000000000) >> 10);
+		int significand = (value & 0b0000001111111111);
+		int sign = (value & 0b1000000000000000) >>> 15;
+		if (exponent == 0){
+			if (significand == 0) {
+				if (sign > 0)
+					return -0;
+				else
+					return +0;
+			}
+			else {
+				// subnormal numbers
+				return Math.pow(-1, sign) * Math.pow(2, -14) * (fraction(significand));
+			}
+		}
+		else if (exponent == 31) {
+			if (significand == 0) {
+				if (sign > 0)
+					return Double.NEGATIVE_INFINITY;
+				else
+					return Double.POSITIVE_INFINITY;
+			}
+			else { // significand != 0
+				return Double.NaN;
+			}
+		}
+		else // exponent 0 < exponent < 31
+		{
+			// normalized numbers
+			return Math.pow(-1, sign) * Math.pow(2, exponent-15) * (1.0 + fraction(significand));
+		}
+	}
+	
+	private static double fraction(int significand) {
+		double result = 0;
+		double frac = 0.5;
+		int mask = 1024;
+		while (mask > 0) {
+			if ((significand & mask) > 0)
+				result += frac;
+			mask = mask >> 1;
+			frac = frac / 2;
+		}
+		return result;
+	}
+	
 }
