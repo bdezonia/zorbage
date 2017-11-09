@@ -29,10 +29,12 @@ package zorbage.type.data.float16.real;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import zorbage.groups.G;
 import zorbage.type.algebra.Gettable;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 import zorbage.type.ctor.Duplicatable;
+import zorbage.type.data.float64.real.Float64Member;
 import zorbage.type.parse.OctonionRepresentation;
 import zorbage.type.parse.TensorStringRepresentation;
 import zorbage.type.storage.coder.ShortCoder;
@@ -50,43 +52,50 @@ public final class Float16Member
 	Allocatable<Float16Member>, Duplicatable<Float16Member>,
 	Settable<Float16Member>, Gettable<Float16Member>
 {
-	private short v;
+	//private static final double SMALL = Math.pow(2,-14);
+	
+	private Float64Member v;
 	
 	public Float16Member() {
-		v = 0;
+		v = new Float64Member();
 	}
 	
 	public Float16Member(double value) {
-		v = toFloat16(value);
+		value = toDouble(toShort(value));
+		v = new Float64Member(value);
 	}
 	
 	public Float16Member(Float16Member value) {
-		v = value.v;
+		v = new Float64Member(value.v);
 	}
 	
 	public Float16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		v = toFloat16(val.r().doubleValue());
+		v = new Float64Member(toDouble(toShort(val.r().doubleValue())));
 	}
 	
-	public double v() { return toDouble(v); }
+	public double v() { return v.v(); }
 	
-	public void setV(double val) { v = toFloat16(val); }
+	// Note: I am going to let internal values stray from Float16 format for performance reasons.
+	// Only deal with format conversions when writing to or reading from a Float16 container.
+	
+	public void setV(double val) { v.setV(val); }
 	
 	@Override
 	public void set(Float16Member other) {
-		v = other.v;
+		G.DBL.assign(other.v, v);
 	}
 	
 	@Override
 	public void get(Float16Member other) {
-		other.v = v;
+		G.DBL.assign(v, other.v);
 	}
 	
 	@Override
 	public String toString() {
-		return String.valueOf(toDouble(v));
+		// make sure we don't stray from values of format
+		return String.valueOf(toDouble(toShort(v.v())));
 	}
 	
 	@Override
@@ -96,22 +105,22 @@ public final class Float16Member
 	
 	@Override
 	public void toValue(short[] arr, int index) {
-		v = arr[index];
+		v.setV(toDouble(arr[index]));
 	}
 	
 	@Override
 	public void toArray(short[] arr, int index) {
-		arr[index] = v;
+		arr[index] = toShort(v.v());
 	}
 	
 	@Override
 	public void toValue(RandomAccessFile raf) throws IOException {
-		v = raf.readShort();
+		v.setV(toDouble(raf.readShort()));
 	}
 	
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
-		raf.writeShort(v);
+		raf.writeShort(toShort(v.v()));
 	}
 	
 	@Override
@@ -124,7 +133,24 @@ public final class Float16Member
 		return new Float16Member(this);
 	}
 
-	static short toFloat16(double value) {
+	static short toShort(double value) {
+		if (value == Double.NEGATIVE_INFINITY)
+			return (short) 0b1111110000000000;
+			
+		if (value == Double.POSITIVE_INFINITY)
+			return (short) 0b0111110000000000;
+			
+		if (Double.isNaN(value))
+			return (short) 0b0111111111111111;
+		
+		if (value == +0)
+			return (short) 0b0000000000000000;
+		
+		if (value == -0)
+			return (short) 0b1000000000000000;
+
+		// if here its a nonspecial number
+
 		throw new IllegalArgumentException("TODO");
 	}
 	
@@ -141,7 +167,7 @@ public final class Float16Member
 			}
 			else {
 				// subnormal numbers
-				return Math.pow(-1, sign) * Math.pow(2, -14) * (fraction(significand));
+				return (sign != 0 ? -1 : 1) * Math.pow(2, -14) * (fraction(significand));
 			}
 		}
 		else if (exponent == 31) {
@@ -155,10 +181,10 @@ public final class Float16Member
 				return Double.NaN;
 			}
 		}
-		else // exponent 0 < exponent < 31
+		else // exponent: 1 <= exponent <= 30
 		{
 			// normalized numbers
-			return Math.pow(-1, sign) * Math.pow(2, exponent-15) * (1.0 + fraction(significand));
+			return (sign != 0 ? -1 : 1) * Math.pow(2, exponent-15) * (1.0 + fraction(significand));
 		}
 	}
 	
@@ -169,8 +195,8 @@ public final class Float16Member
 		while (mask > 0) {
 			if ((significand & mask) > 0)
 				result += frac;
-			mask = mask >> 1;
-			frac = frac / 2;
+			mask >>= 1;
+			frac /= 2;
 		}
 		return result;
 	}
