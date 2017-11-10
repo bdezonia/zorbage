@@ -172,7 +172,7 @@ public final class Float16Member
 					tmp -= frac;
 				}
 				mask >>= 1;
-				frac /= 2;
+				frac /= 2.0;
 			}
 			return (short) (sign | signif);
 		}
@@ -194,7 +194,7 @@ public final class Float16Member
 					tmp -= frac;
 				}
 				mask >>= 1;
-				frac /= 2;
+				frac /= 2.0;
 			}
 			return (short) (sign | ((exp + 15) << 10) | signif);
 		}
