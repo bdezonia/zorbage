@@ -41,6 +41,8 @@ import zorbage.type.storage.coder.ShortCoder;
 
 // https://en.wikipedia.org/wiki/Half-precision_floating-point_format
 
+// TODO write conversion tests
+
 /**
  * 
  * @author Barry DeZonia
@@ -52,7 +54,11 @@ public final class Float16Member
 	Allocatable<Float16Member>, Duplicatable<Float16Member>,
 	Settable<Float16Member>, Gettable<Float16Member>
 {
-	//private static final double SMALL = Math.pow(2,-14);
+	private static final double SUBNORMAL_BOUND = Math.pow(2,-14);
+	private static final short MAX_BOUND_I = (short) 0b0111101111111111;
+	private static final short MIN_BOUND_I = (short) 0b1111101111111111;
+	private static final double MAX_BOUND_R = toDouble(MAX_BOUND_I);
+	private static final double MIN_BOUND_R = toDouble(MIN_BOUND_I);
 	
 	private Float64Member v;
 	
@@ -134,24 +140,64 @@ public final class Float16Member
 	}
 
 	static short toShort(double value) {
-		if (value == Double.NEGATIVE_INFINITY)
-			return (short) 0b1111110000000000;
+		if (value == Double.NEGATIVE_INFINITY) return (short) 0b1111110000000000;
 			
-		if (value == Double.POSITIVE_INFINITY)
-			return (short) 0b0111110000000000;
+		if (value == Double.POSITIVE_INFINITY) return (short) 0b0111110000000000;
 			
-		if (Double.isNaN(value))
-			return (short) 0b0111111111111111;
+		if (Double.isNaN(value)) return (short) 0b0111111111111111;
 		
-		if (value == +0)
-			return (short) 0b0000000000000000;
+		if (value == +0) return (short) 0b0000000000000000;
 		
-		if (value == -0)
-			return (short) 0b1000000000000000;
+		if (value == -0) return (short) 0b1000000000000000;
 
-		// if here its a nonspecial number
-
-		throw new IllegalArgumentException("TODO");
+		if (value <= MIN_BOUND_R) return MIN_BOUND_I;
+					
+		if (value >= MAX_BOUND_R) return MAX_BOUND_I;
+					
+		// if here its a number in representational range
+		
+// https://stackoverflow.com/questions/6162651/half-precision-floating-point-in-java/6162687#6162687
+		
+		int sign = (value < 0 ? 0b1000000000000000 : 0);
+		value = Math.abs(value);
+		if (value < SUBNORMAL_BOUND) {
+			// encode as a subnormal number
+			double tmp = value / SUBNORMAL_BOUND;
+			double frac = 0.5;
+			int mask = 512;
+			int signif = 0;
+			while (mask > 0) {
+				if (tmp >= frac) {
+					signif |= mask;
+					tmp -= frac;
+				}
+				mask >>= 1;
+				frac /= 2;
+			}
+			return (short) (sign | signif);
+		}
+		else {
+			// encode as a normalized number
+			// sign already set
+			// exp ranges -14 to 15  (1 to 30)
+			int exp = (int) Math.floor(Math.log(value) / Math.log(2));
+			if (exp < -14) throw new IllegalArgumentException("whoops 1");
+			if (exp > 15) throw new IllegalArgumentException("whoops 2");
+			value = value / Math.pow(2,exp);
+			double tmp = value - 1.0;
+			double frac = 0.5;
+			int mask = 512;
+			int signif = 0;
+			while (mask > 0) {
+				if (tmp >= frac) {
+					signif |= mask;
+					tmp -= frac;
+				}
+				mask >>= 1;
+				frac /= 2;
+			}
+			return (short) (sign | ((exp + 15) << 10) | signif);
+		}
 	}
 	
 	static double toDouble(short value) {
@@ -196,7 +242,7 @@ public final class Float16Member
 			if ((significand & mask) > 0)
 				result += frac;
 			mask >>= 1;
-			frac /= 2;
+			frac /= 2.0;
 		}
 		return result;
 	}
