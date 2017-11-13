@@ -24,45 +24,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region.sampling;
+package zorbage.sampling;
 
+import zorbage.region.SetMembership;
 import zorbage.type.algebra.Dimensioned;
-import zorbage.type.ctor.Allocatable;
 
 /**
- * {@link Bounds} is a private class with a static public calculation method for finding
- * the real or integer space bounds of a {@link Sampling}.
+ * {@link Sampling} defines the base class for samplings of all types. It
+ * is defines a set membership method and an iterator method.
+ * 
  * @author Barry DeZonia
  *
+ * @param <T>
  */
-public class Bounds {
+public interface Sampling<T> extends Dimensioned, SetMembership<T> {
 	
-	private Bounds() {
-		// don't instantiate
-	}
-
-	/**
-	 * Find the bounds of a sampling.
-	 * 
-	 * @param sampling
-	 * @param min
-	 * @param max
-	 */
-	public static <U extends Allocatable<U> & Dimensioned & SupportsBoundsCalc<U>>
-		void find(Sampling<U> sampling, U min, U max)
-	{
-		if (min.numDimensions() != sampling.numDimensions() ||
-				max.numDimensions() != sampling.numDimensions())
-			throw new IllegalArgumentException("mismatched dimensions in Bounds::find()");
-		min.setMax();
-		max.setMin();
-		SamplingIterator<U> iter = sampling.iterator();
-		U tmp = min.allocate();
-		while (iter.hasNext()) {
-			iter.next(tmp);
-			min.updateMin(tmp);
-			max.updateMax(tmp);
-		}
-	}
+	SamplingIterator<T> iterator();
 
 }

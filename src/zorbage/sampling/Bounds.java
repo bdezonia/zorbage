@@ -24,23 +24,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region.sampling;
+package zorbage.sampling;
 
-// TODO - this class name and concept is already in algebra hierarchy. Think how to improve.
+import zorbage.type.algebra.Dimensioned;
+import zorbage.type.ctor.Allocatable;
 
 /**
- * {@link SupportsBoundCalcs} is a helper interface so that some types can be made to
- * allow their bounds to be calculated easily by the {@link Bounds} class.
- * 
+ * {@link Bounds} is a private class with a static public calculation method for finding
+ * the real or integer space bounds of a {@link Sampling}.
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface SupportsBoundsCalc<U> {
+public class Bounds {
+	
+	private Bounds() {
+		// don't instantiate
+	}
 
-	void setMax();
-	void setMin();
-	void updateMin(U tmp);
-	void updateMax(U tmp);
+	/**
+	 * Find the bounds of a sampling.
+	 * 
+	 * @param sampling
+	 * @param min
+	 * @param max
+	 */
+	public static <U extends Allocatable<U> & Dimensioned & SupportsBoundsCalc<U>>
+		void find(Sampling<U> sampling, U min, U max)
+	{
+		if (min.numDimensions() != sampling.numDimensions() ||
+				max.numDimensions() != sampling.numDimensions())
+			throw new IllegalArgumentException("mismatched dimensions in Bounds::find()");
+		min.setMax();
+		max.setMin();
+		SamplingIterator<U> iter = sampling.iterator();
+		U tmp = min.allocate();
+		while (iter.hasNext()) {
+			iter.next(tmp);
+			min.updateMin(tmp);
+			max.updateMax(tmp);
+		}
+	}
 
 }

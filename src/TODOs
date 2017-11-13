@@ -269,7 +269,4 @@ Define a Signed and an Unsigned marker interface. Attach to various types.
 Do I remove all stack oriented numeric objects in the types and use static threadlocals
   instead? This might look confusing but might be faster. If stack objects get
   optimized to stack struct variables it would not.
-Add Float16 class. Stored that way. Methods convert to floating point and do
-  calcs and convert to float16 storage. There should be some standards around
-  on how old implementations encoded 16 bit floats.
 Realize that dividing by -1 of a signed min int should likely throw an error.

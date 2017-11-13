@@ -24,21 +24,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region.sampling;
+package zorbage.sampling;
 
-import zorbage.region.SetMembership;
-import zorbage.type.algebra.Dimensioned;
+// TODO - this class name and concept is already in algebra hierarchy. Think how to improve.
 
 /**
- * {@link Sampling} defines the base class for samplings of all types. It
- * is defines a set membership method and an iterator method.
+ * {@link SupportsBoundCalcs} is a helper interface so that some types can be made to
+ * allow their bounds to be calculated easily by the {@link Bounds} class.
  * 
  * @author Barry DeZonia
  *
- * @param <T>
+ * @param <U>
  */
-public interface Sampling<T> extends Dimensioned, SetMembership<T> {
-	
-	SamplingIterator<T> iterator();
+public interface SupportsBoundsCalc<U> {
+
+	void setMax();
+	void setMin();
+	void updateMin(U tmp);
+	void updateMax(U tmp);
 
 }

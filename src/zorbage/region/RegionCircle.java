@@ -26,7 +26,7 @@
  */
 package zorbage.region;
 
-import zorbage.region.sampling.RealIndex;
+import zorbage.sampling.RealIndex;
 import zorbage.util.RealUtils;
 
 /**

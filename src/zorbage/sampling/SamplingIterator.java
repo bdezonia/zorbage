@@ -24,62 +24,19 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region.sampling;
+package zorbage.sampling;
 
 /**
- * SamplingComplement is a sampling that represents the difference
- * between a sampling's bounds and it's actual members. This kind of
- * relationship only works well in integer indexed space.  This class
- * should not be confused with {@link SamplingDifference}.
+ * {@link SamplingIterator} defines how to iterate {@link Sampling}s. Each Sampling
+ * should fill the T value passed to next().
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  */
-public class SamplingComplement implements Sampling<IntegerIndex> {
+public interface SamplingIterator<T> {
 
-	private final Sampling<IntegerIndex> difference;
+	boolean hasNext();
 	
-	public SamplingComplement(Sampling<IntegerIndex> sampling) {
-		IntegerIndex min = new IntegerIndex(sampling.numDimensions());
-		IntegerIndex max = new IntegerIndex(sampling.numDimensions());
-		Bounds.find(sampling, min, max);
-		Sampling<IntegerIndex> volume = new SamplingCartesianIntegerGrid(min, max);
-		this.difference = new SamplingDifference<IntegerIndex>(volume, sampling, min);
-	}
-	
-	@Override
-	public int numDimensions() {
-		return difference.numDimensions();
-	}
-
-	@Override
-	public boolean contains(IntegerIndex samplePoint) {
-		return difference.contains(samplePoint);
-	}
-
-	@Override
-	public SamplingIterator<IntegerIndex> iterator() {
-		return new Iterator();
-	}
-	
-	private class Iterator implements SamplingIterator<IntegerIndex> {
-
-		private final SamplingIterator<IntegerIndex> iter;
-		
-		private Iterator() {
-			iter = difference.iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return iter.hasNext();
-		}
-
-		@Override
-		public void next(IntegerIndex value) {
-			iter.next(value);
-		}
-		
-	}
-
+	void next(T value);
 }

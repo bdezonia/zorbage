@@ -24,29 +24,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region.sampling;
+package zorbage.sampling;
 
 import zorbage.type.algebra.Dimensioned;
 import zorbage.type.algebra.Settable;
 import zorbage.type.ctor.Allocatable;
 
 /**
- * {@link SamplingIntersection} is a {@link Sampling} that iterated the set of points
- * common to two other Samplings.
+ * {@link SamplingSymmetricDifference} is a {@link Sampling} that iterates the set of points
+ * that are disjoint between two other Samplings. (A-B) U (B-A),
  * 
  * @author Barry DeZonia
  *
  * @param <T>
  */
-public class SamplingIntersection<T extends Allocatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
+public class SamplingSymmetricDifference<T extends Allocatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
 
 	private final Sampling<T> first;
 	private final Sampling<T> second;
 	private final T example;
 	
-	public SamplingIntersection(Sampling<T> first, Sampling<T> second, T example) {
+	public SamplingSymmetricDifference(Sampling<T> first, Sampling<T> second, T example) {
 		if (first.numDimensions() != second.numDimensions())
-			throw new IllegalArgumentException("num dimensions do not match in SamplingIntersection");
+			throw new IllegalArgumentException("num dimensions do not match in SamplingSymmetricDifference");
 		if (first.numDimensions() != example.numDimensions())
 			throw new IllegalArgumentException("example index does not have correct dimensions");
 		this.first = first;
@@ -61,7 +61,9 @@ public class SamplingIntersection<T extends Allocatable<T> & Dimensioned & Setta
 
 	@Override
 	public boolean contains(T samplePoint) {
-		return first.contains(samplePoint) && second.contains(samplePoint);
+		boolean a = first.contains(samplePoint);
+		boolean b = second.contains(samplePoint);
+		return (a && !b) || (!a && b);
 	}
 
 	@Override
@@ -72,11 +74,13 @@ public class SamplingIntersection<T extends Allocatable<T> & Dimensioned & Setta
 	private class Iterator implements SamplingIterator<T> {
 
 		private final SamplingIterator<T> iter1;
+		private final SamplingIterator<T> iter2;
 		private final T index;
 		private boolean cached;
 		
 		private Iterator() {
 			iter1 = first.iterator();
+			iter2 = second.iterator();
 			index = example.allocate();
 			cached = false;
 		}
@@ -84,7 +88,14 @@ public class SamplingIntersection<T extends Allocatable<T> & Dimensioned & Setta
 		private boolean positionToNext() {
 			while (iter1.hasNext()) {
 				iter1.next(index);
-				if (second.contains(index)) {
+				if (!second.contains(index)) {
+					cached = true;
+					return true;
+				}
+			}
+			while (iter2.hasNext()) {
+				iter2.next(index);
+				if (!first.contains(index)) {
 					cached = true;
 					return true;
 				}
