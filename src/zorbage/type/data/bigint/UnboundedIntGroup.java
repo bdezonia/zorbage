@@ -297,8 +297,12 @@ public class UnboundedIntGroup
 		int cmp = b.v().compareTo(BigInteger.ZERO);
 		if (cmp < 0)
 			throw new IllegalArgumentException("negative powers not supported for unbounded ints");
-		else if (cmp == 0)
-			c.setV(BigInteger.ONE);
+		else if (cmp == 0) {
+			if (a.v() == BigInteger.ZERO)
+				throw new IllegalArgumentException("0^0 is not a number");
+			else	
+				c.setV(BigInteger.ONE);
+		}
 		else if (b.v().compareTo(BigInteger.valueOf(java.lang.Integer.MAX_VALUE)) > 0)
 			throw new IllegalArgumentException("very large powers not supported for unbounded ints");
 		else

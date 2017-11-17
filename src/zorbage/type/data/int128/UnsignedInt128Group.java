@@ -325,6 +325,8 @@ public class UnsignedInt128Group
 		int cmp = compare(b,ZERO);
 		if (cmp < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
+		if (cmp == 0 && compare(a,ZERO) == 0)
+			throw new IllegalArgumentException("0^0 is not a number");
 		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
 		if (cmp > 0) {
 			UnsignedInt128Member pow = new UnsignedInt128Member(b);
