@@ -270,3 +270,9 @@ Do I remove all stack oriented numeric objects in the types and use static threa
   optimized to stack struct variables it would not.
 Realize that dividing by -1 of a signed min int should likely throw an error.
 Support both kinds (logical and arithmetic) of right shift operator for int classes
+With generic gcd helper code are the lcm() implementations prone to overflow?
+I should change GcdHelper to IntegerHelper and add a lcm method
+In findGcd() I should relax the generic constraints so it doesn't require Integer
+  interface but just assign and compare and construct and mod.
+Make sure all types can be exported to and imported from the primitive types and
+  BigInteger and BigDecimal.

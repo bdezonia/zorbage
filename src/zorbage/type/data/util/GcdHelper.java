@@ -26,7 +26,11 @@
  */
 package zorbage.type.data.util;
 
-import zorbage.type.algebra.Integer;
+import zorbage.type.algebra.AbsoluteValue;
+import zorbage.type.algebra.Group;
+import zorbage.type.algebra.IntegralDivision;
+import zorbage.type.algebra.Multiplication;
+import zorbage.type.algebra.Ordered;
 
 /**
  * 
@@ -37,7 +41,9 @@ public class GcdHelper {
 	
 	private GcdHelper() {}
 	
-	public static <T extends Integer<T,U>, U> void findGcd(T group, U zero, U a, U b, U result) {
+	public static <T extends Group<T,U> & IntegralDivision<U> & Ordered<U>, U>
+		void findGcd(T group, U zero, U a, U b, U result)
+	{
 		U aTmp = group.construct(a);
 		U bTmp = group.construct(b);
 		U t = group.construct();
@@ -49,4 +55,14 @@ public class GcdHelper {
 		group.assign(aTmp, result);
 	}
 
+	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Ordered<U>, U>
+		void findLcm(T group, U zero, U a, U b, U result)
+	{
+		U n = group.construct();
+		U d = group.construct();
+		group.multiply(a,b,n);
+		group.abs(n,n);
+		GcdHelper.findGcd(group, zero, a, b, d);
+		group.div(n,d,result);
+	}
 }
