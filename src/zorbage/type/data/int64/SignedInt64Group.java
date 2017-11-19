@@ -29,7 +29,6 @@ package zorbage.type.data.int64;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
-import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int64.SignedInt64Member;
 import zorbage.type.data.util.GcdLcmHelper;
@@ -44,8 +43,7 @@ public class SignedInt64Group
     Integer<SignedInt64Group, SignedInt64Member>,
     Bounded<SignedInt64Member>,
     BitOperations<SignedInt64Member>,
-    Random<SignedInt64Member>,
-    Power<SignedInt64Member>
+    Random<SignedInt64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
