@@ -269,3 +269,4 @@ Do I remove all stack oriented numeric objects in the types and use static threa
   instead? This might look confusing but might be faster. If stack objects get
   optimized to stack struct variables it would not.
 Realize that dividing by -1 of a signed min int should likely throw an error.
+Support both kinds (logical and arithmetic) of right shift operator for int classes
