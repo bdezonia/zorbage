@@ -258,16 +258,27 @@ public class UnsignedInt16Group
 
 	@Override
 	public void bitShiftLeft(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( a.v() << count );
+		if (count < 0)
+			bitShiftRight(Math.abs(count), a, b);
+		else {
+			count = count % 16;
+			b.setV( a.v() << count );
+		}
 	}
 
 	@Override
 	public void bitShiftRight(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( a.v() >> count );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( a.v() >> count );
 	}
 
 	public void bitShiftRightFillZero(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( a.v() >>> count );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( a.v() >>> count );
 	}
 
 	@Override

@@ -264,16 +264,27 @@ public class UnsignedInt64Group
 
 	@Override
 	public void bitShiftLeft(int count, UnsignedInt64Member a, UnsignedInt64Member b) {
-		b.v = a.v << count;
+		if (count < 0)
+			bitShiftRight(Math.abs(count), a, b);
+		else {
+			count = count % 64;
+			b.v = a.v << count;
+		}
 	}
 
 	@Override
 	public void bitShiftRight(int count, UnsignedInt64Member a, UnsignedInt64Member b) {
-		b.v = a.v >> count;
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.v = a.v >> count;
 	}
 
 	public void bitShiftRightFillZero(int count, UnsignedInt64Member a, UnsignedInt64Member b) {
-		b.v = a.v >>> count;
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.v = a.v >>> count;
 	}
 
 	@Override

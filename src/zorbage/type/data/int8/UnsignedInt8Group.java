@@ -258,16 +258,27 @@ public class UnsignedInt8Group
 
 	@Override
 	public void bitShiftLeft(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( a.v() << count );
+		if (count < 0)
+			bitShiftRight(Math.abs(count), a, b);
+		else {
+			count = count % 8;
+			b.setV( a.v() << count );
+		}
 	}
 
 	@Override
 	public void bitShiftRight(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( a.v() >> count );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( a.v() >> count );
 	}
 
 	public void bitShiftRightFillZero(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( a.v() >>> count );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( a.v() >>> count );
 	}
 
 	@Override

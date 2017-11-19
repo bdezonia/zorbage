@@ -247,16 +247,27 @@ public class SignedInt16Group
 
 	@Override
 	public void bitShiftLeft(int count, SignedInt16Member a, SignedInt16Member b) {
-		b.setV( (short)(a.v() << count) );
+		if (count < 0)
+			bitShiftRight(Math.abs(count), a, b);
+		else {
+			count = count % 16;
+			b.setV( (short)(a.v() << count) );
+		}
 	}
 
 	@Override
 	public void bitShiftRight(int count, SignedInt16Member a, SignedInt16Member b) {
-		b.setV( (short)(a.v() >> count) );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( (short)(a.v() >> count) );
 	}
 
 	public void bitShiftRightFillZero(int count, SignedInt16Member a, SignedInt16Member b) {
-		b.setV( (short)(a.v() >>> count) );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( (short)(a.v() >>> count) );
 	}
 
 	@Override

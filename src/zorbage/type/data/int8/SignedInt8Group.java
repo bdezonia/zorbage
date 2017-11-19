@@ -247,16 +247,27 @@ public class SignedInt8Group
 
 	@Override
 	public void bitShiftLeft(int count, SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte)(a.v() << count) );
+		if (count < 0)
+			bitShiftRight(Math.abs(count), a, b);
+		else {
+			count = count % 8;
+			b.setV( (byte)(a.v() << count) );
+		}
 	}
 
 	@Override
 	public void bitShiftRight(int count, SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte)(a.v() >> count) );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( (byte)(a.v() >> count) );
 	}
 
 	public void bitShiftRightFillZero(int count, SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte)(a.v() >>> count) );
+		if (count < 0)
+			bitShiftLeft(Math.abs(count), a, b);
+		else
+			b.setV( (byte)(a.v() >>> count) );
 	}
 
 	@Override

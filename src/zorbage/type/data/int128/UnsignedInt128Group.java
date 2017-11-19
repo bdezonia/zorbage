@@ -371,9 +371,8 @@ public class UnsignedInt128Group
 	public void bitShiftLeft(int count, UnsignedInt128Member a, UnsignedInt128Member b) {
 		if (count < 0)
 			bitShiftRight(Math.abs(count), a, b);
-		else if (count > 127)
-			assign(ZERO, b);  // TODO: test what 1<<32 does in java code and match behavior
 		else {
+			count = count % 128;
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
 			for (int i = 0; i < count; i++) {
 				shiftLeftOneBit(tmp);
