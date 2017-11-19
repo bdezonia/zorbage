@@ -30,7 +30,7 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
-import zorbage.type.data.util.GcdHelper;
+import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -289,16 +289,12 @@ public class UnsignedInt128Group
 
 	@Override
 	public void gcd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		GcdHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		UnsignedInt128Member n = new UnsignedInt128Member();
-		UnsignedInt128Member d = new UnsignedInt128Member();
-		multiply(a,b,n);
-		GcdHelper.findGcd(this, ZERO, a, b, d);
-		div(n, d, c);
+		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
 	}
 
 	@Override

@@ -37,9 +37,11 @@ import zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class GcdHelper {
+public class GcdLcmHelper {
 	
-	private GcdHelper() {}
+	private GcdLcmHelper() {}
+	
+	// TODO: negative friendly?
 	
 	public static <T extends Group<T,U> & IntegralDivision<U> & Ordered<U>, U>
 		void findGcd(T group, U zero, U a, U b, U result)
@@ -55,6 +57,8 @@ public class GcdHelper {
 		group.assign(aTmp, result);
 	}
 
+	// TODO: negative friendly? overflow prone?
+	
 	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Ordered<U>, U>
 		void findLcm(T group, U zero, U a, U b, U result)
 	{
@@ -62,7 +66,7 @@ public class GcdHelper {
 		U d = group.construct();
 		group.multiply(a,b,n);
 		group.abs(n,n);
-		GcdHelper.findGcd(group, zero, a, b, d);
+		GcdLcmHelper.findGcd(group, zero, a, b, d);
 		group.div(n,d,result);
 	}
 }

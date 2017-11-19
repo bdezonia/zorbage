@@ -31,7 +31,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int16.SignedInt16Member;
-import zorbage.type.data.util.GcdHelper;
+import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -182,15 +182,12 @@ public class SignedInt16Group
 
 	@Override
 	public void gcd(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-		GcdHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-		SignedInt16Member n = new SignedInt16Member((short) Math.abs(a.v() * b.v()));
-		SignedInt16Member d = new SignedInt16Member();
-		GcdHelper.findGcd(this, ZERO, a, b, d);
-		div(n,d,c);
+		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
 	}
 
 	@Override

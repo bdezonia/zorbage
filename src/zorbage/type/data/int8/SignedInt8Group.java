@@ -31,7 +31,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int8.SignedInt8Member;
-import zorbage.type.data.util.GcdHelper;
+import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -182,15 +182,12 @@ public class SignedInt8Group
 
 	@Override
 	public void gcd(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		GcdHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		SignedInt8Member n = new SignedInt8Member((byte) Math.abs(a.v() * b.v()));
-		SignedInt8Member d = new SignedInt8Member();
-		GcdHelper.findGcd(this, ZERO, a, b, d);
-		div(n,d,c);
+		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
 	}
 
 	@Override

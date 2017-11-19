@@ -31,7 +31,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int16.UnsignedInt16Member;
-import zorbage.type.data.util.GcdHelper;
+import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -185,17 +185,14 @@ public class UnsignedInt16Group
 	
 	@Override
 	public void gcd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		GcdHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		UnsignedInt16Member n = new UnsignedInt16Member(Math.abs(a.v() * b.v()));
-		UnsignedInt16Member d = new UnsignedInt16Member();
-		GcdHelper.findGcd(this, ZERO, a, b, d);
-		div(n,d,c);
+		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
 	}
 
 	@Override

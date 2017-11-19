@@ -32,7 +32,7 @@ import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int64.SignedInt64Member;
-import zorbage.type.data.util.GcdHelper;
+import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -184,15 +184,12 @@ public class SignedInt64Group
 
 	@Override
 	public void gcd(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		GcdHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		SignedInt64Member n = new SignedInt64Member(Math.abs(a.v() * b.v()));
-		SignedInt64Member d = new SignedInt64Member();
-		GcdHelper.findGcd(this, ZERO, a, b, d);
-		div(n,d,c);
+		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
 	}
 
 	@Override
