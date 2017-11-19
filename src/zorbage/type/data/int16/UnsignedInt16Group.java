@@ -181,14 +181,10 @@ public class UnsignedInt16Group
 		mod(a,b,m);
 	}
 
-	// TODO: is this right?
-	
 	@Override
 	public void gcd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
 		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
-
-	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {

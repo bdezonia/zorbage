@@ -181,14 +181,10 @@ public class UnsignedInt8Group
 		mod(a,b,m);
 	}
 
-	// TODO: is this right?
-	
 	@Override
 	public void gcd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
 		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
-
-	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {

@@ -187,14 +187,10 @@ public class UnsignedInt64Group
 		m.setV(result[1]);
 	}
 
-	// TODO: is this right?
-	
 	@Override
 	public void gcd(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
 		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
-
-	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {

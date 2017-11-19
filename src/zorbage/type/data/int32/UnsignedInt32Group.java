@@ -181,14 +181,10 @@ public class UnsignedInt32Group
 		mod(a,b,m);
 	}
 
-	// TODO: is this right?
-	
 	@Override
 	public void gcd(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
 		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
 	}
-
-	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
