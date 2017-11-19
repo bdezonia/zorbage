@@ -265,10 +265,14 @@ Constant class: should be a proc for n = 0 to +inf params. A ton of Constant cla
   approach makes some sense.
 Define a Signed and an Unsigned marker interface. Attach to various types.
   Can test for in <T> signatures if one or the other is needed for an algorithm.
+  Similarly for Exact vs. Approximate. We already have Bounded and Infinite.
 Do I remove all stack oriented numeric objects in the types and use static threadlocals
   instead? This might look confusing but might be faster. If stack objects get
   optimized to stack struct variables it would not.
-Realize that dividing by -1 of a signed min int should likely throw an error.
+Realize that dividing by -1 of a signed min int should likely throw an error. So should abs()
+  and norm().
 Support both kinds (logical and arithmetic) of right shift operator for int classes
 Make sure all types can be exported to and imported from the primitive types and
   BigInteger and BigDecimal.
+Relocate gcd and lcm helper code to an algorithm package.
+Refactor LUDecomp example into an algorithm package.
