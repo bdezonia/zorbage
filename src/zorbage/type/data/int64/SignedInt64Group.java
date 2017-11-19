@@ -31,7 +31,6 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
-import zorbage.type.data.int32.UnsignedInt32Member;
 import zorbage.type.data.int64.SignedInt64Member;
 import zorbage.type.data.util.GcdHelper;
 

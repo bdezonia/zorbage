@@ -30,7 +30,6 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
-import zorbage.type.data.int64.SignedInt64Member;
 import zorbage.type.data.int8.SignedInt8Member;
 import zorbage.type.data.util.GcdHelper;
 
