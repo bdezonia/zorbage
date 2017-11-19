@@ -27,10 +27,10 @@
 package zorbage.type.data.util;
 
 import zorbage.type.algebra.AbsoluteValue;
+import zorbage.type.algebra.Equality;
 import zorbage.type.algebra.Group;
 import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.algebra.Multiplication;
-import zorbage.type.algebra.Ordered;
 
 /**
  * 
@@ -43,13 +43,13 @@ public class GcdLcmHelper {
 	
 	// TODO: negative friendly?
 	
-	public static <T extends Group<T,U> & IntegralDivision<U> & Ordered<U>, U>
+	public static <T extends Group<T,U> & IntegralDivision<U> & Equality<U>, U>
 		void findGcd(T group, U zero, U a, U b, U result)
 	{
 		U aTmp = group.construct(a);
 		U bTmp = group.construct(b);
 		U t = group.construct();
-		while (group.compare(bTmp, zero) != 0) {
+		while (group.isNotEqual(bTmp, zero)) {
 			group.assign(bTmp, t);
 			group.mod(aTmp, bTmp, bTmp);
 			group.assign(t, aTmp);
@@ -59,7 +59,7 @@ public class GcdLcmHelper {
 
 	// TODO: negative friendly? overflow prone?
 	
-	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Ordered<U>, U>
+	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Equality<U>, U>
 		void findLcm(T group, U zero, U a, U b, U result)
 	{
 		U n = group.construct();
