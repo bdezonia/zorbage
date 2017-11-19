@@ -58,7 +58,8 @@ public class GcdLcmHelper {
 		group.assign(aTmp, result);
 	}
 
-	// TODO: negative friendly? overflow prone?
+	// TODO: negative friendly? overflow prone? is abs() a requirement and what would it do to
+	//   polynomials?
 	
 	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Equality<U>, U>
 		void findLcm(T group, U a, U b, U result)
@@ -67,7 +68,7 @@ public class GcdLcmHelper {
 		U d = group.construct();
 		group.multiply(a,b,n);
 		group.abs(n,n);
-		GcdLcmHelper.findGcd(group, a, b, d);
+		findGcd(group, a, b, d);
 		group.div(n,d,result);
 	}
 }
