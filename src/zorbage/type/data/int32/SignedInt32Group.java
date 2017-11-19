@@ -181,12 +181,12 @@ public class SignedInt32Group
 
 	@Override
 	public void gcd(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
+		GcdLcmHelper.findLcm(this, a, b, c);
 	}
 
 	@Override

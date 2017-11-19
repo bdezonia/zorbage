@@ -183,12 +183,12 @@ public class UnsignedInt32Group
 
 	@Override
 	public void gcd(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		GcdLcmHelper.findGcd(this, ZERO, a, b, c);
+		GcdLcmHelper.findGcd(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		GcdLcmHelper.findLcm(this, ZERO, a, b, c);
+		GcdLcmHelper.findLcm(this, a, b, c);
 	}
 
 	@Override
