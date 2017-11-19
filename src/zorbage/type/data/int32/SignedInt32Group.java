@@ -30,6 +30,7 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -45,6 +46,7 @@ public class SignedInt32Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	private static final SignedInt32Member ZERO = new SignedInt32Member();
 	
 	public SignedInt32Group() {
 	}
@@ -179,23 +181,15 @@ public class SignedInt32Group
 
 	@Override
 	public void gcd(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		c.setV( gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		int n = Math.abs(a.v() * b.v());
-		int d = gcdHelper(a.v(), b.v());
-		c.setV( n / d );
-	}
-
-	private int gcdHelper(int a, int b) {
-		while (b != 0) {
-			int t = b;
-			b = a % b;
-			a = t;
-		}
-		return a;
+		SignedInt32Member n = new SignedInt32Member(Math.abs(a.v() * b.v()));
+		SignedInt32Member d = new SignedInt32Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override

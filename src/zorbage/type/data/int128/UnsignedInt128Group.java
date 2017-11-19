@@ -30,6 +30,7 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -288,7 +289,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void gcd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		gcdHelper(a, b, c);
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
@@ -296,7 +297,7 @@ public class UnsignedInt128Group
 		UnsignedInt128Member n = new UnsignedInt128Member();
 		UnsignedInt128Member d = new UnsignedInt128Member();
 		multiply(a,b,n);
-		gcdHelper(a, b, d);
+		GcdHelper.findGcd(this, ZERO, a, b, d);
 		div(n, d, c);
 	}
 
@@ -430,15 +431,4 @@ public class UnsignedInt128Group
 			val.lo |= 128;
 	}
 
-	private void gcdHelper(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		UnsignedInt128Member aTmp = new UnsignedInt128Member(a);
-		UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
-		UnsignedInt128Member t = new UnsignedInt128Member();
-		while (compare(bTmp, ZERO) != 0) {
-			assign(bTmp, t);
-			mod(aTmp,bTmp,bTmp);
-			assign(t, aTmp);
-		}
-		assign(aTmp, c);
-	}
 }

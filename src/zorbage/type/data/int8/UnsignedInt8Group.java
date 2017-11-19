@@ -31,6 +31,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int8.UnsignedInt8Member;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -184,29 +185,17 @@ public class UnsignedInt8Group
 	
 	@Override
 	public void gcd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		int av = a.v();
-		int bv = b.v();
-		int n = Math.abs(av * bv);
-		int d = gcdHelper(av, bv);
-		c.setV( (byte)(n / d) );
-	}
-
-	// TODO: is this right?
-
-	private int gcdHelper(int a, int b) {
-		while (b != 0) {
-			int t = b;
-			b = a % b;
-			a = t;
-		}
-		return a;
+		UnsignedInt8Member n = new UnsignedInt8Member(Math.abs(a.v() * b.v()));
+		UnsignedInt8Member d = new UnsignedInt8Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override

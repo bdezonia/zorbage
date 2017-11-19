@@ -31,6 +31,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int32.UnsignedInt32Member;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -184,29 +185,17 @@ public class UnsignedInt32Group
 	
 	@Override
 	public void gcd(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		c.setV( gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		long av = a.v();
-		long bv = b.v();
-		long n = Math.abs(av * bv);
-		long d = gcdHelper(av, bv);
-		c.setV( n / d );
-	}
-
-	// TODO: is this right?
-
-	private long gcdHelper(long a, long b) {
-		while (b != 0) {
-			long t = b;
-			b = a % b;
-			a = t;
-		}
-		return a;
+		UnsignedInt32Member n = new UnsignedInt32Member(Math.abs(a.v() * b.v()));
+		UnsignedInt32Member d = new UnsignedInt32Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override

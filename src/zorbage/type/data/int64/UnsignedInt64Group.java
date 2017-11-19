@@ -33,6 +33,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int64.UnsignedInt64Member;
+import zorbage.type.data.util.GcdHelper;
 
 // TODO: minimize use of BigInteger methods
 
@@ -190,29 +191,17 @@ public class UnsignedInt64Group
 	
 	@Override
 	public void gcd(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		c.setV( gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	// TODO: is this right?
 
 	@Override
 	public void lcm(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		BigInteger av = a.v();
-		BigInteger bv = b.v();
-		BigInteger n = av.multiply(bv).abs();
-		BigInteger d = gcdHelper(av, bv);
-		c.setV( n.divide(d) );
-	}
-
-	// TODO: is this right?
-
-	private BigInteger gcdHelper(BigInteger a, BigInteger b) {
-		while (b != BigInteger.ZERO) {
-			BigInteger t = b;
-			b = a.mod(b);
-			a = t;
-		}
-		return a;
+		UnsignedInt64Member n = new UnsignedInt64Member(a.v().multiply(b.v()).abs());
+		UnsignedInt64Member d = new UnsignedInt64Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override

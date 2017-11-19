@@ -30,7 +30,9 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.int64.SignedInt64Member;
 import zorbage.type.data.int8.SignedInt8Member;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -46,6 +48,7 @@ public class SignedInt8Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	private static final SignedInt8Member ZERO = new SignedInt8Member();
 	
 	public SignedInt8Group() {
 	}
@@ -180,23 +183,15 @@ public class SignedInt8Group
 
 	@Override
 	public void gcd(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte) gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		int n = Math.abs(a.v() * b.v());
-		int d = gcdHelper(a.v(), b.v());
-		c.setV( (byte)(n / d) );
-	}
-
-	private int gcdHelper(int a, int b) {
-		while (b != 0) {
-			int t = b;
-			b = a % b;
-			a = t;
-		}
-		return a;
+		SignedInt8Member n = new SignedInt8Member((byte) Math.abs(a.v() * b.v()));
+		SignedInt8Member d = new SignedInt8Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override

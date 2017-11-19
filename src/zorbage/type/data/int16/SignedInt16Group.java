@@ -31,6 +31,7 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int16.SignedInt16Member;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -46,6 +47,7 @@ public class SignedInt16Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	private static final SignedInt16Member ZERO = new SignedInt16Member();
 	
 	public SignedInt16Group() {
 	}
@@ -180,23 +182,15 @@ public class SignedInt16Group
 
 	@Override
 	public void gcd(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-		c.setV( (short) gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-		int n = Math.abs(a.v() * b.v());
-		int d = gcdHelper(a.v(), b.v());
-		c.setV( (short)(n / d) );
-	}
-
-	private int gcdHelper(int a, int b) {
-		while (b != 0) {
-			int t = b;
-			b = a % b;
-			a = t;
-		}
-		return a;
+		SignedInt16Member n = new SignedInt16Member((short) Math.abs(a.v() * b.v()));
+		SignedInt16Member d = new SignedInt16Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override

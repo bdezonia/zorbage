@@ -31,7 +31,9 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Power;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.int32.UnsignedInt32Member;
 import zorbage.type.data.int64.SignedInt64Member;
+import zorbage.type.data.util.GcdHelper;
 
 /**
  * 
@@ -48,6 +50,7 @@ public class SignedInt64Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	
 	public SignedInt64Group() {
 	}
@@ -182,23 +185,15 @@ public class SignedInt64Group
 
 	@Override
 	public void gcd(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		c.setV( gcdHelper(a.v(), b.v()) );
+		GcdHelper.findGcd(this, ZERO, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		long n = Math.abs(a.v() * b.v());
-		long d = gcdHelper(a.v(), b.v());
-		c.setV( n / d );
-	}
-
-	private long gcdHelper(long a, long b) {
-		while (b != 0) {
-			long t = b;
-			b = a % b;
-			a = t;
-		}
-		return a;
+		SignedInt64Member n = new SignedInt64Member(Math.abs(a.v() * b.v()));
+		SignedInt64Member d = new SignedInt64Member();
+		GcdHelper.findGcd(this, ZERO, a, b, d);
+		div(n,d,c);
 	}
 
 	@Override
