@@ -20,6 +20,7 @@ Other needs
   functions of a real variable as a vector space
   vector direct product creating tensors
   improve exp() and log() accuracy near 1.0 / - 1.0
+  improve cbrt() accuracies
   big decimal type needed?
   number bases: instead of zero and unity need faster ways to construct
     numbers besides strings
@@ -200,7 +201,7 @@ Do we get rid of rigid algebraic type hierarchy and define skewfield for
   instance to have multiply function and x function and y function etc.
   Then Octonions aren't quite a skewfield. But they support most of it's
   operations and can be passed to methods that use a subset of skewfield
-  operations.
+  operations. In other words ducktyping.
 I can write this library in C++ for efficiency.
 Make Storage class allocate method look at how big the request is and
   how big the type is and how much ram is available and allocate an
@@ -216,7 +217,8 @@ Notice that Condition<T> and SetMembership<T> are essentially the same concept.
 Support more coord system grids: look up types in engineering and math books
 Use apache commons to write my DFT example. Test speed and memory use between
   the two libraries
-add more operations: skew, kurtosis, other moments, etc.
+add more operations: skew, kurtosis, other moments, etc. Also I hear that
+  my calculation for variance is not a well behaved algorithm.
 FileStorage: have multiple buffers and configurable or calculated buffer sizes
   based upon numElements and percents etc.
 Constructible interfaces could instead derive from Function interfaces
@@ -269,8 +271,8 @@ Define a Signed and an Unsigned marker interface. Attach to various types.
 Do I remove all stack oriented numeric objects in the types and use static threadlocals
   instead? This might look confusing but might be faster. If stack objects get
   optimized to stack struct variables it would not.
-Realize that dividing by -1 of a signed min int should likely throw an error. So should abs()
-  and norm().
+Realize that dividing by -1 of a signed min int should likely throw an error.
+  So should abs() and norm().
 Support both kinds (logical and arithmetic) of right shift operator for int classes
 Make sure all types can be exported to and imported from the primitive types and
   BigInteger and BigDecimal.
