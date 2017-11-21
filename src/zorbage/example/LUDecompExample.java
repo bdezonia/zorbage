@@ -26,6 +26,7 @@
  */
 package zorbage.example;
 
+import zorbage.algorithm.LUDecomp;
 import zorbage.groups.G;
 import zorbage.type.ctor.MemoryConstruction;
 import zorbage.type.ctor.StorageConstruction;
@@ -63,91 +64,10 @@ public class LUDecompExample {
 		
 		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
-		run(a,b,x);
+		LUDecomp.compute(a,b,x);
 
 		System.out.println(x.toString());
 	}
 	
-	public void run(Float64MatrixMember a, Float64VectorMember b, Float64VectorMember x) {
-		
-		final long n = x.length();
-		
-		// decomposition of matrix
-
-		Float64MatrixMember lu = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-		Float64Member sum = G.DBL.construct();
-		Float64Member value1 = G.DBL.construct();
-		Float64Member value2 = G.DBL.construct();
-		Float64Member term = G.DBL.construct();
-		Float64Member tmp = G.DBL.construct();
-		for (long i = 0; i < n; i++)
-		{
-			for (long j = i; j < n; j++)
-			{
-				sum.setV(0);
-				for (long k = 0; k < i; k++) {
-					lu.v(i, k, value1);
-					lu.v(k, j, value2);
-					G.DBL.multiply(value1, value2, term);
-					G.DBL.add(sum, term, sum);
-				}
-				a.v(i, j, term);
-				G.DBL.subtract(term, sum, term);
-				lu.setV(i, j, term);
-			}
-			for (long j = i + 1; j < n; j++)
-			{
-				sum.setV(0);
-				for (long k = 0; k < i; k++) {
-					lu.v(j, k, value1);
-					lu.v(k, i, value2);
-					G.DBL.multiply(value1, value2, term);
-					G.DBL.add(sum, term, sum);
-				}
-				G.DBL.unity(value1);
-				lu.v(i, i, tmp);
-				G.DBL.divide(value1, tmp, value1);
-				a.v(j, i, tmp);
-				G.DBL.subtract(tmp, sum, value2);
-				G.DBL.multiply(value1, value2, term);
-				lu.setV(j, i, term);
-			}
-		}
-
-		// find solution of Ly = b
-		Float64VectorMember y = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
-		for (long i = 0; i < n; i++)
-		{
-			sum.setV(0);
-			for (long k = 0; k < i; k++) {
-				lu.v(i, k, value1);
-				y.v(k, value2);
-				G.DBL.multiply(value1, value2, term);
-				G.DBL.add(sum, term, sum);
-			}
-			b.v(i, value1);
-			G.DBL.subtract(value1, sum, term);
-			y.setV(i, term);
-		}
-
-		// find solution of Ux = y
-		for (long i = n - 1; i >= 0; i--)
-		{
-			sum.setV(0);
-			for (long k = i + 1; k < n; k++) {
-				lu.v(i, k, value1);
-				x.v(k, value2);
-				G.DBL.multiply(value1, value2, term);
-				G.DBL.add(sum, term, sum);
-			}
-			G.DBL.unity(tmp);
-			lu.v(i, i, value1);
-			G.DBL.divide(tmp, value1, value1);
-			y.v(i, value2);
-			G.DBL.subtract(value2, sum, value2);
-			G.DBL.multiply(value1, value2, term);
-			x.setV(i, term);
-		}
-	}
 
 }
