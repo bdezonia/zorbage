@@ -183,12 +183,12 @@ public class SignedInt16Group
 
 	@Override
 	public void gcd(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-		Gcd.findGcd(this, a, b, c);
+		Gcd.compute(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-		Lcm.findLcm(this, a, b, c);
+		Lcm.compute(this, a, b, c);
 	}
 
 	@Override

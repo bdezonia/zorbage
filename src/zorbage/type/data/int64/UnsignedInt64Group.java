@@ -190,12 +190,12 @@ public class UnsignedInt64Group
 
 	@Override
 	public void gcd(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		Gcd.findGcd(this, a, b, c);
+		Gcd.compute(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		Lcm.findLcm(this, a, b, c);
+		Lcm.compute(this, a, b, c);
 	}
 
 	@Override

@@ -183,12 +183,12 @@ public class SignedInt64Group
 
 	@Override
 	public void gcd(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		Gcd.findGcd(this, a, b, c);
+		Gcd.compute(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		Lcm.findLcm(this, a, b, c);
+		Lcm.compute(this, a, b, c);
 	}
 
 	@Override

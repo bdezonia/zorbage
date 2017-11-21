@@ -184,12 +184,12 @@ public class UnsignedInt16Group
 
 	@Override
 	public void gcd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		Gcd.findGcd(this, a, b, c);
+		Gcd.compute(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		Lcm.findLcm(this, a, b, c);
+		Lcm.compute(this, a, b, c);
 	}
 
 	@Override

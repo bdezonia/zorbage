@@ -53,7 +53,7 @@ public class Gcd {
 	 * @param result
 	 */
 	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Ordered<U>, U>
-		void findGcd(T group, U a, U b, U result)
+		void compute(T group, U a, U b, U result)
 	{
 		U aTmp = group.construct(a);
 		U bTmp = group.construct(b);

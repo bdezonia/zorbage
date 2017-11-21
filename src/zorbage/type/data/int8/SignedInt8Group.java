@@ -183,12 +183,12 @@ public class SignedInt8Group
 
 	@Override
 	public void gcd(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		Gcd.findGcd(this, a, b, c);
+		Gcd.compute(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		Lcm.findLcm(this, a, b, c);
+		Lcm.compute(this, a, b, c);
 	}
 
 	@Override

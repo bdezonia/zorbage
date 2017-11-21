@@ -54,13 +54,13 @@ public class Lcm {
 	 * @param result
 	 */
 	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Ordered<U>, U>
-		void findLcm(T group, U a, U b, U result)
+		void compute(T group, U a, U b, U result)
 	{
 		U n = group.construct();
 		U d = group.construct();
 		group.multiply(a,b,n); // TODO: overflow prone?
 		group.abs(n,n);
-		Gcd.findGcd(group, a, b, d);
+		Gcd.compute(group, a, b, d);
 		group.div(n,d,result);
 	}
 

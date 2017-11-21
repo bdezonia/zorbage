@@ -290,12 +290,12 @@ public class UnsignedInt128Group
 
 	@Override
 	public void gcd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		Gcd.findGcd(this, a, b, c);
+		Gcd.compute(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		Lcm.findLcm(this, a, b, c);
+		Lcm.compute(this, a, b, c);
 	}
 
 	@Override
