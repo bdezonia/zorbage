@@ -27,10 +27,10 @@
 package zorbage.type.data.util;
 
 import zorbage.type.algebra.AbsoluteValue;
-import zorbage.type.algebra.Equality;
 import zorbage.type.algebra.Group;
 import zorbage.type.algebra.IntegralDivision;
 import zorbage.type.algebra.Multiplication;
+import zorbage.type.algebra.Ordered;
 
 /**
  * 
@@ -38,18 +38,25 @@ import zorbage.type.algebra.Multiplication;
  *
  */
 public class GcdLcmHelper {
-	
+	 
+	// TODO with AbsoluteValue a requirement what will it do to polynomials?
+			 
 	private GcdLcmHelper() {}
 	
-	// TODO: negative friendly?
-	
-	public static <T extends Group<T,U> & IntegralDivision<U> & Equality<U>, U>
+	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Ordered<U>, U>
 		void findGcd(T group, U a, U b, U result)
 	{
 		U aTmp = group.construct(a);
 		U bTmp = group.construct(b);
 		U t = group.construct();
 		U zero = group.construct();
+		group.abs(aTmp, aTmp);
+		group.abs(bTmp, bTmp);
+		if (group.isLess(aTmp, bTmp)) {
+			group.assign(aTmp, t);
+			group.assign(bTmp, aTmp);
+			group.assign(t, bTmp);
+		}
 		while (group.isNotEqual(bTmp, zero)) {
 			group.assign(bTmp, t);
 			group.mod(aTmp, bTmp, bTmp);
@@ -58,15 +65,12 @@ public class GcdLcmHelper {
 		group.assign(aTmp, result);
 	}
 
-	// TODO: negative friendly? overflow prone? is abs() a requirement and what would it do to
-	//   polynomials?
-	
-	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Equality<U>, U>
+	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Ordered<U>, U>
 		void findLcm(T group, U a, U b, U result)
 	{
 		U n = group.construct();
 		U d = group.construct();
-		group.multiply(a,b,n);
+		group.multiply(a,b,n); // TODO: overflow prone?
 		group.abs(n,n);
 		findGcd(group, a, b, d);
 		group.div(n,d,result);
