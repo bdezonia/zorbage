@@ -276,8 +276,6 @@ Realize that dividing by -1 of a signed min int should likely throw an error.
 Support both kinds (logical and arithmetic) of right shift operator for int classes
 Make sure all types can be exported to and imported from the primitive types and
   BigInteger and BigDecimal.
-Relocate gcd and lcm helper code to an algorithm package.
-Refactor LUDecomp example into an algorithm package.
 Are the random(U) implementations threadsafe? That depends upon java lib. Investigate.
   Need to use ThreadLocalRandom. Do so.
 128bit unsigned needs both kinds of shift right and not just one
