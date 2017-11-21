@@ -58,10 +58,10 @@ public class Lcm {
 	{
 		U n = group.construct();
 		U d = group.construct();
-		group.multiply(a,b,n); // TODO: overflow prone?
-		group.abs(n,n);
+		group.multiply(a, b, n); // TODO: overflow prone?
+		group.abs(n, n);
 		Gcd.compute(group, a, b, d);
-		group.div(n,d,result);
+		group.div(n, d, result);
 	}
 
 }
