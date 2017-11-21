@@ -24,25 +24,34 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.util;
+package zorbage.algorithm;
 
 import zorbage.type.algebra.AbsoluteValue;
 import zorbage.type.algebra.Group;
 import zorbage.type.algebra.IntegralDivision;
-import zorbage.type.algebra.Multiplication;
 import zorbage.type.algebra.Ordered;
 
 /**
+ * Greatest Common Divisor algorithm
  * 
  * @author Barry DeZonia
  *
  */
-public class GcdLcmHelper {
-	 
-	// TODO with AbsoluteValue a requirement what will it do to polynomials?
-			 
-	private GcdLcmHelper() {}
+public class Gcd {
 	
+	/**
+	 * Do not instantiate. Private constructor for utility class.
+	 */
+	private Gcd() {}
+	
+	/**
+	 * Sets the result to the greatest common divisor of a and b. Result is always positive.
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @param result
+	 */
 	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Ordered<U>, U>
 		void findGcd(T group, U a, U b, U result)
 	{
@@ -63,16 +72,5 @@ public class GcdLcmHelper {
 			group.assign(t, aTmp);
 		}
 		group.assign(aTmp, result);
-	}
-
-	public static <T extends Group<T,U> & AbsoluteValue<U> & IntegralDivision<U> & Multiplication<U> & Ordered<U>, U>
-		void findLcm(T group, U a, U b, U result)
-	{
-		U n = group.construct();
-		U d = group.construct();
-		group.multiply(a,b,n); // TODO: overflow prone?
-		group.abs(n,n);
-		findGcd(group, a, b, d);
-		group.div(n,d,result);
 	}
 }

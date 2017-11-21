@@ -26,11 +26,12 @@
  */
 package zorbage.type.data.int32;
 
+import zorbage.algorithm.Gcd;
+import zorbage.algorithm.Lcm;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
-import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -181,12 +182,12 @@ public class SignedInt32Group
 
 	@Override
 	public void gcd(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		GcdLcmHelper.findGcd(this, a, b, c);
+		Gcd.findGcd(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-		GcdLcmHelper.findLcm(this, a, b, c);
+		Lcm.findLcm(this, a, b, c);
 	}
 
 	@Override

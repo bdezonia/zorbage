@@ -28,12 +28,13 @@ package zorbage.type.data.int64;
 
 import java.math.BigInteger;
 
+import zorbage.algorithm.Gcd;
+import zorbage.algorithm.Lcm;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int64.UnsignedInt64Member;
-import zorbage.type.data.util.GcdLcmHelper;
 
 // TODO: minimize use of BigInteger methods
 
@@ -189,12 +190,12 @@ public class UnsignedInt64Group
 
 	@Override
 	public void gcd(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		GcdLcmHelper.findGcd(this, a, b, c);
+		Gcd.findGcd(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		GcdLcmHelper.findLcm(this, a, b, c);
+		Lcm.findLcm(this, a, b, c);
 	}
 
 	@Override

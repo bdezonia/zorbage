@@ -26,12 +26,13 @@
  */
 package zorbage.type.data.int16;
 
+import zorbage.algorithm.Gcd;
+import zorbage.algorithm.Lcm;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int16.UnsignedInt16Member;
-import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -183,12 +184,12 @@ public class UnsignedInt16Group
 
 	@Override
 	public void gcd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		GcdLcmHelper.findGcd(this, a, b, c);
+		Gcd.findGcd(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		GcdLcmHelper.findLcm(this, a, b, c);
+		Lcm.findLcm(this, a, b, c);
 	}
 
 	@Override

@@ -26,12 +26,13 @@
  */
 package zorbage.type.data.int8;
 
+import zorbage.algorithm.Gcd;
+import zorbage.algorithm.Lcm;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int8.UnsignedInt8Member;
-import zorbage.type.data.util.GcdLcmHelper;
 
 /**
  * 
@@ -183,12 +184,12 @@ public class UnsignedInt8Group
 
 	@Override
 	public void gcd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		GcdLcmHelper.findGcd(this, a, b, c);
+		Gcd.findGcd(this, a, b, c);
 	}
 
 	@Override
 	public void lcm(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		GcdLcmHelper.findLcm(this, a, b, c);
+		Lcm.findLcm(this, a, b, c);
 	}
 
 	@Override
