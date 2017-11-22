@@ -296,7 +296,7 @@ public class UnsignedInt128Group
 			shiftLeftOneBit(quotient);
 			if (isGreaterEqual(dividend, divisor)) {
 				subtract(dividend, divisor, dividend);
-				bitOr(ONE, quotient, quotient);
+				quotient.lo |= 1;
 			}
 			shiftRightOneBit(divisor);
 		}
