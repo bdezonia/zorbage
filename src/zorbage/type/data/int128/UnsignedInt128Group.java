@@ -48,10 +48,9 @@ public class UnsignedInt128Group
 
 	// TODO
 	// 1) subtract
-	// 2) div
-	// 3) convert byte references and constants to long references and constants
-	// 4) speed test versus imglib
-	// 5) optimize methods
+	// 2) convert byte references and constants to long references and constants
+	// 3) speed test versus imglib
+	// 4) optimize methods
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
@@ -268,10 +267,8 @@ public class UnsignedInt128Group
 
 	@Override
 	public void div(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d) {
-		if (isEqual(b, ZERO))
-			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("not implemented yet");
+		UnsignedInt128Member m = new UnsignedInt128Member();
+		divMod(a,b,d,m);
 	}
 
 	@Override
@@ -282,12 +279,50 @@ public class UnsignedInt128Group
 
 	@Override
 	public void divMod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
-		UnsignedInt128Member sum = new UnsignedInt128Member();
-		div(a,b,d);
-		multiply(b,d,sum);
-		subtract(a,sum,m);
+		if (isEqual(b, ZERO))
+			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
+		UnsignedInt128Member quotient = new UnsignedInt128Member();
+		UnsignedInt128Member dividend = new UnsignedInt128Member(a);
+		UnsignedInt128Member divisor = new UnsignedInt128Member(b);
+		int dividendLeadingZeroBit = leadingNonZeroBit(a);
+		int divisorLeadingZeroBit = leadingNonZeroBit(b);
+		if (dividendLeadingZeroBit < divisorLeadingZeroBit) {
+			assign(d, ZERO);
+			assign(m, dividend);
+			return;
+		}
+		bitShiftLeft((dividendLeadingZeroBit - divisorLeadingZeroBit), divisor, divisor);
+		do {
+			shiftLeftOneBit(quotient);
+			if (isGreaterEqual(dividend, divisor)) {
+				subtract(dividend, divisor, dividend);
+				bitOr(ONE, quotient, quotient);
+			}
+			shiftRightOneBit(divisor);
+		}
+		while (isGreaterEqual(dividend, divisor));
+		assign(quotient, d);
+		assign(dividend, m);
 	}
 
+	private int leadingNonZeroBit(UnsignedInt128Member num) {
+		int mask = 128;
+		for (int i = 0; i < 8; i++) {
+			if ((num.hi & mask) > 0) {
+				return 15 - i;
+			}
+			mask >>>= 1;
+		}
+		mask = 128;
+		for (int i = 0; i < 8; i++) {
+			if ((num.lo & mask) > 0) {
+				return 7 - i;
+			}
+			mask >>>= 1;
+		}
+		return -1;
+	}
+	
 	@Override
 	public void gcd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
 		Gcd.compute(this, a, b, c);
