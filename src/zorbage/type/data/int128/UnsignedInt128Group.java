@@ -47,7 +47,7 @@ public class UnsignedInt128Group
 {
 
 	// TODO
-	// 1) subtract
+	// 1) write thorough tests for add/sub/mult/div/mod
 	// 2) convert byte references and constants to long references and constants
 	// 3) speed test versus imglib
 	// 4) optimize methods
@@ -133,8 +133,29 @@ public class UnsignedInt128Group
 
 	@Override
 	public void subtract(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("not implemented yet");
+		byte cHi = (byte) (a.hi - b.hi);
+		byte cLo = (byte) (a.lo - b.lo);
+		final int correction;
+		int alh = a.lo & 0x80;
+		int blh = b.lo & 0x80;
+		if (alh < blh)
+			correction = 1;
+		else if (alh > blh) {
+			correction = 0;
+		}
+		else { // alh == blh
+			int all = a.lo & 0x7f;
+			int bll = b.lo & 0x7f;
+			if (all < bll)
+				correction = 1;
+			else if (all > bll)
+				correction = 0;
+			else // all == bll
+				correction = 0;
+		}
+		cHi -= correction;
+		c.lo = cLo;
+		c.hi = cHi;
 	}
 
 	@Override
