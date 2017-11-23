@@ -15,7 +15,7 @@ public class TmpUInt128Tests {
 	
 	// These tests are slow so make it possible to turn them on or off
 	
-	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
+	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = true;
 	
 	public void run() {
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
@@ -23,8 +23,7 @@ public class TmpUInt128Tests {
 			//PASSED addTests();
 			//PASSED subtractTests();
 			//PASSED multiplyTests();
-			divideTests();
-			modTests();
+			divModTests();
 			System.out.println("  Done running exhaustive 16 bit tests");
 		}
 	}
@@ -86,37 +85,25 @@ public class TmpUInt128Tests {
 		}
 	}
 
-	private static void divideTests() {
+	private static void divModTests() {
 		System.out.println("  Divide tests");
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
-		UnsignedInt128Member c = G.UINT128.construct();
+		UnsignedInt128Member d = G.UINT128.construct();
+		UnsignedInt128Member m = G.UINT128.construct();
 		for (int i = 0; i < 65536; i++) {
 			BigInteger I = BigInteger.valueOf(i);
 			a.setV(I);
 			for (int j = 1; j < 65536; j++) { // avoid divide by zero
+				System.out.println("DivModing "+i+" and "+j);
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
-				G.UINT128.div(a, b, c);
-				assert(c.v().equals(I.divide(J)));
+				G.UINT128.divMod(a, b, d, m);
+				BigInteger[] dm = I.divideAndRemainder(J);
+				assert(d.v().equals(dm[0]));
+				assert(m.v().equals(dm[1]));
 			}			
 		}
 	}
 
-	private static void modTests() {
-		System.out.println("  Mod tests");
-		UnsignedInt128Member a = G.UINT128.construct();
-		UnsignedInt128Member b = G.UINT128.construct();
-		UnsignedInt128Member c = G.UINT128.construct();
-		for (int i = 0; i < 65536; i++) {
-			BigInteger I = BigInteger.valueOf(i);
-			a.setV(I);
-			for (int j = 1; j < 65536; j++) { // avoid divide by zero
-				BigInteger J = BigInteger.valueOf(j);
-				b.setV(J);
-				G.UINT128.mod(a, b, c);
-				assert(c.v().equals(I.mod(J)));
-			}			
-		}
-	}
 }
