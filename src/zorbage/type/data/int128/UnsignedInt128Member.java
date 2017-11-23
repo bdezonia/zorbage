@@ -82,22 +82,22 @@ public final class UnsignedInt128Member
 	// expensive but shouldn't need to call very often
 	
 	public BigInteger v() {
-		BigInteger low = BigInteger.valueOf(lo & 127);
-		BigInteger lowInc = ((lo & 128) > 0) ? BigInteger.valueOf(128) : BigInteger.ZERO;
-		BigInteger high = BigInteger.valueOf(256*(hi & 127));
-		BigInteger highInc =  ((hi & 128) > 0) ? BigInteger.valueOf(256*128) : BigInteger.ZERO;
+		BigInteger low = BigInteger.valueOf(lo & 0x7f);
+		BigInteger lowInc = ((lo & 0x80) > 0) ? BigInteger.valueOf(0x80) : BigInteger.ZERO;
+		BigInteger high = BigInteger.valueOf(256*(hi & 0x7f));
+		BigInteger highInc =  ((hi & 0x80) > 0) ? BigInteger.valueOf(256*0x80) : BigInteger.ZERO;
 		return low.add(lowInc).add(high).add(highInc);
 	}
 	
 	// expensive but shouldn't need to call very often
 	
 	public void setV(BigInteger val) {
-		lo = BigInteger.valueOf(127).and(val).byteValue();
-		hi = BigInteger.valueOf(256*127).and(val).shiftRight(8).byteValue();
+		lo = BigInteger.valueOf(0x7f).and(val).byteValue();
+		hi = BigInteger.valueOf(256*0x7f).and(val).shiftRight(8).byteValue();
 		if (val.testBit(7))
-			lo |= 128;
+			lo |= 0x80;
 		if (val.testBit(15))
-			hi |= 128;
+			hi |= 0x80;
 	}
 	
 	@Override

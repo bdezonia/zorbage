@@ -15,14 +15,14 @@ public class TmpUInt128Tests {
 	
 	// These tests are slow so make it possible to turn them on or off
 	
-	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = true;
+	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
 	
 	public void run() {
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
-			//PASSED addTests();
-			//PASSED subtractTests();
-			//PASSED multiplyTests();
+			addTests();
+			subtractTests();
+			multiplyTests();
 			divModTests();
 			System.out.println("  Done running exhaustive 16 bit tests");
 		}
@@ -95,7 +95,6 @@ public class TmpUInt128Tests {
 			BigInteger I = BigInteger.valueOf(i);
 			a.setV(I);
 			for (int j = 1; j < 65536; j++) { // avoid divide by zero
-				System.out.println("DivModing "+i+" and "+j);
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.divMod(a, b, d, m);

@@ -47,10 +47,9 @@ public class UnsignedInt128Group
 {
 
 	// TODO
-	// 1) write thorough tests for add/sub/mult/div/mod
+	// 1) optimize methods
 	// 2) convert byte references and constants to long references and constants
 	// 3) speed test versus imglib
-	// 4) optimize methods
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
@@ -101,32 +100,32 @@ public class UnsignedInt128Group
 
 	@Override
 	public void add(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		byte aLoTmp = (byte) (a.lo & 127);
-		byte bLoTmp = (byte) (b.lo & 127);
+		byte aLoTmp = (byte) (a.lo & 0x7f);
+		byte bLoTmp = (byte) (b.lo & 0x7f);
 		byte loTmp = (byte) (aLoTmp + bLoTmp);
 		byte loCarry = 0;
-		if ((a.lo & 128) > 0) loCarry++;
-		if ((b.lo & 128) > 0) loCarry++;
-		if ((loTmp & 128) > 0) loCarry++;
-		c.lo = (byte) (loTmp & 127);
+		if ((a.lo & 0x80) > 0) loCarry++;
+		if ((b.lo & 0x80) > 0) loCarry++;
+		if ((loTmp & 0x80) > 0) loCarry++;
+		c.lo = (byte) (loTmp & 0x7f);
 		if (loCarry == 1 || loCarry == 3) {
-			c.lo |= 128;
+			c.lo |= 0x80;
 			loCarry -= 1;
 		}
 		// it is FALSE that loCarry only == 0 or 2 at this point
-		byte aHiTmp = (byte) (a.hi & 127);
-		byte bHiTmp = (byte) (b.hi & 127);
+		byte aHiTmp = (byte) (a.hi & 0x7f);
+		byte bHiTmp = (byte) (b.hi & 0x7f);
 		byte hiTmp = (byte) (aHiTmp + bHiTmp);
 		if (loCarry > 0) {
 			hiTmp += 1;
 		}
 		byte hiCarry = 0;
-		if ((a.hi & 128) > 0) hiCarry++;
-		if ((b.hi & 128) > 0) hiCarry++;
-		if ((hiTmp & 128) > 0) hiCarry++;
-		c.hi = (byte) (hiTmp & 127);
+		if ((a.hi & 0x80) > 0) hiCarry++;
+		if ((b.hi & 0x80) > 0) hiCarry++;
+		if ((hiTmp & 0x80) > 0) hiCarry++;
+		c.hi = (byte) (hiTmp & 0x7f);
 		if (hiCarry == 1 || hiCarry == 3) {
-			c.hi |= 128;
+			c.hi |= 0x80;
 			// and ignore the extra bit if hiCarry == 3: overflow happened
 		}
 	}
@@ -217,8 +216,8 @@ public class UnsignedInt128Group
 	@Override
 	public int compare(UnsignedInt128Member a, UnsignedInt128Member b) {
 		int abyte, bbyte;
-		int ab = a.hi & 128;
-		int bb = b.hi & 128;
+		int ab = a.hi & 0x80;
+		int bb = b.hi & 0x80;
 		if (ab == 0 && bb != 0) {
 			return -1;
 		}
@@ -226,15 +225,15 @@ public class UnsignedInt128Group
 			return 1;
 		}
 		else { // ab == bb
-			abyte = a.hi & 127;
-			bbyte = b.hi & 127;
+			abyte = a.hi & 0x7f;
+			bbyte = b.hi & 0x7f;
 			if (abyte < bbyte)
 				return -1;
 			else if (abyte > bbyte)
 				return 1;
 			else { // a.hi == b.hi
-				ab = a.lo & 128;
-				bb = b.lo & 128;
+				ab = a.lo & 0x80;
+				bb = b.lo & 0x80;
 				if (ab == 0 && bb != 0) {
 					return -1;
 				}
@@ -242,8 +241,8 @@ public class UnsignedInt128Group
 					return 1;
 				}
 				else { // ab == bb
-					abyte = a.lo & 127;
-					bbyte = b.lo & 127;
+					abyte = a.lo & 0x7f;
+					bbyte = b.lo & 0x7f;
 					if (abyte < bbyte)
 						return -1;
 					else if (abyte > bbyte)
@@ -300,19 +299,26 @@ public class UnsignedInt128Group
 
 	@Override
 	public void divMod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
-		if (isEqual(b, ZERO))
+		if (isEqual(b, ZERO)) {
 			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
+		}
+		if (isEqual(a,b)) {
+			assign(ONE, d);
+			assign(ZERO, m);
+			return;
+		}
+		if (isLess(a,b)) {
+			assign(ZERO, d);
+			assign(a, m);
+			return;
+		}
+		// if here a is greater than b
 		UnsignedInt128Member quotient = new UnsignedInt128Member();
 		UnsignedInt128Member dividend = new UnsignedInt128Member(a);
 		UnsignedInt128Member divisor = new UnsignedInt128Member(b);
-		int dividendLeadingZeroBit = leadingNonZeroBit(a);
-		int divisorLeadingZeroBit = leadingNonZeroBit(b);
-		if (dividendLeadingZeroBit < divisorLeadingZeroBit) {
-			assign(d, ZERO);
-			assign(m, dividend);
-			return;
-		}
-		bitShiftLeft((dividendLeadingZeroBit - divisorLeadingZeroBit), divisor, divisor);
+		int dividendLeadingNonzeroBit = leadingNonZeroBit(a);
+		int divisorLeadingNonzeroBit = leadingNonZeroBit(b);
+		bitShiftLeft((dividendLeadingNonzeroBit - divisorLeadingNonzeroBit), divisor, divisor);
 		do {
 			shiftLeftOneBit(quotient);
 			if (isGreaterEqual(dividend, divisor)) {
@@ -321,20 +327,20 @@ public class UnsignedInt128Group
 			}
 			shiftRightOneBit(divisor);
 		}
-		while (isGreaterEqual(dividend, divisor));
+		while (isGreaterEqual(dividend, divisor) && isNotEqual(divisor, ZERO));
 		assign(quotient, d);
 		assign(dividend, m);
 	}
 
 	private int leadingNonZeroBit(UnsignedInt128Member num) {
-		int mask = 128;
+		int mask = 0x80;
 		for (int i = 0; i < 8; i++) {
 			if ((num.hi & mask) > 0) {
 				return 15 - i;
 			}
 			mask >>>= 1;
 		}
-		mask = 128;
+		mask = 0x80;
 		for (int i = 0; i < 8; i++) {
 			if ((num.lo & mask) > 0) {
 				return 7 - i;
@@ -394,8 +400,8 @@ public class UnsignedInt128Group
 
 	@Override
 	public void random(UnsignedInt128Member a) {
-		a.lo = (byte) (rng.nextInt(256) - 128);
-		a.hi = (byte) (rng.nextInt(256) - 128);
+		a.lo = (byte) (rng.nextInt(256) - 0x80);
+		a.hi = (byte) (rng.nextInt(256) - 0x80);
 	}
 
 	@Override
@@ -429,7 +435,7 @@ public class UnsignedInt128Group
 		if (count < 0)
 			bitShiftRight(Math.abs(count), a, b);
 		else {
-			count = count % 128;
+			count = count % 0x80;
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
 			for (int i = 0; i < count; i++) {
 				shiftLeftOneBit(tmp);
@@ -444,7 +450,7 @@ public class UnsignedInt128Group
 	public void bitShiftRight(int count, UnsignedInt128Member a, UnsignedInt128Member b) {
 		if (count < 0)
 			bitShiftLeft(Math.abs(count), a, b);
-		else if (count > 127)
+		else if (count > 0x7f)
 			assign(ZERO, b);
 		else {
 			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
@@ -468,7 +474,7 @@ public class UnsignedInt128Group
 	}
 
 	private void shiftLeftOneBit(UnsignedInt128Member val) {
-		boolean transitionBit = (val.lo & 128) > 0;
+		boolean transitionBit = (val.lo & 0x80) > 0;
 		val.lo = (byte) ((val.lo & 0xff) << 1);
 		val.hi = (byte) ((val.hi & 0xff) << 1);
 		if (transitionBit)
@@ -480,7 +486,7 @@ public class UnsignedInt128Group
 		val.lo = (byte) ((val.lo & 0xff) >>> 1);
 		val.hi = (byte) ((val.hi & 0xff) >>> 1);
 		if (transitionBit)
-			val.lo |= 128;
+			val.lo |= 0x80;
 	}
 
 }
