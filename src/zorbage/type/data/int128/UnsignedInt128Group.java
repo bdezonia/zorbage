@@ -100,34 +100,23 @@ public class UnsignedInt128Group
 
 	@Override
 	public void add(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		byte aLoTmp = (byte) (a.lo & 0x7f);
-		byte bLoTmp = (byte) (b.lo & 0x7f);
-		byte loTmp = (byte) (aLoTmp + bLoTmp);
-		byte loCarry = 0;
-		if ((a.lo & 0x80) > 0) loCarry++;
-		if ((b.lo & 0x80) > 0) loCarry++;
-		if ((loTmp & 0x80) > 0) loCarry++;
-		c.lo = (byte) (loTmp & 0x7f);
-		if (loCarry == 1 || loCarry == 3) {
-			c.lo |= 0x80;
-			loCarry -= 1;
+		byte cLo = (byte) (a.lo + b.lo);
+		byte cHi = (byte) (a.hi + b.hi);
+		int correction = 0;
+		byte alh = (byte) (a.lo & 0x80);
+		byte blh = (byte) (b.lo & 0x80);
+		if (alh != 0 && blh != 0) {
+			correction = 1;
 		}
-		// it is FALSE that loCarry only == 0 or 2 at this point
-		byte aHiTmp = (byte) (a.hi & 0x7f);
-		byte bHiTmp = (byte) (b.hi & 0x7f);
-		byte hiTmp = (byte) (aHiTmp + bHiTmp);
-		if (loCarry > 0) {
-			hiTmp += 1;
+		else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
+			byte all = (byte) (a.lo & 0x7f);
+			byte bll = (byte) (b.lo & 0x7f);
+			if ((byte)(all + bll) < 0)
+				correction = 1;
 		}
-		byte hiCarry = 0;
-		if ((a.hi & 0x80) > 0) hiCarry++;
-		if ((b.hi & 0x80) > 0) hiCarry++;
-		if ((hiTmp & 0x80) > 0) hiCarry++;
-		c.hi = (byte) (hiTmp & 0x7f);
-		if (hiCarry == 1 || hiCarry == 3) {
-			c.hi |= 0x80;
-			// and ignore the extra bit if hiCarry == 3: overflow happened
-		}
+		cHi += correction;
+		c.lo = cLo;
+		c.hi = cHi;
 	}
 
 	@Override
@@ -147,9 +136,7 @@ public class UnsignedInt128Group
 			int bll = b.lo & 0x7f;
 			if (all < bll)
 				correction = 1;
-			else if (all > bll)
-				correction = 0;
-			else // all == bll
+			else // (all >= bll)
 				correction = 0;
 		}
 		cHi -= correction;
