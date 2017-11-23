@@ -48,6 +48,18 @@ public class NumberTest {
 	//	setVTest();
 	//	compareTest();
 		versusTest();
+		oneDivModTest();
+	}
+
+	// prove that I can divMod two numbers correctly
+	private void oneDivModTest() {
+		UnsignedInt128Member a = G.UINT128.construct("525");
+		UnsignedInt128Member b = G.UINT128.construct("20");
+		UnsignedInt128Member d = G.UINT128.construct();
+		UnsignedInt128Member m = G.UINT128.construct();
+		G.UINT128.divMod(a, b, d, m);
+		assert(d.equals(BigInteger.valueOf(26)));
+		assert(m.equals(BigInteger.valueOf(5)));
 	}
 	
 	private void multiplyFullRangeTest() {

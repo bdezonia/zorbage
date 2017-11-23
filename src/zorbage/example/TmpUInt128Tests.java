@@ -20,9 +20,9 @@ public class TmpUInt128Tests {
 	public void run() {
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
-			addTests();
-			subtractTests();
-			multiplyTests();
+			//PASSED addTests();
+			//PASSED subtractTests();
+			//PASSED multiplyTests();
 			divideTests();
 			modTests();
 			System.out.println("  Done running exhaustive 16 bit tests");

@@ -278,6 +278,8 @@ Make sure all types can be exported to and imported from the primitive types and
   BigInteger and BigDecimal.
 Are the random(U) implementations threadsafe? That depends upon java lib. Investigate.
   Need to use ThreadLocalRandom. Do so.
-128bit unsigned needs both kinds of shift right and not just one
-128bit subtract algorithm might not loop correctly. I think you can divide 1010 by
+128 bit unsigned needs both kinds of shift right and not just one
+128 bit subtract algorithm might not loop correctly. I think you can divide 1010 by
   10 and get a remainder of 10. Debug.
+Test 128 bit div and mod
+Make 128 bit add more efficient: model the subtract method
