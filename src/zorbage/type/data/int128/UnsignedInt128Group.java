@@ -47,9 +47,8 @@ public class UnsignedInt128Group
 {
 
 	// TODO
-	// 1) optimize methods
-	// 2) convert byte references and constants to long references and constants
-	// 3) speed test versus imglib
+	// 1) convert byte references and constants to long references and constants
+	// 2) speed test versus imglib
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
