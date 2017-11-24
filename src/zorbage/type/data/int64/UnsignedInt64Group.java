@@ -209,8 +209,6 @@ public class UnsignedInt64Group
 		return a.v % 2 == 1;
 	}
 
-	// TODO: test
-	
 	@Override
 	public void pred(UnsignedInt64Member a, UnsignedInt64Member b) {
 		if (a.v == 0)
@@ -219,8 +217,6 @@ public class UnsignedInt64Group
 			b.v = a.v - 1;
 	}
 
-	// TODO: test
-	
 	@Override
 	public void succ(UnsignedInt64Member a, UnsignedInt64Member b) {
 		if (a.v == -1)
