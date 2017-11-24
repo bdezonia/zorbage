@@ -26,8 +26,6 @@
  */
 package zorbage.type.data.int64;
 
-import java.math.BigInteger;
-
 import zorbage.algorithm.Gcd;
 import zorbage.algorithm.Lcm;
 import zorbage.type.algebra.BitOperations;
@@ -35,8 +33,6 @@ import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
 import zorbage.type.data.int64.UnsignedInt64Member;
-
-// TODO: minimize use of BigInteger methods
 
 /**
  * 
@@ -94,7 +90,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void multiply(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		c.setV( a.v().multiply(b.v()) );
+		c.v = a.v * b.v;
 	}
 
 	@Override
@@ -102,10 +98,11 @@ public class UnsignedInt64Group
 		if (power == 0 && a.v == 0) throw new IllegalArgumentException("0^0 is not a number");
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		else if (power == 0)
-			b.setV(BigInteger.ONE);
-		else
-			b.setV(a.v().pow(power));
+		long val = 1;
+		for (int i = 0; i < power; i++) {
+			val *= a.v;
+		}
+		b.v = val;
 	}
 
 	@Override
@@ -173,19 +170,18 @@ public class UnsignedInt64Group
 
 	@Override
 	public void div(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d) {
-		d.setV( a.v().divide(b.v()) );
+		d.v = a.v / b.v;
 	}
 
 	@Override
 	public void mod(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member m) {
-		m.setV( a.v().mod(b.v()) );
+		m.v = a.v % b.v;
 	}
 
 	@Override
 	public void divMod(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d, UnsignedInt64Member m) {
-		BigInteger[] result = a.v().divideAndRemainder(b.v());
-		d.setV(result[0]);
-		m.setV(result[1]);
+		d.v = a.v / b.v;
+		m.v = a.v % b.v;
 	}
 
 	@Override
@@ -218,7 +214,7 @@ public class UnsignedInt64Group
 	@Override
 	public void pred(UnsignedInt64Member a, UnsignedInt64Member b) {
 		if (a.v == 0)
-			b.v = 0xffffffffffffffffL;
+			b.v = -1;
 		else
 			b.v = a.v - 1;
 	}
@@ -235,7 +231,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void maxBound(UnsignedInt64Member a) {
-		a.v = 0xffffffffffffffffL;
+		a.v = -1;
 	}
 
 	@Override
@@ -311,7 +307,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void pow(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		power(b.v().intValue(), a, c);
+		power((int)b.v, a, c);
 	}
 
 }

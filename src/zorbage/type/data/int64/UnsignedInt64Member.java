@@ -70,8 +70,7 @@ public final class UnsignedInt64Member
 	public UnsignedInt64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		long x = val.r().longValue();
-		v = x;
+		v = val.r().longValue();
 	}
 
 	public BigInteger v() {
@@ -81,7 +80,7 @@ public final class UnsignedInt64Member
 	}
 
 	public void setV(BigInteger val) {
-		v = val.mod(MODULUS).longValue();
+		v = val.longValue();
 	}
 	
 	@Override
