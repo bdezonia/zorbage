@@ -49,6 +49,14 @@ public class NumberTest {
 	//	compareTest();
 		versusTest();
 		oneDivModTest();
+		oneFastMultiply();
+	}
+	
+	private void oneFastMultiply() {
+		UnsignedInt128Member a = G.UINT128.construct("3");
+		UnsignedInt128Member b = G.UINT128.construct("86");
+		UnsignedInt128Member c = G.UINT128.construct();
+		G.UINT128.multiplyFast(a, b, c);
 	}
 
 	// prove that I can divMod two numbers correctly

@@ -161,6 +161,29 @@ public class UnsignedInt128Group
 		assign(tmp,c);
 	}
 
+	public void multiplyFast(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+		byte all = (byte) (a.lo & 0xf);
+		byte alh = (byte) ((a.lo & 0xf0) >>> 4);
+		byte bll = (byte) (b.lo & 0xf);
+		byte blh = (byte) ((b.lo & 0xf0) >>> 4);
+		byte loLoNib = (byte) (all * bll);
+		byte loHiNib = (byte) ((all * blh) + (alh * bll));
+		if ((loLoNib & 0xf0) != 0) {
+			loHiNib++;
+			loLoNib &= 0xf;
+		}
+		byte hiLoNib = (byte) (alh * blh);
+		if ((loHiNib & 0xf0) != 0) {
+			hiLoNib++;
+			loHiNib &= 0xf;
+		}
+		byte mid1 = (byte) (a.lo * b.hi);
+		byte mid2 = (byte) (a.hi * b.lo);
+		// can throw away a.hi * b.hi: all overflow
+		c.lo = (byte)((loHiNib << 4) + loLoNib);
+		c.hi = (byte) (hiLoNib + mid1 + mid2);
+	}
+	
 	@Override
 	public void power(int power, UnsignedInt128Member a, UnsignedInt128Member b) {
 		if (power == 0 && isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");

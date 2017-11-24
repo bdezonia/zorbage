@@ -272,3 +272,5 @@ Are the random(U) implementations threadsafe? That depends upon java lib. Invest
 128 bit unsigned needs both kinds of shift right and not just one
 128 bit needs to be based on longs rather than bytes
 64 bit unsigned needs some tests
+Can I break 128-bit multiply into pieces that I can multiply together a chunk
+  at a time and avoid all the shift/add calls? Similar question for divide

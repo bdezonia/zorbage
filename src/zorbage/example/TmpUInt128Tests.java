@@ -49,6 +49,7 @@ public class TmpUInt128Tests {
 	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
 	
 	public void run() {
+		testMultiplies();
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
 			addTests();
@@ -141,4 +142,23 @@ public class TmpUInt128Tests {
 		}
 	}
 
+	private static void testMultiplies() {
+		System.out.println("compare 128 bit unsigned multiplies");
+		UnsignedInt128Member a = G.UINT128.construct();
+		UnsignedInt128Member b = G.UINT128.construct();
+		UnsignedInt128Member c = G.UINT128.construct();
+		UnsignedInt128Member d = G.UINT128.construct();
+		
+		for (int i = 0; i < 65536; i++) {
+			a.setV(BigInteger.valueOf(i));
+			for (int j = 0; j < 65536; j++) {
+				b.setV(BigInteger.valueOf(j));
+				G.UINT128.multiply(a, b, c);
+				G.UINT128.multiplyFast(a, b, d);
+				System.out.println(a+ " x " + b + " = " + c + " fast calced " + d);
+				System.out.flush();
+				test(G.UINT128.isEqual(c, d),1);
+			}
+		}
+	}
 }
