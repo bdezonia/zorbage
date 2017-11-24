@@ -96,12 +96,6 @@ ArrayBit Storage: flesh out
 Some types could be bit encodable but also byte encodable with extra
   bits set to zero to byte boundaries. For instance a 12-bit number
   could be encoded as two bytes
-Do bit types store ints/longs internally for math and then & with mask
-  on set and get? Can I write 128 bit math easily using two longs and
-  look for overflows and underflows and predictably use result to make
-  correct bit code? Maybe imglib2 has this type. Investigate. Imglib
-  uses BigInteger. This is avoidable. Multiply and divide using my
-  boolean logic book definitions
 Do I make all types have constructors from all or some primitive types
   so I can make generic code that can use primitives? Otherwise the code
   is ugly.
@@ -222,8 +216,6 @@ add more operations: skew, kurtosis, other moments, etc. Also I hear that
 FileStorage: have multiple buffers and configurable or calculated buffer sizes
   based upon numElements and percents etc.
 Constructible interfaces could instead derive from Function interfaces
-Minimize use of BigInteger math in UnsignedInt32Group class. Two's complement
-  math may rescue me.
 Must write a lot of tests for the numeric types
 Write more Functions, Procedures, Accessors, and Tuples. Beyond 10 params.
   Note that combining tuples and funcs/procs we support 100 params right now.
@@ -280,3 +272,4 @@ Are the random(U) implementations threadsafe? That depends upon java lib. Invest
   Need to use ThreadLocalRandom. Do so.
 128 bit unsigned needs both kinds of shift right and not just one
 128 bit needs to be based on longs rather than bytes
+64 bit unsigned needs some tests
