@@ -51,7 +51,6 @@ public final class UnsignedInt64Member
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
-	private static final BigInteger MODULUS = new BigInteger("10000000000000000",16);
 
 	long v;
 	
