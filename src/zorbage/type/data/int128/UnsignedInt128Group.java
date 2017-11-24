@@ -125,9 +125,9 @@ public class UnsignedInt128Group
 		final int correction;
 		int alh = a.lo & 0x80;
 		int blh = b.lo & 0x80;
-		if (alh < blh)
+		if (alh == 0 && blh != 0)
 			correction = 1;
-		else if (alh > blh) {
+		else if (alh != 0 && blh == 0) {
 			correction = 0;
 		}
 		else { // alh == blh
