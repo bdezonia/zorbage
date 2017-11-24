@@ -85,6 +85,8 @@ public class SignedInt16Group
 
 	@Override
 	public void abs(SignedInt16Member a, SignedInt16Member b) {
+		if (a.v() == Short.MIN_VALUE)
+			throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
 		b.setV( (short) Math.abs(a.v()) );
 	}
 
@@ -193,7 +195,7 @@ public class SignedInt16Group
 
 	@Override
 	public void norm(SignedInt16Member a, SignedInt16Member b) {
-		b.setV( (short)Math.abs(a.v()) );
+		abs(a,b);
 	}
 
 	@Override

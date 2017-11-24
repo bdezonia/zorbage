@@ -181,7 +181,7 @@ public class UnboundedIntGroup
 
 	@Override
 	public void norm(UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().abs() );
+		abs(a,b);
 	}
 
 	@Override

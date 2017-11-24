@@ -85,6 +85,8 @@ public class SignedInt64Group
 
 	@Override
 	public void abs(SignedInt64Member a, SignedInt64Member b) {
+		if (a.v() == Long.MIN_VALUE)
+			throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
 		b.setV( Math.abs(a.v()) );
 	}
 
@@ -193,7 +195,7 @@ public class SignedInt64Group
 
 	@Override
 	public void norm(SignedInt64Member a, SignedInt64Member b) {
-		b.setV( Math.abs(a.v()) );
+		abs(a,b);
 	}
 
 	@Override

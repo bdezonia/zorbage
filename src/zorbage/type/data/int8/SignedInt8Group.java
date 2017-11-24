@@ -85,6 +85,8 @@ public class SignedInt8Group
 
 	@Override
 	public void abs(SignedInt8Member a, SignedInt8Member b) {
+		if (a.v() == Byte.MIN_VALUE)
+			throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
 		b.setV( (byte) Math.abs(a.v()) );
 	}
 
@@ -193,7 +195,7 @@ public class SignedInt8Group
 
 	@Override
 	public void norm(SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte)Math.abs(a.v()) );
+		abs(a,b);
 	}
 
 	@Override

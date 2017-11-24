@@ -84,6 +84,8 @@ public class SignedInt32Group
 
 	@Override
 	public void abs(SignedInt32Member a, SignedInt32Member b) {
+		if (a.v() == java.lang.Integer.MIN_VALUE)
+			throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
 		b.setV( Math.abs(a.v()) );
 	}
 
@@ -192,7 +194,7 @@ public class SignedInt32Group
 
 	@Override
 	public void norm(SignedInt32Member a, SignedInt32Member b) {
-		b.setV( Math.abs(a.v()) );
+		abs(a,b);
 	}
 
 	@Override
