@@ -353,6 +353,8 @@ public class TestMain {
 		new NumberTest().run();
 		
 		new TmpUInt128Tests().run();
+		
+		new UInt64Tests().run();
 	}
 
 }

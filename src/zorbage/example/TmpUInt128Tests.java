@@ -59,6 +59,11 @@ public class TmpUInt128Tests {
 		}
 	}
 	
+	private static void test(boolean b, int testNum) {
+		if (!b)
+			throw new IllegalArgumentException("test "+testNum+" failed");
+	}
+	
 	private static void addTests() {
 		System.out.println("  Add tests");
 		UnsignedInt128Member a = G.UINT128.construct();
@@ -72,7 +77,7 @@ public class TmpUInt128Tests {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.add(a, b, c);
-				assert(c.v().equals(I.add(J).mod(BASE)));
+				test(c.v().equals(I.add(J).mod(BASE)),1);
 			}			
 		}
 	}
@@ -92,8 +97,8 @@ public class TmpUInt128Tests {
 				G.UINT128.subtract(a, b, c);
 				BigInteger result = I.subtract(J);
 				if (result.compareTo(BigInteger.ZERO) < 0)
-					result.add(BASE);
-				assert(c.v().equals(result));
+					result = result.add(BASE);
+				test(c.v().equals(result),2);
 			}			
 		}
 	}
@@ -111,7 +116,7 @@ public class TmpUInt128Tests {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.multiply(a, b, c);
-				assert(c.v().equals(I.multiply(J).mod(BASE)));
+				test(c.v().equals(I.multiply(J).mod(BASE)),3);
 			}			
 		}
 	}
@@ -130,8 +135,8 @@ public class TmpUInt128Tests {
 				b.setV(J);
 				G.UINT128.divMod(a, b, d, m);
 				BigInteger[] dm = I.divideAndRemainder(J);
-				assert(d.v().equals(dm[0]));
-				assert(m.v().equals(dm[1]));
+				test(d.v().equals(dm[0]),4);
+				test(m.v().equals(dm[1]),5);
 			}			
 		}
 	}

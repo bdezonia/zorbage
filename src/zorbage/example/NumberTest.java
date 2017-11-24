@@ -48,7 +48,7 @@ public class NumberTest {
 	//	setVTest();
 	//	compareTest();
 		versusTest();
-		oneDivModTest();
+		//oneDivModTest();
 	}
 
 	// prove that I can divMod two numbers correctly
@@ -58,8 +58,10 @@ public class NumberTest {
 		UnsignedInt128Member d = G.UINT128.construct();
 		UnsignedInt128Member m = G.UINT128.construct();
 		G.UINT128.divMod(a, b, d, m);
-		assert(d.equals(BigInteger.valueOf(26)));
-		assert(m.equals(BigInteger.valueOf(5)));
+		if (!(d.v().equals(BigInteger.valueOf(26))))
+			throw new IllegalArgumentException("Single divide did not work : 26 != "+d.v());
+		if (!(m.v().equals(BigInteger.valueOf(5))))
+			throw new IllegalArgumentException("Single mod did not work : 5 != "+m.v());
 	}
 	
 	private void multiplyFullRangeTest() {
@@ -259,7 +261,7 @@ public class NumberTest {
 		
 		long c = System.currentTimeMillis();
 		
-		System.out.println("mine " + (b-a) + " theirs " + (c-b));
+		System.out.println("Add one 64K times: UInt128 " + (b-a) + " BigInteger " + (c-b));
 	}
 
 }
