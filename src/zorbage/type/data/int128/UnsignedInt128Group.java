@@ -321,14 +321,14 @@ public class UnsignedInt128Group
 	private int leadingNonZeroBit(UnsignedInt128Member num) {
 		int mask = 0x80;
 		for (int i = 0; i < 8; i++) {
-			if ((num.hi & mask) > 0) {
+			if ((num.hi & mask) != 0) {
 				return 15 - i;
 			}
 			mask >>>= 1;
 		}
 		mask = 0x80;
 		for (int i = 0; i < 8; i++) {
-			if ((num.lo & mask) > 0) {
+			if ((num.lo & mask) != 0) {
 				return 7 - i;
 			}
 			mask >>>= 1;
@@ -468,7 +468,7 @@ public class UnsignedInt128Group
 	}
 
 	private void shiftRightOneBit(UnsignedInt128Member val) {
-		boolean transitionBit = (val.hi & 1) > 0;
+		boolean transitionBit = (val.hi & 1) != 0;
 		val.lo = (byte) ((val.lo & 0xff) >>> 1);
 		val.hi = (byte) ((val.hi & 0xff) >>> 1);
 		if (transitionBit)
