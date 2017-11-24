@@ -288,12 +288,13 @@ public class UnsignedInt128Group
 		if (isEqual(b, ZERO)) {
 			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
 		}
-		if (isEqual(a,b)) {
+		int comparison = compare(a,b);
+		if (comparison == 0) { // a is equal b
 			assign(ONE, d);
 			assign(ZERO, m);
 			return;
 		}
-		if (isLess(a,b)) {
+		if (comparison < 0) { // a is less than b
 			assign(ZERO, d);
 			assign(a, m);
 			return;
@@ -305,7 +306,7 @@ public class UnsignedInt128Group
 		int dividendLeadingNonzeroBit = leadingNonZeroBit(a);
 		int divisorLeadingNonzeroBit = leadingNonZeroBit(b);
 		bitShiftLeft((dividendLeadingNonzeroBit - divisorLeadingNonzeroBit), divisor, divisor);
-		do {
+		for (int i = 0; i < dividendLeadingNonzeroBit-divisorLeadingNonzeroBit+1; i++) {
 			shiftLeftOneBit(quotient);
 			if (isGreaterEqual(dividend, divisor)) {
 				subtract(dividend, divisor, dividend);
@@ -313,7 +314,6 @@ public class UnsignedInt128Group
 			}
 			shiftRightOneBit(divisor);
 		}
-		while (isGreaterEqual(dividend, divisor) && isNotEqual(divisor, ZERO));
 		assign(quotient, d);
 		assign(dividend, m);
 	}
