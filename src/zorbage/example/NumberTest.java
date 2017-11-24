@@ -48,7 +48,7 @@ public class NumberTest {
 	//	setVTest();
 	//	compareTest();
 		versusTest();
-		//oneDivModTest();
+		oneDivModTest();
 	}
 
 	// prove that I can divMod two numbers correctly

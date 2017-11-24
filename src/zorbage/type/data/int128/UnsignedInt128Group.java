@@ -268,7 +268,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void norm(UnsignedInt128Member a, UnsignedInt128Member b) {
-		abs(a, b);
+		assign(a, b);
 	}
 
 	@Override
