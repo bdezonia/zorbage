@@ -169,6 +169,8 @@ public class SignedInt64Group
 
 	@Override
 	public void div(SignedInt64Member a, SignedInt64Member b, SignedInt64Member d) {
+		if (b.v() == -1 && a.v() == Long.MIN_VALUE)
+			throw new IllegalArgumentException("cannot divide minint by -1");
 		d.setV( a.v() / b.v() );
 	}
 

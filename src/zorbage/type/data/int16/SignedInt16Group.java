@@ -169,6 +169,8 @@ public class SignedInt16Group
 
 	@Override
 	public void div(SignedInt16Member a, SignedInt16Member b, SignedInt16Member d) {
+		if (b.v() == -1 && a.v() == Short.MIN_VALUE)
+			throw new IllegalArgumentException("cannot divide minint by -1");
 		d.setV( (short)(a.v() / b.v()) );
 	}
 
