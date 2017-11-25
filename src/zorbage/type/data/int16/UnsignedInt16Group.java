@@ -99,11 +99,9 @@ public class UnsignedInt16Group
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		int tmp = 1;
-		if (power > 0) {
-			int av = a.v();
-			for (int i = 1; i <= power; i++)
-				tmp = tmp * av;
-		}
+		int av = a.v();
+		for (int i = 0; i < power; i++)
+			tmp = tmp * av;
 		b.setV(tmp);
 	}
 

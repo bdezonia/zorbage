@@ -101,10 +101,8 @@ public class SignedInt64Group
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		long tmp = 1;
-		if (power > 0) {
-			for (int i = 1; i <= power; i++)
-				tmp = tmp * a.v();
-		}
+		for (int i = 0; i < power; i++)
+			tmp = tmp * a.v();
 		b.setV(tmp);
 	}
 
