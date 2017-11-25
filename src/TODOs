@@ -4,7 +4,7 @@ Examples
   Game of life
   
 Other needs
-  maven
+  maven: partially done. make examples into tests
   Multiplying together vectors, matrices, and tensors
   Fix and flesh out tensor classes
   Matrices: norm (more than one kind), det, invert
