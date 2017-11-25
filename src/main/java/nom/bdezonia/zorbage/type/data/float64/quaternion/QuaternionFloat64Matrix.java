@@ -24,13 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64.quaternion;
+package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
-import zorbage.type.algebra.MatrixRing;
-import zorbage.type.algebra.RingWithUnity;
-import zorbage.type.ctor.Constructible2dLong;
-import zorbage.type.ctor.MemoryConstruction;
-import zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
+import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 

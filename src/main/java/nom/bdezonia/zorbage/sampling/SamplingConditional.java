@@ -24,12 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.sampling;
+package nom.bdezonia.zorbage.sampling;
 
-import zorbage.condition.Condition;
-import zorbage.type.algebra.Dimensioned;
-import zorbage.type.algebra.Settable;
-import zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
 /**
  * {@link SamplingConditional} is a {@link Sampling} that includes the points of another

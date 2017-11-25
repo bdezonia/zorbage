@@ -24,23 +24,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float16.real;
+package nom.bdezonia.zorbage.type.data.float16.real;
 
-import zorbage.type.algebra.Bounded;
-import zorbage.type.algebra.Constants;
-import zorbage.type.algebra.Exponential;
-import zorbage.type.algebra.Hyperbolic;
-import zorbage.type.algebra.Infinite;
-import zorbage.type.algebra.InverseHyperbolic;
-import zorbage.type.algebra.InverseTrigonometric;
-import zorbage.type.algebra.Norm;
-import zorbage.type.algebra.OrderedField;
-import zorbage.type.algebra.Power;
-import zorbage.type.algebra.Random;
-import zorbage.type.algebra.RealUnreal;
-import zorbage.type.algebra.Roots;
-import zorbage.type.algebra.Rounding;
-import zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.Exponential;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
+import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.OrderedField;
+import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.RealUnreal;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 

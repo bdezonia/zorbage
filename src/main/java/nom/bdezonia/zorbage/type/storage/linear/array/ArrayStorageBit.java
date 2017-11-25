@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage.linear.array;
 
-import zorbage.type.ctor.Allocatable;
-import zorbage.type.storage.coder.BitCoder;
-import zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 

@@ -24,12 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm;
 
-import zorbage.type.algebra.AbsoluteValue;
-import zorbage.type.algebra.Group;
-import zorbage.type.algebra.IntegralDivision;
-import zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
  * Greatest Common Divisor algorithm

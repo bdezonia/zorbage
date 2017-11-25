@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.sampling;
+package nom.bdezonia.zorbage.sampling;
 
-import zorbage.type.algebra.Dimensioned;
-import zorbage.type.algebra.Settable;
-import zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
 /**
  * 

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64.real;
+package nom.bdezonia.zorbage.type.data.float64.real;
 
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.
@@ -45,10 +45,10 @@ package zorbage.type.data.float64.real;
 //public void takeDiagonal(TensorMember a, Object b) {} // change Object to Vector
 //many more
 
-import zorbage.type.algebra.TensorProduct;
-import zorbage.type.ctor.ConstructibleNdLong;
-import zorbage.type.ctor.MemoryConstruction;
-import zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.algebra.TensorProduct;
+import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
+import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 

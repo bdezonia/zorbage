@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.coder;
+package nom.bdezonia.zorbage.type.storage.coder;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

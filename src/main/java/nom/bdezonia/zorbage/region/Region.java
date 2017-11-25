@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region;
+package nom.bdezonia.zorbage.region;
 
-import zorbage.type.algebra.Bounded;
-import zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 
 /**
  * 

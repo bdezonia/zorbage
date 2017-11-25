@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.multidim;
+package nom.bdezonia.zorbage.type.storage.multidim;
 
-import zorbage.type.algebra.Dimensioned;
-import zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 

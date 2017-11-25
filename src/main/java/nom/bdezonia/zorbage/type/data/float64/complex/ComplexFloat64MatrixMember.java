@@ -24,16 +24,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64.complex;
+package nom.bdezonia.zorbage.type.data.float64.complex;
 
-import zorbage.type.ctor.MemoryConstruction;
-import zorbage.type.ctor.StorageConstruction;
-import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.TensorStringRepresentation;
-import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import zorbage.type.storage.linear.file.FileStorageFloat64;
-import zorbage.util.BigList;
+import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.util.BigList;
 
 /**
  * 

@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.sampling;
+package nom.bdezonia.zorbage.sampling;
 
-import zorbage.region.SetMembership;
-import zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.region.SetMembership;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 
 /**
  * {@link Sampling} defines the base class for samplings of all types. It

@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.parse;
+package nom.bdezonia.zorbage.type.parse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import zorbage.util.BigList;
+import nom.bdezonia.zorbage.util.BigList;
 
 /**
  * 

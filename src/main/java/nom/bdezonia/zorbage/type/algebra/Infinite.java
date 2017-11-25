@@ -1,4 +1,4 @@
-package zorbage.type.algebra;
+package nom.bdezonia.zorbage.type.algebra;
 
 public interface Infinite<T> {
 	boolean isNaN(T a);

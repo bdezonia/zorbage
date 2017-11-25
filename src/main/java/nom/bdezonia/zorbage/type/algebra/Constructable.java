@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.algebra;
+package nom.bdezonia.zorbage.type.algebra;
 
-import zorbage.type.ctor.Constructible0d;
-import zorbage.type.ctor.ConstructibleString;
-import zorbage.type.ctor.ConstructibleU;
+import nom.bdezonia.zorbage.type.ctor.Constructible0d;
+import nom.bdezonia.zorbage.type.ctor.ConstructibleString;
+import nom.bdezonia.zorbage.type.ctor.ConstructibleU;
 
 /**
  * 

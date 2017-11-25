@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.bool;
+package nom.bdezonia.zorbage.type.data.bool;
 
-import zorbage.type.algebra.Bounded;
-import zorbage.type.algebra.CommutativeRingWithUnity;
-import zorbage.type.algebra.LogicalOperations;
-import zorbage.type.algebra.Ordered;
-import zorbage.type.algebra.Power;
-import zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.CommutativeRingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.LogicalOperations;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.Random;
 
 // TODO - do I need a BitType that is stored within an int? Or just use BooleanMember?
 

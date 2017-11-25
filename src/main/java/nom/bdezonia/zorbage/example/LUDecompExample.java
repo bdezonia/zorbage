@@ -24,15 +24,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.example;
+package nom.bdezonia.zorbage.example;
 
-import zorbage.algorithm.LUDecomp;
-import zorbage.groups.G;
-import zorbage.type.ctor.MemoryConstruction;
-import zorbage.type.ctor.StorageConstruction;
-import zorbage.type.data.float64.real.Float64MatrixMember;
-import zorbage.type.data.float64.real.Float64Member;
-import zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.algorithm.LUDecomp;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 

@@ -24,27 +24,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.example;
+package nom.bdezonia.zorbage.example;
 
 import java.util.Arrays;
 
-import zorbage.groups.G;
-import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.Ordered;
-import zorbage.type.algebra.Unity;
-import zorbage.type.data.bigint.UnboundedIntMember;
-import zorbage.type.data.bool.BooleanMember;
-import zorbage.type.data.float64.real.Float64Group;
-import zorbage.type.data.float64.real.Float64Member;
-import zorbage.type.data.int32.SignedInt32Member;
-import zorbage.type.operation.Average;
-import zorbage.type.operation.Max;
-import zorbage.type.operation.Median;
-import zorbage.type.operation.Min;
-import zorbage.type.operation.Sum;
-import zorbage.type.storage.linear.LinearAccessor;
-import zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.operation.Average;
+import nom.bdezonia.zorbage.type.operation.Max;
+import nom.bdezonia.zorbage.type.operation.Median;
+import nom.bdezonia.zorbage.type.operation.Min;
+import nom.bdezonia.zorbage.type.operation.Sum;
+import nom.bdezonia.zorbage.type.storage.linear.LinearAccessor;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 
 /**
  * 

@@ -24,11 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.procedure;
+package nom.bdezonia.zorbage.procedure;
 
-import zorbage.basic.procedure.Procedure2;
-import zorbage.groups.G;
-import zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.basic.procedure.Procedure2;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 

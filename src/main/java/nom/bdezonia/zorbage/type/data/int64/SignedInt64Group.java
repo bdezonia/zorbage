@@ -24,16 +24,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.int64;
+package nom.bdezonia.zorbage.type.data.int64;
 
-import zorbage.algorithm.Gcd;
-import zorbage.algorithm.Lcm;
-import zorbage.type.algebra.BitOperations;
-import zorbage.type.algebra.Bounded;
-import zorbage.type.algebra.Integer;
-import zorbage.type.algebra.Random;
-import zorbage.type.data.int32.UnsignedInt32Member;
-import zorbage.type.data.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.algorithm.Gcd;
+import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.type.algebra.BitOperations;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Integer;
+import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 
 /**
  * 

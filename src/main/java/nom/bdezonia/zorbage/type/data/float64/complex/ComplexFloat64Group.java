@@ -35,24 +35,24 @@
 // * Steffen Jaensch, Jan Funke, Mark Longair, and Dimiter Prodanov.
 
 
-package zorbage.type.data.float64.complex;
+package nom.bdezonia.zorbage.type.data.float64.complex;
 
-import zorbage.type.algebra.Conjugate;
-import zorbage.type.algebra.Constants;
-import zorbage.type.algebra.Exponential;
-import zorbage.type.algebra.Field;
-import zorbage.type.algebra.Hyperbolic;
-import zorbage.type.algebra.Infinite;
-import zorbage.type.algebra.InverseHyperbolic;
-import zorbage.type.algebra.InverseTrigonometric;
-import zorbage.type.algebra.Norm;
-import zorbage.type.algebra.Power;
-import zorbage.type.algebra.Random;
-import zorbage.type.algebra.Roots;
-import zorbage.type.algebra.Rounding;
-import zorbage.type.algebra.Trigonometric;
-import zorbage.type.algebra.RealUnreal;
-import zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Conjugate;
+import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.Exponential;
+import nom.bdezonia.zorbage.type.algebra.Field;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
+import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.algebra.RealUnreal;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 

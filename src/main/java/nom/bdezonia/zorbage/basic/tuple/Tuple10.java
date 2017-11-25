@@ -24,18 +24,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.basic.tuple;
+package nom.bdezonia.zorbage.basic.tuple;
 
-import zorbage.basic.accessor.AccessorA;
-import zorbage.basic.accessor.AccessorB;
-import zorbage.basic.accessor.AccessorC;
-import zorbage.basic.accessor.AccessorD;
-import zorbage.basic.accessor.AccessorE;
-import zorbage.basic.accessor.AccessorF;
-import zorbage.basic.accessor.AccessorG;
-import zorbage.basic.accessor.AccessorH;
-import zorbage.basic.accessor.AccessorI;
-import zorbage.basic.accessor.AccessorJ;
+import nom.bdezonia.zorbage.basic.accessor.AccessorA;
+import nom.bdezonia.zorbage.basic.accessor.AccessorB;
+import nom.bdezonia.zorbage.basic.accessor.AccessorC;
+import nom.bdezonia.zorbage.basic.accessor.AccessorD;
+import nom.bdezonia.zorbage.basic.accessor.AccessorE;
+import nom.bdezonia.zorbage.basic.accessor.AccessorF;
+import nom.bdezonia.zorbage.basic.accessor.AccessorG;
+import nom.bdezonia.zorbage.basic.accessor.AccessorH;
+import nom.bdezonia.zorbage.basic.accessor.AccessorI;
+import nom.bdezonia.zorbage.basic.accessor.AccessorJ;
 
 /**
  * 

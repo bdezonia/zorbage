@@ -24,32 +24,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.groups;
+package nom.bdezonia.zorbage.groups;
 
-import zorbage.type.data.bigint.UnboundedIntGroup;
-import zorbage.type.data.bool.BooleanGroup;
-import zorbage.type.data.float64.complex.ComplexFloat64Group;
-import zorbage.type.data.float64.complex.ComplexFloat64Matrix;
-import zorbage.type.data.float64.complex.ComplexFloat64Vector;
-import zorbage.type.data.float64.octonion.OctonionFloat64Group;
-import zorbage.type.data.float64.octonion.OctonionFloat64Matrix;
-import zorbage.type.data.float64.octonion.OctonionFloat64RModule;
-import zorbage.type.data.float64.quaternion.QuaternionFloat64Group;
-import zorbage.type.data.float64.quaternion.QuaternionFloat64Matrix;
-import zorbage.type.data.float64.quaternion.QuaternionFloat64RModule;
-import zorbage.type.data.float64.real.Float64Group;
-import zorbage.type.data.float64.real.Float64Matrix;
-import zorbage.type.data.float64.real.Float64TensorProduct;
-import zorbage.type.data.float64.real.Float64Vector;
-import zorbage.type.data.int128.UnsignedInt128Group;
-import zorbage.type.data.int16.SignedInt16Group;
-import zorbage.type.data.int16.UnsignedInt16Group;
-import zorbage.type.data.int32.SignedInt32Group;
-import zorbage.type.data.int32.UnsignedInt32Group;
-import zorbage.type.data.int64.SignedInt64Group;
-import zorbage.type.data.int64.UnsignedInt64Group;
-import zorbage.type.data.int8.SignedInt8Group;
-import zorbage.type.data.int8.UnsignedInt8Group;
+import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntGroup;
+import nom.bdezonia.zorbage.type.data.bool.BooleanGroup;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Group;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Vector;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Group;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModule;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Group;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModule;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
+import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Group;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Group;
+import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Group;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
+import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Group;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Group;
+import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Group;
+import nom.bdezonia.zorbage.type.data.int8.SignedInt8Group;
+import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Group;
 
 /**
  * G is the container for the global set of defined groups.

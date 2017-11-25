@@ -1,4 +1,4 @@
-package zorbage.type.algebra;
+package nom.bdezonia.zorbage.type.algebra;
 
 public interface MatrixOps<U,W> {
 	void transpose(U a, U b);

@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.operation;
+package nom.bdezonia.zorbage.type.operation;
 
-import zorbage.type.algebra.AdditiveGroup;
-import zorbage.type.algebra.IntegralDivision;
-import zorbage.type.algebra.Multiplication;
-import zorbage.type.algebra.Roots;
-import zorbage.type.algebra.Unity;
-import zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 

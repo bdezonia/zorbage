@@ -24,16 +24,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear.file;
+package nom.bdezonia.zorbage.type.storage.linear.file;
 
-import zorbage.type.storage.coder.BooleanCoder;
-import zorbage.type.storage.coder.ByteCoder;
-import zorbage.type.storage.coder.DoubleCoder;
-import zorbage.type.storage.coder.FloatCoder;
-import zorbage.type.storage.coder.IntCoder;
-import zorbage.type.storage.coder.LongCoder;
-import zorbage.type.storage.coder.ShortCoder;
-import zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
+import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
+import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
+import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
+import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 

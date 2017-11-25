@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.example;
+package nom.bdezonia.zorbage.example;
 
-import zorbage.groups.G;
-import zorbage.type.data.float64.complex.ComplexFloat64Member;
-import zorbage.type.data.int32.SignedInt32Member;
-import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 
 /**
  * 

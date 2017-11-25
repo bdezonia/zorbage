@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.example;
+package nom.bdezonia.zorbage.example;
 
-import zorbage.type.data.float64.complex.ComplexFloat64Member;
-import zorbage.type.storage.linear.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 
 /**
  * 

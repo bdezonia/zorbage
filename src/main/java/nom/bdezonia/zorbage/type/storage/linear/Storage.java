@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear;
+package nom.bdezonia.zorbage.type.storage.linear;
 
-import zorbage.type.storage.linear.array.ArrayStorage;
-import zorbage.type.storage.linear.file.FileStorage;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.linear.file.FileStorage;
 
 /**
  * 

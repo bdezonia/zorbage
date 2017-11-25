@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.region;
+package nom.bdezonia.zorbage.region;
 
-import zorbage.sampling.RealIndex;
-import zorbage.util.RealUtils;
+import nom.bdezonia.zorbage.sampling.RealIndex;
+import nom.bdezonia.zorbage.util.RealUtils;
 
 /**
  * 

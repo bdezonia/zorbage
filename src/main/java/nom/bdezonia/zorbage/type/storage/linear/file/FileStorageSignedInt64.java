@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear.file;
+package nom.bdezonia.zorbage.type.storage.linear.file;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -34,10 +34,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import zorbage.type.ctor.Allocatable;
-import zorbage.type.storage.coder.LongCoder;
-import zorbage.type.storage.linear.LinearStorage;
-import zorbage.type.storage.linear.array.ArrayStorageSignedInt64;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt64;
 
 /**
  * 

@@ -24,12 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import java.math.BigInteger;
 
-import zorbage.type.data.bigint.UnboundedIntMember;
-import zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 

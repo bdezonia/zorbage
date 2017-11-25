@@ -24,13 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.example;
+package nom.bdezonia.zorbage.example;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import zorbage.groups.G;
-import zorbage.type.data.int128.UnsignedInt128Member;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
 
 /**
  * 

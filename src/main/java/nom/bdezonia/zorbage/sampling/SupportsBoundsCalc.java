@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.sampling;
+package nom.bdezonia.zorbage.sampling;
 
 // TODO - this class name and concept is already in algebra hierarchy. Think how to improve.
 

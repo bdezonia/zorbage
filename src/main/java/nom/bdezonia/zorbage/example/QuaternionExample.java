@@ -24,12 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.example;
+package nom.bdezonia.zorbage.example;
 
-import zorbage.groups.G;
-import zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
-import zorbage.type.data.float64.real.Float64Member;
-import zorbage.util.RealUtils;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.util.RealUtils;
 
 /**
  * 

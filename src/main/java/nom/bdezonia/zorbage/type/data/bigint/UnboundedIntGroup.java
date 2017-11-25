@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.bigint;
+package nom.bdezonia.zorbage.type.data.bigint;
 
 import java.math.BigInteger;
 
-import zorbage.type.algebra.BitOperations;
-import zorbage.type.algebra.Integer;
-import zorbage.type.data.bool.BooleanMember;
-import zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.algebra.BitOperations;
+import nom.bdezonia.zorbage.type.algebra.Integer;
+import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 

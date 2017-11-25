@@ -24,18 +24,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.type.data.float64.octonion;
+package nom.bdezonia.zorbage.type.data.float64.octonion;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import zorbage.type.algebra.Gettable;
-import zorbage.type.algebra.Settable;
-import zorbage.type.ctor.Allocatable;
-import zorbage.type.ctor.Duplicatable;
-import zorbage.type.parse.OctonionRepresentation;
-import zorbage.type.parse.TensorStringRepresentation;
-import zorbage.type.storage.coder.DoubleCoder;
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
+import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
 /**
  * 

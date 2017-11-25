@@ -24,10 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package zorbage.basic.tuple;
+package nom.bdezonia.zorbage.basic.tuple;
 
-import zorbage.basic.accessor.AccessorA;
-import zorbage.basic.accessor.AccessorB;
+import nom.bdezonia.zorbage.basic.accessor.AccessorA;
+import nom.bdezonia.zorbage.basic.accessor.AccessorB;
 
 /**
  * 
