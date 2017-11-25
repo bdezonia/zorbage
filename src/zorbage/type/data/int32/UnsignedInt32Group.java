@@ -32,6 +32,7 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.int128.UnsignedInt128Member;
 import zorbage.type.data.int32.UnsignedInt32Member;
 
 /**
@@ -48,6 +49,7 @@ public class UnsignedInt32Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
+	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();
 	
 	public UnsignedInt32Group() {
@@ -298,7 +300,15 @@ public class UnsignedInt32Group
 
 	@Override
 	public void pow(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		power((int)b.v(), a, c);
+		if (signum(a) == 0 && signum(b) == 0)
+			throw new IllegalArgumentException("0^0 is not a number");
+		UnsignedInt32Member tmp = new UnsignedInt32Member(ONE);
+		UnsignedInt32Member pow = new UnsignedInt32Member(b);
+		while (!isEqual(pow, ZERO)) {
+			multiply(tmp, a, tmp);
+			pred(pow,pow);
+		}
+		assign(tmp, c);
 	}
 
 }

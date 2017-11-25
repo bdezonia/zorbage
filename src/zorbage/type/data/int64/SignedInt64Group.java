@@ -32,6 +32,7 @@ import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.int32.UnsignedInt32Member;
 import zorbage.type.data.int64.SignedInt64Member;
 
 /**
@@ -49,6 +50,7 @@ public class SignedInt64Group
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
+	private static final SignedInt64Member ONE = new SignedInt64Member(1);
 	
 	public SignedInt64Group() {
 	}
@@ -292,10 +294,15 @@ public class SignedInt64Group
 	public void pow(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
 		if (b.v() < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from int64s");
-		else if (b.v() > java.lang.Integer.MAX_VALUE)
-			throw new IllegalArgumentException("very large powers not supported for int64s");
-		else
-			power((int)b.v(), a, c);
+		if (signum(a) == 0 && signum(b) == 0)
+			throw new IllegalArgumentException("0^0 is not a number");
+		SignedInt64Member tmp = new SignedInt64Member(ONE);
+		SignedInt64Member pow = new SignedInt64Member(b);
+		while (!isEqual(pow, ZERO)) {
+			multiply(tmp, a, tmp);
+			pred(pow,pow);
+		}
+		assign(tmp, c);
 	}
 
 }

@@ -26,12 +26,15 @@
  */
 package zorbage.type.data.int64;
 
+import java.math.BigInteger;
+
 import zorbage.algorithm.Gcd;
 import zorbage.algorithm.Lcm;
 import zorbage.type.algebra.BitOperations;
 import zorbage.type.algebra.Bounded;
 import zorbage.type.algebra.Integer;
 import zorbage.type.algebra.Random;
+import zorbage.type.data.int32.UnsignedInt32Member;
 import zorbage.type.data.int64.UnsignedInt64Member;
 
 /**
@@ -49,6 +52,7 @@ public class UnsignedInt64Group
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
+	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);
 	
 	public UnsignedInt64Group() {
 	}
@@ -304,7 +308,15 @@ public class UnsignedInt64Group
 
 	@Override
 	public void pow(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		power((int)b.v, a, c);
+		if (signum(a) == 0 && signum(b) == 0)
+			throw new IllegalArgumentException("0^0 is not a number");
+		UnsignedInt64Member tmp = new UnsignedInt64Member(ONE);
+		UnsignedInt64Member pow = new UnsignedInt64Member(b);
+		while (!isEqual(pow, ZERO)) {
+			multiply(tmp, a, tmp);
+			pred(pow,pow);
+		}
+		assign(tmp, c);
 	}
 
 }
