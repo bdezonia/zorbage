@@ -24,9 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.type.data.int128;
+
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
+
+import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
@@ -36,7 +40,7 @@ import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
  * @author Barry DeZonia
  *
  */
-public class TmpUInt128Tests {
+public class TestUnsignedInt128Group {
 
 	// Note: UInt128 initially designed as 2 bytes rather than 2 longs. This was done to get
 	// the logic right before making huge untestable numbers. This means the range is 0 to
@@ -45,9 +49,9 @@ public class TmpUInt128Tests {
 	// should be correct.
 	
 	// These tests are slow so make it possible to turn them on or off
-	
 	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
-	
+
+	@Test
 	public void run() {
 		//testMultiplies();
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
@@ -59,13 +63,8 @@ public class TmpUInt128Tests {
 			System.out.println("  Done running exhaustive 16 bit tests");
 		}
 	}
-	
-	private static void test(boolean b, int testNum) {
-		if (!b)
-			throw new IllegalArgumentException("test "+testNum+" failed");
-	}
-	
-	private static void addTests() {
+
+	private void addTests() {
 		System.out.println("  Add tests");
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
@@ -78,12 +77,12 @@ public class TmpUInt128Tests {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.add(a, b, c);
-				test(c.v().equals(I.add(J).mod(BASE)),1);
+				assertEquals(c.v(),I.add(J).mod(BASE));
 			}			
 		}
 	}
 
-	private static void subtractTests() {
+	private void subtractTests() {
 		System.out.println("  Subtract tests");
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
@@ -99,12 +98,12 @@ public class TmpUInt128Tests {
 				BigInteger result = I.subtract(J);
 				if (result.compareTo(BigInteger.ZERO) < 0)
 					result = result.add(BASE);
-				test(c.v().equals(result),2);
+				assertEquals(c.v(),result);
 			}			
 		}
 	}
 
-	private static void multiplyTests() {
+	private void multiplyTests() {
 		System.out.println("  Multiply tests");
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
@@ -117,12 +116,12 @@ public class TmpUInt128Tests {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.multiply(a, b, c);
-				test(c.v().equals(I.multiply(J).mod(BASE)),3);
+				assertEquals(c.v(),I.multiply(J).mod(BASE));
 			}			
 		}
 	}
 
-	private static void divModTests() {
+	private void divModTests() {
 		System.out.println("  Divide tests");
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
@@ -136,13 +135,14 @@ public class TmpUInt128Tests {
 				b.setV(J);
 				G.UINT128.divMod(a, b, d, m);
 				BigInteger[] dm = I.divideAndRemainder(J);
-				test(d.v().equals(dm[0]),4);
-				test(m.v().equals(dm[1]),5);
+				assertEquals(d.v(),dm[0]);
+				assertEquals(m.v(),dm[1]);
 			}			
 		}
 	}
 
-	private static void testMultiplies() {
+	/*
+	private void testMultiplies() {
 		System.out.println("compare 128 bit unsigned multiplies");
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
@@ -157,8 +157,10 @@ public class TmpUInt128Tests {
 				G.UINT128.multiplyFast(a, b, d);
 				System.out.println(a+ " x " + b + " = " + c + " fast calced " + d);
 				System.out.flush();
-				test(G.UINT128.isEqual(c, d),1);
+				assertTrue(G.UINT128.isEqual(c, d));
 			}
 		}
 	}
+	*/
 }
+

@@ -239,7 +239,7 @@ Do I make Tuple and Proc and Func more generic? Like Tuple could be one type
   well. Cleaner but how performant is it? In the case of a Condition it might
   have to check the shape of the tuple on every invocation. Or it just queries
   the n things it cares about. But must cast every arg. For func and proc the
-  macro language idea would prefer the generic approach with runtime checks.
+  macro language idea would prefer the Object approach with runtime checks.
   But right now the tuples are compile time typed.
 Default values for functions/procedures can be defined in the code of such
   things. So if null comes in the code defines the value. It's not a feature
