@@ -392,12 +392,10 @@ public class UnsignedInt128Group
 		if (cmp == 0 && compare(a,ZERO) == 0)
 			throw new IllegalArgumentException("0^0 is not a number");
 		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
-		if (cmp > 0) {
-			UnsignedInt128Member pow = new UnsignedInt128Member(b);
-			while (compare(pow, ZERO) > 0) {
-				multiply(tmp, a, tmp);
-				pred(pow,pow);
-			}
+		UnsignedInt128Member pow = new UnsignedInt128Member(b);
+		while (!isEqual(pow, ZERO)) {
+			multiply(tmp, a, tmp);
+			pred(pow,pow);
 		}
 		assign(tmp, c);
 	}
