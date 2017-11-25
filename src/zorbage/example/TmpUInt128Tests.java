@@ -49,7 +49,7 @@ public class TmpUInt128Tests {
 	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
 	
 	public void run() {
-		testMultiplies();
+		//testMultiplies();
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
 			addTests();
