@@ -156,10 +156,10 @@ public class UnsignedInt64Group
 
 	@Override
 	public int compare(UnsignedInt64Member a, UnsignedInt64Member b) {
-		long aHi = (a.v & 0x8000000000000000L) >>> 1;
-		long bHi = (b.v & 0x8000000000000000L) >>> 1;
-		if (aHi < bHi) return -1;
-		if (aHi > bHi) return 1;
+		long aHi = a.v & 0x8000000000000000L;
+		long bHi = b.v & 0x8000000000000000L;
+		if (aHi == 0 && bHi != 0) return -1;
+		if (aHi != 0 && bHi == 0) return 1;
 		long aLo = a.v & 0x7fffffffffffffffL;
 		long bLo = b.v & 0x7fffffffffffffffL;
 		if (aLo < bLo) return -1;
