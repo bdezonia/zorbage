@@ -161,7 +161,8 @@ public class UnsignedInt8Group
 
 	@Override
 	public int signum(UnsignedInt8Member a) {
-		return compare(a,ZERO);
+		if (a.v == 0) return 0;
+		return 1;
 	}
 
 	@Override

@@ -165,7 +165,8 @@ public class UnsignedInt64Group
 
 	@Override
 	public int signum(UnsignedInt64Member a) {
-		return compare(a,ZERO);
+		if (a.v == 0) return 0;
+		return 1;
 	}
 
 	@Override

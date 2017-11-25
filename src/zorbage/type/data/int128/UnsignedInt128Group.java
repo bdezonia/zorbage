@@ -260,7 +260,8 @@ public class UnsignedInt128Group
 
 	@Override
 	public int signum(UnsignedInt128Member a) {
-		return compare(a,ZERO);
+		if (isEqual(a, ZERO)) return 0;
+		return 1;
 	}
 
 	@Override

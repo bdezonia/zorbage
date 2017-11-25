@@ -161,7 +161,8 @@ public class UnsignedInt32Group
 
 	@Override
 	public int signum(UnsignedInt32Member a) {
-		return compare(a,ZERO);
+		if (a.v == 0) return 0;
+		return 1;
 	}
 
 	@Override
