@@ -386,10 +386,10 @@ public class UnsignedInt128Group
 
 	@Override
 	public void pow(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		int cmp = compare(b,ZERO);
+		int cmp = signum(b);
 		if (cmp < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		if (cmp == 0 && compare(a,ZERO) == 0)
+		if (cmp == 0 && signum(a) == 0)
 			throw new IllegalArgumentException("0^0 is not a number");
 		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
 		UnsignedInt128Member pow = new UnsignedInt128Member(b);
