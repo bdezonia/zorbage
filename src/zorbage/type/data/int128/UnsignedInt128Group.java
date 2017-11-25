@@ -147,16 +147,13 @@ public class UnsignedInt128Group
 	public void multiply(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
 		UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
 		UnsignedInt128Member tmp = new UnsignedInt128Member();
-		UnsignedInt128Member part = new UnsignedInt128Member();
-		int shift = 0;
+		UnsignedInt128Member part = new UnsignedInt128Member(a);
 		while (isNotEqual(bTmp,ZERO)) {
 			if ((bTmp.lo & 1) > 0) {
-				assign(a, part);
-				bitShiftLeft(shift, part, part);
 				add(tmp, part, tmp);
 			}
+			shiftLeftOneBit(part);
 			shiftRightOneBit(bTmp);
-			shift++;
 		}
 		assign(tmp,c);
 	}
@@ -190,10 +187,8 @@ public class UnsignedInt128Group
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
-		if (power > 0) {
-			for (int i = 1; i <= power; i++)
-				multiply(tmp, a, tmp);
-		}
+		for (int i = 0; i < power; i++)
+			multiply(tmp, a, tmp);
 		assign(tmp, b);
 	}
 
@@ -483,7 +478,7 @@ public class UnsignedInt128Group
 	}
 
 	private void shiftLeftOneBit(UnsignedInt128Member val) {
-		boolean transitionBit = (val.lo & 0x80) > 0;
+		boolean transitionBit = (val.lo & 0x80) != 0;
 		val.lo = (byte) ((val.lo & 0xff) << 1);
 		val.hi = (byte) ((val.hi & 0xff) << 1);
 		if (transitionBit)
