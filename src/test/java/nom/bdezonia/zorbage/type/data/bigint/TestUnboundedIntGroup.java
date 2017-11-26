@@ -24,47 +24,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64.real;
+package nom.bdezonia.zorbage.type.data.bigint;
 
 import static org.junit.Assert.assertTrue;
+
+import java.math.BigInteger;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestFloat64Matrix {
+public class TestUnboundedIntGroup {
 
 	@Test
-	public void run() {
-		// toggle true/false if want to run this big slow test
-		if (false) {
-			System.out.println("Making a huge virtual matrix > 2 gig entries");
-			Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
-			G.DBL_MAT.unity(m);
-			Float64Member value = G.DBL.construct();
-			Float64Member zero = G.DBL.construct();
-			Float64Member one = G.DBL.construct();
-			G.DBL.unity(one);
-			for (long r = 0; r < m.rows(); r++) {
-				for (long c = 0; c < m.cols(); c++) {
-					m.v(r, c, value);
-					if (r == c) {
-						assertTrue(G.DBL.isEqual(value, one));
-					}
-					else {
-						assertTrue(G.DBL.isEqual(value, zero));
-					}
-				}
-			}
-		}
+	public void testHugeNumbers() {
+		UnboundedIntMember a = new UnboundedIntMember(Long.MAX_VALUE);
+		UnboundedIntMember b = new UnboundedIntMember(44);
+		UnboundedIntMember product = new UnboundedIntMember();
+
+		G.BIGINT.multiply(a,b,product);
+		
+		assertTrue(new BigInteger("405828369621610135508").equals(product.v()));
 	}
 }

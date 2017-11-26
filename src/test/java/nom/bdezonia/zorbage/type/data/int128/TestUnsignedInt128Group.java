@@ -77,7 +77,7 @@ public class TestUnsignedInt128Group {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.add(a, b, c);
-				assertEquals(c.v(),I.add(J).mod(BASE));
+				assertEquals(I.add(J).mod(BASE),c.v());
 			}			
 		}
 	}
@@ -98,7 +98,7 @@ public class TestUnsignedInt128Group {
 				BigInteger result = I.subtract(J);
 				if (result.compareTo(BigInteger.ZERO) < 0)
 					result = result.add(BASE);
-				assertEquals(c.v(),result);
+				assertEquals(result,c.v());
 			}			
 		}
 	}
@@ -116,7 +116,7 @@ public class TestUnsignedInt128Group {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
 				G.UINT128.multiply(a, b, c);
-				assertEquals(c.v(),I.multiply(J).mod(BASE));
+				assertEquals(I.multiply(J).mod(BASE),c.v());
 			}			
 		}
 	}
@@ -135,8 +135,8 @@ public class TestUnsignedInt128Group {
 				b.setV(J);
 				G.UINT128.divMod(a, b, d, m);
 				BigInteger[] dm = I.divideAndRemainder(J);
-				assertEquals(d.v(),dm[0]);
-				assertEquals(m.v(),dm[1]);
+				assertEquals(dm[0], d.v());
+				assertEquals(dm[1], m.v());
 			}			
 		}
 	}

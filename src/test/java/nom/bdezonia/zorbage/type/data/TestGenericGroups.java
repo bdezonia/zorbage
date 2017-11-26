@@ -24,47 +24,63 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64.real;
+package nom.bdezonia.zorbage.type.data;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestFloat64Matrix {
+public class TestGenericGroups {
 
 	@Test
-	public void run() {
-		// toggle true/false if want to run this big slow test
-		if (false) {
-			System.out.println("Making a huge virtual matrix > 2 gig entries");
-			Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
-			G.DBL_MAT.unity(m);
-			Float64Member value = G.DBL.construct();
-			Float64Member zero = G.DBL.construct();
-			Float64Member one = G.DBL.construct();
-			G.DBL.unity(one);
-			for (long r = 0; r < m.rows(); r++) {
-				for (long c = 0; c < m.cols(); c++) {
-					m.v(r, c, value);
-					if (r == c) {
-						assertTrue(G.DBL.isEqual(value, one));
-					}
-					else {
-						assertTrue(G.DBL.isEqual(value, zero));
-					}
-				}
-			}
-		}
+	public void testA() {
+		test1(G.INT32);
+		test1(G.DBL);
+	}
+	
+	@Test
+	public void testB() {
+		test2(G.INT32);
+		test2(G.DBL);
+	}
+	
+	private <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T grp) {
+		U a = grp.construct();
+		grp.unity(a);
+		U b = grp.construct();
+		grp.zero(b);
+		grp.add(a, a, b);
+		U c = grp.construct();
+		grp.add(a, b, c);
+		assertTrue(grp.isEqual(grp.construct("3"), c));
+		assertFalse(grp.isEqual(a, b));
+		assertFalse(grp.isGreater(a, b));
+		assertTrue(grp.isLess(a, b));
+		assertTrue(grp.isLess(a, c));
+		assertTrue(grp.isLess(b, c));
+	}
+	
+	private <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2(T grp) {
+		U a = grp.construct("1040");
+		U b = grp.construct("160");
+		U c = grp.construct();
+		grp.add(a, b, c);
+		assertTrue(grp.isEqual(grp.construct("1200"), c));
+		assertFalse(grp.isEqual(a, b));
+		assertTrue(grp.isGreater(a, b));
+		assertFalse(grp.isLess(a, b));
+		assertTrue(grp.isLess(a, c));
+		assertTrue(grp.isLess(b, c));
 	}
 }

@@ -24,47 +24,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64.real;
+package nom.bdezonia.zorbage.type.data.int32;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestFloat64Matrix {
+public class TestSignedInt32Group {
 
 	@Test
-	public void run() {
-		// toggle true/false if want to run this big slow test
-		if (false) {
-			System.out.println("Making a huge virtual matrix > 2 gig entries");
-			Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
-			G.DBL_MAT.unity(m);
-			Float64Member value = G.DBL.construct();
-			Float64Member zero = G.DBL.construct();
-			Float64Member one = G.DBL.construct();
-			G.DBL.unity(one);
-			for (long r = 0; r < m.rows(); r++) {
-				for (long c = 0; c < m.cols(); c++) {
-					m.v(r, c, value);
-					if (r == c) {
-						assertTrue(G.DBL.isEqual(value, one));
-					}
-					else {
-						assertTrue(G.DBL.isEqual(value, zero));
-					}
-				}
-			}
-		}
+	public void testInts() {
+		  
+		SignedInt32Member a = G.INT32.construct("1");
+		SignedInt32Member b = G.INT32.construct("4");
+		SignedInt32Member sum = G.INT32.construct("99");
+
+		G.INT32.add(a,b,sum);
+		
+		assertEquals(5, sum.v());
 	}
+	
 }

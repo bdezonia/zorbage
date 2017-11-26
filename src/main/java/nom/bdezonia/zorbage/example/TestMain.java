@@ -53,60 +53,8 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
  */
 public class TestMain {
 	
-	public static void testInts() {
-		  
-		SignedInt32Member a = new SignedInt32Member(1);
-		SignedInt32Member b = new SignedInt32Member(4);
-		SignedInt32Member sum = new SignedInt32Member(99);
-
-		G.INT32.add(a,b,sum);
-		  
-		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
-	}
 	
-	public static void testFloats() {
-		  
-		Float64Member a = new Float64Member(1.1);
-		Float64Member b = new Float64Member(4.2);
-		Float64Member sum = new Float64Member(99.3);
-
-		G.DBL.add(a,b,sum);
-		  
-		System.out.println(a.v() + " plus " + b.v() + " equals " + sum.v());
-	}
 	
-	public static void testHugeNumbers() {
-		UnboundedIntMember a = new UnboundedIntMember(Long.MAX_VALUE);
-		UnboundedIntMember b = new UnboundedIntMember(44);
-		UnboundedIntMember product = new UnboundedIntMember();
-
-		G.BIGINT.multiply(a,b,product);
-		  
-		System.out.println(a.v() + " times " + b.v() + " equals " + product.v());
-	}
-	
-	public static <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T grp) {
-		U a = grp.construct();
-		grp.unity(a);
-		U b = grp.construct();
-		grp.zero(b);
-		grp.add(a, a, b);
-		U c = grp.construct();
-		grp.add(a, b, c);
-		System.out.println(a.toString() + " plus " + b.toString() + " equals " + c.toString());
-		System.out.println(a.toString() + " equals " + b.toString() + " : " + grp.isEqual(a, b));
-		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + grp.isGreater(a, b));
-	}
-	
-	public static <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2(T grp) {
-		U a = grp.construct("1040");
-		U b = grp.construct("160");
-		U c = grp.construct();
-		grp.add(a, b, c);
-		System.out.println(a.toString() + " plus " + b.toString() + " equals " + c.toString());
-		System.out.println(a.toString() + " equals " + b.toString() + " : " + grp.isEqual(a, b));
-		System.out.println(a.toString() + " is greater than " + b.toString() + " : " + grp.isGreater(a, b));
-	}
 	
 	public static void testAccessor() {
 		SignedInt32Member value = new SignedInt32Member();
@@ -327,14 +275,7 @@ public class TestMain {
 	}
 	
 	public static void main(String[] args) {
-		testInts();
-		testFloats();
-		testHugeNumbers();
 		testQuats();
-		test1(G.INT32);
-		test1(G.DBL);
-		test2(G.INT32);
-		test2(G.DBL);
 		testAccessor();
 		testGroupOfConversions();
 		testAverage();
