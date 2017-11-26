@@ -287,8 +287,6 @@ public class TestMain {
 		
 		// TODO when go from byte backed to long backed will need to remove this test due to speed
 		new NumberTest().run();
-		
-		new UInt64Tests().run();
 	}
 
 }
