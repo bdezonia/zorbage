@@ -48,7 +48,6 @@ public class UnsignedInt8Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	private static final UnsignedInt8Member ZERO = new UnsignedInt8Member();
 	
 	public UnsignedInt8Group() {
 	}

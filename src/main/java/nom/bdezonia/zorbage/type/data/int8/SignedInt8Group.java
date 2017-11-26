@@ -48,7 +48,6 @@ public class SignedInt8Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	private static final SignedInt8Member ZERO = new SignedInt8Member();
 	
 	public SignedInt8Group() {
 	}

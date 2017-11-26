@@ -32,7 +32,6 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 
 /**

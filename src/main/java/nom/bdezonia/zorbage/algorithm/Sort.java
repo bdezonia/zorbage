@@ -35,28 +35,35 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
+public class Sort {
 
-	private T grp;
+	private Sort() {}
 	
-	public Sort(T grp) {
-		this.grp = grp;
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 */
+	public static <T extends Group<T,U> & Ordered<U> ,U>
+		void compute(T grp, LinearStorage<?,U> storage)
+	{
+		qsort(grp, storage, 0, storage.size() -1);
 	}
 	
-	public void calculate(LinearStorage<?,U> storage) {
-		qsort(storage, 0, storage.size() -1);
-	}
-	
-	private void qsort(LinearStorage<?,U> storage, long left, long right) {
+	private static <T extends Group<T,U> & Ordered<U> ,U>
+		void qsort(T grp, LinearStorage<?,U> storage, long left, long right)
+	{
 		if (left < right) {
-			long pivotPoint = partition(storage,left,right);
-			qsort(storage,left,pivotPoint-1);
-			qsort(storage,pivotPoint+1,right);
+			long pivotPoint = partition(grp, storage,left,right);
+			qsort(grp, storage,left,pivotPoint-1);
+			qsort(grp, storage,pivotPoint+1,right);
 		}
 	}
 
 
-	private long partition(LinearStorage<?,U> storage, long left, long right) {
+	private static <T extends Group<T,U> & Ordered<U> ,U>
+		long partition(T grp, LinearStorage<?,U> storage, long left, long right)
+	{
 		U tmp1 = grp.construct();
 		U tmp2 = grp.construct();
 		

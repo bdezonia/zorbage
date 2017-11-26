@@ -38,17 +38,19 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class StdDev<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U>, U> {
+public class StdDev {
 
-	private T grp;
+	private StdDev() {}
 	
-	public StdDev(T grp) {
-		this.grp = grp;
-	}
-	
-	public void calculate(LinearStorage<?,U> storage, U result) {
-		Variance<T,U> var = new Variance<T,U>(grp);
-		var.calculate(storage, result);
+	/**
+	 * 
+	 * @param storage
+	 * @param result
+	 */
+	public static <T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U result)
+	{
+		Variance.compute(grp, storage, result);
 		grp.sqrt(result, result);
 	}
 }

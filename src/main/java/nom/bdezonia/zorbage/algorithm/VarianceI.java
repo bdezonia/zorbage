@@ -37,24 +37,26 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class VarianceI<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & IntegralDivision<U>, U> {
+public class VarianceI {
 
-	private T grp;
+	private VarianceI() {}
 	
-	public VarianceI(T grp) {
-		this.grp = grp;
-	}
-	
-	public void calculate(LinearStorage<?,U> storage, U result) {
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 * @param result
+	 */
+	public static <T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & IntegralDivision<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U result)
+	{
 		U avg = grp.construct();
 		U sum = grp.construct();
 		U count = grp.construct();
 		U one = grp.construct();
 		grp.unity(one);
-		AverageI<T,U> mean = new AverageI<T,U>(grp);
-		mean.calculate(storage, avg);
-		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(grp);
-		sumSq.calculate(storage, avg, sum, count);
+		AverageI.compute(grp, storage, avg);
+		SumSquareCount.compute(grp, storage, avg, sum, count);
 		grp.subtract(count, one, count);
 		grp.div(sum, count, result);
 	}

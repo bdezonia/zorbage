@@ -34,12 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Median;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.linear.LinearAccessor;
@@ -123,9 +118,8 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Average<Float64Group,Float64Member> a = new Average<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
-		a.calculate(storage, result);
+		Average.compute(G.DBL, storage, result);
 		System.out.println("Average value = " + result.v());
 	}
 	
@@ -141,9 +135,8 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Median<Float64Group,Float64Member> a = new Median<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
-		a.calculate(storage, result);
+		Median.compute(G.DBL, storage, result);
 		System.out.println("Median value = " + result.v());
 	}
 
@@ -159,11 +152,10 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Min<Float64Group,Float64Member> a = new Min<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		Float64Member max = new Float64Member();
 		G.DBL.maxBound(max);
-		a.calculate(storage, max, result);
+		Min.compute(G.DBL, storage, max, result);
 		System.out.println("Minimum value = " + result.v());
 	}
 
@@ -179,11 +171,10 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Max<Float64Group,Float64Member> a = new Max<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
 		Float64Member min = new Float64Member();
 		G.DBL.minBound(min);
-		a.calculate(storage, min, result);
+		Max.compute(G.DBL, storage, min, result);
 		System.out.println("Maximum value = " + result.v());
 	}
 
@@ -199,9 +190,8 @@ public class TestMain {
 			value.setV(i++);
 			accessor.put();
 		}
-		Sum<Float64Group,Float64Member> a = new Sum<Float64Group,Float64Member>(G.DBL);
 		Float64Member result = new Float64Member();
-		a.calculate(storage, result);
+		Sum.compute(G.DBL, storage, result);
 		System.out.println("Sum value = " + result.v());
 	}
 

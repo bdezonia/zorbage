@@ -33,19 +33,22 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 /**
  * 
  * @author Barry DeZonia
- *
- * @param <T>
- * @param <U>
+ * 
  */
-public class Max<T extends Group<T,U> & Ordered<U>, U> {
+public class Max {
 
-	private T grp;
-
-	public Max(T grp) {
-		this.grp = grp;
-	}
+	private Max() {}
 	
-	public void calculate(LinearStorage<?,U> storage, U min, U result) {
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 * @param min
+	 * @param result
+	 */
+	public static <T extends Group<T,U> & Ordered<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U min, U result)
+	{
 		grp.assign(min, result);
 		U tmp = grp.construct();
 		for (long i = 0; i < storage.size(); i++) {

@@ -35,22 +35,22 @@ import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U> {
+public class Average {
 
-	private T grp;
+	private Average() {}
 
-	public Average(T grp) {
-		this.grp = grp;
-	}
-	
-	public void calculate(LinearStorage<?,U> storage, U result) {
-		SumCount<T,U> sumCount = new SumCount<T, U>(grp);
+	/**
+	 * @param grp
+	 * @param storage
+	 * @param result
+	 */
+	public static <T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U result)
+	{
 		U sum = grp.construct();
 		U count = grp.construct();
-		sumCount.calculate(storage, sum, count);
+		SumCount.compute(grp, storage, sum, count);
 		grp.divide(sum, count, result);
 	}
 }

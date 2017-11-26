@@ -48,7 +48,6 @@ public class SignedInt16Group
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	private static final SignedInt16Member ZERO = new SignedInt16Member();
 	
 	public SignedInt16Group() {
 	}

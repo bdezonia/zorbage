@@ -35,22 +35,23 @@ import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class AverageI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity<U>, U> {
+public class AverageI {
 
-	private T grp;
-
-	public AverageI(T grp) {
-		this.grp = grp;
-	}
+	private AverageI() {}
 	
-	public void calculate(LinearStorage<?,U> storage, U result) {
-		SumCount<T,U> sumCount = new SumCount<T, U>(grp);
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 * @param result
+	 */
+	public static <T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U result)
+	{
 		U sum = grp.construct();
 		U count = grp.construct();
-		sumCount.calculate(storage, sum, count);
+		SumCount.compute(grp, storage, sum, count);
 		grp.div(sum, count, result);
 	}
 }

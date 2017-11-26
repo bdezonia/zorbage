@@ -36,27 +36,27 @@ import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class MedianI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordered<U> & Unity<U>, U> {
+public class MedianI {
 
-	private T grp;
-	private LinearStorage<?,U> localStorage;
+	private MedianI() {}
 
-	public MedianI(T grp) {
-		this.grp = grp;
-	}
-	
-	public void calculate(LinearStorage<?,U> storage, U result) {
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 * @param result
+	 */
+	public static <T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordered<U> & Unity<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U result)
+	{
 		U tmp = grp.construct();
 		U one = grp.construct();
 		U sum = grp.construct();
 		U count = grp.construct();
 		grp.unity(one);
-		localStorage = storage.duplicate();
-		Sort<T,U> sort = new Sort<T,U>(grp);
-		sort.calculate(localStorage);
+		LinearStorage<?,U> localStorage = storage.duplicate();
+		Sort.compute(grp, localStorage);
 		if (localStorage.size() % 2 == 0) {
 			localStorage.get(localStorage.size()/2 - 1, tmp);
 			grp.add(sum, tmp, sum);

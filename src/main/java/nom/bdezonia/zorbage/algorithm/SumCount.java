@@ -35,15 +35,20 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class SumCount<T extends AdditiveGroup<T,U> & Unity<U>, U> {
+public class SumCount {
 
-	private T grp;
+	private SumCount() {}
 	
-	public SumCount(T grp) {
-		this.grp = grp;
-	}
-	
-	public void calculate(LinearStorage<?,U> storage, U sum, U count) {
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 * @param sum
+	 * @param count
+	 */
+	public static <T extends AdditiveGroup<T,U> & Unity<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U sum, U count)
+	{
 		U tmp = grp.construct();
 		U one = grp.construct();
 		grp.unity(one);
