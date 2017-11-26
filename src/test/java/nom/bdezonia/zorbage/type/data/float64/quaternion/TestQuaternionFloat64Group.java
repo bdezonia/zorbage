@@ -24,23 +24,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.type.data.float64.quaternion;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.util.RealUtils;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class QuaternionExample {
+public class TestQuaternionFloat64Group {
 
+	private static final double TOL = 0.0000000001;
+	
+	@Test
 	public void run() {
-		final double tol = 0.000000000001;
-		
 		QuaternionFloat64Member q1 = G.QDBL.construct();
 		
 		// TODO define a ctor that takes four doubles
@@ -52,8 +55,8 @@ public class QuaternionExample {
 		Float64Member tmp = new Float64Member();
 		
 		G.QDBL.norm(q1, tmp);
-		
-		System.out.println("Quaternion 1st norm test is correct: " + (tmp.v() == (3*Math.sqrt(2))));
+
+		assertEquals(3*Math.sqrt(2),tmp.v(),TOL);
 		
 		QuaternionFloat64Member q2 = G.QDBL.construct();
 
@@ -64,25 +67,37 @@ public class QuaternionExample {
 
 		G.QDBL.norm(q2, tmp);
 
-		System.out.println("Quaternion 2nd norm test is correct: " + (tmp.v() == (Math.sqrt(129))));
+		assertEquals(Math.sqrt(129),tmp.v(),TOL);
 		
 		QuaternionFloat64Member q3 = G.QDBL.construct();
 
 		G.QDBL.add(q1, q2, q3);
-		
-		System.out.println("Quaternion add worked: " + ((q1.r()+q2.r() == q3.r()) && (q1.i()+q2.i() == q3.i()) && (q1.j()+q2.j() == q3.j()) && (q1.k()+q2.k() == q3.k())));
+
+		assertEquals(q1.r()+q2.r(), q3.r(), 0);
+		assertEquals(q1.i()+q2.i(), q3.i(), 0);
+		assertEquals(q1.j()+q2.j(), q3.j(), 0);
+		assertEquals(q1.k()+q2.k(), q3.k(), 0);
 		
 		G.QDBL.subtract(q1, q2, q3);
 
-		System.out.println("Quaternion subtract worked: " + ((q1.r()-q2.r() == q3.r()) && (q1.i()-q2.i() == q3.i()) && (q1.j()-q2.j() == q3.j()) && (q1.k()-q2.k() == q3.k())));
+		assertEquals(q1.r()-q2.r(), q3.r(), 0);
+		assertEquals(q1.i()-q2.i(), q3.i(), 0);
+		assertEquals(q1.j()-q2.j(), q3.j(), 0);
+		assertEquals(q1.k()-q2.k(), q3.k(), 0);
 
 		G.QDBL.multiply(q1, q2, q3);
-		
-		System.out.println("Quaternion multiply worked: " + ((q3.r() == 11) && (q3.i() == -30) && (q3.j() == 25) && (q3.k() == 26)));
-		
+
+		assertEquals(11, q3.r(), TOL);
+		assertEquals(-30, q3.i(), TOL);
+		assertEquals(25, q3.j(), TOL);
+		assertEquals(26, q3.k(), TOL);
+
 		G.QDBL.divide(q3, q2, q1);
 
-		System.out.println("Quaternion divide worked: " + (RealUtils.near(q1.r(),1,tol) && RealUtils.near(q1.i(),-2, tol) && RealUtils.near(q1.j(),3,tol) && RealUtils.near(q1.k(),2,tol)));
+		assertEquals(1, q1.r(), TOL);
+		assertEquals(-2, q1.i(), TOL);
+		assertEquals(3, q1.j(), TOL);
+		assertEquals(2, q1.k(), TOL);
 		
 	}
 }

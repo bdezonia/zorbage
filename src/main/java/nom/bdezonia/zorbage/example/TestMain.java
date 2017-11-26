@@ -262,10 +262,6 @@ public class TestMain {
 		//new BigMatrixExample().run();
 	}
 	
-	public static void testQuats() {
-		new QuaternionExample().run();
-	}
-
 	public static void testLUMatrix() {
 		new LUDecompExample().run();
 	}
@@ -275,7 +271,6 @@ public class TestMain {
 	}
 	
 	public static void main(String[] args) {
-		testQuats();
 		testAccessor();
 		testGroupOfConversions();
 		testAverage();
