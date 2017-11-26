@@ -7,7 +7,59 @@
   <groupId>nom.bdezonia</groupId>
   <artifactId>zorbage</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <name>Zorbage</name>
+  <description>An algebraic data hierarchy for use in numeric processing</description>
+  <url>https://github.com/bdezonia/zorbage</url>
+  <inceptionYear>2016</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>BSD-2 clause</name>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/bdezonia/zorbage</connection>
+    <developerConnection>scm:git:git@github.com:bdezonia/zorbage</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/bdezonia/zorbage</url>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/bdezonia/zorbage/issues</url>
+  </issueManagement>
+
+  <properties>
+    <package-name>nom.bdezonia</package-name>
+    <license.licenseName>bsd_2</license.licenseName>
+    <license.projectName>Zorbage: an algebraic data hierarchy for use in numeric processing.</license.projectName>
+    <license.organizationName>Zorbage authors</license.organizationName>
+    <license.copyrightOwners>Barry DeZonia</license.copyrightOwners>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <developers>
+    <developer>
+      <id>bdezonia</id>
+      <name>Barry DeZonia</name>
+      <url>https://github.com/User:bdezonia</url>
+      <roles>
+        <role>founder</role>
+        <role>lead</role>
+        <role>developer</role>
+        <role>debugger</role>
+        <role>reviewer</role>
+        <role>support</role>
+        <role>maintainer</role>
+      </roles>
+    </developer>
+  </developers>
+
   <packaging>jar</packaging>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -16,6 +68,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -28,4 +81,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>
