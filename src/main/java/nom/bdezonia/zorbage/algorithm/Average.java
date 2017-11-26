@@ -24,10 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 
 /**
  * 
@@ -36,20 +38,19 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <T>
  * @param <U>
  */
-public class Sum<T extends AdditiveGroup<T,U>, U> {
+public class Average<T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U> {
 
 	private T grp;
 
-	public Sum(T grp) {
+	public Average(T grp) {
 		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		grp.zero(result);
-		U tmp = grp.construct();
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			grp.add(result, tmp, result);
-		}
+		SumCount<T,U> sumCount = new SumCount<T, U>(grp);
+		U sum = grp.construct();
+		U count = grp.construct();
+		sumCount.calculate(storage, sum, count);
+		grp.divide(sum, count, result);
 	}
 }

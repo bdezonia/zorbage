@@ -24,33 +24,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class AverageI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity<U>, U> {
+public class SumSquareCount<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U>,U> {
 
 	private T grp;
-
-	public AverageI(T grp) {
+	
+	public SumSquareCount(T grp) {
 		this.grp = grp;
 	}
 	
-	public void calculate(LinearStorage<?,U> storage, U result) {
-		SumCount<T,U> sumCount = new SumCount<T, U>(grp);
-		U sum = grp.construct();
-		U count = grp.construct();
-		sumCount.calculate(storage, sum, count);
-		grp.div(sum, count, result);
+	public void calculate(LinearStorage<?,U> storage, U avg, U sumSqDevs, U count) {
+		U tmp = grp.construct();
+		U one = grp.construct();
+		grp.unity(one);
+		grp.zero(sumSqDevs);
+		grp.zero(count);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			grp.subtract(tmp, avg, tmp);
+			grp.multiply(tmp, tmp, tmp);
+			grp.add(sumSqDevs, tmp, sumSqDevs);
+			grp.add(count, one, count);
+		}
 	}
 }

@@ -24,35 +24,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class Min<T extends Group<T,U> & Ordered<U>, U> {
+public class SumCount<T extends AdditiveGroup<T,U> & Unity<U>, U> {
 
 	private T grp;
-
-	public Min(T grp) {
+	
+	public SumCount(T grp) {
 		this.grp = grp;
 	}
 	
-	public void calculate(LinearStorage<?,U> storage, U max, U result) {
-		grp.assign(max, result);
+	public void calculate(LinearStorage<?,U> storage, U sum, U count) {
 		U tmp = grp.construct();
+		U one = grp.construct();
+		grp.unity(one);
+		grp.zero(sum);
+		grp.zero(count);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			if (grp.isLess(tmp, result)) {
-				grp.assign(tmp, result);
-			}
+			grp.add(sum, tmp, sum);
+			grp.add(count, one, count);
 		}
 	}
 }

@@ -24,11 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -37,25 +38,17 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Variance<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U> {
+public class StdDev<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U>, U> {
 
 	private T grp;
 	
-	public Variance(T grp) {
+	public StdDev(T grp) {
 		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
-		U avg = grp.construct();
-		U sum = grp.construct();
-		U count = grp.construct();
-		U one = grp.construct();
-		grp.unity(one);
-		Average<T, U> mean = new Average<T,U>(grp);
-		mean.calculate(storage, avg);
-		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(grp);
-		sumSq.calculate(storage, avg, sum, count);
-		grp.subtract(count, one, count);
-		grp.divide(sum, count, result);
+		Variance<T,U> var = new Variance<T,U>(grp);
+		var.calculate(storage, result);
+		grp.sqrt(result, result);
 	}
 }

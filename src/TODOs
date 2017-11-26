@@ -277,3 +277,5 @@ Are the mod() implementations for signed ints right when a == minint and b == -1
 Test float16 by iterating thru 65536 combos and going toFloat().toShort() and
   making sure there is no drift in the process. NaNs will drift as implemented
   so catch that.
+Move operations into algorithms. Make them static and fixup code elsewhere to
+  account for that. Their signature should match other algos.

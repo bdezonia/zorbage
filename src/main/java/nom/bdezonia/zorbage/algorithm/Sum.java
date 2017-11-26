@@ -24,13 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
  * 
@@ -39,34 +36,20 @@ import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
  * @param <T>
  * @param <U>
  */
-public class MedianI<T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordered<U> & Unity<U>, U> {
+public class Sum<T extends AdditiveGroup<T,U>, U> {
 
 	private T grp;
-	private LinearStorage<?,U> localStorage;
 
-	public MedianI(T grp) {
+	public Sum(T grp) {
 		this.grp = grp;
 	}
 	
 	public void calculate(LinearStorage<?,U> storage, U result) {
+		grp.zero(result);
 		U tmp = grp.construct();
-		U one = grp.construct();
-		U sum = grp.construct();
-		U count = grp.construct();
-		grp.unity(one);
-		localStorage = storage.duplicate();
-		Sort<T,U> sort = new Sort<T,U>(grp);
-		sort.calculate(localStorage);
-		if (localStorage.size() % 2 == 0) {
-			localStorage.get(localStorage.size()/2 - 1, tmp);
-			grp.add(sum, tmp, sum);
-			localStorage.get(localStorage.size()/2, tmp);
-			grp.add(sum, tmp, sum);
-			grp.add(one, one, count);
-			grp.div(sum, count, result);
-		}
-		else {
-			localStorage.get(localStorage.size()/2, result);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			grp.add(result, tmp, result);
 		}
 	}
 }

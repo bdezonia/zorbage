@@ -24,12 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -37,25 +35,68 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class VarianceI<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & IntegralDivision<U>, U> {
+public class Sort<T extends Group<T,U> & Ordered<U> ,U> {
 
 	private T grp;
 	
-	public VarianceI(T grp) {
+	public Sort(T grp) {
 		this.grp = grp;
 	}
 	
-	public void calculate(LinearStorage<?,U> storage, U result) {
-		U avg = grp.construct();
-		U sum = grp.construct();
-		U count = grp.construct();
-		U one = grp.construct();
-		grp.unity(one);
-		AverageI<T,U> mean = new AverageI<T,U>(grp);
-		mean.calculate(storage, avg);
-		SumSquareCount<T,U> sumSq = new SumSquareCount<T,U>(grp);
-		sumSq.calculate(storage, avg, sum, count);
-		grp.subtract(count, one, count);
-		grp.div(sum, count, result);
+	public void calculate(LinearStorage<?,U> storage) {
+		qsort(storage, 0, storage.size() -1);
+	}
+	
+	private void qsort(LinearStorage<?,U> storage, long left, long right) {
+		if (left < right) {
+			long pivotPoint = partition(storage,left,right);
+			qsort(storage,left,pivotPoint-1);
+			qsort(storage,pivotPoint+1,right);
+		}
+	}
+
+
+	private long partition(LinearStorage<?,U> storage, long left, long right) {
+		U tmp1 = grp.construct();
+		U tmp2 = grp.construct();
+		
+		U pivotValue = grp.construct();
+		storage.get(left, pivotValue);
+
+		long leftmark = left+1;
+		long rightmark = right;
+	
+		boolean done = false;
+		while (!done) {
+	
+			while (true) {
+				if (leftmark > rightmark) break;
+				storage.get(leftmark, tmp1);
+				if (grp.isGreater(tmp1, pivotValue)) break;
+				leftmark++;
+			}
+	
+			while (true) {
+				storage.get(rightmark, tmp1);
+				if (grp.isLess(tmp1, pivotValue)) break;
+				if (rightmark < leftmark) break;
+				rightmark--;
+			}
+	
+			if (rightmark < leftmark)
+				done = true;
+			else {
+				storage.get(leftmark, tmp1);
+				storage.get(rightmark, tmp2);
+				storage.set(leftmark,tmp2);
+				storage.set(rightmark, tmp1);
+			}
+		}
+		storage.get(left, tmp1);
+		storage.get(rightmark, tmp2);
+		storage.set(left,tmp2);
+		storage.set(rightmark, tmp1);
+
+		return rightmark;
 	}
 }

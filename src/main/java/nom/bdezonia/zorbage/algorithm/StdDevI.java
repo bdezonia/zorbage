@@ -24,9 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.operation;
+package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -35,24 +38,17 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class SumCount<T extends AdditiveGroup<T,U> & Unity<U>, U> {
+public class StdDevI<T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & IntegralDivision<U> & Roots<U>, U> {
 
 	private T grp;
 	
-	public SumCount(T grp) {
+	public StdDevI(T grp) {
 		this.grp = grp;
 	}
 	
-	public void calculate(LinearStorage<?,U> storage, U sum, U count) {
-		U tmp = grp.construct();
-		U one = grp.construct();
-		grp.unity(one);
-		grp.zero(sum);
-		grp.zero(count);
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			grp.add(sum, tmp, sum);
-			grp.add(count, one, count);
-		}
+	public void calculate(LinearStorage<?,U> storage, U result) {
+		VarianceI<T,U> var = new VarianceI<T,U>(grp);
+		var.calculate(storage, result);
+		grp.sqrt(result, result);
 	}
 }

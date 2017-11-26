@@ -28,6 +28,11 @@ package nom.bdezonia.zorbage.example;
 
 import java.util.Arrays;
 
+import nom.bdezonia.zorbage.algorithm.Average;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Median;
+import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -37,11 +42,6 @@ import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.operation.Average;
-import nom.bdezonia.zorbage.type.operation.Max;
-import nom.bdezonia.zorbage.type.operation.Median;
-import nom.bdezonia.zorbage.type.operation.Min;
-import nom.bdezonia.zorbage.type.operation.Sum;
 import nom.bdezonia.zorbage.type.storage.linear.LinearAccessor;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
