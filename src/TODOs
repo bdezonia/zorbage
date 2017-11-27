@@ -289,3 +289,4 @@ add Sinc/pi and Sinch/pi interfaces and computations to the hierarchy
 erf/erfc needs to be implemented
 implement pulling random values out of statistical distributions as
   algorithms if possible
+median and mediani share a lot of code: break out into helper classes
