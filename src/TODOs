@@ -36,7 +36,8 @@ Other needs
     nan overrides all.
   complex numbers: polar constructors
   quotient/remainder as well as div/mod
-    later note: are they different? for instance do they treat neg nums differently?
+    later note: are they different? for instance do they treat neg nums
+    differently? I am hoping that I can calc one from the other.
   there are numerous kinds of norms. can embed a default impl for some
     types. but should implement families of reusable norm implementations
   group hierarchy could be multithreaded
@@ -72,7 +73,8 @@ Investigate other libraries: Colt (java), Gnu sci lib, Imglib, boost,
   Boost headers for complex and quats can give valuable design ideas.
     Need a ref for octs.
     http://www.boost.org/doc/libs/1_65_1/boost/math/octonion.hpp
-Mostly done: 0^0 should be nan or throw an exception. right now it returns 1.
+0^0 should be nan or throw an exception. right now it returns 1.
+  Not done for matrices or tensors
 rmodules have right and left subtypes: see that AWchap3.pdf file I
   downloaded
 make arraybit support multibit value encodings
@@ -200,8 +202,6 @@ Make Storage class allocate method look at how big the request is and
   how big the type is and how much ram is available and allocate an
   ArrayStorage or a FileStorage as needed.
 When done writing 128 bit unsigned integers test speed versus imglib
-Can I optimize 128 bit by just adding/subtracting the pieces and predict
-  the carrys/borrows? test.
 Instead of condition2<a,b>, condition3<a,b,c>, etc. do condition<tuple2<a,b>>.
   This is just a maybe idea. Haskell has tuple2, tuple3, etc. up to like
   17. It's okay if I do that too. Just not sure I want to.
@@ -271,7 +271,8 @@ Are the random(U) implementations threadsafe? That depends upon java lib. Invest
 128 bit needs to be based on longs rather than bytes
 64 bit unsigned needs some tests
 Can I break 128-bit multiply into pieces that I can multiply together a chunk
-  at a time and avoid all the shift/add calls? Similar question for divide
+  at a time and avoid all the shift/add calls? Similar question for divide.
+  I started this with multiplyfast() in 128 bit unsigned code.
 Are the mod() implementations for signed ints right when a == minint and b == -1
 Test float16 by iterating thru 65536 combos and going toFloat().toShort() and
   making sure there is no drift in the process. NaNs will drift as implemented
