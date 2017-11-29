@@ -290,3 +290,5 @@ erf/erfc needs to be implemented
 implement pulling random values out of statistical distributions as
   algorithms if possible
 median and mediani share a lot of code: break out into helper classes
+add javadoc to each of the algorithms
+fix doc for gcd and lcm: always nonnegative. not "always > 0".
