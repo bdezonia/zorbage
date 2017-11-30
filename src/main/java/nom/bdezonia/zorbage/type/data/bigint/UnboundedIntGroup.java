@@ -43,8 +43,9 @@ public class UnboundedIntGroup
     Integer<UnboundedIntGroup, UnboundedIntMember>,
     BitOperations<UnboundedIntMember>
 {
-	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
-
+	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
+	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
+	
 	public UnboundedIntGroup() {
 	}
 
@@ -87,12 +88,12 @@ public class UnboundedIntGroup
 
 	@Override
 	public boolean isEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) == 0;
+		return compare(a,b) == 0;
 	}
 
 	@Override
 	public boolean isNotEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) != 0;
+		return compare(a,b) != 0;
 	}
 
 	@Override
@@ -117,27 +118,27 @@ public class UnboundedIntGroup
 
 	@Override
 	public void unity(UnboundedIntMember a) {
-		a.setV( BigInteger.ONE );
+		assign(ONE, a);
 	}
 
 	@Override
 	public boolean isLess(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) < 0;
+		return compare(a,b) < 0;
 	}
 
 	@Override
 	public boolean isLessEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) <= 0;
+		return compare(a,b) <= 0;
 	}
 
 	@Override
 	public boolean isGreater(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) > 0;
+		return compare(a,b) > 0;
 	}
 
 	@Override
 	public boolean isGreaterEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v()) >= 0;
+		return compare(a,b) >= 0;
 	}
 
 	@Override
@@ -186,22 +187,22 @@ public class UnboundedIntGroup
 
 	@Override
 	public boolean isEven(UnboundedIntMember a) {
-		return a.v().mod(TWO).equals(BigInteger.ZERO);
+		return !isOdd(a);
 	}
 
 	@Override
 	public boolean isOdd(UnboundedIntMember a) {
-		return a.v().mod(TWO).equals(BigInteger.ONE);
+		return a.v().and(BigInteger.ONE).equals(BigInteger.ONE);
 	}
 
 	@Override
 	public void pred(UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().subtract(BigInteger.ONE) );
+		subtract(a, ONE, b);
 	}
 
 	@Override
 	public void succ(UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().add(BigInteger.ONE) );
+		add(a, ONE, b);
 	}
 
 	@Override
@@ -300,13 +301,22 @@ public class UnboundedIntGroup
 		else if (cmp == 0) {
 			if (a.v() == BigInteger.ZERO)
 				throw new IllegalArgumentException("0^0 is not a number");
-			else	
-				c.setV(BigInteger.ONE);
+			else
+				assign(ONE, c);
 		}
-		else if (b.v().compareTo(BigInteger.valueOf(java.lang.Integer.MAX_VALUE)) > 0)
-			throw new IllegalArgumentException("very large powers not supported for unbounded ints");
-		else
+		else if (b.v().compareTo(BigInteger.valueOf(java.lang.Integer.MAX_VALUE)) <= 0) {
+			// speed optimization
 			c.setV(a.v().pow(b.v().intValue()));
+		}
+		else { // huge power
+			UnboundedIntMember tmp = new UnboundedIntMember(ONE);
+			UnboundedIntMember power = new UnboundedIntMember(b);
+			while (isGreater(power, ZERO)) {
+				multiply(tmp, a, tmp);
+				pred(power, power);
+			}
+			assign(tmp, c);
+		}
 	}	
 
 }
