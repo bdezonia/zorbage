@@ -45,7 +45,7 @@ public class Gcd {
 	private Gcd() {}
 	
 	/**
-	 * Sets the result to the greatest common divisor of a and b. Result is always positive.
+	 * Sets the result to the greatest common divisor of a and b. Result is always nonnegative.
 	 * 
 	 * @param group
 	 * @param a

@@ -283,7 +283,6 @@ UnboundedInt: isOdd() and isEven() can be sped up. isLessThan() etc can
   reuse compare(). pow() can be made consistent with other numeric impls.
   isProbablePrime() and testBit() should return a boolean rather then set
   a BooleanMember.
-float classes can speed up signum() calcs by using a library function I think
 java implements scalb(). add to hierarchy and float types.
 add Sinc/pi and Sinch/pi interfaces and computations to the hierarchy
 erf/erfc needs to be implemented
@@ -291,4 +290,3 @@ implement pulling random values out of statistical distributions as
   algorithms if possible
 median and mediani share a lot of code: break out into helper classes
 add javadoc to each of the algorithms
-fix doc for gcd and lcm: always nonnegative. not "always > 0".

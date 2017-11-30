@@ -46,7 +46,7 @@ public class Lcm {
 	private Lcm() {}
 	
 	/**
-	 * Sets the result to the least common multiple of a and b. Result is always positive.
+	 * Sets the result to the least common multiple of a and b. Result is always nonnegative.
 	 * 
 	 * @param group
 	 * @param a
