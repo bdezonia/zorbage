@@ -286,3 +286,7 @@ implement pulling random values out of statistical distributions as
   algorithms if possible
 median and mediani share a lot of code: break out into helper classes
 add javadoc to each of the algorithms
+rename IntegralDivision to ModularDivision?
+In java floats support the % operator. Could support part of IntegralDivision
+  and this would allow Integral algorithms to work with them. But gcd/lcm
+  and isOdd/isEven make no sense for floats. Break apart IntegralDivision.
