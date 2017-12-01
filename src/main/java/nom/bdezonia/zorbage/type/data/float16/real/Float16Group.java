@@ -207,7 +207,7 @@ public class Float16Group
 
 	@Override
 	public void norm(Float16Member a, Float16Member b) {
-		b.setV( Math.abs(a.v()) );
+		abs(a,b);
 	}
 
 	@Override
@@ -499,10 +499,6 @@ public class Float16Group
 		c.setV( Math.pow(a.v(), b.v()) );
 	}
 	
-	public void copySign(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( Math.copySign(a.v(), b.v()) );
-	}
-	
 	public void log10(Float16Member a, Float16Member b, Float16Member c) {
 		b.setV( Math.log10(a.v()) );
 	}
@@ -515,6 +511,7 @@ public class Float16Group
 		b.setV( Math.toRadians(a.v()) );
 	}
 	
+	@Override
 	public void random(Float16Member a) {
 		a.setV(rng.nextDouble());
 	}
@@ -542,6 +539,11 @@ public class Float16Group
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
+	@Override
+	public void copySign(Float16Member a, Float16Member b, Float16Member c) {
+		c.setV( Math.copySign(a.v(), b.v()) );
+	}
+	
 	@Override
 	public int getExponent(Float16Member a) {
 		// TODO
