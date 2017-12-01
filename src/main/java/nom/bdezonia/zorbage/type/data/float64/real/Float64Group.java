@@ -210,7 +210,7 @@ public class Float64Group
 
 	@Override
 	public void norm(Float64Member a, Float64Member b) {
-		b.setV( Math.abs(a.v()) );
+		abs(a,b);
 	}
 
 	@Override
