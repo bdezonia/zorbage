@@ -36,11 +36,13 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -63,7 +65,8 @@ public class Float16Group
     Power<Float16Member>,
     Rounding<Float16Member>,
     Random<Float16Member>,
-    RealUnreal<Float16Member,Float16Member>
+    RealUnreal<Float16Member,Float16Member>,
+    PredSucc<Float16Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -525,4 +528,16 @@ public class Float16Group
 		b.setV(0);
 	}
 
+
+	@Override
+	public void pred(Float16Member a, Float16Member b) {
+		// TODO
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public void succ(Float16Member a, Float16Member b) {
+		// TODO
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 }

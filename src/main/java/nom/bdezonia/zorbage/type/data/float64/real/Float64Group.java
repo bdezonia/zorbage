@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -63,7 +64,8 @@ public class Float64Group
     Power<Float64Member>,
     Rounding<Float64Member>,
     Random<Float64Member>,
-    RealUnreal<Float64Member,Float64Member>
+    RealUnreal<Float64Member,Float64Member>,
+    PredSucc<Float64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -595,6 +597,17 @@ public class Float64Group
 			
 			return(result);
 		}
+	}
+
+	@Override
+	public void pred(Float64Member a, Float64Member b) {
+		b.setV(Math.nextUp(a.v()));
+		
+	}
+
+	@Override
+	public void succ(Float64Member a, Float64Member b) {
+		b.setV(Math.nextDown(a.v()));
 	}
 
 }
