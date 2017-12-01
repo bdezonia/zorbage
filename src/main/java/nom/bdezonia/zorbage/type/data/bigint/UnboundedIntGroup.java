@@ -30,7 +30,6 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
-import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
@@ -269,8 +268,8 @@ public class UnboundedIntGroup
 		b.setV( a.v().flipBit(n) );
 	}
 	
-	public void isProbablePrime(int certainty, UnboundedIntMember a, BooleanMember b) {
-		b.setV( a.v().isProbablePrime(certainty) );
+	public boolean isProbablePrime(int certainty, UnboundedIntMember a) {
+		return a.v().isProbablePrime(certainty);
 	}
 	
 	public void modInverse(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
@@ -289,8 +288,8 @@ public class UnboundedIntGroup
 		b.setV( a.v().setBit(n) );
 	}
 	
-	public void testBit(int n, UnboundedIntMember a, BooleanMember b) {
-		b.setV( a.v().testBit(n) );
+	public boolean testBit(int n, UnboundedIntMember a) {
+		return a.v().testBit(n);
 	}
 
 	@Override
