@@ -510,14 +510,6 @@ public class Float64Group
 		b.setV( Math.log10(a.v()) );
 	}
 	
-	public void nextAfter(Float64Member a, Float64Member b, Float64Member c) {
-		c.setV( Math.nextAfter(a.v(), b.v()) );
-	}
-	
-	public void nextUp(Float64Member a, Float64Member b) {
-		b.setV( Math.nextUp(a.v()) );
-	}
-	
 	public void toDegrees(Float64Member a, Float64Member b) {
 		b.setV( Math.toDegrees(a.v()) );
 	}
@@ -596,7 +588,6 @@ public class Float64Group
 	@Override
 	public void pred(Float64Member a, Float64Member b) {
 		b.setV(Math.nextDown(a.v()));
-		
 	}
 
 	@Override
