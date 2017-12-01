@@ -292,4 +292,6 @@ In java floats support the % operator. Could support part of IntegralDivision
   and isOdd/isEven make no sense for floats. Break apart IntegralDivision.
 Can pred/succ fail on floats because of boundary conditions? Some algos
   might test against zero while floats might start negative and stick at
-  negative infinity. Must review pred/succ assumptions.
+  negative infinity. Must review pred/succ assumptions. Might be okay if
+  number is not NaN or infinity and our algorithm goes to/from zero or
+  minbound/maxbound.
