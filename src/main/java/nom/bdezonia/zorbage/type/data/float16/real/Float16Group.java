@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.MiscFloat;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
@@ -42,7 +43,6 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -66,7 +66,8 @@ public class Float16Group
     Rounding<Float16Member>,
     Random<Float16Member>,
     RealUnreal<Float16Member,Float16Member>,
-    PredSucc<Float16Member>
+    PredSucc<Float16Member>,
+    MiscFloat<Float16Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -537,6 +538,23 @@ public class Float16Group
 
 	@Override
 	public void succ(Float16Member a, Float16Member b) {
+		// TODO
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public int getExponent(Float16Member a) {
+		// TODO
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public void scalb(int scaleFactor, Float16Member a, Float16Member b) {
+		b.setV(Math.scalb(a.v(),scaleFactor));
+	}
+
+	@Override
+	public void ulp(Float16Member a, Float16Member b) {
 		// TODO
 		throw new UnsupportedOperationException("Not yet implemented");
 	}

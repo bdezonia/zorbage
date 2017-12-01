@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.MiscFloat;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
@@ -65,7 +66,8 @@ public class Float64Group
     Rounding<Float64Member>,
     Random<Float64Member>,
     RealUnreal<Float64Member,Float64Member>,
-    PredSucc<Float64Member>
+    PredSucc<Float64Member>,
+    MiscFloat<Float64Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -500,10 +502,6 @@ public class Float64Group
 		c.setV( Math.pow(a.v(), b.v()) );
 	}
 	
-	public void copySign(Float64Member a, Float64Member b, Float64Member c) {
-		c.setV( Math.copySign(a.v(), b.v()) );
-	}
-	
 	public void IEEEremainder(Float64Member a, Float64Member b, Float64Member c) {
 		c.setV( Math.IEEEremainder(a.v(), b.v()) );
 	}
@@ -528,10 +526,6 @@ public class Float64Group
 		b.setV( Math.toRadians(a.v()) );
 	}
 	
-	public void ulp(Float64Member a, Float64Member b) {
-		b.setV( Math.ulp(a.v()) );
-	}
-
 	@Override
 	public void random(Float64Member a) {
 		a.setV(rng.nextDouble());
@@ -601,13 +595,33 @@ public class Float64Group
 
 	@Override
 	public void pred(Float64Member a, Float64Member b) {
-		b.setV(Math.nextUp(a.v()));
+		b.setV(Math.nextDown(a.v()));
 		
 	}
 
 	@Override
 	public void succ(Float64Member a, Float64Member b) {
-		b.setV(Math.nextDown(a.v()));
+		b.setV(Math.nextUp(a.v()));
+	}
+
+	@Override
+	public void copySign(Float64Member a, Float64Member b, Float64Member c) {
+		c.setV(Math.copySign(a.v(), b.v()));
+	}
+
+	@Override
+	public int getExponent(Float64Member a) {
+		return Math.getExponent(a.v());
+	}
+
+	@Override
+	public void scalb(int scaleFactor, Float64Member a, Float64Member b) {
+		b.setV(Math.scalb(a.v(), scaleFactor));
+	}
+
+	@Override
+	public void ulp(Float64Member a, Float64Member b) {
+		b.setV(Math.ulp(a.v()));
 	}
 
 }
