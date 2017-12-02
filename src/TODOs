@@ -277,9 +277,7 @@ Are the mod() implementations for signed ints right when a == minint and b == -1
 Test float16 by iterating thru 65536 combos and going toFloat().toShort() and
   making sure there is no drift in the process. NaNs will drift as implemented
   so catch that.
-finish making examples into tests
 change Conditions to Sets
-java implements scalb(). add to hierarchy and float types.
 add Sinc/pi and Sinch/pi interfaces and computations to the hierarchy
 erf/erfc needs to be implemented
 implement pulling random values out of statistical distributions as
