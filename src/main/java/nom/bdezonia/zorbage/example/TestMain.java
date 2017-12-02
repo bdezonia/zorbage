@@ -252,10 +252,6 @@ public class TestMain {
 		//new BigMatrixExample().run();
 	}
 	
-	public static void testLUMatrix() {
-		new LUDecompExample().run();
-	}
-	
 	public static void testTuples() {
 		new TupleExample().run();
 	}
@@ -272,7 +268,6 @@ public class TestMain {
 		testFileStorage();
 		testSpeed();
 		//testSize(); // very slow
-		testLUMatrix();
 		testTuples();
 		
 		// TODO when go from byte backed to long backed will need to remove this test due to speed

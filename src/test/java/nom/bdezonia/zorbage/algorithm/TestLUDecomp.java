@@ -24,7 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.algorithm;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.groups.G;
@@ -39,8 +43,9 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
  * @author Barry DeZonia
  *
  */
-public class LUDecompExample {
+public class TestLUDecomp {
 
+	@Test
 	public void run() {
 		
 		Float64Member val = G.DBL.construct();
@@ -66,7 +71,18 @@ public class LUDecompExample {
 
 		LUDecomp.compute(a,b,x);
 
-		System.out.println(x.toString());
+		Float64Member value = new Float64Member();
+		
+		assertEquals(3, x.length());
+		
+		x.v(0, value );
+		assertEquals(7, value.v(), 0.000000000001);
+		
+		x.v(1, value );
+		assertEquals(-3, value.v(), 0.000000000001);
+		
+		x.v(2, value );
+		assertEquals(13, value.v(), 0.000000000001);
 	}
 	
 
