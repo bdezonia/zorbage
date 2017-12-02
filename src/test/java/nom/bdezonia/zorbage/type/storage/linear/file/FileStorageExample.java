@@ -24,7 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.type.storage.linear.file;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
@@ -36,6 +40,7 @@ import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
  */
 public class FileStorageExample {
 
+	@Test
 	public void run() {
 		ComplexFloat64Member v = new ComplexFloat64Member();
 		
@@ -48,15 +53,15 @@ public class FileStorageExample {
 		}
 		for (long i = 0; i < store.size(); i++) {
 			store.get(i, v);
-			if ((v.r() != i) || (v.i() != i+1))
-				System.out.println("A: Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
+			assertEquals(i, v.r(), 0.00000001);
+			assertEquals(i+1, v.i(), 0.00000001);
 		}
 		
 		FileStorageFloat64<ComplexFloat64Member> dup = store.duplicate();
 		for (long i = 0; i < dup.size(); i++) {
 			dup.get(i, v);
-			if ((v.r() != i) || (v.i() != i+1))
-				System.out.println("B: Data value mismatch i = " + i + " real = " + v.r() + " imag = " + v.i());
+			assertEquals(i, v.r(), 0.00000001);
+			assertEquals(i+1, v.i(), 0.00000001);
 		}
 		
 	}

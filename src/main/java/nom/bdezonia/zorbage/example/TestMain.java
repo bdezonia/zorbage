@@ -231,11 +231,6 @@ public class TestMain {
 		System.out.println("b should be true and is " + b.v());
 	}
 
-	public static void testFileStorage() {
-		new FileStorageExample().run();
-		System.out.println("tested file backed data storage");
-	}
-	
 	public static void testSpeed() {
 		long[] timings = new long[20];
 		long x = System.currentTimeMillis();
@@ -265,7 +260,6 @@ public class TestMain {
 		testMax();
 		testSum();
 		testParsing();
-		testFileStorage();
 		testSpeed();
 		//testSize(); // very slow
 		testTuples();
