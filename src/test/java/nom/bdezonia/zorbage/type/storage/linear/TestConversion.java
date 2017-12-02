@@ -24,19 +24,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.type.storage.linear;
 
-import nom.bdezonia.zorbage.algorithm.Average;
-import nom.bdezonia.zorbage.algorithm.Max;
-import nom.bdezonia.zorbage.algorithm.Median;
-import nom.bdezonia.zorbage.algorithm.Min;
-import nom.bdezonia.zorbage.algorithm.Sum;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.linear.LinearAccessor;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
 
 /**
@@ -44,13 +40,62 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
  * @author Barry DeZonia
  *
  */
-public class TestMain {
-	
-	
-	
-	
+public class TestConversion {
 
+	// Scale a collection of Int32s by a floating point number
 	
+	// Made before universal conversion facilities in place
+	
+	@Test
+	public void test() {
+		SignedInt32Member value = new SignedInt32Member();
+		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(10, new SignedInt32Member());
+		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
+		// build the initial test data
+		for (int i = 0; i < storage.size(); i++) {
+			value.setV(i);
+			storage.set(i, value);
+		}
+		// scale it by 6.3
+		Float64Member scale = new Float64Member(6.3);
+		Float64Member tmp = new Float64Member();
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i,  value);
+			tmp.setV(value.v());
+			G.DBL.multiply(tmp, scale, tmp);
+			value.setV((int)Math.round(tmp.v()));
+			storage.set(i, value);
+		}
+		
+		storage.get(0, value);
+		assertEquals(0, value.v());
 
-
+		storage.get(1, value);
+		assertEquals(6, value.v());
+		
+		storage.get(2, value);
+		assertEquals(13, value.v());
+		
+		storage.get(3, value);
+		assertEquals(19, value.v());
+		
+		storage.get(4, value);
+		assertEquals(25, value.v());
+		
+		storage.get(5, value);
+		assertEquals(32, value.v());
+		
+		storage.get(6, value);
+		assertEquals(38, value.v());
+		
+		storage.get(7, value);
+		assertEquals(44, value.v());
+		
+		storage.get(8, value);
+		assertEquals(50, value.v());
+		
+		storage.get(9, value);
+		assertEquals(57, value.v());
+				
+	}
 }
