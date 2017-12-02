@@ -37,7 +37,7 @@ public class TensorOctonionRepresentation {
 
 	private static final OctonionRepresentation ZERO = new OctonionRepresentation();
 	
-	private BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>();
+	private BigList<OctonionRepresentation> values;
 	private long[] dims;
 	
 	public TensorOctonionRepresentation() {
@@ -49,6 +49,9 @@ public class TensorOctonionRepresentation {
 		if (count == 0) count = 1;
 		if (values == null || count != values.size()) {
 			values = new BigList<OctonionRepresentation>(count);
+			for (long i = 0; i < count; i++) {
+				values.add(null);
+			}
 		}
 		this.dims = dims.clone();
 	}
