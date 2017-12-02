@@ -1,4 +1,4 @@
-package bdezonia.zorbage.type.storage.linear;
+package nom.bdezonia.zorbage.type.storage.linear;
 
 import static org.junit.Assert.assertEquals;
 
