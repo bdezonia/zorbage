@@ -293,4 +293,8 @@ Can pred/succ fail on floats because of boundary conditions? Some algos
   negative infinity. Must review pred/succ assumptions. Might be okay if
   number is not NaN or infinity and our algorithm goes to/from zero or
   minbound/maxbound.
-Conversions
+Conversions: (complex/quat/oct) and (vector/matrix/tensor)
+Define linear storage filters that allow one to treat disconnected indices
+  as a linear storage. This allows sums/avgs/etc to be computed on subsets
+  of linear storage. Can Samplings factor in here?
+Should I implement Rational classes? And a BigDecimal based class?
