@@ -84,45 +84,9 @@ public class TestMain {
 	}
 
 	
-	public static void testParsing() {
-		BooleanMember b;
-		b = new BooleanMember("false");
-		System.out.println("b should be false and is " + b.v());
-		b = new BooleanMember("true");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("1");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("0");
-		System.out.println("b should be false and is " + b.v());
-		b = new BooleanMember("2");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("3.4");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("-3.4");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("+3.4");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("1.2e+05");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("(1,0)");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("(0,1)");
-		System.out.println("b should be false and is " + b.v());
-		b = new BooleanMember("[0]");
-		System.out.println("b should be false and is " + b.v());
-		b = new BooleanMember("[1]");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("[1,0,0]");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("[[1,0,0][0,0,0]]");
-		System.out.println("b should be true and is " + b.v());
-		b = new BooleanMember("[[[1,0,0][0,0,0]][[0,0,0][0,0,0]]]");
-		System.out.println("b should be true and is " + b.v());
-	}
 
 	public static void main(String[] args) {
 		testGroupOfConversions();
-		testParsing();
 	}
 
 }
