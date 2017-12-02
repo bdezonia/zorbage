@@ -24,36 +24,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.type.storage.linear.file;
 
-import nom.bdezonia.zorbage.basic.accessor.AccessorA;
-import nom.bdezonia.zorbage.basic.accessor.AccessorB;
-import nom.bdezonia.zorbage.basic.tuple.Tuple2;
-import nom.bdezonia.zorbage.basic.tuple.Tuple5;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TupleExample {
+public class TestFileStorage {
 
-	/**
-	 * Show that tuples of differing sizes can be sent to methods.
-	 */
-	public void run( ) {
-		Tuple2<Integer,Float> tuple2 =
-				new Tuple2<Integer,Float>(1,7.0f);
+	@Test
+	public void run() {
+		ComplexFloat64Member v = new ComplexFloat64Member();
 		
-		Tuple5<Integer,Float,Double,Character,Short> tuple5 =
-				new Tuple5<Integer,Float,Double,Character,Short>(9,13.0f,5.7,'f',(short)33);
+		FileStorageFloat64<ComplexFloat64Member> store = new FileStorageFloat64<ComplexFloat64Member>(4000, new ComplexFloat64Member());
 		
-		method(tuple2);
+		for (long i = 0; i < store.size(); i++) {
+			v.setR(i);
+			v.setI(i+1);
+			store.set(i, v);
+		}
+		for (long i = 0; i < store.size(); i++) {
+			store.get(i, v);
+			assertEquals(i, v.r(), 0.00000001);
+			assertEquals(i+1, v.i(), 0.00000001);
+		}
 		
-		method(tuple5);
-	}
-	
-	private <T extends AccessorA<Integer> & AccessorB<Float>> void method(T tuple) {
-		System.out.println("first is " + tuple.a() + " and second is " + tuple.b());
+		FileStorageFloat64<ComplexFloat64Member> dup = store.duplicate();
+		for (long i = 0; i < dup.size(); i++) {
+			dup.get(i, v);
+			assertEquals(i, v.r(), 0.00000001);
+			assertEquals(i+1, v.i(), 0.00000001);
+		}
+		
 	}
 }

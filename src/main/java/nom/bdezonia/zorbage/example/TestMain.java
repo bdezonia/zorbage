@@ -247,10 +247,6 @@ public class TestMain {
 		//new BigMatrixExample().run();
 	}
 	
-	public static void testTuples() {
-		new TupleExample().run();
-	}
-	
 	public static void main(String[] args) {
 		testAccessor();
 		testGroupOfConversions();
@@ -262,7 +258,6 @@ public class TestMain {
 		testParsing();
 		testSpeed();
 		//testSize(); // very slow
-		testTuples();
 		
 		// TODO when go from byte backed to long backed will need to remove this test due to speed
 		new NumberTest().run();
