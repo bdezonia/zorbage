@@ -295,3 +295,4 @@ Can pred/succ fail on floats because of boundary conditions? Some algos
   negative infinity. Must review pred/succ assumptions. Might be okay if
   number is not NaN or infinity and our algorithm goes to/from zero or
   minbound/maxbound.
+Conversions

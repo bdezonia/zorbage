@@ -46,12 +46,25 @@ public class TestFloat64Complex {
 
 	@Test
 	public void run() {
-		final int size = 500;
-		LinearStorage<?,SignedInt32Member> inputData = makeIntData(size);
-		fillIntData(inputData);
-		LinearStorage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
-		dft(inputData, outputComplexData);
-		// TODO: apply inverse and test resulting values
+		long[] times = new long[20];
+		for (int i = 0; i < times.length; i++) {
+			long a = System.currentTimeMillis();
+			final int size = 500;
+			LinearStorage<?,SignedInt32Member> inputData = makeIntData(size);
+			fillIntData(inputData);
+			LinearStorage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
+			dft(inputData, outputComplexData);
+			// TODO: apply inverse and test resulting values
+			long b = System.currentTimeMillis();
+			times[i] = b - a;
+		}
+		System.out.println("DFT time test");
+		for (int i = 0; i < times.length; i++) {
+			if (i > 0)
+				System.out.print(",");
+			System.out.print(times[i]);
+		}
+		System.out.println("]");
 		assertTrue(true);
 	}
 	
