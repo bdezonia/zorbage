@@ -83,95 +83,7 @@ public class TestMain {
 		}
 	}
 
-	public static void testAverage() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
-		// build the initial test data
-		int i = 0;
-		while (accessor.hasNext()) {
-			accessor.fwd();
-			accessor.get();
-			value.setV(i++);
-			accessor.put();
-		}
-		Float64Member result = new Float64Member();
-		Average.compute(G.DBL, storage, result);
-		System.out.println("Average value = " + result.v());
-	}
 	
-	public static void testMedian() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
-		// build the initial test data
-		int i = 0;
-		while (accessor.hasNext()) {
-			accessor.fwd();
-			accessor.get();
-			value.setV(i++);
-			accessor.put();
-		}
-		Float64Member result = new Float64Member();
-		Median.compute(G.DBL, storage, result);
-		System.out.println("Median value = " + result.v());
-	}
-
-	public static void testMin() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
-		// build the initial test data
-		int i = 0;
-		while (accessor.hasNext()) {
-			accessor.fwd();
-			accessor.get();
-			value.setV(i++);
-			accessor.put();
-		}
-		Float64Member result = new Float64Member();
-		Float64Member max = new Float64Member();
-		G.DBL.maxBound(max);
-		Min.compute(G.DBL, storage, max, result);
-		System.out.println("Minimum value = " + result.v());
-	}
-
-	public static void testMax() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
-		// build the initial test data
-		int i = 0;
-		while (accessor.hasNext()) {
-			accessor.fwd();
-			accessor.get();
-			value.setV(i++);
-			accessor.put();
-		}
-		Float64Member result = new Float64Member();
-		Float64Member min = new Float64Member();
-		G.DBL.minBound(min);
-		Max.compute(G.DBL, storage, min, result);
-		System.out.println("Maximum value = " + result.v());
-	}
-
-	public static void testSum() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
-		// build the initial test data
-		int i = 0;
-		while (accessor.hasNext()) {
-			accessor.fwd();
-			accessor.get();
-			value.setV(i++);
-			accessor.put();
-		}
-		Float64Member result = new Float64Member();
-		Sum.compute(G.DBL, storage, result);
-		System.out.println("Sum value = " + result.v());
-	}
-
 	public static void testParsing() {
 		BooleanMember b;
 		b = new BooleanMember("false");
@@ -210,11 +122,6 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		testGroupOfConversions();
-		testAverage();
-		testMedian();
-		testMin();
-		testMax();
-		testSum();
 		testParsing();
 	}
 
