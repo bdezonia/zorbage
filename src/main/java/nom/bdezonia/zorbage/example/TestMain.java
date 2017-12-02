@@ -229,10 +229,6 @@ public class TestMain {
 		System.out.println("b should be true and is " + b.v());
 	}
 
-	public static void testSize() {
-		//new BigMatrixExample().run();
-	}
-	
 	public static void main(String[] args) {
 		testAccessor();
 		testGroupOfConversions();
@@ -242,10 +238,6 @@ public class TestMain {
 		testMax();
 		testSum();
 		testParsing();
-		//testSize(); // very slow
-		
-		// TODO when go from byte backed to long backed will need to remove this test due to speed
-		new NumberTest().run();
 	}
 
 }

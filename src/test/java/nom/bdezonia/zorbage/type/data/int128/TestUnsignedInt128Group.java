@@ -27,8 +27,11 @@
 package nom.bdezonia.zorbage.type.data.int128;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -52,7 +55,7 @@ public class TestUnsignedInt128Group {
 	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
 
 	@Test
-	public void run() {
+	public void exhauative() {
 		//testMultiplies();
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
@@ -162,5 +165,138 @@ public class TestUnsignedInt128Group {
 		}
 	}
 	*/
-}
 
+	// prove that I can divMod two numbers correctly
+	@Test
+	public void oneDivModTest() {
+		UnsignedInt128Member a = G.UINT128.construct("525");
+		UnsignedInt128Member b = G.UINT128.construct("20");
+		UnsignedInt128Member d = G.UINT128.construct();
+		UnsignedInt128Member m = G.UINT128.construct();
+		G.UINT128.divMod(a, b, d, m);
+		assertEquals(BigInteger.valueOf(26), d.v());
+		assertEquals(BigInteger.valueOf(5), m.v());
+	}
+
+	@Test
+	public void addOneAndVTest() {
+		ArrayList<Long> list = new ArrayList<Long>();
+		
+		UnsignedInt128Member zero = G.UINT128.construct();
+		UnsignedInt128Member min = G.UINT128.construct();
+		UnsignedInt128Member max = G.UINT128.construct();
+		G.UINT128.minBound(min);
+		G.UINT128.maxBound(max);
+		
+		assertTrue(G.UINT128.isEqual(min, zero));
+
+		// TODO this will fail when going from byte backed to long backed
+		UnsignedInt128Member v = G.UINT128.construct();
+		while (G.UINT128.isLess(v, max)) {
+			list.add(v.v().longValue());
+			G.UINT128.succ(v, v);
+		}
+		list.add(v.v().longValue());
+
+		G.UINT128.succ(v, v);
+		assertTrue(G.UINT128.isEqual(v, zero));
+		for (int i = 0; i < list.size(); i++) {
+			assertEquals(i, list.get(i).longValue());
+		}
+	}
+
+	@Test
+	public void subtractOneAndVTest() {
+		ArrayList<Long> list = new ArrayList<Long>();
+		
+		UnsignedInt128Member zero = G.UINT128.construct();
+		UnsignedInt128Member min = G.UINT128.construct();
+		UnsignedInt128Member max = G.UINT128.construct();
+		G.UINT128.minBound(min);
+		G.UINT128.maxBound(max);
+		
+		assertTrue(G.UINT128.isEqual(min, zero));
+		
+		// TODO this will fail when going from byte backed to long backed
+		UnsignedInt128Member v = new UnsignedInt128Member(max);
+		while (G.UINT128.isGreater(v, zero)) {
+			list.add(v.v().longValue());
+			G.UINT128.pred(v, v);
+		}
+		list.add(v.v().longValue());
+
+		G.UINT128.pred(v, v);
+		assertTrue(G.UINT128.isEqual(v, max));
+
+		for (int i = 0; i < list.size(); i++) {
+			assertEquals(65535-i, list.get(i).longValue());
+		}
+	}
+
+	@Test
+	public void setVTest() {
+		UnsignedInt128Member v = G.UINT128.construct();
+		for (int i = 0; i < 65536; i++) {
+			v.setV(BigInteger.valueOf(i));
+			assertEquals(i, v.v().longValue());
+		}
+	}
+
+	@Test
+	public void compareTest() {
+		ArrayList<UnsignedInt128Member> list = new ArrayList<UnsignedInt128Member>();
+		
+		UnsignedInt128Member v = G.UINT128.construct();
+		UnsignedInt128Member max = G.UINT128.construct();
+		G.UINT128.maxBound(max);
+		
+		while (G.UINT128.isLess(v, max)) {
+			list.add(v.duplicate());
+			G.UINT128.succ(v, v);
+		}
+		list.add(v.duplicate());
+
+		for (int i = 0; i < list.size(); i++) {
+			UnsignedInt128Member x = list.get(i);
+			if (i >= 1) {
+				UnsignedInt128Member y = list.get(i-1);
+				assertTrue(G.UINT128.isGreater(x, y));
+				assertFalse(G.UINT128.isLessEqual(x, y));
+			}
+			assertTrue(G.UINT128.isEqual(x,x));
+			assertFalse(G.UINT128.isNotEqual(x,x));
+			assertTrue(G.UINT128.isGreaterEqual(x,x));
+			assertTrue(G.UINT128.isLessEqual(x,x));
+			if (i < list.size()-1) {
+				UnsignedInt128Member y = list.get(i+1);
+				assertTrue(G.UINT128.isLess(x, y));
+				assertFalse(G.UINT128.isGreaterEqual(x, y));
+			}
+		}
+	}
+
+	@Test
+	public void versusTest() {
+		long a = System.currentTimeMillis();
+		
+		UnsignedInt128Member v = G.UINT128.construct();
+		UnsignedInt128Member one = G.UINT128.construct();
+		G.UINT128.unity(one);
+		for (int i = 0; i < 65536; i++) {
+			G.UINT128.add(v, one, v);
+		}
+
+		long b = System.currentTimeMillis();
+
+		BigInteger vb = BigInteger.ZERO;
+		for (int i = 0; i < 65536; i++) {
+			vb = vb.add(BigInteger.ONE);
+		}
+		
+		long c = System.currentTimeMillis();
+		
+		System.out.println("Add one 64K times: UInt128 " + (b-a) + " BigInteger " + (c-b));
+		
+		assertTrue(true);
+	}
+}
