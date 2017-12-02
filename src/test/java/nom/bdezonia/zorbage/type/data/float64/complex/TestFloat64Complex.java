@@ -24,7 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.example;
+package nom.bdezonia.zorbage.type.data.float64.complex;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
@@ -38,14 +42,17 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
  * @author Barry DeZonia
  *
  */
-public class DFTExample {
+public class TestFloat64Complex {
 
+	@Test
 	public void run() {
 		final int size = 500;
 		LinearStorage<?,SignedInt32Member> inputData = makeIntData(size);
 		fillIntData(inputData);
 		LinearStorage<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
 		dft(inputData, outputComplexData);
+		// TODO: apply inverse and test resulting values
+		assertTrue(true);
 	}
 	
 	

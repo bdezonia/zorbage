@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.example;
 
-import java.util.Arrays;
-
 import nom.bdezonia.zorbage.algorithm.Average;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Median;
@@ -231,18 +229,6 @@ public class TestMain {
 		System.out.println("b should be true and is " + b.v());
 	}
 
-	public static void testSpeed() {
-		long[] timings = new long[20];
-		long x = System.currentTimeMillis();
-		for (int i = 0; i < timings.length; i++) {
-			new DFTExample().run();
-			long y = System.currentTimeMillis();
-			timings[i] = y - x;
-			x = y;
-		}
-		System.out.println(Arrays.toString(timings));
-	}
-
 	public static void testSize() {
 		//new BigMatrixExample().run();
 	}
@@ -256,7 +242,6 @@ public class TestMain {
 		testMax();
 		testSum();
 		testParsing();
-		testSpeed();
 		//testSize(); // very slow
 		
 		// TODO when go from byte backed to long backed will need to remove this test due to speed
