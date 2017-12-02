@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 

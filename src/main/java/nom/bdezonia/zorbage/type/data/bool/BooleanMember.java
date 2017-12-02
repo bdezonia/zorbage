@@ -34,7 +34,9 @@ import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
@@ -48,7 +50,8 @@ public final class BooleanMember
 	implements
 		BitCoder<BooleanMember>, BooleanCoder<BooleanMember>,
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
-		Settable<BooleanMember>, Gettable<BooleanMember>
+		Settable<BooleanMember>, Gettable<BooleanMember>,
+		InternalRepresentation
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -153,4 +156,16 @@ public final class BooleanMember
 	public BooleanMember duplicate() {
 		return new BooleanMember(this);
 	}
+
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(v()?1:0)));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		BigDecimal d = rep.getFirstValue().r();
+		v = !d.equals(BigDecimal.ZERO);
+	}
+
 }

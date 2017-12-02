@@ -28,12 +28,15 @@ package nom.bdezonia.zorbage.type.data.int8;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
@@ -46,7 +49,8 @@ public final class UnsignedInt8Member
 	implements
 		ByteCoder<UnsignedInt8Member>,
 		Allocatable<UnsignedInt8Member>, Duplicatable<UnsignedInt8Member>,
-		Settable<UnsignedInt8Member>, Gettable<UnsignedInt8Member>
+		Settable<UnsignedInt8Member>, Gettable<UnsignedInt8Member>,
+		InternalRepresentation
 {
 
 	byte v;
@@ -124,6 +128,16 @@ public final class UnsignedInt8Member
 	@Override
 	public UnsignedInt8Member duplicate() {
 		return new UnsignedInt8Member(this);
+	}
+
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(v())));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		v = (byte) rep.getFirstValue().r().intValue();
 	}
 
 }

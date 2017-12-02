@@ -32,7 +32,6 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.storage.linear.LinearAccessor;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 
 /**
@@ -46,7 +45,6 @@ public class TestMin {
 	public void test() {
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		LinearAccessor<Float64Member> accessor = new LinearAccessor<Float64Member>(value, storage);
 		// build the initial test data
 		for (int i = 0; i < storage.size(); i++) {
 			value.setV(i);

@@ -28,12 +28,15 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
@@ -46,7 +49,8 @@ public final class Float64Member
 	implements
 		DoubleCoder<Float64Member>,
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
-		Settable<Float64Member>, Gettable<Float64Member>
+		Settable<Float64Member>, Gettable<Float64Member>,
+		InternalRepresentation
 {
 	private double v;
 	
@@ -120,6 +124,16 @@ public final class Float64Member
 	@Override
 	public Float64Member duplicate() {
 		return new Float64Member(this);
+	}
+
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(v())));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		v = rep.getFirstValue().r().doubleValue();
 	}
 
 }

@@ -1,0 +1,130 @@
+/*
+ * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ *
+ * Copyright (C) 2016-2017 Barry DeZonia
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package nom.bdezonia.zorbage.type.data.universal;
+
+import nom.bdezonia.zorbage.util.BigList;
+
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
+public class TensorOctonionRepresentation {
+
+	private static final OctonionRepresentation ZERO = new OctonionRepresentation();
+	
+	private BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>();
+	private long[] dims;
+	
+	public TensorOctonionRepresentation() {
+		 setDims(new long[] {});
+	}
+	
+	public void setDims(long[] dims) {
+		long count = calcCount(dims);
+		if (count == 0) count = 1;
+		if (values == null || count != values.size()) {
+			values = new BigList<OctonionRepresentation>(count);
+		}
+		this.dims = dims.clone();
+	}
+	
+	public long[] getDims() {
+		return dims;
+	}
+	
+	public boolean isValue() {
+		return dims.length == 0;
+	}
+
+	public boolean isVector() {
+		return dims.length == 1;
+	}
+
+	public boolean isMatrix() {
+		return dims.length == 2;
+	}
+
+	public boolean isTensor() {
+		return dims.length > 2;
+	}
+
+	// single value
+	
+	public void setFirstValue(OctonionRepresentation value) {
+		setDims(new long[] {});
+		values.set(0, value);
+	}
+	
+	// vector value
+	
+	public void setFirstVector(long n, OctonionRepresentation[] values) {
+		setDims(new long[] {n});
+		for (int i = 0; i < values.length; i++) {
+			this.values.set(i, values[i]);
+		}
+	}
+	
+	// matrix value
+	
+	public void setFirstMatrix(long r, long c, OctonionRepresentation[] values) {
+		if (r*c != values.length)
+			throw new IllegalArgumentException("Incorrect number of values passed");
+		setDims(new long[] {c,r});
+		for (int i = 0; i < values.length; i++) {
+			this.values.set(i, values[i]);
+		}
+	}
+	
+	// tensor value
+	
+	public void setTensor(long[] dims, OctonionRepresentation[] values) {
+		if (calcCount(dims) != values.length)
+			throw new IllegalArgumentException("Incorrect number of values passed");
+		setDims(dims);
+		for (int i = 0; i < values.length; i++) {
+			this.values.set(i, values[i]);
+		}
+	}
+	
+	public OctonionRepresentation getFirstValue() {
+		return nonNull(values.get(0));
+	}
+	
+	private OctonionRepresentation nonNull(OctonionRepresentation o) {
+		if (o == null) return ZERO;
+		return o;
+	}
+	
+	private long calcCount(long[] dims) {
+		long count = 1;
+		for (long d : dims) {
+			count *= d;
+		}
+		return count;
+	}
+}

@@ -28,12 +28,15 @@ package nom.bdezonia.zorbage.type.data.int32;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 
@@ -46,7 +49,8 @@ public final class SignedInt32Member
 	implements
 		IntCoder<SignedInt32Member>,
 		Allocatable<SignedInt32Member>, Duplicatable<SignedInt32Member>,
-		Settable<SignedInt32Member>, Gettable<SignedInt32Member>
+		Settable<SignedInt32Member>, Gettable<SignedInt32Member>,
+		InternalRepresentation
 {
 
 	private int v;
@@ -119,6 +123,16 @@ public final class SignedInt32Member
 	@Override
 	public SignedInt32Member duplicate() {
 		return new SignedInt32Member(this);
+	}
+
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(v)));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		v = rep.getFirstValue().r().intValue();
 	}
 
 }

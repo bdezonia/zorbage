@@ -24,46 +24,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.parse;
-
-import java.math.BigDecimal;
+package nom.bdezonia.zorbage.type.data.universal;
 
 /**
+ * A universal data conversion class. Slow but as exact as possible. Fall
+ * back to this if primitive based conversion is too difficult.
  * 
  * @author Barry DeZonia
  *
  */
-public class OctonionRepresentation {
+public class UniversalConverter {
 
-	private BigDecimal r, i, j, k, l, i0, j0, k0;
+	// don't instantiate
 	
-	public OctonionRepresentation(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k,
-			BigDecimal l, BigDecimal i0, BigDecimal j0, BigDecimal k0)
+	private UniversalConverter() {}
+	
+	public static <U extends InternalRepresentation, V extends InternalRepresentation>
+		void convert(TensorOctonionRepresentation rep, U a, V b)
 	{
-		if (r == null) r = BigDecimal.ZERO;
-		if (i == null) i = BigDecimal.ZERO;
-		if (j == null) j = BigDecimal.ZERO;
-		if (k == null) k = BigDecimal.ZERO;
-		if (l == null) l = BigDecimal.ZERO;
-		if (i0 == null) i0 = BigDecimal.ZERO;
-		if (j0 == null) j0 = BigDecimal.ZERO;
-		if (k0 == null) k0 = BigDecimal.ZERO;
-		this.r = r;
-		this.i = i;
-		this.j = j;
-		this.k = k;
-		this.l = l;
-		this.i0 = i0;
-		this.j0 = j0;
-		this.k0 = k0;
+		a.setInternalRep(rep);
+		b.setSelf(rep);
 	}
-	
-	public BigDecimal r() { return r; }
-	public BigDecimal i() { return i; }
-	public BigDecimal j() { return j; }
-	public BigDecimal k() { return k; }
-	public BigDecimal l() { return l; }
-	public BigDecimal i0() { return i0; }
-	public BigDecimal j0() { return j0; }
-	public BigDecimal k0() { return k0; }
 }

@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float16.real;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -35,7 +36,9 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 
@@ -52,7 +55,8 @@ public final class Float16Member
 	implements
 	ShortCoder<Float16Member>,
 	Allocatable<Float16Member>, Duplicatable<Float16Member>,
-	Settable<Float16Member>, Gettable<Float16Member>
+	Settable<Float16Member>, Gettable<Float16Member>,
+	InternalRepresentation
 {
 	private static final double SUBNORMAL_BOUND = Math.pow(2,-14);
 	private static final short MAX_BOUND_I = (short) 0b0111101111111111;
@@ -137,6 +141,17 @@ public final class Float16Member
 	@Override
 	public Float16Member duplicate() {
 		return new Float16Member(this);
+	}
+
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		double val = toDouble(toShort(v()));
+		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(val)));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		setV(rep.getFirstValue().r().doubleValue());
 	}
 
 	static short toShort(double value) {

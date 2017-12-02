@@ -24,34 +24,62 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.type.data.universal;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import java.math.BigDecimal;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestAvg {
+public class OctonionRepresentation {
 
-	@Test
-	public void test() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		// build the initial test data
-		for (int i = 0; i < storage.size(); i++) {
-			value.setV(i);
-			storage.set(i, value);
-		}
-		Float64Member result = new Float64Member();
-		Average.compute(G.DBL, storage, result);
-		assertEquals(4.5, result.v(), 0.000000001);
+	private BigDecimal r, i, j, k, l, i0, j0, k0;
+	
+	public OctonionRepresentation() {
+		this(null,null,null,null,null,null,null,null);
 	}
+
+	public OctonionRepresentation(BigDecimal r) {
+		this(r,null,null,null,null,null,null,null);
+	}
+
+	public OctonionRepresentation(BigDecimal r, BigDecimal i) {
+		this(r,i,null,null,null,null,null,null);
+	}
+
+	public OctonionRepresentation(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k) {
+		this(r,i,j,k,null,null,null,null);
+	}
+
+	public OctonionRepresentation(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k,
+			BigDecimal l, BigDecimal i0, BigDecimal j0, BigDecimal k0)
+	{
+		if (r == null) r = BigDecimal.ZERO;
+		if (i == null) i = BigDecimal.ZERO;
+		if (j == null) j = BigDecimal.ZERO;
+		if (k == null) k = BigDecimal.ZERO;
+		if (l == null) l = BigDecimal.ZERO;
+		if (i0 == null) i0 = BigDecimal.ZERO;
+		if (j0 == null) j0 = BigDecimal.ZERO;
+		if (k0 == null) k0 = BigDecimal.ZERO;
+		this.r = r;
+		this.i = i;
+		this.j = j;
+		this.k = k;
+		this.l = l;
+		this.i0 = i0;
+		this.j0 = j0;
+		this.k0 = k0;
+	}
+	
+	public BigDecimal r() { return r; }
+	public BigDecimal i() { return i; }
+	public BigDecimal j() { return j; }
+	public BigDecimal k() { return k; }
+	public BigDecimal l() { return l; }
+	public BigDecimal i0() { return i0; }
+	public BigDecimal j0() { return j0; }
+	public BigDecimal k0() { return k0; }
 }

@@ -50,7 +50,6 @@ public class TestConversion {
 	public void test() {
 		SignedInt32Member value = new SignedInt32Member();
 		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(10, new SignedInt32Member());
-		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		for (int i = 0; i < storage.size(); i++) {
 			value.setV(i);

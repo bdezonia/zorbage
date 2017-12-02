@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;

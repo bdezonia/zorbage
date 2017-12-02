@@ -26,13 +26,16 @@
  */
 package nom.bdezonia.zorbage.type.data.bigint;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 
 /**
@@ -43,7 +46,8 @@ import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 public final class UnboundedIntMember
 	implements
 		Allocatable<UnboundedIntMember>, Duplicatable<UnboundedIntMember>,
-		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>
+		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
+		InternalRepresentation
 {
 	private BigInteger v;
 	
@@ -96,4 +100,14 @@ public final class UnboundedIntMember
 		return new UnboundedIntMember();
 	}
 	
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(new OctonionRepresentation(new BigDecimal(v())));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		v = rep.getFirstValue().r().toBigInteger();
+	}
+
 }

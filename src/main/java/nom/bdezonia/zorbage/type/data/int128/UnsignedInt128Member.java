@@ -28,13 +28,16 @@ package nom.bdezonia.zorbage.type.data.int128;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.parse.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 
@@ -47,7 +50,8 @@ public final class UnsignedInt128Member
 	implements
 		LongCoder<UnsignedInt128Member>,
 		Allocatable<UnsignedInt128Member>, Duplicatable<UnsignedInt128Member>,
-		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>
+		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
+		InternalRepresentation
 {
 	//static final BigInteger MAX = new BigInteger("340282366920938463463374607431768211456");
 	static final BigInteger MAX = new BigInteger("65536");
@@ -154,6 +158,16 @@ public final class UnsignedInt128Member
 	@Override
 	public UnsignedInt128Member duplicate() {
 		return new UnsignedInt128Member(this);
+	}
+
+	@Override
+	public void setInternalRep(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(new OctonionRepresentation(new BigDecimal(v())));
+	}
+
+	@Override
+	public void setSelf(TensorOctonionRepresentation rep) {
+		setV(rep.getFirstValue().r().toBigInteger());
 	}
 
 }
