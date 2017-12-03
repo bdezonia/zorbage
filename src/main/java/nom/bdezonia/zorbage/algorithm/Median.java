@@ -50,23 +50,16 @@ public class Median {
 	public static <T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & Unity<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U result)
 	{
-		U tmp = grp.construct();
 		U one = grp.construct();
+		U two = grp.construct();
 		U sum = grp.construct();
-		U count = grp.construct();
+		U result1 = grp.construct();
+		U result2 = grp.construct();
+		TwoMiddleValues.compute(grp, storage, result1, result2);
 		grp.unity(one);
-		LinearStorage<?,U> localStorage = storage.duplicate();
-		Sort.compute(grp, localStorage);
-		if (localStorage.size() % 2 == 0) {
-			localStorage.get(localStorage.size()/2 - 1, tmp);
-			grp.add(sum, tmp, sum);
-			localStorage.get(localStorage.size()/2, tmp);
-			grp.add(sum, tmp, sum);
-			grp.add(one, one, count);
-			grp.divide(sum, count, result);
-		}
-		else {
-			localStorage.get(localStorage.size()/2, result);
-		}
+		grp.add(one, one, two);
+		grp.add(sum, result1, sum);
+		grp.add(sum, result2, sum);
+		grp.divide(sum, two, result);
 	}
 }

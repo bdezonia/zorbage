@@ -27,19 +27,17 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MedianI {
+public class TwoMiddleValues {
 
-	private MedianI() {}
+	private TwoMiddleValues() {}
 
 	/**
 	 * 
@@ -47,19 +45,18 @@ public class MedianI {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordered<U> & Unity<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U result)
+	public static <T extends Group<T,U> & Ordered<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U result1, U result2)
 	{
-		U one = grp.construct();
-		U two = grp.construct();
-		U sum = grp.construct();
-		U result1 = grp.construct();
-		U result2 = grp.construct();
-		TwoMiddleValues.compute(grp, storage, result1, result2);
-		grp.unity(one);
-		grp.add(one, one, two);
-		grp.add(sum, result1, sum);
-		grp.add(sum, result2, sum);
-		grp.div(sum, two, result);
+		LinearStorage<?,U> localStorage = storage.duplicate();
+		Sort.compute(grp, localStorage);
+		if (localStorage.size() % 2 == 0) {
+			localStorage.get(localStorage.size()/2 - 1, result1);
+			localStorage.get(localStorage.size()/2, result2);
+		}
+		else {
+			localStorage.get(localStorage.size()/2, result1);
+			grp.assign(result1, result2);
+		}
 	}
 }
