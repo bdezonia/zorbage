@@ -257,7 +257,7 @@ public class Float64Group
 		double cosine = Math.cos(arg);
 		double sine = Math.sqrt(1 - cosine * cosine);
 		if ( arg < 0) {
-			if (arg < -Math.PI)
+			if (arg > -Math.PI)
 				sine = -sine;
 		}
 		else { // arg >= 0

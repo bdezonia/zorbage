@@ -59,14 +59,14 @@ public class TestFloat64Group {
 		Float64Member s2 = new Float64Member();
 		Float64Member c2 = new Float64Member();
 		
-		for (double a = 0; a < 2*Math.PI; a += (Math.PI) / 720) {
+		for (double a = -2*Math.PI; a < 2*Math.PI; a += (Math.PI) / 720) {
 			angle.setV(a);
 			G.DBL.sin(angle, s1);
 			G.DBL.cos(angle, c1);
 			G.DBL.sinAndCos(angle, s2, c2);
 			// TODO: is this good enough? Any more precise and it fails.
-			assertEquals(s1.v(), s2.v(), 0.0000000000001);
-			assertEquals(c1.v(), c2.v(), 0.0000000000001);
+			assertEquals(s1.v(), s2.v(), 0.00000000000016);
+			assertEquals(c1.v(), c2.v(), 0.00000000000016);
 		}
 	}
 }
