@@ -43,14 +43,20 @@ public class MedianValues {
 	 * 
 	 * @param grp
 	 * @param storage
-	 * @param result
+	 * @param result1
+	 * @param result2
 	 */
 	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U result1, U result2)
 	{
 		LinearStorage<?,U> localStorage = storage.duplicate();
 		Sort.compute(grp, localStorage);
-		if (localStorage.size() % 2 == 0) {
+		if (localStorage.size() == 0) {
+			U zero = grp.construct();
+			grp.assign(zero, result1);
+			grp.assign(zero, result2);
+		}
+		else if (localStorage.size() % 2 == 0) {
 			localStorage.get(localStorage.size()/2 - 1, result1);
 			localStorage.get(localStorage.size()/2, result2);
 		}
