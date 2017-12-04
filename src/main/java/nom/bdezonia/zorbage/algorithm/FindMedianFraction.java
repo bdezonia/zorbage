@@ -26,33 +26,31 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MedianI {
+public class FindMedianFraction {
 
-	private MedianI() {}
+	private FindMedianFraction() {}
 
 	/**
 	 * 
-	 * @param grp
-	 * @param storage
-	 * @param result
+	 * @param numer
+	 * @param denom
 	 */
-	public static <T extends AdditiveGroup<T,U> & IntegralDivision<U> & Ordered<U> & Unity<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U result)
+	public static <T extends AdditiveGroup<T,U> & Ordered<U> & Unity<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U numer, U denom)
 	{
-		U numer = grp.construct();
-		U denom = grp.construct();
-		FindMedianFraction.compute(grp, storage, numer, denom);
-		grp.div(numer, denom, result);
+		U result1 = grp.construct();
+		U result2 = grp.construct();
+		MedianValues.compute(grp, storage, result1, result2);
+		TwoElementFraction.compute(grp, result1, result2, numer, denom);
 	}
 }

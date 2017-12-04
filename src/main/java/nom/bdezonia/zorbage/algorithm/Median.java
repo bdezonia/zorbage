@@ -50,16 +50,9 @@ public class Median {
 	public static <T extends AdditiveGroup<T,U> & Invertible<U> & Ordered<U> & Unity<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U result)
 	{
-		U one = grp.construct();
-		U two = grp.construct();
-		U sum = grp.construct();
-		U result1 = grp.construct();
-		U result2 = grp.construct();
-		MedianValues.compute(grp, storage, result1, result2);
-		grp.unity(one);
-		grp.add(one, one, two);
-		grp.add(sum, result1, sum);
-		grp.add(sum, result2, sum);
-		grp.divide(sum, two, result);
+		U numer = grp.construct();
+		U denom = grp.construct();
+		FindMedianFraction.compute(grp, storage, numer, denom);
+		grp.divide(numer, denom, result);
 	}
 }
