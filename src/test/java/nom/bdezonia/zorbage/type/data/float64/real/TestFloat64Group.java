@@ -53,20 +53,84 @@ public class TestFloat64Group {
 	
 	@Test
 	public void testSinCos() {
+		//timingSinCos();
 		Float64Member angle = new Float64Member();
 		Float64Member s1 = new Float64Member();
 		Float64Member c1 = new Float64Member();
 		Float64Member s2 = new Float64Member();
 		Float64Member c2 = new Float64Member();
 		
-		for (double a = -2*Math.PI; a < 2*Math.PI; a += (Math.PI) / 720) {
+		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
 			angle.setV(a);
 			G.DBL.sin(angle, s1);
 			G.DBL.cos(angle, c1);
 			G.DBL.sinAndCos(angle, s2, c2);
 			// TODO: is this good enough? Any more precise and it fails.
-			assertEquals(s1.v(), s2.v(), 0.00000000000016);
-			assertEquals(c1.v(), c2.v(), 0.00000000000016);
+			assertEquals(s1.v(), s2.v(), 0.00000000000226);
+			assertEquals(c1.v(), c2.v(), 0.00000000000226);
 		}
 	}
+	
+	@Test
+	public void testSinhCosh() {
+		//timingSinhCosh();
+		Float64Member angle = new Float64Member();
+		Float64Member s1 = new Float64Member();
+		Float64Member c1 = new Float64Member();
+		Float64Member s2 = new Float64Member();
+		Float64Member c2 = new Float64Member();
+		
+		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
+			angle.setV(a);
+			G.DBL.sinh(angle, s1);
+			G.DBL.cosh(angle, c1);
+			G.DBL.sinhAndCosh(angle, s2, c2);
+			// TODO: is this good enough? Any more precise and it fails.
+			assertEquals(s1.v(), s2.v(), 0.000000015);
+			assertEquals(c1.v(), c2.v(), 0.000000015);
+		}
+	}
+
+	/*
+	
+	private void timingSinCos() {
+		Float64Member angle = new Float64Member();
+		Float64Member s1 = new Float64Member();
+		Float64Member c1 = new Float64Member();
+		
+		long p = System.currentTimeMillis();
+		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
+			angle.setV(a);
+			G.DBL.sin(angle, s1);
+		}
+		long q = System.currentTimeMillis();
+		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
+			angle.setV(a);
+			G.DBL.cos(angle, c1);
+		}
+		long r = System.currentTimeMillis();
+		
+		System.out.println("Times: sin "+(q-p)+" cos "+(r-q));
+	}
+
+	private void timingSinhCosh() {
+		Float64Member angle = new Float64Member();
+		Float64Member s1 = new Float64Member();
+		Float64Member c1 = new Float64Member();
+		
+		long p = System.currentTimeMillis();
+		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
+			angle.setV(a);
+			G.DBL.sinh(angle, s1);
+		}
+		long q = System.currentTimeMillis();
+		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
+			angle.setV(a);
+			G.DBL.cosh(angle, c1);
+		}
+		long r = System.currentTimeMillis();
+		
+		System.out.println("Times: sinh "+(q-p)+" cosh "+(r-q));
+	}
+	*/
 }

@@ -306,9 +306,14 @@ public class Float64Group
 
 	@Override
 	public void sinhAndCosh(Float64Member a, Float64Member s, Float64Member c) {
-		// TODO - is there a speedup?
-		sinh(a, s);
-		cosh(a, c);
+		double arg = a.v();
+		double cosh = Math.cosh(arg);
+		double sinh = Math.sqrt(cosh * cosh - 1);
+		if ( arg < 0) {
+			sinh = -sinh;
+		}
+		s.setV( sinh );
+		c.setV( cosh );
 	}
 	
 	@Override
