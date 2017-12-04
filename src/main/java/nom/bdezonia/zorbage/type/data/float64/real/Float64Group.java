@@ -308,7 +308,7 @@ public class Float64Group
 	public void sinhAndCosh(Float64Member a, Float64Member s, Float64Member c) {
 		
 		double t1 = Math.exp(a.v());
-		double t2 = Math.exp(-a.v());
+		double t2 = 1/t1;
 		double cosh = 0.5 * (t1+t2);
 		double sinh = 0.5 * (t1-t2);
 		s.setV(sinh);
