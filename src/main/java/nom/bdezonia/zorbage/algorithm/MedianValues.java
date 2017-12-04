@@ -35,9 +35,9 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  *
  */
-public class TwoMiddleValues {
+public class MedianValues {
 
-	private TwoMiddleValues() {}
+	private MedianValues() {}
 
 	/**
 	 * 

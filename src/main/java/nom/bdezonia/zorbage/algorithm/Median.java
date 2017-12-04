@@ -55,7 +55,7 @@ public class Median {
 		U sum = grp.construct();
 		U result1 = grp.construct();
 		U result2 = grp.construct();
-		TwoMiddleValues.compute(grp, storage, result1, result2);
+		MedianValues.compute(grp, storage, result1, result2);
 		grp.unity(one);
 		grp.add(one, one, two);
 		grp.add(sum, result1, sum);
