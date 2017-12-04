@@ -30,6 +30,7 @@ package nom.bdezonia.zorbage.type.storage.linear;
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  * @param <U>
  */
 public interface LinearStorage<T extends LinearStorage<T,U>, U> {
