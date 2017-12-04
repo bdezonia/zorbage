@@ -306,14 +306,22 @@ public class Float64Group
 
 	@Override
 	public void sinhAndCosh(Float64Member a, Float64Member s, Float64Member c) {
-		double arg = a.v();
-		double cosh = Math.cosh(arg);
-		double sinh = Math.sqrt(cosh * cosh - 1);
-		if ( arg < 0) {
-			sinh = -sinh;
-		}
-		s.setV( sinh );
-		c.setV( cosh );
+		
+		double t1 = Math.exp(a.v());
+		double t2 = Math.exp(-a.v());
+		double cosh = 0.5 * (t1+t2);
+		double sinh = 0.5 * (t1-t2);
+		s.setV(sinh);
+		c.setV(cosh);
+		// alternate approach: accuracy seems the same. investigate. speed compare too.
+		//double arg = a.v();
+		//double cosh = Math.cosh(arg);
+		//double sinh = Math.sqrt(cosh * cosh - 1);
+		//if ( arg < 0) {
+		//	sinh = -sinh;
+		//}
+		//s.setV( sinh );
+		//c.setV( cosh );
 	}
 	
 	@Override
