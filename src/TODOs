@@ -299,5 +299,8 @@ Define linear storage filters that allow one to treat disconnected indices
   as a linear storage. This allows sums/avgs/etc to be computed on subsets
   of linear storage. Can Samplings factor in here?
 Should I implement Rational classes? And a BigDecimal based class?
-LinearStorage should implement the Duplicatable interface
+LinearStorage should implement the Duplicatable interface. Maybe also a
+  Sortable interface. Median would require a Sortable DataSource. Does a
+  DataSource have a size()? What about streams?
 The array storage classes should duplicate the input type maybe. maybe not.
+Test isLess etc for signed and unsigned int tests
