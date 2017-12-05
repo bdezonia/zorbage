@@ -315,14 +315,14 @@ public class UnsignedInt128Group
 
 	private int leadingNonZeroBit(UnsignedInt128Member num) {
 		long mask = 0x8000000000000000L;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 64; i++) {
 			if ((num.hi & mask) != 0) {
 				return 127 - i;
 			}
 			mask >>>= 1;
 		}
 		mask = 0x8000000000000000L;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 64; i++) {
 			if ((num.lo & mask) != 0) {
 				return 63 - i;
 			}
