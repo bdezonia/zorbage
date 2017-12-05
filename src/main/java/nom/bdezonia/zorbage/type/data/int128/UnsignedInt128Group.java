@@ -47,12 +47,11 @@ public class UnsignedInt128Group
 {
 
 	// TODO
-	// 1) convert byte references and constants to long references and constants
-	// 2) speed test versus imglib
+	// 1) speed test versus imglib
 	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
-	private static final UnsignedInt128Member ONE = new UnsignedInt128Member((byte)0,(byte)1);
+	private static final UnsignedInt128Member ONE = new UnsignedInt128Member(0,1);
 
 	@Override
 	public UnsignedInt128Member construct() {
@@ -99,18 +98,18 @@ public class UnsignedInt128Group
 
 	@Override
 	public void add(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		byte cLo = (byte) (a.lo + b.lo);
-		byte cHi = (byte) (a.hi + b.hi);
+		long cLo = a.lo + b.lo;
+		long cHi = a.hi + b.hi;
 		int correction = 0;
-		byte alh = (byte) (a.lo & 0x80);
-		byte blh = (byte) (b.lo & 0x80);
+		long alh = a.lo & 0x8000000000000000L;
+		long blh = b.lo & 0x8000000000000000L;
 		if (alh != 0 && blh != 0) {
 			correction = 1;
 		}
 		else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
-			byte all = (byte) (a.lo & 0x7f);
-			byte bll = (byte) (b.lo & 0x7f);
-			if ((byte)(all + bll) < 0)
+			long all = a.lo & 0x7fffffffffffffffL;
+			long bll = b.lo & 0x7fffffffffffffffL;
+			if ((all + bll) < 0)
 				correction = 1;
 		}
 		cHi += correction;
@@ -120,19 +119,19 @@ public class UnsignedInt128Group
 
 	@Override
 	public void subtract(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		byte cHi = (byte) (a.hi - b.hi);
-		byte cLo = (byte) (a.lo - b.lo);
+		long cHi = a.hi - b.hi;
+		long cLo = a.lo - b.lo;
 		final int correction;
-		int alh = a.lo & 0x80;
-		int blh = b.lo & 0x80;
+		long alh = a.lo & 0x8000000000000000L;
+		long blh = b.lo & 0x8000000000000000L;
 		if (alh == 0 && blh != 0)
 			correction = 1;
 		else if (alh != 0 && blh == 0) {
 			correction = 0;
 		}
 		else { // alh == blh
-			int all = a.lo & 0x7f;
-			int bll = b.lo & 0x7f;
+			long all = a.lo & 0x7fffffffffffffffL;
+			long bll = b.lo & 0x7fffffffffffffffL;
 			if (all < bll)
 				correction = 1;
 			else // (all >= bll)
@@ -149,7 +148,7 @@ public class UnsignedInt128Group
 		UnsignedInt128Member tmp = new UnsignedInt128Member();
 		UnsignedInt128Member part = new UnsignedInt128Member(a);
 		while (isNotEqual(bTmp,ZERO)) {
-			if ((bTmp.lo & 1) > 0) {
+			if ((bTmp.lo & 1) != 0) {
 				add(tmp, part, tmp);
 			}
 			shiftLeftOneBit(part);
@@ -158,29 +157,6 @@ public class UnsignedInt128Group
 		assign(tmp,c);
 	}
 
-	public void multiplyFast(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		byte all = (byte) (a.lo & 0xf);
-		byte alh = (byte) ((a.lo & 0xf0) >>> 4);
-		byte bll = (byte) (b.lo & 0xf);
-		byte blh = (byte) ((b.lo & 0xf0) >>> 4);
-		byte loLoNib = (byte) (all * bll);
-		byte loHiNib = (byte) ((all * blh) + (alh * bll));
-		if ((loLoNib & 0xf0) != 0) {
-			loHiNib++;
-			loLoNib &= 0xf;
-		}
-		byte hiLoNib = (byte) (alh * blh);
-		if ((loHiNib & 0xf0) != 0) {
-			hiLoNib++;
-			loHiNib &= 0xf;
-		}
-		byte mid1 = (byte) (a.lo * b.hi);
-		byte mid2 = (byte) (a.hi * b.lo);
-		// can throw away a.hi * b.hi: all overflow
-		c.lo = (byte)((loHiNib << 4) + loLoNib);
-		c.hi = (byte) (hiLoNib + mid1 + mid2);
-	}
-	
 	@Override
 	public void power(int power, UnsignedInt128Member a, UnsignedInt128Member b) {
 		if (power == 0 && isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
@@ -219,9 +195,9 @@ public class UnsignedInt128Group
 
 	@Override
 	public int compare(UnsignedInt128Member a, UnsignedInt128Member b) {
-		int abyte, bbyte;
-		int ab = a.hi & 0x80;
-		int bb = b.hi & 0x80;
+		long abyte, bbyte;
+		long ab = a.hi & 0x8000000000000000L;
+		long bb = b.hi & 0x8000000000000000L;
 		if (ab == 0 && bb != 0) {
 			return -1;
 		}
@@ -229,15 +205,15 @@ public class UnsignedInt128Group
 			return 1;
 		}
 		else { // ab == bb
-			abyte = a.hi & 0x7f;
-			bbyte = b.hi & 0x7f;
+			abyte = a.hi & 0x7fffffffffffffffL;
+			bbyte = b.hi & 0x7fffffffffffffffL;
 			if (abyte < bbyte)
 				return -1;
 			else if (abyte > bbyte)
 				return 1;
 			else { // a.hi == b.hi
-				ab = a.lo & 0x80;
-				bb = b.lo & 0x80;
+				ab = a.lo & 0x8000000000000000L;
+				bb = b.lo & 0x8000000000000000L;
 				if (ab == 0 && bb != 0) {
 					return -1;
 				}
@@ -245,8 +221,8 @@ public class UnsignedInt128Group
 					return 1;
 				}
 				else { // ab == bb
-					abyte = a.lo & 0x7f;
-					bbyte = b.lo & 0x7f;
+					abyte = a.lo & 0x7fffffffffffffffL;
+					bbyte = b.lo & 0x7fffffffffffffffL;
 					if (abyte < bbyte)
 						return -1;
 					else if (abyte > bbyte)
@@ -338,17 +314,17 @@ public class UnsignedInt128Group
 	}
 
 	private int leadingNonZeroBit(UnsignedInt128Member num) {
-		int mask = 0x80;
+		long mask = 0x8000000000000000L;
 		for (int i = 0; i < 8; i++) {
 			if ((num.hi & mask) != 0) {
-				return 15 - i;
+				return 127 - i;
 			}
 			mask >>>= 1;
 		}
-		mask = 0x80;
+		mask = 0x8000000000000000L;
 		for (int i = 0; i < 8; i++) {
 			if ((num.lo & mask) != 0) {
-				return 7 - i;
+				return 63 - i;
 			}
 			mask >>>= 1;
 		}
@@ -367,12 +343,12 @@ public class UnsignedInt128Group
 
 	@Override
 	public boolean isEven(UnsignedInt128Member a) {
-		return a.lo % 2 == 0;
+		return (a.lo & 1) == 0;
 	}
 
 	@Override
 	public boolean isOdd(UnsignedInt128Member a) {
-		return a.lo % 2 == 1;
+		return (a.lo & 1) == 1;
 	}
 
 	@Override
@@ -400,32 +376,32 @@ public class UnsignedInt128Group
 
 	@Override
 	public void random(UnsignedInt128Member a) {
-		a.lo = (byte) (rng.nextInt(256) - 0x80);
-		a.hi = (byte) (rng.nextInt(256) - 0x80);
+		a.lo = rng.nextLong();
+		a.hi = rng.nextLong();
 	}
 
 	@Override
 	public void bitAnd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		c.lo = (byte) (a.lo & b.lo);
-		c.hi = (byte) (a.hi & b.hi);
+		c.lo = a.lo & b.lo;
+		c.hi = a.hi & b.hi;
 	}
 
 	@Override
 	public void bitOr(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		c.lo = (byte) (a.lo | b.lo);
-		c.hi = (byte) (a.hi | b.hi);
+		c.lo = a.lo | b.lo;
+		c.hi = a.hi | b.hi;
 	}
 
 	@Override
 	public void bitXor(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		c.lo = (byte) (a.lo ^ b.lo);
-		c.hi = (byte) (a.hi ^ b.hi);
+		c.lo = a.lo ^ b.lo;
+		c.hi = a.hi ^ b.hi;
 	}
 
 	@Override
 	public void bitNot(UnsignedInt128Member a, UnsignedInt128Member b) {
-		b.lo = (byte) ~a.lo;
-		b.hi = (byte) ~a.hi;
+		b.lo = ~a.lo;
+		b.hi = ~a.hi;
 	}
 
 	// TODO improve performance
@@ -474,19 +450,19 @@ public class UnsignedInt128Group
 	}
 
 	private void shiftLeftOneBit(UnsignedInt128Member val) {
-		boolean transitionBit = (val.lo & 0x80) != 0;
-		val.lo = (byte) ((val.lo & 0xff) << 1);
-		val.hi = (byte) ((val.hi & 0xff) << 1);
+		boolean transitionBit = (val.lo & 0x8000000000000000L) != 0;
+		val.lo = val.lo << 1;
+		val.hi = val.hi << 1;
 		if (transitionBit)
 			val.hi |= 1;
 	}
 
 	private void shiftRightOneBit(UnsignedInt128Member val) {
 		boolean transitionBit = (val.hi & 1) != 0;
-		val.lo = (byte) ((val.lo & 0xff) >>> 1);
-		val.hi = (byte) ((val.hi & 0xff) >>> 1);
+		val.lo = val.lo >>> 1;
+		val.hi = val.hi >>> 1;
 		if (transitionBit)
-			val.lo |= 0x80;
+			val.lo |= 0x8000000000000000L;
 	}
 
 }

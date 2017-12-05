@@ -273,7 +273,6 @@ Are the random(U) implementations threadsafe? That depends upon java lib. Invest
 64 bit unsigned needs some tests
 Can I break 128-bit multiply into pieces that I can multiply together a chunk
   at a time and avoid all the shift/add calls? Similar question for divide.
-  I started this with multiplyfast() in 128 bit unsigned code.
 Are the mod() implementations for signed ints right when a == minint and b == -1
 Test float16 by iterating thru 65536 combos and going toFloat().toShort() and
   making sure there is no drift in the process. NaNs will drift as implemented

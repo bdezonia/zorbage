@@ -53,10 +53,11 @@ public final class UnsignedInt128Member
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
 		InternalRepresentation
 {
-	//static final BigInteger MAX = new BigInteger("340282366920938463463374607431768211456");
-	static final BigInteger MAX = new BigInteger("65536");
-
-	byte lo, hi; // package access is necessary so group can manipulate values
+	static final BigInteger TWO64 = new BigInteger("2").pow(64);
+	static final BigInteger TWO63 = new BigInteger("2").pow(63);
+	static final BigInteger TWO63_MINUS_ONE = new BigInteger("2").pow(63).subtract(BigInteger.ONE);
+	
+	long lo, hi; // package access is necessary so group can manipulate values
 	
 	public UnsignedInt128Member() {
 		lo = hi = 0;
@@ -78,7 +79,7 @@ public final class UnsignedInt128Member
 		setV(r);
 	}
 
-	UnsignedInt128Member(byte hi, byte lo) {
+	UnsignedInt128Member(long hi, long lo) {
 		this.lo = lo;
 		this.hi = hi;
 	}
@@ -86,22 +87,22 @@ public final class UnsignedInt128Member
 	// expensive but shouldn't need to call very often
 	
 	public BigInteger v() {
-		BigInteger low = BigInteger.valueOf(lo & 0x7f);
-		BigInteger lowInc = ((lo & 0x80) > 0) ? BigInteger.valueOf(0x80) : BigInteger.ZERO;
-		BigInteger high = BigInteger.valueOf(256*(hi & 0x7f));
-		BigInteger highInc =  ((hi & 0x80) > 0) ? BigInteger.valueOf(256*0x80) : BigInteger.ZERO;
+		BigInteger low = BigInteger.valueOf(lo & 0x7fffffffffffffffL);
+		BigInteger lowInc = ((lo & 0x8000000000000000L) != 0) ? TWO63 : BigInteger.ZERO;
+		BigInteger high = TWO64.multiply(BigInteger.valueOf(hi & 0x7fffffffffffffffL));
+		BigInteger highInc =  ((hi & 0x8000000000000000L) != 0) ? TWO64.multiply(TWO63) : BigInteger.ZERO;
 		return low.add(lowInc).add(high).add(highInc);
 	}
 	
 	// expensive but shouldn't need to call very often
 	
 	public void setV(BigInteger val) {
-		lo = BigInteger.valueOf(0x7f).and(val).byteValue();
-		hi = BigInteger.valueOf(256*0x7f).and(val).shiftRight(8).byteValue();
-		if (val.testBit(7))
-			lo |= 0x80;
-		if (val.testBit(15))
-			hi |= 0x80;
+		lo = TWO63_MINUS_ONE.and(val).longValue();
+		hi = TWO64.multiply(TWO63_MINUS_ONE).and(val).shiftRight(64).longValue();
+		if (val.testBit(63))
+			lo |= 0x8000000000000000L;
+		if (val.testBit(127))
+			hi |= 0x8000000000000000L;
 	}
 	
 	@Override
@@ -128,8 +129,8 @@ public final class UnsignedInt128Member
 
 	@Override
 	public void toValue(long[] arr, int index) {
-		lo = (byte) arr[index];
-		hi = (byte) arr[index+1];
+		lo = arr[index];
+		hi = arr[index+1];
 	}
 
 	@Override
@@ -140,8 +141,8 @@ public final class UnsignedInt128Member
 
 	@Override
 	public void toValue(RandomAccessFile raf) throws IOException {
-		lo = (byte) raf.readLong();
-		hi = (byte) raf.readLong();
+		lo = raf.readLong();
+		hi = raf.readLong();
 	}
 
 	@Override
