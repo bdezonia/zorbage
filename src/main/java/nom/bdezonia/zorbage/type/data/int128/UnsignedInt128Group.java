@@ -195,7 +195,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public int compare(UnsignedInt128Member a, UnsignedInt128Member b) {
-		long abyte, bbyte;
+		long along, blong;
 		long ab = a.hi & 0x8000000000000000L;
 		long bb = b.hi & 0x8000000000000000L;
 		if (ab == 0 && bb != 0) {
@@ -205,11 +205,11 @@ public class UnsignedInt128Group
 			return 1;
 		}
 		else { // ab == bb
-			abyte = a.hi & 0x7fffffffffffffffL;
-			bbyte = b.hi & 0x7fffffffffffffffL;
-			if (abyte < bbyte)
+			along = a.hi & 0x7fffffffffffffffL;
+			blong = b.hi & 0x7fffffffffffffffL;
+			if (along < blong)
 				return -1;
-			else if (abyte > bbyte)
+			else if (along > blong)
 				return 1;
 			else { // a.hi == b.hi
 				ab = a.lo & 0x8000000000000000L;
@@ -221,11 +221,11 @@ public class UnsignedInt128Group
 					return 1;
 				}
 				else { // ab == bb
-					abyte = a.lo & 0x7fffffffffffffffL;
-					bbyte = b.lo & 0x7fffffffffffffffL;
-					if (abyte < bbyte)
+					along = a.lo & 0x7fffffffffffffffL;
+					blong = b.lo & 0x7fffffffffffffffL;
+					if (along < blong)
 						return -1;
-					else if (abyte > bbyte)
+					else if (along > blong)
 						return 1;
 					else
 						return 0;
