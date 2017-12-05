@@ -27,11 +27,9 @@
 package nom.bdezonia.zorbage.type.data.int128;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -178,6 +176,7 @@ public class TestUnsignedInt128Group {
 		assertEquals(BigInteger.valueOf(5), m.v());
 	}
 
+	/* Now long backed: this test too resource intensive
 	@Test
 	public void addOneAndVTest() {
 		ArrayList<Long> list = new ArrayList<Long>();
@@ -204,7 +203,9 @@ public class TestUnsignedInt128Group {
 			assertEquals(i, list.get(i).longValue());
 		}
 	}
-
+	*/
+	
+	/* Now long backed: this test too resource intensive
 	@Test
 	public void subtractOneAndVTest() {
 		ArrayList<Long> list = new ArrayList<Long>();
@@ -232,7 +233,8 @@ public class TestUnsignedInt128Group {
 			assertEquals(65535-i, list.get(i).longValue());
 		}
 	}
-
+	*/
+	
 	@Test
 	public void setVTest() {
 		UnsignedInt128Member v = G.UINT128.construct();
@@ -242,6 +244,7 @@ public class TestUnsignedInt128Group {
 		}
 	}
 
+	/* Now long backed: this test too resource intensive
 	@Test
 	public void compareTest() {
 		ArrayList<UnsignedInt128Member> list = new ArrayList<UnsignedInt128Member>();
@@ -274,7 +277,8 @@ public class TestUnsignedInt128Group {
 			}
 		}
 	}
-
+	*/
+	
 	@Test
 	public void versusTest() {
 		long a = System.currentTimeMillis();
