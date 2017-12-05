@@ -106,9 +106,6 @@ How do you store matrices? byte encoder and store row and col count
   approaches this.
 Also character stream encoding. Can use my numeric string format.
 Support unsigned int types for all defined int types
-Support 128-bit type. Start with a 16 bit two byte type that I can
- exhaustively test for add, sub, mul, div. Then substitute two longs
- with appropriate constants. Note that it can be a LongCoder type.
 It's becoming more apparent that all types should implement ByteCoder.
 RGB could be a BitCoder of three 8 bit values
   This might be a good test of BitCoder. BitCount = 24. Read or write 1
@@ -269,7 +266,6 @@ Make sure all types can be exported to and imported from the primitive types and
 Are the random(U) implementations threadsafe? That depends upon java lib. Investigate.
   Need to use ThreadLocalRandom. Do so.
 128 bit unsigned needs both kinds of shift right and not just one
-128 bit needs to be based on longs rather than bytes
 64 bit unsigned needs some tests
 Can I break 128-bit multiply into pieces that I can multiply together a chunk
   at a time and avoid all the shift/add calls? Similar question for divide.
@@ -304,3 +300,5 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
 The array storage classes should duplicate the input type maybe. maybe not.
 Test isLess etc for signed and unsigned int tests
 Write some non-exhaustive tests for Int128 classes
+Fix 128 bit divmod test
+Make signed 128-bit code
