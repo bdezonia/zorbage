@@ -303,3 +303,4 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
   DataSource have a size()? What about streams?
 The array storage classes should duplicate the input type maybe. maybe not.
 Test isLess etc for signed and unsigned int tests
+Write some non-exhaustive tests for Int128 classes

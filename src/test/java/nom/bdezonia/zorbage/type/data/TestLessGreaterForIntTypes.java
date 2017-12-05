@@ -316,8 +316,6 @@ public class TestLessGreaterForIntTypes {
 		*/
 	}
 
-	// TODO: this test won't pass until I transition from two bytes to two longs
-
 	@Test
 	public void uint128() {
 		UnsignedInt128Member a = new UnsignedInt128Member(BigInteger.ZERO);
