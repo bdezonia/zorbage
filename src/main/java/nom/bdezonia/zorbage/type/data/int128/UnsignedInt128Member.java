@@ -53,9 +53,11 @@ public final class UnsignedInt128Member
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
 		InternalRepresentation
 {
-	static final BigInteger TWO64 = new BigInteger("2").pow(64);
-	static final BigInteger TWO63 = new BigInteger("2").pow(63);
-	static final BigInteger TWO63_MINUS_ONE = new BigInteger("2").pow(63).subtract(BigInteger.ONE);
+	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
+	static final BigInteger TWO127 = TWO.pow(127);
+	static final BigInteger TWO64 = TWO.pow(64);
+	static final BigInteger TWO63 = TWO.pow(63);
+	static final BigInteger TWO63_MINUS_ONE = TWO63.subtract(BigInteger.ONE);
 	
 	long lo, hi; // package access is necessary so group can manipulate values
 	
@@ -89,8 +91,8 @@ public final class UnsignedInt128Member
 	public BigInteger v() {
 		BigInteger low = BigInteger.valueOf(lo & 0x7fffffffffffffffL);
 		BigInteger lowInc = ((lo & 0x8000000000000000L) != 0) ? TWO63 : BigInteger.ZERO;
-		BigInteger high = TWO64.multiply(BigInteger.valueOf(hi & 0x7fffffffffffffffL));
-		BigInteger highInc =  ((hi & 0x8000000000000000L) != 0) ? TWO64.multiply(TWO63) : BigInteger.ZERO;
+		BigInteger high = BigInteger.valueOf(hi & 0x7fffffffffffffffL).shiftLeft(64);
+		BigInteger highInc =  ((hi & 0x8000000000000000L) != 0) ? TWO127 : BigInteger.ZERO;
 		return low.add(lowInc).add(high).add(highInc);
 	}
 	
@@ -98,7 +100,7 @@ public final class UnsignedInt128Member
 	
 	public void setV(BigInteger val) {
 		lo = TWO63_MINUS_ONE.and(val).longValue();
-		hi = TWO64.multiply(TWO63_MINUS_ONE).and(val).shiftRight(64).longValue();
+		hi = TWO63_MINUS_ONE.shiftLeft(64).and(val).shiftRight(64).longValue();
 		if (val.testBit(63))
 			lo |= 0x8000000000000000L;
 		if (val.testBit(127))
