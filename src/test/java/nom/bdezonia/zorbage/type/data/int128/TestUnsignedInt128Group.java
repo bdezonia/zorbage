@@ -52,8 +52,104 @@ public class TestUnsignedInt128Group {
 	// These tests are slow so make it possible to turn them on or off
 	private static final boolean RUN_EXHAUSTIVE_16_BIT_TESTS = false;
 
+	// This test will exercise all ops for a subset of all possible numbers. The integer
+	// sequence is different every time. This will help cover all of the range of the numbers
+	// in testing eventually. When it fails it shows which number combo is problematic.
+	
 	@Test
-	public void exhauative() {
+	public void testAllOpsForSomeNumbers() {
+		int loop_max = 1000;
+		BigInteger max = BigInteger.ONE.add(BigInteger.ONE).pow(128);
+		UnsignedInt128Member a = G.UINT128.construct();
+		UnsignedInt128Member b = G.UINT128.construct();
+		UnsignedInt128Member c = G.UINT128.construct();
+		UnsignedInt128Member d = G.UINT128.construct();
+		UnsignedInt128Member m = G.UINT128.construct();
+		UnsignedInt128Member zero = G.UINT128.construct();
+		String msg;
+		BigInteger bigTmp;
+		StringBuilder sb;
+		for (int i = 0; i < loop_max; i++) {
+			G.UINT128.random(a);
+			BigInteger abig = a.v();
+			for (int j = 0; j < loop_max; j++) {
+				G.UINT128.random(b);
+				BigInteger bbig = b.v();
+				bigTmp = c.v();
+				sb = new StringBuilder();
+				sb.append("Expecting compare of ");
+				sb.append(abig);
+				sb.append(" and ");
+				sb.append(bbig);
+				sb.append(" to match between BigInts and UInt128s");
+				msg = sb.toString();
+				assertEquals(msg, abig.compareTo(bbig), G.UINT128.compare(a, b));
+				G.UINT128.add(a, b, c);
+				bigTmp = c.v();
+				sb = new StringBuilder();
+				sb.append("Expecting add of ");
+				sb.append(abig);
+				sb.append(" and ");
+				sb.append(bbig);
+				sb.append(" to equal ");
+				sb.append(bigTmp);
+				msg = sb.toString();
+				assertEquals(msg, abig.add(bbig).mod(max), bigTmp);
+				G.UINT128.subtract(a, b, c);
+				bigTmp = c.v();
+				sb = new StringBuilder();
+				sb.append("Expecting sub of ");
+				sb.append(abig);
+				sb.append(" and ");
+				sb.append(bbig);
+				sb.append(" to equal ");
+				sb.append(bigTmp);
+				msg = sb.toString();
+				BigInteger tmp = abig.subtract(bbig);
+				if (tmp.compareTo(BigInteger.ZERO) < 0)
+					tmp = tmp.add(max);
+				assertEquals(msg, tmp, bigTmp);
+				G.UINT128.multiply(a, b, c);
+				bigTmp = c.v();
+				sb = new StringBuilder();
+				sb.append("Expecting mul of ");
+				sb.append(abig);
+				sb.append(" and ");
+				sb.append(bbig);
+				sb.append(" to equal ");
+				sb.append(bigTmp);
+				msg = sb.toString();
+				assertEquals(msg, abig.multiply(bbig).mod(max), bigTmp);
+				if (G.UINT128.isNotEqual(b, zero)) {
+					G.UINT128.divMod(a, b, d, m);
+					BigInteger[] dm = abig.divideAndRemainder(bbig);
+					bigTmp = d.v();
+					sb = new StringBuilder();
+					sb.append("Expecting div of ");
+					sb.append(abig);
+					sb.append(" and ");
+					sb.append(bbig);
+					sb.append(" to equal ");
+					sb.append(bigTmp);
+					msg = sb.toString();
+					assertEquals(msg, dm[0], bigTmp);
+					bigTmp = m.v();
+					sb = new StringBuilder();
+					sb.append("Expecting mod of ");
+					sb.append(abig);
+					sb.append(" and ");
+					sb.append(bbig);
+					sb.append(" to equal ");
+					sb.append(bigTmp);
+					msg = sb.toString();
+					assertEquals(msg, dm[1], bigTmp);
+				}
+			}
+		}
+	}
+
+	@Test
+	public void exhaustive() {
 		//testMultiplies();
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
@@ -141,29 +237,7 @@ public class TestUnsignedInt128Group {
 			}			
 		}
 	}
-
-	/*
-	private void testMultiplies() {
-		System.out.println("compare 128 bit unsigned multiplies");
-		UnsignedInt128Member a = G.UINT128.construct();
-		UnsignedInt128Member b = G.UINT128.construct();
-		UnsignedInt128Member c = G.UINT128.construct();
-		UnsignedInt128Member d = G.UINT128.construct();
-		
-		for (int i = 0; i < 65536; i++) {
-			a.setV(BigInteger.valueOf(i));
-			for (int j = 0; j < 65536; j++) {
-				b.setV(BigInteger.valueOf(j));
-				G.UINT128.multiply(a, b, c);
-				G.UINT128.multiplyFast(a, b, d);
-				System.out.println(a+ " x " + b + " = " + c + " fast calced " + d);
-				System.out.flush();
-				assertTrue(G.UINT128.isEqual(c, d));
-			}
-		}
-	}
-	*/
-
+	
 	// prove that I can divMod two numbers correctly
 	@Test
 	public void oneDivModTest() {
@@ -286,20 +360,20 @@ public class TestUnsignedInt128Group {
 		UnsignedInt128Member v = G.UINT128.construct();
 		UnsignedInt128Member one = G.UINT128.construct();
 		G.UINT128.unity(one);
-		for (int i = 0; i < 65536; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			G.UINT128.add(v, one, v);
 		}
 
 		long b = System.currentTimeMillis();
 
 		BigInteger vb = BigInteger.ZERO;
-		for (int i = 0; i < 65536; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			vb = vb.add(BigInteger.ONE);
 		}
 		
 		long c = System.currentTimeMillis();
 		
-		System.out.println("Add one 64K times: UInt128 " + (b-a) + " BigInteger " + (c-b));
+		System.out.println("Add one 1000000 times: UInt128 " + (b-a) + " BigInteger " + (c-b));
 		
 		assertTrue(true);
 	}

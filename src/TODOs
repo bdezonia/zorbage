@@ -298,6 +298,4 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
   Sortable interface. Median would require a Sortable DataSource. Does a
   DataSource have a size()? What about streams?
 The array storage classes should duplicate the input type maybe. maybe not.
-Make signed 128-bit code and enable group in G
-Enable isLess/Greater test signed 128-bit int
-Write some non-exhaustive tests for Int128 classes
+Make signed 128-bit code, add non-exhaustive tests, and enable group in G
