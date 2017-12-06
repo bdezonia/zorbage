@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -148,9 +149,31 @@ public class TestUnsignedInt128Group {
 		}
 	}
 
+	// This test will exercise v()/setV() for a subset of all possible numbers. The integer
+	// sequence is different every time. This will help cover all of the range of the numbers
+	// in testing eventually. When it fails it shows which number is problematic.
+	
+	@Test
+	public void testVsetV() {
+		Random rng = new Random();
+		int loop_max = 1000000;
+		UnsignedInt128Member a = new UnsignedInt128Member();
+		for (int i = 0; i < loop_max; i++) {
+			BigInteger abig = new BigInteger(128, rng);
+			a.setV(abig);
+			BigInteger bigTmp = a.v();
+			StringBuilder sb = new StringBuilder();
+			sb.append("Expecting ");
+			sb.append(bigTmp);
+			sb.append(" to equal ");
+			sb.append(abig);
+			String msg = sb.toString();
+			assertEquals(msg, abig, bigTmp);
+		}
+	}
+
 	@Test
 	public void exhaustive() {
-		//testMultiplies();
 		if (RUN_EXHAUSTIVE_16_BIT_TESTS) {
 			System.out.println("Running exhaustive 16 bit tests");
 			addTests();
@@ -250,65 +273,6 @@ public class TestUnsignedInt128Group {
 		assertEquals(BigInteger.valueOf(5), m.v());
 	}
 
-	/* Now long backed: this test too resource intensive
-	@Test
-	public void addOneAndVTest() {
-		ArrayList<Long> list = new ArrayList<Long>();
-		
-		UnsignedInt128Member zero = G.UINT128.construct();
-		UnsignedInt128Member min = G.UINT128.construct();
-		UnsignedInt128Member max = G.UINT128.construct();
-		G.UINT128.minBound(min);
-		G.UINT128.maxBound(max);
-		
-		assertTrue(G.UINT128.isEqual(min, zero));
-
-		// TODO this will fail when going from byte backed to long backed
-		UnsignedInt128Member v = G.UINT128.construct();
-		while (G.UINT128.isLess(v, max)) {
-			list.add(v.v().longValue());
-			G.UINT128.succ(v, v);
-		}
-		list.add(v.v().longValue());
-
-		G.UINT128.succ(v, v);
-		assertTrue(G.UINT128.isEqual(v, zero));
-		for (int i = 0; i < list.size(); i++) {
-			assertEquals(i, list.get(i).longValue());
-		}
-	}
-	*/
-	
-	/* Now long backed: this test too resource intensive
-	@Test
-	public void subtractOneAndVTest() {
-		ArrayList<Long> list = new ArrayList<Long>();
-		
-		UnsignedInt128Member zero = G.UINT128.construct();
-		UnsignedInt128Member min = G.UINT128.construct();
-		UnsignedInt128Member max = G.UINT128.construct();
-		G.UINT128.minBound(min);
-		G.UINT128.maxBound(max);
-		
-		assertTrue(G.UINT128.isEqual(min, zero));
-		
-		// TODO this will fail when going from byte backed to long backed
-		UnsignedInt128Member v = new UnsignedInt128Member(max);
-		while (G.UINT128.isGreater(v, zero)) {
-			list.add(v.v().longValue());
-			G.UINT128.pred(v, v);
-		}
-		list.add(v.v().longValue());
-
-		G.UINT128.pred(v, v);
-		assertTrue(G.UINT128.isEqual(v, max));
-
-		for (int i = 0; i < list.size(); i++) {
-			assertEquals(65535-i, list.get(i).longValue());
-		}
-	}
-	*/
-	
 	@Test
 	public void setVTest() {
 		UnsignedInt128Member v = G.UINT128.construct();
@@ -318,43 +282,8 @@ public class TestUnsignedInt128Group {
 		}
 	}
 
-	/* Now long backed: this test too resource intensive
 	@Test
-	public void compareTest() {
-		ArrayList<UnsignedInt128Member> list = new ArrayList<UnsignedInt128Member>();
-		
-		UnsignedInt128Member v = G.UINT128.construct();
-		UnsignedInt128Member max = G.UINT128.construct();
-		G.UINT128.maxBound(max);
-		
-		while (G.UINT128.isLess(v, max)) {
-			list.add(v.duplicate());
-			G.UINT128.succ(v, v);
-		}
-		list.add(v.duplicate());
-
-		for (int i = 0; i < list.size(); i++) {
-			UnsignedInt128Member x = list.get(i);
-			if (i >= 1) {
-				UnsignedInt128Member y = list.get(i-1);
-				assertTrue(G.UINT128.isGreater(x, y));
-				assertFalse(G.UINT128.isLessEqual(x, y));
-			}
-			assertTrue(G.UINT128.isEqual(x,x));
-			assertFalse(G.UINT128.isNotEqual(x,x));
-			assertTrue(G.UINT128.isGreaterEqual(x,x));
-			assertTrue(G.UINT128.isLessEqual(x,x));
-			if (i < list.size()-1) {
-				UnsignedInt128Member y = list.get(i+1);
-				assertTrue(G.UINT128.isLess(x, y));
-				assertFalse(G.UINT128.isGreaterEqual(x, y));
-			}
-		}
-	}
-	*/
-	
-	@Test
-	public void versusTest() {
+	public void speedVersusBigIntegerTest() {
 		long a = System.currentTimeMillis();
 		
 		UnsignedInt128Member v = G.UINT128.construct();
