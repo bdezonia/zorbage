@@ -59,6 +59,7 @@ public class TestUnsignedInt128Group {
 	
 	@Test
 	public void testAllOpsForSomeNumbers() {
+		Random rng = new Random();
 		int loop_max = 1000;
 		BigInteger max = BigInteger.ONE.add(BigInteger.ONE).pow(128);
 		UnsignedInt128Member a = G.UINT128.construct();
@@ -71,12 +72,11 @@ public class TestUnsignedInt128Group {
 		BigInteger bigTmp;
 		StringBuilder sb;
 		for (int i = 0; i < loop_max; i++) {
-			G.UINT128.random(a);
-			BigInteger abig = a.v();
+			BigInteger abig = new BigInteger(128, rng);
+			a.setV(abig);
 			for (int j = 0; j < loop_max; j++) {
-				G.UINT128.random(b);
-				BigInteger bbig = b.v();
-				bigTmp = c.v();
+				BigInteger bbig = new BigInteger(128, rng);
+				b.setV(bbig);
 				sb = new StringBuilder();
 				sb.append("Expecting compare of ");
 				sb.append(abig);
