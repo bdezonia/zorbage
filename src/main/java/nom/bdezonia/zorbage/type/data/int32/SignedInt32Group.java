@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.int32;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -95,13 +96,7 @@ public class SignedInt32Group
 
 	@Override
 	public void power(int power, SignedInt32Member a, SignedInt32Member b) {
-		if (power == 0 && a.v() == 0) throw new IllegalArgumentException("0^0 is not a number");
-		if (power < 0)
-			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		int tmp = 1;
-		for (int i = 0; i < power; i++)
-			tmp = tmp * a.v();
-		b.setV(tmp);
+		PowerI.compute(this, power, a, b);
 	}
 
 	@Override

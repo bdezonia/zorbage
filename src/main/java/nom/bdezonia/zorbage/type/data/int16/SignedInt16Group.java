@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.int16;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -96,13 +97,7 @@ public class SignedInt16Group
 
 	@Override
 	public void power(int power, SignedInt16Member a, SignedInt16Member b) {
-		if (power == 0 && a.v() == 0) throw new IllegalArgumentException("0^0 is not a number");
-		if (power < 0)
-			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		int tmp = 1;
-		for (int i = 0; i < power; i++)
-			tmp = tmp * a.v();
-		b.setV( (short) tmp );  // TODO: is this correct working in ints vs. shorts?
+		PowerI.compute(this, power, a, b);
 	}
 
 	@Override

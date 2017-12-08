@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.int128;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -159,13 +160,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void power(int power, UnsignedInt128Member a, UnsignedInt128Member b) {
-		if (power == 0 && isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
-		if (power < 0)
-			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
-		for (int i = 0; i < power; i++)
-			multiply(tmp, a, tmp);
-		assign(tmp, b);
+		PowerI.compute(this, power, a, b);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -98,14 +99,7 @@ public class UnsignedInt64Group
 
 	@Override
 	public void power(int power, UnsignedInt64Member a, UnsignedInt64Member b) {
-		if (power == 0 && a.v == 0) throw new IllegalArgumentException("0^0 is not a number");
-		if (power < 0)
-			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		long val = 1;
-		for (int i = 0; i < power; i++) {
-			val *= a.v;
-		}
-		b.v = val;
+		PowerI.compute(this, power, a, b);
 	}
 
 	@Override

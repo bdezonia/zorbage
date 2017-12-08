@@ -210,6 +210,7 @@ Use apache commons to write my DFT example. Test speed and memory use between
   the two libraries
 add more operations: skew, kurtosis, other moments, etc. Also I hear that
   my calculation for variance is not a well behaved algorithm.
+power(int,a,b) could be a reusable algorithm
 FileStorage: have multiple buffers and configurable or calculated buffer sizes
   based upon numElements and percents etc.
 Constructible interfaces could instead derive from Function interfaces
@@ -299,3 +300,4 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
   DataSource have a size()? What about streams?
 The array storage classes should duplicate the input type maybe. maybe not.
 Make signed 128-bit code, add non-exhaustive tests, and enable group in G
+Add more constants to the Constants interface

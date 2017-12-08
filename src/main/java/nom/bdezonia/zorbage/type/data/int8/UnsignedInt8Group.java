@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.int8;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -94,14 +95,7 @@ public class UnsignedInt8Group
 
 	@Override
 	public void power(int power, UnsignedInt8Member a, UnsignedInt8Member b) {
-		if (power == 0 && a.v == 0) throw new IllegalArgumentException("0^0 is not a number");
-		if (power < 0)
-			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		int tmp = 1;
-		int av = a.v();
-		for (int i = 0; i < power; i++)
-			tmp = tmp * av;
-		b.setV(tmp);
+		PowerI.compute(this, power, a, b);
 	}
 
 	@Override
