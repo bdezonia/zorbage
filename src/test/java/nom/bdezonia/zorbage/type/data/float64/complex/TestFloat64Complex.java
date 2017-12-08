@@ -101,7 +101,7 @@ public class TestFloat64Complex {
 		ComplexFloat64Member uTmp = new ComplexFloat64Member();
 		ComplexFloat64Member xTmp = new ComplexFloat64Member();
 		ComplexFloat64Member I = new ComplexFloat64Member(0,1);
-		ComplexFloat64Member MINUS_2 = new ComplexFloat64Member(-2,0);
+		ComplexFloat64Member MINUS_2_PI = new ComplexFloat64Member(-2*Math.PI,0);
 		ComplexFloat64Member N = new ComplexFloat64Member(input.size(), 0);
 		ComplexFloat64Member E = new ComplexFloat64Member();
 		ComplexFloat64Member PI = new ComplexFloat64Member();
@@ -117,8 +117,7 @@ public class TestFloat64Complex {
 				input.get(x, in);
 				fOfX.setR(in.v());
 				xTmp.setR(x);
-				G.CDBL.multiply(MINUS_2, PI, power);
-				G.CDBL.multiply(power, I, power);
+				G.CDBL.multiply(MINUS_2_PI, I, power);
 				G.CDBL.multiply(power, xTmp, power);
 				G.CDBL.multiply(power, uTmp, power);
 				G.CDBL.divide(power, N, power);
