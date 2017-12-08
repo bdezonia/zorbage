@@ -57,16 +57,19 @@ public class PowerI {
 		U sum = group.construct();
 		U inc = group.construct();
 		group.unity(inc);
-		if (power == 0)
+		if (power == 0) {
 			group.assign(inc, b);
+			return;
+		}
 		// else power >= 1
 		int hiBit = hiBit(power);
 		U two = group.construct();
 		group.add(inc, inc, two);
+		group.assign(a, inc);
 		for (int i = 0; i <= hiBit; i++) {
 			if ((power & i) > 0)
 				group.add(sum, inc, sum);
-			group.multiply(inc, two, inc);
+			group.multiply(inc, a, inc);
 		}
 		group.assign(sum, b);
 	}
