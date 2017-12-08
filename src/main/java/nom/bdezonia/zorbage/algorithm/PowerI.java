@@ -54,7 +54,6 @@ public class PowerI {
 		if (power == 0 && group.isEqual(a,zero))
 			throw new IllegalArgumentException("0^0 is not a number");
 		// this code minimizes number of multiplies
-		U sum = group.construct();
 		U inc = group.construct();
 		group.unity(inc);
 		if (power == 0) {
@@ -62,14 +61,13 @@ public class PowerI {
 			return;
 		}
 		// else power >= 1
+		U sum = group.construct();
 		int hiBit = hiBit(power);
-		U two = group.construct();
-		group.add(inc, inc, two);
 		group.assign(a, inc);
 		for (int i = 0; i <= hiBit; i++) {
 			if ((power & i) > 0)
 				group.add(sum, inc, sum);
-			group.multiply(inc, a, inc);
+			group.multiply(inc, inc, inc);
 		}
 		group.assign(sum, b);
 	}
