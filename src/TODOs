@@ -25,9 +25,6 @@ Other needs
     numbers besides strings
   find all TODOs in code and implement
   power<u> might not be in right place in hierarchy
-  power(int, a, b): minimize number of multiplies via recursion. see
-    boost hpp code for quats and octs.
-    implement this for all numeric types
   make sure all math ops can safely work if (a,b,c) params collide. use
    extra tmps and assign().
   check: IEEE 754 might specify that a num with one component inf and
@@ -210,7 +207,6 @@ Use apache commons to write my DFT example. Test speed and memory use between
   the two libraries
 add more operations: skew, kurtosis, other moments, etc. Also I hear that
   my calculation for variance is not a well behaved algorithm.
-power(int,a,b) could be a reusable algorithm
 FileStorage: have multiple buffers and configurable or calculated buffer sizes
   based upon numElements and percents etc.
 Constructible interfaces could instead derive from Function interfaces
@@ -301,3 +297,6 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
 The array storage classes should duplicate the input type maybe. maybe not.
 Make signed 128-bit code, add non-exhaustive tests, and enable group in G
 Add more constants to the Constants interface
+We have a PowerI algo for ints. Make a PowerR algo for reals that can utilize
+  divide as needed. But unlike current impls in the types it should minimize
+  muls and divs like PowerI does.
