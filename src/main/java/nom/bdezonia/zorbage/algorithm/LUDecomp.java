@@ -26,13 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -56,8 +55,8 @@ public class LUDecomp {
 	 * @param b
 	 * @param x
 	 */
-	public static <N extends Group<N,U> & Addition<U> & Multiplication<U> & Invertible<U> & Unity<U>,
-					R extends Group<R,RModuleMember<U>> & Constructible1dLong<RModuleMember<U>>,
+	public static <N extends RingWithUnity<N,U> & Invertible<U>,
+					R extends RModule<R,RModuleMember<U>,N,U> & Constructible1dLong<RModuleMember<U>>,
 					M extends Group<M,MatrixMember<U>> & Constructible2dLong<MatrixMember<U>>,
 					U>
 		void compute(N numGroup, R vecGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
