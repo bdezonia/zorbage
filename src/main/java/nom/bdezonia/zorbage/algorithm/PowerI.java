@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Unity;
@@ -47,44 +46,41 @@ public class PowerI {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U>, U>
+	public static <T extends Group<T,U> & Multiplication<U> & Unity<U>, U>
 		void compute(T group, int power, U a, U b)
 	{
-		U one = group.construct();
-		group.unity(one);
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
-			U zero = group.construct();
-			if (group.isEqual(a,zero))
+			U tmp = group.construct();
+			if (group.isEqual(a,tmp))
 				throw new IllegalArgumentException("0^0 is not a number");
-			group.assign(one, b);
+			group.unity(tmp);
+			group.assign(tmp, b);
 			return;
 		}
 		// else power >= 1
-		// this code minimizes number of multiplies
-		U sum = group.construct(one);
-		U term = group.construct(a);
-		while (power != 0) {
-			if ((power & 1) > 0)
-				group.multiply(sum, term, sum);
-			group.multiply(term, term, term);
-			power >>= 1;
-		}
 
-		// pow bits
-		// 1   (0001) is 2^1
-		// 2   (0010) is 2^2
-		// 3   (0011) is 2^2 * 2^1
-		// 4   (0100) is 2^4
-		// 5   (0101) is 2^4 * 2^1
-		// 6   (0110) is 2^4 * 2^2
-		// 7   (0111) is 2^4 * 2^2 * 2^1
-		// 8   (1000) is 2^8
-		// 9   (1001) is 2^8 * 2^1 
-		// 10  (1010) is 2^8 * 2^2 
-		
-		group.assign(sum, b);
+		pow(group, power, a, b);
 	}
 	
+	private static <T extends Group<T,U> & Multiplication<U> & Unity<U>, U>
+		void pow(T group, int pow, U a, U b)
+	{
+		if (pow == 0) {
+			group.unity(b);
+		}
+		else if (pow == 1) {
+			group.assign(a, b);
+		}
+		else {
+			U tmp = group.construct();
+			int halfPow = pow >>> 1;
+			pow(group, halfPow, a, tmp);
+			group.multiply(tmp, tmp, tmp);
+			if (pow != (halfPow << 1))
+				group.multiply(tmp, a, tmp);
+			group.assign(tmp, b);
+		}
+	}
 }
