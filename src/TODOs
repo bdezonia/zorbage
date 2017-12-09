@@ -301,3 +301,4 @@ We have a PowerI algo for ints. Make a PowerR algo for reals that can utilize
   divide as needed. But unlike current impls in the types it should minimize
   muls and divs like PowerI does.
 Test PowerI
+Find all places that might try to find hiBit and use Integer.numLeadZero()

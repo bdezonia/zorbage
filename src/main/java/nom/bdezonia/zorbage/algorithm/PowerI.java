@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class PowerI {
 
+	private PowerI() {}
+	
 	/**
 	 * 
 	 * @param group
@@ -48,38 +50,41 @@ public class PowerI {
 	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U>, U>
 		void compute(T group, int power, U a, U b)
 	{
+		U one = group.construct();
+		group.unity(one);
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
-		U zero = group.construct();
-		if (power == 0 && group.isEqual(a,zero))
-			throw new IllegalArgumentException("0^0 is not a number");
-		// this code minimizes number of multiplies
-		U inc = group.construct();
-		group.unity(inc);
 		if (power == 0) {
-			group.assign(inc, b);
+			U zero = group.construct();
+			if (group.isEqual(a,zero))
+				throw new IllegalArgumentException("0^0 is not a number");
+			group.assign(one, b);
 			return;
 		}
 		// else power >= 1
-		U sum = group.construct();
-		int hiBit = hiBit(power);
-		group.assign(a, inc);
-		for (int i = 0; i <= hiBit; i++) {
-			if ((power & i) > 0)
-				group.add(sum, inc, sum);
-			group.multiply(inc, inc, inc);
+		// this code minimizes number of multiplies
+		U sum = group.construct(one);
+		U term = group.construct(a);
+		while (power != 0) {
+			if ((power & 1) > 0)
+				group.multiply(sum, term, sum);
+			group.multiply(term, term, term);
+			power >>= 1;
 		}
+
+		// pow bits
+		// 1   (0001) is 2^1
+		// 2   (0010) is 2^2
+		// 3   (0011) is 2^2 * 2^1
+		// 4   (0100) is 2^4
+		// 5   (0101) is 2^4 * 2^1
+		// 6   (0110) is 2^4 * 2^2
+		// 7   (0111) is 2^4 * 2^2 * 2^1
+		// 8   (1000) is 2^8
+		// 9   (1001) is 2^8 * 2^1 
+		// 10  (1010) is 2^8 * 2^2 
+		
 		group.assign(sum, b);
 	}
 	
-	private static int hiBit(int power) {
-		int tmp = 0x80000000;
-		for (int i = 31; i >= 0; i--) {
-			if ((power & tmp) > 0)
-				return i;
-			tmp >>>= 1;
-		}
-		throw new IllegalArgumentException("should not be possible to get here");
-	}
-
 }

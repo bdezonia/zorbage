@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.data.int32;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -49,6 +51,36 @@ public class TestSignedInt32Group {
 		G.INT32.add(a,b,sum);
 		
 		assertEquals(5, sum.v());
+	}
+	
+	@Test
+	public void testPower() {
+		SignedInt32Member a = G.INT32.construct();
+		SignedInt32Member b = G.INT32.construct();
+		
+		a.setV(2);
+		
+		try {
+			G.INT32.power(-1, a, b);
+			fail();
+		}
+		catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+		for (int i = 0; i < 100; i++) {
+			G.INT32.power(i, a, b);
+			assertEquals(pow(a.v(), i), b.v());
+		}
+
+	}
+	
+	private int pow(int base, int power) {
+		int total = 1;
+		for (int i = 0; i < power; i++) {
+			total *= base;
+		}
+		return total;
 	}
 	
 }
