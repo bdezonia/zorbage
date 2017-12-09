@@ -299,3 +299,7 @@ Make signed 128-bit code, add non-exhaustive tests, and enable group in G
 Add more constants to the Constants interface
 Find all places that might try to find hiBit and use Integer.numLeadZero()
 Make Power and PowerI applicable to matrices and maybe tensors. Think.
+Change Dimensioned interface to include long dim(int i). Add to all
+  relevant classes. Eliminate getDims(long[] d) from any class (like
+  tensors) that implement it. Make sure matrices return dim[0] for cols
+  and dim[1] for rows.
