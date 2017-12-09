@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
@@ -38,15 +37,6 @@ import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 
