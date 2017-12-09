@@ -60,31 +60,12 @@ public class Power {
 		}
 		// else power != 0
 
-		pow(group, power, a, b);
-	}
-	
-	private static <T extends Group<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void pow(T group, int pow, U a, U b)
-	{
-		if (pow < 0) {
+		if (power < 0) {
 			U invA = group.construct();
 			group.invert(a, invA);
-			pow(group, pow, invA, b);
+			PowerI.compute(group, -power, invA, b);
 		}
-		else if (pow == 0) {
-			group.unity(b);
-		}
-		else if (pow == 1) {
-			group.assign(a, b);
-		}
-		else {
-			U tmp = group.construct();
-			int halfPow = pow >>> 1;
-			pow(group, halfPow, a, tmp);
-			group.multiply(tmp, tmp, tmp);
-			if (pow != (halfPow << 1))
-				group.multiply(tmp, a, tmp);
-			group.assign(tmp, b);
-		}
+		else
+			PowerI.compute(group, power, a, b);
 	}
 }
