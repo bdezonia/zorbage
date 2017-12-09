@@ -297,8 +297,5 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
 The array storage classes should duplicate the input type maybe. maybe not.
 Make signed 128-bit code, add non-exhaustive tests, and enable group in G
 Add more constants to the Constants interface
-We have a PowerI algo for ints. Make a PowerR algo for reals that can utilize
-  divide as needed. But unlike current impls in the types it should minimize
-  muls and divs like PowerI does.
-Test PowerI
 Find all places that might try to find hiBit and use Integer.numLeadZero()
+Make Power and PowerI applicable to matrices and maybe tensors. Think.

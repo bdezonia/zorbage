@@ -1,5 +1,4 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2017 Barry DeZonia
  * 
@@ -546,7 +545,8 @@ public class Float64Group
 		b.setV(0);
 	}
 	
-	// adopted from boost library
+	// adapted from boost library: TODO write my own impl that fits a
+	// curve near zero.
 
 	public static double sinc_pi(double x) {
 
@@ -572,7 +572,8 @@ public class Float64Group
 		}
 	}
 	
-	// adopted from boost library
+	// adapted from boost library: TODO write my own impl that fits a
+	// curve near zero.
 
 	public static double sinhc_pi(double x) {
 
