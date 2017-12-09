@@ -69,7 +69,6 @@ public class Float64Group
     PredSucc<Float64Member>,
     MiscFloat<Float64Member>
 {
-
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
 	private static final double taylor_0_bound = Math.ulp(1.0);

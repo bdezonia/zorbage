@@ -31,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -47,6 +48,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  */
 public final class Float64Member
 	implements
+		NumberMember<Float64Member>,
 		DoubleCoder<Float64Member>,
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
 		Settable<Float64Member>, Gettable<Float64Member>,
@@ -134,6 +136,21 @@ public final class Float64Member
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		v = rep.getFirstValue().r().doubleValue();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(Float64Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(Float64Member value) {
+		set(value);
 	}
 
 }

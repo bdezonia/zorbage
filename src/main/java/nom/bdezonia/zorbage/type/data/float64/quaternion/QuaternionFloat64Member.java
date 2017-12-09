@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -46,6 +47,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  */
 public final class QuaternionFloat64Member 
 	implements
+		NumberMember<QuaternionFloat64Member>,
 		DoubleCoder<QuaternionFloat64Member>,
 		Allocatable<QuaternionFloat64Member>, Duplicatable<QuaternionFloat64Member>,
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>
@@ -174,6 +176,21 @@ public final class QuaternionFloat64Member
 	@Override
 	public QuaternionFloat64Member duplicate() {
 		return new QuaternionFloat64Member(this);
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(QuaternionFloat64Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(QuaternionFloat64Member value) {
+		set(value);
 	}
 
 }

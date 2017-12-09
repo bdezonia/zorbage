@@ -27,10 +27,25 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
+import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModuleMember;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModuleMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
@@ -40,99 +55,101 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
  */
 public class LUDecomp {
 
-	// TODO - generalize to more floating types
-	
 	/**
 	 * Do not instantiate. Private constructor for utility class.
 	 */
 	private LUDecomp() {}
 	
 	/**
-	 * LU Decomposition. Sets the solution vector x to the equation Ax = b.
+	 * LU Decomposition. Sets the solution vector x from the equation Ax = b.
 	 * @param a
 	 * @param b
 	 * @param x
 	 */
-	public static void compute(Float64MatrixMember a, Float64VectorMember b, Float64VectorMember x) {
-		
+	public static <N extends Group<N,U> & Addition<U> & Multiplication<U> & Invertible<U> & Unity<U>,
+					R extends Group<R,RModuleMember<U>> & Constructible1dLong<RModuleMember<U>>,
+					M extends Group<M,MatrixMember<U>> & Constructible2dLong<MatrixMember<U>>,
+					U>
+		void compute(N numGroup, R vecGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
+	{
 		final long n = x.length();
 		
 		// decomposition of matrix
 
-		Float64MatrixMember lu = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-		Float64Member sum = G.DBL.construct();
-		Float64Member value1 = G.DBL.construct();
-		Float64Member value2 = G.DBL.construct();
-		Float64Member term = G.DBL.construct();
-		Float64Member tmp = G.DBL.construct();
+		MatrixMember<U> lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
+		U sum = numGroup.construct();
+		U value1 = numGroup.construct();
+		U value2 = numGroup.construct();
+		U term = numGroup.construct();
+		U tmp = numGroup.construct();
 		for (long i = 0; i < n; i++)
 		{
 			for (long j = i; j < n; j++)
 			{
-				sum.setV(0);
+				numGroup.zero(sum);
 				for (long k = 0; k < i; k++) {
 					lu.v(i, k, value1);
 					lu.v(k, j, value2);
-					G.DBL.multiply(value1, value2, term);
-					G.DBL.add(sum, term, sum);
+					numGroup.multiply(value1, value2, term);
+					numGroup.add(sum, term, sum);
 				}
 				a.v(i, j, term);
-				G.DBL.subtract(term, sum, term);
+				numGroup.subtract(term, sum, term);
 				lu.setV(i, j, term);
 			}
 			for (long j = i + 1; j < n; j++)
 			{
-				sum.setV(0);
+				numGroup.zero(sum);
 				for (long k = 0; k < i; k++) {
 					lu.v(j, k, value1);
 					lu.v(k, i, value2);
-					G.DBL.multiply(value1, value2, term);
-					G.DBL.add(sum, term, sum);
+					numGroup.multiply(value1, value2, term);
+					numGroup.add(sum, term, sum);
 				}
-				G.DBL.unity(value1);
+				numGroup.unity(value1);
 				lu.v(i, i, tmp);
-				G.DBL.divide(value1, tmp, value1);
+				numGroup.divide(value1, tmp, value1);
 				a.v(j, i, tmp);
-				G.DBL.subtract(tmp, sum, value2);
-				G.DBL.multiply(value1, value2, term);
+				numGroup.subtract(tmp, sum, value2);
+				numGroup.multiply(value1, value2, term);
 				lu.setV(j, i, term);
 			}
 		}
 
 		// find solution of Ly = b
-		Float64VectorMember y = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		RModuleMember<U> y = vecGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
-			sum.setV(0);
+			numGroup.zero(sum);
 			for (long k = 0; k < i; k++) {
 				lu.v(i, k, value1);
 				y.v(k, value2);
-				G.DBL.multiply(value1, value2, term);
-				G.DBL.add(sum, term, sum);
+				numGroup.multiply(value1, value2, term);
+				numGroup.add(sum, term, sum);
 			}
 			b.v(i, value1);
-			G.DBL.subtract(value1, sum, term);
+			numGroup.subtract(value1, sum, term);
 			y.setV(i, term);
 		}
 
 		// find solution of Ux = y
 		for (long i = n - 1; i >= 0; i--)
 		{
-			sum.setV(0);
+			numGroup.zero(sum);
 			for (long k = i + 1; k < n; k++) {
 				lu.v(i, k, value1);
 				x.v(k, value2);
-				G.DBL.multiply(value1, value2, term);
-				G.DBL.add(sum, term, sum);
+				numGroup.multiply(value1, value2, term);
+				numGroup.add(sum, term, sum);
 			}
-			G.DBL.unity(tmp);
+			numGroup.unity(tmp);
 			lu.v(i, i, value1);
-			G.DBL.divide(tmp, value1, value1);
+			numGroup.divide(tmp, value1, value1);
 			y.v(i, value2);
-			G.DBL.subtract(value2, sum, value2);
-			G.DBL.multiply(value1, value2, term);
+			numGroup.subtract(value2, sum, value2);
+			numGroup.multiply(value1, value2, term);
 			x.setV(i, term);
 		}
 	}
-
+	
 }

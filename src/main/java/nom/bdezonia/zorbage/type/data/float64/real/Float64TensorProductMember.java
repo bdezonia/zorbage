@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -45,7 +48,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class Float64TensorProductMember {
+public final class Float64TensorProductMember
+	implements
+		TensorMember<Float64Member>,
+		Gettable<Float64TensorProductMember>,
+		Settable<Float64TensorProductMember>
+{
 
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -98,6 +106,7 @@ public final class Float64TensorProductMember {
 		}
 	}
 
+	@Override
 	public void set(Float64TensorProductMember other) {
 		if (this == other) return;
 		dims = other.dims.clone();
@@ -107,6 +116,7 @@ public final class Float64TensorProductMember {
 		s = other.s;
 	}
 	
+	@Override
 	public void get(Float64TensorProductMember other) {
 		if (this == other) return;
 		other.dims = dims.clone();
@@ -116,14 +126,11 @@ public final class Float64TensorProductMember {
 		other.s = s;
 	}
 	
-	public int numDims() {
-		return dims.length;
-	}
-	
 	public long dim(int dim) {
 		return dims[dim];
 	}
 
+	@Override
 	public void dims(long[] d) {
 		if (d.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
@@ -132,6 +139,7 @@ public final class Float64TensorProductMember {
 		}
 	}
 	
+	@Override
 	public void init(long[] newDims) {
 		dims = newDims.clone();
 		multipliers = calcMultipliers();
@@ -161,6 +169,7 @@ public final class Float64TensorProductMember {
 		storage.get(index, value);
 	}
 	
+	@Override
 	public void v(long[] index, Float64Member value) {
 		if (index.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
@@ -174,6 +183,7 @@ public final class Float64TensorProductMember {
 		storage.set(index, value);
 	}
 	
+	@Override
 	public void setV(long[] index, Float64Member value) {
 		if (index.length != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
@@ -257,5 +267,16 @@ public final class Float64TensorProductMember {
 			result[i] = idx / multipliers[i];
 			idx = idx % multipliers[i];
 		}
+	}
+
+	@Override
+	public int numDimensions() {
+		return dims.length;
+	}
+
+	@Override
+	public void reshape(long[] dims) {
+		// TODO
+		throw new IllegalArgumentException("to implement");
 	}
 }

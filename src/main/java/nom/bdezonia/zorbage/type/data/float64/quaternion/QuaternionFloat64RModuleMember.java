@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,9 +44,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat64RModuleMember {
-
-	private static final QuaternionFloat64Group qdbl = new QuaternionFloat64Group();
+public final class QuaternionFloat64RModuleMember
+	implements
+		RModuleMember<QuaternionFloat64Member>,
+		Gettable<QuaternionFloat64RModuleMember>,
+		Settable<QuaternionFloat64RModuleMember>
+{
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
 	private LinearStorage<?,QuaternionFloat64Member> storage;
@@ -103,19 +110,22 @@ public final class QuaternionFloat64RModuleMember {
 			storage = new FileStorageFloat64<QuaternionFloat64Member>(d1, new QuaternionFloat64Member());
 	}
 	
+	@Override
 	public void v(long i, QuaternionFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
 		else {
-			qdbl.zero(v);
+			G.QDBL.zero(v);
 		}
 	}
 
+	@Override
 	public void setV(long i, QuaternionFloat64Member v) {
 		storage.set(i, v);
 	}
 	
+	@Override
 	public void set(QuaternionFloat64RModuleMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
@@ -123,6 +133,7 @@ public final class QuaternionFloat64RModuleMember {
 		s = other.s;
 	}
 	
+	@Override
 	public void get(QuaternionFloat64RModuleMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
@@ -130,6 +141,7 @@ public final class QuaternionFloat64RModuleMember {
 		other.s = s;
 	}
 
+	@Override
 	public long length() { return storage.size(); }
 	
 	@Override
@@ -147,6 +159,7 @@ public final class QuaternionFloat64RModuleMember {
 		return builder.toString();
 	}
 
+	@Override
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
@@ -159,5 +172,16 @@ public final class QuaternionFloat64RModuleMember {
 				storage.set(i, ZERO);
 			}
 		}
+	}
+
+	@Override
+	public int numDimensions() {
+		return 1;
+	}
+
+	@Override
+	public void reshape(long len) {
+		// TODO Auto-generated method stub
+		throw new IllegalArgumentException("implement me");
 	}
 }

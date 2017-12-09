@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -41,7 +42,6 @@ public class Float64Vector
     VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>,
     Constructible1dLong<Float64VectorMember>
 {
-	private static final Float64Group dbl = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0);
 
 	public Float64Vector() {
@@ -59,7 +59,7 @@ public class Float64Vector
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			dbl.negate(tmp, tmp);
+			G.DBL.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class Float64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			dbl.add(atmp, btmp, btmp);
+			G.DBL.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class Float64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			dbl.subtract(atmp, btmp, btmp);
+			G.DBL.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class Float64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (dbl.isNotEqual(atmp, btmp))
+			if (G.DBL.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -157,9 +157,9 @@ public class Float64Vector
 		}
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i,  tmp);
-			dbl.divide(tmp, max, tmp);
-			dbl.multiply(tmp, tmp, tmp);
-			dbl.add(norm2, tmp, norm2);
+			G.DBL.divide(tmp, max, tmp);
+			G.DBL.multiply(tmp, tmp, tmp);
+			G.DBL.add(norm2, tmp, norm2);
 		}
 		double norm = max.v() * Math.sqrt(norm2.v());
 		b.setV(norm);
@@ -172,13 +172,13 @@ public class Float64Vector
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			dbl.multiply(scalar, tmp, tmp);
+			G.DBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			dbl.multiply(scalar, tmp, tmp);
+			G.DBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -196,27 +196,27 @@ public class Float64Vector
 		Float64Member t = new Float64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		dbl.multiply(atmp, btmp, term1);
+		G.DBL.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		dbl.multiply(atmp, btmp, term2);
-		dbl.subtract(term1, term2, t);
+		G.DBL.multiply(atmp, btmp, term2);
+		G.DBL.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		dbl.multiply(atmp, btmp, term1);
+		G.DBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		dbl.multiply(atmp, btmp, term2);
-		dbl.subtract(term1, term2, t);
+		G.DBL.multiply(atmp, btmp, term2);
+		G.DBL.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		dbl.multiply(atmp, btmp, term1);
+		G.DBL.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		dbl.multiply(atmp, btmp, term2);
-		dbl.subtract(term1, term2, t);
+		G.DBL.multiply(atmp, btmp, term2);
+		G.DBL.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -225,7 +225,7 @@ public class Float64Vector
 		Float64Member tmp = new Float64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (dbl.isNotEqual(tmp, ZERO))
+			if (G.DBL.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -240,8 +240,8 @@ public class Float64Vector
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			dbl.multiply(atmp, btmp, btmp);
-			dbl.add(sum, btmp, sum);
+			G.DBL.multiply(atmp, btmp, btmp);
+			G.DBL.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -257,12 +257,12 @@ public class Float64Vector
 		Float64Member term2 = new Float64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		dbl.negate(atmp, atmp);
-		dbl.multiply(atmp, btmp, term1);
+		G.DBL.negate(atmp, atmp);
+		G.DBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		dbl.multiply(atmp, btmp, term2);
-		dbl.add(term1, term2, c);
+		G.DBL.multiply(atmp, btmp, term2);
+		G.DBL.add(term1, term2, c);
 	}
 
 	@Override

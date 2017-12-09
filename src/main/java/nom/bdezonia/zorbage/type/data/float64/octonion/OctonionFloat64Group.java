@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -73,7 +74,6 @@ public class OctonionFloat64Group
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member NaN = new OctonionFloat64Member(Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN);
-	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 
 	public OctonionFloat64Group() {
 	}
@@ -717,7 +717,7 @@ public class OctonionFloat64Group
 		norm(unreal, norm);
 		tmp.setR(a.r());
 		tmp.setI(norm.v());
-		cdbl.log(tmp, tmp);
+		G.CDBL.log(tmp, tmp);
 		if ( norm.v() == 0.0 ) {
 			factor = tmp.i();
 		} else {

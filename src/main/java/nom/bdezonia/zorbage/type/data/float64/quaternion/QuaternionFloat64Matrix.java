@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
@@ -43,7 +44,6 @@ public class QuaternionFloat64Matrix
 		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Group, QuaternionFloat64Member>,
 		Constructible2dLong<QuaternionFloat64MatrixMember>
 {
-	private static final QuaternionFloat64Group qdbl = new QuaternionFloat64Group();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
 	public QuaternionFloat64Matrix() { }
@@ -61,12 +61,12 @@ public class QuaternionFloat64Matrix
 		QuaternionFloat64Member term = new QuaternionFloat64Member();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				qdbl.zero(sum);
+				G.QDBL.zero(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					qdbl.multiply(atmp, btmp, term);
-					qdbl.add(sum, term, sum);
+					G.QDBL.multiply(atmp, btmp, term);
+					G.QDBL.add(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}
@@ -124,7 +124,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.negate(tmp, tmp);
+				G.QDBL.negate(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -144,7 +144,7 @@ public class QuaternionFloat64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				qdbl.add(atmp, btmp, tmp);
+				G.QDBL.add(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -164,7 +164,7 @@ public class QuaternionFloat64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				qdbl.subtract(atmp, btmp, tmp);
+				G.QDBL.subtract(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -181,7 +181,7 @@ public class QuaternionFloat64Matrix
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (qdbl.isNotEqual(value1, value2))
+				if (G.QDBL.isNotEqual(value1, value2))
 					return false;
 			}
 		}
@@ -240,7 +240,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.roundTowardsZero(tmp, tmp);
+				G.QDBL.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -254,7 +254,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.roundAwayFromZero(tmp, tmp);
+				G.QDBL.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -268,7 +268,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.roundPositive(tmp, tmp);
+				G.QDBL.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -282,7 +282,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.roundNegative(tmp, tmp);
+				G.QDBL.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -296,7 +296,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.roundNearest(tmp, tmp);
+				G.QDBL.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -310,7 +310,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				qdbl.roundNearestEven(tmp, tmp);
+				G.QDBL.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -322,7 +322,7 @@ public class QuaternionFloat64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (qdbl.isNaN(value))
+				if (G.QDBL.isNaN(value))
 					return true;
 			}
 		}
@@ -335,7 +335,7 @@ public class QuaternionFloat64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (qdbl.isInfinite(value))
+				if (G.QDBL.isInfinite(value))
 					return true;
 			}
 		}
@@ -352,7 +352,7 @@ public class QuaternionFloat64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				qdbl.conjugate(atmp, btmp);
+				G.QDBL.conjugate(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}

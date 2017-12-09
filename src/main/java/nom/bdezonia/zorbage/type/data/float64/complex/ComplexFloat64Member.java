@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -46,7 +47,8 @@ public final class ComplexFloat64Member
 	implements
 		DoubleCoder<ComplexFloat64Member>,
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
-		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>
+		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
+		NumberMember<ComplexFloat64Member>
 {
 	private double r, i;
 	
@@ -140,6 +142,21 @@ public final class ComplexFloat64Member
 	@Override
 	public ComplexFloat64Member duplicate() {
 		return new ComplexFloat64Member(this);
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(ComplexFloat64Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(ComplexFloat64Member value) {
+		set(value);
 	}
 
 }

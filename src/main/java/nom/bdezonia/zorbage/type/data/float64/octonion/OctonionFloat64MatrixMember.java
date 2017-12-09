@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,8 +43,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class OctonionFloat64MatrixMember {
-	
+public final class OctonionFloat64MatrixMember
+	implements
+		MatrixMember<OctonionFloat64Member>,
+		Gettable<OctonionFloat64MatrixMember>,
+		Settable<OctonionFloat64MatrixMember>
+{
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
 	private LinearStorage<?,OctonionFloat64Member> storage;
@@ -98,10 +105,13 @@ public final class OctonionFloat64MatrixMember {
 		init(d2,d1);
 	}
 	
+	@Override
 	public long rows() { return rows; }
 
+	@Override
 	public long cols() { return cols; }
 
+	@Override
 	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
@@ -117,16 +127,19 @@ public final class OctonionFloat64MatrixMember {
 			storage = new FileStorageFloat64<OctonionFloat64Member>(r*c, new OctonionFloat64Member());
 	}
 	
+	@Override
 	public void v(long r, long c, OctonionFloat64Member value) {
 		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
+	@Override
 	public void setV(long r, long c, OctonionFloat64Member value) {
 		long index = r * rows + c;
 		storage.set(index, value);
 	}
 	
+	@Override
 	public void set(OctonionFloat64MatrixMember other) {
 		if (this == other) return;
 		rows = other.rows;
@@ -136,6 +149,7 @@ public final class OctonionFloat64MatrixMember {
 		storage = other.storage.duplicate();
 	}
 	
+	@Override
 	public void get(OctonionFloat64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
@@ -162,5 +176,16 @@ public final class OctonionFloat64MatrixMember {
 		}
 		builder.append(']');
 		return builder.toString();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 2;
+	}
+
+	@Override
+	public void reshape(long rows, long cols) {
+		// TODO Auto-generated method stub
+		throw new IllegalArgumentException("implement me");
 	}
 }

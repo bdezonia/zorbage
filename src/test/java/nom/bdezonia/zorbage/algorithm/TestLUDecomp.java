@@ -34,6 +34,12 @@ import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModuleMember;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModuleMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
@@ -69,7 +75,7 @@ public class TestLUDecomp {
 		
 		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
-		LUDecomp.compute(a,b,x);
+		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a,b,x);
 
 		Float64Member value = new Float64Member();
 		
@@ -85,5 +91,36 @@ public class TestLUDecomp {
 		assertEquals(13, value.v(), 0.000000000001);
 	}
 	
+	@Test
+	public void testFloat() {
+		Float64MatrixMember a;
+		Float64VectorMember b;
+		Float64VectorMember x;
+		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b, x);
+	}
+	
+	@Test
+	public void testComplexFloat() {
+		ComplexFloat64MatrixMember a;
+		ComplexFloat64VectorMember b;
+		ComplexFloat64VectorMember x;
+		LUDecomp.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, a, b, x);
+	}
+	
+	@Test
+	public void testQuaternionFloat() {
+		QuaternionFloat64MatrixMember a;
+		QuaternionFloat64RModuleMember b;
+		QuaternionFloat64RModuleMember x;
+		LUDecomp.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b, x);
+	}
+
+	@Test
+	public void testOctonionFloat() {
+		OctonionFloat64MatrixMember a;
+		OctonionFloat64RModuleMember b;
+		OctonionFloat64RModuleMember x;
+		LUDecomp.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b, x);
+	}
 
 }

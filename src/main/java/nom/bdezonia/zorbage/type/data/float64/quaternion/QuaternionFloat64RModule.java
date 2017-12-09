@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -41,7 +42,6 @@ public class QuaternionFloat64RModule
     RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Group,QuaternionFloat64Member>,
     Constructible1dLong<QuaternionFloat64RModuleMember>
 {
-	private static final QuaternionFloat64Group qdbl = new QuaternionFloat64Group();
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
 	public QuaternionFloat64RModule() {
@@ -59,7 +59,7 @@ public class QuaternionFloat64RModule
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			qdbl.negate(tmp, tmp);
+			G.QDBL.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class QuaternionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			qdbl.add(atmp, btmp, btmp);
+			G.QDBL.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class QuaternionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			qdbl.subtract(atmp, btmp, btmp);
+			G.QDBL.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class QuaternionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (qdbl.isNotEqual(atmp, btmp))
+			if (G.QDBL.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -169,13 +169,13 @@ public class QuaternionFloat64RModule
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			qdbl.multiply(scalar, tmp, tmp);
+			G.QDBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			qdbl.multiply(scalar, tmp, tmp);
+			G.QDBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -193,27 +193,27 @@ public class QuaternionFloat64RModule
 		QuaternionFloat64Member t = new QuaternionFloat64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		qdbl.multiply(atmp, btmp, term1);
+		G.QDBL.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		qdbl.multiply(atmp, btmp, term2);
-		qdbl.subtract(term1, term2, t);
+		G.QDBL.multiply(atmp, btmp, term2);
+		G.QDBL.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		qdbl.multiply(atmp, btmp, term1);
+		G.QDBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		qdbl.multiply(atmp, btmp, term2);
-		qdbl.subtract(term1, term2, t);
+		G.QDBL.multiply(atmp, btmp, term2);
+		G.QDBL.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		qdbl.multiply(atmp, btmp, term1);
+		G.QDBL.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		qdbl.multiply(atmp, btmp, term2);
-		qdbl.subtract(term1, term2, t);
+		G.QDBL.multiply(atmp, btmp, term2);
+		G.QDBL.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -222,7 +222,7 @@ public class QuaternionFloat64RModule
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (qdbl.isNotEqual(tmp, ZERO))
+			if (G.QDBL.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -237,8 +237,8 @@ public class QuaternionFloat64RModule
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			qdbl.multiply(atmp, btmp, btmp);
-			qdbl.add(sum, btmp, sum);
+			G.QDBL.multiply(atmp, btmp, btmp);
+			G.QDBL.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -254,12 +254,12 @@ public class QuaternionFloat64RModule
 		QuaternionFloat64Member term2 = new QuaternionFloat64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		qdbl.negate(atmp, atmp);
-		qdbl.multiply(atmp, btmp, term1);
+		G.QDBL.negate(atmp, atmp);
+		G.QDBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		qdbl.multiply(atmp, btmp, term2);
-		qdbl.add(term1, term2, c);
+		G.QDBL.multiply(atmp, btmp, term2);
+		G.QDBL.add(term1, term2, c);
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class QuaternionFloat64RModule
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
-			qdbl.conjugate(tmp, tmp);
+			G.QDBL.conjugate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

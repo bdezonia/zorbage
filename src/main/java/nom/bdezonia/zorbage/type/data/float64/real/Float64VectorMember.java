@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,9 +44,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class Float64VectorMember {
-
-	private static final Float64Group dbl = new Float64Group();
+public final class Float64VectorMember
+	implements
+		RModuleMember<Float64Member>,
+		Gettable<Float64VectorMember>,
+		Settable<Float64VectorMember>
+{
 	private static final Float64Member ZERO = new Float64Member(0); 
 
 	private LinearStorage<?,Float64Member> storage;
@@ -94,21 +101,24 @@ public final class Float64VectorMember {
 		else
 			storage = new FileStorageFloat64<Float64Member>(d1, new Float64Member());
 	}
-	
+
+	@Override
 	public void v(long i, Float64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
 		else {
-			dbl.zero(v);
+			G.DBL.zero(v);
 		}
 	}
 
+	@Override
 	public void setV(long i, Float64Member v) {
 		storage.set(i, v);
 	}
 	
 	
+	@Override
 	public void set(Float64VectorMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
@@ -116,6 +126,7 @@ public final class Float64VectorMember {
 		s = other.s;
 	}
 	
+	@Override
 	public void get(Float64VectorMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
@@ -123,6 +134,7 @@ public final class Float64VectorMember {
 		other.s = s;
 	}
 
+	@Override
 	public long length() { return storage.size(); }
 	
 	@Override
@@ -140,6 +152,7 @@ public final class Float64VectorMember {
 		return builder.toString();
 	}
 
+	@Override
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
@@ -152,6 +165,17 @@ public final class Float64VectorMember {
 				storage.set(i, ZERO);
 			}
 		}
+	}
+
+	@Override
+	public int numDimensions() {
+		return 1;
+	}
+
+	@Override
+	public void reshape(long len) {
+		// copy from complex vector code
+		throw new IllegalArgumentException("TODO");
 	}
 
 }

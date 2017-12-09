@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -41,7 +42,6 @@ public class OctonionFloat64RModule
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
     Constructible1dLong<OctonionFloat64RModuleMember>
 {
-	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
 	public OctonionFloat64RModule() {
@@ -59,7 +59,7 @@ public class OctonionFloat64RModule
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			odbl.negate(tmp, tmp);
+			G.ODBL.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			odbl.add(atmp, btmp, btmp);
+			G.ODBL.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			odbl.subtract(atmp, btmp, btmp);
+			G.ODBL.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (odbl.isNotEqual(atmp, btmp))
+			if (G.ODBL.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -169,13 +169,13 @@ public class OctonionFloat64RModule
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			odbl.multiply(scalar, tmp, tmp);
+			G.ODBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			odbl.multiply(scalar, tmp, tmp);
+			G.ODBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -193,27 +193,27 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member t = new OctonionFloat64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		odbl.multiply(atmp, btmp, term1);
+		G.ODBL.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		odbl.multiply(atmp, btmp, term2);
-		odbl.subtract(term1, term2, t);
+		G.ODBL.multiply(atmp, btmp, term2);
+		G.ODBL.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		odbl.multiply(atmp, btmp, term1);
+		G.ODBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		odbl.multiply(atmp, btmp, term2);
-		odbl.subtract(term1, term2, t);
+		G.ODBL.multiply(atmp, btmp, term2);
+		G.ODBL.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		odbl.multiply(atmp, btmp, term1);
+		G.ODBL.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		odbl.multiply(atmp, btmp, term2);
-		odbl.subtract(term1, term2, t);
+		G.ODBL.multiply(atmp, btmp, term2);
+		G.ODBL.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -222,7 +222,7 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (odbl.isNotEqual(tmp, ZERO))
+			if (G.ODBL.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -237,8 +237,8 @@ public class OctonionFloat64RModule
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			odbl.multiply(atmp, btmp, btmp);
-			odbl.add(sum, btmp, sum);
+			G.ODBL.multiply(atmp, btmp, btmp);
+			G.ODBL.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -254,12 +254,12 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member term2 = new OctonionFloat64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		odbl.negate(atmp, atmp);
-		odbl.multiply(atmp, btmp, term1);
+		G.ODBL.negate(atmp, atmp);
+		G.ODBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		odbl.multiply(atmp, btmp, term2);
-		odbl.add(term1, term2, c);
+		G.ODBL.multiply(atmp, btmp, term2);
+		G.ODBL.add(term1, term2, c);
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
-			odbl.conjugate(tmp, tmp);
+			G.ODBL.conjugate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

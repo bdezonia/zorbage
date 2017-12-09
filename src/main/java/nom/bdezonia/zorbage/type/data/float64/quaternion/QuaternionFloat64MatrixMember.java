@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,8 +43,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat64MatrixMember {
-	
+public final class QuaternionFloat64MatrixMember
+	implements
+		MatrixMember<QuaternionFloat64Member>,
+		Gettable<QuaternionFloat64MatrixMember>,
+		Settable<QuaternionFloat64MatrixMember>
+{
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
 	private LinearStorage<?,QuaternionFloat64Member> storage;
@@ -93,11 +100,14 @@ public final class QuaternionFloat64MatrixMember {
 		this.s = s;
 		init(d2,d1);
 	}
-	
+
+	@Override
 	public long rows() { return rows; }
 
+	@Override
 	public long cols() { return cols; }
 
+	@Override
 	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
@@ -113,16 +123,19 @@ public final class QuaternionFloat64MatrixMember {
 			storage = new FileStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
 	}
 	
+	@Override
 	public void v(long r, long c, QuaternionFloat64Member value) {
 		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
+	@Override
 	public void setV(long r, long c, QuaternionFloat64Member value) {
 		long index = r * rows + c;
 		storage.set(index, value);
 	}
 	
+	@Override
 	public void set(QuaternionFloat64MatrixMember other) {
 		if (this == other) return;
 		rows = other.rows;
@@ -132,6 +145,7 @@ public final class QuaternionFloat64MatrixMember {
 		storage = other.storage.duplicate();
 	}
 	
+	@Override
 	public void get(QuaternionFloat64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
@@ -158,5 +172,16 @@ public final class QuaternionFloat64MatrixMember {
 		}
 		builder.append(']');
 		return builder.toString();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 2;
+	}
+
+	@Override
+	public void reshape(long rows, long cols) {
+		// TODO Auto-generated method stub
+		throw new IllegalArgumentException("implement me");
 	}
 }

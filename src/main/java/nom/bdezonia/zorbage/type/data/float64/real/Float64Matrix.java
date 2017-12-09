@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
@@ -43,7 +44,6 @@ public class Float64Matrix
 		MatrixRing<Float64Matrix, Float64MatrixMember, Float64Group, Float64Member>,
 		Constructible2dLong<Float64MatrixMember>
 {
-	private static final Float64Group dbl = new Float64Group();
 	private static final Float64Member ZERO = new Float64Member(0);
 	
 	public Float64Matrix() { }
@@ -61,12 +61,12 @@ public class Float64Matrix
 		Float64Member term = new Float64Member();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				dbl.zero(sum);
+				G.DBL.zero(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					dbl.multiply(atmp, btmp, term);
-					dbl.add(sum, term, sum);
+					G.DBL.multiply(atmp, btmp, term);
+					G.DBL.add(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}
@@ -126,7 +126,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.negate(tmp,tmp);
+				G.DBL.negate(tmp,tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -146,7 +146,7 @@ public class Float64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				dbl.add(atmp, btmp, tmp);
+				G.DBL.add(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -166,7 +166,7 @@ public class Float64Matrix
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				dbl.subtract(atmp, btmp, tmp);
+				G.DBL.subtract(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}
@@ -183,7 +183,7 @@ public class Float64Matrix
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (dbl.isNotEqual(value1, value2))
+				if (G.DBL.isNotEqual(value1, value2))
 					return false;
 			}
 		}
@@ -242,7 +242,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.roundTowardsZero(tmp, tmp);
+				G.DBL.roundTowardsZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -256,7 +256,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.roundAwayFromZero(tmp, tmp);
+				G.DBL.roundAwayFromZero(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -270,7 +270,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.roundPositive(tmp, tmp);
+				G.DBL.roundPositive(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -284,7 +284,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.roundNegative(tmp, tmp);
+				G.DBL.roundNegative(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -298,7 +298,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.roundNearest(tmp, tmp);
+				G.DBL.roundNearest(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -312,7 +312,7 @@ public class Float64Matrix
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				dbl.roundNearestEven(tmp, tmp);
+				G.DBL.roundNearestEven(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
@@ -324,7 +324,7 @@ public class Float64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (dbl.isNaN(value))
+				if (G.DBL.isNaN(value))
 					return true;
 			}
 		}
@@ -337,7 +337,7 @@ public class Float64Matrix
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (dbl.isInfinite(value))
+				if (G.DBL.isInfinite(value))
 					return true;
 			}
 		}

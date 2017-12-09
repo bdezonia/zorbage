@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,8 +43,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class OctonionFloat64RModuleMember {
-
+public final class OctonionFloat64RModuleMember
+	implements
+		RModuleMember<OctonionFloat64Member>,
+		Gettable<OctonionFloat64RModuleMember>,
+		Settable<OctonionFloat64RModuleMember>
+{
 	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
@@ -110,7 +117,8 @@ public final class OctonionFloat64RModuleMember {
 		else
 			storage = new FileStorageFloat64<OctonionFloat64Member>(d1, new OctonionFloat64Member());
 	}
-	
+
+	@Override
 	public void v(long i, OctonionFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
@@ -120,10 +128,12 @@ public final class OctonionFloat64RModuleMember {
 		}
 	}
 
+	@Override
 	public void setV(long i, OctonionFloat64Member v) {
 		storage.set(i, v);
 	}
 	
+	@Override
 	public void set(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
@@ -131,6 +141,7 @@ public final class OctonionFloat64RModuleMember {
 		s = other.s;
 	}
 	
+	@Override
 	public void get(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
@@ -138,6 +149,7 @@ public final class OctonionFloat64RModuleMember {
 		other.s = s;
 	}
 
+	@Override
 	public long length() { return storage.size(); }
 	
 	@Override
@@ -155,6 +167,7 @@ public final class OctonionFloat64RModuleMember {
 		return builder.toString();
 	}
 
+	@Override
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
@@ -167,5 +180,16 @@ public final class OctonionFloat64RModuleMember {
 				storage.set(i, ZERO);
 			}
 		}
+	}
+
+	@Override
+	public int numDimensions() {
+		return 1;
+	}
+
+	@Override
+	public void reshape(long len) {
+		// TODO Auto-generated method stub
+		throw new IllegalArgumentException("implement me");
 	}
 }

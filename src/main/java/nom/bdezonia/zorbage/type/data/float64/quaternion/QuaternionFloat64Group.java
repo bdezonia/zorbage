@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -61,7 +62,6 @@ public class QuaternionFloat64Group
     Power<QuaternionFloat64Member>,
     RealUnreal<QuaternionFloat64Member,Float64Member>
 {
-	
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
@@ -70,7 +70,6 @@ public class QuaternionFloat64Group
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	private static final QuaternionFloat64Member NaN = new QuaternionFloat64Member(Double.NaN,Double.NaN,Double.NaN,Double.NaN);
-	private static final Float64Group dbl = new Float64Group();
 	
 	public QuaternionFloat64Group() {
 	}
@@ -316,7 +315,7 @@ public class QuaternionFloat64Group
 		v1.setV(a.i() * multiplier.v());
 		v2.setV(a.j() * multiplier.v());
 		v3.setV(a.k() * multiplier.v());
-		dbl.acos(multiplier, term);
+		G.DBL.acos(multiplier, term);
 		b.setR(Math.log(norm.v()));
 		b.setI(v1.v() * term.v());
 		b.setJ(v2.v() * term.v());
@@ -471,143 +470,4 @@ public class QuaternionFloat64Group
 		// TODO
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
-
-	
-	// for log()
-	// http://math.stackexchange.com/questions/2552/the-logarithm-of-quaternion
-	// also wikipedia
-	// if q = a + bi + cj + dk = a + v
-	// then log q = log || q || + (v / || v ||) * acos(a / || q ||)
-	
-	//http://www.lce.hut.fi/~ssarkka/pub/quat.pdf
-	// power: q1^q2 = exp(log(q1) ∗ q2).
-	
-	/*
-	 * From boost library headers:
-
-        // transcendentals
-        // (please see the documentation)
-        
-        
-        template<typename T>
-        inline quaternion<T>                    exp(quaternion<T> const & q)
-        {
-            using    ::std::exp;
-            using    ::std::cos;
-            
-            using    ::boost::math::sinc_pi;
-            
-            T    u = exp(real(q));
-            
-            T    z = abs(unreal(q));
-            
-            T    w = sinc_pi(z);
-            
-            return(u*quaternion<T>(cos(z),
-                w*q.R_component_2(), w*q.R_component_3(),
-                w*q.R_component_4()));
-        }
-        
-        
-        template<typename T>
-        inline quaternion<T>                    cos(quaternion<T> const & q)
-        {
-            using    ::std::sin;
-            using    ::std::cos;
-            using    ::std::cosh;
-            
-            using    ::boost::math::sinhc_pi;
-            
-            T    z = abs(unreal(q));
-            
-            T    w = -sin(q.real())*sinhc_pi(z);
-            
-            return(quaternion<T>(cos(q.real())*cosh(z),
-                w*q.R_component_2(), w*q.R_component_3(),
-                w*q.R_component_4()));
-        }
-        
-        
-        template<typename T>
-        inline quaternion<T>                    sin(quaternion<T> const & q)
-        {
-            using    ::std::sin;
-            using    ::std::cos;
-            using    ::std::cosh;
-            
-            using    ::boost::math::sinhc_pi;
-            
-            T    z = abs(unreal(q));
-            
-            T    w = +cos(q.real())*sinhc_pi(z);
-            
-            return(quaternion<T>(sin(q.real())*cosh(z),
-                w*q.R_component_2(), w*q.R_component_3(),
-                w*q.R_component_4()));
-        }
-        
-        
-        template<typename T>
-        inline quaternion<T>                    tan(quaternion<T> const & q)
-        {
-            return(sin(q)/cos(q));
-        }
-        
-        
-        template<typename T>
-        inline quaternion<T>                    cosh(quaternion<T> const & q)
-        {
-            return((exp(+q)+exp(-q))/static_cast<T>(2));
-        }
-        
-        
-        template<typename T>
-        inline quaternion<T>                    sinh(quaternion<T> const & q)
-        {
-            return((exp(+q)-exp(-q))/static_cast<T>(2));
-        }
-        
-        
-        template<typename T>
-        inline quaternion<T>                    tanh(quaternion<T> const & q)
-        {
-            return(sinh(q)/cosh(q));
-        }
-        
-        
-        template<typename T>
-        quaternion<T>                            pow(quaternion<T> const & q,
-                                                    int n)
-        {
-            if        (n > 1)
-            {
-                int    m = n>>1;
-                
-                quaternion<T>    result = pow(q, m);
-                
-                result *= result;
-                
-                if    (n != (m<<1))
-                {
-                    result *= q; // n odd
-                }
-                
-                return(result);
-            }
-            else if    (n == 1)
-            {
-                return(q);
-            }
-            else if    (n == 0)
-            {
-                return(quaternion<T>(static_cast<T>(1)));
-            }
-            else    // n < 0
-            {
-                return(pow(quaternion<T>(static_cast<T>(1))/q,-n));
-            }
-        }
-  
-
-	 */
 }

@@ -77,7 +77,6 @@ public class ComplexFloat64Group
     Random<ComplexFloat64Member>,
     RealUnreal<ComplexFloat64Member,Float64Member>
 {
-
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);

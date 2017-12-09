@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,8 +43,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class Float64MatrixMember {
-	
+public final class Float64MatrixMember
+	implements
+		MatrixMember<Float64Member>,
+		Settable<Float64MatrixMember>,
+		Gettable<Float64MatrixMember>
+{
 	private static final Float64Member ZERO = new Float64Member(0);
 
 	private LinearStorage<?,Float64Member> storage;
@@ -90,11 +97,14 @@ public final class Float64MatrixMember {
 		this.s = s;
 		init(d2, d1);
 	}
-	
+
+	@Override
 	public long rows() { return rows; }
 
+	@Override
 	public long cols() { return cols; }
 
+	@Override
 	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
@@ -110,17 +120,19 @@ public final class Float64MatrixMember {
 			storage = new FileStorageFloat64<Float64Member>(r*c, new Float64Member());
 	}
 	
+	@Override
 	public void v(long r, long c, Float64Member value) {
 		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
+	@Override
 	public void setV(long r, long c, Float64Member value) {
 		long index = r * rows + c;
 		storage.set(index, value);
 	}
 	
-	
+	@Override
 	public void set(Float64MatrixMember other) {
 		if (this == other) return;
 		rows = other.rows;
@@ -130,6 +142,7 @@ public final class Float64MatrixMember {
 		storage = other.storage.duplicate();
 	}
 	
+	@Override
 	public void get(Float64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
@@ -156,5 +169,15 @@ public final class Float64MatrixMember {
 		}
 		builder.append(']');
 		return builder.toString();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 2;
+	}
+
+	@Override
+	public void reshape(long rows, long cols) {
+		throw new IllegalArgumentException("not implemented yet");
 	}
 }

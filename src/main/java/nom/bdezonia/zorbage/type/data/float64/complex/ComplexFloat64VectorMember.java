@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,9 +44,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class ComplexFloat64VectorMember {
-
-	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
+public final class ComplexFloat64VectorMember
+	implements
+		RModuleMember<ComplexFloat64Member>,
+		Gettable<ComplexFloat64VectorMember>,
+		Settable<ComplexFloat64VectorMember>
+{
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
 	private LinearStorage<?,ComplexFloat64Member> storage;
@@ -98,20 +105,23 @@ public final class ComplexFloat64VectorMember {
 		else
 			storage = new FileStorageFloat64<ComplexFloat64Member>(d1, new ComplexFloat64Member());
 	}
-	
+
+	@Override
 	public void v(long i, ComplexFloat64Member v) {
 		if (i < storage.size()) {
 			storage.get(i, v);
 		}
 		else {
-			cdbl.zero(v);
+			G.CDBL.zero(v);
 		}
 	}
 
+	@Override
 	public void setV(long i, ComplexFloat64Member v) {
 		storage.set(i, v);
 	}
-	
+
+	@Override
 	public void set(ComplexFloat64VectorMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
@@ -119,6 +129,7 @@ public final class ComplexFloat64VectorMember {
 		s = other.s;
 	}
 	
+	@Override
 	public void get(ComplexFloat64VectorMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
@@ -126,6 +137,7 @@ public final class ComplexFloat64VectorMember {
 		other.s = s;
 	}
 
+	@Override
 	public long length() { return storage.size(); }
 	
 	@Override
@@ -143,6 +155,7 @@ public final class ComplexFloat64VectorMember {
 		return builder.toString();
 	}
 	
+	@Override
 	public void init(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
@@ -154,6 +167,27 @@ public final class ComplexFloat64VectorMember {
 			for (long i = 0; i < storage.size(); i++) {
 				storage.set(i, ZERO);
 			}
+		}
+	}
+
+	@Override
+	public int numDimensions() {
+		return 1;
+	}
+
+	@Override
+	public void reshape(long len) {
+		if (len == storage.size()) return;
+		LinearStorage<?, ComplexFloat64Member> orig = storage;
+		init(len);
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		for (long i = orig.size(); i < storage.size(); i++) {
+			storage.set(i, value);
+		}
+		long size = Math.min(storage.size(), orig.size());
+		for (long i = 0; i < size; i++) {
+			orig.get(i, value);
+			storage.set(i, value);
 		}
 	}
 

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -41,7 +42,6 @@ public class ComplexFloat64Vector
     VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
     Constructible1dLong<ComplexFloat64VectorMember>
 {
-	private static final ComplexFloat64Group cdbl = new ComplexFloat64Group();
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	public ComplexFloat64Vector() {
@@ -59,7 +59,7 @@ public class ComplexFloat64Vector
 		final long max = Math.max(a.length(), b.length());
 		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
-			cdbl.negate(tmp, tmp);
+			G.CDBL.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -72,7 +72,7 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			cdbl.add(atmp, btmp, btmp);
+			G.CDBL.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -87,7 +87,7 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			cdbl.subtract(atmp, btmp, btmp);
+			G.CDBL.subtract(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 		for (long i = max; i < c.length(); i++)
@@ -102,7 +102,7 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			if (cdbl.isNotEqual(atmp, btmp))
+			if (G.CDBL.isNotEqual(atmp, btmp))
 				return false;
 		}
 		return true;
@@ -175,13 +175,13 @@ public class ComplexFloat64Vector
 		final long min = Math.min(a.length(), b.length());
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmp);
-			cdbl.multiply(scalar, tmp, tmp);
+			G.CDBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 		final long max = Math.max(a.length(), b.length());
 		for (long i = min; i < max; i++) {
 			a.v(i, tmp);
-			cdbl.multiply(scalar, tmp, tmp);
+			G.CDBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -199,27 +199,27 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member t = new ComplexFloat64Member();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		cdbl.multiply(atmp, btmp, term1);
+		G.CDBL.multiply(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		cdbl.multiply(atmp, btmp, term2);
-		cdbl.subtract(term1, term2, t);
+		G.CDBL.multiply(atmp, btmp, term2);
+		G.CDBL.subtract(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		cdbl.multiply(atmp, btmp, term1);
+		G.CDBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		cdbl.multiply(atmp, btmp, term2);
-		cdbl.subtract(term1, term2, t);
+		G.CDBL.multiply(atmp, btmp, term2);
+		G.CDBL.subtract(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		cdbl.multiply(atmp, btmp, term1);
+		G.CDBL.multiply(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		cdbl.multiply(atmp, btmp, term2);
-		cdbl.subtract(term1, term2, t);
+		G.CDBL.multiply(atmp, btmp, term2);
+		G.CDBL.subtract(term1, term2, t);
 		tmp.setV(2, t);
 		assign(tmp, c);
 	}
@@ -228,7 +228,7 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = dim; i < v.length(); i++) {
 			v.v(i, tmp);
-			if (cdbl.isNotEqual(tmp, ZERO))
+			if (G.CDBL.isNotEqual(tmp, ZERO))
 				return false;
 		}
 		return true;
@@ -243,8 +243,8 @@ public class ComplexFloat64Vector
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			cdbl.multiply(atmp, btmp, btmp);
-			cdbl.add(sum, btmp, sum);
+			G.CDBL.multiply(atmp, btmp, btmp);
+			G.CDBL.add(sum, btmp, sum);
 		}
 		c.set(sum);
 	}
@@ -260,12 +260,12 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member term2 = new ComplexFloat64Member();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		cdbl.negate(atmp, atmp);
-		cdbl.multiply(atmp, btmp, term1);
+		G.CDBL.negate(atmp, atmp);
+		G.CDBL.multiply(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		cdbl.multiply(atmp, btmp, term2);
-		cdbl.add(term1, term2, c);
+		G.CDBL.multiply(atmp, btmp, term2);
+		G.CDBL.add(term1, term2, c);
 	}
 
 	@Override
@@ -291,7 +291,7 @@ public class ComplexFloat64Vector
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
-			cdbl.conjugate(tmp, tmp);
+			G.CDBL.conjugate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

@@ -106,7 +106,7 @@ public class Float64TensorProduct
 	@Override
 	public void assign(Float64TensorProductMember from, Float64TensorProductMember to) {
 		Float64Member tmp = new Float64Member();
-		long[] dims = new long[from.numDims()];
+		long[] dims = new long[from.numDimensions()];
 		from.dims(dims);
 		to.init(dims);
 		long numElems = from.numElems();
@@ -228,8 +228,8 @@ public class Float64TensorProduct
 	}
 
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
-		int numDims = a.numDims();
-		if (numDims != b.numDims())
+		int numDims = a.numDimensions();
+		if (numDims != b.numDimensions())
 			return false;
 		long[] aDims = new long[numDims];
 		long[] bDims = new long[numDims];

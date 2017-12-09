@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -43,7 +44,8 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public final class OctonionFloat64Member
-	implements 
+	implements
+		NumberMember<OctonionFloat64Member>,
 		DoubleCoder<OctonionFloat64Member>,
 		Allocatable<OctonionFloat64Member>, Duplicatable<OctonionFloat64Member>,
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>
@@ -232,6 +234,35 @@ public final class OctonionFloat64Member
 	@Override
 	public OctonionFloat64Member duplicate() {
 		return new OctonionFloat64Member(this);
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(OctonionFloat64Member value) {
+		value.r = r;
+		value.i = i;
+		value.j = j;
+		value.k = k;
+		value.l = l;
+		value.i0 = i0;
+		value.j0 = j0;
+		value.k0 = k0;
+	}
+
+	@Override
+	public void setV(OctonionFloat64Member value) {
+		r = value.r;
+		i = value.i;
+		j = value.j;
+		k = value.k;
+		l = value.l;
+		i0 = value.i0;
+		j0 = value.j0;
+		k0 = value.k0;
 	}
 
 }

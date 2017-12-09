@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -40,8 +43,12 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public final class ComplexFloat64MatrixMember {
-	
+public final class ComplexFloat64MatrixMember
+	implements
+		MatrixMember<ComplexFloat64Member>,
+		Gettable<ComplexFloat64MatrixMember>,
+		Settable<ComplexFloat64MatrixMember>
+{
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
 	private LinearStorage<?,ComplexFloat64Member> storage;
@@ -92,10 +99,13 @@ public final class ComplexFloat64MatrixMember {
 		init(d2, d1);
 	}
 	
+	@Override
 	public long rows() { return rows; }
 
+	@Override
 	public long cols() { return cols; }
 
+	@Override
 	public void init(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
@@ -111,16 +121,19 @@ public final class ComplexFloat64MatrixMember {
 			storage = new FileStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
 	}
 	
+	@Override
 	public void v(long r, long c, ComplexFloat64Member value) {
 		long index = r * rows + c;
 		storage.get(index, value);
 	}
 	
+	@Override
 	public void setV(long r, long c, ComplexFloat64Member value) {
 		long index = r * rows + c;
 		storage.set(index, value);
 	}
-	
+
+	@Override
 	public void set(ComplexFloat64MatrixMember other) {
 		if (this == other) return;
 		rows = other.rows;
@@ -131,6 +144,7 @@ public final class ComplexFloat64MatrixMember {
 		storage = other.storage.duplicate();
 	}
 	
+	@Override
 	public void get(ComplexFloat64MatrixMember other) {
 		if (this == other) return;
 		other.rows = rows;
@@ -158,5 +172,20 @@ public final class ComplexFloat64MatrixMember {
 		}
 		builder.append(']');
 		return builder.toString();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 2;
+	}
+
+	@Override
+	public void reshape(long rows, long cols) {
+		if (this.rows == rows && this.cols == cols) return;
+		LinearStorage<?, ComplexFloat64Member> orig = storage;
+		init(rows, cols);
+		// TODO: look at vectorMember. copy overlapping data.
+		// set other to zero.
+		throw new IllegalArgumentException("not implemented yet");
 	}
 }
