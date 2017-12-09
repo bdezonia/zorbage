@@ -242,23 +242,7 @@ public class OctonionFloat64Group
 
 	@Override
 	public void power(int power, OctonionFloat64Member a, OctonionFloat64Member b) {
-		if (power == 0 && isEqual(a, ZERO)) {
-			assign(NaN, b);
-			return;
-		}
-		// okay for power to be negative
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		assign(ONE,tmp);
-		if (power > 0) {
-			for (int i = 1; i <= power; i++)
-				multiply(tmp,a,tmp);
-		}
-		else if (power < 0) {
-			power = -power;
-			for (int i = 1; i <= power; i++)
-				divide(tmp,a,tmp);
-		}
-		assign(tmp, b);
+		nom.bdezonia.zorbage.algorithm.Power.compute(this, power, a, b);
 	}
 
 	@Override
