@@ -59,7 +59,7 @@ public class LUDecomp {
 					R extends RModule<R,RModuleMember<U>,N,U> & Constructible1dLong<RModuleMember<U>>,
 					M extends Group<M,MatrixMember<U>> & Constructible2dLong<MatrixMember<U>>,
 					U>
-		void compute(N numGroup, R vecGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
+		void compute(N numGroup, R rmodGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
 	{
 		final long n = x.length();
 		
@@ -106,7 +106,7 @@ public class LUDecomp {
 		}
 
 		// find solution of Ly = b
-		RModuleMember<U> y = vecGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		RModuleMember<U> y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
 			numGroup.zero(sum);
