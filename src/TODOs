@@ -111,9 +111,6 @@ RGB could be a BitCoder of three 8 bit values
   bit unsigned type.
 FileStorage bit is possible but slow. It could do file reads and rewind
   and then file writes.
-LUDecomposition for multiple types: (float, comp, quat, oct)
-  This would require a bool within(U,U) method. Also maybe not possible
-  because it requires an Ordered relation? Maybe I'm wrong here.
 Types should specify a preferred order of encoding choices so storage
   allocation is optimal. Then types can implement a ton of coder
   interfaces.
