@@ -147,6 +147,10 @@ public class TestFactorial {
 		a.setV(BigInteger.valueOf(6));
 		Factorial.compute(G.BIGINT, a, b);
 		assertEquals(BigInteger.valueOf(720), b.v());
+
+		a.setV(BigInteger.valueOf(45));
+		Factorial.compute(G.BIGINT, a, b);
+		assertEquals(new BigInteger("119622220865480194561963161495657715064383733760000000000"), b.v());
 	}
 	
 	@Test
