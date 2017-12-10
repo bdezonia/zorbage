@@ -55,22 +55,31 @@ public class LUDecomp {
 	 * @param b
 	 * @param x
 	 */
+/*
 	public static <N extends RingWithUnity<N,U> & Invertible<U>,
 					R extends RModule<R,RModuleMember<U>,N,U> & Constructible1dLong<RModuleMember<U>>,
 					M extends Group<M,MatrixMember<U>> & Constructible2dLong<MatrixMember<U>>,
 					U>
 		void compute(N numGroup, R rmodGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
+*/
+	public static <A, // the base type like Float64Member or Octonion etc.
+					B extends RingWithUnity<B,A> & Invertible<A>,
+					C extends RModuleMember<A>,
+					D extends RModule<D,C,B,A> & Constructible1dLong<C>,
+					E extends MatrixMember<A>,
+					F extends Group<F,E> & Constructible2dLong<E>>
+		void compute(B numGroup, D rmodGroup, F matGroup, E a, C b, C x)
 	{
 		final long n = x.length();
 		
 		// decomposition of matrix
 
-		MatrixMember<U> lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-		U sum = numGroup.construct();
-		U value1 = numGroup.construct();
-		U value2 = numGroup.construct();
-		U term = numGroup.construct();
-		U tmp = numGroup.construct();
+		E lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
+		A sum = numGroup.construct();
+		A value1 = numGroup.construct();
+		A value2 = numGroup.construct();
+		A term = numGroup.construct();
+		A tmp = numGroup.construct();
 		for (long i = 0; i < n; i++)
 		{
 			for (long j = i; j < n; j++)
@@ -106,7 +115,7 @@ public class LUDecomp {
 		}
 
 		// find solution of Ly = b
-		RModuleMember<U> y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		C y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
 			numGroup.zero(sum);

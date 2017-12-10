@@ -91,35 +91,35 @@ public class TestLUDecomp {
 		assertEquals(13, value.v(), 0.000000000001);
 	}
 	
-	@Test
-	public void testFloat() {
-		Float64MatrixMember a;
-		Float64VectorMember b;
-		Float64VectorMember x;
+	//@Test
+	private void testFloat() {
+		Float64MatrixMember a = null;
+		Float64VectorMember b = null;
+		Float64VectorMember x = null;
 		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b, x);
 	}
 	
-	@Test
-	public void testComplexFloat() {
-		ComplexFloat64MatrixMember a;
-		ComplexFloat64VectorMember b;
-		ComplexFloat64VectorMember x;
+	//@Test
+	private void testComplexFloat() {
+		ComplexFloat64MatrixMember a = null;
+		ComplexFloat64VectorMember b = null;
+		ComplexFloat64VectorMember x = null;
 		LUDecomp.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, a, b, x);
 	}
 	
-	@Test
-	public void testQuaternionFloat() {
-		QuaternionFloat64MatrixMember a;
-		QuaternionFloat64RModuleMember b;
-		QuaternionFloat64RModuleMember x;
+	//@Test
+	private void testQuaternionFloat() {
+		QuaternionFloat64MatrixMember a = null;
+		QuaternionFloat64RModuleMember b = null;
+		QuaternionFloat64RModuleMember x = null;
 		LUDecomp.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b, x);
 	}
 
-	@Test
-	public void testOctonionFloat() {
-		OctonionFloat64MatrixMember a;
-		OctonionFloat64RModuleMember b;
-		OctonionFloat64RModuleMember x;
+	//@Test
+	private void testOctonionFloat() {
+		OctonionFloat64MatrixMember a = null;
+		OctonionFloat64RModuleMember b = null;
+		OctonionFloat64RModuleMember x = null;
 		LUDecomp.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b, x);
 	}
 
