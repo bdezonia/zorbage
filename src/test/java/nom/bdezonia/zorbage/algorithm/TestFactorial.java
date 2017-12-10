@@ -184,7 +184,9 @@ public class TestFactorial {
 		
 		// TODO: this is a little weird. consider what is best behavior.
 		// Trunc 4.5 to 4.0 and calc from there? Or leave as is? Or disallow
-		// for reals? That seems too harsh.
+		// for reals? That seems too harsh. Could make the gamma function
+		// and tell users to prefer that algorithm for reals but allow it
+		// here.
 		
 		a.setV(4.5);
 		Factorial.compute(G.DBL, a, b);
