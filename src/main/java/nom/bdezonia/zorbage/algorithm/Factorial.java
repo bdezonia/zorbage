@@ -26,11 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.PredSucc;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 
 /**
  * 
@@ -50,7 +47,7 @@ public class Factorial {
 	 * @param a
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Unity<U> & Multiplication<U> & PredSucc<U>, U>
+	public static <T extends RingWithUnity<T,U> & Ordered<U>, U>
 		void compute(T group, U a, U result)
 	{
 		U tmp = group.construct();
@@ -64,7 +61,7 @@ public class Factorial {
 			U multiplier = group.construct(a);
 			while (group.isGreater(multiplier, tmp)) {
 				group.multiply(product, multiplier, product);
-				group.pred(multiplier, multiplier);
+				group.subtract(multiplier, tmp, multiplier);
 			}
 			group.assign(product, result);
 		}
