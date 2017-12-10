@@ -58,6 +58,9 @@ public class TestFileStorage {
 		}
 		
 		FileStorageFloat64<ComplexFloat64Member> dup = store.duplicate();
+		
+		assertEquals(store.size(), dup.size());
+
 		for (long i = 0; i < dup.size(); i++) {
 			dup.get(i, v);
 			assertEquals(i, v.r(), 0.00000001);
