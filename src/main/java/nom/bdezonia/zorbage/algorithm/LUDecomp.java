@@ -62,24 +62,24 @@ public class LUDecomp {
 					U>
 		void compute(N numGroup, R rmodGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
 */
-	public static <A, // the base type like Float64Member or Octonion etc.
-					B extends RingWithUnity<B,A> & Invertible<A>,
-					C extends RModuleMember<A>,
-					D extends RModule<D,C,B,A> & Constructible1dLong<C>,
-					E extends MatrixMember<A>,
-					F extends Group<F,E> & Constructible2dLong<E>>
-		void compute(B numGroup, D rmodGroup, F matGroup, E a, C b, C x)
+	public static <BASETYPE, // the base type like Float64Member or Octonion etc.
+					BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+					RMODULE_MEMBER extends RModuleMember<BASETYPE>,
+					RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+					MATRIX_MEMBER extends MatrixMember<BASETYPE>,
+					MATRIX_GROUP extends Group<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+		void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
 	{
 		final long n = x.length();
 		
 		// decomposition of matrix
 
-		E lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-		A sum = numGroup.construct();
-		A value1 = numGroup.construct();
-		A value2 = numGroup.construct();
-		A term = numGroup.construct();
-		A tmp = numGroup.construct();
+		MATRIX_MEMBER lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
+		BASETYPE sum = numGroup.construct();
+		BASETYPE value1 = numGroup.construct();
+		BASETYPE value2 = numGroup.construct();
+		BASETYPE term = numGroup.construct();
+		BASETYPE tmp = numGroup.construct();
 		for (long i = 0; i < n; i++)
 		{
 			for (long j = i; j < n; j++)
@@ -115,7 +115,7 @@ public class LUDecomp {
 		}
 
 		// find solution of Ly = b
-		C y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		RMODULE_MEMBER y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
 			numGroup.zero(sum);
