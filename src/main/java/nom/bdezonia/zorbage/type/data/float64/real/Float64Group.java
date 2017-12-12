@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.MiscFloat;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
@@ -43,6 +44,7 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
 
 /**
  * 
@@ -67,7 +69,8 @@ public class Float64Group
     Random<Float64Member>,
     RealUnreal<Float64Member,Float64Member>,
     PredSucc<Float64Member>,
-    MiscFloat<Float64Member>
+    MiscFloat<Float64Member>,
+    ModularDivision<Float64Member>
 {
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
@@ -573,6 +576,27 @@ public class Float64Group
 	@Override
 	public void ulp(Float64Member a, Float64Member b) {
 		b.setV(Math.ulp(a.v()));
+	}
+
+	@Override
+	public void div(Float64Member a, Float64Member b, Float64Member d) {
+		double v = a.v() / b.v();
+		if (v > 0)
+			v = Math.floor(v);
+		else
+			v = Math.ceil(v);
+		d.setV(v);
+	}
+
+	@Override
+	public void mod(Float64Member a, Float64Member b, Float64Member m) {
+		m.setV(a.v() % b.v());
+	}
+
+	@Override
+	public void divMod(Float64Member a, Float64Member b, Float64Member d, Float64Member m) {
+		div(a,b,d);
+		mod(a,b,m);
 	}
 
 	/*

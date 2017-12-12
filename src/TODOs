@@ -304,9 +304,4 @@ Change Dimensioned interface to include long dim(int i). Add to all
   Break Dimensioned into two concepts: DimCount and Dimensioned. The
   samplings only need DimCount. Dimensioned extends DimCount.
 Implement NumberMember interface for all integral types
-Test Round with integers. Make floats support ModularDivision. div
-  and mod is easy. What is best way to support isOdd/isEven for a float?
-  I should be able to avoid call to isEven/isOdd I think by being clever
-  in such a way that works for both reals and ints. Then I can make
-  Round rely on ModularDiv and not IntegralDiv and thus will work for
-  reals and floats.
+Test Round with integers and floats.

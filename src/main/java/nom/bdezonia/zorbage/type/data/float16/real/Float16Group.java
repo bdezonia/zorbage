@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.MiscFloat;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
@@ -67,7 +68,8 @@ public class Float16Group
     Random<Float16Member>,
     RealUnreal<Float16Member,Float16Member>,
     PredSucc<Float16Member>,
-    MiscFloat<Float16Member>
+    MiscFloat<Float16Member>,
+    ModularDivision<Float16Member>
 {
 
 	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
@@ -559,5 +561,26 @@ public class Float16Group
 	public void ulp(Float16Member a, Float16Member b) {
 		// TODO
 		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public void div(Float16Member a, Float16Member b, Float16Member d) {
+		double v = a.v() / b.v();
+		if (v > 0)
+			v = Math.floor(v);
+		else
+			v = Math.ceil(v);
+		d.setV(v);
+	}
+
+	@Override
+	public void mod(Float16Member a, Float16Member b, Float16Member m) {
+		m.setV(a.v() % b.v());
+	}
+
+	@Override
+	public void divMod(Float16Member a, Float16Member b, Float16Member d, Float16Member m) {
+		div(a,b,d);
+		mod(a,b,m);
 	}
 }
