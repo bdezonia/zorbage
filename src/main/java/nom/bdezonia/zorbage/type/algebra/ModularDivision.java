@@ -24,44 +24,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
-
-import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.ModularDivision;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
+package nom.bdezonia.zorbage.type.algebra;
 
 /**
- * Least Common Multiple algorithm
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public class Lcm {
+public interface ModularDivision<U> {
+
+	void div(U a, U b, U d);
+	void mod(U a, U b, U m);
+	void divMod(U a, U b, U d, U m);
 	
-	/**
-	 * Do not instantiate. Private constructor for utility class.
-	 */
-	private Lcm() {}
-	
-	/**
-	 * Sets the result to the least common multiple of a and b. Result is always nonnegative.
-	 * 
-	 * @param group
-	 * @param a
-	 * @param b
-	 * @param result
-	 */
-	public static <T extends Group<T,U> & AbsoluteValue<U> & ModularDivision<U> & Multiplication<U> & Ordered<U>, U>
-		void compute(T group, U a, U b, U result)
-	{
-		U n = group.construct();
-		U d = group.construct();
-		group.multiply(a, b, n); // TODO: overflow prone?
-		group.abs(n, n);
-		Gcd.compute(group, a, b, d);
-		group.div(n, d, result);
-	}
+	// TODO add quot/rem/quotRem
 
 }

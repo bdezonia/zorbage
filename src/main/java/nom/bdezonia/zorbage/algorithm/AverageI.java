@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class AverageI {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends AdditiveGroup<T,U> & IntegralDivision<U> & Unity<U>, U>
+	public static <T extends AdditiveGroup<T,U> & ModularDivision<U> & Unity<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U result)
 	{
 		U sum = grp.construct();

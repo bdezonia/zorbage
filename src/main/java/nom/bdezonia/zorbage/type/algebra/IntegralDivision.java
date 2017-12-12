@@ -31,11 +31,8 @@ package nom.bdezonia.zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface IntegralDivision<U>
+public interface IntegralDivision<U> extends ModularDivision<U>
 {
-	void div(U a, U b, U d);
-	void mod(U a, U b, U m);
-	void divMod(U a, U b, U d, U m);
 	void gcd(U a, U b, U c);
 	void lcm(U a, U b, U c);
 	boolean isEven(U a);
