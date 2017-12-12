@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -52,7 +52,7 @@ public final class UnsignedInt128Member
 		LongCoder<UnsignedInt128Member>,
 		Allocatable<UnsignedInt128Member>, Duplicatable<UnsignedInt128Member>,
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
-		InternalRepresentation, NumberMember<UnsignedInt128Member>
+		UniversalRepresentation, NumberMember<UnsignedInt128Member>
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);

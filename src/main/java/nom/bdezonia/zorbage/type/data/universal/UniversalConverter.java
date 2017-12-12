@@ -39,7 +39,7 @@ public class UniversalConverter {
 	
 	private UniversalConverter() {}
 	
-	public static <U extends InternalRepresentation, V extends InternalRepresentation>
+	public static <U extends UniversalRepresentation, V extends UniversalRepresentation>
 		void convert(TensorOctonionRepresentation rep, U a, V b)
 	{
 		a.setInternalRep(rep);

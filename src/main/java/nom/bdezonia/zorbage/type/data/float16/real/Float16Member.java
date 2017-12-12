@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -56,7 +56,7 @@ public final class Float16Member
 	ShortCoder<Float16Member>,
 	Allocatable<Float16Member>, Duplicatable<Float16Member>,
 	Settable<Float16Member>, Gettable<Float16Member>,
-	InternalRepresentation
+	UniversalRepresentation
 {
 	private static final double SUBNORMAL_BOUND = Math.pow(2,-14);
 	private static final short MAX_BOUND_I = (short) 0b0111101111111111;

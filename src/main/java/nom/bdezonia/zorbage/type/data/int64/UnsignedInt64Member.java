@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -52,7 +52,7 @@ public final class UnsignedInt64Member
 		LongCoder<UnsignedInt64Member>,
 		Allocatable<UnsignedInt64Member>, Duplicatable<UnsignedInt64Member>,
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>,
-		InternalRepresentation, NumberMember<UnsignedInt64Member>
+		UniversalRepresentation, NumberMember<UnsignedInt64Member>
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);

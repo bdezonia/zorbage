@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -51,7 +51,7 @@ public final class SignedInt16Member
 		ShortCoder<SignedInt16Member>,
 		Allocatable<SignedInt16Member>, Duplicatable<SignedInt16Member>,
 		Settable<SignedInt16Member>, Gettable<SignedInt16Member>,
-		InternalRepresentation, NumberMember<SignedInt16Member>
+		UniversalRepresentation, NumberMember<SignedInt16Member>
 {
 
 	private short v;

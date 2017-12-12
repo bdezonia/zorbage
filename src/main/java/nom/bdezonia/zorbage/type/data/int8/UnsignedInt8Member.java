@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -51,7 +51,7 @@ public final class UnsignedInt8Member
 		ByteCoder<UnsignedInt8Member>,
 		Allocatable<UnsignedInt8Member>, Duplicatable<UnsignedInt8Member>,
 		Settable<UnsignedInt8Member>, Gettable<UnsignedInt8Member>,
-		InternalRepresentation, NumberMember<UnsignedInt8Member>
+		UniversalRepresentation, NumberMember<UnsignedInt8Member>
 {
 
 	byte v;

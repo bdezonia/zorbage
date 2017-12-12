@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -51,7 +51,7 @@ public final class UnsignedInt16Member
 		ShortCoder<UnsignedInt16Member>,
 		Allocatable<UnsignedInt16Member>, Duplicatable<UnsignedInt16Member>,
 		Settable<UnsignedInt16Member>, Gettable<UnsignedInt16Member>,
-		InternalRepresentation, NumberMember<UnsignedInt16Member>
+		UniversalRepresentation, NumberMember<UnsignedInt16Member>
 {
 
 	short v;

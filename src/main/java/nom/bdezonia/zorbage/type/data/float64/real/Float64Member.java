@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.InternalRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
@@ -52,7 +52,7 @@ public final class Float64Member
 		DoubleCoder<Float64Member>,
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
 		Settable<Float64Member>, Gettable<Float64Member>,
-		InternalRepresentation
+		UniversalRepresentation
 {
 	private double v;
 	

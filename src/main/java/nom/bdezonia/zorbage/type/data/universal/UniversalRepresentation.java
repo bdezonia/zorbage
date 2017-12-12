@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.type.data.universal;
  * @author Barry DeZonia
  *
  */
-public interface InternalRepresentation {
+public interface UniversalRepresentation {
 
 	void setInternalRep(TensorOctonionRepresentation rep);
 	void setSelf(TensorOctonionRepresentation rep);
