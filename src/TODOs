@@ -303,5 +303,4 @@ Change Dimensioned interface to include long dim(int i). Add to all
   beyond their dimension. Throw exception for queried negative dim.
   Break Dimensioned into two concepts: DimCount and Dimensioned. The
   samplings only need DimCount. Dimensioned extends DimCount.
-Implement NumberMember interface for all integral types
 Test Round with integers and floats.

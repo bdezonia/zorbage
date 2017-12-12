@@ -31,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -51,7 +52,7 @@ public final class BooleanMember
 		BitCoder<BooleanMember>, BooleanCoder<BooleanMember>,
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<BooleanMember>
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -166,6 +167,21 @@ public final class BooleanMember
 	public void setSelf(TensorOctonionRepresentation rep) {
 		BigDecimal d = rep.getFirstValue().r();
 		v = !d.equals(BigDecimal.ZERO);
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(BooleanMember value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(BooleanMember value) {
+		set(value);
 	}
 
 }

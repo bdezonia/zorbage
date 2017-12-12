@@ -31,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -50,7 +51,7 @@ public final class UnsignedInt16Member
 		ShortCoder<UnsignedInt16Member>,
 		Allocatable<UnsignedInt16Member>, Duplicatable<UnsignedInt16Member>,
 		Settable<UnsignedInt16Member>, Gettable<UnsignedInt16Member>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<UnsignedInt16Member>
 {
 
 	short v;
@@ -138,6 +139,21 @@ public final class UnsignedInt16Member
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		v = (short) rep.getFirstValue().r().intValue();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(UnsignedInt16Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(UnsignedInt16Member value) {
+		set(value);
 	}
 
 }

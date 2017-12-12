@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -47,7 +48,7 @@ public final class UnboundedIntMember
 	implements
 		Allocatable<UnboundedIntMember>, Duplicatable<UnboundedIntMember>,
 		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<UnboundedIntMember>
 {
 	private BigInteger v;
 	
@@ -108,6 +109,21 @@ public final class UnboundedIntMember
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		v = rep.getFirstValue().r().toBigInteger();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(UnboundedIntMember value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(UnboundedIntMember value) {
+		set(value);
 	}
 
 }

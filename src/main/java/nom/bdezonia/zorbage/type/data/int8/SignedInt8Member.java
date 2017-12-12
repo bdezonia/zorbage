@@ -31,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -50,7 +51,7 @@ public final class SignedInt8Member
 		ByteCoder<SignedInt8Member>,
 		Allocatable<SignedInt8Member>, Duplicatable<SignedInt8Member>,
 		Settable<SignedInt8Member>, Gettable<SignedInt8Member>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<SignedInt8Member>
 {
 
 	private byte v;
@@ -133,6 +134,21 @@ public final class SignedInt8Member
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		v = (byte) rep.getFirstValue().r().intValue();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(SignedInt8Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(SignedInt8Member value) {
+		set(value);
 	}
 
 }

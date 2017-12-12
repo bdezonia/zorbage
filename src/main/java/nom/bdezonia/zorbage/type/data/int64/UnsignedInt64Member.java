@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -51,7 +52,7 @@ public final class UnsignedInt64Member
 		LongCoder<UnsignedInt64Member>,
 		Allocatable<UnsignedInt64Member>, Duplicatable<UnsignedInt64Member>,
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<UnsignedInt64Member>
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -145,6 +146,21 @@ public final class UnsignedInt64Member
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		v = rep.getFirstValue().r().longValue();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(UnsignedInt64Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(UnsignedInt64Member value) {
+		set(value);
 	}
 
 }

@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -51,7 +52,7 @@ public final class UnsignedInt128Member
 		LongCoder<UnsignedInt128Member>,
 		Allocatable<UnsignedInt128Member>, Duplicatable<UnsignedInt128Member>,
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<UnsignedInt128Member>
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);
@@ -171,6 +172,21 @@ public final class UnsignedInt128Member
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		setV(rep.getFirstValue().r().toBigInteger());
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(UnsignedInt128Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(UnsignedInt128Member value) {
+		set(value);
 	}
 
 }

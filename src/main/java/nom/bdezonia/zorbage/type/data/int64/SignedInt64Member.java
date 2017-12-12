@@ -31,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -50,7 +51,7 @@ public final class SignedInt64Member
 		LongCoder<SignedInt64Member>,
 		Allocatable<SignedInt64Member>, Duplicatable<SignedInt64Member>,
 		Settable<SignedInt64Member>, Gettable<SignedInt64Member>,
-		InternalRepresentation
+		InternalRepresentation, NumberMember<SignedInt64Member>
 {
 
 	private long v;
@@ -133,6 +134,21 @@ public final class SignedInt64Member
 	@Override
 	public void setSelf(TensorOctonionRepresentation rep) {
 		v = rep.getFirstValue().r().intValue();
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(SignedInt64Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(SignedInt64Member value) {
+		set(value);
 	}
 
 }
