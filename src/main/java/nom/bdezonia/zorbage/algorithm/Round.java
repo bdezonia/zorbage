@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Ring;
+import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 
 /**
  * 
@@ -58,11 +58,11 @@ public class Round {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Ring<T,U> & IntegralDivision<U> & Ordered<U>,U>
+	public static <T extends RingWithUnity<T,U> & ModularDivision<U> & Ordered<U>,U>
 		void compute(T group, Mode mode, U delta, U a, U b)
 	{
 		// For symmetry provide a NONE option. This simplifies algorithms
-		// from having to check if mode == NONE should I skip Round.
+		// from having to check "if mode == NONE should I skip Round?".
 		if (mode == Mode.NONE) {
 			group.assign(a,b);
 			return;
@@ -74,6 +74,10 @@ public class Round {
 		U m = group.construct();
 		U bTmp = group.construct();
 		U d1 = group.construct();
+		U m1 = group.construct();
+		U two = group.construct();
+		group.unity(two);
+		group.add(two, two, two);
 		group.divMod(a, delta, d, m);
 		group.multiply(delta, d, bTmp);
 		if (group.isNotEqual(m, zero)) {
@@ -124,12 +128,15 @@ public class Round {
 					break;
 				case HALF_EVEN:
 					// towards nearest boundary but prefer even result
+					group.subtract(delta, m, d1);
 					if (group.isGreater(bTmp, zero)) {
 						if (group.isGreater(m, d1))
 							group.add(bTmp, delta, bTmp);
 						else if (group.isEqual(m, d1)) {
 							// half case
-							if (group.isOdd(bTmp)) {
+							group.mod(d, two, m1);
+							// if is odd number of deltas from origin
+							if (group.isNotEqual(m1, zero)) {
 								group.add(bTmp, delta, bTmp);
 							}
 						}
@@ -139,7 +146,9 @@ public class Round {
 							group.subtract(bTmp, delta, bTmp);
 						else if (group.isEqual(m, d1)) {
 							// half case
-							if (group.isOdd(bTmp)) {
+							group.mod(d, two, m1);
+							// if is odd number of deltas from origin
+							if (group.isNotEqual(m1, zero)) {
 								group.subtract(bTmp, delta, bTmp);
 							}
 						}
@@ -148,12 +157,15 @@ public class Round {
 					break;
 				case HALF_ODD:
 					// towards nearest boundary but prefer odd result
+					group.subtract(delta, m, d1);
 					if (group.isGreater(bTmp, zero)) {
 						if (group.isGreater(m, d1))
 							group.add(bTmp, delta, bTmp);
 						else if (group.isEqual(m, d1)) {
 							// half case
-							if (group.isEven(bTmp)) {
+							group.mod(d, two, m1);
+							// if is even number of deltas from origin
+							if (group.isEqual(m1, zero)) {
 								group.add(bTmp, delta, bTmp);
 							}
 						}
@@ -163,7 +175,9 @@ public class Round {
 							group.subtract(bTmp, delta, bTmp);
 						else if (group.isEqual(m, d1)) {
 							// half case
-							if (group.isEven(bTmp)) {
+							group.mod(d, two, m1);
+							// if is even number of deltas from origin
+							if (group.isEqual(m1, zero)) {
 								group.subtract(bTmp, delta, bTmp);
 							}
 						}
