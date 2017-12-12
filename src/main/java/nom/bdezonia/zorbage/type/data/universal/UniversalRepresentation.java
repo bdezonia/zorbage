@@ -33,7 +33,7 @@ package nom.bdezonia.zorbage.type.data.universal;
  */
 public interface UniversalRepresentation {
 
-	void setInternalRep(TensorOctonionRepresentation rep);
-	void setSelf(TensorOctonionRepresentation rep);
+	void setTensorFromSelf(TensorOctonionRepresentation rep);
+	void setSelfFromTensor(TensorOctonionRepresentation rep);
 
 }

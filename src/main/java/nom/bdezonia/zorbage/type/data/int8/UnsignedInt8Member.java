@@ -132,12 +132,12 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public void setInternalRep(TensorOctonionRepresentation rep) {
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
 		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(v())));
 	}
 
 	@Override
-	public void setSelf(TensorOctonionRepresentation rep) {
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
 		v = (byte) rep.getFirstValue().r().intValue();
 	}
 

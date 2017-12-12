@@ -144,13 +144,13 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setInternalRep(TensorOctonionRepresentation rep) {
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
 		double val = toDouble(toShort(v()));
 		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(val)));
 	}
 
 	@Override
-	public void setSelf(TensorOctonionRepresentation rep) {
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
 		setV(rep.getFirstValue().r().doubleValue());
 	}
 

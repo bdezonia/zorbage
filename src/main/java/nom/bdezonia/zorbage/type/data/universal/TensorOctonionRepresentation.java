@@ -64,7 +64,7 @@ public class TensorOctonionRepresentation {
 		return dims.length == 0;
 	}
 
-	public boolean isVector() {
+	public boolean isRModule() {
 		return dims.length == 1;
 	}
 
@@ -85,7 +85,7 @@ public class TensorOctonionRepresentation {
 	
 	// vector value
 	
-	public void setFirstVector(long n, OctonionRepresentation[] values) {
+	public void setFirstRModule(long n, OctonionRepresentation[] values) {
 		setDims(new long[] {n});
 		for (int i = 0; i < values.length; i++) {
 			this.values.set(i, values[i]);
@@ -119,7 +119,8 @@ public class TensorOctonionRepresentation {
 	}
 	
 	private OctonionRepresentation nonNull(OctonionRepresentation o) {
-		if (o == null) return ZERO;
+		if (o == null)
+			return ZERO; // TODO: does this make the constant malleable?
 		return o;
 	}
 	
