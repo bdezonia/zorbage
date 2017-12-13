@@ -86,6 +86,8 @@ public class TensorOctonionRepresentation {
 	// vector value
 	
 	public void setFirstRModule(long n, OctonionRepresentation[] values) {
+		if (n != values.length)
+			throw new IllegalArgumentException("Incorrect number of values passed");
 		setDims(new long[] {n});
 		for (int i = 0; i < values.length; i++) {
 			this.values.set(i, values[i]);
@@ -120,7 +122,7 @@ public class TensorOctonionRepresentation {
 	
 	private OctonionRepresentation nonNull(OctonionRepresentation o) {
 		if (o == null)
-			return ZERO; // TODO: does this make the constant malleable?
+			return ZERO; // TODO: does this make the constant malleable? Should I duplicate() it?
 		return o;
 	}
 	
