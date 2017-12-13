@@ -47,9 +47,9 @@ public class PrimitiveConverter {
 	/**
 	 * PrimitiveConverter.compute()
 	 * 
-	 * @param tmp1
-	 * @param tmp2
-	 * @param tmp3
+	 * @param tmp1 An IntegerIndex whose size = max dim of from and to. Contents overwritten.
+	 * @param tmp2 An IntegerIndex whose size = max dim of from and to. Contents overwritten.
+	 * @param tmp3 An IntegerIndex whose size = max dim of from and to. Contents overwritten.
 	 * @param from The value being converted from.
 	 * @param to The value receiving the conversion.
 	 */
