@@ -45,7 +45,7 @@ public class PrimitiveConverter {
 	private PrimitiveConverter() {}
 
 	/**
-	 * PrimitiveConverter.compute()
+	 * PrimitiveConverter.convert()
 	 * 
 	 * @param tmp1 An IntegerIndex whose size = max dim of from and to. Contents overwritten.
 	 * @param tmp2 An IntegerIndex whose size = max dim of from and to. Contents overwritten.
@@ -53,8 +53,9 @@ public class PrimitiveConverter {
 	 * @param from The value being converted from.
 	 * @param to The value receiving the conversion.
 	 */
-	public static <U extends PrimitiveConversion, V extends PrimitiveConversion>
-		void convert(IntegerIndex tmp1, IntegerIndex tmp2, IntegerIndex tmp3, U from, V to)
+	public static
+		void convert(IntegerIndex tmp1, IntegerIndex tmp2, IntegerIndex tmp3,
+						PrimitiveConversion from, PrimitiveConversion to)
 	{
 		final int numD = Math.max(from.numDimensions(), to.numDimensions());
 		if (tmp1.numDimensions() != numD)
@@ -107,8 +108,11 @@ public class PrimitiveConverter {
 		}
 	}
 	
-	private static <U extends PrimitiveConversion, V extends PrimitiveConversion>
-		void convertOneValue(IntegerIndex index, U from, V to)
+	private static
+		void convertOneValue(
+			IntegerIndex index,
+			PrimitiveConversion from,
+			PrimitiveConversion to)
 	{
 		switch (from.preferredRepresentation()) {
 			case BYTE:
