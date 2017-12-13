@@ -283,7 +283,6 @@ Can pred/succ fail on floats because of boundary conditions? Some algos
   negative infinity. Must review pred/succ assumptions. Might be okay if
   number is not NaN or infinity and our algorithm goes to/from zero or
   minbound/maxbound.
-Conversions: (complex/quat/oct) and (vector/matrix/tensor)
 Define linear storage filters that allow one to treat disconnected indices
   as a linear storage. This allows sums/avgs/etc to be computed on subsets
   of linear storage. Can Samplings factor in here?
@@ -304,3 +303,4 @@ Change Dimensioned interface to include long dim(int i). Add to all
   Break Dimensioned into two concepts: DimCount and Dimensioned. The
   samplings only need DimCount. Dimensioned extends DimCount.
 Test Round with integers and floats.
+Implement PrimtiveConversion for all the numeric classes. Test them.
