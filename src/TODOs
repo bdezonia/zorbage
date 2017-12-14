@@ -303,4 +303,6 @@ Change Dimensioned interface to include long dim(int i). Add to all
   Break Dimensioned into two concepts: DimCount and Dimensioned. The
   samplings only need DimCount. Dimensioned extends DimCount.
 Test Round with integers and floats.
-Implement PrimtiveConversion for all the numeric classes. Test them.
+Implement PrimitiveConversion for all the numeric classes. Test them.
+Do a Matrix/Vector multiply algorithm for generic types.
+Tensor and Matrix slicing algorithms for generic types.
