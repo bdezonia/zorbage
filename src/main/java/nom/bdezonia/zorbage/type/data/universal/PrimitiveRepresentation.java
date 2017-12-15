@@ -31,8 +31,9 @@ package nom.bdezonia.zorbage.type.data.universal;
  * @author Barry DeZonia
  *
  */
-public enum PreferredRepresentation {
+public enum PrimitiveRepresentation {
 	
 	BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BIGINTEGER, BIGDECIMAL
+	// purposely skipping BOOLEAN since it's not numeric
 
 }

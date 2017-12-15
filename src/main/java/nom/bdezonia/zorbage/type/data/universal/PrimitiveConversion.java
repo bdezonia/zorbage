@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  */
 public interface PrimitiveConversion {
 	
-	PreferredRepresentation preferredRepresentation();
+	PrimitiveRepresentation preferredRepresentation();
 
 
 	// Dimensions
