@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.bigint;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -36,6 +37,8 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 
@@ -48,7 +51,8 @@ public final class UnboundedIntMember
 	implements
 		Allocatable<UnboundedIntMember>, Duplicatable<UnboundedIntMember>,
 		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
-		UniversalRepresentation, NumberMember<UnboundedIntMember>
+		UniversalRepresentation, NumberMember<UnboundedIntMember>,
+		PrimitiveConversion
 {
 	private BigInteger v;
 	
@@ -124,6 +128,506 @@ public final class UnboundedIntMember
 	@Override
 	public void setV(UnboundedIntMember value) {
 		set(value);
+	}
+
+	@Override
+	public PrimitiveRepresentation preferredRepresentation() {
+		return PrimitiveRepresentation.BIGINTEGER;
+	}
+
+	@Override
+	public long dimension(int i) {
+		return 0;
+	}
+
+	@Override
+	public int componentCount() {
+		return 1;
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, byte v) {
+		this.v = BigInteger.valueOf(v);
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, short v) {
+		this.v = BigInteger.valueOf(v);
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, int v) {
+		this.v = BigInteger.valueOf(v);
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, long v) {
+		this.v = BigInteger.valueOf(v);
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, float v) {
+		this.v = BigInteger.valueOf((long)v);
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, double v) {
+		this.v = BigInteger.valueOf((long)v);
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, BigInteger v) {
+		this.v = v;
+	}
+
+	@Override
+	public void set(IntegerIndex index, int component, BigDecimal v) {
+		this.v = v.toBigInteger();
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, byte v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = BigInteger.valueOf(v);
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, short v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = BigInteger.valueOf(v);
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, int v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = BigInteger.valueOf(v);
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, long v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = BigInteger.valueOf(v);
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, float v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = BigInteger.valueOf((long)v);
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, double v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = BigInteger.valueOf((long)v);
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, BigInteger v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = v;
+		}
+	}
+
+	@Override
+	public void setSafe(IntegerIndex index, int component, BigDecimal v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			this.v = v.toBigInteger();
+		}
+	}
+
+	@Override
+	public byte getAsByte(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v.byteValue();
+		return 0;
+	}
+
+	@Override
+	public short getAsShort(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v.shortValue();
+		return 0;
+	}
+
+	@Override
+	public int getAsInt(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v.intValue();
+		return 0;
+	}
+
+	@Override
+	public long getAsLong(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v.longValue();
+		return 0;
+	}
+
+	@Override
+	public float getAsFloat(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v.longValue();
+		return 0;
+	}
+
+	@Override
+	public double getAsDouble(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v.longValue();
+		return 0;
+	}
+
+	@Override
+	public BigInteger getAsBigInteger(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return v;
+		return BigInteger.ZERO;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return new BigDecimal(v);
+		return BigDecimal.ZERO;
+	}
+
+	@Override
+	public byte getAsByteSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return v.byteValue();
+		}
+	}
+
+	@Override
+	public short getAsShortSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return v.shortValue();
+		}
+	}
+
+	@Override
+	public int getAsIntSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return v.intValue();
+		}
+	}
+
+	@Override
+	public long getAsLongSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return v.longValue();
+		}
+	}
+
+	@Override
+	public float getAsFloatSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return v.longValue();
+		}
+	}
+
+	@Override
+	public double getAsDoubleSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return v.longValue();
+		}
+	}
+
+	@Override
+	public BigInteger getAsBigIntegerSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return BigInteger.ZERO;
+		}
+		else {
+			return v;
+		}
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimalSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return BigDecimal.ZERO;
+		}
+		else {
+			return new BigDecimal(v);
+		}
+	}
+
+	@Override
+	public void setZero() {
+		v = BigInteger.ZERO;
 	}
 
 }
