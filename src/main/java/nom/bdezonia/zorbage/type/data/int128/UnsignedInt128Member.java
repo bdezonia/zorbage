@@ -211,47 +211,47 @@ public final class UnsignedInt128Member
 	// TODO: do the setV(negative primitive) give correct answers?
 	
 	@Override
-	public void set(IntegerIndex index, int component, byte v) {
+	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		setV(BigInteger.valueOf(v));
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, short v) {
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		setV(BigInteger.valueOf(v));
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, int v) {
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		setV(BigInteger.valueOf(v));
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, long v) {
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		setV(BigInteger.valueOf(v));
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, float v) {
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		setV(BigInteger.valueOf((long)v));
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, double v) {
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		setV(BigInteger.valueOf((long)v));
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, BigInteger v) {
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		setV(v);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, BigDecimal v) {
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		setV(v.toBigInteger());
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, byte v) {
+	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -275,7 +275,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, short v) {
+	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -299,7 +299,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, int v) {
+	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -323,7 +323,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, long v) {
+	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -347,7 +347,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, float v) {
+	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -371,7 +371,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, double v) {
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -395,7 +395,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, BigInteger v) {
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -419,7 +419,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, BigDecimal v) {
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -443,7 +443,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public byte getAsByte(IntegerIndex index, int component) {
+	public byte primComponentGetAsByte(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -452,7 +452,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public short getAsShort(IntegerIndex index, int component) {
+	public short primComponentGetAsShort(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -461,7 +461,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public int getAsInt(IntegerIndex index, int component) {
+	public int primComponentGetAsInt(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -470,7 +470,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public long getAsLong(IntegerIndex index, int component) {
+	public long primComponentGetAsLong(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -479,7 +479,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public float getAsFloat(IntegerIndex index, int component) {
+	public float primComponentGetAsFloat(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -488,7 +488,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public double getAsDouble(IntegerIndex index, int component) {
+	public double primComponentGetAsDouble(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -497,7 +497,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigInteger getAsBigInteger(IntegerIndex index, int component) {
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -506,7 +506,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal(IntegerIndex index, int component) {
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -515,7 +515,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public byte getAsByteSafe(IntegerIndex index, int component) {
+	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -537,7 +537,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public short getAsShortSafe(IntegerIndex index, int component) {
+	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -559,7 +559,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public int getAsIntSafe(IntegerIndex index, int component) {
+	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -581,7 +581,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public long getAsLongSafe(IntegerIndex index, int component) {
+	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -603,7 +603,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public float getAsFloatSafe(IntegerIndex index, int component) {
+	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -625,7 +625,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public double getAsDoubleSafe(IntegerIndex index, int component) {
+	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -647,7 +647,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigInteger getAsBigIntegerSafe(IntegerIndex index, int component) {
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -669,7 +669,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimalSafe(IntegerIndex index, int component) {
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");

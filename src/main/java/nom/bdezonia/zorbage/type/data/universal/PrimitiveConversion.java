@@ -65,51 +65,51 @@ public interface PrimitiveConversion {
 	// knows. If pushed outside the bounds in dims it knows it should throw
 	// excep if v is not zero. Meant to be used by PrimitiveConverter.
 	
-	void set(IntegerIndex index, int component, byte v);
-	void set(IntegerIndex index, int component, short v);
-	void set(IntegerIndex index, int component, int v);
-	void set(IntegerIndex index, int component, long v);
-	void set(IntegerIndex index, int component, float v);
-	void set(IntegerIndex index, int component, double v);
-	void set(IntegerIndex index, int component, BigInteger v);
-	void set(IntegerIndex index, int component, BigDecimal v);
+	void primComponentSetByte(IntegerIndex index, int component, byte v);
+	void primComponentSetShort(IntegerIndex index, int component, short v);
+	void primComponentSetInt(IntegerIndex index, int component, int v);
+	void primComponentSetLong(IntegerIndex index, int component, long v);
+	void primComponentSetFloat(IntegerIndex index, int component, float v);
+	void primComponentSetDouble(IntegerIndex index, int component, double v);
+	void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v);
+	void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v);
 
 	// NOTE: any index possible. dest looks at all dims. If pushed outside
 	// the bounds in any dim throw excep if v is not zero. Meant for general
 	// use by any class.
 	
-	void setSafe(IntegerIndex index, int component, byte v);
-	void setSafe(IntegerIndex index, int component, short v);
-	void setSafe(IntegerIndex index, int component, int v);
-	void setSafe(IntegerIndex index, int component, long v);
-	void setSafe(IntegerIndex index, int component, float v);
-	void setSafe(IntegerIndex index, int component, double v);
-	void setSafe(IntegerIndex index, int component, BigInteger v);
-	void setSafe(IntegerIndex index, int component, BigDecimal v);
+	void primComponentSetByteSafe(IntegerIndex index, int component, byte v);
+	void primComponentSetShortSafe(IntegerIndex index, int component, short v);
+	void primComponentSetIntSafe(IntegerIndex index, int component, int v);
+	void primComponentSetLongSafe(IntegerIndex index, int component, long v);
+	void primComponentSetFloatSafe(IntegerIndex index, int component, float v);
+	void primComponentSetDoubleSafe(IntegerIndex index, int component, double v);
+	void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v);
+	void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v);
 
 	// NOTE: index's numDims >= to src object. src only looks at dims
 	// it knows. Returns 0 otherwise. Meant for use by PrimitiveConverter.
 	
-	byte getAsByte(IntegerIndex index, int component);
-	short getAsShort(IntegerIndex index, int component);
-	int getAsInt(IntegerIndex index, int component);
-	long getAsLong(IntegerIndex index, int component);
-	float getAsFloat(IntegerIndex index, int component);
-	double getAsDouble(IntegerIndex index, int component);
-	BigInteger getAsBigInteger(IntegerIndex index, int component);
-	BigDecimal getAsBigDecimal(IntegerIndex index, int component);
+	byte primComponentGetAsByte(IntegerIndex index, int component);
+	short primComponentGetAsShort(IntegerIndex index, int component);
+	int primComponentGetAsInt(IntegerIndex index, int component);
+	long primComponentGetAsLong(IntegerIndex index, int component);
+	float primComponentGetAsFloat(IntegerIndex index, int component);
+	double primComponentGetAsDouble(IntegerIndex index, int component);
+	BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component);
+	BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component);
 	
 	// NOTE: any index possible. src looks at all dims. If pushed outside
 	// the bounds in any dim returns 0. Meant for general use by any class.
 	
-	byte getAsByteSafe(IntegerIndex index, int component);
-	short getAsShortSafe(IntegerIndex index, int component);
-	int getAsIntSafe(IntegerIndex index, int component);
-	long getAsLongSafe(IntegerIndex index, int component);
-	float getAsFloatSafe(IntegerIndex index, int component);
-	double getAsDoubleSafe(IntegerIndex index, int component);
-	BigInteger getAsBigIntegerSafe(IntegerIndex index, int component);
-	BigDecimal getAsBigDecimalSafe(IntegerIndex index, int component);
+	byte primComponentGetAsByteSafe(IntegerIndex index, int component);
+	short primComponentGetAsShortSafe(IntegerIndex index, int component);
+	int primComponentGetAsIntSafe(IntegerIndex index, int component);
+	long primComponentGetAsLongSafe(IntegerIndex index, int component);
+	float primComponentGetAsFloatSafe(IntegerIndex index, int component);
+	double primComponentGetAsDoubleSafe(IntegerIndex index, int component);
+	BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component);
+	BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component);
 	
 	// utility method
 	void setZero();

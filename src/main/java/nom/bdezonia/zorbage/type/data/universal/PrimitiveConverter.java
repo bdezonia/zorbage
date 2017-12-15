@@ -117,50 +117,50 @@ public class PrimitiveConverter {
 		switch (from.preferredRepresentation()) {
 			case BYTE:
 				for (int j = 0; j < to.componentCount(); j++) {
-					byte v = from.getAsByte(index, j);
-					to.set(index, j, v);
+					byte v = from.primComponentGetAsByte(index, j);
+					to.primComponentSetByte(index, j, v);
 				}
 				break;
 			case SHORT:
 				for (int j = 0; j < to.componentCount(); j++) {
-					short v = from.getAsShort(index, j);
-					to.set(index, j, v);
+					short v = from.primComponentGetAsShort(index, j);
+					to.primComponentSetShort(index, j, v);
 				}
 				break;
 			case INT:
 				for (int j = 0; j < to.componentCount(); j++) {
-					int v = from.getAsInt(index, j);
-					to.set(index, j, v);
+					int v = from.primComponentGetAsInt(index, j);
+					to.primComponentSetInt(index, j, v);
 				}
 				break;
 			case LONG:
 				for (int j = 0; j < to.componentCount(); j++) {
-					long v = from.getAsLong(index, j);
-					to.set(index, j, v);
+					long v = from.primComponentGetAsLong(index, j);
+					to.primComponentSetLong(index, j, v);
 				}
 				break;
 			case FLOAT:
 				for (int j = 0; j < to.componentCount(); j++) {
-					float v = from.getAsFloat(index, j);
-					to.set(index, j, v);
+					float v = from.primComponentGetAsFloat(index, j);
+					to.primComponentSetFloat(index, j, v);
 				}
 				break;
 			case DOUBLE:
 				for (int j = 0; j < to.componentCount(); j++) {
-					double v = from.getAsDouble(index, j);
-					to.set(index, j, v);
+					double v = from.primComponentGetAsDouble(index, j);
+					to.primComponentSetDouble(index, j, v);
 				}
 				break;
 			case BIGINTEGER:
 				for (int j = 0; j < to.componentCount(); j++) {
-					BigInteger v = from.getAsBigInteger(index, j);
-					to.set(index, j, v);
+					BigInteger v = from.primComponentGetAsBigInteger(index, j);
+					to.primComponentSetBigInteger(index, j, v);
 				}
 				break;
 			case BIGDECIMAL:
 				for (int j = 0; j < to.componentCount(); j++) {
-					BigDecimal v = from.getAsBigDecimal(index, j);
-					to.set(index, j, v);
+					BigDecimal v = from.primComponentGetAsBigDecimal(index, j);
+					to.primComponentSetBigDecimal(index, j, v);
 				}
 				break;
 			default:

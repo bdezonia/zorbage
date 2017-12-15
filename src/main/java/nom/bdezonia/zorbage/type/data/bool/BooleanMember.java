@@ -205,47 +205,47 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, byte v) {
+	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		this.v = (v != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, short v) {
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		this.v = (v != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, int v) {
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		this.v = (v != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, long v) {
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		this.v = (v != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, float v) {
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		this.v = !(Float.isNaN(v)) && (v != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, double v) {
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		this.v = !(Double.isNaN(v)) && (v != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, BigInteger v) {
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		this.v = (v.signum() != 0);
 	}
 
 	@Override
-	public void set(IntegerIndex index, int component, BigDecimal v) {
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		this.v = (v.signum() != 0);
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, byte v) {
+	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -269,7 +269,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, short v) {
+	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -293,7 +293,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, int v) {
+	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -317,7 +317,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, long v) {
+	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -341,7 +341,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, float v) {
+	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -365,7 +365,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, double v) {
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -389,7 +389,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, BigInteger v) {
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -413,7 +413,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, int component, BigDecimal v) {
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -437,7 +437,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public byte getAsByte(IntegerIndex index, int component) {
+	public byte primComponentGetAsByte(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -446,7 +446,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public short getAsShort(IntegerIndex index, int component) {
+	public short primComponentGetAsShort(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -455,7 +455,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public int getAsInt(IntegerIndex index, int component) {
+	public int primComponentGetAsInt(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -464,7 +464,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public long getAsLong(IntegerIndex index, int component) {
+	public long primComponentGetAsLong(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -473,7 +473,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public float getAsFloat(IntegerIndex index, int component) {
+	public float primComponentGetAsFloat(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -482,7 +482,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public double getAsDouble(IntegerIndex index, int component) {
+	public double primComponentGetAsDouble(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -491,7 +491,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public BigInteger getAsBigInteger(IntegerIndex index, int component) {
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -500,7 +500,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal(IntegerIndex index, int component) {
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -509,7 +509,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public byte getAsByteSafe(IntegerIndex index, int component) {
+	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -531,7 +531,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public short getAsShortSafe(IntegerIndex index, int component) {
+	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -553,7 +553,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public int getAsIntSafe(IntegerIndex index, int component) {
+	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -575,7 +575,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public long getAsLongSafe(IntegerIndex index, int component) {
+	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -597,7 +597,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public float getAsFloatSafe(IntegerIndex index, int component) {
+	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -619,7 +619,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public double getAsDoubleSafe(IntegerIndex index, int component) {
+	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -641,7 +641,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public BigInteger getAsBigIntegerSafe(IntegerIndex index, int component) {
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
@@ -663,7 +663,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimalSafe(IntegerIndex index, int component) {
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
