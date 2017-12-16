@@ -29,8 +29,10 @@ package nom.bdezonia.zorbage.type.data.float16.real;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -38,6 +40,8 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
@@ -56,7 +60,7 @@ public final class Float16Member
 	ShortCoder<Float16Member>,
 	Allocatable<Float16Member>, Duplicatable<Float16Member>,
 	Settable<Float16Member>, Gettable<Float16Member>,
-	UniversalRepresentation
+	UniversalRepresentation, PrimitiveConversion
 {
 	private static final double SUBNORMAL_BOUND = Math.pow(2,-14);
 	private static final short MAX_BOUND_I = (short) 0b0111101111111111;
@@ -105,7 +109,7 @@ public final class Float16Member
 	@Override
 	public String toString() {
 		// make sure we don't stray from values of format
-		return String.valueOf(toDouble(toShort(v.v())));
+		return String.valueOf(toDouble(toShort(v())));
 	}
 	
 	@Override
@@ -120,7 +124,7 @@ public final class Float16Member
 	
 	@Override
 	public void toArray(short[] arr, int index) {
-		arr[index] = toShort(v.v());
+		arr[index] = toShort(v());
 	}
 	
 	@Override
@@ -130,7 +134,7 @@ public final class Float16Member
 	
 	@Override
 	public void toFile(RandomAccessFile raf) throws IOException {
-		raf.writeShort(toShort(v.v()));
+		raf.writeShort(toShort(v()));
 	}
 	
 	@Override
@@ -260,6 +264,512 @@ public final class Float16Member
 			frac /= 2.0;
 		}
 		return result;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public PrimitiveRepresentation preferredRepresentation() {
+		return PrimitiveRepresentation.DOUBLE;
+	}
+
+	@Override
+	public long dimension(int i) {
+		return 0;
+	}
+
+	@Override
+	public int componentCount() {
+		return 1;
+	}
+
+	@Override
+	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
+		setV(toDouble(toShort(v)));
+	}
+
+	@Override
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		setV(toDouble(toShort(v)));
+	}
+
+	@Override
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		setV(toDouble(toShort(v)));
+	}
+
+	@Override
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		setV(toDouble(toShort(v)));
+	}
+
+	@Override
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		setV(toDouble(toShort(v)));
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		setV(toDouble(toShort(v)));
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		setV(toDouble(toShort(v.doubleValue())));
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		setV(toDouble(toShort(v.doubleValue())));
+	}
+
+	@Override
+	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v)));
+		}
+	}
+
+	@Override
+	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v)));
+		}
+	}
+
+	@Override
+	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v)));
+		}
+	}
+
+	@Override
+	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v)));
+		}
+	}
+
+	@Override
+	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v)));
+		}
+	}
+
+	@Override
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v)));
+		}
+	}
+
+	@Override
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v.doubleValue())));
+		}
+	}
+
+	@Override
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			setV(toDouble(toShort(v.doubleValue())));
+		}
+	}
+
+	@Override
+	public byte primComponentGetAsByte(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return (byte) toDouble(toShort(v()));
+		return 0;
+	}
+
+	@Override
+	public short primComponentGetAsShort(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return (short) toDouble(toShort(v()));
+		return 0;
+	}
+
+	@Override
+	public int primComponentGetAsInt(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return (int) toDouble(toShort(v()));
+		return 0;
+	}
+
+	@Override
+	public long primComponentGetAsLong(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return (long) toDouble(toShort(v()));
+		return 0;
+	}
+
+	@Override
+	public float primComponentGetAsFloat(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return (float) toDouble(toShort(v()));
+		return 0;
+	}
+
+	@Override
+	public double primComponentGetAsDouble(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return toDouble(toShort(v()));
+		return 0;
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return BigInteger.valueOf((long)toDouble(toShort(v())));
+		return BigInteger.ZERO;
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) return new BigDecimal(toDouble(toShort(v())));
+		return BigDecimal.ZERO;
+	}
+
+	@Override
+	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return (byte) toDouble(toShort(v()));
+		}
+	}
+
+	@Override
+	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return (short) toDouble(toShort(v()));
+		}
+	}
+
+	@Override
+	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return (int) toDouble(toShort(v()));
+		}
+	}
+
+	@Override
+	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return (long) toDouble(toShort(v()));
+		}
+	}
+
+	@Override
+	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return (float) toDouble(toShort(v()));
+		}
+	}
+
+	@Override
+	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			return toDouble(toShort(v()));
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return BigInteger.ZERO;
+		}
+		else {
+			return BigInteger.valueOf((long) v());
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 0;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return BigDecimal.ZERO;
+		}
+		else {
+			return BigDecimal.valueOf(v());
+		}
+	}
+
+	@Override
+	public void setZero() {
+		setV(0);  // TODO is this good enough? As used by primconvert yes.
+		          //   But maybe not if used generally.
 	}
 	
 }
