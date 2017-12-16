@@ -32,6 +32,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -48,47 +49,166 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.NEGATIVE;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(5.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-3.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.NEGATIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-6.0, b.v(), 0);
+
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 
 	@Test
@@ -97,47 +217,166 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.POSITIVE;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(6.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(3.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.POSITIVE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-5.0, b.v(), 0);
+
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 
 	@Test
@@ -146,47 +385,165 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.AWAY_FROM_ORIGIN;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(6.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(3.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-3.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.AWAY_FROM_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-6.0, b.v(), 0);
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 
 	@Test
@@ -195,47 +552,165 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.TOWARDS_ORIGIN;
+		
 		delta.setV(1);
-
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(5.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.TOWARDS_ORIGIN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-5.0, b.v(), 0);
+
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 
 	@Test
@@ -244,47 +719,198 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.HALF_UP;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(6.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(3.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-3.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_UP, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-6.0, b.v(), 0);
+
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		// halfways
+		a.setV(1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		// halfways
+		a.setV(1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		// halfways
+		a.setV(0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		// halfways
+		a.setV(0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		// halfways
+		a.setV(-0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		// halfways
+		a.setV(-0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		// halfways
+		a.setV(-1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		// halfways
+		a.setV(-1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 	
 	@Test
@@ -293,47 +919,198 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.HALF_DOWN;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(5.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_DOWN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-5.0, b.v(), 0);
+	
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		// halfways
+		a.setV(1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		// halfways
+		a.setV(1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		// halfways
+		a.setV(0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		// halfways
+		a.setV(0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		// halfways
+		a.setV(-0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		// halfways
+		a.setV(-0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		// halfways
+		a.setV(-1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		// halfways
+		a.setV(-1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 	
 	@Test
@@ -342,47 +1119,198 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.HALF_EVEN;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(6.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_EVEN, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-6.0, b.v(), 0);
+
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		// halfways
+		a.setV(1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		// halfways
+		a.setV(1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		// halfways
+		a.setV(0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		// halfways
+		a.setV(0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		// halfways
+		a.setV(-0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		// halfways
+		a.setV(-0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		// halfways
+		a.setV(-1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		// halfways
+		a.setV(-1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 	
 	@Test
@@ -391,47 +1319,198 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.HALF_ODD;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(5.0, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(3.0, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.0, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.0, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-3.0, b.v(), 0);
-
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.HALF_ODD, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-5.0, b.v(), 0);
+
+		delta.setV(0.5);
+		
+		a.setV(2.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		a.setV(1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.0, b.v(), 0);
+		// halfways
+		a.setV(1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		// halfways
+		a.setV(1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.5, b.v(), 0);
+		a.setV(1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		// halfways
+		a.setV(0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		// halfways
+		a.setV(0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0.5, b.v(), 0);
+		a.setV(0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		a.setV(-0.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(0, b.v(), 0);
+		// halfways
+		a.setV(-0.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		// halfways
+		a.setV(-0.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-0.5, b.v(), 0);
+		a.setV(-0.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-0.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		// halfways
+		a.setV(-1.25);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.3);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.4);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.7);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		// halfways
+		a.setV(-1.75);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.5, b.v(), 0);
+		a.setV(-1.8);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-1.9);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
+		a.setV(-2);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.0, b.v(), 0);
 	}
 	
 	@Test
@@ -440,75 +1519,68 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.EXACT;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(2.5);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(1.6);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(1.1);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(-1.6);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(-2.5);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
 		}
-
 		a.setV(-5.5);
 		try {
-			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
+			Round.compute(G.DBL, mode, delta, a, b);
 			fail();
 		} catch (ArithmeticException e) {
 			assertTrue(true);
@@ -521,46 +1593,69 @@ public class TestRound {
 		Float64Member a = new Float64Member();
 		Float64Member b = new Float64Member();
 
+		Round.Mode mode = Mode.NONE;
+		
 		delta.setV(1);
 
 		a.setV(5.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(5.5, b.v(), 0);
-
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(2.5, b.v(), 0);
-
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.6, b.v(), 0);
-
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.1, b.v(), 0);
-
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
-
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
-
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.1, b.v(), 0);
-
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-1.6, b.v(), 0);
-
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-2.5, b.v(), 0);
 
+		delta.setV(0.5);
+		
+		a.setV(5.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(5.5, b.v(), 0);
+		a.setV(2.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(2.5, b.v(), 0);
+		a.setV(1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.6, b.v(), 0);
+		a.setV(1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.1, b.v(), 0);
+		a.setV(1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(1.0, b.v(), 0);
+		a.setV(-1.0);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.0, b.v(), 0);
+		a.setV(-1.1);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.1, b.v(), 0);
+		a.setV(-1.6);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-1.6, b.v(), 0);
+		a.setV(-2.5);
+		Round.compute(G.DBL, mode, delta, a, b);
+		assertEquals(-2.5, b.v(), 0);
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-5.5, b.v(), 0);
 	}
 }

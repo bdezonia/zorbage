@@ -69,8 +69,8 @@ public class Round {
 			return;
 		}
 		U zero = group.construct();
-		if (group.isLess(delta,zero))
-			throw new IllegalArgumentException("rounding error: delta must be nonnegative");
+		if (group.isLessEqual(delta,zero))
+			throw new IllegalArgumentException("rounding error: delta must be > 0");
 		U d = group.construct();
 		U m = group.construct();
 		U absM = group.construct();
@@ -85,22 +85,32 @@ public class Round {
 		if (group.isNotEqual(m, zero)) {
 			switch (mode) {
 				case NEGATIVE:
-					if (group.isLess(bTmp, zero))
+					if (group.isEqual(bTmp, zero)) {
+						if (group.isLess(m, zero))
+							group.subtract(bTmp, delta, bTmp);
+					}
+					else if (group.isLess(bTmp, zero))
 						group.subtract(bTmp, delta, bTmp);
 					break;
 				case POSITIVE:
-					if (group.isGreater(bTmp, zero))
+					if (group.isEqual(bTmp, zero)) {
+						if (group.isGreater(m, zero))
+							group.add(bTmp, delta, bTmp);
+					}
+					else if (group.isGreater(bTmp, zero))
 						group.add(bTmp, delta, bTmp);
 					break;
 				case TOWARDS_ORIGIN:
-					// nothing to do: integral math has already chopped b
-					//if (group.isGreater(bTmp, zero))
-					//	group.subtract(bTmp, delta, bTmp);
-					//else
-					//	group.add(bTmp, delta, bTmp);
+					// nothing to do: modular math has already chopped b
 					break;
 				case AWAY_FROM_ORIGIN:
-					if (group.isGreater(bTmp, zero))
+					if (group.isEqual(bTmp, zero)) {
+						if (group.isGreater(m, zero))
+							group.add(bTmp, delta, bTmp);
+						else
+							group.subtract(bTmp, delta, bTmp);
+					}
+					else if (group.isGreater(bTmp, zero))
 						group.add(bTmp, delta, bTmp);
 					else
 						group.subtract(bTmp, delta, bTmp);
@@ -109,11 +119,11 @@ public class Round {
 					// towards the origin unless it's >= half and then away
 					group.abs(m, absM);
 					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero)) {
+					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
 						if (group.isGreaterEqual(absM, d1))
 							group.add(bTmp, delta, bTmp);
 					}
-					else if (group.isLess(bTmp, zero)) {
+					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
 						if (group.isGreaterEqual(absM, d1))
 							group.subtract(bTmp, delta, bTmp);
 					}
@@ -123,11 +133,11 @@ public class Round {
 					// towards the origin unless it's > half and then away
 					group.abs(m, absM);
 					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero)) {
+					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
 						if (group.isGreater(absM, d1))
 							group.add(bTmp, delta, bTmp);
 					}
-					else if (group.isLess(bTmp, zero)) {
+					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
 						if (group.isGreater(absM, d1))
 							group.subtract(bTmp, delta, bTmp);
 					}
@@ -137,7 +147,7 @@ public class Round {
 					// towards nearest boundary but prefer even result
 					group.abs(m, absM);
 					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero)) {
+					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
 						if (group.isGreater(absM, d1))
 							group.add(bTmp, delta, bTmp);
 						else if (group.isEqual(absM, d1)) {
@@ -149,7 +159,7 @@ public class Round {
 							}
 						}
 					}
-					else if (group.isLess(bTmp, zero)) {
+					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
 						if (group.isGreater(absM, d1))
 							group.subtract(bTmp, delta, bTmp);
 						else if (group.isEqual(absM, d1)) {
@@ -167,7 +177,7 @@ public class Round {
 					// towards nearest boundary but prefer odd result
 					group.abs(m, absM);
 					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero)) {
+					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
 						if (group.isGreater(absM, d1))
 							group.add(bTmp, delta, bTmp);
 						else if (group.isEqual(absM, d1)) {
@@ -179,7 +189,7 @@ public class Round {
 							}
 						}
 					}
-					else if (group.isLess(bTmp, zero)) {
+					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
 						if (group.isGreater(absM, d1))
 							group.subtract(bTmp, delta, bTmp);
 						else if (group.isEqual(absM, d1)) {
