@@ -82,6 +82,8 @@ public class PrimitiveConverter {
 			for (int i = 0; i < minD; i++) {
 				min.set(i, 0);
 				max.set(i, Math.min(from.dimension(i), to.dimension(i))-1);
+				// TODO: is the -1 correct? will min {0,0} max {0,0} iterate one
+				// spot. Must check.
 			}
 
 			for (int i = minD; i < numD; i++) {

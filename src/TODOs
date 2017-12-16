@@ -304,6 +304,7 @@ Change Dimensioned interface to include long dim(int i). Add to all
   samplings only need DimCount. Dimensioned extends DimCount.
 Test Round with integers and floats.
 Implement PrimitiveConversion for all the numeric classes. Test them.
-  Write an example that converts an array of one type to an array of another
+  Write an example that converts an array of one type to an array of
+  another. This could be an algorithm.
 Do a Matrix/Vector multiply algorithm for generic types.
 Tensor and Matrix slicing algorithms for generic types.
