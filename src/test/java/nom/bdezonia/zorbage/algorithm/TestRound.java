@@ -35,6 +35,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
@@ -1657,5 +1658,891 @@ public class TestRound {
 		a.setV(-5.5);
 		Round.compute(G.DBL, mode, delta, a, b);
 		assertEquals(-5.5, b.v(), 0);
+	}
+	
+	@Test
+	public void testNegativeInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.NEGATIVE;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(3);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-6, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-6, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+	}
+	
+	@Test
+	public void testPostiveInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.POSITIVE;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(3);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(6, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(6, b.v());
+	}
+	
+	@Test
+	public void testAwayFromOriginInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.AWAY_FROM_ORIGIN;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(3);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-6, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-6, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(6, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(6, b.v());
+	}
+	
+	@Test
+	public void testTowardsOriginInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.TOWARDS_ORIGIN;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(3);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+	}
+	
+	@Test
+	public void testHalfUpInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.HALF_UP;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(4);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+	}
+	
+	@Test
+	public void testHalfDownInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.HALF_DOWN;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(4);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+	}
+	
+	@Test
+	public void testHalfEvenInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.HALF_EVEN;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(4);
+
+		a.setV(-8);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-8, b.v());
+		a.setV(-7);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-8, b.v());
+		a.setV(-6);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-8, b.v());
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(6);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(8, b.v());
+		a.setV(7);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(8, b.v());
+		a.setV(8);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(8, b.v());
+	}
+	
+	@Test
+	public void testHalfOddInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.HALF_ODD;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(4);
+
+		a.setV(-8);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-8, b.v());
+		a.setV(-7);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-8, b.v());
+		a.setV(-6);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(6);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(7);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(8, b.v());
+		a.setV(8);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(8, b.v());
+	}
+	
+	@Test
+	public void testExactInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.EXACT;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(4);
+
+		try {
+			a.setV(-5);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		try {
+			a.setV(-3);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		try {
+			a.setV(-2);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		try {
+			a.setV(-1);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		try {
+			a.setV(1);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		try {
+			a.setV(2);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		try {
+			a.setV(3);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		try {
+			a.setV(5);
+			Round.compute(G.INT32, mode, delta, a, b);
+			fail();
+		}
+		catch (ArithmeticException e) {
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void testNoneInts() {
+		SignedInt32Member delta = new SignedInt32Member();
+		SignedInt32Member a = new SignedInt32Member();
+		SignedInt32Member b = new SignedInt32Member();
+
+		Round.Mode mode = Mode.NONE;
+		
+		delta.setV(1);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
+
+		delta.setV(4);
+
+		a.setV(-5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-5, b.v());
+		a.setV(-4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-4, b.v());
+		a.setV(-3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-3, b.v());
+		a.setV(-2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-2, b.v());
+		a.setV(-1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(-1, b.v());
+		a.setV(0);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(0, b.v());
+		a.setV(1);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(1, b.v());
+		a.setV(2);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(2, b.v());
+		a.setV(3);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(3, b.v());
+		a.setV(4);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(4, b.v());
+		a.setV(5);
+		Round.compute(G.INT32, mode, delta, a, b);
+		assertEquals(5, b.v());
 	}
 }

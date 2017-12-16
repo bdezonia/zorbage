@@ -294,7 +294,6 @@ Make signed 128-bit code, add non-exhaustive tests, and enable group in G
 Add more constants to the Constants interface
 Find all places that might try to find hiBit and use Integer.numLeadZero()
 Make Power and PowerI applicable to matrices and maybe tensors. Think.
-Test Round with integers (various increments) and floats (0.1 increment).
 Implement PrimitiveConversion for all the numeric classes. Test them.
 Write an example that uses DataConvert. Especially after the 1d, 2d, and
   n-d types support PrimitiveConversion.
