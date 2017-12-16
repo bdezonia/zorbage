@@ -451,7 +451,6 @@ public class TestRound {
 		}
 
 		a.setV(2.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
@@ -460,7 +459,6 @@ public class TestRound {
 		}
 
 		a.setV(1.6);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
@@ -469,7 +467,6 @@ public class TestRound {
 		}
 
 		a.setV(1.1);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
@@ -478,15 +475,14 @@ public class TestRound {
 		}
 
 		a.setV(1.0);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 		assertEquals(1.0, b.v(), 0);
 
 		a.setV(-1.0);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
+		Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 		assertEquals(-1.0, b.v(), 0);
 
 		a.setV(-1.1);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
@@ -495,7 +491,6 @@ public class TestRound {
 		}
 
 		a.setV(-1.6);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
@@ -504,7 +499,6 @@ public class TestRound {
 		}
 
 		a.setV(-2.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
@@ -513,7 +507,6 @@ public class TestRound {
 		}
 
 		a.setV(-5.5);
-		Round.compute(G.DBL, Round.Mode.NONE, delta, a, b);
 		try {
 			Round.compute(G.DBL, Round.Mode.EXACT, delta, a, b);
 			fail();
