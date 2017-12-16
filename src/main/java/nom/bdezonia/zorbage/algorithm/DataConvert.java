@@ -46,18 +46,18 @@ public class DataConvert {
 	/**
 	 * DataConvert.compute()
 	 * 
-	 * @param group1
-	 * @param group2
+	 * @param fromGroup
+	 * @param toGroup
 	 * @param input
 	 * @param output
 	 */
 	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T group1, U group2, LinearStorage<?,V> input, LinearStorage<?,W> output)
+		void compute(T fromGroup, U toGroup, LinearStorage<?,V> input, LinearStorage<?,W> output)
 	{
 		// assumptions: output size is >= input size
 		
-		V from = group1.construct();
-		W to = group2.construct();
+		V from = fromGroup.construct();
+		W to = toGroup.construct();
 		int numD = Math.max(from.numDimensions(), to.numDimensions());
 		IntegerIndex tmp1 = new IntegerIndex(numD);
 		IntegerIndex tmp2 = new IntegerIndex(numD);
