@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.util.List;
+
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -66,6 +68,26 @@ public class DataConvert {
 			input.get(i, from);
 			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from, to);
 			output.set(i, to);
+		}
+	}
+	/**
+	 * DataConvert.compute()
+	 * 
+	 * @param input
+	 * @param output
+	 */
+	public static <V extends PrimitiveConversion, W extends PrimitiveConversion>
+		void compute(List<V> input, List<W> output)
+	{
+		// assumptions: output size is >= input size
+		if (input.size() == 0 || output.size() == 0)
+			throw new IllegalArgumentException("cannot work with empty arrays");
+		int numD = Math.max(input.get(0).numDimensions(), output.get(0).numDimensions());
+		IntegerIndex tmp1 = new IntegerIndex(numD);
+		IntegerIndex tmp2 = new IntegerIndex(numD);
+		IntegerIndex tmp3 = new IntegerIndex(numD);
+		for (int i = 0; i < input.size(); i++) {
+			PrimitiveConverter.convert(tmp1, tmp2, tmp3, input.get(i), output.get(i));
 		}
 	}
 }
