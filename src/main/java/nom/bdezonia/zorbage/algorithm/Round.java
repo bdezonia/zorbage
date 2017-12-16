@@ -109,7 +109,6 @@ public class Round {
 					// towards the origin unless it's >= half and then away
 					group.abs(m, absM);
 					group.subtract(delta, absM, d1);
-					System.out.println(m + " " + d1);
 					if (group.isGreater(bTmp, zero)) {
 						if (group.isGreaterEqual(absM, d1))
 							group.add(bTmp, delta, bTmp);
