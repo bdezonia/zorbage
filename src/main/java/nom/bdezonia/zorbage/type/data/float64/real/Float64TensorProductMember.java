@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
@@ -125,20 +126,7 @@ public final class Float64TensorProductMember
 		other.m = m;
 		other.s = s;
 	}
-	
-	public long dim(int dim) {
-		return dims[dim];
-	}
 
-	@Override
-	public void dims(long[] d) {
-		if (d.length != this.dims.length)
-			throw new IllegalArgumentException("mismatched dims in tensor member");
-		for (int i = 0; i < d.length; i++) {
-			d[i] = dims[i];
-		}
-	}
-	
 	@Override
 	public void init(long[] newDims) {
 		dims = newDims.clone();
@@ -170,8 +158,8 @@ public final class Float64TensorProductMember
 	}
 	
 	@Override
-	public void v(long[] index, Float64Member value) {
-		if (index.length != this.dims.length)
+	public void v(IntegerIndex index, Float64Member value) {
+		if (index.numDimensions() != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
 		long idx = indexToLong(index);
 		storage.get(idx, value);
@@ -184,8 +172,8 @@ public final class Float64TensorProductMember
 	}
 	
 	@Override
-	public void setV(long[] index, Float64Member value) {
-		if (index.length != this.dims.length)
+	public void setV(IntegerIndex index, Float64Member value) {
+		if (index.numDimensions() != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
 		long idx = indexToLong(index);
 		storage.set(idx, value);
@@ -198,7 +186,7 @@ public final class Float64TensorProductMember
 		// iterate values/indices and write numbers, brackets, and commas in correct order
 		// something recursive?
 		Float64Member tmp = new Float64Member();
-		long[] index = new long[this.dims.length];
+		IntegerIndex index = new IntegerIndex(this.dims.length);
 		// [2,2,2] dims
 		// [0,0,0]  [[[num
 		// [1,0,0]  [[[num,num
@@ -210,15 +198,15 @@ public final class Float64TensorProductMember
 		// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			longToIndex(i, index);
+			longToIntegerIndex(i, index);
 			int j = 0;
-			while (j < index.length && index[j++] == 0)
+			while (j < index.numDimensions() && index.get(j++) == 0)
 				builder.append('[');
-			if (index[0] != 0)
+			if (index.get(0) != 0)
 				builder.append(',');
 			builder.append(tmp.v());
 			j = 0;
-			while (j < index.length && index[j] == (dims[j++]-1))
+			while (j < index.numDimensions() && index.get(j) == (dims[j++]-1))
 				builder.append(']');
 		}
 		return builder.toString();
@@ -249,22 +237,22 @@ public final class Float64TensorProductMember
 	 * idx = [1,2,3]
 	 * long = 3*5*4 + 2*4 + 1;
 	 */
-	private long indexToLong(long[] idx) {
-		if (idx.length == 0) return 0;
+	private long indexToLong(IntegerIndex idx) {
+		if (idx.numDimensions() == 0) return 0;
 		long index = 0;
 		long mult = 1;
-		for (int i = 0; i < idx.length; i++) {
-			index += mult * idx[i];
+		for (int i = 0; i < idx.numDimensions(); i++) {
+			index += mult * idx.get(i);
 			mult *= dims[i];
 		}
 		return index;
 	}
 
-	private void longToIndex(long idx, long[] result) {
-		if (result.length != this.dims.length)
+	private void longToIntegerIndex(long idx, IntegerIndex result) {
+		if (result.numDimensions() != this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		for (int i = result.length-1; i >= 0; i--) {
-			result[i] = idx / multipliers[i];
+		for (int i = result.numDimensions()-1; i >= 0; i--) {
+			result.set(i, idx / multipliers[i]);
 			idx = idx % multipliers[i];
 		}
 	}
@@ -278,5 +266,13 @@ public final class Float64TensorProductMember
 	public void reshape(long[] dims) {
 		// TODO
 		throw new IllegalArgumentException("to implement");
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d >= dims.length) return 1;
+		return dims[d];
 	}
 }

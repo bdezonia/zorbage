@@ -30,13 +30,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface PrimitiveConversion {
+public interface PrimitiveConversion extends Dimensioned{
 	
 	PrimitiveRepresentation preferredRepresentation();
 
@@ -48,9 +49,9 @@ public interface PrimitiveConversion {
 	// 2, [m,n] : matrix
 	// 3, [m,n,...] : tensor
 	
-	int numDimensions();
+	//int numDimensions();    // from Dimensioned interface
 	
-	long dimension(int i);
+	//long dimension(int i);  // from Dimensioned interface
 	
 	// Components
 	//
@@ -111,6 +112,9 @@ public interface PrimitiveConversion {
 	BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component);
 	BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component);
 	
-	// utility method
+	// Utility method: this is not meant for general use but only in the
+	//   context of PrimitiveConverter and it's use there. Implementing
+	//   classes make assumptions about how it is called.
+	
 	void setZero();
 }

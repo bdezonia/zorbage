@@ -184,4 +184,12 @@ public final class QuaternionFloat64RModuleMember
 		// TODO Auto-generated method stub
 		throw new IllegalArgumentException("implement me");
 	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return storage.size();
+		return 1;
+	}
 }

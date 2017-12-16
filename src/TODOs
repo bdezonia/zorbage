@@ -141,7 +141,6 @@ Test all the contains() methods in real grid sampling code. Make tolerance
   an internal constant or a passable parameter. Or calc a tol from dx, dy, dz
   and counts.
 Revisit all todos noted in sampling code
-Make some types implement Dimensioned
 How do you using Samplings with Regions. Should be able to sample a region easily.
 Right now file storage classes lock their whole buffer. we should block single
   indices at a time so that multiple threads can access the container at one time
@@ -295,13 +294,6 @@ Make signed 128-bit code, add non-exhaustive tests, and enable group in G
 Add more constants to the Constants interface
 Find all places that might try to find hiBit and use Integer.numLeadZero()
 Make Power and PowerI applicable to matrices and maybe tensors. Think.
-Change Dimensioned interface to include long dim(int i). Add to all
-  relevant classes. Eliminate getDims(long[] d) from any class (like
-  tensors) that implement it. Make sure matrices return dim[0] for cols
-  and dim[1] for rows. All implementors should return 0 when queried
-  beyond their dimension. Throw exception for queried negative dim.
-  Break Dimensioned into two concepts: DimCount and Dimensioned. The
-  samplings only need DimCount. Dimensioned extends DimCount.
 Test Round with integers and floats.
 Implement PrimitiveConversion for all the numeric classes. Test them.
 Write an example that uses DataConvert. Especially after the 1d, 2d, and

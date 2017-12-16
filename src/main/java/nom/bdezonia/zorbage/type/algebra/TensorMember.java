@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+
 /**
  * 
  * @author Barry DeZonia
@@ -34,9 +36,8 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface TensorMember<A> extends Dimensioned {
 	// n dims
-	void dims(long[] dims);
 	void init(long[] dims);
 	void reshape(long[] dims);
-	void v(long[] index, A value);
-	void setV(long[] index, A value);
+	void v(IntegerIndex index, A value);
+	void setV(IntegerIndex index, A value);
 }

@@ -184,4 +184,13 @@ public final class QuaternionFloat64MatrixMember
 		// TODO Auto-generated method stub
 		throw new IllegalArgumentException("implement me");
 	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return cols;
+		if (d == 1) return rows;
+		return 1;
+	}
 }

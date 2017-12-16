@@ -24,17 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.region;
-
-import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
+package nom.bdezonia.zorbage.type.algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
-public interface Region<T> extends DimensionCount, SetMembership<T>, Bounded<T> {
-	
+public interface DimensionCount {
+	int numDimensions();
 }

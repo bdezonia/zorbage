@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.universal;
 
+import nom.bdezonia.zorbage.type.algebra.DimensionsResizable;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**
@@ -33,7 +34,7 @@ import nom.bdezonia.zorbage.util.BigList;
  * @author Barry DeZonia
  *
  */
-public class TensorOctonionRepresentation {
+public class TensorOctonionRepresentation implements DimensionsResizable {
 
 	private static final OctonionRepresentation ZERO = new OctonionRepresentation();
 	
@@ -44,6 +45,7 @@ public class TensorOctonionRepresentation {
 		 setDims(new long[] {});
 	}
 	
+	@Override
 	public void setDims(long[] dims) {
 		long count = calcCount(dims);
 		if (count == 0) count = 1;

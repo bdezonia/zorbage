@@ -180,4 +180,13 @@ public final class Float64MatrixMember
 	public void reshape(long rows, long cols) {
 		throw new IllegalArgumentException("not implemented yet");
 	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return cols;
+		if (d == 1) return rows;
+		return 1;
+	}
 }

@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.sampling;
 
 import nom.bdezonia.zorbage.region.SetMembership;
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 
 /**
  * {@link Sampling} defines the base class for samplings of all types. It
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Dimensioned;
  *
  * @param <T>
  */
-public interface Sampling<T> extends Dimensioned, SetMembership<T> {
+public interface Sampling<T> extends DimensionCount, SetMembership<T> {
 	
 	SamplingIterator<T> iterator();
 

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
 /**
@@ -48,7 +48,7 @@ public class Bounds {
 	 * @param min
 	 * @param max
 	 */
-	public static <U extends Allocatable<U> & Dimensioned & SupportsBoundsCalc<U>>
+	public static <U extends Allocatable<U> & DimensionCount & SupportsBoundsCalc<U>>
 		void find(Sampling<U> sampling, U min, U max)
 	{
 		if (min.numDimensions() != sampling.numDimensions() ||

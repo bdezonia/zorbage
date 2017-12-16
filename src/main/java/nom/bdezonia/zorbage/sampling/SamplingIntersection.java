@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
  *
  * @param <T>
  */
-public class SamplingIntersection<T extends Allocatable<T> & Dimensioned & Settable<T>> implements Sampling<T> {
+public class SamplingIntersection<T extends Allocatable<T> & DimensionCount & Settable<T>> implements Sampling<T> {
 
 	private final Sampling<T> first;
 	private final Sampling<T> second;

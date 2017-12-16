@@ -178,4 +178,11 @@ public final class Float64VectorMember
 		throw new IllegalArgumentException("TODO");
 	}
 
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return storage.size();
+		return 1;
+	}
 }

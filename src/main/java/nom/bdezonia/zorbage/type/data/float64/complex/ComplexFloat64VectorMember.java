@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -191,4 +192,11 @@ public final class ComplexFloat64VectorMember
 		}
 	}
 
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return storage.size();
+		return 1;
+	}
 }

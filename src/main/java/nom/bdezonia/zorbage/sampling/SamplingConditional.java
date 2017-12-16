@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.sampling;
 
 import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
  * @author Barry DeZonia
  *
  */
-public class SamplingConditional<T extends Allocatable<T> & Settable<T> & Dimensioned>
+public class SamplingConditional<T extends Allocatable<T> & Settable<T> & DimensionCount>
 	implements Sampling<T>
 {
 	private final Condition<T> condition;

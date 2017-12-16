@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
  */
 public class IntegerIndex
 	implements
-		Allocatable<IntegerIndex>, Duplicatable<IntegerIndex>, Dimensioned,
+		Allocatable<IntegerIndex>, Duplicatable<IntegerIndex>, DimensionCount,
 		Settable<IntegerIndex>, Gettable<IntegerIndex>, SupportsBoundsCalc<IntegerIndex>
 {
 	private final long[] index;

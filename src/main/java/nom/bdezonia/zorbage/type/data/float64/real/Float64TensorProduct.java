@@ -107,7 +107,9 @@ public class Float64TensorProduct
 	public void assign(Float64TensorProductMember from, Float64TensorProductMember to) {
 		Float64Member tmp = new Float64Member();
 		long[] dims = new long[from.numDimensions()];
-		from.dims(dims);
+		for (int i = 0; i < dims.length; i++) {
+			dims[i] = from.dimension(i);
+		}
 		to.init(dims);
 		long numElems = from.numElems();
 		for (long i = 0; i < numElems; i++) {
@@ -231,12 +233,8 @@ public class Float64TensorProduct
 		int numDims = a.numDimensions();
 		if (numDims != b.numDimensions())
 			return false;
-		long[] aDims = new long[numDims];
-		long[] bDims = new long[numDims];
-		a.dims(aDims);
-		b.dims(bDims);
 		for (int i = 0; i < numDims; i++) {
-			if (aDims[i] != bDims[i])
+			if (a.dimension(i) != b.dimension(i))
 				return false;
 		}
 		return true;

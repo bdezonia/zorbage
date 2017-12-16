@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.sampling;
 
 import java.util.ArrayList;
 
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 
@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
  * @author Barry DeZonia
  *
  */
-public class SamplingGeneral<U extends Duplicatable<U> & Dimensioned & Settable<U>>
+public class SamplingGeneral<U extends Duplicatable<U> & DimensionCount & Settable<U>>
 	implements Sampling<U>
 {
 	private final int numD;
@@ -84,7 +84,7 @@ public class SamplingGeneral<U extends Duplicatable<U> & Dimensioned & Settable<
 	 * @param type
 	 * @return
 	 */
-	public static <T extends Settable<T> & Duplicatable<T> & Dimensioned>
+	public static <T extends Settable<T> & Duplicatable<T> & DimensionCount>
 		SamplingGeneral<T> create(Sampling<T> other, T scratch)
 	{
 		SamplingGeneral<T> sampling = new SamplingGeneral<T>(other.numDimensions());

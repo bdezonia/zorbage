@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
  */
 public class RealIndex
 	implements
-		Allocatable<RealIndex>, Duplicatable<RealIndex>, Dimensioned,
+		Allocatable<RealIndex>, Duplicatable<RealIndex>, DimensionCount,
 		Settable<RealIndex>, Gettable<RealIndex>, SupportsBoundsCalc<RealIndex>
 {
 	private final double[] index;

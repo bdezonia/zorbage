@@ -109,4 +109,11 @@ public class MultiDimAccessor<T extends LinearStorage<T,U>,U>
 		return index;
 	}
 
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d >= dims.length) return 1;
+		return dims[d];
+	}
 }
