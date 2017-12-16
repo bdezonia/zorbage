@@ -685,7 +685,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = false;
 	}
 

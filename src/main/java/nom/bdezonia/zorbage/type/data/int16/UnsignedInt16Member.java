@@ -657,7 +657,7 @@ public final class UnsignedInt16Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 

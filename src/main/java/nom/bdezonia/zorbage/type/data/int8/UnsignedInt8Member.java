@@ -658,7 +658,7 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 

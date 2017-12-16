@@ -657,7 +657,7 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 

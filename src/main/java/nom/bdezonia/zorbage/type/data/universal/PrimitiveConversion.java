@@ -116,5 +116,5 @@ public interface PrimitiveConversion extends Dimensioned{
 	//   context of PrimitiveConverter and it's use there. Implementing
 	//   classes make assumptions about how it is called.
 	
-	void setZero();
+	void primitiveInit();
 }

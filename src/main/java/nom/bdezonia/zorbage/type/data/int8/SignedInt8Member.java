@@ -652,7 +652,7 @@ public final class SignedInt8Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 

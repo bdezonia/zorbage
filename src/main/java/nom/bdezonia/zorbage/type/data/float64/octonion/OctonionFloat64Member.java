@@ -1097,7 +1097,7 @@ public final class OctonionFloat64Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		setR(0);
 		setI(0);
 		setJ(0);

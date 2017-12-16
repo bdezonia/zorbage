@@ -691,7 +691,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		lo = hi = 0;
 	}
 

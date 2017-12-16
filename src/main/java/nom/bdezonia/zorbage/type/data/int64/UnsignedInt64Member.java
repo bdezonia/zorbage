@@ -664,7 +664,7 @@ public final class UnsignedInt64Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 

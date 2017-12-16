@@ -724,7 +724,7 @@ public final class ComplexFloat64Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		setR(0);
 		setI(0);
 	}

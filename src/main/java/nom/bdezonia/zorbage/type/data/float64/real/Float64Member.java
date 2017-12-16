@@ -653,7 +653,7 @@ public final class Float64Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 }

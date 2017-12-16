@@ -652,7 +652,7 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		v = 0;
 	}
 }

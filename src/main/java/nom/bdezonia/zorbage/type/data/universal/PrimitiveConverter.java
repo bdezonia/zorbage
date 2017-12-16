@@ -96,7 +96,7 @@ public class PrimitiveConverter {
 			// to 0 that need it (saving cpu cycles) but that makes code more
 			// complex. Skip that approach for now.
 			
-			to.setZero();
+			to.primitiveInit();
 
 			// iterate the overlap and set values
 			

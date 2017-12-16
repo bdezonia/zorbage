@@ -767,7 +767,7 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setZero() {
+	public void primitiveInit() {
 		setV(0);  // TODO is this good enough? As used by primconvert yes.
 		          //   But maybe not if used generally.
 	}
