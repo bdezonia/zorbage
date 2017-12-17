@@ -280,7 +280,9 @@ Can pred/succ fail on floats because of boundary conditions? Some algos
   factorials may depend upon it.
 Define linear storage filters that allow one to treat disconnected indices
   as a linear storage. This allows sums/avgs/etc to be computed on subsets
-  of linear storage. Can Samplings factor in here?
+  of linear storage. Can Samplings factor in here? (Later edit: samplings
+  could be conditional so size() of linearstorage could be unknown w/o
+  iterating whole thing which might be problematic)
 Should I implement Rational classes? And a BigDecimal based class?
 LinearStorage should implement the Duplicatable interface. Maybe also a
   Sortable interface. Median would require a Sortable DataSource. Does a
