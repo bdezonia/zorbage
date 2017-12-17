@@ -272,16 +272,12 @@ erf/erfc needs to be implemented
 implement pulling random values out of statistical distributions as
   algorithms if possible
 add javadoc to each of the algorithms
-rename IntegralDivision to ModularDivision?
-In java floats support the % operator. Could support part of IntegralDivision
-  and this would allow Integral algorithms to work with them. But gcd/lcm
-  and isOdd/isEven make no sense for floats. Break apart IntegralDivision
-  into at least two pieces.
 Can pred/succ fail on floats because of boundary conditions? Some algos
   might test against zero while floats might start negative and stick at
   negative infinity. Must review pred/succ assumptions. Might be okay if
   number is not NaN or infinity and our algorithm goes to/from zero or
-  minbound/maxbound.
+  minbound/maxbound. Bounded by zero below might be a property. General
+  factorials may depend upon it.
 Define linear storage filters that allow one to treat disconnected indices
   as a linear storage. This allows sums/avgs/etc to be computed on subsets
   of linear storage. Can Samplings factor in here?
