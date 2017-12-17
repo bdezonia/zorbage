@@ -26,12 +26,19 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
@@ -47,7 +54,8 @@ public final class OctonionFloat64RModuleMember
 	implements
 		RModuleMember<OctonionFloat64Member>,
 		Gettable<OctonionFloat64RModuleMember>,
-		Settable<OctonionFloat64RModuleMember>
+		Settable<OctonionFloat64RModuleMember>,
+		PrimitiveConversion
 // TODO: UniversalRepresentation
 {
 	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
@@ -200,5 +208,1030 @@ public final class OctonionFloat64RModuleMember
 			throw new IllegalArgumentException("can't query negative dimension");
 		if (d == 0) return storage.size();
 		return 1;
+	}
+
+	private static ThreadLocal<OctonionFloat64Member> tmpOct =
+			new ThreadLocal<OctonionFloat64Member>()
+	{
+		protected OctonionFloat64Member initialValue() {
+			return new OctonionFloat64Member();
+		};
+		
+	};
+	
+	@Override
+	public PrimitiveRepresentation preferredRepresentation() {
+		return PrimitiveRepresentation.DOUBLE;
+	}
+
+	@Override
+	public int componentCount() {
+		return 8;
+	}
+
+	@Override
+	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v);
+		else if (component == 1)
+			tmpOct.get().setI(v);
+		else if (component == 2)
+			tmpOct.get().setJ(v);
+		else if (component == 3)
+			tmpOct.get().setK(v);
+		else if (component == 4)
+			tmpOct.get().setL(v);
+		else if (component == 5)
+			tmpOct.get().setI0(v);
+		else if (component == 6)
+			tmpOct.get().setJ0(v);
+		else
+			tmpOct.get().setK0(v);
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v);
+		else if (component == 1)
+			tmpOct.get().setI(v);
+		else if (component == 2)
+			tmpOct.get().setJ(v);
+		else if (component == 3)
+			tmpOct.get().setK(v);
+		else if (component == 4)
+			tmpOct.get().setL(v);
+		else if (component == 5)
+			tmpOct.get().setI0(v);
+		else if (component == 6)
+			tmpOct.get().setJ0(v);
+		else
+			tmpOct.get().setK0(v);
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v);
+		else if (component == 1)
+			tmpOct.get().setI(v);
+		else if (component == 2)
+			tmpOct.get().setJ(v);
+		else if (component == 3)
+			tmpOct.get().setK(v);
+		else if (component == 4)
+			tmpOct.get().setL(v);
+		else if (component == 5)
+			tmpOct.get().setI0(v);
+		else if (component == 6)
+			tmpOct.get().setJ0(v);
+		else
+			tmpOct.get().setK0(v);
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v);
+		else if (component == 1)
+			tmpOct.get().setI(v);
+		else if (component == 2)
+			tmpOct.get().setJ(v);
+		else if (component == 3)
+			tmpOct.get().setK(v);
+		else if (component == 4)
+			tmpOct.get().setL(v);
+		else if (component == 5)
+			tmpOct.get().setI0(v);
+		else if (component == 6)
+			tmpOct.get().setJ0(v);
+		else
+			tmpOct.get().setK0(v);
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v);
+		else if (component == 1)
+			tmpOct.get().setI(v);
+		else if (component == 2)
+			tmpOct.get().setJ(v);
+		else if (component == 3)
+			tmpOct.get().setK(v);
+		else if (component == 4)
+			tmpOct.get().setL(v);
+		else if (component == 5)
+			tmpOct.get().setI0(v);
+		else if (component == 6)
+			tmpOct.get().setJ0(v);
+		else
+			tmpOct.get().setK0(v);
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v);
+		else if (component == 1)
+			tmpOct.get().setI(v);
+		else if (component == 2)
+			tmpOct.get().setJ(v);
+		else if (component == 3)
+			tmpOct.get().setK(v);
+		else if (component == 4)
+			tmpOct.get().setL(v);
+		else if (component == 5)
+			tmpOct.get().setI0(v);
+		else if (component == 6)
+			tmpOct.get().setJ0(v);
+		else
+			tmpOct.get().setK0(v);
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v.doubleValue());
+		else if (component == 1)
+			tmpOct.get().setI(v.doubleValue());
+		else if (component == 2)
+			tmpOct.get().setJ(v.doubleValue());
+		else if (component == 3)
+			tmpOct.get().setK(v.doubleValue());
+		else if (component == 4)
+			tmpOct.get().setL(v.doubleValue());
+		else if (component == 5)
+			tmpOct.get().setI0(v.doubleValue());
+		else if (component == 6)
+			tmpOct.get().setJ0(v.doubleValue());
+		else
+			tmpOct.get().setK0(v.doubleValue());
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		long i = index.get(0);
+		v(i, tmpOct.get());
+		if (component == 0)
+			tmpOct.get().setR(v.doubleValue());
+		else if (component == 1)
+			tmpOct.get().setI(v.doubleValue());
+		else if (component == 2)
+			tmpOct.get().setJ(v.doubleValue());
+		else if (component == 3)
+			tmpOct.get().setK(v.doubleValue());
+		else if (component == 4)
+			tmpOct.get().setL(v.doubleValue());
+		else if (component == 5)
+			tmpOct.get().setI0(v.doubleValue());
+		else if (component == 6)
+			tmpOct.get().setJ0(v.doubleValue());
+		else
+			tmpOct.get().setK0(v.doubleValue());
+		setV(i, tmpOct.get());
+	}
+
+	@Override
+	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v);
+			else if (component == 1)
+				tmpOct.get().setI(v);
+			else if (component == 2)
+				tmpOct.get().setJ(v);
+			else if (component == 3)
+				tmpOct.get().setK(v);
+			else if (component == 4)
+				tmpOct.get().setL(v);
+			else if (component == 5)
+				tmpOct.get().setI0(v);
+			else if (component == 6)
+				tmpOct.get().setJ0(v);
+			else
+				tmpOct.get().setK0(v);
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v);
+			else if (component == 1)
+				tmpOct.get().setI(v);
+			else if (component == 2)
+				tmpOct.get().setJ(v);
+			else if (component == 3)
+				tmpOct.get().setK(v);
+			else if (component == 4)
+				tmpOct.get().setL(v);
+			else if (component == 5)
+				tmpOct.get().setI0(v);
+			else if (component == 6)
+				tmpOct.get().setJ0(v);
+			else
+				tmpOct.get().setK0(v);
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v);
+			else if (component == 1)
+				tmpOct.get().setI(v);
+			else if (component == 2)
+				tmpOct.get().setJ(v);
+			else if (component == 3)
+				tmpOct.get().setK(v);
+			else if (component == 4)
+				tmpOct.get().setL(v);
+			else if (component == 5)
+				tmpOct.get().setI0(v);
+			else if (component == 6)
+				tmpOct.get().setJ0(v);
+			else
+				tmpOct.get().setK0(v);
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v);
+			else if (component == 1)
+				tmpOct.get().setI(v);
+			else if (component == 2)
+				tmpOct.get().setJ(v);
+			else if (component == 3)
+				tmpOct.get().setK(v);
+			else if (component == 4)
+				tmpOct.get().setL(v);
+			else if (component == 5)
+				tmpOct.get().setI0(v);
+			else if (component == 6)
+				tmpOct.get().setJ0(v);
+			else
+				tmpOct.get().setK0(v);
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v);
+			else if (component == 1)
+				tmpOct.get().setI(v);
+			else if (component == 2)
+				tmpOct.get().setJ(v);
+			else if (component == 3)
+				tmpOct.get().setK(v);
+			else if (component == 4)
+				tmpOct.get().setL(v);
+			else if (component == 5)
+				tmpOct.get().setI0(v);
+			else if (component == 6)
+				tmpOct.get().setJ0(v);
+			else
+				tmpOct.get().setK0(v);
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v);
+			else if (component == 1)
+				tmpOct.get().setI(v);
+			else if (component == 2)
+				tmpOct.get().setJ(v);
+			else if (component == 3)
+				tmpOct.get().setK(v);
+			else if (component == 4)
+				tmpOct.get().setL(v);
+			else if (component == 5)
+				tmpOct.get().setI0(v);
+			else if (component == 6)
+				tmpOct.get().setJ0(v);
+			else
+				tmpOct.get().setK0(v);
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v.doubleValue());
+			else if (component == 1)
+				tmpOct.get().setI(v.doubleValue());
+			else if (component == 2)
+				tmpOct.get().setJ(v.doubleValue());
+			else if (component == 3)
+				tmpOct.get().setK(v.doubleValue());
+			else if (component == 4)
+				tmpOct.get().setL(v.doubleValue());
+			else if (component == 5)
+				tmpOct.get().setI0(v.doubleValue());
+			else if (component == 6)
+				tmpOct.get().setJ0(v.doubleValue());
+			else
+				tmpOct.get().setK0(v.doubleValue());
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			long i = index.get(0);
+			v(i, tmpOct.get());
+			if (component == 0)
+				tmpOct.get().setR(v.doubleValue());
+			else if (component == 1)
+				tmpOct.get().setI(v.doubleValue());
+			else if (component == 2)
+				tmpOct.get().setJ(v.doubleValue());
+			else if (component == 3)
+				tmpOct.get().setK(v.doubleValue());
+			else if (component == 4)
+				tmpOct.get().setL(v.doubleValue());
+			else if (component == 5)
+				tmpOct.get().setI0(v.doubleValue());
+			else if (component == 6)
+				tmpOct.get().setJ0(v.doubleValue());
+			else
+				tmpOct.get().setK0(v.doubleValue());
+			setV(i, tmpOct.get());
+		}
+	}
+
+	@Override
+	public byte primComponentGetAsByte(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return 0;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return (byte) tmpOct.get().r();
+		if (component == 1) return (byte) tmpOct.get().i();
+		if (component == 2) return (byte) tmpOct.get().j();
+		if (component == 3) return (byte) tmpOct.get().k();
+		if (component == 4) return (byte) tmpOct.get().l();
+		if (component == 5) return (byte) tmpOct.get().i0();
+		if (component == 6) return (byte) tmpOct.get().j0();
+		return (byte) tmpOct.get().k0();
+	}
+
+	@Override
+	public short primComponentGetAsShort(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return 0;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return (short) tmpOct.get().r();
+		if (component == 1) return (short) tmpOct.get().i();
+		if (component == 2) return (short) tmpOct.get().j();
+		if (component == 3) return (short) tmpOct.get().k();
+		if (component == 4) return (short) tmpOct.get().l();
+		if (component == 5) return (short) tmpOct.get().i0();
+		if (component == 6) return (short) tmpOct.get().j0();
+		return (short) tmpOct.get().k0();
+	}
+
+	@Override
+	public int primComponentGetAsInt(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return 0;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return (int) tmpOct.get().r();
+		if (component == 1) return (int) tmpOct.get().i();
+		if (component == 2) return (int) tmpOct.get().j();
+		if (component == 3) return (int) tmpOct.get().k();
+		if (component == 4) return (int) tmpOct.get().l();
+		if (component == 5) return (int) tmpOct.get().i0();
+		if (component == 6) return (int) tmpOct.get().j0();
+		return (int) tmpOct.get().k0();
+	}
+
+	@Override
+	public long primComponentGetAsLong(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return 0;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return (long) tmpOct.get().r();
+		if (component == 1) return (long) tmpOct.get().i();
+		if (component == 2) return (long) tmpOct.get().j();
+		if (component == 3) return (long) tmpOct.get().k();
+		if (component == 4) return (long) tmpOct.get().l();
+		if (component == 5) return (long) tmpOct.get().i0();
+		if (component == 6) return (long) tmpOct.get().j0();
+		return (long) tmpOct.get().k0();
+	}
+
+	@Override
+	public float primComponentGetAsFloat(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return 0;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return (float) tmpOct.get().r();
+		if (component == 1) return (float) tmpOct.get().i();
+		if (component == 2) return (float) tmpOct.get().j();
+		if (component == 3) return (float) tmpOct.get().k();
+		if (component == 4) return (float) tmpOct.get().l();
+		if (component == 5) return (float) tmpOct.get().i0();
+		if (component == 6) return (float) tmpOct.get().j0();
+		return (float) tmpOct.get().k0();
+	}
+
+	@Override
+	public double primComponentGetAsDouble(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return 0;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return tmpOct.get().r();
+		if (component == 1) return tmpOct.get().i();
+		if (component == 2) return tmpOct.get().j();
+		if (component == 3) return tmpOct.get().k();
+		if (component == 4) return tmpOct.get().l();
+		if (component == 5) return tmpOct.get().i0();
+		if (component == 6) return tmpOct.get().j0();
+		return tmpOct.get().k0();
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return BigInteger.ZERO;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return BigInteger.valueOf((long) tmpOct.get().r());
+		if (component == 1) return BigInteger.valueOf((long) tmpOct.get().i());
+		if (component == 2) return BigInteger.valueOf((long) tmpOct.get().j());
+		if (component == 3) return BigInteger.valueOf((long) tmpOct.get().k());
+		if (component == 4) return BigInteger.valueOf((long) tmpOct.get().l());
+		if (component == 5) return BigInteger.valueOf((long) tmpOct.get().i0());
+		if (component == 6) return BigInteger.valueOf((long) tmpOct.get().j0());
+		return BigInteger.valueOf((long) tmpOct.get().k0());
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component > 7) return BigDecimal.ZERO;
+		v(index.get(0), tmpOct.get());
+		if (component == 0) return BigDecimal.valueOf(tmpOct.get().r());
+		if (component == 1) return BigDecimal.valueOf(tmpOct.get().i());
+		if (component == 2) return BigDecimal.valueOf(tmpOct.get().j());
+		if (component == 3) return BigDecimal.valueOf(tmpOct.get().k());
+		if (component == 4) return BigDecimal.valueOf(tmpOct.get().l());
+		if (component == 5) return BigDecimal.valueOf(tmpOct.get().i0());
+		if (component == 6) return BigDecimal.valueOf(tmpOct.get().j0());
+		return BigDecimal.valueOf(tmpOct.get().k0());
+	}
+
+	@Override
+	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return (byte) tmpOct.get().r();
+			if (component == 1) return (byte) tmpOct.get().i();
+			if (component == 2) return (byte) tmpOct.get().j();
+			if (component == 3) return (byte) tmpOct.get().k();
+			if (component == 4) return (byte) tmpOct.get().l();
+			if (component == 5) return (byte) tmpOct.get().i0();
+			if (component == 6) return (byte) tmpOct.get().j0();
+			return (byte) tmpOct.get().k0();
+		}
+	}
+
+	@Override
+	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return (short) tmpOct.get().r();
+			if (component == 1) return (short) tmpOct.get().i();
+			if (component == 2) return (short) tmpOct.get().j();
+			if (component == 3) return (short) tmpOct.get().k();
+			if (component == 4) return (short) tmpOct.get().l();
+			if (component == 5) return (short) tmpOct.get().i0();
+			if (component == 6) return (short) tmpOct.get().j0();
+			return (short) tmpOct.get().k0();
+		}
+	}
+
+	@Override
+	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return (int) tmpOct.get().r();
+			if (component == 1) return (int) tmpOct.get().i();
+			if (component == 2) return (int) tmpOct.get().j();
+			if (component == 3) return (int) tmpOct.get().k();
+			if (component == 4) return (int) tmpOct.get().l();
+			if (component == 5) return (int) tmpOct.get().i0();
+			if (component == 6) return (int) tmpOct.get().j0();
+			return (int) tmpOct.get().k0();
+		}
+	}
+
+	@Override
+	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return (long) tmpOct.get().r();
+			if (component == 1) return (long) tmpOct.get().i();
+			if (component == 2) return (long) tmpOct.get().j();
+			if (component == 3) return (long) tmpOct.get().k();
+			if (component == 4) return (long) tmpOct.get().l();
+			if (component == 5) return (long) tmpOct.get().i0();
+			if (component == 6) return (long) tmpOct.get().j0();
+			return (long) tmpOct.get().k0();
+		}
+	}
+
+	@Override
+	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return (float) tmpOct.get().r();
+			if (component == 1) return (float) tmpOct.get().i();
+			if (component == 2) return (float) tmpOct.get().j();
+			if (component == 3) return (float) tmpOct.get().k();
+			if (component == 4) return (float) tmpOct.get().l();
+			if (component == 5) return (float) tmpOct.get().i0();
+			if (component == 6) return (float) tmpOct.get().j0();
+			return (float) tmpOct.get().k0();
+		}
+	}
+
+	@Override
+	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return 0;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return tmpOct.get().r();
+			if (component == 1) return tmpOct.get().i();
+			if (component == 2) return tmpOct.get().j();
+			if (component == 3) return tmpOct.get().k();
+			if (component == 4) return tmpOct.get().l();
+			if (component == 5) return tmpOct.get().i0();
+			if (component == 6) return tmpOct.get().j0();
+			return tmpOct.get().k0();
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return BigInteger.ZERO;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return BigInteger.valueOf((long) tmpOct.get().r());
+			if (component == 1) return BigInteger.valueOf((long) tmpOct.get().i());
+			if (component == 2) return BigInteger.valueOf((long) tmpOct.get().j());
+			if (component == 3) return BigInteger.valueOf((long) tmpOct.get().k());
+			if (component == 4) return BigInteger.valueOf((long) tmpOct.get().l());
+			if (component == 5) return BigInteger.valueOf((long) tmpOct.get().i0());
+			if (component == 6) return BigInteger.valueOf((long) tmpOct.get().j0());
+			return BigInteger.valueOf((long) tmpOct.get().k0());
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		boolean oob = component > 7;
+		if (!oob) {
+			for (int i = 0; i < numDimensions(); i++) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
+					oob = true;
+					break;
+				}
+			}
+		}
+		if (oob) {
+			return BigDecimal.ZERO;
+		}
+		else {
+			v(index.get(0), tmpOct.get());
+			if (component == 0) return BigDecimal.valueOf(tmpOct.get().r());
+			if (component == 1) return BigDecimal.valueOf(tmpOct.get().i());
+			if (component == 2) return BigDecimal.valueOf(tmpOct.get().j());
+			if (component == 3) return BigDecimal.valueOf(tmpOct.get().k());
+			if (component == 4) return BigDecimal.valueOf(tmpOct.get().l());
+			if (component == 5) return BigDecimal.valueOf(tmpOct.get().i0());
+			if (component == 6) return BigDecimal.valueOf(tmpOct.get().j0());
+			return BigDecimal.valueOf(tmpOct.get().k0());
+		}
+	}
+
+	@Override
+	public void primitiveInit() {
+		tmpOct.get().setR(0);
+		tmpOct.get().setI(0);
+		tmpOct.get().setJ(0);
+		tmpOct.get().setK(0);
+		tmpOct.get().setL(0);
+		tmpOct.get().setI0(0);
+		tmpOct.get().setJ0(0);
+		tmpOct.get().setK0(0);
+		for (long i = 0; i < storage.size(); i++)
+			storage.set(i, tmpOct.get());
 	}
 }
