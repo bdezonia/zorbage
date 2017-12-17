@@ -49,6 +49,7 @@ public final class QuaternionFloat64RModuleMember
 		RModuleMember<QuaternionFloat64Member>,
 		Gettable<QuaternionFloat64RModuleMember>,
 		Settable<QuaternionFloat64RModuleMember>
+// TODO: UniversalRepresentation
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 

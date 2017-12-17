@@ -54,6 +54,7 @@ public final class Float64TensorProductMember
 		TensorMember<Float64Member>,
 		Gettable<Float64TensorProductMember>,
 		Settable<Float64TensorProductMember>
+// TODO: UniversalRepresentation
 {
 
 	private static final Float64Member ZERO = new Float64Member(0);

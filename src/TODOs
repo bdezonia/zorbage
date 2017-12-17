@@ -299,3 +299,5 @@ Do a Matrix/Vector multiply algorithm for generic types.
 Tensor and Matrix slicing algorithms for generic types.
 Prim conversion of Quat and Oct can do binary search of components.
   Might be faster than lots of if/else clauses.
+Many of the float64 types need Duplicatable, UniversalRepresentation,
+  PrimitveConversion, etc.

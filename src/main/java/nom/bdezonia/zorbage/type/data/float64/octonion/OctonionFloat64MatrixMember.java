@@ -48,6 +48,7 @@ public final class OctonionFloat64MatrixMember
 		MatrixMember<OctonionFloat64Member>,
 		Gettable<OctonionFloat64MatrixMember>,
 		Settable<OctonionFloat64MatrixMember>
+// TODO: UniversalRepresentation
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 

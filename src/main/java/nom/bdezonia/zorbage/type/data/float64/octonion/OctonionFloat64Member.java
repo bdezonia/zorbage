@@ -55,6 +55,7 @@ public final class OctonionFloat64Member
 		Allocatable<OctonionFloat64Member>, Duplicatable<OctonionFloat64Member>,
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion
+		// TODO: UniversalRepresentation
 {
 
 	private double r, i, j, k, l, i0, j0, k0;

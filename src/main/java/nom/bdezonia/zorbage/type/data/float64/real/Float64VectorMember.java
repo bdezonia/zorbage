@@ -49,6 +49,7 @@ public final class Float64VectorMember
 		RModuleMember<Float64Member>,
 		Gettable<Float64VectorMember>,
 		Settable<Float64VectorMember>
+		// TODO: UniversalRepresentation
 {
 	private static final Float64Member ZERO = new Float64Member(0); 
 

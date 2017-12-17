@@ -48,6 +48,7 @@ public final class QuaternionFloat64MatrixMember
 		MatrixMember<QuaternionFloat64Member>,
 		Gettable<QuaternionFloat64MatrixMember>,
 		Settable<QuaternionFloat64MatrixMember>
+// TODO: UniversalRepresentation
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 

@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -50,6 +49,7 @@ public final class ComplexFloat64VectorMember
 		RModuleMember<ComplexFloat64Member>,
 		Gettable<ComplexFloat64VectorMember>,
 		Settable<ComplexFloat64VectorMember>
+// TODO: UniversalRepresentation
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 

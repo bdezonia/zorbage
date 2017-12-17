@@ -48,6 +48,7 @@ public final class OctonionFloat64RModuleMember
 		RModuleMember<OctonionFloat64Member>,
 		Gettable<OctonionFloat64RModuleMember>,
 		Settable<OctonionFloat64RModuleMember>
+// TODO: UniversalRepresentation
 {
 	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 

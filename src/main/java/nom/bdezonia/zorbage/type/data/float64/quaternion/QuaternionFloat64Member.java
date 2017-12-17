@@ -57,6 +57,7 @@ public final class QuaternionFloat64Member
 		Allocatable<QuaternionFloat64Member>, Duplicatable<QuaternionFloat64Member>,
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion
+		// TODO: UniversalRepresentation
 {
 
 	private double r, i, j, k;

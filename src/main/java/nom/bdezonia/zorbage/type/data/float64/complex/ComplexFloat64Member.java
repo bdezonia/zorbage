@@ -54,6 +54,7 @@ public final class ComplexFloat64Member
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion
+		// TODO: UniversalRepresentation
 {
 	private double r, i;
 	

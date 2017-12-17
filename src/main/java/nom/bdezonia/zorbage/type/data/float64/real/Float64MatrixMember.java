@@ -48,6 +48,7 @@ public final class Float64MatrixMember
 		MatrixMember<Float64Member>,
 		Settable<Float64MatrixMember>,
 		Gettable<Float64MatrixMember>
+// TODO: UniversalRepresentation
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 

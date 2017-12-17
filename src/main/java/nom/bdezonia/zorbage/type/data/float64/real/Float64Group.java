@@ -44,7 +44,6 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
 
 /**
  * 
