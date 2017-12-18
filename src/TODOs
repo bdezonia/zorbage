@@ -300,5 +300,6 @@ Tensor and Matrix slicing algorithms for generic types.
 Prim conversion of Quat and Oct can do binary search of components.
   Might be faster than lots of if/else clauses.
 Many of the float64 types need Duplicatable, UniversalRepresentation,
-  PrimitiveConversion, etc.
+  PrimitiveConversion, Allocatable, etc.
 Eliminate a lot of duplicate code in the classes that implement PrimConv
+Make MultiDimAccess use IntegerIndex
