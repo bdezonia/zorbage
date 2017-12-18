@@ -58,7 +58,7 @@ public class TestPrimitiveConversions {
 		
 		uint8.setV(222);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, uint8, dbl);
-		assertEquals(dbl.v(), uint8.v(), 0);
+		assertEquals(222, dbl.v(), 0);
 		
 		dbl.setV(14.7);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, dbl, uint8);
