@@ -50,12 +50,14 @@ public class TestDataConvert {
 		OctonionFloat64Member tmpO = new OctonionFloat64Member();
 		LinearStorage<?,SignedInt32Member> in = ArrayStorage.allocate(size, tmpI);
 		LinearStorage<?,OctonionFloat64Member> out = ArrayStorage.allocate(size, tmpO);
-		for (int i = 0; i < in.size(); i++) {
+		assertEquals(size, in.size());
+		assertEquals(size, out.size());
+		for (int i = 0; i < size; i++) {
 			tmpI.setV(i);
 			in.set(i, tmpI);
 		}
 		DataConvert.compute(G.INT32, G.ODBL, in, out);
-		for (int i = 0; i < out.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			out.get(i, tmpO);
 			assertEquals(i, tmpO.r(), 0);
 			assertEquals(0, tmpO.i(), 0);
