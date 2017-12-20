@@ -26,12 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.util.List;
-
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -39,43 +34,23 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class DataConvert {
-
-	// do not instantiate
-	
-	private DataConvert() {}
+public class FillRange {
 	
 	/**
-	 * DataConvert.compute()
+	 * FillRange.compute()
 	 * 
-	 * @param fromGroup
-	 * @param toGroup
-	 * @param fromList
-	 * @param toList
+	 * @param group
+	 * @param storage
+	 * @param value
+	 * @param start
+	 * @param count
 	 */
-	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
+	public static <T extends Group<T,U>,U>
+		void compute(T group, LinearStorage<?,U> storage, U value, long start, long count)
 	{
-		DataConvertRange.compute(fromGroup, toGroup, fromList, toList, 0, 0, fromList.size());
-	}
-
-	/**
-	 * DataConvert.compute()
-	 * 
-	 * @param input
-	 * @param output
-	 */
-	public static <V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(List<V> input, List<W> output)
-	{
-		if (input.size() == 0 || output.size() == 0)
-			throw new IllegalArgumentException("cannot work with empty lists");
-		int numD = Math.max(input.get(0).numDimensions(), output.get(0).numDimensions());
-		IntegerIndex tmp1 = new IntegerIndex(numD);
-		IntegerIndex tmp2 = new IntegerIndex(numD);
-		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (int i = 0; i < input.size(); i++) {
-			PrimitiveConverter.convert(tmp1, tmp2, tmp3, input.get(i), output.get(i));
+		for (long i = 0; i < count; i++) {
+			storage.set(start+i, value);
 		}
 	}
+
 }

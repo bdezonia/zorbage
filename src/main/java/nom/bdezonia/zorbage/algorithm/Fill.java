@@ -48,8 +48,6 @@ public class Fill {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, LinearStorage<?,U> storage, U value)
 	{
-		for (long i = 0; i < storage.size(); i++) {
-			storage.set(i, value);
-		}
+		FillRange.compute(group, storage, value, 0, storage.size());
 	}
 }

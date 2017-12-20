@@ -26,12 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.util.List;
-
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -39,43 +34,31 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class DataConvert {
-
-	// do not instantiate
+public class SwapRanges {
 	
-	private DataConvert() {}
-	
-	/**
-	 * DataConvert.compute()
-	 * 
-	 * @param fromGroup
-	 * @param toGroup
-	 * @param fromList
-	 * @param toList
-	 */
-	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
-	{
-		DataConvertRange.compute(fromGroup, toGroup, fromList, toList, 0, 0, fromList.size());
-	}
+	private SwapRanges() {}
 
 	/**
-	 * DataConvert.compute()
+	 * SwapRanges.compute()
 	 * 
-	 * @param input
-	 * @param output
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @param aStart
+	 * @param bStart
+	 * @param count
 	 */
-	public static <V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(List<V> input, List<W> output)
+	public static <T extends Group<T,U>,U>
+		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
 	{
-		if (input.size() == 0 || output.size() == 0)
-			throw new IllegalArgumentException("cannot work with empty lists");
-		int numD = Math.max(input.get(0).numDimensions(), output.get(0).numDimensions());
-		IntegerIndex tmp1 = new IntegerIndex(numD);
-		IntegerIndex tmp2 = new IntegerIndex(numD);
-		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (int i = 0; i < input.size(); i++) {
-			PrimitiveConverter.convert(tmp1, tmp2, tmp3, input.get(i), output.get(i));
+		U tmp1 = group.construct();
+		U tmp2 = group.construct();
+		for (long i = 0; i < count; i++) {
+			a.get(aStart+i, tmp1);
+			b.get(bStart+i, tmp2);
+			a.set(aStart+i, tmp2);
+			b.set(bStart+i, tmp1);
 		}
 	}
+
 }
