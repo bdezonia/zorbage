@@ -46,7 +46,6 @@ public class DataConvert {
 	private DataConvert() {}
 	
 	/**
-	 * DataConvert.compute()
 	 * 
 	 * @param fromGroup
 	 * @param toGroup
@@ -56,7 +55,33 @@ public class DataConvert {
 	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
 		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
 	{
-		DataConvertRange.compute(fromGroup, toGroup, fromList, toList, 0, 0, fromList.size());
+		compute(fromGroup, toGroup, fromList, toList, 0, 0, fromList.size());
+	}
+
+	/**
+	 * 
+	 * @param fromGroup
+	 * @param toGroup
+	 * @param fromList
+	 * @param toList
+	 * @param fromStart
+	 * @param toStart
+	 * @param count
+	 */
+	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
+		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList, long fromStart, long toStart, long count)
+	{
+		V from = fromGroup.construct();
+		W to = toGroup.construct();
+		int numD = Math.max(from.numDimensions(), to.numDimensions());
+		IntegerIndex tmp1 = new IntegerIndex(numD);
+		IntegerIndex tmp2 = new IntegerIndex(numD);
+		IntegerIndex tmp3 = new IntegerIndex(numD);
+		for (long i = 0; i < count; i++) {
+			fromList.get(fromStart+i, from);
+			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from, to);
+			toList.set(toStart+i, to);
+		}
 	}
 
 	/**

@@ -36,10 +36,11 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  */
 public class Fill {
 
+	// do not instantiate
+	
 	private Fill() {}
 	
 	/**
-	 * Fill.compute()
 	 * 
 	 * @param group
 	 * @param storage
@@ -48,6 +49,22 @@ public class Fill {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, LinearStorage<?,U> storage, U value)
 	{
-		FillRange.compute(group, storage, value, 0, storage.size());
+		compute(group, storage, value, 0, storage.size());
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param storage
+	 * @param value
+	 * @param start
+	 * @param count
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, LinearStorage<?,U> storage, U value, long start, long count)
+	{
+		for (long i = 0; i < count; i++) {
+			storage.set(start+i, value);
+		}
 	}
 }

@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  */
 public class Replace {
 
+	// do not instantiate
+	
 	private Replace() {}
 
 	/**
@@ -48,6 +50,27 @@ public class Replace {
 	public static <T extends Group<T,U>, U>
 		void compute(T group, LinearStorage<?,U> storage, U target, U replacement)
 	{
-		ReplaceRange.compute(group, storage, target, replacement, 0, storage.size());
+		compute(group, storage, target, replacement, 0, storage.size());
 	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @param storage
+	 * @param target
+	 * @param replacement
+	 * @param start
+	 * @param count
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, LinearStorage<?,U> storage, U target, U replacement, long start, long count)
+	{
+		U tmp = group.construct();
+		for (long i = 0; i < count; i++) {
+			storage.get(start+i, tmp);
+			if (group.isEqual(tmp, target))
+				storage.set(start+i, replacement);
+		}
+	}
+
 }

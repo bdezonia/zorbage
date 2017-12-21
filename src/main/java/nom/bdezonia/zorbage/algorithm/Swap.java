@@ -36,10 +36,11 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  */
 public class Swap {
 
+	// do not instantiate
+	
 	private Swap() {}
 
 	/**
-	 * Swap.compute()
 	 * 
 	 * @param group
 	 * @param a
@@ -48,6 +49,29 @@ public class Swap {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		SwapRanges.compute(group, a, b, 0, 0, a.size());
+		compute(group, a, b, 0, 0, a.size());
 	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+	{
+		U tmp1 = group.construct();
+		U tmp2 = group.construct();
+		for (long i = 0; i < count; i++) {
+			a.get(aStart+i, tmp1);
+			b.get(bStart+i, tmp2);
+			a.set(aStart+i, tmp2);
+			b.set(bStart+i, tmp1);
+		}
+	}
+
 }
