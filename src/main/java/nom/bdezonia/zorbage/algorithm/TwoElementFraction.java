@@ -51,7 +51,13 @@ public class TwoElementFraction {
 	{
 		U one = grp.construct();
 		grp.unity(one);
-		grp.add(one, one, denom);
-		grp.add(result1, result2, numer);
+		if (grp.isEqual(result1,  result2)) {
+			grp.assign(result1, numer);
+			grp.assign(one, denom);
+		}
+		else {
+			grp.add(result1, result2, numer);
+			grp.add(one, one, denom);
+		}
 	}
 }
