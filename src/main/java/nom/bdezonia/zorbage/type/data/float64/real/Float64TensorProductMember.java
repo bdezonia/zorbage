@@ -269,9 +269,12 @@ public final class Float64TensorProductMember
 	}
 
 	private void longToIntegerIndex(long idx, IntegerIndex result) {
+		if (idx < 0)
+			throw new IllegalArgumentException("negative index in tensor addressing");
+		if (idx >= storage.size())
+			throw new IllegalArgumentException("index beyond end of tensor storage");
 		if (result.numDimensions() < this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		idx = idx % storage.size();
 		for (int i = dims.length; i < result.numDimensions(); i++) {
 			result.set(i,0);
 		}
