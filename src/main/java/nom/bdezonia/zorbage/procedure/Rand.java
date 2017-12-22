@@ -24,66 +24,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.procedure;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Rand;
-import nom.bdezonia.zorbage.procedure.Sin;
+import nom.bdezonia.zorbage.basic.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
+
+// TODO: should this implement Procedure1 instead?
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestTransform {
-
-	@Test
-	public void testFloats()
-	{
-		test(G.DBL);
-	}
-
-	@Test
-	public void testComplexes() {
-		test(G.CDBL);
+public class Rand<T extends Group<T,U> & Random<U>,U>
+	implements Procedure2<U,U>
+{
+	private T group;
+	
+	public Rand(T group) {
+		this.group = group;
 	}
 	
-	@Test
-	public void testQuats() {
-		test(G.QDBL);
-	}
-	
-	@Test
-	public void testOcts() {
-		test(G.ODBL);
+	@Override
+	public void call(U a, U b) {
+		group.random(b);
 	}
 
-	// an algorithm that applies Sin() op to a list of any type that
-	// supports sin()
-	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
-		void test(T group)
-	{
-		// generic allocation
-		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
-		
-		// set values of storage to random doubles between 0 and 1
-		Rand<T, U> randOp = new Rand<T,U>(group);
-		Transform.compute(group, a, randOp);
-		
-		// transform each input[i] value to be the sin(input[i])
-		Sin<T, U> sinOp = new Sin<T,U>(group);
-		Transform.compute(group, a, sinOp);
-		
-		assertTrue(true);
-	}
 }
