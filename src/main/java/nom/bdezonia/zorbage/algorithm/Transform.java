@@ -43,6 +43,19 @@ public class Transform {
 	private Transform() {}
 
 	/**
+	 * Transform the data of one complete list in place.
+	 * 
+	 * @param grpU
+	 * @param a
+	 * @param proc
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, LinearStorage<?,U> a, Procedure2<U,U> proc)
+	{
+		compute(grpU, grpU, a, a, proc, 0, 0, a.size());
+	}
+	
+	/**
 	 * Transform the data from one complete list to another complete list.
 	 * Source and destination lists can be the same.
 	 * 

@@ -24,29 +24,61 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure2;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Sin;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Tan<T extends Group<T,U> & Trigonometric<U>,U>
-	implements Procedure2<U,U>
-{
-	private T group;
-	
-	public Tan(T group) {
-		this.group = group;
-	}
-	
-	@Override
-	public void call(U a, U b) {
-		group.tan(a, b);
+public class TestTransform {
+
+	@Test
+	public void testFloats()
+	{
+		test(G.DBL);
 	}
 
+	@Test
+	public void testComplexes() {
+		test(G.CDBL);
+	}
+	
+	@Test
+	public void testQuats() {
+		test(G.QDBL);
+	}
+	
+	@Test
+	public void testOcts() {
+		test(G.ODBL);
+	}
+
+	// an algorithm that applies Sin() op to any type that supports it
+	
+	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
+		void test(T group)
+	{
+		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
+		Sin<T, U> sinOp = new Sin<T,U>(group);
+		U tmp = group.construct();
+		for (long i = 0; i < a.size(); i++) {
+			group.random(tmp);
+			a.set(i, tmp);
+		}
+		Transform.compute(group, a, sinOp);
+		assertTrue(true);
+	}
 }
