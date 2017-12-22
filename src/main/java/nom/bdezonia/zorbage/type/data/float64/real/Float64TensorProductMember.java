@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -33,6 +36,8 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
@@ -53,7 +58,8 @@ public final class Float64TensorProductMember
 	implements
 		TensorMember<Float64Member>,
 		Gettable<Float64TensorProductMember>,
-		Settable<Float64TensorProductMember>
+		Settable<Float64TensorProductMember>,
+		PrimitiveConversion
 // TODO: UniversalRepresentation
 {
 
@@ -73,6 +79,21 @@ public final class Float64TensorProductMember
 		s = StorageConstruction.ARRAY;
 	}
 
+	public Float64TensorProductMember(long[] dims, double[] vals) {
+		if (vals.length != numElems(dims))
+			throw new IllegalArgumentException("incorrect number of values provided to tensor constructor");
+		this.dims = dims;
+		storage = new ArrayStorageFloat64<Float64Member>(vals.length, new Float64Member());
+		multipliers = calcMultipliers();
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
+		Float64Member tmp = new Float64Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
+		}
+	}
+	
 	public Float64TensorProductMember(Float64TensorProductMember other) { 
 		dims = other.dims.clone();
 		storage = other.storage.duplicate();
@@ -160,8 +181,6 @@ public final class Float64TensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, Float64Member value) {
-		if (index.numDimensions() != this.dims.length)
-			throw new IllegalArgumentException("mismatched dims in tensor member");
 		long idx = indexToLong(index);
 		storage.get(idx, value);
 	}
@@ -174,8 +193,6 @@ public final class Float64TensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, Float64Member value) {
-		if (index.numDimensions() != this.dims.length)
-			throw new IllegalArgumentException("mismatched dims in tensor member");
 		long idx = indexToLong(index);
 		storage.set(idx, value);
 	}
@@ -240,9 +257,11 @@ public final class Float64TensorProductMember
 	 */
 	private long indexToLong(IntegerIndex idx) {
 		if (idx.numDimensions() == 0) return 0;
+		if ((idx.numDimensions() >= dims.length) && indexOob(idx, 0))
+			throw new IllegalArgumentException("index out of bounds");
 		long index = 0;
 		long mult = 1;
-		for (int i = 0; i < idx.numDimensions(); i++) {
+		for (int i = 0; i < dims.length; i++) {
 			index += mult * idx.get(i);
 			mult *= dims[i];
 		}
@@ -250,14 +269,37 @@ public final class Float64TensorProductMember
 	}
 
 	private void longToIntegerIndex(long idx, IntegerIndex result) {
-		if (result.numDimensions() != this.dims.length)
+		if (result.numDimensions() < this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
-		for (int i = result.numDimensions()-1; i >= 0; i--) {
+		idx = idx % storage.size();
+		for (int i = dims.length; i < result.numDimensions(); i++) {
+			result.set(i,0);
+		}
+		for (int i = dims.length-1; i >= 0; i--) {
 			result.set(i, idx / multipliers[i]);
 			idx = idx % multipliers[i];
 		}
 	}
 
+	private boolean indexOob(IntegerIndex idx, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException("negative component specified in indexOob");
+		if (component > 0) return true;
+		for (int i = 0; i < dims.length; i++) {
+			final long index = idx.get(i);
+			if (index < 0)
+				throw new IllegalArgumentException("negative index in indexOob");
+			if (index >= dims[i]) return true;
+		}
+		for (int i = dims.length; i < idx.numDimensions(); i++) {
+			final long index = idx.get(i);
+			if (index < 0)
+				throw new IllegalArgumentException("negative index in indexOob");
+			if (index > 0) return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public int numDimensions() {
 		return dims.length;
@@ -275,5 +317,366 @@ public final class Float64TensorProductMember
 			throw new IllegalArgumentException("can't query negative dimension");
 		if (d >= dims.length) return 1;
 		return dims[d];
+	}
+	
+	private static ThreadLocal<Float64Member> tmpFloat =
+			new ThreadLocal<Float64Member>()
+	{
+		protected Float64Member initialValue() {
+			return new Float64Member();
+		};
+		
+	};
+	
+	@Override
+	public PrimitiveRepresentation preferredRepresentation() {
+		return PrimitiveRepresentation.DOUBLE;
+	}
+
+	@Override
+	public int componentCount() {
+		return 1;
+	}
+
+	@Override
+	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
+		tmpFloat.get().setV(v);
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		tmpFloat.get().setV(v);
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		tmpFloat.get().setV(v);
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		tmpFloat.get().setV(v);
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		tmpFloat.get().setV(v);
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		tmpFloat.get().setV(v);
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		tmpFloat.get().setV(v.doubleValue());
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		tmpFloat.get().setV(v.doubleValue());
+		setV(index, tmpFloat.get());
+	}
+
+	@Override
+	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
+		if (indexOob(index, component)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v);
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
+		if (indexOob(index, component)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v);
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
+		if (indexOob(index, component)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v);
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
+		if (indexOob(index, component)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v);
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
+		if (indexOob(index, component)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v);
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
+		if (indexOob(index, component)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v);
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
+		if (indexOob(index, component)) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v.doubleValue());
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
+		if (indexOob(index, component)) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			tmpFloat.get().setV(v.doubleValue());
+			setV(index, tmpFloat.get());
+		}
+	}
+
+	@Override
+	public byte primComponentGetAsByte(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return (byte) tmpFloat.get().v();
+		}
+		return 0;
+	}
+
+	@Override
+	public short primComponentGetAsShort(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return (short) tmpFloat.get().v();
+		}
+		return 0;
+	}
+
+	@Override
+	public int primComponentGetAsInt(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return (int) tmpFloat.get().v();
+		}
+		return 0;
+	}
+
+	@Override
+	public long primComponentGetAsLong(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return (long) tmpFloat.get().v();
+		}
+		return 0;
+	}
+
+	@Override
+	public float primComponentGetAsFloat(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return (float) tmpFloat.get().v();
+		}
+		return 0;
+	}
+
+	@Override
+	public double primComponentGetAsDouble(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return tmpFloat.get().v();
+		}
+		return 0;
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return BigInteger.valueOf((long) tmpFloat.get().v());
+		}
+		return BigInteger.ZERO;
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		if (component == 0) {
+			v(index, tmpFloat.get());
+			return BigDecimal.valueOf(tmpFloat.get().v());
+		}
+		return BigDecimal.ZERO;
+	}
+
+	@Override
+	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return 0;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return (byte) tmpFloat.get().v();
+		}
+	}
+
+	@Override
+	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return 0;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return (short) tmpFloat.get().v();
+		}
+	}
+
+	@Override
+	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return 0;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return (int) tmpFloat.get().v();
+		}
+	}
+
+	@Override
+	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return 0;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return (long) tmpFloat.get().v();
+		}
+	}
+
+	@Override
+	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return 0;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return (float) tmpFloat.get().v();
+		}
+	}
+
+	@Override
+	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return 0;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return tmpFloat.get().v();
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return BigInteger.ZERO;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return BigInteger.valueOf((long) tmpFloat.get().v());
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
+		if (indexOob(index, component)) {
+			return BigDecimal.ZERO;
+		}
+		else {
+			v(index, tmpFloat.get());
+			return BigDecimal.valueOf(tmpFloat.get().v());
+		}
+	}
+
+	@Override
+	public void primitiveInit() {
+		for (long i = 0; i < storage.size(); i++)
+			storage.set(i, ZERO);
 	}
 }

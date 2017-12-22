@@ -33,11 +33,14 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProductMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
 
@@ -187,6 +190,158 @@ public class TestPrimitiveConversions {
 	
 	@Test
 	public void nD() {
+
+		IntegerIndex tmp1 = new IntegerIndex(3);
+		IntegerIndex tmp2 = new IntegerIndex(3);
+		IntegerIndex tmp3 = new IntegerIndex(3);
+
+		double[] vals = new double[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
 		
+		Float64TensorProductMember t =
+				new Float64TensorProductMember(
+						new long[]{2,3,4},
+						vals);
+
+		Float64Member tmp = new Float64Member();
+		
+		UnsignedInt8Member uint8 = new UnsignedInt8Member();
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, uint8);
+		assertEquals(1, uint8.v());
+		
+		Float64VectorMember v = new Float64VectorMember(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 5);
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, v);
+		assertEquals(5, v.length());
+		v.v(0, tmp);
+		assertEquals(1, tmp.v(), 0);
+		v.v(1, tmp);
+		assertEquals(2, tmp.v(), 0);
+		v.v(2, tmp);
+		assertEquals(0, tmp.v(), 0);
+		v.v(3, tmp);
+		assertEquals(0, tmp.v(), 0);
+		v.v(4, tmp);
+		assertEquals(0, tmp.v(), 0);
+
+		Float64MatrixMember m = new Float64MatrixMember(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 2);
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, m);
+		assertEquals(2, m.rows());
+		assertEquals(3, m.cols());
+		m.v(0, 0, tmp);
+		assertEquals(1, tmp.v(), 0);
+		m.v(0, 1, tmp);
+		assertEquals(2, tmp.v(), 0);
+		m.v(0, 2, tmp);
+		assertEquals(0, tmp.v(), 0);
+		m.v(1, 0, tmp);
+		assertEquals(3, tmp.v(), 0);
+		m.v(1, 1, tmp);
+		assertEquals(4, tmp.v(), 0);
+		m.v(1, 2, tmp);
+		assertEquals(0, tmp.v(), 0);
+		
+		tmp1 = new IntegerIndex(4);
+		tmp2 = new IntegerIndex(4);
+		tmp3 = new IntegerIndex(4);
+		Float64TensorProductMember t2 = new Float64TensorProductMember(new long[] {5,3,2,2}, new double[60]);
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, t2);
+		assertEquals(5,t2.dimension(0));
+		assertEquals(3,t2.dimension(1));
+		assertEquals(2,t2.dimension(2));
+		assertEquals(2,t2.dimension(3));
+		IntegerIndex index = new IntegerIndex(4);
+
+		index.set(0,0);
+		index.set(1,0);
+		index.set(2,0);
+		index.set(3,0);
+		
+		t2.v(index, tmp);
+		assertEquals(1,tmp.v(),0);
+		index.set(0,1);
+		t2.v(index, tmp);
+		assertEquals(2,tmp.v(),0);
+		index.set(0,2);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,3);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,4);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		
+		index.set(1,1);
+		index.set(0,0);
+		
+		t2.v(index, tmp);
+		assertEquals(3,tmp.v(),0);
+		index.set(0,1);
+		t2.v(index, tmp);
+		assertEquals(4,tmp.v(),0);
+		index.set(0,2);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,3);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,4);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+
+		index.set(1,2);
+		index.set(0,0);
+
+		t2.v(index, tmp);
+		assertEquals(5,tmp.v(),0);
+		index.set(0,1);
+		t2.v(index, tmp);
+		assertEquals(6,tmp.v(),0);
+		index.set(0,2);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,3);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,4);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+
+		index.set(2,1);
+		index.set(1,0);
+		index.set(0,0);
+		
+		t2.v(index, tmp);
+		assertEquals(7,tmp.v(),0);
+		index.set(0,1);
+		t2.v(index, tmp);
+		assertEquals(8,tmp.v(),0);
+		index.set(0,2);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,3);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,4);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+
+		index.set(2,1);
+		index.set(1,1);
+		index.set(0,0);
+		
+		t2.v(index, tmp);
+		assertEquals(9,tmp.v(),0);
+		index.set(0,1);
+		t2.v(index, tmp);
+		assertEquals(10,tmp.v(),0);
+		index.set(0,2);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,3);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
+		index.set(0,4);
+		t2.v(index, tmp);
+		assertEquals(0,tmp.v(),0);
 	}
 }
