@@ -1354,15 +1354,7 @@ public final class OctonionFloat64MatrixMember
 
 	@Override
 	public void primitiveInit() {
-		tmpOct.get().setR(0);
-		tmpOct.get().setI(0);
-		tmpOct.get().setJ(0);
-		tmpOct.get().setK(0);
-		tmpOct.get().setL(0);
-		tmpOct.get().setI0(0);
-		tmpOct.get().setJ0(0);
-		tmpOct.get().setK0(0);
 		for (long i = 0; i < storage.size(); i++)
-			storage.set(i, tmpOct.get());
+			storage.set(i, ZERO);
 	}
 }

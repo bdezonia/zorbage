@@ -152,7 +152,7 @@ public final class Float64TensorProductMember
 		return storage.size();
 	}
 	
-	public void v(long index, Float64Member value) {
+	void v(long index, Float64Member value) {
 		if (index < 0 || index >= storage.size())
 			throw new IllegalArgumentException("invald index in tensor member");
 		storage.get(index, value);
@@ -166,7 +166,7 @@ public final class Float64TensorProductMember
 		storage.get(idx, value);
 	}
 	
-	public void setV(long index, Float64Member value) {
+	void setV(long index, Float64Member value) {
 		if (index < 0 || index >= storage.size())
 			throw new IllegalArgumentException("invald index in tensor member");
 		storage.set(index, value);

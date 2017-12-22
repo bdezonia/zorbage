@@ -986,8 +986,7 @@ public final class Float64MatrixMember
 
 	@Override
 	public void primitiveInit() {
-		tmpFloat.get().setV(0);
 		for (long i = 0; i < storage.size(); i++)
-			storage.set(i, tmpFloat.get());
+			storage.set(i, ZERO);
 	}
 }

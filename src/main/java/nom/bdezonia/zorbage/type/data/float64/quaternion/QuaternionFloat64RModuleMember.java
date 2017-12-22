@@ -1022,11 +1022,7 @@ public final class QuaternionFloat64RModuleMember
 
 	@Override
 	public void primitiveInit() {
-		tmpQuat.get().setR(0);
-		tmpQuat.get().setI(0);
-		tmpQuat.get().setJ(0);
-		tmpQuat.get().setK(0);
 		for (long i = 0; i < storage.size(); i++)
-			storage.set(i, tmpQuat.get());
+			storage.set(i, ZERO);
 	}
 }

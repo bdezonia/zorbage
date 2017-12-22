@@ -932,9 +932,7 @@ public final class ComplexFloat64VectorMember
 
 	@Override
 	public void primitiveInit() {
-		tmpComp.get().setR(0);
-		tmpComp.get().setI(0);
 		for (long i = 0; i < storage.size(); i++)
-			storage.set(i, tmpComp.get());
+			storage.set(i, ZERO);
 	}
 }
