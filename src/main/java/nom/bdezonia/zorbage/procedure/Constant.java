@@ -27,24 +27,28 @@
 package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure1;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Constant implements Procedure1<Float64Member> {
-
-	private final Float64Member c;
+public class Constant<T extends Group<T,U>,U>
+	implements Procedure1<U>
+{
+	private T group;
 	
-	public Constant(Float64Member c) {
-		this.c = new Float64Member(c);
+	private U c;
+	
+	public Constant(T group, U c) {
+		this.group = group;
+		group.assign(c, this.c);
 	}
 	
 	@Override
-	public void call(Float64Member a) {
-		a.set(c);
+	public void call(U a) {
+		group.assign(c, a);
 	}
 
 }

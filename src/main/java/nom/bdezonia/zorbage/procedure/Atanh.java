@@ -27,19 +27,26 @@
 package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Atanh implements Procedure2<Float64Member,Float64Member> {
+public class Atanh<T extends Group<T,U> & InverseHyperbolic<U>,U>
+	implements Procedure2<U,U>
+{
+	private T group;
+	
+	public Atanh(T group) {
+		this.group = group;
+	}
 
 	@Override
-	public void call(Float64Member a, Float64Member b) {
-		G.DBL.atanh(a, b);
+	public void call(U a, U b) {
+		group.atanh(a, b);
 	}
 
 }

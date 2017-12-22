@@ -27,19 +27,26 @@
 package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure3;
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Divide implements Procedure3<Float64Member,Float64Member,Float64Member> {
+public class Divide<T extends Group<T,U> & Invertible<U>,U>
+	implements Procedure3<U,U,U>
+{
+	private T group;
+	
+	public Divide(T group) {
+		this.group = group;
+	}
 
 	@Override
-	public void call(Float64Member a, Float64Member b, Float64Member c) {
-		G.DBL.divide(a, b, c);
+	public void call(U a, U b, U c) {
+		group.divide(a, b, c);
 	}
 
 }

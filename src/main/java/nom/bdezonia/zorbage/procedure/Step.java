@@ -27,24 +27,32 @@
 package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Step implements Procedure2<Float64Member,Float64Member> {
+public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
+	implements Procedure2<U,U>
+{
 
-	private static final Float64Member ZERO = new Float64Member();
+	private T group;
+	
+	public Step(T group) {
+		this.group = group;
+	}
 	
 	@Override
-	public void call(Float64Member a, Float64Member b) {
-		if (G.DBL.isLessEqual(a, ZERO))
-			b.setV(0);
+	public void call(U a, U b) {
+		U tmp = group.construct();
+		if (group.isLessEqual(a, tmp))
+			group.assign(tmp, b);
 		else
-			b.setV(1);
+			group.unity(b);
 	}
 
 }

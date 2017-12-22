@@ -27,19 +27,26 @@
 package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure3;
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Add implements Procedure3<Float64Member,Float64Member,Float64Member> {
+public class Add<T extends Group<T,U> & Addition<U>, U>
+	implements Procedure3<U,U,U>
+{
+	private T group;
+	
+	public Add(T group) {
+		this.group = group;
+	}
 
 	@Override
-	public void call(Float64Member a, Float64Member b, Float64Member c) {
-		G.DBL.add(a, b, c);
+	public void call(U a, U b, U c) {
+		group.add(a, b, c);
 	}
 
 }
