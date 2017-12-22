@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
@@ -123,6 +124,65 @@ public class TestPrimitiveConversions {
 	@Test
 	public void twoD() {
 		
+		IntegerIndex tmp1 = new IntegerIndex(2);
+		IntegerIndex tmp2 = new IntegerIndex(2);
+		IntegerIndex tmp3 = new IntegerIndex(2);
+
+		Float64Member tmp = new Float64Member();
+
+		Float64MatrixMember m = new Float64MatrixMember(2, 4, new double[] {1,2,3,4,5,6,7,8});
+
+		UnboundedIntMember t = new UnboundedIntMember(BigInteger.TEN);
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, t);
+		assertEquals(BigInteger.ONE, t.v());
+		
+		Float64VectorMember v = new Float64VectorMember(new double[] {9,9,9});
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, v);
+		assertEquals(3, v.length());
+		v.v(0, tmp);
+		assertEquals(1, tmp.v(), 0);
+		v.v(1, tmp);
+		assertEquals(2, tmp.v(), 0);
+		v.v(2, tmp);
+		assertEquals(3, tmp.v(), 0);
+
+		v = new Float64VectorMember(new double[] {9,9,9,9,9});
+
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, v);
+		assertEquals(5, v.length());
+		v.v(0, tmp);
+		assertEquals(1, tmp.v(), 0);
+		v.v(1, tmp);
+		assertEquals(2, tmp.v(), 0);
+		v.v(2, tmp);
+		assertEquals(3, tmp.v(), 0);
+		v.v(3, tmp);
+		assertEquals(4, tmp.v(), 0);
+		v.v(4, tmp);
+		assertEquals(0, tmp.v(), 0);
+
+		Float64MatrixMember m2 = new Float64MatrixMember(3, 3, new double[] {99,99,99,99,99,99,99,99,99});
+		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, m2);
+		assertEquals(3, m2.rows());
+		assertEquals(3, m2.cols());
+		m2.v(0, 0, tmp);
+		assertEquals(1,tmp.v(),0);
+		m2.v(0, 1, tmp);
+		assertEquals(2,tmp.v(),0);
+		m2.v(0, 2, tmp);
+		assertEquals(3,tmp.v(),0);
+		m2.v(1, 0, tmp);
+		assertEquals(5,tmp.v(),0);
+		m2.v(1, 1, tmp);
+		assertEquals(6,tmp.v(),0);
+		m2.v(1, 2, tmp);
+		assertEquals(7,tmp.v(),0);
+		m2.v(2, 0, tmp);
+		assertEquals(0,tmp.v(),0);
+		m2.v(2, 1, tmp);
+		assertEquals(0,tmp.v(),0);
+		m2.v(2, 2, tmp);
+		assertEquals(0,tmp.v(),0);
 	}
 	
 	@Test
