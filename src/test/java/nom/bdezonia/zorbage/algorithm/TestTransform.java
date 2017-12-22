@@ -66,19 +66,26 @@ public class TestTransform {
 		test(G.ODBL);
 	}
 
-	// an algorithm that applies Sin() op to any type that supports it
+	// an algorithm that applies Sin() op to a list of any type that
+	// supports sin()
 	
 	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
 		void test(T group)
 	{
+		// generic allocation
 		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
-		Sin<T, U> sinOp = new Sin<T,U>(group);
+		
+		// set values of storage to random doubles between 0 and 1
 		U tmp = group.construct();
 		for (long i = 0; i < a.size(); i++) {
 			group.random(tmp);
 			a.set(i, tmp);
 		}
+		
+		// transform each input[i] value to be the sin(input[i])
+		Sin<T, U> sinOp = new Sin<T,U>(group);
 		Transform.compute(group, a, sinOp);
+		
 		assertTrue(true);
 	}
 }
