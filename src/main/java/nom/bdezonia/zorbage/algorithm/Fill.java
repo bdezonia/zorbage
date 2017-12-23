@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.basic.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -64,6 +65,36 @@ public class Fill {
 		void compute(T group, LinearStorage<?,U> storage, U value, long start, long count)
 	{
 		for (long i = 0; i < count; i++) {
+			storage.set(start+i, value);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @param proc
+	 * @param storage
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, Procedure1<U> proc, LinearStorage<?,U> storage)
+	{
+		compute(group, proc, 0, storage.size(), storage);
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param proc
+	 * @param start
+	 * @param count
+	 * @param storage
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, Procedure1<U> proc, long start, long count, LinearStorage<?,U> storage)
+	{
+		U value = group.construct();
+		for (long i = 0; i < count; i++) {
+			proc.call(value);
 			storage.set(start+i, value);
 		}
 	}

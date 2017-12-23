@@ -26,11 +26,9 @@
  */
 package nom.bdezonia.zorbage.procedure;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure2;
+import nom.bdezonia.zorbage.basic.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
-
-// TODO: should this implement Procedure1 instead?
 
 /**
  * 
@@ -38,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
  *
  */
 public class Rand<T extends Group<T,U> & Random<U>,U>
-	implements Procedure2<U,U>
+	implements Procedure1<U>
 {
 	private T group;
 	
@@ -47,8 +45,8 @@ public class Rand<T extends Group<T,U> & Random<U>,U>
 	}
 	
 	@Override
-	public void call(U a, U b) {
-		group.random(b);
+	public void call(U a) {
+		group.random(a);
 	}
 
 }
