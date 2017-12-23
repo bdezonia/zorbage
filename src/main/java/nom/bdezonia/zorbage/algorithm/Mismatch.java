@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.basic.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -34,9 +35,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Equal {
-
-	private Equal() {}
+public class Mismatch {
 
 	/**
 	 * 
@@ -46,33 +45,39 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		Tuple2<Long,Long> compute(T group, LinearStorage<?, U> a, LinearStorage<?,U> b)
 	{
-		if (a.size() != b.size()) return false;
-		return compute(group, a, b, 0, 0, a.size());
+		return compute(group, 0, 0, a.size(), a, b);
 	}
-	
+
 	/**
 	 * 
 	 * @param group
-	 * @param a
-	 * @param b
 	 * @param aStart
 	 * @param bStart
 	 * @param count
+	 * @param a
+	 * @param b
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		Tuple2<Long,Long> compute(T group, long aStart, long bStart, long count, LinearStorage<?, U> a, LinearStorage<?,U> b)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			if (group.isNotEqual(tmp1, tmp2))
-				return false;
+		U tmpA = group.construct();
+		U tmpB = group.construct();
+		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
+		for (int i = 0; i < count; i++) {
+			a.get(aStart+i, tmpA);
+			b.get(bStart+i, tmpB);
+			if (group.isNotEqual(tmpA, tmpB)) {
+				retVal.setA(aStart+i);
+				retVal.setB(bStart+i);
+				return retVal;
+			}
+				
 		}
-		return true;
+		retVal.setA(aStart+count);
+		retVal.setB(bStart+count);
+		return retVal;
 	}
 }

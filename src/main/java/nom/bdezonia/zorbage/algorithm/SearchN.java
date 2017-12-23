@@ -34,45 +34,45 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Equal {
-
-	private Equal() {}
+public class SearchN {
 
 	/**
 	 * 
 	 * @param group
+	 * @param n
+	 * @param value
 	 * @param a
-	 * @param b
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		long compute(T group, long n, U value, LinearStorage<?,U> a)
 	{
-		if (a.size() != b.size()) return false;
-		return compute(group, a, b, 0, 0, a.size());
+		return compute(group, n, value, 0, a.size(), a);
 	}
-	
+
 	/**
 	 * 
 	 * @param group
-	 * @param a
-	 * @param b
-	 * @param aStart
-	 * @param bStart
+	 * @param n
+	 * @param value
+	 * @param start
 	 * @param count
+	 * @param a
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		long compute(T group, long n, U value, long start, long count, LinearStorage<?,U> a)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			if (group.isNotEqual(tmp1, tmp2))
-				return false;
-		}
-		return true;
+		U tmpA = group.construct();
+	    for (long i = 0; i < count-n; i++) {
+	    	for (int j = 0; j < n; j++) {
+		    	a.get(start+i+j, tmpA);
+	            if (group.isNotEqual(tmpA, value))
+	                break;
+	            if (j == n-1)
+	                return start+i;
+	        }
+	    }
+	    return start+count;
 	}
 }

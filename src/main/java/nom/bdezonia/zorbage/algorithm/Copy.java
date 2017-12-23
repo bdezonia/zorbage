@@ -34,45 +34,36 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Equal {
-
-	private Equal() {}
+public class Copy {
 
 	/**
 	 * 
 	 * @param group
 	 * @param a
 	 * @param b
-	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		if (a.size() != b.size()) return false;
-		return compute(group, a, b, 0, 0, a.size());
+		compute(group, 0, 0, a.size(), a, b);
 	}
 	
 	/**
 	 * 
 	 * @param group
-	 * @param a
-	 * @param b
 	 * @param aStart
 	 * @param bStart
 	 * @param count
-	 * @return
+	 * @param a
+	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		void compute(T group, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
+		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			if (group.isNotEqual(tmp1, tmp2))
-				return false;
+			a.get(aStart+i, tmp);
+			b.set(bStart+i, tmp);
 		}
-		return true;
 	}
 }

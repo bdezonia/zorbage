@@ -29,50 +29,53 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
+// TODO - use boyer moore algorithm
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Equal {
-
-	private Equal() {}
+public class Search {
 
 	/**
 	 * 
 	 * @param group
+	 * @param elements
 	 * @param a
-	 * @param b
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		long compute(T group, LinearStorage<?, U> elements, LinearStorage<?, U> a)
 	{
-		if (a.size() != b.size()) return false;
-		return compute(group, a, b, 0, 0, a.size());
+		return compute(group,elements,0, a.size(), a);
 	}
 	
 	/**
 	 * 
 	 * @param group
-	 * @param a
-	 * @param b
-	 * @param aStart
-	 * @param bStart
+	 * @param elements
+	 * @param start
 	 * @param count
+	 * @param a
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		long compute(T group, LinearStorage<?, U> elements, long start, long count, LinearStorage<?, U> a)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			if (group.isNotEqual(tmp1, tmp2))
-				return false;
-		}
-		return true;
-	}
+		U tmpA = group.construct();
+		U element = group.construct();
+	    for (long i = 0; i < count; i++) {
+	    	a.get(start+i, tmpA);
+	    	for (int j = 0; j < elements.size(); j++) {
+	    		elements.get(j, element);
+	            if (group.isNotEqual(tmpA, element))
+	                break;
+	            if (j == elements.size()-1)
+	                return start+i;
+	        }
+	    }
+	    return start+count;
+	}	
+	
 }

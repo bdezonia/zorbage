@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -34,45 +35,39 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Equal {
-
-	private Equal() {}
+public class CopyIf {
 
 	/**
 	 * 
 	 * @param group
+	 * @param cond
 	 * @param a
 	 * @param b
-	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, Condition<U> cond, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		if (a.size() != b.size()) return false;
-		return compute(group, a, b, 0, 0, a.size());
+		compute(group, cond, 0, 0, a.size(), a, b);
 	}
-	
+
 	/**
 	 * 
 	 * @param group
-	 * @param a
-	 * @param b
+	 * @param cond
 	 * @param aStart
 	 * @param bStart
 	 * @param count
-	 * @return
+	 * @param a
+	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		void compute(T group, Condition<U> cond, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
+		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			if (group.isNotEqual(tmp1, tmp2))
-				return false;
+			a.get(aStart+i, tmp);
+			if (cond.isTrue(tmp))
+				b.set(bStart+i, tmp);
 		}
-		return true;
 	}
 }

@@ -78,12 +78,12 @@ public class TestParallelTransform {
 		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
 		
 		// set values of storage to random doubles between 0 and 1
-		Rand<T, U> randOp = new Rand<T,U>(group);
+		Rand<T,U> randOp = new Rand<T,U>(group);
 		// TODO: don't do parallel xform until Random is thread friendly
 		Fill.compute(group, randOp, a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		Sin<T, U> sinOp = new Sin<T,U>(group);
+		Sin<T,U> sinOp = new Sin<T,U>(group);
 		ParallelTransform.compute(group, sinOp, 0, 0, a.size(), a, a);
 		
 		assertTrue(true);
