@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.Sin;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
 
@@ -70,7 +71,7 @@ public class TestParallelTransform {
 	// an algorithm that applies Sin() op to a list of any type that
 	// supports sin()
 	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
+	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U extends PrimitiveConversion>
 		void test(T group)
 	{
 		// generic allocation
@@ -79,11 +80,11 @@ public class TestParallelTransform {
 		// set values of storage to random doubles between 0 and 1
 		Rand<T, U> randOp = new Rand<T,U>(group);
 		// TODO: don't do parallel xform until Random is thread friendly
-		Transform.compute(group, a, randOp);
+		Transform.compute(group, randOp, a);
 		
 		// transform each input[i] value to be the sin(input[i])
 		Sin<T, U> sinOp = new Sin<T,U>(group);
-		ParallelTransform.compute(group, group, a, a, sinOp, 0, 0, a.size());
+		ParallelTransform.compute(group, sinOp, 0, 0, a.size(), a, a);
 		
 		assertTrue(true);
 	}

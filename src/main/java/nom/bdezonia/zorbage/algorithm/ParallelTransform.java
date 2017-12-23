@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -44,7 +45,6 @@ public class ParallelTransform {
 	/**
 	 * 
 	 * @param grpU
-	 * @param grpW
 	 * @param a
 	 * @param b
 	 * @param proc
@@ -52,8 +52,8 @@ public class ParallelTransform {
 	 * @param bStart
 	 * @param count
 	 */
-	public static <T extends Group<T,U>,U,V extends Group<V,W>,W>
-		void compute(T grpU, V grpW, LinearStorage<?,U> a, LinearStorage<?,W> b, Procedure2<U, W> proc, long aStart, long bStart, long count)
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure2<U, U> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -67,7 +67,7 @@ public class ParallelTransform {
 			else {
 				thCount = count / numProcs;
 			}
-			Runnable c = new Computer<T,U,V,W>(grpU, grpW, a, b, proc, thAStart, thBStart, thCount);
+			Runnable c = new Computer<T,U>(grpU, proc, thAStart, thBStart, thCount, a, b);
 			threads[i] = new Thread(c);
 			thAStart += thCount;
 			thBStart += thCount;
@@ -84,21 +84,19 @@ public class ParallelTransform {
 		}
 	}
 	
-	private static class Computer<T extends Group<T,U>, U ,V extends Group<V,W>, W>
+	private static class Computer<T extends Group<T,U>, U>
 		implements Runnable
 	{
 		private final T group1;
-		private final V group2;
 		private final LinearStorage<?,U> list1;
-		private final LinearStorage<?,W> list2;
-		private final Procedure2<U, W> proc;
+		private final LinearStorage<?,U> list2;
+		private final Procedure2<U, U> proc;
 		private final long aStart;
 		private final long bStart;
 		private final long count;
 		
-		Computer(T grpU, V grpW, LinearStorage<?,U> a, LinearStorage<?,W> b, Procedure2<U, W> proc, long aStart, long bStart, long count) {
+		Computer(T grpU, Procedure2<U, U> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b) {
 			group1 = grpU;
-			group2 = grpW;
 			list1 = a;
 			list2 = b;
 			this.proc = proc;
@@ -108,7 +106,7 @@ public class ParallelTransform {
 		}
 		
 		public void run() {
-			Transform.compute(group1, group2, list1, list2, proc, aStart, bStart, count);
+			Transform.compute(group1, proc, aStart, bStart, count, list1, list2);
 		}
 	}
 }

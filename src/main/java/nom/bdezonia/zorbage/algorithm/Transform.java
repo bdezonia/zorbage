@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
 import nom.bdezonia.zorbage.basic.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
 /**
@@ -50,48 +51,83 @@ public class Transform {
 	 * @param proc
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, LinearStorage<?,U> a, Procedure2<U,U> proc)
+		void compute(T grpU, Procedure2<U,U> proc, LinearStorage<?,U> a)
 	{
-		compute(grpU, grpU, a, a, proc, 0, 0, a.size());
-	}
-	
-	/**
-	 * Transform the data from one complete list to another complete list.
-	 * Source and destination lists can be the same.
-	 * 
-	 * @param grpU
-	 * @param grpW
-	 * @param a
-	 * @param b
-	 * @param proc
-	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
-		void compute(T grpU, V grpW, LinearStorage<?,U> a, LinearStorage<?,W> b, Procedure2<U, W> proc)
-	{
-		compute(grpU, grpW, a, b, proc, 0, 0, a.size());
-	}
-	
-	/**
-	 * Transform the data from two complete lists to another complete list.
-	 * Source and destination lists can be the same.
-	 * 
-	 * @param grpU
-	 * @param grpW
-	 * @param grpY
-	 * @param a
-	 * @param b
-	 * @param c
-	 * @param proc
-	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y>
-		void compute(T grpU, V grpW, X grpY, LinearStorage<?,U> a, LinearStorage<?,W> b, LinearStorage<?,Y> c, Procedure3<U, W, Y> proc)
-	{
-		compute(grpU, grpW, grpY, a, b, c, proc, 0, 0, 0, a.size());
+		compute(grpU, proc, 0, a.size(), a);
 	}
 
 	/**
-	 * Transform the data from a subrange of one list to another subrange
-	 * of another list. Source and destination lists can be the same.
+	 * Transform a portion of the data of one list in place
+	 * 
+	 * @param grpU
+	 * @param proc
+	 * @param a
+	 * @param start
+	 * @param count
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure2<U,U> proc, long start, long count, LinearStorage<?,U> a)
+	{
+		compute(grpU, proc, start, start, count, a, a);
+	}
+
+	/**
+	 * Transform the data of one complete list into the data of another
+	 * list.
+	 * 
+	 * @param grpU
+	 * @param a
+	 * @param b
+	 * @param proc
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure2<U,U> proc, LinearStorage<?,U> a, LinearStorage<?,U> b)
+	{
+		compute(grpU, proc, 0, 0, a.size(), a, b);
+	}
+
+	/**
+	 * Transform the data of a portion of one list into the data of
+	 * another list.
+	 * 
+	 * @param grpU
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure2<U,U> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+	{
+		U tmpU = grpU.construct();
+		for (long i = 0; i < count; i++) {
+			a.get(aStart+i, tmpU);
+			proc.call(tmpU, tmpU);
+			b.set(bStart+i, tmpU);
+		}
+	}
+
+	/**
+	 * Transform the data from one complete list to another list. Lists
+	 * can be of differing types.
+	 * 
+	 * @param grpU
+	 * @param grpW
+	 * @param a
+	 * @param b
+	 * @param proc
+	 */
+	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
+		void compute(T grpU, V grpW, Procedure2<U, W> proc, LinearStorage<?,U> a, LinearStorage<?,W> b)
+	{
+		compute(grpU, grpW, proc, 0, 0, a.size(), a, b);
+	}
+	
+	/**
+	 * Transform the data from a subrange of one list to a subrange
+	 * of another list. Lists can be of differing types.
 	 * 
 	 * @param grpU
 	 * @param grpW
@@ -102,8 +138,8 @@ public class Transform {
 	 * @param bStart
 	 * @param count
 	 */
-	public static <T extends Group<T,U>,U,V extends Group<V,W>,W>
-		void compute(T grpU, V grpW, LinearStorage<?,U> a, LinearStorage<?,W> b, Procedure2<U, W> proc, long aStart, long bStart, long count)
+	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
+		void compute(T grpU, V grpW, Procedure2<U, W> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,W> b)
 	{
 		U tmpU = grpU.construct();
 		W tmpW = grpW.construct();
@@ -115,8 +151,26 @@ public class Transform {
 	}
 
 	/**
-	 * Transform the data from subranges of two lists to another subrange
-	 * of another list. Source and destination lists can be the same.
+	 * Transform the data from two complete lists to another list.
+	 * Lists can be of differing types.
+	 * 
+	 * @param grpU
+	 * @param grpW
+	 * @param grpY
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param proc
+	 */
+	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion, X extends Group<X,Y>, Y extends PrimitiveConversion>
+		void compute(T grpU, V grpW, X grpY, Procedure3<U, W, Y> proc, LinearStorage<?,U> a, LinearStorage<?,W> b, LinearStorage<?,Y> c)
+	{
+		compute(grpU, grpW, grpY, proc, 0, 0, 0, a.size(), a, b, c);
+	}
+
+	/**
+	 * Transform the data from subranges of two lists to a subrange
+	 * of another list. Lists can be of differing types.
 	 * 
 	 * @param grpU
 	 * @param grpW
@@ -130,8 +184,8 @@ public class Transform {
 	 * @param cStart
 	 * @param count
 	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y>
-		void compute(T grpU, V grpW, X grpX, LinearStorage<?,U> a, LinearStorage<?,W> b, LinearStorage<?,Y> c, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count)
+	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion, X extends Group<X,Y>, Y extends PrimitiveConversion>
+		void compute(T grpU, V grpW, X grpX, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, LinearStorage<?,U> a, LinearStorage<?,W> b, LinearStorage<?,Y> c)
 	{
 		U tmpU = grpU.construct();
 		W tmpW = grpW.construct();

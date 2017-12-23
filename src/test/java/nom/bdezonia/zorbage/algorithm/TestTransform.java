@@ -78,11 +78,11 @@ public class TestTransform {
 		
 		// set values of storage to random doubles between 0 and 1
 		Rand<T, U> randOp = new Rand<T,U>(group);
-		Transform.compute(group, a, randOp);
+		Transform.compute(group, randOp, a);
 		
 		// transform each input[i] value to be the sin(input[i])
 		Sin<T, U> sinOp = new Sin<T,U>(group);
-		Transform.compute(group, a, sinOp);
+		Transform.compute(group, sinOp, a);
 		
 		assertTrue(true);
 	}
