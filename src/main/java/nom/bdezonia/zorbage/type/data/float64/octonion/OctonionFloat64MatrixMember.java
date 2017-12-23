@@ -252,192 +252,200 @@ public final class OctonionFloat64MatrixMember
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpOct.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpOct.get().setJ(v);
+			tmp.setJ(v);
 		else if (component == 3)
-			tmpOct.get().setK(v);
+			tmp.setK(v);
 		else if (component == 4)
-			tmpOct.get().setL(v);
+			tmp.setL(v);
 		else if (component == 5)
-			tmpOct.get().setI0(v);
+			tmp.setI0(v);
 		else if (component == 6)
-			tmpOct.get().setJ0(v);
+			tmp.setJ0(v);
 		else
-			tmpOct.get().setK0(v);
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpOct.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpOct.get().setJ(v);
+			tmp.setJ(v);
 		else if (component == 3)
-			tmpOct.get().setK(v);
+			tmp.setK(v);
 		else if (component == 4)
-			tmpOct.get().setL(v);
+			tmp.setL(v);
 		else if (component == 5)
-			tmpOct.get().setI0(v);
+			tmp.setI0(v);
 		else if (component == 6)
-			tmpOct.get().setJ0(v);
+			tmp.setJ0(v);
 		else
-			tmpOct.get().setK0(v);
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpOct.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpOct.get().setJ(v);
+			tmp.setJ(v);
 		else if (component == 3)
-			tmpOct.get().setK(v);
+			tmp.setK(v);
 		else if (component == 4)
-			tmpOct.get().setL(v);
+			tmp.setL(v);
 		else if (component == 5)
-			tmpOct.get().setI0(v);
+			tmp.setI0(v);
 		else if (component == 6)
-			tmpOct.get().setJ0(v);
+			tmp.setJ0(v);
 		else
-			tmpOct.get().setK0(v);
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpOct.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpOct.get().setJ(v);
+			tmp.setJ(v);
 		else if (component == 3)
-			tmpOct.get().setK(v);
+			tmp.setK(v);
 		else if (component == 4)
-			tmpOct.get().setL(v);
+			tmp.setL(v);
 		else if (component == 5)
-			tmpOct.get().setI0(v);
+			tmp.setI0(v);
 		else if (component == 6)
-			tmpOct.get().setJ0(v);
+			tmp.setJ0(v);
 		else
-			tmpOct.get().setK0(v);
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpOct.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpOct.get().setJ(v);
+			tmp.setJ(v);
 		else if (component == 3)
-			tmpOct.get().setK(v);
+			tmp.setK(v);
 		else if (component == 4)
-			tmpOct.get().setL(v);
+			tmp.setL(v);
 		else if (component == 5)
-			tmpOct.get().setI0(v);
+			tmp.setI0(v);
 		else if (component == 6)
-			tmpOct.get().setJ0(v);
+			tmp.setJ0(v);
 		else
-			tmpOct.get().setK0(v);
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpOct.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpOct.get().setJ(v);
+			tmp.setJ(v);
 		else if (component == 3)
-			tmpOct.get().setK(v);
+			tmp.setK(v);
 		else if (component == 4)
-			tmpOct.get().setL(v);
+			tmp.setL(v);
 		else if (component == 5)
-			tmpOct.get().setI0(v);
+			tmp.setI0(v);
 		else if (component == 6)
-			tmpOct.get().setJ0(v);
+			tmp.setJ0(v);
 		else
-			tmpOct.get().setK0(v);
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v.doubleValue());
+			tmp.setR(v.doubleValue());
 		else if (component == 1)
-			tmpOct.get().setI(v.doubleValue());
+			tmp.setI(v.doubleValue());
 		else if (component == 2)
-			tmpOct.get().setJ(v.doubleValue());
+			tmp.setJ(v.doubleValue());
 		else if (component == 3)
-			tmpOct.get().setK(v.doubleValue());
+			tmp.setK(v.doubleValue());
 		else if (component == 4)
-			tmpOct.get().setL(v.doubleValue());
+			tmp.setL(v.doubleValue());
 		else if (component == 5)
-			tmpOct.get().setI0(v.doubleValue());
+			tmp.setI0(v.doubleValue());
 		else if (component == 6)
-			tmpOct.get().setJ0(v.doubleValue());
+			tmp.setJ0(v.doubleValue());
 		else
-			tmpOct.get().setK0(v.doubleValue());
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v.doubleValue());
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpOct.get());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpOct.get().setR(v.doubleValue());
+			tmp.setR(v.doubleValue());
 		else if (component == 1)
-			tmpOct.get().setI(v.doubleValue());
+			tmp.setI(v.doubleValue());
 		else if (component == 2)
-			tmpOct.get().setJ(v.doubleValue());
+			tmp.setJ(v.doubleValue());
 		else if (component == 3)
-			tmpOct.get().setK(v.doubleValue());
+			tmp.setK(v.doubleValue());
 		else if (component == 4)
-			tmpOct.get().setL(v.doubleValue());
+			tmp.setL(v.doubleValue());
 		else if (component == 5)
-			tmpOct.get().setI0(v.doubleValue());
+			tmp.setI0(v.doubleValue());
 		else if (component == 6)
-			tmpOct.get().setJ0(v.doubleValue());
+			tmp.setJ0(v.doubleValue());
 		else
-			tmpOct.get().setK0(v.doubleValue());
-		setV(r, c, tmpOct.get());
+			tmp.setK0(v.doubleValue());
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -474,24 +482,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpOct.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpOct.get().setJ(v);
+				tmp.setJ(v);
 			else if (component == 3)
-				tmpOct.get().setK(v);
+				tmp.setK(v);
 			else if (component == 4)
-				tmpOct.get().setL(v);
+				tmp.setL(v);
 			else if (component == 5)
-				tmpOct.get().setI0(v);
+				tmp.setI0(v);
 			else if (component == 6)
-				tmpOct.get().setJ0(v);
+				tmp.setJ0(v);
 			else
-				tmpOct.get().setK0(v);
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -529,24 +538,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpOct.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpOct.get().setJ(v);
+				tmp.setJ(v);
 			else if (component == 3)
-				tmpOct.get().setK(v);
+				tmp.setK(v);
 			else if (component == 4)
-				tmpOct.get().setL(v);
+				tmp.setL(v);
 			else if (component == 5)
-				tmpOct.get().setI0(v);
+				tmp.setI0(v);
 			else if (component == 6)
-				tmpOct.get().setJ0(v);
+				tmp.setJ0(v);
 			else
-				tmpOct.get().setK0(v);
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -584,24 +594,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpOct.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpOct.get().setJ(v);
+				tmp.setJ(v);
 			else if (component == 3)
-				tmpOct.get().setK(v);
+				tmp.setK(v);
 			else if (component == 4)
-				tmpOct.get().setL(v);
+				tmp.setL(v);
 			else if (component == 5)
-				tmpOct.get().setI0(v);
+				tmp.setI0(v);
 			else if (component == 6)
-				tmpOct.get().setJ0(v);
+				tmp.setJ0(v);
 			else
-				tmpOct.get().setK0(v);
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -639,24 +650,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpOct.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpOct.get().setJ(v);
+				tmp.setJ(v);
 			else if (component == 3)
-				tmpOct.get().setK(v);
+				tmp.setK(v);
 			else if (component == 4)
-				tmpOct.get().setL(v);
+				tmp.setL(v);
 			else if (component == 5)
-				tmpOct.get().setI0(v);
+				tmp.setI0(v);
 			else if (component == 6)
-				tmpOct.get().setJ0(v);
+				tmp.setJ0(v);
 			else
-				tmpOct.get().setK0(v);
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -694,24 +706,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpOct.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpOct.get().setJ(v);
+				tmp.setJ(v);
 			else if (component == 3)
-				tmpOct.get().setK(v);
+				tmp.setK(v);
 			else if (component == 4)
-				tmpOct.get().setL(v);
+				tmp.setL(v);
 			else if (component == 5)
-				tmpOct.get().setI0(v);
+				tmp.setI0(v);
 			else if (component == 6)
-				tmpOct.get().setJ0(v);
+				tmp.setJ0(v);
 			else
-				tmpOct.get().setK0(v);
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -749,24 +762,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpOct.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpOct.get().setJ(v);
+				tmp.setJ(v);
 			else if (component == 3)
-				tmpOct.get().setK(v);
+				tmp.setK(v);
 			else if (component == 4)
-				tmpOct.get().setL(v);
+				tmp.setL(v);
 			else if (component == 5)
-				tmpOct.get().setI0(v);
+				tmp.setI0(v);
 			else if (component == 6)
-				tmpOct.get().setJ0(v);
+				tmp.setJ0(v);
 			else
-				tmpOct.get().setK0(v);
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -804,24 +818,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v.doubleValue());
+				tmp.setR(v.doubleValue());
 			else if (component == 1)
-				tmpOct.get().setI(v.doubleValue());
+				tmp.setI(v.doubleValue());
 			else if (component == 2)
-				tmpOct.get().setJ(v.doubleValue());
+				tmp.setJ(v.doubleValue());
 			else if (component == 3)
-				tmpOct.get().setK(v.doubleValue());
+				tmp.setK(v.doubleValue());
 			else if (component == 4)
-				tmpOct.get().setL(v.doubleValue());
+				tmp.setL(v.doubleValue());
 			else if (component == 5)
-				tmpOct.get().setI0(v.doubleValue());
+				tmp.setI0(v.doubleValue());
 			else if (component == 6)
-				tmpOct.get().setJ0(v.doubleValue());
+				tmp.setJ0(v.doubleValue());
 			else
-				tmpOct.get().setK0(v.doubleValue());
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v.doubleValue());
+			setV(r, c, tmp);
 		}
 	}
 
@@ -859,24 +874,25 @@ public final class OctonionFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpOct.get());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpOct.get().setR(v.doubleValue());
+				tmp.setR(v.doubleValue());
 			else if (component == 1)
-				tmpOct.get().setI(v.doubleValue());
+				tmp.setI(v.doubleValue());
 			else if (component == 2)
-				tmpOct.get().setJ(v.doubleValue());
+				tmp.setJ(v.doubleValue());
 			else if (component == 3)
-				tmpOct.get().setK(v.doubleValue());
+				tmp.setK(v.doubleValue());
 			else if (component == 4)
-				tmpOct.get().setL(v.doubleValue());
+				tmp.setL(v.doubleValue());
 			else if (component == 5)
-				tmpOct.get().setI0(v.doubleValue());
+				tmp.setI0(v.doubleValue());
 			else if (component == 6)
-				tmpOct.get().setJ0(v.doubleValue());
+				tmp.setJ0(v.doubleValue());
 			else
-				tmpOct.get().setK0(v.doubleValue());
-			setV(r, c, tmpOct.get());
+				tmp.setK0(v.doubleValue());
+			setV(r, c, tmp);
 		}
 	}
 
@@ -886,15 +902,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return 0;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return (byte) tmpOct.get().r();
-		if (component == 1) return (byte) tmpOct.get().i();
-		if (component == 2) return (byte) tmpOct.get().j();
-		if (component == 3) return (byte) tmpOct.get().k();
-		if (component == 4) return (byte) tmpOct.get().l();
-		if (component == 5) return (byte) tmpOct.get().i0();
-		if (component == 6) return (byte) tmpOct.get().j0();
-		return (byte) tmpOct.get().k0();
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (byte) tmp.r();
+		if (component == 1) return (byte) tmp.i();
+		if (component == 2) return (byte) tmp.j();
+		if (component == 3) return (byte) tmp.k();
+		if (component == 4) return (byte) tmp.l();
+		if (component == 5) return (byte) tmp.i0();
+		if (component == 6) return (byte) tmp.j0();
+		return (byte) tmp.k0();
 	}
 
 	@Override
@@ -903,15 +920,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return 0;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return (short) tmpOct.get().r();
-		if (component == 1) return (short) tmpOct.get().i();
-		if (component == 2) return (short) tmpOct.get().j();
-		if (component == 3) return (short) tmpOct.get().k();
-		if (component == 4) return (short) tmpOct.get().l();
-		if (component == 5) return (short) tmpOct.get().i0();
-		if (component == 6) return (short) tmpOct.get().j0();
-		return (short) tmpOct.get().k0();
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (short) tmp.r();
+		if (component == 1) return (short) tmp.i();
+		if (component == 2) return (short) tmp.j();
+		if (component == 3) return (short) tmp.k();
+		if (component == 4) return (short) tmp.l();
+		if (component == 5) return (short) tmp.i0();
+		if (component == 6) return (short) tmp.j0();
+		return (short) tmp.k0();
 	}
 
 	@Override
@@ -920,15 +938,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return 0;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return (int) tmpOct.get().r();
-		if (component == 1) return (int) tmpOct.get().i();
-		if (component == 2) return (int) tmpOct.get().j();
-		if (component == 3) return (int) tmpOct.get().k();
-		if (component == 4) return (int) tmpOct.get().l();
-		if (component == 5) return (int) tmpOct.get().i0();
-		if (component == 6) return (int) tmpOct.get().j0();
-		return (int) tmpOct.get().k0();
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (int) tmp.r();
+		if (component == 1) return (int) tmp.i();
+		if (component == 2) return (int) tmp.j();
+		if (component == 3) return (int) tmp.k();
+		if (component == 4) return (int) tmp.l();
+		if (component == 5) return (int) tmp.i0();
+		if (component == 6) return (int) tmp.j0();
+		return (int) tmp.k0();
 	}
 
 	@Override
@@ -937,15 +956,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return 0;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return (long) tmpOct.get().r();
-		if (component == 1) return (long) tmpOct.get().i();
-		if (component == 2) return (long) tmpOct.get().j();
-		if (component == 3) return (long) tmpOct.get().k();
-		if (component == 4) return (long) tmpOct.get().l();
-		if (component == 5) return (long) tmpOct.get().i0();
-		if (component == 6) return (long) tmpOct.get().j0();
-		return (long) tmpOct.get().k0();
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (long) tmp.r();
+		if (component == 1) return (long) tmp.i();
+		if (component == 2) return (long) tmp.j();
+		if (component == 3) return (long) tmp.k();
+		if (component == 4) return (long) tmp.l();
+		if (component == 5) return (long) tmp.i0();
+		if (component == 6) return (long) tmp.j0();
+		return (long) tmp.k0();
 	}
 
 	@Override
@@ -954,15 +974,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return 0;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return (float) tmpOct.get().r();
-		if (component == 1) return (float) tmpOct.get().i();
-		if (component == 2) return (float) tmpOct.get().j();
-		if (component == 3) return (float) tmpOct.get().k();
-		if (component == 4) return (float) tmpOct.get().l();
-		if (component == 5) return (float) tmpOct.get().i0();
-		if (component == 6) return (float) tmpOct.get().j0();
-		return (float) tmpOct.get().k0();
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (float) tmp.r();
+		if (component == 1) return (float) tmp.i();
+		if (component == 2) return (float) tmp.j();
+		if (component == 3) return (float) tmp.k();
+		if (component == 4) return (float) tmp.l();
+		if (component == 5) return (float) tmp.i0();
+		if (component == 6) return (float) tmp.j0();
+		return (float) tmp.k0();
 	}
 
 	@Override
@@ -971,15 +992,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return 0;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return tmpOct.get().r();
-		if (component == 1) return tmpOct.get().i();
-		if (component == 2) return tmpOct.get().j();
-		if (component == 3) return tmpOct.get().k();
-		if (component == 4) return tmpOct.get().l();
-		if (component == 5) return tmpOct.get().i0();
-		if (component == 6) return tmpOct.get().j0();
-		return tmpOct.get().k0();
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return tmp.r();
+		if (component == 1) return tmp.i();
+		if (component == 2) return tmp.j();
+		if (component == 3) return tmp.k();
+		if (component == 4) return tmp.l();
+		if (component == 5) return tmp.i0();
+		if (component == 6) return tmp.j0();
+		return tmp.k0();
 	}
 
 	@Override
@@ -988,15 +1010,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return BigInteger.ZERO;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return BigInteger.valueOf((long) tmpOct.get().r());
-		if (component == 1) return BigInteger.valueOf((long) tmpOct.get().i());
-		if (component == 2) return BigInteger.valueOf((long) tmpOct.get().j());
-		if (component == 3) return BigInteger.valueOf((long) tmpOct.get().k());
-		if (component == 4) return BigInteger.valueOf((long) tmpOct.get().l());
-		if (component == 5) return BigInteger.valueOf((long) tmpOct.get().i0());
-		if (component == 6) return BigInteger.valueOf((long) tmpOct.get().j0());
-		return BigInteger.valueOf((long) tmpOct.get().k0());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return BigInteger.valueOf((long) tmp.r());
+		if (component == 1) return BigInteger.valueOf((long) tmp.i());
+		if (component == 2) return BigInteger.valueOf((long) tmp.j());
+		if (component == 3) return BigInteger.valueOf((long) tmp.k());
+		if (component == 4) return BigInteger.valueOf((long) tmp.l());
+		if (component == 5) return BigInteger.valueOf((long) tmp.i0());
+		if (component == 6) return BigInteger.valueOf((long) tmp.j0());
+		return BigInteger.valueOf((long) tmp.k0());
 	}
 
 	@Override
@@ -1005,15 +1028,16 @@ public final class OctonionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 7) return BigDecimal.ZERO;
-		v(index.get(1), index.get(0), tmpOct.get());
-		if (component == 0) return BigDecimal.valueOf(tmpOct.get().r());
-		if (component == 1) return BigDecimal.valueOf(tmpOct.get().i());
-		if (component == 2) return BigDecimal.valueOf(tmpOct.get().j());
-		if (component == 3) return BigDecimal.valueOf(tmpOct.get().k());
-		if (component == 4) return BigDecimal.valueOf(tmpOct.get().l());
-		if (component == 5) return BigDecimal.valueOf(tmpOct.get().i0());
-		if (component == 6) return BigDecimal.valueOf(tmpOct.get().j0());
-		return BigDecimal.valueOf(tmpOct.get().k0());
+		OctonionFloat64Member tmp = tmpOct.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return BigDecimal.valueOf(tmp.r());
+		if (component == 1) return BigDecimal.valueOf(tmp.i());
+		if (component == 2) return BigDecimal.valueOf(tmp.j());
+		if (component == 3) return BigDecimal.valueOf(tmp.k());
+		if (component == 4) return BigDecimal.valueOf(tmp.l());
+		if (component == 5) return BigDecimal.valueOf(tmp.i0());
+		if (component == 6) return BigDecimal.valueOf(tmp.j0());
+		return BigDecimal.valueOf(tmp.k0());
 	}
 
 	@Override
@@ -1046,15 +1070,16 @@ public final class OctonionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return (byte) tmpOct.get().r();
-			if (component == 1) return (byte) tmpOct.get().i();
-			if (component == 2) return (byte) tmpOct.get().j();
-			if (component == 3) return (byte) tmpOct.get().k();
-			if (component == 4) return (byte) tmpOct.get().l();
-			if (component == 5) return (byte) tmpOct.get().i0();
-			if (component == 6) return (byte) tmpOct.get().j0();
-			return (byte) tmpOct.get().k0();
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (byte) tmp.r();
+			if (component == 1) return (byte) tmp.i();
+			if (component == 2) return (byte) tmp.j();
+			if (component == 3) return (byte) tmp.k();
+			if (component == 4) return (byte) tmp.l();
+			if (component == 5) return (byte) tmp.i0();
+			if (component == 6) return (byte) tmp.j0();
+			return (byte) tmp.k0();
 		}
 	}
 
@@ -1088,15 +1113,16 @@ public final class OctonionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return (short) tmpOct.get().r();
-			if (component == 1) return (short) tmpOct.get().i();
-			if (component == 2) return (short) tmpOct.get().j();
-			if (component == 3) return (short) tmpOct.get().k();
-			if (component == 4) return (short) tmpOct.get().l();
-			if (component == 5) return (short) tmpOct.get().i0();
-			if (component == 6) return (short) tmpOct.get().j0();
-			return (short) tmpOct.get().k0();
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (short) tmp.r();
+			if (component == 1) return (short) tmp.i();
+			if (component == 2) return (short) tmp.j();
+			if (component == 3) return (short) tmp.k();
+			if (component == 4) return (short) tmp.l();
+			if (component == 5) return (short) tmp.i0();
+			if (component == 6) return (short) tmp.j0();
+			return (short) tmp.k0();
 		}
 	}
 
@@ -1130,15 +1156,16 @@ public final class OctonionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return (int) tmpOct.get().r();
-			if (component == 1) return (int) tmpOct.get().i();
-			if (component == 2) return (int) tmpOct.get().j();
-			if (component == 3) return (int) tmpOct.get().k();
-			if (component == 4) return (int) tmpOct.get().l();
-			if (component == 5) return (int) tmpOct.get().i0();
-			if (component == 6) return (int) tmpOct.get().j0();
-			return (int) tmpOct.get().k0();
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (int) tmp.r();
+			if (component == 1) return (int) tmp.i();
+			if (component == 2) return (int) tmp.j();
+			if (component == 3) return (int) tmp.k();
+			if (component == 4) return (int) tmp.l();
+			if (component == 5) return (int) tmp.i0();
+			if (component == 6) return (int) tmp.j0();
+			return (int) tmp.k0();
 		}
 	}
 
@@ -1172,15 +1199,16 @@ public final class OctonionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return (long) tmpOct.get().r();
-			if (component == 1) return (long) tmpOct.get().i();
-			if (component == 2) return (long) tmpOct.get().j();
-			if (component == 3) return (long) tmpOct.get().k();
-			if (component == 4) return (long) tmpOct.get().l();
-			if (component == 5) return (long) tmpOct.get().i0();
-			if (component == 6) return (long) tmpOct.get().j0();
-			return (long) tmpOct.get().k0();
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (long) tmp.r();
+			if (component == 1) return (long) tmp.i();
+			if (component == 2) return (long) tmp.j();
+			if (component == 3) return (long) tmp.k();
+			if (component == 4) return (long) tmp.l();
+			if (component == 5) return (long) tmp.i0();
+			if (component == 6) return (long) tmp.j0();
+			return (long) tmp.k0();
 		}
 	}
 
@@ -1214,15 +1242,16 @@ public final class OctonionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return (float) tmpOct.get().r();
-			if (component == 1) return (float) tmpOct.get().i();
-			if (component == 2) return (float) tmpOct.get().j();
-			if (component == 3) return (float) tmpOct.get().k();
-			if (component == 4) return (float) tmpOct.get().l();
-			if (component == 5) return (float) tmpOct.get().i0();
-			if (component == 6) return (float) tmpOct.get().j0();
-			return (float) tmpOct.get().k0();
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (float) tmp.r();
+			if (component == 1) return (float) tmp.i();
+			if (component == 2) return (float) tmp.j();
+			if (component == 3) return (float) tmp.k();
+			if (component == 4) return (float) tmp.l();
+			if (component == 5) return (float) tmp.i0();
+			if (component == 6) return (float) tmp.j0();
+			return (float) tmp.k0();
 		}
 	}
 
@@ -1256,15 +1285,16 @@ public final class OctonionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return tmpOct.get().r();
-			if (component == 1) return tmpOct.get().i();
-			if (component == 2) return tmpOct.get().j();
-			if (component == 3) return tmpOct.get().k();
-			if (component == 4) return tmpOct.get().l();
-			if (component == 5) return tmpOct.get().i0();
-			if (component == 6) return tmpOct.get().j0();
-			return tmpOct.get().k0();
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return tmp.r();
+			if (component == 1) return tmp.i();
+			if (component == 2) return tmp.j();
+			if (component == 3) return tmp.k();
+			if (component == 4) return tmp.l();
+			if (component == 5) return tmp.i0();
+			if (component == 6) return tmp.j0();
+			return tmp.k0();
 		}
 	}
 
@@ -1298,15 +1328,16 @@ public final class OctonionFloat64MatrixMember
 			return BigInteger.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return BigInteger.valueOf((long) tmpOct.get().r());
-			if (component == 1) return BigInteger.valueOf((long) tmpOct.get().i());
-			if (component == 2) return BigInteger.valueOf((long) tmpOct.get().j());
-			if (component == 3) return BigInteger.valueOf((long) tmpOct.get().k());
-			if (component == 4) return BigInteger.valueOf((long) tmpOct.get().l());
-			if (component == 5) return BigInteger.valueOf((long) tmpOct.get().i0());
-			if (component == 6) return BigInteger.valueOf((long) tmpOct.get().j0());
-			return BigInteger.valueOf((long) tmpOct.get().k0());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return BigInteger.valueOf((long) tmp.r());
+			if (component == 1) return BigInteger.valueOf((long) tmp.i());
+			if (component == 2) return BigInteger.valueOf((long) tmp.j());
+			if (component == 3) return BigInteger.valueOf((long) tmp.k());
+			if (component == 4) return BigInteger.valueOf((long) tmp.l());
+			if (component == 5) return BigInteger.valueOf((long) tmp.i0());
+			if (component == 6) return BigInteger.valueOf((long) tmp.j0());
+			return BigInteger.valueOf((long) tmp.k0());
 		}
 	}
 
@@ -1340,15 +1371,16 @@ public final class OctonionFloat64MatrixMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpOct.get());
-			if (component == 0) return BigDecimal.valueOf(tmpOct.get().r());
-			if (component == 1) return BigDecimal.valueOf(tmpOct.get().i());
-			if (component == 2) return BigDecimal.valueOf(tmpOct.get().j());
-			if (component == 3) return BigDecimal.valueOf(tmpOct.get().k());
-			if (component == 4) return BigDecimal.valueOf(tmpOct.get().l());
-			if (component == 5) return BigDecimal.valueOf(tmpOct.get().i0());
-			if (component == 6) return BigDecimal.valueOf(tmpOct.get().j0());
-			return BigDecimal.valueOf(tmpOct.get().k0());
+			OctonionFloat64Member tmp = tmpOct.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return BigDecimal.valueOf(tmp.r());
+			if (component == 1) return BigDecimal.valueOf(tmp.i());
+			if (component == 2) return BigDecimal.valueOf(tmp.j());
+			if (component == 3) return BigDecimal.valueOf(tmp.k());
+			if (component == 4) return BigDecimal.valueOf(tmp.l());
+			if (component == 5) return BigDecimal.valueOf(tmp.i0());
+			if (component == 6) return BigDecimal.valueOf(tmp.j0());
+			return BigDecimal.valueOf(tmp.k0());
 		}
 	}
 

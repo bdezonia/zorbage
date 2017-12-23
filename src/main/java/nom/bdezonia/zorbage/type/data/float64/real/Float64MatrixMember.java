@@ -234,66 +234,74 @@ public final class Float64MatrixMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v);
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v);
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v);
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v);
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v);
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v);
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v);
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v);
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v);
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v);
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v);
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v);
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v.doubleValue());
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v.doubleValue());
+		setV(r,c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		Float64Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmpFloat.get().setV(v.doubleValue());
-		setV(r,c, tmpFloat.get());
+		tmp.setV(v.doubleValue());
+		setV(r,c, tmp);
 	}
 
 	@Override
@@ -328,10 +336,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v);
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v);
+			setV(r,c, tmp);
 		}
 	}
 
@@ -367,10 +376,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v);
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v);
+			setV(r,c, tmp);
 		}
 	}
 
@@ -406,10 +416,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v);
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v);
+			setV(r,c, tmp);
 		}
 	}
 
@@ -445,10 +456,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v);
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v);
+			setV(r,c, tmp);
 		}
 	}
 
@@ -484,10 +496,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v);
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v);
+			setV(r,c, tmp);
 		}
 	}
 
@@ -523,10 +536,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v);
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v);
+			setV(r,c, tmp);
 		}
 	}
 
@@ -562,10 +576,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v.doubleValue());
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v.doubleValue());
+			setV(r,c, tmp);
 		}
 	}
 
@@ -601,10 +616,11 @@ public final class Float64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			Float64Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmpFloat.get().setV(v.doubleValue());
-			setV(r,c, tmpFloat.get());
+			tmp.setV(v.doubleValue());
+			setV(r,c, tmp);
 		}
 	}
 
@@ -614,8 +630,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (byte) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (byte) tmp.v();
 		}
 		return 0;
 	}
@@ -626,8 +643,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (short) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (short) tmp.v();
 		}
 		return 0;
 	}
@@ -638,8 +656,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (int) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (int) tmp.v();
 		}
 		return 0;
 	}
@@ -650,8 +669,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (long) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (long) tmp.v();
 		}
 		return 0;
 	}
@@ -662,8 +682,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (float) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (float) tmp.v();
 		}
 		return 0;
 	}
@@ -674,8 +695,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return tmp.v();
 		}
 		return 0;
 	}
@@ -686,8 +708,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return BigInteger.valueOf((long) tmpFloat.get().v());
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return BigInteger.valueOf((long) tmp.v());
 		}
 		return BigInteger.ZERO;
 	}
@@ -698,8 +721,9 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component == 0) {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return BigDecimal.valueOf(tmpFloat.get().v());
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return BigDecimal.valueOf(tmp.v());
 		}
 		return BigDecimal.ZERO;
 	}
@@ -734,8 +758,9 @@ public final class Float64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (byte) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (byte) tmp.v();
 		}
 	}
 
@@ -769,8 +794,9 @@ public final class Float64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (short) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (short) tmp.v();
 		}
 	}
 
@@ -804,8 +830,9 @@ public final class Float64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (int) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (int) tmp.v();
 		}
 	}
 
@@ -839,8 +866,9 @@ public final class Float64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (long) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (long) tmp.v();
 		}
 	}
 
@@ -874,8 +902,9 @@ public final class Float64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return (float) tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return (float) tmp.v();
 		}
 	}
 
@@ -909,8 +938,9 @@ public final class Float64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return tmpFloat.get().v();
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return tmp.v();
 		}
 	}
 
@@ -944,8 +974,9 @@ public final class Float64MatrixMember
 			return BigInteger.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return BigInteger.valueOf((long) tmpFloat.get().v());
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return BigInteger.valueOf((long) tmp.v());
 		}
 	}
 
@@ -979,8 +1010,9 @@ public final class Float64MatrixMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpFloat.get());
-			return BigDecimal.valueOf(tmpFloat.get().v());
+			Float64Member tmp = tmpFloat.get();
+			v(index.get(1), index.get(0), tmp);
+			return BigDecimal.valueOf(tmp.v());
 		}
 	}
 

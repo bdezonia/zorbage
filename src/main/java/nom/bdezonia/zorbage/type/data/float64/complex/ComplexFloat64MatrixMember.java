@@ -246,96 +246,104 @@ public final class ComplexFloat64MatrixMember
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v);
+			tmp.setR(v);
 		else
-			tmpComp.get().setI(v);
-		setV(r, c, tmpComp.get());
+			tmp.setI(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v);
+			tmp.setR(v);
 		else
-			tmpComp.get().setI(v);
-		setV(r, c, tmpComp.get());
+			tmp.setI(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v);
+			tmp.setR(v);
 		else
-			tmpComp.get().setI(v);
-		setV(r, c, tmpComp.get());
+			tmp.setI(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v);
+			tmp.setR(v);
 		else
-			tmpComp.get().setI(v);
-		setV(r, c, tmpComp.get());
+			tmp.setI(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v);
+			tmp.setR(v);
 		else
-			tmpComp.get().setI(v);
-		setV(r, c, tmpComp.get());
+			tmp.setI(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v);
+			tmp.setR(v);
 		else
-			tmpComp.get().setI(v);
-		setV(r, c, tmpComp.get());
+			tmp.setI(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v.doubleValue());
+			tmp.setR(v.doubleValue());
 		else
-			tmpComp.get().setI(v.doubleValue());
-		setV(r, c, tmpComp.get());
+			tmp.setI(v.doubleValue());
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpComp.get());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
-			tmpComp.get().setR(v.doubleValue());
+			tmp.setR(v.doubleValue());
 		else
-			tmpComp.get().setI(v.doubleValue());
-		setV(r, c, tmpComp.get());
+			tmp.setI(v.doubleValue());
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -372,12 +380,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v);
+				tmp.setR(v);
 			else
-				tmpComp.get().setI(v);
-			setV(r, c, tmpComp.get());
+				tmp.setI(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -415,12 +424,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v);
+				tmp.setR(v);
 			else
-				tmpComp.get().setI(v);
-			setV(r, c, tmpComp.get());
+				tmp.setI(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -458,12 +468,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v);
+				tmp.setR(v);
 			else
-				tmpComp.get().setI(v);
-			setV(r, c, tmpComp.get());
+				tmp.setI(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -501,12 +512,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v);
+				tmp.setR(v);
 			else
-				tmpComp.get().setI(v);
-			setV(r, c, tmpComp.get());
+				tmp.setI(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -544,12 +556,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v);
+				tmp.setR(v);
 			else
-				tmpComp.get().setI(v);
-			setV(r, c, tmpComp.get());
+				tmp.setI(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -587,12 +600,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v);
+				tmp.setR(v);
 			else
-				tmpComp.get().setI(v);
-			setV(r, c, tmpComp.get());
+				tmp.setI(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -630,12 +644,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v.doubleValue());
+				tmp.setR(v.doubleValue());
 			else
-				tmpComp.get().setI(v.doubleValue());
-			setV(r, c, tmpComp.get());
+				tmp.setI(v.doubleValue());
+			setV(r, c, tmp);
 		}
 	}
 
@@ -673,12 +688,13 @@ public final class ComplexFloat64MatrixMember
 		else {
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpComp.get());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
-				tmpComp.get().setR(v.doubleValue());
+				tmp.setR(v.doubleValue());
 			else
-				tmpComp.get().setI(v.doubleValue());
-			setV(r, c, tmpComp.get());
+				tmp.setI(v.doubleValue());
+			setV(r, c, tmp);
 		}
 	}
 
@@ -688,9 +704,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return (byte) tmpComp.get().r();
-		return (byte) tmpComp.get().i();
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (byte) tmp.r();
+		return (byte) tmp.i();
 	}
 
 	@Override
@@ -699,9 +716,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return (short) tmpComp.get().r();
-		return (short) tmpComp.get().i();
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (short) tmp.r();
+		return (short) tmp.i();
 	}
 
 	@Override
@@ -710,9 +728,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return (int) tmpComp.get().r();
-		return (int) tmpComp.get().i();
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (int) tmp.r();
+		return (int) tmp.i();
 	}
 
 	@Override
@@ -721,9 +740,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return (long) tmpComp.get().r();
-		return (long) tmpComp.get().i();
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (long) tmp.r();
+		return (long) tmp.i();
 	}
 
 	@Override
@@ -732,9 +752,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return (float) tmpComp.get().r();
-		return (float) tmpComp.get().i();
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return (float) tmp.r();
+		return (float) tmp.i();
 	}
 
 	@Override
@@ -743,9 +764,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return tmpComp.get().r();
-		return tmpComp.get().i();
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return tmp.r();
+		return tmp.i();
 	}
 
 	@Override
@@ -754,9 +776,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return BigInteger.ZERO;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return BigInteger.valueOf((long) tmpComp.get().r());
-		return BigInteger.valueOf((long) tmpComp.get().i());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return BigInteger.valueOf((long) tmp.r());
+		return BigInteger.valueOf((long) tmp.i());
 	}
 
 	@Override
@@ -765,9 +788,10 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return BigDecimal.ZERO;
-		v(index.get(1), index.get(0), tmpComp.get());
-		if (component == 0) return BigDecimal.valueOf(tmpComp.get().r());
-		return BigDecimal.valueOf(tmpComp.get().i());
+		ComplexFloat64Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
+		if (component == 0) return BigDecimal.valueOf(tmp.r());
+		return BigDecimal.valueOf(tmp.i());
 	}
 
 	@Override
@@ -800,9 +824,10 @@ public final class ComplexFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return (byte) tmpComp.get().r();
-			return (byte) tmpComp.get().i();
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (byte) tmp.r();
+			return (byte) tmp.i();
 		}
 	}
 
@@ -836,9 +861,10 @@ public final class ComplexFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return (short) tmpComp.get().r();
-			return (short) tmpComp.get().i();
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (short) tmp.r();
+			return (short) tmp.i();
 		}
 	}
 
@@ -872,9 +898,10 @@ public final class ComplexFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return (int) tmpComp.get().r();
-			return (int) tmpComp.get().i();
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (int) tmp.r();
+			return (int) tmp.i();
 		}
 	}
 
@@ -908,9 +935,10 @@ public final class ComplexFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return (long) tmpComp.get().r();
-			return (long) tmpComp.get().i();
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (long) tmp.r();
+			return (long) tmp.i();
 		}
 	}
 
@@ -944,9 +972,10 @@ public final class ComplexFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return (float) tmpComp.get().r();
-			return (float) tmpComp.get().i();
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (float) tmp.r();
+			return (float) tmp.i();
 		}
 	}
 
@@ -980,9 +1009,10 @@ public final class ComplexFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return tmpComp.get().r();
-			return tmpComp.get().i();
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return tmp.r();
+			return tmp.i();
 		}
 	}
 
@@ -1016,9 +1046,10 @@ public final class ComplexFloat64MatrixMember
 			return BigInteger.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return BigInteger.valueOf((long) tmpComp.get().r());
-			return BigInteger.valueOf((long) tmpComp.get().i());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return BigInteger.valueOf((long) tmp.r());
+			return BigInteger.valueOf((long) tmp.i());
 		}
 	}
 
@@ -1052,9 +1083,10 @@ public final class ComplexFloat64MatrixMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpComp.get());
-			if (component == 0) return BigDecimal.valueOf(tmpComp.get().r());
-			return BigDecimal.valueOf(tmpComp.get().i());
+			ComplexFloat64Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return BigDecimal.valueOf(tmp.r());
+			return BigDecimal.valueOf(tmp.i());
 		}
 	}
 

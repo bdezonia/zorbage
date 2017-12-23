@@ -242,130 +242,138 @@ public final class QuaternionFloat64MatrixMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpQuat.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpQuat.get().setJ(v);
+			tmp.setJ(v);
 		else
-			tmpQuat.get().setK(v);
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpQuat.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpQuat.get().setJ(v);
+			tmp.setJ(v);
 		else
-			tmpQuat.get().setK(v);
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpQuat.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpQuat.get().setJ(v);
+			tmp.setJ(v);
 		else
-			tmpQuat.get().setK(v);
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpQuat.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpQuat.get().setJ(v);
+			tmp.setJ(v);
 		else
-			tmpQuat.get().setK(v);
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpQuat.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpQuat.get().setJ(v);
+			tmp.setJ(v);
 		else
-			tmpQuat.get().setK(v);
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v);
+			tmp.setR(v);
 		else if (component == 1)
-			tmpQuat.get().setI(v);
+			tmp.setI(v);
 		else if (component == 2)
-			tmpQuat.get().setJ(v);
+			tmp.setJ(v);
 		else
-			tmpQuat.get().setK(v);
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v.doubleValue());
+			tmp.setR(v.doubleValue());
 		else if (component == 1)
-			tmpQuat.get().setI(v.doubleValue());
+			tmp.setI(v.doubleValue());
 		else if (component == 2)
-			tmpQuat.get().setJ(v.doubleValue());
+			tmp.setJ(v.doubleValue());
 		else
-			tmpQuat.get().setK(v.doubleValue());
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v.doubleValue());
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		QuaternionFloat64Member tmp = tmpQuat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		v(r, c, tmpQuat.get());
+		v(r, c, tmp);
 		if (component == 0)
-			tmpQuat.get().setR(v.doubleValue());
+			tmp.setR(v.doubleValue());
 		else if (component == 1)
-			tmpQuat.get().setI(v.doubleValue());
+			tmp.setI(v.doubleValue());
 		else if (component == 2)
-			tmpQuat.get().setJ(v.doubleValue());
+			tmp.setJ(v.doubleValue());
 		else
-			tmpQuat.get().setK(v.doubleValue());
-		setV(r, c, tmpQuat.get());
+			tmp.setK(v.doubleValue());
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -400,18 +408,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpQuat.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpQuat.get().setJ(v);
+				tmp.setJ(v);
 			else
-				tmpQuat.get().setK(v);
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -447,18 +456,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpQuat.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpQuat.get().setJ(v);
+				tmp.setJ(v);
 			else
-				tmpQuat.get().setK(v);
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -494,18 +504,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpQuat.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpQuat.get().setJ(v);
+				tmp.setJ(v);
 			else
-				tmpQuat.get().setK(v);
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -541,18 +552,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpQuat.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpQuat.get().setJ(v);
+				tmp.setJ(v);
 			else
-				tmpQuat.get().setK(v);
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -588,18 +600,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpQuat.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpQuat.get().setJ(v);
+				tmp.setJ(v);
 			else
-				tmpQuat.get().setK(v);
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -635,18 +648,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v);
+				tmp.setR(v);
 			else if (component == 1)
-				tmpQuat.get().setI(v);
+				tmp.setI(v);
 			else if (component == 2)
-				tmpQuat.get().setJ(v);
+				tmp.setJ(v);
 			else
-				tmpQuat.get().setK(v);
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -682,18 +696,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v.doubleValue());
+				tmp.setR(v.doubleValue());
 			else if (component == 1)
-				tmpQuat.get().setI(v.doubleValue());
+				tmp.setI(v.doubleValue());
 			else if (component == 2)
-				tmpQuat.get().setJ(v.doubleValue());
+				tmp.setJ(v.doubleValue());
 			else
-				tmpQuat.get().setK(v.doubleValue());
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v.doubleValue());
+			setV(r, c, tmp);
 		}
 	}
 
@@ -729,18 +744,19 @@ public final class QuaternionFloat64MatrixMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
+			QuaternionFloat64Member tmp = tmpQuat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			v(r, c, tmpQuat.get());
+			v(r, c, tmp);
 			if (component == 0)
-				tmpQuat.get().setR(v.doubleValue());
+				tmp.setR(v.doubleValue());
 			else if (component == 1)
-				tmpQuat.get().setI(v.doubleValue());
+				tmp.setI(v.doubleValue());
 			else if (component == 2)
-				tmpQuat.get().setJ(v.doubleValue());
+				tmp.setJ(v.doubleValue());
 			else
-				tmpQuat.get().setK(v.doubleValue());
-			setV(r, c, tmpQuat.get());
+				tmp.setK(v.doubleValue());
+			setV(r, c, tmp);
 		}
 	}
 
@@ -750,11 +766,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return 0;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return (byte) tmpQuat.get().r();
-		if (component == 1) return (byte) tmpQuat.get().i();
-		if (component == 2) return (byte) tmpQuat.get().j();
-		return (byte) tmpQuat.get().k();
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return (byte) tmp.r();
+		if (component == 1) return (byte) tmp.i();
+		if (component == 2) return (byte) tmp.j();
+		return (byte) tmp.k();
 	}
 
 	@Override
@@ -763,11 +780,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return 0;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return (short) tmpQuat.get().r();
-		if (component == 1) return (short) tmpQuat.get().i();
-		if (component == 2) return (short) tmpQuat.get().j();
-		return (short) tmpQuat.get().k();
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return (short) tmp.r();
+		if (component == 1) return (short) tmp.i();
+		if (component == 2) return (short) tmp.j();
+		return (short) tmp.k();
 	}
 
 	@Override
@@ -776,11 +794,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return 0;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return (int) tmpQuat.get().r();
-		if (component == 1) return (int) tmpQuat.get().i();
-		if (component == 2) return (int) tmpQuat.get().j();
-		return (int) tmpQuat.get().k();
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return (int) tmp.r();
+		if (component == 1) return (int) tmp.i();
+		if (component == 2) return (int) tmp.j();
+		return (int) tmp.k();
 	}
 
 	@Override
@@ -789,11 +808,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return 0;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return (long) tmpQuat.get().r();
-		if (component == 1) return (long) tmpQuat.get().i();
-		if (component == 2) return (long) tmpQuat.get().j();
-		return (long) tmpQuat.get().k();
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return (long) tmp.r();
+		if (component == 1) return (long) tmp.i();
+		if (component == 2) return (long) tmp.j();
+		return (long) tmp.k();
 	}
 
 	@Override
@@ -802,11 +822,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return 0;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return (float) tmpQuat.get().r();
-		if (component == 1) return (float) tmpQuat.get().i();
-		if (component == 2) return (float) tmpQuat.get().j();
-		return (float) tmpQuat.get().k();
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return (float) tmp.r();
+		if (component == 1) return (float) tmp.i();
+		if (component == 2) return (float) tmp.j();
+		return (float) tmp.k();
 	}
 
 	@Override
@@ -815,11 +836,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return 0;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return tmpQuat.get().r();
-		if (component == 1) return tmpQuat.get().i();
-		if (component == 2) return tmpQuat.get().j();
-		return tmpQuat.get().k();
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return tmp.r();
+		if (component == 1) return tmp.i();
+		if (component == 2) return tmp.j();
+		return tmp.k();
 	}
 
 	@Override
@@ -828,11 +850,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return BigInteger.ZERO;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return BigInteger.valueOf((long) tmpQuat.get().r());
-		if (component == 1) return BigInteger.valueOf((long) tmpQuat.get().i());
-		if (component == 2) return BigInteger.valueOf((long) tmpQuat.get().j());
-		return BigInteger.valueOf((long) tmpQuat.get().k());
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return BigInteger.valueOf((long) tmp.r());
+		if (component == 1) return BigInteger.valueOf((long) tmp.i());
+		if (component == 2) return BigInteger.valueOf((long) tmp.j());
+		return BigInteger.valueOf((long) tmp.k());
 	}
 
 	@Override
@@ -841,11 +864,12 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 3) return BigDecimal.ZERO;
-		v(index.get(1),index.get(0), tmpQuat.get());
-		if (component == 0) return BigDecimal.valueOf(tmpQuat.get().r());
-		if (component == 1) return BigDecimal.valueOf(tmpQuat.get().i());
-		if (component == 2) return BigDecimal.valueOf(tmpQuat.get().j());
-		return BigDecimal.valueOf(tmpQuat.get().k());
+		QuaternionFloat64Member tmp = tmpQuat.get();
+		v(index.get(1),index.get(0), tmp);
+		if (component == 0) return BigDecimal.valueOf(tmp.r());
+		if (component == 1) return BigDecimal.valueOf(tmp.i());
+		if (component == 2) return BigDecimal.valueOf(tmp.j());
+		return BigDecimal.valueOf(tmp.k());
 	}
 
 	@Override
@@ -878,11 +902,12 @@ public final class QuaternionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return (byte) tmpQuat.get().r();
-			if (component == 1) return (byte) tmpQuat.get().i();
-			if (component == 2) return (byte) tmpQuat.get().j();
-			return (byte) tmpQuat.get().k();
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (byte) tmp.r();
+			if (component == 1) return (byte) tmp.i();
+			if (component == 2) return (byte) tmp.j();
+			return (byte) tmp.k();
 		}
 	}
 
@@ -916,11 +941,12 @@ public final class QuaternionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return (short) tmpQuat.get().r();
-			if (component == 1) return (short) tmpQuat.get().i();
-			if (component == 2) return (short) tmpQuat.get().j();
-			return (short) tmpQuat.get().k();
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (short) tmp.r();
+			if (component == 1) return (short) tmp.i();
+			if (component == 2) return (short) tmp.j();
+			return (short) tmp.k();
 		}
 	}
 
@@ -954,11 +980,12 @@ public final class QuaternionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return (int) tmpQuat.get().r();
-			if (component == 1) return (int) tmpQuat.get().i();
-			if (component == 2) return (int) tmpQuat.get().j();
-			return (int) tmpQuat.get().k();
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (int) tmp.r();
+			if (component == 1) return (int) tmp.i();
+			if (component == 2) return (int) tmp.j();
+			return (int) tmp.k();
 		}
 	}
 
@@ -992,11 +1019,12 @@ public final class QuaternionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return (long) tmpQuat.get().r();
-			if (component == 1) return (long) tmpQuat.get().i();
-			if (component == 2) return (long) tmpQuat.get().j();
-			return (long) tmpQuat.get().k();
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (long) tmp.r();
+			if (component == 1) return (long) tmp.i();
+			if (component == 2) return (long) tmp.j();
+			return (long) tmp.k();
 		}
 	}
 
@@ -1030,11 +1058,12 @@ public final class QuaternionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return (float) tmpQuat.get().r();
-			if (component == 1) return (float) tmpQuat.get().i();
-			if (component == 2) return (float) tmpQuat.get().j();
-			return (float) tmpQuat.get().k();
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return (float) tmp.r();
+			if (component == 1) return (float) tmp.i();
+			if (component == 2) return (float) tmp.j();
+			return (float) tmp.k();
 		}
 	}
 
@@ -1068,11 +1097,12 @@ public final class QuaternionFloat64MatrixMember
 			return 0;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return tmpQuat.get().r();
-			if (component == 1) return tmpQuat.get().i();
-			if (component == 2) return tmpQuat.get().j();
-			return tmpQuat.get().k();
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return tmp.r();
+			if (component == 1) return tmp.i();
+			if (component == 2) return tmp.j();
+			return tmp.k();
 		}
 	}
 
@@ -1106,11 +1136,12 @@ public final class QuaternionFloat64MatrixMember
 			return BigInteger.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return BigInteger.valueOf((long) tmpQuat.get().r());
-			if (component == 1) return BigInteger.valueOf((long) tmpQuat.get().i());
-			if (component == 2) return BigInteger.valueOf((long) tmpQuat.get().j());
-			return BigInteger.valueOf((long) tmpQuat.get().k());
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return BigInteger.valueOf((long) tmp.r());
+			if (component == 1) return BigInteger.valueOf((long) tmp.i());
+			if (component == 2) return BigInteger.valueOf((long) tmp.j());
+			return BigInteger.valueOf((long) tmp.k());
 		}
 	}
 
@@ -1144,11 +1175,12 @@ public final class QuaternionFloat64MatrixMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			v(index.get(1), index.get(0), tmpQuat.get());
-			if (component == 0) return BigDecimal.valueOf(tmpQuat.get().r());
-			if (component == 1) return BigDecimal.valueOf(tmpQuat.get().i());
-			if (component == 2) return BigDecimal.valueOf(tmpQuat.get().j());
-			return BigDecimal.valueOf(tmpQuat.get().k());
+			QuaternionFloat64Member tmp = tmpQuat.get();
+			v(index.get(1), index.get(0), tmp);
+			if (component == 0) return BigDecimal.valueOf(tmp.r());
+			if (component == 1) return BigDecimal.valueOf(tmp.i());
+			if (component == 2) return BigDecimal.valueOf(tmp.j());
+			return BigDecimal.valueOf(tmp.k());
 		}
 	}
 
