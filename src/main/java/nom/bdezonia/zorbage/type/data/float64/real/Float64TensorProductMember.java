@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
+import nom.bdezonia.zorbage.util.LongUtils;
 
 
 // rank
@@ -80,7 +81,7 @@ public final class Float64TensorProductMember
 	}
 
 	public Float64TensorProductMember(long[] dims, double[] vals) {
-		if (vals.length != numElems(dims))
+		if (vals.length != LongUtils.numElements(dims))
 			throw new IllegalArgumentException("incorrect number of values provided to tensor constructor");
 		this.dims = dims;
 		storage = new ArrayStorageFloat64<Float64Member>(vals.length, new Float64Member());
@@ -122,10 +123,10 @@ public final class Float64TensorProductMember
 		dims = nd.clone();
 		multipliers = calcMultipliers();
 		if (s == StorageConstruction.ARRAY) {
-			storage = new ArrayStorageFloat64<Float64Member>(numElems(nd), new Float64Member());
+			storage = new ArrayStorageFloat64<Float64Member>(LongUtils.numElements(nd), new Float64Member());
 		}
 		else {
-			storage = new FileStorageFloat64<Float64Member>(numElems(nd), new Float64Member());
+			storage = new FileStorageFloat64<Float64Member>(LongUtils.numElements(nd), new Float64Member());
 		}
 	}
 
@@ -153,7 +154,7 @@ public final class Float64TensorProductMember
 	public void init(long[] newDims) {
 		dims = newDims.clone();
 		multipliers = calcMultipliers();
-		long newCount = numElems(newDims);
+		long newCount = LongUtils.numElements(newDims);
 		if (newCount != storage.size()) {
 			if (s == StorageConstruction.ARRAY) {
 				storage = new ArrayStorageFloat64<Float64Member>(newCount, new Float64Member());
@@ -241,15 +242,6 @@ public final class Float64TensorProductMember
 		return result;
 	}
 	
-	private long numElems(long[] dims) {
-		if (dims.length == 0) return 0;
-		long count = 1;
-		for (long d : dims) {
-			count *= d;
-		}
-		return count;
-	}
-
 	/*
 	 * dims = [4,5,6]
 	 * idx = [1,2,3]

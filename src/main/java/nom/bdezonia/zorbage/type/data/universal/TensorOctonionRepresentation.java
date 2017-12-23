@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.universal;
 
 import nom.bdezonia.zorbage.type.algebra.DimensionsResizable;
 import nom.bdezonia.zorbage.util.BigList;
+import nom.bdezonia.zorbage.util.LongUtils;
 
 /**
  * 
@@ -47,7 +48,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	@Override
 	public void setDims(long[] dims) {
-		long count = calcCount(dims);
+		long count = LongUtils.numElements(dims);
 		if (count == 0) count = 1;
 		if (values == null || count != values.size()) {
 			values = new BigList<OctonionRepresentation>(count);
@@ -110,7 +111,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	// tensor value
 	
 	public void setTensor(long[] dims, OctonionRepresentation[] values) {
-		if (calcCount(dims) != values.length)
+		if (LongUtils.numElements(dims) != values.length)
 			throw new IllegalArgumentException("Incorrect number of values passed");
 		setDims(dims);
 		for (int i = 0; i < values.length; i++) {
@@ -128,11 +129,4 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		return o;
 	}
 	
-	private long calcCount(long[] dims) {
-		long count = 1;
-		for (long d : dims) {
-			count *= d;
-		}
-		return count;
-	}
 }

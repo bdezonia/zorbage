@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.storage.multidim;
 
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.util.LongUtils;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class MultiDimAccessor<T extends LinearStorage<T,U>,U>
 	public MultiDimAccessor(long[] dims, T storage) {
 		this.dims = dims.clone();
 		this.storage = storage;
-		if (dimsSize(dims) != storage.size())
+		if (LongUtils.numElements(dims) != storage.size())
 			throw new IllegalArgumentException("MultiDimAccessor has been given conflicting sizes");
 	}
 
@@ -65,7 +66,7 @@ public class MultiDimAccessor<T extends LinearStorage<T,U>,U>
 	}
 
 	public void resetDimensions(long[] newDims) {
-		if (dimsSize(newDims) != storage.size())
+		if (LongUtils.numElements(newDims) != storage.size())
 			throw new IllegalArgumentException("MultiDimAccessor has been given conflicting sizes");
 		dims = newDims.clone();
 	}
@@ -82,15 +83,6 @@ public class MultiDimAccessor<T extends LinearStorage<T,U>,U>
 	
 	public long numElements() {
 		return storage.size();
-	}
-	
-	private long dimsSize(long[] dims) {
-		if (dims.length == 0) return 0;
-		long l = 1;
-		for (long sz : dims) {
-			l *= sz;
-		}
-		return l;
 	}
 	
 	/*

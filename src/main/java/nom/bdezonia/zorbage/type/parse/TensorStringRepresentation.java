@@ -33,6 +33,7 @@ import java.util.List;
 
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.util.BigList;
+import nom.bdezonia.zorbage.util.LongUtils;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class TensorStringRepresentation {
 		dimensions = determineDimensions(chars);
 		elements = new BigList<OctonionRepresentation>();
 		gatherOctonions(chars);
-		if (elements.size() != numElems(dimensions))
+		if (elements.size() != LongUtils.numElements(dimensions))
 			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 	}
 	
@@ -103,12 +104,6 @@ public class TensorStringRepresentation {
 		return matrixElements;
 	}
 	
-	private long numElems(long[] dims) {
-		long sz = 1;
-		for (long dim : dims) sz *= dim;
-		return sz;
-	}
-
 	private List<Character> preprocessCharacters(String s) {
 		List<Character> chars = new ArrayList<Character>();
 		for (int i = 0; i < s.length(); i++) {
