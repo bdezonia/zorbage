@@ -67,17 +67,17 @@ public class Search {
 	{
 		U tmpA = group.construct();
 		U element = group.construct();
-	    for (long i = 0; i < count; i++) {
-	    	a.get(start+i, tmpA);
-	    	for (int j = 0; j < elements.size(); j++) {
-	    		elements.get(j, element);
-	            if (group.isNotEqual(tmpA, element))
-	                break;
-	            if (j == elements.size()-1)
-	                return start+i;
-	        }
-	    }
-	    return start+count;
+		for (long i = 0; i < count; i++) {
+			a.get(start+i, tmpA);
+			for (int j = 0; j < elements.size(); j++) {
+				elements.get(j, element);
+				if (group.isNotEqual(tmpA, element))
+					break;
+				if (j == elements.size()-1)
+					return start+i;
+			}
+		}
+		return start+count;
 	}	
 
 	/**
@@ -110,18 +110,18 @@ public class Search {
 		U tmpA = group.construct();
 		U element = group.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, element);
-	    for (long i = 0; i < count; i++) {
-	    	a.get(start+i, tmpA);
-	    	tuple.setA(tmpA);
-	    	for (int j = 0; j < elements.size(); j++) {
-	    		elements.get(j, element);
-		    	tuple.setB(element);
-	            if (cond.isTrue(tuple))
-	                break;
-	            if (j == elements.size()-1)
-	                return start+i;
-	        }
-	    }
-	    return start+count;
+		for (long i = 0; i < count; i++) {
+			a.get(start+i, tmpA);
+			tuple.setA(tmpA);
+			for (int j = 0; j < elements.size(); j++) {
+				elements.get(j, element);
+				tuple.setB(element);
+				if (cond.isTrue(tuple))
+					break;
+				if (j == elements.size()-1)
+					return start+i;
+			}
+		}
+		return start+count;
 	}	
 }

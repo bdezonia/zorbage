@@ -65,16 +65,16 @@ public class SearchN {
 		long compute(T group, long n, U value, long start, long count, LinearStorage<?,U> a)
 	{
 		U tmpA = group.construct();
-	    for (long i = 0; i < count-n; i++) {
-	    	for (int j = 0; j < n; j++) {
-		    	a.get(start+i+j, tmpA);
-	            if (group.isNotEqual(tmpA, value))
-	                break;
-	            if (j == n-1)
-	                return start+i;
-	        }
-	    }
-	    return start+count;
+		for (long i = 0; i < count-n; i++) {
+			for (int j = 0; j < n; j++) {
+				a.get(start+i+j, tmpA);
+				if (group.isNotEqual(tmpA, value))
+					break;
+				if (j == n-1)
+					return start+i;
+			}
+		}
+		return start+count;
 	}
 
 	/**
@@ -105,15 +105,15 @@ public class SearchN {
 		long compute(T group, long n, Condition<U> cond, long start, long count, LinearStorage<?,U> a)
 	{
 		U tmpA = group.construct();
-	    for (long i = 0; i < count-n; i++) {
-	    	for (int j = 0; j < n; j++) {
-		    	a.get(start+i+j, tmpA);
-	            if (!cond.isTrue(tmpA))
-	                break;
-	            if (j == n-1)
-	                return start+i;
-	        }
-	    }
-	    return start+count;
+		for (long i = 0; i < count-n; i++) {
+			for (int j = 0; j < n; j++) {
+				a.get(start+i+j, tmpA);
+				if (!cond.isTrue(tmpA))
+					break;
+				if (j == n-1)
+					return start+i;
+			}
+		}
+		return start+count;
 	}
 }
