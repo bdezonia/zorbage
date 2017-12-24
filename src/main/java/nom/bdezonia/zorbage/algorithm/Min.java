@@ -49,10 +49,24 @@ public class Min {
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U min)
 	{
+		compute(grp, 0, storage.size(), storage, min);
+	}
+
+	/**
+	 * 
+	 * @param grp
+	 * @param start
+	 * @param count
+	 * @param storage
+	 * @param min
+	 */
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U min)
+	{
 		U tmp = grp.construct();
 		grp.maxBound(min);
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
+		for (long i = 0; i < count; i++) {
+			storage.get(start+i, tmp);
 			if (grp.isLess(tmp, min)) {
 				grp.assign(tmp, min);
 			}

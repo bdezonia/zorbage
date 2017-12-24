@@ -49,10 +49,24 @@ public class Max {
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U max)
 	{
+		compute(grp, 0, storage.size(), storage, max);
+	}
+	
+	/**
+	 * 
+	 * @param grp
+	 * @param start
+	 * @param count
+	 * @param storage
+	 * @param max
+	 */
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U max)
+	{
 		U tmp = grp.construct();
 		grp.minBound(max);
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
+		for (long i = 0; i < count; i++) {
+			storage.get(start+i, tmp);
 			if (grp.isGreater(tmp, max)) {
 				grp.assign(tmp, max);
 			}

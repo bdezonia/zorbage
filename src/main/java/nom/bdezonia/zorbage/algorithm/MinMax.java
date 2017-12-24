@@ -44,17 +44,32 @@ public class MinMax {
 	 * 
 	 * @param grp
 	 * @param storage
-	 * @param min 
+	 * @param min
 	 * @param max
 	 */
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		void compute(T grp, LinearStorage<?,U> storage, U min, U max)
 	{
+		compute(grp, 0, storage.size(), storage, min, max);
+	}
+
+	/**
+	 * 
+	 * @param grp
+	 * @param start
+	 * @param count
+	 * @param storage
+	 * @param min
+	 * @param max
+	 */
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U min, U max)
+	{
 		U tmp = grp.construct();
 		grp.maxBound(min);
 		grp.minBound(max);
-		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
+		for (long i = 0; i < count; i++) {
+			storage.get(start+i, tmp);
 			if (grp.isGreater(tmp, max)) {
 				grp.assign(tmp, max);
 			}
