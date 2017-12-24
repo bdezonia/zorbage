@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.universal;
 
+import java.math.BigDecimal;
+
 import nom.bdezonia.zorbage.type.algebra.DimensionsResizable;
 import nom.bdezonia.zorbage.util.BigList;
 import nom.bdezonia.zorbage.util.LongUtils;
@@ -121,6 +123,23 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	public OctonionRepresentation getFirstValue() {
 		return nonNull(values.get(0));
+	}
+	
+	public void scaleBy(BigDecimal v) {
+		OctonionRepresentation o = null;
+		for (long i = 0; i < values.size(); i++) {
+			o = values.get(i);
+			o.setR(v.multiply(o.r()));
+			o.setI(v.multiply(o.i()));
+			o.setJ(v.multiply(o.j()));
+			o.setK(v.multiply(o.k()));
+			o.setL(v.multiply(o.l()));
+			o.setI0(v.multiply(o.i0()));
+			o.setJ0(v.multiply(o.j0()));
+			o.setK0(v.multiply(o.k0()));
+			// TODO: unnecessary?
+			// values.set(i, o);
+		}
 	}
 	
 	private OctonionRepresentation nonNull(OctonionRepresentation o) {

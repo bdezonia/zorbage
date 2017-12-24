@@ -82,4 +82,13 @@ public class OctonionRepresentation {
 	public BigDecimal i0() { return i0; }
 	public BigDecimal j0() { return j0; }
 	public BigDecimal k0() { return k0; }
+	
+	public void setR(BigDecimal r) { this.r = r; }
+	public void setI(BigDecimal i) { this.i = i; }
+	public void setJ(BigDecimal j) { this.j = j; }
+	public void setK(BigDecimal k) { this.k = k; }
+	public void setL(BigDecimal l) { this.l = l; }
+	public void setI0(BigDecimal i0) { this.i0 = i0; }
+	public void setJ0(BigDecimal j0) { this.j0 = j0; }
+	public void setK0(BigDecimal k0) { this.k0 = k0; }
 }

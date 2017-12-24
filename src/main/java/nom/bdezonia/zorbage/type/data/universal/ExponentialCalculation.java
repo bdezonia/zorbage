@@ -52,18 +52,14 @@ public class ExponentialCalculation {
 	 * @param power
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Power<U>, U>
-		void compute(T group, BigDecimal fraction, int base, int power, U result)
+	public static <T extends Group<T,U> & Power<U>, U extends UniversalRepresentation>
+		void compute(T group, BigDecimal fraction, U base, U power, U result)
 	{
-		if (base < 0)
-			throw new IllegalArgumentException("negative bases not allowed");
-		if (base == 0 && power == 0)
-			throw new IllegalArgumentException("0^0 is not a number");
-		BigDecimal b = BigDecimal.valueOf(base);
-		BigDecimal exponentiation = b.pow(power, context);
-		BigDecimal x = fraction.multiply(exponentiation);
-		x = x.round(context);
-		U tmp = group.construct(x.toString());
-		group.assign(tmp, result);
+		U tmp = group.construct();
+		group.pow(base, power, tmp);
+		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
+		tmp.setTensorFromSelf(rep);
+		rep.scaleBy(fraction);
+		result.setSelfFromTensor(rep);
 	}
 }
