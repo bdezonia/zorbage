@@ -69,7 +69,7 @@ public class Search {
 		U element = group.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmpA);
-			for (int j = 0; j < elements.size(); j++) {
+			for (long j = 0; j < elements.size(); j++) {
 				elements.get(j, element);
 				if (group.isNotEqual(tmpA, element))
 					break;
@@ -113,7 +113,7 @@ public class Search {
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmpA);
 			tuple.setA(tmpA);
-			for (int j = 0; j < elements.size(); j++) {
+			for (long j = 0; j < elements.size(); j++) {
 				elements.get(j, element);
 				tuple.setB(element);
 				if (cond.isTrue(tuple))

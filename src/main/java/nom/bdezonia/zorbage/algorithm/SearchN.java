@@ -66,7 +66,7 @@ public class SearchN {
 	{
 		U tmpA = group.construct();
 		for (long i = 0; i < count-n; i++) {
-			for (int j = 0; j < n; j++) {
+			for (long j = 0; j < n; j++) {
 				a.get(start+i+j, tmpA);
 				if (group.isNotEqual(tmpA, value))
 					break;
@@ -106,7 +106,7 @@ public class SearchN {
 	{
 		U tmpA = group.construct();
 		for (long i = 0; i < count-n; i++) {
-			for (int j = 0; j < n; j++) {
+			for (long j = 0; j < n; j++) {
 				a.get(start+i+j, tmpA);
 				if (!cond.isTrue(tmpA))
 					break;

@@ -67,7 +67,7 @@ public class Mismatch {
 		U tmpA = group.construct();
 		U tmpB = group.construct();
 		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
-		for (int i = 0; i < count; i++) {
+		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmpA);
 			b.get(bStart+i, tmpB);
 			if (group.isNotEqual(tmpA, tmpB)) {
@@ -114,7 +114,7 @@ public class Mismatch {
 		U tmpB = group.construct();
 		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
 		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, tmpB);
-		for (int i = 0; i < count; i++) {
+		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmpA);
 			b.get(bStart+i, tmpB);
 			tuple.setA(tmpA);
