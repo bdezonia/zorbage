@@ -43,8 +43,7 @@ public class ExponentialCalculation {
 
 	/**
 	 * Create a numeric value from an exponential description. Works in
-	 * BigDecimals for accuracy and rounds to 100 decimal places. Passed
-	 * in type assigned from universal string parsing representation.
+	 * BigDecimals for accuracy. Result must support UniversalRepresentation.
 	 * 
 	 * @param group
 	 * @param fraction
