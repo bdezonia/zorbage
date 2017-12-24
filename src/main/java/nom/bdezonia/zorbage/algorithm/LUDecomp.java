@@ -55,13 +55,6 @@ public class LUDecomp {
 	 * @param b
 	 * @param x
 	 */
-/*
-	public static <N extends RingWithUnity<N,U> & Invertible<U>,
-					R extends RModule<R,RModuleMember<U>,N,U> & Constructible1dLong<RModuleMember<U>>,
-					M extends Group<M,MatrixMember<U>> & Constructible2dLong<MatrixMember<U>>,
-					U>
-		void compute(N numGroup, R rmodGroup, M matGroup, MatrixMember<U> a, RModuleMember<U> b, RModuleMember<U> x)
-*/
 	public static <BASETYPE, // the base type like Float64Member or Octonion etc.
 					BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
 					RMODULE_MEMBER extends RModuleMember<BASETYPE>,

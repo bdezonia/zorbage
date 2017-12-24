@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.basic.tuple.Tuple2;
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -68,6 +70,49 @@ public class FindFirstOf {
 			for (long j = 0; j < elements.size(); j++) {
 				elements.get(j, element);
 				if (group.isEqual(tmpA, element))
+					return start+i;
+			}
+		}
+		return start + count;
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param cond
+	 * @param elements
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		long compute(T group, Condition<Tuple2<U,U>> cond, LinearStorage<?, U> elements, LinearStorage<?, U> a)
+	{
+		return compute(group, cond, elements, 0, a.size(), a);
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param cond
+	 * @param elements
+	 * @param start
+	 * @param count
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		long compute(T group, Condition<Tuple2<U,U>> cond, LinearStorage<?, U> elements, long start, long count, LinearStorage<?, U> a)
+	{
+		U tmpA = group.construct();
+		U element = group.construct();
+		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA,element);
+		for (long i = 0; i < count; i++) {
+			a.get(start+i, tmpA);
+			tuple.setA(tmpA);
+			for (long j = 0; j < elements.size(); j++) {
+				elements.get(j, element);
+				tuple.setB(element);
+				if (cond.isTrue(tuple))
 					return start+i;
 			}
 		}

@@ -47,9 +47,9 @@ public class FindIf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, LinearStorage<?,U> a, Condition<U> condition)
+		long compute(T group, Condition<U> condition, LinearStorage<?,U> a)
 	{
-		return compute(group, a, condition, 0, a.size());
+		return compute(group, condition, 0, a.size(), a);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class FindIf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, LinearStorage<?,U> a, Condition<U> condition, long start, long count)
+		long compute(T group, Condition<U> condition, long start, long count, LinearStorage<?,U> a)
 	{
 		U value = group.construct();
 		for (long i = 0; i < count; i++) {

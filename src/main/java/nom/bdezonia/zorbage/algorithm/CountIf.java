@@ -50,9 +50,9 @@ public class CountIf {
 	 * @param sum
 	 */
 	public static <T extends Group<T,U>, U, V extends AdditiveGroup<V,W> & Unity<W>, W>
-		void compute(T group, V addGroup, LinearStorage<?,U> a, Condition<U> condition, W sum)
+		void compute(T group, V addGroup, Condition<U> condition, LinearStorage<?,U> a, W sum)
 	{
-		compute(group, addGroup, a, 0, a.size(), condition, sum);
+		compute(group, addGroup, condition, 0, a.size(), a, sum);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class CountIf {
 	 * @param sum
 	 */
 	public static <T extends Group<T,U>, U, V extends AdditiveGroup<V,W> & Unity<W>, W>
-		void compute(T group, V addGroup, LinearStorage<?,U> a, long start, long count, Condition<U> condition, W sum)
+		void compute(T group, V addGroup, Condition<U> condition, long start, long count, LinearStorage<?,U> a, W sum)
 	{
 		U tmp = group.construct();
 		W tmpSum = addGroup.construct();

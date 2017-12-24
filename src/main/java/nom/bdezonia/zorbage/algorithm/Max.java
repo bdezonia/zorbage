@@ -28,33 +28,33 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
- * 
+ *
  */
 public class Max {
 
 	private Max() {}
-	
+
 	/**
 	 * 
 	 * @param grp
 	 * @param storage
-	 * @param min
-	 * @param result
+	 * @param max
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U min, U result)
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U max)
 	{
-		grp.assign(min, result);
 		U tmp = grp.construct();
+		grp.minBound(max);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			if (grp.isGreater(tmp, result)) {
-				grp.assign(tmp, result);
+			if (grp.isGreater(tmp, max)) {
+				grp.assign(tmp, max);
 			}
 		}
 	}

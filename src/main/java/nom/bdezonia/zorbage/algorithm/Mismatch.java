@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.basic.tuple.Tuple2;
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -80,4 +81,54 @@ public class Mismatch {
 		retVal.setB(bStart+count);
 		return retVal;
 	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @param cond
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, LinearStorage<?, U> a, LinearStorage<?,U> b)
+	{
+		return compute(group, cond, 0, 0, a.size(), a, b);
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param cond
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, LinearStorage<?, U> a, LinearStorage<?,U> b)
+	{
+		U tmpA = group.construct();
+		U tmpB = group.construct();
+		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
+		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, tmpB);
+		for (int i = 0; i < count; i++) {
+			a.get(aStart+i, tmpA);
+			b.get(bStart+i, tmpB);
+			tuple.setA(tmpA);
+			tuple.setB(tmpB);
+			if (!cond.isTrue(tuple)) {
+				retVal.setA(aStart+i);
+				retVal.setB(bStart+i);
+				return retVal;
+			}
+				
+		}
+		retVal.setA(aStart+count);
+		retVal.setB(bStart+count);
+		return retVal;
+	}
+	
 }

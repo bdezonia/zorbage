@@ -26,77 +26,41 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
- *
+ * 
  */
-public class Find {
+public class MinMax {
 
-	private Find() {}
+	private MinMax() {}
 
 	/**
 	 * 
-	 * @param group
-	 * @param a
-	 * @param value
-	 * @return
+	 * @param grp
+	 * @param storage
+	 * @param min 
+	 * @param max
 	 */
-	public static <T extends Group<T,U>, U>
-		long compute(T group, U value, LinearStorage<?,U> a)
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U min, U max)
 	{
-		return compute(group, value, 0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param group
-	 * @param a
-	 * @param value
-	 * @param start
-	 * @param count
-	 * @return
-	 */
-	public static <T extends Group<T,U>, U>
-		long compute(T group, U value, long start, long count, LinearStorage<?,U> a)
-	{
-		U tmp = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(start+i, tmp);
-			if (group.isEqual(tmp, value))
-				return start + i;
+		U tmp = grp.construct();
+		grp.maxBound(min);
+		grp.minBound(max);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			if (grp.isGreater(tmp, max)) {
+				grp.assign(tmp, max);
+			}
+			if (grp.isLess(tmp, min)) {
+				grp.assign(tmp, min);
+			}
 		}
-		return start + count;
-	}
-	
-	public static <T extends Group<T,U>, U>
-		long compute(T group, Condition<U> cond, LinearStorage<?,U> a)
-	{
-		return compute(group, cond, 0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param group
-	 * @param a
-	 * @param cond
-	 * @param start
-	 * @param count
-	 * @return
-	 */
-	public static <T extends Group<T,U>, U>
-		long compute(T group, Condition<U> cond, long start, long count, LinearStorage<?,U> a)
-	{
-		U tmp = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(start+i, tmp);
-			if (cond.isTrue(tmp))
-				return start + i;
-		}
-		return start + count;
 	}
 }

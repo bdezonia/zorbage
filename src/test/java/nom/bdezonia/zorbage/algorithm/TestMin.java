@@ -52,8 +52,7 @@ public class TestMin {
 		}
 		Float64Member result = new Float64Member();
 		Float64Member max = new Float64Member();
-		G.DBL.maxBound(max);
-		Min.compute(G.DBL, storage, max, result);
+		Min.compute(G.DBL, storage, max);
 		assertEquals(0, result.v(), 0.0000001);
 	}
 }

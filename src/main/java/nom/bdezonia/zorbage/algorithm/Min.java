@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -43,18 +44,17 @@ public class Min {
 	 * 
 	 * @param grp
 	 * @param storage
-	 * @param max
-	 * @param result
+	 * @param min
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U max, U result)
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U min)
 	{
-		grp.assign(max, result);
 		U tmp = grp.construct();
+		grp.maxBound(min);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			if (grp.isLess(tmp, result)) {
-				grp.assign(tmp, result);
+			if (grp.isLess(tmp, min)) {
+				grp.assign(tmp, min);
 			}
 		}
 	}

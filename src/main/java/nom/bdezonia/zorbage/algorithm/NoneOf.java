@@ -47,9 +47,9 @@ public class NoneOf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, Condition<U> condition)
+		boolean compute(T group, Condition<U> condition, LinearStorage<?,U> a)
 	{
-		return compute(group, a, condition, 0, a.size());
+		return compute(group, condition, 0, a.size(), a);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class NoneOf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, Condition<U> condition, long start, long count)
+		boolean compute(T group, Condition<U> condition, long start, long count, LinearStorage<?,U> a)
 	{
 		U value = group.construct();
 		if (count == 0) return false;

@@ -49,9 +49,9 @@ public class Count {
 	 * @param sum
 	 */
 	public static <T extends Group<T,U>, U, V extends AdditiveGroup<V,W> & Unity<W>, W>
-		void compute(T group, V addGroup, LinearStorage<?,U> a, U value, W sum)
+		void compute(T group, V addGroup, U value, LinearStorage<?,U> a, W sum)
 	{
-		compute(group, addGroup, a, 0, a.size(), value, sum);
+		compute(group, addGroup, value, 0, a.size(), a, sum);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class Count {
 	 * @param sum
 	 */
 	public static <T extends Group<T,U>, U, V extends AdditiveGroup<V,W> & Unity<W>, W>
-		void compute(T group, V addGroup, LinearStorage<?,U> a, long start, long count, U value, W sum)
+		void compute(T group, V addGroup, U value, long start, long count, LinearStorage<?,U> a, W sum)
 	{
 		U tmp = group.construct();
 		W tmpSum = addGroup.construct();

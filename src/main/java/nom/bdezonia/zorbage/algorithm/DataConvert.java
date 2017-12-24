@@ -55,7 +55,7 @@ public class DataConvert {
 	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
 		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
 	{
-		compute(fromGroup, toGroup, fromList, toList, 0, 0, fromList.size());
+		compute(fromGroup, toGroup, 0, 0, fromList.size(), fromList, toList);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class DataConvert {
 	 * @param count
 	 */
 	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList, long fromStart, long toStart, long count)
+		void compute(T fromGroup, U toGroup, long fromStart, long toStart, long count, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
 	{
 		V from = fromGroup.construct();
 		W to = toGroup.construct();

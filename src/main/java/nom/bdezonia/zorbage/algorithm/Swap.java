@@ -49,7 +49,7 @@ public class Swap {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		compute(group, a, b, 0, 0, a.size());
+		compute(group, 0, 0, a.size(), a, b);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class Swap {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		void compute(T group, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
 		U tmp1 = group.construct();
 		U tmp2 = group.construct();

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -68,6 +69,46 @@ public class SearchN {
 	    	for (int j = 0; j < n; j++) {
 		    	a.get(start+i+j, tmpA);
 	            if (group.isNotEqual(tmpA, value))
+	                break;
+	            if (j == n-1)
+	                return start+i;
+	        }
+	    }
+	    return start+count;
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param n
+	 * @param cond
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		long compute(T group, long n, Condition<U> cond, LinearStorage<?,U> a)
+	{
+		return compute(group, n, cond, 0, a.size(), a);
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param n
+	 * @param cond
+	 * @param start
+	 * @param count
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		long compute(T group, long n, Condition<U> cond, long start, long count, LinearStorage<?,U> a)
+	{
+		U tmpA = group.construct();
+	    for (long i = 0; i < count-n; i++) {
+	    	for (int j = 0; j < n; j++) {
+		    	a.get(start+i+j, tmpA);
+	            if (!cond.isTrue(tmpA))
 	                break;
 	            if (j == n-1)
 	                return start+i;
