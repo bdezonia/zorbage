@@ -50,9 +50,8 @@ public class TestMinElement {
 			value.setV(i);
 			storage.set(i, value);
 		}
-		Float64Member result = new Float64Member();
-		Float64Member max = new Float64Member();
-		MinElement.compute(G.DBL, storage, max);
-		assertEquals(0, result.v(), 0.0000001);
+		Float64Member min = new Float64Member();
+		MinElement.compute(G.DBL, storage, min);
+		assertEquals(0, min.v(), 0);
 	}
 }

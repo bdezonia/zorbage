@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -62,8 +64,6 @@ public class QuaternionFloat64Group
     Power<QuaternionFloat64Member>,
     RealUnreal<QuaternionFloat64Member,Float64Member>
 {
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
 	private static final QuaternionFloat64Member TWO = new QuaternionFloat64Member(2,0,0,0);
@@ -324,6 +324,7 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void random(QuaternionFloat64Member a) {
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		a.setR(rng.nextDouble());
 		a.setI(rng.nextDouble());
 		a.setJ(rng.nextDouble());

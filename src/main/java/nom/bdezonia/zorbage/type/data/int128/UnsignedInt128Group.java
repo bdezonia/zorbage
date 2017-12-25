@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int128;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -48,11 +50,6 @@ public class UnsignedInt128Group
 		BitOperations<UnsignedInt128Member>,
 		Random<UnsignedInt128Member>
 {
-
-	// TODO
-	// 1) speed test versus imglib
-	
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
 	private static final UnsignedInt128Member ONE = new UnsignedInt128Member(0,1);
 
@@ -367,6 +364,7 @@ public class UnsignedInt128Group
 
 	@Override
 	public void random(UnsignedInt128Member a) {
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		a.lo = rng.nextLong();
 		a.hi = rng.nextLong();
 	}

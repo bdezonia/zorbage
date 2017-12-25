@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float16.real;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -74,8 +76,6 @@ public class Float16Group
     ModularDivision<Float16Member>
 {
 
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	
 	private static final double TWO_PI = Math.PI * 2;
 	
 	public Float16Group() {
@@ -517,7 +517,7 @@ public class Float16Group
 	
 	@Override
 	public void random(Float16Member a) {
-		a.setV(rng.nextDouble());
+		a.setV(ThreadLocalRandom.current().nextDouble());
 	}
 	
 	@Override

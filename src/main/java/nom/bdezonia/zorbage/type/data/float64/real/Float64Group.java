@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -73,8 +75,6 @@ public class Float64Group
     MiscFloat<Float64Member>,
     ModularDivision<Float64Member>
 {
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
 	private static final double taylor_n_bound = Math.sqrt(taylor_2_bound);
@@ -536,7 +536,7 @@ public class Float64Group
 	
 	@Override
 	public void random(Float64Member a) {
-		a.setV(rng.nextDouble());
+		a.setV(ThreadLocalRandom.current().nextDouble());
 	}
 	
 	@Override

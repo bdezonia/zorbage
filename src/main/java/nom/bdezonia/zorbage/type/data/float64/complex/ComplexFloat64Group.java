@@ -37,6 +37,8 @@
 
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -77,8 +79,6 @@ public class ComplexFloat64Group
     Random<ComplexFloat64Member>,
     RealUnreal<ComplexFloat64Member,Float64Member>
 {
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
@@ -681,6 +681,7 @@ public class ComplexFloat64Group
 
 	@Override
 	public void random(ComplexFloat64Member a) {
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		a.setR(rng.nextDouble());
 		a.setI(rng.nextDouble());
 	}

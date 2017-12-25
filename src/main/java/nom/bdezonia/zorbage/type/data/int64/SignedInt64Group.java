@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int64;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -49,8 +51,6 @@ public class SignedInt64Group
     BitOperations<SignedInt64Member>,
     Random<SignedInt64Member>
 {
-
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);
 	
@@ -283,7 +283,7 @@ public class SignedInt64Group
 
 	@Override
 	public void random(SignedInt64Member a) {
-		a.setV(rng.nextLong());
+		a.setV(ThreadLocalRandom.current().nextLong());
 	}
 
 	@Override

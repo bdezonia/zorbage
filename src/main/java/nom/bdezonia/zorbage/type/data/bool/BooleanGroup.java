@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.bool;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -54,8 +56,6 @@ public class BooleanGroup
     Power<BooleanMember>
 {
 	
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-
 	public BooleanGroup() {
 	}
 	
@@ -229,7 +229,7 @@ public class BooleanGroup
 
 	@Override
 	public void random(BooleanMember a) {
-		a.setV(rng.nextBoolean());
+		a.setV(ThreadLocalRandom.current().nextBoolean());
 	}
 
 	@Override

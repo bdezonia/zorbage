@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int32;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -49,8 +51,6 @@ public class UnsignedInt32Group
     BitOperations<UnsignedInt32Member>,
     Random<UnsignedInt32Member>
 {
-
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();
 	
@@ -290,7 +290,7 @@ public class UnsignedInt32Group
 
 	@Override
 	public void random(UnsignedInt32Member a) {
-		a.setV( rng.nextInt() );
+		a.setV(ThreadLocalRandom.current().nextInt());
 	}
 
 	@Override

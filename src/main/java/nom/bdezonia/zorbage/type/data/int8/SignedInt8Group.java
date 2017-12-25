@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int8;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -50,8 +52,6 @@ public class SignedInt8Group
     Random<SignedInt8Member>
 {
 
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
-	
 	public SignedInt8Group() {
 	}
 	
@@ -281,7 +281,7 @@ public class SignedInt8Group
 
 	@Override
 	public void random(SignedInt8Member a) {
-		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
+		a.setV( (byte) (java.lang.Byte.MIN_VALUE + ThreadLocalRandom.current().nextInt(0x100)));
 	}
 
 	@Override

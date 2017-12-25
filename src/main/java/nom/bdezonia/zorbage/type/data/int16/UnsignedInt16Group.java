@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int16;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -49,8 +51,6 @@ public class UnsignedInt16Group
     BitOperations<UnsignedInt16Member>,
     Random<UnsignedInt16Member>
 {
-
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	
 	public UnsignedInt16Group() {
 	}
@@ -288,7 +288,7 @@ public class UnsignedInt16Group
 
 	@Override
 	public void random(UnsignedInt16Member a) {
-		a.setV( rng.nextInt(0x10000) );
+		a.setV(ThreadLocalRandom.current().nextInt(0x10000) );
 	}
 
 	@Override

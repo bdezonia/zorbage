@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -65,8 +67,6 @@ public class OctonionFloat64Group
     Power<OctonionFloat64Member>,
     RealUnreal<OctonionFloat64Member,Float64Member>
 {
-
-	private static final java.util.Random rng = new java.util.Random(System.currentTimeMillis());
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member TWO = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
@@ -525,6 +525,7 @@ public class OctonionFloat64Group
 	
 	@Override
 	public void random(OctonionFloat64Member a) {
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		a.setR(rng.nextDouble());
 		a.setI(rng.nextDouble());
 		a.setJ(rng.nextDouble());
