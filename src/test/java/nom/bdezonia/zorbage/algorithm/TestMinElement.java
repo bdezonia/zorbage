@@ -50,7 +50,7 @@ public class TestMinElement {
 			value.setV(i);
 			storage.set(i, value);
 		}
-		Float64Member min = new Float64Member();
+		Float64Member min = new Float64Member(-1234);
 		MinElement.compute(G.DBL, storage, min);
 		assertEquals(0, min.v(), 0);
 	}

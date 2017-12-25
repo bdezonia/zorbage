@@ -50,7 +50,7 @@ public class TestMaxElement {
 			value.setV(i);
 			storage.set(i, value);
 		}
-		Float64Member max = new Float64Member();
+		Float64Member max = new Float64Member(1234);
 		MaxElement.compute(G.DBL, storage, max);
 		assertEquals(9, max.v(), 0);
 	}
