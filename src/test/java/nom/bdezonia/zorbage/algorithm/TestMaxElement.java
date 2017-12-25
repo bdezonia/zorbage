@@ -26,50 +26,34 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Max {
+public class TestMaxElement {
 
-	private Max() {}
-
-	/**
-	 * 
-	 * @param grp
-	 * @param storage
-	 * @param max
-	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U max)
-	{
-		compute(grp, 0, storage.size(), storage, max);
-	}
-	
-	/**
-	 * 
-	 * @param grp
-	 * @param start
-	 * @param count
-	 * @param storage
-	 * @param max
-	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
-		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U max)
-	{
-		U tmp = grp.construct();
-		grp.minBound(max);
-		for (long i = 0; i < count; i++) {
-			storage.get(start+i, tmp);
-			if (grp.isGreater(tmp, max)) {
-				grp.assign(tmp, max);
-			}
+	@Test
+	public void test() {
+		Float64Member value = new Float64Member();
+		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
+		// build the initial test data
+		for (int i = 0; i < 10; i++) {
+			value.setV(i);
+			storage.set(i, value);
 		}
+		Float64Member result = new Float64Member();
+		Float64Member min = new Float64Member();
+		MaxElement.compute(G.DBL, storage, min);
+		assertEquals(9, result.v(), 0.0000001);
 	}
+
 }

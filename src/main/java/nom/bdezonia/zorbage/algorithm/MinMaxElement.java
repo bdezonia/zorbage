@@ -36,9 +36,9 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  * 
  */
-public class MinMax {
+public class MinMaxElement {
 
-	private MinMax() {}
+	private MinMaxElement() {}
 
 	/**
 	 * 

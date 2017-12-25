@@ -36,39 +36,39 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  *
  */
-public class Min {
+public class MaxElement {
 
-	private Min() {}
+	private MaxElement() {}
 
 	/**
 	 * 
 	 * @param grp
 	 * @param storage
-	 * @param min
+	 * @param max
 	 */
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U min)
+		void compute(T grp, LinearStorage<?,U> storage, U max)
 	{
-		compute(grp, 0, storage.size(), storage, min);
+		compute(grp, 0, storage.size(), storage, max);
 	}
-
+	
 	/**
 	 * 
 	 * @param grp
 	 * @param start
 	 * @param count
 	 * @param storage
-	 * @param min
+	 * @param max
 	 */
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
-		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U min)
+		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U max)
 	{
 		U tmp = grp.construct();
-		grp.maxBound(min);
+		grp.minBound(max);
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (grp.isLess(tmp, min)) {
-				grp.assign(tmp, min);
+			if (grp.isGreater(tmp, max)) {
+				grp.assign(tmp, max);
 			}
 		}
 	}

@@ -26,33 +26,50 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestMin {
+public class MinElement {
 
-	@Test
-	public void test() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		// build the initial test data
-		for (int i = 0; i < storage.size(); i++) {
-			value.setV(i);
-			storage.set(i, value);
+	private MinElement() {}
+
+	/**
+	 * 
+	 * @param grp
+	 * @param storage
+	 * @param min
+	 */
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, LinearStorage<?,U> storage, U min)
+	{
+		compute(grp, 0, storage.size(), storage, min);
+	}
+
+	/**
+	 * 
+	 * @param grp
+	 * @param start
+	 * @param count
+	 * @param storage
+	 * @param min
+	 */
+	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U min)
+	{
+		U tmp = grp.construct();
+		grp.maxBound(min);
+		for (long i = 0; i < count; i++) {
+			storage.get(start+i, tmp);
+			if (grp.isLess(tmp, min)) {
+				grp.assign(tmp, min);
+			}
 		}
-		Float64Member result = new Float64Member();
-		Float64Member max = new Float64Member();
-		Min.compute(G.DBL, storage, max);
-		assertEquals(0, result.v(), 0.0000001);
 	}
 }

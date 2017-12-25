@@ -39,21 +39,20 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
  * @author Barry DeZonia
  *
  */
-public class TestMax {
+public class TestMinElement {
 
 	@Test
 	public void test() {
 		Float64Member value = new Float64Member();
 		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
 		// build the initial test data
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			value.setV(i);
 			storage.set(i, value);
 		}
 		Float64Member result = new Float64Member();
-		Float64Member min = new Float64Member();
-		Max.compute(G.DBL, storage, min);
-		assertEquals(9, result.v(), 0.0000001);
+		Float64Member max = new Float64Member();
+		MinElement.compute(G.DBL, storage, max);
+		assertEquals(0, result.v(), 0.0000001);
 	}
-
 }
