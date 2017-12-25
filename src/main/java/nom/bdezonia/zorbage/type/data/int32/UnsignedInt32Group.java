@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int32;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -278,12 +280,12 @@ public class UnsignedInt32Group
 
 	@Override
 	public void min(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		c.setV( Math.min(a.v(), b.v()) );
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-		c.setV( Math.max(a.v(), b.v()) );
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int64;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -271,12 +273,12 @@ public class SignedInt64Group
 
 	@Override
 	public void min(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		c.setV( Math.min(a.v(), b.v()) );
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-		c.setV( Math.max(a.v(), b.v()) );
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float16.real;
 
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -488,12 +490,12 @@ public class Float16Group
 
 	@Override
 	public void min(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( Math.min(a.v(), b.v()) );
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( Math.max(a.v(), b.v()) );
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.bool;
 
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.CommutativeRingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.LogicalOperations;
@@ -157,12 +159,12 @@ public class BooleanGroup
 
 	@Override
 	public void min(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.setV(isLess(a,b) ? a.v() : b.v());
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(BooleanMember a, BooleanMember b, BooleanMember c) {
-		c.setV(isGreater(a,b) ? a.v() : b.v());
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

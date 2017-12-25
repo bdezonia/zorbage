@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int128;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -237,18 +239,12 @@ public class UnsignedInt128Group
 
 	@Override
 	public void min(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		if (compare(a,b) < 0)
-			assign(a, c);
-		else
-			assign(b, c);
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		if (compare(a,b) > 0)
-			assign(a, c);
-		else
-			assign(b, c);
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

@@ -30,6 +30,8 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -280,18 +282,12 @@ public class UnsignedInt64Group
 
 	@Override
 	public void min(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		if (compare(a,b) < 0)
-			c.set(a);
-		else
-			c.set(b);
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-		if (compare(a,b) > 0)
-			c.set(a);
-		else
-			c.set(b);
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

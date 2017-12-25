@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int8;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -269,12 +271,12 @@ public class SignedInt8Group
 
 	@Override
 	public void min(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte) Math.min(a.v(), b.v()) );
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte) Math.max(a.v(), b.v()) );
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

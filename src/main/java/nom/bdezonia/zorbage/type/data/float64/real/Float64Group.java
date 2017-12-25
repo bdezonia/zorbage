@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -503,12 +505,12 @@ public class Float64Group
 
 	@Override
 	public void min(Float64Member a, Float64Member b, Float64Member c) {
-		c.setV( Math.min(a.v(), b.v()) );
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(Float64Member a, Float64Member b, Float64Member c) {
-		c.setV( Math.max(a.v(), b.v()) );
+		Max.compute(this, a, b, c);
 	}
 
 	@Override

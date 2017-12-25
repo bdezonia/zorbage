@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.bigint;
 
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
@@ -236,12 +238,12 @@ public class UnboundedIntGroup
 
 	@Override
 	public void min(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().min(b.v()) );
+		Min.compute(this, a, b, c);
 	}
 
 	@Override
 	public void max(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().max(b.v()) );
+		Max.compute(this, a, b, c);
 	}
 
 	public void andNot(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
