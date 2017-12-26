@@ -53,6 +53,7 @@ public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
 	public Step(T group, U h0) {
 		this.group = group;
 		this.zero = group.construct();
+		this.h0 = group.construct();
 		group.assign(h0, this.h0);
 		U one = group.construct();
 		group.unity(one);
