@@ -38,16 +38,16 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class AddL<T extends Group<T,U> & Addition<U>, U>
 	implements Procedure<U>
 {
-	private T group;
 	private Procedure<U> ancestor1;
 	private Procedure<U> ancestor2;
+	private Add<T,U> lowerProc;
 	private U tmp1;
 	private U tmp2;
 	
 	public AddL(T group, Procedure<U> ancestor1, Procedure<U> ancestor2) {
-		this.group = group;
 		this.ancestor1 = ancestor1;
 		this.ancestor2 = ancestor2;
+		this.lowerProc = new Add<T,U>(group);
 		tmp1 = group.construct();
 		tmp2 = group.construct();
 	}
@@ -56,7 +56,7 @@ public class AddL<T extends Group<T,U> & Addition<U>, U>
 	public void call(U result, U... inputs) {
 		ancestor1.call(tmp1, inputs);
 		ancestor2.call(tmp2, inputs);
-		group.add(tmp1, tmp2, result);
+		lowerProc.call(tmp1, tmp2, result);
 	}
 
 }

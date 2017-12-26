@@ -39,26 +39,20 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class StepL<T extends Group<T,U> & Ordered<U> & Unity<U>,U>
 	implements Procedure<U>
 {
-	private T group;
-	private int index;
-	private U zero;
+	private Procedure<U> ancestor;
+	private Step<T,U> lowerProc;
+	private U tmp;
 	
-	public StepL(T group, int index) {
-		if (index < 0)
-			throw new IllegalArgumentException("negative index exception");
-		this.group = group;
-		this.index = index;
-		this.zero = group.construct();
+	public StepL(T group, Procedure<U> ancestor) {
+		this.ancestor = ancestor;
+		this.lowerProc = new Step<T,U>(group);
+		this.tmp = group.construct();
 	}
 	
 	@Override
 	public void call(U result, U... inputs) {
-		if (index >= inputs.length)
-			throw new IllegalArgumentException("undefined variable #"+index);
-		if (group.isGreaterEqual(inputs[index], zero))
-			group.unity(result);
-		else
-			group.assign(zero, result);
+		ancestor.call(tmp, inputs);
+		lowerProc.call(tmp, result);
 	}
 
 }

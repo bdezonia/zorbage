@@ -38,20 +38,20 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class AtanL<T extends Group<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure<U>
 {
-	private T group;
 	private Procedure<U> ancestor;
+	private Atan<T,U> lowerProc;
 	private U tmp;
 	
 	public AtanL(T group, Procedure<U> ancestor) {
-		this.group = group;
 		this.ancestor = ancestor;
+		this.lowerProc = new Atan<T,U>(group);
 		this.tmp = group.construct();
 	}
 
 	@Override
 	public void call(U result, U... inputs) {
 		ancestor.call(tmp, inputs);
-		group.atan(tmp, result);
+		lowerProc.call(tmp, result);
 	}
 	
 }

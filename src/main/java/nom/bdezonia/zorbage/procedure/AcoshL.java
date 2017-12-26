@@ -38,20 +38,20 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 public class AcoshL<T extends Group<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure<U>
 {
-	private T group;
 	private Procedure<U> ancestor;
+	private Acosh<T,U> lowerProc;
 	private U tmp;
 	
 	public AcoshL(T group, Procedure<U> ancestor) {
-		this.group = group;
 		this.ancestor = ancestor;
+		this.lowerProc = new Acosh<T,U>(group);
 		this.tmp = group.construct();
 	}
 
 	@Override
 	public void call(U result, U... inputs) {
 		ancestor.call(tmp, inputs);
-		group.acosh(tmp, result);
+		lowerProc.call(tmp, result);
 	}
 	
 }

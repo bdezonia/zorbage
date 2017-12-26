@@ -26,45 +26,32 @@
  */
 package nom.bdezonia.zorbage.procedure;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure2;
-import nom.bdezonia.zorbage.basic.procedure.Procedure3;
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.basic.procedure.Procedure;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class AddProc implements Procedure3<Float64Member,Float64Member,Float64Member> {
+public class AtanhL<T extends Group<T,U> & InverseHyperbolic<U>,U>
+	implements Procedure<U>
+{
+	private Procedure<U> ancestor;
+	private Atanh<T,U> lowerProc;
+	private U tmp;
+	
+	public AtanhL(T group, Procedure<U> ancestor) {
+		this.ancestor = ancestor;
+		this.lowerProc = new Atanh<T,U>(group);
+		this.tmp = group.construct();
+	}
 
-	private final Procedure2<Float64Member,Float64Member> p1;
-	private final Procedure2<Float64Member,Float64Member> p2;
-    
-	private static final ThreadLocal<Float64Member> x =
-		new ThreadLocal<Float64Member>() {
-			@Override protected Float64Member initialValue() {
-				return new Float64Member();
-			}
-		};
-
-	private static final ThreadLocal<Float64Member> y =
-		new ThreadLocal<Float64Member>() {
-			@Override protected Float64Member initialValue() {
-				return new Float64Member();
-			}
-		};
-    
-	public AddProc(Procedure2<Float64Member,Float64Member> p1, Procedure2<Float64Member,Float64Member> p2) {
-		this.p1 = p1;
-		this.p2 = p2;
+	@Override
+	public void call(U result, U... inputs) {
+		ancestor.call(tmp, inputs);
+		lowerProc.call(tmp, result);
 	}
 	
-	@Override
-	public void call(Float64Member a, Float64Member b, Float64Member c) {
-		p1.call(a, x.get());
-		p2.call(b, y.get());
-		G.DBL.add(x.get(), y.get(), c);
-	}
-
 }

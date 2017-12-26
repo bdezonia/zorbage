@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 
 /**
@@ -38,20 +39,20 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class AsinL<T extends Group<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure<U>
 {
-	private T group;
 	private Procedure<U> ancestor;
+	private Asin<T,U> lowerProc;
 	private U tmp;
 	
 	public AsinL(T group, Procedure<U> ancestor) {
-		this.group = group;
 		this.ancestor = ancestor;
+		this.lowerProc = new Asin<T,U>(group);
 		this.tmp = group.construct();
 	}
 
 	@Override
 	public void call(U result, U... inputs) {
 		ancestor.call(tmp, inputs);
-		group.asin(tmp, result);
+		lowerProc.call(tmp, result);
 	}
 	
 }

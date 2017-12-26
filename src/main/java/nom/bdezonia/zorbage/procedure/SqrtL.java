@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 
 /**
@@ -38,20 +39,20 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 public class SqrtL<T extends Group<T,U> & Roots<U>,U>
 	implements Procedure<U>
 {
-	private T group;
 	private Procedure<U> ancestor;
+	private Sqrt<T,U> lowerProc;
 	private U tmp;
 	
 	public SqrtL(T group, Procedure<U> ancestor) {
-		this.group = group;
 		this.ancestor = ancestor;
-		tmp = group.construct();
+		this.lowerProc = new Sqrt<T,U>(group);
+		this.tmp = group.construct();
 	}
 
 	@Override
 	public void call(U result, U... inputs) {
 		ancestor.call(tmp, inputs);
-		group.sqrt(tmp, result);
+		lowerProc.call(tmp, result);
 	}
-
+	
 }
