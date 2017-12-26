@@ -39,18 +39,18 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
 	implements Procedure2<U,U>
 {
-
 	private T group;
+	private U zero;
 	
 	public Step(T group) {
 		this.group = group;
+		this.zero = group.construct();
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		U tmp = group.construct();
-		if (group.isLessEqual(a, tmp))
-			group.assign(tmp, b);
+		if (group.isLess(a, zero))
+			group.assign(zero, b);
 		else
 			group.unity(b);
 	}
