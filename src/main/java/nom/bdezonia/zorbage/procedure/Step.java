@@ -53,7 +53,11 @@ public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
 	public Step(T group, U h0) {
 		this.group = group;
 		this.zero = group.construct();
-		this.h0 = h0;
+		group.assign(h0, this.h0);
+		U one = group.construct();
+		group.unity(one);
+		if (group.isLess(h0, zero) || group.isGreater(h0, one))
+			throw new IllegalArgumentException("step: h0 out of sensible range");
 	}
 	
 	@Override
