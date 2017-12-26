@@ -43,9 +43,9 @@ public class StepL<T extends Group<T,U> & Ordered<U> & Unity<U>,U>
 	private Step<T,U> lowerProc;
 	private U tmp;
 	
-	public StepL(T group, Procedure<U> ancestor) {
+	public StepL(T group, Procedure<U> ancestor, U h0) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Step<T,U>(group);
+		this.lowerProc = new Step<T,U>(group,h0);
 		this.tmp = group.construct();
 	}
 	

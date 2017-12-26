@@ -41,18 +41,30 @@ public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
 {
 	private T group;
 	private U zero;
+	private U h0;
 	
-	public Step(T group) {
+	/**
+	 * Heaviside step function. 
+	 * 
+	 * @param group
+	 * @param h0 The value to return if the input is 0. Common values
+	 *   are 0, 1/2, and 1.
+	 */
+	public Step(T group, U h0) {
 		this.group = group;
 		this.zero = group.construct();
+		this.h0 = h0;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		if (group.isLess(a, zero))
+		int s = group.signum(a);
+		if (s < 0)
 			group.assign(zero, b);
-		else
+		else if (s > 0)
 			group.unity(b);
+		else
+			group.assign(h0, b);
 	}
 
 }
