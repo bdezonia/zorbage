@@ -288,7 +288,8 @@ public class UnsignedInt16Group
 
 	@Override
 	public void random(UnsignedInt16Member a) {
-		a.setV(ThreadLocalRandom.current().nextInt(0x10000) );
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextInt(0x10000) );
 	}
 
 	@Override

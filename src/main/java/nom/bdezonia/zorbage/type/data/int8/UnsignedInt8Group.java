@@ -288,7 +288,8 @@ public class UnsignedInt8Group
 
 	@Override
 	public void random(UnsignedInt8Member a) {
-		a.setV(ThreadLocalRandom.current().nextInt(0x100));
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextInt(0x100));
 	}
 
 	@Override

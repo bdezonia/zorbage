@@ -280,7 +280,8 @@ public class SignedInt32Group
 
 	@Override
 	public void random(SignedInt32Member a) {
-		a.setV(ThreadLocalRandom.current().nextInt());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextInt());
 	}
 
 	@Override

@@ -517,7 +517,8 @@ public class Float16Group
 	
 	@Override
 	public void random(Float16Member a) {
-		a.setV(ThreadLocalRandom.current().nextDouble());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextDouble());
 	}
 	
 	@Override

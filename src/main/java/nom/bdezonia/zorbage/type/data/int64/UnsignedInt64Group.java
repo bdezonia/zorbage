@@ -291,7 +291,8 @@ public class UnsignedInt64Group
 
 	@Override
 	public void random(UnsignedInt64Member a) {
-		a.v = ThreadLocalRandom.current().nextLong();
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.v = rng.nextLong();
 	}
 
 	@Override

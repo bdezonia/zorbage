@@ -229,7 +229,8 @@ public class BooleanGroup
 
 	@Override
 	public void random(BooleanMember a) {
-		a.setV(ThreadLocalRandom.current().nextBoolean());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextBoolean());
 	}
 
 	@Override

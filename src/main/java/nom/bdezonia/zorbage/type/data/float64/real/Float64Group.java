@@ -536,7 +536,8 @@ public class Float64Group
 	
 	@Override
 	public void random(Float64Member a) {
-		a.setV(ThreadLocalRandom.current().nextDouble());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextDouble());
 	}
 	
 	@Override

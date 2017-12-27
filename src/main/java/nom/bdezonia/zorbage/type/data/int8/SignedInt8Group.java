@@ -281,7 +281,8 @@ public class SignedInt8Group
 
 	@Override
 	public void random(SignedInt8Member a) {
-		a.setV( (byte) (java.lang.Byte.MIN_VALUE + ThreadLocalRandom.current().nextInt(0x100)));
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
 	}
 
 	@Override

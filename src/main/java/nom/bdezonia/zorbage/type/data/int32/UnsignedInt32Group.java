@@ -290,7 +290,8 @@ public class UnsignedInt32Group
 
 	@Override
 	public void random(UnsignedInt32Member a) {
-		a.setV(ThreadLocalRandom.current().nextInt());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextInt());
 	}
 
 	@Override

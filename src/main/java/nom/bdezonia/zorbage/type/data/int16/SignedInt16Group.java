@@ -281,7 +281,8 @@ public class SignedInt16Group
 
 	@Override
 	public void random(SignedInt16Member a) {
-		a.setV( (short) (java.lang.Short.MIN_VALUE + ThreadLocalRandom.current().nextInt(0x10000)));
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0x10000)));
 	}
 
 	@Override

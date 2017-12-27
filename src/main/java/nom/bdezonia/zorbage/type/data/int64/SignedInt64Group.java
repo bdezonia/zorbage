@@ -283,7 +283,8 @@ public class SignedInt64Group
 
 	@Override
 	public void random(SignedInt64Member a) {
-		a.setV(ThreadLocalRandom.current().nextLong());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		a.setV(rng.nextLong());
 	}
 
 	@Override
