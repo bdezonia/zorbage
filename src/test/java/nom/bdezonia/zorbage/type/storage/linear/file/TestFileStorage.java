@@ -42,19 +42,24 @@ public class TestFileStorage {
 
 	@Test
 	public void run() {
+		final int SIZE = 4000;
+		
 		ComplexFloat64Member v = new ComplexFloat64Member();
 		
-		FileStorageFloat64<ComplexFloat64Member> store = new FileStorageFloat64<ComplexFloat64Member>(4000, new ComplexFloat64Member());
+		FileStorageFloat64<ComplexFloat64Member> store = new FileStorageFloat64<ComplexFloat64Member>(SIZE, new ComplexFloat64Member());
+
+		assertEquals(SIZE, store.size());
 		
 		for (long i = 0; i < store.size(); i++) {
 			v.setR(i);
 			v.setI(i+1);
 			store.set(i, v);
 		}
+		
 		for (long i = 0; i < store.size(); i++) {
 			store.get(i, v);
-			assertEquals(i, v.r(), 0.00000001);
-			assertEquals(i+1, v.i(), 0.00000001);
+			assertEquals(i, v.r(), 0);
+			assertEquals(i+1, v.i(), 0);
 		}
 		
 		FileStorageFloat64<ComplexFloat64Member> dup = store.duplicate();
@@ -63,8 +68,8 @@ public class TestFileStorage {
 
 		for (long i = 0; i < dup.size(); i++) {
 			dup.get(i, v);
-			assertEquals(i, v.r(), 0.00000001);
-			assertEquals(i+1, v.i(), 0.00000001);
+			assertEquals(i, v.r(), 0);
+			assertEquals(i+1, v.i(), 0);
 		}
 		
 	}
