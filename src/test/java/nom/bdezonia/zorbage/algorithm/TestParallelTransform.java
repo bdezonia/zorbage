@@ -79,7 +79,7 @@ public class TestParallelTransform {
 		
 		// set values of storage to random doubles between 0 and 1
 		Rand<T,U> randOp = new Rand<T,U>(group);
-		// TODO: don't do parallel xform until Random is thread friendly
+		// TODO: some day convert this to a parallel xform call that handles Procedure1's
 		Fill.compute(group, randOp, a);
 		
 		// transform each input[i] value to be the sin(input[i])
