@@ -8,7 +8,8 @@ Support for:
   1) integers, reals, complex numbers, quaternions, octonions
   2) numbers, vectors, matrices, and tensors
   3) various precisions: 1-bit to 128-bit
-  4) generic programming
-  5) group theoretical algorithms
-  6) procedural, object oriented, and (coming soon) functional styles
+  4) very large datasets
+  5) generic programming
+  6) group theoretical algorithms
+  7) procedural, object oriented, and (coming soon) functional coding styles
  
