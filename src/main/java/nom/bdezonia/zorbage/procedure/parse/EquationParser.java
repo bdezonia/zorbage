@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.parse;
+package nom.bdezonia.zorbage.procedure.parse;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.basic.tuple.Tuple2;
