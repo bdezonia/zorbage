@@ -35,18 +35,20 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class ForEach {
+public class ForEachN {
 
 	/**
 	 * 
 	 * @param grpU
 	 * @param proc
+	 * @param start
+	 * @param count
 	 * @param a
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, LinearStorage<?,U> a)
+		void compute(T grpU, Procedure2<U,U> proc, long start, long count, LinearStorage<?,U> a)
 	{
-		ForEachN.compute(grpU, proc, 0, a.size(), a);
+		Transform.compute(grpU, proc, start, count, a);
 	}
-	
+
 }
