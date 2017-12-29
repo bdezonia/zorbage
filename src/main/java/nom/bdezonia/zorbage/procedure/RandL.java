@@ -40,7 +40,7 @@ public class RandL<T extends Group<T,U> & Random<U>,U>
 {
 	private Rand<T,U> lowerProc;
 	
-	public RandL(T group, U c) {
+	public RandL(T group) {
 		this.lowerProc = new Rand<T,U>(group);
 	}
 	
