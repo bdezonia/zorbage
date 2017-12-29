@@ -39,7 +39,7 @@ public class NullL<T extends Group<T,U>,U>
 {
 	private Null<T,U> lowerProc;
 	
-	public NullL(T group, U c) {
+	public NullL(T group) {
 		this.lowerProc = new Null<T,U>(group);
 	}
 	
