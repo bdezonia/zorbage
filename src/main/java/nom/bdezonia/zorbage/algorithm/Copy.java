@@ -45,25 +45,7 @@ public class Copy {
 	public static <T extends Group<T,U>, U>
 		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
 	{
-		compute(group, 0, 0, a.size(), a, b);
+		CopyN.compute(group, 0, 0, a.size(), a, b);
 	}
 	
-	/**
-	 * 
-	 * @param group
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Group<T,U>, U>
-		void compute(T group, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
-	{
-		U tmp = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp);
-			b.set(bStart+i, tmp);
-		}
-	}
 }

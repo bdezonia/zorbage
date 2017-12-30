@@ -26,66 +26,55 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Rand;
-import nom.bdezonia.zorbage.procedure.Sin;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestParallelTransform {
+public class FindEnd {
 
-	@Test
-	public void testFloats()
+	/**
+	 * 
+	 * @param group
+	 * @param values
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		long compute(T group, LinearStorage<?,U> values, LinearStorage<?,U> a)
 	{
-		test(G.DBL);
+		return compute(group, values, 0, a.size(), a);
 	}
 
-	@Test
-	public void testComplexes() {
-		test(G.CDBL);
-	}
-	
-	@Test
-	public void testQuats() {
-		test(G.QDBL);
-	}
-	
-	@Test
-	public void testOcts() {
-		test(G.ODBL);
-	}
-
-	// an algorithm that applies Sin() op to a list of any type that
-	// supports sin()
-	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U extends PrimitiveConversion>
-		void test(T group)
+	/**
+	 * 
+	 * @param group
+	 * @param values
+	 * @param start
+	 * @param count
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Group<T,U>, U>
+		long compute(T group, LinearStorage<?,U> values, long start, long count, LinearStorage<?,U> a)
 	{
-		// generic allocation
-		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
-		
-		// set values of storage to random doubles between 0 and 1
-		Rand<T,U> randOp = new Rand<T,U>(group);
-		// TODO: some day convert this to a parallel xform call that handles Procedure1's
-		Generate.compute(group, randOp, a);
-		
-		// transform each input[i] value to be the sin(input[i])
-		Sin<T,U> sinOp = new Sin<T,U>(group);
-		ParallelTransform.compute(group, sinOp, 0, 0, a.size(), a, a);
-		
-		assertTrue(true);
+		long sz = values.size();
+		if (sz == 0 || count < sz) return start + count;
+		U tmpA = group.construct();
+		U tmpV = group.construct();
+		for (long i = start+count-sz; i >= 0; i--) {
+			for (int j = 0; j < sz; j++) {
+				a.get(i+j, tmpA);
+				values.get(j, tmpV);
+				if (group.isNotEqual(tmpA, tmpV))
+					break;
+				if (j == sz-1)
+					return i;
+			}
+		}
+		return start + count;
 	}
 }

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -34,44 +35,45 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @author Barry DeZonia
  *
  */
-public class Swap {
-
-	// do not instantiate
-	
-	private Swap() {}
+public class IsPartitioned {
 
 	/**
 	 * 
 	 * @param group
+	 * @param cond
 	 * @param a
-	 * @param b
+	 * @return
 	 */
-	public static <T extends Group<T,U>,U>
-		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+	public static <T extends Group<T,U>, U>
+		boolean compute(T group, Condition<U> cond, LinearStorage<?,U> a)
 	{
-		compute(group, 0, 0, a.size(), a, b);
+		return compute(group, cond, 0, a.size(), a);
 	}
-	
+
 	/**
 	 * 
 	 * @param group
-	 * @param a
-	 * @param b
-	 * @param aStart
-	 * @param bStart
+	 * @param cond
+	 * @param start
 	 * @param count
+	 * @param a
+	 * @return
 	 */
-	public static <T extends Group<T,U>,U>
-		void compute(T group, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+	public static <T extends Group<T,U>, U>
+		boolean compute(T group, Condition<U> cond, long start, long count, LinearStorage<?,U> a)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			a.set(aStart+i, tmp2);
-			b.set(bStart+i, tmp1);
+		U tmp = group.construct();
+		long i = 0;
+		while (i < count) {
+			a.get(start+i, tmp);
+			if (!cond.isTrue(tmp)) break;
+			i++;
 		}
+		while (i < count) {
+			a.get(start+i, tmp);
+			i++;
+			if (cond.isTrue(tmp)) return false;
+		}
+		return true;
 	}
-
 }

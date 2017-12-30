@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 
@@ -70,39 +69,6 @@ public class Replace {
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
 			if (group.isEqual(tmp, target))
-				storage.set(start+i, replacement);
-		}
-	}
-
-	/**
-	 * 
-	 * @param group
-	 * @param cond
-	 * @param replacement
-	 * @param storage
-	 */
-	public static <T extends Group<T,U>, U>
-		void compute(T group, Condition<U> cond, U replacement, LinearStorage<?,U> storage)
-	{
-		compute(group, cond, replacement, 0, storage.size(), storage);
-	}
-
-	/**
-	 * 
-	 * @param group
-	 * @param cond
-	 * @param replacement
-	 * @param start
-	 * @param count
-	 * @param storage
-	 */
-	public static <T extends Group<T,U>,U>
-		void compute(T group, Condition<U> cond, U replacement, long start, long count, LinearStorage<?,U> storage)
-	{
-		U tmp = group.construct();
-		for (long i = 0; i < count; i++) {
-			storage.get(start+i, tmp);
-			if (cond.isTrue(tmp))
 				storage.set(start+i, replacement);
 		}
 	}

@@ -26,66 +26,52 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Rand;
-import nom.bdezonia.zorbage.procedure.Sin;
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestParallelTransform {
+public class ReplaceIf {
 
-	@Test
-	public void testFloats()
+	// do not instantiate
+	
+	private ReplaceIf() {}
+
+	/**
+	 * 
+	 * @param group
+	 * @param cond
+	 * @param replacement
+	 * @param storage
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T group, Condition<U> cond, U replacement, LinearStorage<?,U> storage)
 	{
-		test(G.DBL);
+		compute(group, cond, replacement, 0, storage.size(), storage);
 	}
 
-	@Test
-	public void testComplexes() {
-		test(G.CDBL);
-	}
-	
-	@Test
-	public void testQuats() {
-		test(G.QDBL);
-	}
-	
-	@Test
-	public void testOcts() {
-		test(G.ODBL);
-	}
-
-	// an algorithm that applies Sin() op to a list of any type that
-	// supports sin()
-	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U extends PrimitiveConversion>
-		void test(T group)
+	/**
+	 * 
+	 * @param group
+	 * @param cond
+	 * @param replacement
+	 * @param start
+	 * @param count
+	 * @param storage
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, Condition<U> cond, U replacement, long start, long count, LinearStorage<?,U> storage)
 	{
-		// generic allocation
-		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
-		
-		// set values of storage to random doubles between 0 and 1
-		Rand<T,U> randOp = new Rand<T,U>(group);
-		// TODO: some day convert this to a parallel xform call that handles Procedure1's
-		Generate.compute(group, randOp, a);
-		
-		// transform each input[i] value to be the sin(input[i])
-		Sin<T,U> sinOp = new Sin<T,U>(group);
-		ParallelTransform.compute(group, sinOp, 0, 0, a.size(), a, a);
-		
-		assertTrue(true);
+		U tmp = group.construct();
+		for (long i = 0; i < count; i++) {
+			storage.get(start+i, tmp);
+			if (cond.isTrue(tmp))
+				storage.set(start+i, replacement);
+		}
 	}
+
 }
