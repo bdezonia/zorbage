@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.procedure.parse;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.basic.tuple.Tuple2;
-import nom.bdezonia.zorbage.procedure.NullL;
+import nom.bdezonia.zorbage.procedure.ZeroL;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -42,7 +42,7 @@ public class EquationParser<T extends Group<T,U>,U> {
 	public Tuple2<String,Procedure<U>> parse(T group, String string) {
 		Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);
 		tuple.setA("Unimplemented");
-		tuple.setB(new NullL<T,U>(group));
+		tuple.setB(new ZeroL<T,U>(group));
 		return tuple;
 	}
 }

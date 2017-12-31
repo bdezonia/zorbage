@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.procedure;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure1;
+import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -34,21 +34,18 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  *
  */
-public class Null<T extends Group<T,U>,U>
-	implements Procedure1<U>
+public class ZeroL<T extends Group<T,U>,U>
+	implements Procedure<U>
 {
-	private T group;
+	private Zero<T,U> lowerProc;
 	
-	private U zero;
-	
-	public Null(T group) {
-		this.group = group;
-		this.zero = group.construct();
+	public ZeroL(T group) {
+		this.lowerProc = new Zero<T,U>(group);
 	}
 	
 	@Override
-	public void call(U a) {
-		group.assign(zero, a);
+	public void call(U result, U... inputs) {
+		lowerProc.call(result);
 	}
 
 }
