@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.region.SetMembership;
+import nom.bdezonia.zorbage.basic.Set;
 import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 
 /**
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.DimensionCount;
  *
  * @param <T>
  */
-public interface Sampling<T> extends DimensionCount, SetMembership<T> {
+public interface Sampling<T> extends DimensionCount, Set<T> {
 	
 	SamplingIterator<T> iterator();
 

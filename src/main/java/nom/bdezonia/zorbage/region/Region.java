@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.region;
 
+import nom.bdezonia.zorbage.basic.Set;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 
@@ -35,6 +36,6 @@ import nom.bdezonia.zorbage.type.algebra.DimensionCount;
  *
  * @param <T>
  */
-public interface Region<T> extends DimensionCount, SetMembership<T>, Bounded<T> {
+public interface Region<T> extends DimensionCount, Set<T>, Bounded<T> {
 	
 }

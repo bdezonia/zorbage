@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.region;
+package nom.bdezonia.zorbage.basic;
 
 /**
  * 
@@ -32,7 +32,7 @@ package nom.bdezonia.zorbage.region;
  *
  * @param <T>
  */
-public interface SetMembership<T> {
+public interface Set<T> {
 	
 	boolean contains(T value);
 	
