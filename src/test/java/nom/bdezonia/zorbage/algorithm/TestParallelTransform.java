@@ -37,8 +37,8 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 

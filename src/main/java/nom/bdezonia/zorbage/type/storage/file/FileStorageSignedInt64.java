@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.file;
+package nom.bdezonia.zorbage.type.storage.file;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -35,17 +35,17 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt8;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt64;
+import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class FileStorageSignedInt8<U extends ByteCoder<U> &  Allocatable<U>>
-	implements IndexedDataSource<FileStorageSignedInt8<U>,U>
+public class FileStorageSignedInt64<U extends LongCoder<U> & Allocatable<U>>
+	implements IndexedDataSource<FileStorageSignedInt64<U>,U>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -53,20 +53,20 @@ public class FileStorageSignedInt8<U extends ByteCoder<U> &  Allocatable<U>>
 	
 	private final U type;
 	private long numElements;
-	private ArrayStorageSignedInt8<U> buffer;
+	private ArrayStorageSignedInt64<U> buffer;
 	private File file;
 	private boolean dirty;
 	private long pageIndex;
 	
 	private static final long BUFFERSIZE = 2048;
 
-	public FileStorageSignedInt8(long numElements, U type) {
+	public FileStorageSignedInt64(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
 		this.type = type.allocate();
 		this.numElements = numElements;
 		this.dirty = false;
-		this.buffer = new ArrayStorageSignedInt8<U>(BUFFERSIZE,type);
+		this.buffer = new ArrayStorageSignedInt64<U>(BUFFERSIZE,type);
 		this.pageIndex = numElements;
 		try { 
 			this.file = File.createTempFile("Storage", ".storage");
@@ -74,8 +74,8 @@ public class FileStorageSignedInt8<U extends ByteCoder<U> &  Allocatable<U>>
 			if (!file.exists() || file.length() == 0) {
 				RandomAccessFile raf = new RandomAccessFile(file, "rw");
 				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
-					for (int i = 0; i < type.byteCount(); i++) {
-						raf.writeByte(0);
+					for (int i = 0; i < type.longCount(); i++) {
+						raf.writeLong(0);
 					}
 				}
 				raf.close();
@@ -110,11 +110,11 @@ public class FileStorageSignedInt8<U extends ByteCoder<U> &  Allocatable<U>>
 	}
 
 	@Override
-	public FileStorageSignedInt8<U> duplicate() {
+	public FileStorageSignedInt64<U> duplicate() {
 		synchronized (this) {
 			flush();
 			try {
-				FileStorageSignedInt8<U> other = new FileStorageSignedInt8<U>(numElements,type);
+				FileStorageSignedInt64<U> other = new FileStorageSignedInt64<U>(numElements,type);
 				other.buffer = buffer.duplicate();
 				other.dirty = dirty;
 				other.pageIndex = pageIndex;
@@ -138,7 +138,7 @@ public class FileStorageSignedInt8<U extends ByteCoder<U> &  Allocatable<U>>
 		try {
 			U tmp = type.allocate();
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.byteCount()*1);
+			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.longCount()*8);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
 				tmp.toFile(raf);
@@ -163,7 +163,7 @@ public class FileStorageSignedInt8<U extends ByteCoder<U> &  Allocatable<U>>
 			try {
 				U tmp = type.allocate();
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.byteCount()*1);
+				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.longCount()*8);
 				for (long i = 0; i < BUFFERSIZE; i++) {
 					tmp.toValue(raf);
 					buffer.set(i, tmp);

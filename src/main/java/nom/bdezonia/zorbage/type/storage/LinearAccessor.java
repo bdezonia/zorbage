@@ -24,53 +24,62 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.array;
-
-import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+package nom.bdezonia.zorbage.type.storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt16<U>,U>
-{
-
-	private final U type;
-	private final short[] data;
+public class LinearAccessor<U> {
 	
-	public ArrayStorageSignedInt16(long size, U type) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.shortCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " short based entities");
-		this.type = type;
-		this.data = new short[(int)size * type.shortCount()];
-	}
+	private U value;
+	private IndexedDataSource<?,U> storage;
+	private long pos;
 
-	@Override
-	public void set(long index, U value) {
-		value.toArray(data, (int)index * type.shortCount());
-	}
-
-	@Override
-	public void get(long index, U value) {
-		value.toValue(data, (int)index * type.shortCount());
+	public LinearAccessor(U value, IndexedDataSource<?,U> storage) {
+		this.value = value;
+		this.storage = storage;
+		beforeFirst();
 	}
 	
-	@Override
-	public long size() {
-		return data.length / type.shortCount();
+	public void get() {
+		storage.get(pos, value);
 	}
-
-	@Override
-	public ArrayStorageSignedInt16<U> duplicate() {
-		ArrayStorageSignedInt16<U> s = new ArrayStorageSignedInt16<U>(size(),type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
-		return s;
+	
+	public void put() {
+		storage.set(pos, value);
 	}
-
+	
+	public boolean hasNext() {
+		return (pos+1) >= 0 && (pos+1) < storage.size();
+	}
+	
+	public boolean hasPrev() {
+		return (pos-1) >= 0 && (pos-1) < storage.size();
+	}
+	
+	public boolean hasNext(long steps) {
+		return (pos+steps) >= 0 && (pos+steps) < storage.size();
+	}
+	
+	public boolean hasPrev(long steps) {
+		return (pos-steps) >= 0 && (pos-steps) < storage.size();
+	}
+	
+	public void fwd() { pos++; }
+	public void back() { pos--; }
+	public void fwd(long steps) { pos += steps; }
+	public void back(long steps) { pos -= steps; }
+	
+	public void afterLast() {
+		pos = storage.size();
+	}
+	
+	public void beforeFirst() {
+		pos = -1;
+	}
+	
+	public long pos() { return pos; }
 }

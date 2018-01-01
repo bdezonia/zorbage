@@ -24,7 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear;
+package nom.bdezonia.zorbage.type.storage.array;
+
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
  * 
@@ -32,54 +35,49 @@ package nom.bdezonia.zorbage.type.storage.linear;
  *
  * @param <U>
  */
-public class LinearAccessor<U> {
-	
-	private U value;
-	private IndexedDataSource<?,U> storage;
-	private long pos;
+public class ArrayStorageGeneric<T extends Group<T,U>,U>
+	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>
+{
 
-	public LinearAccessor(U value, IndexedDataSource<?,U> storage) {
-		this.value = value;
-		this.storage = storage;
-		beforeFirst();
+	private final T grp;
+	private final Object[] data;
+	
+	public ArrayStorageGeneric(long size, T grp) {
+		if (size < 0)
+			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
+		if (size > Integer.MAX_VALUE)
+			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
+		this.grp = grp;
+		this.data = new Object[(int)size];
+		for (int i = 0; i < size; i++) {
+			this.data[i] = grp.construct();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void set(long index, U value) {
+		grp.assign(value, (U)data[(int)index]);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void get(long index, U value) {
+		grp.assign((U)data[(int)index], value);
 	}
 	
-	public void get() {
-		storage.get(pos, value);
+	@Override
+	public long size() {
+		return data.length;
 	}
-	
-	public void put() {
-		storage.set(pos, value);
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayStorageGeneric<T,U> duplicate() {
+		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),grp);
+		for (int i = 0; i < data.length; i++)
+			grp.assign((U)data[i], (U)s.data[i]);
+		return s;
 	}
-	
-	public boolean hasNext() {
-		return (pos+1) >= 0 && (pos+1) < storage.size();
-	}
-	
-	public boolean hasPrev() {
-		return (pos-1) >= 0 && (pos-1) < storage.size();
-	}
-	
-	public boolean hasNext(long steps) {
-		return (pos+steps) >= 0 && (pos+steps) < storage.size();
-	}
-	
-	public boolean hasPrev(long steps) {
-		return (pos-steps) >= 0 && (pos-steps) < storage.size();
-	}
-	
-	public void fwd() { pos++; }
-	public void back() { pos--; }
-	public void fwd(long steps) { pos += steps; }
-	public void back(long steps) { pos -= steps; }
-	
-	public void afterLast() {
-		pos = storage.size();
-	}
-	
-	public void beforeFirst() {
-		pos = -1;
-	}
-	
-	public long pos() { return pos; }
+
 }

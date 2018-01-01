@@ -24,22 +24,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear;
+package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.storage.linear.file.FileStorage;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public class Storage {
-
-	public static <U> IndexedDataSource<?, U> allocate(long numElements, U type) {
-		if (numElements > Integer.MAX_VALUE / 20)
-			return FileStorage.allocate(numElements, type);
-		else
-			return ArrayStorage.allocate(numElements, type);
+public class ArrayStorageFloat64<U extends DoubleCoder<U>>
+	implements IndexedDataSource<ArrayStorageFloat64<U>, U>
+{
+	private final U type;
+	private final double[] data;
+	
+	public ArrayStorageFloat64(long size, U type) {
+		if (size < 0)
+			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.doubleCount()))
+			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " double based entities");
+		this.type = type;
+		this.data = new double[(int)size * type.doubleCount()];
 	}
+
+	@Override
+	public void set(long index, U value) {
+		value.toArray(data, (int)(index * type.doubleCount()));
+	}
+
+	@Override
+	public void get(long index, U value) {
+		value.toValue(data, (int)(index * type.doubleCount()));
+	}
+	
+	@Override
+	public long size() {
+		return data.length / type.doubleCount();
+	}
+
+	@Override
+	public ArrayStorageFloat64<U> duplicate() {
+		ArrayStorageFloat64<U> s = new ArrayStorageFloat64<U>(size(), type);
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
+	}
+
 }

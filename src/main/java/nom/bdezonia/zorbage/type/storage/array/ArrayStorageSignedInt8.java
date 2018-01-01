@@ -24,50 +24,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class ArrayStorageFloat64<U extends DoubleCoder<U>>
-	implements IndexedDataSource<ArrayStorageFloat64<U>, U>
+public class ArrayStorageSignedInt8<U extends ByteCoder<U>>
+	implements IndexedDataSource<ArrayStorageSignedInt8<U>,U>
 {
+
 	private final U type;
-	private final double[] data;
+	private final byte[] data;
 	
-	public ArrayStorageFloat64(long size, U type) {
+	public ArrayStorageSignedInt8(long size, U type) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.doubleCount()))
-			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " double based entities");
+			throw new IllegalArgumentException("ArrayStorageSignedInt8 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.byteCount()))
+			throw new IllegalArgumentException("ArrayStorageSignedInt8 can handle at most " + (Integer.MAX_VALUE / type.byteCount()) + " byte based entities");
 		this.type = type;
-		this.data = new double[(int)size * type.doubleCount()];
+		this.data = new byte[(int)size * type.byteCount()];
 	}
 
 	@Override
 	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.doubleCount()));
+		value.toArray(data, (int)(index * type.byteCount()));
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.doubleCount()));
+		value.toValue(data, (int)(index * type.byteCount()));
 	}
 	
 	@Override
 	public long size() {
-		return data.length / type.doubleCount();
+		return data.length / type.byteCount();
 	}
 
 	@Override
-	public ArrayStorageFloat64<U> duplicate() {
-		ArrayStorageFloat64<U> s = new ArrayStorageFloat64<U>(size(), type);
+	public ArrayStorageSignedInt8<U> duplicate() {
+		ArrayStorageSignedInt8<U> s = new ArrayStorageSignedInt8<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.file;
+package nom.bdezonia.zorbage.type.storage.file;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -35,17 +35,17 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBoolean;
+import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
-	implements IndexedDataSource<FileStorageFloat64<U>,U>
+public class FileStorageBoolean<U extends BooleanCoder<U> & Allocatable<U>>
+	implements IndexedDataSource<FileStorageBoolean<U>,U>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -53,20 +53,20 @@ public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
 	
 	private final U type;
 	private long numElements;
-	private ArrayStorageFloat64<U> buffer;
+	private ArrayStorageBoolean<U> buffer;
 	private File file;
 	private boolean dirty;
 	private long pageIndex;
 	
 	private static final long BUFFERSIZE = 2048;
 
-	public FileStorageFloat64(long numElements, U type) {
+	public FileStorageBoolean(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
 		this.type = type.allocate();
 		this.numElements = numElements;
 		this.dirty = false;
-		this.buffer = new ArrayStorageFloat64<U>(BUFFERSIZE,type);
+		this.buffer = new ArrayStorageBoolean<U>(BUFFERSIZE,type);
 		this.pageIndex = numElements;
 		try { 
 			this.file = File.createTempFile("Storage", ".storage");
@@ -74,8 +74,8 @@ public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
 			if (!file.exists() || file.length() == 0) {
 				RandomAccessFile raf = new RandomAccessFile(file, "rw");
 				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
-					for (int i = 0; i < type.doubleCount(); i++) {
-						raf.writeDouble(0);
+					for (int i = 0; i < type.booleanCount(); i++) {
+						raf.writeBoolean(false);
 					}
 				}
 				raf.close();
@@ -110,22 +110,22 @@ public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
 	}
 
 	@Override
-	public FileStorageFloat64<U> duplicate() {
+	public FileStorageBoolean<U> duplicate() {
 		synchronized (this) {
 			flush();
 			try {
-				FileStorageFloat64<U> other = new FileStorageFloat64<U>(numElements,type);
+				FileStorageBoolean<U> other = new FileStorageBoolean<U>(numElements,type);
 				other.buffer = buffer.duplicate();
 				other.dirty = dirty;
 				other.pageIndex = pageIndex;
-			    Path FROM = Paths.get(file.getAbsolutePath());
-			    Path TO = Paths.get(other.file.getAbsolutePath());
-			    //overwrite existing file, if exists
-			    CopyOption[] options = new CopyOption[]{
-			      StandardCopyOption.REPLACE_EXISTING,
-			      StandardCopyOption.COPY_ATTRIBUTES
-			    }; 
-			    Files.copy(FROM, TO, options);
+				Path FROM = Paths.get(file.getAbsolutePath());
+				Path TO = Paths.get(other.file.getAbsolutePath());
+				//overwrite existing file, if exists
+				CopyOption[] options = new CopyOption[]{
+						StandardCopyOption.REPLACE_EXISTING,
+						StandardCopyOption.COPY_ATTRIBUTES
+				}; 
+				Files.copy(FROM, TO, options);
 				return other;
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -138,7 +138,7 @@ public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
 		try {
 			U tmp = type.allocate();
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.doubleCount()*8);
+			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.booleanCount()*1);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
 				tmp.toFile(raf);
@@ -163,7 +163,7 @@ public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
 			try {
 				U tmp = type.allocate();
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.doubleCount()*8);
+				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.booleanCount()*1);
 				for (long i = 0; i < BUFFERSIZE; i++) {
 					tmp.toValue(raf);
 					buffer.set(i, tmp);

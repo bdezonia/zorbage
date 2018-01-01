@@ -39,9 +39,9 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**

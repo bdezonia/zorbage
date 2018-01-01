@@ -24,21 +24,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear;
+package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  * @param <U>
  */
-public interface IndexedDataSource<T extends IndexedDataSource<T,U>, U>
-	extends Duplicatable<T>
+public class ArrayStorageFloat32<U extends FloatCoder<U>>
+	implements IndexedDataSource<ArrayStorageFloat32<U>, U>
 {
-	void set(long index, U value);
-	void get(long index, U value);
-	long size();
+	private final U type;
+	private final float[] data;
+	
+	public ArrayStorageFloat32(long size, U type) {
+		if (size < 0)
+			throw new IllegalArgumentException("ArrayStorageFloat32 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.floatCount()))
+			throw new IllegalArgumentException("ArrayStorageFloat32 can handle at most " + (Integer.MAX_VALUE / type.floatCount()) + " float based entities");
+		this.type = type;
+		this.data = new float[(int)size * type.floatCount()];
+	}
+
+	@Override
+	public void set(long index, U value) {
+		value.toArray(data, (int)(index * type.floatCount()));
+	}
+
+	@Override
+	public void get(long index, U value) {
+		value.toValue(data, (int)(index * type.floatCount()));
+	}
+	
+	@Override
+	public long size() {
+		return data.length / type.floatCount();
+	}
+
+	@Override
+	public ArrayStorageFloat32<U> duplicate() {
+		ArrayStorageFloat32<U> s = new ArrayStorageFloat32<U>(size(), type);
+		for (int i = 0; i < data.length; i++)
+			s.data[i] = data[i];
+		return s;
+	}
+
 }

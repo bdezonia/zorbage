@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.basic.tuple.Tuple2;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
  * 

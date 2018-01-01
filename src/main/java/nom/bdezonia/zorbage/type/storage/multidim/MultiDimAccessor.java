@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.multidim;
 
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.util.LongUtils;
 
 /**

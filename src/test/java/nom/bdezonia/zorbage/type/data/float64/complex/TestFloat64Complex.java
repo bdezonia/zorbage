@@ -33,9 +33,9 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
 
 /**
  * 

@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import java.util.Random;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
  * 

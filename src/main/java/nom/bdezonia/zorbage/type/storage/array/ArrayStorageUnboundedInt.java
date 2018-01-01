@@ -24,50 +24,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import java.math.BigInteger;
+
+import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public class ArrayStorageSignedInt32<U extends IntCoder<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt32<U>,U>
+public class ArrayStorageUnboundedInt
+	implements IndexedDataSource<ArrayStorageUnboundedInt,UnboundedIntMember>
 {
-
-	private final U type;
-	private final int[] data;
+	private final BigInteger[] data;
 	
-	public ArrayStorageSignedInt32(long size, U type) {
+	public ArrayStorageUnboundedInt(long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.intCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + (Integer.MAX_VALUE / type.intCount()) + " int based entities");
-		this.type = type;
-		this.data = new int[(int)size * type.intCount()];
+			throw new IllegalArgumentException("ArrayStorageUnboundedInt cannot handle a negative request");
+		if (size > Integer.MAX_VALUE)
+			throw new IllegalArgumentException("ArrayStorageUnboundedInt can handle at most " + Integer.MAX_VALUE + " unbounded integers");
+		this.data = new BigInteger[(int)size];
+		for (int i = 0; i < data.length; i++) {
+			data[i] = BigInteger.ZERO;
+		}
 	}
 
 	@Override
-	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.intCount()));
+	public void set(long index, UnboundedIntMember value) {
+		data[(int)index] = value.v();
 	}
 
 	@Override
-	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.intCount()));
+	public void get(long index, UnboundedIntMember value) {
+		value.setV(data[(int)index]);
 	}
 	
 	@Override
 	public long size() {
-		return data.length / type.intCount();
+		return data.length;
 	}
 
 	@Override
-	public ArrayStorageSignedInt32<U> duplicate() {
-		ArrayStorageSignedInt32<U> s = new ArrayStorageSignedInt32<U>(size(), type);
+	public ArrayStorageUnboundedInt duplicate() {
+		ArrayStorageUnboundedInt s = new ArrayStorageUnboundedInt(size());
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

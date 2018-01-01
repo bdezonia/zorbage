@@ -24,8 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.file;
+package nom.bdezonia.zorbage.type.storage.file;
 
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
@@ -33,7 +34,6 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 

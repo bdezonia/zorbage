@@ -24,53 +24,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage;
 
-import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  * @param <U>
  */
-public class ArrayStorageBoolean<U extends BooleanCoder<U>>
-	implements IndexedDataSource<ArrayStorageBoolean<U>, U>
+public interface IndexedDataSource<T extends IndexedDataSource<T,U>, U>
+	extends Duplicatable<T>
 {
-	private final U type;
-	private final boolean[] data;
-	
-	public ArrayStorageBoolean(long size, U type) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.booleanCount()))
-			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " boolean based entities");
-		this.type = type;
-		this.data = new boolean[(int)size * type.booleanCount()];
-	}
-
-	@Override
-	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.booleanCount()));
-	}
-
-	@Override
-	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.booleanCount()));
-	}
-	
-	@Override
-	public long size() {
-		return data.length / type.booleanCount();
-	}
-
-	@Override
-	public ArrayStorageBoolean<U> duplicate() {
-		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(size(), type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
-		return s;
-	}
-
+	void set(long index, U value);
+	void get(long index, U value);
+	long size();
 }

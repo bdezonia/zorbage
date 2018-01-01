@@ -24,59 +24,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class ArrayStorageGeneric<T extends Group<T,U>,U>
-	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>
+public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
+	implements IndexedDataSource<ArrayStorageSignedInt16<U>,U>
 {
 
-	private final T grp;
-	private final Object[] data;
+	private final U type;
+	private final short[] data;
 	
-	public ArrayStorageGeneric(long size, T grp) {
+	public ArrayStorageSignedInt16(long size, U type) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
-		this.grp = grp;
-		this.data = new Object[(int)size];
-		for (int i = 0; i < size; i++) {
-			this.data[i] = grp.construct();
-		}
+			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.shortCount()))
+			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " short based entities");
+		this.type = type;
+		this.data = new short[(int)size * type.shortCount()];
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void set(long index, U value) {
-		grp.assign(value, (U)data[(int)index]);
+		value.toArray(data, (int)index * type.shortCount());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void get(long index, U value) {
-		grp.assign((U)data[(int)index], value);
+		value.toValue(data, (int)index * type.shortCount());
 	}
 	
 	@Override
 	public long size() {
-		return data.length;
+		return data.length / type.shortCount();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayStorageGeneric<T,U> duplicate() {
-		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),grp);
+	public ArrayStorageSignedInt16<U> duplicate() {
+		ArrayStorageSignedInt16<U> s = new ArrayStorageSignedInt16<U>(size(),type);
 		for (int i = 0; i < data.length; i++)
-			grp.assign((U)data[i], (U)s.data[i]);
+			s.data[i] = data[i];
 		return s;
 	}
 

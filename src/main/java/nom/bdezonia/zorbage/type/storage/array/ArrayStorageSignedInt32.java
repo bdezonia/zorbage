@@ -24,50 +24,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear.array;
+package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
-import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt64<U extends LongCoder<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt64<U>,U>
+public class ArrayStorageSignedInt32<U extends IntCoder<U>>
+	implements IndexedDataSource<ArrayStorageSignedInt32<U>,U>
 {
 
 	private final U type;
-	private final long[] data;
+	private final int[] data;
 	
-	public ArrayStorageSignedInt64(long size, U type) {
+	public ArrayStorageSignedInt32(long size, U type) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.longCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " long based entities");
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.intCount()))
+			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + (Integer.MAX_VALUE / type.intCount()) + " int based entities");
 		this.type = type;
-		this.data = new long[(int)size * type.longCount()];
+		this.data = new int[(int)size * type.intCount()];
 	}
 
 	@Override
 	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.longCount()));
+		value.toArray(data, (int)(index * type.intCount()));
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.longCount()));
+		value.toValue(data, (int)(index * type.intCount()));
 	}
 	
 	@Override
 	public long size() {
-		return data.length / type.longCount();
+		return data.length / type.intCount();
 	}
 
 	@Override
-	public ArrayStorageSignedInt64<U> duplicate() {
-		ArrayStorageSignedInt64<U> s = new ArrayStorageSignedInt64<U>(size(), type);
+	public ArrayStorageSignedInt32<U> duplicate() {
+		ArrayStorageSignedInt32<U> s = new ArrayStorageSignedInt32<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;

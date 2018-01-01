@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.linear.LinearAccessor;
-import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt32;
+import nom.bdezonia.zorbage.type.storage.LinearAccessor;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
 
 public class TestLinearAccessor {
 
