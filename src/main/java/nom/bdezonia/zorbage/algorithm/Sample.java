@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import java.util.Random;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class Sample {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, int n, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, int n, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(group, n, 0, 0, a.size(), a, b);
 	}
@@ -62,7 +62,7 @@ public class Sample {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, int n, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, int n, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (n > count)
 			throw new IllegalArgumentException("n too large");

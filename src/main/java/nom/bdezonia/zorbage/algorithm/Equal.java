@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		boolean compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a.size() != b.size()) return false;
 		return compute(group, a, b, 0, 0, a.size());
@@ -63,7 +63,7 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b, long aStart, long bStart, long count)
+		boolean compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, long aStart, long bStart, long count)
 	{
 		U tmp1 = group.construct();
 		U tmp2 = group.construct();

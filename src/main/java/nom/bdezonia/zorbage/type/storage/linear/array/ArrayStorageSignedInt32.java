@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  *
  */
 public class ArrayStorageSignedInt32<U extends IntCoder<U>>
-	implements LinearStorage<ArrayStorageSignedInt32<U>,U>
+	implements IndexedDataSource<ArrayStorageSignedInt32<U>,U>
 {
 
 	private final U type;

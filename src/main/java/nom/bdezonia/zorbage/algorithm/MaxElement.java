@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
@@ -47,7 +47,7 @@ public class MaxElement {
 	 * @param max
 	 */
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U max)
+		void compute(T grp, IndexedDataSource<?,U> storage, U max)
 	{
 		compute(grp, 0, storage.size(), storage, max);
 	}
@@ -61,7 +61,7 @@ public class MaxElement {
 	 * @param max
 	 */
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
-		void compute(T grp, long start, long count, LinearStorage<?,U> storage, U max)
+		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U max)
 	{
 		U tmp = grp.construct();
 		grp.minBound(max);

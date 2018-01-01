@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <U>
  */
 public class ArrayStorageFloat32<U extends FloatCoder<U>>
-	implements LinearStorage<ArrayStorageFloat32<U>, U>
+	implements IndexedDataSource<ArrayStorageFloat32<U>, U>
 {
 	private final U type;
 	private final float[] data;

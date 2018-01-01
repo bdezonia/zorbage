@@ -3,7 +3,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.basic.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 public class GenerateN {
 
@@ -16,7 +16,7 @@ public class GenerateN {
 	 * @param storage
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, Procedure1<U> proc, long start, long count, LinearStorage<?,U> storage)
+		void compute(T group, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		U value = group.construct();
 		for (long i = 0; i < count; i++) {
@@ -35,7 +35,7 @@ public class GenerateN {
 	 * @param inputs
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, Procedure<U> proc, long start, long count, LinearStorage<?,U> storage, U... inputs)
+		void compute(T group, Procedure<U> proc, long start, long count, IndexedDataSource<?,U> storage, U... inputs)
 	{
 		U value = group.construct();
 		for (long i = 0; i < count; i++) {

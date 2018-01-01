@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class Sum {
 	 * @param result
 	 */
 	public static <T extends AdditiveGroup<T,U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U result)
+		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		grp.zero(result);
 		U tmp = grp.construct();

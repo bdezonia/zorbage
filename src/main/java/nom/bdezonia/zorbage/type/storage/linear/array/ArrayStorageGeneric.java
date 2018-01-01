@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <U>
  */
 public class ArrayStorageGeneric<T extends Group<T,U>,U>
-	implements LinearStorage<ArrayStorageGeneric<T,U>,U>
+	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>
 {
 
 	private final T grp;

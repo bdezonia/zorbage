@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
 
 /**
@@ -75,7 +75,7 @@ public class TestParallelTransform {
 		void test(T group)
 	{
 		// generic allocation
-		LinearStorage<?,U> a = ArrayStorage.allocate(100, group.construct());
+		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, group.construct());
 		
 		// set values of storage to random doubles between 0 and 1
 		Rand<T,U> randOp = new Rand<T,U>(group);

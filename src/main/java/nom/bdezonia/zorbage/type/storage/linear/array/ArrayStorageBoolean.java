@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <U>
  */
 public class ArrayStorageBoolean<U extends BooleanCoder<U>>
-	implements LinearStorage<ArrayStorageBoolean<U>, U>
+	implements IndexedDataSource<ArrayStorageBoolean<U>, U>
 {
 	private final U type;
 	private final boolean[] data;

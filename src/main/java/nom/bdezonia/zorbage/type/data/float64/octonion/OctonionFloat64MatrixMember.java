@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
@@ -59,7 +59,7 @@ public final class OctonionFloat64MatrixMember
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
-	private LinearStorage<?,OctonionFloat64Member> storage;
+	private IndexedDataSource<?,OctonionFloat64Member> storage;
 	private long rows;
 	private long cols;
 	private MemoryConstruction m;

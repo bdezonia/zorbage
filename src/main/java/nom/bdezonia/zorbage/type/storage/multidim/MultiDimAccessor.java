@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.multidim;
 
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.util.LongUtils;
 
 /**
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.util.LongUtils;
  * @param <T>
  * @param <U>
  */
-public class MultiDimAccessor<T extends LinearStorage<T,U>,U>
+public class MultiDimAccessor<T extends IndexedDataSource<T,U>,U>
 	implements
 		Dimensioned
 {

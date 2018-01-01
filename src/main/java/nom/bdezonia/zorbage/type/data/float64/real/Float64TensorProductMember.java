@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
@@ -66,7 +66,7 @@ public final class Float64TensorProductMember
 
 	private static final Float64Member ZERO = new Float64Member(0);
 
-	private LinearStorage<?,Float64Member> storage;
+	private IndexedDataSource<?,Float64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private MemoryConstruction m;

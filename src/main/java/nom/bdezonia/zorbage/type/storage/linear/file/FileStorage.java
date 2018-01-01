@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -43,28 +43,28 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 public class FileStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U> LinearStorage<?,U> allocate(long size, U type) {
+	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
 		if (type instanceof DoubleCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageFloat64(size, (DoubleCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageFloat64(size, (DoubleCoder<U>)type);
 		}
 		if (type instanceof FloatCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageFloat32(size, (FloatCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageFloat32(size, (FloatCoder<U>)type);
 		}
 		if (type instanceof LongCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageSignedInt64(size, (LongCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt64(size, (LongCoder<U>)type);
 		}
 		if (type instanceof IntCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageSignedInt32(size, (IntCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt32(size, (IntCoder<U>)type);
 		}
 		if (type instanceof ShortCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageSignedInt16(size, (ShortCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt16(size, (ShortCoder<U>)type);
 		}
 		if (type instanceof BooleanCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageBoolean(size, (BooleanCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageBoolean(size, (BooleanCoder<U>)type);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder<?>) {
-			return (LinearStorage<?,U>) new FileStorageSignedInt8(size, (ByteCoder<U>)type);
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt8(size, (ByteCoder<U>)type);
 		}
 		
 		// TODO: add bitCoder when it is done. It should certainly be last as it will

@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -45,13 +45,13 @@ public class Sort {
 	 * @param storage
 	 */
 	public static <T extends Group<T,U> & Ordered<U> ,U>
-		void compute(T grp, LinearStorage<?,U> storage)
+		void compute(T grp, IndexedDataSource<?,U> storage)
 	{
 		qsort(grp, storage, 0, storage.size() -1);
 	}
 	
 	private static <T extends Group<T,U> & Ordered<U> ,U>
-		void qsort(T grp, LinearStorage<?,U> storage, long left, long right)
+		void qsort(T grp, IndexedDataSource<?,U> storage, long left, long right)
 	{
 		if (left < right) {
 			long pivotPoint = partition(grp, storage,left,right);
@@ -62,7 +62,7 @@ public class Sort {
 
 
 	private static <T extends Group<T,U> & Ordered<U> ,U>
-		long partition(T grp, LinearStorage<?,U> storage, long left, long right)
+		long partition(T grp, IndexedDataSource<?,U> storage, long left, long right)
 	{
 		U tmp1 = grp.construct();
 		U tmp2 = grp.construct();

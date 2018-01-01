@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <U>
  */
 public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
-	implements LinearStorage<ArrayStorageBit<U>,U>
+	implements IndexedDataSource<ArrayStorageBit<U>,U>
 {
 	private final U type;
 	private final long[] data;

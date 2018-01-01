@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class ReplaceCopyIf {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, Condition<U> cond, U new_value, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, Condition<U> cond, U new_value, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(group, cond, new_value, 0, 0, a.size(), a, b);
 	}
@@ -63,7 +63,7 @@ public class ReplaceCopyIf {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, Condition<U> cond, U new_value, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, Condition<U> cond, U new_value, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {

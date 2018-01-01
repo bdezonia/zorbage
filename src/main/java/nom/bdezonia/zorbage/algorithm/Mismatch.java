@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.basic.tuple.Tuple2;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		Tuple2<Long,Long> compute(T group, LinearStorage<?, U> a, LinearStorage<?,U> b)
+		Tuple2<Long,Long> compute(T group, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
 		return compute(group, 0, 0, a.size(), a, b);
 	}
@@ -62,7 +62,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		Tuple2<Long,Long> compute(T group, long aStart, long bStart, long count, LinearStorage<?, U> a, LinearStorage<?,U> b)
+		Tuple2<Long,Long> compute(T group, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
 		U tmpA = group.construct();
 		U tmpB = group.construct();
@@ -91,7 +91,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, LinearStorage<?, U> a, LinearStorage<?,U> b)
+		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
 		return compute(group, cond, 0, 0, a.size(), a, b);
 	}
@@ -108,7 +108,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, LinearStorage<?, U> a, LinearStorage<?,U> b)
+		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
 		U tmpA = group.construct();
 		U tmpB = group.construct();

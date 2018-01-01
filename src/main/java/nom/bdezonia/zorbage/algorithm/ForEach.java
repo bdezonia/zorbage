@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -44,7 +44,7 @@ public class ForEach {
 	 * @param a
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, LinearStorage<?,U> a)
+		void compute(T grpU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
 		ForEachN.compute(grpU, proc, 0, a.size(), a);
 	}

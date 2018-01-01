@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -43,7 +43,7 @@ public class Copy {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		CopyN.compute(group, 0, 0, a.size(), a, b);
 	}

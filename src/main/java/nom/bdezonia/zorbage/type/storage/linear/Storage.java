@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.linear.file.FileStorage;
  */
 public class Storage {
 
-	public static <U> LinearStorage<?, U> allocate(long numElements, U type) {
+	public static <U> IndexedDataSource<?, U> allocate(long numElements, U type) {
 		if (numElements > Integer.MAX_VALUE / 20)
 			return FileStorage.allocate(numElements, type);
 		else

@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class SwapRanges {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(group, 0, 0, a.size(), a, b);
 	}
@@ -62,7 +62,7 @@ public class SwapRanges {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		U tmp1 = group.construct();
 		U tmp2 = group.construct();

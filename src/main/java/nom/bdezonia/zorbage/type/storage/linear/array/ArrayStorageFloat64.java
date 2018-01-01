@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <U>
  */
 public class ArrayStorageFloat64<U extends DoubleCoder<U>>
-	implements LinearStorage<ArrayStorageFloat64<U>, U>
+	implements IndexedDataSource<ArrayStorageFloat64<U>, U>
 {
 	private final U type;
 	private final double[] data;

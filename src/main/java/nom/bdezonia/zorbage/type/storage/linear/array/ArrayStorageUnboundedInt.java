@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.type.storage.linear.array;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  * @param <U>
  */
 public class ArrayStorageUnboundedInt
-	implements LinearStorage<ArrayStorageUnboundedInt,UnboundedIntMember>
+	implements IndexedDataSource<ArrayStorageUnboundedInt,UnboundedIntMember>
 {
 	private final BigInteger[] data;
 	

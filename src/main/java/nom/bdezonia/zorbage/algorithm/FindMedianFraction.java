@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class FindMedianFraction {
 	 * @param denom
 	 */
 	public static <T extends AdditiveGroup<T,U> & Ordered<U> & Unity<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U numer, U denom)
+		void compute(T grp, IndexedDataSource<?,U> storage, U numer, U denom)
 	{
 		U result1 = grp.construct();
 		U result2 = grp.construct();

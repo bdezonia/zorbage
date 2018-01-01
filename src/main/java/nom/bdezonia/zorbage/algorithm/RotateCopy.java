@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -43,7 +43,7 @@ public class RotateCopy {
 	 * @param a
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, long delta, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, long delta, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(group, delta, 0, a.size(), a, b);
 	}
@@ -58,7 +58,7 @@ public class RotateCopy {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, long delta, long start, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T group, long delta, long start, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (delta == 0) return;
 		U tmp1 = group.construct();

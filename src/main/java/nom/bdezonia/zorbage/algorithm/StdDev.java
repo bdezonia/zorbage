@@ -31,7 +31,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class StdDev {
 	 * @param result
 	 */
 	public static <T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U result)
+		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		Variance.compute(grp, storage, result);
 		grp.sqrt(result, result);

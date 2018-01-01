@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class Find {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, U value, LinearStorage<?,U> a)
+		long compute(T group, U value, IndexedDataSource<?,U> a)
 	{
 		return compute(group, value, 0, a.size(), a);
 	}
@@ -62,7 +62,7 @@ public class Find {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, U value, long start, long count, LinearStorage<?,U> a)
+		long compute(T group, U value, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
@@ -74,7 +74,7 @@ public class Find {
 	}
 	
 	public static <T extends Group<T,U>, U>
-		long compute(T group, Condition<U> cond, LinearStorage<?,U> a)
+		long compute(T group, Condition<U> cond, IndexedDataSource<?,U> a)
 	{
 		return compute(group, cond, 0, a.size(), a);
 	}
@@ -89,7 +89,7 @@ public class Find {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, Condition<U> cond, long start, long count, LinearStorage<?,U> a)
+		long compute(T group, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {

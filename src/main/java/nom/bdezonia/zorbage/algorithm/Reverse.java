@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class Reverse {
 	 * @param a
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, LinearStorage<?,U> a)
+		void compute(T group, IndexedDataSource<?,U> a)
 	{
 		compute(group, 0, a.size(), a);
 	}	
@@ -55,7 +55,7 @@ public class Reverse {
 	 * @param a
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T group, long start, long count, LinearStorage<?,U> a)
+		void compute(T group, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmp1 = group.construct();
 		U tmp2 = group.construct();

@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class ParallelTransform {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U, U> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T grpU, Procedure2<U, U> proc, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -87,14 +87,14 @@ public class ParallelTransform {
 		implements Runnable
 	{
 		private final T group1;
-		private final LinearStorage<?,U> list1;
-		private final LinearStorage<?,U> list2;
+		private final IndexedDataSource<?,U> list1;
+		private final IndexedDataSource<?,U> list2;
 		private final Procedure2<U, U> proc;
 		private final long aStart;
 		private final long bStart;
 		private final long count;
 		
-		Computer(T grpU, Procedure2<U, U> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b) {
+		Computer(T grpU, Procedure2<U, U> proc, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b) {
 			group1 = grpU;
 			list1 = a;
 			list2 = b;

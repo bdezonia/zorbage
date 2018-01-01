@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -53,7 +53,7 @@ public class DataConvert {
 	 * @param toList
 	 */
 	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
+		void compute(T fromGroup, U toGroup, IndexedDataSource<?,V> fromList, IndexedDataSource<?,W> toList)
 	{
 		compute(fromGroup, toGroup, 0, 0, fromList.size(), fromList, toList);
 	}
@@ -69,7 +69,7 @@ public class DataConvert {
 	 * @param count
 	 */
 	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, long fromStart, long toStart, long count, LinearStorage<?,V> fromList, LinearStorage<?,W> toList)
+		void compute(T fromGroup, U toGroup, long fromStart, long toStart, long count, IndexedDataSource<?,V> fromList, IndexedDataSource<?,W> toList)
 	{
 		V from = fromGroup.construct();
 		W to = toGroup.construct();

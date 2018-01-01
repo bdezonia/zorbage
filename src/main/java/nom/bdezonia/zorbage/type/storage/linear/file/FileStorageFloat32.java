@@ -36,7 +36,7 @@ import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat32;
 
 /**
@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat32;
  *
  */
 public class FileStorageFloat32<U extends FloatCoder<U> & Allocatable<U>>
-	implements LinearStorage<FileStorageFloat32<U>,U>
+	implements IndexedDataSource<FileStorageFloat32<U>,U>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes

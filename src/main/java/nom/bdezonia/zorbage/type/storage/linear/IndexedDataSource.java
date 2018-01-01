@@ -33,7 +33,7 @@ package nom.bdezonia.zorbage.type.storage.linear;
  * @param <T>
  * @param <U>
  */
-public interface LinearStorage<T extends LinearStorage<T,U>, U> {
+public interface IndexedDataSource<T extends IndexedDataSource<T,U>, U> {
 	
 	void set(long index, U value);
 	void get(long index, U value);

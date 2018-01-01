@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.basic.tuple.Tuple2;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, LinearStorage<?, U> elements, LinearStorage<?, U> a)
+		long compute(T group, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
 	{
 		return compute(group, elements, 0, a.size(), a);
 	}
@@ -61,7 +61,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, LinearStorage<?, U> elements, long start, long count, LinearStorage<?, U> a)
+		long compute(T group, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
 	{
 		U tmpA = group.construct();
 		U element = group.construct();
@@ -85,7 +85,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, Condition<Tuple2<U,U>> cond, LinearStorage<?, U> elements, LinearStorage<?, U> a)
+		long compute(T group, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
 	{
 		return compute(group, cond, elements, 0, a.size(), a);
 	}
@@ -101,7 +101,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, Condition<Tuple2<U,U>> cond, LinearStorage<?, U> elements, long start, long count, LinearStorage<?, U> a)
+		long compute(T group, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
 	{
 		U tmpA = group.construct();
 		U element = group.construct();

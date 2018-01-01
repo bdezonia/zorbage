@@ -33,7 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorage;
 
 /**
@@ -48,8 +48,8 @@ public class TestDataConvert {
 		final int size = 100;
 		SignedInt32Member tmpI = new SignedInt32Member();
 		OctonionFloat64Member tmpO = new OctonionFloat64Member();
-		LinearStorage<?,SignedInt32Member> in = ArrayStorage.allocate(size, tmpI);
-		LinearStorage<?,OctonionFloat64Member> out = ArrayStorage.allocate(size, tmpO);
+		IndexedDataSource<?,SignedInt32Member> in = ArrayStorage.allocate(size, tmpI);
+		IndexedDataSource<?,OctonionFloat64Member> out = ArrayStorage.allocate(size, tmpO);
 		assertEquals(size, in.size());
 		assertEquals(size, out.size());
 		for (int i = 0; i < size; i++) {

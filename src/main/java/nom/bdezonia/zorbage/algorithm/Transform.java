@@ -30,7 +30,7 @@ import nom.bdezonia.zorbage.basic.procedure.Procedure2;
 import nom.bdezonia.zorbage.basic.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -51,7 +51,7 @@ public class Transform {
 	 * @param proc
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, LinearStorage<?,U> a)
+		void compute(T grpU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
 		compute(grpU, proc, 0, a.size(), a);
 	}
@@ -66,7 +66,7 @@ public class Transform {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, long start, long count, LinearStorage<?,U> a)
+		void compute(T grpU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
 	{
 		compute(grpU, proc, start, start, count, a, a);
 	}
@@ -81,7 +81,7 @@ public class Transform {
 	 * @param proc
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T grpU, Procedure2<U,U> proc, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(grpU, proc, 0, 0, a.size(), a, b);
 	}
@@ -99,7 +99,7 @@ public class Transform {
 	 * @param b
 	 */
 	public static <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,U> b)
+		void compute(T grpU, Procedure2<U,U> proc, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		U tmpU = grpU.construct();
 		for (long i = 0; i < count; i++) {
@@ -120,7 +120,7 @@ public class Transform {
 	 * @param proc
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
-		void compute(T grpU, V grpW, Procedure2<U, W> proc, LinearStorage<?,U> a, LinearStorage<?,W> b)
+		void compute(T grpU, V grpW, Procedure2<U, W> proc, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		compute(grpU, grpW, proc, 0, 0, a.size(), a, b);
 	}
@@ -139,7 +139,7 @@ public class Transform {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
-		void compute(T grpU, V grpW, Procedure2<U, W> proc, long aStart, long bStart, long count, LinearStorage<?,U> a, LinearStorage<?,W> b)
+		void compute(T grpU, V grpW, Procedure2<U, W> proc, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		U tmpU = grpU.construct();
 		W tmpW = grpW.construct();
@@ -163,7 +163,7 @@ public class Transform {
 	 * @param proc
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion, X extends Group<X,Y>, Y extends PrimitiveConversion>
-		void compute(T grpU, V grpW, X grpY, Procedure3<U, W, Y> proc, LinearStorage<?,U> a, LinearStorage<?,W> b, LinearStorage<?,Y> c)
+		void compute(T grpU, V grpW, X grpY, Procedure3<U, W, Y> proc, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
 		compute(grpU, grpW, grpY, proc, 0, 0, 0, a.size(), a, b, c);
 	}
@@ -185,7 +185,7 @@ public class Transform {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion, X extends Group<X,Y>, Y extends PrimitiveConversion>
-		void compute(T grpU, V grpW, X grpX, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, LinearStorage<?,U> a, LinearStorage<?,W> b, LinearStorage<?,Y> c)
+		void compute(T grpU, V grpW, X grpX, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
 		U tmpU = grpU.construct();
 		W tmpW = grpW.construct();

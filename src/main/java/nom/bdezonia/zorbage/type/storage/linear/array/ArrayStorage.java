@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -44,35 +44,35 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
 public class ArrayStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U> LinearStorage<?,U> allocate(long size, U type) {
+	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
 
 		// Best if first: maybe preferred by bit types over other encodings for
 		//   space reasons
 		if (type instanceof BitCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
 		}
 		if (type instanceof DoubleCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageFloat64(size, (DoubleCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageFloat64(size, (DoubleCoder<U>)type);
 		}
 		if (type instanceof FloatCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageFloat32(size, (FloatCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageFloat32(size, (FloatCoder<U>)type);
 		}
 		if (type instanceof LongCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageSignedInt64(size, (LongCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt64(size, (LongCoder<U>)type);
 		}
 		if (type instanceof IntCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageSignedInt32(size, (IntCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt32(size, (IntCoder<U>)type);
 		}
 		if (type instanceof ShortCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageSignedInt16(size, (ShortCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt16(size, (ShortCoder<U>)type);
 		}
 		if (type instanceof BooleanCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageBoolean(size, (BooleanCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageBoolean(size, (BooleanCoder<U>)type);
 		}
 		// Best if last as many types might support Bytes by default but prefer
 		// other types for speed
 		if (type instanceof ByteCoder<?>) {
-			return (LinearStorage<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder<U>)type);
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder<U>)type);
 		}
 		
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");

@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
@@ -60,7 +60,7 @@ public final class ComplexFloat64VectorMember
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
-	private LinearStorage<?,ComplexFloat64Member> storage;
+	private IndexedDataSource<?,ComplexFloat64Member> storage;
 	private MemoryConstruction m;
 	private StorageConstruction s;
 	
@@ -186,7 +186,7 @@ public final class ComplexFloat64VectorMember
 	@Override
 	public void reshape(long len) {
 		if (len == storage.size()) return;
-		LinearStorage<?, ComplexFloat64Member> orig = storage;
+		IndexedDataSource<?, ComplexFloat64Member> orig = storage;
 		init(len);
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (long i = orig.size(); i < storage.size(); i++) {

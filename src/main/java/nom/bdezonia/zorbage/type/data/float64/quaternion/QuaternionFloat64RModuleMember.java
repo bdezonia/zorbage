@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.linear.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
@@ -60,7 +60,7 @@ public final class QuaternionFloat64RModuleMember
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
-	private LinearStorage<?,QuaternionFloat64Member> storage;
+	private IndexedDataSource<?,QuaternionFloat64Member> storage;
 	private MemoryConstruction m;
 	private StorageConstruction s;
 	

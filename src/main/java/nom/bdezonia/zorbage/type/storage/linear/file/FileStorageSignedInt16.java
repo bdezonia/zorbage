@@ -36,7 +36,7 @@ import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt16;;
 
 /**
@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageSignedInt16;;
  *
  */
 public class FileStorageSignedInt16<U extends ShortCoder<U> & Allocatable<U>>
-	implements LinearStorage<FileStorageSignedInt16<U>,U>
+	implements IndexedDataSource<FileStorageSignedInt16<U>,U>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes

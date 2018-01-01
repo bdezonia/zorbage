@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.linear.array;
 
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 
 /**
  * 
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
  *
  */
 public class ArrayStorageSignedInt64<U extends LongCoder<U>>
-	implements LinearStorage<ArrayStorageSignedInt64<U>,U>
+	implements IndexedDataSource<ArrayStorageSignedInt64<U>,U>
 {
 
 	private final U type;

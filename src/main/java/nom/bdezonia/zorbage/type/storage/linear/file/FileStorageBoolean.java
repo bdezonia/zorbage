@@ -36,7 +36,7 @@ import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageBoolean;
 
 /**
@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.linear.array.ArrayStorageBoolean;
  *
  */
 public class FileStorageBoolean<U extends BooleanCoder<U> & Allocatable<U>>
-	implements LinearStorage<FileStorageBoolean<U>,U>
+	implements IndexedDataSource<FileStorageBoolean<U>,U>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes

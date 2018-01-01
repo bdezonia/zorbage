@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.storage.linear.LinearStorage;
+import nom.bdezonia.zorbage.type.storage.linear.IndexedDataSource;
 import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 
@@ -48,7 +48,7 @@ public class MedianI {
 	 * @param result
 	 */
 	public static <T extends AdditiveGroup<T,U> & ModularDivision<U> & Ordered<U> & Unity<U>, U>
-		void compute(T grp, LinearStorage<?,U> storage, U result)
+		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		U numer = grp.construct();
 		U denom = grp.construct();
