@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.linear;
 
+import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,10 +35,10 @@ package nom.bdezonia.zorbage.type.storage.linear;
  * @param <T>
  * @param <U>
  */
-public interface IndexedDataSource<T extends IndexedDataSource<T,U>, U> {
-	
+public interface IndexedDataSource<T extends IndexedDataSource<T,U>, U>
+	extends Duplicatable<T>
+{
 	void set(long index, U value);
 	void get(long index, U value);
 	long size();
-	T duplicate();
 }
