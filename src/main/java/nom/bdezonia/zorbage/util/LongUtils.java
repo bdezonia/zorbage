@@ -42,6 +42,8 @@ public class LongUtils {
 		long product = 1;
 		long tmp;
 		for (long d : dims) {
+			if (d <= 0)
+				throw new IllegalArgumentException("dimension must be positive in size");
 			tmp = product;
 			product *= d;
 			if (product < tmp)
