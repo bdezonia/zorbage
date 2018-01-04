@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.basic.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -56,4 +57,22 @@ public class FillN {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param group
+	 * @param storage
+	 * @param proc
+	 * @param start
+	 * @param count
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, IndexedDataSource<?,U> storage, Procedure1<U> proc, long start, long count)
+	{
+		U tmp = group.construct();
+		for (long i = 0; i < count; i++) {
+			proc.call(tmp);
+			storage.set(start+i, tmp);
+		}
+	}
+
 }
