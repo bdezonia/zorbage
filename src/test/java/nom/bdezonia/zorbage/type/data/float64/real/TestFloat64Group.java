@@ -66,8 +66,10 @@ public class TestFloat64Group {
 			G.DBL.cos(angle, c1);
 			G.DBL.sinAndCos(angle, s2, c2);
 			// TODO: is this good enough? Any more precise and it fails.
-			assertEquals(s1.v(), s2.v(), 0.00000000000226);
-			assertEquals(c1.v(), c2.v(), 0.00000000000226);
+			//assertEquals(s1.v(), s2.v(), 0.00000000000226);
+			//assertEquals(c1.v(), c2.v(), 0.00000000000226);
+			assertEquals(s1.v(), s2.v(), 0);
+			assertEquals(c1.v(), c2.v(), 0);
 		}
 	}
 	
@@ -86,8 +88,10 @@ public class TestFloat64Group {
 			G.DBL.cosh(angle, c1);
 			G.DBL.sinhAndCosh(angle, s2, c2);
 			// TODO: is this good enough? Any more precise and it fails.
-			assertEquals(s1.v(), s2.v(), 0.000000015);
-			assertEquals(c1.v(), c2.v(), 0.000000015);
+			//assertEquals(s1.v(), s2.v(), 0.000000015);
+			//assertEquals(c1.v(), c2.v(), 0.000000015);
+			assertEquals(s1.v(), s2.v(), 0);
+			assertEquals(c1.v(), c2.v(), 0);
 		}
 	}
 

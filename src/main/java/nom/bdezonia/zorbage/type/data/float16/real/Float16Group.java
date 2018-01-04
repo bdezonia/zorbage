@@ -254,19 +254,27 @@ public class Float16Group
 
 	@Override
 	public void sinAndCos(Float16Member a, Float16Member s, Float16Member c) {
+		sin(a,s);
+		cos(a,c);
+		
+		/*
+		
+		// This might be too inaccurate to be worth optimization
+		
 		double arg = a.v() % TWO_PI;  // this might be faster than some while (arg < 0 || arg >= TWO_PI) loops
 		double cosine = Math.cos(arg);
 		double sine = Math.sqrt(1 - cosine * cosine);
 		if ( arg < 0) {
 			if (arg < -Math.PI)
 				sine = -sine;
-		}
+		}+
 		else { // arg >= 0
 			if (arg > Math.PI)
 				sine = -sine;
 		}
 		s.setV( sine );
 		c.setV( cosine );
+		*/
 	}
 
 	@Override
