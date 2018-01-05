@@ -49,12 +49,18 @@ public class TestFill {
 		long size = 10000;
 		Float64Member type = new Float64Member();
 		IndexedDataSource<?, Float64Member> data = Storage.allocate(size, type);
-		Ramp<Float64Group, Float64Member> rampProc = new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(-25), new Float64Member(3));
-		Fill.compute(G.DBL, data, rampProc);
 		assertEquals(size, data.size());
+		Ramp<Float64Group, Float64Member> ramp1 = new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(-25), new Float64Member(3));
+		Fill.compute(G.DBL, data, ramp1);
 		for (long i = 0; i < size; i++) {
 			data.get(i, type);
 			assertEquals(-25+3*i, type.v(), 0);
+		}
+		Ramp<Float64Group, Float64Member> ramp2 = new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(300), new Float64Member(-6));
+		Fill.compute(G.DBL, data, ramp2);
+		for (long i = 0; i < size; i++) {
+			data.get(i, type);
+			assertEquals(300-6*i, type.v(), 0);
 		}
 	}
 }
