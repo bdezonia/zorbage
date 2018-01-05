@@ -32,8 +32,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Ramp;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
 
@@ -47,20 +47,20 @@ public class TestFill {
 	@Test
 	public void test() {
 		long size = 10000;
-		Float64Member type = new Float64Member();
-		IndexedDataSource<?, Float64Member> data = Storage.allocate(size, type);
+		SignedInt32Member type = new SignedInt32Member();
+		IndexedDataSource<?, SignedInt32Member> data = Storage.allocate(size, type);
 		assertEquals(size, data.size());
-		Ramp<Float64Group, Float64Member> ramp1 = new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(-25), new Float64Member(3));
-		Fill.compute(G.DBL, data, ramp1);
+		Ramp<SignedInt32Group, SignedInt32Member> ramp1 = new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32, new SignedInt32Member(-25), new SignedInt32Member(3));
+		Fill.compute(G.INT32, data, ramp1);
 		for (long i = 0; i < size; i++) {
 			data.get(i, type);
-			assertEquals(-25+3*i, type.v(), 0);
+			assertEquals(-25+3*i, type.v());
 		}
-		Ramp<Float64Group, Float64Member> ramp2 = new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(300), new Float64Member(-6));
-		Fill.compute(G.DBL, data, ramp2);
+		Ramp<SignedInt32Group, SignedInt32Member> ramp2 = new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32, new SignedInt32Member(300), new SignedInt32Member(-6));
+		Fill.compute(G.INT32, data, ramp2);
 		for (long i = 0; i < size; i++) {
 			data.get(i, type);
-			assertEquals(300-6*i, type.v(), 0);
+			assertEquals(300-6*i, type.v());
 		}
 	}
 }
