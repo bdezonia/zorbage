@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.data.universal;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 /**
  * 
@@ -35,10 +37,13 @@ import java.math.BigDecimal;
  */
 public class ScientificNotation {
 
+	private static final MathContext context = new MathContext(100, RoundingMode.HALF_EVEN);
+
 	/**
 	 * Create a numeric value from an scientific notation description.
-	 * Works in BigDecimals for accuracy. Can only create Real values.
-	 * Result must support UniversalRepresentation.
+	 * Works in BigDecimals for up to 100 decimal places of accuracy.
+	 * Can only create real values using this method. Result must
+	 * support UniversalRepresentation.
 	 * 
 	 * @param fraction
 	 * @param base
@@ -49,8 +54,8 @@ public class ScientificNotation {
 		void compute(BigDecimal fraction, int base, int power, U result)
 	{
 		BigDecimal b = BigDecimal.valueOf(base);
-		BigDecimal tmp = b.pow(power);
-		BigDecimal value = tmp.multiply(fraction);
+		BigDecimal tmp = b.pow(power, context);
+		BigDecimal value = tmp.multiply(fraction, context);
 		OctonionRepresentation v = new OctonionRepresentation();
 		v.setR(value);
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
