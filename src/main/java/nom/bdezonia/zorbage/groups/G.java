@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.groups;
 
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntGroup;
 import nom.bdezonia.zorbage.type.data.bool.BooleanGroup;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Group;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Group;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Vector;
@@ -64,6 +65,12 @@ public class G {
 	public static final UnboundedIntGroup BIGINT = new UnboundedIntGroup();
 	
 	public static final BooleanGroup BOOL = new BooleanGroup();
+	
+	public static final Float16Group HLF = new Float16Group();
+	// TODO and num, vec, mat, ten for real, complex, quat, oct
+	
+	//TODO public static final Float32Group SNG = new Float32Group();
+	// TODO and num, vec, mat, ten for real, complex, quat, oct
 	
 	public static final Float64Group DBL = new Float64Group();
 	public static final Float64Vector DBL_VEC = new Float64Vector();
