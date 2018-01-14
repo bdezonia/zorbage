@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.data.universal;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Power;
@@ -39,11 +38,10 @@ import nom.bdezonia.zorbage.type.algebra.Power;
  */
 public class ExponentialCalculation {
 
-	private static final MathContext context = new MathContext(100);
-
 	/**
 	 * Create a numeric value from an exponential description. Works in
-	 * BigDecimals for accuracy. Result must support UniversalRepresentation.
+	 * BigDecimals for accuracy. Can create nonreal values if necessary.
+	 * Result must support UniversalRepresentation.
 	 * 
 	 * @param group
 	 * @param fraction
