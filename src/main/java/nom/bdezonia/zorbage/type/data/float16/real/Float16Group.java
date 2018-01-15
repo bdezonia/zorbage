@@ -77,8 +77,6 @@ public class Float16Group
     ModularDivision<Float16Member>
 {
 
-	private static final double TWO_PI = Math.PI * 2;
-	
 	public Float16Group() {
 	}
 	

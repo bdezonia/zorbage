@@ -207,7 +207,6 @@ public final class ComplexFloat64MatrixMember
 	@Override
 	public void reshape(long rows, long cols) {
 		if (this.rows == rows && this.cols == cols) return;
-		IndexedDataSource<?, ComplexFloat64Member> orig = storage;
 		init(rows, cols);
 		// TODO: look at vectorMember. copy overlapping data.
 		// set other to zero.

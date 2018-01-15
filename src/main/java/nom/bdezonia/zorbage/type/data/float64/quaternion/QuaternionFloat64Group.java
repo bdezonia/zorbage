@@ -70,7 +70,6 @@ public class QuaternionFloat64Group
 	private static final QuaternionFloat64Member TWO = new QuaternionFloat64Member(2,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
-	private static final QuaternionFloat64Member NaN = new QuaternionFloat64Member(Double.NaN,Double.NaN,Double.NaN,Double.NaN);
 	
 	public QuaternionFloat64Group() {
 	}
