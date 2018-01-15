@@ -49,6 +49,7 @@ public class TanhL<T extends Group<T,U> & Hyperbolic<U>,U>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
 		ancestor.call(tmp, inputs);
 		lowerProc.call(tmp, result);

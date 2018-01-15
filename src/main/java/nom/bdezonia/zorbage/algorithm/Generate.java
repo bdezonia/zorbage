@@ -26,6 +26,7 @@ public class Generate {
 	 * @param storage
 	 * @param inputs
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Group<T,U>,U>
 		void compute(T group, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
 	{

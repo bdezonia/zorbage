@@ -53,6 +53,7 @@ public class MultiplyL<T extends Group<T,U> & Multiplication<U>, U>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
 		ancestor1.call(tmp1, inputs);
 		ancestor2.call(tmp2, inputs);

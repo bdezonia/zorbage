@@ -45,6 +45,7 @@ public class RandL<T extends Group<T,U> & Random<U>,U>
 	}
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
 		lowerProc.call(result);
 	}

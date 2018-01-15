@@ -48,6 +48,7 @@ public class VariableConstantL<T extends Group<T,U>, U>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
 		if (index >= inputs.length)
 			throw new IllegalArgumentException("unspecified variable #"+index);

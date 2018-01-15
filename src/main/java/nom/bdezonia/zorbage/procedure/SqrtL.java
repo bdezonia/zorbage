@@ -49,6 +49,7 @@ public class SqrtL<T extends Group<T,U> & Roots<U>,U>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
 		ancestor.call(tmp, inputs);
 		lowerProc.call(tmp, result);

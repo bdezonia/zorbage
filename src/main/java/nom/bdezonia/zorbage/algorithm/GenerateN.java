@@ -34,6 +34,7 @@ public class GenerateN {
 	 * @param storage
 	 * @param inputs
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Group<T,U>,U>
 		void compute(T group, Procedure<U> proc, long start, long count, IndexedDataSource<?,U> storage, U... inputs)
 	{
