@@ -26,12 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -42,7 +45,8 @@ public class QuaternionFloat64Matrix
 	implements
 		RingWithUnity<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember>,
 		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Group, QuaternionFloat64Member>,
-		Constructible2dLong<QuaternionFloat64MatrixMember>
+		Constructible2dLong<QuaternionFloat64MatrixMember>,
+		Rounding<Float64Member, QuaternionFloat64MatrixMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
@@ -233,84 +237,14 @@ public class QuaternionFloat64Matrix
 	}
 
 	@Override
-	public void roundTowardsZero(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+	public void round(Round.Mode mode, Float64Member delta, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				G.QDBL.roundTowardsZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundAwayFromZero(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.QDBL.roundAwayFromZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundPositive(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.QDBL.roundPositive(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNegative(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.QDBL.roundNegative(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearest(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.QDBL.roundNearest(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearestEven(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.QDBL.roundNearestEven(tmp, tmp);
+				G.QDBL.round(mode, delta, tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

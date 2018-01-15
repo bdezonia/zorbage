@@ -26,16 +26,13 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.algorithm.Round;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Rounding<T> {
-	void roundTowardsZero(T a, T b);
-	void roundAwayFromZero(T a, T b);
-	void roundPositive(T a, T b);
-	void roundNegative(T a, T b);
-	void roundNearest(T a, T b);
-	void roundNearestEven(T a, T b);
+public interface Rounding<T,U> {
+	void round(Round.Mode mode, T delta, U a, U b);
 }

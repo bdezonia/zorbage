@@ -26,12 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -42,7 +45,8 @@ public class ComplexFloat64Matrix
 	implements
 		RingWithUnity<ComplexFloat64Matrix, ComplexFloat64MatrixMember>,
 		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>,
-		Constructible2dLong<ComplexFloat64MatrixMember>
+		Constructible2dLong<ComplexFloat64MatrixMember>,
+		Rounding<Float64Member, ComplexFloat64MatrixMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -234,84 +238,14 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void roundTowardsZero(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+	public void round(Round.Mode mode, Float64Member delta, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				G.CDBL.roundTowardsZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundAwayFromZero(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.roundAwayFromZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundPositive(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.roundPositive(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNegative(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.roundNegative(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearest(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.roundNearest(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearestEven(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.roundNearestEven(tmp, tmp);
+				G.CDBL.round(mode, delta, tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

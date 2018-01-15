@@ -39,6 +39,8 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -73,7 +75,7 @@ public class ComplexFloat64Group
     InverseHyperbolic<ComplexFloat64Member>,
     Roots<ComplexFloat64Member>,
     Power<ComplexFloat64Member>,
-    Rounding<ComplexFloat64Member>,
+    Rounding<Float64Member,ComplexFloat64Member>,
     Infinite<ComplexFloat64Member>,
     Conjugate<ComplexFloat64Member>,
     Random<ComplexFloat64Member>,
@@ -611,51 +613,14 @@ public class ComplexFloat64Group
 	}
 
 	@Override
-	public void roundTowardsZero(ComplexFloat64Member a, ComplexFloat64Member b) {
-		if (a.r() < 0)
-			b.setR( Math.ceil(a.r()) );
-		else
-			b.setR( Math.floor(a.r()) );
-		if (a.i() < 0)
-			b.setI( Math.ceil(a.i()) );
-		else
-			b.setI( Math.floor(a.i()) );
-	}
-
-	@Override
-	public void roundAwayFromZero(ComplexFloat64Member a, ComplexFloat64Member b) {
-		if (a.r() > 0)
-			b.setR( Math.ceil(a.r()) );
-		else
-			b.setR( Math.floor(a.r()) );
-		if (a.i() > 0)
-			b.setI( Math.ceil(a.i()) );
-		else
-			b.setI( Math.floor(a.i()) );
-	}
-
-	@Override
-	public void roundNegative(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.setR( Math.floor(a.r()) );
-		b.setI( Math.floor(a.i()) );
-	}
-
-	@Override
-	public void roundPositive(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.setR( Math.ceil(a.r()) );
-		b.setI( Math.ceil(a.i()) );
-	}
-
-	@Override
-	public void roundNearest(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.setR( Math.round(a.r()) );
-		b.setI( Math.round(a.i()) );
-	}
-
-	@Override
-	public void roundNearestEven(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.setR( Math.rint(a.r()) );
-		b.setI( Math.rint(a.i()) );
+	public void round(Round.Mode mode, Float64Member delta, ComplexFloat64Member a, ComplexFloat64Member b) {
+		Float64Member tmp = new Float64Member();
+		tmp.setV(a.r());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setR(tmp.v());
+		tmp.setV(a.i());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setI(tmp.v());
 	}
 
 	@Override

@@ -26,9 +26,11 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -42,7 +44,8 @@ public class Float64Matrix
 	implements
 		RingWithUnity<Float64Matrix, Float64MatrixMember>,
 		MatrixRing<Float64Matrix, Float64MatrixMember, Float64Group, Float64Member>,
-		Constructible2dLong<Float64MatrixMember>
+		Constructible2dLong<Float64MatrixMember>,
+		Rounding<Float64Member, Float64MatrixMember>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 	
@@ -235,84 +238,14 @@ public class Float64Matrix
 	}
 
 	@Override
-	public void roundTowardsZero(Float64MatrixMember a, Float64MatrixMember b) {
+	public void round(Round.Mode mode, Float64Member delta, Float64MatrixMember a, Float64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		Float64Member tmp = new Float64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				G.DBL.roundTowardsZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundAwayFromZero(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.DBL.roundAwayFromZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundPositive(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.DBL.roundPositive(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNegative(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.DBL.roundNegative(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearest(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.DBL.roundNearest(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearestEven(Float64MatrixMember a, Float64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.DBL.roundNearestEven(tmp, tmp);
+				Round.compute(G.DBL, mode, delta, tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

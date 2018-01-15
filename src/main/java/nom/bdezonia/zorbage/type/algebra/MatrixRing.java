@@ -41,7 +41,6 @@ public interface MatrixRing<T extends RingWithUnity<T,U>, U,
                         V extends RingWithUnity<V,W>, W>  // TODO W needs to be Invertible?
   extends
     Norm<U,W>,
-    Rounding<U>,
     Infinite<U>,
     Conjugate<U>,
     Invertible<U>,

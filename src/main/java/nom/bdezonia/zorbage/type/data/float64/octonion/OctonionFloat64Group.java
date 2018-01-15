@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -58,7 +59,7 @@ public class OctonionFloat64Group
     Conjugate<OctonionFloat64Member>,
     Norm<OctonionFloat64Member,Float64Member>,
     Infinite<OctonionFloat64Member>,
-    Rounding<OctonionFloat64Member>,
+    Rounding<Float64Member,OctonionFloat64Member>,
     Constants<OctonionFloat64Member>,
     Random<OctonionFloat64Member>,
     Exponential<OctonionFloat64Member>,
@@ -338,125 +339,34 @@ public class OctonionFloat64Group
 	}
 
 	@Override
-	public void roundTowardsZero(OctonionFloat64Member a, OctonionFloat64Member b) {
-		if (a.r() < 0)
-			b.setR( Math.ceil(a.r()) );
-		else
-			b.setR( Math.floor(a.r()) );
-		if (a.i() < 0)
-			b.setI( Math.ceil(a.i()) );
-		else
-			b.setI( Math.floor(a.i()) );
-		if (a.j() < 0)
-			b.setJ( Math.ceil(a.j()) );
-		else
-			b.setJ( Math.floor(a.j()) );
-		if (a.k() < 0)
-			b.setK( Math.ceil(a.k()) );
-		else
-			b.setK( Math.floor(a.k()) );
-		if (a.l() < 0)
-			b.setL( Math.ceil(a.l()) );
-		else
-			b.setL( Math.floor(a.l()) );
-		if (a.i0() < 0)
-			b.setI0( Math.ceil(a.i0()) );
-		else
-			b.setI0( Math.floor(a.i0()) );
-		if (a.j0() < 0)
-			b.setJ0( Math.ceil(a.j0()) );
-		else
-			b.setJ0( Math.floor(a.j0()) );
-		if (a.k0() < 0)
-			b.setK0( Math.ceil(a.k0()) );
-		else
-			b.setK0( Math.floor(a.k0()) );
+	public void round(Round.Mode mode, Float64Member delta, OctonionFloat64Member a, OctonionFloat64Member b) {
+		Float64Member tmp = new Float64Member();
+		tmp.setV(a.r());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setR(tmp.v());
+		tmp.setV(a.i());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setI(tmp.v());
+		tmp.setV(a.j());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setJ(tmp.v());
+		tmp.setV(a.k());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setK(tmp.v());
+		tmp.setV(a.l());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setL(tmp.v());
+		tmp.setV(a.i0());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setI0(tmp.v());
+		tmp.setV(a.j0());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setJ0(tmp.v());
+		tmp.setV(a.k0());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setK0(tmp.v());
 	}
-
-	@Override
-	public void roundAwayFromZero(OctonionFloat64Member a, OctonionFloat64Member b) {
-		if (a.r() > 0)
-			b.setR( Math.ceil(a.r()) );
-		else
-			b.setR( Math.floor(a.r()) );
-		if (a.i() > 0)
-			b.setI( Math.ceil(a.i()) );
-		else
-			b.setI( Math.floor(a.i()) );
-		if (a.j() > 0)
-			b.setJ( Math.ceil(a.j()) );
-		else
-			b.setJ( Math.floor(a.j()) );
-		if (a.k() > 0)
-			b.setK( Math.ceil(a.k()) );
-		else
-			b.setK( Math.floor(a.k()) );
-		if (a.l() > 0)
-			b.setL( Math.ceil(a.l()) );
-		else
-			b.setL( Math.floor(a.l()) );
-		if (a.i0() > 0)
-			b.setI0( Math.ceil(a.i0()) );
-		else
-			b.setI0( Math.floor(a.i0()) );
-		if (a.j0() > 0)
-			b.setJ0( Math.ceil(a.j0()) );
-		else
-			b.setJ0( Math.floor(a.j0()) );
-		if (a.k0() > 0)
-			b.setK0( Math.ceil(a.k0()) );
-		else
-			b.setK0( Math.floor(a.k0()) );
-	}
-
-	@Override
-	public void roundPositive(OctonionFloat64Member a, OctonionFloat64Member b) {
-		b.setR( Math.ceil(a.r()) );
-		b.setI( Math.ceil(a.i()) );
-		b.setJ( Math.ceil(a.j()) );
-		b.setK( Math.ceil(a.k()) );
-		b.setL( Math.ceil(a.l()) );
-		b.setI0( Math.ceil(a.i0()) );
-		b.setJ0( Math.ceil(a.j0()) );
-		b.setK0( Math.ceil(a.k0()) );
-	}
-
-	@Override
-	public void roundNegative(OctonionFloat64Member a, OctonionFloat64Member b) {
-		b.setR( Math.floor(a.r()) );
-		b.setI( Math.floor(a.i()) );
-		b.setJ( Math.floor(a.j()) );
-		b.setK( Math.floor(a.k()) );
-		b.setL( Math.floor(a.l()) );
-		b.setI0( Math.floor(a.i0()) );
-		b.setJ0( Math.floor(a.j0()) );
-		b.setK0( Math.floor(a.k0()) );
-	}
-
-	@Override
-	public void roundNearest(OctonionFloat64Member a, OctonionFloat64Member b) {
-		b.setR( Math.round(a.r()) );
-		b.setI( Math.round(a.i()) );
-		b.setJ( Math.round(a.j()) );
-		b.setK( Math.round(a.k()) );
-		b.setL( Math.round(a.l()) );
-		b.setI0( Math.round(a.i0()) );
-		b.setJ0( Math.round(a.j0()) );
-		b.setK0( Math.round(a.k0()) );
-	}
-
-	@Override
-	public void roundNearestEven(OctonionFloat64Member a, OctonionFloat64Member b) {
-		b.setR( Math.rint(a.r()) );
-		b.setI( Math.rint(a.i()) );
-		b.setJ( Math.rint(a.j()) );
-		b.setK( Math.rint(a.k()) );
-		b.setL( Math.rint(a.l()) );
-		b.setI0( Math.rint(a.i0()) );
-		b.setJ0( Math.rint(a.j0()) );
-		b.setK0( Math.rint(a.k0()) );
-	}
-
+	
 	@Override
 	public boolean isNaN(OctonionFloat64Member a) {
 		return Double.isNaN(a.r()) || Double.isNaN(a.i()) || Double.isNaN(a.j()) || Double.isNaN(a.k()) ||

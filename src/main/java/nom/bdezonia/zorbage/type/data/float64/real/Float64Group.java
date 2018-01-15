@@ -30,6 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -68,7 +69,7 @@ public class Float64Group
     Infinite<Float64Member>,
     Roots<Float64Member>,
     Power<Float64Member>,
-    Rounding<Float64Member>,
+    Rounding<Float64Member,Float64Member>,
     Random<Float64Member>,
     RealUnreal<Float64Member,Float64Member>,
     PredSucc<Float64Member>,
@@ -78,7 +79,6 @@ public class Float64Group
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
 	private static final double taylor_n_bound = Math.sqrt(taylor_2_bound);
-	private static final double TWO_PI = Math.PI * 2;
 	
 	public Float64Group() {
 	}
@@ -478,39 +478,8 @@ public class Float64Group
 	}
 
 	@Override
-	public void roundTowardsZero(Float64Member a, Float64Member b) {
-		if (a.v() > 0)
-			roundNegative(a, b);
-		else
-			roundPositive(a, b);
-	}
-
-	@Override
-	public void roundAwayFromZero(Float64Member a, Float64Member b) {
-		if (a.v() < 0)
-			roundNegative(a, b);
-		else
-			roundPositive(a, b);
-	}
-
-	@Override
-	public void roundPositive(Float64Member a, Float64Member b) {
-		b.setV( Math.ceil(a.v()) );
-	}
-
-	@Override
-	public void roundNegative(Float64Member a, Float64Member b) {
-		b.setV( Math.floor(a.v()) );
-	}
-
-	@Override
-	public void roundNearest(Float64Member a, Float64Member b) {
-		b.setV( Math.round(b.v()) );
-	}
-
-	@Override
-	public void roundNearestEven(Float64Member a, Float64Member b) {
-		b.setV( Math.rint(b.v()) );
+	public void round(Round.Mode mode, Float64Member delta, Float64Member a, Float64Member b) {
+		Round.compute(this, mode, delta, a, b);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -56,7 +57,7 @@ public class QuaternionFloat64Group
     Norm<QuaternionFloat64Member, Float64Member>,
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,
-    Rounding<QuaternionFloat64Member>,
+    Rounding<Float64Member,QuaternionFloat64Member>,
     Random<QuaternionFloat64Member>,
     Exponential<QuaternionFloat64Member>,
     Trigonometric<QuaternionFloat64Member>,
@@ -206,75 +207,20 @@ public class QuaternionFloat64Group
 	}
 
 	@Override
-	public void roundTowardsZero(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		if (a.r() < 0)
-			b.setR( Math.ceil(a.r()) );
-		else
-			b.setR( Math.floor(a.r()) );
-		if (a.i() < 0)
-			b.setI( Math.ceil(a.i()) );
-		else
-			b.setI( Math.floor(a.i()) );
-		if (a.j() < 0)
-			b.setJ( Math.ceil(a.j()) );
-		else
-			b.setJ( Math.floor(a.j()) );
-		if (a.k() < 0)
-			b.setK( Math.ceil(a.k()) );
-		else
-			b.setK( Math.floor(a.k()) );
-	}
-
-	@Override
-	public void roundAwayFromZero(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		if (a.r() > 0)
-			b.setR( Math.ceil(a.r()) );
-		else
-			b.setR( Math.floor(a.r()) );
-		if (a.i() > 0)
-			b.setI( Math.ceil(a.i()) );
-		else
-			b.setI( Math.floor(a.i()) );
-		if (a.j() > 0)
-			b.setJ( Math.ceil(a.j()) );
-		else
-			b.setJ( Math.floor(a.j()) );
-		if (a.k() > 0)
-			b.setK( Math.ceil(a.k()) );
-		else
-			b.setK( Math.floor(a.k()) );
-	}
-
-	@Override
-	public void roundPositive(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		b.setR( Math.ceil(a.r()) );
-		b.setI( Math.ceil(a.i()) );
-		b.setJ( Math.ceil(a.j()) );
-		b.setK( Math.ceil(a.k()) );
-	}
-
-	@Override
-	public void roundNegative(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		b.setR( Math.floor(a.r()) );
-		b.setI( Math.floor(a.i()) );
-		b.setJ( Math.floor(a.j()) );
-		b.setK( Math.floor(a.k()) );
-	}
-
-	@Override
-	public void roundNearest(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		b.setR( Math.round(a.r()) );
-		b.setI( Math.round(a.i()) );
-		b.setJ( Math.round(a.j()) );
-		b.setK( Math.round(a.k()) );
-	}
-
-	@Override
-	public void roundNearestEven(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		b.setR( Math.rint(a.r()) );
-		b.setI( Math.rint(a.i()) );
-		b.setJ( Math.rint(a.j()) );
-		b.setK( Math.rint(a.k()) );
+	public void round(Round.Mode mode, Float64Member delta, QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		Float64Member tmp = new Float64Member();
+		tmp.setV(a.r());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setR(tmp.v());
+		tmp.setV(a.i());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setI(tmp.v());
+		tmp.setV(a.j());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setJ(tmp.v());
+		tmp.setV(a.k());
+		Round.compute(G.DBL, mode, delta, tmp, tmp);
+		b.setK(tmp.v());
 	}
 
 	@Override

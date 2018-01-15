@@ -26,12 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -42,7 +45,8 @@ public class OctonionFloat64Matrix
 	implements
 		RingWithUnity<OctonionFloat64Matrix, OctonionFloat64MatrixMember>,
 		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>,
-		Constructible2dLong<OctonionFloat64MatrixMember>
+		Constructible2dLong<OctonionFloat64MatrixMember>,
+		Rounding<Float64Member, OctonionFloat64MatrixMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
@@ -233,84 +237,14 @@ public class OctonionFloat64Matrix
 	}
 
 	@Override
-	public void roundTowardsZero(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+	public void round(Round.Mode mode, Float64Member delta, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
 			b.init(a.rows(), a.cols());
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				G.ODBL.roundTowardsZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundAwayFromZero(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.ODBL.roundAwayFromZero(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundPositive(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.ODBL.roundPositive(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNegative(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.ODBL.roundNegative(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearest(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.ODBL.roundNearest(tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
-	}
-
-	@Override
-	public void roundNearestEven(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		if (a != b)
-			b.init(a.rows(), a.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.ODBL.roundNearestEven(tmp, tmp);
+				G.ODBL.round(mode, delta, tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}
