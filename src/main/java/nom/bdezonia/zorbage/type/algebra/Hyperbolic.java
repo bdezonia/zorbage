@@ -36,6 +36,8 @@ public interface Hyperbolic<U> {
 	void cosh(U a, U b);
 	void sinhAndCosh(U a, U s, U c);
 	void tanh(U a, U b);
+	void sinch(U a, U b);
+	void sinchpi(U a, U b);
 	//void csch(U a, U b);
 	//void sech(U a, U b);
 	//void coth(U a, U b);

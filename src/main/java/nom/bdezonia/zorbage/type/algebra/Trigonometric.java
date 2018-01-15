@@ -36,6 +36,8 @@ public interface Trigonometric<U> {
 	void cos(U a, U b);
 	void tan(U a, U b);
 	void sinAndCos(U a, U s, U c);
+	void sinc(U a, U b);
+	void sincpi(U a, U b);
 	//void csc(U a, U b);
 	//void sec(U a, U b);
 	//void cot(U a, U b);

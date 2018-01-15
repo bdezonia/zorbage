@@ -76,6 +76,8 @@ public class Float16Group
     MiscFloat<Float16Member>,
     ModularDivision<Float16Member>
 {
+	private static final Float16Member ZERO = new Float16Member();
+	private static final Float16Member ONE = new Float16Member(1);
 
 	public Float16Group() {
 	}
@@ -561,5 +563,61 @@ public class Float16Group
 	public void divMod(Float16Member a, Float16Member b, Float16Member d, Float16Member m) {
 		div(a,b,d);
 		mod(a,b,m);
+	}
+
+	@Override
+	public void sinch(Float16Member a, Float16Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float16Member tmp = new Float16Member();
+			sinh(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sinchpi(Float16Member a, Float16Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float16Member pi = new Float16Member();
+			Float16Member tmp2 = new Float16Member();
+			Float16Member tmp3 = new Float16Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sinh(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
+
+	@Override
+	public void sinc(Float16Member a, Float16Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float16Member tmp = new Float16Member();
+			sin(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sincpi(Float16Member a, Float16Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float16Member pi = new Float16Member();
+			Float16Member tmp2 = new Float16Member();
+			Float16Member tmp3 = new Float16Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sin(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
 	}
 }

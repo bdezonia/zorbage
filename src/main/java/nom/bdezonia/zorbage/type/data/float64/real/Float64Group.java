@@ -79,6 +79,8 @@ public class Float64Group
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
 	private static final double taylor_n_bound = Math.sqrt(taylor_2_bound);
+	private static final Float64Member ZERO = new Float64Member();
+	private static final Float64Member ONE = new Float64Member(1);
 	
 	public Float64Group() {
 	}
@@ -580,6 +582,63 @@ public class Float64Group
 		mod(a,b,m);
 	}
 
+
+	@Override
+	public void sinch(Float64Member a, Float64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float64Member tmp = new Float64Member();
+			sinh(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sinchpi(Float64Member a, Float64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float64Member pi = new Float64Member();
+			Float64Member tmp2 = new Float64Member();
+			Float64Member tmp3 = new Float64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sinh(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
+
+	@Override
+	public void sinc(Float64Member a, Float64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float64Member tmp = new Float64Member();
+			sin(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sincpi(Float64Member a, Float64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			Float64Member pi = new Float64Member();
+			Float64Member tmp2 = new Float64Member();
+			Float64Member tmp3 = new Float64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sin(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
+
 	/*
 	Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -607,7 +666,7 @@ public class Float64Group
 	*/
 
 	// adapted from boost library: TODO write my own impl that fits a
-	// curve near zero.
+	// curve near zero. should be reusable by float64group.
 
 	public static double sinc_pi(double x) {
 
@@ -634,7 +693,7 @@ public class Float64Group
 	}
 	
 	// adapted from boost library: TODO write my own impl that fits a
-	// curve near zero.
+	// curve near zero. should be reusable by float64group.
 
 	public static double sinhc_pi(double x) {
 

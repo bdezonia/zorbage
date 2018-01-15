@@ -685,4 +685,60 @@ public class OctonionFloat64Group
 		// TODO
 		throw new UnsupportedOperationException("Not yet implemented");
 	}	
+
+	@Override
+	public void sinch(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			sinh(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sinchpi(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			OctonionFloat64Member pi = new OctonionFloat64Member();
+			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+			OctonionFloat64Member tmp3 = new OctonionFloat64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sinh(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
+
+	@Override
+	public void sinc(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			sin(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sincpi(OctonionFloat64Member a, OctonionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			OctonionFloat64Member pi = new OctonionFloat64Member();
+			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+			OctonionFloat64Member tmp3 = new OctonionFloat64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sin(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
 }

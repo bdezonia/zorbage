@@ -416,4 +416,60 @@ public class QuaternionFloat64Group
 		// TODO
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
+
+	@Override
+	public void sinch(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+			sinh(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sinchpi(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			QuaternionFloat64Member pi = new QuaternionFloat64Member();
+			QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+			QuaternionFloat64Member tmp3 = new QuaternionFloat64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sinh(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
+
+	@Override
+	public void sinc(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+			sin(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sincpi(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			QuaternionFloat64Member pi = new QuaternionFloat64Member();
+			QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
+			QuaternionFloat64Member tmp3 = new QuaternionFloat64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sin(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
 }

@@ -661,4 +661,60 @@ public class ComplexFloat64Group
 		assign(a,b);
 		b.setR(0);
 	}
+
+	@Override
+	public void sinch(ComplexFloat64Member a, ComplexFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			sinh(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sinchpi(ComplexFloat64Member a, ComplexFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			ComplexFloat64Member pi = new ComplexFloat64Member();
+			ComplexFloat64Member tmp2 = new ComplexFloat64Member();
+			ComplexFloat64Member tmp3 = new ComplexFloat64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sinh(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
+
+	@Override
+	public void sinc(ComplexFloat64Member a, ComplexFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			sin(a, tmp);
+			divide(tmp, a, b);
+		}
+	}
+
+	@Override
+	public void sincpi(ComplexFloat64Member a, ComplexFloat64Member b) {
+		// TODO - improve accuracy near 0 by fitting polynomial
+		if (isEqual(ZERO, a))
+			assign(ONE, b);
+		else {
+			ComplexFloat64Member pi = new ComplexFloat64Member();
+			ComplexFloat64Member tmp2 = new ComplexFloat64Member();
+			ComplexFloat64Member tmp3 = new ComplexFloat64Member();
+			PI(pi);
+			multiply(a, pi, tmp2);
+			sin(tmp2, tmp3);
+			divide(tmp3, tmp2, b);
+		}
+	}
 }
