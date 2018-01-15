@@ -81,6 +81,8 @@ public class Float64Group
 	private static final double taylor_n_bound = Math.sqrt(taylor_2_bound);
 	private static final Float64Member ZERO = new Float64Member();
 	private static final Float64Member ONE = new Float64Member(1);
+	private static final Float64Member PI = new Float64Member(Math.PI);
+	private static final Float64Member E = new Float64Member(Math.E);
 	
 	public Float64Group() {
 	}
@@ -220,12 +222,12 @@ public class Float64Group
 
 	@Override
 	public void PI(Float64Member a) {
-		a.setV( Math.PI );
+		assign(PI, a);
 	}
 
 	@Override
 	public void E(Float64Member a) {
-		a.setV( Math.E );
+		assign(E, a);
 	}
 	
 	@Override
@@ -601,11 +603,9 @@ public class Float64Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			Float64Member pi = new Float64Member();
 			Float64Member tmp2 = new Float64Member();
 			Float64Member tmp3 = new Float64Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sinh(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}
@@ -629,11 +629,9 @@ public class Float64Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			Float64Member pi = new Float64Member();
 			Float64Member tmp2 = new Float64Member();
 			Float64Member tmp3 = new Float64Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sin(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}

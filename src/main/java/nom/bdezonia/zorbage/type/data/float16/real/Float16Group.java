@@ -78,6 +78,8 @@ public class Float16Group
 {
 	private static final Float16Member ZERO = new Float16Member();
 	private static final Float16Member ONE = new Float16Member(1);
+	private static final Float16Member PI = new Float16Member(Math.PI);
+	private static final Float16Member E = new Float16Member(Math.E);
 
 	public Float16Group() {
 	}
@@ -217,12 +219,12 @@ public class Float16Group
 
 	@Override
 	public void PI(Float16Member a) {
-		a.setV( Math.PI );
+		assign(PI, a);
 	}
 
 	@Override
 	public void E(Float16Member a) {
-		a.setV( Math.E );
+		assign(E, a);
 	}
 	
 	@Override
@@ -583,11 +585,9 @@ public class Float16Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			Float16Member pi = new Float16Member();
 			Float16Member tmp2 = new Float16Member();
 			Float16Member tmp3 = new Float16Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sinh(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}
@@ -611,11 +611,9 @@ public class Float16Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			Float16Member pi = new Float16Member();
 			Float16Member tmp2 = new Float16Member();
 			Float16Member tmp3 = new Float16Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sin(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}

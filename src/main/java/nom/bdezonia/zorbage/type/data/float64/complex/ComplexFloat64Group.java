@@ -680,11 +680,9 @@ public class ComplexFloat64Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			ComplexFloat64Member pi = new ComplexFloat64Member();
 			ComplexFloat64Member tmp2 = new ComplexFloat64Member();
 			ComplexFloat64Member tmp3 = new ComplexFloat64Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sinh(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}
@@ -708,11 +706,9 @@ public class ComplexFloat64Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			ComplexFloat64Member pi = new ComplexFloat64Member();
 			ComplexFloat64Member tmp2 = new ComplexFloat64Member();
 			ComplexFloat64Member tmp3 = new ComplexFloat64Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sin(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}

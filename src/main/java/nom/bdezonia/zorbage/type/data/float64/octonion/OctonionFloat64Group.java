@@ -704,11 +704,9 @@ public class OctonionFloat64Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			OctonionFloat64Member pi = new OctonionFloat64Member();
 			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
 			OctonionFloat64Member tmp3 = new OctonionFloat64Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sinh(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}
@@ -732,11 +730,9 @@ public class OctonionFloat64Group
 		if (isEqual(ZERO, a))
 			assign(ONE, b);
 		else {
-			OctonionFloat64Member pi = new OctonionFloat64Member();
 			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
 			OctonionFloat64Member tmp3 = new OctonionFloat64Member();
-			PI(pi);
-			multiply(a, pi, tmp2);
+			multiply(a, PI, tmp2);
 			sin(tmp2, tmp3);
 			divide(tmp3, tmp2, b);
 		}
