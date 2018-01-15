@@ -69,7 +69,7 @@ public class G {
 	public static final Float16Group HLF = new Float16Group();
 	// TODO and num, vec, mat, ten for real, complex, quat, oct
 	
-	//TODO public static final Float32Group SNG = new Float32Group();
+	//TODO public static final Float32Group FLT = new Float32Group();
 	// TODO and num, vec, mat, ten for real, complex, quat, oct
 	
 	public static final Float64Group DBL = new Float64Group();
