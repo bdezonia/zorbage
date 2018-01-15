@@ -198,15 +198,15 @@ public class TensorStringRepresentation {
 		BigDecimal[] vals = new BigDecimal[8];
 		if (input.get(ptr) == '(') {
 			int count = 0;
-			while (input.get(ptr+1) != ')') {
+			while ((ptr+1) < input.size() && input.get(ptr+1) != ')') {
 				ptr = number(input, ptr+1);
 				if (count < 8) {
 					vals[count++] = tmp;
 				}
-				if (input.get(ptr) == ',')
-					ptr++;
+				//if (input.get(ptr) == ',')
+				//	ptr++;
 			}
-			ptr = ptr + 2; // skip ')'
+			ptr = ptr + 1; // skip ')'
 		}
 		else {
 			ptr = number(input, ptr);
