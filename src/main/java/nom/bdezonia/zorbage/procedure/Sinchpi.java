@@ -27,18 +27,26 @@
 package nom.bdezonia.zorbage.procedure;
 
 import nom.bdezonia.zorbage.basic.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Sinchpi implements Procedure2<Float64Member,Float64Member> {
-
+public class Sinchpi<T extends Group<T,U> & Hyperbolic<U>,U>
+	implements Procedure2<U,U>
+{
+	private T group;
+	
+	public Sinchpi(T group) {
+		this.group = group;
+	}
+	
 	@Override
-	public void call(Float64Member a, Float64Member b) {
-		// TODO G.DBL.sinchpi(a, b);
+	public void call(U a, U b) {
+		group.sinchpi(a, b);
 	}
 
 }

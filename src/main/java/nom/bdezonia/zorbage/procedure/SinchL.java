@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.procedure;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure2;
+import nom.bdezonia.zorbage.basic.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 
@@ -35,18 +35,24 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
  * @author Barry DeZonia
  *
  */
-public class Sinch<T extends Group<T,U> & Hyperbolic<U>,U>
-	implements Procedure2<U,U>
+public class SinchL<T extends Group<T,U> & Hyperbolic<U>,U>
+	implements Procedure<U>
 {
-	private T group;
+	private Procedure<U> ancestor;
+	private Sinch<T,U> lowerProc;
+	private U tmp;
 	
-	public Sinch(T group) {
-		this.group = group;
-	}
-	
-	@Override
-	public void call(U a, U b) {
-		group.sinch(a, b);
+	public SinchL(T group, Procedure<U> ancestor) {
+		this.ancestor = ancestor;
+		this.lowerProc = new Sinch<T,U>(group);
+		this.tmp = group.construct();
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public void call(U result, U... inputs) {
+		ancestor.call(tmp, inputs);
+		lowerProc.call(tmp, result);
+	}
+	
 }
