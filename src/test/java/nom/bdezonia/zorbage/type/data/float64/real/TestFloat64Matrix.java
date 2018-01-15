@@ -43,10 +43,12 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  */
 public class TestFloat64Matrix {
 
+	// toggle true/false if want to run this big slow test
+	private static final boolean RUN = false;
+	
 	@Test
 	public void run() {
-		// toggle true/false if want to run this big slow test
-		if (false) {
+		if (RUN) {
 			System.out.println("Making a huge virtual matrix > 2 gig entries");
 			Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
 			G.DBL_MAT.unity(m);
