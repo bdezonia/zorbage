@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
@@ -420,6 +421,10 @@ public final class Float64TensorProductMember
 
 	@Override
 	public void reshape(long[] dims) {
+		// the idea here is to change dims and preserve values that
+		// overlap old dims / new dims.
+		if (Arrays.equals(this.dims, dims)) return;
+		// the previous line makes sure that tensor add(a,a,a) will work
 		// TODO
 		throw new IllegalArgumentException("to implement");
 	}
