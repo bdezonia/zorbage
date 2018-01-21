@@ -48,9 +48,9 @@ import nom.bdezonia.zorbage.util.BigList;
 import nom.bdezonia.zorbage.util.LongUtils;
 
 
-// rank
-// dimension
-// upper and lower indices
+// TODO:
+//   rank 0 tensor getting and setting 1 value instead of 0
+//   upper and lower indices: only if not CartesianTensors
 
 /**
  * 
@@ -74,7 +74,13 @@ public final class Float64TensorProductMember
 	private long[] multipliers;
 	private MemoryConstruction m;
 	private StorageConstruction s;
+
+	// rank() is also numDimensions(). Confusing. TODO - fix
 	
+	public int rank() { return rank; }
+	
+	public long dimensions() { return dimCount; }
+
 	public Float64TensorProductMember() {
 		rank = 0;
 		dimCount = 0;
@@ -218,14 +224,14 @@ public final class Float64TensorProductMember
 		for (int i = 0; i < rank; i++) {
 			this.dims[i] = dimCount;
 		}
-		multipliers = calcMultipliers();
+		this.multipliers = calcMultipliers();
 		this.m = m;
 		this.s = s;
 		long numElems = LongUtils.numElements(this.dims);
 		if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
+			this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		else
-			storage = new FileStorageFloat64<Float64Member>(numElems, new Float64Member());
+			this.storage = new FileStorageFloat64<Float64Member>(numElems, new Float64Member());
 	}
 	
 	@Override
