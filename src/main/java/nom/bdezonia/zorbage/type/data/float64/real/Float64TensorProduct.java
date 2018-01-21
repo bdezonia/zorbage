@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.data.float64.real;
 
 
+import nom.bdezonia.zorbage.groups.G;
+
 //note that many implementations of tensors on the internet treat them as generalized matrices.
 //they do not worry about upper and lower indices or even matching shapes. They do element by
 //element ops like sin() of each elem.
@@ -60,8 +62,6 @@ public class Float64TensorProduct
 		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
 		ConstructibleNdLong<Float64TensorProductMember>
 {
-	private Float64Group dbl = new Float64Group();
-	
 	@Override
 	public Float64TensorProductMember construct() {
 		return new Float64TensorProductMember();
@@ -92,7 +92,7 @@ public class Float64TensorProduct
 		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			if (dbl.isNotEqual(aTmp, bTmp))
+			if (G.DBL.isNotEqual(aTmp, bTmp))
 				return false;
 		}
 		return true;
@@ -105,6 +105,7 @@ public class Float64TensorProduct
 
 	@Override
 	public void assign(Float64TensorProductMember from, Float64TensorProductMember to) {
+		if (to == from) return;
 		Float64Member tmp = new Float64Member();
 		long[] dims = new long[from.numDimensions()];
 		for (int i = 0; i < dims.length; i++) {
@@ -121,7 +122,6 @@ public class Float64TensorProduct
 	@Override
 	public void zero(Float64TensorProductMember a) {
 		Float64Member tmp = new Float64Member();
-		dbl.zero(tmp);
 		long numElems = a.numElems();
 		for (long i = 0; i < numElems; i++) {
 			a.setV(i, tmp);
@@ -135,7 +135,7 @@ public class Float64TensorProduct
 		long numElems = b.numElems();
 		for (long i = 0; i < numElems; i++) {
 			b.v(i, tmp);
-			dbl.negate(tmp, tmp);
+			G.DBL.negate(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -145,6 +145,11 @@ public class Float64TensorProduct
 			Float64TensorProductMember c) {
 		if (!shapesMatch(a,b))
 			throw new IllegalArgumentException("tensor add shape mismatch");
+		long[] newDims = new long[a.numDimensions()];
+		for (int i = 0; i < newDims.length; i++) {
+			newDims[i] = a.dimension(i);
+		}
+		c.init(newDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -152,7 +157,7 @@ public class Float64TensorProduct
 		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			dbl.add(aTmp, bTmp, cTmp);
+			G.DBL.add(aTmp, bTmp, cTmp);
 			c.setV(i, cTmp);
 		}
 	}
@@ -162,6 +167,11 @@ public class Float64TensorProduct
 			Float64TensorProductMember c) {
 		if (!shapesMatch(a,b))
 			throw new IllegalArgumentException("tensor subtract shape mismatch");
+		long[] newDims = new long[a.numDimensions()];
+		for (int i = 0; i < newDims.length; i++) {
+			newDims[i] = a.dimension(i);
+		}
+		c.init(newDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -169,15 +179,14 @@ public class Float64TensorProduct
 		for (long i = 0; i < numElems; i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			dbl.subtract(aTmp, bTmp, cTmp);
+			G.DBL.subtract(aTmp, bTmp, cTmp);
 			c.setV(i, cTmp);
 		}
 	}
 
 	@Override
 	public void norm(Float64TensorProductMember a, Float64Member b) {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalArgumentException("to be implemented");
 	}
 
 	@Override
@@ -186,7 +195,7 @@ public class Float64TensorProduct
 		assign(a,b);
 		for (long i = 0; i < b.numElems(); i++) {
 			b.v(i, tmp);
-			dbl.multiply(scalar, tmp, tmp);
+			G.DBL.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}
@@ -225,8 +234,7 @@ public class Float64TensorProduct
 
 	@Override
 	public void conjugate(Float64TensorProductMember a, Float64TensorProductMember b) {
-		assign(a,b);
-		// real so nothing left to do
+		throw new IllegalArgumentException("to be implemented");
 	}
 
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
