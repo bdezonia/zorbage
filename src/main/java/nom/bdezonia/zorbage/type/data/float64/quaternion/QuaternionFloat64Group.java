@@ -29,6 +29,10 @@ package nom.bdezonia.zorbage.type.data.float64.quaternion;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -419,53 +423,21 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void sinch(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-			sinh(a, tmp);
-			divide(tmp, a, b);
-		}
+		Sinch.compute(this, a, b);
 	}
 
 	@Override
 	public void sinchpi(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
-			QuaternionFloat64Member tmp3 = new QuaternionFloat64Member();
-			multiply(a, PI, tmp2);
-			sinh(tmp2, tmp3);
-			divide(tmp3, tmp2, b);
-		}
+		Sinchpi.compute(this, a, b);
 	}
 
 	@Override
 	public void sinc(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-			sin(a, tmp);
-			divide(tmp, a, b);
-		}
+		Sinc.compute(this, a, b);
 	}
 
 	@Override
 	public void sincpi(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
-			QuaternionFloat64Member tmp3 = new QuaternionFloat64Member();
-			multiply(a, PI, tmp2);
-			sin(tmp2, tmp3);
-			divide(tmp3, tmp2, b);
-		}
+		Sincpi.compute(this, a, b);
 	}
 }

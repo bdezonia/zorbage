@@ -29,6 +29,10 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -688,53 +692,21 @@ public class OctonionFloat64Group
 
 	@Override
 	public void sinch(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			OctonionFloat64Member tmp = new OctonionFloat64Member();
-			sinh(a, tmp);
-			divide(tmp, a, b);
-		}
+		Sinch.compute(this, a, b);
 	}
 
 	@Override
 	public void sinchpi(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
-			OctonionFloat64Member tmp3 = new OctonionFloat64Member();
-			multiply(a, PI, tmp2);
-			sinh(tmp2, tmp3);
-			divide(tmp3, tmp2, b);
-		}
+		Sinchpi.compute(this, a, b);
 	}
 
 	@Override
 	public void sinc(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			OctonionFloat64Member tmp = new OctonionFloat64Member();
-			sin(a, tmp);
-			divide(tmp, a, b);
-		}
+		Sinc.compute(this, a, b);
 	}
 
 	@Override
 	public void sincpi(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
-			OctonionFloat64Member tmp3 = new OctonionFloat64Member();
-			multiply(a, PI, tmp2);
-			sin(tmp2, tmp3);
-			divide(tmp3, tmp2, b);
-		}
+		Sincpi.compute(this, a, b);
 	}
 }

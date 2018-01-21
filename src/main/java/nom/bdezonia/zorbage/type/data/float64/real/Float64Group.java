@@ -31,6 +31,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -587,54 +591,22 @@ public class Float64Group
 
 	@Override
 	public void sinch(Float64Member a, Float64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			Float64Member tmp = new Float64Member();
-			sinh(a, tmp);
-			divide(tmp, a, b);
-		}
+		Sinch.compute(this, a, b);
 	}
 
 	@Override
 	public void sinchpi(Float64Member a, Float64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			Float64Member tmp2 = new Float64Member();
-			Float64Member tmp3 = new Float64Member();
-			multiply(a, PI, tmp2);
-			sinh(tmp2, tmp3);
-			divide(tmp3, tmp2, b);
-		}
+		Sinchpi.compute(this, a, b);
 	}
 
 	@Override
 	public void sinc(Float64Member a, Float64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			Float64Member tmp = new Float64Member();
-			sin(a, tmp);
-			divide(tmp, a, b);
-		}
+		Sinc.compute(this, a, b);
 	}
 
 	@Override
 	public void sincpi(Float64Member a, Float64Member b) {
-		// TODO - improve accuracy near 0 by fitting polynomial
-		if (isEqual(ZERO, a))
-			assign(ONE, b);
-		else {
-			Float64Member tmp2 = new Float64Member();
-			Float64Member tmp3 = new Float64Member();
-			multiply(a, PI, tmp2);
-			sin(tmp2, tmp3);
-			divide(tmp3, tmp2, b);
-		}
+		Sincpi.compute(this, a, b);
 	}
 
 	/*
