@@ -245,9 +245,9 @@ public class TestPrimitiveConversions {
 		Float64TensorProductMember t2 = new Float64TensorProductMember(new long[] {5,3,2,2}, new double[60]);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, t2);
 		assertEquals(5,t2.dimension(0));
-		assertEquals(3,t2.dimension(1));
-		assertEquals(2,t2.dimension(2));
-		assertEquals(2,t2.dimension(3));
+		assertEquals(5,t2.dimension(1));
+		assertEquals(5,t2.dimension(2));
+		assertEquals(5,t2.dimension(3));
 		IntegerIndex index = new IntegerIndex(4);
 
 		index.set(0,0);

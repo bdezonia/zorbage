@@ -30,6 +30,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
@@ -63,9 +65,10 @@ public final class Float64TensorProductMember
 		PrimitiveConversion
 // TODO: UniversalRepresentation
 {
+	private static final Float64Member ZERO = new Float64Member();
 
-	private static final Float64Member ZERO = new Float64Member(0);
-
+	private int rank;
+	private long dimCount;
 	private IndexedDataSource<?,Float64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
@@ -73,6 +76,8 @@ public final class Float64TensorProductMember
 	private StorageConstruction s;
 	
 	public Float64TensorProductMember() {
+		rank = 0;
+		dimCount = 0;
 		dims = new long[0];
 		storage = new ArrayStorageFloat64<Float64Member>(0, new Float64Member());
 		multipliers = calcMultipliers();
@@ -80,25 +85,83 @@ public final class Float64TensorProductMember
 		s = StorageConstruction.ARRAY;
 	}
 
-	public Float64TensorProductMember(long[] dims, double[] vals) {
-		if (vals.length != LongUtils.numElements(dims))
-			throw new IllegalArgumentException("incorrect number of values provided to tensor constructor");
-		this.dims = dims;
-		storage = new ArrayStorageFloat64<Float64Member>(vals.length, new Float64Member());
+	public Float64TensorProductMember(int rank, long dimCount) {
+		if (rank < 0)
+			throw new IllegalArgumentException("bad rank in tensor constructor");
+		if (dimCount < 0)
+			throw new IllegalArgumentException("bad dimensionality in tensor constructor");
+		this.rank = rank;
+		this.dimCount = dimCount;
+		dims = new long[rank];
+		for (int i = 0; i < rank; i++) {
+			dims[i] = dimCount;
+		}
+		long numElems = LongUtils.numElements(this.dims);
+		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		multipliers = calcMultipliers();
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
-		Float64Member tmp = new Float64Member();
+	}
+	
+	public Float64TensorProductMember(int rank, long dimCount, double[] vals) {
+		this(rank, dimCount);
+		if (vals.length != storage.size())
+			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
+		Float64Member value = new Float64Member();
 		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
+			value.setV(vals[i]);
+			storage.set(i, value);
+		}
+	}
+
+	public Float64TensorProductMember(long[] dims) {
+		this.rank = dims.length;
+		long max = 0;
+		for (long d : dims) {
+			if (max < d)
+				max = d;
+		}
+		this.dimCount = max;
+		this.dims = new long[rank];
+		for (int i = 0; i < rank; i++) {
+			this.dims[i] = dimCount;
+		}
+		long numElems = LongUtils.numElements(this.dims);
+		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
+		multipliers = calcMultipliers();
+		m = MemoryConstruction.DENSE;
+		s = StorageConstruction.ARRAY;
+	}
+	
+	public Float64TensorProductMember(long[] dims, double[] vals) {
+		this(dims);
+		if (vals.length != LongUtils.numElements(dims))
+			throw new IllegalArgumentException("incorrect number of values provided to tensor constructor");
+		long[] point1 = new long[dims.length];
+		long[] point2 = new long[dims.length];
+		for (int i = 0; i < dims.length; i++) {
+			point2[i] = dims[i] - 1;
+		}
+		Float64Member value = new Float64Member();
+		int i = 0;
+		SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
+		SamplingIterator<IntegerIndex> iter = sampling.iterator();
+		IntegerIndex index = new IntegerIndex(dims.length);
+		while (iter.hasNext()) {
+			iter.next(index);
+			value.setV(vals[i]);
+			long idx = indexToLong(index);
+			storage.set(idx, value);
+			i++;
 		}
 	}
 	
-	public Float64TensorProductMember(Float64TensorProductMember other) { 
+	public Float64TensorProductMember(Float64TensorProductMember other) {
+		rank = other.rank;
+		dimCount = other.dimCount;
 		dims = other.dims.clone();
 		storage = other.storage.duplicate();
-		multipliers = calcMultipliers();
+		multipliers = other.multipliers.clone();
 		m = other.m;
 		s = other.s;
 	}
@@ -106,33 +169,70 @@ public final class Float64TensorProductMember
 	public Float64TensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
-		storage = new ArrayStorageFloat64<Float64Member>(data.size(), new Float64Member());
-		dims = rep.dimensions().clone();
-		multipliers = calcMultipliers();
-		m = MemoryConstruction.DENSE;
+		long[] tmpDims = rep.dimensions().clone();
+		this.rank = tmpDims.length;
+		long max = 0;
+		for (long d : tmpDims) {
+			if (max < d)
+				max = d;
+		}
+		this.dimCount = max;
+		this.dims = new long[rank];
+		for (int i = 0; i < rank; i++) {
+			this.dims[i] = dimCount;
+		}
+		long numElems = LongUtils.numElements(this.dims);
+		this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
+		this.multipliers = calcMultipliers();
+		this.m = MemoryConstruction.DENSE;
 		this.s = StorageConstruction.ARRAY;
-		Float64Member tmp = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
+		long[] point1 = new long[tmpDims.length];
+		long[] point2 = new long[tmpDims.length];
+		for (int i = 0; i < tmpDims.length; i++) {
+			point2[i] = tmpDims[i] - 1;
+		}
+		Float64Member value = new Float64Member();
+		long i = 0;
+		SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
+		SamplingIterator<IntegerIndex> iter = sampling.iterator();
+		IntegerIndex index = new IntegerIndex(dims.length);
+		while (iter.hasNext()) {
+			iter.next(index);
 			OctonionRepresentation val = data.get(i);
-			tmp.setV(val.r().doubleValue());
-			storage.set(i, tmp);
+			value.setV(val.r().doubleValue());
+			long idx = indexToLong(index);
+			storage.set(idx, value);
+			i++;
 		}
 	}
 	
 	public Float64TensorProductMember(MemoryConstruction m, StorageConstruction s, long[] nd) {
-		dims = nd.clone();
+		this.rank = dims.length;
+		long max = 0;
+		for (long d : dims) {
+			if (max < d)
+				max = d;
+		}
+		this.dimCount = max;
+		this.dims = new long[rank];
+		for (int i = 0; i < rank; i++) {
+			this.dims[i] = dimCount;
+		}
 		multipliers = calcMultipliers();
-		if (s == StorageConstruction.ARRAY) {
-			storage = new ArrayStorageFloat64<Float64Member>(LongUtils.numElements(nd), new Float64Member());
-		}
-		else {
-			storage = new FileStorageFloat64<Float64Member>(LongUtils.numElements(nd), new Float64Member());
-		}
+		this.m = m;
+		this.s = s;
+		long numElems = LongUtils.numElements(this.dims);
+		if (s == StorageConstruction.ARRAY)
+			storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
+		else
+			storage = new FileStorageFloat64<Float64Member>(numElems, new Float64Member());
 	}
-
+	
 	@Override
 	public void set(Float64TensorProductMember other) {
 		if (this == other) return;
+		rank = other.rank;
+		dimCount = other.dimCount;
 		dims = other.dims.clone();
 		multipliers = other.multipliers.clone();
 		storage = other.storage.duplicate();
@@ -143,6 +243,8 @@ public final class Float64TensorProductMember
 	@Override
 	public void get(Float64TensorProductMember other) {
 		if (this == other) return;
+		other.rank = rank;
+		other.dimCount = dimCount;
 		other.dims = dims.clone();
 		other.multipliers = multipliers.clone();
 		other.storage = storage.duplicate();
@@ -152,9 +254,19 @@ public final class Float64TensorProductMember
 
 	@Override
 	public void init(long[] newDims) {
-		dims = newDims.clone();
-		multipliers = calcMultipliers();
-		long newCount = LongUtils.numElements(newDims);
+		this.rank = newDims.length;
+		long max = 0;
+		for (long d : newDims) {
+			if (max < d)
+				max = d;
+		}
+		this.dimCount = max;
+		this.dims = new long[rank];
+		for (int i = 0; i < rank; i++) {
+			this.dims[i] = dimCount;
+		}
+		this.multipliers = calcMultipliers();
+		long newCount = LongUtils.numElements(this.dims);
 		if (newCount != storage.size()) {
 			if (s == StorageConstruction.ARRAY) {
 				storage = new ArrayStorageFloat64<Float64Member>(newCount, new Float64Member());
