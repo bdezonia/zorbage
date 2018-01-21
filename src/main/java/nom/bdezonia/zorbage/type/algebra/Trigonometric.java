@@ -37,7 +37,7 @@ public interface Trigonometric<U> {
 	void tan(U a, U b);
 	void sinAndCos(U a, U s, U c);
 	void sinc(U a, U b);
-	void sincpi(U a, U b);
+	void sincpi(U a, U b); // this one is out of place. what if type doesn't support PI?
 	//void csc(U a, U b);
 	//void sec(U a, U b);
 	//void cot(U a, U b);
