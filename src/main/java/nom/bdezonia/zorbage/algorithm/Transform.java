@@ -185,11 +185,11 @@ public class Transform {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion, X extends Group<X,Y>, Y extends PrimitiveConversion>
-		void compute(T grpU, V grpW, X grpX, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
+		void compute(T grpU, V grpW, X grpY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
 		U tmpU = grpU.construct();
 		W tmpW = grpW.construct();
-		Y tmpY = grpX.construct();
+		Y tmpY = grpY.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmpU);
 			b.get(bStart+i, tmpW);
