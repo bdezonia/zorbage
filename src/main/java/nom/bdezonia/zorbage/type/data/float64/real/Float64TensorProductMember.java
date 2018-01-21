@@ -86,7 +86,7 @@ public final class Float64TensorProductMember
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
-		storage = new ArrayStorageFloat64<Float64Member>(0, new Float64Member());
+		storage = new ArrayStorageFloat64<Float64Member>(1, new Float64Member());
 		multipliers = calcMultipliers();
 		m = MemoryConstruction.DENSE;
 		s = StorageConstruction.ARRAY;
@@ -104,6 +104,7 @@ public final class Float64TensorProductMember
 			dims[i] = dimCount;
 		}
 		long numElems = LongUtils.numElements(this.dims);
+		if (numElems == 0) numElems = 1;
 		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		multipliers = calcMultipliers();
 		m = MemoryConstruction.DENSE;
@@ -134,6 +135,7 @@ public final class Float64TensorProductMember
 			this.dims[i] = dimCount;
 		}
 		long numElems = LongUtils.numElements(this.dims);
+		if (numElems == 0) numElems = 1;
 		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		multipliers = calcMultipliers();
 		m = MemoryConstruction.DENSE;
@@ -142,24 +144,32 @@ public final class Float64TensorProductMember
 	
 	public Float64TensorProductMember(long[] dims, double[] vals) {
 		this(dims);
-		if (vals.length != LongUtils.numElements(dims))
+		long numElems = LongUtils.numElements(dims);
+		if (numElems == 0) numElems = 1;
+		if (vals.length != numElems)
 			throw new IllegalArgumentException("incorrect number of values provided to tensor constructor");
-		long[] point1 = new long[dims.length];
-		long[] point2 = new long[dims.length];
-		for (int i = 0; i < dims.length; i++) {
-			point2[i] = dims[i] - 1;
-		}
 		Float64Member value = new Float64Member();
-		int i = 0;
-		SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
-		SamplingIterator<IntegerIndex> iter = sampling.iterator();
-		IntegerIndex index = new IntegerIndex(dims.length);
-		while (iter.hasNext()) {
-			iter.next(index);
-			value.setV(vals[i]);
-			long idx = indexToLong(index);
-			storage.set(idx, value);
-			i++;
+		if (numElems == 1) {
+			value.setV(vals[0]);
+			storage.set(0, value);
+		}
+		else {
+			long[] point1 = new long[dims.length];
+			long[] point2 = new long[dims.length];
+			for (int i = 0; i < dims.length; i++) {
+				point2[i] = dims[i] - 1;
+			}
+			int i = 0;
+			SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
+			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			IntegerIndex index = new IntegerIndex(dims.length);
+			while (iter.hasNext()) {
+				iter.next(index);
+				value.setV(vals[i]);
+				long idx = indexToLong(index);
+				storage.set(idx, value);
+				i++;
+			}
 		}
 	}
 	
@@ -189,27 +199,36 @@ public final class Float64TensorProductMember
 			this.dims[i] = dimCount;
 		}
 		long numElems = LongUtils.numElements(this.dims);
+		if (numElems == 0) numElems = 1;
 		this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		this.multipliers = calcMultipliers();
 		this.m = MemoryConstruction.DENSE;
 		this.s = StorageConstruction.ARRAY;
-		long[] point1 = new long[tmpDims.length];
-		long[] point2 = new long[tmpDims.length];
-		for (int i = 0; i < tmpDims.length; i++) {
-			point2[i] = tmpDims[i] - 1;
-		}
 		Float64Member value = new Float64Member();
-		long i = 0;
-		SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
-		SamplingIterator<IntegerIndex> iter = sampling.iterator();
-		IntegerIndex index = new IntegerIndex(dims.length);
-		while (iter.hasNext()) {
-			iter.next(index);
-			OctonionRepresentation val = data.get(i);
+		if (numElems == 1) {
+			// TODO: does a rank 0 tensor have any values from a parsing?
+			OctonionRepresentation val = data.get(0);
 			value.setV(val.r().doubleValue());
-			long idx = indexToLong(index);
-			storage.set(idx, value);
-			i++;
+			storage.set(0, value);
+		}
+		else {
+			long[] point1 = new long[tmpDims.length];
+			long[] point2 = new long[tmpDims.length];
+			for (int i = 0; i < tmpDims.length; i++) {
+				point2[i] = tmpDims[i] - 1;
+			}
+			long i = 0;
+			SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
+			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			IntegerIndex index = new IntegerIndex(dims.length);
+			while (iter.hasNext()) {
+				iter.next(index);
+				OctonionRepresentation val = data.get(i);
+				value.setV(val.r().doubleValue());
+				long idx = indexToLong(index);
+				storage.set(idx, value);
+				i++;
+			}
 		}
 	}
 	
@@ -229,6 +248,7 @@ public final class Float64TensorProductMember
 		this.m = m;
 		this.s = s;
 		long numElems = LongUtils.numElements(this.dims);
+		if (numElems == 0) numElems = 1;
 		if (s == StorageConstruction.ARRAY)
 			this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		else
@@ -274,6 +294,7 @@ public final class Float64TensorProductMember
 		}
 		this.multipliers = calcMultipliers();
 		long newCount = LongUtils.numElements(this.dims);
+		if (newCount == 0) newCount = 1;
 		if (newCount != storage.size()) {
 			if (s == StorageConstruction.ARRAY) {
 				storage = new ArrayStorageFloat64<Float64Member>(newCount, new Float64Member());
