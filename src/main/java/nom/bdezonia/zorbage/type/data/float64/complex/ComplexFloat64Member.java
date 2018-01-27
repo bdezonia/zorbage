@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
@@ -53,8 +55,8 @@ public final class ComplexFloat64Member
 		DoubleCoder<ComplexFloat64Member>,
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
-		NumberMember<ComplexFloat64Member>, PrimitiveConversion
-		// TODO: UniversalRepresentation
+		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
+		UniversalRepresentation
 {
 	private double r, i;
 	
@@ -163,6 +165,23 @@ public final class ComplexFloat64Member
 	@Override
 	public void setV(ComplexFloat64Member value) {
 		set(value);
+	}
+
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(
+			new OctonionRepresentation(
+				BigDecimal.valueOf(r()),
+				BigDecimal.valueOf(i())
+			)
+		);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		OctonionRepresentation v = rep.getFirstValue();
+		setR(v.r().doubleValue());
+		setI(v.i().doubleValue());
 	}
 
 	@Override

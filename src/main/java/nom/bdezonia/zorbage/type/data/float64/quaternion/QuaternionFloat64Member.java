@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
@@ -56,8 +58,7 @@ public final class QuaternionFloat64Member
 		DoubleCoder<QuaternionFloat64Member>,
 		Allocatable<QuaternionFloat64Member>, Duplicatable<QuaternionFloat64Member>,
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
-		PrimitiveConversion
-		// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 
 	private double r, i, j, k;
@@ -198,6 +199,27 @@ public final class QuaternionFloat64Member
 	@Override
 	public void setV(QuaternionFloat64Member value) {
 		set(value);
+	}
+
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		rep.setFirstValue(
+			new OctonionRepresentation(
+				BigDecimal.valueOf(r()),
+				BigDecimal.valueOf(i()),
+				BigDecimal.valueOf(j()),
+				BigDecimal.valueOf(k())
+			)
+		);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		OctonionRepresentation v = rep.getFirstValue();
+		setR(v.r().doubleValue());
+		setI(v.i().doubleValue());
+		setJ(v.j().doubleValue());
+		setK(v.k().doubleValue());
 	}
 
 	@Override
