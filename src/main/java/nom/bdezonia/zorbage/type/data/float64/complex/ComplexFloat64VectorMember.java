@@ -36,9 +36,12 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -55,8 +58,7 @@ public final class ComplexFloat64VectorMember
 		RModuleMember<ComplexFloat64Member>,
 		Gettable<ComplexFloat64VectorMember>,
 		Settable<ComplexFloat64VectorMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
@@ -143,6 +145,33 @@ public final class ComplexFloat64VectorMember
 		other.storage = storage.duplicate();
 		other.m = m;
 		other.s = s;
+	}
+
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		for (long i = 0; i < length(); i++) {
+			storage.get(i, value);
+			BigDecimal real = BigDecimal.valueOf(value.r());
+			BigDecimal imag = BigDecimal.valueOf(value.i());
+			OctonionRepresentation o = new OctonionRepresentation(real,imag);
+			values.set(i, o);
+		}
+		rep.setFirstRModule(length(), values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		BigList<OctonionRepresentation> rmod = rep.getFirstRModule();
+		init(rmod.size());
+		for (long i = 0; i < rmod.size(); i++) {
+			OctonionRepresentation o = rmod.get(i);
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
+			storage.set(i,value);
+		}
 	}
 
 	@Override

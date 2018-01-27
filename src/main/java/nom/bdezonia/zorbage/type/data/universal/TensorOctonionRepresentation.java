@@ -39,8 +39,6 @@ import nom.bdezonia.zorbage.util.LongUtils;
  */
 public class TensorOctonionRepresentation implements DimensionsResizable {
 
-	private static final OctonionRepresentation ZERO = new OctonionRepresentation();
-	
 	private BigList<OctonionRepresentation> values;
 	private long[] dims;
 	
@@ -81,6 +79,8 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		return dims.length > 2;
 	}
 
+	// TODO: change setFirstX() to just setX()
+	
 	// single value
 	
 	public void setFirstValue(OctonionRepresentation value) {
@@ -90,40 +90,95 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	// vector value
 	
-	public void setFirstRModule(long n, OctonionRepresentation[] values) {
-		if (n != values.length)
-			throw new IllegalArgumentException("Incorrect number of values passed");
+	public void setFirstRModule(long n, BigList<OctonionRepresentation> values) {
 		setDims(new long[] {n});
-		for (int i = 0; i < values.length; i++) {
-			this.values.set(i, values[i]);
+		if (this.values.size() != values.size())
+			throw new IllegalArgumentException("Incorrect number of values passed");
+		for (long i = 0; i < this.values.size(); i++) {
+			this.values.set(i, values.get(i));
 		}
 	}
 	
 	// matrix value
 	
-	public void setFirstMatrix(long r, long c, OctonionRepresentation[] values) {
-		if (r*c != values.length)
-			throw new IllegalArgumentException("Incorrect number of values passed");
+	public void setFirstMatrix(long r, long c, BigList<OctonionRepresentation> values) {
 		setDims(new long[] {c,r});
-		for (int i = 0; i < values.length; i++) {
-			this.values.set(i, values[i]);
+		if (this.values.size() != values.size())
+			throw new IllegalArgumentException("Incorrect number of values passed");
+		for (long i = 0; i < this.values.size(); i++) {
+			this.values.set(i, values.get(i));
 		}
 	}
 	
 	// tensor value
 	
-	public void setTensor(long[] dims, OctonionRepresentation[] values) {
-		if (LongUtils.numElements(dims) != values.length)
-			throw new IllegalArgumentException("Incorrect number of values passed");
+	public void setTensor(long[] dims, BigList<OctonionRepresentation> values) {
 		setDims(dims);
-		for (int i = 0; i < values.length; i++) {
-			this.values.set(i, values[i]);
+		if (this.values.size() != values.size())
+			throw new IllegalArgumentException("Incorrect number of values passed");
+		for (long i = 0; i < this.values.size(); i++) {
+			this.values.set(i, values.get(i));
 		}
 	}
 	
 	public OctonionRepresentation getFirstValue() {
 		return nonNull(values.get(0));
 	}
+
+	public long getFirstRModuleDim() {
+		long size = 1;
+		if (dims.length >= 1 && dims[0] > 0)
+			size = dims[0];
+		return size;
+	}
+	
+	public BigList<OctonionRepresentation> getFirstRModule() {
+		long size = getFirstRModuleDim();
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size);
+		for (long i = 0; i < size; i++) {
+			list.set(i, nonNull(values.get(i)));
+		}
+		return list;
+	}
+	
+	public long getFirstMatrixColDim() {
+		long size = 1;
+		if (dims.length >= 1 && dims[0] > 0)
+			size = dims[0];
+		return size;
+	}
+	
+	public long getFirstMatrixRowDim() {
+		long size = 1;
+		if (dims.length >= 2 && dims[1] > 0)
+			size = dims[1];
+		return size;
+	}
+	
+	public BigList<OctonionRepresentation> getFirstMatrix() {
+		long r = getFirstMatrixRowDim();
+		long c = getFirstMatrixColDim();
+		long size = LongUtils.numElements(new long[] {c,r});
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size);
+		for (long i = 0; i < size; i++) {
+			list.set(i, nonNull(values.get(i)));
+		}
+		return list;
+	}
+
+	public long[] getTensorDims() {
+		return dims.clone();
+	}
+
+	public BigList<OctonionRepresentation> getTensor() {
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(values.size());
+		for (long i = 0; i < values.size(); i++) {
+			list.set(i, nonNull(values.get(i)));
+		}
+		return list;
+	}
+	
+	// TODO: this really doesn't belong in this class.
 	
 	public void scaleBy(BigDecimal v) {
 		OctonionRepresentation o = null;
@@ -143,9 +198,9 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	}
 	
 	private OctonionRepresentation nonNull(OctonionRepresentation o) {
-		if (o == null)
-			return ZERO; // TODO: does this make the constant malleable? Should I duplicate() it?
-		return o;
+		if (o != null)
+			return o;
+		return new OctonionRepresentation();
 	}
 	
 }
