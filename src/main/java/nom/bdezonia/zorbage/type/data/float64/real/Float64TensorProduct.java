@@ -190,17 +190,6 @@ public class Float64TensorProduct
 	}
 
 	@Override
-	public void scale(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
-		Float64Member tmp = new Float64Member();
-		assign(a,b);
-		for (long i = 0; i < b.numElems(); i++) {
-			b.v(i, tmp);
-			G.DBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
-	}
-
-	@Override
 	public void crossProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 		// TODO Auto-generated method stub
 		
@@ -237,6 +226,105 @@ public class Float64TensorProduct
 		throw new IllegalArgumentException("to be implemented");
 	}
 
+	@Override
+	public void scale(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
+		Float64Member tmp = new Float64Member();
+		assign(a,b);
+		for (long i = 0; i < b.numElems(); i++) {
+			b.v(i, tmp);
+			G.DBL.multiply(scalar, tmp, tmp);
+			b.setV(i, tmp);
+		}
+	}
+
+	// TODO: need some interface to override
+	
+	public void add(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
+		Float64Member tmp = new Float64Member();
+		assign(a,b);
+		for (long i = 0; i < b.numElems(); i++) {
+			b.v(i, tmp);
+			G.DBL.add(scalar, tmp, tmp);
+			b.setV(i, tmp);
+		}
+	}
+
+	// TODO: need some interface to override
+	
+	public void multiplyElements(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+		if (!shapesMatch(a, b))
+			throw new IllegalArgumentException("mismatched shapes");
+		long[] newDims = new long[a.numDimensions()];
+		for (int i = 0; i < newDims.length; i++) {
+			newDims[i] = a.dimension(i);
+		}
+		c.reshape(newDims);
+		Float64Member aTmp = new Float64Member();
+		Float64Member bTmp = new Float64Member();
+		Float64Member cTmp = new Float64Member();
+		long numElems = a.numElems();
+		for (long i = 0; i < numElems; i++) {
+			a.v(i, aTmp);
+			b.v(i, bTmp);
+			G.DBL.multiply(aTmp, bTmp, cTmp);
+			c.setV(i, cTmp);
+		}
+	}
+	
+	// TODO: need some interface to override
+	
+	public void divideElements(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+		if (!shapesMatch(a, b))
+			throw new IllegalArgumentException("mismatched shapes");
+		long[] newDims = new long[a.numDimensions()];
+		for (int i = 0; i < newDims.length; i++) {
+			newDims[i] = a.dimension(i);
+		}
+		c.reshape(newDims);
+		Float64Member aTmp = new Float64Member();
+		Float64Member bTmp = new Float64Member();
+		Float64Member cTmp = new Float64Member();
+		long numElems = a.numElems();
+		for (long i = 0; i < numElems; i++) {
+			a.v(i, aTmp);
+			b.v(i, bTmp);
+			G.DBL.divide(aTmp, bTmp, cTmp);
+			c.setV(i, cTmp);
+		}
+	}
+
+	// TODO: need some interface to override
+	
+	public void product(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+		if (c == a || c == b)
+			throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
+		long dimA = a.dimension(0);
+		long dimB = b.dimension(0);
+		if (dimA != dimB)
+			throw new IllegalArgumentException("dimension of tensors must match");
+		int rankA = a.numDimensions();
+		int rankB = b.numDimensions();
+		int rankC = rankA + rankB;
+		long[] cDims = new long[rankC];
+		for (int i = 0; i < cDims.length; i++) {
+			cDims[i] = dimA;
+		}
+		c.reshape(cDims);
+		Float64Member aTmp = new Float64Member();
+		Float64Member bTmp = new Float64Member();
+		Float64Member cTmp = new Float64Member();
+		long k = 0;
+		for (long i = 0; i < a.componentCount(); i++) {
+			a.v(i, aTmp);
+			for (long j = 0; j < b.componentCount(); j++) {
+				b.v(i, bTmp);
+				G.DBL.multiply(aTmp, bTmp, cTmp);
+				c.setV(k, cTmp);
+				k++;
+			}
+		}
+	}
+	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
 		int numDims = a.numDimensions();
 		if (numDims != b.numDimensions())
