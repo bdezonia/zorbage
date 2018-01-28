@@ -196,14 +196,14 @@ public final class QuaternionFloat64MatrixMember
 			OctonionRepresentation o = new OctonionRepresentation(re,im,j,k);
 			values.set(i, o);
 		}
-		rep.setFirstMatrix(rows, cols, values);
+		rep.setMatrix(rows, cols, values);
 	}
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		BigList<OctonionRepresentation> mat = rep.getFirstMatrix();
-		init(rep.getFirstMatrixRowDim(), rep.getFirstMatrixColDim());
+		BigList<OctonionRepresentation> mat = rep.getMatrix();
+		init(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		for (long i = 0; i < mat.size(); i++) {
 			OctonionRepresentation o = mat.get(i);
 			value.setR(o.r().doubleValue());

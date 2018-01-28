@@ -170,7 +170,7 @@ public final class UnsignedInt128Member
 
 	@Override
 	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
-		rep.setFirstValue(new OctonionRepresentation(new BigDecimal(v())));
+		rep.setValue(new OctonionRepresentation(new BigDecimal(v())));
 	}
 
 	@Override

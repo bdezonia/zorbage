@@ -59,7 +59,7 @@ public class ScientificNotation {
 		OctonionRepresentation v = new OctonionRepresentation();
 		v.setR(value);
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
-		rep.setFirstValue(v);
+		rep.setValue(v);
 		result.setSelfFromTensor(rep);
 	}
 }

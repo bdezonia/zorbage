@@ -175,13 +175,13 @@ public final class OctonionFloat64RModuleMember
 			OctonionRepresentation o = new OctonionRepresentation(r,im,j,k,l,i0,j0,k0);
 			values.set(i, o);
 		}
-		rep.setFirstRModule(length(), values);
+		rep.setRModule(length(), values);
 	}
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
 		OctonionFloat64Member value = new OctonionFloat64Member();
-		BigList<OctonionRepresentation> rmod = rep.getFirstRModule();
+		BigList<OctonionRepresentation> rmod = rep.getRModule();
 		init(rmod.size());
 		for (long i = 0; i < rmod.size(); i++) {
 			OctonionRepresentation o = rmod.get(i);

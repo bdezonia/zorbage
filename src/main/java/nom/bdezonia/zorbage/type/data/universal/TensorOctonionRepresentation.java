@@ -79,18 +79,16 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		return dims.length > 2;
 	}
 
-	// TODO: change setFirstX() to just setX()
-	
 	// single value
 	
-	public void setFirstValue(OctonionRepresentation value) {
+	public void setValue(OctonionRepresentation value) {
 		setDims(new long[] {});
 		values.set(0, value);
 	}
 	
-	// vector value
+	// vector/rmodule value
 	
-	public void setFirstRModule(long n, BigList<OctonionRepresentation> values) {
+	public void setRModule(long n, BigList<OctonionRepresentation> values) {
 		setDims(new long[] {n});
 		if (this.values.size() != values.size())
 			throw new IllegalArgumentException("Incorrect number of values passed");
@@ -101,7 +99,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	// matrix value
 	
-	public void setFirstMatrix(long r, long c, BigList<OctonionRepresentation> values) {
+	public void setMatrix(long r, long c, BigList<OctonionRepresentation> values) {
 		setDims(new long[] {c,r});
 		if (this.values.size() != values.size())
 			throw new IllegalArgumentException("Incorrect number of values passed");
@@ -125,15 +123,15 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		return nonNull(values.get(0));
 	}
 
-	public long getFirstRModuleDim() {
+	public long getRModuleDim() {
 		long size = 1;
 		if (dims.length >= 1 && dims[0] > 0)
 			size = dims[0];
 		return size;
 	}
 	
-	public BigList<OctonionRepresentation> getFirstRModule() {
-		long size = getFirstRModuleDim();
+	public BigList<OctonionRepresentation> getRModule() {
+		long size = getRModuleDim();
 		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size);
 		for (long i = 0; i < size; i++) {
 			list.set(i, nonNull(values.get(i)));
@@ -141,23 +139,23 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		return list;
 	}
 	
-	public long getFirstMatrixColDim() {
+	public long getMatrixColDim() {
 		long size = 1;
 		if (dims.length >= 1 && dims[0] > 0)
 			size = dims[0];
 		return size;
 	}
 	
-	public long getFirstMatrixRowDim() {
+	public long getMatrixRowDim() {
 		long size = 1;
 		if (dims.length >= 2 && dims[1] > 0)
 			size = dims[1];
 		return size;
 	}
 	
-	public BigList<OctonionRepresentation> getFirstMatrix() {
-		long r = getFirstMatrixRowDim();
-		long c = getFirstMatrixColDim();
+	public BigList<OctonionRepresentation> getMatrix() {
+		long r = getMatrixRowDim();
+		long c = getMatrixColDim();
 		long size = LongUtils.numElements(new long[] {c,r});
 		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size);
 		for (long i = 0; i < size; i++) {

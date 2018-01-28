@@ -133,7 +133,7 @@ public final class SignedInt64Member
 
 	@Override
 	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
-		rep.setFirstValue(new OctonionRepresentation(BigDecimal.valueOf(v)));
+		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(v)));
 	}
 
 	@Override

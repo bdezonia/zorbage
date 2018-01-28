@@ -203,7 +203,7 @@ public final class QuaternionFloat64Member
 
 	@Override
 	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
-		rep.setFirstValue(
+		rep.setValue(
 			new OctonionRepresentation(
 				BigDecimal.valueOf(r()),
 				BigDecimal.valueOf(i()),
