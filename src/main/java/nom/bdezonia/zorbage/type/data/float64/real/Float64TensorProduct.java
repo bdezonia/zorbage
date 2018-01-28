@@ -325,6 +325,12 @@ public class Float64TensorProduct
 		}
 	}
 	
+	// TODO: need some interface to override
+
+	public void contract(int i, int j, Float64TensorProductMember a, Float64TensorProductMember b) {
+		throw new IllegalArgumentException("must implement");
+	}
+	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
 		int numDims = a.numDimensions();
 		if (numDims != b.numDimensions())
