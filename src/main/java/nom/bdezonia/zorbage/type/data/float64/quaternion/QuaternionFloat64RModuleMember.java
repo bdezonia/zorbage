@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -55,8 +57,7 @@ public final class QuaternionFloat64RModuleMember
 		RModuleMember<QuaternionFloat64Member>,
 		Gettable<QuaternionFloat64RModuleMember>,
 		Settable<QuaternionFloat64RModuleMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
@@ -147,6 +148,37 @@ public final class QuaternionFloat64RModuleMember
 		other.storage = storage.duplicate();
 		other.m = m;
 		other.s = s;
+	}
+
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		for (long i = 0; i < length(); i++) {
+			storage.get(i, value);
+			BigDecimal r = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			BigDecimal j = BigDecimal.valueOf(value.j());
+			BigDecimal k = BigDecimal.valueOf(value.k());
+			OctonionRepresentation o = new OctonionRepresentation(r,im,j,k);
+			values.set(i, o);
+		}
+		rep.setFirstRModule(length(), values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		BigList<OctonionRepresentation> rmod = rep.getFirstRModule();
+		init(rmod.size());
+		for (long i = 0; i < rmod.size(); i++) {
+			OctonionRepresentation o = rmod.get(i);
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
+			value.setJ(o.j().doubleValue());
+			value.setK(o.k().doubleValue());
+			storage.set(i,value);
+		}
 	}
 
 	@Override

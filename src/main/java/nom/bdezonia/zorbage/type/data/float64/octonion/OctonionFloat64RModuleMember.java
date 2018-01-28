@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
@@ -38,6 +39,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -54,10 +57,8 @@ public final class OctonionFloat64RModuleMember
 		RModuleMember<OctonionFloat64Member>,
 		Gettable<OctonionFloat64RModuleMember>,
 		Settable<OctonionFloat64RModuleMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
-	private static final OctonionFloat64Group odbl = new OctonionFloat64Group();
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
 	private IndexedDataSource<?,OctonionFloat64Member> storage;
@@ -132,7 +133,7 @@ public final class OctonionFloat64RModuleMember
 			storage.get(i, v);
 		}
 		else {
-			odbl.zero(v);
+			G.ODBL.zero(v);
 		}
 	}
 
@@ -155,6 +156,45 @@ public final class OctonionFloat64RModuleMember
 		other.storage = storage.duplicate();
 		other.m = m;
 		other.s = s;
+	}
+
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		for (long i = 0; i < length(); i++) {
+			storage.get(i, value);
+			BigDecimal r = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			BigDecimal j = BigDecimal.valueOf(value.j());
+			BigDecimal k = BigDecimal.valueOf(value.k());
+			BigDecimal l = BigDecimal.valueOf(value.l());
+			BigDecimal i0 = BigDecimal.valueOf(value.i0());
+			BigDecimal j0 = BigDecimal.valueOf(value.j0());
+			BigDecimal k0 = BigDecimal.valueOf(value.k0());
+			OctonionRepresentation o = new OctonionRepresentation(r,im,j,k,l,i0,j0,k0);
+			values.set(i, o);
+		}
+		rep.setFirstRModule(length(), values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		BigList<OctonionRepresentation> rmod = rep.getFirstRModule();
+		init(rmod.size());
+		for (long i = 0; i < rmod.size(); i++) {
+			OctonionRepresentation o = rmod.get(i);
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
+			value.setJ(o.j().doubleValue());
+			value.setK(o.k().doubleValue());
+			value.setL(o.l().doubleValue());
+			value.setI0(o.i0().doubleValue());
+			value.setJ0(o.j0().doubleValue());
+			value.setK0(o.k0().doubleValue());
+			storage.set(i,value);
+		}
 	}
 
 	@Override

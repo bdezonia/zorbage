@@ -80,8 +80,6 @@ public class Float16Group
     MiscFloat<Float16Member>,
     ModularDivision<Float16Member>
 {
-	private static final Float16Member ZERO = new Float16Member();
-	private static final Float16Member ONE = new Float16Member(1);
 	private static final Float16Member PI = new Float16Member(Math.PI);
 	private static final Float16Member E = new Float16Member(Math.E);
 

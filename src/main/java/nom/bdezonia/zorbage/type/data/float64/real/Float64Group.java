@@ -83,8 +83,6 @@ public class Float64Group
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
 	private static final double taylor_n_bound = Math.sqrt(taylor_2_bound);
-	private static final Float64Member ZERO = new Float64Member();
-	private static final Float64Member ONE = new Float64Member(1);
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
 	
