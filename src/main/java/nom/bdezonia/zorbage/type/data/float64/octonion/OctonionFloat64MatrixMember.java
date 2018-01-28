@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -54,8 +56,7 @@ public final class OctonionFloat64MatrixMember
 		MatrixMember<OctonionFloat64Member>,
 		Gettable<OctonionFloat64MatrixMember>,
 		Settable<OctonionFloat64MatrixMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
@@ -190,6 +191,45 @@ public final class OctonionFloat64MatrixMember
 		other.storage = storage.duplicate();
 	}
 	
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			BigDecimal j = BigDecimal.valueOf(value.j());
+			BigDecimal k = BigDecimal.valueOf(value.k());
+			BigDecimal l = BigDecimal.valueOf(value.l());
+			BigDecimal i0 = BigDecimal.valueOf(value.i0());
+			BigDecimal j0 = BigDecimal.valueOf(value.j0());
+			BigDecimal k0 = BigDecimal.valueOf(value.k0());
+			OctonionRepresentation o = new OctonionRepresentation(re,im,j,k,l,i0,j0,k0);
+			values.set(i, o);
+		}
+		rep.setFirstMatrix(rows, cols, values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		OctonionFloat64Member value = new OctonionFloat64Member();
+		BigList<OctonionRepresentation> mat = rep.getFirstMatrix();
+		init(rep.getFirstMatrixRowDim(), rep.getFirstMatrixColDim());
+		for (long i = 0; i < mat.size(); i++) {
+			OctonionRepresentation o = mat.get(i);
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
+			value.setJ(o.j().doubleValue());
+			value.setK(o.k().doubleValue());
+			value.setL(o.l().doubleValue());
+			value.setI0(o.i0().doubleValue());
+			value.setJ0(o.j0().doubleValue());
+			value.setK0(o.k0().doubleValue());
+			storage.set(i,value);
+		}
+	}
+
 	@Override
 	public String toString() {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();

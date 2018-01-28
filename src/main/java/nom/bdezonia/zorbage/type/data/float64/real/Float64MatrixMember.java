@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -54,8 +56,7 @@ public final class Float64MatrixMember
 		MatrixMember<Float64Member>,
 		Settable<Float64MatrixMember>,
 		Gettable<Float64MatrixMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -173,6 +174,31 @@ public final class Float64MatrixMember
 		other.m = m;
 		other.s = s;
 		other.storage = storage.duplicate();
+	}
+
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		Float64Member value = new Float64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			BigDecimal re = BigDecimal.valueOf(value.v());
+			OctonionRepresentation o = new OctonionRepresentation(re);
+			values.set(i, o);
+		}
+		rep.setFirstMatrix(rows, cols, values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		Float64Member value = new Float64Member();
+		BigList<OctonionRepresentation> mat = rep.getFirstMatrix();
+		init(rep.getFirstMatrixRowDim(), rep.getFirstMatrixColDim());
+		for (long i = 0; i < mat.size(); i++) {
+			OctonionRepresentation o = mat.get(i);
+			value.setV(o.r().doubleValue());
+			storage.set(i,value);
+		}
 	}
 
 	@Override

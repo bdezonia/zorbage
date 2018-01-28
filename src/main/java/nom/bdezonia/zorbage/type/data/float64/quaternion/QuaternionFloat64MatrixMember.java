@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -54,8 +56,7 @@ public final class QuaternionFloat64MatrixMember
 		MatrixMember<QuaternionFloat64Member>,
 		Gettable<QuaternionFloat64MatrixMember>,
 		Settable<QuaternionFloat64MatrixMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
@@ -182,6 +183,37 @@ public final class QuaternionFloat64MatrixMember
 		other.storage = storage.duplicate();
 	}
 	
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			BigDecimal j = BigDecimal.valueOf(value.j());
+			BigDecimal k = BigDecimal.valueOf(value.k());
+			OctonionRepresentation o = new OctonionRepresentation(re,im,j,k);
+			values.set(i, o);
+		}
+		rep.setFirstMatrix(rows, cols, values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		BigList<OctonionRepresentation> mat = rep.getFirstMatrix();
+		init(rep.getFirstMatrixRowDim(), rep.getFirstMatrixColDim());
+		for (long i = 0; i < mat.size(); i++) {
+			OctonionRepresentation o = mat.get(i);
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
+			value.setJ(o.j().doubleValue());
+			value.setK(o.k().doubleValue());
+			storage.set(i,value);
+		}
+	}
+
 	@Override
 	public String toString() {
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();

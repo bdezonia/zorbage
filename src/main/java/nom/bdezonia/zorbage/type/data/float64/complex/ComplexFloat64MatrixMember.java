@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -54,8 +56,7 @@ public final class ComplexFloat64MatrixMember
 		MatrixMember<ComplexFloat64Member>,
 		Gettable<ComplexFloat64MatrixMember>,
 		Settable<ComplexFloat64MatrixMember>,
-		PrimitiveConversion
-// TODO: UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -180,6 +181,33 @@ public final class ComplexFloat64MatrixMember
 		other.storage = storage.duplicate();
 	}
 	
+	@Override
+	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			OctonionRepresentation o = new OctonionRepresentation(re,im);
+			values.set(i, o);
+		}
+		rep.setFirstMatrix(rows, cols, values);
+	}
+
+	@Override
+	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		BigList<OctonionRepresentation> mat = rep.getFirstMatrix();
+		init(rep.getFirstMatrixRowDim(), rep.getFirstMatrixColDim());
+		for (long i = 0; i < mat.size(); i++) {
+			OctonionRepresentation o = mat.get(i);
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
+			storage.set(i,value);
+		}
+	}
+
 	@Override
 	public String toString() {
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
