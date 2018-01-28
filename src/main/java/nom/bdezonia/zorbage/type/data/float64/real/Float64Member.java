@@ -139,7 +139,7 @@ public final class Float64Member
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		v = rep.getFirstValue().r().doubleValue();
+		v = rep.getValue().r().doubleValue();
 	}
 
 	@Override

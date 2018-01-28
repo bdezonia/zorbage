@@ -138,7 +138,7 @@ public final class SignedInt16Member
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		v = rep.getFirstValue().r().shortValue();
+		v = rep.getValue().r().shortValue();
 	}
 
 	@Override

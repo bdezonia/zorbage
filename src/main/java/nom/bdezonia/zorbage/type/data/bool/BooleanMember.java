@@ -170,7 +170,7 @@ public final class BooleanMember
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		BigDecimal d = rep.getFirstValue().r();
+		BigDecimal d = rep.getValue().r();
 		v = !d.equals(BigDecimal.ZERO);
 	}
 

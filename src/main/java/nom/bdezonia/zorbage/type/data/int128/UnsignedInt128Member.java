@@ -175,7 +175,7 @@ public final class UnsignedInt128Member
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		setV(rep.getFirstValue().r().toBigInteger());
+		setV(rep.getValue().r().toBigInteger());
 	}
 
 	@Override

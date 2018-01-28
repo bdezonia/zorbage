@@ -119,7 +119,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		}
 	}
 	
-	public OctonionRepresentation getFirstValue() {
+	public OctonionRepresentation getValue() {
 		return nonNull(values.get(0));
 	}
 

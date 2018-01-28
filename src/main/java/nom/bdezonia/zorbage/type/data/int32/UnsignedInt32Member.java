@@ -143,7 +143,7 @@ public final class UnsignedInt32Member
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		v = (int) rep.getFirstValue().r().longValue();
+		v = (int) rep.getValue().r().longValue();
 	}
 
 	@Override

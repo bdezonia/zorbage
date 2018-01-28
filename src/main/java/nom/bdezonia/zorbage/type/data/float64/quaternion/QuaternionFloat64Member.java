@@ -215,7 +215,7 @@ public final class QuaternionFloat64Member
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		OctonionRepresentation v = rep.getFirstValue();
+		OctonionRepresentation v = rep.getValue();
 		setR(v.r().doubleValue());
 		setI(v.i().doubleValue());
 		setJ(v.j().doubleValue());

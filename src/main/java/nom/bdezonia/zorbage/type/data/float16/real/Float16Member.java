@@ -155,7 +155,7 @@ public final class Float16Member
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		setV(rep.getFirstValue().r().doubleValue());
+		setV(rep.getValue().r().doubleValue());
 	}
 
 	static short toShort(double value) {

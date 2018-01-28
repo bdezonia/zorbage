@@ -112,7 +112,7 @@ public final class UnboundedIntMember
 
 	@Override
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
-		v = rep.getFirstValue().r().toBigInteger();
+		v = rep.getValue().r().toBigInteger();
 	}
 
 	@Override
