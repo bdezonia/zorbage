@@ -328,6 +328,8 @@ public class Float64TensorProduct
 	// TODO: need some interface to override
 
 	public void contract(int i, int j, Float64TensorProductMember a, Float64TensorProductMember b) {
+		if (a == b)
+			throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
 		throw new IllegalArgumentException("must implement");
 	}
 	
