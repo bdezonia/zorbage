@@ -317,7 +317,7 @@ public class Float64TensorProduct
 		for (long i = 0; i < a.componentCount(); i++) {
 			a.v(i, aTmp);
 			for (long j = 0; j < b.componentCount(); j++) {
-				b.v(i, bTmp);
+				b.v(j, bTmp);
 				G.DBL.multiply(aTmp, bTmp, cTmp);
 				c.setV(k, cTmp);
 				k++;
