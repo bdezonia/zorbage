@@ -328,9 +328,21 @@ public class Float64TensorProduct
 	// TODO: need some interface to override
 
 	public void contract(int i, int j, Float64TensorProductMember a, Float64TensorProductMember b) {
+		if (a.rank() < 2)
+			throw new IllegalArgumentException("input tensor must be rank 2 or greater to contract");
+		if (i < 0 || j < 0 || i >= a.rank() || j >= a.rank())
+			throw new IllegalArgumentException("bad contraction indices given");
+		if (i == j)
+			throw new IllegalArgumentException("cannot contract along a single axis");
 		if (a == b)
 			throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
-		throw new IllegalArgumentException("must implement");
+		int rank = a.rank() - 2;
+		long[] newDims = new long[rank];
+		for (int k = 0; k < newDims.length; k++) {
+			newDims[k] = a.dimension(0);
+		}
+		b.reshape(newDims);
+		throw new IllegalArgumentException("must finish");
 	}
 	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
