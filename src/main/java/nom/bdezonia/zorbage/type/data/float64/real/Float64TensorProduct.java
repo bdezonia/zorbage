@@ -314,9 +314,9 @@ public class Float64TensorProduct
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
 		long k = 0;
-		for (long i = 0; i < a.componentCount(); i++) {
+		for (long i = 0; i < a.numElems(); i++) {
 			a.v(i, aTmp);
-			for (long j = 0; j < b.componentCount(); j++) {
+			for (long j = 0; j < b.numElems(); j++) {
 				b.v(j, bTmp);
 				G.DBL.multiply(aTmp, bTmp, cTmp);
 				c.setV(k, cTmp);
