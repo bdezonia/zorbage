@@ -55,9 +55,16 @@ public class BigList<T> {
 			List<T> l;
 			if ((size / Integer.MAX_VALUE) > 0) {
 				l = new ArrayList<T>(Integer.MAX_VALUE);
+				for (int i = 0; i < Integer.MAX_VALUE; i++) {
+					l.add(null);
+				}
 			}
 			else {
-				l = new ArrayList<T>((int)size);
+				int sz = (int) size;
+				l = new ArrayList<T>(sz);
+				for (int i = 0; i < sz; i++) {
+					l.add(null);
+				}
 			}
 			lists.add(l);
 			size -= Integer.MAX_VALUE;
