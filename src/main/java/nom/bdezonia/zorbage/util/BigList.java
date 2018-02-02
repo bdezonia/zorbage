@@ -37,38 +37,72 @@ import java.util.List;
  */
 public class BigList<T> {
 	
-	// TODO: replace me with actual bigger container
-	
-	private List<T> list;
+	private long MAX_ITEMS = 1L * Integer.MAX_VALUE * Integer.MAX_VALUE;
+
+	private List<List<T>> lists;
 	
 	public BigList() {
-		list = new ArrayList<T>();
+		lists = new ArrayList<List<T>>();
 	}
 	
 	public BigList(long size) {
-		if (size > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("Fake BigList size is too big");
-		list = new ArrayList<T>((int) size);
+		if (size < 0)
+			throw new IllegalArgumentException("negative index error");
+		if (size > MAX_ITEMS)
+			throw new IllegalArgumentException("BigList can only handle "+MAX_ITEMS+" items");
+		lists = new ArrayList<List<T>>();
+		while (size > 0) {
+			List<T> l;
+			if ((size / Integer.MAX_VALUE) > 0) {
+				l = new ArrayList<T>(Integer.MAX_VALUE);
+			}
+			else {
+				l = new ArrayList<T>((int)size);
+			}
+			lists.add(l);
+			size -= Integer.MAX_VALUE;
+		}
 	}
 	
 	public long size() {
-		return list.size();
+		if (lists.size() == 0)
+			return 0;
+		long size = 1;
+		size *= lists.size()-1;
+		size *= Integer.MAX_VALUE;
+		size += lists.get(lists.size()-1).size();
+		return size;
 	}
 	
 	public T get(long i) {
-		if (i > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("Fake BigList index is too big");
-		return list.get((int) i);
+		if (i < 0)
+			throw new IllegalArgumentException("negative index error");
+		if (i >= MAX_ITEMS)
+			throw new IllegalArgumentException("BigList can only handle "+MAX_ITEMS+" items");
+		int list = (int)(i / Integer.MAX_VALUE);
+		int offset = (int)(i % Integer.MAX_VALUE);
+		List<T> l = lists.get(list);
+		return l.get(offset);
 	}
 
 	public void set(long i, T v) {
-		if (i > Integer.MAX_VALUE)
-			throw new IllegalArgumentException("Fake BigList index is too big");
-		list.set((int) i, v);
+		if (i < 0)
+			throw new IllegalArgumentException("negative index error");
+		if (i >= MAX_ITEMS)
+			throw new IllegalArgumentException("BigList can only handle "+MAX_ITEMS+" items");
+		int list = (int)(i / Integer.MAX_VALUE);
+		int offset = (int)(i % Integer.MAX_VALUE);
+		List<T> l = lists.get(list);
+		l.set(offset, v);
 	}
 	
 	public void add(T val) {
-		list.add(val);
+		if ((lists.size() == 0) ||
+			(lists.get(lists.size()-1).size() == Integer.MAX_VALUE))
+		{
+			lists.add(new ArrayList<T>());
+		}
+		lists.get(lists.size()-1).add(val);
 	}
 
 }
