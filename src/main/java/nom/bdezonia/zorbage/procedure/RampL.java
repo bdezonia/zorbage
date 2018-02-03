@@ -35,12 +35,12 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  *
  */
-public class RamplL<T extends Group<T,U> & Addition<U>,U>
+public class RampL<T extends Group<T,U> & Addition<U>,U>
 	implements Procedure<U>
 {
 	private Ramp<T,U> lowerProc;
 	
-	public RamplL(T group, U origin, U delta) {
+	public RampL(T group, U origin, U delta) {
 		this.lowerProc = new Ramp<T,U>(group, origin, delta);
 	}
 	
