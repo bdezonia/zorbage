@@ -107,7 +107,7 @@ public class BigList<T> {
 		if ((lists.size() == 0) ||
 			(lists.get(lists.size()-1).size() == Integer.MAX_VALUE))
 		{
-			lists.add(new ArrayList<T>(Integer.MAX_VALUE));
+			lists.add(new ArrayList<T>());
 		}
 		lists.get(lists.size()-1).add(val);
 	}
