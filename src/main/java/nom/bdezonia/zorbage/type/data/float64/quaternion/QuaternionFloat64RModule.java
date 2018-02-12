@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -183,52 +184,9 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void crossProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64RModuleMember c) {
-		// kludgy: 3 dim only. treating lower dim RModules as having zeroes in other positions.
-		if (!compatible(3,a) || !compatible(3,b))
-			throw new UnsupportedOperationException("RModule cross product defined for 3 dimensions");
-		QuaternionFloat64RModuleMember tmp = new QuaternionFloat64RModuleMember(new double[3*4]);
-		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member term1 = new QuaternionFloat64Member();
-		QuaternionFloat64Member term2 = new QuaternionFloat64Member();
-		QuaternionFloat64Member t = new QuaternionFloat64Member();
-		a.v(1, atmp);
-		b.v(2, btmp);
-		G.QDBL.multiply(atmp, btmp, term1);
-		a.v(2, atmp);
-		b.v(1, btmp);
-		G.QDBL.multiply(atmp, btmp, term2);
-		G.QDBL.subtract(term1, term2, t);
-		tmp.setV(0, t);
-		a.v(2, atmp);
-		b.v(0, btmp);
-		G.QDBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(2, btmp);
-		G.QDBL.multiply(atmp, btmp, term2);
-		G.QDBL.subtract(term1, term2, t);
-		tmp.setV(1, t);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.QDBL.multiply(atmp, btmp, term1);
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.QDBL.multiply(atmp, btmp, term2);
-		G.QDBL.subtract(term1, term2, t);
-		tmp.setV(2, t);
-		assign(tmp, c);
+		CrossProduct.compute(G.QDBL_MOD, G.QDBL, a, b, c);
 	}
 
-	private boolean compatible(long dim, QuaternionFloat64RModuleMember v) {
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long i = dim; i < v.length(); i++) {
-			v.v(i, tmp);
-			if (G.QDBL.isNotEqual(tmp, ZERO))
-				return false;
-		}
-		return true;
-	}
-	
 	@Override
 	public void dotProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64Member c) {
 		final long min = Math.min(a.length(), b.length());

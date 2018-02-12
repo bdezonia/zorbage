@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -189,52 +190,9 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void crossProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		// kludgy: 3 dim only. treating lower dim vectors as having zeroes in other positions.
-		if (!compatible(3,a) || !compatible(3,b))
-			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
-		ComplexFloat64VectorMember tmp = new ComplexFloat64VectorMember(new double[3*2]);
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		ComplexFloat64Member term1 = new ComplexFloat64Member();
-		ComplexFloat64Member term2 = new ComplexFloat64Member();
-		ComplexFloat64Member t = new ComplexFloat64Member();
-		a.v(1, atmp);
-		b.v(2, btmp);
-		G.CDBL.multiply(atmp, btmp, term1);
-		a.v(2, atmp);
-		b.v(1, btmp);
-		G.CDBL.multiply(atmp, btmp, term2);
-		G.CDBL.subtract(term1, term2, t);
-		tmp.setV(0, t);
-		a.v(2, atmp);
-		b.v(0, btmp);
-		G.CDBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(2, btmp);
-		G.CDBL.multiply(atmp, btmp, term2);
-		G.CDBL.subtract(term1, term2, t);
-		tmp.setV(1, t);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.CDBL.multiply(atmp, btmp, term1);
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.CDBL.multiply(atmp, btmp, term2);
-		G.CDBL.subtract(term1, term2, t);
-		tmp.setV(2, t);
-		assign(tmp, c);
+		CrossProduct.compute(G.CDBL_VEC, G.CDBL, a, b, c);
 	}
 
-	private boolean compatible(long dim, ComplexFloat64VectorMember v) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long i = dim; i < v.length(); i++) {
-			v.v(i, tmp);
-			if (G.CDBL.isNotEqual(tmp, ZERO))
-				return false;
-		}
-		return true;
-	}
-	
 	@Override
 	public void dotProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
 		final long min = Math.min(a.length(), b.length());

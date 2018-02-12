@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -183,52 +184,9 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void crossProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		// kludgy: 3 dim only. treating lower dim RModules as having zeroes in other positions.
-		if (!compatible(3,a) || !compatible(3,b))
-			throw new UnsupportedOperationException("RModule cross product defined for 3 dimensions");
-		OctonionFloat64RModuleMember tmp = new OctonionFloat64RModuleMember(new double[3*8]);
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		OctonionFloat64Member term1 = new OctonionFloat64Member();
-		OctonionFloat64Member term2 = new OctonionFloat64Member();
-		OctonionFloat64Member t = new OctonionFloat64Member();
-		a.v(1, atmp);
-		b.v(2, btmp);
-		G.ODBL.multiply(atmp, btmp, term1);
-		a.v(2, atmp);
-		b.v(1, btmp);
-		G.ODBL.multiply(atmp, btmp, term2);
-		G.ODBL.subtract(term1, term2, t);
-		tmp.setV(0, t);
-		a.v(2, atmp);
-		b.v(0, btmp);
-		G.ODBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(2, btmp);
-		G.ODBL.multiply(atmp, btmp, term2);
-		G.ODBL.subtract(term1, term2, t);
-		tmp.setV(1, t);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.ODBL.multiply(atmp, btmp, term1);
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.ODBL.multiply(atmp, btmp, term2);
-		G.ODBL.subtract(term1, term2, t);
-		tmp.setV(2, t);
-		assign(tmp, c);
+		CrossProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
 	}
 
-	private boolean compatible(long dim, OctonionFloat64RModuleMember v) {
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long i = dim; i < v.length(); i++) {
-			v.v(i, tmp);
-			if (G.ODBL.isNotEqual(tmp, ZERO))
-				return false;
-		}
-		return true;
-	}
-	
 	@Override
 	public void dotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
 		final long min = Math.min(a.length(), b.length());

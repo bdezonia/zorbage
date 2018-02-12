@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -186,50 +187,7 @@ public class Float64Vector
 
 	@Override
 	public void crossProduct(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
-		// kludgy: 3 dim only. treating lower dim vectors as having zeroes in other positions.
-		if (!compatible(3,a) || !compatible(3,b))
-			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
-		Float64VectorMember tmp = new Float64VectorMember(new double[3]);
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member term1 = new Float64Member();
-		Float64Member term2 = new Float64Member();
-		Float64Member t = new Float64Member();
-		a.v(1, atmp);
-		b.v(2, btmp);
-		G.DBL.multiply(atmp, btmp, term1);
-		a.v(2, atmp);
-		b.v(1, btmp);
-		G.DBL.multiply(atmp, btmp, term2);
-		G.DBL.subtract(term1, term2, t);
-		tmp.setV(0, t);
-		a.v(2, atmp);
-		b.v(0, btmp);
-		G.DBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(2, btmp);
-		G.DBL.multiply(atmp, btmp, term2);
-		G.DBL.subtract(term1, term2, t);
-		tmp.setV(1, t);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.DBL.multiply(atmp, btmp, term1);
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.DBL.multiply(atmp, btmp, term2);
-		G.DBL.subtract(term1, term2, t);
-		tmp.setV(2, t);
-		assign(tmp, c);
-	}
-
-	private boolean compatible(long dim, Float64VectorMember v) {
-		Float64Member tmp = new Float64Member();
-		for (long i = dim; i < v.length(); i++) {
-			v.v(i, tmp);
-			if (G.DBL.isNotEqual(tmp, ZERO))
-				return false;
-		}
-		return true;
+		CrossProduct.compute(G.DBL_VEC, G.DBL, a, b, c);
 	}
 
 	@Override
