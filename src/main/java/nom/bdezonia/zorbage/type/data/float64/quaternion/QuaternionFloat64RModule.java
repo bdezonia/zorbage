@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -245,21 +246,7 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void perpDotProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64Member c) {
-		// kludgy: 2 dim only. treating lower dim RModules as having zeroes in other positions.
-		if (!compatible(2,a) || !compatible(2,b))
-			throw new UnsupportedOperationException("RModule perp dot product defined for 2 dimensions");
-		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member term1 = new QuaternionFloat64Member();
-		QuaternionFloat64Member term2 = new QuaternionFloat64Member();
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.QDBL.negate(atmp, atmp);
-		G.QDBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.QDBL.multiply(atmp, btmp, term2);
-		G.QDBL.add(term1, term2, c);
+		PerpDotProduct.compute(G.QDBL_MOD, G.QDBL, a, b, c);
 	}
 
 	@Override

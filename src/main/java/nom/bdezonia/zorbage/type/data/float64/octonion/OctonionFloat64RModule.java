@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -245,21 +246,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void perpDotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-		// kludgy: 2 dim only. treating lower dim RModules as having zeroes in other positions.
-		if (!compatible(2,a) || !compatible(2,b))
-			throw new UnsupportedOperationException("RModule perp dot product defined for 2 dimensions");
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		OctonionFloat64Member term1 = new OctonionFloat64Member();
-		OctonionFloat64Member term2 = new OctonionFloat64Member();
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.ODBL.negate(atmp, atmp);
-		G.ODBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.ODBL.multiply(atmp, btmp, term2);
-		G.ODBL.add(term1, term2, c);
+		PerpDotProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
 	}
 
 	@Override

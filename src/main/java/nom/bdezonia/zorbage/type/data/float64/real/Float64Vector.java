@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -248,21 +249,7 @@ public class Float64Vector
 
 	@Override
 	public void perpDotProduct(Float64VectorMember a, Float64VectorMember b, Float64Member c) {
-		// kludgy: 2 dim only. treating lower dim vectors as having zeroes in other positions.
-		if (!compatible(2,a) || !compatible(2,b))
-			throw new UnsupportedOperationException("vector perp dot product defined for 2 dimensions");
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member term1 = new Float64Member();
-		Float64Member term2 = new Float64Member();
-		a.v(1, atmp);
-		b.v(0, btmp);
-		G.DBL.negate(atmp, atmp);
-		G.DBL.multiply(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(1, btmp);
-		G.DBL.multiply(atmp, btmp, term2);
-		G.DBL.add(term1, term2, c);
+		PerpDotProduct.compute(G.DBL_VEC, G.DBL, a, b, c);
 	}
 
 	@Override
