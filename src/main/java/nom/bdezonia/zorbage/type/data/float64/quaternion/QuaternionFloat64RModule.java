@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -149,20 +150,7 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void scale(QuaternionFloat64Member scalar, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		// two loops minimizes memory allocations
-		final long min = Math.min(a.length(), b.length());
-		for (long i = 0; i < min; i++) {
-			a.v(i, tmp);
-			G.QDBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
-		final long max = Math.max(a.length(), b.length());
-		for (long i = min; i < max; i++) {
-			a.v(i, tmp);
-			G.QDBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleScale.compute(G.QDBL_MOD, G.QDBL, scalar, a, b);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -155,20 +156,7 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void scale(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		// two loops minimizes memory allocations
-		final long min = Math.min(a.length(), b.length());
-		for (long i = 0; i < min; i++) {
-			a.v(i, tmp);
-			G.CDBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
-		final long max = Math.max(a.length(), b.length());
-		for (long i = min; i < max; i++) {
-			a.v(i, tmp);
-			G.CDBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleScale.compute(G.CDBL_VEC, G.CDBL, scalar, a, b);
 	}
 
 	@Override

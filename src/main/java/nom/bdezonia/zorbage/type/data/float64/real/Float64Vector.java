@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -152,20 +153,7 @@ public class Float64Vector
 
 	@Override
 	public void scale(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
-		Float64Member tmp = new Float64Member();
-		// two loops minimizes memory allocations
-		final long min = Math.min(a.length(), b.length());
-		for (long i = 0; i < min; i++) {
-			a.v(i, tmp);
-			G.DBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
-		final long max = Math.max(a.length(), b.length());
-		for (long i = min; i < max; i++) {
-			a.v(i, tmp);
-			G.DBL.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleScale.compute(G.DBL_VEC, G.DBL, scalar, a, b);
 	}
 
 	@Override
