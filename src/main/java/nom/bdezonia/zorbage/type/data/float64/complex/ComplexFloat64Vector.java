@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -75,17 +76,7 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void subtract(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.CDBL.subtract(atmp, btmp, btmp);
-			c.setV(i, btmp);
-		}
-		for (long i = max; i < c.length(); i++)
-			c.setV(i, ZERO);
+		RModuleSubtract.compute(G.CDBL_VEC, G.CDBL, a, b, c);
 	}
 
 	@Override

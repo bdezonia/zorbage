@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -75,17 +76,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void subtract(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.ODBL.subtract(atmp, btmp, btmp);
-			c.setV(i, btmp);
-		}
-		for (long i = max; i < c.length(); i++)
-			c.setV(i, ZERO);
+		RModuleSubtract.compute(G.ODBL_MOD, G.ODBL, a, b, c);
 	}
 
 	@Override
