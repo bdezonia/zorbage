@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.quaternion;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
+import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -69,17 +70,7 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void add(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64RModuleMember c) {
-		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.QDBL.add(atmp, btmp, btmp);
-			c.setV(i, btmp);
-		}
-		for (long i = max; i < c.length(); i++)
-			c.setV(i, ZERO);
+		RModuleAdd.compute(G.QDBL_MOD, G.QDBL, a, b, c);
 	}
 
 	@Override

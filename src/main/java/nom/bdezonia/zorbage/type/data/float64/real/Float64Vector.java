@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
+import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
@@ -69,17 +70,7 @@ public class Float64Vector
 
 	@Override
 	public void add(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.DBL.add(atmp, btmp, btmp);
-			c.setV(i, btmp);
-		}
-		for (long i = max; i < c.length(); i++)
-			c.setV(i, ZERO);
+		RModuleAdd.compute(G.DBL_VEC, G.DBL, a, b, c);
 	}
 
 	@Override
