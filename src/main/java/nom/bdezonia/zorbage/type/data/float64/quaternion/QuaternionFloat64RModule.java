@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
+import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -189,17 +190,7 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void dotProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64Member c) {
-		final long min = Math.min(a.length(), b.length());
-		QuaternionFloat64Member sum = new QuaternionFloat64Member();
-		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		for (long i = 0; i < min; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.QDBL.multiply(atmp, btmp, btmp);
-			G.QDBL.add(sum, btmp, sum);
-		}
-		c.set(sum);
+		DotProduct.compute(G.QDBL, a, b, c);
 	}
 
 	@Override

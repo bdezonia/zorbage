@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
+import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -189,17 +190,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void dotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-		final long min = Math.min(a.length(), b.length());
-		OctonionFloat64Member sum = new OctonionFloat64Member();
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		for (long i = 0; i < min; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.ODBL.multiply(atmp, btmp, btmp);
-			G.ODBL.add(sum, btmp, sum);
-		}
-		c.set(sum);
+		DotProduct.compute(G.ODBL, a, b, c);
 	}
 
 	@Override

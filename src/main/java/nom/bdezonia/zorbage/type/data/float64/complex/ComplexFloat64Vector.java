@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
+import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -195,17 +196,7 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void dotProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
-		final long min = Math.min(a.length(), b.length());
-		ComplexFloat64Member sum = new ComplexFloat64Member(0,0);
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		for (long i = 0; i < min; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			G.CDBL.multiply(atmp, btmp, btmp);
-			G.CDBL.add(sum, btmp, sum);
-		}
-		c.set(sum);
+		DotProduct.compute(G.CDBL, a, b, c);
 	}
 
 	@Override
