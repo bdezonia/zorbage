@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
@@ -82,16 +83,7 @@ public class ComplexFloat64Vector
 
 	@Override
 	public boolean isEqual(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			if (G.CDBL.isNotEqual(atmp, btmp))
-				return false;
-		}
-		return true;
+		return RModuleIsEqual.compute(G.CDBL, a, b);
 	}
 
 	@Override

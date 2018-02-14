@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
@@ -82,16 +83,7 @@ public class Float64Vector
 
 	@Override
 	public boolean isEqual(Float64VectorMember a, Float64VectorMember b) {
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			if (G.DBL.isNotEqual(atmp, btmp))
-				return false;
-		}
-		return true;
+		return RModuleIsEqual.compute(G.DBL, a, b);
 	}
 
 	@Override
