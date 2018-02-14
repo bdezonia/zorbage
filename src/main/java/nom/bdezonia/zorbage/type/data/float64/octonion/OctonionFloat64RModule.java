@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
+import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -169,12 +170,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void conjugate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long i = 0; i < a.length(); i++) {
-			a.v(i, tmp);
-			G.ODBL.conjugate(tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleConjugate.compute(G.ODBL, a, b);
 	}
 
 }

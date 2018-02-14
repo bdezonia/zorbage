@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
+import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -175,12 +176,7 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void conjugate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long i = 0; i < a.length(); i++) {
-			a.v(i, tmp);
-			G.CDBL.conjugate(tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleConjugate.compute(G.CDBL, a, b);
 	}
 
 }
