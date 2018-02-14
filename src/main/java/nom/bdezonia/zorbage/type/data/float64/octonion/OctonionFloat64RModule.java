@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
+import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -108,14 +109,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void assign(OctonionFloat64RModuleMember from, OctonionFloat64RModuleMember to) {
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long i = 0; i < from.length(); i++) {
-			from.v(i, tmp);
-			to.setV(i, tmp);
-		}
-		for (long i = from.length(); i < to.length(); i++) {
-			to.setV(i, ZERO);
-		}
+		RModuleAssign.compute(G.ODBL, from, to);
 	}
 
 	@Override
