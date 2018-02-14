@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
+import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
@@ -62,13 +63,7 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void negate(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, tmp);
-			G.QDBL.negate(tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleNegate.compute(G.QDBL, a, b);
 	}
 
 	@Override

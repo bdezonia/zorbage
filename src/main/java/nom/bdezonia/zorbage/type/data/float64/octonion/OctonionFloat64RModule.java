@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
+import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
@@ -62,13 +63,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void negate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		final long max = Math.max(a.length(), b.length());
-		for (long i = 0; i < max; i++) {
-			a.v(i, tmp);
-			G.ODBL.negate(tmp, tmp);
-			b.setV(i, tmp);
-		}
+		RModuleNegate.compute(G.ODBL, a, b);
 	}
 
 	@Override
