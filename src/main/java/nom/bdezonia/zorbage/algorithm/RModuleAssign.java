@@ -44,9 +44,9 @@ public class RModuleAssign {
 		void compute(T group, U from, U to)
 	{
 		V tmp = group.construct();
-		final long max = from.length();
-		to.reshape(max);
-		for (long i = 0; i < max; i++) {
+		final long length = from.length();
+		to.alloc(length);
+		for (long i = 0; i < length; i++) {
 			from.v(i, tmp);
 			to.setV(i, tmp);
 		}

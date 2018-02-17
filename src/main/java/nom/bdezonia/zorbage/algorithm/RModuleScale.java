@@ -44,9 +44,9 @@ public class RModuleScale {
 		void compute(V memberGroup, W scalar, U a, U b)
 	{
 		W tmp = memberGroup.construct();
-		final long max = a.length();
-		b.reshape(max);
-		for (long i = 0; i < max; i++) {
+		final long length = a.length();
+		b.alloc(length);
+		for (long i = 0; i < length; i++) {
 			a.v(i, tmp);
 			memberGroup.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);

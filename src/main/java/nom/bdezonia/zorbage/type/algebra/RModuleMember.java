@@ -35,6 +35,7 @@ package nom.bdezonia.zorbage.type.algebra;
 public interface RModuleMember<A> extends Dimensioned {
 	// 1 dims
 	long length();
+	boolean alloc(long len);
 	void init(long len);
 	void reshape(long len);
 	void v(long i, A value);

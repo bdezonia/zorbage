@@ -191,15 +191,20 @@ public final class ComplexFloat64VectorMember
 		return builder.toString();
 	}
 	
-	@Override
-	public void init(long size) {
+	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.ARRAY)
 				storage = new ArrayStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
 			else
 				storage = new FileStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
+			return true;
 		}
-		else {
+		return false;
+	}
+	
+	@Override
+	public void init(long size) {
+		if (!alloc(size)) {
 			for (long i = 0; i < storage.size(); i++) {
 				storage.set(i, ZERO);
 			}

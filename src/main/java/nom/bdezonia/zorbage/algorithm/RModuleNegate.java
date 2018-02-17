@@ -45,9 +45,9 @@ public class RModuleNegate {
 		void compute(V memberGroup, U a, U b)
 	{
 		W tmp = memberGroup.construct();
-		final long max = a.length();
-		b.reshape(max);
-		for (long i = 0; i < max; i++) {
+		final long length = a.length();
+		b.alloc(length);
+		for (long i = 0; i < length; i++) {
 			a.v(i, tmp);
 			memberGroup.negate(tmp, tmp);
 			b.setV(i, tmp);
