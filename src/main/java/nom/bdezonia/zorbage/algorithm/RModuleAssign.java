@@ -40,12 +40,13 @@ public class RModuleAssign {
 		// do not instantiate
 	}
 	
-	public static <T extends Group<T,V>,U extends RModuleMember<V>, V>
+	public static <T extends Group<T,V>, U extends RModuleMember<V>, V>
 		void compute(T group, U from, U to)
 	{
-		// TODO - is this constructor size agnostic? This method might be broken.
 		V tmp = group.construct();
-		for (long i = 0; i < to.length(); i++) {
+		final long max = from.length();
+		to.reshape(max);
+		for (long i = 0; i < max; i++) {
 			from.v(i, tmp);
 			to.setV(i, tmp);
 		}
