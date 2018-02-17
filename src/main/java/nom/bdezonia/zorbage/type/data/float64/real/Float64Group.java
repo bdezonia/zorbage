@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
@@ -78,7 +79,8 @@ public class Float64Group
     RealUnreal<Float64Member,Float64Member>,
     PredSucc<Float64Member>,
     MiscFloat<Float64Member>,
-    ModularDivision<Float64Member>
+    ModularDivision<Float64Member>,
+    Conjugate<Float64Member>
 {
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
@@ -685,6 +687,11 @@ public class Float64Group
 			
 			return(result);
 		}
+	}
+
+	@Override
+	public void conjugate(Float64Member a, Float64Member b) {
+		assign(a, b);
 	}
 
 }
