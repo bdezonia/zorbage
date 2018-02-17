@@ -201,8 +201,6 @@ public class UnsignedInt8Group
 		return a.v % 2 == 1;
 	}
 
-	// TODO: test
-	
 	@Override
 	public void pred(UnsignedInt8Member a, UnsignedInt8Member b) {
 		if (a.v == 0)
@@ -211,8 +209,6 @@ public class UnsignedInt8Group
 			b.setV( a.v() - 1 );
 	}
 
-	// TODO: test
-	
 	@Override
 	public void succ(UnsignedInt8Member a, UnsignedInt8Member b) {
 		if (a.v == -1)

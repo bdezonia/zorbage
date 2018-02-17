@@ -45,8 +45,6 @@ import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
-// TODO - do we nest Float64Members inside Quat<Float64Member>? Is this even possible?
-
 /**
  * 
  * @author Barry DeZonia

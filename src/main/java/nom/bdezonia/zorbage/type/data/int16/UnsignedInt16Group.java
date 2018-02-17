@@ -201,8 +201,6 @@ public class UnsignedInt16Group
 		return a.v % 2 == 1;
 	}
 
-	// TODO: test
-	
 	@Override
 	public void pred(UnsignedInt16Member a, UnsignedInt16Member b) {
 		if (a.v == 0)
@@ -211,8 +209,6 @@ public class UnsignedInt16Group
 			b.setV( a.v() - 1 );
 	}
 
-	// TODO: test
-	
 	@Override
 	public void succ(UnsignedInt16Member a, UnsignedInt16Member b) {
 		if (a.v == -1)

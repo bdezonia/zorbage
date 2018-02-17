@@ -203,8 +203,6 @@ public class UnsignedInt32Group
 		return a.v % 2 == 1;
 	}
 
-	// TODO: test
-	
 	@Override
 	public void pred(UnsignedInt32Member a, UnsignedInt32Member b) {
 		if (a.v == 0)
@@ -213,8 +211,6 @@ public class UnsignedInt32Group
 			b.setV( a.v() - 1 );
 	}
 
-	// TODO: test
-	
 	@Override
 	public void succ(UnsignedInt32Member a, UnsignedInt32Member b) {
 		if (a.v == -1)

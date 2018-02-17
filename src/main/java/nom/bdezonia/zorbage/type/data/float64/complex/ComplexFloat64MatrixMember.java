@@ -164,7 +164,6 @@ public final class ComplexFloat64MatrixMember
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		// TODO: do we keep our mem/store strategies or adopt the other's
 		m = other.m;
 		s = other.s;
 		storage = other.storage.duplicate();
@@ -175,7 +174,6 @@ public final class ComplexFloat64MatrixMember
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		// TODO: do we keep our mem/store strategies or adopt the other's
 		other.m = m;
 		other.s = s;
 		other.storage = storage.duplicate();
