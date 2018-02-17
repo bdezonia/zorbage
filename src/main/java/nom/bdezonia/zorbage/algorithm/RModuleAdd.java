@@ -46,14 +46,12 @@ public class RModuleAdd {
 		W atmp = memberGroup.construct();
 		W btmp = memberGroup.construct();
 		final long max = Math.max(a.length(), b.length());
+		c.reshape(max);
 		for (long i = 0; i < max; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
 			memberGroup.add(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
-		W zero = memberGroup.construct();
-		for (long i = max; i < c.length(); i++)
-			c.setV(i, zero);
 	}
 }

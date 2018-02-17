@@ -46,17 +46,12 @@ public class RModuleSubtract {
 		W atmp = memberGroup.construct();
 		W btmp = memberGroup.construct();
 		final long max = Math.max(a.length(), b.length());
+		c.reshape(max);
 		for (long i = 0; i < max; i++) {
-			if (i < c.length()) {
-				a.v(i, atmp);
-				b.v(i, btmp);
-				memberGroup.subtract(atmp, btmp, btmp);
-				c.setV(i, btmp);
-			}
-		}
-		W zero = memberGroup.construct();
-		for (long i = max; i < c.length(); i++) {
-			c.setV(i, zero);
+			a.v(i, atmp);
+			b.v(i, btmp);
+			memberGroup.subtract(atmp, btmp, btmp);
+			c.setV(i, btmp);
 		}
 	}
 }

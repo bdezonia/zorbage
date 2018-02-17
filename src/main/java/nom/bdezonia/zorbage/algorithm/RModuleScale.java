@@ -45,15 +45,8 @@ public class RModuleScale {
 		void compute(T rmodGroup, V memberGroup, W scalar, U a, U b)
 	{
 		W tmp = memberGroup.construct();
-		// two loops minimizes memory allocations
-		final long min = Math.min(a.length(), b.length());
-		for (long i = 0; i < min; i++) {
-			a.v(i, tmp);
-			memberGroup.multiply(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
-		final long max = Math.max(a.length(), b.length());
-		for (long i = min; i < max; i++) {
+		b.reshape(a.length());
+		for (long i = 0; i < a.length(); i++) {
 			a.v(i, tmp);
 			memberGroup.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);
