@@ -70,12 +70,12 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void add(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		RModuleAdd.compute(G.CDBL_VEC, G.CDBL, a, b, c);
+		RModuleAdd.compute(G.CDBL, a, b, c);
 	}
 
 	@Override
 	public void subtract(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		RModuleSubtract.compute(G.CDBL_VEC, G.CDBL, a, b, c);
+		RModuleSubtract.compute(G.CDBL, a, b, c);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void scale(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		RModuleScale.compute(G.CDBL_VEC, G.CDBL, scalar, a, b);
+		RModuleScale.compute(G.CDBL, scalar, a, b);
 	}
 
 	@Override

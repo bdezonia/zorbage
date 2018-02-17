@@ -69,12 +69,12 @@ public class Float64Vector
 
 	@Override
 	public void add(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
-		RModuleAdd.compute(G.DBL_VEC, G.DBL, a, b, c);
+		RModuleAdd.compute(G.DBL, a, b, c);
 	}
 
 	@Override
 	public void subtract(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
-		RModuleSubtract.compute(G.DBL_VEC, G.DBL, a, b, c);
+		RModuleSubtract.compute(G.DBL, a, b, c);
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class Float64Vector
 
 	@Override
 	public void scale(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
-		RModuleScale.compute(G.DBL_VEC, G.DBL, scalar, a, b);
+		RModuleScale.compute(G.DBL, scalar, a, b);
 	}
 
 	@Override

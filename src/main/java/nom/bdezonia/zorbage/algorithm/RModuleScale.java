@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Ring;
 
@@ -41,12 +40,13 @@ public class RModuleScale {
 		// do not instantiate
 	}
 	
-	public static <T extends AdditiveGroup<T,U>, U extends RModuleMember<W>, V extends Ring<V,W>, W>
-		void compute(T rmodGroup, V memberGroup, W scalar, U a, U b)
+	public static <U extends RModuleMember<W>, V extends Ring<V,W>, W>
+		void compute(V memberGroup, W scalar, U a, U b)
 	{
 		W tmp = memberGroup.construct();
-		b.reshape(a.length());
-		for (long i = 0; i < a.length(); i++) {
+		final long max = a.length();
+		b.reshape(max);
+		for (long i = 0; i < max; i++) {
 			a.v(i, tmp);
 			memberGroup.multiply(scalar, tmp, tmp);
 			b.setV(i, tmp);

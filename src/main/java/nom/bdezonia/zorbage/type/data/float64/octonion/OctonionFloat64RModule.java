@@ -70,12 +70,12 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void add(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		RModuleAdd.compute(G.ODBL_MOD, G.ODBL, a, b, c);
+		RModuleAdd.compute(G.ODBL, a, b, c);
 	}
 
 	@Override
 	public void subtract(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		RModuleSubtract.compute(G.ODBL_MOD, G.ODBL, a, b, c);
+		RModuleSubtract.compute(G.ODBL, a, b, c);
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void scale(OctonionFloat64Member scalar, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		RModuleScale.compute(G.ODBL_MOD, G.ODBL, scalar, a, b);
+		RModuleScale.compute(G.ODBL, scalar, a, b);
 	}
 
 	@Override

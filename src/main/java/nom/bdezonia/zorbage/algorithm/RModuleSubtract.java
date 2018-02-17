@@ -40,8 +40,8 @@ public class RModuleSubtract {
 		// do not instantiate
 	}
 	
-	public static <T extends AdditiveGroup<T,U>, U extends RModuleMember<W>, V extends AdditiveGroup<V,W>, W>
-		void compute(T rmodGroup, V memberGroup, U a, U b, U c)
+	public static <U extends RModuleMember<W>, V extends AdditiveGroup<V,W>, W>
+		void compute(V memberGroup, U a, U b, U c)
 	{
 		W atmp = memberGroup.construct();
 		W btmp = memberGroup.construct();

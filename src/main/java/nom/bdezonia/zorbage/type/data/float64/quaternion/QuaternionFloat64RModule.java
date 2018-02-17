@@ -70,12 +70,12 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void add(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64RModuleMember c) {
-		RModuleAdd.compute(G.QDBL_MOD, G.QDBL, a, b, c);
+		RModuleAdd.compute(G.QDBL, a, b, c);
 	}
 
 	@Override
 	public void subtract(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64RModuleMember c) {
-		RModuleSubtract.compute(G.QDBL_MOD, G.QDBL, a, b, c);
+		RModuleSubtract.compute(G.QDBL, a, b, c);
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void scale(QuaternionFloat64Member scalar, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
-		RModuleScale.compute(G.QDBL_MOD, G.QDBL, scalar, a, b);
+		RModuleScale.compute(G.QDBL, scalar, a, b);
 	}
 
 	@Override
