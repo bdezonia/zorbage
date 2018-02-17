@@ -417,8 +417,11 @@ public class QuaternionFloat64Group
 
 	@Override
 	public void pow(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-		// TODO
-		throw new UnsupportedOperationException("Not yet implemented");
+		QuaternionFloat64Member logA = new QuaternionFloat64Member();
+		QuaternionFloat64Member bLogA = new QuaternionFloat64Member();
+		log(a, logA);
+		multiply(b, logA, bLogA);
+		exp(bLogA, c);
 	}
 
 	@Override

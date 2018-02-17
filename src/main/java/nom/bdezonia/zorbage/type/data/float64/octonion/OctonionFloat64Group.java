@@ -686,8 +686,11 @@ public class OctonionFloat64Group
 
 	@Override
 	public void pow(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		// TODO
-		throw new UnsupportedOperationException("Not yet implemented");
+		OctonionFloat64Member logA = new OctonionFloat64Member();
+		OctonionFloat64Member bLogA = new OctonionFloat64Member();
+		log(a, logA);
+		multiply(b, logA, bLogA);
+		exp(bLogA, c);
 	}	
 
 	@Override

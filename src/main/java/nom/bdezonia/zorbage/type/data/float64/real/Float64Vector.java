@@ -123,7 +123,7 @@ public class Float64Vector
 			max.setV(Math.max(Math.abs(tmp.v()), max.v()));
 		}
 		for (long i = 0; i < a.length(); i++) {
-			a.v(i,  tmp);
+			a.v(i, tmp);
 			G.DBL.divide(tmp, max, tmp);
 			G.DBL.multiply(tmp, tmp, tmp);
 			G.DBL.add(norm2, tmp, norm2);
