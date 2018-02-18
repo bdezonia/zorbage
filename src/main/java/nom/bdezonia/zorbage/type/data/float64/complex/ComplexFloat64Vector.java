@@ -53,7 +53,6 @@ public class ComplexFloat64Vector
     Constructible1dLong<ComplexFloat64VectorMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
-	private static final ComplexFloat64Member HALF = new ComplexFloat64Member(0.5,0);
 	
 	public ComplexFloat64Vector() {
 	}
@@ -126,10 +125,7 @@ public class ComplexFloat64Vector
 			G.CDBL.multiply(aTmp, tmp, tmp);
 			G.CDBL.add(sum, tmp, sum);
 		}
-		G.CDBL.pow(sum, HALF, tmp);
-		// since x*conj x this result should be real
-		// TODO: test this real assumption with RealUtils.near()
-		b.setR(tmp.r());
+		b.setR(Math.sqrt(sum.r()));
 	}
 
 	@Override

@@ -53,7 +53,6 @@ public class QuaternionFloat64RModule
     Constructible1dLong<QuaternionFloat64RModuleMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
-	private static final QuaternionFloat64Member HALF = new QuaternionFloat64Member(0.5,0,0,0);
 	
 	public QuaternionFloat64RModule() {
 	}
@@ -126,10 +125,7 @@ public class QuaternionFloat64RModule
 			G.QDBL.multiply(aTmp, tmp, tmp);
 			G.QDBL.add(sum, tmp, sum);
 		}
-		G.QDBL.pow(sum, HALF, tmp);
-		// since x*conj x this result should be real
-		// TODO: test this real assumption with RealUtils.near()
-		b.setR(tmp.r());
+		b.setR(Math.sqrt(sum.r()));
 	}
 
 	@Override

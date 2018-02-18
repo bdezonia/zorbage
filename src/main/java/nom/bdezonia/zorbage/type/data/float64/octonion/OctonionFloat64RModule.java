@@ -53,7 +53,6 @@ public class OctonionFloat64RModule
     Constructible1dLong<OctonionFloat64RModuleMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
-	private static final OctonionFloat64Member HALF = new OctonionFloat64Member(0.5,0,0,0,0,0,0,0);
 	
 	public OctonionFloat64RModule() {
 	}
@@ -126,10 +125,7 @@ public class OctonionFloat64RModule
 			G.ODBL.multiply(aTmp, tmp, tmp);
 			G.ODBL.add(sum, tmp, sum);
 		}
-		G.ODBL.pow(sum, HALF, tmp);
-		// since x*conj x this result should be real
-		// TODO: test this real assumption with RealUtils.near()
-		b.setR(tmp.r());
+		b.setR(Math.sqrt(sum.r()));
 	}
 
 	@Override
