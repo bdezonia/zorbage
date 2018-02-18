@@ -129,7 +129,7 @@ public class OctonionFloat64RModule
 		G.ODBL.pow(sum, HALF, tmp);
 		// since x*conj x this result should be real
 		// TODO: test this real assumption with RealUtils.near()
-		b.setR(sum.r());
+		b.setR(tmp.r());
 	}
 
 	@Override
