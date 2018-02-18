@@ -24,94 +24,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64.quaternion;
+package nom.bdezonia.zorbage.type.data.float64.octonion;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestQuaternionFloat64Group {
+public class TestOctonionFloat64Group {
 
 	private static final double TOL = 0.0000000001;
 	
 	@Test
-	public void run() {
-		QuaternionFloat64Member q1 = G.QDBL.construct();
-		
-		// TODO define a ctor that takes four doubles
-		q1.setR(1);
-		q1.setI(-2);
-		q1.setJ(3);
-		q1.setK(2);
-		
-		Float64Member tmp = new Float64Member();
-		
-		G.QDBL.norm(q1, tmp);
-
-		assertEquals(3*Math.sqrt(2),tmp.v(),TOL);
-		
-		QuaternionFloat64Member q2 = G.QDBL.construct();
-
-		q2.setR(11);
-		q2.setI(-2);
-		q2.setJ(0);
-		q2.setK(-2);
-
-		G.QDBL.norm(q2, tmp);
-
-		assertEquals(Math.sqrt(129),tmp.v(),TOL);
-		
-		QuaternionFloat64Member q3 = G.QDBL.construct();
-
-		G.QDBL.add(q1, q2, q3);
-
-		assertEquals(q1.r()+q2.r(), q3.r(), 0);
-		assertEquals(q1.i()+q2.i(), q3.i(), 0);
-		assertEquals(q1.j()+q2.j(), q3.j(), 0);
-		assertEquals(q1.k()+q2.k(), q3.k(), 0);
-		
-		G.QDBL.subtract(q1, q2, q3);
-
-		assertEquals(q1.r()-q2.r(), q3.r(), 0);
-		assertEquals(q1.i()-q2.i(), q3.i(), 0);
-		assertEquals(q1.j()-q2.j(), q3.j(), 0);
-		assertEquals(q1.k()-q2.k(), q3.k(), 0);
-
-		G.QDBL.multiply(q1, q2, q3);
-
-		assertEquals(11, q3.r(), TOL);
-		assertEquals(-30, q3.i(), TOL);
-		assertEquals(25, q3.j(), TOL);
-		assertEquals(26, q3.k(), TOL);
-
-		G.QDBL.divide(q3, q2, q1);
-
-		assertEquals(1, q1.r(), TOL);
-		assertEquals(-2, q1.i(), TOL);
-		assertEquals(3, q1.j(), TOL);
-		assertEquals(2, q1.k(), TOL);
-		
-	}
-	
-	@Test
 	public void testConjugate() {
-		QuaternionFloat64Member a = new QuaternionFloat64Member(5,3,-1,-7);
-		QuaternionFloat64Member b = new QuaternionFloat64Member();
-		QuaternionFloat64Member c = new QuaternionFloat64Member();
+		OctonionFloat64Member a = new OctonionFloat64Member(-1,5,-2,7,-1,-2,-3,-4);
+		OctonionFloat64Member b = new OctonionFloat64Member();
+		OctonionFloat64Member c = new OctonionFloat64Member();
 		
-		G.QDBL.conjugate(a, b);
-		G.QDBL.multiply(a, b, c);
-		assertEquals(84,c.r(), TOL);
+		G.ODBL.conjugate(a, b);
+		G.ODBL.multiply(a, b, c);
+		assertEquals(109,c.r(), TOL);
 		assertEquals(0,c.i(), TOL);
 		assertEquals(0,c.j(), TOL);
 		assertEquals(0,c.k(), TOL);
+		assertEquals(0,c.l(), TOL);
+		assertEquals(0,c.i0(), TOL);
+		assertEquals(0,c.j0(), TOL);
+		assertEquals(0,c.k0(), TOL);
 	}
 }
