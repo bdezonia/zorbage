@@ -111,7 +111,7 @@ public class Float64TensorProduct
 		for (int i = 0; i < dims.length; i++) {
 			dims[i] = from.dimension(i);
 		}
-		to.reshape(dims);
+		to.alloc(dims);
 		long numElems = from.numElems();
 		for (long i = 0; i < numElems; i++) {
 			from.v(i, tmp);
@@ -149,7 +149,7 @@ public class Float64TensorProduct
 		for (int i = 0; i < newDims.length; i++) {
 			newDims[i] = a.dimension(i);
 		}
-		c.reshape(newDims);
+		c.alloc(newDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -171,7 +171,7 @@ public class Float64TensorProduct
 		for (int i = 0; i < newDims.length; i++) {
 			newDims[i] = a.dimension(i);
 		}
-		c.reshape(newDims);
+		c.alloc(newDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -258,7 +258,7 @@ public class Float64TensorProduct
 		for (int i = 0; i < newDims.length; i++) {
 			newDims[i] = a.dimension(i);
 		}
-		c.reshape(newDims);
+		c.alloc(newDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -280,7 +280,7 @@ public class Float64TensorProduct
 		for (int i = 0; i < newDims.length; i++) {
 			newDims[i] = a.dimension(i);
 		}
-		c.reshape(newDims);
+		c.alloc(newDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -309,7 +309,7 @@ public class Float64TensorProduct
 		for (int i = 0; i < cDims.length; i++) {
 			cDims[i] = dimA;
 		}
-		c.reshape(cDims);
+		c.alloc(cDims);
 		Float64Member aTmp = new Float64Member();
 		Float64Member bTmp = new Float64Member();
 		Float64Member cTmp = new Float64Member();
@@ -341,7 +341,7 @@ public class Float64TensorProduct
 		for (int k = 0; k < newDims.length; k++) {
 			newDims[k] = a.dimension(0);
 		}
-		b.reshape(newDims);
+		b.alloc(newDims);
 		throw new IllegalArgumentException("must finish");
 	}
 	
