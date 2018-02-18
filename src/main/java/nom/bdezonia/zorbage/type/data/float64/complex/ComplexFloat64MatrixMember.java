@@ -132,19 +132,27 @@ public final class ComplexFloat64MatrixMember
 	public long cols() { return cols; }
 
 	@Override
-	public void init(long r, long c) {
+	public boolean alloc(long r, long c) {
 		if (rows != r || cols != c) {
 			rows = r;
 			cols = c;
 		}
-		if (storage != null && storage.size() == r*c) {
+		if (storage == null || storage.size() != r*c) {
+			if (s == StorageConstruction.ARRAY)
+				storage = new ArrayStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
+			else
+				storage = new FileStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void init(long r, long c) {
+		if (!alloc(r,c)) {
 			for (long i = 0; i < storage.size(); i++)
 				storage.set(i, ZERO);
 		}
-		else if (s == StorageConstruction.ARRAY)
-			storage = new ArrayStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
-		else
-			storage = new FileStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
 	}
 	
 	@Override

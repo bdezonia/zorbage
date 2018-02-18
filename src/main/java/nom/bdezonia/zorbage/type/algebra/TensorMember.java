@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  */
 public interface TensorMember<A> extends Dimensioned {
 	// n dims
+	boolean alloc(long[] dims);
 	void init(long[] dims);
 	void reshape(long[] dims);
 	void v(IntegerIndex index, A value);
