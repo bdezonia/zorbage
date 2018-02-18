@@ -201,7 +201,7 @@ public final class Float64MatrixMember
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
 		Float64Member value = new Float64Member();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
-		init(rep.getMatrixRowDim(), rep.getMatrixColDim());
+		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		for (long i = 0; i < mat.size(); i++) {
 			OctonionRepresentation o = mat.get(i);
 			value.setV(o.r().doubleValue());

@@ -205,7 +205,7 @@ public final class ComplexFloat64MatrixMember
 	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
-		init(rep.getMatrixRowDim(), rep.getMatrixColDim());
+		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		for (long i = 0; i < mat.size(); i++) {
 			OctonionRepresentation o = mat.get(i);
 			value.setR(o.r().doubleValue());
@@ -241,7 +241,6 @@ public final class ComplexFloat64MatrixMember
 	@Override
 	public void reshape(long rows, long cols) {
 		if (this.rows == rows && this.cols == cols) return;
-		init(rows, cols);
 		// TODO: look at vectorMember. copy overlapping data.
 		// set other to zero.
 		throw new IllegalArgumentException("not implemented yet");

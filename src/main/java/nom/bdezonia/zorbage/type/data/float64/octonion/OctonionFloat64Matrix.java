@@ -95,7 +95,7 @@ public class OctonionFloat64Matrix
 		}
 		else if (power == 0) {
 			// TODO if (isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
-			b.init(a.rows(), a.cols());
+			b.alloc(a.rows(), a.cols());
 			unity(b);
 		}
 		else if (power == 1)
@@ -124,7 +124,7 @@ public class OctonionFloat64Matrix
 	public void negate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		if (a != b)
-			b.init(a.rows(), a.cols());
+			b.alloc(a.rows(), a.cols());
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
@@ -139,7 +139,7 @@ public class OctonionFloat64Matrix
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
-			c.init(a.rows(), a.cols());
+			c.alloc(a.rows(), a.cols());
 		}
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
@@ -159,7 +159,7 @@ public class OctonionFloat64Matrix
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (c != a && c != b) {
-			c.init(a.rows(), a.cols());
+			c.alloc(a.rows(), a.cols());
 		}
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
@@ -200,7 +200,7 @@ public class OctonionFloat64Matrix
 	@Override
 	public void assign(OctonionFloat64MatrixMember from, OctonionFloat64MatrixMember to) {
 		if (from == to) return;
-		to.init(from.rows(), from.cols());
+		to.alloc(from.rows(), from.cols());
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < from.rows(); row++) {
 			for (long col = 0; col < from.cols(); col++) {
@@ -239,7 +239,7 @@ public class OctonionFloat64Matrix
 	@Override
 	public void round(Round.Mode mode, Float64Member delta, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		if (a != b)
-			b.init(a.rows(), a.cols());
+			b.alloc(a.rows(), a.cols());
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
@@ -281,7 +281,7 @@ public class OctonionFloat64Matrix
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();
 		if (a != b) {
-			b.init(a.rows(), a.cols());
+			b.alloc(a.rows(), a.cols());
 		}
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
@@ -296,7 +296,7 @@ public class OctonionFloat64Matrix
 	public void transpose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
-		b.init(a.cols(), a.rows());
+		b.alloc(a.cols(), a.rows());
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r,  c, value);
