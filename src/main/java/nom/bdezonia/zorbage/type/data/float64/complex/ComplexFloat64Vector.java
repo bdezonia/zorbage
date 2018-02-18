@@ -53,6 +53,7 @@ public class ComplexFloat64Vector
     Constructible1dLong<ComplexFloat64VectorMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
+	private static final ComplexFloat64Member HALF = new ComplexFloat64Member(0.5,0);
 	
 	public ComplexFloat64Vector() {
 	}
@@ -115,25 +116,20 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void norm(ComplexFloat64VectorMember a, ComplexFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-		// TODO
-		//ComplexFloat64Member norm2 = new ComplexFloat64Member();
-		//ComplexFloat64Member tmp = new ComplexFloat64Member();
-		//ComplexFloat64Member tmp2 = new ComplexFloat64Member();
-		//for (int i = 0; i < a.length(); i++) {
-		//	a.v(i, tmp);
-		//	g.multiply(tmp,tmp,tmp2);
-		//	g.add(norm2, tmp2, norm2);
-		//}
-		//ComplexFloat64Member norm = Math.sqrt(norm2); // TODO this is the tricky part
-		//b.set(norm);
-		// is a norm of a complex vector a complex number or a real number? read.
-
-		// TODO
-		//   i think we want a hermitian norm and also for quats and octs
-		//   you calc math.sqrt((conj v) dot v)
-		//   i think it is a real number but maybe not
-		//   if not then need power(real, a, b) support for the four types (1, 2, 4, 8 dims)
+		ComplexFloat64Member aTmp = new ComplexFloat64Member();
+		ComplexFloat64Member sum = new ComplexFloat64Member();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		// TODO Look into preventing overflow. can do so similar to float case using norms
+		for (long i = 0; i < a.length(); i++) {
+			a.v(i, aTmp);
+			G.CDBL.conjugate(aTmp, tmp);
+			G.CDBL.multiply(aTmp, tmp, tmp);
+			G.CDBL.add(sum, tmp, sum);
+		}
+		G.CDBL.pow(sum, HALF, tmp);
+		// since x*conj x this result should be real
+		// TODO: test this real assumption with RealUtils.near()
+		b.setR(sum.r());
 	}
 
 	@Override

@@ -53,6 +53,7 @@ public class QuaternionFloat64RModule
     Constructible1dLong<QuaternionFloat64RModuleMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
+	private static final QuaternionFloat64Member HALF = new QuaternionFloat64Member(0.5,0,0,0);
 	
 	public QuaternionFloat64RModule() {
 	}
@@ -115,19 +116,20 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void norm(QuaternionFloat64RModuleMember a, QuaternionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-		// TODO
-		//QuaternionFloat64Member norm2 = new QuaternionFloat64Member();
-		//QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		//QuaternionFloat64Member tmp2 = new QuaternionFloat64Member();
-		//for (int i = 0; i < a.length(); i++) {
-		//	a.v(i, tmp);
-		//	g.multiply(tmp,tmp,tmp2);
-		//	g.add(norm2, tmp2, norm2);
-		//}
-		//QuaternionFloat64Member norm = Math.sqrt(norm2); // TODO this is the tricky part
-		//b.set(norm);
-		// is a norm of a Quaternion RModule a Quaternion number or a real number? read.
+		QuaternionFloat64Member aTmp = new QuaternionFloat64Member();
+		QuaternionFloat64Member sum = new QuaternionFloat64Member();
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		// TODO Look into preventing overflow. can do so similar to float case using norms
+		for (long i = 0; i < a.length(); i++) {
+			a.v(i, aTmp);
+			G.QDBL.conjugate(aTmp, tmp);
+			G.QDBL.multiply(aTmp, tmp, tmp);
+			G.QDBL.add(sum, tmp, sum);
+		}
+		G.QDBL.pow(sum, HALF, tmp);
+		// since x*conj x this result should be real
+		// TODO: test this real assumption with RealUtils.near()
+		b.setR(sum.r());
 	}
 
 	@Override

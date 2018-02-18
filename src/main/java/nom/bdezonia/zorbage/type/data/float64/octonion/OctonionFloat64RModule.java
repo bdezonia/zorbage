@@ -53,6 +53,7 @@ public class OctonionFloat64RModule
     Constructible1dLong<OctonionFloat64RModuleMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
+	private static final OctonionFloat64Member HALF = new OctonionFloat64Member(0.5,0,0,0,0,0,0,0);
 	
 	public OctonionFloat64RModule() {
 	}
@@ -115,19 +116,20 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void norm(OctonionFloat64RModuleMember a, OctonionFloat64Member b) {
-		throw new IllegalArgumentException("TODO");
-		// TODO
-		//OctonionFloat64Member norm2 = new OctonionFloat64Member();
-		//OctonionFloat64Member tmp = new OctonionFloat64Member();
-		//OctonionFloat64Member tmp2 = new OctonionFloat64Member();
-		//for (int i = 0; i < a.length(); i++) {
-		//	a.v(i, tmp);
-		//	g.multiply(tmp,tmp,tmp2);
-		//	g.add(norm2, tmp2, norm2);
-		//}
-		//OctonionFloat64Member norm = Math.sqrt(norm2); // TODO this is the tricky part
-		//b.set(norm);
-		// is a norm of a Octonion RModule a Octonion number or a real number? read.
+		OctonionFloat64Member aTmp = new OctonionFloat64Member();
+		OctonionFloat64Member sum = new OctonionFloat64Member();
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		// TODO Look into preventing overflow. can do so similar to float case using norms
+		for (long i = 0; i < a.length(); i++) {
+			a.v(i, aTmp);
+			G.ODBL.conjugate(aTmp, tmp);
+			G.ODBL.multiply(aTmp, tmp, tmp);
+			G.ODBL.add(sum, tmp, sum);
+		}
+		G.ODBL.pow(sum, HALF, tmp);
+		// since x*conj x this result should be real
+		// TODO: test this real assumption with RealUtils.near()
+		b.setR(sum.r());
 	}
 
 	@Override
