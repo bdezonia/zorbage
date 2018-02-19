@@ -37,10 +37,12 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -50,7 +52,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class QuaternionFloat64RModule
   implements
     RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Group,QuaternionFloat64Member>,
-    Constructible1dLong<QuaternionFloat64RModuleMember>
+    Constructible1dLong<QuaternionFloat64RModuleMember>,
+    Norm<QuaternionFloat64RModuleMember,Float64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
@@ -114,7 +117,7 @@ public class QuaternionFloat64RModule
 	}
 
 	@Override
-	public void norm(QuaternionFloat64RModuleMember a, QuaternionFloat64Member b) {
+	public void norm(QuaternionFloat64RModuleMember a, Float64Member b) {
 		QuaternionFloat64Member aTmp = new QuaternionFloat64Member();
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
@@ -125,7 +128,7 @@ public class QuaternionFloat64RModule
 			G.QDBL.multiply(aTmp, tmp, tmp);
 			G.QDBL.add(sum, tmp, sum);
 		}
-		b.setR(Math.sqrt(sum.r()));
+		b.setV(Math.sqrt(sum.r()));
 	}
 
 	@Override

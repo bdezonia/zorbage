@@ -37,10 +37,12 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -50,7 +52,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class ComplexFloat64Vector
   implements
     VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
-    Constructible1dLong<ComplexFloat64VectorMember>
+    Constructible1dLong<ComplexFloat64VectorMember>,
+    Norm<ComplexFloat64VectorMember,Float64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -114,7 +117,7 @@ public class ComplexFloat64Vector
 	}
 
 	@Override
-	public void norm(ComplexFloat64VectorMember a, ComplexFloat64Member b) {
+	public void norm(ComplexFloat64VectorMember a, Float64Member b) {
 		ComplexFloat64Member aTmp = new ComplexFloat64Member();
 		ComplexFloat64Member sum = new ComplexFloat64Member();
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
@@ -125,7 +128,7 @@ public class ComplexFloat64Vector
 			G.CDBL.multiply(aTmp, tmp, tmp);
 			G.CDBL.add(sum, tmp, sum);
 		}
-		b.setR(Math.sqrt(sum.r()));
+		b.setV(Math.sqrt(sum.r()));
 	}
 
 	@Override

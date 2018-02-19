@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.
 //they do not worry about upper and lower indices or even matching shapes. They do element by
@@ -60,7 +61,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class Float64TensorProduct
 	implements
 		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
-		ConstructibleNdLong<Float64TensorProductMember>
+		ConstructibleNdLong<Float64TensorProductMember>,
+		Norm<Float64TensorProductMember,Float64Member>
 {
 	@Override
 	public Float64TensorProductMember construct() {

@@ -38,7 +38,6 @@ package nom.bdezonia.zorbage.type.algebra;
 public interface RModule<T extends RModule<T,U,V,W>, U, V extends Ring<V,W>, W>
   extends
     AdditiveGroup<T,U>,
-    Norm<U,W>,
     Products<U,W>,
     Conjugate<U>
 {

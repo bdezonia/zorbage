@@ -37,10 +37,12 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -50,7 +52,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class OctonionFloat64RModule
   implements
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
-    Constructible1dLong<OctonionFloat64RModuleMember>
+    Constructible1dLong<OctonionFloat64RModuleMember>,
+	Norm<OctonionFloat64RModuleMember,Float64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
@@ -114,7 +117,7 @@ public class OctonionFloat64RModule
 	}
 
 	@Override
-	public void norm(OctonionFloat64RModuleMember a, OctonionFloat64Member b) {
+	public void norm(OctonionFloat64RModuleMember a, Float64Member b) {
 		OctonionFloat64Member aTmp = new OctonionFloat64Member();
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
@@ -125,7 +128,7 @@ public class OctonionFloat64RModule
 			G.ODBL.multiply(aTmp, tmp, tmp);
 			G.ODBL.add(sum, tmp, sum);
 		}
-		b.setR(Math.sqrt(sum.r()));
+		b.setV(Math.sqrt(sum.r()));
 	}
 
 	@Override

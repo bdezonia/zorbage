@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -49,7 +50,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class Float64Vector
   implements
     VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>,
-    Constructible1dLong<Float64VectorMember>
+    Constructible1dLong<Float64VectorMember>,
+	Norm<Float64VectorMember,Float64Member>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
