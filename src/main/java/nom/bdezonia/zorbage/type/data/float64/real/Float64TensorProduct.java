@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Scale;
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.
 //they do not worry about upper and lower indices or even matching shapes. They do element by
@@ -62,7 +63,8 @@ public class Float64TensorProduct
 	implements
 		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
 		ConstructibleNdLong<Float64TensorProductMember>,
-		Norm<Float64TensorProductMember,Float64Member>
+		Norm<Float64TensorProductMember,Float64Member>,
+		Scale<Float64TensorProductMember,Float64Member>
 {
 	@Override
 	public Float64TensorProductMember construct() {
@@ -191,37 +193,6 @@ public class Float64TensorProduct
 		throw new IllegalArgumentException("to be implemented");
 	}
 
-	@Override
-	public void crossProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dotProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64Member c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void perpDotProduct(Float64TensorProductMember a, Float64TensorProductMember b, Float64Member c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void vectorTripleProduct(Float64TensorProductMember a, Float64TensorProductMember b,
-			Float64TensorProductMember c, Float64TensorProductMember d) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void scalarTripleProduct(Float64TensorProductMember a, Float64TensorProductMember b,
-			Float64TensorProductMember c, Float64Member d) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void conjugate(Float64TensorProductMember a, Float64TensorProductMember b) {
@@ -345,6 +316,16 @@ public class Float64TensorProduct
 		}
 		b.alloc(newDims);
 		throw new IllegalArgumentException("must finish");
+	}
+	
+	// TODO: need some interface to override
+
+	public void semicolonDerivative(int someArgs) {
+	}
+	
+	// TODO: need some interface to override
+
+	public void commaDerivative(int someArgs) {
 	}
 	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {

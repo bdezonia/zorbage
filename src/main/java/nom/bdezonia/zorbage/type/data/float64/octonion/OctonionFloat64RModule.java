@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
@@ -53,7 +54,8 @@ public class OctonionFloat64RModule
   implements
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
     Constructible1dLong<OctonionFloat64RModuleMember>,
-	Norm<OctonionFloat64RModuleMember,Float64Member>
+	Norm<OctonionFloat64RModuleMember,Float64Member>,
+	Products<OctonionFloat64RModuleMember, OctonionFloat64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	

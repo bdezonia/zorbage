@@ -32,11 +32,6 @@ package nom.bdezonia.zorbage.type.algebra;
  *
  * @param <U>
  */
-public interface Products<U,W> extends Scale<U,W> {
-	void crossProduct(U a, U b, U c);
-	void dotProduct(U a, U b, W c);
-	void perpDotProduct(U a, U b, W c);
-	//void vectorDirectProduct(U a, U b, Tensor c); // TODO implement Tensor support and rename for rmodules
-	void vectorTripleProduct(U a, U b, U c, U d); // TODO rename from vector to something for both vectors and rmodules
-	void scalarTripleProduct(U a, U b, U c, W d); // TODO rename from scalar to something for both vectors and rmodules
+public interface Scale<U,W> {
+	void scale(W scalar, U a, U b);
 }
