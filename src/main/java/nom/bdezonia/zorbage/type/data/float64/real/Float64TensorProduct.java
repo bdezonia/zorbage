@@ -317,15 +317,19 @@ public class Float64TensorProduct
 		b.alloc(newDims);
 		throw new IllegalArgumentException("must finish");
 	}
-	
+		
 	// TODO: need some interface to override
 
+	// http://mathworld.wolfram.com/CovariantDerivative.html
 	public void semicolonDerivative(int someArgs) {
+		throw new IllegalArgumentException("to implement");
 	}
 	
 	// TODO: need some interface to override
 
+	// http://mathworld.wolfram.com/CommaDerivative.html
 	public void commaDerivative(int someArgs) {
+		throw new IllegalArgumentException("to implement");
 	}
 	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
