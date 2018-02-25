@@ -59,8 +59,7 @@ public class OctonionFloat64RModule
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
-	public OctonionFloat64RModule() {
-	}
+	public OctonionFloat64RModule() {}
 	
 	@Override
 	public void zero(OctonionFloat64RModuleMember a) {
@@ -123,7 +122,12 @@ public class OctonionFloat64RModule
 		OctonionFloat64Member aTmp = new OctonionFloat64Member();
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		// TODO Look into preventing overflow. can do so similar to float case using norms
+		// TODO Look into preventing overflow. can do so similar to float
+		// case using norms. Also could avoid a lot of adds and multiplies
+		// by just working with components of the oct as reals since
+		// that is all that survives. This can be extended to quats and
+		// complexes. maybe not, think it through. But the conjugate()
+		// and multiply() can be simplified.
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, aTmp);
 			G.ODBL.conjugate(aTmp, tmp);
@@ -155,7 +159,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void vectorTripleProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c,
-			OctonionFloat64RModuleMember d)
+		OctonionFloat64RModuleMember d)
 	{
 		OctonionFloat64RModuleMember b_cross_c = new OctonionFloat64RModuleMember(new double[3*8]);
 		crossProduct(b, c, b_cross_c);
@@ -164,7 +168,7 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void scalarTripleProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c,
-			OctonionFloat64Member d)
+		OctonionFloat64Member d)
 	{
 		OctonionFloat64RModuleMember b_cross_c = new OctonionFloat64RModuleMember(new double[3*8]);
 		crossProduct(b, c, b_cross_c);

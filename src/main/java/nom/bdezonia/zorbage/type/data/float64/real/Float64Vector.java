@@ -123,7 +123,7 @@ public class Float64Vector
 		Float64Member norm2 = new Float64Member(0);
 		max.setV(Double.NEGATIVE_INFINITY);
 		for (long i = 0; i < a.length(); i++) {
-			a.v(i,  tmp);
+			a.v(i, tmp);
 			max.setV(Math.max(Math.abs(tmp.v()), max.v()));
 		}
 		for (long i = 0; i < a.length(); i++) {
