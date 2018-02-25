@@ -62,12 +62,12 @@ public class BinarySearch {
 		while (hi >= lo) {
 			long mid = (lo + hi) / 2;
 			data.get(start+mid, tmp);
-			int cmp = group.compare(tmp, value);
+			int cmp = group.compare(value, tmp);
 			if (cmp == 0)
 				return start + mid;
-			else if (cmp < 0)
+			else if (cmp > 0)
 				lo = mid + 1;
-			else // cmp > 0
+			else // cmp < 0
 				hi = mid - 1;
 		}
 		return -1;
