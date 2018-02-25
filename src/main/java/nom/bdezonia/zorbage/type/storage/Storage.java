@@ -37,9 +37,16 @@ import nom.bdezonia.zorbage.type.storage.file.FileStorage;
 public class Storage {
 
 	public static <U> IndexedDataSource<?, U> allocate(long numElements, U type) {
-		if (numElements > Integer.MAX_VALUE / 20)
-			return FileStorage.allocate(numElements, type);
-		else
+		
+		try {
+
 			return ArrayStorage.allocate(numElements, type);
+
+		} catch (OutOfMemoryError e) {
+
+			return FileStorage.allocate(numElements, type);
+
+		}
+
 	}
 }
