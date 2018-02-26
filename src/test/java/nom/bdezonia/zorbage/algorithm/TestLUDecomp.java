@@ -247,4 +247,25 @@ public class TestLUDecomp {
 		assertEquals(0, value.k0(), 0.000000000001);
 	}
 
+	public void testRealDet() {
+		Float64Member val = G.DBL.construct();
+
+		Float64MatrixMember a = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 2, 2);
+		val.setV(1);
+		a.setV(0, 0, val);
+		val.setV(2);
+		a.setV(0, 1, val);
+		val.setV(3);
+		a.setV(1, 0, val);
+		val.setV(4);
+		a.setV(1, 1, val);
+		
+		Float64VectorMember b = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 2);
+		
+		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 2);
+
+		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b, x, val);
+		
+		assertEquals(-2, val.v(), 0);
+	}
 }
