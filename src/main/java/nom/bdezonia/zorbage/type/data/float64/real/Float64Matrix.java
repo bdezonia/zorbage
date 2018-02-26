@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -300,10 +301,15 @@ public class Float64Matrix
 		transpose(a, b);
 	}
 
+	// TODO test
+
 	@Override
 	public void det(Float64MatrixMember a, Float64Member b) {
-		// TODO
-		throw new IllegalArgumentException("TODO");
+		if (a.rows() != a.cols())
+			throw new IllegalArgumentException("determinants only defined for square matrices");
+		Float64VectorMember v1 = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.cols());
+		Float64VectorMember v2 = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.cols());
+		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, v1, v2, b);
 	}
 
 	@Override

@@ -61,7 +61,7 @@ public class LUDecomp {
 					RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 					MATRIX_MEMBER extends MatrixMember<BASETYPE>,
 					MATRIX_GROUP extends Group<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
-		void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
+		void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x, BASETYPE det)
 	{
 		final long n = x.length();
 		
@@ -141,6 +141,22 @@ public class LUDecomp {
 			numGroup.multiply(value1, value2, term);
 			x.setV(i, term);
 		}
+
+		// For now compute determinant of lu as part of this algorithm.
+
+		// TODO: make three algorithms out of this one. One of them does a
+		// LU factorization. Another calls LU factorize and then solves for
+		// x vector. A third calls LU factorize and calcs determinant.
+		
+		// TODO: test that I work and am not off by a factor of -1
+		
+		numGroup.zero(sum);
+		for (long i = 0; i < n; i++) {
+			lu.v(i, i, value1);
+			numGroup.multiply(value1, value1, value2);
+			numGroup.add(sum, value2, sum);
+		}
+		numGroup.assign(sum, det);
 	}
 	
 }

@@ -78,7 +78,7 @@ public class TestLUDecomp {
 		
 		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
-		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a,b,x);
+		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b, x, val);
 
 		Float64Member value = new Float64Member();
 		
@@ -118,7 +118,7 @@ public class TestLUDecomp {
 		
 		ComplexFloat64VectorMember x = G.CDBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
-		LUDecomp.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, a, b, x);
+		LUDecomp.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, a, b, x, val);
 
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		
@@ -161,7 +161,7 @@ public class TestLUDecomp {
 		
 		QuaternionFloat64RModuleMember x = G.QDBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
-		LUDecomp.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b, x);
+		LUDecomp.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b, x, val);
 
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		
@@ -210,7 +210,7 @@ public class TestLUDecomp {
 		
 		OctonionFloat64RModuleMember x = G.ODBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
 
-		LUDecomp.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b, x);
+		LUDecomp.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b, x, val);
 
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		
