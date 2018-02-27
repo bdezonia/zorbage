@@ -247,7 +247,8 @@ public class TestLUDecomp {
 		assertEquals(0, value.k0(), 0.000000000001);
 	}
 
-	public void testRealDet() {
+	@Test
+	public void testReal2x2Det() {
 		Float64Member val = G.DBL.construct();
 
 		Float64MatrixMember a = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 2, 2);

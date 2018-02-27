@@ -150,11 +150,10 @@ public class LUDecomp {
 		
 		// TODO: test that I work and am not off by a factor of -1
 		
-		numGroup.zero(sum);
+		numGroup.unity(sum);
 		for (long i = 0; i < n; i++) {
 			lu.v(i, i, value1);
-			numGroup.multiply(value1, value1, value2);
-			numGroup.add(sum, value2, sum);
+			numGroup.multiply(sum, value1, sum);
 		}
 		numGroup.assign(sum, det);
 	}
