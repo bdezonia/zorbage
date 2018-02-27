@@ -28,8 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
