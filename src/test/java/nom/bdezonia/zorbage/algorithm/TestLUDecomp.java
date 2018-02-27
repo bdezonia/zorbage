@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
@@ -321,7 +323,7 @@ public class TestLUDecomp {
 		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 4);
 
 		LUDecomp.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b, x, val);
-		
+
 		assertEquals(602, val.v(), 0);
 	}
 }

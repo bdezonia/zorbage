@@ -50,7 +50,8 @@ public class LUDecomp {
 	private LUDecomp() {}
 	
 	/**
-	 * LU Decomposition. Sets the solution vector x from the equation Ax = b.
+	 * LU Decomposition. Sets the solution vector x given A and b from the matrix
+	 * equation Ax = b.
 	 * @param a
 	 * @param b
 	 * @param x
@@ -148,14 +149,13 @@ public class LUDecomp {
 		// LU factorization. Another calls LU factorize and then solves for
 		// x vector. A third calls LU factorize and calcs determinant.
 		
-		// TODO: test that I work and am not off by a factor of -1
-		
-		numGroup.unity(sum);
+		BASETYPE prod = numGroup.construct();
+		numGroup.unity(prod);
 		for (long i = 0; i < n; i++) {
 			lu.v(i, i, value1);
-			numGroup.multiply(sum, value1, sum);
+			numGroup.multiply(prod, value1, prod);
 		}
-		numGroup.assign(sum, det);
+		numGroup.assign(prod, det);
 	}
 	
 }
