@@ -293,6 +293,8 @@ public class Float64TensorProduct
 		}
 	}
 	
+	// https://en.wikipedia.org/wiki/Tensor_contraction
+	
 	@Override
 	public void contract(int i, int j, Float64TensorProductMember a, Float64TensorProductMember b) {
 		if (a.rank() < 2)
