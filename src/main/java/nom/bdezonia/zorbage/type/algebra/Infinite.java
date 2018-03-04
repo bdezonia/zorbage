@@ -26,6 +26,11 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
 public interface Infinite<T> {
 	boolean isNaN(T a);
 	boolean isInfinite(T a);
