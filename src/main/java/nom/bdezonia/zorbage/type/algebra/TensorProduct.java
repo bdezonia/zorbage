@@ -37,8 +37,12 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface TensorProduct<T extends TensorProduct<T,U,V,W>, U, V extends Field<V,W>, W>
   extends
-    VectorSpace<T,U,V,W>
+    VectorSpace<T,U,V,W>, Multiplication<U>, Unity<U>
 {
-	// covariant derivative?
-	// other things?
+	void contract(int i, int j, U a, U b);
+	void addToElements(W scalar, U a, U b);
+	void multiplyElements(U a, U b, U c);
+	void divideElements(U a, U b, U c);
+	void semicolonDerivative(int someArgs);
+	void commaDerivative(int someArgs);
 }

@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
-
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Scale;
@@ -210,9 +209,8 @@ public class Float64TensorProduct
 		}
 	}
 
-	// TODO: need some interface to override
-	
-	public void add(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
+	@Override
+	public void addToElements(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
 		Float64Member tmp = new Float64Member();
 		assign(a,b);
 		for (long i = 0; i < b.numElems(); i++) {
@@ -222,8 +220,7 @@ public class Float64TensorProduct
 		}
 	}
 
-	// TODO: need some interface to override
-	
+	@Override
 	public void multiplyElements(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 		if (!shapesMatch(a, b))
 			throw new IllegalArgumentException("mismatched shapes");
@@ -244,8 +241,7 @@ public class Float64TensorProduct
 		}
 	}
 	
-	// TODO: need some interface to override
-	
+	@Override
 	public void divideElements(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 		if (!shapesMatch(a, b))
 			throw new IllegalArgumentException("mismatched shapes");
@@ -266,9 +262,8 @@ public class Float64TensorProduct
 		}
 	}
 
-	// TODO: need some interface to override
-	
-	public void product(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+	@Override
+	public void multiply(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 		if (c == a || c == b)
 			throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
 		long dimA = a.dimension(0);
@@ -298,8 +293,7 @@ public class Float64TensorProduct
 		}
 	}
 	
-	// TODO: need some interface to override
-
+	@Override
 	public void contract(int i, int j, Float64TensorProductMember a, Float64TensorProductMember b) {
 		if (a.rank() < 2)
 			throw new IllegalArgumentException("input tensor must be rank 2 or greater to contract");
@@ -318,16 +312,16 @@ public class Float64TensorProduct
 		throw new IllegalArgumentException("must finish");
 	}
 		
-	// TODO: need some interface to override
-
 	// http://mathworld.wolfram.com/CovariantDerivative.html
+	
+	@Override
 	public void semicolonDerivative(int someArgs) {
 		throw new IllegalArgumentException("to implement");
 	}
 	
-	// TODO: need some interface to override
-
 	// http://mathworld.wolfram.com/CommaDerivative.html
+	
+	@Override
 	public void commaDerivative(int someArgs) {
 		throw new IllegalArgumentException("to implement");
 	}
@@ -341,5 +335,35 @@ public class Float64TensorProduct
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void power(int power, Float64TensorProductMember a, Float64TensorProductMember b) {
+		if (power < 0) {
+			// TODO: is this right?
+			throw new IllegalArgumentException("negative powers not supported");
+		}
+		else if (power == 0) {
+			assign(a, b);
+			unity(b);
+		}
+		else if (power == 1) {
+			assign(a, b);
+		}
+		else {
+			Float64TensorProductMember tmp1 = new Float64TensorProductMember();
+			Float64TensorProductMember tmp2 = new Float64TensorProductMember();
+			multiply(a,a,tmp1);
+			for (int i = 2; i < power; i++) {
+				multiply(tmp1, a, tmp2);
+				assign(tmp2, tmp1);
+			}
+			assign(tmp1, b);
+		}
+	}
+
+	@Override
+	public void unity(Float64TensorProductMember result) {
+		throw new IllegalArgumentException("TODO");
 	}
 }
