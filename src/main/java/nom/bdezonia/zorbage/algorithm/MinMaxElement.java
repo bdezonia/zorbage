@@ -65,17 +65,41 @@ public class MinMaxElement {
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min, U max)
 	{
-		U tmp = grp.construct();
+		U tmp1 = grp.construct();
+		U tmp2 = grp.construct();
 		grp.maxBound(min);
 		grp.minBound(max);
-		for (long i = 0; i < count; i++) {
-			storage.get(start+i, tmp);
-			if (grp.isGreater(tmp, max)) {
-				grp.assign(tmp, max);
+		long i = 0;
+		if ((count & 1) == 1) {
+			storage.get(start, tmp1);
+			if (grp.isGreater(tmp1, max)) {
+				grp.assign(tmp1, max);
 			}
-			if (grp.isLess(tmp, min)) {
-				grp.assign(tmp, min);
+			if (grp.isLess(tmp1, min)) {
+				grp.assign(tmp1, min);
 			}
+			i++;
+		}
+		while (i < count) {
+			storage.get(start+i, tmp1);
+			storage.get(start+i+1, tmp2);
+			if (grp.isGreater(tmp1, tmp2)) {
+				if (grp.isGreater(tmp1, max)) {
+					grp.assign(tmp1, max);
+				}
+				if (grp.isLess(tmp2, min)) {
+					grp.assign(tmp2, min);
+				}
+			}
+			else { // tmp2 >= tmp1
+				if (grp.isGreater(tmp2, max)) {
+					grp.assign(tmp2, max);
+				}
+				if (grp.isLess(tmp1, min)) {
+					grp.assign(tmp1, min);
+				}
+			}
+			i += 2;
 		}
 	}
 }
