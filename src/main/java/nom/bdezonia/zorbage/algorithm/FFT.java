@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.PaddedIndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.Storage;
 
 /**
  * 
@@ -66,9 +65,8 @@ public class FFT {
 		long n = enclosingPowerOf2(a.size());
 		if (b.size() != n)
 			throw new IllegalArgumentException("output is not the correct size: expected "+n+" and given "+b.size());
-		IndexedDataSource<?, ComplexFloat64Member> A = Storage.allocate(n, new ComplexFloat64Member());
 		PaddedIndexedDataSource<?, U> paddedA = new PaddedIndexedDataSource<T,U>(group, a);
-		bitReverseCopy(paddedA, A, group.construct());
+		bitReverseCopy(paddedA, b, group.construct());
 		int maxS = lg(n);
 		for (int s = 1; s <= maxS; s++) {
 			long m = 1 << s;
@@ -78,18 +76,17 @@ public class FFT {
 			long halfM = m / 2;
 			for (long j = 0; j < halfM - 1; j++) {
 				for (long k = j; k < n; k += m) {
-					A.get(k + halfM, t);
+					b.get(k + halfM, t);
 					G.CDBL.multiply(w, t, t);
-					A.get(k, u);
+					b.get(k, u);
 					G.CDBL.add(u, t, sum);
 					G.CDBL.subtract(u, t, diff);
-					A.set(k, sum);
-					A.set(k + halfM, diff);
+					b.set(k, sum);
+					b.set(k + halfM, diff);
 				}
 				G.CDBL.multiply(w, wm, w);
 			}
 		}
-		CopyN.compute(G.CDBL, 0, 0, n, A, b);
 	}
 
 	private static long rev(long index) {
