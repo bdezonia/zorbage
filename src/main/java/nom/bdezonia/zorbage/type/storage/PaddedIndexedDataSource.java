@@ -35,23 +35,23 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @param <T>
  * @param <U>
  */
-public class PaddedStorage<T extends Group<T,U>,U>
-	implements IndexedDataSource<PaddedStorage<T,U>, U>
+public class PaddedIndexedDataSource<T extends Group<T,U>,U>
+	implements IndexedDataSource<PaddedIndexedDataSource<T,U>, U>
 {
 	final private T group;
 	final private IndexedDataSource<?,U> storage;
 	final private U zero;
 	
-	public PaddedStorage(T group, IndexedDataSource<?,U> storage) {
+	public PaddedIndexedDataSource(T group, IndexedDataSource<?,U> storage) {
 		this.group = group;
 		this.storage = storage;
 		this.zero = group.construct();
 	}
 
 	@Override
-	public PaddedStorage<T, U> duplicate() {
+	public PaddedIndexedDataSource<T, U> duplicate() {
 		IndexedDataSource<?,U> otherStorage = storage.duplicate();
-		return new PaddedStorage<T,U>(group, otherStorage);
+		return new PaddedIndexedDataSource<T,U>(group, otherStorage);
 	}
 
 	@Override
