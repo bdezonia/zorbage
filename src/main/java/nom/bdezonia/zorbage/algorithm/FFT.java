@@ -59,41 +59,41 @@ public class FFT {
 		ComplexFloat64Member tmp2 = group.construct();
 
 		// bit reversal permutation
-        int shift = 1 + Long.numberOfLeadingZeros(a.size());
-        for (long k = 0; k < a.size(); k++) {
-            long j = Long.reverse(k) >>> shift;
-        	a.get(j, tmp1);
-        	a.get(k, tmp2);
-            if (j > k) {
-            	b.set(k, tmp1);
-            	b.set(j, tmp2);
-            }
-            else {
-            	b.set(j, tmp1);
-            	b.set(k, tmp2);
-            }
-        }
+		int shift = 1 + Long.numberOfLeadingZeros(a.size());
+		for (long k = 0; k < a.size(); k++) {
+			long j = Long.reverse(k) >>> shift;
+			a.get(j, tmp1);
+			a.get(k, tmp2);
+			if (j > k) {
+				b.set(k, tmp1);
+				b.set(j, tmp2);
+			}
+			else {
+				b.set(j, tmp1);
+				b.set(k, tmp2);
+			}
+		}
 
 		ComplexFloat64Member w = group.construct();
 		ComplexFloat64Member tao = group.construct();
 
 		// butterfly updates
-        for (long L = 2; L <= a.size(); L = L+L) {
-            for (long k = 0; k < L/2; k++) {
-                double kth = -2 * k * Math.PI / L;
-                w.setR(Math.cos(kth));
-                w.setI(Math.sin(kth));
-                for (long j = 0; j < a.size()/L; j++) {
-                	b.get(j*L + k + L/2, tmp1);
-                	group.multiply(w, tmp1, tao);
-                    b.get(j*L + k, tmp2);
-                    group.subtract(tmp2, tao, tmp1);
-                    b.set(j*L + k + L/2, tmp1);
-                    group.add(tmp2, tao, tmp1);
-                    b.set(j*L + k, tmp1);
-                }
-            }
-        }
+		for (long L = 2; L <= a.size(); L = L+L) {
+			for (long k = 0; k < L/2; k++) {
+				double kth = -2 * k * Math.PI / L;
+				w.setR(Math.cos(kth));
+				w.setI(Math.sin(kth));
+				for (long j = 0; j < a.size()/L; j++) {
+					b.get(j*L + k + L/2, tmp1);
+					group.multiply(w, tmp1, tao);
+					b.get(j*L + k, tmp2);
+					group.subtract(tmp2, tao, tmp1);
+					b.set(j*L + k + L/2, tmp1);
+					group.add(tmp2, tao, tmp1);
+					b.set(j*L + k, tmp1);
+				}
+			}
+		}
 	}
 	
 	/**
