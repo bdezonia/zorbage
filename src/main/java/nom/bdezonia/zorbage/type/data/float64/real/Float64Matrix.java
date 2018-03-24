@@ -324,7 +324,7 @@ public class Float64Matrix
 
 	@Override
 	public void invert(Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixInvert.compute(a, b);
+		MatrixInvert.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b);
 	}
 
 	@Override
@@ -335,7 +335,7 @@ public class Float64Matrix
 						MemoryConstruction.DENSE,
 						StorageConstruction.ARRAY,
 						a.cols(), a.rows());
-		MatrixInvert.compute(b, invB);
+		MatrixInvert.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, b, invB);
 		G.DBL_MAT.multiply(a, invB, c);
 	}
 

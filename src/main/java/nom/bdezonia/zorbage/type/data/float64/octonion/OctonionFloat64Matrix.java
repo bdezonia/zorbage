@@ -336,7 +336,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public void invert(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixInvert.compute(a, b);
+		MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
 	}
 
 	@Override
@@ -347,7 +347,7 @@ public class OctonionFloat64Matrix
 						MemoryConstruction.DENSE,
 						StorageConstruction.ARRAY,
 						a.cols(), a.rows());
-		MatrixInvert.compute(b, invB);
+		MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, b, invB);
 		G.ODBL_MAT.multiply(a, invB, c);
 	}
 

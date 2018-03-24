@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -337,7 +336,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void invert(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixInvert.compute(a, b);
+		MatrixInvert.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
 	}
 
 	@Override
@@ -350,7 +349,7 @@ public class QuaternionFloat64Matrix
 						MemoryConstruction.DENSE,
 						StorageConstruction.ARRAY,
 						a.cols(), a.rows());
-		MatrixInvert.compute(b, invB);
+		MatrixInvert.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, b, invB);
 		G.QDBL_MAT.multiply(a, invB, c);
 	}
 

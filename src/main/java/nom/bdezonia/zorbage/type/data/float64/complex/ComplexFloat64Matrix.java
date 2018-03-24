@@ -335,7 +335,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void invert(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		MatrixInvert.compute(a, b);
+		MatrixInvert.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, a, b);
 	}
 
 	@Override
@@ -346,7 +346,7 @@ public class ComplexFloat64Matrix
 						MemoryConstruction.DENSE,
 						StorageConstruction.ARRAY,
 						a.cols(), a.rows());
-		MatrixInvert.compute(b, invB);
+		MatrixInvert.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, b, invB);
 		G.CDBL_MAT.multiply(a, invB, c);
 	}
 

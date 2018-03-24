@@ -26,6 +26,18 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
+import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
+import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.helper.MatrixColumnRModuleBridge;
+
 /**
  * 
  * @author Barry DeZonia
@@ -37,9 +49,30 @@ public class MatrixInvert {
 	
 	private MatrixInvert() {}
 	
-	public static <MATRIX_MEMBER>
-		void compute(MATRIX_MEMBER a, MATRIX_MEMBER b)
+	public static
+		<BASETYPE, // the base type like Float64Member or Octonion etc.
+		BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+		RMODULE_MEMBER extends RModuleMember<BASETYPE>,
+		RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
+		MATRIX_GROUP extends Group<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+	void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, MATRIX_MEMBER b)
 	{
+		MATRIX_MEMBER lu = matGroup.construct(a);
+		LUDecomp.compute(numGroup, matGroup, lu);
+		RMODULE_MEMBER bCol =
+				rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.rows());
+		MatrixColumnRModuleBridge<BASETYPE> xBridge =
+				new MatrixColumnRModuleBridge<BASETYPE>(numGroup, b);
+		BASETYPE zero = numGroup.construct();
+		BASETYPE one = numGroup.construct();
+		numGroup.unity(one);
+		for (long c = 0; c < b.cols(); c++) {
+			xBridge.setCol(c);
+			bCol.setV(c, one);
+			LUSolve.compute(rmodGroup, numGroup, lu, bCol, (RMODULE_MEMBER) xBridge);
+			bCol.setV(c, zero);
+		}
 		
 	}
 }

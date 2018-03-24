@@ -41,14 +41,18 @@ public class MatrixColumnRModuleBridge<U> implements RModuleMember<U> {
 	private final MatrixMember<U> mat;
 	private long col;
 	
-	public MatrixColumnRModuleBridge(Group<?,U> numGroup, MatrixMember<U> mat, long col) {
+	public MatrixColumnRModuleBridge(Group<?,U> numGroup, MatrixMember<U> mat) {
 		this.group = numGroup;
 		this.mat = mat;
-		this.col = col;
-		if (col < 0 || col >= mat.cols())
-			throw new IllegalArgumentException("specified column outside bounds of matrix");
+		this.col = 0;
 	}
 	
+	public void setCol(long col) {
+		if (col < 0 || col >= mat.rows())
+			throw new IllegalArgumentException("specified column outside bounds of matrix");
+		this.col = col;
+	}
+
 	@Override
 	public long dimension(int d) {
 		if (d < 0)
@@ -99,7 +103,7 @@ public class MatrixColumnRModuleBridge<U> implements RModuleMember<U> {
 
 	@Override
 	public void setV(long i, U value) {
-		mat.v(i, col, value);
+		mat.setV(i, col, value);
 	}
 
 	
