@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -334,13 +335,19 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void invert(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		throw new IllegalArgumentException("TODO");
+		MatrixInvert.compute(a, b);
 	}
 
 	@Override
 	public void divide(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
 		// invert and multiply
-		throw new IllegalArgumentException("TODO");
+		ComplexFloat64MatrixMember invB =
+				G.CDBL_MAT.construct(
+						MemoryConstruction.DENSE,
+						StorageConstruction.ARRAY,
+						a.cols(), a.rows());
+		MatrixInvert.compute(b, invB);
+		G.CDBL_MAT.multiply(a, invB, c);
 	}
 
 }

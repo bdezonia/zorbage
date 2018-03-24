@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -35,6 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -335,7 +337,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void invert(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		throw new IllegalArgumentException("TODO");
+		MatrixInvert.compute(a, b);
 	}
 
 	@Override
@@ -343,7 +345,13 @@ public class QuaternionFloat64Matrix
 			QuaternionFloat64MatrixMember c)
 	{
 		// invert and multiply
-		throw new IllegalArgumentException("TODO");
+		QuaternionFloat64MatrixMember invB =
+				G.QDBL_MAT.construct(
+						MemoryConstruction.DENSE,
+						StorageConstruction.ARRAY,
+						a.cols(), a.rows());
+		MatrixInvert.compute(b, invB);
+		G.QDBL_MAT.multiply(a, invB, c);
 	}
 
 }
