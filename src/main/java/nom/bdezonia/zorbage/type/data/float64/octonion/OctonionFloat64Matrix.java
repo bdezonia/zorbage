@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
-import nom.bdezonia.zorbage.algorithm.LUDecomp;
+import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -317,11 +317,7 @@ public class OctonionFloat64Matrix
 	
 	@Override
 	public void det(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
-		if (a.rows() != a.cols())
-			throw new IllegalArgumentException("determinants only defined for square matrices");
-		OctonionFloat64RModuleMember v1 = G.ODBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.cols());
-		OctonionFloat64RModuleMember v2 = G.ODBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.cols());
-		LUDecomp.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, v1, v2, b);
+		MatrixDeterminant.compute(this, G.ODBL, a, b);
 	}
 
 	@Override

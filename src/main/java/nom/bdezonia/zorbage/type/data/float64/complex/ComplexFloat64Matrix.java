@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
-import nom.bdezonia.zorbage.algorithm.LUDecomp;
+import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -316,11 +316,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void det(ComplexFloat64MatrixMember a, ComplexFloat64Member b) {
-		if (a.rows() != a.cols())
-			throw new IllegalArgumentException("determinants only defined for square matrices");
-		ComplexFloat64VectorMember v1 = G.CDBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.cols());
-		ComplexFloat64VectorMember v2 = G.CDBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, a.cols());
-		LUDecomp.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, a, v1, v2, b);
+		MatrixDeterminant.compute(this, G.CDBL, a, b);
 	}
 
 	@Override

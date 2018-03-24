@@ -26,11 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
-import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
+import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
@@ -39,75 +40,70 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  * @author Barry DeZonia
  *
  */
-public class LUDecomp {
+public class LUSolve {
 
-	// do not instantiate
-	
-	private LUDecomp() {}
+	/**
+	 * Do not instantiate. Private constructor for utility class.
+	 */
+	private LUSolve() {}
 	
 	/**
-	 * 
-	 * @param numGroup The group that can do primitive type math.
-	 * @param matGroup The group that can do matrix type math.
-	 * @param a The matrix that will be modified into LU format.
+	 * LU solution. Sets the solution vector x given A and b from the matrix
+	 * equation Ax = b. A is already assumed to be in LU form.
+	 * @param a
+	 * @param b
+	 * @param x
 	 */
-	public static
-	
-		<BASETYPE, // the base type like Float64Member or Octonion etc.
-		BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
-		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-		MATRIX_GROUP extends Group<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
-		
-	void compute(BASETYPE_GROUP numGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a)
+	public static <BASETYPE, // the base type like Float64Member or Octonion etc.
+					BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+					RMODULE_MEMBER extends RModuleMember<BASETYPE>,
+					RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+					MATRIX_MEMBER extends MatrixMember<BASETYPE>>
+		void compute(RMODULE_GROUP rmodGroup, BASETYPE_GROUP numGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
 	{
-		if (a.rows() != a.cols())
-			throw new IllegalArgumentException("LUDecomp requires square matrix input");
+		final long n = x.length();
 		
-		final long n = a.rows();
-	
-		// decomposition of matrix
-		
-		MATRIX_MEMBER lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
-		BASETYPE sum = numGroup.construct();
+		BASETYPE tmp = numGroup.construct();
 		BASETYPE value1 = numGroup.construct();
 		BASETYPE value2 = numGroup.construct();
+		BASETYPE sum = numGroup.construct();
 		BASETYPE term = numGroup.construct();
-		BASETYPE tmp = numGroup.construct();
 		
+		// find solution of Ly = b
+		RMODULE_MEMBER y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
-			for (long j = i; j < n; j++)
-			{
-				numGroup.zero(sum);
-				for (long k = 0; k < i; k++) {
-					lu.v(i, k, value1);
-					lu.v(k, j, value2);
-					numGroup.multiply(value1, value2, term);
-					numGroup.add(sum, term, sum);
-				}
-				a.v(i, j, term);
-				numGroup.subtract(term, sum, term);
-				lu.setV(i, j, term);
-			}
-			for (long j = i + 1; j < n; j++)
-			{
-				numGroup.zero(sum);
-				for (long k = 0; k < i; k++) {
-					lu.v(j, k, value1);
-					lu.v(k, i, value2);
-					numGroup.multiply(value1, value2, term);
-					numGroup.add(sum, term, sum);
-				}
-				numGroup.unity(value1);
-				lu.v(i, i, tmp);
-				numGroup.divide(value1, tmp, value1);
-				a.v(j, i, tmp);
-				numGroup.subtract(tmp, sum, value2);
+			numGroup.zero(sum);
+			for (long k = 0; k < i; k++) {
+				a.v(i, k, value1);
+				y.v(k, value2);
 				numGroup.multiply(value1, value2, term);
-				lu.setV(j, i, term);
+				numGroup.add(sum, term, sum);
 			}
+			b.v(i, value1);
+			numGroup.subtract(value1, sum, term);
+			y.setV(i, term);
 		}
-		
-		matGroup.assign(lu, a);
+
+		// find solution of Ux = y
+		for (long i = n - 1; i >= 0; i--)
+		{
+			numGroup.zero(sum);
+			for (long k = i + 1; k < n; k++) {
+				a.v(i, k, value1);
+				x.v(k, value2);
+				numGroup.multiply(value1, value2, term);
+				numGroup.add(sum, term, sum);
+			}
+			numGroup.unity(tmp);
+			a.v(i, i, value1);
+			numGroup.divide(tmp, value1, value1);
+			y.v(i, value2);
+			numGroup.subtract(value2, sum, value2);
+			numGroup.multiply(value1, value2, term);
+			x.setV(i, term);
+		}
+
 	}
+	
 }
