@@ -71,6 +71,10 @@ public class MatrixInvert {
 		for (long c = 0; c < b.cols(); c++) {
 			xBridge.setCol(c);
 			bCol.setV(c, one);
+			// The cast that follows is necessary because the bridge class does not
+			// implement Constructable1d. I think I can manipulate generics
+			// with a separate rmod type decl that does not require it that
+			// x can satisfy.
 			LUSolve.compute(numGroup, rmodGroup, lu, bCol, (RMODULE_MEMBER) xBridge);
 			bCol.setV(c, zero);
 		}
