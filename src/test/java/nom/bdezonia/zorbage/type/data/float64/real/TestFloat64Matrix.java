@@ -73,6 +73,7 @@ public class TestFloat64Matrix {
 	
 	@Test
 	public void test() {
+		double tol = 0.000000000000001;
 		Float64MatrixMember mat =
 				new Float64MatrixMember(3, 3,
 						new double[] {1,7,4,1,2,4,8,3,3});
@@ -81,22 +82,22 @@ public class TestFloat64Matrix {
 		G.DBL_MAT.invert(mat, invMat);
 		Float64Member value = new Float64Member();
 		invMat.v(0, 0, value);
-		assertEquals(-6.0/145, value.v(), 0.000000000001);
+		assertEquals(-6.0/145, value.v(), tol);
 		invMat.v(0, 1, value);
-		assertEquals(-9.0/145, value.v(), 0.000000000001);
+		assertEquals(-9.0/145, value.v(), tol);
 		invMat.v(0, 2, value);
-		assertEquals(20.0/145, value.v(), 0.000000000001);
+		assertEquals(20.0/145, value.v(), tol);
 		invMat.v(1, 0, value);
-		assertEquals(29.0/145, value.v(), 0.000000000001);
+		assertEquals(29.0/145, value.v(), tol);
 		invMat.v(1, 1, value);
-		assertEquals(-29.0/145, value.v(), 0.000000000001);
+		assertEquals(-29.0/145, value.v(), tol);
 		invMat.v(1, 2, value);
-		assertEquals(0.0/145, value.v(), 0.000000000001);
+		assertEquals(0.0/145, value.v(), tol);
 		invMat.v(2, 0, value);
-		assertEquals(-13.0/145, value.v(), 0.000000000001);
+		assertEquals(-13.0/145, value.v(), tol);
 		invMat.v(2, 1, value);
-		assertEquals(53.0/145, value.v(), 0.000000000001);
+		assertEquals(53.0/145, value.v(), tol);
 		invMat.v(2, 2, value);
-		assertEquals(-5.0/145, value.v(), 0.000000000001);
+		assertEquals(-5.0/145, value.v(), tol);
 	}
 }
