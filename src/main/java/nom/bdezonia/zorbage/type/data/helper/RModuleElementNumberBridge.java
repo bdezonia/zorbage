@@ -53,7 +53,7 @@ public class RModuleElementNumberBridge<U> implements NumberMember<U> {
 	@Override
 	public long dimension(int d) {
 		if (d < 0)
-			throw new IllegalArgumentException("negative dimension error");
+			throw new IllegalArgumentException("negative dimension query");
 		return 1;
 	}
 
