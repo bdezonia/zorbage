@@ -31,6 +31,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algorithm.LUDecomp;
+import nom.bdezonia.zorbage.algorithm.LUSolve;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -128,5 +130,21 @@ public class TestFloat64Matrix {
 		assertEquals(0, value.v(), tol);
 		ident.v(2, 2, value);
 		assertEquals(1, value.v(), tol);
+	}
+	
+	@Test
+	public void testSingular() {
+		Float64MatrixMember a = new Float64MatrixMember(3, 3, new double[] {1,0,0,0,1,0,0,0,0});
+		Float64VectorMember b = new Float64VectorMember(new double[] {1,2,3});
+		Float64VectorMember x = new Float64VectorMember(new double[3]);
+		LUDecomp.compute(G.DBL, G.DBL_MAT, a);
+		LUSolve.compute(G.DBL_VEC, G.DBL, a, b, x);
+		Float64Member v = new Float64Member();
+		x.v(0, v);
+		System.out.println(v.v());
+		x.v(1, v);
+		System.out.println(v.v());
+		x.v(2, v);
+		System.out.println(v.v());
 	}
 }
