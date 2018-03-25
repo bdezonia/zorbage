@@ -79,7 +79,7 @@ public class TestLUDecomp {
 
 		LUDecomp.compute(G.DBL, G.DBL_MAT, a);
 
-		LUSolve.compute(G.DBL_VEC, G.DBL, a, b, x);
+		LUSolve.compute(G.DBL, G.DBL_VEC, a, b, x);
 
 		Float64Member value = new Float64Member();
 		
@@ -121,7 +121,7 @@ public class TestLUDecomp {
 
 		LUDecomp.compute(G.CDBL, G.CDBL_MAT, a);
 
-		LUSolve.compute(G.CDBL_VEC, G.CDBL, a, b, x);
+		LUSolve.compute(G.CDBL, G.CDBL_VEC, a, b, x);
 
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		
@@ -166,7 +166,7 @@ public class TestLUDecomp {
 
 		LUDecomp.compute(G.QDBL, G.QDBL_MAT, a);
 
-		LUSolve.compute(G.QDBL_MOD, G.QDBL, a, b, x);
+		LUSolve.compute(G.QDBL, G.QDBL_MOD, a, b, x);
 
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		
@@ -217,7 +217,7 @@ public class TestLUDecomp {
 
 		LUDecomp.compute(G.ODBL, G.ODBL_MAT, a);
 
-		LUSolve.compute(G.ODBL_MOD, G.ODBL, a, b, x);
+		LUSolve.compute(G.ODBL, G.ODBL_MOD, a, b, x);
 
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		

@@ -48,7 +48,8 @@ public class MatrixInvert {
 	// do not instantiate
 	
 	private MatrixInvert() {}
-	
+
+	@SuppressWarnings("unchecked")
 	public static
 		<BASETYPE, // the base type like Float64Member or Octonion etc.
 		BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
@@ -70,7 +71,7 @@ public class MatrixInvert {
 		for (long c = 0; c < b.cols(); c++) {
 			xBridge.setCol(c);
 			bCol.setV(c, one);
-			LUSolve.compute(rmodGroup, numGroup, lu, bCol, (RMODULE_MEMBER) xBridge);
+			LUSolve.compute(numGroup, rmodGroup, lu, bCol, (RMODULE_MEMBER) xBridge);
 			bCol.setV(c, zero);
 		}
 		

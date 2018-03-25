@@ -59,7 +59,7 @@ public class LUSolve {
 					RMODULE_MEMBER extends RModuleMember<BASETYPE>,
 					RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 					MATRIX_MEMBER extends MatrixMember<BASETYPE>>
-		void compute(RMODULE_GROUP rmodGroup, BASETYPE_GROUP numGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
+		void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
 	{
 		final long n = x.length();
 		
