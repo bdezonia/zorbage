@@ -48,7 +48,7 @@ public class TestFloat64Matrix {
 	private static final boolean RUN = false;
 	
 	@Test
-	public void run() {
+	public void testHugeMatrix() {
 		if (RUN) {
 			System.out.println("Making a huge virtual matrix > 2 gig entries");
 			Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
@@ -72,15 +72,23 @@ public class TestFloat64Matrix {
 	}
 	
 	@Test
-	public void test() {
-		double tol = 0.000000000000001;
+	public void testMatrixInverse() {
+		double tol = 0.00000000000001;
+		
 		Float64MatrixMember mat =
 				new Float64MatrixMember(3, 3,
 						new double[] {1,7,4,1,2,4,8,3,3});
+		
 		Float64MatrixMember invMat =
 				new Float64MatrixMember(3, 3, new double[9]);
+		
+		Float64MatrixMember ident =
+				new Float64MatrixMember(3, 3, new double[9]);
+		
 		G.DBL_MAT.invert(mat, invMat);
+		
 		Float64Member value = new Float64Member();
+
 		invMat.v(0, 0, value);
 		assertEquals(-6.0/145, value.v(), tol);
 		invMat.v(0, 1, value);
@@ -99,5 +107,26 @@ public class TestFloat64Matrix {
 		assertEquals(53.0/145, value.v(), tol);
 		invMat.v(2, 2, value);
 		assertEquals(-5.0/145, value.v(), tol);
+		
+		G.DBL_MAT.multiply(mat, invMat, ident);
+
+		ident.v(0, 0, value);
+		assertEquals(1, value.v(), tol);
+		ident.v(0, 1, value);
+		assertEquals(0, value.v(), tol);
+		ident.v(0, 2, value);
+		assertEquals(0, value.v(), tol);
+		ident.v(1, 0, value);
+		assertEquals(0, value.v(), tol);
+		ident.v(1, 1, value);
+		assertEquals(1, value.v(), tol);
+		ident.v(1, 2, value);
+		assertEquals(0, value.v(), tol);
+		ident.v(2, 0, value);
+		assertEquals(0, value.v(), tol);
+		ident.v(2, 1, value);
+		assertEquals(0, value.v(), tol);
+		ident.v(2, 2, value);
+		assertEquals(1, value.v(), tol);
 	}
 }
