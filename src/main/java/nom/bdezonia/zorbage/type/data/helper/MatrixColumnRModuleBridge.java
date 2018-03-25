@@ -48,7 +48,7 @@ public class MatrixColumnRModuleBridge<U> implements RModuleMember<U> {
 	}
 	
 	public void setCol(long col) {
-		if (col < 0 || col >= mat.rows())
+		if (col < 0 || col >= mat.cols())
 			throw new IllegalArgumentException("specified column outside bounds of matrix");
 		this.col = col;
 	}
