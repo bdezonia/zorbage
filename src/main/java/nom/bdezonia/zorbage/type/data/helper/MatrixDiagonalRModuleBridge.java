@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -35,56 +37,137 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
  */
 public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 
-	// identify diagonal:
-	//   dnum:  0 (maximal), 1 (up 1 diag), -1 (down 1 diag), etc.
-	//   origin: 0, 1, 2, 3: which corner to count from
+	public enum Origin {UpperLeft, UpperRight, LowerRight, LowerLeft};
+	
+	private final Group<?,U> group;
+	private final MatrixMember<U> mat;
+	private Origin origin;
+	private long diagNumber;
+	
+	public MatrixDiagonalRModuleBridge(Group<?,U> group, MatrixMember<U> mat) {
+		this.group = group;
+		this.mat = mat;
+		this.origin = Origin.UpperLeft;
+		this.diagNumber = 0;
+	}
+	
+	public void setDiagonal(Origin origin, long diagNumber) {
+		this.origin = origin;
+		this.diagNumber = diagNumber;
+		if (length() <= 0)
+			throw new IllegalArgumentException("diagonal number is outside allowed range");
+	}
 	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension query");
+		if (d == 0)
+			return length();
+		return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public long length() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.min(mat.rows(), mat.cols()) - Math.abs(diagNumber);
 	}
 
 	@Override
 	public boolean alloc(long len) {
-		// TODO Auto-generated method stub
-		return false;
+		if (len == length())
+			return false;
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long len) {
-		// TODO Auto-generated method stub
-		
+		if (len == length()) {
+			U zero = group.construct();
+			for (long i = 0; i < len; i++) {
+				setV(i, zero);
+			}
+		}
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long len) {
-		// TODO Auto-generated method stub
-		
+		if (len != length())
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(long i, U value) {
-		// TODO Auto-generated method stub
-		
+		if (i < 0 || i >= length())
+			throw new IllegalArgumentException("diagonal indexed out of bounds");
+		long r = row(i);
+		long c = col(i);
+		mat.v(r, c, value);
 	}
 
 	@Override
 	public void setV(long i, U value) {
-		// TODO Auto-generated method stub
-		
+		if (i < 0 || i >= length())
+			throw new IllegalArgumentException("diagonal indexed out of bounds");
+		long r = row(i);
+		long c = col(i);
+		mat.setV(r, c, value);
+	}
+	
+	long row(long i) {
+		switch (origin) {
+		case UpperLeft:
+			if (diagNumber < 0)
+				return i + diagNumber;
+			else
+				return i;
+		case LowerRight:
+			if (diagNumber < 0)
+				return mat.rows() - 1 - i + diagNumber;
+			else
+				return mat.rows() - 1 - i;
+		case UpperRight:			
+			if (diagNumber < 0)
+				return i;
+			else
+				return i + diagNumber;
+		default: // LowerLeft
+			if (diagNumber < 0)
+				return mat.rows() - 1 - i;
+			else
+				return mat.rows() - 1 - i - diagNumber;
+		}
+	}
+
+	long col(long i) {
+		switch (origin) {
+		case UpperLeft:
+			if (diagNumber < 0)
+				return i;
+			else
+				return i + diagNumber;
+		case LowerRight:
+			if (diagNumber < 0)
+				return mat.cols() - 1 - i;
+			else
+				return mat.cols() - 1 - i - diagNumber;
+		case UpperRight:			
+			if (diagNumber < 0)
+				return mat.cols() - 1 - i + diagNumber;
+			else
+				return mat.cols() - i - 1 - diagNumber;
+		default: // LowerLeft
+			if (diagNumber < 0)
+				return i - diagNumber;
+			else
+				return i;
+		}
 	}
 
 }
