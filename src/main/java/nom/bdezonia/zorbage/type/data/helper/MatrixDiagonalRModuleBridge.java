@@ -124,7 +124,7 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 		switch (origin) {
 		case UpperLeft:
 			if (diagNumber < 0)
-				return i + diagNumber;
+				return i - diagNumber;
 			else
 				return i;
 		case LowerRight:
@@ -161,7 +161,7 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 			if (diagNumber < 0)
 				return mat.cols() - 1 - i + diagNumber;
 			else
-				return mat.cols() - i - 1 - diagNumber;
+				return mat.cols() - 1 - i;
 		default: // LowerLeft
 			if (diagNumber < 0)
 				return i - diagNumber;
