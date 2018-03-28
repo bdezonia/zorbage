@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
+import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -297,15 +298,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void transpose(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		if (a == b) throw new IllegalArgumentException("cannot transpose in place");
-		b.alloc(a.cols(), a.rows());
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.v(r,  c, value);
-				b.setV(c, r, value);
-			}
-		}
+		MatrixTranspose.compute(G.CDBL, a, b);
 	}
 
 	@Override
