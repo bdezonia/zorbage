@@ -95,6 +95,7 @@ public class TestMatrixTranspose {
 		assertEquals(9, value.v(), 0);
 	}
 	
+	@Test
 	public void nonsquare() {
 		Float64Member value = new Float64Member();
 		Float64MatrixMember a = new Float64MatrixMember(2,4,new double[] {1,2,3,4,5,6,7,8});
