@@ -35,10 +35,6 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 // while another thread is searching structure. Doing so would cause probs
 // unless we make the methods synchronized which I don't want to do.
 
-// NOTE: this structure is 1-d. Used by n-d structures. This means that
-// higher indexed n-d access is slower than it needs to be. Think about
-// addressing this in another way.
-
 /**
  * 
  * @author Barry DeZonia
@@ -47,6 +43,8 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 public class SparseStorageBoolean<U extends BooleanCoder<U>>
 	implements IndexedDataSource<SparseStorageBoolean<U>, U>
 {
+	private enum Color {RED, BLACK};
+	
 	private final Node nil = new Node();
 	private final RedBlackTree data;
 	private final long numElements;
@@ -115,7 +113,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 	}
 
 	private class Node {
-		private boolean isBlack;
+		private Color color;
 		private Node p; // parent
 		private Node left;
 		private Node right;
@@ -123,15 +121,17 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 		private boolean[] value;
 	}
 
+	// Code adapted from Cormen, Leiserson, Rivest, & Stein, 3rd Edition
+	
 	private class RedBlackTree {
 		private Node root;
 		
-		public RedBlackTree() {
-			nil.isBlack = true;
+		RedBlackTree() {
+			nil.color = Color.BLACK;
 			root = nil;
 		}
 		
-		public Node findElement(long i) {
+		Node findElement(long i) {
 			Node n = root;
 			while (true) {
 				if (n == nil)
@@ -145,8 +145,8 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 			}
 		}
 		
-		public void leftRotate(Node x) {
-			Node y = x;
+		void leftRotate(Node x) {
+			Node y = x.right;
 			x.right = y.left;
 			if (y.left != nil)
 				y.left.p = x;
@@ -157,12 +157,12 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 				x.p.left = y;
 			else
 				x.p.right = y;
-			x.left = x;
+			y.left = x;
 			x.p = y;
 		}
 
-		public void rightRotate(Node x) {
-			Node y = x;
+		void rightRotate(Node x) {
+			Node y = x.left;
 			x.left = y.right;
 			if (y.right != nil)
 				y.right.p = x;
@@ -173,7 +173,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 				x.p.right = y;
 			else
 				x.p.left = y;
-			x.right = x;
+			y.right = x;
 			x.p = y;
 		}
 		
@@ -186,51 +186,51 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 					x = x.left;
 				else
 					x = x.right;
-				z.p = y;
-				if (y == nil)
-					root = z;
-				else if (x.key < y.key)
-					y.left = z;
-				else
-					y.right = z;
-				z.left = nil;
-				z.right = nil;
-				z.isBlack = false;
-				insertFixup(z);
 			}
+			z.p = y;
+			if (y == nil)
+				root = z;
+			else if (z.key < y.key)
+				y.left = z;
+			else
+				y.right = z;
+			z.left = nil;
+			z.right = nil;
+			z.color = Color.RED;
+			insertFixup(z);
 		}
 		
 		void insertFixup(Node z) {
-			while (!z.p.isBlack) {
+			while (z.p.color == Color.RED) {
 				if (z.p == z.p.p.left) {
 					Node y = z.p.p.right;
-					if (!y.isBlack) {
-						z.p.isBlack = true;
-						y.isBlack = true;
-						z.p.p.isBlack = false;
+					if (y.color == Color.RED) {
+						z.p.color = Color.BLACK;
+						y.color = Color.BLACK;
+						z.p.p.color = Color.RED;
 						z = z.p.p;
 					}
 					else if (z == z.p.right) {
 						z = z.p;
 						leftRotate(z);
-						z.p.isBlack = true;
-						z.p.p.isBlack = false;
+						z.p.color = Color.BLACK;
+						z.p.p.color = Color.RED;
 						rightRotate(z.p.p);
 					}
 				}
 				else {
 					Node y = z.p.p.left;
-					if (!y.isBlack) {
-						z.p.isBlack = true;
-						y.isBlack = true;
-						z.p.p.isBlack = false;
+					if (y.color == Color.RED) {
+						z.p.color = Color.BLACK;
+						y.color = Color.BLACK;
+						z.p.p.color = Color.RED;
 						z = z.p.p;
 					}
 					else if (z == z.p.left) {
 						z = z.p;
 						rightRotate(z);
-						z.p.isBlack = true;
-						z.p.p.isBlack = false;
+						z.p.color = Color.BLACK;
+						z.p.p.color = Color.RED;
 						leftRotate(z.p.p);
 					}
 				}
@@ -250,7 +250,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 		void delete(Node z) {
 			Node y = z;
 			Node x;
-			boolean yOrigColor = y.isBlack;
+			Color yOrigColor = y.color;
 			if (z.left == nil) {
 				x = z.right;
 				transplant(z,z.right);
@@ -261,7 +261,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 			}
 			else {
 				y = treeMinimum(z.right);
-				yOrigColor = y.isBlack;
+				yOrigColor = y.color;
 				x = y.right;
 				if (y.p == z)
 					x.p = y;
@@ -273,72 +273,71 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 				transplant(z,y);
 				y.left = z.left;
 				y.left.p = y;
-				y.isBlack = z.isBlack;
+				y.color = z.color;
 			}
-			if (yOrigColor)
+			if (yOrigColor == Color.BLACK)
 				deleteFixup(x);
 		}
 		
 		void deleteFixup(Node x) {
-			while (x != root && x.isBlack) {
+			while (x != root && x.color == Color.BLACK) {
 				if (x == x.p.left) {
 					Node w = x.p.right;
-					if (!w.isBlack) {
-						w.isBlack = true;
-						x.p.isBlack = false;
+					if (w.color == Color.RED) {
+						w.color = Color.BLACK;
+						x.p.color = Color.RED;
 						leftRotate(x.p);
 						w = x.p.right;
 					}
-					if (w.left.isBlack && w.right.isBlack) {
-						w.isBlack = false;
+					if (w.left.color == Color.BLACK && w.right.color == Color.BLACK) {
+						w.color = Color.RED;
 						x = x.p;
 					}
-					else if (w.right.isBlack) {
-						w.left.isBlack = true;
-						w.isBlack = false;
+					else if (w.right.color == Color.BLACK) {
+						w.left.color = Color.BLACK;
+						w.color = Color.RED;
 						rightRotate(w);
 						w = x.p.right;
 						// from here the cormen book had unindented code: bug?
-						w.isBlack = x.p.isBlack;
-						x.p.isBlack = true;
-						w.right.isBlack = true;
+						w.color = x.p.color;
+						x.p.color = Color.BLACK;
+						w.right.color = Color.BLACK;
 						leftRotate(x.p);
 						x = root;
 					}
 				}
 				else {
-					// copy reverse
 					Node w = x.p.left;
-					if (!w.isBlack) {
-						w.isBlack = true;
-						x.p.isBlack = false;
+					if (w.color == Color.RED) {
+						w.color = Color.BLACK;
+						x.p.color = Color.RED;
 						rightRotate(x.p);
 						w = x.p.left;
 					}
-					if (w.right.isBlack && w.left.isBlack) {
-						w.isBlack = false;
+					if (w.right.color == Color.BLACK && w.left.color == Color.BLACK) {
+						w.color = Color.RED;
 						x = x.p;
 					}
-					else if (w.left.isBlack) {
-						w.right.isBlack = true;
-						w.isBlack = false;
+					else if (w.left.color == Color.BLACK) {
+						w.right.color = Color.BLACK;
+						w.color = Color.RED;
 						leftRotate(w);
 						w = x.p.left;
 						// from here the cormen book had unindented code: bug?
-						w.isBlack = x.p.isBlack;
-						x.p.isBlack = true;
-						w.left.isBlack = true;
+						w.color = x.p.color;
+						x.p.color = Color.BLACK;
+						w.left.color = Color.BLACK;
 						rightRotate(x.p);
 						x = root;
 					}
 				}
 			}
-			x.isBlack = true;
+			x.color = Color.BLACK;
 		}
 		
 		Node treeMinimum(Node x) {
-			if (x == nil)
-				return nil;
+			if (x == nil)    // my code
+				return nil;  // my code
 			while (x.left != nil)
 				x = x.left;
 			return x;

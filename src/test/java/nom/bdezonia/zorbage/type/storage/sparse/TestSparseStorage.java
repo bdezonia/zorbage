@@ -206,12 +206,37 @@ public class TestSparseStorage {
 		assertEquals(false, elem.c);
 		assertEquals(false, elem.d);
 
+		// access beyond ends of storage
+		
+		try {
+			data.get(-1, elem);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 		try {
 			data.get(1000, elem);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+
+		// erase an element by setting it to zero
+		
+		elem.a = false;
+		elem.b = false;
+		elem.c = false;
+		elem.d = false;
+		data.set(13, elem);
+		elem.a = true;
+		elem.b = true;
+		elem.c = true;
+		elem.d = true;
+		data.get(13, elem);
+		assertEquals(false, elem.a);
+		assertEquals(false, elem.b);
+		assertEquals(false, elem.c);
+		assertEquals(false, elem.d);
 
 	}
 }
