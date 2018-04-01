@@ -80,10 +80,11 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 			if (node == nil) {
 				Node n = new Node();
 				n.key = index;
-				n.value = new boolean[tmp.length];
 				n.p = nil;
 				n.left = nil;
 				n.right = nil;
+				n.value = new boolean[tmp.length];
+				// n.color =? What?
 				for (int i = 0; i < tmp.length; i++)
 					n.value[i] = tmp[i];
 				data.insert(n);
@@ -210,9 +211,11 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 						z.p.p.color = Color.RED;
 						z = z.p.p;
 					}
-					else if (z == z.p.right) {
-						z = z.p;
-						leftRotate(z);
+					else {
+						if (z == z.p.right) {
+							z = z.p;
+							leftRotate(z);
+						}
 						z.p.color = Color.BLACK;
 						z.p.p.color = Color.RED;
 						rightRotate(z.p.p);
@@ -226,9 +229,11 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 						z.p.p.color = Color.RED;
 						z = z.p.p;
 					}
-					else if (z == z.p.left) {
-						z = z.p;
-						rightRotate(z);
+					else {
+						if (z == z.p.left) {
+							z = z.p;
+							rightRotate(z);
+						}
 						z.p.color = Color.BLACK;
 						z.p.p.color = Color.RED;
 						leftRotate(z.p.p);
@@ -293,12 +298,13 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 						w.color = Color.RED;
 						x = x.p;
 					}
-					else if (w.right.color == Color.BLACK) {
-						w.left.color = Color.BLACK;
-						w.color = Color.RED;
-						rightRotate(w);
-						w = x.p.right;
-						// from here the cormen book had unindented code: bug?
+					else {
+						if (w.right.color == Color.BLACK) {
+							w.left.color = Color.BLACK;
+							w.color = Color.RED;
+							rightRotate(w);
+							w = x.p.right;
+						}
 						w.color = x.p.color;
 						x.p.color = Color.BLACK;
 						w.right.color = Color.BLACK;
@@ -318,12 +324,13 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 						w.color = Color.RED;
 						x = x.p;
 					}
-					else if (w.left.color == Color.BLACK) {
-						w.right.color = Color.BLACK;
-						w.color = Color.RED;
-						leftRotate(w);
-						w = x.p.left;
-						// from here the cormen book had unindented code: bug?
+					else {
+						if (w.left.color == Color.BLACK) {
+							w.right.color = Color.BLACK;
+							w.color = Color.RED;
+							leftRotate(w);
+							w = x.p.left;
+						}
 						w.color = x.p.color;
 						x.p.color = Color.BLACK;
 						w.left.color = Color.BLACK;
