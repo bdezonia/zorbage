@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.sparse;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
@@ -45,24 +46,35 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 {
 	private enum Color {RED, BLACK};
 	
-	private final Node nil = new Node();
+	private final Node nil;
 	private final RedBlackTree data;
 	private final long numElements;
-	private boolean[] zero, tmp;
+	private final boolean[] zero, tmp;
 	private final U type;
 	
 	public SparseStorageBoolean(long numElements, U type) {
 		this.numElements = numElements;
 		this.type = type;
-		this.data = new RedBlackTree();
 		this.zero = new boolean[type.booleanCount()];
 		this.tmp = new boolean[type.booleanCount()];
+		this.nil = nilNode();
+		this.data = new RedBlackTree();
 	}
 	
 	@Override
 	public SparseStorageBoolean<U> duplicate() {
 		SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(numElements, type);
-		// TODO copy data into list
+		Stack<Node> nodes = new Stack<Node>();
+		nodes.push(data.root);
+		while (!nodes.isEmpty()) {
+			Node n = nodes.pop();
+			if (n != nil) {
+				type.toValue(n.value, 0);
+				list.set(n.key, type);
+				if (n.left != nil) nodes.push(n.left);
+				if (n.right != nil) nodes.push(n.right);
+			}
+		}
 		return list;
 	}
 
@@ -113,6 +125,17 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 		return numElements;
 	}
 
+	private Node nilNode() {
+		Node nil = new Node();
+		nil.color = Color.BLACK;
+		nil.p = null; // nil; will loop forever. null throws excep.
+		nil.left = nil;
+		nil.right = nil;
+		nil.key = Long.MIN_VALUE;
+		nil.value = new boolean[type.booleanCount()];
+		return nil;
+	}
+	
 	private class Node {
 		private Color color;
 		private Node p; // parent
@@ -128,7 +151,6 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 		private Node root;
 		
 		RedBlackTree() {
-			nil.color = Color.BLACK;
 			root = nil;
 		}
 		
