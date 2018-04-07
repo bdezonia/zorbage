@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 import nom.bdezonia.zorbage.util.LongUtils;
 
@@ -302,6 +303,9 @@ public final class Float64TensorProductMember
 		if (storage == null || newCount != storage.size()) {
 			if (s == StorageConstruction.MEM_ARRAY) {
 				storage = new ArrayStorageFloat64<Float64Member>(newCount, new Float64Member());
+			}
+			else if (s == StorageConstruction.MEM_SPARSE) {
+				storage = new SparseStorageFloat64<Float64Member>(newCount, new Float64Member());
 			}
 			else {
 				storage = new FileStorageFloat64<Float64Member>(newCount, new Float64Member());

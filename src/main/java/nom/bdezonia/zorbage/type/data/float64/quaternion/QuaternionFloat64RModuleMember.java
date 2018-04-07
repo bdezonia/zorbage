@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**
@@ -106,10 +107,7 @@ public final class QuaternionFloat64RModuleMember
 
 	public QuaternionFloat64RModuleMember(StorageConstruction s, long d1) {
 		this.s = s;
-		if (s == StorageConstruction.MEM_ARRAY)
-			storage = new ArrayStorageFloat64<QuaternionFloat64Member>(d1, new QuaternionFloat64Member());
-		else
-			storage = new FileStorageFloat64<QuaternionFloat64Member>(d1, new QuaternionFloat64Member());
+		alloc(d1);
 	}
 	
 	@Override
@@ -194,6 +192,8 @@ public final class QuaternionFloat64RModuleMember
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<QuaternionFloat64Member>(size, new QuaternionFloat64Member());
+			else if (s == StorageConstruction.MEM_SPARSE)
+				storage = new SparseStorageFloat64<QuaternionFloat64Member>(size, new QuaternionFloat64Member());
 			else
 				storage = new FileStorageFloat64<QuaternionFloat64Member>(size, new QuaternionFloat64Member());
 			return true;

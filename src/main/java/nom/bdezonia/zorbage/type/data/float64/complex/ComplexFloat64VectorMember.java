@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**
@@ -102,10 +103,7 @@ public final class ComplexFloat64VectorMember
 
 	public ComplexFloat64VectorMember(StorageConstruction s, long d1) {
 		this.s = s;
-		if (s == StorageConstruction.MEM_ARRAY)
-			storage = new ArrayStorageFloat64<ComplexFloat64Member>(d1, new ComplexFloat64Member());
-		else
-			storage = new FileStorageFloat64<ComplexFloat64Member>(d1, new ComplexFloat64Member());
+		alloc(d1);
 	}
 
 	@Override
@@ -186,6 +184,8 @@ public final class ComplexFloat64VectorMember
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
+			else if (s == StorageConstruction.MEM_SPARSE)
+				storage = new SparseStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
 			else
 				storage = new FileStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
 			return true;

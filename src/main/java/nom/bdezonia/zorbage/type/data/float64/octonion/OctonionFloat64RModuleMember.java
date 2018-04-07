@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**
@@ -114,10 +115,7 @@ public final class OctonionFloat64RModuleMember
 
 	public OctonionFloat64RModuleMember(StorageConstruction s, long d1) {
 		this.s = s;
-		if (s == StorageConstruction.MEM_ARRAY)
-			storage = new ArrayStorageFloat64<OctonionFloat64Member>(d1, new OctonionFloat64Member());
-		else
-			storage = new FileStorageFloat64<OctonionFloat64Member>(d1, new OctonionFloat64Member());
+		alloc(d1);
 	}
 
 	@Override
@@ -210,6 +208,8 @@ public final class OctonionFloat64RModuleMember
 		if (storage == null || storage.size() != size) {
 			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<OctonionFloat64Member>(size, new OctonionFloat64Member());
+			else if (s == StorageConstruction.MEM_SPARSE)
+				storage = new SparseStorageFloat64<OctonionFloat64Member>(size, new OctonionFloat64Member());
 			else
 				storage = new FileStorageFloat64<OctonionFloat64Member>(size, new OctonionFloat64Member());
 			return true;
