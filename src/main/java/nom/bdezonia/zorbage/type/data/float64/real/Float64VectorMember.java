@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -62,19 +61,16 @@ public final class Float64VectorMember
 	private static final Float64Member ZERO = new Float64Member(0); 
 
 	private IndexedDataSource<?,Float64Member> storage;
-	private MemoryConstruction m;
 	private StorageConstruction s;
 	
 	public Float64VectorMember() {
 		storage = new ArrayStorageFloat64<Float64Member>(0, new Float64Member());
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 	}
 	
 	public Float64VectorMember(double[] vals) {
 		storage = new ArrayStorageFloat64<Float64Member>(vals.length, new Float64Member());
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		Float64Member value = new Float64Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(vals[i]);
@@ -84,7 +80,6 @@ public final class Float64VectorMember
 	
 	public Float64VectorMember(Float64VectorMember other) {
 		storage = other.storage.duplicate();
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -92,8 +87,7 @@ public final class Float64VectorMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageFloat64<Float64Member>(data.size(), new Float64Member());
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		Float64Member tmp = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
@@ -102,10 +96,9 @@ public final class Float64VectorMember
 		}
 	}
 
-	public Float64VectorMember(MemoryConstruction m, StorageConstruction s, long d1) {
-		this.m = m;
+	public Float64VectorMember(StorageConstruction s, long d1) {
 		this.s = s;
-		if (s == StorageConstruction.ARRAY)
+		if (s == StorageConstruction.MEM_ARRAY)
 			storage = new ArrayStorageFloat64<Float64Member>(d1, new Float64Member());
 		else
 			storage = new FileStorageFloat64<Float64Member>(d1, new Float64Member());
@@ -131,7 +124,6 @@ public final class Float64VectorMember
 	public void set(Float64VectorMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -139,7 +131,6 @@ public final class Float64VectorMember
 	public void get(Float64VectorMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
-		other.m = m;
 		other.s = s;
 	}
 
@@ -188,7 +179,7 @@ public final class Float64VectorMember
 
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			if (s == StorageConstruction.ARRAY)
+			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<Float64Member>(size, new Float64Member());
 			else
 				storage = new FileStorageFloat64<Float64Member>(size, new Float64Member());

@@ -34,7 +34,6 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.LUSolve;
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -53,7 +52,7 @@ public class TestFloat64Matrix {
 	public void testHugeMatrix() {
 		if (RUN) {
 			System.out.println("Making a huge virtual matrix > 2 gig entries");
-			Float64MatrixMember m = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.FILE, 50000, 50000);
+			Float64MatrixMember m = G.DBL_MAT.construct(StorageConstruction.MEM_VIRTUAL, 50000, 50000);
 			G.DBL_MAT.unity(m);
 			Float64Member value = G.DBL.construct();
 			Float64Member zero = G.DBL.construct();
@@ -141,10 +140,10 @@ public class TestFloat64Matrix {
 		LUSolve.compute(G.DBL, G.DBL_VEC, a, b, x);
 		Float64Member v = new Float64Member();
 		x.v(0, v);
-		System.out.println(v.v());
+		//System.out.println(v.v());
 		x.v(1, v);
-		System.out.println(v.v());
+		//System.out.println(v.v());
 		x.v(2, v);
-		System.out.println(v.v());
+		//System.out.println(v.v());
 	}
 }

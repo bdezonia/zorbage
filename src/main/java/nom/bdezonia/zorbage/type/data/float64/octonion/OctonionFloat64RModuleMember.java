@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -62,20 +61,17 @@ public final class OctonionFloat64RModuleMember
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
 	private IndexedDataSource<?,OctonionFloat64Member> storage;
-	private MemoryConstruction m;
 	private StorageConstruction s;
 	
 	public OctonionFloat64RModuleMember() {
 		storage = new ArrayStorageFloat64<OctonionFloat64Member>(0, new OctonionFloat64Member());
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 	}
 	
 	public OctonionFloat64RModuleMember(double[] vals) {
 		final int count = vals.length / 8;
 		storage = new ArrayStorageFloat64<OctonionFloat64Member>(count, new OctonionFloat64Member());
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 8*i;
@@ -93,7 +89,6 @@ public final class OctonionFloat64RModuleMember
 	
 	public OctonionFloat64RModuleMember(OctonionFloat64RModuleMember other) {
 		storage = other.storage.duplicate();
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -101,8 +96,7 @@ public final class OctonionFloat64RModuleMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		storage = new ArrayStorageFloat64<OctonionFloat64Member>(data.size(), new OctonionFloat64Member());
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);
@@ -118,10 +112,9 @@ public final class OctonionFloat64RModuleMember
 		}
 	}
 
-	public OctonionFloat64RModuleMember(MemoryConstruction m, StorageConstruction s, long d1) {
-		this.m = m;
+	public OctonionFloat64RModuleMember(StorageConstruction s, long d1) {
 		this.s = s;
-		if (s == StorageConstruction.ARRAY)
+		if (s == StorageConstruction.MEM_ARRAY)
 			storage = new ArrayStorageFloat64<OctonionFloat64Member>(d1, new OctonionFloat64Member());
 		else
 			storage = new FileStorageFloat64<OctonionFloat64Member>(d1, new OctonionFloat64Member());
@@ -146,7 +139,6 @@ public final class OctonionFloat64RModuleMember
 	public void set(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		storage = other.storage.duplicate();
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -154,7 +146,6 @@ public final class OctonionFloat64RModuleMember
 	public void get(OctonionFloat64RModuleMember other) {
 		if (this == other) return;
 		other.storage = storage.duplicate();
-		other.m = m;
 		other.s = s;
 	}
 
@@ -217,7 +208,7 @@ public final class OctonionFloat64RModuleMember
 
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			if (s == StorageConstruction.ARRAY)
+			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<OctonionFloat64Member>(size, new OctonionFloat64Member());
 			else
 				storage = new FileStorageFloat64<OctonionFloat64Member>(size, new OctonionFloat64Member());

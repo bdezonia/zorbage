@@ -33,7 +33,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -63,14 +62,12 @@ public final class Float64MatrixMember
 	private IndexedDataSource<?,Float64Member> storage;
 	private long rows;
 	private long cols;
-	private MemoryConstruction m;
 	private StorageConstruction s;
 	
 	public Float64MatrixMember() {
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		init(0,0);
 	}
 	
@@ -79,8 +76,7 @@ public final class Float64MatrixMember
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
 		Float64Member tmp = new Float64Member();
 		for (int i = 0; i < vals.length; i++) {
@@ -92,7 +88,6 @@ public final class Float64MatrixMember
 	public Float64MatrixMember(Float64MatrixMember other) {
 		rows = other.rows;
 		cols = other.cols;
-		m = other.m;
 		s = other.s;
 		storage = other.storage.duplicate();
 	}
@@ -103,8 +98,7 @@ public final class Float64MatrixMember
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		this.s = StorageConstruction.ARRAY;
+		this.s = StorageConstruction.MEM_ARRAY;
 		init(dimensions[1],dimensions[0]);
 		Float64Member tmp = new Float64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -114,10 +108,9 @@ public final class Float64MatrixMember
 		}
 	}
 	
-	public Float64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+	public Float64MatrixMember(StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
-		this.m = m;
 		this.s = s;
 		init(d2, d1);
 	}
@@ -135,7 +128,7 @@ public final class Float64MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			if (s == StorageConstruction.ARRAY)
+			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<Float64Member>(r*c, new Float64Member());
 			else
 				storage = new FileStorageFloat64<Float64Member>(r*c, new Float64Member());
@@ -169,7 +162,6 @@ public final class Float64MatrixMember
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		m = other.m;
 		s = other.s;
 		storage = other.storage.duplicate();
 	}
@@ -179,7 +171,6 @@ public final class Float64MatrixMember
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		other.m = m;
 		other.s = s;
 		other.storage = storage.duplicate();
 	}

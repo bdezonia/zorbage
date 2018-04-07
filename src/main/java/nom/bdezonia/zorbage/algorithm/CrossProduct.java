@@ -30,7 +30,6 @@ import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Ring;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
@@ -52,7 +51,7 @@ public class CrossProduct {
 	{
 		if ((a.numDimensions() != 3) || (b.numDimensions() != 3))
 			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
-		U tmp = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		U tmp = rmodGroup.construct(StorageConstruction.MEM_ARRAY, 3);
 		W atmp = memberGroup.construct();
 		W btmp = memberGroup.construct();
 		W term1 = memberGroup.construct();

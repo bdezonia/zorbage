@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -74,7 +73,6 @@ public final class Float64TensorProductMember
 	private IndexedDataSource<?,Float64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
-	private MemoryConstruction m;
 	private StorageConstruction s;
 
 	// rank() is also numDimensions(). Confusing. TODO - fix
@@ -89,8 +87,7 @@ public final class Float64TensorProductMember
 		dims = new long[0];
 		storage = new ArrayStorageFloat64<Float64Member>(1, new Float64Member());
 		multipliers = calcMultipliers();
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 	}
 
 	public Float64TensorProductMember(int rank, long dimCount) {
@@ -108,8 +105,7 @@ public final class Float64TensorProductMember
 		if (numElems == 0) numElems = 1;
 		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		multipliers = calcMultipliers();
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 	}
 	
 	public Float64TensorProductMember(int rank, long dimCount, double[] vals) {
@@ -139,8 +135,7 @@ public final class Float64TensorProductMember
 		if (numElems == 0) numElems = 1;
 		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		multipliers = calcMultipliers();
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 	}
 	
 	public Float64TensorProductMember(long[] dims, double[] vals) {
@@ -180,7 +175,6 @@ public final class Float64TensorProductMember
 		dims = other.dims.clone();
 		storage = other.storage.duplicate();
 		multipliers = other.multipliers.clone();
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -203,8 +197,7 @@ public final class Float64TensorProductMember
 		if (numElems == 0) numElems = 1;
 		this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		this.multipliers = calcMultipliers();
-		this.m = MemoryConstruction.DENSE;
-		this.s = StorageConstruction.ARRAY;
+		this.s = StorageConstruction.MEM_ARRAY;
 		Float64Member value = new Float64Member();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
@@ -233,7 +226,7 @@ public final class Float64TensorProductMember
 		}
 	}
 	
-	public Float64TensorProductMember(MemoryConstruction m, StorageConstruction s, long[] nd) {
+	public Float64TensorProductMember(StorageConstruction s, long[] nd) {
 		this.rank = dims.length;
 		long max = 0;
 		for (long d : dims) {
@@ -246,11 +239,10 @@ public final class Float64TensorProductMember
 			this.dims[i] = dimCount;
 		}
 		this.multipliers = calcMultipliers();
-		this.m = m;
 		this.s = s;
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
-		if (s == StorageConstruction.ARRAY)
+		if (s == StorageConstruction.MEM_ARRAY)
 			this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
 		else
 			this.storage = new FileStorageFloat64<Float64Member>(numElems, new Float64Member());
@@ -264,7 +256,6 @@ public final class Float64TensorProductMember
 		dims = other.dims.clone();
 		multipliers = other.multipliers.clone();
 		storage = other.storage.duplicate();
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -276,7 +267,6 @@ public final class Float64TensorProductMember
 		other.dims = dims.clone();
 		other.multipliers = multipliers.clone();
 		other.storage = storage.duplicate();
-		other.m = m;
 		other.s = s;
 	}
 
@@ -310,7 +300,7 @@ public final class Float64TensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			if (s == StorageConstruction.ARRAY) {
+			if (s == StorageConstruction.MEM_ARRAY) {
 				storage = new ArrayStorageFloat64<Float64Member>(newCount, new Float64Member());
 			}
 			else {

@@ -31,7 +31,6 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
@@ -67,7 +66,7 @@ public class LUDecomp {
 	
 		// decomposition of matrix
 		
-		MATRIX_MEMBER lu = matGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n, n);
+		MATRIX_MEMBER lu = matGroup.construct(StorageConstruction.MEM_ARRAY, n, n);
 		BASETYPE sum = numGroup.construct();
 		BASETYPE value1 = numGroup.construct();
 		BASETYPE value2 = numGroup.construct();

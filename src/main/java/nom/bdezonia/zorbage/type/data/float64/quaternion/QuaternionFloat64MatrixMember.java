@@ -33,7 +33,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -63,14 +62,12 @@ public final class QuaternionFloat64MatrixMember
 	private IndexedDataSource<?,QuaternionFloat64Member> storage;
 	private long rows;
 	private long cols;
-	private MemoryConstruction m;
 	private StorageConstruction s;
 	
 	public QuaternionFloat64MatrixMember() {
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		init(0,0);
 	}
 	
@@ -79,8 +76,7 @@ public final class QuaternionFloat64MatrixMember
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		int quatCount = vals.length / 4;
@@ -97,7 +93,6 @@ public final class QuaternionFloat64MatrixMember
 		storage = other.storage.duplicate();
 		rows = other.rows;
 		cols = other.cols;
-		m = other.m;
 		s = other.s;
 	}
 	
@@ -107,8 +102,7 @@ public final class QuaternionFloat64MatrixMember
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		this.s = StorageConstruction.ARRAY;
+		this.s = StorageConstruction.MEM_ARRAY;
 		init(dimensions[1], dimensions[0]);
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -121,10 +115,9 @@ public final class QuaternionFloat64MatrixMember
 		}
 	}
 	
-	public QuaternionFloat64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+	public QuaternionFloat64MatrixMember(StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
-		this.m = m;
 		this.s = s;
 		init(d2,d1);
 	}
@@ -142,7 +135,7 @@ public final class QuaternionFloat64MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			if (s == StorageConstruction.ARRAY)
+			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
 			else
 				storage = new FileStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
@@ -176,7 +169,6 @@ public final class QuaternionFloat64MatrixMember
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		m = other.m;
 		s = other.s;
 		storage = other.storage.duplicate();
 	}
@@ -186,7 +178,6 @@ public final class QuaternionFloat64MatrixMember
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		other.m = m;
 		other.s = s;
 		other.storage = storage.duplicate();
 	}

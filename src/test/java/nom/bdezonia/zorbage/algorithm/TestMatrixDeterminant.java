@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -47,7 +46,7 @@ public class TestMatrixDeterminant {
 	public void testReal2x2Det() {
 		Float64Member val = G.DBL.construct();
 
-		Float64MatrixMember a = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 2, 2);
+		Float64MatrixMember a = G.DBL_MAT.construct(StorageConstruction.MEM_ARRAY, 2, 2);
 		val.setV(1);
 		a.setV(0, 0, val);
 		val.setV(2);
@@ -70,7 +69,7 @@ public class TestMatrixDeterminant {
 	public void testReal4x4Det() {
 		Float64Member val = G.DBL.construct();
 
-		Float64MatrixMember a = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 4, 4);
+		Float64MatrixMember a = G.DBL_MAT.construct(StorageConstruction.MEM_ARRAY, 4, 4);
 		
 		val.setV(4);
 		a.setV(0, 0, val);

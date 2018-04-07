@@ -41,7 +41,6 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -109,8 +108,8 @@ public class ComplexFloat64Vector
 	}
 
 	@Override
-	public ComplexFloat64VectorMember construct(MemoryConstruction m, StorageConstruction s, long d1) {
-		return new ComplexFloat64VectorMember(m, s, d1);
+	public ComplexFloat64VectorMember construct(StorageConstruction s, long d1) {
+		return new ComplexFloat64VectorMember(s, d1);
 	}
 
 	@Override

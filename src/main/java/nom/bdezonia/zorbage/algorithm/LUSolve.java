@@ -32,7 +32,6 @@ import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
@@ -70,7 +69,7 @@ public class LUSolve {
 		BASETYPE term = numGroup.construct();
 		
 		// find solution of Ly = b
-		RMODULE_MEMBER y = rmodGroup.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, n);
+		RMODULE_MEMBER y = rmodGroup.construct(StorageConstruction.MEM_ARRAY, n);
 		for (long i = 0; i < n; i++)
 		{
 			numGroup.zero(sum);

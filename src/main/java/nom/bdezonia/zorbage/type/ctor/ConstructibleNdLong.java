@@ -32,5 +32,5 @@ package nom.bdezonia.zorbage.type.ctor;
  *
  */
 public interface ConstructibleNdLong<U> {
-	U construct(MemoryConstruction m, StorageConstruction s, long[] nd);
+	U construct(StorageConstruction s, long[] nd);
 }

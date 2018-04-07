@@ -33,5 +33,5 @@ package nom.bdezonia.zorbage.type.ctor;
  */
 public enum StorageConstruction {
 
-	ARRAY, FILE;
+	MEM_ARRAY, MEM_VIRTUAL, MEM_SPARSE;
 }

@@ -41,7 +41,6 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -109,8 +108,8 @@ public class QuaternionFloat64RModule
 	}
 
 	@Override
-	public QuaternionFloat64RModuleMember construct(MemoryConstruction m, StorageConstruction s, long d1) {
-		return new QuaternionFloat64RModuleMember(m, s, d1);
+	public QuaternionFloat64RModuleMember construct(StorageConstruction s, long d1) {
+		return new QuaternionFloat64RModuleMember(s, d1);
 	}
 
 	@Override

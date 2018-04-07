@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
@@ -58,7 +57,7 @@ public class TestLUDecomp {
 		
 		Float64Member val = G.DBL.construct();
 
-		Float64MatrixMember a = G.DBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
+		Float64MatrixMember a = G.DBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
 		G.DBL.unity(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
@@ -67,7 +66,7 @@ public class TestLUDecomp {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		Float64VectorMember b = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		Float64VectorMember b = G.DBL_VEC.construct(StorageConstruction.MEM_ARRAY, 3);
 		val = G.DBL.construct("4");
 		b.setV(0, val);
 		val = G.DBL.construct("10");
@@ -75,7 +74,7 @@ public class TestLUDecomp {
 		val = G.DBL.construct("20");
 		b.setV(2, val);
 		
-		Float64VectorMember x = G.DBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		Float64VectorMember x = G.DBL_VEC.construct(StorageConstruction.MEM_ARRAY, 3);
 
 		LUDecomp.compute(G.DBL, G.DBL_MAT, a);
 
@@ -100,7 +99,7 @@ public class TestLUDecomp {
 		
 		ComplexFloat64Member val = G.CDBL.construct();
 
-		ComplexFloat64MatrixMember a = G.CDBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
+		ComplexFloat64MatrixMember a = G.CDBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
 		G.CDBL.unity(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
@@ -109,7 +108,7 @@ public class TestLUDecomp {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		ComplexFloat64VectorMember b = G.CDBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		ComplexFloat64VectorMember b = G.CDBL_VEC.construct(StorageConstruction.MEM_ARRAY, 3);
 		val = G.CDBL.construct("(4,0)");
 		b.setV(0, val);
 		val = G.CDBL.construct("(10,0)");
@@ -117,7 +116,7 @@ public class TestLUDecomp {
 		val = G.CDBL.construct("(20,0)");
 		b.setV(2, val);
 		
-		ComplexFloat64VectorMember x = G.CDBL_VEC.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		ComplexFloat64VectorMember x = G.CDBL_VEC.construct(StorageConstruction.MEM_ARRAY, 3);
 
 		LUDecomp.compute(G.CDBL, G.CDBL_MAT, a);
 
@@ -145,7 +144,7 @@ public class TestLUDecomp {
 		
 		QuaternionFloat64Member val = G.QDBL.construct();
 
-		QuaternionFloat64MatrixMember a = G.QDBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
+		QuaternionFloat64MatrixMember a = G.QDBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
 		G.QDBL.unity(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
@@ -154,7 +153,7 @@ public class TestLUDecomp {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		QuaternionFloat64RModuleMember b = G.QDBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		QuaternionFloat64RModuleMember b = G.QDBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
 		val = G.QDBL.construct("(4,0,0,0)");
 		b.setV(0, val);
 		val = G.QDBL.construct("(10,0,0,0)");
@@ -162,7 +161,7 @@ public class TestLUDecomp {
 		val = G.QDBL.construct("(20,0,0,0)");
 		b.setV(2, val);
 		
-		QuaternionFloat64RModuleMember x = G.QDBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		QuaternionFloat64RModuleMember x = G.QDBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
 
 		LUDecomp.compute(G.QDBL, G.QDBL_MAT, a);
 
@@ -196,7 +195,7 @@ public class TestLUDecomp {
 		
 		OctonionFloat64Member val = G.ODBL.construct();
 
-		OctonionFloat64MatrixMember a = G.ODBL_MAT.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3, 3);
+		OctonionFloat64MatrixMember a = G.ODBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
 		G.ODBL.unity(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
@@ -205,7 +204,7 @@ public class TestLUDecomp {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		OctonionFloat64RModuleMember b = G.ODBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		OctonionFloat64RModuleMember b = G.ODBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
 		val = G.ODBL.construct("(4,0,0,0,0,0,0,0)");
 		b.setV(0, val);
 		val = G.ODBL.construct("(10,0,0,0,0,0,0,0)");
@@ -213,7 +212,7 @@ public class TestLUDecomp {
 		val = G.ODBL.construct("(20,0,0,0,0,0,0,0)");
 		b.setV(2, val);
 		
-		OctonionFloat64RModuleMember x = G.ODBL_MOD.construct(MemoryConstruction.DENSE, StorageConstruction.ARRAY, 3);
+		OctonionFloat64RModuleMember x = G.ODBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
 
 		LUDecomp.compute(G.ODBL, G.ODBL_MAT, a);
 

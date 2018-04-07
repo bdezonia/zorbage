@@ -35,7 +35,6 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -229,8 +228,8 @@ public class OctonionFloat64Matrix
 	}
 
 	@Override
-	public OctonionFloat64MatrixMember construct(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
-		return new OctonionFloat64MatrixMember(m, s, d1, d2);
+	public OctonionFloat64MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new OctonionFloat64MatrixMember(s, d1, d2);
 	}
 
 	@Override
@@ -337,8 +336,7 @@ public class OctonionFloat64Matrix
 		// invert and multiply
 		OctonionFloat64MatrixMember invB =
 				G.ODBL_MAT.construct(
-						MemoryConstruction.DENSE,
-						StorageConstruction.ARRAY,
+						StorageConstruction.MEM_ARRAY,
 						a.cols(), a.rows());
 		MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, b, invB);
 		G.ODBL_MAT.multiply(a, invB, c);

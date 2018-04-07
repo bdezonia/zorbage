@@ -33,7 +33,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -63,21 +62,18 @@ public final class ComplexFloat64MatrixMember
 	private IndexedDataSource<?,ComplexFloat64Member> storage;
 	private long rows;
 	private long cols;
-	private MemoryConstruction m;
 	private StorageConstruction s;
 	
 	public ComplexFloat64MatrixMember() {
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		init(0,0);
 	}
 	
 	public ComplexFloat64MatrixMember(ComplexFloat64MatrixMember other) {
 		rows = other.rows;
 		cols = other.cols;
-		m = other.m;
 		s = other.s;
 		storage = other.storage.duplicate();
 	}
@@ -87,8 +83,7 @@ public final class ComplexFloat64MatrixMember
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		s = StorageConstruction.ARRAY;
+		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		int compCount = vals.length / 2;
@@ -105,8 +100,7 @@ public final class ComplexFloat64MatrixMember
 		long[] dimensions = rep.dimensions();
 		rows = -1;
 		cols = -1;
-		m = MemoryConstruction.DENSE;
-		this.s = StorageConstruction.ARRAY;
+		this.s = StorageConstruction.MEM_ARRAY;
 		init(dimensions[1],dimensions[0]);
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
@@ -117,10 +111,9 @@ public final class ComplexFloat64MatrixMember
 		}
 	}
 	
-	public ComplexFloat64MatrixMember(MemoryConstruction m, StorageConstruction s, long d1, long d2) {
+	public ComplexFloat64MatrixMember(StorageConstruction s, long d1, long d2) {
 		rows = -1;
 		cols = -1;
-		this.m = m;
 		this.s = s;
 		init(d2, d1);
 	}
@@ -138,7 +131,7 @@ public final class ComplexFloat64MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			if (s == StorageConstruction.ARRAY)
+			if (s == StorageConstruction.MEM_ARRAY)
 				storage = new ArrayStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
 			else
 				storage = new FileStorageFloat64<ComplexFloat64Member>(r*c, new ComplexFloat64Member());
@@ -172,7 +165,6 @@ public final class ComplexFloat64MatrixMember
 		if (this == other) return;
 		rows = other.rows;
 		cols = other.cols;
-		m = other.m;
 		s = other.s;
 		storage = other.storage.duplicate();
 	}
@@ -182,7 +174,6 @@ public final class ComplexFloat64MatrixMember
 		if (this == other) return;
 		other.rows = rows;
 		other.cols = cols;
-		other.m = m;
 		other.s = s;
 		other.storage = storage.duplicate();
 	}

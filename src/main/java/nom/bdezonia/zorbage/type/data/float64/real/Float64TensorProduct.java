@@ -50,7 +50,6 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 
 import nom.bdezonia.zorbage.type.algebra.TensorProduct;
 import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
-import nom.bdezonia.zorbage.type.ctor.MemoryConstruction;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
@@ -81,8 +80,8 @@ public class Float64TensorProduct
 	}
 
 	@Override
-	public Float64TensorProductMember construct(MemoryConstruction m, StorageConstruction s, long[] nd) {
-		return new Float64TensorProductMember(m, s, nd);
+	public Float64TensorProductMember construct(StorageConstruction s, long[] nd) {
+		return new Float64TensorProductMember(s, nd);
 	}
 
 	@Override
