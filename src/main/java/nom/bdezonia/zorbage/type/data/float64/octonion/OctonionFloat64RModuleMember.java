@@ -43,9 +43,6 @@ import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**
@@ -66,14 +63,14 @@ public final class OctonionFloat64RModuleMember
 	private StorageConstruction s;
 	
 	public OctonionFloat64RModuleMember() {
-		storage = new ArrayStorageFloat64<OctonionFloat64Member>(0, new OctonionFloat64Member());
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, 0, new OctonionFloat64Member());
 	}
 	
 	public OctonionFloat64RModuleMember(double[] vals) {
 		final int count = vals.length / 8;
-		storage = new ArrayStorageFloat64<OctonionFloat64Member>(count, new OctonionFloat64Member());
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, count, new OctonionFloat64Member());
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 8*i;
@@ -97,8 +94,8 @@ public final class OctonionFloat64RModuleMember
 	public OctonionFloat64RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
-		storage = new ArrayStorageFloat64<OctonionFloat64Member>(data.size(), new OctonionFloat64Member());
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, data.size(), new OctonionFloat64Member());
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);

@@ -43,9 +43,6 @@ import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 
 /**
@@ -66,14 +63,14 @@ public final class QuaternionFloat64RModuleMember
 	private StorageConstruction s;
 	
 	public QuaternionFloat64RModuleMember() {
-		storage = new ArrayStorageFloat64<QuaternionFloat64Member>(0, new QuaternionFloat64Member());
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, 0, new QuaternionFloat64Member());
 	}
 	
 	public QuaternionFloat64RModuleMember(double[] vals) {
 		final int count = vals.length / 4;
-		storage = new ArrayStorageFloat64<QuaternionFloat64Member>(count, new QuaternionFloat64Member());
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, count, new QuaternionFloat64Member());
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 4*i;
@@ -93,8 +90,8 @@ public final class QuaternionFloat64RModuleMember
 	public QuaternionFloat64RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
-		storage = new ArrayStorageFloat64<QuaternionFloat64Member>(data.size(), new QuaternionFloat64Member());
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, data.size(), new QuaternionFloat64Member());
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		for (long i = 0; i < storage.size(); i++) {
 			OctonionRepresentation val = data.get(i);

@@ -45,9 +45,6 @@ import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
-import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
 import nom.bdezonia.zorbage.util.BigList;
 import nom.bdezonia.zorbage.util.LongUtils;
 
@@ -87,9 +84,9 @@ public final class Float64TensorProductMember
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
-		storage = new ArrayStorageFloat64<Float64Member>(1, new Float64Member());
-		multipliers = calcMultipliers();
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, 1, new Float64Member());
+		multipliers = calcMultipliers();
 	}
 
 	public Float64TensorProductMember(int rank, long dimCount) {
@@ -105,9 +102,9 @@ public final class Float64TensorProductMember
 		}
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
-		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
-		multipliers = calcMultipliers();
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, numElems, new Float64Member());
+		multipliers = calcMultipliers();
 	}
 	
 	public Float64TensorProductMember(int rank, long dimCount, double[] vals) {
@@ -135,9 +132,9 @@ public final class Float64TensorProductMember
 		}
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
-		storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
-		multipliers = calcMultipliers();
 		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, numElems, new Float64Member());
+		multipliers = calcMultipliers();
 	}
 	
 	public Float64TensorProductMember(long[] dims, double[] vals) {
@@ -197,9 +194,9 @@ public final class Float64TensorProductMember
 		}
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
-		this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
-		this.multipliers = calcMultipliers();
 		this.s = StorageConstruction.MEM_ARRAY;
+		this.storage = Storage.allocate(this.s, numElems, new Float64Member());
+		this.multipliers = calcMultipliers();
 		Float64Member value = new Float64Member();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
@@ -244,10 +241,7 @@ public final class Float64TensorProductMember
 		this.s = s;
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
-		if (s == StorageConstruction.MEM_ARRAY)
-			this.storage = new ArrayStorageFloat64<Float64Member>(numElems, new Float64Member());
-		else
-			this.storage = new FileStorageFloat64<Float64Member>(numElems, new Float64Member());
+		this.storage = Storage.allocate(s, numElems, new Float64Member());
 	}
 	
 	@Override
