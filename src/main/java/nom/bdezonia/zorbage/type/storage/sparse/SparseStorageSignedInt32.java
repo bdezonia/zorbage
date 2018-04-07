@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
+import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.type.storage.sparse.RedBlackTree.Node;
 
 // NOTE: this class can't be thread friendly. One thread can insert a value
@@ -42,31 +42,31 @@ import nom.bdezonia.zorbage.type.storage.sparse.RedBlackTree.Node;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageBoolean<U extends BooleanCoder<U>>
-	implements IndexedDataSource<SparseStorageBoolean<U>, U>
+public class SparseStorageSignedInt32<U extends IntCoder<U>>
+	implements IndexedDataSource<SparseStorageSignedInt32<U>, U>
 {
 	private final RedBlackTree data;
 	private final long numElements;
-	private final boolean[] zero, tmp;
+	private final int[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageBoolean(long numElements, U type) {
+	public SparseStorageSignedInt32(long numElements, U type) {
 		this.numElements = numElements;
 		this.type = type;
-		this.zero = new boolean[type.booleanCount()];
-		this.tmp = new boolean[type.booleanCount()];
+		this.zero = new int[type.intCount()];
+		this.tmp = new int[type.intCount()];
 		this.data = new RedBlackTree();
 	}
 	
 	@Override
-	public SparseStorageBoolean<U> duplicate() {
-		SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(numElements, type);
+	public SparseStorageSignedInt32<U> duplicate() {
+		SparseStorageSignedInt32<U> list = new SparseStorageSignedInt32<U>(numElements, type);
 		Stack<Node> nodes = new Stack<Node>();
 		if (data.root != data.nil) {
 			nodes.push(data.root);
 			while (!nodes.isEmpty()) {
 				Node n = nodes.pop();
-				type.toValue((boolean[])n.value, 0);
+				type.toValue((int[])n.value, 0);
 				list.set(n.key, type);
 				if (n.left != data.nil) nodes.push(n.left);
 				if (n.right != data.nil) nodes.push(n.right);
@@ -92,14 +92,14 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 				n.p = data.nil;
 				n.left = data.nil;
 				n.right = data.nil;
-				n.value = new boolean[tmp.length];
+				n.value = new int[tmp.length];
 				// n.color =? What?
 				for (int i = 0; i < tmp.length; i++)
-					((boolean[])n.value)[i] = tmp[i];
+					((int[])n.value)[i] = tmp[i];
 				data.insert(n);
 			}
 			else {
-				value.toArray((boolean[])node.value, 0);
+				value.toArray((int[])node.value, 0);
 			}
 		}
 	}
@@ -113,7 +113,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 			value.toValue(zero, 0);
 		}
 		else { // nonzero
-			value.toValue((boolean[])node.value, 0);
+			value.toValue((int[])node.value, 0);
 		}
 	}
 
