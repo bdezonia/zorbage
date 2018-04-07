@@ -26,8 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.file.FileStorage;
+import nom.bdezonia.zorbage.type.storage.sparse.SparseStorage;
 
 /**
  * 
@@ -48,5 +50,15 @@ public class Storage {
 
 		}
 
+	}
+	
+	public static <U> IndexedDataSource<?, U> allocate(StorageConstruction strategy, long numElements, U type) {
+		if (strategy == StorageConstruction.MEM_ARRAY)
+			return ArrayStorage.allocate(numElements, type);
+		else if (strategy == StorageConstruction.MEM_SPARSE)
+			return SparseStorage.allocate(numElements, type);
+		else if (strategy == StorageConstruction.MEM_VIRTUAL)
+			return FileStorage.allocate(numElements, type);
+		throw new IllegalArgumentException("Unknown storage strategy "+strategy);
 	}
 }

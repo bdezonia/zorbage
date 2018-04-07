@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
@@ -182,12 +183,7 @@ public final class ComplexFloat64VectorMember
 	
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			if (s == StorageConstruction.MEM_ARRAY)
-				storage = new ArrayStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
-			else if (s == StorageConstruction.MEM_SPARSE)
-				storage = new SparseStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
-			else
-				storage = new FileStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
+			storage = Storage.allocate(s, size, new ComplexFloat64Member());
 			return true;
 		}
 		return false;

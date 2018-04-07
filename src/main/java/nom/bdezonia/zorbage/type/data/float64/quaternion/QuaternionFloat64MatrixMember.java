@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.sparse.SparseStorageFloat64;
@@ -136,12 +137,7 @@ public final class QuaternionFloat64MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			if (s == StorageConstruction.MEM_ARRAY)
-				storage = new ArrayStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
-			else if (s == StorageConstruction.MEM_SPARSE)
-				storage = new SparseStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
-			else
-				storage = new FileStorageFloat64<QuaternionFloat64Member>(r*c, new QuaternionFloat64Member());
+			storage = Storage.allocate(s, r*c, new QuaternionFloat64Member());
 			return true;
 		}
 		return false;
