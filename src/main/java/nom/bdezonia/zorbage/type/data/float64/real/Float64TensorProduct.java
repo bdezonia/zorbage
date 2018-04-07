@@ -191,13 +191,13 @@ public class Float64TensorProduct
 
 	@Override
 	public void norm(Float64TensorProductMember a, Float64Member b) {
-		throw new IllegalArgumentException("to be implemented");
+		throw new IllegalArgumentException("TODO");
 	}
 
 
 	@Override
 	public void conjugate(Float64TensorProductMember a, Float64TensorProductMember b) {
-		throw new IllegalArgumentException("to be implemented");
+		assign(a,b);
 	}
 
 	@Override
@@ -313,21 +313,21 @@ public class Float64TensorProduct
 			newDims[k] = a.dimension(0);
 		}
 		b.alloc(newDims);
-		throw new IllegalArgumentException("must finish");
+		throw new IllegalArgumentException("TODO");
 	}
 		
 	// http://mathworld.wolfram.com/CovariantDerivative.html
 	
 	@Override
 	public void semicolonDerivative(int someArgs) {
-		throw new IllegalArgumentException("to implement");
+		throw new IllegalArgumentException("TODO");
 	}
 	
 	// http://mathworld.wolfram.com/CommaDerivative.html
 	
 	@Override
 	public void commaDerivative(int someArgs) {
-		throw new IllegalArgumentException("to implement");
+		throw new IllegalArgumentException("TODO");
 	}
 	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
