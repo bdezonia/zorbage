@@ -85,7 +85,6 @@ public class TestSparseStorage {
 		Data elem = new Data();
 		SparseStorageBoolean<Data> data = new SparseStorageBoolean<Data>(1000, elem);
 		for (long i = 0; i < 16; i++) {
-			System.out.println("about to set i "+i);
 			elem.a = (i & 1) > 0;
 			elem.b = (i & 2) > 0;
 			elem.c = (i & 4) > 0;

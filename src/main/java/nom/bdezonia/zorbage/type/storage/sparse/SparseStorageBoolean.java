@@ -65,10 +65,10 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 	public SparseStorageBoolean<U> duplicate() {
 		SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(numElements, type);
 		Stack<Node> nodes = new Stack<Node>();
-		nodes.push(data.root);
-		while (!nodes.isEmpty()) {
-			Node n = nodes.pop();
-			if (n != nil) {
+		if (data.root != nil) {
+			nodes.push(data.root);
+			while (!nodes.isEmpty()) {
+				Node n = nodes.pop();
 				type.toValue(n.value, 0);
 				list.set(n.key, type);
 				if (n.left != nil) nodes.push(n.left);
@@ -128,7 +128,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 	private Node nilNode() {
 		Node nil = new Node();
 		nil.color = Color.BLACK;
-		nil.p = null; // nil; will loop forever. null throws excep.
+		nil.p = nil;
 		nil.left = nil;
 		nil.right = nil;
 		nil.key = Long.MIN_VALUE;
@@ -169,6 +169,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 		}
 		
 		void leftRotate(Node x) {
+			if (x == nil) return; // my code
 			Node y = x.right;
 			x.right = y.left;
 			if (y.left != nil)
@@ -185,6 +186,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 		}
 
 		void rightRotate(Node x) {
+			if (x == nil) return; // my code
 			Node y = x.left;
 			x.left = y.right;
 			if (y.right != nil)
