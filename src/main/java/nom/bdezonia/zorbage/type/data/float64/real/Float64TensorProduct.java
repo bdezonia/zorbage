@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 
@@ -51,6 +52,8 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.TensorProduct;
 import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
+// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -352,6 +355,7 @@ public class Float64TensorProduct
 			assign(a, b);
 		}
 		else {
+			// TODO: this method has a lot of memory overhead. Try to fix.
 			Float64TensorProductMember tmp1 = new Float64TensorProductMember();
 			Float64TensorProductMember tmp2 = new Float64TensorProductMember();
 			multiply(a,a,tmp1);
@@ -365,6 +369,15 @@ public class Float64TensorProduct
 
 	@Override
 	public void unity(Float64TensorProductMember result) {
-		throw new IllegalArgumentException("TODO");
+		Float64Member one = new Float64Member();
+		G.DBL.unity(one);
+		zero(result);
+		IntegerIndex index = new IntegerIndex(result.rank());
+		for (long d = 0; d < result.dimension(0); d++) {
+			for (int r = 0; r < result.rank(); r++) {
+				index.set(r, d);
+			}
+			result.setV(index, one);
+		}
 	}
 }
