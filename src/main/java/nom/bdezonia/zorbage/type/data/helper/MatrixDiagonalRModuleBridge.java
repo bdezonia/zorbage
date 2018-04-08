@@ -39,13 +39,13 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 
 	public enum Origin {UpperLeft, UpperRight, LowerRight, LowerLeft};
 	
-	private final Group<?,U> group;
+	private final U zero;
 	private final MatrixMember<U> mat;
 	private Origin origin;
 	private long diagNumber;
 	
 	public MatrixDiagonalRModuleBridge(Group<?,U> group, MatrixMember<U> mat) {
-		this.group = group;
+		this.zero = group.construct();
 		this.mat = mat;
 		this.origin = Origin.UpperLeft;
 		this.diagNumber = 0;
@@ -87,7 +87,6 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void init(long len) {
 		if (len == length()) {
-			U zero = group.construct();
 			for (long i = 0; i < len; i++) {
 				setV(i, zero);
 			}

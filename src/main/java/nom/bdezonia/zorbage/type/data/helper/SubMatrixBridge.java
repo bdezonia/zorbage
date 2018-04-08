@@ -36,12 +36,12 @@ import nom.bdezonia.zorbage.type.algebra.MatrixMember;
  */
 public class SubMatrixBridge<U> implements MatrixMember<U>{
 
-	private final Group<?,U> group;
+	private final U zero;
 	private final MatrixMember<U> mat;
 	private long startRow, countRows, startCol, countCols;
 	
 	public SubMatrixBridge(Group<?,U> group, MatrixMember<U> mat) {
-		this.group = group;
+		this.zero = group.construct();
 		this.mat = mat;
 		this.startRow = 0;
 		this.startCol = 0;
@@ -103,7 +103,6 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	@Override
 	public void init(long rows, long cols) {
 		if (rows == countRows && cols == countCols) {
-			U zero = group.construct();
 			for (long r = 0; r < countRows; r++) {
 				for (long c = 0; c < countCols; c++) {
 					setV(r, c, zero);

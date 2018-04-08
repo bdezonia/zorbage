@@ -36,12 +36,12 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
  */
 public class SubRModuleBridge<U> implements RModuleMember<U> {
 
-	private final Group<?,U> group;
+	private final U zero;
 	private final RModuleMember<U> rmod;
 	private long startElem, countElems;
 	
 	public SubRModuleBridge(Group<?,U> group, RModuleMember<U> rmod) {
-		this.group = group;
+		this.zero = group.construct();
 		this.rmod = rmod;
 		this.startElem = 0;
 		this.countElems = rmod.length();
@@ -84,9 +84,8 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void init(long len) {
 		if (len == countElems) {
-			U zero = group.construct();
 			for (long i = 0; i < countElems; i++) {
-					setV(i, zero);
+				setV(i, zero);
 			}
 		}
 		else {

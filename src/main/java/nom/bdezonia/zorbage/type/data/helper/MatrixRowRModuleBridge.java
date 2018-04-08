@@ -37,12 +37,12 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
  */
 public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 
-	private final Group<?,U> group;
+	private final U zero;
 	private final MatrixMember<U> mat;
 	private long row;
 	
-	public MatrixRowRModuleBridge(Group<?,U> numGroup, MatrixMember<U> mat) {
-		this.group = numGroup;
+	public MatrixRowRModuleBridge(Group<?,U> group, MatrixMember<U> mat) {
+		this.zero = group.construct();
 		this.mat = mat;
 		this.row = 0;
 	}
@@ -82,7 +82,6 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void init(long len) {
 		if (len == mat.cols()) {
-			U zero = group.construct();
 			for (long i = 0; i < length(); i++)
 				setV(i, zero);
 		}
