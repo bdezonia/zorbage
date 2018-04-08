@@ -55,9 +55,9 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	
 	public void setShape(long startRow, long startCol, long size) {
 		if (startRow < 0 || startRow >= mat.rows())
-			throw new IllegalArgumentException("start row are of bounds");
+			throw new IllegalArgumentException("startRow is of bounds");
 		if (startCol < 0 || startCol >= mat.cols())
-			throw new IllegalArgumentException("start row are of bounds");
+			throw new IllegalArgumentException("startCol is of bounds");
 		if (size < 1)
 			throw new IllegalArgumentException("size must be positive");
 		if ((startRow + size) >= mat.rows() || (startCol + size) >= mat.cols())
