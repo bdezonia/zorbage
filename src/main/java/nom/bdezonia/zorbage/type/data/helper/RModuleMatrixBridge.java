@@ -26,7 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
  * 
@@ -35,58 +37,121 @@ import nom.bdezonia.zorbage.type.algebra.MatrixMember;
  */
 public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 
+	private final Group<?,U> group;
+	private final U zero;
+	private final RModuleMember<U> rmod;
+	private boolean isColumn;
+	
+	public RModuleMatrixBridge(Group<?,U> group, RModuleMember<U> rmod) {
+		this.group = group;
+		this.zero = group.construct();
+		this.rmod = rmod;
+		this.isColumn = true;
+	}
+
+	public void setIsColumn(boolean b) {
+		this.isColumn = b;
+	}
+	
+	public boolean isColumn() {
+		return isColumn;
+	}
+
+	public boolean isRow() {
+		return !isColumn;
+	}
+
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension exception");
+		else if (d == 0)
+			return cols();
+		else if (d == 1)
+			return rows();
+		else
+			return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public long rows() {
-		// TODO Auto-generated method stub
-		return 0;
+		return isColumn ? 1 : rmod.length();
 	}
 
 	@Override
 	public long cols() {
-		// TODO Auto-generated method stub
-		return 0;
+		return isColumn ? rmod.length() : 1;
 	}
 
 	@Override
 	public boolean alloc(long rows, long cols) {
-		// TODO Auto-generated method stub
-		return false;
+		if (isColumn && rows == 1 && cols == rmod.length())
+			return false;
+		else if (!isColumn && rows == rmod.length() && cols == 1)
+			return false;
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long rows, long cols) {
-		// TODO Auto-generated method stub
-		
+		if (isColumn && rows == 1 && cols == rmod.length()) {
+			for (long i = 0; i < rmod.length(); i++)
+				rmod.setV(i, zero);
+		}
+		else if (!isColumn && rows == rmod.length() && cols == 1) {
+			for (long i = 0; i < rmod.length(); i++)
+				rmod.setV(i, zero);
+		}
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long rows, long cols) {
-		// TODO Auto-generated method stub
-		
+		if (isColumn && rows == 1 && cols == rmod.length()) {
+			;
+		}
+		else if (!isColumn && rows == rmod.length() && cols == 1) {
+			;
+		}
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(long r, long c, U value) {
-		// TODO Auto-generated method stub
-		
+		if (isColumn) {
+			if (r != 0)
+				group.assign(zero, value);
+			else
+				rmod.v(c, value);
+		}
+		else {
+			if (c != 0)
+				group.assign(zero, value);
+			else
+				rmod.v(r, value);
+		}
 	}
 
 	@Override
 	public void setV(long r, long c, U value) {
-		// TODO Auto-generated method stub
-		
+		if (isColumn) {
+			if (r != 0 && group.isNotEqual(zero, value))
+				throw new IllegalArgumentException("out of bounds nonzero write");
+			else
+				rmod.setV(c, value);
+		}
+		else {
+			if (c != 0 && group.isNotEqual(zero, value))
+				throw new IllegalArgumentException("out of bounds nonzero write");
+			else
+				rmod.setV(r, value);
+		}
 	}
 
 }

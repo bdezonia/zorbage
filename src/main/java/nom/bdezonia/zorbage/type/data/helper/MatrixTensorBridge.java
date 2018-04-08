@@ -39,9 +39,9 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class MatrixTensorBridge<U> implements TensorMember<U> {
 
-	private final MatrixMember<U> mat;
 	private final Group<?,U> group;
 	private final U zero;
+	private MatrixMember<U> mat;
 	private long startRow, startCol, size;
 	
 	public MatrixTensorBridge(Group<?,U> group, MatrixMember<U> mat) {
@@ -53,7 +53,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		this.size = Math.min(mat.rows(), mat.cols());
 	}
 	
-	public void setShape(long startRow, long startCol, long size) {
+	public void setMat(MatrixMember<U> mat, long startRow, long startCol, long size) {
 		if (startRow < 0 || startRow >= mat.rows())
 			throw new IllegalArgumentException("startRow is of bounds");
 		if (startCol < 0 || startCol >= mat.cols())
@@ -62,6 +62,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("size must be positive");
 		if ((startRow + size) >= mat.rows() || (startCol + size) >= mat.cols())
 			throw new IllegalArgumentException("dimensions out of bounds");
+		this.mat = mat;
 		this.startRow = startRow;
 		this.startCol = startCol;
 		this.size = size;

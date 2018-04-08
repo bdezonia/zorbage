@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.data.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
 /**
@@ -36,46 +38,81 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class RModuleTensorBridge<U> implements TensorMember<U> {
 
+	private final Group<?,U> group;
+	private final U zero;
+	private final RModuleMember<U> rmod;
+	
+	public RModuleTensorBridge(Group<?,U> group, RModuleMember<U> rmod) {
+		this.group = group;
+		this.zero = group.construct();
+		this.rmod = rmod;
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		return rmod.dimension(d);
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public boolean alloc(long[] dims) {
-		// TODO Auto-generated method stub
-		return false;
+		if (dimsCompatible(dims)) {
+			return false;
+		}
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long[] dims) {
-		// TODO Auto-generated method stub
-		
+		if (dimsCompatible(dims)) {
+			for (long i = 0; i < rmod.length(); i++) {
+				rmod.setV(i, zero);
+			}
+		}
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long[] dims) {
-		// TODO Auto-generated method stub
-		
+		if (!dimsCompatible(dims))
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(IntegerIndex index, U value) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 1; i < index.numDimensions(); i++) {
+			if (index.get(i) != 0) {
+				group.assign(zero, value);
+				return;
+			}
+		}
+		long i = index.get(0);
+		rmod.v(i, value);
 	}
 
 	@Override
 	public void setV(IntegerIndex index, U value) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 1; i < index.numDimensions(); i++) {
+			if (index.get(i) != 0) {
+				if (group.isNotEqual(zero, value))
+					throw new IllegalArgumentException("out of bounds nonzero write");
+			}
+		}
+		long i = index.get(0);
+		rmod.setV(i, value);
 	}
 
+	private boolean dimsCompatible(long[] newDims) {
+		if (newDims.length < 1) return false;
+		for (int i = 1; i < newDims.length; i++) {
+			if (newDims[i] != 1) return false;
+		}
+		if (newDims[0] != rmod.length()) return false;
+		return true;
+	}
 }

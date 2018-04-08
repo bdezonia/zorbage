@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.data.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
 /**
@@ -36,46 +38,79 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class NumberTensorBridge<U> implements TensorMember<U> {
 
+	private final U zero;
+	private final Group<?,U> group;
+	private NumberMember<U> num;
+	
+	public NumberTensorBridge(Group<?,U> group, NumberMember<U> num) {
+		this.zero = group.construct();
+		this.group = group;
+		this.num = num;
+	}
+	
+	public void setNum(NumberMember<U> num) {
+		this.num = num;
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean alloc(long[] dims) {
-		// TODO Auto-generated method stub
-		return false;
+		if (dimsCompatible(dims)) {
+			return false;
+		}
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long[] dims) {
-		// TODO Auto-generated method stub
-		
+		if (dimsCompatible(dims))
+			num.setV(zero);
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long[] dims) {
-		// TODO Auto-generated method stub
-		
+		if (!dimsCompatible(dims))
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(IntegerIndex index, U value) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 1; i < index.numDimensions(); i++) {
+			if (index.get(i) != 0) {
+				group.assign(zero, value);
+				return;
+			}
+		}
+		num.v(value);
 	}
 
 	@Override
 	public void setV(IntegerIndex index, U value) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 1; i < index.numDimensions(); i++) {
+			if (index.get(i) != 0) {
+				if (group.isNotEqual(zero, value))
+					throw new IllegalArgumentException("out of bounds nonzero write");
+			}
+		}
+		num.setV(value);
 	}
 
+	private boolean dimsCompatible(long[] newDims) {
+		if (newDims.length < 1) return false;
+		for (int i = 0; i < newDims.length; i++) {
+			if (newDims[i] != 1) return false;
+		}
+		return true;
+	}
 }

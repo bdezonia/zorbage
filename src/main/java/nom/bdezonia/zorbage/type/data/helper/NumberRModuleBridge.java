@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -35,52 +37,71 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
  */
 public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
+	private final U zero;
+	private final Group<?,U> group;
+	private NumberMember<U> num;
+	
+	public NumberRModuleBridge(Group<?,U> group, NumberMember<U> num) {
+		this.zero = group.construct();
+		this.group = group;
+		this.num = num;
+	}
+	
+	public void setNum(NumberMember<U> num) {
+		this.num = num;
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public long length() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public boolean alloc(long len) {
-		// TODO Auto-generated method stub
-		return false;
+		if (len == 1)
+			return false;
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long len) {
-		// TODO Auto-generated method stub
-		
+		if (len == 1)
+			num.setV(zero);
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long len) {
-		// TODO Auto-generated method stub
-		
+		if (len != 1)
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(long i, U value) {
-		// TODO Auto-generated method stub
-		
+		if (i == 0)
+			num.v(value);
+		else
+			group.assign(zero, value);
 	}
 
 	@Override
 	public void setV(long i, U value) {
-		// TODO Auto-generated method stub
-		
+		if (i == 0)
+			num.setV(value);
+		else if (group.isNotEqual(zero, value))
+			throw new IllegalArgumentException("out of bounds nonzero write");
+
 	}
 
 }
