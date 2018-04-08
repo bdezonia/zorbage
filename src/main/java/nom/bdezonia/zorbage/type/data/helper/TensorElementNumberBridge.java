@@ -26,7 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
 /**
  * 
@@ -35,28 +37,46 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
  */
 public class TensorElementNumberBridge<U> implements NumberMember<U> {
 
+	private final TensorMember<U> tensor;
+	private final IntegerIndex index;
+	
+	public TensorElementNumberBridge(TensorMember<U> tensor) {
+		this.tensor = tensor;
+		this.index = new IntegerIndex(tensor.numDimensions());
+	}
+	
+	public void setIndex(IntegerIndex idx) {
+		for (int i = 0; i < index.numDimensions(); i++) {
+			index.set(i, 0);
+		}
+		for (int i = 0; i < idx.numDimensions(); i++) {
+			if (i < index.numDimensions())
+				index.set(i, idx.get(i));
+			else if (idx.get(i) > 0)
+				throw new IllegalArgumentException("out of bounds index");
+		}
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension exception");
+		return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void v(U value) {
-		// TODO Auto-generated method stub
-		
+		tensor.v(index, value);
 	}
 
 	@Override
 	public void setV(U value) {
-		// TODO Auto-generated method stub
-		
+		tensor.setV(index, value);
 	}
 
 }
