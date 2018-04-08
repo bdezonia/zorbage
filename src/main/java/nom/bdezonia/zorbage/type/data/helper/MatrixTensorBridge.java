@@ -42,16 +42,38 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	private final MatrixMember<U> mat;
 	private final Group<?,U> group;
 	private final U zero;
+	private long startRow, startCol, size;
 	
 	public MatrixTensorBridge(Group<?,U> group, MatrixMember<U> mat) {
 		this.mat = mat;
 		this.group = group;
 		this.zero = group.construct();
+		this.startRow = 0;
+		this.startCol = 0;
+		this.size = Math.min(mat.rows(), mat.cols());
+	}
+	
+	public void setShape(long startRow, long startCol, long size) {
+		if (startRow < 0 || startRow >= mat.rows())
+			throw new IllegalArgumentException("start row are of bounds");
+		if (startCol < 0 || startCol >= mat.cols())
+			throw new IllegalArgumentException("start row are of bounds");
+		if (size < 1)
+			throw new IllegalArgumentException("size must be positive");
+		if ((startRow + size) >= mat.rows() || (startCol + size) >= mat.cols())
+			throw new IllegalArgumentException("dimensions out of bounds");
+		this.startRow = startRow;
+		this.startCol = startCol;
+		this.size = size;
 	}
 	
 	@Override
 	public long dimension(int d) {
-		return mat.dimension(d);
+		if (d == 0 || d == 1)
+			return size;
+		// TODO: should I be returning 1 for d > 1?
+		// that is not a tensor shape.
+		throw new IllegalArgumentException("dimension out of bounds exception");
 	}
 
 	@Override
@@ -70,8 +92,8 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public void init(long[] dims) {
 		if (dimsCompatible(dims)) {
-			for (long r = 0; r < mat.rows(); r++) {
-				for (long c = 0; c < mat.cols(); c++) {
+			for (long r = startRow; r < startRow + size; r++) {
+				for (long c = startCol; c < startCol + size; c++) {
 					mat.setV(r, c, zero);
 				}
 			}
@@ -96,7 +118,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.v(r, c, value);
+		mat.v(startRow + r, startCol + c, value);
 	}
 
 	@Override
@@ -109,7 +131,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.setV(r, c, value);
+		mat.setV(startRow + r, startCol + c, value);
 	}
 
 	private boolean dimsCompatible(long[] newDims) {
@@ -117,8 +139,8 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		for (int i = 2; i < newDims.length; i++) {
 			if (newDims[i] != 1) return false;
 		}
-		if (newDims[0] != mat.cols()) return false;
-		if (newDims[1] != mat.rows()) return false;
+		if (newDims[0] != size) return false;
+		if (newDims[1] != size) return false;
 		return true;
 	}
 }
