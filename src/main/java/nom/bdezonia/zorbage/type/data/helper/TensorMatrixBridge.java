@@ -26,7 +26,12 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.TensorMember;
+
+//TODO: support a subrange of tensor plane as a matrix
 
 /**
  * 
@@ -35,58 +40,111 @@ import nom.bdezonia.zorbage.type.algebra.MatrixMember;
  */
 public class TensorMatrixBridge<U> implements MatrixMember<U> {
 
+	private final Group<?,U> group;
+	private final U zero;
+	private final TensorMember<U> tensor;
+	private final IntegerIndex fixedDims;
+	private int rangingDimR;
+	private int rangingDimC;
+
+	public TensorMatrixBridge(Group<?,U> group, TensorMember<U> tensor) {
+		if (tensor.numDimensions() < 2)
+			throw new IllegalArgumentException();
+		this.group = group;
+		this.zero = group.construct();
+		this.tensor = tensor;
+		this.fixedDims = new IntegerIndex(tensor.numDimensions());
+		this.rangingDimC = 0;
+		this.rangingDimR = 0;
+	}
+	
+	public void setMatrix(IntegerIndex idx, int rDim, int cDim) {
+		if (idx.numDimensions() != fixedDims.numDimensions())
+			throw new IllegalArgumentException("mismatched dimensions");
+		if (rDim < 0 || rDim >= fixedDims.numDimensions())
+			throw new IllegalArgumentException("row dim out of range");
+		if (cDim < 0 || cDim >= fixedDims.numDimensions())
+			throw new IllegalArgumentException("col dim out of range");
+		if (rDim == cDim)
+			throw new IllegalArgumentException("cannot specify same dim twice");
+		rangingDimR = rDim;
+		rangingDimC = cDim;
+		for (int i = 0; i < idx.numDimensions(); i++)
+			fixedDims.set(i, idx.get(i));
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension exception");
+		if (d == 0) return cols();
+		if (d == 1) return rows();
+		return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public long rows() {
-		// TODO Auto-generated method stub
-		return 0;
+		return tensor.dimension(rangingDimR);
 	}
 
 	@Override
 	public long cols() {
-		// TODO Auto-generated method stub
-		return 0;
+		return tensor.dimension(rangingDimC);
 	}
 
 	@Override
 	public boolean alloc(long rows, long cols) {
-		// TODO Auto-generated method stub
-		return false;
+		if (rows == rows() && cols == cols())
+			return false;
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long rows, long cols) {
-		// TODO Auto-generated method stub
-		
+		if (rows == rows() && cols == cols()) {
+			for (long r = 0; r < rows; r++) {
+				for (long c = 0; c < cols; c++) {
+					setV(r,c,zero);
+				}
+			}
+		}
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long rows, long cols) {
-		// TODO Auto-generated method stub
-		
+		if (rows != rows() && cols != cols())
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(long r, long c, U value) {
-		// TODO Auto-generated method stub
-		
+		if (r < 0 || r >= rows() || c < 0 || c >= cols())
+			group.assign(zero, value);
+		else {
+			fixedDims.set(rangingDimR, r);
+			fixedDims.set(rangingDimC, c);
+			tensor.v(fixedDims, value);
+		}
 	}
 
 	@Override
 	public void setV(long r, long c, U value) {
-		// TODO Auto-generated method stub
-		
+		if (r < 0 || r >= rows() || c < 0 || c >= cols()) {
+			if (group.isNotEqual(zero, value))
+				throw new IllegalArgumentException("out of bounds nonzero write");
+		}
+		else {
+			fixedDims.set(rangingDimR, r);
+			fixedDims.set(rangingDimC, c);
+			tensor.setV(fixedDims, value);
+		}
 	}
 
 }

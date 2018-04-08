@@ -26,7 +26,12 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.TensorMember;
+
+// TODO: support a subrange of tensor column as an rmodule
 
 /**
  * 
@@ -35,52 +40,92 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
  */
 public class TensorRModuleBridge<U> implements RModuleMember<U> {
 
+	private final Group<?,U> group;
+	private final U zero;
+	private final TensorMember<U> tensor;
+	private final IntegerIndex fixedDims;
+	private int rangingDim;
+
+	public TensorRModuleBridge(Group<?,U> group, TensorMember<U> tensor) {
+		this.group = group;
+		this.zero = group.construct();
+		this.tensor = tensor;
+		this.fixedDims = new IntegerIndex(tensor.numDimensions());
+		this.rangingDim = 0;
+	}
+	
+	public void setRmodule(IntegerIndex idx, int dim) {
+		if (idx.numDimensions() != fixedDims.numDimensions())
+			throw new IllegalArgumentException("mismatched dimensions");
+		if (dim < 0 || dim >= fixedDims.numDimensions())
+			throw new IllegalArgumentException("dim out of range");
+		this.rangingDim = dim;
+		for (int i = 0; i < idx.numDimensions(); i++)
+			fixedDims.set(i, idx.get(i));
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension exception");
+		if (d == 0)
+			return length();
+		return 1;
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public long length() {
-		// TODO Auto-generated method stub
-		return 0;
+		return tensor.dimension(rangingDim);
 	}
 
 	@Override
 	public boolean alloc(long len) {
-		// TODO Auto-generated method stub
-		return false;
+		if (len == length())
+			return false;
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long len) {
-		// TODO Auto-generated method stub
-		
+		if (len == length()) {
+			for (long i = 0; i < len; i++)
+				setV(i, zero);
+		}
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long len) {
-		// TODO Auto-generated method stub
-		
+		if (len != length())
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(long i, U value) {
-		// TODO Auto-generated method stub
-		
+		if (i < 0 || i >= length())
+			group.assign(zero, value);
+		else {
+			fixedDims.set(rangingDim, i);
+			tensor.v(fixedDims, value);
+		}
 	}
 
 	@Override
 	public void setV(long i, U value) {
-		// TODO Auto-generated method stub
-		
+		if (i < 0 || i >= length()) {
+			if (group.isNotEqual(zero, value))
+				throw new IllegalArgumentException("out of bounds nonzero write");
+		}
+		else {
+			fixedDims.set(rangingDim, i);
+			tensor.setV(fixedDims, value);
+		}
 	}
 
 }
