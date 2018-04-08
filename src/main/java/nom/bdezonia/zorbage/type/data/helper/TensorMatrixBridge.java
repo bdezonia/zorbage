@@ -31,8 +31,6 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
-//TODO: support a subrange of tensor plane as a matrix
-
 /**
  * 
  * @author Barry DeZonia

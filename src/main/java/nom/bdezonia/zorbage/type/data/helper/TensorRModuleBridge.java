@@ -31,8 +31,6 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
-// TODO: support a subrange of tensor column as an rmodule
-
 /**
  * 
  * @author Barry DeZonia
