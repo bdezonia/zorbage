@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.helper;
 
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
 /**
@@ -37,46 +39,86 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class MatrixTensorBridge<U> implements TensorMember<U> {
 
+	private final MatrixMember<U> mat;
+	private final Group<?,U> group;
+	private final U zero;
+	
+	public MatrixTensorBridge(Group<?,U> group, MatrixMember<U> mat) {
+		this.mat = mat;
+		this.group = group;
+		this.zero = group.construct();
+	}
+	
 	@Override
 	public long dimension(int d) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mat.dimension(d);
 	}
 
 	@Override
 	public int numDimensions() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public boolean alloc(long[] dims) {
-		// TODO Auto-generated method stub
-		return false;
+		if (dimsCompatible(dims)) {
+			return false;
+		}
+		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long[] dims) {
-		// TODO Auto-generated method stub
-		
+		if (dimsCompatible(dims)) {
+			for (long r = 0; r < mat.rows(); r++) {
+				for (long c = 0; c < mat.cols(); c++) {
+					mat.setV(r, c, zero);
+				}
+			}
+		}
+		else
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long[] dims) {
-		// TODO Auto-generated method stub
-		
+		if (!dimsCompatible(dims))
+			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(IntegerIndex index, U value) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 2; i < index.numDimensions(); i++) {
+			if (index.get(i) != 0) {
+				group.assign(zero, value);
+				return;
+			}
+		}
+		long c = index.get(0);
+		long r = index.get(1);
+		mat.v(r, c, value);
 	}
 
 	@Override
 	public void setV(IntegerIndex index, U value) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 2; i < index.numDimensions(); i++) {
+			if (index.get(i) != 0) {
+				if (group.isNotEqual(zero, value))
+					throw new IllegalArgumentException("out of bounds nonzero write");
+			}
+		}
+		long c = index.get(0);
+		long r = index.get(1);
+		mat.setV(r, c, value);
 	}
 
+	private boolean dimsCompatible(long[] newDims) {
+		if (newDims.length < 2) return false;
+		for (int i = 2; i < newDims.length; i++) {
+			if (newDims[i] != 1) return false;
+		}
+		if (newDims[0] != mat.cols()) return false;
+		if (newDims[1] != mat.rows()) return false;
+		return true;
+	}
 }
