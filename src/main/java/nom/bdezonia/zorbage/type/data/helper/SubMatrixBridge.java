@@ -73,9 +73,11 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	
 	@Override
 	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension exception");
 		if (d == 0) return countCols;
 		if (d == 1) return countRows;
-		return mat.dimension(d);
+		return 1;
 	}
 
 	@Override

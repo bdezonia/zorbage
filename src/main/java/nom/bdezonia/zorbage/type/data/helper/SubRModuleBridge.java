@@ -60,8 +60,10 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 
 	@Override
 	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("negative dimension exception");
 		if (d == 0) return countElems;
-		return rmod.dimension(d);
+		return 1;
 	}
 
 	@Override
