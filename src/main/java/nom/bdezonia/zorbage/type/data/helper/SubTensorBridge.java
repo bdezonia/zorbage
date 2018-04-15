@@ -32,10 +32,6 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
-//TODO: support a subrange of tensor block as a tensor
-//  Not necessary for matrices and rmods because we have sub bridges for
-//  those. But the subtensor bridge will be only way to get smaller.
-
 /**
  * 
  * @author Barry DeZonia
@@ -46,8 +42,9 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	private final Group<?,U> group;
 	private final U zero;
 	private final TensorMember<U> tensor;
-	private IntegerIndex fixedDims;
+	private IntegerIndex index;
 	private int[] rangingDims;
+	private long dim;
 
 	public SubTensorBridge(Group<?,U> group, TensorMember<U> tensor) {
 		if (tensor.numDimensions() < 2)
@@ -55,26 +52,55 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		this.group = group;
 		this.zero = group.construct();
 		this.tensor = tensor;
-		this.fixedDims = new IntegerIndex(tensor.numDimensions());
+		this.index = new IntegerIndex(tensor.numDimensions());
+		this.rangingDims = new int[tensor.numDimensions()];
 		for (int i = 0; i < tensor.numDimensions(); i++) {
-			fixedDims.set(i, tensor.dimension(i));
+			this.rangingDims[i] = i;
 		}
-		this.rangingDims = new int[1];
+		this.dim = tensor.dimension(0);
 	}
 
-	public void setSubtensor(int[] rangingDims) {
-		if ((rangingDims.length < 1) || (rangingDims.length >= fixedDims.numDimensions()))
-			throw new IllegalArgumentException("subtensor is not a subset of parent tensor");
+	public void setSubrange(int rank, int dim, int[] rangingDims, long[] fixedDimValues) {
+		if (rank < 2 || rank > tensor.numDimensions())
+			throw new IllegalArgumentException("rank of subtensor outside legal range");
+		if (dim < 1 || dim > tensor.dimension(0))
+			throw new IllegalArgumentException("dimension of subtensor outside legal range");
+		if (rank != rangingDims.length)
+			throw new IllegalArgumentException("count of ranging dimensions does not match given rank");
+		if (rangingDims.length + fixedDimValues.length != tensor.numDimensions())
+			throw new IllegalArgumentException("combined dims are incompatible with given tensor");
 		for (int i = 0; i < rangingDims.length; i++) {
 			int v = rangingDims[i];
-			if (v < 0 || v >= fixedDims.numDimensions())
-				throw new IllegalArgumentException("subdimension out of bounds");
+			if (v < 0 || v >= tensor.numDimensions())
+				throw new IllegalArgumentException("");
 			for (int j = i+1; j < rangingDims.length; j++) {
 				if (rangingDims[j] == v)
-					throw new IllegalArgumentException("dim "+v+" specified more than once");
+					throw new IllegalArgumentException("repeated ranging dim not allowed");
+				if (rangingDims[j] < v)
+					throw new IllegalArgumentException("ranging dims must be specified as increasing values");
 			}
 		}
+		for (int i = 0; i < fixedDimValues.length; i++) {
+			long v = fixedDimValues[i];
+			if (v < 0 || v >= tensor.dimension(0))
+				throw new IllegalArgumentException("fixed dimensions out of range");
+		}
 		this.rangingDims = rangingDims.clone();
+		this.dim = dim;
+		int f = 0;
+		for (int i = 0; i < rangingDims.length; i++) {
+			int v = rangingDims[i];
+			while (f < v) {
+				index.set(f, fixedDimValues[f]);
+				f++;
+			}
+			index.set(f, 0);
+			f++;
+		}
+		for (int i = rangingDims[rangingDims.length-1]+1; i < tensor.numDimensions(); i++) {
+			index.set(i, fixedDimValues[f]);
+			f++;
+		}
 	}
 	
 	@Override
@@ -83,7 +109,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("negative dimension exception");
 		if (d >= rangingDims.length)
 			throw new IllegalArgumentException("dimension out of bounds exception");
-		return fixedDims.get(rangingDims[d]);
+		return dim;
 	}
 
 	@Override
@@ -125,12 +151,12 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
-			fixedDims.set(rangingDims[i], index.get(i));
+			index.set(rangingDims[i], index.get(i));
 		}
 		if (oob())
 			group.assign(zero, value);
 		else
-			tensor.v(fixedDims, value);
+			tensor.v(index, value);
 	}
 
 	@Override
@@ -138,32 +164,29 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
-			fixedDims.set(rangingDims[i], index.get(i));
+			index.set(rangingDims[i], index.get(i));
 		}
 		if (oob()) {
 			if (group.isNotEqual(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else
-			tensor.setV(fixedDims, value);
+			tensor.setV(index, value);
 	}
 
 	private boolean dimsCompatible(long[] newDims) {
-		if (newDims.length != rangingDims.length) return false;
+		if (newDims.length != rangingDims.length)
+			return false;
 		for (int i = 0; i < rangingDims.length; i++) {
-			if (newDims[i] != fixedDims.get(rangingDims[i]))
-				return false;
-		}
-		for (int i = rangingDims.length; i < newDims.length; i++) {
-			if (newDims[i] != 1)
+			if (newDims[i] != dim)
 				return false;
 		}
 		return true;
 	}
 	
 	private boolean oob() {
-		for (int i = 0; i < fixedDims.numDimensions(); i++) {
-			long v = fixedDims.get(i);
+		for (int i = 0; i < index.numDimensions(); i++) {
+			long v = index.get(i);
 			if (v < 0 || v >= tensor.dimension(i))
 				return true;
 		}
