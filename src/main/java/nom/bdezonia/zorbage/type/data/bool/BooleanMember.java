@@ -164,12 +164,12 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+	public void getRep(TensorOctonionRepresentation rep) {
 		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(v()?1:0)));
 	}
 
 	@Override
-	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+	public void setTensor(TensorOctonionRepresentation rep) {
 		BigDecimal d = rep.getValue().r();
 		v = !d.equals(BigDecimal.ZERO);
 	}

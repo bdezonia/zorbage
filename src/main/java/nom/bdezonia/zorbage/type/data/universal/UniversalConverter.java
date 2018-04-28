@@ -42,7 +42,7 @@ public class UniversalConverter {
 	public static <U extends UniversalRepresentation, V extends UniversalRepresentation>
 		void convert(TensorOctonionRepresentation rep, U a, V b)
 	{
-		a.setTensorFromSelf(rep);
-		b.setSelfFromTensor(rep);
+		a.getRep(rep);
+		b.setTensor(rep);
 	}
 }

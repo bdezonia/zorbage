@@ -175,7 +175,7 @@ public final class ComplexFloat64MatrixMember
 	}
 	
 	@Override
-	public void setTensorFromSelf(TensorOctonionRepresentation rep) {
+	public void getRep(TensorOctonionRepresentation rep) {
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
 		for (long i = 0; i < storage.size(); i++) {
@@ -189,7 +189,7 @@ public final class ComplexFloat64MatrixMember
 	}
 
 	@Override
-	public void setSelfFromTensor(TensorOctonionRepresentation rep) {
+	public void setTensor(TensorOctonionRepresentation rep) {
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
