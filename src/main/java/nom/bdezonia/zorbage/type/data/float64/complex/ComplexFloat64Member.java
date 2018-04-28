@@ -105,11 +105,11 @@ public final class ComplexFloat64Member
     @Override
 	public String toString() {
     	StringBuilder builder = new StringBuilder();
-    	builder.append('(');
+    	builder.append('{');
     	builder.append(r);
     	builder.append(',');
     	builder.append(i);
-    	builder.append(')');
+    	builder.append('}');
     	return builder.toString();
     }
 

@@ -162,7 +162,7 @@ public final class OctonionFloat64Member
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append('(');
+		builder.append('{');
 		builder.append(r);
 		builder.append(',');
 		builder.append(i);
@@ -178,7 +178,7 @@ public final class OctonionFloat64Member
 		builder.append(j0);
 		builder.append(',');
 		builder.append(k0);
-		builder.append(')');
+		builder.append('}');
 		return builder.toString();
 	}
 

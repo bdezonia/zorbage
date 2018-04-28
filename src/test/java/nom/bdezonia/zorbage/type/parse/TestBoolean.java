@@ -61,9 +61,9 @@ public class TestBoolean {
 		assertTrue(b.v());
 		b = new BooleanMember("1.2e+05");
 		assertTrue(b.v());
-		b = new BooleanMember("(1,0)");
+		b = new BooleanMember("{1,0}");
 		assertTrue(b.v());
-		b = new BooleanMember("(0,1)");
+		b = new BooleanMember("{0,1}");
 		assertFalse(b.v());
 		b = new BooleanMember("[0]");
 		assertFalse(b.v());

@@ -125,7 +125,7 @@ public final class QuaternionFloat64Member
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append('(');
+		builder.append('{');
 		builder.append(r);
 		builder.append(',');
 		builder.append(i);
@@ -133,7 +133,7 @@ public final class QuaternionFloat64Member
 		builder.append(j);
 		builder.append(',');
 		builder.append(k);
-		builder.append(')');
+		builder.append('}');
 		return builder.toString();
 	}
 

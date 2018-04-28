@@ -136,9 +136,9 @@ public class TensorStringRepresentation {
 				if (unmatchedBrackets < 0)
 					throw new IllegalArgumentException("unexpected ] bracket in number parsing at index " + i + " of string " + Arrays.toString(chars.toArray()));
 			}
-			else if (ch == '(')
+			else if (ch == '{')
 				inOct = true;
-			else if (ch == ')')
+			else if (ch == '}')
 				inOct = false;
 			else if (ch == ',' && inOct == false)
 				innermostDim++;
@@ -196,9 +196,9 @@ public class TensorStringRepresentation {
 	
 	private int octonion(List<Character> input, int ptr) {
 		BigDecimal[] vals = new BigDecimal[8];
-		if (input.get(ptr) == '(') {
+		if (input.get(ptr) == '{') {
 			int count = 0;
-			while ((ptr+1) < input.size() && input.get(ptr+1) != ')') {
+			while ((ptr+1) < input.size() && input.get(ptr+1) != '}') {
 				ptr = number(input, ptr+1);
 				if (count < 8) {
 					vals[count++] = tmp;
@@ -206,7 +206,7 @@ public class TensorStringRepresentation {
 				//if (input.get(ptr) == ',')
 				//	ptr++;
 			}
-			ptr = ptr + 1; // skip ')'
+			ptr = ptr + 1; // skip '}'
 		}
 		else {
 			ptr = number(input, ptr);
@@ -225,7 +225,7 @@ public class TensorStringRepresentation {
 			// could append non-legal chars but let BigDecimal constructor handle it
 			// hopefully this allows +/- Inf and NaN
 			// (NOPE: BigD can't handle these but does support sci notation)
-			if ((ch == ')') || (ch == ',') || (ch == ']')) {
+			if ((ch == '}') || (ch == ',') || (ch == ']')) {
 				ptr--;
 				break;
 			}
