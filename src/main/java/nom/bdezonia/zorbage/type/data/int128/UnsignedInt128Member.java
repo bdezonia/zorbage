@@ -169,12 +169,12 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void getRep(TensorOctonionRepresentation rep) {
+	public void getValue(TensorOctonionRepresentation rep) {
 		rep.setValue(new OctonionRepresentation(new BigDecimal(v())));
 	}
 
 	@Override
-	public void setTensor(TensorOctonionRepresentation rep) {
+	public void setValue(TensorOctonionRepresentation rep) {
 		setV(rep.getValue().r().toBigInteger());
 	}
 
