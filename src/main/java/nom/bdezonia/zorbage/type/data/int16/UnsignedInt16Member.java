@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
-import nom.bdezonia.zorbage.type.parse.TensorStringRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 
 /**
