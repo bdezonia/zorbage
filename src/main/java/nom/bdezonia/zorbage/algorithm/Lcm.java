@@ -56,12 +56,16 @@ public class Lcm {
 	public static <T extends Group<T,U> & AbsoluteValue<U> & ModularDivision<U> & Multiplication<U> & Ordered<U>, U>
 		void compute(T group, U a, U b, U result)
 	{
-		U n = group.construct();
-		U d = group.construct();
-		group.multiply(a, b, n); // TODO: overflow prone?
-		group.abs(n, n);
-		Gcd.compute(group, a, b, d);
-		group.div(n, d, result);
+		U gcd = group.construct();
+		U a1 = group.construct();
+		U b1 = group.construct();
+		Gcd.compute(group, a, b, gcd);
+		group.div(a, gcd, a1);
+		group.div(b, gcd, b1);
+		group.abs(a1, a1);
+		group.abs(b1, b1);
+		group.multiply(a1, b1, result);
+		group.multiply(result, gcd, result);
 	}
 
 }
