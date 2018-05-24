@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.type.storage.sparse;
  * @author Barry DeZonia
  *
  */
-public class RedBlackTree {
+public class RedBlackTree<T> {
 
 	// Code adapted from Cormen, Leiserson, Rivest, & Stein, 3rd Edition
 
@@ -43,7 +43,7 @@ public class RedBlackTree {
 		Node left;
 		Node right;
 		long key;
-		Object value;
+		T value;
 	}
 
 	Node root;
@@ -56,7 +56,7 @@ public class RedBlackTree {
 		nil.left = nil;
 		nil.right = nil;
 		nil.key = Long.MIN_VALUE;
-		nil.value = new Object();
+		nil.value = null;
 		return nil;
 	}
 	

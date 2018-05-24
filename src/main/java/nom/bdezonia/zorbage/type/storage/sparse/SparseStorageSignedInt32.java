@@ -31,7 +31,6 @@ import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
-import nom.bdezonia.zorbage.type.storage.sparse.RedBlackTree.Node;
 
 // NOTE: this class can't be thread friendly. One thread can insert a value
 // while another thread is searching structure. Doing so would cause probs
@@ -45,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.sparse.RedBlackTree.Node;
 public class SparseStorageSignedInt32<U extends IntCoder<U>>
 	implements IndexedDataSource<SparseStorageSignedInt32<U>, U>
 {
-	private final RedBlackTree data;
+	private final RedBlackTree<int[]> data;
 	private final long numElements;
 	private final int[] zero, tmp;
 	private final U type;
@@ -55,18 +54,18 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 		this.type = type;
 		this.zero = new int[type.intCount()];
 		this.tmp = new int[type.intCount()];
-		this.data = new RedBlackTree();
+		this.data = new RedBlackTree<int[]>();
 	}
 	
 	@Override
 	public SparseStorageSignedInt32<U> duplicate() {
 		SparseStorageSignedInt32<U> list = new SparseStorageSignedInt32<U>(numElements, type);
-		Stack<Node> nodes = new Stack<Node>();
+		Stack<RedBlackTree<int[]>.Node> nodes = new Stack<RedBlackTree<int[]>.Node>();
 		if (data.root != data.nil) {
 			nodes.push(data.root);
 			while (!nodes.isEmpty()) {
-				Node n = nodes.pop();
-				type.toValue((int[])n.value, 0);
+				RedBlackTree<int[]>.Node n = nodes.pop();
+				type.toValue(n.value, 0);
 				list.set(n.key, type);
 				if (n.left != data.nil) nodes.push(n.left);
 				if (n.right != data.nil) nodes.push(n.right);
@@ -80,14 +79,14 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
 		value.toArray(tmp, 0);
-		Node node = data.findElement(index);
+		RedBlackTree<int[]>.Node node = data.findElement(index);
 		if (Arrays.equals(tmp, zero)) {
 			if (node != data.nil)
 				data.delete(node);
 		}
 		else { // nonzero
 			if (node == data.nil) {
-				Node n = data.new Node();
+				RedBlackTree<int[]>.Node n = data.new Node();
 				n.key = index;
 				n.p = data.nil;
 				n.left = data.nil;
@@ -95,11 +94,11 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 				n.value = new int[tmp.length];
 				// n.color =? What?
 				for (int i = 0; i < tmp.length; i++)
-					((int[])n.value)[i] = tmp[i];
+					n.value[i] = tmp[i];
 				data.insert(n);
 			}
 			else {
-				value.toArray((int[])node.value, 0);
+				value.toArray(node.value, 0);
 			}
 		}
 	}
@@ -108,12 +107,12 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 	public void get(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		Node node = data.findElement(index);
+		RedBlackTree<int[]>.Node node = data.findElement(index);
 		if (node == data.nil) {
 			value.toValue(zero, 0);
 		}
 		else { // nonzero
-			value.toValue((int[])node.value, 0);
+			value.toValue(node.value, 0);
 		}
 	}
 

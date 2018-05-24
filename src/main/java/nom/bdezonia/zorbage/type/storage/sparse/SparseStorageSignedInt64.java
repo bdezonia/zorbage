@@ -31,7 +31,6 @@ import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
-import nom.bdezonia.zorbage.type.storage.sparse.RedBlackTree.Node;
 
 // NOTE: this class can't be thread friendly. One thread can insert a value
 // while another thread is searching structure. Doing so would cause probs
@@ -45,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.sparse.RedBlackTree.Node;
 public class SparseStorageSignedInt64<U extends LongCoder<U>>
 	implements IndexedDataSource<SparseStorageSignedInt64<U>, U>
 {
-	private final RedBlackTree data;
+	private final RedBlackTree<long[]> data;
 	private final long numElements;
 	private final long[] zero, tmp;
 	private final U type;
@@ -55,18 +54,18 @@ public class SparseStorageSignedInt64<U extends LongCoder<U>>
 		this.type = type;
 		this.zero = new long[type.longCount()];
 		this.tmp = new long[type.longCount()];
-		this.data = new RedBlackTree();
+		this.data = new RedBlackTree<long[]>();
 	}
 	
 	@Override
 	public SparseStorageSignedInt64<U> duplicate() {
 		SparseStorageSignedInt64<U> list = new SparseStorageSignedInt64<U>(numElements, type);
-		Stack<Node> nodes = new Stack<Node>();
+		Stack<RedBlackTree<long[]>.Node> nodes = new Stack<RedBlackTree<long[]>.Node>();
 		if (data.root != data.nil) {
 			nodes.push(data.root);
 			while (!nodes.isEmpty()) {
-				Node n = nodes.pop();
-				type.toValue((long[])n.value, 0);
+				RedBlackTree<long[]>.Node n = nodes.pop();
+				type.toValue(n.value, 0);
 				list.set(n.key, type);
 				if (n.left != data.nil) nodes.push(n.left);
 				if (n.right != data.nil) nodes.push(n.right);
@@ -80,14 +79,14 @@ public class SparseStorageSignedInt64<U extends LongCoder<U>>
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
 		value.toArray(tmp, 0);
-		Node node = data.findElement(index);
+		RedBlackTree<long[]>.Node node = data.findElement(index);
 		if (Arrays.equals(tmp, zero)) {
 			if (node != data.nil)
 				data.delete(node);
 		}
 		else { // nonzero
 			if (node == data.nil) {
-				Node n = data.new Node();
+				RedBlackTree<long[]>.Node n = data.new Node();
 				n.key = index;
 				n.p = data.nil;
 				n.left = data.nil;
@@ -95,11 +94,11 @@ public class SparseStorageSignedInt64<U extends LongCoder<U>>
 				n.value = new long[tmp.length];
 				// n.color =? What?
 				for (int i = 0; i < tmp.length; i++)
-					((long[])n.value)[i] = tmp[i];
+					n.value[i] = tmp[i];
 				data.insert(n);
 			}
 			else {
-				value.toArray((long[])node.value, 0);
+				value.toArray(node.value, 0);
 			}
 		}
 	}
@@ -108,12 +107,12 @@ public class SparseStorageSignedInt64<U extends LongCoder<U>>
 	public void get(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		Node node = data.findElement(index);
+		RedBlackTree<long[]>.Node node = data.findElement(index);
 		if (node == data.nil) {
 			value.toValue(zero, 0);
 		}
 		else { // nonzero
-			value.toValue((long[])node.value, 0);
+			value.toValue(node.value, 0);
 		}
 	}
 
