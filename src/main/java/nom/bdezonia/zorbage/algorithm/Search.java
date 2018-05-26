@@ -69,8 +69,8 @@ public class Search {
 		U element = group.construct();
 		final long max = elements.size();
 		for (long i = 0; i < count; i++) {
-			a.get(start+i, tmpA);
 			for (long j = 0; j < max; j++) {
+				a.get(start+i+j, tmpA);
 				elements.get(j, element);
 				if (group.isNotEqual(tmpA, element))
 					break;
@@ -113,8 +113,8 @@ public class Search {
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, element);
 		final long max = elements.size();
 		for (long i = 0; i < count; i++) {
-			a.get(start+i, tmpA);
 			for (long j = 0; j < max; j++) {
+				a.get(start+i+j, tmpA);
 				elements.get(j, element);
 				if (!cond.isTrue(tuple))
 					break;
