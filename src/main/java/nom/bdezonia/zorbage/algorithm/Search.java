@@ -33,6 +33,8 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 // TODO - use boyer moore algorithm
 
+// TODO - does SearchN need to be updated like this Search class was?
+
 /**
  * 
  * @author Barry DeZonia
@@ -68,7 +70,7 @@ public class Search {
 		U tmpA = group.construct();
 		U element = group.construct();
 		final long max = elements.size();
-		for (long i = 0; i < count; i++) {
+		for (long i = 0; i < count - max; i++) {
 			for (long j = 0; j < max; j++) {
 				a.get(start+i+j, tmpA);
 				elements.get(j, element);
@@ -112,7 +114,7 @@ public class Search {
 		U element = group.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, element);
 		final long max = elements.size();
-		for (long i = 0; i < count; i++) {
+		for (long i = 0; i < count - max; i++) {
 			for (long j = 0; j < max; j++) {
 				a.get(start+i+j, tmpA);
 				elements.get(j, element);
