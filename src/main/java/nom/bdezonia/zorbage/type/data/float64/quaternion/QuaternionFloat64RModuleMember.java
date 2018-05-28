@@ -246,14 +246,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v);
-		else if (component == 1)
-			tmp.setI(v);
-		else if (component == 2)
-			tmp.setJ(v);
-		else
-			tmp.setK(v);
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v);
+			else // component == 1
+				tmp.setI(v);
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v);
+			else // component == 3
+				tmp.setK(v);
+		}
 		setV(i, tmp);
 	}
 
@@ -262,14 +268,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v);
-		else if (component == 1)
-			tmp.setI(v);
-		else if (component == 2)
-			tmp.setJ(v);
-		else
-			tmp.setK(v);
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v);
+			else // component == 1
+				tmp.setI(v);
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v);
+			else // component == 3
+				tmp.setK(v);
+		}
 		setV(i, tmp);
 	}
 
@@ -278,14 +290,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v);
-		else if (component == 1)
-			tmp.setI(v);
-		else if (component == 2)
-			tmp.setJ(v);
-		else
-			tmp.setK(v);
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v);
+			else // component == 1
+				tmp.setI(v);
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v);
+			else // component == 3
+				tmp.setK(v);
+		}
 		setV(i, tmp);
 	}
 
@@ -294,14 +312,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v);
-		else if (component == 1)
-			tmp.setI(v);
-		else if (component == 2)
-			tmp.setJ(v);
-		else
-			tmp.setK(v);
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v);
+			else // component == 1
+				tmp.setI(v);
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v);
+			else // component == 3
+				tmp.setK(v);
+		}
 		setV(i, tmp);
 	}
 
@@ -310,14 +334,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v);
-		else if (component == 1)
-			tmp.setI(v);
-		else if (component == 2)
-			tmp.setJ(v);
-		else
-			tmp.setK(v);
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v);
+			else // component == 1
+				tmp.setI(v);
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v);
+			else // component == 3
+				tmp.setK(v);
+		}
 		setV(i, tmp);
 	}
 
@@ -326,14 +356,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v);
-		else if (component == 1)
-			tmp.setI(v);
-		else if (component == 2)
-			tmp.setJ(v);
-		else
-			tmp.setK(v);
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v);
+			else // component == 1
+				tmp.setI(v);
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v);
+			else // component == 3
+				tmp.setK(v);
+		}
 		setV(i, tmp);
 	}
 
@@ -342,14 +378,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v.doubleValue());
-		else if (component == 1)
-			tmp.setI(v.doubleValue());
-		else if (component == 2)
-			tmp.setJ(v.doubleValue());
-		else
-			tmp.setK(v.doubleValue());
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v.doubleValue());
+			else // component == 1
+				tmp.setI(v.doubleValue());
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v.doubleValue());
+			else // component == 3
+				tmp.setK(v.doubleValue());
+		}
 		setV(i, tmp);
 	}
 
@@ -358,14 +400,20 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
 		v(i, tmp);
-		if (component == 0)
-			tmp.setR(v.doubleValue());
-		else if (component == 1)
-			tmp.setI(v.doubleValue());
-		else if (component == 2)
-			tmp.setJ(v.doubleValue());
-		else
-			tmp.setK(v.doubleValue());
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				tmp.setR(v.doubleValue());
+			else // component == 1
+				tmp.setI(v.doubleValue());
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				tmp.setJ(v.doubleValue());
+			else // component == 3
+				tmp.setK(v.doubleValue());
+		}
 		setV(i, tmp);
 	}
 
@@ -398,14 +446,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v);
-			else if (component == 1)
-				tmp.setI(v);
-			else if (component == 2)
-				tmp.setJ(v);
-			else
-				tmp.setK(v);
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v);
+				else // component == 1
+					tmp.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v);
+				else // component == 3
+					tmp.setK(v);
+			}
 			setV(i, tmp);
 		}
 	}
@@ -439,14 +493,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v);
-			else if (component == 1)
-				tmp.setI(v);
-			else if (component == 2)
-				tmp.setJ(v);
-			else
-				tmp.setK(v);
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v);
+				else // component == 1
+					tmp.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v);
+				else // component == 3
+					tmp.setK(v);
+			}
 			setV(i, tmp);
 		}
 	}
@@ -480,14 +540,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v);
-			else if (component == 1)
-				tmp.setI(v);
-			else if (component == 2)
-				tmp.setJ(v);
-			else
-				tmp.setK(v);
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v);
+				else // component == 1
+					tmp.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v);
+				else // component == 3
+					tmp.setK(v);
+			}
 			setV(i, tmp);
 		}
 	}
@@ -521,14 +587,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v);
-			else if (component == 1)
-				tmp.setI(v);
-			else if (component == 2)
-				tmp.setJ(v);
-			else
-				tmp.setK(v);
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v);
+				else // component == 1
+					tmp.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v);
+				else // component == 3
+					tmp.setK(v);
+			}
 			setV(i, tmp);
 		}
 	}
@@ -562,14 +634,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v);
-			else if (component == 1)
-				tmp.setI(v);
-			else if (component == 2)
-				tmp.setJ(v);
-			else
-				tmp.setK(v);
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v);
+				else // component == 1
+					tmp.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v);
+				else // component == 3
+					tmp.setK(v);
+			}
 			setV(i, tmp);
 		}
 	}
@@ -603,14 +681,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v);
-			else if (component == 1)
-				tmp.setI(v);
-			else if (component == 2)
-				tmp.setJ(v);
-			else
-				tmp.setK(v);
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v);
+				else // component == 1
+					tmp.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v);
+				else // component == 3
+					tmp.setK(v);
+			}
 			setV(i, tmp);
 		}
 	}
@@ -644,14 +728,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v.doubleValue());
-			else if (component == 1)
-				tmp.setI(v.doubleValue());
-			else if (component == 2)
-				tmp.setJ(v.doubleValue());
-			else
-				tmp.setK(v.doubleValue());
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v.doubleValue());
+				else // component == 1
+					tmp.setI(v.doubleValue());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v.doubleValue());
+				else // component == 3
+					tmp.setK(v.doubleValue());
+			}
 			setV(i, tmp);
 		}
 	}
@@ -685,14 +775,20 @@ public final class QuaternionFloat64RModuleMember
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
 			v(i, tmp);
-			if (component == 0)
-				tmp.setR(v.doubleValue());
-			else if (component == 1)
-				tmp.setI(v.doubleValue());
-			else if (component == 2)
-				tmp.setJ(v.doubleValue());
-			else
-				tmp.setK(v.doubleValue());
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					tmp.setR(v.doubleValue());
+				else // component == 1
+					tmp.setI(v.doubleValue());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					tmp.setJ(v.doubleValue());
+				else // component == 3
+					tmp.setK(v.doubleValue());
+			}
 			setV(i, tmp);
 		}
 	}
@@ -705,10 +801,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return (byte) tmp.r();
-		if (component == 1) return (byte) tmp.i();
-		if (component == 2) return (byte) tmp.j();
-		return (byte) tmp.k();
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return (byte) tmp.r();
+			else // component == 1
+				return (byte) tmp.i();
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return (byte) tmp.j();
+			else // component == 3
+				return (byte) tmp.k();
+		}
 	}
 
 	@Override
@@ -719,10 +825,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return (short) tmp.r();
-		if (component == 1) return (short) tmp.i();
-		if (component == 2) return (short) tmp.j();
-		return (short) tmp.k();
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return (short) tmp.r();
+			else // component == 1
+				return (short) tmp.i();
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return (short) tmp.j();
+			else // component == 3
+				return (short) tmp.k();
+		}
 	}
 
 	@Override
@@ -733,10 +849,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return (int) tmp.r();
-		if (component == 1) return (int) tmp.i();
-		if (component == 2) return (int) tmp.j();
-		return (int) tmp.k();
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return (int) tmp.r();
+			else // component == 1
+				return (int) tmp.i();
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return (int) tmp.j();
+			else // component == 3
+				return (int) tmp.k();
+		}
 	}
 
 	@Override
@@ -747,10 +873,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return (long) tmp.r();
-		if (component == 1) return (long) tmp.i();
-		if (component == 2) return (long) tmp.j();
-		return (long) tmp.k();
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return (long) tmp.r();
+			else // component == 1
+				return (long) tmp.i();
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return (long) tmp.j();
+			else // component == 3
+				return (long) tmp.k();
+		}
 	}
 
 	@Override
@@ -761,10 +897,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return (float) tmp.r();
-		if (component == 1) return (float) tmp.i();
-		if (component == 2) return (float) tmp.j();
-		return (float) tmp.k();
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return (float) tmp.r();
+			else // component == 1
+				return (float) tmp.i();
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return (float) tmp.j();
+			else // component == 3
+				return (float) tmp.k();
+		}
 	}
 
 	@Override
@@ -775,10 +921,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return tmp.r();
-		if (component == 1) return tmp.i();
-		if (component == 2) return tmp.j();
-		return tmp.k();
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return tmp.r();
+			else // component == 1
+				return tmp.i();
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return tmp.j();
+			else // component == 3
+				return tmp.k();
+		}
 	}
 
 	@Override
@@ -789,10 +945,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return BigInteger.ZERO;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return BigInteger.valueOf((long) tmp.r());
-		if (component == 1) return BigInteger.valueOf((long) tmp.i());
-		if (component == 2) return BigInteger.valueOf((long) tmp.j());
-		return BigInteger.valueOf((long) tmp.k());
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return BigInteger.valueOf((long) tmp.r());
+			else // component == 1
+				return BigInteger.valueOf((long) tmp.i());
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return BigInteger.valueOf((long) tmp.j());
+			else // component == 3
+				return BigInteger.valueOf((long) tmp.k());
+		}
 	}
 
 	@Override
@@ -803,10 +969,20 @@ public final class QuaternionFloat64RModuleMember
 		if (component > 3) return BigDecimal.ZERO;
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		v(index.get(0), tmp);
-		if (component == 0) return BigDecimal.valueOf(tmp.r());
-		if (component == 1) return BigDecimal.valueOf(tmp.i());
-		if (component == 2) return BigDecimal.valueOf(tmp.j());
-		return BigDecimal.valueOf(tmp.k());
+		if (component < 2) {
+			// 0 <= component <= 1
+			if (component == 0)
+				return BigDecimal.valueOf(tmp.r());
+			else // component == 1
+				return BigDecimal.valueOf(tmp.i());
+		}
+		else {
+			// 2 <= component <= 3
+			if (component == 2)
+				return BigDecimal.valueOf(tmp.j());
+			else // component == 3
+				return BigDecimal.valueOf(tmp.k());
+		}
 	}
 
 	@Override
@@ -835,10 +1011,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return (byte) tmp.r();
-			if (component == 1) return (byte) tmp.i();
-			if (component == 2) return (byte) tmp.j();
-			return (byte) tmp.k();
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (byte) tmp.r();
+				else // component == 1
+					return (byte) tmp.i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (byte) tmp.j();
+				else // component == 3
+					return (byte) tmp.k();
+			}
 		}
 	}
 
@@ -868,10 +1054,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return (short) tmp.r();
-			if (component == 1) return (short) tmp.i();
-			if (component == 2) return (short) tmp.j();
-			return (short) tmp.k();
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (short) tmp.r();
+				else // component == 1
+					return (short) tmp.i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (short) tmp.j();
+				else // component == 3
+					return (short) tmp.k();
+			}
 		}
 	}
 
@@ -901,10 +1097,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return (int) tmp.r();
-			if (component == 1) return (int) tmp.i();
-			if (component == 2) return (int) tmp.j();
-			return (int) tmp.k();
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (int) tmp.r();
+				else // component == 1
+					return (int) tmp.i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (int) tmp.j();
+				else // component == 3
+					return (int) tmp.k();
+			}
 		}
 	}
 
@@ -934,10 +1140,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return (long) tmp.r();
-			if (component == 1) return (long) tmp.i();
-			if (component == 2) return (long) tmp.j();
-			return (long) tmp.k();
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (long) tmp.r();
+				else // component == 1
+					return (long) tmp.i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (long) tmp.j();
+				else // component == 3
+					return (long) tmp.k();
+			}
 		}
 	}
 
@@ -967,10 +1183,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return (float) tmp.r();
-			if (component == 1) return (float) tmp.i();
-			if (component == 2) return (float) tmp.j();
-			return (float) tmp.k();
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (float) tmp.r();
+				else // component == 1
+					return (float) tmp.i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (float) tmp.j();
+				else // component == 3
+					return (float) tmp.k();
+			}
 		}
 	}
 
@@ -1000,10 +1226,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return tmp.r();
-			if (component == 1) return tmp.i();
-			if (component == 2) return tmp.j();
-			return tmp.k();
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return tmp.r();
+				else // component == 1
+					return tmp.i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return tmp.j();
+				else // component == 3
+					return tmp.k();
+			}
 		}
 	}
 
@@ -1033,10 +1269,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return BigInteger.valueOf((long) tmp.r());
-			if (component == 1) return BigInteger.valueOf((long) tmp.i());
-			if (component == 2) return BigInteger.valueOf((long) tmp.j());
-			return BigInteger.valueOf((long) tmp.k());
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return BigInteger.valueOf((long) tmp.r());
+				else // component == 1
+					return BigInteger.valueOf((long) tmp.i());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return BigInteger.valueOf((long) tmp.j());
+				else // component == 3
+					return BigInteger.valueOf((long) tmp.k());
+			}
 		}
 	}
 
@@ -1066,10 +1312,20 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			v(index.get(0), tmp);
-			if (component == 0) return BigDecimal.valueOf(tmp.r());
-			if (component == 1) return BigDecimal.valueOf(tmp.i());
-			if (component == 2) return BigDecimal.valueOf(tmp.j());
-			return BigDecimal.valueOf(tmp.k());
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return BigDecimal.valueOf(tmp.r());
+				else // component == 1
+					return BigDecimal.valueOf(tmp.i());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return BigDecimal.valueOf(tmp.j());
+				else // component == 3
+					return BigDecimal.valueOf(tmp.k());
+			}
 		}
 	}
 
