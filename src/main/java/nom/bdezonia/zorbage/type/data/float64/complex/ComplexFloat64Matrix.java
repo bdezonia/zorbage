@@ -62,6 +62,7 @@ public class ComplexFloat64Matrix
 		long rows = a.rows();
 		long cols = b.cols();
 		long common = a.cols(); 
+		c.alloc(rows, cols);
 		ComplexFloat64Member sum = new ComplexFloat64Member();
 		ComplexFloat64Member atmp = new ComplexFloat64Member();
 		ComplexFloat64Member btmp = new ComplexFloat64Member();

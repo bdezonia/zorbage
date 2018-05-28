@@ -61,6 +61,7 @@ public class QuaternionFloat64Matrix
 		long rows = a.rows();
 		long cols = b.cols();
 		long common = a.cols(); 
+		c.alloc(rows, cols);
 		QuaternionFloat64Member sum = new QuaternionFloat64Member();
 		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
 		QuaternionFloat64Member btmp = new QuaternionFloat64Member();

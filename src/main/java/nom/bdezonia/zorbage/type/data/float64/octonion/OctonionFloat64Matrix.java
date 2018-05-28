@@ -61,6 +61,7 @@ public class OctonionFloat64Matrix
 		long rows = a.rows();
 		long cols = b.cols();
 		long common = a.cols(); 
+		c.alloc(rows, cols);
 		OctonionFloat64Member sum = new OctonionFloat64Member();
 		OctonionFloat64Member atmp = new OctonionFloat64Member();
 		OctonionFloat64Member btmp = new OctonionFloat64Member();

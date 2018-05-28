@@ -60,6 +60,7 @@ public class Float64Matrix
 		long rows = a.rows();
 		long cols = b.cols();
 		long common = a.cols(); 
+		c.alloc(rows, cols);
 		Float64Member sum = new Float64Member();
 		Float64Member atmp = new Float64Member();
 		Float64Member btmp = new Float64Member();
