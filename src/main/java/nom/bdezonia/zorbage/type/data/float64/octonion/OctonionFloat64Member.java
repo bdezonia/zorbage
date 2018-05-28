@@ -306,162 +306,290 @@ public final class OctonionFloat64Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		if (component == 0)
-			this.setR(v);
-		else if (component == 1)
-			this.setI(v);
-		else if (component == 2)
-			this.setJ(v);
-		else if (component == 3)
-			this.setK(v);
-		else if (component == 4)
-			this.setL(v);
-		else if (component == 5)
-			this.setI0(v);
-		else if (component == 6)
-			this.setJ0(v);
-		else
-			this.setK0(v);
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v);
+				else // component == 1
+					this.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v);
+				else // component == 3
+					this.setK(v);
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v);
+				else // component == 5
+					this.setI0(v);
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v);
+				else // component == 7
+					this.setK0(v);
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		if (component == 0)
-			this.setR(v);
-		else if (component == 1)
-			this.setI(v);
-		else if (component == 2)
-			this.setJ(v);
-		else if (component == 3)
-			this.setK(v);
-		else if (component == 4)
-			this.setL(v);
-		else if (component == 5)
-			this.setI0(v);
-		else if (component == 6)
-			this.setJ0(v);
-		else
-			this.setK0(v);
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v);
+				else // component == 1
+					this.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v);
+				else // component == 3
+					this.setK(v);
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v);
+				else // component == 5
+					this.setI0(v);
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v);
+				else // component == 7
+					this.setK0(v);
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		if (component == 0)
-			this.setR(v);
-		else if (component == 1)
-			this.setI(v);
-		else if (component == 2)
-			this.setJ(v);
-		else if (component == 3)
-			this.setK(v);
-		else if (component == 4)
-			this.setL(v);
-		else if (component == 5)
-			this.setI0(v);
-		else if (component == 6)
-			this.setJ0(v);
-		else
-			this.setK0(v);
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v);
+				else // component == 1
+					this.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v);
+				else // component == 3
+					this.setK(v);
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v);
+				else // component == 5
+					this.setI0(v);
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v);
+				else // component == 7
+					this.setK0(v);
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		if (component == 0)
-			this.setR(v);
-		else if (component == 1)
-			this.setI(v);
-		else if (component == 2)
-			this.setJ(v);
-		else if (component == 3)
-			this.setK(v);
-		else if (component == 4)
-			this.setL(v);
-		else if (component == 5)
-			this.setI0(v);
-		else if (component == 6)
-			this.setJ0(v);
-		else
-			this.setK0(v);
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v);
+				else // component == 1
+					this.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v);
+				else // component == 3
+					this.setK(v);
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v);
+				else // component == 5
+					this.setI0(v);
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v);
+				else // component == 7
+					this.setK0(v);
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		if (component == 0)
-			this.setR(v);
-		else if (component == 1)
-			this.setI(v);
-		else if (component == 2)
-			this.setJ(v);
-		else if (component == 3)
-			this.setK(v);
-		else if (component == 4)
-			this.setL(v);
-		else if (component == 5)
-			this.setI0(v);
-		else if (component == 6)
-			this.setJ0(v);
-		else
-			this.setK0(v);
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v);
+				else // component == 1
+					this.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v);
+				else // component == 3
+					this.setK(v);
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v);
+				else // component == 5
+					this.setI0(v);
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v);
+				else // component == 7
+					this.setK0(v);
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		if (component == 0)
-			this.setR(v);
-		else if (component == 1)
-			this.setI(v);
-		else if (component == 2)
-			this.setJ(v);
-		else if (component == 3)
-			this.setK(v);
-		else if (component == 4)
-			this.setL(v);
-		else if (component == 5)
-			this.setI0(v);
-		else if (component == 6)
-			this.setJ0(v);
-		else
-			this.setK0(v);
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v);
+				else // component == 1
+					this.setI(v);
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v);
+				else // component == 3
+					this.setK(v);
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v);
+				else // component == 5
+					this.setI0(v);
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v);
+				else // component == 7
+					this.setK0(v);
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		if (component == 0)
-			this.setR(v.doubleValue());
-		else if (component == 1)
-			this.setI(v.doubleValue());
-		else if (component == 2)
-			this.setJ(v.doubleValue());
-		else if (component == 3)
-			this.setK(v.doubleValue());
-		else if (component == 4)
-			this.setL(v.doubleValue());
-		else if (component == 5)
-			this.setI0(v.doubleValue());
-		else if (component == 6)
-			this.setJ0(v.doubleValue());
-		else
-			this.setK0(v.doubleValue());
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v.doubleValue());
+				else // component == 1
+					this.setI(v.doubleValue());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v.doubleValue());
+				else // component == 3
+					this.setK(v.doubleValue());
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v.doubleValue());
+				else // component == 5
+					this.setI0(v.doubleValue());
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v.doubleValue());
+				else // component == 7
+					this.setK0(v.doubleValue());
+			}
+		}
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		if (component == 0)
-			this.setR(v.doubleValue());
-		else if (component == 1)
-			this.setI(v.doubleValue());
-		else if (component == 2)
-			this.setJ(v.doubleValue());
-		else if (component == 3)
-			this.setK(v.doubleValue());
-		else if (component == 4)
-			this.setL(v.doubleValue());
-		else if (component == 5)
-			this.setI0(v.doubleValue());
-		else if (component == 6)
-			this.setJ0(v.doubleValue());
-		else
-			this.setK0(v.doubleValue());
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					this.setR(v.doubleValue());
+				else // component == 1
+					this.setI(v.doubleValue());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					this.setJ(v.doubleValue());
+				else // component == 3
+					this.setK(v.doubleValue());
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					this.setL(v.doubleValue());
+				else // component == 5
+					this.setI0(v.doubleValue());
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					this.setJ0(v.doubleValue());
+				else // component == 7
+					this.setK0(v.doubleValue());
+			}
+		}
 	}
 
 	@Override
@@ -484,22 +612,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v);
-			else if (component == 1)
-				this.setI(v);
-			else if (component == 2)
-				this.setJ(v);
-			else if (component == 3)
-				this.setK(v);
-			else if (component == 4)
-				this.setL(v);
-			else if (component == 5)
-				this.setI0(v);
-			else if (component == 6)
-				this.setJ0(v);
-			else
-				this.setK0(v);
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v);
+					else // component == 1
+						this.setI(v);
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v);
+					else // component == 3
+						this.setK(v);
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v);
+					else // component == 5
+						this.setI0(v);
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v);
+					else // component == 7
+						this.setK0(v);
+				}
+			}
 		}
 	}
 
@@ -523,22 +667,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v);
-			else if (component == 1)
-				this.setI(v);
-			else if (component == 2)
-				this.setJ(v);
-			else if (component == 3)
-				this.setK(v);
-			else if (component == 4)
-				this.setL(v);
-			else if (component == 5)
-				this.setI0(v);
-			else if (component == 6)
-				this.setJ0(v);
-			else
-				this.setK0(v);
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v);
+					else // component == 1
+						this.setI(v);
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v);
+					else // component == 3
+						this.setK(v);
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v);
+					else // component == 5
+						this.setI0(v);
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v);
+					else // component == 7
+						this.setK0(v);
+				}
+			}
 		}
 	}
 
@@ -562,22 +722,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v);
-			else if (component == 1)
-				this.setI(v);
-			else if (component == 2)
-				this.setJ(v);
-			else if (component == 3)
-				this.setK(v);
-			else if (component == 4)
-				this.setL(v);
-			else if (component == 5)
-				this.setI0(v);
-			else if (component == 6)
-				this.setJ0(v);
-			else
-				this.setK0(v);
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v);
+					else // component == 1
+						this.setI(v);
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v);
+					else // component == 3
+						this.setK(v);
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v);
+					else // component == 5
+						this.setI0(v);
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v);
+					else // component == 7
+						this.setK0(v);
+				}
+			}
 		}
 	}
 
@@ -601,22 +777,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v);
-			else if (component == 1)
-				this.setI(v);
-			else if (component == 2)
-				this.setJ(v);
-			else if (component == 3)
-				this.setK(v);
-			else if (component == 4)
-				this.setL(v);
-			else if (component == 5)
-				this.setI0(v);
-			else if (component == 6)
-				this.setJ0(v);
-			else
-				this.setK0(v);
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v);
+					else // component == 1
+						this.setI(v);
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v);
+					else // component == 3
+						this.setK(v);
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v);
+					else // component == 5
+						this.setI0(v);
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v);
+					else // component == 7
+						this.setK0(v);
+				}
+			}
 		}
 	}
 
@@ -640,22 +832,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v);
-			else if (component == 1)
-				this.setI(v);
-			else if (component == 2)
-				this.setJ(v);
-			else if (component == 3)
-				this.setK(v);
-			else if (component == 4)
-				this.setL(v);
-			else if (component == 5)
-				this.setI0(v);
-			else if (component == 6)
-				this.setJ0(v);
-			else
-				this.setK0(v);
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v);
+					else // component == 1
+						this.setI(v);
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v);
+					else // component == 3
+						this.setK(v);
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v);
+					else // component == 5
+						this.setI0(v);
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v);
+					else // component == 7
+						this.setK0(v);
+				}
+			}
 		}
 	}
 
@@ -679,22 +887,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v);
-			else if (component == 1)
-				this.setI(v);
-			else if (component == 2)
-				this.setJ(v);
-			else if (component == 3)
-				this.setK(v);
-			else if (component == 4)
-				this.setL(v);
-			else if (component == 5)
-				this.setI0(v);
-			else if (component == 6)
-				this.setJ0(v);
-			else
-				this.setK0(v);
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v);
+					else // component == 1
+						this.setI(v);
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v);
+					else // component == 3
+						this.setK(v);
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v);
+					else // component == 5
+						this.setI0(v);
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v);
+					else // component == 7
+						this.setK0(v);
+				}
+			}
 		}
 	}
 
@@ -718,22 +942,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v.doubleValue());
-			else if (component == 1)
-				this.setI(v.doubleValue());
-			else if (component == 2)
-				this.setJ(v.doubleValue());
-			else if (component == 3)
-				this.setK(v.doubleValue());
-			else if (component == 4)
-				this.setL(v.doubleValue());
-			else if (component == 5)
-				this.setI0(v.doubleValue());
-			else if (component == 6)
-				this.setJ0(v.doubleValue());
-			else
-				this.setK0(v.doubleValue());
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v.doubleValue());
+					else // component == 1
+						this.setI(v.doubleValue());
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v.doubleValue());
+					else // component == 3
+						this.setK(v.doubleValue());
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v.doubleValue());
+					else // component == 5
+						this.setI0(v.doubleValue());
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v.doubleValue());
+					else // component == 7
+						this.setK0(v.doubleValue());
+				}
+			}
 		}
 	}
 
@@ -757,22 +997,38 @@ public final class OctonionFloat64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (component == 0)
-				this.setR(v.doubleValue());
-			else if (component == 1)
-				this.setI(v.doubleValue());
-			else if (component == 2)
-				this.setJ(v.doubleValue());
-			else if (component == 3)
-				this.setK(v.doubleValue());
-			else if (component == 4)
-				this.setL(v.doubleValue());
-			else if (component == 5)
-				this.setI0(v.doubleValue());
-			else if (component == 6)
-				this.setJ0(v.doubleValue());
-			else
-				this.setK0(v.doubleValue());
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						this.setR(v.doubleValue());
+					else // component == 1
+						this.setI(v.doubleValue());
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						this.setJ(v.doubleValue());
+					else // component == 3
+						this.setK(v.doubleValue());
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						this.setL(v.doubleValue());
+					else // component == 5
+						this.setI0(v.doubleValue());
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						this.setJ0(v.doubleValue());
+					else // component == 7
+						this.setK0(v.doubleValue());
+				}
+			}
 		}
 	}
 
@@ -781,14 +1037,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (byte) r();
-		if (component == 1) return (byte) i();
-		if (component == 2) return (byte) j();
-		if (component == 3) return (byte) k();
-		if (component == 4) return (byte) l();
-		if (component == 5) return (byte) i0();
-		if (component == 6) return (byte) j0();
-		return (byte) k0();
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (byte) r();
+				else // component == 1
+					return (byte) i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (byte) j();
+				else // component == 3
+					return (byte) k();
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return (byte) l();
+				else // component == 5
+					return (byte) i0();
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return (byte) j0();
+				else // component == 7
+					return (byte) k0();
+			}
+		}
 	}
 
 	@Override
@@ -796,14 +1076,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (short) r();
-		if (component == 1) return (short) i();
-		if (component == 2) return (short) j();
-		if (component == 3) return (short) k();
-		if (component == 4) return (short) l();
-		if (component == 5) return (short) i0();
-		if (component == 6) return (short) j0();
-		return (short) k0();
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (short) r();
+				else // component == 1
+					return (short) i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (short) j();
+				else // component == 3
+					return (short) k();
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return (short) l();
+				else // component == 5
+					return (short) i0();
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return (short) j0();
+				else // component == 7
+					return (short) k0();
+			}
+		}
 	}
 
 	@Override
@@ -811,14 +1115,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (int) r();
-		if (component == 1) return (int) i();
-		if (component == 2) return (int) j();
-		if (component == 3) return (int) k();
-		if (component == 4) return (int) l();
-		if (component == 5) return (int) i0();
-		if (component == 6) return (int) j0();
-		return (int) k0();
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (int) r();
+				else // component == 1
+					return (int) i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (int) j();
+				else // component == 3
+					return (int) k();
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return (int) l();
+				else // component == 5
+					return (int) i0();
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return (int) j0();
+				else // component == 7
+					return (int) k0();
+			}
+		}
 	}
 
 	@Override
@@ -826,14 +1154,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (long) r();
-		if (component == 1) return (long) i();
-		if (component == 2) return (long) j();
-		if (component == 3) return (long) k();
-		if (component == 4) return (long) l();
-		if (component == 5) return (long) i0();
-		if (component == 6) return (long) j0();
-		return (long) k0();
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (long) r();
+				else // component == 1
+					return (long) i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (long) j();
+				else // component == 3
+					return (long) k();
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return (long) l();
+				else // component == 5
+					return (long) i0();
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return (long) j0();
+				else // component == 7
+					return (long) k0();
+			}
+		}
 	}
 
 	@Override
@@ -841,14 +1193,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (float) r();
-		if (component == 1) return (float) i();
-		if (component == 2) return (float) j();
-		if (component == 3) return (float) k();
-		if (component == 4) return (float) l();
-		if (component == 5) return (float) i0();
-		if (component == 6) return (float) j0();
-		return (float) k0();
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return (float) r();
+				else // component == 1
+					return (float) i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return (float) j();
+				else // component == 3
+					return (float) k();
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return (float) l();
+				else // component == 5
+					return (float) i0();
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return (float) j0();
+				else // component == 7
+					return (float) k0();
+			}
+		}
 	}
 
 	@Override
@@ -856,14 +1232,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r();
-		if (component == 1) return i();
-		if (component == 2) return j();
-		if (component == 3) return k();
-		if (component == 4) return l();
-		if (component == 5) return i0();
-		if (component == 6) return j0();
-		return k0();
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return r();
+				else // component == 1
+					return i();
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return j();
+				else // component == 3
+					return k();
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return l();
+				else // component == 5
+					return i0();
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return j0();
+				else // component == 7
+					return k0();
+			}
+		}
 	}
 
 	@Override
@@ -871,14 +1271,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigInteger.valueOf((long) r());
-		if (component == 1) return BigInteger.valueOf((long) i());
-		if (component == 2) return BigInteger.valueOf((long) j());
-		if (component == 3) return BigInteger.valueOf((long) k());
-		if (component == 4) return BigInteger.valueOf((long) l());
-		if (component == 5) return BigInteger.valueOf((long) i0());
-		if (component == 6) return BigInteger.valueOf((long) j0());
-		return BigInteger.valueOf((long) k0());
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return BigInteger.valueOf((long) r());
+				else // component == 1
+					return BigInteger.valueOf((long) i());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return BigInteger.valueOf((long) j());
+				else // component == 3
+					return BigInteger.valueOf((long) k());
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return BigInteger.valueOf((long) l());
+				else // component == 5
+					return BigInteger.valueOf((long) i0());
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return BigInteger.valueOf((long) j0());
+				else // component == 7
+					return BigInteger.valueOf((long) k0());
+			}
+		}
 	}
 
 	@Override
@@ -886,14 +1310,38 @@ public final class OctonionFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(r());
-		if (component == 1) return BigDecimal.valueOf(i());
-		if (component == 2) return BigDecimal.valueOf(j());
-		if (component == 3) return BigDecimal.valueOf(k());
-		if (component == 4) return BigDecimal.valueOf(l());
-		if (component == 5) return BigDecimal.valueOf(i0());
-		if (component == 6) return BigDecimal.valueOf(j0());
-		return BigDecimal.valueOf(k0());
+		if (component < 4) {
+			if (component < 2) {
+				// 0 <= component <= 1
+				if (component == 0)
+					return BigDecimal.valueOf(r());
+				else // component == 1
+					return BigDecimal.valueOf(i());
+			}
+			else {
+				// 2 <= component <= 3
+				if (component == 2)
+					return BigDecimal.valueOf(j());
+				else // component == 3
+					return BigDecimal.valueOf(k());
+			}
+		} else {
+			// component >= 4
+			if (component < 6) {
+				// 4 <= component <= 5
+				if (component == 4)
+					return BigDecimal.valueOf(l());
+				else // component == 5
+					return BigDecimal.valueOf(i0());
+			}
+			else {
+				// 6 <= component <= 7
+				if (component == 6)
+					return BigDecimal.valueOf(j0());
+				else // component == 7
+					return BigDecimal.valueOf(k0());
+			}
+		}
 	}
 
 	@Override
@@ -914,14 +1362,38 @@ public final class OctonionFloat64Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (byte) r();
-			if (component == 1) return (byte) i();
-			if (component == 2) return (byte) j();
-			if (component == 3) return (byte) k();
-			if (component == 4) return (byte) l();
-			if (component == 5) return (byte) i0();
-			if (component == 6) return (byte) j0();
-			return (byte) k0();
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return (byte) r();
+					else // component == 1
+						return (byte) i();
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return (byte) j();
+					else // component == 3
+						return (byte) k();
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return (byte) l();
+					else // component == 5
+						return (byte) i0();
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return (byte) j0();
+					else // component == 7
+						return (byte) k0();
+				}
+			}
 		}
 	}
 
@@ -943,14 +1415,38 @@ public final class OctonionFloat64Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (short) r();
-			if (component == 1) return (short) i();
-			if (component == 2) return (short) j();
-			if (component == 3) return (short) k();
-			if (component == 4) return (short) l();
-			if (component == 5) return (short) i0();
-			if (component == 6) return (short) j0();
-			return (short) k0();
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return (short) r();
+					else // component == 1
+						return (short) i();
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return (short) j();
+					else // component == 3
+						return (short) k();
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return (short) l();
+					else // component == 5
+						return (short) i0();
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return (short) j0();
+					else // component == 7
+						return (short) k0();
+				}
+			}
 		}
 	}
 
@@ -972,14 +1468,38 @@ public final class OctonionFloat64Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (int) r();
-			if (component == 1) return (int) i();
-			if (component == 2) return (int) j();
-			if (component == 3) return (int) k();
-			if (component == 4) return (int) l();
-			if (component == 5) return (int) i0();
-			if (component == 6) return (int) j0();
-			return (int) k0();
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return (int) r();
+					else // component == 1
+						return (int) i();
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return (int) j();
+					else // component == 3
+						return (int) k();
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return (int) l();
+					else // component == 5
+						return (int) i0();
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return (int) j0();
+					else // component == 7
+						return (int) k0();
+				}
+			}
 		}
 	}
 
@@ -1001,14 +1521,38 @@ public final class OctonionFloat64Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (long) r();
-			if (component == 1) return (long) i();
-			if (component == 2) return (long) j();
-			if (component == 3) return (long) k();
-			if (component == 4) return (long) l();
-			if (component == 5) return (long) i0();
-			if (component == 6) return (long) j0();
-			return (long) k0();
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return (long) r();
+					else // component == 1
+						return (long) i();
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return (long) j();
+					else // component == 3
+						return (long) k();
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return (long) l();
+					else // component == 5
+						return (long) i0();
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return (long) j0();
+					else // component == 7
+						return (long) k0();
+				}
+			}
 		}
 	}
 
@@ -1030,14 +1574,38 @@ public final class OctonionFloat64Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (float) r();
-			if (component == 1) return (float) i();
-			if (component == 2) return (float) j();
-			if (component == 3) return (float) k();
-			if (component == 4) return (float) l();
-			if (component == 5) return (float) i0();
-			if (component == 6) return (float) j0();
-			return (float) k0();
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return (float) r();
+					else // component == 1
+						return (float) i();
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return (float) j();
+					else // component == 3
+						return (float) k();
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return (float) l();
+					else // component == 5
+						return (float) i0();
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return (float) j0();
+					else // component == 7
+						return (float) k0();
+				}
+			}
 		}
 	}
 
@@ -1059,14 +1627,38 @@ public final class OctonionFloat64Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r();
-			if (component == 1) return i();
-			if (component == 2) return j();
-			if (component == 3) return k();
-			if (component == 4) return l();
-			if (component == 5) return i0();
-			if (component == 6) return j0();
-			return k0();
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return r();
+					else // component == 1
+						return i();
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return j();
+					else // component == 3
+						return k();
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return l();
+					else // component == 5
+						return i0();
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return j0();
+					else // component == 7
+						return k0();
+				}
+			}
 		}
 	}
 
@@ -1088,14 +1680,38 @@ public final class OctonionFloat64Member
 			return BigInteger.ZERO;
 		}
 		else {
-			if (component == 0) return BigInteger.valueOf((long) r());
-			if (component == 1) return BigInteger.valueOf((long) i());
-			if (component == 2) return BigInteger.valueOf((long) j());
-			if (component == 3) return BigInteger.valueOf((long) k());
-			if (component == 4) return BigInteger.valueOf((long) l());
-			if (component == 5) return BigInteger.valueOf((long) i0());
-			if (component == 6) return BigInteger.valueOf((long) j0());
-			return BigInteger.valueOf((long) k0());
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return BigInteger.valueOf((long) r());
+					else // component == 1
+						return BigInteger.valueOf((long) i());
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return BigInteger.valueOf((long) j());
+					else // component == 3
+						return BigInteger.valueOf((long) k());
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return BigInteger.valueOf((long) l());
+					else // component == 5
+						return BigInteger.valueOf((long) i0());
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return BigInteger.valueOf((long) j0());
+					else // component == 7
+						return BigInteger.valueOf((long) k0());
+				}
+			}
 		}
 	}
 
@@ -1117,14 +1733,38 @@ public final class OctonionFloat64Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			if (component == 0) return BigDecimal.valueOf(r());
-			if (component == 1) return BigDecimal.valueOf(i());
-			if (component == 2) return BigDecimal.valueOf(j());
-			if (component == 3) return BigDecimal.valueOf(k());
-			if (component == 4) return BigDecimal.valueOf(l());
-			if (component == 5) return BigDecimal.valueOf(i0());
-			if (component == 6) return BigDecimal.valueOf(j0());
-			return BigDecimal.valueOf(k0());
+			if (component < 4) {
+				if (component < 2) {
+					// 0 <= component <= 1
+					if (component == 0)
+						return BigDecimal.valueOf(r());
+					else // component == 1
+						return BigDecimal.valueOf(i());
+				}
+				else {
+					// 2 <= component <= 3
+					if (component == 2)
+						return BigDecimal.valueOf(j());
+					else // component == 3
+						return BigDecimal.valueOf(k());
+				}
+			} else {
+				// component >= 4
+				if (component < 6) {
+					// 4 <= component <= 5
+					if (component == 4)
+						return BigDecimal.valueOf(l());
+					else // component == 5
+						return BigDecimal.valueOf(i0());
+				}
+				else {
+					// 6 <= component <= 7
+					if (component == 6)
+						return BigDecimal.valueOf(j0());
+					else // component == 7
+						return BigDecimal.valueOf(k0());
+				}
+			}
 		}
 	}
 
