@@ -60,16 +60,16 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 	{
 		Float64Member tmp = new Float64Member();
 		Float64Member max = new Float64Member(); 
-		for (long c = 0; c < matrix.cols(); c++) {
-			Float64Member colSum = new Float64Member();
+		for (long r = 0; r < matrix.rows(); r++) {
+			Float64Member rowSum = new Float64Member();
 			U value = numGroup.construct();
-			for (long r = 0; r < matrix.rows(); r++) {
+			for (long c = 0; c < matrix.cols(); c++) {
 				matrix.v(r, c, value);
 				numGroup.norm(value, tmp);
-				G.DBL.add(colSum, tmp, colSum);
+				G.DBL.add(rowSum, tmp, rowSum);
 			}
-			if (G.DBL.isGreater(colSum, max))
-				G.DBL.assign(colSum, max);
+			if (G.DBL.isGreater(rowSum, max))
+				G.DBL.assign(rowSum, max);
 		}
 		G.DBL.assign(max, norm);
 	}
