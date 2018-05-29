@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
@@ -49,7 +50,8 @@ public class QuaternionFloat64Matrix
 		RingWithUnity<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember>,
 		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Group, QuaternionFloat64Member>,
 		Constructible2dLong<QuaternionFloat64MatrixMember>,
-		Rounding<Float64Member, QuaternionFloat64MatrixMember>
+		Rounding<Float64Member, QuaternionFloat64MatrixMember>,
+		Norm<QuaternionFloat64MatrixMember,Float64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
@@ -214,7 +216,7 @@ public class QuaternionFloat64Matrix
 	}
 
 	@Override
-	public void norm(QuaternionFloat64MatrixMember a, QuaternionFloat64Member b) {
+	public void norm(QuaternionFloat64MatrixMember a, Float64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}

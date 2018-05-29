@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
@@ -49,7 +50,8 @@ public class ComplexFloat64Matrix
 		RingWithUnity<ComplexFloat64Matrix, ComplexFloat64MatrixMember>,
 		MatrixRing<ComplexFloat64Matrix, ComplexFloat64MatrixMember, ComplexFloat64Group, ComplexFloat64Member>,
 		Constructible2dLong<ComplexFloat64MatrixMember>,
-		Rounding<Float64Member, ComplexFloat64MatrixMember>
+		Rounding<Float64Member, ComplexFloat64MatrixMember>,
+		Norm<ComplexFloat64MatrixMember,Float64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -215,7 +217,7 @@ public class ComplexFloat64Matrix
 	}
 
 	@Override
-	public void norm(ComplexFloat64MatrixMember a, ComplexFloat64Member b) {
+	public void norm(ComplexFloat64MatrixMember a, Float64Member b) {
 		// TODO
 		throw new IllegalArgumentException("TODO");
 	}

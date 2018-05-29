@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
@@ -48,7 +49,8 @@ public class Float64Matrix
 		RingWithUnity<Float64Matrix, Float64MatrixMember>,
 		MatrixRing<Float64Matrix, Float64MatrixMember, Float64Group, Float64Member>,
 		Constructible2dLong<Float64MatrixMember>,
-		Rounding<Float64Member, Float64MatrixMember>
+		Rounding<Float64Member, Float64MatrixMember>,
+		Norm<Float64MatrixMember,Float64Member>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 	

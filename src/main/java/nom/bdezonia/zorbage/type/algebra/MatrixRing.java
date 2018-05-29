@@ -40,7 +40,7 @@ package nom.bdezonia.zorbage.type.algebra;
 public interface MatrixRing<T extends RingWithUnity<T,U>, U,
                         V extends RingWithUnity<V,W>, W>  // TODO W needs to be Invertible?
   extends
-    Norm<U,W>,
+    //Norm<U,W>,
     Infinite<U>,
     Conjugate<U>,
     Invertible<U>,
