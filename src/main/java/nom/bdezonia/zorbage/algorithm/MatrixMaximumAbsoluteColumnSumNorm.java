@@ -26,11 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -53,22 +54,23 @@ public class MatrixMaximumAbsoluteColumnSumNorm {
 	 */
 	public static
 		<S extends MatrixMember<U>,
-		T extends Group<T,U> & Addition<U> & AbsoluteValue<U> & Ordered<U>,
+		T extends Group<T,U> & Addition<U> & Norm<U,Float64Member>,
 		U>
-	void compute(T numGroup, S matrix, U norm)
+	void compute(T numGroup, S matrix, Float64Member norm)
 	{
-		U max = numGroup.construct(); 
+		Float64Member tmp = new Float64Member();
+		Float64Member max = new Float64Member(); 
 		for (long c = 0; c < matrix.cols(); c++) {
-			U colSum = numGroup.construct();
+			Float64Member colSum = new Float64Member();
 			U value = numGroup.construct();
 			for (long r = 0; r < matrix.rows(); r++) {
 				matrix.v(r, c, value);
-				numGroup.abs(value, value);
-				numGroup.add(colSum, value, colSum);
+				numGroup.norm(value, tmp);
+				G.DBL.add(colSum, tmp, colSum);
 			}
-			if (numGroup.isGreater(colSum, max))
-				numGroup.assign(colSum, max);
+			if (G.DBL.isGreater(colSum, max))
+				G.DBL.assign(colSum, max);
 		}
-		numGroup.assign(max, norm);
+		G.DBL.assign(max, norm);
 	}
 }
