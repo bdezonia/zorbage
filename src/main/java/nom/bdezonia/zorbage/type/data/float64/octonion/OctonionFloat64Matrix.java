@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
+import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -298,15 +299,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public void unity(OctonionFloat64MatrixMember a) {
-		final OctonionFloat64Member one = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				if (r == c)
-					a.setV(r, c, one);
-				else
-					a.setV(r, c, ZERO);
-			}
-		}
+		MatrixUnity.compute(G.ODBL, a);
 	}
 
 	@Override

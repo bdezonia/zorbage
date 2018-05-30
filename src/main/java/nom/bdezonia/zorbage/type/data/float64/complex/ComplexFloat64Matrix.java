@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
+import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -297,15 +298,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void unity(ComplexFloat64MatrixMember a) {
-		final ComplexFloat64Member one = new ComplexFloat64Member(1, 0);
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				if (r == c)
-					a.setV(r, c, one);
-				else
-					a.setV(r, c, ZERO);
-			}
-		}
+		MatrixUnity.compute(G.CDBL, a);
 	}
 
 	@Override
