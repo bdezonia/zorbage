@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
@@ -66,36 +67,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void power(int power, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a.rows() != a.cols())
-			throw new IllegalArgumentException("power requires a square matrix as input");
-		if (power < 0) {
-			power = -power;
-			QuaternionFloat64MatrixMember aInv = new QuaternionFloat64MatrixMember();
-			invert(a, aInv);
-			QuaternionFloat64MatrixMember tmp = new QuaternionFloat64MatrixMember(aInv);
-			QuaternionFloat64MatrixMember tmp2 = new QuaternionFloat64MatrixMember();
-			for (int i = 2; i <= power; i++) {
-				multiply(tmp, aInv, tmp2);
-				assign(tmp2, tmp);
-			}
-			assign(tmp, b);
-		}
-		else if (power == 0) {
-			// TODO if (isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
-			b.alloc(a.rows(), a.cols());
-			unity(b);
-		}
-		else if (power == 1)
-			assign(a,b);
-		else { // power >= 2
-			QuaternionFloat64MatrixMember tmp = new QuaternionFloat64MatrixMember(a);
-			QuaternionFloat64MatrixMember tmp2 = new QuaternionFloat64MatrixMember();
-			for (int i = 2; i <= power; i++) {
-				multiply(tmp, a, tmp2);
-				assign(tmp2, tmp);
-			}
-			assign(tmp, b);
-		}
+		MatrixPower.compute(power, G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
 	}
 
 	@Override
