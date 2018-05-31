@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
+import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
@@ -89,22 +90,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void subtract(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
-		if (c != a && c != b) {
-			c.alloc(a.rows(), a.cols());
-		}
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
-				G.CDBL.subtract(atmp, btmp, tmp);
-				c.setV(row, col, tmp);
-			}
-		}
+		MatrixSubtraction.compute(G.CDBL, a, b, c);
 	}
 
 	@Override

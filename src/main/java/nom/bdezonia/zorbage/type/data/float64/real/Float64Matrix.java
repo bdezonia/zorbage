@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
+import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
@@ -87,22 +88,7 @@ public class Float64Matrix
 
 	@Override
 	public void subtract(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
-		if (c != a && c != b) {
-			c.alloc(a.rows(), a.cols());
-		}
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
-				G.DBL.subtract(atmp, btmp, tmp);
-				c.setV(row, col, tmp);
-			}
-		}
+		MatrixSubtraction.compute(G.DBL, a, b, c);
 	}
 
 	@Override
