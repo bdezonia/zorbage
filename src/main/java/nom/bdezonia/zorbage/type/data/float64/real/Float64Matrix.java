@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
@@ -186,15 +187,7 @@ public class Float64Matrix
 
 	@Override
 	public void assign(Float64MatrixMember from, Float64MatrixMember to) {
-		if (from == to) return;
-		to.alloc(from.rows(), from.cols());
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < from.rows(); row++) {
-			for (long col = 0; col < from.cols(); col++) {
-				from.v(row, col, tmp);
-				to.setV(row, col, tmp);
-			}
-		}
+		MatrixAssign.compute(G.DBL, from, to);
 	}
 
 	@Override

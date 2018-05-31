@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
@@ -185,15 +186,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public void assign(OctonionFloat64MatrixMember from, OctonionFloat64MatrixMember to) {
-		if (from == to) return;
-		to.alloc(from.rows(), from.cols());
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < from.rows(); row++) {
-			for (long col = 0; col < from.cols(); col++) {
-				from.v(row, col, tmp);
-				to.setV(row, col, tmp);
-			}
-		}
+		MatrixAssign.compute(G.ODBL, from, to);
 	}
 
 	@Override

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
@@ -186,15 +187,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void assign(ComplexFloat64MatrixMember from, ComplexFloat64MatrixMember to) {
-		if (from == to) return;
-		to.alloc(from.rows(), from.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < from.rows(); row++) {
-			for (long col = 0; col < from.cols(); col++) {
-				from.v(row, col, tmp);
-				to.setV(row, col, tmp);
-			}
-		}
+		MatrixAssign.compute(G.CDBL, from, to);
 	}
 
 	@Override

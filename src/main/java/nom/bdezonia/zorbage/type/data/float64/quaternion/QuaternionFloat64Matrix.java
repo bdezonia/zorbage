@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
@@ -185,15 +186,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void assign(QuaternionFloat64MatrixMember from, QuaternionFloat64MatrixMember to) {
-		if (from == to) return;
-		to.alloc(from.rows(), from.cols());
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < from.rows(); row++) {
-			for (long col = 0; col < from.cols(); col++) {
-				from.v(row, col, tmp);
-				to.setV(row, col, tmp);
-			}
-		}
+		MatrixAssign.compute(G.QDBL, from, to);
 	}
 
 	@Override
