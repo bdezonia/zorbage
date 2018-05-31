@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.quaternion;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
@@ -94,20 +95,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public boolean isEqual(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		if (a == b) return true;
-		if (a.rows() != b.rows()) return false;
-		if (a.cols() != b.cols()) return false;
-		QuaternionFloat64Member value1 = new QuaternionFloat64Member();
-		QuaternionFloat64Member value2 = new QuaternionFloat64Member();
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.v(r, c, value1);
-				b.v(r, c, value2);
-				if (G.QDBL.isNotEqual(value1, value2))
-					return false;
-			}
-		}
-		return true;
+		return MatrixEqual.compute(G.QDBL, a, b);
 	}
 
 	@Override

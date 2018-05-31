@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
@@ -95,20 +96,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public boolean isEqual(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a == b) return true;
-		if (a.rows() != b.rows()) return false;
-		if (a.cols() != b.cols()) return false;
-		ComplexFloat64Member value1 = new ComplexFloat64Member();
-		ComplexFloat64Member value2 = new ComplexFloat64Member();
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.v(r, c, value1);
-				b.v(r, c, value2);
-				if (G.CDBL.isNotEqual(value1, value2))
-					return false;
-			}
-		}
-		return true;
+		return MatrixEqual.compute(G.CDBL, a, b);
 	}
 
 	@Override
