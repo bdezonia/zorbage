@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -75,16 +76,7 @@ public class Float64Matrix
 
 	@Override
 	public void negate(Float64MatrixMember a, Float64MatrixMember b) {
-		Float64Member tmp = new Float64Member();
-		if (a != b)
-			b.alloc(a.rows(), a.cols());
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.DBL.negate(tmp,tmp);
-				b.setV(row, col, tmp);
-			}
-		}
+		MatrixNegate.compute(G.DBL, a, b);
 	}
 
 	@Override

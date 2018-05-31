@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -77,16 +78,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void negate(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		if (a != b)
-			b.alloc(a.rows(), a.cols());
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.negate(tmp,tmp);
-				b.setV(row, col, tmp);
-			}
-		}
+		MatrixNegate.compute(G.CDBL, a, b);
 	}
 
 	@Override
