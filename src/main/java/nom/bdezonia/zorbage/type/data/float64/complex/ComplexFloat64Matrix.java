@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
@@ -83,22 +84,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void add(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (c != a && c != b) {
-			c.alloc(a.rows(), a.cols());
-		}
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
-				G.CDBL.add(atmp, btmp, tmp);
-				c.setV(row, col, tmp);
-			}
-		}
+		MatrixAddition.compute(G.CDBL, a, b, c);
 	}
 
 	@Override

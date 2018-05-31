@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
@@ -82,22 +83,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public void add(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (c != a && c != b) {
-			c.alloc(a.rows(), a.cols());
-		}
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
-				G.ODBL.add(atmp, btmp, tmp);
-				c.setV(row, col, tmp);
-			}
-		}
+		MatrixAddition.compute(G.ODBL, a, b, c);
 	}
 
 	@Override

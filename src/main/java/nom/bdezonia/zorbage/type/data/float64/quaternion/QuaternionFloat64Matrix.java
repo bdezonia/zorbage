@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
@@ -82,22 +83,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void add(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (c != a && c != b) {
-			c.alloc(a.rows(), a.cols());
-		}
-		QuaternionFloat64Member atmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member btmp = new QuaternionFloat64Member();
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
-				G.QDBL.add(atmp, btmp, tmp);
-				c.setV(row, col, tmp);
-			}
-		}
+		MatrixAddition.compute(G.QDBL, a, b, c);
 	}
 
 	@Override

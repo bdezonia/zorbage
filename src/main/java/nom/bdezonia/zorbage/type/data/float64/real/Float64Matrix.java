@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
@@ -81,22 +82,7 @@ public class Float64Matrix
 
 	@Override
 	public void add(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (c != a && c != b) {
-			c.alloc(a.rows(), a.cols());
-		}
-		Float64Member atmp = new Float64Member();
-		Float64Member btmp = new Float64Member();
-		Float64Member tmp = new Float64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
-				G.DBL.add(atmp, btmp, tmp);
-				c.setV(row, col, tmp);
-			}
-		}
+		MatrixAddition.compute(G.DBL, a, b, c);
 	}
 
 	@Override
