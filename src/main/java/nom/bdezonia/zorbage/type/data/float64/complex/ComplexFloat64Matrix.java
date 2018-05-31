@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
+import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -56,8 +57,6 @@ public class ComplexFloat64Matrix
 		Rounding<Float64Member, ComplexFloat64MatrixMember>,
 		Norm<ComplexFloat64MatrixMember,Float64Member>
 {
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
-	
 	public ComplexFloat64Matrix() {
 	}
 
@@ -73,11 +72,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void zero(ComplexFloat64MatrixMember a) {
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.setV(row, col, ZERO);
-			}
-		}
+		MatrixZero.compute(G.CDBL, a);
 	}
 
 	@Override

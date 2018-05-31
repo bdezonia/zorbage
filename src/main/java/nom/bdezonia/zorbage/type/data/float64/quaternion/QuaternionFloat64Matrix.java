@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
+import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
@@ -56,8 +57,6 @@ public class QuaternionFloat64Matrix
 		Rounding<Float64Member, QuaternionFloat64MatrixMember>,
 		Norm<QuaternionFloat64MatrixMember,Float64Member>
 {
-	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
-	
 	public QuaternionFloat64Matrix() { }
 
 	@Override
@@ -72,11 +71,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void zero(QuaternionFloat64MatrixMember a) {
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.setV(row, col, ZERO);
-			}
-		}
+		MatrixZero.compute(G.QDBL, a);
 	}
 
 	@Override
