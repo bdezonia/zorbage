@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
+import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -137,16 +138,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void round(Round.Mode mode, Float64Member delta, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		if (a != b)
-			b.alloc(a.rows(), a.cols());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
-				G.CDBL.round(mode, delta, tmp, tmp);
-				b.setV(row, col, tmp);
-			}
-		}
+		MatrixRound.compute(G.DBL, G.CDBL, mode, delta, a, b);
 	}
 
 	@Override
