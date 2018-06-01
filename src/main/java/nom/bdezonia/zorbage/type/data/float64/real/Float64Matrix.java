@@ -185,8 +185,8 @@ public class Float64Matrix
 	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		// invert and multiply
 		Float64MatrixMember invB = construct(a.storageType(), a.cols(), a.rows());
-		MatrixInvert.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, b, invB);
-		MatrixMultiply.compute(G.DBL, a, invB, c);
+		invert(b, invB);
+		multiply(a, invB, c);
 	}
 
 }

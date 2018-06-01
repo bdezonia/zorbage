@@ -58,6 +58,10 @@ public class MatrixInvert {
 		MATRIX_GROUP extends Group<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
 	void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, MATRIX_MEMBER b)
 	{
+		if (a.rows() != a.cols())
+			throw new IllegalArgumentException("can only invert square matrices");
+		if (a.rows() != b.rows() || a.cols() != b.cols())
+			throw new IllegalArgumentException("invert: destination matrix is not same shape as source matrix");
 		MATRIX_MEMBER lu = matGroup.construct(a);
 		LUDecomp.compute(numGroup, matGroup, lu);
 		RMODULE_MEMBER bCol =

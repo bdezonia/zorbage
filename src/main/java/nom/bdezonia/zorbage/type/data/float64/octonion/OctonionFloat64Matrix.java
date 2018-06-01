@@ -191,8 +191,8 @@ public class OctonionFloat64Matrix
 	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		// invert and multiply
 		OctonionFloat64MatrixMember invB = construct(a.storageType(), a.cols(), a.rows());
-		MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, b, invB);
-		MatrixMultiply.compute(G.ODBL, a, invB, c);
+		invert(b, invB);
+		multiply(a, invB, c);
 	}
 
 }

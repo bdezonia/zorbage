@@ -193,8 +193,8 @@ public class QuaternionFloat64Matrix
 	{
 		// invert and multiply
 		QuaternionFloat64MatrixMember invB = construct(a.storageType(), a.cols(), a.rows());
-		MatrixInvert.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, b, invB);
-		MatrixMultiply.compute(G.QDBL, a, invB, c);
+		invert(b, invB);
+		multiply(a, invB, c);
 	}
 
 }

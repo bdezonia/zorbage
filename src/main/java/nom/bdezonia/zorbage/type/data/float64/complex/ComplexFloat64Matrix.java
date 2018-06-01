@@ -190,8 +190,8 @@ public class ComplexFloat64Matrix
 	public void divide(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
 		// invert and multiply
 		ComplexFloat64MatrixMember invB = construct(a.storageType(), a.cols(), a.rows());
-		MatrixInvert.compute(G.CDBL, G.CDBL_VEC, G.CDBL_MAT, b, invB);
-		MatrixMultiply.compute(G.CDBL, a, invB, c);
+		invert(b, invB);
+		multiply(a, invB, c);
 	}
 
 }
