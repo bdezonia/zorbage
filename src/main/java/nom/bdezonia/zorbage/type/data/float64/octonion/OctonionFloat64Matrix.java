@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
+import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
@@ -148,15 +149,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public boolean isInfinite(OctonionFloat64MatrixMember a) {
-		OctonionFloat64Member value = new OctonionFloat64Member();
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.v(r, c, value);
-				if (G.ODBL.isInfinite(value))
-					return true;
-			}
-		}
-		return false;
+		return MatrixIsInfinite.compute(G.ODBL, a);
 	}
 
 	@Override
