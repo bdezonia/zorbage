@@ -100,6 +100,10 @@ public final class Float64VectorMember
 		alloc(d1);
 	}
 
+	public StorageConstruction storageType() {
+		return s;
+	}
+	
 	@Override
 	public void v(long i, Float64Member v) {
 		if (i < storage.size()) {

@@ -116,6 +116,10 @@ public final class OctonionFloat64RModuleMember
 		alloc(d1);
 	}
 
+	public StorageConstruction storageType() {
+		return s;
+	}
+	
 	@Override
 	public void v(long i, OctonionFloat64Member v) {
 		if (i < storage.size()) {

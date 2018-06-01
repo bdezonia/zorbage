@@ -190,12 +190,9 @@ public class OctonionFloat64Matrix
 	@Override
 	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		// invert and multiply
-		OctonionFloat64MatrixMember invB =
-				G.ODBL_MAT.construct(
-						StorageConstruction.MEM_ARRAY,
-						a.cols(), a.rows());
+		OctonionFloat64MatrixMember invB = construct(a.storageType(), a.cols(), a.rows());
 		MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, b, invB);
-		G.ODBL_MAT.multiply(a, invB, c);
+		MatrixMultiply.compute(G.ODBL, a, invB, c);
 	}
 
 }

@@ -184,12 +184,9 @@ public class Float64Matrix
 	@Override
 	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		// invert and multiply
-		Float64MatrixMember invB =
-				G.DBL_MAT.construct(
-						StorageConstruction.MEM_ARRAY,
-						a.cols(), a.rows());
+		Float64MatrixMember invB = construct(a.storageType(), a.cols(), a.rows());
 		MatrixInvert.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, b, invB);
-		G.DBL_MAT.multiply(a, invB, c);
+		MatrixMultiply.compute(G.DBL, a, invB, c);
 	}
 
 }

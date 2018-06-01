@@ -108,6 +108,10 @@ public final class QuaternionFloat64RModuleMember
 		alloc(d1);
 	}
 	
+	public StorageConstruction storageType() {
+		return s;
+	}
+	
 	@Override
 	public void v(long i, QuaternionFloat64Member v) {
 		if (i < storage.size()) {

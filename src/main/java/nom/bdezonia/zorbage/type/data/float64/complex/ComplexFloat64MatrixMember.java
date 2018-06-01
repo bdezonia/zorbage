@@ -117,6 +117,10 @@ public final class ComplexFloat64MatrixMember
 		init(d2, d1);
 	}
 	
+	public StorageConstruction storageType() {
+		return s;
+	}
+	
 	@Override
 	public long rows() { return rows; }
 
