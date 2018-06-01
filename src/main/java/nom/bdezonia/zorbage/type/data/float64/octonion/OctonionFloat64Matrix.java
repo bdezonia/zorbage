@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
+import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
@@ -154,18 +155,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public void conjugate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		OctonionFloat64Member atmp = new OctonionFloat64Member();
-		OctonionFloat64Member btmp = new OctonionFloat64Member();
-		if (a != b) {
-			b.alloc(a.rows(), a.cols());
-		}
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				G.ODBL.conjugate(atmp, btmp);
-				b.setV(row, col, btmp);
-			}
-		}
+		MatrixConjugate.compute(G.ODBL, a, b);
 	}
 
 	@Override

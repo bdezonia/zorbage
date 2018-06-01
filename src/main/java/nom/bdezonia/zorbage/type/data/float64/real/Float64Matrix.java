@@ -166,8 +166,6 @@ public class Float64Matrix
 		transpose(a, b);
 	}
 
-	// TODO test
-
 	@Override
 	public void det(Float64MatrixMember a, Float64Member b) {
 		MatrixDeterminant.compute(this, G.DBL, a, b);

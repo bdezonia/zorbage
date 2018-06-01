@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
+import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
@@ -155,18 +156,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void conjugate(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		ComplexFloat64Member atmp = new ComplexFloat64Member();
-		ComplexFloat64Member btmp = new ComplexFloat64Member();
-		if (a != b) {
-			b.alloc(a.rows(), a.cols());
-		}
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				G.CDBL.conjugate(atmp, btmp);
-				b.setV(row, col, btmp);
-			}
-		}
+		MatrixConjugate.compute(G.CDBL, a, b);
 	}
 
 	@Override
