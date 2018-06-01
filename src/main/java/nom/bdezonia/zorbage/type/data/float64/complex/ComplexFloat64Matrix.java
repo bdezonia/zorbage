@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
+import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
@@ -143,15 +144,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public boolean isNaN(ComplexFloat64MatrixMember a) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.v(r, c, value);
-				if (G.CDBL.isNaN(value))
-					return true;
-			}
-		}
-		return false;
+		return MatrixIsNaN.compute(G.CDBL, a);
 	}
 
 	@Override
