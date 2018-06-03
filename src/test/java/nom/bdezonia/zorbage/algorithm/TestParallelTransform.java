@@ -31,8 +31,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Rand;
-import nom.bdezonia.zorbage.procedure.Sin;
+import nom.bdezonia.zorbage.procedure.impl.Rand;
+import nom.bdezonia.zorbage.procedure.impl.Sin;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;

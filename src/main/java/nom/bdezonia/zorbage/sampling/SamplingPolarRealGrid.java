@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.util.RealUtils;
+import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
  * {@link SamplingPolarGrid} is a 2-d {@link Sampling} in real polar space.

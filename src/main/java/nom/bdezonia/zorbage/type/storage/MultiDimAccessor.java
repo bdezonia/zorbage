@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
+import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
-import nom.bdezonia.zorbage.util.LongUtils;
 
 /**
  * 

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.util.RealUtils;
+import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
  * {@link SamplingCylindricalGrid} is a 3-d {@link Sampling} in real cylindrical space.

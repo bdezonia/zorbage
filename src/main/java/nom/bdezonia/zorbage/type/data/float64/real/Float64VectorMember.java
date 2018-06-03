@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
@@ -43,7 +44,6 @@ import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
-import nom.bdezonia.zorbage.util.BigList;
 
 /**
  * 

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.util.RealUtils;
+import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
  * 

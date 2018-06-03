@@ -30,6 +30,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import nom.bdezonia.zorbage.misc.BigList;
+import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
@@ -45,8 +47,6 @@ import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
-import nom.bdezonia.zorbage.util.BigList;
-import nom.bdezonia.zorbage.util.LongUtils;
 
 
 // TODO:

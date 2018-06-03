@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Ramp;
+import nom.bdezonia.zorbage.procedure.impl.Ramp;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;

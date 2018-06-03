@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.condition;
 
-import nom.bdezonia.zorbage.basic.tuple.Tuple2;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**

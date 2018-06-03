@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure2;
-import nom.bdezonia.zorbage.basic.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;

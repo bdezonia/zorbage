@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.region;
 
+import nom.bdezonia.zorbage.misc.RealUtils;
 import nom.bdezonia.zorbage.sampling.RealIndex;
-import nom.bdezonia.zorbage.util.RealUtils;
 
 /**
  * 

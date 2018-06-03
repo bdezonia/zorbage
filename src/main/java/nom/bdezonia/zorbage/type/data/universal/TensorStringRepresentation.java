@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import nom.bdezonia.zorbage.util.BigList;
-import nom.bdezonia.zorbage.util.LongUtils;
+import nom.bdezonia.zorbage.misc.BigList;
+import nom.bdezonia.zorbage.misc.LongUtils;
 
 /**
  * 

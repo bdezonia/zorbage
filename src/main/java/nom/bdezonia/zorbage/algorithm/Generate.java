@@ -1,7 +1,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.basic.procedure.Procedure;
-import nom.bdezonia.zorbage.basic.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
