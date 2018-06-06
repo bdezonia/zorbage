@@ -34,11 +34,11 @@ import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
  * @author Barry DeZonia
  *
  */
-public class PrincipalComplexRootOfUnity {
+public class ComplexRootOfUnity {
 
 	// do not instantiate
 	
-	private PrincipalComplexRootOfUnity() {}
+	private ComplexRootOfUnity() {}
 	
 	// TODO: for values of m very large this math will break down
 
