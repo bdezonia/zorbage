@@ -40,7 +40,7 @@ public class ComplexRootOfUnity {
 	
 	private ComplexRootOfUnity() {}
 	
-	// TODO: for values of m/n very large this math will break down
+	// NOTE: for values of m or n very large (about 2^52) this math will break down.
 
 	/**
 	 * Compute a root of unity given the order m and suborder n.
