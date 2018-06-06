@@ -40,29 +40,35 @@ public class ComplexRootOfUnity {
 	
 	private ComplexRootOfUnity() {}
 	
-	// TODO: for values of m very large this math will break down
+	// TODO: for values of m/n very large this math will break down
 
 	/**
-	 * Compute the principal root of unity given the order m.
-	 * @param m Order of principal root.
-	 * @param principalRoot Output value.
+	 * Compute a root of unity given the order m and suborder n.
+	 * @param m Order of the root. The m'th root of unity.
+	 * @param n Suborder of the root. 0 <= n < m.
+	 * @param root Output value.
 	 */
 	public static
-		void compute(long m, ComplexFloat64Member principalRoot)
+		void compute(long m, long n, ComplexFloat64Member root)
 	{
+		if (n < 0 || n >= m)
+			throw new IllegalArgumentException("n outside bounds of [0,m-1]: n = "+n+" m = "+m);
 		ComplexFloat64Member e = G.CDBL.construct();
 		ComplexFloat64Member power = G.CDBL.construct();
 		ComplexFloat64Member two = G.CDBL.construct();
 		ComplexFloat64Member I = G.CDBL.construct();
 		ComplexFloat64Member M = G.CDBL.construct();
+		ComplexFloat64Member N = G.CDBL.construct();
 		two.setR(2);
 		I.setI(1);
 		M.setR(m);
+		N.setR(n);
 		G.CDBL.E(e);
 		G.CDBL.PI(power);
 		G.CDBL.multiply(power, two, power);
 		G.CDBL.multiply(power, I, power);
 		G.CDBL.divide(power, M, power);
-		G.CDBL.pow(e, power, principalRoot);
+		G.CDBL.multiply(power, N, power);
+		G.CDBL.pow(e, power, root);
 	}
 }
