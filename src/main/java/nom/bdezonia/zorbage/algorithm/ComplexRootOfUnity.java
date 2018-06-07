@@ -49,9 +49,9 @@ public class ComplexRootOfUnity {
 	public static
 		void compute(int m, int n, ComplexFloat64Member root)
 	{
-		if (n < 0 || m < 0)
-			throw new IllegalArgumentException("negative argument exception");
-		if (n < 1 || n > m)
+		if (n < 1 || m < 1)
+			throw new IllegalArgumentException("arguments must be positive");
+		if (n > m)
 			throw new IllegalArgumentException("n outside bounds of [1,m]: n = "+n+" m = "+m);
 		ComplexFloat64Member e = G.CDBL.construct();
 		ComplexFloat64Member power = G.CDBL.construct();
