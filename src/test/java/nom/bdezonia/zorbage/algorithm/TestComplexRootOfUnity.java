@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 
@@ -34,41 +38,54 @@ import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
  * @author Barry DeZonia
  *
  */
-public class ComplexRootOfUnity {
+public class TestComplexRootOfUnity {
 
-	// do not instantiate
-	
-	private ComplexRootOfUnity() {}
-	
-	/**
-	 * Compute a root of unity given the order m and suborder n.
-	 * @param m Order of the root. The m'th root of unity.
-	 * @param n Suborder of the root. 1 <= n <= m.
-	 * @param root Output value.
-	 */
-	public static
-		void compute(int m, int n, ComplexFloat64Member root)
-	{
-		if (n < 0 || m < 0)
-			throw new IllegalArgumentException("negative argument exception");
-		if (n < 1 || n > m)
-			throw new IllegalArgumentException("n outside bounds of [1,m]: n = "+n+" m = "+m);
-		ComplexFloat64Member e = G.CDBL.construct();
-		ComplexFloat64Member power = G.CDBL.construct();
-		ComplexFloat64Member two = G.CDBL.construct();
-		ComplexFloat64Member I = G.CDBL.construct();
-		ComplexFloat64Member M = G.CDBL.construct();
-		ComplexFloat64Member N = G.CDBL.construct();
-		two.setR(2);
-		I.setI(1);
-		M.setR(m);
-		N.setR(n);
-		G.CDBL.E(e);
-		G.CDBL.PI(power);
-		G.CDBL.multiply(power, two, power);
-		G.CDBL.multiply(power, I, power);
-		G.CDBL.divide(power, M, power);
-		G.CDBL.multiply(power, N, power);
-		G.CDBL.pow(e, power, root);
+	@Test
+	public void test() {
+		
+		double tol = 0.00000000000001; 
+		
+		ComplexFloat64Member root = G.CDBL.construct();
+		
+		ComplexRootOfUnity.compute(1, 1, root);
+		assertEquals(1, root.r(), tol);
+		assertEquals(0, root.i(), tol);
+		
+		ComplexRootOfUnity.compute(2, 1, root);
+		assertEquals(-1, root.r(), tol);
+		assertEquals(0, root.i(), tol);
+		
+		ComplexRootOfUnity.compute(2, 2, root);
+		assertEquals(1, root.r(), tol);
+		assertEquals(0, root.i(), tol);
+		
+		ComplexRootOfUnity.compute(3, 1, root);
+		assertEquals(-0.5, root.r(), tol);
+		assertEquals(Math.sqrt(3)/2, root.i(), tol);
+		
+		ComplexRootOfUnity.compute(3, 2, root);
+		assertEquals(-0.5, root.r(), tol);
+		assertEquals(-Math.sqrt(3)/2, root.i(), tol);
+		
+		ComplexRootOfUnity.compute(3, 3, root);
+		assertEquals(1, root.r(), tol);
+		assertEquals(0, root.i(), tol);
+
+		ComplexRootOfUnity.compute(4, 1, root);
+		assertEquals(0, root.r(), tol);
+		assertEquals(1, root.i(), tol);
+
+		ComplexRootOfUnity.compute(4, 2, root);
+		assertEquals(-1, root.r(), tol);
+		assertEquals(0, root.i(), tol);
+
+		ComplexRootOfUnity.compute(4, 3, root);
+		assertEquals(0, root.r(), tol);
+		assertEquals(-1, root.i(), tol);
+
+		ComplexRootOfUnity.compute(4, 4, root);
+		assertEquals(1, root.r(), tol);
+		assertEquals(0, root.i(), tol);
+		
 	}
 }
