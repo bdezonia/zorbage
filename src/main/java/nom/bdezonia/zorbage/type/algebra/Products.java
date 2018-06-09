@@ -36,7 +36,7 @@ public interface Products<U,V,W> extends Scale<U,V> {
 	void crossProduct(U a, U b, U c);
 	void dotProduct(U a, U b, V c);
 	void perpDotProduct(U a, U b, V c);
-	void vectorDirectProduct(U a, U b, W c); // TODO implement Tensor support and rename for rmodules
+	void vectorDirectProduct(U a, U b, W c); // TODO rename for rmodules
 	void vectorTripleProduct(U a, U b, U c, U d); // TODO rename from vector to something for both vectors and rmodules
 	void scalarTripleProduct(U a, U b, U c, V d); // TODO rename from scalar to something for both vectors and rmodules
 }
