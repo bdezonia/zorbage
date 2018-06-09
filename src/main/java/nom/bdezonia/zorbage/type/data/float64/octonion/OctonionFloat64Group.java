@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
+import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -70,9 +71,12 @@ public class OctonionFloat64Group
     Trigonometric<OctonionFloat64Member>,
     Hyperbolic<OctonionFloat64Member>,
     Power<OctonionFloat64Member>,
+    Roots<OctonionFloat64Member>,
     RealUnreal<OctonionFloat64Member,Float64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member ONE_HALF = new OctonionFloat64Member(0.5, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE = new OctonionFloat64Member(1, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member TWO = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
@@ -711,5 +715,15 @@ public class OctonionFloat64Group
 	@Override
 	public void sincpi(OctonionFloat64Member a, OctonionFloat64Member b) {
 		Sincpi.compute(this, a, b);
+	}
+
+	@Override
+	public void sqrt(OctonionFloat64Member a, OctonionFloat64Member b) {
+		pow(a, ONE_HALF, b);
+	}
+
+	@Override
+	public void cbrt(OctonionFloat64Member a, OctonionFloat64Member b) {
+		pow(a, ONE_THIRD, b);
 	}
 }

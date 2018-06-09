@@ -92,6 +92,7 @@ public class ComplexFloat64Group
 	private static final ComplexFloat64Member PI = new ComplexFloat64Member(Math.PI,0);
 	private static final ComplexFloat64Member E = new ComplexFloat64Member(Math.E,0);
 	private static final ComplexFloat64Member ONE_HALF = new ComplexFloat64Member(0.5,0);
+	private static final ComplexFloat64Member ONE_THIRD = new ComplexFloat64Member(1.0/3,0);
 	private static final ComplexFloat64Member I = new ComplexFloat64Member(0,1);
 	private static final ComplexFloat64Member I_OVER_TWO = new ComplexFloat64Member(0,0.5);
 	private static final ComplexFloat64Member TWO_I = new ComplexFloat64Member(0,2);
@@ -612,8 +613,7 @@ public class ComplexFloat64Group
 	
 	@Override
 	public void cbrt(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member(1.0/3,0);
-		pow(a,tmp,b);
+		pow(a,ONE_THIRD,b);
 	}
 
 	@Override

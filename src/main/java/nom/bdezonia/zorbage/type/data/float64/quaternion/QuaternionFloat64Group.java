@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
+import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -67,16 +68,18 @@ public class QuaternionFloat64Group
     Trigonometric<QuaternionFloat64Member>,
     Hyperbolic<QuaternionFloat64Member>,
     Power<QuaternionFloat64Member>,
+    Roots<QuaternionFloat64Member>,
     RealUnreal<QuaternionFloat64Member,Float64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
+	private static final QuaternionFloat64Member ONE_THIRD = new QuaternionFloat64Member(1.0/3,0,0,0);
+	private static final QuaternionFloat64Member ONE_HALF = new QuaternionFloat64Member(0.5,0,0,0);
 	private static final QuaternionFloat64Member ONE = new QuaternionFloat64Member(1,0,0,0);
 	private static final QuaternionFloat64Member TWO = new QuaternionFloat64Member(2,0,0,0);
 	private static final QuaternionFloat64Member E = new QuaternionFloat64Member(Math.E,0,0,0);
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	
-	public QuaternionFloat64Group() {
-	}
+	public QuaternionFloat64Group() { }
 	
 	@Override
 	public void unity(QuaternionFloat64Member a) {
@@ -442,5 +445,15 @@ public class QuaternionFloat64Group
 	@Override
 	public void sincpi(QuaternionFloat64Member a, QuaternionFloat64Member b) {
 		Sincpi.compute(this, a, b);
+	}
+
+	@Override
+	public void sqrt(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		pow(a, ONE_HALF, b);
+	}
+
+	@Override
+	public void cbrt(QuaternionFloat64Member a, QuaternionFloat64Member b) {
+		pow(a, ONE_THIRD, b);
 	}
 }
