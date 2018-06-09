@@ -191,6 +191,8 @@ public class Float64TensorProduct
 
 	@Override
 	public void norm(Float64TensorProductMember a, Float64Member b) {
+		// TODO: to port to complex, quat, oct do I need to multiply() not by self but by the
+		// conjugate of self. We need to transform a comp, quat, oct into a real.
 		Float64Member max = new Float64Member();
 		Float64Member value = new Float64Member();
 		for (long i = 0; i < a.numElems(); i++) {
@@ -203,13 +205,12 @@ public class Float64TensorProduct
 		for (long i = 0; i < a.numElems(); i++) {
 			a.v(i, value);
 			G.DBL.divide(value, max, value);
-			G.DBL.multiply(value, value, value);
+			G.DBL.multiply(value, value, value); // See TODO above
 			G.DBL.add(sum, value, sum);
 		}
 		G.DBL.sqrt(sum, sum);
 		G.DBL.multiply(max, sum, sum);
 		G.DBL.assign(sum, b);
-		b.setV(sum);
 	}
 
 
