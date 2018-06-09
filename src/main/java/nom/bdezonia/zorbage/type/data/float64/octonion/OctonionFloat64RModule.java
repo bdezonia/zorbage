@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -54,7 +55,7 @@ public class OctonionFloat64RModule
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
     Constructible1dLong<OctonionFloat64RModuleMember>,
 	Norm<OctonionFloat64RModuleMember,Float64Member>,
-	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, Object>
+	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, OctonionFloat64MatrixMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
@@ -180,9 +181,8 @@ public class OctonionFloat64RModule
 	}
 
 	@Override
-	public void vectorDirectProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, Object c) {
-		// TODO Auto-generated method stub
-		
+	public void vectorDirectProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64MatrixMember c) {
+		RModuleDirectProduct.compute(G.ODBL, a, b, c);
 	}
 
 }

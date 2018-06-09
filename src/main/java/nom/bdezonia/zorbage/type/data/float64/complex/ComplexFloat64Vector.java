@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -54,7 +55,7 @@ public class ComplexFloat64Vector
     VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
     Constructible1dLong<ComplexFloat64VectorMember>,
     Norm<ComplexFloat64VectorMember,Float64Member>,
-    Products<ComplexFloat64VectorMember, ComplexFloat64Member, Object>
+    Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -176,9 +177,8 @@ public class ComplexFloat64Vector
 	}
 
 	@Override
-	public void vectorDirectProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, Object c) {
-		// TODO Auto-generated method stub
-		
+	public void vectorDirectProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64MatrixMember c) {
+		RModuleDirectProduct.compute(G.CDBL, a, b, c);
 	}
 
 }

@@ -31,12 +31,12 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
+import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -181,17 +181,7 @@ public class Float64Vector
 
 	@Override
 	public void vectorDirectProduct(Float64VectorMember a, Float64VectorMember b, Float64MatrixMember c) {
-		c.alloc(a.length(), b.length());
-		Float64Member val1 = G.DBL.construct();
-		Float64Member val2 = G.DBL.construct();
-		for (long row = 0; row < a.length(); row++) {
-			a.v(row, val1);
-			for (long col = 0; col < b.length(); col++) {
-				b.v(col, val2);
-				G.DBL.multiply(val1, val2, val2);
-				c.setV(row, col, val2);
-			}
-		}
+		RModuleDirectProduct.compute(G.DBL, a, b, c);
 	}
 
 }
