@@ -54,7 +54,7 @@ public class OctonionFloat64RModule
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
     Constructible1dLong<OctonionFloat64RModuleMember>,
 	Norm<OctonionFloat64RModuleMember,Float64Member>,
-	Products<OctonionFloat64RModuleMember, OctonionFloat64Member>
+	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, Object>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
@@ -177,6 +177,12 @@ public class OctonionFloat64RModule
 	@Override
 	public void conjugate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 		RModuleConjugate.compute(G.ODBL, a, b);
+	}
+
+	@Override
+	public void vectorDirectProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, Object c) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

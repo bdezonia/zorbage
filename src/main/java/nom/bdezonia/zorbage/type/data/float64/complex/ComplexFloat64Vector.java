@@ -54,7 +54,7 @@ public class ComplexFloat64Vector
     VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
     Constructible1dLong<ComplexFloat64VectorMember>,
     Norm<ComplexFloat64VectorMember,Float64Member>,
-    Products<ComplexFloat64VectorMember, ComplexFloat64Member>
+    Products<ComplexFloat64VectorMember, ComplexFloat64Member, Object>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -173,6 +173,12 @@ public class ComplexFloat64Vector
 	@Override
 	public void conjugate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 		RModuleConjugate.compute(G.CDBL, a, b);
+	}
+
+	@Override
+	public void vectorDirectProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, Object c) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

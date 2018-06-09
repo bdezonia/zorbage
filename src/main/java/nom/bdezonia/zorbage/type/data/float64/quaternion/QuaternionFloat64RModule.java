@@ -54,7 +54,7 @@ public class QuaternionFloat64RModule
     RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Group,QuaternionFloat64Member>,
     Constructible1dLong<QuaternionFloat64RModuleMember>,
     Norm<QuaternionFloat64RModuleMember,Float64Member>,
-    Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member>
+    Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, Object>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
@@ -173,6 +173,12 @@ public class QuaternionFloat64RModule
 	@Override
 	public void conjugate(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
 		RModuleConjugate.compute(G.QDBL, a, b);
+	}
+
+	@Override
+	public void vectorDirectProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, Object c) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

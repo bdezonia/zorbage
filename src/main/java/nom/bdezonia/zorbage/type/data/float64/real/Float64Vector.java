@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -52,7 +53,7 @@ public class Float64Vector
     VectorSpace<Float64Vector,Float64VectorMember,Float64Group,Float64Member>,
     Constructible1dLong<Float64VectorMember>,
 	Norm<Float64VectorMember,Float64Member>,
-	Products<Float64VectorMember, Float64Member>
+	Products<Float64VectorMember, Float64Member, Float64TensorProductMember>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -176,6 +177,24 @@ public class Float64Vector
 	@Override
 	public void conjugate(Float64VectorMember a, Float64VectorMember b) {
 		assign(a,b);
+	}
+
+	@Override
+	public void vectorDirectProduct(Float64VectorMember a, Float64VectorMember b, Float64TensorProductMember c) {
+		c.alloc(new long[] {b.length(), a.length()});
+		IntegerIndex idx = new IntegerIndex(2);
+		Float64Member val1 = G.DBL.construct();
+		Float64Member val2 = G.DBL.construct();
+		for (long row = 0; row < a.length(); row++) {
+			idx.set(1, row);
+			a.v(row, val1);
+			for (long col = 0; col < b.length(); col++) {
+				idx.set(0, col);
+				b.v(row, val2);
+				G.DBL.multiply(val1, val2, val2);
+				c.setV(idx, val2);
+			}
+		}
 	}
 
 }
