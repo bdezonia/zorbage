@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
@@ -41,7 +40,7 @@ public class RModuleDirectProduct {
 
 	private RModuleDirectProduct() { }
 	
-	public static <T extends Group<T,U> & Addition<U> & Multiplication<U>,U>
+	public static <T extends Group<T,U> & Multiplication<U>,U>
 		void compute(T group, RModuleMember<U> a, RModuleMember<U> b, MatrixMember<U> c)
 	{
 		c.alloc(a.length(), b.length());
