@@ -190,7 +190,7 @@ public class OctonionFloat64Matrix
 	@Override
 	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
 		// invert and multiply
-		OctonionFloat64MatrixMember invB = construct(b);
+		OctonionFloat64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
 		invert(b, invB);
 		multiply(a, invB, c);
 	}

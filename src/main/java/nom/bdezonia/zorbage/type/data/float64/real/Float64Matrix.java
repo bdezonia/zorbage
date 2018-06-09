@@ -184,7 +184,7 @@ public class Float64Matrix
 	@Override
 	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
 		// invert and multiply
-		Float64MatrixMember invB = construct(b);
+		Float64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
 		invert(b, invB);
 		multiply(a, invB, c);
 	}
