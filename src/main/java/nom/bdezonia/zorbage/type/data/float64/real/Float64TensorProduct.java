@@ -191,12 +191,27 @@ public class Float64TensorProduct
 
 	@Override
 	public void norm(Float64TensorProductMember a, Float64Member b) {
-		throw new IllegalArgumentException("TODO");
+		Float64Member max = new Float64Member();
+		Float64Member value = new Float64Member();
+		for (long i = 0; i < a.numElems(); i++) {
+			a.v(i, value);
+			G.DBL.abs(value, value);
+			if (G.DBL.isGreater(value, max))
+				G.DBL.assign(value, max);
+		}
+		double sum = 0;
+		for (long i = 0; i < a.numElems(); i++) {
+			a.v(i, value);
+			sum += (value.v() / max.v()) * (value.v() / max.v());
+		}
+		sum = max.v() * Math.sqrt(sum);
+		b.setV(sum);
 	}
 
 
 	@Override
 	public void conjugate(Float64TensorProductMember a, Float64TensorProductMember b) {
+		// TODO: is this correct?
 		assign(a,b);
 	}
 
@@ -327,6 +342,7 @@ public class Float64TensorProduct
 	
 	@Override
 	public void commaDerivative(int someArgs) {
+		
 		throw new IllegalArgumentException("TODO");
 	}
 	
