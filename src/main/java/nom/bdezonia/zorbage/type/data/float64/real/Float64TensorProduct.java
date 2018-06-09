@@ -195,16 +195,20 @@ public class Float64TensorProduct
 		Float64Member value = new Float64Member();
 		for (long i = 0; i < a.numElems(); i++) {
 			a.v(i, value);
-			G.DBL.abs(value, value);
+			G.DBL.norm(value, value);
 			if (G.DBL.isGreater(value, max))
 				G.DBL.assign(value, max);
 		}
-		double sum = 0;
+		Float64Member sum = new Float64Member();
 		for (long i = 0; i < a.numElems(); i++) {
 			a.v(i, value);
-			sum += (value.v() / max.v()) * (value.v() / max.v());
+			G.DBL.divide(value, max, value);
+			G.DBL.multiply(value, value, value);
+			G.DBL.add(sum, value, sum);
 		}
-		sum = max.v() * Math.sqrt(sum);
+		G.DBL.sqrt(sum, sum);
+		G.DBL.multiply(max, sum, sum);
+		G.DBL.assign(sum, b);
 		b.setV(sum);
 	}
 
