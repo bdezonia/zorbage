@@ -61,7 +61,7 @@ public class Average<T extends Group<T,U> & Unity<U> & Addition<U> & Invertible<
 				group.add(count, one, count);
 				group.add(sum, inputs[i], sum);
 			}
-			group.divide(count, sum, result);
+			group.divide(sum, count, result);
 		}
 	}
 
