@@ -47,16 +47,11 @@ public class Sum<T extends Group<T,U> & Addition<U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		if (inputs.length == 0) {
-			group.zero(result);
+		U sum = group.construct();
+		for (int i = 0; i < inputs.length; i++) {
+			group.add(sum, inputs[i], sum);
 		}
-		else {
-			U sum = group.construct();
-			for (int i = 0; i < inputs.length; i++) {
-				group.add(sum, inputs[i], sum);
-			}
-			group.assign(sum, result);
-		}
+		group.assign(sum, result);
 	}
 
 }

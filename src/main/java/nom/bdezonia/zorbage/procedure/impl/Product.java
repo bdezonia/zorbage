@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -37,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  *
  */
-public class Product<T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U>,U>
+public class Product<T extends Group<T,U> & Multiplication<U> & Unity<U>,U>
 	implements Procedure<U>
 {
 	private final T group;
@@ -49,17 +48,14 @@ public class Product<T extends Group<T,U> & Addition<U> & Multiplication<U> & Un
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		if (inputs.length == 0) {
-			group.zero(result);
-		}
-		else {
-			U prod = group.construct();
+		U prod = group.construct();
+		if (inputs.length != 0) {
 			group.unity(prod);
-			for (int i = 0; i < inputs.length; i++) {
-				group.multiply(prod, inputs[i], prod);
-			}
-			group.assign(prod, result);
 		}
+		for (int i = 0; i < inputs.length; i++) {
+			group.multiply(prod, inputs[i], prod);
+		}
+		group.assign(prod, result);
 	}
 
 }
