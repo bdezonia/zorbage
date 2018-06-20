@@ -75,13 +75,32 @@ public class MultiDimAccessor<T extends IndexedDataSource<T,U>,U>
 		storage.set(idx, v);
 	}
 	
+	public void setSafe(long[] index, U v) {
+		boundsCheck(index);
+		set(index, v);
+	}
+	
 	public void get(long[] index, U v) {
 		long idx = indexToLong(index);
 		storage.get(idx, v);
 	}
 	
+	public void getSafe(long[] index, U v) {
+		boundsCheck(index);
+		get(index, v);
+	}
+	
 	public long numElements() {
 		return storage.size();
+	}
+
+	private void boundsCheck(long[] index) {
+		if (index.length != this.dims.length)
+			throw new IllegalArgumentException("index dimensionality not the same as accessor dimensions");
+		for (int i = 0; i < index.length; i++) {
+			if (index[i] < 0 || index[i] >= this.dims[i])
+				throw new IllegalArgumentException("index out of bounds of accessor dimensions");
+		}
 	}
 	
 	/*
