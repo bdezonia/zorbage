@@ -140,7 +140,7 @@ public class OctonionFloat64Matrix
 
 	@Override
 	public void round(Round.Mode mode, Float64Member delta, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixRound.compute(G.DBL, G.ODBL, mode, delta, a, b);
+		MatrixRound.compute(G.ODBL, mode, delta, a, b);
 	}
 
 	@Override

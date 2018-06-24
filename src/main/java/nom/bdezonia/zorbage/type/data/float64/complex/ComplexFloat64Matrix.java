@@ -141,7 +141,7 @@ public class ComplexFloat64Matrix
 
 	@Override
 	public void round(Round.Mode mode, Float64Member delta, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-		MatrixRound.compute(G.DBL, G.CDBL, mode, delta, a, b);
+		MatrixRound.compute(G.CDBL, mode, delta, a, b);
 	}
 
 	@Override

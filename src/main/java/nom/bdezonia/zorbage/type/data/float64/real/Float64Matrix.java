@@ -138,7 +138,7 @@ public class Float64Matrix
 
 	@Override
 	public void round(Round.Mode mode, Float64Member delta, Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixRound.compute(G.DBL, G.DBL, mode, delta, a, b);
+		MatrixRound.compute(G.DBL, mode, delta, a, b);
 	}
 
 	@Override

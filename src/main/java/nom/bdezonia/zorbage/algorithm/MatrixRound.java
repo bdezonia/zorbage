@@ -40,8 +40,8 @@ public class MatrixRound {
 
 	private MatrixRound() { }
 	
-	public static <T extends Group<T,U>, U, V extends Group<V,W> & Rounding<U,W>, W extends NumberMember<W>>
-		void compute(T numGroup, V entityGroup, Round.Mode mode, U delta, MatrixMember<W> a, MatrixMember<W> b)
+	public static <U, V extends Group<V,W> & Rounding<U,W>, W extends NumberMember<W>>
+		void compute(V entityGroup, Round.Mode mode, U delta, MatrixMember<W> a, MatrixMember<W> b)
 	{
 		if (a != b)
 			b.alloc(a.rows(), a.cols());

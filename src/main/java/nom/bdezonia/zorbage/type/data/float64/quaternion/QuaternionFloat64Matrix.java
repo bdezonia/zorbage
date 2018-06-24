@@ -140,7 +140,7 @@ public class QuaternionFloat64Matrix
 
 	@Override
 	public void round(Round.Mode mode, Float64Member delta, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixRound.compute(G.DBL, G.QDBL, mode, delta, a, b);
+		MatrixRound.compute(G.QDBL, mode, delta, a, b);
 	}
 
 	@Override
