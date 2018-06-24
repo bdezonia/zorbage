@@ -40,12 +40,12 @@ public class MatrixRound {
 
 	private MatrixRound() { }
 	
-	public static <U, V extends Group<V,W> & Rounding<U,W>, W extends NumberMember<W>>
-		void compute(V entityGroup, Round.Mode mode, U delta, MatrixMember<W> a, MatrixMember<W> b)
+	public static <T extends Group<T,U> & Rounding<W,U>, U extends NumberMember<U>, W>
+		void compute(T entityGroup, Round.Mode mode, W delta, MatrixMember<U> a, MatrixMember<U> b)
 	{
 		if (a != b)
 			b.alloc(a.rows(), a.cols());
-		W tmp = entityGroup.construct();
+		U tmp = entityGroup.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
