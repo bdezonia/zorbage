@@ -42,8 +42,8 @@ public class MatrixSubtraction {
 	public static <T extends Group<T,U> & Addition<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
-		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
-		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
+		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
+		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");
 		if (c != a && c != b) {
 			c.alloc(a.rows(), a.cols());
 		}
