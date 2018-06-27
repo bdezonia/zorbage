@@ -55,7 +55,7 @@ public class MatrixDirectProduct {
 					for (long c2 = 0; c2 < in2.cols(); c2++) {
 						in2.v(r2, c2, tmp2);
 						group.multiply(tmp1, tmp2, tmp3);
-						out.setV(r1*in2.rows(), c1*in2.cols(), tmp3);
+						out.setV(r1*in2.rows()+r2, c1*in2.cols()+c2, tmp3);
 					}
 				}
 			}
