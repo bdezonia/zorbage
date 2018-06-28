@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
@@ -43,6 +44,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
@@ -61,7 +63,8 @@ public class Float64Matrix
 		MatrixRing<Float64Matrix, Float64MatrixMember, Float64Group, Float64Member>,
 		Constructible2dLong<Float64MatrixMember>,
 		Rounding<Float64Member, Float64MatrixMember>,
-		Norm<Float64MatrixMember,Float64Member>
+		Norm<Float64MatrixMember,Float64Member>,
+		DirectProduct<Float64MatrixMember, Float64MatrixMember>
 {
 	public Float64Matrix() { }
 
@@ -187,6 +190,11 @@ public class Float64Matrix
 		Float64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
 		invert(b, invB);
 		multiply(a, invB, c);
+	}
+
+	@Override
+	public void directProduct(Float64MatrixMember in1, Float64MatrixMember in2, Float64MatrixMember out) {
+		MatrixDirectProduct.compute(G.DBL, in1, in2, out);
 	}
 
 }

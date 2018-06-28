@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
@@ -44,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
@@ -63,7 +65,8 @@ public class OctonionFloat64Matrix
 		MatrixRing<OctonionFloat64Matrix, OctonionFloat64MatrixMember, OctonionFloat64Group, OctonionFloat64Member>,
 		Constructible2dLong<OctonionFloat64MatrixMember>,
 		Rounding<Float64Member, OctonionFloat64MatrixMember>,
-		Norm<OctonionFloat64MatrixMember,Float64Member>
+		Norm<OctonionFloat64MatrixMember,Float64Member>,
+		DirectProduct<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember>
 {
 	public OctonionFloat64Matrix() { }
 
@@ -195,4 +198,10 @@ public class OctonionFloat64Matrix
 		multiply(a, invB, c);
 	}
 
+	@Override
+	public void directProduct(OctonionFloat64MatrixMember in1, OctonionFloat64MatrixMember in2,
+			OctonionFloat64MatrixMember out)
+	{
+		MatrixDirectProduct.compute(G.ODBL, in1, in2, out);
+	}
 }

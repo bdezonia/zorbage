@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -55,11 +56,12 @@ public class OctonionFloat64RModule
     RModule<OctonionFloat64RModule,OctonionFloat64RModuleMember,OctonionFloat64Group,OctonionFloat64Member>,
     Constructible1dLong<OctonionFloat64RModuleMember>,
 	Norm<OctonionFloat64RModuleMember,Float64Member>,
-	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, OctonionFloat64MatrixMember>
+	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, OctonionFloat64MatrixMember>,
+	DirectProduct<OctonionFloat64RModuleMember, OctonionFloat64MatrixMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
-	public OctonionFloat64RModule() {}
+	public OctonionFloat64RModule() { }
 	
 	@Override
 	public void zero(OctonionFloat64RModuleMember a) {
@@ -182,7 +184,14 @@ public class OctonionFloat64RModule
 
 	@Override
 	public void vectorDirectProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64MatrixMember c) {
-		RModuleDirectProduct.compute(G.ODBL, a, b, c);
+		directProduct(a, b, c);
+	}
+
+	@Override
+	public void directProduct(OctonionFloat64RModuleMember in1, OctonionFloat64RModuleMember in2,
+			OctonionFloat64MatrixMember out)
+	{
+		RModuleDirectProduct.compute(G.ODBL, in1, in2, out);
 	}
 
 }

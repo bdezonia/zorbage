@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -55,12 +56,12 @@ public class QuaternionFloat64RModule
     RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Group,QuaternionFloat64Member>,
     Constructible1dLong<QuaternionFloat64RModuleMember>,
     Norm<QuaternionFloat64RModuleMember,Float64Member>,
-    Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, QuaternionFloat64MatrixMember>
+    Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, QuaternionFloat64MatrixMember>,
+    DirectProduct<QuaternionFloat64RModuleMember, QuaternionFloat64MatrixMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
-	public QuaternionFloat64RModule() {
-	}
+	public QuaternionFloat64RModule() { }
 	
 	@Override
 	public void zero(QuaternionFloat64RModuleMember a) {
@@ -178,7 +179,14 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public void vectorDirectProduct(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64MatrixMember c) {
-		RModuleDirectProduct.compute(G.QDBL, a, b, c);
+		directProduct(a, b, c);
+	}
+
+	@Override
+	public void directProduct(QuaternionFloat64RModuleMember in1, QuaternionFloat64RModuleMember in2,
+			QuaternionFloat64MatrixMember out)
+	{
+		RModuleDirectProduct.compute(G.QDBL, in1, in2, out);
 	}
 
 }

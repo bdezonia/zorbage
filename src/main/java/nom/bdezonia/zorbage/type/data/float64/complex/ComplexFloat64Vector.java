@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
@@ -55,12 +56,12 @@ public class ComplexFloat64Vector
     VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Group,ComplexFloat64Member>,
     Constructible1dLong<ComplexFloat64VectorMember>,
     Norm<ComplexFloat64VectorMember,Float64Member>,
-    Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>
+    Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>,
+    DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
-	public ComplexFloat64Vector() {
-	}
+	public ComplexFloat64Vector() { }
 	
 	@Override
 	public void zero(ComplexFloat64VectorMember a) {
@@ -178,7 +179,14 @@ public class ComplexFloat64Vector
 
 	@Override
 	public void vectorDirectProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64MatrixMember c) {
-		RModuleDirectProduct.compute(G.CDBL, a, b, c);
+		directProduct(a, b, c);
+	}
+
+	@Override
+	public void directProduct(ComplexFloat64VectorMember in1, ComplexFloat64VectorMember in2,
+			ComplexFloat64MatrixMember out)
+	{
+		RModuleDirectProduct.compute(G.CDBL, in1, in2, out);
 	}
 
 }
