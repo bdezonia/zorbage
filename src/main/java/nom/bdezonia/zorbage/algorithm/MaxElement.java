@@ -63,6 +63,8 @@ public class MaxElement {
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U max)
 	{
+		if (count <= 0)
+			throw new IllegalArgumentException("max undefined for empty list");
 		U tmp = grp.construct();
 		grp.minBound(max);
 		for (long i = 0; i < count; i++) {

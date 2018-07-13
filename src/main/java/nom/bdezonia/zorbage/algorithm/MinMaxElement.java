@@ -65,6 +65,8 @@ public class MinMaxElement {
 	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min, U max)
 	{
+		if (count <= 0)
+			throw new IllegalArgumentException("minmax undefined for empty list");
 		U tmp1 = grp.construct();
 		U tmp2 = grp.construct();
 		grp.maxBound(min);

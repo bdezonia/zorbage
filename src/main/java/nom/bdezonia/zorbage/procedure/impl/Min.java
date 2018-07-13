@@ -48,6 +48,8 @@ public class Min<T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
+		if (inputs.length == 0)
+			throw new IllegalArgumentException("min undefined for empty list");
 		U min = group.construct();
 		group.maxBound(min);
 		for (int i = 0; i < inputs.length; i++) {
