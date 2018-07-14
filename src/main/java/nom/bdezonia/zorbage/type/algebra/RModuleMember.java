@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageType;
 
 /**
  * 
@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  *
  * @param <A>
  */
-public interface RModuleMember<A> extends Dimensioned {
+public interface RModuleMember<A> extends Dimensioned, StorageType {
 	// 1 dims
 	long length();
 	boolean alloc(long len);
@@ -42,6 +42,5 @@ public interface RModuleMember<A> extends Dimensioned {
 	void reshape(long len);
 	void v(long i, A value);
 	void setV(long i, A value);
-	StorageConstruction storageType();
 }
 

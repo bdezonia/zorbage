@@ -24,24 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.algebra;
-
-import nom.bdezonia.zorbage.type.ctor.StorageType;
+package nom.bdezonia.zorbage.type.ctor;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <A>
  */
-public interface MatrixMember<A> extends Dimensioned, StorageType {
-	// 2 dims
-	long rows();
-	long cols();
-	boolean alloc(long rows, long cols);
-	void init(long rows, long cols);
-	void reshape(long rows, long cols);
-	void v(long r, long c, A value);
-	void setV(long r, long c, A value);
-}
+public interface StorageType {
 
+	StorageConstruction storageType();
+}
