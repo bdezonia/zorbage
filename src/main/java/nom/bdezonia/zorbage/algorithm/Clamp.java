@@ -47,11 +47,11 @@ public class Clamp {
 	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T group, U min, U max, U value, U result)
 	{
-		if (group.isLess(value, min))
-			group.assign(min, result);
-		else if (group.isGreater(value, max))
-			group.assign(max, result);
+		if (group.isLess().call(value, min))
+			group.assign().call(min, result);
+		else if (group.isGreater().call(value, max))
+			group.assign().call(max, result);
 		else
-			group.assign(value, result);
+			group.assign().call(value, result);
 	}
 }

@@ -46,7 +46,7 @@ public class Asin<T extends Group<T,U> & InverseTrigonometric<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.asin(a, b);
+		group.asin().call(a, b);
 	}
 
 }

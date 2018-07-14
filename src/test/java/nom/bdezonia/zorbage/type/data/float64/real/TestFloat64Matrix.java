@@ -62,10 +62,10 @@ public class TestFloat64Matrix {
 				for (long c = 0; c < m.cols(); c++) {
 					m.v(r, c, value);
 					if (r == c) {
-						assertTrue(G.DBL.isEqual(value, one));
+						assertTrue(G.DBL.isEqual().call(value, one));
 					}
 					else {
-						assertTrue(G.DBL.isEqual(value, zero));
+						assertTrue(G.DBL.isEqual().call(value, zero));
 					}
 				}
 			}

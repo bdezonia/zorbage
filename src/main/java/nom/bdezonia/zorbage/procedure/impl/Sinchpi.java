@@ -46,7 +46,7 @@ public class Sinchpi<T extends Group<T,U> & Hyperbolic<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.sinchpi(a, b);
+		group.sinchpi().call(a, b);
 	}
 
 }

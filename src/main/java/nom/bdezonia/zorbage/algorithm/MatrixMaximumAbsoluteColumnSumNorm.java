@@ -65,7 +65,7 @@ public class MatrixMaximumAbsoluteColumnSumNorm {
 			U value = numGroup.construct();
 			for (long r = 0; r < matrix.rows(); r++) {
 				matrix.v(r, c, value);
-				numGroup.norm(value, tmp);
+				numGroup.norm().call(value, tmp);
 				G.DBL.add(colSum, tmp, colSum);
 			}
 			if (G.DBL.isGreater(colSum, max))

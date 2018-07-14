@@ -26,18 +26,21 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Hyperbolic<U> {
-	void sinh(U a, U b);
-	void cosh(U a, U b);
-	void sinhAndCosh(U a, U s, U c);
-	void tanh(U a, U b);
-	void sinch(U a, U b);
-	void sinchpi(U a, U b); // this one is out of place. what if type doesn't support PI?
+	Procedure2<U,U> sinh();
+	Procedure2<U,U> cosh();
+	Procedure3<U,U,U> sinhAndCosh();
+	Procedure2<U,U> tanh();
+	Procedure2<U,U> sinch();
+	Procedure2<U,U> sinchpi(); // this one is out of place. what if type doesn't support PI?
 	//void csch(U a, U b);
 	//void sech(U a, U b);
 	//void coth(U a, U b);

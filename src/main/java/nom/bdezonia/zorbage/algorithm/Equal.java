@@ -70,7 +70,7 @@ public class Equal {
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp1);
 			b.get(bStart+i, tmp2);
-			if (group.isNotEqual(tmp1, tmp2))
+			if (group.isNotEqual().call(tmp1, tmp2))
 				return false;
 		}
 		return true;

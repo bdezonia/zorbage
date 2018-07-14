@@ -54,7 +54,7 @@ public class MatrixAddition {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				group.add(atmp, btmp, tmp);
+				group.add().call(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}

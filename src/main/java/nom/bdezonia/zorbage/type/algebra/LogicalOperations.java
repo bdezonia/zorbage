@@ -26,14 +26,17 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface LogicalOperations<U> {
-	void logicalAnd(U a, U b, U c);
-	void logicalOr(U a, U b, U c);
-	void logicalXor(U a, U b, U c);
-	void logicalNot(U a, U b);
+	Procedure3<U,U,U> logicalAnd();
+	Procedure3<U,U,U> logicalOr();
+	Procedure3<U,U,U> logicalXor();
+	Procedure2<U,U> logicalNot();
 }

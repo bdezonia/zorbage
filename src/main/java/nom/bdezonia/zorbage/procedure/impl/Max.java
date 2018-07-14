@@ -51,12 +51,12 @@ public class Max<T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("max undefined for empty list");
 		U max = group.construct();
-		group.minBound(max);
+		group.minBound().call(max);
 		for (int i = 0; i < inputs.length; i++) {
-			if (group.isGreater(inputs[i], max)) {
-				group.assign(inputs[i], max);
+			if (group.isGreater().call(inputs[i], max)) {
+				group.assign().call(inputs[i], max);
 			}
 		}
-		group.assign(max, result);
+		group.assign().call(max, result);
 	}
 }

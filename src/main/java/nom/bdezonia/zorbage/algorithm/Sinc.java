@@ -48,12 +48,12 @@ public class Sinc {
 		void compute(T group, U x, U result)
 	{
 		U tmp = group.construct();
-		if (group.isEqual(tmp, x)) {
-			group.unity(result);
+		if (group.isEqual().call(tmp, x)) {
+			group.unity().call(result);
 		}
 		else {
-			group.sin(x, tmp);
-			group.divide(tmp, x, result);
+			group.sin().call(x, tmp);
+			group.divide().call(tmp, x, result);
 		}
 	
 	}

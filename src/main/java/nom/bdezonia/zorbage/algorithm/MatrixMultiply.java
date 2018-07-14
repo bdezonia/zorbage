@@ -57,12 +57,12 @@ public class MatrixMultiply {
 		U term = group.construct();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				group.zero(sum);
+				group.zero().call(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					group.multiply(atmp, btmp, term);
-					group.add(sum, term, sum);
+					group.multiply().call(atmp, btmp, term);
+					group.add().call(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}

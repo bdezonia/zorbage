@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,8 +37,8 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface Addition<U>
 {
-	void zero(U a);                // setZero()
-	void negate(U a, U b);         // additive inverse
-	void add(U a, U b, U c);
-	void subtract(U a, U b, U c);
+	Procedure1<U> zero();           // setZero()
+	Procedure2<U,U> negate();       // additive inverse
+	Procedure3<U,U,U> add();
+	Procedure3<U,U,U> subtract();
 }

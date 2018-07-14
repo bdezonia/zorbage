@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Constants<T> {
-  void PI(T a);
-  void E(T a);
+	Procedure1<T> PI();
+	Procedure1<T> E();
 }

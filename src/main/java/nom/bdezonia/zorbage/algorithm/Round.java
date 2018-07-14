@@ -65,11 +65,11 @@ public class Round {
 		// For symmetry provide a NONE option. This simplifies algorithms
 		// from having to check "if mode == NONE should I skip Round?".
 		if (mode == Mode.NONE) {
-			group.assign(a,b);
+			group.assign().call(a,b);
 			return;
 		}
 		U zero = group.construct();
-		if (group.isLessEqual(delta,zero))
+		if (group.isLessEqual().call(delta,zero))
 			throw new IllegalArgumentException("rounding error: delta must be > 0");
 		U d = group.construct();
 		U m = group.construct();
@@ -78,96 +78,96 @@ public class Round {
 		U d1 = group.construct();
 		U m1 = group.construct();
 		U two = group.construct();
-		group.unity(two);
-		group.add(two, two, two);
-		group.divMod(a, delta, d, m);
-		group.multiply(delta, d, bTmp);
-		if (group.isNotEqual(m, zero)) {
+		group.unity().call(two);
+		group.add().call(two, two, two);
+		group.divMod().call(a, delta, d, m);
+		group.multiply().call(delta, d, bTmp);
+		if (group.isNotEqual().call(m, zero)) {
 			switch (mode) {
 				case NEGATIVE:
-					if (group.isEqual(bTmp, zero)) {
-						if (group.isLess(m, zero))
-							group.subtract(bTmp, delta, bTmp);
+					if (group.isEqual().call(bTmp, zero)) {
+						if (group.isLess().call(m, zero))
+							group.subtract().call(bTmp, delta, bTmp);
 					}
-					else if (group.isLess(bTmp, zero))
-						group.subtract(bTmp, delta, bTmp);
+					else if (group.isLess().call(bTmp, zero))
+						group.subtract().call(bTmp, delta, bTmp);
 					break;
 				case POSITIVE:
-					if (group.isEqual(bTmp, zero)) {
-						if (group.isGreater(m, zero))
-							group.add(bTmp, delta, bTmp);
+					if (group.isEqual().call(bTmp, zero)) {
+						if (group.isGreater().call(m, zero))
+							group.add().call(bTmp, delta, bTmp);
 					}
-					else if (group.isGreater(bTmp, zero))
-						group.add(bTmp, delta, bTmp);
+					else if (group.isGreater().call(bTmp, zero))
+						group.add().call(bTmp, delta, bTmp);
 					break;
 				case TOWARDS_ORIGIN:
 					// nothing to do: modular math has already chopped b
 					break;
 				case AWAY_FROM_ORIGIN:
-					if (group.isEqual(bTmp, zero)) {
-						if (group.isGreater(m, zero))
-							group.add(bTmp, delta, bTmp);
+					if (group.isEqual().call(bTmp, zero)) {
+						if (group.isGreater().call(m, zero))
+							group.add().call(bTmp, delta, bTmp);
 						else
-							group.subtract(bTmp, delta, bTmp);
+							group.subtract().call(bTmp, delta, bTmp);
 					}
-					else if (group.isGreater(bTmp, zero))
-						group.add(bTmp, delta, bTmp);
+					else if (group.isGreater().call(bTmp, zero))
+						group.add().call(bTmp, delta, bTmp);
 					else
-						group.subtract(bTmp, delta, bTmp);
+						group.subtract().call(bTmp, delta, bTmp);
 					break;
 				case HALF_UP:
 					// towards the origin unless it's >= half and then away
-					group.abs(m, absM);
-					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
-						if (group.isGreaterEqual(absM, d1))
-							group.add(bTmp, delta, bTmp);
+					group.abs().call(m, absM);
+					group.subtract().call(delta, absM, d1);
+					if (group.isGreater().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isGreater().call(m, zero))) {
+						if (group.isGreaterEqual().call(absM, d1))
+							group.add().call(bTmp, delta, bTmp);
 					}
-					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
-						if (group.isGreaterEqual(absM, d1))
-							group.subtract(bTmp, delta, bTmp);
+					else if (group.isLess().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isLess().call(m, zero))) {
+						if (group.isGreaterEqual().call(absM, d1))
+							group.subtract().call(bTmp, delta, bTmp);
 					}
 					// else bTmp == 0 and no rounding needed
 					break;
 				case HALF_DOWN:
 					// towards the origin unless it's > half and then away
-					group.abs(m, absM);
-					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
-						if (group.isGreater(absM, d1))
-							group.add(bTmp, delta, bTmp);
+					group.abs().call(m, absM);
+					group.subtract().call(delta, absM, d1);
+					if (group.isGreater().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isGreater().call(m, zero))) {
+						if (group.isGreater().call(absM, d1))
+							group.add().call(bTmp, delta, bTmp);
 					}
-					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
-						if (group.isGreater(absM, d1))
-							group.subtract(bTmp, delta, bTmp);
+					else if (group.isLess().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isLess().call(m, zero))) {
+						if (group.isGreater().call(absM, d1))
+							group.subtract().call(bTmp, delta, bTmp);
 					}
 					// else bTmp == 0 and no rounding needed
 					break;
 				case HALF_EVEN:
 					// towards nearest boundary but prefer even result
-					group.abs(m, absM);
-					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
-						if (group.isGreater(absM, d1))
-							group.add(bTmp, delta, bTmp);
-						else if (group.isEqual(absM, d1)) {
+					group.abs().call(m, absM);
+					group.subtract().call(delta, absM, d1);
+					if (group.isGreater().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isGreater().call(m, zero))) {
+						if (group.isGreater().call(absM, d1))
+							group.add().call(bTmp, delta, bTmp);
+						else if (group.isEqual().call(absM, d1)) {
 							// half case
-							group.mod(d, two, m1);
+							group.mod().call(d, two, m1);
 							// if is odd number of deltas from origin
-							if (group.isNotEqual(m1, zero)) {
-								group.add(bTmp, delta, bTmp);
+							if (group.isNotEqual().call(m1, zero)) {
+								group.add().call(bTmp, delta, bTmp);
 							}
 						}
 					}
-					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
-						if (group.isGreater(absM, d1))
-							group.subtract(bTmp, delta, bTmp);
-						else if (group.isEqual(absM, d1)) {
+					else if (group.isLess().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isLess().call(m, zero))) {
+						if (group.isGreater().call(absM, d1))
+							group.subtract().call(bTmp, delta, bTmp);
+						else if (group.isEqual().call(absM, d1)) {
 							// half case
-							group.mod(d, two, m1);
+							group.mod().call(d, two, m1);
 							// if is odd number of deltas from origin
-							if (group.isNotEqual(m1, zero)) {
-								group.subtract(bTmp, delta, bTmp);
+							if (group.isNotEqual().call(m1, zero)) {
+								group.subtract().call(bTmp, delta, bTmp);
 							}
 						}
 					}
@@ -175,29 +175,29 @@ public class Round {
 					break;
 				case HALF_ODD:
 					// towards nearest boundary but prefer odd result
-					group.abs(m, absM);
-					group.subtract(delta, absM, d1);
-					if (group.isGreater(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isGreater(m, zero))) {
-						if (group.isGreater(absM, d1))
-							group.add(bTmp, delta, bTmp);
-						else if (group.isEqual(absM, d1)) {
+					group.abs().call(m, absM);
+					group.subtract().call(delta, absM, d1);
+					if (group.isGreater().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isGreater().call(m, zero))) {
+						if (group.isGreater().call(absM, d1))
+							group.add().call(bTmp, delta, bTmp);
+						else if (group.isEqual().call(absM, d1)) {
 							// half case
-							group.mod(d, two, m1);
+							group.mod().call(d, two, m1);
 							// if is even number of deltas from origin
-							if (group.isEqual(m1, zero)) {
-								group.add(bTmp, delta, bTmp);
+							if (group.isEqual().call(m1, zero)) {
+								group.add().call(bTmp, delta, bTmp);
 							}
 						}
 					}
-					else if (group.isLess(bTmp, zero) || (group.isEqual(bTmp, zero) && group.isLess(m, zero))) {
-						if (group.isGreater(absM, d1))
-							group.subtract(bTmp, delta, bTmp);
-						else if (group.isEqual(absM, d1)) {
+					else if (group.isLess().call(bTmp, zero) || (group.isEqual().call(bTmp, zero) && group.isLess().call(m, zero))) {
+						if (group.isGreater().call(absM, d1))
+							group.subtract().call(bTmp, delta, bTmp);
+						else if (group.isEqual().call(absM, d1)) {
 							// half case
-							group.mod(d, two, m1);
+							group.mod().call(d, two, m1);
 							// if is even number of deltas from origin
-							if (group.isEqual(m1, zero)) {
-								group.subtract(bTmp, delta, bTmp);
+							if (group.isEqual().call(m1, zero)) {
+								group.subtract().call(bTmp, delta, bTmp);
 							}
 						}
 					}
@@ -211,7 +211,7 @@ public class Round {
 								"Unknown rounding mode: "+mode);
 			}
 		}
-		group.assign(bTmp, b);
+		group.assign().call(bTmp, b);
 	}
 
 }

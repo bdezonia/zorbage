@@ -46,7 +46,7 @@ public class Cbrt<T extends Group<T,U> & Roots<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.cbrt(a, b);
+		group.cbrt().call(a, b);
 	}
 
 }

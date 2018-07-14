@@ -26,14 +26,16 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Infinite<T> {
-	boolean isNaN(T a);
-	boolean isInfinite(T a);
+	Function1<Boolean,T> isNaN();
+	Function1<Boolean,T> isInfinite();
 	// positive or negative can be determined with signum() for Ordered groups.
 	// Complex has no concept of pos inf and neg inf.
 }

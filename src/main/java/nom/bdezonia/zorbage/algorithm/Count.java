@@ -70,13 +70,13 @@ public class Count {
 		U tmp = group.construct();
 		W tmpSum = addGroup.construct();
 		W one = addGroup.construct();
-		addGroup.unity(one);
+		addGroup.unity().call(one);
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmp);
-			if (group.isEqual(tmp, value))
-				addGroup.add(tmpSum, one, tmpSum);
+			if (group.isEqual().call(tmp, value))
+				addGroup.add().call(tmpSum, one, tmpSum);
 		}
-		addGroup.assign(tmpSum, sum);
+		addGroup.assign().call(tmpSum, sum);
 	}
 
 }

@@ -26,15 +26,17 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface InverseHyperbolic<U> {
-	void asinh(U a, U b);
-	void acosh(U a, U b);
-	void atanh(U a, U b);
+	Procedure2<U,U> asinh();
+	Procedure2<U,U> acosh();
+	Procedure2<U,U> atanh();
 	//void acsch(U a, U b);
 	//void asech(U a, U b);
 	//void acoth(U a, U b);

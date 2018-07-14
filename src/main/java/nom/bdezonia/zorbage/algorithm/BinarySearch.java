@@ -62,7 +62,7 @@ public class BinarySearch {
 		while (hi >= lo) {
 			long mid = (lo + hi) / 2;
 			data.get(start+mid, tmp);
-			int cmp = group.compare(value, tmp);
+			int cmp = group.compare().call(value, tmp);
 			if (cmp == 0)
 				return start + mid;
 			else if (cmp > 0)

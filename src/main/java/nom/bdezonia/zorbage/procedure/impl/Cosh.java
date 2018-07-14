@@ -46,7 +46,7 @@ public class Cosh<T extends Group<T,U> & Hyperbolic<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.cosh(a, b);
+		group.cosh().call(a, b);
 	}
 
 }

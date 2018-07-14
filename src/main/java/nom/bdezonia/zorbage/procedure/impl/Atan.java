@@ -46,7 +46,7 @@ public class Atan<T extends Group<T,U> & InverseTrigonometric<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.atan(a, b);
+		group.atan().call(a, b);
 	}
 
 }

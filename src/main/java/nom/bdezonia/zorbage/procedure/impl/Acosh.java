@@ -46,7 +46,7 @@ public class Acosh<T extends Group<T,U> & InverseHyperbolic<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.acosh(a, b);
+		group.acosh().call(a, b);
 	}
 
 }

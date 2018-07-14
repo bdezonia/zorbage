@@ -53,8 +53,8 @@ public class MedianValues {
 		Sort.compute(grp, localStorage);
 		if (localStorage.size() == 0) {
 			U zero = grp.construct();
-			grp.assign(zero, result1);
-			grp.assign(zero, result2);
+			grp.assign().call(zero, result1);
+			grp.assign().call(zero, result2);
 		}
 		else if (localStorage.size() % 2 == 0) {
 			localStorage.get(localStorage.size()/2 - 1, result1);
@@ -62,7 +62,7 @@ public class MedianValues {
 		}
 		else {
 			localStorage.get(localStorage.size()/2, result1);
-			grp.assign(result1, result2);
+			grp.assign().call(result1, result2);
 		}
 	}
 }

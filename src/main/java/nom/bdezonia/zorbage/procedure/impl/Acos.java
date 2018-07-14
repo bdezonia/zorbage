@@ -46,7 +46,7 @@ public class Acos<T extends Group<T,U> & InverseTrigonometric<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.acos(a, b);
+		group.acos().call(a, b);
 	}
 
 }

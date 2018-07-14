@@ -42,11 +42,11 @@ public class LessThanEqualConstant<T extends Group<T,U> & Ordered<U>,U>
 	
 	public LessThanEqualConstant(T group, U value) {
 		this.group = group;
-		group.assign(value, constant);
+		group.assign().call(value, constant);
 	}
 
 	@Override
 	public boolean isTrue(U value) {
-		return group.isLessEqual(value, constant);
+		return group.isLessEqual().call(value, constant);
 	}
 }

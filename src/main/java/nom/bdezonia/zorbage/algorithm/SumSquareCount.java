@@ -53,15 +53,15 @@ public class SumSquareCount {
 	{
 		U tmp = grp.construct();
 		U one = grp.construct();
-		grp.unity(one);
-		grp.zero(sumSqDevs);
-		grp.zero(count);
+		grp.unity().call(one);
+		grp.zero().call(sumSqDevs);
+		grp.zero().call(count);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			grp.subtract(tmp, avg, tmp);
-			grp.multiply(tmp, tmp, tmp);
-			grp.add(sumSqDevs, tmp, sumSqDevs);
-			grp.add(count, one, count);
+			grp.subtract().call(tmp, avg, tmp);
+			grp.multiply().call(tmp, tmp, tmp);
+			grp.add().call(sumSqDevs, tmp, sumSqDevs);
+			grp.add().call(count, one, count);
 		}
 	}
 }

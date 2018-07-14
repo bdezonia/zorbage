@@ -57,30 +57,30 @@ public class TestGenericGroups {
 	
 	private <T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>, U> void test1(T grp) {
 		U a = grp.construct();
-		grp.unity(a);
+		grp.unity().call(a);
 		U b = grp.construct();
-		grp.zero(b);
-		grp.add(a, a, b);
+		grp.zero().call(b);
+		grp.add().call(a, a, b);
 		U c = grp.construct();
-		grp.add(a, b, c);
-		assertTrue(grp.isEqual(grp.construct("3"), c));
-		assertFalse(grp.isEqual(a, b));
-		assertFalse(grp.isGreater(a, b));
-		assertTrue(grp.isLess(a, b));
-		assertTrue(grp.isLess(a, c));
-		assertTrue(grp.isLess(b, c));
+		grp.add().call(a, b, c);
+		assertTrue(grp.isEqual().call(grp.construct("3"), c));
+		assertFalse(grp.isEqual().call(a, b));
+		assertFalse(grp.isGreater().call(a, b));
+		assertTrue(grp.isLess().call(a, b));
+		assertTrue(grp.isLess().call(a, c));
+		assertTrue(grp.isLess().call(b, c));
 	}
 	
 	private <T extends AdditiveGroup<T,U> & Ordered<U>, U> void test2(T grp) {
 		U a = grp.construct("1040");
 		U b = grp.construct("160");
 		U c = grp.construct();
-		grp.add(a, b, c);
-		assertTrue(grp.isEqual(grp.construct("1200"), c));
-		assertFalse(grp.isEqual(a, b));
-		assertTrue(grp.isGreater(a, b));
-		assertFalse(grp.isLess(a, b));
-		assertTrue(grp.isLess(a, c));
-		assertTrue(grp.isLess(b, c));
+		grp.add().call(a, b, c);
+		assertTrue(grp.isEqual().call(grp.construct("1200"), c));
+		assertFalse(grp.isEqual().call(a, b));
+		assertTrue(grp.isGreater().call(a, b));
+		assertFalse(grp.isLess().call(a, b));
+		assertTrue(grp.isLess().call(a, c));
+		assertTrue(grp.isLess().call(b, c));
 	}
 }

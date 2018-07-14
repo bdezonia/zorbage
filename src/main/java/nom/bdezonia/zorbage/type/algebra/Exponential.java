@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,8 +35,6 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface Exponential<T> {
 
-	void exp(T a, T b);
-	//void expm1(T a, T b);
-	void log(T a, T b);
-	//void log1p(T a, T b);
+	Procedure2<T,T> exp();
+	Procedure2<T,T> log();
 }

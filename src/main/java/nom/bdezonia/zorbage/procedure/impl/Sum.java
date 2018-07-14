@@ -49,9 +49,9 @@ public class Sum<T extends Group<T,U> & Addition<U>,U>
 	public void call(U result, U... inputs) {
 		U sum = group.construct();
 		for (int i = 0; i < inputs.length; i++) {
-			group.add(sum, inputs[i], sum);
+			group.add().call(sum, inputs[i], sum);
 		}
-		group.assign(sum, result);
+		group.assign().call(sum, result);
 	}
 
 }

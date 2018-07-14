@@ -71,13 +71,13 @@ public class CountIf {
 		U tmp = group.construct();
 		W tmpSum = addGroup.construct();
 		W one = addGroup.construct();
-		addGroup.unity(one);
+		addGroup.unity().call(one);
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmp);
 			if (condition.isTrue(tmp))
-				addGroup.add(tmpSum, one, tmpSum);
+				addGroup.add().call(tmpSum, one, tmpSum);
 		}
-		addGroup.assign(tmpSum, sum);
+		addGroup.assign().call(tmpSum, sum);
 	}
 
 }

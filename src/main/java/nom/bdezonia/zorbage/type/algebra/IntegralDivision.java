@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,8 +36,8 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface IntegralDivision<U> extends ModularDivision<U>
 {
-	void gcd(U a, U b, U c);
-	void lcm(U a, U b, U c);
-	boolean isEven(U a);
-	boolean isOdd(U a);
+	Procedure3<U,U,U> gcd();
+	Procedure3<U,U,U> lcm();
+	Function1<Boolean,U> isEven();
+	Function1<Boolean,U> isOdd();
 }

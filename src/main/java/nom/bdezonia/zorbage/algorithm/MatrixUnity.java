@@ -18,7 +18,7 @@ public class MatrixUnity {
 	{
 		U zero = group.construct();
 		U one = group.construct();
-		group.unity(one);
+		group.unity().call(one);
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				if (r == c)

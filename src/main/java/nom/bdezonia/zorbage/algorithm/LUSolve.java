@@ -71,34 +71,34 @@ public class LUSolve {
 		RMODULE_MEMBER y = rmodGroup.construct(x.storageType(), n);
 		for (long i = 0; i < n; i++)
 		{
-			numGroup.zero(sum);
+			numGroup.zero().call(sum);
 			for (long k = 0; k < i; k++) {
 				a.v(i, k, value1);
 				y.v(k, value2);
-				numGroup.multiply(value1, value2, term);
-				numGroup.add(sum, term, sum);
+				numGroup.multiply().call(value1, value2, term);
+				numGroup.add().call(sum, term, sum);
 			}
 			b.v(i, value1);
-			numGroup.subtract(value1, sum, term);
+			numGroup.subtract().call(value1, sum, term);
 			y.setV(i, term);
 		}
 
 		// find solution of Ux = y
 		for (long i = n - 1; i >= 0; i--)
 		{
-			numGroup.zero(sum);
+			numGroup.zero().call(sum);
 			for (long k = i + 1; k < n; k++) {
 				a.v(i, k, value1);
 				x.v(k, value2);
-				numGroup.multiply(value1, value2, term);
-				numGroup.add(sum, term, sum);
+				numGroup.multiply().call(value1, value2, term);
+				numGroup.add().call(sum, term, sum);
 			}
-			numGroup.unity(tmp);
+			numGroup.unity().call(tmp);
 			a.v(i, i, value1);
-			numGroup.divide(tmp, value1, value1);
+			numGroup.divide().call(tmp, value1, value1);
 			y.v(i, value2);
-			numGroup.subtract(value2, sum, value2);
-			numGroup.multiply(value1, value2, term);
+			numGroup.subtract().call(value2, sum, value2);
+			numGroup.multiply().call(value1, value2, term);
 			x.setV(i, term);
 		}
 

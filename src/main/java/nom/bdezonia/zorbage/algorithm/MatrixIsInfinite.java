@@ -46,7 +46,7 @@ public class MatrixIsInfinite {
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (group.isInfinite(value))
+				if (group.isInfinite().call(value))
 					return true;
 			}
 		}

@@ -46,7 +46,7 @@ public class Sincpi<T extends Group<T,U> & Trigonometric<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.sincpi(a, b);
+		group.sincpi().call(a, b);
 	}
 
 }

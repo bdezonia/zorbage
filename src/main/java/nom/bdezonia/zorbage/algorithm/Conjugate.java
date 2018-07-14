@@ -56,7 +56,7 @@ public class Conjugate {
 			throw new IllegalArgumentException("mismatched input/output");
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, tmpA);
-			group.conjugate(tmpA, tmpB);
+			group.conjugate().call(tmpA, tmpB);
 			b.set(i, tmpB);
 		}
 	}

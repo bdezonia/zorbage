@@ -51,13 +51,13 @@ public class SumCount {
 	{
 		U tmp = grp.construct();
 		U one = grp.construct();
-		grp.unity(one);
-		grp.zero(sum);
-		grp.zero(count);
+		grp.unity().call(one);
+		grp.zero().call(sum);
+		grp.zero().call(count);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			grp.add(sum, tmp, sum);
-			grp.add(count, one, count);
+			grp.add().call(sum, tmp, sum);
+			grp.add().call(count, one, count);
 		}
 	}
 }

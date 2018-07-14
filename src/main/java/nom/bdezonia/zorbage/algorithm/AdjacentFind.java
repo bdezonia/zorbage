@@ -69,9 +69,9 @@ public class AdjacentFind {
 		a.get(start, tmp1);
 		for (long i = 1; i < count; i++) {
 			a.get(start+i, tmp2);
-			if (group.isEqual(tmp1, tmp2))
+			if (group.isEqual().call(tmp1, tmp2))
 				return start + i - 1;
-			group.assign(tmp2, tmp1);
+			group.assign().call(tmp2, tmp1);
 		}
 		return start + count;
 	}

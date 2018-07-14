@@ -26,13 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface MatrixOps<U,W> {
-	void transpose(U a, U b);
-	void conjugateTranspose(U a, U b);
-	void det(U a, W b);
+	Procedure2<U,U> transpose();
+	Procedure2<U,U> conjugateTranspose();
+	Procedure2<U,W> det();
 }

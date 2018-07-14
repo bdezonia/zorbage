@@ -51,6 +51,6 @@ public class Average {
 		U sum = grp.construct();
 		U count = grp.construct();
 		SumCount.compute(grp, storage, sum, count);
-		grp.divide(sum, count, result);
+		grp.divide().call(sum, count, result);
 	}
 }

@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,5 +35,5 @@ package nom.bdezonia.zorbage.type.algebra;
  * @param <U>
  */
 public interface AbsoluteValue<U> {
-	void abs(U a, U b);
+	Procedure2<U,U> abs();
 }

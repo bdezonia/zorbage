@@ -48,7 +48,7 @@ public class RModuleScale {
 		b.alloc(length);
 		for (long i = 0; i < length; i++) {
 			a.v(i, tmp);
-			memberGroup.multiply(scalar, tmp, tmp);
+			memberGroup.multiply().call(scalar, tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

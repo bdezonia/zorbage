@@ -57,13 +57,13 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void set(long index, U value) {
-		grp.assign(value, (U)data[(int)index]);
+		grp.assign().call(value, (U)data[(int)index]);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void get(long index, U value) {
-		grp.assign((U)data[(int)index], value);
+		grp.assign().call((U)data[(int)index], value);
 	}
 	
 	@Override
@@ -76,7 +76,7 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 	public ArrayStorageGeneric<T,U> duplicate() {
 		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),grp);
 		for (int i = 0; i < data.length; i++)
-			grp.assign((U)data[i], (U)s.data[i]);
+			grp.assign().call((U)data[i], (U)s.data[i]);
 		return s;
 	}
 

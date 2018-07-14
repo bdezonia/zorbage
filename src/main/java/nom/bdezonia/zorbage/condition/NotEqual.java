@@ -45,6 +45,6 @@ public class NotEqual<T extends Group<T,U>,U>
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return group.isNotEqual(value.a(), value.b());
+		return group.isNotEqual().call(value.a(), value.b());
 	}
 }

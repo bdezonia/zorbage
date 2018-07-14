@@ -53,6 +53,6 @@ public class MedianI {
 		U numer = grp.construct();
 		U denom = grp.construct();
 		FindMedianFraction.compute(grp, storage, numer, denom);
-		grp.div(numer, denom, result);
+		grp.div().call(numer, denom, result);
 	}
 }

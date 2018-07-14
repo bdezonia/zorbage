@@ -50,7 +50,7 @@ public class RModuleSubtract {
 		for (long i = 0; i < length; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			memberGroup.subtract(atmp, btmp, btmp);
+			memberGroup.subtract().call(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 	}

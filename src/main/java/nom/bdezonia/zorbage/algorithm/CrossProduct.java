@@ -59,28 +59,28 @@ public class CrossProduct {
 		W t = memberGroup.construct();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		memberGroup.multiply(atmp, btmp, term1);
+		memberGroup.multiply().call(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		memberGroup.multiply(atmp, btmp, term2);
-		memberGroup.subtract(term1, term2, t);
+		memberGroup.multiply().call(atmp, btmp, term2);
+		memberGroup.subtract().call(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		memberGroup.multiply(atmp, btmp, term1);
+		memberGroup.multiply().call(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		memberGroup.multiply(atmp, btmp, term2);
-		memberGroup.subtract(term1, term2, t);
+		memberGroup.multiply().call(atmp, btmp, term2);
+		memberGroup.subtract().call(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		memberGroup.multiply(atmp, btmp, term1);
+		memberGroup.multiply().call(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		memberGroup.multiply(atmp, btmp, term2);
-		memberGroup.subtract(term1, term2, t);
+		memberGroup.multiply().call(atmp, btmp, term2);
+		memberGroup.subtract().call(term1, term2, t);
 		tmp.setV(2, t);
-		rmodGroup.assign(tmp, c);
+		rmodGroup.assign().call(tmp, c);
 	}
 }

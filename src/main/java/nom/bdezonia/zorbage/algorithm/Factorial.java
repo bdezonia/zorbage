@@ -51,19 +51,19 @@ public class Factorial {
 		void compute(T group, U a, U result)
 	{
 		U tmp = group.construct();
-		if (group.isLess(a, tmp))
+		if (group.isLess().call(a, tmp))
 			throw new IllegalArgumentException("Cannot take factorial of negative input");
-		group.unity(tmp);
-		if (group.isLessEqual(a, tmp))
-			group.assign(tmp, result);
+		group.unity().call(tmp);
+		if (group.isLessEqual().call(a, tmp))
+			group.assign().call(tmp, result);
 		else {
 			U product = group.construct(tmp);
 			U multiplier = group.construct(a);
-			while (group.isGreater(multiplier, tmp)) {
-				group.multiply(product, multiplier, product);
-				group.subtract(multiplier, tmp, multiplier);
+			while (group.isGreater().call(multiplier, tmp)) {
+				group.multiply().call(product, multiplier, product);
+				group.subtract().call(multiplier, tmp, multiplier);
 			}
-			group.assign(product, result);
+			group.assign().call(product, result);
 		}
 	}
 }

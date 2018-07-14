@@ -52,17 +52,17 @@ public class Power {
 	{
 		if (power == 0) {
 			U tmp = group.construct();
-			if (group.isEqual(a,tmp))
+			if (group.isEqual().call(a,tmp))
 				throw new IllegalArgumentException("0^0 is not a number");
-			group.unity(tmp);
-			group.assign(tmp, b);
+			group.unity().call(tmp);
+			group.assign().call(tmp, b);
 			return;
 		}
 		// else power != 0
 
 		if (power < 0) {
 			U invA = group.construct();
-			group.invert(a, invA);
+			group.invert().call(a, invA);
 			PowerI.compute(group, -power, invA, b);
 		}
 		else

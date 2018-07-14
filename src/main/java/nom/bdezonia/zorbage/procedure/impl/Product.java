@@ -50,12 +50,12 @@ public class Product<T extends Group<T,U> & Multiplication<U> & Unity<U>,U>
 	public void call(U result, U... inputs) {
 		U prod = group.construct();
 		if (inputs.length != 0) {
-			group.unity(prod);
+			group.unity().call(prod);
 		}
 		for (int i = 0; i < inputs.length; i++) {
-			group.multiply(prod, inputs[i], prod);
+			group.multiply().call(prod, inputs[i], prod);
 		}
-		group.assign(prod, result);
+		group.assign().call(prod, result);
 	}
 
 }

@@ -61,7 +61,7 @@ public class Correlate {
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, tmpA);
 			b.get(i, tmpB);
-			group.multiply(tmpA, tmpB, tmpC);
+			group.multiply().call(tmpA, tmpB, tmpC);
 			c.set(i, tmpC);
 		}
 	}

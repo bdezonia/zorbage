@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Bounded<U> {
-	void maxBound(U a);  // set a to max value of type
-	void minBound(U a);  // set a to min value of type
+	Procedure1<U> maxBound();  // set a to max value of type
+	Procedure1<U> minBound();  // set a to min value of type
 }

@@ -46,7 +46,7 @@ public class Sin<T extends Group<T,U> & Trigonometric<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.sin(a, b);
+		group.sin().call(a, b);
 	}
 
 }

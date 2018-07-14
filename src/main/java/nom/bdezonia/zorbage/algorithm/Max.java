@@ -46,10 +46,10 @@ public class Max {
 	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T group, U a, U b, U result)
 	{
-		if (group.isGreater(a, b))
-			group.assign(a, result);
+		if (group.isGreater().call(a, b))
+			group.assign().call(a, result);
 		else
-			group.assign(b, result);
+			group.assign().call(b, result);
 	}
 
 }

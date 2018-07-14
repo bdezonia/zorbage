@@ -26,15 +26,17 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface InverseTrigonometric<U> {
-	void asin(U a, U b);
-	void acos(U a, U b);
-	void atan(U a, U b);
+	Procedure2<U,U> asin();
+	Procedure2<U,U> acos();
+	Procedure2<U,U> atan();
 	//void acsc(U a, U b);
 	//void asec(U a, U b);
 	//void acot(U a, U b);

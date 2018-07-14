@@ -50,7 +50,7 @@ public class RModuleIsEqual {
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			if (memberGroup.isNotEqual(aTmp, bTmp))
+			if (memberGroup.isNotEqual().call(aTmp, bTmp))
 				return false;
 		}
 		return true;

@@ -50,15 +50,15 @@ public class Sinchpi {
 		void compute(T group, U x, U result)
 	{
 		U tmp = group.construct();
-		if (group.isEqual(tmp, x)) {
-			group.unity(result);
+		if (group.isEqual().call(tmp, x)) {
+			group.unity().call(result);
 		}
 		else {
 			U piX = group.construct();
-			group.PI(piX);
-			group.multiply(piX, x, piX);
-			group.sinh(piX, tmp);
-			group.divide(tmp, piX, result);
+			group.PI().call(piX);
+			group.multiply().call(piX, x, piX);
+			group.sinh().call(piX, tmp);
+			group.divide().call(tmp, piX, result);
 		}
 	
 	}

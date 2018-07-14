@@ -26,11 +26,13 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Random<U> {
-	void random(U a);
+	Procedure1<U> random();
 }

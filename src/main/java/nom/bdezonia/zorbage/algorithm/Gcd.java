@@ -59,18 +59,18 @@ public class Gcd {
 		U bTmp = group.construct(b);
 		U t = group.construct();
 		U zero = group.construct();
-		group.abs(aTmp, aTmp);
-		group.abs(bTmp, bTmp);
-		if (group.isLess(aTmp, bTmp)) {
-			group.assign(aTmp, t);
-			group.assign(bTmp, aTmp);
-			group.assign(t, bTmp);
+		group.abs().call(aTmp, aTmp);
+		group.abs().call(bTmp, bTmp);
+		if (group.isLess().call(aTmp, bTmp)) {
+			group.assign().call(aTmp, t);
+			group.assign().call(bTmp, aTmp);
+			group.assign().call(t, bTmp);
 		}
-		while (group.isNotEqual(bTmp, zero)) {
-			group.assign(bTmp, t);
-			group.mod(aTmp, bTmp, bTmp);
-			group.assign(t, aTmp);
+		while (group.isNotEqual().call(bTmp, zero)) {
+			group.assign().call(bTmp, t);
+			group.mod().call(aTmp, bTmp, bTmp);
+			group.assign().call(t, aTmp);
 		}
-		group.assign(aTmp, result);
+		group.assign().call(aTmp, result);
 	}
 }

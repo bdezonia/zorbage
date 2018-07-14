@@ -50,7 +50,7 @@ public class MatrixEqual {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (group.isNotEqual(value1, value2))
+				if (group.isNotEqual().call(value1, value2))
 					return false;
 			}
 		}

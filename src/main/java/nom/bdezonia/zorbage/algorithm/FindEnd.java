@@ -69,7 +69,7 @@ public class FindEnd {
 			for (int j = 0; j < sz; j++) {
 				a.get(i+j, tmpA);
 				values.get(j, tmpV);
-				if (group.isNotEqual(tmpA, tmpV))
+				if (group.isNotEqual().call(tmpA, tmpV))
 					break;
 				if (j == sz-1)
 					return i;

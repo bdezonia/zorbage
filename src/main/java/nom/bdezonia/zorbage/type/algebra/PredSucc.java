@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,6 +35,6 @@ package nom.bdezonia.zorbage.type.algebra;
  * @param <U>
  */
 public interface PredSucc<U> {
-	void pred(U a, U b);
-	void succ(U a, U b);
+	Procedure2<U,U> pred();
+	Procedure2<U,U> succ();
 }

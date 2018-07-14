@@ -42,11 +42,11 @@ public class GreaterThanConstant<T extends Group<T,U> & Ordered<U>,U>
 	
 	public GreaterThanConstant(T group, U value) {
 		this.group = group;
-		group.assign(value, constant);
+		group.assign().call(value, constant);
 	}
 
 	@Override
 	public boolean isTrue(U value) {
-		return group.isGreater(value, constant);
+		return group.isGreater().call(value, constant);
 	}
 }

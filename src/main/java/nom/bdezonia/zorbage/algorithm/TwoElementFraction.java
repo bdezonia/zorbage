@@ -50,14 +50,14 @@ public class TwoElementFraction {
 		void compute(T grp, U result1, U result2, U numer, U denom)
 	{
 		U one = grp.construct();
-		grp.unity(one);
-		if (grp.isEqual(result1, result2)) {
-			grp.assign(result1, numer);
-			grp.assign(one, denom);
+		grp.unity().call(one);
+		if (grp.isEqual().call(result1, result2)) {
+			grp.assign().call(result1, numer);
+			grp.assign().call(one, denom);
 		}
 		else {
-			grp.add(result1, result2, numer);
-			grp.add(one, one, denom);
+			grp.add().call(result1, result2, numer);
+			grp.add().call(one, one, denom);
 		}
 	}
 }

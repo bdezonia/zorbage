@@ -54,9 +54,9 @@ public class DotProduct {
 		for (long i = 0; i < min; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			memberGroup.multiply(atmp, btmp, btmp);
-			memberGroup.add(sum, btmp, sum);
+			memberGroup.multiply().call(atmp, btmp, btmp);
+			memberGroup.add().call(sum, btmp, sum);
 		}
-		memberGroup.assign(sum,c);
+		memberGroup.assign().call(sum,c);
 	}
 }

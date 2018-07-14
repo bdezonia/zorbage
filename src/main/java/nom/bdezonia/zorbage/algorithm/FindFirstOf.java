@@ -69,7 +69,7 @@ public class FindFirstOf {
 			a.get(start+i, tmpA);
 			for (long j = 0; j < elements.size(); j++) {
 				elements.get(j, element);
-				if (group.isEqual(tmpA, element))
+				if (group.isEqual().call(tmpA, element))
 					return start+i;
 			}
 		}

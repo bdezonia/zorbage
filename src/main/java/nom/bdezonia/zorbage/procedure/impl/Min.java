@@ -51,12 +51,12 @@ public class Min<T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("min undefined for empty list");
 		U min = group.construct();
-		group.maxBound(min);
+		group.maxBound().call(min);
 		for (int i = 0; i < inputs.length; i++) {
-			if (group.isLess(inputs[i], min)) {
-				group.assign(inputs[i], min);
+			if (group.isLess().call(inputs[i], min)) {
+				group.assign().call(inputs[i], min);
 			}
 		}
-		group.assign(min, result);
+		group.assign().call(min, result);
 	}
 }

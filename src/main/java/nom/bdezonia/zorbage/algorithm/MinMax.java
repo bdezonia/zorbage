@@ -47,13 +47,13 @@ public class MinMax {
 	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T group, U a, U b, U min, U max)
 	{
-		if (group.isGreater(a, b)) {
-			group.assign(a, max);
-			group.assign(b, min);
+		if (group.isGreater().call(a, b)) {
+			group.assign().call(a, max);
+			group.assign().call(b, min);
 		}
 		else {
-			group.assign(a, min);
-			group.assign(b, max);
+			group.assign().call(a, min);
+			group.assign().call(b, max);
 		}
 	}
 

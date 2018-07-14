@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+
 /**
  * 
  * @author Barry DeZonia
@@ -34,9 +37,9 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface ModularDivision<U> {
 
-	void div(U a, U b, U d);
-	void mod(U a, U b, U m);
-	void divMod(U a, U b, U d, U m);
+	Procedure3<U,U,U> div();
+	Procedure3<U,U,U> mod();
+	Procedure4<U,U,U,U> divMod();
 	
 	// TODO add quot/rem/quotRem
 

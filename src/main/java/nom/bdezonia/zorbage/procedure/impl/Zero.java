@@ -48,7 +48,7 @@ public class Zero<T extends Group<T,U>,U>
 	
 	@Override
 	public void call(U a) {
-		group.assign(zero, a);
+		group.assign().call(zero, a);
 	}
 
 }

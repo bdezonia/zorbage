@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,6 +35,6 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface DirectProduct<A,B> {
 
-	void directProduct(A in1, A in2, B out);
+	Procedure3<A,A,B> directProduct();
 
 }

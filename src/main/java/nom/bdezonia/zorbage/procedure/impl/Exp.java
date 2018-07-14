@@ -46,7 +46,7 @@ public class Exp<T extends Group<T,U> & Exponential<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.exp(a, b);
+		group.exp().call(a, b);
 	}
 
 }

@@ -41,11 +41,11 @@ public class EqualConstant<T extends Group<T,U>,U>
 	
 	public EqualConstant(T group, U value) {
 		this.group = group;
-		group.assign(value, constant);
+		group.assign().call(value, constant);
 	}
 
 	@Override
 	public boolean isTrue(U value) {
-		return group.isEqual(value, constant);
+		return group.isEqual().call(value, constant);
 	}
 }

@@ -46,7 +46,7 @@ public class Multiply<T extends Group<T,U> & Multiplication<U>,U>
 
 	@Override
 	public void call(U a, U b, U c) {
-		group.multiply(a, b, c);
+		group.multiply().call(a, b, c);
 	}
 
 }

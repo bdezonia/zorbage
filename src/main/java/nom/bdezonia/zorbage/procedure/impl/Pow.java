@@ -46,7 +46,7 @@ public class Pow<T extends Group<T,U> & Power<U>,U>
 
 	@Override
 	public void call(U a, U b, U c) {
-		group.pow(a, b, c);
+		group.pow().call(a, b, c);
 	}
 
 }

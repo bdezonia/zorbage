@@ -46,7 +46,7 @@ public class Tanh<T extends Group<T,U> & Hyperbolic<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.tanh(a, b);
+		group.tanh().call(a, b);
 	}
 
 }

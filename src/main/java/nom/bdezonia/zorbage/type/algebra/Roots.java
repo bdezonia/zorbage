@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,6 +35,6 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface Roots<T> {
 
-	void sqrt(T a, T b);
-	void cbrt(T a, T b);
+	Procedure2<T,T> sqrt();
+	Procedure2<T,T> cbrt();
 }

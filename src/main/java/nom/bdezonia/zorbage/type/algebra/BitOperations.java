@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,10 +36,10 @@ package nom.bdezonia.zorbage.type.algebra;
  * @param <T>
  */
 public interface BitOperations<T> {
-	void bitAnd(T a, T b, T c);
-	void bitOr(T a, T b, T c);
-	void bitXor(T a, T b, T c);
-	void bitNot(T a, T b);
-	void bitShiftLeft(int count, T a, T b);
-	void bitShiftRight(int count, T a, T b);
+	Procedure3<T,T,T> bitAnd();
+	Procedure3<T,T,T> bitOr();
+	Procedure3<T,T,T> bitXor();
+	Procedure2<T,T> bitNot();
+	Procedure3<java.lang.Integer,T,T> bitShiftLeft();
+	Procedure3<java.lang.Integer,T,T> bitShiftRight();
 }

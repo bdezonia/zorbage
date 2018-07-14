@@ -46,7 +46,7 @@ public class Rand<T extends Group<T,U> & Random<U>,U>
 	
 	@Override
 	public void call(U a) {
-		group.random(a);
+		group.random().call(a);
 	}
 
 }

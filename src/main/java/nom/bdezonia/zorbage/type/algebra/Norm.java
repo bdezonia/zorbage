@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,7 +35,7 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface Norm<U,V> {
 
-	void norm(U a, V b);
+	Procedure2<U,V> norm();
 	
 	// from MathWorld
 	// Norms exist for complex numbers (the complex modulus, sometimes also called the complex norm or simply

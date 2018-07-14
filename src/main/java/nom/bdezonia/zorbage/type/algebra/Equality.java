@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,7 +36,7 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface Equality<U>
 {
-	boolean isEqual(U a, U b);
-	boolean isNotEqual(U a, U b);
-	void assign(U from, U to);
+	Function2<Boolean,U,U> isEqual();
+	Function2<Boolean,U,U> isNotEqual();
+	Procedure2<U,U> assign();
 }

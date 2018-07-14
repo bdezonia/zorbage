@@ -66,11 +66,11 @@ public class MinElement {
 		if (count <= 0)
 			throw new IllegalArgumentException("min undefined for empty list");
 		U tmp = grp.construct();
-		grp.maxBound(min);
+		grp.maxBound().call(min);
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (grp.isLess(tmp, min)) {
-				grp.assign(tmp, min);
+			if (grp.isLess().call(tmp, min)) {
+				grp.assign().call(tmp, min);
 			}
 		}
 	}

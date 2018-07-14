@@ -53,7 +53,7 @@ public class ExponentialCalculation {
 		void compute(T group, BigDecimal fraction, U base, U power, U result)
 	{
 		U tmp = group.construct();
-		group.pow(base, power, tmp);
+		group.pow().call(base, power, tmp);
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
 		tmp.getValue(rep);
 		rep.scaleBy(fraction);

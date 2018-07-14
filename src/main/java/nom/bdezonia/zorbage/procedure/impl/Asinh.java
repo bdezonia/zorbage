@@ -46,7 +46,7 @@ public class Asinh<T extends Group<T,U> & InverseHyperbolic<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.asinh(a, b);
+		group.asinh().call(a, b);
 	}
 
 }

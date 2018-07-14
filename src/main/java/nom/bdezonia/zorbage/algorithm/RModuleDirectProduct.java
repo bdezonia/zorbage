@@ -50,7 +50,7 @@ public class RModuleDirectProduct {
 			a.v(row, val1);
 			for (long col = 0; col < b.length(); col++) {
 				b.v(col, val2);
-				group.multiply(val1, val2, val2);
+				group.multiply().call(val1, val2, val2);
 				c.setV(row, col, val2);
 			}
 		}

@@ -79,13 +79,13 @@ public class Sort {
 			while (true) {
 				if (leftmark > rightmark) break;
 				storage.get(leftmark, tmp1);
-				if (grp.isGreater(tmp1, pivotValue)) break;
+				if (grp.isGreater().call(tmp1, pivotValue)) break;
 				leftmark++;
 			}
 	
 			while (true) {
 				storage.get(rightmark, tmp1);
-				if (grp.isLess(tmp1, pivotValue)) break;
+				if (grp.isLess().call(tmp1, pivotValue)) break;
 				if (rightmark < leftmark) break;
 				rightmark--;
 			}

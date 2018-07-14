@@ -50,7 +50,7 @@ public class RModuleAdd {
 		for (long i = 0; i < length; i++) {
 			a.v(i, atmp);
 			b.v(i, btmp);
-			memberGroup.add(atmp, btmp, btmp);
+			memberGroup.add().call(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}
 	}

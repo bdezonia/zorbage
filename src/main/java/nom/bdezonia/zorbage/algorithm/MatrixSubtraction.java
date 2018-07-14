@@ -54,7 +54,7 @@ public class MatrixSubtraction {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				group.subtract(atmp, btmp, tmp);
+				group.subtract().call(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}

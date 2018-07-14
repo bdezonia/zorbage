@@ -67,7 +67,7 @@ public class ReplaceCopy {
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp);
-			if (group.isEqual(tmp, old_value))
+			if (group.isEqual().call(tmp, old_value))
 				b.set(bStart+i, new_value);
 			else
 				b.set(bStart+i, tmp);

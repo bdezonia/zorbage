@@ -74,7 +74,7 @@ public class Search {
 			for (long j = 0; j < max; j++) {
 				a.get(start+i+j, tmpA);
 				elements.get(j, element);
-				if (group.isNotEqual(tmpA, element))
+				if (group.isNotEqual().call(tmpA, element))
 					break;
 				if (j == max-1)
 					return start+i;

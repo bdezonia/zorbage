@@ -48,7 +48,7 @@ public class MatrixNegate {
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				group.negate(tmp, tmp);
+				group.negate().call(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

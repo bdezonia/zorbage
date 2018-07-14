@@ -60,12 +60,12 @@ public class Lcm {
 		U a1 = group.construct();
 		U b1 = group.construct();
 		Gcd.compute(group, a, b, gcd);
-		group.div(a, gcd, a1);
-		group.div(b, gcd, b1);
-		group.abs(a1, a1);
-		group.abs(b1, b1);
-		group.multiply(a1, b1, result);
-		group.multiply(result, gcd, result);
+		group.div().call(a, gcd, a1);
+		group.div().call(b, gcd, b1);
+		group.abs().call(a1, a1);
+		group.abs().call(b1, b1);
+		group.multiply().call(a1, b1, result);
+		group.multiply().call(result, gcd, result);
 	}
 
 }

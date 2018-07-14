@@ -50,18 +50,18 @@ public class Average<T extends Group<T,U> & Unity<U> & Addition<U> & Invertible<
 	@Override
 	public void call(U result, U... inputs) {
 		if (inputs.length == 0) {
-			group.zero(result);
+			group.zero().call(result);
 		}
 		else {
 			U count = group.construct();
 			U sum = group.construct();
 			U one = group.construct();
-			group.unity(one);
+			group.unity().call(one);
 			for (int i = 0; i < inputs.length; i++) {
-				group.add(count, one, count);
-				group.add(sum, inputs[i], sum);
+				group.add().call(count, one, count);
+				group.add().call(sum, inputs[i], sum);
 			}
-			group.divide(sum, count, result);
+			group.divide().call(sum, count, result);
 		}
 	}
 

@@ -67,7 +67,7 @@ public class Find {
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmp);
-			if (group.isEqual(tmp, value))
+			if (group.isEqual().call(tmp, value))
 				return start + i;
 		}
 		return start + count;

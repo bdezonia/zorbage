@@ -26,12 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Invertible<U> {
-	void invert(U a, U b); // multiplicative inverse
-	void divide(U a, U b, U c);
+	Procedure2<U,U> invert(); // multiplicative inverse
+	Procedure3<U,U,U> divide();
 }

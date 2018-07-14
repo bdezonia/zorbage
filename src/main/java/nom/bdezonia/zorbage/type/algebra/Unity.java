@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure1;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,5 +35,5 @@ package nom.bdezonia.zorbage.type.algebra;
  * @param <U>
  */
 public interface Unity<U> {
-	void unity(U result);
+	Procedure1<U> unity();
 }

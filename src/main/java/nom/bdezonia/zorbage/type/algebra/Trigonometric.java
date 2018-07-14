@@ -26,18 +26,21 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Trigonometric<U> {
-	void sin(U a, U b);
-	void cos(U a, U b);
-	void tan(U a, U b);
-	void sinAndCos(U a, U s, U c);
-	void sinc(U a, U b);
-	void sincpi(U a, U b); // this one is out of place. what if type doesn't support PI?
+	Procedure2<U,U> sin();
+	Procedure2<U,U> cos();
+	Procedure2<U,U> tan();
+	Procedure3<U,U,U> sinAndCos();
+	Procedure2<U,U> sinc();
+	Procedure2<U,U> sincpi(); // this one is out of place. what if type doesn't support PI?
 	//void csc(U a, U b);
 	//void sec(U a, U b);
 	//void cot(U a, U b);

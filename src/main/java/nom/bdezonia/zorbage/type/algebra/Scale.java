@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,5 +35,5 @@ package nom.bdezonia.zorbage.type.algebra;
  * @param <U>
  */
 public interface Scale<U,W> {
-	void scale(W scalar, U a, U b);
+	Procedure3<W,U,U> scale();
 }

@@ -49,7 +49,7 @@ public class RModuleNegate {
 		b.alloc(length);
 		for (long i = 0; i < length; i++) {
 			a.v(i, tmp);
-			memberGroup.negate(tmp, tmp);
+			memberGroup.negate().call(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

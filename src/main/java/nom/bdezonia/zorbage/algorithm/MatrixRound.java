@@ -49,7 +49,7 @@ public class MatrixRound {
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				entityGroup.round(mode, delta, tmp, tmp);
+				entityGroup.round().call(mode, delta, tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

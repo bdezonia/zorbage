@@ -68,7 +68,7 @@ public class SearchN {
 		for (long i = 0; i < count-n; i++) {
 			for (long j = 0; j < n; j++) {
 				a.get(start+i+j, tmpA);
-				if (group.isNotEqual(tmpA, value))
+				if (group.isNotEqual().call(tmpA, value))
 					break;
 				if (j == n-1)
 					return start+i;

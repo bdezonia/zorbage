@@ -54,10 +54,10 @@ public class VarianceI {
 		U sum = grp.construct();
 		U count = grp.construct();
 		U one = grp.construct();
-		grp.unity(one);
+		grp.unity().call(one);
 		AverageI.compute(grp, storage, avg);
 		SumSquareCount.compute(grp, storage, avg, sum, count);
-		grp.subtract(count, one, count);
-		grp.div(sum, count, result);
+		grp.subtract().call(count, one, count);
+		grp.div().call(sum, count, result);
 	}
 }

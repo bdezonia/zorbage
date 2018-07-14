@@ -46,7 +46,7 @@ public class Sinh<T extends Group<T,U> & Hyperbolic<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.sinh(a, b);
+		group.sinh().call(a, b);
 	}
 
 }

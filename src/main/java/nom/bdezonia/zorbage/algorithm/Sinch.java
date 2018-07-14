@@ -48,12 +48,12 @@ public class Sinch {
 		void compute(T group, U x, U result)
 	{
 		U tmp = group.construct();
-		if (group.isEqual(tmp, x)) {
-			group.unity(result);
+		if (group.isEqual().call(tmp, x)) {
+			group.unity().call(result);
 		}
 		else {
-			group.sinh(x, tmp);
-			group.divide(tmp, x, result);
+			group.sinh().call(x, tmp);
+			group.divide().call(tmp, x, result);
 		}
 	
 	}

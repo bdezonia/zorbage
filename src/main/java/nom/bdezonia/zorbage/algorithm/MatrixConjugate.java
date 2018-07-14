@@ -50,7 +50,7 @@ public class MatrixConjugate {
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				group.conjugate(atmp, btmp);
+				group.conjugate().call(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}

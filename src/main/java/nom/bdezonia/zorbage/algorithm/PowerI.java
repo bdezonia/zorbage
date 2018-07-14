@@ -53,10 +53,10 @@ public class PowerI {
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
 			U tmp = group.construct();
-			if (group.isEqual(a,tmp))
+			if (group.isEqual().call(a,tmp))
 				throw new IllegalArgumentException("0^0 is not a number");
-			group.unity(tmp);
-			group.assign(tmp, b);
+			group.unity().call(tmp);
+			group.assign().call(tmp, b);
 			return;
 		}
 		// else power >= 1
@@ -70,19 +70,19 @@ public class PowerI {
 		void pow(T group, int pow, U a, U b)
 	{
 		if (pow == 0) {
-			group.unity(b);
+			group.unity().call(b);
 		}
 		else if (pow == 1) {
-			group.assign(a, b);
+			group.assign().call(a, b);
 		}
 		else {
 			U tmp = group.construct();
 			int halfPow = pow >>> 1;
 			pow(group, halfPow, a, tmp);
-			group.multiply(tmp, tmp, tmp);
+			group.multiply().call(tmp, tmp, tmp);
 			if (pow != (halfPow << 1))
-				group.multiply(tmp, a, tmp);
-			group.assign(tmp, b);
+				group.multiply().call(tmp, a, tmp);
+			group.assign().call(tmp, b);
 		}
 	}
 

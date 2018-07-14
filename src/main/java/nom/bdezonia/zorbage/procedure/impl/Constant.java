@@ -43,12 +43,12 @@ public class Constant<T extends Group<T,U>,U>
 	
 	public Constant(T group, U c) {
 		this.group = group;
-		group.assign(c, this.c);
+		group.assign().call(c, this.c);
 	}
 	
 	@Override
 	public void call(U a) {
-		group.assign(c, a);
+		group.assign().call(c, a);
 	}
 
 }

@@ -55,7 +55,7 @@ public class Scale {
 		U tmp = group.construct();
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i,  tmp);
-			group.multiply(tmp, factor, tmp);
+			group.multiply().call(tmp, factor, tmp);
 			b.set(i, tmp);
 		}
 	}

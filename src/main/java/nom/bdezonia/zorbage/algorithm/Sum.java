@@ -47,11 +47,11 @@ public class Sum {
 	public static <T extends AdditiveGroup<T,U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
-		grp.zero(result);
+		grp.zero().call(result);
 		U tmp = grp.construct();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			grp.add(result, tmp, result);
+			grp.add().call(result, tmp, result);
 		}
 	}
 }

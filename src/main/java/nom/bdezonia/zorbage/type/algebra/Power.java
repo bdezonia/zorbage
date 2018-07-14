@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 // TODO: locate me in algebra hierarchy
 
 /**
@@ -34,5 +36,5 @@ package nom.bdezonia.zorbage.type.algebra;
  *
  */
 public interface Power<T> {
-	void pow(T a, T b, T c);
+	Procedure3<T,T,T> pow();
 }

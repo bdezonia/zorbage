@@ -55,11 +55,11 @@ public class PerpDotProduct {
 		W term2 = memberGroup.construct();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		memberGroup.negate(atmp, atmp);
-		memberGroup.multiply(atmp, btmp, term1);
+		memberGroup.negate().call(atmp, atmp);
+		memberGroup.multiply().call(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		memberGroup.multiply(atmp, btmp, term2);
-		memberGroup.add(term1, term2, c);
+		memberGroup.multiply().call(atmp, btmp, term2);
+		memberGroup.add().call(term1, term2, c);
 	}
 }

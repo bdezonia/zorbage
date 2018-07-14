@@ -46,7 +46,7 @@ public class Sqrt<T extends Group<T,U> & Roots<U>,U>
 
 	@Override
 	public void call(U a, U b) {
-		group.sqrt(a, b);
+		group.sqrt().call(a, b);
 	}
 
 }

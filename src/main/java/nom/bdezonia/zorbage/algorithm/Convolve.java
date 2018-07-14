@@ -70,10 +70,10 @@ public class Convolve {
 			// convolution will not break.
 			a.get(i, tmpA1);
 			b.get(j, tmpB1);
-			group.multiply(tmpA1, tmpB1, tmpC1);
+			group.multiply().call(tmpA1, tmpB1, tmpC1);
 			a.get(j, tmpA2);
 			b.get(i, tmpB2);
-			group.multiply(tmpA2, tmpB2, tmpC2);
+			group.multiply().call(tmpA2, tmpB2, tmpC2);
 			c.set(i, tmpC1);
 			c.set(j, tmpC2);
 		}

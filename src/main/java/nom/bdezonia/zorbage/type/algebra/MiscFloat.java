@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,9 +37,9 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface MiscFloat<U> {
 
-	void copySign(U a, U b, U c);
-	int getExponent(U a);
-	void scalb(int scaleFactor, U a, U b);
-	void ulp(U a, U b);
+	Procedure3<U,U,U> copySign();
+	Function1<java.lang.Integer,U> getExponent();
+	Procedure3<java.lang.Integer,U,U> scalb();
+	Procedure2<U,U> ulp();
 	
 }

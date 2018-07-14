@@ -76,36 +76,36 @@ public class LUDecomp {
 		{
 			for (long j = i; j < n; j++)
 			{
-				numGroup.zero(sum);
+				numGroup.zero().call(sum);
 				for (long k = 0; k < i; k++) {
 					lu.v(i, k, value1);
 					lu.v(k, j, value2);
-					numGroup.multiply(value1, value2, term);
-					numGroup.add(sum, term, sum);
+					numGroup.multiply().call(value1, value2, term);
+					numGroup.add().call(sum, term, sum);
 				}
 				a.v(i, j, term);
-				numGroup.subtract(term, sum, term);
+				numGroup.subtract().call(term, sum, term);
 				lu.setV(i, j, term);
 			}
 			for (long j = i + 1; j < n; j++)
 			{
-				numGroup.zero(sum);
+				numGroup.zero().call(sum);
 				for (long k = 0; k < i; k++) {
 					lu.v(j, k, value1);
 					lu.v(k, i, value2);
-					numGroup.multiply(value1, value2, term);
-					numGroup.add(sum, term, sum);
+					numGroup.multiply().call(value1, value2, term);
+					numGroup.add().call(sum, term, sum);
 				}
-				numGroup.unity(value1);
+				numGroup.unity().call(value1);
 				lu.v(i, i, tmp);
-				numGroup.divide(value1, tmp, value1);
+				numGroup.divide().call(value1, tmp, value1);
 				a.v(j, i, tmp);
-				numGroup.subtract(tmp, sum, value2);
-				numGroup.multiply(value1, value2, term);
+				numGroup.subtract().call(tmp, sum, value2);
+				numGroup.multiply().call(value1, value2, term);
 				lu.setV(j, i, term);
 			}
 		}
 		
-		matGroup.assign(lu, a);
+		matGroup.assign().call(lu, a);
 	}
 }

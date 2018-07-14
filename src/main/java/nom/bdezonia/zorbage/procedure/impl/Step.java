@@ -54,22 +54,22 @@ public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
 		this.group = group;
 		this.zero = group.construct();
 		this.h0 = group.construct();
-		group.assign(h0, this.h0);
+		group.assign().call(h0, this.h0);
 		U one = group.construct();
-		group.unity(one);
-		if (group.isLess(h0, zero) || group.isGreater(h0, one))
+		group.unity().call(one);
+		if (group.isLess().call(h0, zero) || group.isGreater().call(h0, one))
 			throw new IllegalArgumentException("step: h0 out of sensible range");
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		int s = group.signum(a);
+		int s = group.signum().call(a);
 		if (s < 0)
-			group.assign(zero, b);
+			group.assign().call(zero, b);
 		else if (s > 0)
-			group.unity(b);
+			group.unity().call(b);
 		else
-			group.assign(h0, b);
+			group.assign().call(h0, b);
 	}
 
 }

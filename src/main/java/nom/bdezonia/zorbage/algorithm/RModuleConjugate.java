@@ -49,7 +49,7 @@ public class RModuleConjugate {
 		b.alloc(length);
 		for (long i = 0; i < length; i++) {
 			a.v(i, tmp);
-			memberGroup.conjugate(tmp, tmp);
+			memberGroup.conjugate().call(tmp, tmp);
 			b.setV(i, tmp);
 		}
 	}

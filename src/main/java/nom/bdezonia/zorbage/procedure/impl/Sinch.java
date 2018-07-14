@@ -46,7 +46,7 @@ public class Sinch<T extends Group<T,U> & Hyperbolic<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.sinch(a, b);
+		group.sinch().call(a, b);
 	}
 
 }

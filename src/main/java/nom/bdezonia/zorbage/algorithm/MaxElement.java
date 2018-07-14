@@ -66,11 +66,11 @@ public class MaxElement {
 		if (count <= 0)
 			throw new IllegalArgumentException("max undefined for empty list");
 		U tmp = grp.construct();
-		grp.minBound(max);
+		grp.minBound().call(max);
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (grp.isGreater(tmp, max)) {
-				grp.assign(tmp, max);
+			if (grp.isGreater().call(tmp, max)) {
+				grp.assign().call(tmp, max);
 			}
 		}
 	}

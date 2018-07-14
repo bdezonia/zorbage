@@ -26,6 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+
 /**
  * 
  * @author Barry DeZonia
@@ -39,10 +43,10 @@ public interface TensorProduct<T extends TensorProduct<T,U,V,W>, U, V extends Fi
   extends
     VectorSpace<T,U,V,W>, Multiplication<U>, Unity<U>
 {
-	void contract(int i, int j, U a, U b);
-	void addToElements(W scalar, U a, U b);
-	void multiplyElements(U a, U b, U c);
-	void divideElements(U a, U b, U c);
-	void semicolonDerivative(int someArgs);
-	void commaDerivative(int someArgs);
+	Procedure4<java.lang.Integer, java.lang.Integer,U,U> contract();
+	Procedure3<W,U,U> addToElements();
+	Procedure3<U,U,U> multiplyElements();
+	Procedure3<U,U,U> divideElements();
+	Procedure1<java.lang.Integer> semicolonDerivative();
+	Procedure1<java.lang.Integer> commaDerivative();
 }

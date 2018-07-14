@@ -57,7 +57,7 @@ public class PaddedIndexedDataSource<T extends Group<T,U>,U>
 	@Override
 	public void set(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			if (group.isNotEqual(zero, value))
+			if (group.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
 		}
 		else {
@@ -68,7 +68,7 @@ public class PaddedIndexedDataSource<T extends Group<T,U>,U>
 	@Override
 	public void get(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			group.assign(zero, value);
+			group.assign().call(zero, value);
 		}
 		else {
 			storage.get(index, value);

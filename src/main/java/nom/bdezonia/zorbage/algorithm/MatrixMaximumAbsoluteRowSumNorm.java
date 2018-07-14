@@ -65,7 +65,7 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 			U value = numGroup.construct();
 			for (long c = 0; c < matrix.cols(); c++) {
 				matrix.v(r, c, value);
-				numGroup.norm(value, tmp);
+				numGroup.norm().call(value, tmp);
 				G.DBL.add(rowSum, tmp, rowSum);
 			}
 			if (G.DBL.isGreater(rowSum, max))

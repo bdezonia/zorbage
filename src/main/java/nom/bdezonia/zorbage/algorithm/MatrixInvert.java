@@ -69,7 +69,7 @@ public class MatrixInvert {
 				new MatrixColumnRModuleBridge<BASETYPE>(numGroup, b);
 		BASETYPE zero = numGroup.construct();
 		BASETYPE one = numGroup.construct();
-		numGroup.unity(one);
+		numGroup.unity().call(one);
 		for (long c = 0; c < b.cols(); c++) {
 			xBridge.setCol(c);
 			bCol.setV(c, one);

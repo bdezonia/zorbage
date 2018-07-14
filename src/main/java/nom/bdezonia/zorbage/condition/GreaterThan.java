@@ -46,6 +46,6 @@ public class GreaterThan<T extends Group<T,U> & Ordered<U>, U>
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return group.isGreater(value.a(), value.b());
+		return group.isGreater().call(value.a(), value.b());
 	}
 }

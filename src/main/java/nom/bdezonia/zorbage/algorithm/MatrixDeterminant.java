@@ -65,12 +65,12 @@ public class MatrixDeterminant {
 		LUDecomp.compute(numGroup, matGroup, tmpMat);
 		BASETYPE tmp = numGroup.construct();
 		BASETYPE prod = numGroup.construct();
-		numGroup.unity(prod);
+		numGroup.unity().call(prod);
 		for (long i = 0; i < tmpMat.rows(); i++) {
 			tmpMat.v(i, i, tmp);
-			numGroup.multiply(prod, tmp, prod);
+			numGroup.multiply().call(prod, tmp, prod);
 		}
-		numGroup.assign(prod, det);
+		numGroup.assign().call(prod, det);
 	}
 	
 }

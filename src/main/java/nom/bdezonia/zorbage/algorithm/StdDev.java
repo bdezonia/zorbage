@@ -51,6 +51,6 @@ public class StdDev {
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		Variance.compute(grp, storage, result);
-		grp.sqrt(result, result);
+		grp.sqrt().call(result, result);
 	}
 }

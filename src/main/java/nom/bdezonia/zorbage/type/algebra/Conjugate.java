@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,5 +35,5 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface Conjugate<T> {
 
-	void conjugate(T a, T b);
+	Procedure2<T,T> conjugate();
 }

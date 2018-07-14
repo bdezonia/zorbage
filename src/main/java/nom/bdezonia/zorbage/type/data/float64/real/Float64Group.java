@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
@@ -92,13 +93,21 @@ public class Float64Group
 	}
 	
 	@Override
-	public boolean isEqual(Float64Member a, Float64Member b) {
-		return a.v() == b.v();
+	public Function2<Boolean,Float64Member,Float64Member> isEqual() {
+		return new Function2<Boolean,Float64Member,Float64Member>() {
+			public Boolean call(Float64Member a, Float64Member b) {
+				return a.v() == b.v();
+			}
+		};
 	}
 
 	@Override
-	public boolean isNotEqual(Float64Member a, Float64Member b) {
-		return a.v() != b.v();
+	public Function2<Boolean,Float64Member,Float64Member> isNotEqual() {
+		return new Function2<Boolean,Float64Member,Float64Member>() {
+			public Boolean call(Float64Member a, Float64Member b) {
+				return a.v() != b.v();
+			}
+		};
 	}
 
 	@Override

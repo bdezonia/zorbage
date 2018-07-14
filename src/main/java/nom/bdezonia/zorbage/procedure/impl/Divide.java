@@ -46,7 +46,7 @@ public class Divide<T extends Group<T,U> & Invertible<U>,U>
 
 	@Override
 	public void call(U a, U b, U c) {
-		group.divide(a, b, c);
+		group.divide().call(a, b, c);
 	}
 
 }

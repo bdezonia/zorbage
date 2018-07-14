@@ -50,8 +50,8 @@ public class Ramp<T extends Group<T,U> & Addition<U>, U> implements Procedure1<U
 	@Override
 	public void call(U a) {
 		// assign curr value to output
-		group.assign(currValue, a);
+		group.assign().call(currValue, a);
 		// setup next value
-		group.add(currValue, delta, currValue);
+		group.add().call(currValue, delta, currValue);
 	}
 }

@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.algebra;
 
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 
 /**
  * 
@@ -34,5 +35,5 @@ import nom.bdezonia.zorbage.algorithm.Round;
  *
  */
 public interface Rounding<T,U> {
-	void round(Round.Mode mode, T delta, U a, U b);
+	Procedure4<Round.Mode,T,U,U> round();
 }

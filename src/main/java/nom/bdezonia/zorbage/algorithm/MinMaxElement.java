@@ -69,36 +69,36 @@ public class MinMaxElement {
 			throw new IllegalArgumentException("minmax undefined for empty list");
 		U tmp1 = grp.construct();
 		U tmp2 = grp.construct();
-		grp.maxBound(min);
-		grp.minBound(max);
+		grp.maxBound().call(min);
+		grp.minBound().call(max);
 		long i = 0;
 		if ((count & 1) == 1) {
 			storage.get(start, tmp1);
-			if (grp.isGreater(tmp1, max)) {
-				grp.assign(tmp1, max);
+			if (grp.isGreater().call(tmp1, max)) {
+				grp.assign().call(tmp1, max);
 			}
-			if (grp.isLess(tmp1, min)) {
-				grp.assign(tmp1, min);
+			if (grp.isLess().call(tmp1, min)) {
+				grp.assign().call(tmp1, min);
 			}
 			i++;
 		}
 		while (i < count) {
 			storage.get(start+i, tmp1);
 			storage.get(start+i+1, tmp2);
-			if (grp.isGreater(tmp1, tmp2)) {
-				if (grp.isGreater(tmp1, max)) {
-					grp.assign(tmp1, max);
+			if (grp.isGreater().call(tmp1, tmp2)) {
+				if (grp.isGreater().call(tmp1, max)) {
+					grp.assign().call(tmp1, max);
 				}
-				if (grp.isLess(tmp2, min)) {
-					grp.assign(tmp2, min);
+				if (grp.isLess().call(tmp2, min)) {
+					grp.assign().call(tmp2, min);
 				}
 			}
 			else { // tmp2 >= tmp1
-				if (grp.isGreater(tmp2, max)) {
-					grp.assign(tmp2, max);
+				if (grp.isGreater().call(tmp2, max)) {
+					grp.assign().call(tmp2, max);
 				}
-				if (grp.isLess(tmp1, min)) {
-					grp.assign(tmp1, min);
+				if (grp.isLess().call(tmp1, min)) {
+					grp.assign().call(tmp1, min);
 				}
 			}
 			i += 2;

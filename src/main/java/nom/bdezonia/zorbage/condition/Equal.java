@@ -45,6 +45,6 @@ public class Equal<T extends Group<T,U>,U>
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return group.isEqual(value.a(), value.b());
+		return group.isEqual().call(value.a(), value.b());
 	}
 }

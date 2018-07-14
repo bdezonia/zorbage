@@ -46,7 +46,7 @@ public class Log<T extends Group<T,U> & Exponential<U>,U>
 	
 	@Override
 	public void call(U a, U b) {
-		group.log(a, b);
+		group.log().call(a, b);
 	}
 
 }

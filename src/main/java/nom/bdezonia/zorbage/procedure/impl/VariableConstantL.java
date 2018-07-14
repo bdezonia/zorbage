@@ -52,7 +52,7 @@ public class VariableConstantL<T extends Group<T,U>, U>
 	public void call(U result, U... inputs) {
 		if (index >= inputs.length)
 			throw new IllegalArgumentException("unspecified variable #"+index);
-		group.assign(inputs[index], result);
+		group.assign().call(inputs[index], result);
 	}
 	
 }

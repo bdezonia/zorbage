@@ -47,7 +47,7 @@ public class TestUnboundedIntGroup {
 		UnboundedIntMember b = new UnboundedIntMember(44);
 		UnboundedIntMember product = new UnboundedIntMember();
 
-		G.BIGINT.multiply(a,b,product);
+		G.BIGINT.multiply().call(a,b,product);
 		
 		assertTrue(new BigInteger("405828369621610135508").equals(product.v()));
 	}

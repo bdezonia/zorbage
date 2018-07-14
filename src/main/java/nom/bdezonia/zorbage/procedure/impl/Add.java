@@ -46,7 +46,7 @@ public class Add<T extends Group<T,U> & Addition<U>, U>
 
 	@Override
 	public void call(U a, U b, U c) {
-		group.add(a, b, c);
+		group.add().call(a, b, c);
 	}
 
 }

@@ -68,7 +68,7 @@ public class Replace {
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (group.isEqual(tmp, target))
+			if (group.isEqual().call(tmp, target))
 				storage.set(start+i, replacement);
 		}
 	}

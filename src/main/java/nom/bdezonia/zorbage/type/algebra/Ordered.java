@@ -26,19 +26,23 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
 public interface Ordered<U> {
-	boolean isLess(U a, U b); 
-	boolean isLessEqual(U a, U b); 
-	boolean isGreater(U a, U b); 
-	boolean isGreaterEqual(U a, U b);
-	int compare(U a, U b);
-	int signum(U a);
-	void min(U a, U b, U c);
-	void max(U a, U b, U c);
+	Function2<Boolean,U,U> isLess(); 
+	Function2<Boolean,U,U> isLessEqual(); 
+	Function2<Boolean,U,U> isGreater(); 
+	Function2<Boolean,U,U> isGreaterEqual();
+	Function2<java.lang.Integer,U,U> compare();
+	Function1<java.lang.Integer,U> signum();
+	Procedure3<U,U,U> min();
+	Procedure3<U,U,U> max();
 }
 

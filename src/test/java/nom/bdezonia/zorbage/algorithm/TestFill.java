@@ -27,11 +27,16 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.impl.Constant;
 import nom.bdezonia.zorbage.procedure.impl.Ramp;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -62,5 +67,22 @@ public class TestFill {
 			data.get(i, type);
 			assertEquals(300-6*i, type.v());
 		}
+	}
+	
+	@Test
+	public void test2() {
+		Float64Member type = new Float64Member();
+		IndexedDataSource<?, Float64Member> data = Storage.allocate(1000, type);
+		Fill.compute(G.DBL, data, G.DBL.zero());
+		Fill.compute(G.DBL, data, G.DBL.unity());
+		Fill.compute(G.DBL, data, G.DBL.minBound());
+		Fill.compute(G.DBL, data, G.DBL.maxBound());
+		Fill.compute(G.DBL, data, G.DBL.E());
+		Fill.compute(G.DBL, data, G.DBL.PI());
+		Fill.compute(G.DBL, data, G.DBL.random());
+		Float64Member value = new Float64Member(17.4);
+		Fill.compute(G.DBL, data, value);
+		assertTrue(true);
+
 	}
 }

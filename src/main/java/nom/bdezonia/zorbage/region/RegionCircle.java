@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.region;
 
 import nom.bdezonia.zorbage.misc.RealUtils;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.sampling.RealIndex;
 
 /**
@@ -58,20 +59,34 @@ public class RegionCircle implements Region<RealIndex> {
 		return RealUtils.distance2d(samplePoint.get(0), samplePoint.get(1), cx, cy) <= radius;
 	}
 
+	private final Procedure1<RealIndex> MAX_BOUND = new Procedure1<RealIndex>() {
+		@Override
+		public void call(RealIndex max) {
+			if (max.numDimensions() != 2)
+				throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::maxBound()");
+			max.set(0, cx + radius);
+			max.set(1, cy + radius);
+		}
+	};
+	
 	@Override
-	public void maxBound(RealIndex max) {
-		if (max.numDimensions() != 2)
-			throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::maxBound()");
-		max.set(0, cx + radius);
-		max.set(1, cy + radius);
+	public Procedure1<RealIndex> maxBound() {
+		return MAX_BOUND;
 	}
 
+	private final Procedure1<RealIndex> MIN_BOUND = new Procedure1<RealIndex>() {
+		@Override
+		public void call(RealIndex min) {
+			if (min.numDimensions() != 2)
+				throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::minBound()");
+			min.set(0, cx - radius);
+			min.set(1, cy - radius);
+		}
+	};
+	
 	@Override
-	public void minBound(RealIndex min) {
-		if (min.numDimensions() != 2)
-			throw new IllegalArgumentException("incorrect dimensions of point in RegionCircle::minBound()");
-		min.set(0, cx - radius);
-		min.set(1, cy - radius);
+	public Procedure1<RealIndex> minBound() {
+		return MIN_BOUND;
 	}
 
 }

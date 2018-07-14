@@ -46,7 +46,7 @@ public class Subtract<T extends Group<T,U> & Addition<U>, U>
 
 	@Override
 	public void call(U a, U b, U c) {
-		group.subtract(a, b, c);
+		group.subtract().call(a, b, c);
 	}
 
 }
