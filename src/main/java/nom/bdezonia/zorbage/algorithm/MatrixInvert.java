@@ -64,7 +64,7 @@ public class MatrixInvert {
 		MATRIX_MEMBER lu = matGroup.construct(a);
 		LUDecomp.compute(numGroup, matGroup, lu);
 		RMODULE_MEMBER bCol =
-				rmodGroup.construct(a.storageType(), a.rows());
+				rmodGroup.construct(b.storageType(), b.rows());
 		MatrixColumnRModuleBridge<BASETYPE> xBridge =
 				new MatrixColumnRModuleBridge<BASETYPE>(numGroup, b);
 		BASETYPE zero = numGroup.construct();
