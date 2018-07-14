@@ -100,6 +100,7 @@ public final class Float64VectorMember
 		alloc(d1);
 	}
 
+	@Override
 	public StorageConstruction storageType() {
 		return s;
 	}

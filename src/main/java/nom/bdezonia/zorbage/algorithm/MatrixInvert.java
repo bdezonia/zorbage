@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.helper.MatrixColumnRModuleBridge;
 
 /**
@@ -65,7 +64,7 @@ public class MatrixInvert {
 		MATRIX_MEMBER lu = matGroup.construct(a);
 		LUDecomp.compute(numGroup, matGroup, lu);
 		RMODULE_MEMBER bCol =
-				rmodGroup.construct(StorageConstruction.MEM_ARRAY, a.rows());
+				rmodGroup.construct(a.storageType(), a.rows());
 		MatrixColumnRModuleBridge<BASETYPE> xBridge =
 				new MatrixColumnRModuleBridge<BASETYPE>(numGroup, b);
 		BASETYPE zero = numGroup.construct();

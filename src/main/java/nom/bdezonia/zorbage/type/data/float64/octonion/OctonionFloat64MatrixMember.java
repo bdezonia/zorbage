@@ -129,6 +129,7 @@ public final class OctonionFloat64MatrixMember
 		init(d2,d1);
 	}
 	
+	@Override
 	public StorageConstruction storageType() {
 		return s;
 	}

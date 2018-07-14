@@ -244,6 +244,7 @@ public final class Float64TensorProductMember
 		this.storage = Storage.allocate(s, numElems, new Float64Member());
 	}
 	
+	@Override
 	public StorageConstruction storageType() {
 		return s;
 	}

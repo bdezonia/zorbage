@@ -108,6 +108,7 @@ public final class QuaternionFloat64RModuleMember
 		alloc(d1);
 	}
 	
+	@Override
 	public StorageConstruction storageType() {
 		return s;
 	}

@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.helper;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -131,6 +132,11 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	@Override
 	public void setV(long r, long c, U value) {
 		mat.setV(startRow+r, startCol+c, value);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return mat.storageType();
 	}
 
 }

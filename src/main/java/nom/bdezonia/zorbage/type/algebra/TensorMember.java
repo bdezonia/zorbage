@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.algebra;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -41,4 +42,5 @@ public interface TensorMember<A> extends Dimensioned {
 	void reshape(long[] dims);
 	void v(IntegerIndex index, A value);
 	void setV(IntegerIndex index, A value);
+	StorageConstruction storageType();
 }

@@ -104,6 +104,7 @@ public final class ComplexFloat64VectorMember
 		alloc(d1);
 	}
 
+	@Override
 	public StorageConstruction storageType() {
 		return s;
 	}

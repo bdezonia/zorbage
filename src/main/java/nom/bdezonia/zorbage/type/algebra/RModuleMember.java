@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
 /**
  * 
  * @author Barry DeZonia
@@ -40,5 +42,6 @@ public interface RModuleMember<A> extends Dimensioned {
 	void reshape(long len);
 	void v(long i, A value);
 	void setV(long i, A value);
+	StorageConstruction storageType();
 }
 

@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -172,6 +173,11 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		}
 		else
 			tensor.setV(index, value);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return tensor.storageType();
 	}
 
 	private boolean dimsCompatible(long[] newDims) {

@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -133,6 +134,11 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		long c = index.get(0);
 		long r = index.get(1);
 		mat.setV(startRow + r, startCol + c, value);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return mat.storageType();
 	}
 
 	private boolean dimsCompatible(long[] newDims) {

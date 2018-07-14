@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.helper;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -167,6 +168,11 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 			else
 				return i;
 		}
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return mat.storageType();
 	}
 
 }

@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.helper;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -104,4 +105,8 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
+	}
 }

@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -105,6 +106,11 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 		}
 		long i = index.get(0);
 		rmod.setV(i, value);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return rmod.storageType();
 	}
 
 	private boolean dimsCompatible(long[] newDims) {
