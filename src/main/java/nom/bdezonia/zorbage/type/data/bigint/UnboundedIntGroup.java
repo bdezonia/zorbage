@@ -30,14 +30,15 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
@@ -83,7 +84,7 @@ public class UnboundedIntGroup
 		return MUL;
 	}
 
-	private final Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> POW =
+	private final Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> POWER =
 			new Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember>()
 	{
 		@Override
@@ -96,7 +97,7 @@ public class UnboundedIntGroup
 	
 	@Override
 	public Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> power() {
-		return POW;
+		return POWER;
 	}
 
 	private final Procedure1<UnboundedIntMember> ZER =
@@ -161,7 +162,7 @@ public class UnboundedIntGroup
 
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare(a,b) == 0;
+			return compare().call(a,b) == 0;
 		}
 
 	};
@@ -176,7 +177,7 @@ public class UnboundedIntGroup
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare(a,b) != 0;
+			return compare().call(a,b) != 0;
 		}
 	};
 	
@@ -227,35 +228,89 @@ public class UnboundedIntGroup
 	public Procedure1<UnboundedIntMember> unity() {
 		return UNI;
 	}
+	
+	private final Function2<Boolean,UnboundedIntMember,UnboundedIntMember> LS =
+			new Function2<Boolean,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
+			return compare().call(a,b) < 0;
+		}
+	};
 
 	@Override
-	public boolean isLess(UnboundedIntMember a, UnboundedIntMember b) {
-		return compare(a,b) < 0;
+	public Function2<Boolean,UnboundedIntMember,UnboundedIntMember> isLess() {
+		return LS;
 	}
 
-	@Override
-	public boolean isLessEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return compare(a,b) <= 0;
-	}
+	private final Function2<Boolean,UnboundedIntMember,UnboundedIntMember> LSE =
+			new Function2<Boolean,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
+			return compare().call(a,b) <= 0;
+		}
+	};
 
 	@Override
-	public boolean isGreater(UnboundedIntMember a, UnboundedIntMember b) {
-		return compare(a,b) > 0;
+	public Function2<Boolean,UnboundedIntMember,UnboundedIntMember> isLessEqual() {
+		return LSE;
 	}
 
-	@Override
-	public boolean isGreaterEqual(UnboundedIntMember a, UnboundedIntMember b) {
-		return compare(a,b) >= 0;
-	}
+	private final Function2<Boolean,UnboundedIntMember,UnboundedIntMember> GR =
+			new Function2<Boolean,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
+			return compare().call(a,b) > 0;
+		}
+	};
 
 	@Override
-	public int compare(UnboundedIntMember a, UnboundedIntMember b) {
-		return a.v().compareTo(b.v());
+	public Function2<Boolean,UnboundedIntMember,UnboundedIntMember> isGreater() {
+		return GR;
 	}
 
+	private final Function2<Boolean,UnboundedIntMember,UnboundedIntMember> GRE =
+			new Function2<Boolean,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
+			return compare().call(a,b) >= 0;
+		}
+	};
+
 	@Override
-	public int signum(UnboundedIntMember a) {
-		return a.v().signum();
+	public Function2<Boolean,UnboundedIntMember,UnboundedIntMember> isGreaterEqual() {
+		return GRE;
+	}
+
+	private final Function2<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> CMP =
+			new Function2<java.lang.Integer,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public java.lang.Integer call(UnboundedIntMember a, UnboundedIntMember b) {
+			return a.v().compareTo(b.v());
+		}
+	};
+	
+	@Override
+	public Function2<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> compare() {
+		return CMP;
+	}
+
+	private final Function1<java.lang.Integer,UnboundedIntMember> SIG =
+			new Function1<java.lang.Integer,UnboundedIntMember>()
+	{
+		@Override
+		public java.lang.Integer call(UnboundedIntMember a) {
+			return a.v().signum();
+		}
+	};
+
+	@Override
+	public Function1<java.lang.Integer,UnboundedIntMember> signum() {
+		return SIG;
 	}
 
 	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> DIV =
@@ -277,7 +332,7 @@ public class UnboundedIntGroup
 	{
 		@Override
 		public void call(UnboundedIntMember a, UnboundedIntMember b,UnboundedIntMember c) {
-			m.setV( a.v().mod(b.v()) );
+			c.setV( a.v().mod(b.v()) );
 		}
 	};
 	
@@ -302,83 +357,219 @@ public class UnboundedIntGroup
 		return DIVMOD;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> GCD =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b,UnboundedIntMember c) {
+			c.setV( a.v().gcd(b.v()) );
+		}
+	};
+	
 	@Override
-	public void gcd(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().gcd(b.v()) );
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> gcd() {
+		return GCD;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> LCM =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b,UnboundedIntMember c) {
+			BigInteger n = a.v().multiply(b.v()).abs();
+			BigInteger d = a.v().gcd(b.v());
+			c.setV( n.divide(d) );
+		}
+	};
+	
 	@Override
-	public void lcm(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		BigInteger n = a.v().multiply(b.v()).abs();
-		BigInteger d = a.v().gcd(b.v());
-		c.setV( n.divide(d) );
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> lcm() {
+		return LCM;
 	}
 
+	private final Procedure2<UnboundedIntMember,UnboundedIntMember> NRM =
+			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			abs().call(a,b);
+		}
+	};
+			
 	@Override
-	public void norm(UnboundedIntMember a, UnboundedIntMember b) {
-		abs(a,b);
+	public Procedure2<UnboundedIntMember,UnboundedIntMember> norm() {
+		return NRM;
 	}
 
-	@Override
-	public boolean isEven(UnboundedIntMember a) {
-		return !isOdd(a);
-	}
+	private final Function1<Boolean,UnboundedIntMember> EV =
+			new Function1<Boolean, UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a) {
+			return !isOdd().call(a);
+		}
+	};
 
 	@Override
-	public boolean isOdd(UnboundedIntMember a) {
-		return a.v().and(BigInteger.ONE).equals(BigInteger.ONE);
+	public Function1<Boolean,UnboundedIntMember> isEven() {
+		return EV;
 	}
+
+	private final Function1<Boolean,UnboundedIntMember> OD =
+			new Function1<Boolean, UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a) {
+			return a.v().and(BigInteger.ONE).equals(BigInteger.ONE);
+		}
+	};
 
 	@Override
-	public void pred(UnboundedIntMember a, UnboundedIntMember b) {
-		subtract(a, ONE, b);
+	public Function1<Boolean,UnboundedIntMember> isOdd() {
+		return OD;
 	}
 
+	private final Procedure2<UnboundedIntMember,UnboundedIntMember> PRD =
+			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			subtract().call(a, ONE, b);
+		}
+	};
+			
 	@Override
-	public void succ(UnboundedIntMember a, UnboundedIntMember b) {
-		add(a, ONE, b);
+	public Procedure2<UnboundedIntMember,UnboundedIntMember> pred() {
+		return PRD;
 	}
 
+	private final Procedure2<UnboundedIntMember,UnboundedIntMember> SUC =
+			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			add().call(a, ONE, b);
+		}
+	};
+			
 	@Override
-	public void bitShiftLeft(int count, UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().shiftLeft(count) );
+	public Procedure2<UnboundedIntMember,UnboundedIntMember> succ() {
+		return SUC;
 	}
 
+	private final Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> SHL =
+			new Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().shiftLeft(count) );
+		}
+	};
+	
 	@Override
-	public void bitShiftRight(int count, UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().shiftRight(count) );
+	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> bitShiftLeft() {
+		return SHL;
 	}
 
+	private final Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> SHR =
+			new Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().shiftRight(count) );
+		}
+	};
+	
 	@Override
-	public void bitAnd(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().and(b.v()) );
+	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> bitShiftRight() {
+		return SHR;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> AND =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			c.setV( a.v().and(b.v()) );
+		}
+	};
+	
 	@Override
-	public void bitOr(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().or(b.v()) );
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> bitAnd() {
+		return AND;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> OR =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			c.setV( a.v().or(b.v()) );
+		}
+	};
+	
 	@Override
-	public void bitXor(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().xor(b.v()) );
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> bitOr() {
+		return OR;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> XOR =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			c.setV( a.v().xor(b.v()) );
+		}
+	};
+	
 	@Override
-	public void bitNot(UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().not() );
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> bitXor() {
+		return XOR;
 	}
 
+	private final Procedure2<UnboundedIntMember,UnboundedIntMember> NOT =
+			new Procedure2<UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().not() );
+		}
+	};
+	
 	@Override
-	public void min(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		Min.compute(this, a, b, c);
+	public Procedure2<UnboundedIntMember,UnboundedIntMember> bitNot() {
+		return NOT;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> MIN =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			Min.compute(G.BIGINT, a, b, c);
+		}
+	};
+	
 	@Override
-	public void max(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		Max.compute(this, a, b, c);
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> min() {
+		return MIN;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> MAX =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			Max.compute(G.BIGINT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> max() {
+		return MAX;
+	}
+
+/*
 	public void andNot(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		c.setV( a.v().andNot(b.v()));
 	}
@@ -426,31 +617,41 @@ public class UnboundedIntGroup
 	public boolean testBit(int n, UnboundedIntMember a) {
 		return a.v().testBit(n);
 	}
+*/
+
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> POW =
+			new Procedure3<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			int cmp = b.v().compareTo(BigInteger.ZERO);
+			if (cmp < 0)
+				throw new IllegalArgumentException("negative powers not supported for unbounded ints");
+			else if (cmp == 0) {
+				if (a.v() == BigInteger.ZERO)
+					throw new IllegalArgumentException("0^0 is not a number");
+				else
+					assign().call(ONE, c);
+			}
+			else if (b.v().compareTo(BigInteger.valueOf(java.lang.Integer.MAX_VALUE)) <= 0) {
+				// speed optimization
+				c.setV(a.v().pow(b.v().intValue()));
+			}
+			else { // huge power
+				UnboundedIntMember tmp = new UnboundedIntMember(ONE);
+				UnboundedIntMember power = new UnboundedIntMember(b);
+				while (isGreater().call(power, ZERO)) {
+					multiply().call(tmp, a, tmp);
+					pred().call(power, power);
+				}
+				assign().call(tmp, c);
+			}
+		}
+	};
 
 	@Override
-	public void pow(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		int cmp = b.v().compareTo(BigInteger.ZERO);
-		if (cmp < 0)
-			throw new IllegalArgumentException("negative powers not supported for unbounded ints");
-		else if (cmp == 0) {
-			if (a.v() == BigInteger.ZERO)
-				throw new IllegalArgumentException("0^0 is not a number");
-			else
-				assign(ONE, c);
-		}
-		else if (b.v().compareTo(BigInteger.valueOf(java.lang.Integer.MAX_VALUE)) <= 0) {
-			// speed optimization
-			c.setV(a.v().pow(b.v().intValue()));
-		}
-		else { // huge power
-			UnboundedIntMember tmp = new UnboundedIntMember(ONE);
-			UnboundedIntMember power = new UnboundedIntMember(b);
-			while (isGreater(power, ZERO)) {
-				multiply().call(tmp, a, tmp);
-				pred(power, power);
-			}
-			assign(tmp, c);
-		}
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> pow() {
+		return POW;
 	}	
 
 }

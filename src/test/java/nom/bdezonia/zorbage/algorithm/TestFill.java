@@ -32,10 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Procedure1;
-import nom.bdezonia.zorbage.procedure.impl.Constant;
 import nom.bdezonia.zorbage.procedure.impl.Ramp;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
