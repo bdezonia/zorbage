@@ -31,8 +31,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.impl.Rand;
-import nom.bdezonia.zorbage.procedure.impl.Sin;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -77,12 +75,10 @@ public class TestTransform {
 		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, group.construct());
 		
 		// set values of storage to random doubles between 0 and 1
-		Rand<T, U> randOp = new Rand<T,U>(group);
-		Generate.compute(group, randOp, a);
+		Generate.compute(group, group.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		Sin<T, U> sinOp = new Sin<T,U>(group);
-		Transform.compute(group, sinOp, a);
+		Transform.compute(group, group.sin(), a);
 		
 		assertTrue(true);
 	}
