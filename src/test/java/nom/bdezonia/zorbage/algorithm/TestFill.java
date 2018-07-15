@@ -77,8 +77,7 @@ public class TestFill {
 		Fill.compute(G.DBL, data, G.DBL.E());
 		Fill.compute(G.DBL, data, G.DBL.PI());
 		Fill.compute(G.DBL, data, G.DBL.random());
-		Float64Member value = new Float64Member(17.4);
-		Fill.compute(G.DBL, data, value);
+		Fill.compute(G.DBL, data, new Float64Member(17.4));
 		assertTrue(true);
 
 	}
