@@ -125,7 +125,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void v(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols())
-			group.assign(zero, value);
+			group.assign().call(zero, value);
 		else {
 			fixedDims.set(rangingDimR, r);
 			fixedDims.set(rangingDimC, c);
@@ -136,7 +136,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void setV(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols()) {
-			if (group.isNotEqual(zero, value))
+			if (group.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else {

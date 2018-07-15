@@ -93,14 +93,14 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 		if (i == 0)
 			num.v(value);
 		else
-			group.assign(zero, value);
+			group.assign().call(zero, value);
 	}
 
 	@Override
 	public void setV(long i, U value) {
 		if (i == 0)
 			num.setV(value);
-		else if (group.isNotEqual(zero, value))
+		else if (group.isNotEqual().call(zero, value))
 			throw new IllegalArgumentException("out of bounds nonzero write");
 
 	}

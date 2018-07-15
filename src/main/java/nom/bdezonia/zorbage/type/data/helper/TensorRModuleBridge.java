@@ -108,7 +108,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void v(long i, U value) {
 		if (i < 0 || i >= length())
-			group.assign(zero, value);
+			group.assign().call(zero, value);
 		else {
 			fixedDims.set(rangingDim, i);
 			tensor.v(fixedDims, value);
@@ -118,7 +118,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void setV(long i, U value) {
 		if (i < 0 || i >= length()) {
-			if (group.isNotEqual(zero, value))
+			if (group.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else {

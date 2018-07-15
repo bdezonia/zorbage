@@ -155,7 +155,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			index.set(rangingDims[i], index.get(i));
 		}
 		if (oob())
-			group.assign(zero, value);
+			group.assign().call(zero, value);
 		else
 			tensor.v(index, value);
 	}
@@ -168,7 +168,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			index.set(rangingDims[i], index.get(i));
 		}
 		if (oob()) {
-			if (group.isNotEqual(zero, value))
+			if (group.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else

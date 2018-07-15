@@ -127,13 +127,13 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	public void v(long r, long c, U value) {
 		if (isColumn) {
 			if (r != 0)
-				group.assign(zero, value);
+				group.assign().call(zero, value);
 			else
 				rmod.v(c, value);
 		}
 		else {
 			if (c != 0)
-				group.assign(zero, value);
+				group.assign().call(zero, value);
 			else
 				rmod.v(r, value);
 		}
@@ -142,13 +142,13 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void setV(long r, long c, U value) {
 		if (isColumn) {
-			if (r != 0 && group.isNotEqual(zero, value))
+			if (r != 0 && group.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 			else
 				rmod.setV(c, value);
 		}
 		else {
-			if (c != 0 && group.isNotEqual(zero, value))
+			if (c != 0 && group.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 			else
 				rmod.setV(r, value);

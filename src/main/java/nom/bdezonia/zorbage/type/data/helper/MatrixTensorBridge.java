@@ -114,7 +114,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	public void v(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				group.assign(zero, value);
+				group.assign().call(zero, value);
 				return;
 			}
 		}
@@ -127,7 +127,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	public void setV(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				if (group.isNotEqual(zero, value))
+				if (group.isNotEqual().call(zero, value))
 					throw new IllegalArgumentException("out of bounds nonzero write");
 			}
 		}
