@@ -35,11 +35,14 @@ import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -231,7 +234,7 @@ public class Float16Group
 		return INV;
 	}
 
-	private final Procedure3<Float16Member,Float16Member,Float16Member> DIV =
+	private final Procedure3<Float16Member,Float16Member,Float16Member> DIVIDE =
 			new Procedure3<Float16Member, Float16Member, Float16Member>()
 	{
 		@Override
@@ -242,7 +245,7 @@ public class Float16Group
 	
 	@Override
 	public Procedure3<Float16Member,Float16Member,Float16Member> divide() {
-		return DIV;
+		return DIVIDE;
 	}
 
 	private final Function2<Boolean,Float16Member,Float16Member> LS =
@@ -734,241 +737,600 @@ public class Float16Group
 		return COTH;
 	}
 	
-	@Override
-	public void acos(Float16Member a, Float16Member b) {
-		b.setV( Math.acos(a.v()) );
-	}
+	private final Procedure2<Float16Member,Float16Member> ACOS =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.acos(a.v()) );
+		}
+	};
 
 	@Override
-	public void asin(Float16Member a, Float16Member b) {
-		b.setV( Math.asin(a.v()) );
+	public Procedure2<Float16Member,Float16Member> acos() {
+		return ACOS;
 	}
 
+	private final Procedure2<Float16Member,Float16Member> ASIN =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.asin(a.v()) );
+		}
+	};
+
 	@Override
-	public void atan(Float16Member a, Float16Member b) {
-		b.setV( Math.atan(a.v()) );
+	public Procedure2<Float16Member,Float16Member> asin() {
+		return ASIN;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> ATAN =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.atan(a.v()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> atan() {
+		return ATAN;
 	}
 	
-	public void atan2(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( Math.atan2(a.v(), b.v()) );
+	private final Procedure3<Float16Member,Float16Member,Float16Member> ATAN2 =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( Math.atan2(a.v(), b.v()) );
+		}
+	};
+	
+	public Procedure3<Float16Member,Float16Member,Float16Member> atan2() {
+		return ATAN2;
 	}
 
 	// reference: Wolfram Alpha
+
+	private final Procedure2<Float16Member,Float16Member> ACSC =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// acsc(x) = asin(1/x)
+			Float16Member tmp = new Float16Member(1 / a.v());
+			asin().call(tmp, b);
+		}
+	};
 
 	//@Override
-	public void acsc(Float16Member a, Float16Member b) {
-		// acsc(x) = asin(1/x)
-		Float16Member tmp = new Float16Member(1 / a.v());
-		asin(tmp, b);
+	public Procedure2<Float16Member,Float16Member> acsc() {
+		return ACSC;
 	}
 
 	// reference: Wolfram Alpha
 	
+	private final Procedure2<Float16Member,Float16Member> ASEC =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// asec(x) = acos(1/x)
+			Float16Member tmp = new Float16Member(1 / a.v());
+			acos().call(tmp, b);
+		}
+	};
+
 	//@Override
-	public void asec(Float16Member a, Float16Member b) {
-		// asec(x) = acos(1/x)
-		Float16Member tmp = new Float16Member(1 / a.v());
-		acos(tmp, b);
+	public Procedure2<Float16Member,Float16Member> asec() {
+		return ASEC;
 	}
 	
 	// reference: Wolfram Alpha
 
+	private final Procedure2<Float16Member,Float16Member> ACOT =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// acot(x) = atan(1/x)
+			Float16Member tmp = new Float16Member(1 / a.v());
+			atan().call(tmp, b);
+		}
+	};
+	
 	// @Override
-	public void acot(Float16Member a, Float16Member b) {
-		// acot(x) = atan(1/x)
-		Float16Member tmp = new Float16Member(1 / a.v());
-		atan(tmp, b);
+	public Procedure2<Float16Member,Float16Member> acot() {
+		return ACOT;
 	}
 	
 	// reference: Mathworld
 
+	private final Procedure2<Float16Member,Float16Member> ACOSH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.log(a.v() + Math.sqrt(a.v()*a.v() - 1)) );
+		}
+	};
+	
 	@Override
-	public void acosh(Float16Member a, Float16Member b) {
-		b.setV( Math.log(a.v() + Math.sqrt(a.v()*a.v() - 1)) );
+	public Procedure2<Float16Member,Float16Member> acosh() {
+		return ACOSH;
 	}
 
 	// reference: Wolfram Alpha
 
+	private final Procedure2<Float16Member,Float16Member> ASINH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.log(a.v() + Math.sqrt(a.v()*a.v() + 1)) );
+		}
+	};
+	
 	@Override
-	public void asinh(Float16Member a, Float16Member b) {
-		b.setV( Math.log(a.v() + Math.sqrt(a.v()*a.v() + 1)) );
+	public Procedure2<Float16Member,Float16Member> asinh() {
+		return ASINH;
 	}
 
 	// reference: Wolfram Alpha
 
+	private final Procedure2<Float16Member,Float16Member> ATANH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 0.5 * (-Math.log(1 - a.v()) + Math.log(1 + a.v())) );
+		}
+	};
+	
 	@Override
-	public void atanh(Float16Member a, Float16Member b) {
-		b.setV( 0.5 * (-Math.log(1 - a.v()) + Math.log(1 + a.v())) );
+	public Procedure2<Float16Member,Float16Member> atanh() {
+		return ATANH;
 	}
 
 	// reference: Wolfram Alpha
+
+	private final Procedure2<Float16Member,Float16Member> ACSCH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// acsch(x) = asinh(1/x)
+			Float16Member tmp = new Float16Member(1 / a.v());
+			asinh().call(tmp, b);
+		}
+	};
 	
 	//@Override
-	public void acsch(Float16Member a, Float16Member b) {
-		// acsch(x) = asinh(1/x)
-		Float16Member tmp = new Float16Member(1 / a.v());
-		asinh(tmp, b);
+	public Procedure2<Float16Member,Float16Member> acsch() {
+		return ACSCH;
+	}
+
+	// reference: Wolfram Alpha
+
+	private final Procedure2<Float16Member,Float16Member> ASECH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// asech(x) = acosh(1/x)
+			Float16Member tmp = new Float16Member(1 / a.v());
+			acosh().call(tmp, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<Float16Member,Float16Member> asech() {
+		return ASECH;
 	}
 
 	// reference: Wolfram Alpha
 	
-	//@Override
-	public void asech(Float16Member a, Float16Member b) {
-		// asech(x) = acosh(1/x)
-		Float16Member tmp = new Float16Member(1 / a.v());
-		acosh(tmp, b);
-	}
-
-	// reference: Wolfram Alpha
+	private final Procedure2<Float16Member,Float16Member> ACOTH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// acoth(x) = atanh(1/x)
+			Float16Member tmp = new Float16Member(1 / a.v());
+			atanh().call(tmp, b);
+		}
+	};
 	
 	//@Override
-	public void acoth(Float16Member a, Float16Member b) {
-		// acoth(x) = atanh(1/x)
-		Float16Member tmp = new Float16Member(1 / a.v());
-		atanh(tmp, b);
+	public Procedure2<Float16Member,Float16Member> acoth() {
+		return ACOTH;
 	}
 
-	@Override
-	public boolean isNaN(Float16Member a) {
-		return Double.isNaN(a.v());
-	}
+	private final Function1<Boolean,Float16Member> NAN =
+			new Function1<Boolean, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a) {
+			return Double.isNaN(a.v());
+		}
+	};
 
 	@Override
-	public boolean isInfinite(Float16Member a) {
-		return Double.isInfinite(a.v());
+	public Function1<Boolean,Float16Member> isNaN() {
+		return NAN;
 	}
 
-	@Override
-	public void sqrt(Float16Member a, Float16Member b) {
-		b.setV( Math.sqrt(a.v()) );
-	}
+	private final Function1<Boolean,Float16Member> INF =
+			new Function1<Boolean, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a) {
+			return Double.isInfinite(a.v());
+		}
+	};
 
 	@Override
-	public void cbrt(Float16Member a, Float16Member b) {
-		b.setV( Math.cbrt(a.v()) );
-	}
-
-	@Override
-	public void round(Round.Mode mode, Float16Member delta, Float16Member a, Float16Member b) {
-		Round.compute(this, mode, delta, a, b);
-	}
-
-	@Override
-	public void min(Float16Member a, Float16Member b, Float16Member c) {
-		Min.compute(this, a, b, c);
-	}
-
-	@Override
-	public void max(Float16Member a, Float16Member b, Float16Member c) {
-		Max.compute(this, a, b, c);
-	}
-
-	@Override
-	public void pow(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( Math.pow(a.v(), b.v()) );
+	public Function1<Boolean,Float16Member> isInfinite() {
+		return INF;
 	}
 	
-	public void log10(Float16Member a, Float16Member b, Float16Member c) {
-		b.setV( Math.log10(a.v()) );
-	}
-	
-	public void toDegrees(Float16Member a, Float16Member b) {
-		b.setV( Math.toDegrees(a.v()) );
-	}
-	
-	public void toRadians(Float16Member a, Float16Member b) {
-		b.setV( Math.toRadians(a.v()) );
-	}
+	private final Procedure2<Float16Member,Float16Member> SQRT =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.sqrt(a.v()) );
+		}
+	};
 	
 	@Override
-	public void random(Float16Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.setV(rng.nextDouble());
+	public Procedure2<Float16Member,Float16Member> sqrt() {
+		return SQRT;
 	}
+
+	private final Procedure2<Float16Member,Float16Member> CBRT =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.cbrt(a.v()) );
+		}
+	};
 	
 	@Override
-	public void real(Float16Member a, Float16Member b) {
-		b.setV(a.v());
+	public Procedure2<Float16Member,Float16Member> cbrt() {
+		return CBRT;
+	}
+
+	private final Procedure4<Round.Mode,Float16Member,Float16Member,Float16Member> ROUND =
+			new Procedure4<Round.Mode, Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Mode mode, Float16Member delta, Float16Member a, Float16Member b) {
+			Round.compute(G.HLF, mode, delta, a, b);
+		}
+	};
+
+	@Override
+	public Procedure4<Round.Mode,Float16Member,Float16Member,Float16Member> round() {
+		return ROUND;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> MIN =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			Min.compute(G.HLF, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> min() {
+		return MIN;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> MAX =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			Max.compute(G.HLF, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> max() {
+		return MAX;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> POW =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( Math.pow(a.v(), b.v()) );
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> pow() {
+		return POW;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> LOG10 =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.log10(a.v()) );
+		}
+	};
+
+	public Procedure2<Float16Member,Float16Member> log10() {
+		return LOG10;
 	}
 	
-	@Override
-	public void unreal(Float16Member a, Float16Member b) {
-		b.setV(0);
-	}
+	private final Procedure2<Float16Member,Float16Member> DEG =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.toDegrees(a.v()) );
+		}
+	};
 
-
-	@Override
-	public void pred(Float16Member a, Float16Member b) {
-		// TODO
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
-	public void succ(Float16Member a, Float16Member b) {
-		// TODO
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
-	public void copySign(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( Math.copySign(a.v(), b.v()) );
+	public Procedure2<Float16Member,Float16Member> toDegrees() {
+		return DEG;
 	}
 	
-	@Override
-	public int getExponent(Float16Member a) {
-		// TODO
-		throw new UnsupportedOperationException("Not yet implemented");
+	private final Procedure2<Float16Member,Float16Member> RAD =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.toRadians(a.v()) );
+		}
+	};
+
+	public Procedure2<Float16Member,Float16Member> toRadians() {
+		return RAD;
 	}
+	
+	private final Procedure1<Float16Member> RAND =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.setV(rng.nextDouble());
+		}
+	};
+	
+	@Override
+	public Procedure1<Float16Member> random() {
+		return RAND;
+	}
+	
+	private final Procedure2<Float16Member,Float16Member> REAL =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV(a.v());
+		}
+	};
 
 	@Override
-	public void scalb(int scaleFactor, Float16Member a, Float16Member b) {
-		b.setV(Math.scalb(a.v(),scaleFactor));
+	public Procedure2<Float16Member,Float16Member> real() {
+		return REAL;
 	}
+	
+	private final Procedure2<Float16Member,Float16Member> UNREAL =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV(0);
+		}
+	};
 
 	@Override
-	public void ulp(Float16Member a, Float16Member b) {
-		// TODO
-		throw new UnsupportedOperationException("Not yet implemented");
+	public Procedure2<Float16Member,Float16Member> unreal() {
+		return UNREAL;
 	}
 
-	@Override
-	public void div(Float16Member a, Float16Member b, Float16Member d) {
-		double v = a.v() / b.v();
-		if (v > 0)
-			v = Math.floor(v);
-		else
-			v = Math.ceil(v);
-		d.setV(v);
-	}
+
+	private final Procedure2<Float16Member,Float16Member> PRED =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// TODO
+			throw new UnsupportedOperationException("Not yet implemented");
+		}
+	};
 
 	@Override
-	public void mod(Float16Member a, Float16Member b, Float16Member m) {
-		m.setV(a.v() % b.v());
+	public Procedure2<Float16Member,Float16Member> pred() {
+		return PRED;
 	}
 
-	@Override
-	public void divMod(Float16Member a, Float16Member b, Float16Member d, Float16Member m) {
-		div(a,b,d);
-		mod(a,b,m);
+	private final Procedure2<Float16Member,Float16Member> SUCC =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// TODO
+			throw new UnsupportedOperationException("Not yet implemented");
+		}
+	};
+
+	public Procedure2<Float16Member,Float16Member> succ() {
+		return SUCC;
 	}
 
-	@Override
-	public void sinch(Float16Member a, Float16Member b) {
-		Sinch.compute(this, a, b);
-	}
+	private final Procedure3<Float16Member,Float16Member,Float16Member> CPS =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( Math.copySign(a.v(), b.v()) );
+		}
+	};
 
 	@Override
-	public void sinchpi(Float16Member a, Float16Member b) {
-		Sinchpi.compute(this, a, b);
+	public Procedure3<Float16Member,Float16Member,Float16Member> copySign() {
+		return CPS;
+	}
+	
+	private final Function1<java.lang.Integer,Float16Member> GEXP =
+			new Function1<Integer, Float16Member>()
+	{
+		@Override
+		public Integer call(Float16Member b) {
+			// TODO
+			throw new UnsupportedOperationException("Not yet implemented");
+		}
+	};
+	
+	@Override
+	public Function1<java.lang.Integer,Float16Member> getExponent() {
+		return GEXP;
 	}
 
+	private final Procedure3<java.lang.Integer,Float16Member,Float16Member> SCALB =
+			new Procedure3<Integer, Float16Member, Float16Member>()
+	{		
+		@Override
+		public void call(Integer scaleFactor, Float16Member a, Float16Member b) {
+			b.setV(Math.scalb(a.v(),scaleFactor));
+		}
+	};
+	
 	@Override
-	public void sinc(Float16Member a, Float16Member b) {
-		Sinc.compute(this, a, b);
+	public Procedure3<java.lang.Integer,Float16Member,Float16Member> scalb() {
+		return SCALB;
 	}
 
+	private final Procedure2<Float16Member,Float16Member> ULP =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			// TODO
+			throw new UnsupportedOperationException("Not yet implemented");
+		}
+	};
+
 	@Override
-	public void sincpi(Float16Member a, Float16Member b) {
-		Sincpi.compute(this, a, b);
+	public Procedure2<Float16Member,Float16Member> ulp() {
+		return ULP;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> DIV =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member d) {
+			double v = a.v() / b.v();
+			if (v > 0)
+				v = Math.floor(v);
+			else
+				v = Math.ceil(v);
+			d.setV(v);
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> MOD =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member m) {
+			m.setV(a.v() % b.v());
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<Float16Member,Float16Member,Float16Member,Float16Member> DIVMOD =
+			new Procedure4<Float16Member, Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member d, Float16Member m) {
+			div().call(a,b,d);
+			mod().call(a,b,m);
+		}
+	};
+
+	@Override
+	public Procedure4<Float16Member,Float16Member,Float16Member,Float16Member> divMod() {
+		return DIVMOD;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> SINCH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			Sinch.compute(G.HLF, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> sinch() {
+		return SINCH;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> SINCHPI =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			Sinchpi.compute(G.HLF, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> sinchpi() {
+		return SINCHPI;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> SINC =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			Sinc.compute(G.HLF, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> sinc() {
+		return SINC;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> SINCPI =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			Sincpi.compute(G.HLF, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> sincpi() {
+		return SINCPI;
 	}
 }

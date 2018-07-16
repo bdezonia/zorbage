@@ -570,7 +570,9 @@ public class UnboundedIntGroup
 	}
 
 /*
-	public void andNot(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+ TODO - implement these 
+  
+  	public void andNot(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
 		c.setV( a.v().andNot(b.v()));
 	}
 	
