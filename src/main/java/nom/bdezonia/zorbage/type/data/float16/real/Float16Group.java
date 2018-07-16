@@ -35,6 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -83,17 +88,34 @@ public class Float16Group
 	private static final Float16Member PI = new Float16Member(Math.PI);
 	private static final Float16Member E = new Float16Member(Math.E);
 
-	public Float16Group() {
-	}
+	public Float16Group() { }
+	
+	private final Function2<Boolean,Float16Member,Float16Member> EQ =
+			new Function2<Boolean, Float16Member, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a, Float16Member b) {
+			return a.v() == b.v();
+		}
+	};
 	
 	@Override
-	public boolean isEqual(Float16Member a, Float16Member b) {
-		return a.v() == b.v();
+	public Function2<Boolean,Float16Member,Float16Member> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,Float16Member,Float16Member> NEQ =
+			new Function2<Boolean, Float16Member, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a, Float16Member b) {
+			return a.v() != b.v();
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(Float16Member a, Float16Member b) {
-		return a.v() != b.v();
+	public Function2<Boolean,Float16Member,Float16Member> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -111,244 +133,605 @@ public class Float16Group
 		return new Float16Member(s);
 	}
 
-	@Override
-	public void assign(Float16Member from, Float16Member to) {
-		to.setV( from.v() );
-	}
-
-	@Override
-	public void add(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( a.v() + b.v() );
-	}
-
-	@Override
-	public void subtract(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( a.v() - b.v() );
-	}
-
-	@Override
-	public void zero(Float16Member a) {
-		a.setV( 0 );
-	}
-
-	@Override
-	public void negate(Float16Member a, Float16Member b) {
-		b.setV( -a.v() );
-	}
-
-	@Override
-	public void unity(Float16Member a) {
-		a.setV( 1 );
-	}
-
-	@Override
-	public void invert(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / a.v() );
-	}
-
-	@Override
-	public void divide(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( a.v() / b.v() );
-	}
-
-	@Override
-	public boolean isLess(Float16Member a, Float16Member b) {
-		return a.v() < b.v();
-	}
-
-	@Override
-	public boolean isLessEqual(Float16Member a, Float16Member b) {
-		return a.v() <= b.v();
-	}
-
-	@Override
-	public boolean isGreater(Float16Member a, Float16Member b) {
-		return a.v() > b.v();
-	}
-
-	@Override
-	public boolean isGreaterEqual(Float16Member a, Float16Member b) {
-		return a.v() >= b.v();
-	}
-
-	@Override
-	public int compare(Float16Member a, Float16Member b) {
-		if (a.v() < b.v()) return -1;
-		if (a.v() > b.v()) return  1;
-		return 0;
-	}
-
-	@Override
-	public int signum(Float16Member a) {
-		if (a.v() < 0) return -1;
-		if (a.v() > 0) return  1;
-		return 0;
-	}
-
-	@Override
-	public void maxBound(Float16Member a) {
-		a.setV( Float16Member.toDouble((short) 0b0111101111111111));
-	}
-
-	@Override
-	public void minBound(Float16Member a) {
-		a.setV( Float16Member.toDouble((short) 0b1111101111111111));
-	}
-
-	@Override
-	public void multiply(Float16Member a, Float16Member b, Float16Member c) {
-		c.setV( a.v() * b.v() );
-	}
-
-	@Override
-	public void power(int power, Float16Member a, Float16Member b) {
-		if (power == 0 && a.v() == 0) {
-			b.setV(Double.NaN);
-			return;
+	private final Procedure2<Float16Member,Float16Member> ASSIGN =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member from, Float16Member to) {
+			to.setV( from.v() );
 		}
-		b.setV( Math.pow(a.v(), power) );
-	}
+	};
 
 	@Override
-	public void abs(Float16Member a, Float16Member b) {
-		b.setV( Math.abs(a.v()) );
+	public Procedure2<Float16Member,Float16Member> assign() {
+		return ASSIGN;
 	}
 
-	@Override
-	public void norm(Float16Member a, Float16Member b) {
-		abs(a,b);
-	}
-
-	@Override
-	public void PI(Float16Member a) {
-		assign(PI, a);
-	}
-
-	@Override
-	public void E(Float16Member a) {
-		assign(E, a);
-	}
-	
-	@Override
-	public void exp(Float16Member a, Float16Member b) {
-		b.setV( Math.exp(a.v()) );
-	}
-
-	public void expm1(Float16Member a, Float16Member b) {
-		b.setV( Math.expm1(a.v()) );
-	}
-
-	@Override
-	public void log(Float16Member a, Float16Member b) {
-		b.setV( Math.log(a.v()) );
-	}
-
-	public void log1p(Float16Member a, Float16Member b) {
-		b.setV( Math.log1p(a.v()) );
-	}
-
-	@Override
-	public void cos(Float16Member a, Float16Member b) {
-		b.setV( Math.cos(a.v()) );
-	}
-
-	@Override
-	public void sin(Float16Member a, Float16Member b) {
-		b.setV( Math.sin(a.v()) );
-	}
-
-	@Override
-	public void sinAndCos(Float16Member a, Float16Member s, Float16Member c) {
-		sin(a,s);
-		cos(a,c);
-		
-		/*
-		
-		// This might be too inaccurate to be worth optimization
-		
-		double arg = a.v() % TWO_PI;  // this might be faster than some while (arg < 0 || arg >= TWO_PI) loops
-		double cosine = Math.cos(arg);
-		double sine = Math.sqrt(1 - cosine * cosine);
-		if ( arg < 0) {
-			if (arg < -Math.PI)
-				sine = -sine;
-		}+
-		else { // arg >= 0
-			if (arg > Math.PI)
-				sine = -sine;
+	private final Procedure3<Float16Member,Float16Member,Float16Member> ADD =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( a.v() + b.v() );
 		}
-		s.setV( sine );
-		c.setV( cosine );
-		*/
+	};
+	
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> add() {
+		return ADD;
 	}
 
+	private final Procedure3<Float16Member,Float16Member,Float16Member> SUB =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( a.v() - b.v() );
+		}
+	};
+	
 	@Override
-	public void tan(Float16Member a, Float16Member b) {
-		b.setV( Math.tan(a.v()) );
+	public Procedure3<Float16Member,Float16Member,Float16Member> subtract() {
+		return SUB;
+	}
+
+	private final Procedure1<Float16Member> ZER =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			a.setV( 0 );
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> zero() {
+		return ZER;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> NEG =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( -a.v() );
+		}
+	};
+	
+	@Override
+	public Procedure2<Float16Member,Float16Member> negate() {
+		return NEG;
+	}
+
+	private final Procedure1<Float16Member> UN =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			a.setV( 1 );
+		}
+	};
+	
+	@Override
+	public Procedure1<Float16Member> unity() {
+		return UN;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> INV =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / a.v() );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> invert() {
+		return INV;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> DIV =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( a.v() / b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> divide() {
+		return DIV;
+	}
+
+	private final Function2<Boolean,Float16Member,Float16Member> LS =
+			new Function2<Boolean, Float16Member, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a, Float16Member b) {
+			return a.v() < b.v();
+		}
+	};
+
+	@Override
+	public Function2<Boolean,Float16Member,Float16Member> isLess() {
+		return LS;
+	}
+
+	private final Function2<Boolean,Float16Member,Float16Member> LE =
+			new Function2<Boolean, Float16Member, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a, Float16Member b) {
+			return a.v() <= b.v();
+		}
+	};
+
+	@Override
+	public Function2<Boolean,Float16Member,Float16Member> isLessEqual() {
+		return LE;
+	}
+
+	private final Function2<Boolean,Float16Member,Float16Member> GR =
+			new Function2<Boolean, Float16Member, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a, Float16Member b) {
+			return a.v() > b.v();
+		}
+	};
+
+	@Override
+	public Function2<Boolean,Float16Member,Float16Member> isGreater() {
+		return GR;
+	}
+
+	private final Function2<Boolean,Float16Member,Float16Member> GRE =
+			new Function2<Boolean, Float16Member, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a, Float16Member b) {
+			return a.v() >= b.v();
+		}
+	};
+
+	@Override
+	public Function2<Boolean,Float16Member,Float16Member> isGreaterEqual() {
+		return GRE;
+	}
+
+	private final Function2<java.lang.Integer,Float16Member,Float16Member> CMP =
+			new Function2<Integer, Float16Member, Float16Member>()
+	{
+		@Override
+		public Integer call(Float16Member a, Float16Member b) {
+			if (a.v() < b.v()) return -1;
+			if (a.v() > b.v()) return  1;
+			return 0;
+		}
+	};
+	
+	@Override
+	public Function2<java.lang.Integer,Float16Member,Float16Member> compare() {
+		return CMP;
+	}
+
+	private final Function1<java.lang.Integer,Float16Member> SIG =
+			new Function1<Integer, Float16Member>()
+	{
+		@Override
+		public Integer call(Float16Member a) {
+			if (a.v() < 0) return -1;
+			if (a.v() > 0) return  1;
+			return 0;
+		}
+	};
+
+	@Override
+	public Function1<java.lang.Integer,Float16Member> signum() {
+		return SIG;
+	}
+
+	private Procedure1<Float16Member> MAXB =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			a.setV( Float16Member.toDouble((short) 0b0111101111111111));
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> maxBound() {
+		return MAXB;
+	}
+
+	private Procedure1<Float16Member> MINB =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			a.setV( Float16Member.toDouble((short) 0b1111101111111111));
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> minBound() {
+		return MINB;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> MUL =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b, Float16Member c) {
+			c.setV( a.v() * b.v() );
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> multiply() {
+		return MUL;
+	}
+
+	private final Procedure3<java.lang.Integer,Float16Member,Float16Member> POWER =
+			new Procedure3<Integer, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Integer power, Float16Member a, Float16Member b) {
+			if (power == 0 && a.v() == 0) {
+				b.setV(Double.NaN);
+			}
+			else {
+				b.setV( Math.pow(a.v(), power) );
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<java.lang.Integer,Float16Member,Float16Member> power() {
+		return POWER;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> ABS =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.abs(a.v()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> abs() {
+		return ABS;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> NRM =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			abs().call(a,b);
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> norm() {
+		return NRM;
+	}
+
+	private final Procedure1<Float16Member> _PI =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			assign().call(PI, a);
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> PI() {
+		return _PI;
+	}
+
+	private final Procedure1<Float16Member> _E =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			assign().call(E, a);
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> E() {
+		return _E;
+	}
+	
+	private final Procedure2<Float16Member,Float16Member> EXP =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.exp(a.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure2<Float16Member,Float16Member> exp() {
+		return EXP;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> EXPM1 =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.expm1(a.v()) );
+		}
+	};
+	
+	public Procedure2<Float16Member,Float16Member> expm1() {
+		return EXPM1;
+	}
+
+	private Procedure2<Float16Member,Float16Member> LOG =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.log(a.v()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> log() {
+		return LOG;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> LOG1P =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.log1p(a.v()) );
+		}
+	};
+
+	public Procedure2<Float16Member,Float16Member> log1p() {
+		return LOG1P;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> COS =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.cos(a.v()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> cos() {
+		return COS;
+	}
+
+	private final Procedure2<Float16Member,Float16Member> SIN =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.sin(a.v()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member,Float16Member> sin() {
+		return SIN;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> SINCOS =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member s, Float16Member c) {
+			sin().call(a,s);
+			cos().call(a,c);
+			
+			/*
+			
+			// This might be too inaccurate to be worth optimization
+			
+			double arg = a.v() % TWO_PI;  // this might be faster than some while (arg < 0 || arg >= TWO_PI) loops
+			double cosine = Math.cos(arg);
+			double sine = Math.sqrt(1 - cosine * cosine);
+			if ( arg < 0) {
+				if (arg < -Math.PI)
+					sine = -sine;
+			}+
+			else { // arg >= 0
+				if (arg > Math.PI)
+					sine = -sine;
+			}
+			s.setV( sine );
+			c.setV( cosine );
+			*/
+		}
+	};
+	
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> sinAndCos() {
+		return SINCOS;
+	}
+
+	private Procedure2<Float16Member,Float16Member> TAN =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.tan(a.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure2<Float16Member,Float16Member> tan() {
+		return TAN;
 	}
 
 	// ref: internet
 
+	private Procedure2<Float16Member,Float16Member> CSC =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / Math.sin(a.v()) );
+		}
+	};
+	
 	//@Override
-	public void csc(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / Math.sin(a.v()) );
+	public Procedure2<Float16Member,Float16Member> csc() {
+		return CSC;
 	}
 	
 	// ref: internet
 
+	private Procedure2<Float16Member,Float16Member> SEC =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / Math.cos(a.v()) );
+		}
+	};
+	
 	//@Override
-	public void sec(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / Math.cos(a.v()) );
+	public Procedure2<Float16Member,Float16Member> sec() {
+		return SEC;
 	}
 	
 	// ref: internet
 
+	private Procedure2<Float16Member,Float16Member> COT =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / Math.tan(a.v()) );
+		}
+	};
+	
 	//@Override
-	public void cot(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / Math.tan(a.v()) );
+	public Procedure2<Float16Member,Float16Member> cot() {
+		return COT;
 	}
 	
-	@Override
-	public void cosh(Float16Member a, Float16Member b) {
-		b.setV( Math.cosh(a.v()) );
-	}
+	private Procedure2<Float16Member,Float16Member> COSH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.cosh(a.v()) );
+		}
+	};
 
 	@Override
-	public void sinh(Float16Member a, Float16Member b) {
-		b.setV( Math.sinh(a.v()) );
+	public Procedure2<Float16Member,Float16Member> cosh() {
+		return COSH;
 	}
 
+	private Procedure2<Float16Member,Float16Member> SINH =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.sinh(a.v()) );
+		}
+	};
+
 	@Override
-	public void sinhAndCosh(Float16Member a, Float16Member s, Float16Member c) {
-		// TODO - is there a speedup?
-		sinh(a, s);
-		cosh(a, c);
+	public Procedure2<Float16Member,Float16Member> sinh() {
+		return SINH;
+	}
+
+	private final Procedure3<Float16Member,Float16Member,Float16Member> SINHCOSH =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member s, Float16Member c) {
+			// TODO - is there a speedup?
+			sinh().call(a, s);
+			cosh().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member,Float16Member,Float16Member> sinhAndCosh() {
+		return SINHCOSH;
 	}
 	
+	private final Procedure2<Float16Member,Float16Member> TANH =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( Math.tanh(a.v()) );
+		}
+	};
+
 	@Override
-	public void tanh(Float16Member a, Float16Member b) {
-		b.setV( Math.tanh(a.v()) );
+	public Procedure2<Float16Member,Float16Member> tanh() {
+		return TANH;
 	}
 
 	// ref: internet
 
+	private final Procedure2<Float16Member,Float16Member> CSCH =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / Math.sinh(a.v()) );
+		}
+	};
+	
 	//@Override
-	public void csch(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / Math.sinh(a.v()) );
+	public Procedure2<Float16Member,Float16Member> csch() {
+		return CSCH;
 	}
 	
 	// ref: internet
 
+	private final Procedure2<Float16Member,Float16Member> SECH =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / Math.cosh(a.v()) );
+		}
+	};
+	
 	//@Override
-	public void sech(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / Math.cosh(a.v()) );
+	public Procedure2<Float16Member,Float16Member> sech() {
+		return SECH;
 	}
 
 	// ref: internet
 
+	private final Procedure2<Float16Member,Float16Member> COTH =
+			new Procedure2<Float16Member, Float16Member>()
+	{	
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setV( 1.0 / Math.tanh(a.v()) );
+		}
+	};
+
 	//@Override
-	public void coth(Float16Member a, Float16Member b) {
-		b.setV( 1.0 / Math.tanh(a.v()) );
+	public Procedure2<Float16Member,Float16Member> coth(Float16Member a, Float16Member b) {
+		return COTH;
 	}
 	
 	@Override
