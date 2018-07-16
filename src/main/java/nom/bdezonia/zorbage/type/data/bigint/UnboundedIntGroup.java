@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
@@ -569,57 +570,161 @@ public class UnboundedIntGroup
 		return MAX;
 	}
 
-/*
- TODO - implement these 
-  
-  	public void andNot(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().andNot(b.v()));
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> ANDNOT =
+			new Procedure3<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			c.setV( a.v().andNot(b.v()));
+		}
+	};
+
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> andNot() {
+		return ANDNOT;
 	}
 	
-	public void bitCount(UnboundedIntMember a, SignedInt32Member b) {
-		b.setV( a.v().bitCount() );
+	private final Procedure2<UnboundedIntMember,SignedInt32Member> BC =
+			new Procedure2<UnboundedIntMember, SignedInt32Member>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, SignedInt32Member b) {
+			b.setV( a.v().bitCount() );
+		}
+	};
+
+	public Procedure2<UnboundedIntMember,SignedInt32Member> bitCount() {
+		return BC;
 	}
 	
-	public void bitLength(UnboundedIntMember a, SignedInt32Member b) {
-		b.setV( a.v().bitLength() );
+	private final Procedure2<UnboundedIntMember,SignedInt32Member> BL =
+			new Procedure2<UnboundedIntMember, SignedInt32Member>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, SignedInt32Member b) {
+			b.setV( a.v().bitLength() );
+		}
+	};
+
+	public Procedure2<UnboundedIntMember,SignedInt32Member> bitLength() {
+		return BL;
 	}
 	
-	public void getLowestSetBit(UnboundedIntMember a, SignedInt32Member b) {
-		b.setV( a.v().getLowestSetBit() );
+	private final Procedure2<UnboundedIntMember,SignedInt32Member> LSB =
+			new Procedure2<UnboundedIntMember, SignedInt32Member>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, SignedInt32Member b) {
+			b.setV( a.v().getLowestSetBit() );
+		}
+	};
+
+	public Procedure2<UnboundedIntMember,SignedInt32Member> getLowestSetBit() {
+		return LSB;
 	}
 	
-	public void clearBit(int n, UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().clearBit(n) );
+	private final Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> CB =
+			new Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(java.lang.Integer n, UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().clearBit(n) );
+		}
+	};
+	
+	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> clearBit() {
+		return CB;
 	}
 	
-	public void flipBit(int n, UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().flipBit(n) );
+	private final Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> FB =
+			new Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(java.lang.Integer n, UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().flipBit(n) );
+		}
+	};
+
+	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> flipBit() {
+		return FB;
 	}
 	
-	public boolean isProbablePrime(int certainty, UnboundedIntMember a) {
-		return a.v().isProbablePrime(certainty);
+	private final Function2<Boolean, java.lang.Integer, UnboundedIntMember> IPP =
+			new Function2<Boolean, java.lang.Integer, UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(java.lang.Integer certainty, UnboundedIntMember a) {
+			return a.v().isProbablePrime(certainty);
+		}
+	};
+
+	public Function2<Boolean, java.lang.Integer, UnboundedIntMember> isProbablePrime() {
+		return IPP;
 	}
 	
-	public void modInverse(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-		c.setV( a.v().modInverse(b.v()) );
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> MI =
+			new Procedure3<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			c.setV( a.v().modInverse(b.v()) );
+		}
+	};
+
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> modInverse() {
+		return MI;
 	}
 	
-	public void modPow(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c, UnboundedIntMember d) {
-		d.setV( a.v().modPow(b.v(), c.v()) );
+	private final Procedure4<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> MP =
+			new Procedure4<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c, UnboundedIntMember d) {
+			d.setV( a.v().modPow(b.v(), c.v()) );
+		}
+	};
+	
+	public Procedure4<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> modPow() {
+		return MP;
+	}
+
+	private final Procedure2<UnboundedIntMember,UnboundedIntMember> NPP =
+			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().nextProbablePrime() );
+		}
+	};
+
+	public Procedure2<UnboundedIntMember,UnboundedIntMember> nextProbablePrime() {
+		return NPP;
 	}
 	
-	public void nextProbablePrime(UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().nextProbablePrime() );
+	private final Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> SB =
+			new Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(java.lang.Integer n, UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV( a.v().setBit(n) );
+		}
+	};
+
+	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> setBit() {
+		return SB;
 	}
 	
-	public void setBit(int n, UnboundedIntMember a, UnboundedIntMember b) {
-		b.setV( a.v().setBit(n) );
-	}
+	private final Function2<Boolean,java.lang.Integer,UnboundedIntMember> TB =
+			new Function2<Boolean, java.lang.Integer, UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(java.lang.Integer n, UnboundedIntMember a) {
+			return a.v().testBit(n);
+		}
+	};
 	
-	public boolean testBit(int n, UnboundedIntMember a) {
-		return a.v().testBit(n);
+	public Function2<Boolean,java.lang.Integer,UnboundedIntMember> testBit() {
+		return TB;
 	}
-*/
 
 	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> POW =
 			new Procedure3<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
