@@ -44,7 +44,14 @@ import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -100,61 +107,132 @@ public class ComplexFloat64Group
 	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
 	private static final ComplexFloat64Member NaN = new ComplexFloat64Member(Double.NaN,Double.NaN);
 
-	public ComplexFloat64Group() {
+	public ComplexFloat64Group() { }
+	
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> MUL =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			// for safety must use tmps
+			double r = a.r()*b.r() - a.i()*b.i();
+			double i = a.i()*b.r() + a.r()*b.i();
+			c.setR( r );
+			c.setI( i );
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> multiply() {
+		return MUL;
 	}
+
+	private final Procedure3<java.lang.Integer,ComplexFloat64Member,ComplexFloat64Member> POWER =
+			new Procedure3<Integer, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(Integer power, ComplexFloat64Member a, ComplexFloat64Member b) {
+			if (power == 0 && isEqual().call(a, ZERO)) {
+				assign().call(NaN, b);
+				return;
+			}
+			double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
+			double nTheta = power * getArgument(a);
+			b.setR(rToTheN * Math.cos(nTheta));
+			b.setI(rToTheN * Math.sin(nTheta));
+		}
+	};
+
+	@Override
+	public Procedure3<java.lang.Integer,ComplexFloat64Member,ComplexFloat64Member> power() {
+		return POWER;
+	}
+
+	private final Procedure1<ComplexFloat64Member> ZER =
+			new Procedure1<ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a) {
+			assign().call(ZERO,a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat64Member> zero() {
+		return ZER;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> NEG =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			b.setR( -a.r() );
+			b.setI( -a.i() );
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> negate() {
+		return NEG;
+	}
+
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> ADD =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			c.setR( a.r() + b.r() );
+			c.setI( a.i() + b.i() );
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> add() {
+		return ADD;
+	}
+
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> SUB =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			c.setR( a.r() - b.r() );
+			c.setI( a.i() - b.i() );
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> subtract() {
+		return SUB;
+	}
+
+	private final Function2<Boolean,ComplexFloat64Member,ComplexFloat64Member> EQ =
+			new Function2<Boolean, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			return a.r() == b.r() && a.i() == b.i();
+		}
+	};
 	
 	@Override
-	public void multiply(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		// for safety must use tmps
-		double r = a.r()*b.r() - a.i()*b.i();
-		double i = a.i()*b.r() + a.r()*b.i();
-		c.setR( r );
-		c.setI( i );
+	public Function2<Boolean,ComplexFloat64Member,ComplexFloat64Member> isEqual() {
+		return EQ;
 	}
 
-	@Override
-	public void power(int power, ComplexFloat64Member a, ComplexFloat64Member b) {
-		if (power == 0 && isEqual(a, ZERO)) {
-			assign(NaN, b);
-			return;
+	private final Function2<Boolean,ComplexFloat64Member,ComplexFloat64Member> NEQ =
+			new Function2<Boolean, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			return a.r() != b.r() || a.i() != b.i();
 		}
-		double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
-		double nTheta = power * getArgument(a);
-		b.setR(rToTheN * Math.cos(nTheta));
-		b.setI(rToTheN * Math.sin(nTheta));
-	}
-
+	};
+	
 	@Override
-	public void zero(ComplexFloat64Member a) {
-		assign(ZERO,a);
-	}
-
-	@Override
-	public void negate(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.setR( -a.r() );
-		b.setI( -a.i() );
-	}
-
-	@Override
-	public void add(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		c.setR( a.r() + b.r() );
-		c.setI( a.i() + b.i() );
-	}
-
-	@Override
-	public void subtract(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		c.setR( a.r() - b.r() );
-		c.setI( a.i() - b.i() );
-	}
-
-	@Override
-	public boolean isEqual(ComplexFloat64Member a, ComplexFloat64Member b) {
-		return a.r() == b.r() && a.i() == b.i();
-	}
-
-	@Override
-	public boolean isNotEqual(ComplexFloat64Member a, ComplexFloat64Member b) {
-		return a.r() != b.r() || a.i() != b.i();
+	public Function2<Boolean,ComplexFloat64Member,ComplexFloat64Member> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -172,397 +250,730 @@ public class ComplexFloat64Group
 		return new ComplexFloat64Member(s);
 	}
 
-	@Override
-	public void assign(ComplexFloat64Member from, ComplexFloat64Member to) {
-		to.setR( from.r() );
-		to.setI( from.i() );
-	}
-
-	@Override
-	public void unity(ComplexFloat64Member a) {
-		assign(ONE,a);
-	}
-
-	@Override
-	public void invert(ComplexFloat64Member a, ComplexFloat64Member b) {
-		divide(ONE,a,b);
-	}
-
-	@Override
-	public void divide(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		// for safety must use tmps
-		double mod2 = b.r()*b.r() + b.i()*b.i();
-		double r = (a.r()*b.r() + a.i()*b.i()) / mod2;
-		double i = (a.i()*b.r() - a.r()*b.i()) / mod2;
-		c.setR( r );
-		c.setI( i );
-	}
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ASSIGN =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member from, ComplexFloat64Member to) {
+			to.setR( from.r() );
+			to.setI( from.i() );
+		}
+	};
 	
 	@Override
-	public void conjugate(ComplexFloat64Member a, ComplexFloat64Member b) {
-		b.setR( a.r() );
-		b.setI( -a.i() );
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> assign() {
+		return ASSIGN;
 	}
 
-	@Override
-	public void norm(ComplexFloat64Member a, Float64Member b) {
-		b.setV( Math.hypot(a.r(),a.i()) );
-	}
-
-	@Override
-	public void PI(ComplexFloat64Member a) {
-		assign(PI, a);
-	}
-
-	@Override
-	public void E(ComplexFloat64Member a) {
-		assign(E, a);
-	}
-
-	@Override
-	public void asin(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member ia = new ComplexFloat64Member();
-		ComplexFloat64Member aSquared = new ComplexFloat64Member();
-		ComplexFloat64Member miniSum = new ComplexFloat64Member();
-		ComplexFloat64Member root = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member logSum = new ComplexFloat64Member();
-		
-		multiply(I, a, ia);
-		multiply(a, a, aSquared);
-		subtract(ONE, aSquared, miniSum);
-		pow(miniSum, ONE_HALF, root);
-		add(ia, root, sum);
-		log(sum, logSum);
-		multiply(MINUS_I, logSum, b);
-	}
-
-	@Override
-	public void acos(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member aSquared = new ComplexFloat64Member();
-		ComplexFloat64Member miniSum = new ComplexFloat64Member();
-		ComplexFloat64Member root = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member logSum = new ComplexFloat64Member();
-
-		multiply(a, a,aSquared);
-		subtract(aSquared, ONE, miniSum);
-		pow(miniSum, ONE_HALF, root);
-		add(a, root, sum);
-		log(sum, logSum);
-		multiply(MINUS_I, logSum, b);
-	}
-
-	@Override
-	public void atan(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member ia = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-		ComplexFloat64Member quotient = new ComplexFloat64Member();
-		ComplexFloat64Member log = new ComplexFloat64Member();
-		
-		multiply(I, a, ia);
-		add(ONE, ia, sum);
-		subtract(ONE, ia, diff);
-		divide(sum, diff, quotient);
-		log(quotient, log);
-		multiply(MINUS_I_OVER_TWO, log, b);
-	}
-
-	//@Override
-	public void acsc(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member recipA = new ComplexFloat64Member();
-		
-		invert(a, recipA);
-		asin(recipA, b);
-	}
-
-	//@Override
-	public void asec(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member recipA = new ComplexFloat64Member();
-		
-		invert(a, recipA);
-		acos(recipA, b);
-	}
-
-	//@Override
-	public void acot(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member ia = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-		ComplexFloat64Member quotient = new ComplexFloat64Member();
-		ComplexFloat64Member log = new ComplexFloat64Member();
-
-		multiply(I, a, ia);
-		add(ia, ONE, sum);
-		subtract(ia, ONE, diff);
-		divide(sum, diff, quotient);
-		log(quotient, log);
-		multiply(I_OVER_TWO, log, b);
-	}
-
-	@Override
-	public void asinh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member aSquared = new ComplexFloat64Member();
-		ComplexFloat64Member miniSum = new ComplexFloat64Member();
-		ComplexFloat64Member root = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-
-		multiply(a, a, aSquared);
-		add(aSquared, ONE, miniSum);
-		pow(miniSum, ONE_HALF, root);
-		add(a, root, sum);
-		log(sum, b);
-	}
-
-	@Override
-	public void acosh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member aSquared = new ComplexFloat64Member();
-		ComplexFloat64Member miniSum = new ComplexFloat64Member();
-		ComplexFloat64Member root = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-
-		multiply(a, a, aSquared);
-		subtract(aSquared, ONE, miniSum);
-		pow(miniSum, ONE_HALF, root);
-		add(a, root, sum);
-		log(sum, b);
-	}
-
-	@Override
-	public void atanh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-		ComplexFloat64Member quotient = new ComplexFloat64Member();
-		ComplexFloat64Member log = new ComplexFloat64Member();
-
-		add(ONE, a, sum);
-		subtract(ONE, a, diff);
-		divide(sum, diff, quotient);
-		log(quotient, log);
-		multiply(ONE_HALF, log, b);
-	}
-
-	//@Override
-	public void acsch(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member recipA = new ComplexFloat64Member();
-
-		invert(a, recipA);
-		asinh(recipA, b);
-	}
-
-	//@Override
-	public void asech(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member recipA = new ComplexFloat64Member();
-
-		invert(a, recipA);
-		acosh(recipA, b);
-	}
-
-	//@Override
-	public void acoth(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-		ComplexFloat64Member quotient = new ComplexFloat64Member();
-		ComplexFloat64Member log = new ComplexFloat64Member();
-
-		add(a, ONE, sum);
-		subtract(a, ONE, diff);
-		divide(sum, diff, quotient);
-		log(quotient, log);
-		multiply(ONE_HALF, log, b);
-	}
-
-	@Override
-	public void sin(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member IA = new ComplexFloat64Member();
-		ComplexFloat64Member minusIA = new ComplexFloat64Member();
-		ComplexFloat64Member expIA = new ComplexFloat64Member();
-		ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-
-		multiply(a, I, IA);
-		multiply(a, MINUS_I, minusIA);
-		exp(IA, expIA);
-		exp(minusIA, expMinusIA);
-		
-		subtract(expIA, expMinusIA, diff);
-		divide(diff, TWO_I, b);
-	}
-
-	@Override
-	public void cos(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member IA = new ComplexFloat64Member();
-		ComplexFloat64Member minusIA = new ComplexFloat64Member();
-		ComplexFloat64Member expIA = new ComplexFloat64Member();
-		ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-
-		multiply(a, I, IA);
-		multiply(a, MINUS_I, minusIA);
-		exp(IA, expIA);
-		exp(minusIA, expMinusIA);
-		
-		add(expIA, expMinusIA, sum);
-		divide(sum, TWO, b);
-	}
-
-	@Override
-	public void sinAndCos(ComplexFloat64Member a, ComplexFloat64Member s, ComplexFloat64Member c) {
-		ComplexFloat64Member IA = new ComplexFloat64Member();
-		ComplexFloat64Member minusIA = new ComplexFloat64Member();
-		ComplexFloat64Member expIA = new ComplexFloat64Member();
-		ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-
-		multiply(a, I, IA);
-		multiply(a, MINUS_I, minusIA);
-		exp(IA, expIA);
-		exp(minusIA, expMinusIA);
-		
-		subtract(expIA, expMinusIA, diff);
-		divide(diff, TWO_I, s);
-
-		add(expIA, expMinusIA, sum);
-		divide(sum, TWO, c);
-	}
+	private final Procedure1<ComplexFloat64Member> UNITY =
+			new Procedure1<ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a) {
+			assign().call(ONE,a);
+		}
+	};
 	
 	@Override
-	public void tan(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member sin = new ComplexFloat64Member();
-		ComplexFloat64Member cos = new ComplexFloat64Member();
-
-		sinAndCos(a, sin, cos);
-		divide(sin, cos, b);
+	public Procedure1<ComplexFloat64Member> unity() {
+		return UNITY;
 	}
 
-	//@Override
-	public void csc(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member sin = new ComplexFloat64Member();
-
-		sin(a, sin);
-		invert(sin, b);
-	}
-
-	//@Override
-	public void sec(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member cos = new ComplexFloat64Member();
-
-		cos(a, cos);
-		invert(cos, b);
-	}
-
-	//@Override
-	public void cot(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member tan = new ComplexFloat64Member();
-
-		tan(a, tan);
-		invert(tan, b);
-	}
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> INV =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			divide().call(ONE,a,b);
+		}
+	};
 
 	@Override
-	public void sinh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member expA = new ComplexFloat64Member();
-		ComplexFloat64Member minusA = new ComplexFloat64Member();
-		ComplexFloat64Member expMinusA = new ComplexFloat64Member();
-		ComplexFloat64Member diff = new ComplexFloat64Member();
-
-		exp(a, expA);
-		multiply(a, MINUS_ONE, minusA);
-		exp(minusA, expMinusA);
-		
-		subtract(expA, expMinusA, diff);
-		divide(diff, TWO, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> invert() {
+		return INV;
 	}
 
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> DIVIDE =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			// for safety must use tmps
+			double mod2 = b.r()*b.r() + b.i()*b.i();
+			double r = (a.r()*b.r() + a.i()*b.i()) / mod2;
+			double i = (a.i()*b.r() - a.r()*b.i()) / mod2;
+			c.setR( r );
+			c.setI( i );
+		}
+	};
+
 	@Override
-	public void cosh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member expA = new ComplexFloat64Member();
-		ComplexFloat64Member minusA = new ComplexFloat64Member();
-		ComplexFloat64Member expMinusA = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-
-		exp(a, expA);
-		multiply(a, MINUS_ONE, minusA);
-		exp(minusA, expMinusA);
-		
-		add(expA, expMinusA, sum);
-		divide(sum, TWO, b);
-	}
-
-	@Override
-	public void sinhAndCosh(ComplexFloat64Member a, ComplexFloat64Member s, ComplexFloat64Member c) {
-		ComplexFloat64Member expA = new ComplexFloat64Member();
-		ComplexFloat64Member minusA = new ComplexFloat64Member();
-		ComplexFloat64Member expMinusA = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-
-		exp(a, expA);
-		multiply(a, MINUS_ONE, minusA);
-		exp(minusA, expMinusA);
-		
-		subtract(expA, expMinusA, sum);
-		divide(sum, TWO, s);
-
-		add(expA, expMinusA, sum);
-		divide(sum, TWO, c);
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> divide() {
+		return DIVIDE;
 	}
 	
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> CONJ =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			b.setR( a.r() );
+			b.setI( -a.i() );
+		}
+	};
+	
 	@Override
-	public void tanh(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member sinh = new ComplexFloat64Member();
-		ComplexFloat64Member cosh = new ComplexFloat64Member();
-
-		sinhAndCosh(a, sinh, cosh);
-		divide(sinh, cosh, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> conjugate() {
+		return CONJ;
 	}
 
-	//@Override
-	public void csch(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member sinh = new ComplexFloat64Member();
-
-		sinh(a, sinh);
-		invert(sinh, b);
-	}
-
-	//@Override
-	public void sech(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member cosh = new ComplexFloat64Member();
-
-		cosh(a, cosh);
-		invert(cosh, b);
-	}
-
-	//@Override
-	public void coth(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member tanh = new ComplexFloat64Member();
-
-		tanh(a, tanh);
-		invert(tanh, b);
-	}
+	private final Procedure2<ComplexFloat64Member,Float64Member> NORM =
+			new Procedure2<ComplexFloat64Member, Float64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, Float64Member b) {
+			b.setV( Math.hypot(a.r(),a.i()) );
+		}
+	};
 
 	@Override
-	public void exp(ComplexFloat64Member a, ComplexFloat64Member b) {
-		double constant = Math.exp(a.r());
-		b.setR( constant * Math.cos(a.i()) );
-		b.setI( constant * Math.sin(a.i()) );
+	public Procedure2<ComplexFloat64Member,Float64Member> norm() {
+		return NORM;
+	}
+
+	private final Procedure1<ComplexFloat64Member> PI_ =
+			new Procedure1<ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a) {
+			assign().call(PI, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat64Member> PI() {
+		return PI_;
+	}
+
+	private final Procedure1<ComplexFloat64Member> E_ =
+			new Procedure1<ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a) {
+			assign().call(E, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat64Member> E() {
+		return E_;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ASIN =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member ia = new ComplexFloat64Member();
+			ComplexFloat64Member aSquared = new ComplexFloat64Member();
+			ComplexFloat64Member miniSum = new ComplexFloat64Member();
+			ComplexFloat64Member root = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member logSum = new ComplexFloat64Member();
+			
+			multiply().call(I, a, ia);
+			multiply().call(a, a, aSquared);
+			subtract().call(ONE, aSquared, miniSum);
+			pow().call(miniSum, ONE_HALF, root);
+			add().call(ia, root, sum);
+			log().call(sum, logSum);
+			multiply().call(MINUS_I, logSum, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> asin() {
+		return ASIN;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ACOS =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member aSquared = new ComplexFloat64Member();
+			ComplexFloat64Member miniSum = new ComplexFloat64Member();
+			ComplexFloat64Member root = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member logSum = new ComplexFloat64Member();
+
+			multiply().call(a, a, aSquared);
+			subtract().call(aSquared, ONE, miniSum);
+			pow().call(miniSum, ONE_HALF, root);
+			add().call(a, root, sum);
+			log().call(sum, logSum);
+			multiply().call(MINUS_I, logSum, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> acos() {
+		return ACOS;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ATAN =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member ia = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+			ComplexFloat64Member quotient = new ComplexFloat64Member();
+			ComplexFloat64Member log = new ComplexFloat64Member();
+			
+			multiply().call(I, a, ia);
+			add().call(ONE, ia, sum);
+			subtract().call(ONE, ia, diff);
+			divide().call(sum, diff, quotient);
+			log().call(quotient, log);
+			multiply().call(MINUS_I_OVER_TWO, log, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> atan() {
+		return ATAN;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ACSC =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member recipA = new ComplexFloat64Member();
+			
+			invert().call(a, recipA);
+			asin().call(recipA, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> acsc() {
+		return ACSC;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ASEC =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member recipA = new ComplexFloat64Member();
+			
+			invert().call(a, recipA);
+			acos().call(recipA, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> asec() {
+		return ASEC;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ACOT =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member ia = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+			ComplexFloat64Member quotient = new ComplexFloat64Member();
+			ComplexFloat64Member log = new ComplexFloat64Member();
+
+			multiply().call(I, a, ia);
+			add().call(ia, ONE, sum);
+			subtract().call(ia, ONE, diff);
+			divide().call(sum, diff, quotient);
+			log().call(quotient, log);
+			multiply().call(I_OVER_TWO, log, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> acot() {
+		return ACOT;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ASINH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member aSquared = new ComplexFloat64Member();
+			ComplexFloat64Member miniSum = new ComplexFloat64Member();
+			ComplexFloat64Member root = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+
+			multiply().call(a, a, aSquared);
+			add().call(aSquared, ONE, miniSum);
+			pow().call(miniSum, ONE_HALF, root);
+			add().call(a, root, sum);
+			log().call(sum, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> asinh() {
+		return ASINH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ACOSH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member aSquared = new ComplexFloat64Member();
+			ComplexFloat64Member miniSum = new ComplexFloat64Member();
+			ComplexFloat64Member root = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+
+			multiply().call(a, a, aSquared);
+			subtract().call(aSquared, ONE, miniSum);
+			pow().call(miniSum, ONE_HALF, root);
+			add().call(a, root, sum);
+			log().call(sum, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> acosh() {
+		return ACOSH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ATANH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+			ComplexFloat64Member quotient = new ComplexFloat64Member();
+			ComplexFloat64Member log = new ComplexFloat64Member();
+
+			add().call(ONE, a, sum);
+			subtract().call(ONE, a, diff);
+			divide().call(sum, diff, quotient);
+			log().call(quotient, log);
+			multiply().call(ONE_HALF, log, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> atanh() {
+		return ATANH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ACSCH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member recipA = new ComplexFloat64Member();
+
+			invert().call(a, recipA);
+			asinh().call(recipA, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> acsch() {
+		return ACSCH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ASECH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member recipA = new ComplexFloat64Member();
+
+			invert().call(a, recipA);
+			acosh().call(recipA, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> asech() {
+		return ASECH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ACOTH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+			ComplexFloat64Member quotient = new ComplexFloat64Member();
+			ComplexFloat64Member log = new ComplexFloat64Member();
+
+			add().call(a, ONE, sum);
+			subtract().call(a, ONE, diff);
+			divide().call(sum, diff, quotient);
+			log().call(quotient, log);
+			multiply().call(ONE_HALF, log, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> acoth() {
+		return ACOTH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SIN =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member IA = new ComplexFloat64Member();
+			ComplexFloat64Member minusIA = new ComplexFloat64Member();
+			ComplexFloat64Member expIA = new ComplexFloat64Member();
+			ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+
+			multiply().call(a, I, IA);
+			multiply().call(a, MINUS_I, minusIA);
+			exp().call(IA, expIA);
+			exp().call(minusIA, expMinusIA);
+			
+			subtract().call(expIA, expMinusIA, diff);
+			divide().call(diff, TWO_I, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sin() {
+		return SIN;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> COS =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member IA = new ComplexFloat64Member();
+			ComplexFloat64Member minusIA = new ComplexFloat64Member();
+			ComplexFloat64Member expIA = new ComplexFloat64Member();
+			ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+
+			multiply().call(a, I, IA);
+			multiply().call(a, MINUS_I, minusIA);
+			exp().call(IA, expIA);
+			exp().call(minusIA, expMinusIA);
+			
+			add().call(expIA, expMinusIA, sum);
+			divide().call(sum, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> cos() {
+		return COS;
+	}
+
+	private Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> SINCOS =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member s, ComplexFloat64Member c) {
+			ComplexFloat64Member IA = new ComplexFloat64Member();
+			ComplexFloat64Member minusIA = new ComplexFloat64Member();
+			ComplexFloat64Member expIA = new ComplexFloat64Member();
+			ComplexFloat64Member expMinusIA = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+
+			multiply().call(a, I, IA);
+			multiply().call(a, MINUS_I, minusIA);
+			exp().call(IA, expIA);
+			exp().call(minusIA, expMinusIA);
+			
+			subtract().call(expIA, expMinusIA, diff);
+			divide().call(diff, TWO_I, s);
+
+			add().call(expIA, expMinusIA, sum);
+			divide().call(sum, TWO, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> sinAndCos() {
+		return SINCOS;
+	}
+	
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> TAN =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member sin = new ComplexFloat64Member();
+			ComplexFloat64Member cos = new ComplexFloat64Member();
+
+			sinAndCos().call(a, sin, cos);
+			divide().call(sin, cos, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> tan() {
+		return TAN;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> CSC =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member sin = new ComplexFloat64Member();
+
+			sin().call(a, sin);
+			invert().call(sin, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> csc() {
+		return CSC;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SEC =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member cos = new ComplexFloat64Member();
+
+			cos().call(a, cos);
+			invert().call(cos, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sec() {
+		return SEC;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> COT =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member tan = new ComplexFloat64Member();
+
+			tan().call(a, tan);
+			invert().call(tan, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> cot() {
+		return COT;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SINH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member expA = new ComplexFloat64Member();
+			ComplexFloat64Member minusA = new ComplexFloat64Member();
+			ComplexFloat64Member expMinusA = new ComplexFloat64Member();
+			ComplexFloat64Member diff = new ComplexFloat64Member();
+
+			exp().call(a, expA);
+			multiply().call(a, MINUS_ONE, minusA);
+			exp().call(minusA, expMinusA);
+			
+			subtract().call(expA, expMinusA, diff);
+			divide().call(diff, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sinh() {
+		return SINH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> COSH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member expA = new ComplexFloat64Member();
+			ComplexFloat64Member minusA = new ComplexFloat64Member();
+			ComplexFloat64Member expMinusA = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+
+			exp().call(a, expA);
+			multiply().call(a, MINUS_ONE, minusA);
+			exp().call(minusA, expMinusA);
+			
+			add().call(expA, expMinusA, sum);
+			divide().call(sum, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> cosh() {
+		return COSH;
+	}
+
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> SINHCOSH =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member s, ComplexFloat64Member c) {
+			ComplexFloat64Member expA = new ComplexFloat64Member();
+			ComplexFloat64Member minusA = new ComplexFloat64Member();
+			ComplexFloat64Member expMinusA = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+
+			exp().call(a, expA);
+			multiply().call(a, MINUS_ONE, minusA);
+			exp().call(minusA, expMinusA);
+			
+			subtract().call(expA, expMinusA, sum);
+			divide().call(sum, TWO, s);
+
+			add().call(expA, expMinusA, sum);
+			divide().call(sum, TWO, c);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> sinhAndCosh() {
+		return SINHCOSH;
+	}
+	
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> TANH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member sinh = new ComplexFloat64Member();
+			ComplexFloat64Member cosh = new ComplexFloat64Member();
+
+			sinhAndCosh().call(a, sinh, cosh);
+			divide().call(sinh, cosh, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> tanh() {
+		return TANH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> CSCH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member sinh = new ComplexFloat64Member();
+
+			sinh().call(a, sinh);
+			invert().call(sinh, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> csch() {
+		return CSCH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SECH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member cosh = new ComplexFloat64Member();
+
+			cosh().call(a, cosh);
+			invert().call(cosh, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sech() {
+		return SECH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> COTH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member tanh = new ComplexFloat64Member();
+
+			tanh().call(a, tanh);
+			invert().call(tanh, b);
+		}
+	};
+	
+	//@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> coth() {
+		return COTH;
+	}
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> EXP =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			double constant = Math.exp(a.r());
+			b.setR( constant * Math.cos(a.i()) );
+			b.setI( constant * Math.sin(a.i()) );
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> exp() {
+		return EXP;
 	}
 
 	// TODO: make an accurate implementation
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> EXPM1 =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			exp().call(a, tmp);
+			subtract().call(tmp, ONE, b);
+		}
+	};
 	
-	public void expm1(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		exp(a, tmp);
-		subtract(tmp, ONE, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> expm1() {
+		return EXPM1;
 	}
+	
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> LOG =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			double modulus = Math.hypot(a.r(), a.i());
+			double argument = getArgument(a);
+			b.setR( Math.log(modulus) );
+			b.setI( getPrincipalArgument(argument) );
+		}
+	};
 
 	@Override
-	public void log(ComplexFloat64Member a, ComplexFloat64Member b) {
-		double modulus = Math.hypot(a.r(), a.i());
-		double argument = getArgument(a);
-		b.setR( Math.log(modulus) );
-		b.setI( getPrincipalArgument(argument) );
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> log() {
+		return LOG;
 	}
 	
 	private double getArgument(ComplexFloat64Member a) {
@@ -597,92 +1008,218 @@ public class ComplexFloat64Group
 	}
 
 	// TODO: make an accurate implementation
+
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> LOG1P =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			add().call(a, ONE, tmp);
+			log().call(tmp, b);
+		}
+	};
 	
-	public void log1p(ComplexFloat64Member a, ComplexFloat64Member b) {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		add(a, ONE, tmp);
-		log(tmp, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> log1p() {
+		return LOG1P;
 	}
 
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SQRT =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			pow().call(a,ONE_HALF,b);
+		}
+	};
+	
 	@Override
-	public void sqrt(ComplexFloat64Member a, ComplexFloat64Member b) {
-		pow(a,ONE_HALF,b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sqrt() {
+		return SQRT;
 	}
 
 	// TODO: make an accurate implementation
 	
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> CBRT =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			pow().call(a,ONE_THIRD,b);
+		}
+	};
+	
 	@Override
-	public void cbrt(ComplexFloat64Member a, ComplexFloat64Member b) {
-		pow(a,ONE_THIRD,b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> cbrt() {
+		return CBRT;
 	}
 
+	private final Procedure4<Round.Mode,Float64Member,ComplexFloat64Member,ComplexFloat64Member> ROUND =
+			new Procedure4<Round.Mode, Float64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, ComplexFloat64Member a, ComplexFloat64Member b) {
+			Float64Member tmp = new Float64Member();
+			tmp.setV(a.r());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setR(tmp.v());
+			tmp.setV(a.i());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setI(tmp.v());
+		}
+	};
+	
 	@Override
-	public void round(Round.Mode mode, Float64Member delta, ComplexFloat64Member a, ComplexFloat64Member b) {
-		Float64Member tmp = new Float64Member();
-		tmp.setV(a.r());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setR(tmp.v());
-		tmp.setV(a.i());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setI(tmp.v());
+	public Procedure4<Round.Mode,Float64Member,ComplexFloat64Member,ComplexFloat64Member> round() {
+		return ROUND;
 	}
 
+	private final Function1<Boolean,ComplexFloat64Member> NAN =
+			new Function1<Boolean, ComplexFloat64Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64Member a) {
+			// true if either component is NaN
+			return Double.isNaN(a.r()) || Double.isNaN(a.i());
+		}
+	};
+	
 	@Override
-	public boolean isNaN(ComplexFloat64Member a) {
-		// true if either component is NaN
-		return Double.isNaN(a.r()) || Double.isNaN(a.i());
+	public Function1<Boolean,ComplexFloat64Member> isNaN() {
+		return NAN;
 	}
 
+	private final Function1<Boolean,ComplexFloat64Member> INF =
+			new Function1<Boolean, ComplexFloat64Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64Member a) {
+			// true if neither is NaN and one or both is Inf
+			return !isNaN().call(a) && (Double.isInfinite(a.r()) || Double.isInfinite(a.i()));
+		}
+	};
+	
 	@Override
-	public boolean isInfinite(ComplexFloat64Member a) {
-		// true if neither is NaN and one or both is Inf
-		return !isNaN(a) && (Double.isInfinite(a.r()) || Double.isInfinite(a.i()));
+	public Function1<Boolean,ComplexFloat64Member> isInfinite() {
+		return INF;
 	}
 
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> POW =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			ComplexFloat64Member logA = new ComplexFloat64Member();
+			ComplexFloat64Member bLogA = new ComplexFloat64Member();
+			log().call(a, logA);
+			multiply().call(b, logA, bLogA);
+			exp().call(bLogA, c);
+		}
+	};
+	
 	@Override
-	public void pow(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-		ComplexFloat64Member logA = new ComplexFloat64Member();
-		ComplexFloat64Member bLogA = new ComplexFloat64Member();
-		log(a, logA);
-		multiply(b, logA, bLogA);
-		exp(bLogA, c);
+	public Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> pow() {
+		return POW;
 	}
 
+	private final Procedure1<ComplexFloat64Member> RAND =
+			new Procedure1<ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.setR(rng.nextDouble());
+			a.setI(rng.nextDouble());
+		}
+	};
+	
 	@Override
-	public void random(ComplexFloat64Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.setR(rng.nextDouble());
-		a.setI(rng.nextDouble());
+	public Procedure1<ComplexFloat64Member> random() {
+		return RAND;
 	}
 
+	private Procedure2<ComplexFloat64Member,Float64Member> REAL =
+			new Procedure2<ComplexFloat64Member, Float64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, Float64Member b) {
+			b.setV(a.r());
+		}
+	};
+	
 	@Override
-	public void real(ComplexFloat64Member a, Float64Member b) {
-		b.setV(a.r());
+	public Procedure2<ComplexFloat64Member,Float64Member> real() {
+		return REAL;
 	}
 
+	private Procedure2<ComplexFloat64Member,ComplexFloat64Member> UNREAL =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			b.setR(0);
+			b.setI(a.i());
+		}
+	};
+	
 	@Override
-	public void unreal(ComplexFloat64Member a, ComplexFloat64Member b) {
-		assign(a,b);
-		b.setR(0);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> unreal() {
+		return UNREAL;
 	}
 
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SINCH =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			Sinch.compute(G.CDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sinch(ComplexFloat64Member a, ComplexFloat64Member b) {
-		Sinch.compute(this, a, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sinch() {
+		return SINCH;
 	}
 
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SINCHPI =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			Sinchpi.compute(G.CDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sinchpi(ComplexFloat64Member a, ComplexFloat64Member b) {
-		Sinchpi.compute(this, a, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sinchpi() {
+		return SINCHPI;
 	}
 
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SINC =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			Sinc.compute(G.CDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sinc(ComplexFloat64Member a, ComplexFloat64Member b) {
-		Sinc.compute(this, a, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sinc() {
+		return SINC;
 	}
 
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> SINCPI =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			Sincpi.compute(G.CDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sincpi(ComplexFloat64Member a, ComplexFloat64Member b) {
-		Sincpi.compute(this, a, b);
+	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sincpi() {
+		return SINCPI;
 	}
 }
