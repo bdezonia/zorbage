@@ -33,6 +33,13 @@ import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -52,17 +59,34 @@ public class UnsignedInt8Group
     Random<UnsignedInt8Member>
 {
 
-	public UnsignedInt8Group() {
-	}
+	public UnsignedInt8Group() { }
+	
+	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> EQ =
+			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			return a.v == b.v;
+		}
+	};
 	
 	@Override
-	public boolean isEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
-		return a.v == b.v;
+	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> NEQ =
+			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			return a.v != b.v;
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
-		return a.v != b.v;
+	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -79,218 +103,559 @@ public class UnsignedInt8Group
 	public UnsignedInt8Member construct(String s) {
 		return new UnsignedInt8Member(s);
 	}
-
-	@Override
-	public void assign(UnsignedInt8Member from, UnsignedInt8Member to) {
-		to.set( from );
-	}
-
-	@Override
-	public void abs(UnsignedInt8Member a, UnsignedInt8Member b) {
-		assign(a,b);
-	}
-
-	@Override
-	public void multiply(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( a.v() * b.v() );
-	}
-
-	@Override
-	public void power(int power, UnsignedInt8Member a, UnsignedInt8Member b) {
-		PowerI.compute(this, power, a, b);
-	}
-
-	@Override
-	public void zero(UnsignedInt8Member a) {
-		a.setV( 0 );
-	}
-
-	@Override
-	public void negate(UnsignedInt8Member a, UnsignedInt8Member b) {
-		assign(a,b); // ignore
-	}
-
-	@Override
-	public void add(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( a.v + b.v );
-	}
-
-	@Override
-	public void subtract(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( a.v - b.v );
-	}
-
-	@Override
-	public void unity(UnsignedInt8Member a) {
-		a.setV( 1 );
-	}
-
-	@Override
-	public boolean isLess(UnsignedInt8Member a, UnsignedInt8Member b) {
-		return compare(a,b) < 0;
-	}
-
-	@Override
-	public boolean isLessEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
-		return compare(a,b) <= 0;
-	}
-
-	@Override
-	public boolean isGreater(UnsignedInt8Member a, UnsignedInt8Member b) {
-		return compare(a,b) > 0;
-	}
-
-	@Override
-	public boolean isGreaterEqual(UnsignedInt8Member a, UnsignedInt8Member b) {
-		return compare(a,b) >= 0;
-	}
-
-	@Override
-	public int compare(UnsignedInt8Member a, UnsignedInt8Member b) {
-		int av = a.v();
-		int bv = b.v();
-		if (av < bv) return -1;
-		if (av > bv) return 1;
-		return 0;
-	}
-
-	@Override
-	public int signum(UnsignedInt8Member a) {
-		if (a.v == 0) return 0;
-		return 1;
-	}
-
-	@Override
-	public void div(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member d) {
-		d.setV( a.v() / b.v() );
-	}
-
-	@Override
-	public void mod(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member m) {
-		m.setV( a.v() % b.v() );
-	}
-
-	@Override
-	public void divMod(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member d, UnsignedInt8Member m) {
-		div(a,b,d);
-		mod(a,b,m);
-	}
-
-	@Override
-	public void gcd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		Gcd.compute(this, a, b, c);
-	}
-
-	@Override
-	public void lcm(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		Lcm.compute(this, a, b, c);
-	}
-
-	@Override
-	public void norm(UnsignedInt8Member a, UnsignedInt8Member b) {
-		assign(a,b);
-	}
-
-	@Override
-	public boolean isEven(UnsignedInt8Member a) {
-		return a.v % 2 == 0;
-	}
-
-	@Override
-	public boolean isOdd(UnsignedInt8Member a) {
-		return a.v % 2 == 1;
-	}
-
-	@Override
-	public void pred(UnsignedInt8Member a, UnsignedInt8Member b) {
-		if (a.v == 0)
-			b.setV(255);
-		else
-			b.setV( a.v() - 1 );
-	}
-
-	@Override
-	public void succ(UnsignedInt8Member a, UnsignedInt8Member b) {
-		if (a.v == -1)
-			b.setV(0);
-		else
-			b.setV( a.v() + 1 );
-	}
-
-	@Override
-	public void maxBound(UnsignedInt8Member a) {
-		a.setV( 255 );
-	}
-
-	@Override
-	public void minBound(UnsignedInt8Member a) {
-		a.setV( 0 );
-	}
-
-	@Override
-	public void bitAnd(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( a.v & b.v );
-	}
-
-	@Override
-	public void bitOr(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( a.v | b.v );
-	}
-
-	@Override
-	public void bitXor(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		c.setV( a.v ^ b.v );
-	}
-
-	@Override
-	public void bitNot(UnsignedInt8Member a, UnsignedInt8Member b) {
-		b.setV( ~a.v );
-	}
-
-	@Override
-	public void bitShiftLeft(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
-		if (count < 0)
-			bitShiftRight(Math.abs(count), a, b);
-		else {
-			count = count % 8;
-			b.setV( a.v() << count );
+	
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> ASSIGN =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
+			to.set( from );
 		}
-	}
+	};
 
 	@Override
-	public void bitShiftRight(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else
-			b.setV( a.v() >> count );
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> assign() {
+		return ASSIGN;
 	}
 
-	public void bitShiftRightFillZero(int count, UnsignedInt8Member a, UnsignedInt8Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else
-			b.setV( a.v() >>> count );
-	}
-
-	@Override
-	public void min(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		Min.compute(this, a, b, c);
-	}
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> ABS =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
+			assign().call(from,to);
+		}
+	};
 
 	@Override
-	public void max(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		Max.compute(this, a, b, c);
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> abs() {
+		return ABS;
 	}
 
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> MUL =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v() * b.v() );
+		}
+	};
+	
 	@Override
-	public void random(UnsignedInt8Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.setV(rng.nextInt(0x100));
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> multiply() {
+		return MUL;
 	}
 
+	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> POWER =
+			new Procedure3<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer power, UnsignedInt8Member a, UnsignedInt8Member b) {
+			PowerI.compute(G.UINT8, power, a, b);
+		}
+	};
+	
 	@Override
-	public void pow(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-		power(b.v(), a, c);
+	public Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> power() {
+		return POWER;
+	}
+
+	private final Procedure1<UnsignedInt8Member> ZER =
+			new Procedure1<UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a) {
+			a.setV(0);
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt8Member> zero() {
+		return ZER;
+	}
+
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> NEG =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
+			assign().call(from,to); // ignore
+		}
+	};
+
+	@Override
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> negate() {
+		return NEG;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> ADD =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v + b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> add() {
+		return ADD;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> SUB =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v - b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> subtract() {
+		return SUB;
+	}
+
+	private final Procedure1<UnsignedInt8Member> UNITY =
+			new Procedure1<UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a) {
+			a.setV(1);
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt8Member> unity() {
+		return UNITY;
+	}
+
+	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> LESS =
+			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			return compare().call(a,b) < 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isLess() {
+		return LESS;
+	}
+
+	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> LE =
+			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			return compare().call(a,b) <= 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isLessEqual() {
+		return LE;
+	}
+
+	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> GREAT =
+			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			return compare().call(a,b) > 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isGreater() {
+		return GREAT;
+	}
+
+	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> GE =
+			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			return compare().call(a,b) >= 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isGreaterEqual() {
+		return GE;
+	}
+
+	private final Function2<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> CMP =
+			new Function2<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public java.lang.Integer call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			int av = a.v();
+			int bv = b.v();
+			if (av < bv) return -1;
+			if (av > bv) return 1;
+			return 0;
+		}
+	};
+
+	@Override
+	public Function2<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> compare() {
+		return CMP;
+	}
+
+	private final Function1<java.lang.Integer,UnsignedInt8Member> SIG =
+			new Function1<java.lang.Integer, UnsignedInt8Member>()
+	{
+		@Override
+		public java.lang.Integer call(UnsignedInt8Member a) {
+			if (a.v == 0) return 0;
+			return 1;
+		}
+	};
+	@Override
+	public Function1<java.lang.Integer,UnsignedInt8Member> signum() {
+		return SIG;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> DIV =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v() / b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> MOD =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v() % b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> DIVMOD =
+			new Procedure4<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member d, UnsignedInt8Member m) {
+			div().call(a,b,d);
+			mod().call(a,b,m);
+		}
+	};
+	
+	@Override
+	public Procedure4<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> divMod() {
+		return DIVMOD;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> GCD =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			Gcd.compute(G.UINT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> gcd() {
+		return GCD;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> LCM =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			Lcm.compute(G.UINT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> lcm() {
+		return LCM;
+	}
+
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> NORM =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
+			assign().call(from,to);
+		}
+	};
+
+	@Override
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> norm() {
+		return NORM;
+	}
+
+	private final Function1<Boolean,UnsignedInt8Member> EVEN =
+			new Function1<Boolean, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a) {
+			return a.v % 2 == 0;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,UnsignedInt8Member> isEven() {
+		return EVEN;
+	}
+
+	private final Function1<Boolean,UnsignedInt8Member> ODD =
+			new Function1<Boolean, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a) {
+			return a.v % 2 == 1;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,UnsignedInt8Member> isOdd() {
+		return ODD;
+	}
+
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> PRED =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			if (a.v == 0)
+				b.setV(255);
+			else
+				b.setV( a.v() - 1 );
+		}
+	};
+
+	@Override
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> pred() {
+		return PRED;
+	}
+
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> SUCC =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			if (a.v == -1)
+				b.setV(0);
+			else
+				b.setV( a.v() + 1 );
+		}
+	};
+
+	@Override
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> succ() {
+		return SUCC;
+	}
+
+	private final Procedure1<UnsignedInt8Member> MAXBOUND =
+			new Procedure1<UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a) {
+			a.setV( 255 );
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt8Member> maxBound() {
+		return MAXBOUND;
+	}
+
+	private final Procedure1<UnsignedInt8Member> MINBOUND =
+			new Procedure1<UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a) {
+			a.setV( 0 );
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt8Member> minBound() {
+		return MINBOUND;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> BITAND =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v & b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> bitAnd() {
+		return BITAND;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> BITOR =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v | b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> bitOr() {
+		return BITOR;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> BITXOR =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v ^ b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> bitXor() {
+		return BITXOR;
+	}
+
+	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> BITNOT =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			b.setV( ~a.v );
+		}
+	};
+
+	@Override
+	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> bitNot() {
+		return BITNOT;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> BITSHL =
+			new Procedure3<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt8Member a, UnsignedInt8Member b) {
+			if (count < 0)
+				bitShiftRight().call(Math.abs(count), a, b);
+			else {
+				count = count % 8;
+				b.setV( a.v() << count );
+			}
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> bitShiftLeft() {
+		return BITSHL;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> BITSHR =
+			new Procedure3<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt8Member a, UnsignedInt8Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else
+				b.setV( a.v() >> count );
+		}
+	};
+	
+	@Override
+	public  Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> bitShiftRight() {
+		return BITSHR;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> BITSHRZ =
+			new Procedure3<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt8Member a, UnsignedInt8Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else
+				b.setV( a.v() >>> count );
+		}
+	};
+	
+	public Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> bitShiftRightFillZero() {
+		return BITSHRZ;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> MIN =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			Min.compute(G.UINT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> min() {
+		return MIN;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> MAX =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			Max.compute(G.UINT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> max() {
+		return MAX;
+	}
+
+	private final Procedure1<UnsignedInt8Member> RAND =
+			new Procedure1<UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.setV(rng.nextInt(0x100));
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt8Member> random() {
+		return RAND;
+	}
+
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> POW =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			power().call(b.v(), a, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> pow() {
+		return POW;
 	}
 
 }
