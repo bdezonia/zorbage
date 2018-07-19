@@ -101,10 +101,10 @@ public class TestNumberCompatibility {
 
 		// add
 		
-		G.DBL.add(dbl1, dbl2, dbl3);
-		G.CDBL.add(cdbl1, cdbl2, cdbl3);
-		G.QDBL.add(qdbl1, qdbl2, qdbl3);
-		G.ODBL.add(odbl1, odbl2, odbl3);
+		G.DBL.add().call(dbl1, dbl2, dbl3);
+		G.CDBL.add().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.add().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.add().call(odbl1, odbl2, odbl3);
 
 		assertEquals(dbl3.v(), cdbl3.r(), TOL);
 		assertEquals(dbl3.v(), qdbl3.r(), TOL);
@@ -130,10 +130,10 @@ public class TestNumberCompatibility {
 
 		// subtract
 
-		G.DBL.subtract(dbl1, dbl2, dbl3);
-		G.CDBL.subtract(cdbl1, cdbl2, cdbl3);
-		G.QDBL.subtract(qdbl1, qdbl2, qdbl3);
-		G.ODBL.subtract(odbl1, odbl2, odbl3);
+		G.DBL.subtract().call(dbl1, dbl2, dbl3);
+		G.CDBL.subtract().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.subtract().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.subtract().call(odbl1, odbl2, odbl3);
 
 		assertEquals(dbl3.v(), cdbl3.r(), TOL);
 		assertEquals(dbl3.v(), qdbl3.r(), TOL);
@@ -160,10 +160,10 @@ public class TestNumberCompatibility {
 		
 		// multiply
 		
-		G.DBL.multiply(dbl1, dbl2, dbl3);
-		G.CDBL.multiply(cdbl1, cdbl2, cdbl3);
-		G.QDBL.multiply(qdbl1, qdbl2, qdbl3);
-		G.ODBL.multiply(odbl1, odbl2, odbl3);
+		G.DBL.multiply().call(dbl1, dbl2, dbl3);
+		G.CDBL.multiply().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.multiply().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.multiply().call(odbl1, odbl2, odbl3);
 
 		assertEquals(dbl3.v(), cdbl3.r(), TOL);
 		assertEquals(dbl3.v(), qdbl3.r(), TOL);
@@ -189,10 +189,10 @@ public class TestNumberCompatibility {
 
 		// divide
 
-		G.DBL.divide(dbl1, dbl2, dbl3);
-		G.CDBL.divide(cdbl1, cdbl2, cdbl3);
-		G.QDBL.divide(qdbl1, qdbl2, qdbl3);
-		G.ODBL.divide(odbl1, odbl2, odbl3);
+		G.DBL.divide().call(dbl1, dbl2, dbl3);
+		G.CDBL.divide().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.divide().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.divide().call(odbl1, odbl2, odbl3);
 
 		assertEquals(dbl3.v(), cdbl3.r(), TOL);
 		assertEquals(dbl3.v(), qdbl3.r(), TOL);
@@ -262,9 +262,9 @@ public class TestNumberCompatibility {
 
 		// add
 		
-		G.CDBL.add(cdbl1, cdbl2, cdbl3);
-		G.QDBL.add(qdbl1, qdbl2, qdbl3);
-		G.ODBL.add(odbl1, odbl2, odbl3);
+		G.CDBL.add().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.add().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.add().call(odbl1, odbl2, odbl3);
 
 		assertEquals(cdbl3.r(), qdbl3.r(), TOL);
 		assertEquals(cdbl3.r(), odbl3.r(), TOL);
@@ -288,9 +288,9 @@ public class TestNumberCompatibility {
 
 		// subtract
 
-		G.CDBL.subtract(cdbl1, cdbl2, cdbl3);
-		G.QDBL.subtract(qdbl1, qdbl2, qdbl3);
-		G.ODBL.subtract(odbl1, odbl2, odbl3);
+		G.CDBL.subtract().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.subtract().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.subtract().call(odbl1, odbl2, odbl3);
 
 		assertEquals(cdbl3.r(), qdbl3.r(), TOL);
 		assertEquals(cdbl3.r(), odbl3.r(), TOL);
@@ -315,9 +315,9 @@ public class TestNumberCompatibility {
 		
 		// multiply
 		
-		G.CDBL.multiply(cdbl1, cdbl2, cdbl3);
-		G.QDBL.multiply(qdbl1, qdbl2, qdbl3);
-		G.ODBL.multiply(odbl1, odbl2, odbl3);
+		G.CDBL.multiply().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.multiply().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.multiply().call(odbl1, odbl2, odbl3);
 
 		assertEquals(cdbl3.r(), qdbl3.r(), TOL);
 		assertEquals(cdbl3.r(), odbl3.r(), TOL);
@@ -341,9 +341,9 @@ public class TestNumberCompatibility {
 
 		// divide
 
-		G.CDBL.divide(cdbl1, cdbl2, cdbl3);
-		G.QDBL.divide(qdbl1, qdbl2, qdbl3);
-		G.ODBL.divide(odbl1, odbl2, odbl3);
+		G.CDBL.divide().call(cdbl1, cdbl2, cdbl3);
+		G.QDBL.divide().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.divide().call(odbl1, odbl2, odbl3);
 
 		assertEquals(cdbl3.r(), qdbl3.r(), TOL);
 		assertEquals(cdbl3.r(), odbl3.r(), TOL);
@@ -403,8 +403,8 @@ public class TestNumberCompatibility {
 
 		// add
 		
-		G.QDBL.add(qdbl1, qdbl2, qdbl3);
-		G.ODBL.add(odbl1, odbl2, odbl3);
+		G.QDBL.add().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.add().call(odbl1, odbl2, odbl3);
 
 		assertEquals(qdbl3.r(), odbl3.r(), TOL);
 
@@ -424,8 +424,8 @@ public class TestNumberCompatibility {
 
 		// subtract
 
-		G.QDBL.subtract(qdbl1, qdbl2, qdbl3);
-		G.ODBL.subtract(odbl1, odbl2, odbl3);
+		G.QDBL.subtract().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.subtract().call(odbl1, odbl2, odbl3);
 
 		assertEquals(qdbl3.r(), odbl3.r(), TOL);
 
@@ -445,8 +445,8 @@ public class TestNumberCompatibility {
 		
 		// multiply
 		
-		G.QDBL.multiply(qdbl1, qdbl2, qdbl3);
-		G.ODBL.multiply(odbl1, odbl2, odbl3);
+		G.QDBL.multiply().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.multiply().call(odbl1, odbl2, odbl3);
 
 		assertEquals(qdbl3.r(), odbl3.r(), TOL);
 
@@ -466,8 +466,8 @@ public class TestNumberCompatibility {
 
 		// divide
 
-		G.QDBL.divide(qdbl1, qdbl2, qdbl3);
-		G.ODBL.divide(odbl1, odbl2, odbl3);
+		G.QDBL.divide().call(qdbl1, qdbl2, qdbl3);
+		G.ODBL.divide().call(odbl1, odbl2, odbl3);
 
 		assertEquals(qdbl3.r(), odbl3.r(), TOL);
 

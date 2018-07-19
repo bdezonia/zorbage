@@ -107,25 +107,25 @@ public class TestFloat64Complex {
 		ComplexFloat64Member PI = new ComplexFloat64Member();
 		SignedInt32Member in = new SignedInt32Member();
 		
-		G.CDBL.E(E);
-		G.CDBL.PI(PI);
+		G.CDBL.E().call(E);
+		G.CDBL.PI().call(PI);
 		
 		for (long u = 0; u < input.size(); u++) {
-			G.CDBL.zero(sum);
+			G.CDBL.zero().call(sum);
 			uTmp.setR(u);
 			for (long x = 0; x < input.size(); x++) {
 				input.get(x, in);
 				fOfX.setR(in.v());
 				xTmp.setR(x);
-				G.CDBL.multiply(MINUS_2_PI, I, power);
-				G.CDBL.multiply(power, xTmp, power);
-				G.CDBL.multiply(power, uTmp, power);
-				G.CDBL.divide(power, N, power);
-				G.CDBL.exp(power, multiplier);
-				G.CDBL.multiply(fOfX, multiplier, term);
-				G.CDBL.add(sum, term, sum);
+				G.CDBL.multiply().call(MINUS_2_PI, I, power);
+				G.CDBL.multiply().call(power, xTmp, power);
+				G.CDBL.multiply().call(power, uTmp, power);
+				G.CDBL.divide().call(power, N, power);
+				G.CDBL.exp().call(power, multiplier);
+				G.CDBL.multiply().call(fOfX, multiplier, term);
+				G.CDBL.add().call(sum, term, sum);
 			}
-			G.CDBL.divide(sum, N, FofU);
+			G.CDBL.divide().call(sum, N, FofU);
 			output.set(u, FofU);
 		}
 	}

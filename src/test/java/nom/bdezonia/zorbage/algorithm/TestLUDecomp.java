@@ -100,7 +100,7 @@ public class TestLUDecomp {
 		ComplexFloat64Member val = G.CDBL.construct();
 
 		ComplexFloat64MatrixMember a = G.CDBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
-		G.CDBL.unity(val);
+		G.CDBL.unity().call(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
 		a.setV(1, 1, val);

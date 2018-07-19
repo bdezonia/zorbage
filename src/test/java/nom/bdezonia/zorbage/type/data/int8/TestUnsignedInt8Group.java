@@ -45,30 +45,30 @@ public class TestUnsignedInt8Group {
 		
 		v.setV(3);
 		assertEquals(3, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(2, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(1, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0xff, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0xfe, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0xfd, v.v());
 
 		v.setV(0x82);
 		assertEquals(0x82, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0x81, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0x80, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0x7f, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0x7e, v.v());
-		G.UINT8.pred(v, v);
+		G.UINT8.pred().call(v, v);
 		assertEquals(0x7d, v.v());
 	}
 	
@@ -78,30 +78,30 @@ public class TestUnsignedInt8Group {
 		
 		v.setV(0xfd);
 		assertEquals(0xfd, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0xfe, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0xff, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(1, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(2, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(3, v.v());
 
 		v.setV(0x7d);
 		assertEquals(0x7d, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0x7e, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0x7f, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0x80, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0x81, v.v());
-		G.UINT8.succ(v, v);
+		G.UINT8.succ().call(v, v);
 		assertEquals(0x82, v.v());
 	}
 

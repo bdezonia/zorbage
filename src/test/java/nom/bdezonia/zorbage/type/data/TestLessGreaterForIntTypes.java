@@ -61,23 +61,23 @@ public class TestLessGreaterForIntTypes {
 		SignedInt8Member f = new SignedInt8Member((byte) (Byte.MAX_VALUE-1));
 		SignedInt8Member g = new SignedInt8Member((byte) Byte.MAX_VALUE);
 		
-		assertTrue(G.INT8.isLess(a, b));
-		assertFalse(G.INT8.isGreater(a, b));
+		assertTrue(G.INT8.isLess().call(a, b));
+		assertFalse(G.INT8.isGreater().call(a, b));
 		
-		assertTrue(G.INT8.isLess(b, c));
-		assertFalse(G.INT8.isGreater(b, c));
+		assertTrue(G.INT8.isLess().call(b, c));
+		assertFalse(G.INT8.isGreater().call(b, c));
 		
-		assertTrue(G.INT8.isLess(c, d));
-		assertFalse(G.INT8.isGreater(c, d));
+		assertTrue(G.INT8.isLess().call(c, d));
+		assertFalse(G.INT8.isGreater().call(c, d));
 		
-		assertTrue(G.INT8.isLess(d, e));
-		assertFalse(G.INT8.isGreater(d, e));
+		assertTrue(G.INT8.isLess().call(d, e));
+		assertFalse(G.INT8.isGreater().call(d, e));
 		
-		assertTrue(G.INT8.isLess(e, f));
-		assertFalse(G.INT8.isGreater(e, f));
+		assertTrue(G.INT8.isLess().call(e, f));
+		assertFalse(G.INT8.isGreater().call(e, f));
 		
-		assertTrue(G.INT8.isLess(f, g));
-		assertFalse(G.INT8.isGreater(f, g));
+		assertTrue(G.INT8.isLess().call(f, g));
+		assertFalse(G.INT8.isGreater().call(f, g));
 	}
 
 	@Test
@@ -90,23 +90,23 @@ public class TestLessGreaterForIntTypes {
 		UnsignedInt8Member f = new UnsignedInt8Member(254);
 		UnsignedInt8Member g = new UnsignedInt8Member(255);
 		
-		assertTrue(G.UINT8.isLess(a, b));
-		assertFalse(G.UINT8.isGreater(a, b));
+		assertTrue(G.UINT8.isLess().call(a, b));
+		assertFalse(G.UINT8.isGreater().call(a, b));
 		
-		assertTrue(G.UINT8.isLess(b, c));
-		assertFalse(G.UINT8.isGreater(b, c));
+		assertTrue(G.UINT8.isLess().call(b, c));
+		assertFalse(G.UINT8.isGreater().call(b, c));
 		
-		assertTrue(G.UINT8.isLess(c, d));
-		assertFalse(G.UINT8.isGreater(c, d));
+		assertTrue(G.UINT8.isLess().call(c, d));
+		assertFalse(G.UINT8.isGreater().call(c, d));
 		
-		assertTrue(G.UINT8.isLess(d, e));
-		assertFalse(G.UINT8.isGreater(d, e));
+		assertTrue(G.UINT8.isLess().call(d, e));
+		assertFalse(G.UINT8.isGreater().call(d, e));
 		
-		assertTrue(G.UINT8.isLess(e, f));
-		assertFalse(G.UINT8.isGreater(e, f));
+		assertTrue(G.UINT8.isLess().call(e, f));
+		assertFalse(G.UINT8.isGreater().call(e, f));
 		
-		assertTrue(G.UINT8.isLess(f, g));
-		assertFalse(G.UINT8.isGreater(f, g));
+		assertTrue(G.UINT8.isLess().call(f, g));
+		assertFalse(G.UINT8.isGreater().call(f, g));
 	}
 
 	@Test
@@ -119,23 +119,23 @@ public class TestLessGreaterForIntTypes {
 		SignedInt16Member f = new SignedInt16Member((short)(Short.MAX_VALUE-1));
 		SignedInt16Member g = new SignedInt16Member(Short.MAX_VALUE);
 		
-		assertTrue(G.INT16.isLess(a, b));
-		assertFalse(G.INT16.isGreater(a, b));
+		assertTrue(G.INT16.isLess().call(a, b));
+		assertFalse(G.INT16.isGreater().call(a, b));
 		
-		assertTrue(G.INT16.isLess(b, c));
-		assertFalse(G.INT16.isGreater(b, c));
+		assertTrue(G.INT16.isLess().call(b, c));
+		assertFalse(G.INT16.isGreater().call(b, c));
 		
-		assertTrue(G.INT16.isLess(c, d));
-		assertFalse(G.INT16.isGreater(c, d));
+		assertTrue(G.INT16.isLess().call(c, d));
+		assertFalse(G.INT16.isGreater().call(c, d));
 		
-		assertTrue(G.INT16.isLess(d, e));
-		assertFalse(G.INT16.isGreater(d, e));
+		assertTrue(G.INT16.isLess().call(d, e));
+		assertFalse(G.INT16.isGreater().call(d, e));
 		
-		assertTrue(G.INT16.isLess(e, f));
-		assertFalse(G.INT16.isGreater(e, f));
+		assertTrue(G.INT16.isLess().call(e, f));
+		assertFalse(G.INT16.isGreater().call(e, f));
 		
-		assertTrue(G.INT16.isLess(f, g));
-		assertFalse(G.INT16.isGreater(f, g));
+		assertTrue(G.INT16.isLess().call(f, g));
+		assertFalse(G.INT16.isGreater().call(f, g));
 	}
 
 	@Test
@@ -148,23 +148,23 @@ public class TestLessGreaterForIntTypes {
 		UnsignedInt16Member f = new UnsignedInt16Member(65534);
 		UnsignedInt16Member g = new UnsignedInt16Member(65535);
 		
-		assertTrue(G.UINT16.isLess(a, b));
-		assertFalse(G.UINT16.isGreater(a, b));
+		assertTrue(G.UINT16.isLess().call(a, b));
+		assertFalse(G.UINT16.isGreater().call(a, b));
 		
-		assertTrue(G.UINT16.isLess(b, c));
-		assertFalse(G.UINT16.isGreater(b, c));
+		assertTrue(G.UINT16.isLess().call(b, c));
+		assertFalse(G.UINT16.isGreater().call(b, c));
 		
-		assertTrue(G.UINT16.isLess(c, d));
-		assertFalse(G.UINT16.isGreater(c, d));
+		assertTrue(G.UINT16.isLess().call(c, d));
+		assertFalse(G.UINT16.isGreater().call(c, d));
 		
-		assertTrue(G.UINT16.isLess(d, e));
-		assertFalse(G.UINT16.isGreater(d, e));
+		assertTrue(G.UINT16.isLess().call(d, e));
+		assertFalse(G.UINT16.isGreater().call(d, e));
 		
-		assertTrue(G.UINT16.isLess(e, f));
-		assertFalse(G.UINT16.isGreater(e, f));
+		assertTrue(G.UINT16.isLess().call(e, f));
+		assertFalse(G.UINT16.isGreater().call(e, f));
 		
-		assertTrue(G.UINT16.isLess(f, g));
-		assertFalse(G.UINT16.isGreater(f, g));
+		assertTrue(G.UINT16.isLess().call(f, g));
+		assertFalse(G.UINT16.isGreater().call(f, g));
 	}
 
 	@Test
@@ -177,23 +177,23 @@ public class TestLessGreaterForIntTypes {
 		SignedInt32Member f = new SignedInt32Member(Integer.MAX_VALUE-1);
 		SignedInt32Member g = new SignedInt32Member(Integer.MAX_VALUE);
 		
-		assertTrue(G.INT32.isLess(a, b));
-		assertFalse(G.INT32.isGreater(a, b));
+		assertTrue(G.INT32.isLess().call(a, b));
+		assertFalse(G.INT32.isGreater().call(a, b));
 		
-		assertTrue(G.INT32.isLess(b, c));
-		assertFalse(G.INT32.isGreater(b, c));
+		assertTrue(G.INT32.isLess().call(b, c));
+		assertFalse(G.INT32.isGreater().call(b, c));
 		
-		assertTrue(G.INT32.isLess(c, d));
-		assertFalse(G.INT32.isGreater(c, d));
+		assertTrue(G.INT32.isLess().call(c, d));
+		assertFalse(G.INT32.isGreater().call(c, d));
 		
-		assertTrue(G.INT32.isLess(d, e));
-		assertFalse(G.INT32.isGreater(d, e));
+		assertTrue(G.INT32.isLess().call(d, e));
+		assertFalse(G.INT32.isGreater().call(d, e));
 		
-		assertTrue(G.INT32.isLess(e, f));
-		assertFalse(G.INT32.isGreater(e, f));
+		assertTrue(G.INT32.isLess().call(e, f));
+		assertFalse(G.INT32.isGreater().call(e, f));
 		
-		assertTrue(G.INT32.isLess(f, g));
-		assertFalse(G.INT32.isGreater(f, g));
+		assertTrue(G.INT32.isLess().call(f, g));
+		assertFalse(G.INT32.isGreater().call(f, g));
 	}
 
 	@Test
@@ -206,23 +206,23 @@ public class TestLessGreaterForIntTypes {
 		UnsignedInt32Member f = new UnsignedInt32Member(0xffffffffL-1);
 		UnsignedInt32Member g = new UnsignedInt32Member(0xffffffffL);
 		
-		assertTrue(G.UINT32.isLess(a, b));
-		assertFalse(G.UINT32.isGreater(a, b));
+		assertTrue(G.UINT32.isLess().call(a, b));
+		assertFalse(G.UINT32.isGreater().call(a, b));
 		
-		assertTrue(G.UINT32.isLess(b, c));
-		assertFalse(G.UINT32.isGreater(b, c));
+		assertTrue(G.UINT32.isLess().call(b, c));
+		assertFalse(G.UINT32.isGreater().call(b, c));
 		
-		assertTrue(G.UINT32.isLess(c, d));
-		assertFalse(G.UINT32.isGreater(c, d));
+		assertTrue(G.UINT32.isLess().call(c, d));
+		assertFalse(G.UINT32.isGreater().call(c, d));
 		
-		assertTrue(G.UINT32.isLess(d, e));
-		assertFalse(G.UINT32.isGreater(d, e));
+		assertTrue(G.UINT32.isLess().call(d, e));
+		assertFalse(G.UINT32.isGreater().call(d, e));
 		
-		assertTrue(G.UINT32.isLess(e, f));
-		assertFalse(G.UINT32.isGreater(e, f));
+		assertTrue(G.UINT32.isLess().call(e, f));
+		assertFalse(G.UINT32.isGreater().call(e, f));
 		
-		assertTrue(G.UINT32.isLess(f, g));
-		assertFalse(G.UINT32.isGreater(f, g));
+		assertTrue(G.UINT32.isLess().call(f, g));
+		assertFalse(G.UINT32.isGreater().call(f, g));
 	}
 
 	@Test
@@ -235,23 +235,23 @@ public class TestLessGreaterForIntTypes {
 		SignedInt64Member f = new SignedInt64Member(Long.MAX_VALUE-1);
 		SignedInt64Member g = new SignedInt64Member(Long.MAX_VALUE);
 		
-		assertTrue(G.INT64.isLess(a, b));
-		assertFalse(G.INT64.isGreater(a, b));
+		assertTrue(G.INT64.isLess().call(a, b));
+		assertFalse(G.INT64.isGreater().call(a, b));
 		
-		assertTrue(G.INT64.isLess(b, c));
-		assertFalse(G.INT64.isGreater(b, c));
+		assertTrue(G.INT64.isLess().call(b, c));
+		assertFalse(G.INT64.isGreater().call(b, c));
 		
-		assertTrue(G.INT64.isLess(c, d));
-		assertFalse(G.INT64.isGreater(c, d));
+		assertTrue(G.INT64.isLess().call(c, d));
+		assertFalse(G.INT64.isGreater().call(c, d));
 		
-		assertTrue(G.INT64.isLess(d, e));
-		assertFalse(G.INT64.isGreater(d, e));
+		assertTrue(G.INT64.isLess().call(d, e));
+		assertFalse(G.INT64.isGreater().call(d, e));
 		
-		assertTrue(G.INT64.isLess(e, f));
-		assertFalse(G.INT64.isGreater(e, f));
+		assertTrue(G.INT64.isLess().call(e, f));
+		assertFalse(G.INT64.isGreater().call(e, f));
 		
-		assertTrue(G.INT64.isLess(f, g));
-		assertFalse(G.INT64.isGreater(f, g));
+		assertTrue(G.INT64.isLess().call(f, g));
+		assertFalse(G.INT64.isGreater().call(f, g));
 	}
 
 	@Test
@@ -264,23 +264,23 @@ public class TestLessGreaterForIntTypes {
 		UnsignedInt64Member f = new UnsignedInt64Member(new BigInteger("ffffffffffffffff",16).subtract(BigInteger.ONE));
 		UnsignedInt64Member g = new UnsignedInt64Member(new BigInteger("ffffffffffffffff",16));
 		
-		assertTrue(G.UINT64.isLess(a, b));
-		assertFalse(G.UINT64.isGreater(a, b));
+		assertTrue(G.UINT64.isLess().call(a, b));
+		assertFalse(G.UINT64.isGreater().call(a, b));
 		
-		assertTrue(G.UINT64.isLess(b, c));
-		assertFalse(G.UINT64.isGreater(b, c));
+		assertTrue(G.UINT64.isLess().call(b, c));
+		assertFalse(G.UINT64.isGreater().call(b, c));
 		
-		assertTrue(G.UINT64.isLess(c, d));
-		assertFalse(G.UINT64.isGreater(c, d));
+		assertTrue(G.UINT64.isLess().call(c, d));
+		assertFalse(G.UINT64.isGreater().call(c, d));
 		
-		assertTrue(G.UINT64.isLess(d, e));
-		assertFalse(G.UINT64.isGreater(d, e));
+		assertTrue(G.UINT64.isLess().call(d, e));
+		assertFalse(G.UINT64.isGreater().call(d, e));
 		
-		assertTrue(G.UINT64.isLess(e, f));
-		assertFalse(G.UINT64.isGreater(e, f));
+		assertTrue(G.UINT64.isLess().call(e, f));
+		assertFalse(G.UINT64.isGreater().call(e, f));
 		
-		assertTrue(G.UINT64.isLess(f, g));
-		assertFalse(G.UINT64.isGreater(f, g));
+		assertTrue(G.UINT64.isLess().call(f, g));
+		assertFalse(G.UINT64.isGreater().call(f, g));
 	}
 
 	@Test
@@ -296,23 +296,23 @@ public class TestLessGreaterForIntTypes {
 		SignedInt128Member f = new SignedInt128Member(new BigInteger("plus max").subtract(BigInteger.ONE));
 		SignedInt128Member g = new SignedInt128Member(new BigInteger("plus max"));
 		
-		assertTrue(G.INT128.isLess(a, b));
-		assertFalse(G.INT128.isGreater(a, b));
+		assertTrue(G.INT128.isLess().call(a, b));
+		assertFalse(G.INT128.isGreater().call(a, b));
 		
-		assertTrue(G.INT128.isLess(b, c));
-		assertFalse(G.INT128.isGreater(b, c));
+		assertTrue(G.INT128.isLess().call(b, c));
+		assertFalse(G.INT128.isGreater().call(b, c));
 		
-		assertTrue(G.INT128.isLess(c, d));
-		assertFalse(G.INT128.isGreater(c, d));
+		assertTrue(G.INT128.isLess().call(c, d));
+		assertFalse(G.INT128.isGreater().call(c, d));
 		
-		assertTrue(G.INT128.isLess(d, e));
-		assertFalse(G.INT128.isGreater(d, e));
+		assertTrue(G.INT128.isLess().call(d, e));
+		assertFalse(G.INT128.isGreater().call(d, e));
 		
-		assertTrue(G.INT128.isLess(e, f));
-		assertFalse(G.INT128.isGreater(e, f));
+		assertTrue(G.INT128.isLess().call(e, f));
+		assertFalse(G.INT128.isGreater().call(e, f));
 		
-		assertTrue(G.INT128.isLess(f, g));
-		assertFalse(G.INT128.isGreater(f, g));
+		assertTrue(G.INT128.isLess().call(f, g));
+		assertFalse(G.INT128.isGreater().call(f, g));
 		*/
 	}
 
@@ -326,22 +326,22 @@ public class TestLessGreaterForIntTypes {
 		UnsignedInt128Member f = new UnsignedInt128Member(new BigInteger("ffffffffffffffffffffffffffffffff",16).subtract(BigInteger.ONE));
 		UnsignedInt128Member g = new UnsignedInt128Member(new BigInteger("ffffffffffffffffffffffffffffffff",16));
 		
-		assertTrue(G.UINT128.isLess(a, b));
-		assertFalse(G.UINT128.isGreater(a, b));
+		assertTrue(G.UINT128.isLess().call(a, b));
+		assertFalse(G.UINT128.isGreater().call(a, b));
 		
-		assertTrue(G.UINT128.isLess(b, c));
-		assertFalse(G.UINT128.isGreater(b, c));
+		assertTrue(G.UINT128.isLess().call(b, c));
+		assertFalse(G.UINT128.isGreater().call(b, c));
 		
-		assertTrue(G.UINT128.isLess(c, d));
-		assertFalse(G.UINT128.isGreater(c, d));
+		assertTrue(G.UINT128.isLess().call(c, d));
+		assertFalse(G.UINT128.isGreater().call(c, d));
 		
-		assertTrue(G.UINT128.isLess(d, e));
-		assertFalse(G.UINT128.isGreater(d, e));
+		assertTrue(G.UINT128.isLess().call(d, e));
+		assertFalse(G.UINT128.isGreater().call(d, e));
 		
-		assertTrue(G.UINT128.isLess(e, f));
-		assertFalse(G.UINT128.isGreater(e, f));
+		assertTrue(G.UINT128.isLess().call(e, f));
+		assertFalse(G.UINT128.isGreater().call(e, f));
 		
-		assertTrue(G.UINT128.isLess(f, g));
-		assertFalse(G.UINT128.isGreater(f, g));
+		assertTrue(G.UINT128.isLess().call(f, g));
+		assertFalse(G.UINT128.isGreater().call(f, g));
 	}
 }
