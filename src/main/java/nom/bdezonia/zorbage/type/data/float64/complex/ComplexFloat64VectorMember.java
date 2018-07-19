@@ -115,7 +115,7 @@ public final class ComplexFloat64VectorMember
 			storage.get(i, v);
 		}
 		else {
-			G.CDBL.zero(v);
+			G.CDBL.zero().call(v);
 		}
 	}
 
