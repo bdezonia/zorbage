@@ -33,6 +33,13 @@ import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -52,17 +59,34 @@ public class SignedInt8Group
     Random<SignedInt8Member>
 {
 
-	public SignedInt8Group() {
-	}
+	public SignedInt8Group() { }
+	
+	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> EQ =
+			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b) {
+			return a.v() == b.v();
+		}
+	};
 	
 	@Override
-	public boolean isEqual(SignedInt8Member a, SignedInt8Member b) {
-		return a.v() == b.v();
+	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> NEQ =
+			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b) {
+			return a.v() != b.v();
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(SignedInt8Member a, SignedInt8Member b) {
-		return a.v() != b.v();
+	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -80,214 +104,554 @@ public class SignedInt8Group
 		return new SignedInt8Member(s);
 	}
 
-	@Override
-	public void assign(SignedInt8Member from, SignedInt8Member to) {
-		to.setV( from.v() );
-	}
-
-	@Override
-	public void abs(SignedInt8Member a, SignedInt8Member b) {
-		if (a.v() == Byte.MIN_VALUE)
-			throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
-		b.setV( (byte) Math.abs(a.v()) );
-	}
-
-	@Override
-	public void multiply(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte) (a.v() * b.v()) );
-	}
-
-	@Override
-	public void power(int power, SignedInt8Member a, SignedInt8Member b) {
-		PowerI.compute(this, power, a, b);
-	}
-
-	@Override
-	public void zero(SignedInt8Member a) {
-		a.setV( (byte) 0 );
-	}
-
-	@Override
-	public void negate(SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte) -a.v() );
-	}
-
-	@Override
-	public void add(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte)(a.v() + b.v()) );
-	}
-
-	@Override
-	public void subtract(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte)(a.v() - b.v()) );
-	}
-
-	@Override
-	public void unity(SignedInt8Member a) {
-		a.setV( (byte) 1 );
-	}
-
-	@Override
-	public boolean isLess(SignedInt8Member a, SignedInt8Member b) {
-		return a.v() < b.v();
-	}
-
-	@Override
-	public boolean isLessEqual(SignedInt8Member a, SignedInt8Member b) {
-		return a.v() <= b.v();
-	}
-
-	@Override
-	public boolean isGreater(SignedInt8Member a, SignedInt8Member b) {
-		return a.v() > b.v();
-	}
-
-	@Override
-	public boolean isGreaterEqual(SignedInt8Member a, SignedInt8Member b) {
-		return a.v() >= b.v();
-	}
-
-	@Override
-	public int compare(SignedInt8Member a, SignedInt8Member b) {
-		if (a.v() < b.v()) return -1;
-		if (a.v() > b.v()) return 1;
-		return 0;
-	}
-
-	@Override
-	public int signum(SignedInt8Member a) {
-		if (a.v() < 0) return -1;
-		if (a.v() > 0) return 1;
-		return 0;
-	}
-
-	@Override
-	public void div(SignedInt8Member a, SignedInt8Member b, SignedInt8Member d) {
-		if (b.v() == -1 && a.v() == Byte.MIN_VALUE)
-			throw new IllegalArgumentException("cannot divide minint by -1");
-		d.setV( (byte)(a.v() / b.v()) );
-	}
-
-	@Override
-	public void mod(SignedInt8Member a, SignedInt8Member b, SignedInt8Member m) {
-		m.setV( (byte)(a.v() % b.v()) );
-	}
-
-	@Override
-	public void divMod(SignedInt8Member a, SignedInt8Member b, SignedInt8Member d, SignedInt8Member m) {
-		div(a,b,d);
-		mod(a,b,m);
-	}
-
-	@Override
-	public void gcd(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		Gcd.compute(this, a, b, c);
-	}
-
-	@Override
-	public void lcm(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		Lcm.compute(this, a, b, c);
-	}
-
-	@Override
-	public void norm(SignedInt8Member a, SignedInt8Member b) {
-		abs(a,b);
-	}
-
-	@Override
-	public boolean isEven(SignedInt8Member a) {
-		return a.v() % 2 == 0;
-	}
-
-	@Override
-	public boolean isOdd(SignedInt8Member a) {
-		return a.v() % 2 == 1;
-	}
-
-	@Override
-	public void pred(SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte)(a.v() - 1) );
-	}
-
-	@Override
-	public void succ(SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte)(a.v() + 1) );
-	}
-
-	@Override
-	public void maxBound(SignedInt8Member a) {
-		a.setV( java.lang.Byte.MAX_VALUE );
-	}
-
-	@Override
-	public void minBound(SignedInt8Member a) {
-		a.setV( java.lang.Byte.MIN_VALUE );
-	}
-
-	@Override
-	public void bitAnd(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte)(a.v() & b.v()) );
-	}
-
-	@Override
-	public void bitOr(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte)(a.v() | b.v()) );
-	}
-
-	@Override
-	public void bitXor(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		c.setV( (byte)(a.v() ^ b.v()) );
-	}
-
-	@Override
-	public void bitNot(SignedInt8Member a, SignedInt8Member b) {
-		b.setV( (byte) ~a.v() );
-	}
-
-	@Override
-	public void bitShiftLeft(int count, SignedInt8Member a, SignedInt8Member b) {
-		if (count < 0)
-			bitShiftRight(Math.abs(count), a, b);
-		else {
-			count = count % 8;
-			b.setV( (byte)(a.v() << count) );
+	private final Procedure2<SignedInt8Member,SignedInt8Member> ASSIGN =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member from, SignedInt8Member to) {
+			to.setV( from.v() );
 		}
-	}
+	};
 
 	@Override
-	public void bitShiftRight(int count, SignedInt8Member a, SignedInt8Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else
-			b.setV( (byte)(a.v() >> count) );
+	public Procedure2<SignedInt8Member,SignedInt8Member> assign() {
+		return ASSIGN;
 	}
 
-	public void bitShiftRightFillZero(int count, SignedInt8Member a, SignedInt8Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else
-			b.setV( (byte)(a.v() >>> count) );
-	}
-
-	@Override
-	public void min(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		Min.compute(this, a, b, c);
-	}
+	private final Procedure2<SignedInt8Member,SignedInt8Member> ABS =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b) {
+			if (a.v() == Byte.MIN_VALUE)
+				throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
+			b.setV( (byte) Math.abs(a.v()) );
+		}
+	};
 
 	@Override
-	public void max(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		Max.compute(this, a, b, c);
+	public Procedure2<SignedInt8Member,SignedInt8Member> abs() {
+		return ABS;
 	}
 
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> MUL =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte) (a.v() * b.v()) );
+		}
+	};
+	
 	@Override
-	public void random(SignedInt8Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> multiply() {
+		return MUL;
 	}
 
+	private final Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> POWER =
+			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer power, SignedInt8Member a, SignedInt8Member b) {
+			PowerI.compute(G.INT8, power, a, b);
+		}
+	};
+	
 	@Override
-	public void pow(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-		power(b.v(), a, c);
+	public Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> power() {
+		return POWER;
+	}
+
+	private final Procedure1<SignedInt8Member> ZER =
+			new Procedure1<SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a) {
+			a.setV( (byte) 0 );
+		}
+	};
+	
+	@Override
+	public Procedure1<SignedInt8Member> zero() {
+		return ZER;
+	}
+
+	private final Procedure2<SignedInt8Member,SignedInt8Member> NEG =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b) {
+			b.setV( (byte) -a.v() );
+		}
+	};
+
+	@Override
+	public Procedure2<SignedInt8Member,SignedInt8Member> negate() {
+		return NEG;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> ADD =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte) (a.v() + b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> add() {
+		return ADD;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> SUB =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte) (a.v() - b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> subtract() {
+		return SUB;
+	}
+
+	private final Procedure1<SignedInt8Member> UNITY =
+			new Procedure1<SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a) {
+			a.setV( (byte) 1 );
+		}
+	};
+	
+	@Override
+	public Procedure1<SignedInt8Member> unity() {
+		return UNITY;
+	}
+
+	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> LESS =
+			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b) {
+			return a.v() < b.v();
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isLess() {
+		return LESS;
+	}
+
+	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> LE =
+			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b) {
+			return a.v() <= b.v();
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isLessEqual() {
+		return LE;
+	}
+
+	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> GREATER =
+			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b) {
+			return a.v() > b.v();
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isGreater() {
+		return GREATER;
+	}
+
+	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> GE =
+			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b) {
+			return a.v() >= b.v();
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isGreaterEqual() {
+		return GE;
+	}
+
+	private final Function2<java.lang.Integer,SignedInt8Member,SignedInt8Member> CMP =
+			new Function2<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public java.lang.Integer call(SignedInt8Member a, SignedInt8Member b) {
+			if (a.v() < b.v()) return -1;
+			if (a.v() > b.v()) return 1;
+			return 0;
+		}
+	};
+	
+	@Override
+	public Function2<java.lang.Integer,SignedInt8Member,SignedInt8Member> compare() {
+		return CMP;
+	}
+
+	private final Function1<java.lang.Integer,SignedInt8Member> SIG =
+			new Function1<java.lang.Integer, SignedInt8Member>()
+	{
+		@Override
+		public java.lang.Integer call(SignedInt8Member a) {
+			if (a.v() < 0) return -1;
+			if (a.v() > 0) return 1;
+			return 0;
+		}
+	};
+	
+	@Override
+	public Function1<java.lang.Integer,SignedInt8Member> signum() {
+		return SIG;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> DIV =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte) (a.v() / b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> MOD =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte) (a.v() % b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<SignedInt8Member,SignedInt8Member,SignedInt8Member,SignedInt8Member> DIVMOD =
+			new Procedure4<SignedInt8Member, SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member d, SignedInt8Member m) {
+			div().call(a,b,d);
+			mod().call(a,b,m);
+		}
+	};
+	
+	@Override
+	public Procedure4<SignedInt8Member,SignedInt8Member,SignedInt8Member,SignedInt8Member> divMod() {
+		return DIVMOD;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> GCD =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			Gcd.compute(G.INT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> gcd() {
+		return GCD;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> LCM =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			Lcm.compute(G.INT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> lcm() {
+		return LCM;
+	}
+
+	private final Procedure2<SignedInt8Member,SignedInt8Member> NORM =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b) {
+			abs().call(a,b);
+		}
+	};
+
+	@Override
+	public Procedure2<SignedInt8Member,SignedInt8Member> norm() {
+		return NORM;
+	}
+
+	private final Function1<Boolean,SignedInt8Member> EVEN =
+			new Function1<Boolean,SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a) {
+			return a.v() % 2 == 0;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,SignedInt8Member> isEven() {
+		return EVEN;
+	}
+
+	private final Function1<Boolean,SignedInt8Member> ODD =
+			new Function1<Boolean,SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member a) {
+			return a.v() % 2 == 1;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,SignedInt8Member> isOdd() {
+		return ODD;
+	}
+
+	private final Procedure2<SignedInt8Member,SignedInt8Member> PRED =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b) {
+			b.setV( (byte)(a.v() - 1) );
+		}
+	};
+
+	@Override
+	public Procedure2<SignedInt8Member,SignedInt8Member> pred() {
+		return PRED;
+	}
+
+	private final Procedure2<SignedInt8Member,SignedInt8Member> SUCC =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b) {
+			b.setV( (byte)(a.v() + 1) );
+		}
+	};
+
+	@Override
+	public Procedure2<SignedInt8Member,SignedInt8Member> succ() {
+		return SUCC;
+	}
+
+	private final Procedure1<SignedInt8Member> MAXBOUND =
+			new Procedure1<SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a) {
+			a.setV( java.lang.Byte.MAX_VALUE );
+		}
+	};
+	
+	@Override
+	public Procedure1<SignedInt8Member> maxBound() {
+		return MAXBOUND;
+	}
+
+	private final Procedure1<SignedInt8Member> MINBOUND =
+			new Procedure1<SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a) {
+			a.setV( java.lang.Byte.MIN_VALUE );
+		}
+	};
+	
+	@Override
+	public Procedure1<SignedInt8Member> minBound() {
+		return MINBOUND;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> BITAND =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte)(a.v() & b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> bitAnd() {
+		return BITAND;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> BITOR =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte)(a.v() | b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> bitOr() {
+		return BITOR;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> BITXOR =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte)(a.v() ^ b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> bitXor() {
+		return BITXOR;
+	}
+
+	private final Procedure2<SignedInt8Member,SignedInt8Member> BITNOT =
+			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b) {
+			b.setV( (byte) ~a.v() );
+		}
+	};
+
+	@Override
+	public Procedure2<SignedInt8Member,SignedInt8Member> bitNot() {
+		return BITNOT;
+	}
+
+	private final Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> BITSHL =
+			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, SignedInt8Member a, SignedInt8Member b) {
+			if (count < 0)
+				bitShiftRight().call(Math.abs(count), a, b);
+			else {
+				count = count % 8;
+				b.setV( (byte)(a.v() << count) );
+			}
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> bitShiftLeft() {
+		return BITSHL;
+	}
+
+	private final Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> BITSHR =
+			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, SignedInt8Member a, SignedInt8Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else
+				b.setV( (byte)(a.v() >> count) );
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> bitShiftRight() {
+		return BITSHR;
+	}
+
+	private final Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> BITSHRZ =
+			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, SignedInt8Member a, SignedInt8Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else
+				b.setV( (byte)(a.v() >>> count) );
+		}
+	};
+	
+	public Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> bitShiftRightFillZero() {
+		return BITSHRZ;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> MIN =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			Min.compute(G.INT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> min() {
+		return MIN;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> MAX =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			Max.compute(G.INT8, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> max() {
+		return MAX;
+	}
+
+	private final Procedure1<SignedInt8Member> RAND = 
+			new Procedure1<SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
+		}
+	};
+	
+	@Override
+	public Procedure1<SignedInt8Member> random() {
+		return RAND;
+	}
+
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> POW =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			power().call((int)b.v(), a, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> pow() {
+		return POW;
 	}
 
 }
