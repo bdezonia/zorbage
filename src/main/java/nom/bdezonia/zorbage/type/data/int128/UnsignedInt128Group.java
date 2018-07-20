@@ -33,6 +33,13 @@ import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -68,237 +75,446 @@ public class UnsignedInt128Group
 		return new UnsignedInt128Member(str);
 	}
 
-	@Override
-	public boolean isEqual(UnsignedInt128Member a, UnsignedInt128Member b) {
-		return a.lo == b.lo && a.hi == b.hi;
-	}
+	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> EQ =
+			new Function2<Boolean, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			return a.lo == b.lo && a.hi == b.hi;
+		}
+	};
 
 	@Override
-	public boolean isNotEqual(UnsignedInt128Member a, UnsignedInt128Member b) {
-		return !isEqual(a, b);
+	public Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> isEqual() {
+		return EQ;
 	}
 
-	@Override
-	public void assign(UnsignedInt128Member from, UnsignedInt128Member to) {
-		to.set(from);
-	}
+	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> NEQ =
+			new Function2<Boolean, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			return !isEqual().call(a, b);
+		}
+	};
 
 	@Override
-	public void zero(UnsignedInt128Member a) {
-		a.hi = a.lo = 0;
+	public Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> isNotEqual() {
+		return NEQ;
+	}
+
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> ASSIGN =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member from, UnsignedInt128Member to) {
+			to.set(from);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> assign() {
+		return ASSIGN;
+	}
+
+	private Procedure1<UnsignedInt128Member> ZER =
+			new Procedure1<UnsignedInt128Member>()
+	{
+		
+		@Override
+		public void call(UnsignedInt128Member a) {
+			a.hi = a.lo = 0;
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt128Member> zero() {
+		return ZER;
 	}
 
 	// TODO: this shows that unsigned numbers aren't quite ints. They should derive slightly differently
 	// in the algebra hierarchy.
 	
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> NEG =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			assign().call(a,b); // ignore
+		}
+	};
+	
 	@Override
-	public void negate(UnsignedInt128Member a, UnsignedInt128Member b) {
-		assign(a,b); // ignore
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> negate() {
+		return NEG;
 	}
 
-	@Override
-	public void add(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		long cLo = a.lo + b.lo;
-		long cHi = a.hi + b.hi;
-		int correction = 0;
-		long alh = a.lo & 0x8000000000000000L;
-		long blh = b.lo & 0x8000000000000000L;
-		if (alh != 0 && blh != 0) {
-			correction = 1;
-		}
-		else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
-			long all = a.lo & 0x7fffffffffffffffL;
-			long bll = b.lo & 0x7fffffffffffffffL;
-			if ((all + bll) < 0)
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> ADD = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			long cLo = a.lo + b.lo;
+			long cHi = a.hi + b.hi;
+			int correction = 0;
+			long alh = a.lo & 0x8000000000000000L;
+			long blh = b.lo & 0x8000000000000000L;
+			if (alh != 0 && blh != 0) {
 				correction = 1;
-		}
-		cHi += correction;
-		c.lo = cLo;
-		c.hi = cHi;
-	}
-
-	@Override
-	public void subtract(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		long cHi = a.hi - b.hi;
-		long cLo = a.lo - b.lo;
-		final int correction;
-		long alh = a.lo & 0x8000000000000000L;
-		long blh = b.lo & 0x8000000000000000L;
-		if (alh == 0 && blh != 0)
-			correction = 1;
-		else if (alh != 0 && blh == 0) {
-			correction = 0;
-		}
-		else { // alh == blh
-			long all = a.lo & 0x7fffffffffffffffL;
-			long bll = b.lo & 0x7fffffffffffffffL;
-			if (all < bll)
-				correction = 1;
-			else // (all >= bll)
-				correction = 0;
-		}
-		cHi -= correction;
-		c.lo = cLo;
-		c.hi = cHi;
-	}
-
-	@Override
-	public void multiply(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
-		UnsignedInt128Member tmp = new UnsignedInt128Member();
-		UnsignedInt128Member part = new UnsignedInt128Member(a);
-		while (isNotEqual(bTmp,ZERO)) {
-			if ((bTmp.lo & 1) != 0) {
-				add(tmp, part, tmp);
 			}
-			shiftLeftOneBit(part);
-			shiftRightOneBit(bTmp);
+			else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
+				long all = a.lo & 0x7fffffffffffffffL;
+				long bll = b.lo & 0x7fffffffffffffffL;
+				if ((all + bll) < 0)
+					correction = 1;
+			}
+			cHi += correction;
+			c.lo = cLo;
+			c.hi = cHi;
 		}
-		assign(tmp,c);
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> add() {
+		return ADD;
 	}
 
-	@Override
-	public void power(int power, UnsignedInt128Member a, UnsignedInt128Member b) {
-		PowerI.compute(this, power, a, b);
-	}
-
-	@Override
-	public void unity(UnsignedInt128Member result) {
-		assign(ONE, result);
-	}
-
-	@Override
-	public boolean isLess(UnsignedInt128Member a, UnsignedInt128Member b) {
-		return compare(a,b) < 0;
-	}
-
-	@Override
-	public boolean isLessEqual(UnsignedInt128Member a, UnsignedInt128Member b) {
-		return compare(a,b) <= 0;
-	}
-
-	@Override
-	public boolean isGreater(UnsignedInt128Member a, UnsignedInt128Member b) {
-		return compare(a,b) > 0;
-	}
-
-	@Override
-	public boolean isGreaterEqual(UnsignedInt128Member a, UnsignedInt128Member b) {
-		return compare(a,b) >= 0;
-	}
-
-	@Override
-	public int compare(UnsignedInt128Member a, UnsignedInt128Member b) {
-		long along, blong;
-		long ab = a.hi & 0x8000000000000000L;
-		long bb = b.hi & 0x8000000000000000L;
-		if (ab == 0 && bb != 0) {
-			return -1;
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> SUB = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			long cHi = a.hi - b.hi;
+			long cLo = a.lo - b.lo;
+			final int correction;
+			long alh = a.lo & 0x8000000000000000L;
+			long blh = b.lo & 0x8000000000000000L;
+			if (alh == 0 && blh != 0)
+				correction = 1;
+			else if (alh != 0 && blh == 0) {
+				correction = 0;
+			}
+			else { // alh == blh
+				long all = a.lo & 0x7fffffffffffffffL;
+				long bll = b.lo & 0x7fffffffffffffffL;
+				if (all < bll)
+					correction = 1;
+				else // (all >= bll)
+					correction = 0;
+			}
+			cHi -= correction;
+			c.lo = cLo;
+			c.hi = cHi;
 		}
-		else if (ab != 0 && bb == 0) {
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> subtract() {
+		return SUB;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> MUL = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
+			UnsignedInt128Member tmp = new UnsignedInt128Member();
+			UnsignedInt128Member part = new UnsignedInt128Member(a);
+			while (isNotEqual().call(bTmp,ZERO)) {
+				if ((bTmp.lo & 1) != 0) {
+					add().call(tmp, part, tmp);
+				}
+				shiftLeftOneBit(part);
+				shiftRightOneBit(bTmp);
+			}
+			assign().call(tmp,c);
+		}
+	};
+
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> multiply() {
+		return MUL;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> POWER = 
+			new Procedure3<java.lang.Integer, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(java.lang.Integer power, UnsignedInt128Member a, UnsignedInt128Member b) {
+			PowerI.compute(G.UINT128, power, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> power() {
+		return POWER;
+	}
+
+	private Procedure1<UnsignedInt128Member> UNITY =
+			new Procedure1<UnsignedInt128Member>()
+	{
+		
+		@Override
+		public void call(UnsignedInt128Member a) {
+			assign().call(ONE, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt128Member> unity() {
+		return UNITY;
+	}
+
+	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> LESS =
+			new Function2<Boolean, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			return compare().call(a,b) < 0;
+		}
+	};
+
+	@Override
+	public Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> isLess() {
+		return LESS;
+	}
+
+	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> LE =
+			new Function2<Boolean, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			return compare().call(a,b) <= 0;
+		}
+	};
+
+	@Override
+	public Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> isLessEqual() {
+		return LE;
+	}
+
+	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> GREAT =
+			new Function2<Boolean, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			return compare().call(a,b) > 0;
+		}
+	};
+
+	@Override
+	public Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> isGreater() {
+		return GREAT;
+	}
+
+	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> GE =
+			new Function2<Boolean, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			return compare().call(a,b) >= 0;
+		}
+	};
+
+	@Override
+	public Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> isGreaterEqual() {
+		return GE;
+	}
+
+	private final Function2<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> CMP =
+			new Function2<java.lang.Integer, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public java.lang.Integer call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			long along, blong;
+			long ab = a.hi & 0x8000000000000000L;
+			long bb = b.hi & 0x8000000000000000L;
+			if (ab == 0 && bb != 0) {
+				return -1;
+			}
+			else if (ab != 0 && bb == 0) {
+				return 1;
+			}
+			else { // ab == bb
+				along = a.hi & 0x7fffffffffffffffL;
+				blong = b.hi & 0x7fffffffffffffffL;
+				if (along < blong)
+					return -1;
+				else if (along > blong)
+					return 1;
+				else { // a.hi == b.hi
+					ab = a.lo & 0x8000000000000000L;
+					bb = b.lo & 0x8000000000000000L;
+					if (ab == 0 && bb != 0) {
+						return -1;
+					}
+					else if (ab != 0 && bb == 0) {
+						return 1;
+					}
+					else { // ab == bb
+						along = a.lo & 0x7fffffffffffffffL;
+						blong = b.lo & 0x7fffffffffffffffL;
+						if (along < blong)
+							return -1;
+						else if (along > blong)
+							return 1;
+						else
+							return 0;
+					}
+				}
+			}
+		}
+	};
+
+	@Override
+	public Function2<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> compare() {
+		return CMP;
+	}
+
+	private final Function1<java.lang.Integer,UnsignedInt128Member> SIG =
+			new Function1<java.lang.Integer, UnsignedInt128Member>()
+	{
+		@Override
+		public java.lang.Integer call(UnsignedInt128Member a) {
+			if (isEqual().call(a, ZERO)) return 0;
 			return 1;
 		}
-		else { // ab == bb
-			along = a.hi & 0x7fffffffffffffffL;
-			blong = b.hi & 0x7fffffffffffffffL;
-			if (along < blong)
-				return -1;
-			else if (along > blong)
-				return 1;
-			else { // a.hi == b.hi
-				ab = a.lo & 0x8000000000000000L;
-				bb = b.lo & 0x8000000000000000L;
-				if (ab == 0 && bb != 0) {
-					return -1;
-				}
-				else if (ab != 0 && bb == 0) {
-					return 1;
-				}
-				else { // ab == bb
-					along = a.lo & 0x7fffffffffffffffL;
-					blong = b.lo & 0x7fffffffffffffffL;
-					if (along < blong)
-						return -1;
-					else if (along > blong)
-						return 1;
-					else
-						return 0;
-				}
+	};
+	
+	@Override
+	public Function1<java.lang.Integer,UnsignedInt128Member> signum() {
+		return SIG;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> MIN = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			Min.compute(G.UINT128, a, b, c);
+		}
+	};
+	
+	@Override
+	public final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> min() {
+		return MIN;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> MAX = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			Max.compute(G.UINT128, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> max() {
+		return MAX;
+	}
+
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> ABS =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			assign().call(a,b); // ignore
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> abs() {
+		return ABS;
+	}
+
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> NORM =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			assign().call(a,b);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> norm() {
+		return NORM;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> DIV = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d) {
+			UnsignedInt128Member m = new UnsignedInt128Member();
+			divMod().call(a,b,d,m);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> MOD = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member m) {
+			UnsignedInt128Member d = new UnsignedInt128Member();
+			divMod().call(a,b,d,m);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> DIVMOD =
+			new Procedure4<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
+			if (isEqual().call(b, ZERO)) {
+				throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
 			}
-		}
-	}
-
-	@Override
-	public int signum(UnsignedInt128Member a) {
-		if (isEqual(a, ZERO)) return 0;
-		return 1;
-	}
-
-	@Override
-	public void min(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		Min.compute(this, a, b, c);
-	}
-
-	@Override
-	public void max(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		Max.compute(this, a, b, c);
-	}
-
-	@Override
-	public void abs(UnsignedInt128Member a, UnsignedInt128Member b) {
-		assign(a, b);
-	}
-
-	@Override
-	public void norm(UnsignedInt128Member a, UnsignedInt128Member b) {
-		assign(a, b);
-	}
-
-	@Override
-	public void div(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d) {
-		UnsignedInt128Member m = new UnsignedInt128Member();
-		divMod(a,b,d,m);
-	}
-
-	@Override
-	public void mod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member m) {
-		UnsignedInt128Member d = new UnsignedInt128Member();
-		divMod(a,b,d,m);
-	}
-
-	@Override
-	public void divMod(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
-		if (isEqual(b, ZERO)) {
-			throw new IllegalArgumentException("divide by zero error in UnsignedInt128Group");
-		}
-		int comparison = compare(a,b);
-		if (comparison == 0) { // a is equal b
-			assign(ONE, d);
-			assign(ZERO, m);
-			return;
-		}
-		if (comparison < 0) { // a is less than b
-			assign(ZERO, d);
-			assign(a, m);
-			return;
-		}
-		// if here a is greater than b
-		UnsignedInt128Member quotient = new UnsignedInt128Member();
-		UnsignedInt128Member dividend = new UnsignedInt128Member(a);
-		UnsignedInt128Member divisor = new UnsignedInt128Member(b);
-		int dividendLeadingNonzeroBit = leadingNonZeroBit(a);
-		int divisorLeadingNonzeroBit = leadingNonZeroBit(b);
-		bitShiftLeft((dividendLeadingNonzeroBit - divisorLeadingNonzeroBit), divisor, divisor);
-		for (int i = 0; i < dividendLeadingNonzeroBit-divisorLeadingNonzeroBit+1; i++) {
-			shiftLeftOneBit(quotient);
-			if (isGreaterEqual(dividend, divisor)) {
-				subtract(dividend, divisor, dividend);
-				quotient.lo |= 1;
+			int comparison = compare().call(a,b);
+			if (comparison == 0) { // a is equal b
+				assign().call(ONE, d);
+				assign().call(ZERO, m);
+				return;
 			}
-			shiftRightOneBit(divisor);
+			if (comparison < 0) { // a is less than b
+				assign().call(ZERO, d);
+				assign().call(a, m);
+				return;
+			}
+			// if here a is greater than b
+			UnsignedInt128Member quotient = new UnsignedInt128Member();
+			UnsignedInt128Member dividend = new UnsignedInt128Member(a);
+			UnsignedInt128Member divisor = new UnsignedInt128Member(b);
+			int dividendLeadingNonzeroBit = leadingNonZeroBit(a);
+			int divisorLeadingNonzeroBit = leadingNonZeroBit(b);
+			bitShiftLeft().call((dividendLeadingNonzeroBit - divisorLeadingNonzeroBit), divisor, divisor);
+			for (int i = 0; i < dividendLeadingNonzeroBit-divisorLeadingNonzeroBit+1; i++) {
+				shiftLeftOneBit(quotient);
+				if (isGreaterEqual().call(dividend, divisor)) {
+					subtract().call(dividend, divisor, dividend);
+					quotient.lo |= 1;
+				}
+				shiftRightOneBit(divisor);
+			}
+			assign().call(quotient, d);
+			assign().call(dividend, m);
 		}
-		assign(quotient, d);
-		assign(dividend, m);
+	};
+	
+	@Override
+	public Procedure4<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> divMod() {
+		return DIVMOD;
 	}
 
 	private int leadingNonZeroBit(UnsignedInt128Member num) {
@@ -319,123 +535,267 @@ public class UnsignedInt128Group
 		return -1;
 	}
 	
-	@Override
-	public void gcd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		Gcd.compute(this, a, b, c);
-	}
-
-	@Override
-	public void lcm(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		Lcm.compute(this, a, b, c);
-	}
-
-	@Override
-	public boolean isEven(UnsignedInt128Member a) {
-		return (a.lo & 1) == 0;
-	}
-
-	@Override
-	public boolean isOdd(UnsignedInt128Member a) {
-		return (a.lo & 1) == 1;
-	}
-
-	@Override
-	public void pred(UnsignedInt128Member a, UnsignedInt128Member b) {
-		subtract(a,ONE,b);
-	}
-
-	@Override
-	public void succ(UnsignedInt128Member a, UnsignedInt128Member b) {
-		add(a,ONE,b);
-	}
-
-	@Override
-	public void pow(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		if (signum(a) == 0 && signum(b) == 0)
-			throw new IllegalArgumentException("0^0 is not a number");
-		UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
-		UnsignedInt128Member pow = new UnsignedInt128Member(b);
-		while (!isEqual(pow, ZERO)) {
-			multiply(tmp, a, tmp);
-			pred(pow,pow);
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> GCD = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			Gcd.compute(G.UINT128, a, b, c);
 		}
-		assign(tmp, c);
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> gcd() {
+		return GCD;
 	}
 
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> LCM = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			Lcm.compute(G.UINT128, a, b, c);
+		}
+	};
+	
 	@Override
-	public void random(UnsignedInt128Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.lo = rng.nextLong();
-		a.hi = rng.nextLong();
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> lcm() {
+		return LCM;
 	}
 
+	private final Function1<Boolean,UnsignedInt128Member> EVEN =
+			new Function1<Boolean, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a) {
+			return (a.lo & 1) == 0;
+		}
+	};
+	
 	@Override
-	public void bitAnd(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		c.lo = a.lo & b.lo;
-		c.hi = a.hi & b.hi;
+	public Function1<Boolean,UnsignedInt128Member> isEven() {
+		return EVEN;
 	}
 
+	private final Function1<Boolean,UnsignedInt128Member> ODD =
+			new Function1<Boolean, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member a) {
+			return (a.lo & 1) == 1;
+		}
+	};
+	
 	@Override
-	public void bitOr(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		c.lo = a.lo | b.lo;
-		c.hi = a.hi | b.hi;
+	public Function1<Boolean,UnsignedInt128Member> isOdd() {
+		return ODD;
 	}
 
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> PRED =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			subtract().call(a,ONE,b);
+		}
+	};
+	
 	@Override
-	public void bitXor(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-		c.lo = a.lo ^ b.lo;
-		c.hi = a.hi ^ b.hi;
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> pred() {
+		return PRED;
 	}
 
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> SUCC =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			add().call(a,ONE,b);
+		}
+	};
+	
 	@Override
-	public void bitNot(UnsignedInt128Member a, UnsignedInt128Member b) {
-		b.lo = ~a.lo;
-		b.hi = ~a.hi;
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> succ() {
+		return SUCC;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> POW = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			if (signum().call(a) == 0 && signum().call(b) == 0)
+				throw new IllegalArgumentException("0^0 is not a number");
+			UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
+			UnsignedInt128Member pow = new UnsignedInt128Member(b);
+			while (!isEqual().call(pow, ZERO)) {
+				multiply().call(tmp, a, tmp);
+				pred().call(pow,pow);
+			}
+			assign().call(tmp, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> pow() {
+		return POW;
+	}
+
+	private Procedure1<UnsignedInt128Member> RAND =
+			new Procedure1<UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.lo = rng.nextLong();
+			a.hi = rng.nextLong();
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt128Member> random() {
+		return RAND;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> BITAND = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			c.lo = a.lo & b.lo;
+			c.hi = a.hi & b.hi;
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> bitAnd() {
+		return BITAND;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> BITOR = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			c.lo = a.lo | b.lo;
+			c.hi = a.hi | b.hi;
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> bitOr() {
+		return BITOR;
+	}
+
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> BITXOR = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			c.lo = a.lo ^ b.lo;
+			c.hi = a.hi ^ b.hi;
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> bitXor() {
+		return BITXOR;
+	}
+
+	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> BITNOT =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			b.lo = ~a.lo;
+			b.hi = ~a.hi;
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> bitNot() {
+		return BITNOT;
 	}
 
 	// TODO improve performance
 	
-	@Override
-	public void bitShiftLeft(int count, UnsignedInt128Member a, UnsignedInt128Member b) {
-		if (count < 0)
-			bitShiftRight(Math.abs(count), a, b);
-		else {
-			count = count % 0x80;
-			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
-			for (int i = 0; i < count; i++) {
-				shiftLeftOneBit(tmp);
+	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> BITSHL = 
+			new Procedure3<java.lang.Integer, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt128Member a, UnsignedInt128Member b) {
+			if (count < 0)
+				bitShiftRight().call(Math.abs(count), a, b);
+			else {
+				count = count % 0x80;
+				UnsignedInt128Member tmp = new UnsignedInt128Member(a);
+				for (int i = 0; i < count; i++) {
+					shiftLeftOneBit(tmp);
+				}
+				assign().call(tmp, b);
 			}
-			assign(tmp, b);
 		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftLeft() {
+		return BITSHL;
 	}
 
 	// TODO improve performance
 	
-	@Override
-	public void bitShiftRight(int count, UnsignedInt128Member a, UnsignedInt128Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else if (count > 0x7f)
-			assign(ZERO, b);
-		else {
-			UnsignedInt128Member tmp = new UnsignedInt128Member(a);
-			for (int i = 0; i < count; i++) {
-				shiftRightOneBit(tmp);
+	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> BITSHR = 
+			new Procedure3<java.lang.Integer, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt128Member a, UnsignedInt128Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else if (count > 0x7f)
+				assign().call(ZERO, b);
+			else {
+				UnsignedInt128Member tmp = new UnsignedInt128Member(a);
+				for (int i = 0; i < count; i++) {
+					shiftRightOneBit(tmp);
+				}
+				assign().call(tmp, b);
 			}
-			assign(tmp, b);
 		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRight() {
+		return BITSHR;
 	}
 
+	private Procedure1<UnsignedInt128Member> MAXBOUND =
+			new Procedure1<UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a) {
+			a.lo = -1;
+			a.hi = -1;
+		}
+	};
+	
 	@Override
-	public void maxBound(UnsignedInt128Member a) {
-		a.lo = -1;
-		a.hi = -1;
+	public Procedure1<UnsignedInt128Member> maxBound() {
+		return MAXBOUND;
 	}
 
+	private Procedure1<UnsignedInt128Member> MINBOUND =
+			new Procedure1<UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a) {
+			a.lo = 0;
+			a.hi = 0;
+		}
+	};
+	
 	@Override
-	public void minBound(UnsignedInt128Member a) {
-		a.lo = 0;
-		a.hi = 0;
+	public Procedure1<UnsignedInt128Member> minBound() {
+		return MINBOUND;
 	}
 
 	private void shiftLeftOneBit(UnsignedInt128Member val) {
