@@ -63,12 +63,12 @@ public class ComplexRootOfUnity {
 		I.setI(1);
 		M.setR(m);
 		N.setR(n);
-		G.CDBL.E(e);
-		G.CDBL.PI(power);
-		G.CDBL.multiply(power, two, power);
-		G.CDBL.multiply(power, I, power);
-		G.CDBL.divide(power, M, power);
-		G.CDBL.multiply(power, N, power);
-		G.CDBL.pow(e, power, root);
+		G.CDBL.E().call(e);
+		G.CDBL.PI().call(power);
+		G.CDBL.multiply().call(power, two, power);
+		G.CDBL.multiply().call(power, I, power);
+		G.CDBL.divide().call(power, M, power);
+		G.CDBL.multiply().call(power, N, power);
+		G.CDBL.pow().call(e, power, root);
 	}
 }

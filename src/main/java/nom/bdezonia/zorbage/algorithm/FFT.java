@@ -85,11 +85,11 @@ public class FFT {
 				w.setI(Math.sin(kth));
 				for (long j = 0; j < a.size()/L; j++) {
 					b.get(j*L + k + L/2, tmp1);
-					group.multiply(w, tmp1, tao);
+					group.multiply().call(w, tmp1, tao);
 					b.get(j*L + k, tmp2);
-					group.subtract(tmp2, tao, tmp1);
+					group.subtract().call(tmp2, tao, tmp1);
 					b.set(j*L + k + L/2, tmp1);
-					group.add(tmp2, tao, tmp1);
+					group.add().call(tmp2, tao, tmp1);
 					b.set(j*L + k, tmp1);
 				}
 			}
