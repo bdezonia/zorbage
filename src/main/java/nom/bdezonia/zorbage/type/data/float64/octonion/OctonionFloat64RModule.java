@@ -37,7 +37,12 @@ import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
@@ -63,35 +68,89 @@ public class OctonionFloat64RModule
 	
 	public OctonionFloat64RModule() { }
 	
+	private final Procedure1<OctonionFloat64RModuleMember> ZER =
+			new Procedure1<OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a) {
+			for (long i = 0; i < a.length(); i++)
+				a.setV(i, ZERO);
+		}
+	};
+	
 	@Override
-	public void zero(OctonionFloat64RModuleMember a) {
-		for (long i = 0; i < a.length(); i++)
-			a.setV(i, ZERO);
+	public Procedure1<OctonionFloat64RModuleMember> zero() {
+		return ZER;
 	}
 
+	private Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> NEG =
+			new Procedure2<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
+			RModuleNegate.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void negate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		RModuleNegate.compute(G.ODBL, a, b);
+	public Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> negate() {
+		return NEG;
 	}
+	
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> ADD =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
+			RModuleAdd.compute(G.ODBL, a, b, c);
+		}
+	};
 
 	@Override
-	public void add(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		RModuleAdd.compute(G.ODBL, a, b, c);
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> add() {
+		return ADD;
 	}
 
-	@Override
-	public void subtract(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		RModuleSubtract.compute(G.ODBL, a, b, c);
-	}
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> SUB =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
+			RModuleSubtract.compute(G.ODBL, a, b, c);
+		}
+	};
 
 	@Override
-	public boolean isEqual(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		return RModuleIsEqual.compute(G.ODBL, a, b);
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> subtract() {
+		return SUB;
 	}
 
+	private final Function2<Boolean,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> EQ =
+			new Function2<Boolean, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
+			return RModuleIsEqual.compute(G.ODBL, a, b);
+		}
+	};
+
 	@Override
-	public boolean isNotEqual(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		return !isEqual(a,b);
+	public Function2<Boolean,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> isEqual() {
+		return EQ;
+	}
+
+	private final Function2<Boolean,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> NEQ =
+			new Function2<Boolean, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
+			return !isEqual().call(a,b);
+		}
+	};
+
+	@Override
+	public Function2<Boolean,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -114,84 +173,184 @@ public class OctonionFloat64RModule
 		return new OctonionFloat64RModuleMember(s, d1);
 	}
 
-	@Override
-	public void assign(OctonionFloat64RModuleMember from, OctonionFloat64RModuleMember to) {
-		RModuleAssign.compute(G.ODBL, from, to);
-	}
-
-	@Override
-	public void norm(OctonionFloat64RModuleMember a, Float64Member b) {
-		OctonionFloat64Member aTmp = new OctonionFloat64Member();
-		OctonionFloat64Member sum = new OctonionFloat64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		// TODO Look into preventing overflow. can do so similar to float
-		// case using norms. Also could avoid a lot of adds and multiplies
-		// by just working with components of the oct as reals since
-		// that is all that survives. This can be extended to quats and
-		// complexes. maybe not, think it through. But the conjugate()
-		// and multiply() can be simplified.
-		for (long i = 0; i < a.length(); i++) {
-			a.v(i, aTmp);
-			G.ODBL.conjugate(aTmp, tmp);
-			G.ODBL.multiply(aTmp, tmp, tmp);
-			G.ODBL.add(sum, tmp, sum);
+	private final Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> ASSIGN =
+			new Procedure2<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember from, OctonionFloat64RModuleMember to) {
+			RModuleAssign.compute(G.ODBL, from, to);
 		}
-		b.setV(Math.sqrt(sum.r()));
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> assign() {
+		return ASSIGN;
 	}
 
-	@Override
-	public void scale(OctonionFloat64Member scalar, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		RModuleScale.compute(G.ODBL, scalar, a, b);
-	}
-
-	@Override
-	public void crossProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-		CrossProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
-	}
-
-	@Override
-	public void dotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-		DotProduct.compute(G.ODBL, a, b, c);
-	}
-
-	@Override
-	public void perpDotProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-		PerpDotProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
-	}
-
-	@Override
-	public void vectorTripleProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c,
-		OctonionFloat64RModuleMember d)
+	private final Procedure2<OctonionFloat64RModuleMember,Float64Member> NORM =
+			new Procedure2<OctonionFloat64RModuleMember, Float64Member>()
 	{
-		OctonionFloat64RModuleMember b_cross_c = new OctonionFloat64RModuleMember(new double[3*8]);
-		crossProduct(b, c, b_cross_c);
-		crossProduct(a, b_cross_c, d);
+		@Override
+		public void call(OctonionFloat64RModuleMember a, Float64Member b) {
+			OctonionFloat64Member aTmp = new OctonionFloat64Member();
+			OctonionFloat64Member sum = new OctonionFloat64Member();
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			// TODO Look into preventing overflow. can do so similar to float
+			// case using norms. Also could avoid a lot of adds and multiplies
+			// by just working with components of the oct as reals since
+			// that is all that survives. This can be extended to quats and
+			// complexes. maybe not, think it through. But the conjugate()
+			// and multiply() can be simplified.
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, aTmp);
+				G.ODBL.conjugate().call(aTmp, tmp);
+				G.ODBL.multiply().call(aTmp, tmp, tmp);
+				G.ODBL.add().call(sum, tmp, sum);
+			}
+			b.setV(Math.sqrt(sum.r()));
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64RModuleMember,Float64Member> norm() {
+		return NORM;
 	}
 
-	@Override
-	public void scalarTripleProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c,
-		OctonionFloat64Member d)
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> SCALE =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
 	{
-		OctonionFloat64RModuleMember b_cross_c = new OctonionFloat64RModuleMember(new double[3*8]);
-		crossProduct(b, c, b_cross_c);
-		dotProduct(a, b_cross_c, d);
+		@Override
+		public void call(OctonionFloat64Member scalar, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
+			RModuleScale.compute(G.ODBL, scalar, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> scale() {
+		return SCALE;
 	}
 
-	@Override
-	public void conjugate(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-		RModuleConjugate.compute(G.ODBL, a, b);
-	}
-
-	@Override
-	public void vectorDirectProduct(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64MatrixMember c) {
-		directProduct(a, b, c);
-	}
-
-	@Override
-	public void directProduct(OctonionFloat64RModuleMember in1, OctonionFloat64RModuleMember in2,
-			OctonionFloat64MatrixMember out)
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> CROSS =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
 	{
-		RModuleDirectProduct.compute(G.ODBL, in1, in2, out);
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
+			CrossProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> crossProduct() {
+		return CROSS;
+	}
+
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64Member> DOT =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
+			DotProduct.compute(G.ODBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64Member> dotProduct() {
+		return DOT;
+	}
+
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64Member> PERP =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
+			PerpDotProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64Member> perpDotProduct() {
+		return PERP;
+	}
+
+	private final Procedure4<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> VTRIPLE =
+			new Procedure4<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c,
+				OctonionFloat64RModuleMember d)
+		{
+			OctonionFloat64RModuleMember b_cross_c = new OctonionFloat64RModuleMember(new double[3*8]);
+			crossProduct().call(b, c, b_cross_c);
+			crossProduct().call(a, b_cross_c, d);
+		}
+	};
+	
+	@Override
+	public Procedure4<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> vectorTripleProduct()
+	{
+		return VTRIPLE;
+	}
+	
+	private final Procedure4<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64Member> STRIPLE =
+			new Procedure4<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c,
+				OctonionFloat64Member d)
+		{
+			OctonionFloat64RModuleMember b_cross_c = new OctonionFloat64RModuleMember(new double[3*8]);
+			crossProduct().call(b, c, b_cross_c);
+			dotProduct().call(a, b_cross_c, d);
+		}
+	};
+
+	@Override
+	public Procedure4<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64Member> scalarTripleProduct()
+	{
+		return STRIPLE;
+	}
+
+	private final Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> CONJ =
+			new Procedure2<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
+			RModuleConjugate.compute(G.ODBL, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> conjugate() {
+		return CONJ;
+	}
+
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64MatrixMember> VDP =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64MatrixMember c) {
+			directProduct().call(a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64MatrixMember> vectorDirectProduct() {
+		return VDP;
+	}
+
+	private final Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64MatrixMember> DP =
+			new Procedure3<OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember in1, OctonionFloat64RModuleMember in2, OctonionFloat64MatrixMember out) {
+			RModuleDirectProduct.compute(G.ODBL, in1, in2, out);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember,OctonionFloat64MatrixMember> directProduct()
+	{
+		return DP;
 	}
 
 }
