@@ -53,7 +53,7 @@ public class TestFloat64Matrix {
 		if (RUN) {
 			System.out.println("Making a huge virtual matrix > 2 gig entries");
 			Float64MatrixMember m = G.DBL_MAT.construct(StorageConstruction.MEM_VIRTUAL, 50000, 50000);
-			G.DBL_MAT.unity(m);
+			G.DBL_MAT.unity().call(m);
 			Float64Member value = G.DBL.construct();
 			Float64Member zero = G.DBL.construct();
 			Float64Member one = G.DBL.construct();
@@ -86,7 +86,7 @@ public class TestFloat64Matrix {
 		Float64MatrixMember ident =
 				new Float64MatrixMember(3, 3, new double[9]);
 		
-		G.DBL_MAT.invert(mat, invMat);
+		G.DBL_MAT.invert().call(mat, invMat);
 		
 		Float64Member value = new Float64Member();
 
@@ -109,7 +109,7 @@ public class TestFloat64Matrix {
 		invMat.v(2, 2, value);
 		assertEquals(-5.0/145, value.v(), tol);
 		
-		G.DBL_MAT.multiply(mat, invMat, ident);
+		G.DBL_MAT.multiply().call(mat, invMat, ident);
 
 		ident.v(0, 0, value);
 		assertEquals(1, value.v(), tol);
