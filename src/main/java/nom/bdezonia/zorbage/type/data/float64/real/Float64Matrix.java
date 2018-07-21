@@ -43,7 +43,14 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -68,49 +75,130 @@ public class Float64Matrix
 {
 	public Float64Matrix() { }
 
+	private final Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> MUL =
+			new Procedure3<Float64MatrixMember, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+			MatrixMultiply.compute(G.DBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void multiply(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-		MatrixMultiply.compute(G.DBL, a, b, c);
+	public Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> multiply() {
+		return MUL;
 	}
 
+	private final Procedure3<java.lang.Integer,Float64MatrixMember,Float64MatrixMember> POWER =
+			new Procedure3<Integer, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Integer power, Float64MatrixMember a, Float64MatrixMember b) {
+			MatrixPower.compute(power, G.DBL, G.DBL_VEC, G.DBL_MAT, a, b);
+		}
+	};
+	
 	@Override
-	public void power(int power, Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixPower.compute(power, G.DBL, G.DBL_VEC, G.DBL_MAT, a, b);
+	public Procedure3<java.lang.Integer,Float64MatrixMember,Float64MatrixMember> power() {
+		return POWER;
 	}
 
+	private final Procedure1<Float64MatrixMember> ZER =
+			new Procedure1<Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a) {
+			MatrixZero.compute(G.DBL, a);
+		}
+	};
+	
 	@Override
-	public void zero(Float64MatrixMember a) {
-		MatrixZero.compute(G.DBL, a);
+	public Procedure1<Float64MatrixMember> zero() {
+		return ZER;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64MatrixMember> NEG =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			MatrixNegate.compute(G.DBL, a, b);
+		}
+	};
+	
 	@Override
-	public void negate(Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixNegate.compute(G.DBL, a, b);
+	public Procedure2<Float64MatrixMember,Float64MatrixMember> negate() {
+		return NEG;
 	}
 
+	private final Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> ADD =
+			new Procedure3<Float64MatrixMember, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+			MatrixAddition.compute(G.DBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void add(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-		MatrixAddition.compute(G.DBL, a, b, c);
+	public Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> add() {
+		return ADD;
 	}
 
+	private final Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> SUB =
+			new Procedure3<Float64MatrixMember, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+			MatrixSubtraction.compute(G.DBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void subtract(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-		MatrixSubtraction.compute(G.DBL, a, b, c);
+	public Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> subtract() {
+		return SUB;
 	}
 
+	private final Function2<Boolean,Float64MatrixMember,Float64MatrixMember> EQ =
+			new Function2<Boolean, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public Boolean call(Float64MatrixMember a, Float64MatrixMember b) {
+			return MatrixEqual.compute(G.DBL, a, b);
+		}
+	};
+	
 	@Override
-	public boolean isEqual(Float64MatrixMember a, Float64MatrixMember b) {
-		return MatrixEqual.compute(G.DBL, a, b);
+	public Function2<Boolean,Float64MatrixMember,Float64MatrixMember> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,Float64MatrixMember,Float64MatrixMember> NEQ =
+			new Function2<Boolean, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public Boolean call(Float64MatrixMember a, Float64MatrixMember b) {
+			return !isEqual().call(a, b);
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(Float64MatrixMember a, Float64MatrixMember b) {
-		return !isEqual(a, b);
+	public Function2<Boolean,Float64MatrixMember,Float64MatrixMember> isNotEqual() {
+		return NEQ;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64MatrixMember> ASSIGN =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember from, Float64MatrixMember to) {
+			MatrixAssign.compute(G.DBL, from, to);
+		}
+	};
+	
 	@Override
-	public void assign(Float64MatrixMember from, Float64MatrixMember to) {
-		MatrixAssign.compute(G.DBL, from, to);
+	public Procedure2<Float64MatrixMember,Float64MatrixMember> assign() {
+		return ASSIGN;
 	}
 
 	@Override
@@ -133,68 +221,176 @@ public class Float64Matrix
 		return new Float64MatrixMember(s, d1, d2);
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64Member> NORM =
+			new Procedure2<Float64MatrixMember, Float64Member>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64Member b) {
+			// TODO
+			throw new IllegalArgumentException("TODO");
+		}
+	};
+	
 	@Override
-	public void norm(Float64MatrixMember a, Float64Member b) {
-		// TODO
-		throw new IllegalArgumentException("TODO");
+	public Procedure2<Float64MatrixMember,Float64Member> norm() {
+		return NORM;
 	}
 
+	private final Procedure4<Round.Mode,Float64Member,Float64MatrixMember,Float64MatrixMember> ROUND =
+			new Procedure4<Round.Mode, Float64Member, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, Float64MatrixMember a, Float64MatrixMember b) {
+			MatrixRound.compute(G.DBL, mode, delta, a, b);
+		}
+	};
+	
 	@Override
-	public void round(Round.Mode mode, Float64Member delta, Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixRound.compute(G.DBL, mode, delta, a, b);
+	public Procedure4<Round.Mode,Float64Member,Float64MatrixMember,Float64MatrixMember> round() {
+		return ROUND;
 	}
 
+	private final Function1<Boolean,Float64MatrixMember> NAN =
+			new Function1<Boolean, Float64MatrixMember>()
+	{
+		@Override
+		public Boolean call(Float64MatrixMember a) {
+			return MatrixIsNaN.compute(G.DBL, a);
+		}
+	};
+	
 	@Override
-	public boolean isNaN(Float64MatrixMember a) {
-		return MatrixIsNaN.compute(G.DBL, a);
+	public Function1<Boolean,Float64MatrixMember> isNaN() {
+		return NAN;
 	}
 
+	private final Function1<Boolean,Float64MatrixMember> INF =
+			new Function1<Boolean, Float64MatrixMember>()
+	{
+		@Override
+		public Boolean call(Float64MatrixMember a) {
+			return MatrixIsInfinite.compute(G.DBL, a);
+		}
+	};
+	
 	@Override
-	public boolean isInfinite(Float64MatrixMember a) {
-		return MatrixIsInfinite.compute(G.DBL, a);
+	public Function1<Boolean,Float64MatrixMember> isInfinite() {
+		return INF;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64MatrixMember> CONJ =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			assign().call(a, b);
+		}
+	};
+	
 	@Override
-	public void conjugate(Float64MatrixMember a, Float64MatrixMember b) {
-		assign(a, b);
+	public Procedure2<Float64MatrixMember,Float64MatrixMember> conjugate() {
+		return CONJ;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64MatrixMember> TRANSP =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			MatrixTranspose.compute(G.DBL, a, b);
+		}
+	};
+	
 	@Override
-	public void transpose(Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixTranspose.compute(G.DBL, a, b);
+	public Procedure2<Float64MatrixMember,Float64MatrixMember> transpose() {
+		return TRANSP;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64MatrixMember> CONJTRANSP =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			transpose().call(a, b);
+		}
+	};
+	
 	@Override
-	public void conjugateTranspose(Float64MatrixMember a, Float64MatrixMember b) {
-		transpose(a, b);
+	public Procedure2<Float64MatrixMember,Float64MatrixMember> conjugateTranspose() {
+		return CONJTRANSP;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64Member> DET =
+			new Procedure2<Float64MatrixMember, Float64Member>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64Member b) {
+			MatrixDeterminant.compute(G.DBL_MAT, G.DBL, a, b);
+		}
+	};
+	
 	@Override
-	public void det(Float64MatrixMember a, Float64Member b) {
-		MatrixDeterminant.compute(this, G.DBL, a, b);
+	public Procedure2<Float64MatrixMember,Float64Member> det() {
+		return DET;
 	}
 
+	private final Procedure1<Float64MatrixMember> UNITY =
+			new Procedure1<Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a) {
+			MatrixUnity.compute(G.DBL, a);
+		}
+	};
+	
 	@Override
-	public void unity(Float64MatrixMember a) {
-		MatrixUnity.compute(G.DBL, a);
+	public Procedure1<Float64MatrixMember> unity() {
+		return UNITY;
 	}
 
+	private final Procedure2<Float64MatrixMember,Float64MatrixMember> INV =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			MatrixInvert.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b);
+		}
+	};
+	
 	@Override
-	public void invert(Float64MatrixMember a, Float64MatrixMember b) {
-		MatrixInvert.compute(G.DBL, G.DBL_VEC, G.DBL_MAT, a, b);
+	public Procedure2<Float64MatrixMember,Float64MatrixMember> invert() {
+		return INV;
 	}
 
+	private final Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> DIVIDE =
+			new Procedure3<Float64MatrixMember, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
+			// invert and multiply
+			Float64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
+			invert().call(b, invB);
+			multiply().call(a, invB, c);
+		}
+	};
+	
 	@Override
-	public void divide(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-		// invert and multiply
-		Float64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
-		invert(b, invB);
-		multiply(a, invB, c);
+	public Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> divide() {
+		return DIVIDE;
 	}
 
+	private final Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> DP =
+			new Procedure3<Float64MatrixMember, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember in1, Float64MatrixMember in2, Float64MatrixMember out) {
+			MatrixDirectProduct.compute(G.DBL, in1, in2, out);
+		}
+	};
+	
 	@Override
-	public void directProduct(Float64MatrixMember in1, Float64MatrixMember in2, Float64MatrixMember out) {
-		MatrixDirectProduct.compute(G.DBL, in1, in2, out);
+	public Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> directProduct() {
+		return DP;
 	}
 
 }
