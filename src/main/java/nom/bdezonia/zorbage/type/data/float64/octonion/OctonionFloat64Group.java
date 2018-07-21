@@ -33,7 +33,14 @@ import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
@@ -82,18 +89,29 @@ public class OctonionFloat64Group
 	private static final OctonionFloat64Member E = new OctonionFloat64Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
 
-	public OctonionFloat64Group() {
-	}
+	public OctonionFloat64Group() { }
+	
+	private final Procedure1<OctonionFloat64Member> UNITY =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(ONE, a);
+		}
+	};
 	
 	@Override
-	public void unity(OctonionFloat64Member a) {
-		assign(ONE, a);
+	public Procedure1<OctonionFloat64Member> unity() {
+		return UNITY;
 	}
 
-	@Override
-	public void multiply(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		/*
-		 
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> MUL =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
+			/*
+			 
 			×	r	i	j	k	l	i0	j0	k0
 				==============================
 			r	r	i	j	k	l	i0	j0	k0
@@ -106,195 +124,264 @@ public class OctonionFloat64Group
 			k0	k0	−j0	i0	l	−k	−j	i	−r
 
 		 */
-		OctonionFloat64Member tmp = new OctonionFloat64Member(ZERO);
-
-		// r * r = r
-		tmp.setR(a.r() * b.r());
-		// r * i = i
-		tmp.setI(a.r() * b.i());
-		// r * j = j
-		tmp.setJ(a.r() * b.j());
-		// r * k = k
-		tmp.setK(a.r() * b.k());
-		// r * l = l
-		tmp.setL(a.r() * b.l());
-		// r * i0 = i0
-		tmp.setI0(a.r() * b.i0());
-		// r * j0 = j0
-		tmp.setJ0(a.r() * b.j0());
-		// r * k0 = k0
-		tmp.setK0(a.r() * b.k0());
-
-		// i * r = i
-		tmp.setI(tmp.i() + a.i() * b.r());
-		// i * i = −r
-		tmp.setR(tmp.r() - a.i() * b.i());
-		// i * j = k
-		tmp.setK(tmp.k() + a.i() * b.j());
-		// i * k = −j
-		tmp.setJ(tmp.j() - a.i() * b.k());
-		// i * l = i0
-		tmp.setI0(tmp.i0() + a.i() * b.l());
-		// i * i0 = −l
-		tmp.setL(tmp.l() - a.i() * b.i0());
-		// i * j0 = −k0
-		tmp.setK0(tmp.k0() - a.i() * b.j0());
-		// i * k0 = j0
-		tmp.setJ0(tmp.j0() + a.i() * b.k0());
-
-		// j * r = j
-		tmp.setJ(tmp.j() + a.j() * b.r());
-		// j * i = −k
-		tmp.setK(tmp.k() - a.j() * b.i());
-		// j * j = −r
-		tmp.setR(tmp.r() - a.j() * b.j());
-		// j * k = i
-		tmp.setI(tmp.i() + a.j() * b.k());
-		// j * l = j0
-		tmp.setJ0(tmp.j0() + a.j() * b.l());
-		// j * i0 = k0
-		tmp.setK0(tmp.k0() + a.j() * b.i0());
-		// j * j0 = −l
-		tmp.setL(tmp.l() - a.j() * b.j0());
-		// j * k0 = -i0
-		tmp.setI0(tmp.i0() - a.j() * b.k0());
-
-		// k * r = k
-		tmp.setK(tmp.k() + a.k() * b.r());
-		// k * i = j
-		tmp.setJ(tmp.j() + a.k() * b.i());
-		// k * j = −i
-		tmp.setI(tmp.i() - a.k() * b.j());
-		// k * k = −r
-		tmp.setR(tmp.r() - a.k() * b.k());
-		// k * l = k0
-		tmp.setK0(tmp.k0() + a.k() * b.l());
-		// k * i0 = −j0
-		tmp.setJ0(tmp.j0() - a.k() * b.i0());
-		// k * j0 = i0
-		tmp.setI0(tmp.i0() + a.k() * b.j0());
-		// k * k0 = −l
-		tmp.setL(tmp.l() - a.k() * b.k0());
- 
-		// l * r = l
-		tmp.setL(tmp.l() + a.l() * b.r());
-		// l * i = −i0
-		tmp.setI0(tmp.i0() - a.l() * b.i());
-		// l * j = −j0
-		tmp.setJ0(tmp.j0() - a.l() * b.j());
-		// l * k = −k0
-		tmp.setK0(tmp.k0() - a.l() * b.k());
-		// l * l = −r
-		tmp.setR(tmp.r() - a.l() * b.l());
-		// l * i0 = i
-		tmp.setI(tmp.i() + a.l() * b.i0());
-		// l * j0 = j
-		tmp.setJ(tmp.j() + a.l() * b.j0());
-		// l * k0 = k
-		tmp.setK(tmp.k() + a.l() * b.k0());
-
-		// i0 * r = i0
-		tmp.setI0(tmp.i0() + a.i0() * b.r());
-		// i0 * i = l
-		tmp.setL(tmp.l() + a.i0() * b.i());
-		// i0 * j = −k0
-		tmp.setK0(tmp.k0() - a.i0() * b.j());
-		// i0 * k = j0
-		tmp.setJ0(tmp.j0() + a.i0() * b.k());
-		// i0 * l = −i
-		tmp.setI(tmp.i() - a.i0() * b.l());
-		// i0 * i0 = −r
-		tmp.setR(tmp.r() - a.i0() * b.i0());
-		// i0 * j0 = −k
-		tmp.setK(tmp.k() - a.i0() * b.j0());
-		// i0 * k0 = j
-		tmp.setJ(tmp.j() + a.i0() * b.k0());
-		
-		// j0 * r = j0
-		tmp.setJ0(tmp.j0() + a.j0() * b.r());
-		// j0 * i = k0
-		tmp.setK0(tmp.k0() + a.j0() * b.i());
-		// j0 * j = l
-		tmp.setL(tmp.l() + a.j0() * b.j());
-		// j0 * k = −i0
-		tmp.setI0(tmp.i0() - a.j0() * b.k());
-		// j0 * l = −j
-		tmp.setJ(tmp.j() - a.j0() * b.l());
-		// j0 * i0 = k
-		tmp.setK(tmp.k() + a.j0() * b.i0());
-		// j0 * j0 = −r
-		tmp.setR(tmp.r() - a.j0() * b.j0());
-		// j0 * k0 = −i
-		tmp.setI(tmp.i() - a.j0() * b.k0());
-		
-		// k0 * r = k0
-		tmp.setK0(tmp.k0() + a.k0() * b.r());
-		// k0 * i = −j0
-		tmp.setJ0(tmp.j0() - a.k0() * b.i());
-		// k0 * j = i0
-		tmp.setI0(tmp.i0() + a.k0() * b.j());
-		// k0 * k = l
-		tmp.setL(tmp.l() + a.k0() * b.k());
-		// k0 * l = −k
-		tmp.setK(tmp.k() - a.k0() * b.l());
-		// k0 * i0 = −j
-		tmp.setJ(tmp.j() - a.k0() * b.i0());
-		// k0 * j0 = i
-		tmp.setI(tmp.i() + a.k0() * b.j0());
-		// k0 * k0 = −r
-		tmp.setR(tmp.r() - a.k0() * b.k0());
-		
-		assign(tmp, c);
+			OctonionFloat64Member tmp = new OctonionFloat64Member(ZERO);
+	
+			// r * r = r
+			tmp.setR(a.r() * b.r());
+			// r * i = i
+			tmp.setI(a.r() * b.i());
+			// r * j = j
+			tmp.setJ(a.r() * b.j());
+			// r * k = k
+			tmp.setK(a.r() * b.k());
+			// r * l = l
+			tmp.setL(a.r() * b.l());
+			// r * i0 = i0
+			tmp.setI0(a.r() * b.i0());
+			// r * j0 = j0
+			tmp.setJ0(a.r() * b.j0());
+			// r * k0 = k0
+			tmp.setK0(a.r() * b.k0());
+	
+			// i * r = i
+			tmp.setI(tmp.i() + a.i() * b.r());
+			// i * i = −r
+			tmp.setR(tmp.r() - a.i() * b.i());
+			// i * j = k
+			tmp.setK(tmp.k() + a.i() * b.j());
+			// i * k = −j
+			tmp.setJ(tmp.j() - a.i() * b.k());
+			// i * l = i0
+			tmp.setI0(tmp.i0() + a.i() * b.l());
+			// i * i0 = −l
+			tmp.setL(tmp.l() - a.i() * b.i0());
+			// i * j0 = −k0
+			tmp.setK0(tmp.k0() - a.i() * b.j0());
+			// i * k0 = j0
+			tmp.setJ0(tmp.j0() + a.i() * b.k0());
+	
+			// j * r = j
+			tmp.setJ(tmp.j() + a.j() * b.r());
+			// j * i = −k
+			tmp.setK(tmp.k() - a.j() * b.i());
+			// j * j = −r
+			tmp.setR(tmp.r() - a.j() * b.j());
+			// j * k = i
+			tmp.setI(tmp.i() + a.j() * b.k());
+			// j * l = j0
+			tmp.setJ0(tmp.j0() + a.j() * b.l());
+			// j * i0 = k0
+			tmp.setK0(tmp.k0() + a.j() * b.i0());
+			// j * j0 = −l
+			tmp.setL(tmp.l() - a.j() * b.j0());
+			// j * k0 = -i0
+			tmp.setI0(tmp.i0() - a.j() * b.k0());
+	
+			// k * r = k
+			tmp.setK(tmp.k() + a.k() * b.r());
+			// k * i = j
+			tmp.setJ(tmp.j() + a.k() * b.i());
+			// k * j = −i
+			tmp.setI(tmp.i() - a.k() * b.j());
+			// k * k = −r
+			tmp.setR(tmp.r() - a.k() * b.k());
+			// k * l = k0
+			tmp.setK0(tmp.k0() + a.k() * b.l());
+			// k * i0 = −j0
+			tmp.setJ0(tmp.j0() - a.k() * b.i0());
+			// k * j0 = i0
+			tmp.setI0(tmp.i0() + a.k() * b.j0());
+			// k * k0 = −l
+			tmp.setL(tmp.l() - a.k() * b.k0());
+	 
+			// l * r = l
+			tmp.setL(tmp.l() + a.l() * b.r());
+			// l * i = −i0
+			tmp.setI0(tmp.i0() - a.l() * b.i());
+			// l * j = −j0
+			tmp.setJ0(tmp.j0() - a.l() * b.j());
+			// l * k = −k0
+			tmp.setK0(tmp.k0() - a.l() * b.k());
+			// l * l = −r
+			tmp.setR(tmp.r() - a.l() * b.l());
+			// l * i0 = i
+			tmp.setI(tmp.i() + a.l() * b.i0());
+			// l * j0 = j
+			tmp.setJ(tmp.j() + a.l() * b.j0());
+			// l * k0 = k
+			tmp.setK(tmp.k() + a.l() * b.k0());
+	
+			// i0 * r = i0
+			tmp.setI0(tmp.i0() + a.i0() * b.r());
+			// i0 * i = l
+			tmp.setL(tmp.l() + a.i0() * b.i());
+			// i0 * j = −k0
+			tmp.setK0(tmp.k0() - a.i0() * b.j());
+			// i0 * k = j0
+			tmp.setJ0(tmp.j0() + a.i0() * b.k());
+			// i0 * l = −i
+			tmp.setI(tmp.i() - a.i0() * b.l());
+			// i0 * i0 = −r
+			tmp.setR(tmp.r() - a.i0() * b.i0());
+			// i0 * j0 = −k
+			tmp.setK(tmp.k() - a.i0() * b.j0());
+			// i0 * k0 = j
+			tmp.setJ(tmp.j() + a.i0() * b.k0());
+			
+			// j0 * r = j0
+			tmp.setJ0(tmp.j0() + a.j0() * b.r());
+			// j0 * i = k0
+			tmp.setK0(tmp.k0() + a.j0() * b.i());
+			// j0 * j = l
+			tmp.setL(tmp.l() + a.j0() * b.j());
+			// j0 * k = −i0
+			tmp.setI0(tmp.i0() - a.j0() * b.k());
+			// j0 * l = −j
+			tmp.setJ(tmp.j() - a.j0() * b.l());
+			// j0 * i0 = k
+			tmp.setK(tmp.k() + a.j0() * b.i0());
+			// j0 * j0 = −r
+			tmp.setR(tmp.r() - a.j0() * b.j0());
+			// j0 * k0 = −i
+			tmp.setI(tmp.i() - a.j0() * b.k0());
+			
+			// k0 * r = k0
+			tmp.setK0(tmp.k0() + a.k0() * b.r());
+			// k0 * i = −j0
+			tmp.setJ0(tmp.j0() - a.k0() * b.i());
+			// k0 * j = i0
+			tmp.setI0(tmp.i0() + a.k0() * b.j());
+			// k0 * k = l
+			tmp.setL(tmp.l() + a.k0() * b.k());
+			// k0 * l = −k
+			tmp.setK(tmp.k() - a.k0() * b.l());
+			// k0 * i0 = −j
+			tmp.setJ(tmp.j() - a.k0() * b.i0());
+			// k0 * j0 = i
+			tmp.setI(tmp.i() + a.k0() * b.j0());
+			// k0 * k0 = −r
+			tmp.setR(tmp.r() - a.k0() * b.k0());
+			
+			assign().call(tmp, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> multiply() {
+		return MUL;
 	}
 
-	@Override
-	public void power(int power, OctonionFloat64Member a, OctonionFloat64Member b) {
-		nom.bdezonia.zorbage.algorithm.Power.compute(this, power, a, b);
-	}
+	private final Procedure3<java.lang.Integer,OctonionFloat64Member,OctonionFloat64Member> POWER =
+			new Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(java.lang.Integer power, OctonionFloat64Member a, OctonionFloat64Member b) {
+			nom.bdezonia.zorbage.algorithm.Power.compute(G.ODBL, power, a, b);
+		}
+	};
 
 	@Override
-	public void zero(OctonionFloat64Member a) {
-		assign(ZERO, a);
+	public Procedure3<java.lang.Integer,OctonionFloat64Member,OctonionFloat64Member> power() {
+		return POWER;
 	}
 
+	private final Procedure1<OctonionFloat64Member> ZER =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(ZERO, a);
+		}
+	};
+	
 	@Override
-	public void negate(OctonionFloat64Member a, OctonionFloat64Member b) {
-		subtract(ZERO, a, b);
+	public Procedure1<OctonionFloat64Member> zero() {
+		return ZER;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> NEG =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			subtract().call(ZERO, a, b);
+		}
+	};
+	
 	@Override
-	public void add(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		c.setR( a.r() + b.r() );
-		c.setI( a.i() + b.i() );
-		c.setJ( a.j() + b.j() );
-		c.setK( a.k() + b.k() );
-		c.setL( a.l() + b.l() );
-		c.setI0( a.i0() + b.i0() );
-		c.setJ0( a.j0() + b.j0() );
-		c.setK0( a.k0() + b.k0() );
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> negate() {
+		return NEG;
 	}
 
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> ADD =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
+			c.setR( a.r() + b.r() );
+			c.setI( a.i() + b.i() );
+			c.setJ( a.j() + b.j() );
+			c.setK( a.k() + b.k() );
+			c.setL( a.l() + b.l() );
+			c.setI0( a.i0() + b.i0() );
+			c.setJ0( a.j0() + b.j0() );
+			c.setK0( a.k0() + b.k0() );
+		}
+	};
+	
 	@Override
-	public void subtract(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		c.setR( a.r() - b.r() );
-		c.setI( a.i() - b.i() );
-		c.setJ( a.j() - b.j() );
-		c.setK( a.k() - b.k() );
-		c.setL( a.l() - b.l() );
-		c.setI0( a.i0() - b.i0() );
-		c.setJ0( a.j0() - b.j0() );
-		c.setK0( a.k0() - b.k0() );
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> add() {
+		return ADD;
 	}
 
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> SUB =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
+			c.setR( a.r() - b.r() );
+			c.setI( a.i() - b.i() );
+			c.setJ( a.j() - b.j() );
+			c.setK( a.k() - b.k() );
+			c.setL( a.l() - b.l() );
+			c.setI0( a.i0() - b.i0() );
+			c.setJ0( a.j0() - b.j0() );
+			c.setK0( a.k0() - b.k0() );
+		}
+	};
+	
 	@Override
-	public boolean isEqual(OctonionFloat64Member a, OctonionFloat64Member b) {
-		return a.r() == b.r() && a.i() == b.i() && a.j() == b.j() && a.k() == b.k() &&
-				a.l() == b.l() && a.i0() == b.i0() && a.j0() == b.j0() && a.k0() == b.k0();
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> subtract() {
+		return SUB;
 	}
 
+	private Function2<Boolean,OctonionFloat64Member,OctonionFloat64Member> EQ =
+			new Function2<Boolean, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			return a.r() == b.r() && a.i() == b.i() && a.j() == b.j() && a.k() == b.k() &&
+					a.l() == b.l() && a.i0() == b.i0() && a.j0() == b.j0() && a.k0() == b.k0();
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(OctonionFloat64Member a, OctonionFloat64Member b) {
-		return !isEqual(a,b);
+	public Function2<Boolean,OctonionFloat64Member,OctonionFloat64Member> isEqual() {
+		return EQ;
+	}
+
+	private Function2<Boolean,OctonionFloat64Member,OctonionFloat64Member> NEQ =
+			new Function2<Boolean, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			return !isEqual().call(a,b);
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,OctonionFloat64Member,OctonionFloat64Member> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -312,85 +399,148 @@ public class OctonionFloat64Group
 		return new OctonionFloat64Member(s);
 	}
 
-	@Override
-	public void assign(OctonionFloat64Member from, OctonionFloat64Member to) {
-		to.setR( from.r() );
-		to.setI( from.i() );
-		to.setJ( from.j() );
-		to.setK( from.k() );
-		to.setL( from.l() );
-		to.setI0( from.i0() );
-		to.setJ0( from.j0() );
-		to.setK0( from.k0() );
-	}
-
-	@Override
-	public void invert(OctonionFloat64Member a, OctonionFloat64Member b) {
-		double norm2 = norm2(a);
-		conjugate(a, b);
-		b.setR( b.r() / norm2 );
-		b.setI( b.i() / norm2 );
-		b.setJ( b.j() / norm2 );
-		b.setK( b.k() / norm2 );
-		b.setL( b.l() / norm2 );
-		b.setI0( b.i0() / norm2 );
-		b.setJ0( b.j0() / norm2 );
-		b.setK0( b.k0() / norm2 );
-	}
-
-	@Override
-	public void divide(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		invert(b, tmp);
-		multiply(a, tmp, c);
-	}
-
-	@Override
-	public void round(Round.Mode mode, Float64Member delta, OctonionFloat64Member a, OctonionFloat64Member b) {
-		Float64Member tmp = new Float64Member();
-		tmp.setV(a.r());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setR(tmp.v());
-		tmp.setV(a.i());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setI(tmp.v());
-		tmp.setV(a.j());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setJ(tmp.v());
-		tmp.setV(a.k());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setK(tmp.v());
-		tmp.setV(a.l());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setL(tmp.v());
-		tmp.setV(a.i0());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setI0(tmp.v());
-		tmp.setV(a.j0());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setJ0(tmp.v());
-		tmp.setV(a.k0());
-		Round.compute(G.DBL, mode, delta, tmp, tmp);
-		b.setK0(tmp.v());
-	}
+	private Procedure2<OctonionFloat64Member,OctonionFloat64Member> ASSIGN =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member from, OctonionFloat64Member to) {
+			to.setR( from.r() );
+			to.setI( from.i() );
+			to.setJ( from.j() );
+			to.setK( from.k() );
+			to.setL( from.l() );
+			to.setI0( from.i0() );
+			to.setJ0( from.j0() );
+			to.setK0( from.k0() );
+		}
+	};
 	
 	@Override
-	public boolean isNaN(OctonionFloat64Member a) {
-		return Double.isNaN(a.r()) || Double.isNaN(a.i()) || Double.isNaN(a.j()) || Double.isNaN(a.k()) ||
-				Double.isNaN(a.l()) || Double.isNaN(a.i0()) || Double.isNaN(a.j0()) || Double.isNaN(a.k0());
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> assign() {
+		return ASSIGN;
 	}
 
+	private Procedure2<OctonionFloat64Member,OctonionFloat64Member> INV =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			double norm2 = norm2(a);
+			conjugate().call(a, b);
+			b.setR( b.r() / norm2 );
+			b.setI( b.i() / norm2 );
+			b.setJ( b.j() / norm2 );
+			b.setK( b.k() / norm2 );
+			b.setL( b.l() / norm2 );
+			b.setI0( b.i0() / norm2 );
+			b.setJ0( b.j0() / norm2 );
+			b.setK0( b.k0() / norm2 );
+		}
+	};
+	
 	@Override
-	public boolean isInfinite(OctonionFloat64Member a) {
-		return !isNaN(a) && (
-				Double.isInfinite(a.r()) || Double.isInfinite(a.i()) || Double.isInfinite(a.j()) ||
-				Double.isInfinite(a.k()) || Double.isInfinite(a.l()) || Double.isInfinite(a.i0()) ||
-				Double.isInfinite(a.j0()) || Double.isInfinite(a.k0()) );
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> invert() {
+		return INV;
 	}
 
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> DIVIDE =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			invert().call(b, tmp);
+			multiply().call(a, tmp, c);
+		}
+	};
+	
 	@Override
-	public void norm(OctonionFloat64Member a, Float64Member b) {
-		b.setV( norm(a) );
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> divide() {
+		return DIVIDE;
+	}
+
+	private final Procedure4<Round.Mode,Float64Member,OctonionFloat64Member,OctonionFloat64Member> ROUND =
+			new Procedure4<Round.Mode, Float64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, OctonionFloat64Member a, OctonionFloat64Member b) {
+			Float64Member tmp = new Float64Member();
+			tmp.setV(a.r());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setR(tmp.v());
+			tmp.setV(a.i());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setI(tmp.v());
+			tmp.setV(a.j());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setJ(tmp.v());
+			tmp.setV(a.k());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setK(tmp.v());
+			tmp.setV(a.l());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setL(tmp.v());
+			tmp.setV(a.i0());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setI0(tmp.v());
+			tmp.setV(a.j0());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setJ0(tmp.v());
+			tmp.setV(a.k0());
+			Round.compute(G.DBL, mode, delta, tmp, tmp);
+			b.setK0(tmp.v());
+		}
+	};
+	
+	@Override
+	public Procedure4<Round.Mode,Float64Member,OctonionFloat64Member,OctonionFloat64Member> round() {
+		return ROUND;
+	}
+
+	private Function1<Boolean,OctonionFloat64Member> NAN =
+			new Function1<Boolean, OctonionFloat64Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64Member a) {
+			return Double.isNaN(a.r()) || Double.isNaN(a.i()) || Double.isNaN(a.j()) || Double.isNaN(a.k()) ||
+					Double.isNaN(a.l()) || Double.isNaN(a.i0()) || Double.isNaN(a.j0()) || Double.isNaN(a.k0());
+		}
+	};
+
+	@Override
+	public Function1<Boolean,OctonionFloat64Member> isNaN() {
+		return NAN;
+	}
+
+	private Function1<Boolean,OctonionFloat64Member> INF =
+			new Function1<Boolean, OctonionFloat64Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64Member a) {
+			return !isNaN().call(a) && (
+					Double.isInfinite(a.r()) || Double.isInfinite(a.i()) || Double.isInfinite(a.j()) ||
+					Double.isInfinite(a.k()) || Double.isInfinite(a.l()) || Double.isInfinite(a.i0()) ||
+					Double.isInfinite(a.j0()) || Double.isInfinite(a.k0()) );
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,OctonionFloat64Member> isInfinite() {
+		return INF;
+	}
+
+	private final Procedure2<OctonionFloat64Member,Float64Member> NORM =
+			new Procedure2<OctonionFloat64Member, Float64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, Float64Member b) {
+			b.setV( norm(a) );
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64Member,Float64Member> norm() {
+		return NORM;
 	}
 
 	private double norm(OctonionFloat64Member a) {
@@ -417,231 +567,376 @@ public class OctonionFloat64Group
 		double norm = norm(a);
 		return norm * norm;
 	}
+
+	private Procedure2<OctonionFloat64Member,OctonionFloat64Member> CONJ =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			b.setR(a.r());
+			b.setI(-a.i());
+			b.setJ(-a.j());
+			b.setK(-a.k());
+			b.setL(-a.l());
+			b.setI0(-a.i0());
+			b.setJ0(-a.j0());
+			b.setK0(-a.k0());
+		}
+	};
 	
 	@Override
-	public void conjugate(OctonionFloat64Member a, OctonionFloat64Member b) {
-		b.setR(a.r());
-		b.setI(-a.i());
-		b.setJ(-a.j());
-		b.setK(-a.k());
-		b.setL(-a.l());
-		b.setI0(-a.i0());
-		b.setJ0(-a.j0());
-		b.setK0(-a.k0());
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> conjugate() {
+		return CONJ;
 	}
 
-	@Override
-	public void PI(OctonionFloat64Member a) {
-		assign(PI, a);
-	}
-
-	@Override
-	public void E(OctonionFloat64Member a) {
-		assign(E, a);
-	}
+	private final Procedure1<OctonionFloat64Member> PI_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(PI, a);
+		}
+	};
 	
 	@Override
-	public void random(OctonionFloat64Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.setR(rng.nextDouble());
-		a.setI(rng.nextDouble());
-		a.setJ(rng.nextDouble());
-		a.setK(rng.nextDouble());
-		a.setL(rng.nextDouble());
-		a.setI0(rng.nextDouble());
-		a.setJ0(rng.nextDouble());
-		a.setK0(rng.nextDouble());
+	public Procedure1<OctonionFloat64Member> PI() {
+		return PI_;
 	}
 
-	@Override
-	public void real(OctonionFloat64Member a, Float64Member b) {
-		b.setV(a.r());
-	}
+	private final Procedure1<OctonionFloat64Member> E_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(E, a);
+		}
+	};
 	
 	@Override
-	public void unreal(OctonionFloat64Member a, OctonionFloat64Member b) {
-		assign(a, b);
-		b.setR(0);
+	public Procedure1<OctonionFloat64Member> E() {
+		return E_;
+	}
+	
+	private final Procedure1<OctonionFloat64Member> RAND =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.setR(rng.nextDouble());
+			a.setI(rng.nextDouble());
+			a.setJ(rng.nextDouble());
+			a.setK(rng.nextDouble());
+			a.setL(rng.nextDouble());
+			a.setI0(rng.nextDouble());
+			a.setJ0(rng.nextDouble());
+			a.setK0(rng.nextDouble());
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> random() {
+		return RAND;
 	}
 
-	@Override
-	public void sinh(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// TODO adapted from Complex64Group: might be wrong
-		OctonionFloat64Member negA = new OctonionFloat64Member();
-		OctonionFloat64Member sum = new OctonionFloat64Member();
-		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
-		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+	private final Procedure2<OctonionFloat64Member,Float64Member> REAL =
+			new Procedure2<OctonionFloat64Member, Float64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, Float64Member b) {
+			b.setV(a.r());
+		}
+	};
 	
-		negate(a, negA);
-		exp(a, tmp1);
-		exp(negA, tmp2);
+	@Override
+	public Procedure2<OctonionFloat64Member,Float64Member> real() {
+		return REAL;
+	}
+	
+	private Procedure2<OctonionFloat64Member,OctonionFloat64Member> UNREAL =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			assign().call(a, b);
+			b.setR(0);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> unreal() {
+		return UNREAL;
+	}
+
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SINH =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			// TODO adapted from Complex64Group: might be wrong
+			OctonionFloat64Member negA = new OctonionFloat64Member();
+			OctonionFloat64Member sum = new OctonionFloat64Member();
+			OctonionFloat64Member tmp1 = new OctonionFloat64Member();
+			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
 		
-		subtract(tmp1, tmp2, sum);
-		divide(sum, TWO, b);
+			negate().call(a, negA);
+			exp().call(a, tmp1);
+			exp().call(negA, tmp2);
+			
+			subtract().call(tmp1, tmp2, sum);
+			divide().call(sum, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sinh() {
+		return SINH;
 	}
 
+	private Procedure2<OctonionFloat64Member,OctonionFloat64Member> COSH =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			// TODO adapted from Complex64Group: might be wrong
+			OctonionFloat64Member negA = new OctonionFloat64Member();
+			OctonionFloat64Member sum = new OctonionFloat64Member();
+			OctonionFloat64Member tmp1 = new OctonionFloat64Member();
+			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+			
+			negate().call(a, negA);
+			exp().call(a, tmp1);
+			exp().call(negA, tmp2);
+			
+			add().call(tmp1, tmp2, sum);
+			divide().call(sum, TWO, b);
+		}
+	};
+	
 	@Override
-	public void cosh(OctonionFloat64Member a, OctonionFloat64Member b) {
-		// TODO adapted from Complex64Group: might be wrong
-		OctonionFloat64Member negA = new OctonionFloat64Member();
-		OctonionFloat64Member sum = new OctonionFloat64Member();
-		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
-		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
-		
-		negate(a, negA);
-		exp(a, tmp1);
-		exp(negA, tmp2);
-		
-		add(tmp1, tmp2, sum);
-		divide(sum, TWO, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> cosh() {
+		return COSH;
     }
 
-	@Override
-	public void sinhAndCosh(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
-		// TODO adapted from Complex64Group: might be wrong
-		OctonionFloat64Member negA = new OctonionFloat64Member();
-		OctonionFloat64Member sum = new OctonionFloat64Member();
-		OctonionFloat64Member tmp1 = new OctonionFloat64Member();
-		OctonionFloat64Member tmp2 = new OctonionFloat64Member();
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> SINHANDCOSH =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
+			// TODO adapted from Complex64Group: might be wrong
+			OctonionFloat64Member negA = new OctonionFloat64Member();
+			OctonionFloat64Member sum = new OctonionFloat64Member();
+			OctonionFloat64Member tmp1 = new OctonionFloat64Member();
+			OctonionFloat64Member tmp2 = new OctonionFloat64Member();
 
-		negate(a, negA);
-		exp(a, tmp1);
-		exp(negA, tmp2);
+			negate().call(a, negA);
+			exp().call(a, tmp1);
+			exp().call(negA, tmp2);
 
-		subtract(tmp1, tmp2, sum);
-		divide(sum, TWO, s);
+			subtract().call(tmp1, tmp2, sum);
+			divide().call(sum, TWO, s);
 
-		add(tmp1, tmp2, sum);
-		divide(sum, TWO, c);
-	}
+			add().call(tmp1, tmp2, sum);
+			divide().call(sum, TWO, c);
+		}
+	};
 	
 	@Override
-	public void tanh(OctonionFloat64Member a, OctonionFloat64Member b) {
-		OctonionFloat64Member s = new OctonionFloat64Member();
-		OctonionFloat64Member c = new OctonionFloat64Member();
-		sinhAndCosh(a, s, c);
-		divide(s, c, b);
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> sinhAndCosh() {
+		return SINHANDCOSH;
 	}
 
-	@Override
-	public void sin(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Float64Member z = new Float64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		unreal(a, tmp);
-		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double cos = Math.cos(a.r());
-		double sin = Math.sin(a.r());
-		double sinhc_pi = Float64Group.sinhc_pi(z.v());
-		double cosh = Math.cosh(z.v());
-		double ws = cos * sinhc_pi;
-		b.setR(sin * cosh);
-		b.setI(ws * a.i());
-		b.setJ(ws * a.j());
-		b.setK(ws * a.k());
-		b.setL(ws * a.l());
-		b.setI0(ws * a.i0());
-		b.setJ0(ws * a.j0());
-		b.setK0(ws * a.k0());
-	}
-
-	@Override
-	public void cos(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Float64Member z = new Float64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		unreal(a, tmp);
-		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double cos = Math.cos(a.r());
-		double sin = Math.sin(a.r());
-		double sinhc_pi = Float64Group.sinhc_pi(z.v());
-		double cosh = Math.cosh(z.v());
-		double wc = -sin * sinhc_pi;
-		b.setR(cos * cosh);
-		b.setI(wc * a.i());
-		b.setJ(wc * a.j());
-		b.setK(wc * a.k());
-		b.setL(wc * a.l());
-		b.setI0(wc * a.i0());
-		b.setJ0(wc * a.j0());
-		b.setK0(wc * a.k0());
-	}
-
-	@Override
-	public void sinAndCos(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
-		Float64Member z = new Float64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		unreal(a, tmp);
-		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double cos = Math.cos(a.r());
-		double sin = Math.sin(a.r());
-		double sinhc_pi = Float64Group.sinhc_pi(z.v());
-		double cosh = Math.cosh(z.v());
-		double ws = cos * sinhc_pi;
-		double wc = -sin * sinhc_pi;
-		s.setR(sin * cosh);
-		s.setI(ws * a.i());
-		s.setJ(ws * a.j());
-		s.setK(ws * a.k());
-		s.setL(ws * a.l());
-		s.setI0(ws * a.i0());
-		s.setJ0(ws * a.j0());
-		s.setK0(ws * a.k0());
-		c.setR(cos * cosh);
-		c.setI(wc * a.i());
-		c.setJ(wc * a.j());
-		c.setK(wc * a.k());
-		c.setL(wc * a.l());
-		c.setI0(wc * a.i0());
-		c.setJ0(wc * a.j0());
-		c.setK0(wc * a.k0());
-	}
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> TANH =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			OctonionFloat64Member s = new OctonionFloat64Member();
+			OctonionFloat64Member c = new OctonionFloat64Member();
+			sinhAndCosh().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
 	
 	@Override
-	public void tan(OctonionFloat64Member a, OctonionFloat64Member b) {
-		OctonionFloat64Member sin = new OctonionFloat64Member();
-		OctonionFloat64Member cos = new OctonionFloat64Member();
-		sinAndCos(a, sin, cos);
-		divide(sin, cos, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> tanh() {
+		return TANH;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SIN =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Float64Member z = new Float64Member();
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			unreal().call(a, tmp);
+			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			double cos = Math.cos(a.r());
+			double sin = Math.sin(a.r());
+			double sinhc_pi = Float64Group.sinhc_pi(z.v());
+			double cosh = Math.cosh(z.v());
+			double ws = cos * sinhc_pi;
+			b.setR(sin * cosh);
+			b.setI(ws * a.i());
+			b.setJ(ws * a.j());
+			b.setK(ws * a.k());
+			b.setL(ws * a.l());
+			b.setI0(ws * a.i0());
+			b.setJ0(ws * a.j0());
+			b.setK0(ws * a.k0());
+		}
+	};
+	
 	@Override
-	public void exp(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Float64Member z = new Float64Member();
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		double u = Math.exp(a.r());
-		unreal(a, tmp);
-		norm(tmp, z); // TODO or abs() whatever that is in boost
-		double w = Float64Group.sinc_pi(z.v());
-		b.setR(u * Math.cos(z.v()));
-		b.setI(u * w * a.i());
-		b.setJ(u * w * a.j());
-		b.setK(u * w * a.k());
-		b.setL(u * w * a.l());
-		b.setI0(u * w * a.i0());
-		b.setJ0(u * w * a.j0());
-		b.setK0(u * w * a.k0());
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sin() {
+		return SIN;
+	}
+
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> COS =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Float64Member z = new Float64Member();
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			unreal().call(a, tmp);
+			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			double cos = Math.cos(a.r());
+			double sin = Math.sin(a.r());
+			double sinhc_pi = Float64Group.sinhc_pi(z.v());
+			double cosh = Math.cosh(z.v());
+			double wc = -sin * sinhc_pi;
+			b.setR(cos * cosh);
+			b.setI(wc * a.i());
+			b.setJ(wc * a.j());
+			b.setK(wc * a.k());
+			b.setL(wc * a.l());
+			b.setI0(wc * a.i0());
+			b.setJ0(wc * a.j0());
+			b.setK0(wc * a.k0());
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> cos() {
+		return COS;
+	}
+
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> SINANDCOS =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
+			Float64Member z = new Float64Member();
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			unreal().call(a, tmp);
+			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			double cos = Math.cos(a.r());
+			double sin = Math.sin(a.r());
+			double sinhc_pi = Float64Group.sinhc_pi(z.v());
+			double cosh = Math.cosh(z.v());
+			double ws = cos * sinhc_pi;
+			double wc = -sin * sinhc_pi;
+			s.setR(sin * cosh);
+			s.setI(ws * a.i());
+			s.setJ(ws * a.j());
+			s.setK(ws * a.k());
+			s.setL(ws * a.l());
+			s.setI0(ws * a.i0());
+			s.setJ0(ws * a.j0());
+			s.setK0(ws * a.k0());
+			c.setR(cos * cosh);
+			c.setI(wc * a.i());
+			c.setJ(wc * a.j());
+			c.setK(wc * a.k());
+			c.setL(wc * a.l());
+			c.setI0(wc * a.i0());
+			c.setJ0(wc * a.j0());
+			c.setK0(wc * a.k0());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> sinAndCos() {
+		return SINANDCOS;
+	}
+
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> TAN =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			OctonionFloat64Member sin = new OctonionFloat64Member();
+			OctonionFloat64Member cos = new OctonionFloat64Member();
+			sinAndCos().call(a, sin, cos);
+			divide().call(sin, cos, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> tan() {
+		return TAN;
+	}
+
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> EXP =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Float64Member z = new Float64Member();
+			OctonionFloat64Member tmp = new OctonionFloat64Member();
+			double u = Math.exp(a.r());
+			unreal().call(a, tmp);
+			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			double w = Float64Group.sinc_pi(z.v());
+			b.setR(u * Math.cos(z.v()));
+			b.setI(u * w * a.i());
+			b.setJ(u * w * a.j());
+			b.setK(u * w * a.k());
+			b.setL(u * w * a.l());
+			b.setI0(u * w * a.i0());
+			b.setJ0(u * w * a.j0());
+			b.setK0(u * w * a.k0());
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> exp() {
+		return EXP;
 	}
 
 	// reference: https://ece.uwaterloo.ca/~dwharder/C++/CQOST/src/Octonion.cpp
 	//   not sure about this. could not find other reference.
-	@Override
-	public void log(OctonionFloat64Member a, OctonionFloat64Member b) {
-		double factor;
-		OctonionFloat64Member unreal = new OctonionFloat64Member();
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		Float64Member norm = new Float64Member();
-		assign(a, b); // this should be safe if two variables or one
-		unreal(a, unreal);
-		norm(unreal, norm);
-		tmp.setR(a.r());
-		tmp.setI(norm.v());
-		G.CDBL.log(tmp, tmp);
-		if ( norm.v() == 0.0 ) {
-			factor = tmp.i();
-		} else {
-			factor = tmp.i() / norm.v();
-		}
+	
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> LOG =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			double factor;
+			OctonionFloat64Member unreal = new OctonionFloat64Member();
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			Float64Member norm = new Float64Member();
+			assign().call(a, b); // this should be safe if two variables or one
+			unreal().call(a, unreal);
+			norm().call(unreal, norm);
+			tmp.setR(a.r());
+			tmp.setI(norm.v());
+			G.CDBL.log().call(tmp, tmp);
+			if ( norm.v() == 0.0 ) {
+				factor = tmp.i();
+			} else {
+				factor = tmp.i() / norm.v();
+			}
 
-		multiplier(tmp.r(), factor, b);
+			multiplier(tmp.r(), factor, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> log() {
+		return LOG;
 	}
 
 	/*
@@ -688,42 +983,105 @@ public class OctonionFloat64Group
 		}
 	}
 
+	private final Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> POW =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
+			OctonionFloat64Member logA = new OctonionFloat64Member();
+			OctonionFloat64Member bLogA = new OctonionFloat64Member();
+			log().call(a, logA);
+			multiply().call(b, logA, bLogA);
+			exp().call(bLogA, c);
+		}
+	};
+	
 	@Override
-	public void pow(OctonionFloat64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-		OctonionFloat64Member logA = new OctonionFloat64Member();
-		OctonionFloat64Member bLogA = new OctonionFloat64Member();
-		log(a, logA);
-		multiply(b, logA, bLogA);
-		exp(bLogA, c);
+	public Procedure3<OctonionFloat64Member,OctonionFloat64Member,OctonionFloat64Member> pow() {
+		return POW;
 	}	
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SINCH =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Sinch.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sinch(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Sinch.compute(this, a, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sinch() {
+		return SINCH;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SINCHPI =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Sinchpi.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sinchpi(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Sinchpi.compute(this, a, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sinchpi() {
+		return SINCHPI;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SINC =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Sinc.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sinc(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Sinc.compute(this, a, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sinc() {
+		return SINC;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SINCPI =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			Sincpi.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void sincpi(OctonionFloat64Member a, OctonionFloat64Member b) {
-		Sincpi.compute(this, a, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sincpi() {
+		return SINCPI;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> SQRT =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			pow().call(a, ONE_HALF, b);
+		}
+	};
+	
 	@Override
-	public void sqrt(OctonionFloat64Member a, OctonionFloat64Member b) {
-		pow(a, ONE_HALF, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> sqrt() {
+		return SQRT;
 	}
 
+	private final Procedure2<OctonionFloat64Member,OctonionFloat64Member> CBRT =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			pow().call(a, ONE_THIRD, b);
+		}
+	};
+	
 	@Override
-	public void cbrt(OctonionFloat64Member a, OctonionFloat64Member b) {
-		pow(a, ONE_THIRD, b);
+	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> cbrt() {
+		return CBRT;
 	}
 }
