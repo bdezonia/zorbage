@@ -45,30 +45,30 @@ public class TestUnsignedInt16Group {
 		
 		v.setV(3);
 		assertEquals(3, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(2, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(1, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0xffff, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0xfffe, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0xfffd, v.v());
 
 		v.setV(0x8002);
 		assertEquals(0x8002, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0x8001, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0x8000, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0x7fff, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0x7ffe, v.v());
-		G.UINT16.pred(v, v);
+		G.UINT16.pred().call(v, v);
 		assertEquals(0x7ffd, v.v());
 	}
 	
@@ -78,30 +78,30 @@ public class TestUnsignedInt16Group {
 		
 		v.setV(0xfffd);
 		assertEquals(0xfffd, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0xfffe, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0xffff, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(1, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(2, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(3, v.v());
 
 		v.setV(0x7ffd);
 		assertEquals(0x7ffd, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0x7ffe, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0x7fff, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0x8000, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0x8001, v.v());
-		G.UINT16.succ(v, v);
+		G.UINT16.succ().call(v, v);
 		assertEquals(0x8002, v.v());
 	}
 
