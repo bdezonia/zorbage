@@ -37,7 +37,12 @@ import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
@@ -63,35 +68,89 @@ public class ComplexFloat64Vector
 	
 	public ComplexFloat64Vector() { }
 	
+	private final Procedure1<ComplexFloat64VectorMember> ZER =
+			new Procedure1<ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a) {
+			for (int i = 0; i < a.length(); i++)
+				a.setV(i, ZERO);
+		}
+	};
+	
 	@Override
-	public void zero(ComplexFloat64VectorMember a) {
-		for (int i = 0; i < a.length(); i++)
-			a.setV(i, ZERO);
+	public Procedure1<ComplexFloat64VectorMember> zero() {
+		return ZER;
 	}
 
+	private final Procedure2<ComplexFloat64VectorMember,ComplexFloat64VectorMember> NEG =
+			new Procedure2<ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			RModuleNegate.compute(G.CDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void negate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		RModuleNegate.compute(G.CDBL, a, b);
+	public Procedure2<ComplexFloat64VectorMember,ComplexFloat64VectorMember> negate() {
+		return NEG;
 	}
 
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> ADD =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			RModuleAdd.compute(G.CDBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void add(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		RModuleAdd.compute(G.CDBL, a, b, c);
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> add() {
+		return ADD;
 	}
 
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> SUB =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			RModuleSubtract.compute(G.CDBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void subtract(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		RModuleSubtract.compute(G.CDBL, a, b, c);
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> subtract() {
+		return SUB;
 	}
 
-	@Override
-	public boolean isEqual(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		return RModuleIsEqual.compute(G.CDBL, a, b);
-	}
+	private final Function2<Boolean,ComplexFloat64VectorMember,ComplexFloat64VectorMember> EQ =
+			new Function2<Boolean, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			return RModuleIsEqual.compute(G.CDBL, a, b);
+		}
+	};
 
 	@Override
-	public boolean isNotEqual(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		return !isEqual(a,b);
+	public Function2<Boolean,ComplexFloat64VectorMember,ComplexFloat64VectorMember> isEqual() {
+		return EQ;
+	}
+
+	private final Function2<Boolean,ComplexFloat64VectorMember,ComplexFloat64VectorMember> NEQ =
+			new Function2<Boolean, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			return !isEqual().call(a, b);
+		}
+	};
+
+	@Override
+	public Function2<Boolean,ComplexFloat64VectorMember,ComplexFloat64VectorMember> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -114,79 +173,179 @@ public class ComplexFloat64Vector
 		return new ComplexFloat64VectorMember(s, d1);
 	}
 
-	@Override
-	public void assign(ComplexFloat64VectorMember from, ComplexFloat64VectorMember to) {
-		RModuleAssign.compute(G.CDBL, from, to);
-	}
-
-	@Override
-	public void norm(ComplexFloat64VectorMember a, Float64Member b) {
-		ComplexFloat64Member aTmp = new ComplexFloat64Member();
-		ComplexFloat64Member sum = new ComplexFloat64Member();
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		// TODO Look into preventing overflow. can do so similar to float case using norms
-		for (long i = 0; i < a.length(); i++) {
-			a.v(i, aTmp);
-			G.CDBL.conjugate(aTmp, tmp);
-			G.CDBL.multiply(aTmp, tmp, tmp);
-			G.CDBL.add(sum, tmp, sum);
+	private final Procedure2<ComplexFloat64VectorMember,ComplexFloat64VectorMember> ASSIGN =
+			new Procedure2<ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember from, ComplexFloat64VectorMember to) {
+			RModuleAssign.compute(G.CDBL, from, to);
 		}
-		b.setV(Math.sqrt(sum.r()));
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64VectorMember,ComplexFloat64VectorMember> assign() {
+		return ASSIGN;
 	}
 
-	@Override
-	public void scale(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		RModuleScale.compute(G.CDBL, scalar, a, b);
-	}
-
-	@Override
-	public void crossProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
-		CrossProduct.compute(G.CDBL_VEC, G.CDBL, a, b, c);
-	}
-
-	@Override
-	public void dotProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
-		DotProduct.compute(G.CDBL, a, b, c);
-	}
-
-	@Override
-	public void perpDotProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
-		PerpDotProduct.compute(G.CDBL_VEC, G.CDBL, a, b, c);
-	}
-
-	@Override
-	public void vectorTripleProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c,
-			ComplexFloat64VectorMember d)
+	private final Procedure2<ComplexFloat64VectorMember,Float64Member> NORM =
+			new Procedure2<ComplexFloat64VectorMember, Float64Member>()
 	{
-		ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3*2]);
-		crossProduct(b, c, b_cross_c);
-		crossProduct(a, b_cross_c, d);
+		@Override
+		public void call(ComplexFloat64VectorMember a, Float64Member b) {
+			ComplexFloat64Member aTmp = new ComplexFloat64Member();
+			ComplexFloat64Member sum = new ComplexFloat64Member();
+			ComplexFloat64Member tmp = new ComplexFloat64Member();
+			// TODO Look into preventing overflow. can do so similar to float case using norms
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, aTmp);
+				G.CDBL.conjugate().call(aTmp, tmp);
+				G.CDBL.multiply().call(aTmp, tmp, tmp);
+				G.CDBL.add().call(sum, tmp, sum);
+			}
+			b.setV(Math.sqrt(sum.r()));
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64VectorMember,Float64Member> norm() {
+		return NORM;
 	}
 
-	@Override
-	public void scalarTripleProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c,
-			ComplexFloat64Member d)
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64VectorMember,ComplexFloat64VectorMember> SCALE =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
 	{
-		ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3*2]);
-		crossProduct(b, c, b_cross_c);
-		dotProduct(a, b_cross_c, d);
+		@Override
+		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			RModuleScale.compute(G.CDBL, scalar, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64Member,ComplexFloat64VectorMember,ComplexFloat64VectorMember> scale() {
+		return SCALE;
 	}
 
-	@Override
-	public void conjugate(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-		RModuleConjugate.compute(G.CDBL, a, b);
-	}
-
-	@Override
-	public void vectorDirectProduct(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64MatrixMember c) {
-		directProduct(a, b, c);
-	}
-
-	@Override
-	public void directProduct(ComplexFloat64VectorMember in1, ComplexFloat64VectorMember in2,
-			ComplexFloat64MatrixMember out)
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> CROSS =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
 	{
-		RModuleDirectProduct.compute(G.CDBL, in1, in2, out);
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			CrossProduct.compute(G.CDBL_VEC, G.CDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> crossProduct() {
+		return CROSS;
+	}
+
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64Member> DOT =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
+			DotProduct.compute(G.CDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64Member> dotProduct() {
+		return DOT;
+	}
+
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64Member> PERP =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
+			PerpDotProduct.compute(G.CDBL_VEC, G.CDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64Member> perpDotProduct() {
+		return PERP;
+	}
+
+	private final Procedure4<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> VTRIPLE =
+			new Procedure4<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c,
+				ComplexFloat64VectorMember d)
+		{
+			ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3*2]);
+			crossProduct().call(b, c, b_cross_c);
+			crossProduct().call(a, b_cross_c, d);
+		}
+	};
+	
+	@Override
+	public Procedure4<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember> vectorTripleProduct()
+	{
+		return VTRIPLE;
+	}
+
+	private final Procedure4<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64Member> STRIPLE =
+			new Procedure4<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c,
+				ComplexFloat64Member d)
+		{
+			ComplexFloat64VectorMember b_cross_c = new ComplexFloat64VectorMember(new double[3*2]);
+			crossProduct().call(b, c, b_cross_c);
+			dotProduct().call(a, b_cross_c, d);
+		}
+	};
+	
+	@Override
+	public Procedure4<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64Member> scalarTripleProduct()
+	{
+		return STRIPLE;
+	}
+
+	private final Procedure2<ComplexFloat64VectorMember,ComplexFloat64VectorMember> CONJ =
+			new Procedure2<ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			RModuleConjugate.compute(G.CDBL, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64VectorMember, ComplexFloat64VectorMember> conjugate() {
+		return CONJ;
+	}
+
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64MatrixMember> VDP =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember in1, ComplexFloat64VectorMember in2, ComplexFloat64MatrixMember out) {
+			directProduct().call(in1, in2, out);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64MatrixMember> vectorDirectProduct() {
+		return VDP;
+	}
+
+	private final Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64MatrixMember> DP =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember in1, ComplexFloat64VectorMember in2, ComplexFloat64MatrixMember out) {
+			RModuleDirectProduct.compute(G.CDBL, in1, in2, out);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64MatrixMember> directProduct()
+	{
+		return DP;
 	}
 
 }

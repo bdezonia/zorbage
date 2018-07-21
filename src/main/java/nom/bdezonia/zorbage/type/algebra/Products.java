@@ -37,9 +37,9 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
  */
 public interface Products<U,V,W> extends Scale<U,V> {
 	Procedure3<U,U,U> crossProduct();
-	Procedure3<U,U,U> dotProduct();
-	Procedure3<U,U,U> perpDotProduct();
-	Procedure3<U,U,U> vectorDirectProduct(); // TODO rename for rmodules
+	Procedure3<U,U,V> dotProduct();
+	Procedure3<U,U,V> perpDotProduct();
+	Procedure3<U,U,W> vectorDirectProduct(); // TODO rename for rmodules
 	Procedure4<U,U,U,U> vectorTripleProduct(); // TODO rename from vector to something for both vectors and rmodules
-	Procedure4<U,U,U,U> scalarTripleProduct(); // TODO rename from scalar to something for both vectors and rmodules
+	Procedure4<U,U,U,V> scalarTripleProduct(); // TODO rename from scalar to something for both vectors and rmodules
 }
