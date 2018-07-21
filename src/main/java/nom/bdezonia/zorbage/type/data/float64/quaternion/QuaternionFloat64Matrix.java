@@ -44,7 +44,14 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -70,49 +77,138 @@ public class QuaternionFloat64Matrix
 {
 	public QuaternionFloat64Matrix() { }
 
+	private final Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> MUL =
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b,
+				QuaternionFloat64MatrixMember c)
+		{
+			MatrixMultiply.compute(G.QDBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void multiply(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
-		MatrixMultiply.compute(G.QDBL, a, b, c);
+	public Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> multiply() {
+		return MUL;
 	}
 
+	private final Procedure3<java.lang.Integer,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> POWER =
+			new Procedure3<java.lang.Integer, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(java.lang.Integer power, QuaternionFloat64MatrixMember a,
+				QuaternionFloat64MatrixMember b)
+		{
+			MatrixPower.compute(power, G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
+		}
+	};
+	
 	@Override
-	public void power(int power, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixPower.compute(power, G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
+	public Procedure3<java.lang.Integer,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> power() {
+		return POWER;
 	}
 
-	@Override
-	public void zero(QuaternionFloat64MatrixMember a) {
-		MatrixZero.compute(G.QDBL, a);
-	}
+	private final Procedure1<QuaternionFloat64MatrixMember> ZER =
+			new Procedure1<QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a) {
+			MatrixZero.compute(G.QDBL, a);
+		}
+	};
 
 	@Override
-	public void negate(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixNegate.compute(G.QDBL, a, b);
+	public Procedure1<QuaternionFloat64MatrixMember> zero() {
+		return ZER;
 	}
 
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> NEG =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			MatrixNegate.compute(G.QDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void add(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
-		MatrixAddition.compute(G.QDBL, a, b, c);
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> negate() {
+		return NEG;
 	}
 
+	private final Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> ADD =
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b,
+				QuaternionFloat64MatrixMember c)
+		{
+			MatrixAddition.compute(G.QDBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void subtract(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
-		MatrixSubtraction.compute(G.QDBL, a, b, c);
+	public Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> add() {
+		return ADD;
 	}
 
+	private final Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> SUB =
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b,
+				QuaternionFloat64MatrixMember c)
+		{
+			MatrixSubtraction.compute(G.QDBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public boolean isEqual(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		return MatrixEqual.compute(G.QDBL, a, b);
+	public Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> subtract() {
+		return SUB;
 	}
 
+	private final Function2<Boolean,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> EQ =
+			new Function2<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			return MatrixEqual.compute(G.QDBL, a, b);
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		return !isEqual(a, b);
+	public Function2<Boolean,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> NEQ =
+			new Function2<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			return !isEqual().call(a, b);
+		}
+	};
+
 	@Override
-	public void assign(QuaternionFloat64MatrixMember from, QuaternionFloat64MatrixMember to) {
-		MatrixAssign.compute(G.QDBL, from, to);
+	public Function2<Boolean,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> isNotEqual() {
+		return NEQ;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> ASSIGN =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember from, QuaternionFloat64MatrixMember to) {
+			MatrixAssign.compute(G.QDBL, from, to);
+		}
+	};
+	
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> assign() {
+		return ASSIGN;
 	}
 
 	@Override
@@ -135,76 +231,186 @@ public class QuaternionFloat64Matrix
 		return new QuaternionFloat64MatrixMember(s, d1, d2);
 	}
 
+	private Procedure2<QuaternionFloat64MatrixMember,Float64Member> NORM =
+			new Procedure2<QuaternionFloat64MatrixMember, Float64Member>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, Float64Member b) {
+			// TODO
+			throw new IllegalArgumentException("TODO");
+		}
+	};
+	
 	@Override
-	public void norm(QuaternionFloat64MatrixMember a, Float64Member b) {
-		// TODO
-		throw new IllegalArgumentException("TODO");
+	public Procedure2<QuaternionFloat64MatrixMember,Float64Member> norm() {
+		return NORM;
 	}
 
+	private final Procedure4<Round.Mode,Float64Member,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> ROUND =
+			new Procedure4<Round.Mode, Float64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			MatrixRound.compute(G.QDBL, mode, delta, a, b);
+		}
+	};
+	
 	@Override
-	public void round(Round.Mode mode, Float64Member delta, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixRound.compute(G.QDBL, mode, delta, a, b);
+	public Procedure4<Round.Mode,Float64Member,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> round() {
+		return ROUND;
 	}
 
+	private final Function1<Boolean,QuaternionFloat64MatrixMember> NAN =
+			new Function1<Boolean,QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64MatrixMember a) {
+			return MatrixIsNaN.compute(G.QDBL, a);
+		}
+	};
+	
 	@Override
-	public boolean isNaN(QuaternionFloat64MatrixMember a) {
-		return MatrixIsNaN.compute(G.QDBL, a);
+	public Function1<Boolean,QuaternionFloat64MatrixMember> isNaN() {
+		return NAN;
 	}
 
+	private final Function1<Boolean,QuaternionFloat64MatrixMember> INF =
+			new Function1<Boolean,QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64MatrixMember a) {
+			return MatrixIsInfinite.compute(G.QDBL, a);
+		}
+	};
+	
 	@Override
-	public boolean isInfinite(QuaternionFloat64MatrixMember a) {
-		return MatrixIsInfinite.compute(G.QDBL, a);
+	public Function1<Boolean,QuaternionFloat64MatrixMember> isInfinite() {
+		return INF;
 	}
 
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> CONJ =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			MatrixConjugate.compute(G.QDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void conjugate(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixConjugate.compute(G.QDBL, a, b);
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> conjugate() {
+		return CONJ;
 	}
 
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> TRANSP =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			MatrixTranspose.compute(G.QDBL, a, b);
+		}
+	};
+	
 	@Override
-	public void transpose(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixTranspose.compute(G.QDBL, a, b);
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> transpose() {
+		return TRANSP;
 	}
 
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> CONJTRANSP =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember tmp = new QuaternionFloat64MatrixMember();
+			conjugate().call(a, tmp);
+			transpose().call(tmp, b);
+		}
+	};
+	
 	@Override
-	public void conjugateTranspose(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		QuaternionFloat64MatrixMember tmp = new QuaternionFloat64MatrixMember();
-		conjugate(a, tmp);
-		transpose(tmp, b);
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> conjugateTranspose() {
+		return CONJTRANSP;
 	}
 
 	// TODO test
+
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64Member> DET =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64Member b) {
+			MatrixDeterminant.compute(G.QDBL_MAT, G.QDBL, a, b);
+		}
+	};
 	
 	@Override
-	public void det(QuaternionFloat64MatrixMember a, QuaternionFloat64Member b) {
-		MatrixDeterminant.compute(this, G.QDBL, a, b);
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64Member> det() {
+		return DET;
 	}
 
-	@Override
-	public void unity(QuaternionFloat64MatrixMember a) {
-		MatrixUnity.compute(G.QDBL, a);
-	}
-
-	@Override
-	public void invert(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-		MatrixInvert.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
-	}
-
-	@Override
-	public void divide(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b,
-			QuaternionFloat64MatrixMember c)
+	private final Procedure1<QuaternionFloat64MatrixMember> UNITY =
+			new Procedure1<QuaternionFloat64MatrixMember>()
 	{
-		// invert and multiply
-		QuaternionFloat64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
-		invert(b, invB);
-		multiply(a, invB, c);
+		@Override
+		public void call(QuaternionFloat64MatrixMember a) {
+			MatrixUnity.compute(G.QDBL, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat64MatrixMember> unity() {
+		return UNITY;
 	}
 
-	@Override
-	public void directProduct(QuaternionFloat64MatrixMember in1, QuaternionFloat64MatrixMember in2,
-			QuaternionFloat64MatrixMember out)
+	private final Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> INV =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
 	{
-		MatrixDirectProduct.compute(G.QDBL, in1, in2, out);
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			MatrixInvert.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> invert() {
+		return INV;
+	}
+
+	private final Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> DIVIDE =
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b,
+				QuaternionFloat64MatrixMember c)
+		{
+			// invert and multiply
+			QuaternionFloat64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
+			invert().call(b, invB);
+			multiply().call(a, invB, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> divide()
+	{
+		return DIVIDE;
+	}
+
+	private final Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> DP =
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember in1, QuaternionFloat64MatrixMember in2,
+				QuaternionFloat64MatrixMember out)
+		{
+			MatrixDirectProduct.compute(G.QDBL, in1, in2, out);
+		}
+	};
+
+	@Override
+	public Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> directProduct()
+	{
+		return DP;
 	}
 
 }
