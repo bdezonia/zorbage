@@ -33,6 +33,13 @@ import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.PowerI;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
@@ -52,17 +59,34 @@ public class UnsignedInt16Group
     Random<UnsignedInt16Member>
 {
 	
-	public UnsignedInt16Group() {
-	}
+	public UnsignedInt16Group() { }
+	
+	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> EQ =
+			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			return a.v == b.v;
+		}
+	};
 	
 	@Override
-	public boolean isEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
-		return a.v == b.v;
+	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> NEQ =
+			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			return a.v != b.v;
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
-		return a.v != b.v;
+	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isNotEqual() {
+		return NEQ;
 	}
 
 	@Override
@@ -80,217 +104,559 @@ public class UnsignedInt16Group
 		return new UnsignedInt16Member(s);
 	}
 
-	@Override
-	public void assign(UnsignedInt16Member from, UnsignedInt16Member to) {
-		to.set(from);
-	}
-
-	@Override
-	public void abs(UnsignedInt16Member a, UnsignedInt16Member b) {
-		assign(a, b);
-	}
-
-	@Override
-	public void multiply(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		c.setV( a.v() * b.v() );
-	}
-
-	@Override
-	public void power(int power, UnsignedInt16Member a, UnsignedInt16Member b) {
-		PowerI.compute(this, power, a, b);
-	}
-
-	@Override
-	public void zero(UnsignedInt16Member a) {
-		a.setV( 0 );
-	}
-
-	@Override
-	public void negate(UnsignedInt16Member a, UnsignedInt16Member b) {
-		assign(a,b); // ignore
-	}
-
-	@Override
-	public void add(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		c.setV( a.v + b.v );
-	}
-
-	@Override
-	public void subtract(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		c.setV( a.v - b.v );
-	}
-
-	@Override
-	public void unity(UnsignedInt16Member a) {
-		a.setV( 1 );
-	}
-
-	@Override
-	public boolean isLess(UnsignedInt16Member a, UnsignedInt16Member b) {
-		return compare(a,b) < 0;
-	}
-
-	@Override
-	public boolean isLessEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
-		return compare(a,b) <= 0;
-	}
-
-	@Override
-	public boolean isGreater(UnsignedInt16Member a, UnsignedInt16Member b) {
-		return compare(a,b) > 0;
-	}
-
-	@Override
-	public boolean isGreaterEqual(UnsignedInt16Member a, UnsignedInt16Member b) {
-		return compare(a,b) >= 0;
-	}
-
-	@Override
-	public int compare(UnsignedInt16Member a, UnsignedInt16Member b) {
-		int av = a.v();
-		int bv = b.v();
-		if (av < bv) return -1;
-		if (av > bv) return 1;
-		return 0;
-	}
-
-	@Override
-	public int signum(UnsignedInt16Member a) {
-		if (a.v == 0) return 0;
-		return 1;
-	}
-
-	@Override
-	public void div(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member d) {
-		d.setV( a.v() / b.v() );
-	}
-
-	@Override
-	public void mod(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member m) {
-		m.setV( a.v() % b.v() );
-	}
-
-	@Override
-	public void divMod(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member d, UnsignedInt16Member m) {
-		div(a,b,d);
-		mod(a,b,m);
-	}
-
-	@Override
-	public void gcd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		Gcd.compute(this, a, b, c);
-	}
-
-	@Override
-	public void lcm(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		Lcm.compute(this, a, b, c);
-	}
-
-	@Override
-	public void norm(UnsignedInt16Member a, UnsignedInt16Member b) {
-		assign(a, b);
-	}
-
-	@Override
-	public boolean isEven(UnsignedInt16Member a) {
-		return a.v % 2 == 0;
-	}
-
-	@Override
-	public boolean isOdd(UnsignedInt16Member a) {
-		return a.v % 2 == 1;
-	}
-
-	@Override
-	public void pred(UnsignedInt16Member a, UnsignedInt16Member b) {
-		if (a.v == 0)
-			b.setV(0xffff);
-		else
-			b.setV( a.v() - 1 );
-	}
-
-	@Override
-	public void succ(UnsignedInt16Member a, UnsignedInt16Member b) {
-		if (a.v == -1)
-			b.setV(0);
-		else
-			b.setV( a.v() + 1 );
-	}
-
-	@Override
-	public void maxBound(UnsignedInt16Member a) {
-		a.setV( 0xffff );
-	}
-
-	@Override
-	public void minBound(UnsignedInt16Member a) {
-		a.setV( 0 );
-	}
-
-	@Override
-	public void bitAnd(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		c.setV( a.v & b.v );
-	}
-
-	@Override
-	public void bitOr(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		c.setV( a.v | b.v );
-	}
-
-	@Override
-	public void bitXor(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		c.setV( a.v ^ b.v );
-	}
-
-	@Override
-	public void bitNot(UnsignedInt16Member a, UnsignedInt16Member b) {
-		b.setV( ~a.v );
-	}
-
-	@Override
-	public void bitShiftLeft(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
-		if (count < 0)
-			bitShiftRight(Math.abs(count), a, b);
-		else {
-			count = count % 16;
-			b.setV( a.v() << count );
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> ASSIGN =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member from, UnsignedInt16Member to) {
+			to.set(from);
 		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> assign() {
+		return ASSIGN;
 	}
+
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> ABS =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			assign().call(a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> abs() {
+		return ABS;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> MUL =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v() * b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> multiply() {
+		return MUL;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> POWER =
+			new Procedure3<java.lang.Integer, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(java.lang.Integer power, UnsignedInt16Member a, UnsignedInt16Member b) {
+			PowerI.compute(G.UINT16, power, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> power() {
+		return POWER;
+	}
+
+	private final Procedure1<UnsignedInt16Member> ZER =
+			new Procedure1<UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a) {
+			a.setV( 0 );
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt16Member> zero() {
+		return ZER;
+	}
+
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> NEG =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			assign().call(a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> negate() {
+		return NEG;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> ADD =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v + b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> add() {
+		return ADD;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> SUB =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v - b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> subtract() {
+		return SUB;
+	}
+
+	private final Procedure1<UnsignedInt16Member> UNITY =
+			new Procedure1<UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a) {
+			a.setV( 1 );
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt16Member> unity() {
+		return UNITY;
+	}
+
+	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> LESS =
+			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			return compare().call(a,b) < 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isLess() {
+		return LESS;
+	}
+
+	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> LE =
+			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			return compare().call(a,b) <= 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isLessEqual() {
+		return LE;
+	}
+
+	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> GREAT =
+			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			return compare().call(a,b) > 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isGreater() {
+		return GREAT;
+	}
+
+	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> GE =
+			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			return compare().call(a,b) >= 0;
+		}
+	};
+	
+	@Override
+	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isGreaterEqual() {
+		return GE;
+	}
+
+	private final Function2<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> CMP =
+			new Function2<java.lang.Integer, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public java.lang.Integer call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			int av = a.v();
+			int bv = b.v();
+			if (av < bv) return -1;
+			if (av > bv) return 1;
+			return 0;
+		}
+	};
+	
+	@Override
+	public Function2<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> compare() {
+		return CMP;
+	}
+
+	private final Function1<java.lang.Integer,UnsignedInt16Member> SIG =
+			new Function1<java.lang.Integer, UnsignedInt16Member>()
+	{
+		@Override
+		public java.lang.Integer call(UnsignedInt16Member a) {
+			if (a.v == 0) return 0;
+			return 1;
+		}
+	};
+	
+	@Override
+	public Function1<java.lang.Integer,UnsignedInt16Member> signum() {
+		return SIG;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> DIV =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member d) {
+			d.setV( a.v() / b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> MOD =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member m) {
+			m.setV( a.v() % b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> DIVMOD =
+			new Procedure4<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member d, UnsignedInt16Member m) {
+			div().call(a,b,d);
+			mod().call(a,b,m);
+		}
+	};
 
 	@Override
-	public void bitShiftRight(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else
-			b.setV( a.v() >> count );
+	public Procedure4<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> divMod() {
+		return DIVMOD;
 	}
 
-	public void bitShiftRightFillZero(int count, UnsignedInt16Member a, UnsignedInt16Member b) {
-		if (count < 0)
-			bitShiftLeft(Math.abs(count), a, b);
-		else
-			b.setV( a.v() >>> count );
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> GCD =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			Gcd.compute(G.UINT16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> gcd() {
+		return GCD;
 	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> LCM =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			Lcm.compute(G.UINT16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> lcm() {
+		return LCM;
+	}
+
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> NORM =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			assign().call(a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> norm() {
+		return NORM;
+	}
+
+	private final Function1<Boolean,UnsignedInt16Member> EVEN =
+			new Function1<Boolean, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a) {
+			return a.v % 2 == 0;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,UnsignedInt16Member> isEven() {
+		return EVEN;
+	}
+
+	private final Function1<Boolean,UnsignedInt16Member> ODD =
+			new Function1<Boolean, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member a) {
+			return a.v % 2 == 1;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,UnsignedInt16Member> isOdd() {
+		return ODD;
+	}
+
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> PRED =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			if (a.v == 0)
+				b.setV(0xffff);
+			else
+				b.setV( a.v() - 1 );
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> pred() {
+		return PRED;
+	}
+
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> SUCC =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			if (a.v == -1)
+				b.setV(0);
+			else
+				b.setV( a.v() + 1 );
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> succ() {
+		return SUCC;
+	}
+
+	private final Procedure1<UnsignedInt16Member> MAXBOUND =
+			new Procedure1<UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a) {
+			a.setV( 0xffff );
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt16Member> maxBound() {
+		return MAXBOUND;
+	}
+
+	private final Procedure1<UnsignedInt16Member> MINBOUND =
+			new Procedure1<UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a) {
+			a.setV( 0 );
+		}
+	};
+	
+	@Override
+	public Procedure1<UnsignedInt16Member> minBound() {
+		return MINBOUND;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> BITAND =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v & b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> bitAnd() {
+		return BITAND;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> BITOR =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v | b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> bitOr() {
+		return BITOR;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> BITXOR =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v ^ b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> bitXor() {
+		return BITXOR;
+	}
+
+	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> BITNOT =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			b.setV( ~a.v );
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> bitNot() {
+		return BITNOT;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> BITSHL =
+			new Procedure3<java.lang.Integer, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt16Member a, UnsignedInt16Member b) {
+			if (count < 0)
+				bitShiftRight().call(Math.abs(count), a, b);
+			else {
+				count = count % 16;
+				b.setV( a.v() << count );
+			}
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> bitShiftLeft() {
+		return BITSHL;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> BITSHR =
+			new Procedure3<java.lang.Integer, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt16Member a, UnsignedInt16Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else
+				b.setV( a.v() >> count );
+		}
+	};
+	
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> bitShiftRight() {
+		return BITSHR;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> BITSHRZ =
+			new Procedure3<java.lang.Integer, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(java.lang.Integer count, UnsignedInt16Member a, UnsignedInt16Member b) {
+			if (count < 0)
+				bitShiftLeft().call(Math.abs(count), a, b);
+			else
+				b.setV( a.v() >>> count );
+		}
+	};
+	
+	public Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> bitShiftRightFillZero() {
+		return BITSHRZ;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> MIN =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			Min.compute(G.UINT16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> min() {
+		return MIN;
+	}
+
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> MAX =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			Max.compute(G.UINT16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> max() {
+		return MAX;
+	}
+
+	private final Procedure1<UnsignedInt16Member> RAND =
+			new Procedure1<UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			a.setV(rng.nextInt(0x10000) );
+		}
+	};
 
 	@Override
-	public void min(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		Min.compute(this, a, b, c);
+	public Procedure1<UnsignedInt16Member> random() {
+		return RAND;
 	}
 
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> POW =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			power().call(b.v(), a, c);
+		}
+	};
+	
 	@Override
-	public void max(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		Max.compute(this, a, b, c);
-	}
-
-	@Override
-	public void random(UnsignedInt16Member a) {
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		a.setV(rng.nextInt(0x10000) );
-	}
-
-	@Override
-	public void pow(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
-		power(b.v(), a, c);
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> pow() {
+		return POW;
 	}
 
 }
