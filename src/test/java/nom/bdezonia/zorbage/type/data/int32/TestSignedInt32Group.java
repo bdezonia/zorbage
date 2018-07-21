@@ -48,7 +48,7 @@ public class TestSignedInt32Group {
 		SignedInt32Member b = G.INT32.construct("4");
 		SignedInt32Member sum = G.INT32.construct("99");
 
-		G.INT32.add(a,b,sum);
+		G.INT32.add().call(a,b,sum);
 		
 		assertEquals(5, sum.v());
 	}
@@ -61,7 +61,7 @@ public class TestSignedInt32Group {
 		a.setV(2);
 		
 		try {
-			G.INT32.power(-1, a, b);
+			G.INT32.power().call(-1, a, b);
 			fail();
 		}
 		catch (IllegalArgumentException e) {
@@ -69,7 +69,7 @@ public class TestSignedInt32Group {
 		}
 
 		for (int i = 0; i < 100; i++) {
-			G.INT32.power(i, a, b);
+			G.INT32.power().call(i, a, b);
 			assertEquals(pow(a.v(), i), b.v());
 		}
 

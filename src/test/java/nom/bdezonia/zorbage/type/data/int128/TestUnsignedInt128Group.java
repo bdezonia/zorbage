@@ -84,8 +84,8 @@ public class TestUnsignedInt128Group {
 				sb.append(bbig);
 				sb.append(" to match between BigInts and UInt128s");
 				msg = sb.toString();
-				assertEquals(msg, abig.compareTo(bbig), G.UINT128.compare(a, b));
-				G.UINT128.add(a, b, c);
+				assertEquals(msg, abig.compareTo(bbig), (int)G.UINT128.compare().call(a, b));
+				G.UINT128.add().call(a, b, c);
 				bigTmp = c.v();
 				sb = new StringBuilder();
 				sb.append("Expecting add of ");
@@ -96,7 +96,7 @@ public class TestUnsignedInt128Group {
 				sb.append(bigTmp);
 				msg = sb.toString();
 				assertEquals(msg, abig.add(bbig).mod(max), bigTmp);
-				G.UINT128.subtract(a, b, c);
+				G.UINT128.subtract().call(a, b, c);
 				bigTmp = c.v();
 				sb = new StringBuilder();
 				sb.append("Expecting sub of ");
@@ -110,7 +110,7 @@ public class TestUnsignedInt128Group {
 				if (tmp.compareTo(BigInteger.ZERO) < 0)
 					tmp = tmp.add(max);
 				assertEquals(msg, tmp, bigTmp);
-				G.UINT128.multiply(a, b, c);
+				G.UINT128.multiply().call(a, b, c);
 				bigTmp = c.v();
 				sb = new StringBuilder();
 				sb.append("Expecting mul of ");
@@ -121,8 +121,8 @@ public class TestUnsignedInt128Group {
 				sb.append(bigTmp);
 				msg = sb.toString();
 				assertEquals(msg, abig.multiply(bbig).mod(max), bigTmp);
-				if (G.UINT128.isNotEqual(b, zero)) {
-					G.UINT128.divMod(a, b, d, m);
+				if (G.UINT128.isNotEqual().call(b, zero)) {
+					G.UINT128.divMod().call(a, b, d, m);
 					BigInteger[] dm = abig.divideAndRemainder(bbig);
 					bigTmp = d.v();
 					sb = new StringBuilder();
@@ -196,7 +196,7 @@ public class TestUnsignedInt128Group {
 			for (int j = 0; j < 65536; j++) {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
-				G.UINT128.add(a, b, c);
+				G.UINT128.add().call(a, b, c);
 				assertEquals(I.add(J).mod(BASE),c.v());
 			}			
 		}
@@ -214,7 +214,7 @@ public class TestUnsignedInt128Group {
 			for (int j = 0; j < 65536; j++) {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
-				G.UINT128.subtract(a, b, c);
+				G.UINT128.subtract().call(a, b, c);
 				BigInteger result = I.subtract(J);
 				if (result.compareTo(BigInteger.ZERO) < 0)
 					result = result.add(BASE);
@@ -235,7 +235,7 @@ public class TestUnsignedInt128Group {
 			for (int j = 0; j < 65536; j++) {
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
-				G.UINT128.multiply(a, b, c);
+				G.UINT128.multiply().call(a, b, c);
 				assertEquals(I.multiply(J).mod(BASE),c.v());
 			}			
 		}
@@ -253,7 +253,7 @@ public class TestUnsignedInt128Group {
 			for (int j = 1; j < 65536; j++) { // avoid divide by zero
 				BigInteger J = BigInteger.valueOf(j);
 				b.setV(J);
-				G.UINT128.divMod(a, b, d, m);
+				G.UINT128.divMod().call(a, b, d, m);
 				BigInteger[] dm = I.divideAndRemainder(J);
 				assertEquals(dm[0], d.v());
 				assertEquals(dm[1], m.v());
@@ -268,7 +268,7 @@ public class TestUnsignedInt128Group {
 		UnsignedInt128Member b = G.UINT128.construct("20");
 		UnsignedInt128Member d = G.UINT128.construct();
 		UnsignedInt128Member m = G.UINT128.construct();
-		G.UINT128.divMod(a, b, d, m);
+		G.UINT128.divMod().call(a, b, d, m);
 		assertEquals(BigInteger.valueOf(26), d.v());
 		assertEquals(BigInteger.valueOf(5), m.v());
 	}
@@ -288,9 +288,9 @@ public class TestUnsignedInt128Group {
 		
 		UnsignedInt128Member v = G.UINT128.construct();
 		UnsignedInt128Member one = G.UINT128.construct();
-		G.UINT128.unity(one);
+		G.UINT128.unity().call(one);
 		for (int i = 0; i < 1000000; i++) {
-			G.UINT128.add(v, one, v);
+			G.UINT128.add().call(v, one, v);
 		}
 
 		long b = System.currentTimeMillis();

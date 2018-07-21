@@ -45,30 +45,30 @@ public class TestUnsignedInt32Group {
 		
 		v.setV(3);
 		assertEquals(3, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(2, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(1, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0xffffffffL, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0xfffffffeL, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0xfffffffdL, v.v());
 
 		v.setV(0x80000002L);
 		assertEquals(0x80000002L, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0x80000001L, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0x80000000L, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0x7fffffffL, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0x7ffffffeL, v.v());
-		G.UINT32.pred(v, v);
+		G.UINT32.pred().call(v, v);
 		assertEquals(0x7ffffffdL, v.v());
 	}
 	
@@ -78,30 +78,30 @@ public class TestUnsignedInt32Group {
 		
 		v.setV(0xfffffffdL);
 		assertEquals(0xfffffffdL, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0xfffffffeL, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0xffffffffL, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(1, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(2, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(3, v.v());
 
 		v.setV(0x7ffffffdL);
 		assertEquals(0x7ffffffdL, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0x7ffffffeL, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0x7fffffffL, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0x80000000L, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0x80000001L, v.v());
-		G.UINT32.succ(v, v);
+		G.UINT32.succ().call(v, v);
 		assertEquals(0x80000002L, v.v());
 	}
 
