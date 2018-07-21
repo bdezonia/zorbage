@@ -44,7 +44,14 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -70,49 +77,130 @@ public class OctonionFloat64Matrix
 {
 	public OctonionFloat64Matrix() { }
 
+	private final Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> MUL =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			MatrixMultiply.compute(G.ODBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void multiply(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
-		MatrixMultiply.compute(G.ODBL, a, b, c);
+	public Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> multiply() {
+		return MUL;
 	}
 
+	private final Procedure3<java.lang.Integer,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> POWER =
+			new Procedure3<java.lang.Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(java.lang.Integer power, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			MatrixPower.compute(power, G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
+		}
+	};
+	
 	@Override
-	public void power(int power, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixPower.compute(power, G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
+	public Procedure3<java.lang.Integer,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> power() {
+		return POWER;
 	}
 
+	private Procedure1<OctonionFloat64MatrixMember> ZER =
+			new Procedure1<OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a) {
+			MatrixZero.compute(G.ODBL, a);
+		}
+	};
+	
 	@Override
-	public void zero(OctonionFloat64MatrixMember a) {
-		MatrixZero.compute(G.ODBL, a);
+	public Procedure1<OctonionFloat64MatrixMember> zero() {
+		return ZER;
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> NEG =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			MatrixNegate.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void negate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixNegate.compute(G.ODBL, a, b);
+	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> negate() {
+		return NEG;
 	}
 
+	private final Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> ADD =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			MatrixAddition.compute(G.ODBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void add(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
-		MatrixAddition.compute(G.ODBL, a, b, c);
+	public Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> add() {
+		return ADD;
 	}
 
+	private final Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> SUB =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			MatrixSubtraction.compute(G.ODBL, a, b, c);
+		}
+	};
+	
 	@Override
-	public void subtract(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
-		MatrixSubtraction.compute(G.ODBL, a, b, c);
+	public Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> subtract() {
+		return SUB;
 	}
 
+	private final Function2<Boolean,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> EQ =
+			new Function2<Boolean, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			return MatrixEqual.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public boolean isEqual(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		return MatrixEqual.compute(G.ODBL, a, b);
+	public Function2<Boolean,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> isEqual() {
+		return EQ;
 	}
 
+	private final Function2<Boolean,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> NEQ =
+			new Function2<Boolean, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			return !isEqual().call(a, b);
+		}
+	};
+	
 	@Override
-	public boolean isNotEqual(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		return !isEqual(a, b);
+	public Function2<Boolean,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> isNotEqual() {
+		return NEQ;
 	}
 
+	private Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> ASSIGN =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember from, OctonionFloat64MatrixMember to) {
+			MatrixAssign.compute(G.ODBL, from, to);
+		}
+	};
+	
 	@Override
-	public void assign(OctonionFloat64MatrixMember from, OctonionFloat64MatrixMember to) {
-		MatrixAssign.compute(G.ODBL, from, to);
+	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> assign() {
+		return ASSIGN;
 	}
 
 	@Override
@@ -135,73 +223,180 @@ public class OctonionFloat64Matrix
 		return new OctonionFloat64MatrixMember(s, d1, d2);
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember,Float64Member> NORM =
+			new Procedure2<OctonionFloat64MatrixMember, Float64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, Float64Member b) {
+			// TODO
+			throw new IllegalArgumentException("TODO");
+		}
+	};
+	
 	@Override
-	public void norm(OctonionFloat64MatrixMember a, Float64Member b) {
-		// TODO
-		throw new IllegalArgumentException("TODO");
+	public Procedure2<OctonionFloat64MatrixMember,Float64Member> norm() {
+		return NORM;
 	}
 
+	private final Procedure4<Round.Mode,Float64Member,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> ROUND =
+			new Procedure4<Round.Mode, Float64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			MatrixRound.compute(G.ODBL, mode, delta, a, b);
+		}
+	};
+	
 	@Override
-	public void round(Round.Mode mode, Float64Member delta, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixRound.compute(G.ODBL, mode, delta, a, b);
+	public Procedure4<Round.Mode,Float64Member,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> round() {
+		return ROUND;
 	}
 
+	private Function1<Boolean,OctonionFloat64MatrixMember> NAN =
+			new Function1<Boolean, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64MatrixMember a) {
+			return MatrixIsNaN.compute(G.ODBL, a);
+		}
+	};
+	
 	@Override
-	public boolean isNaN(OctonionFloat64MatrixMember a) {
-		return MatrixIsNaN.compute(G.ODBL, a);
+	public Function1<Boolean,OctonionFloat64MatrixMember> isNaN() {
+		return NAN;
 	}
 
+	private Function1<Boolean,OctonionFloat64MatrixMember> INF =
+			new Function1<Boolean, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64MatrixMember a) {
+			return MatrixIsInfinite.compute(G.ODBL, a);
+		}
+	};
+	
 	@Override
-	public boolean isInfinite(OctonionFloat64MatrixMember a) {
-		return MatrixIsInfinite.compute(G.ODBL, a);
+	public Function1<Boolean,OctonionFloat64MatrixMember> isInfinite() {
+		return INF;
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> CONJ =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			MatrixConjugate.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void conjugate(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixConjugate.compute(G.ODBL, a, b);
+	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> conjugate() {
+		return CONJ;
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> TRANSP =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			MatrixTranspose.compute(G.ODBL, a, b);
+		}
+	};
+	
 	@Override
-	public void transpose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixTranspose.compute(G.ODBL, a, b);
+	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> transpose() {
+		return TRANSP;
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> CONJTRANSP =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember();
+			conjugate().call(a, tmp);
+			transpose().call(tmp, b);
+		}
+	};
+	
 	@Override
-	public void conjugateTranspose(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		OctonionFloat64MatrixMember tmp = new OctonionFloat64MatrixMember();
-		conjugate(a, tmp);
-		transpose(tmp, b);
+	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> conjugateTranspose() {
+		return CONJTRANSP;
 	}
 
 	// TODO - test
+
+	private final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64Member> DET =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
+			MatrixDeterminant.compute(G.ODBL_MAT, G.ODBL, a, b);
+		}
+	};
 	
 	@Override
-	public void det(OctonionFloat64MatrixMember a, OctonionFloat64Member b) {
-		MatrixDeterminant.compute(this, G.ODBL, a, b);
+	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64Member> det() {
+		return DET;
 	}
 
-	@Override
-	public void unity(OctonionFloat64MatrixMember a) {
-		MatrixUnity.compute(G.ODBL, a);
-	}
-
-	@Override
-	public void invert(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-		MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
-	}
-
-	@Override
-	public void divide(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
-		// invert and multiply
-		OctonionFloat64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
-		invert(b, invB);
-		multiply(a, invB, c);
-	}
-
-	@Override
-	public void directProduct(OctonionFloat64MatrixMember in1, OctonionFloat64MatrixMember in2,
-			OctonionFloat64MatrixMember out)
+	private final Procedure1<OctonionFloat64MatrixMember> UNITY =
+			new Procedure1<OctonionFloat64MatrixMember>()
 	{
-		MatrixDirectProduct.compute(G.ODBL, in1, in2, out);
+		@Override
+		public void call(OctonionFloat64MatrixMember a) {
+			MatrixUnity.compute(G.ODBL, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64MatrixMember> unity() {
+		return UNITY;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> INVERT = 
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
+		}
+	};
+	
+	@Override
+	public final Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> invert() {
+		return INVERT;
+	}
+
+	private final Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> DIVIDE =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			// invert and multiply
+			OctonionFloat64MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
+			invert().call(b, invB);
+			multiply().call(a, invB, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> divide() {
+		return DIVIDE;
+	}
+
+	private final Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> DP =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember in1, OctonionFloat64MatrixMember in2, OctonionFloat64MatrixMember out) {
+			MatrixDirectProduct.compute(G.ODBL, in1, in2, out);
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> directProduct()
+	{
+		return DP;
 	}
 }
