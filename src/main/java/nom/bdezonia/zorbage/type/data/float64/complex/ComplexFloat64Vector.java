@@ -63,6 +63,7 @@ public class ComplexFloat64Vector
     Norm<ComplexFloat64VectorMember,Float64Member>,
     Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>,
     DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>
+//TODO Round, Nan, Inf
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	

@@ -61,6 +61,7 @@ public class Float64Vector
 	Norm<Float64VectorMember,Float64Member>,
 	Products<Float64VectorMember, Float64Member, Float64MatrixMember>,
 	DirectProduct<Float64VectorMember, Float64MatrixMember>
+//TODO Round, Nan, Inf
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 

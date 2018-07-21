@@ -63,6 +63,7 @@ public class OctonionFloat64RModule
 	Norm<OctonionFloat64RModuleMember,Float64Member>,
 	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, OctonionFloat64MatrixMember>,
 	DirectProduct<OctonionFloat64RModuleMember, OctonionFloat64MatrixMember>
+// TODO Round, Nan, Inf
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	

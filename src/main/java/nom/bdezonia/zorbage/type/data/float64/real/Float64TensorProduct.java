@@ -66,6 +66,7 @@ public class Float64TensorProduct
 		ConstructibleNdLong<Float64TensorProductMember>,
 		Norm<Float64TensorProductMember,Float64Member>,
 		Scale<Float64TensorProductMember,Float64Member>
+//TODO Round, Nan, Inf
 {
 	@Override
 	public Float64TensorProductMember construct() {

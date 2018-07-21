@@ -63,6 +63,7 @@ public class QuaternionFloat64RModule
     Norm<QuaternionFloat64RModuleMember,Float64Member>,
     Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, QuaternionFloat64MatrixMember>,
     DirectProduct<QuaternionFloat64RModuleMember, QuaternionFloat64MatrixMember>
+//TODO Round, Nan, Inf
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
