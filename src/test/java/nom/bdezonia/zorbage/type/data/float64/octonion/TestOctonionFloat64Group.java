@@ -47,8 +47,8 @@ public class TestOctonionFloat64Group {
 		OctonionFloat64Member b = new OctonionFloat64Member();
 		OctonionFloat64Member c = new OctonionFloat64Member();
 		
-		G.ODBL.conjugate(a, b);
-		G.ODBL.multiply(a, b, c);
+		G.ODBL.conjugate().call(a, b);
+		G.ODBL.multiply().call(a, b, c);
 		assertEquals(109,c.r(), TOL);
 		assertEquals(0,c.i(), TOL);
 		assertEquals(0,c.j(), TOL);
