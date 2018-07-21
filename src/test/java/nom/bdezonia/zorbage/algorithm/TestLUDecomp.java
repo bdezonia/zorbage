@@ -196,7 +196,7 @@ public class TestLUDecomp {
 		OctonionFloat64Member val = G.ODBL.construct();
 
 		OctonionFloat64MatrixMember a = G.ODBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
-		G.ODBL.unity(val);
+		G.ODBL.unity().call(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
 		a.setV(1, 1, val);
