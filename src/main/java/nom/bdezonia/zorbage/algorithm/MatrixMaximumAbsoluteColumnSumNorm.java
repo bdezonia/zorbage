@@ -66,11 +66,11 @@ public class MatrixMaximumAbsoluteColumnSumNorm {
 			for (long r = 0; r < matrix.rows(); r++) {
 				matrix.v(r, c, value);
 				numGroup.norm().call(value, tmp);
-				G.DBL.add(colSum, tmp, colSum);
+				G.DBL.add().call(colSum, tmp, colSum);
 			}
-			if (G.DBL.isGreater(colSum, max))
-				G.DBL.assign(colSum, max);
+			if (G.DBL.isGreater().call(colSum, max))
+				G.DBL.assign().call(colSum, max);
 		}
-		G.DBL.assign(max, norm);
+		G.DBL.assign().call(max, norm);
 	}
 }

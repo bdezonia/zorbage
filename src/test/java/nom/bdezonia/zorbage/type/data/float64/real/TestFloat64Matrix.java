@@ -57,7 +57,7 @@ public class TestFloat64Matrix {
 			Float64Member value = G.DBL.construct();
 			Float64Member zero = G.DBL.construct();
 			Float64Member one = G.DBL.construct();
-			G.DBL.unity(one);
+			G.DBL.unity().call(one);
 			for (long r = 0; r < m.rows(); r++) {
 				for (long c = 0; c < m.cols(); c++) {
 					m.v(r, c, value);

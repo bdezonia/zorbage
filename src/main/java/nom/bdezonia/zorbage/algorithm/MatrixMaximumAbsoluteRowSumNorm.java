@@ -66,11 +66,11 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 			for (long c = 0; c < matrix.cols(); c++) {
 				matrix.v(r, c, value);
 				numGroup.norm().call(value, tmp);
-				G.DBL.add(rowSum, tmp, rowSum);
+				G.DBL.add().call(rowSum, tmp, rowSum);
 			}
-			if (G.DBL.isGreater(rowSum, max))
-				G.DBL.assign(rowSum, max);
+			if (G.DBL.isGreater().call(rowSum, max))
+				G.DBL.assign().call(rowSum, max);
 		}
-		G.DBL.assign(max, norm);
+		G.DBL.assign().call(max, norm);
 	}
 }

@@ -46,7 +46,7 @@ public class TestFloat64Group {
 		Float64Member b = G.DBL.construct("4.2");
 		Float64Member sum = G.DBL.construct("99.3");
 
-		G.DBL.add(a,b,sum);
+		G.DBL.add().call(a,b,sum);
 		  
 		assertEquals(5.3, sum.v(), 0.000000001);
 	}
@@ -62,9 +62,9 @@ public class TestFloat64Group {
 		
 		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
 			angle.setV(a);
-			G.DBL.sin(angle, s1);
-			G.DBL.cos(angle, c1);
-			G.DBL.sinAndCos(angle, s2, c2);
+			G.DBL.sin().call(angle, s1);
+			G.DBL.cos().call(angle, c1);
+			G.DBL.sinAndCos().call(angle, s2, c2);
 			// TODO: is this good enough? Any more precise and it fails.
 			//assertEquals(s1.v(), s2.v(), 0.00000000000226);
 			//assertEquals(c1.v(), c2.v(), 0.00000000000226);
@@ -84,9 +84,9 @@ public class TestFloat64Group {
 		
 		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
 			angle.setV(a);
-			G.DBL.sinh(angle, s1);
-			G.DBL.cosh(angle, c1);
-			G.DBL.sinhAndCosh(angle, s2, c2);
+			G.DBL.sinh().call(angle, s1);
+			G.DBL.cosh().call(angle, c1);
+			G.DBL.sinhAndCosh().call(angle, s2, c2);
 			// TODO: is this good enough? Any more precise and it fails.
 			//assertEquals(s1.v(), s2.v(), 0.000000015);
 			//assertEquals(c1.v(), c2.v(), 0.000000015);

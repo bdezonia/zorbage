@@ -98,12 +98,12 @@ public final class Float16Member
 	
 	@Override
 	public void set(Float16Member other) {
-		G.DBL.assign(other.v, v);
+		G.DBL.assign().call(other.v, v);
 	}
 	
 	@Override
 	public void get(Float16Member other) {
-		G.DBL.assign(v, other.v);
+		G.DBL.assign().call(v, other.v);
 	}
 	
 	@Override

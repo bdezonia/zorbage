@@ -53,7 +53,7 @@ public class RealEquation implements Procedure<Float64Member>{
 		if (error() == null)
 			tuple.b().call(result, inputs);
 		else
-			G.DBL.zero(result);
+			G.DBL.zero().call(result);
 	}
 	
 	public String error() {

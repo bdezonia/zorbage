@@ -61,7 +61,7 @@ public class TestConversion {
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i,  value);
 			tmp.setV(value.v());
-			G.DBL.multiply(tmp, scale, tmp);
+			G.DBL.multiply().call(tmp, scale, tmp);
 			value.setV((int)Math.round(tmp.v()));
 			storage.set(i, value);
 		}

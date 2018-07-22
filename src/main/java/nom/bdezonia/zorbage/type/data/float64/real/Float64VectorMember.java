@@ -111,7 +111,7 @@ public final class Float64VectorMember
 			storage.get(i, v);
 		}
 		else {
-			G.DBL.zero(v);
+			G.DBL.zero().call(v);
 		}
 	}
 
