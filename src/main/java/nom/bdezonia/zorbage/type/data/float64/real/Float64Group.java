@@ -96,25 +96,34 @@ public class Float64Group
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
 	
-	public Float64Group() {
-	}
+	public Float64Group() { }
+	
+	private final Function2<Boolean,Float64Member,Float64Member> EQ =
+		new Function2<Boolean,Float64Member,Float64Member>()
+	{
+		@Override
+		public Boolean call(Float64Member a, Float64Member b) {
+			return a.v() == b.v();
+		}
+	};
 	
 	@Override
 	public Function2<Boolean,Float64Member,Float64Member> isEqual() {
-		return new Function2<Boolean,Float64Member,Float64Member>() {
-			public Boolean call(Float64Member a, Float64Member b) {
-				return a.v() == b.v();
-			}
-		};
+		return EQ;
 	}
 
+	private final Function2<Boolean,Float64Member,Float64Member> NEQ =
+			new Function2<Boolean,Float64Member,Float64Member>()
+	{
+		@Override
+		public Boolean call(Float64Member a, Float64Member b) {
+			return a.v() != b.v();
+		}
+	};
+		
 	@Override
 	public Function2<Boolean,Float64Member,Float64Member> isNotEqual() {
-		return new Function2<Boolean,Float64Member,Float64Member>() {
-			public Boolean call(Float64Member a, Float64Member b) {
-				return a.v() != b.v();
-			}
-		};
+		return NEQ;
 	}
 
 	@Override
