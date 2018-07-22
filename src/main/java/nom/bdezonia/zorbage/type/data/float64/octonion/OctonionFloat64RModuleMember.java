@@ -127,7 +127,7 @@ public final class OctonionFloat64RModuleMember
 			storage.get(i, v);
 		}
 		else {
-			G.ODBL.zero(v);
+			G.ODBL.zero().call(v);
 		}
 	}
 

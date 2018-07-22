@@ -58,7 +58,7 @@ public class TestLUDecomp {
 		Float64Member val = G.DBL.construct();
 
 		Float64MatrixMember a = G.DBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
-		G.DBL.unity(val);
+		G.DBL.unity().call(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
 		a.setV(1, 1, val);
@@ -145,7 +145,7 @@ public class TestLUDecomp {
 		QuaternionFloat64Member val = G.QDBL.construct();
 
 		QuaternionFloat64MatrixMember a = G.QDBL_MAT.construct(StorageConstruction.MEM_ARRAY, 3, 3);
-		G.QDBL.unity(val);
+		G.QDBL.unity().call(val);
 		a.setV(0, 0, val);
 		a.setV(0, 1, val);
 		a.setV(1, 1, val);

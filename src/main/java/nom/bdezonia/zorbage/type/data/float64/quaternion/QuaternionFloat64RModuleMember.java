@@ -119,7 +119,7 @@ public final class QuaternionFloat64RModuleMember
 			storage.get(i, v);
 		}
 		else {
-			G.QDBL.zero(v);
+			G.QDBL.zero().call(v);
 		}
 	}
 
