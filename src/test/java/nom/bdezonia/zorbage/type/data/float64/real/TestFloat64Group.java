@@ -195,5 +195,53 @@ public class TestFloat64Group {
 		G.DBL.divMod().call(a, b, d, m);
 		assertEquals(1, d.v(), tol);
 		assertEquals(1.7, m.v(), tol);
+
+		a.setV(17);
+		b.setV(3);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(5, d.v(), tol);
+		assertEquals(2, m.v(), tol);
+
+		a.setV(-17);
+		b.setV(3);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(-5, d.v(), tol);
+		assertEquals(-2, m.v(), tol);
+
+		a.setV(17);
+		b.setV(-3);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(-5, d.v(), tol);
+		assertEquals(2, m.v(), tol);
+
+		a.setV(-17);
+		b.setV(-3);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(5, d.v(), tol);
+		assertEquals(-2, m.v(), tol);
+
+		a.setV(3);
+		b.setV(17);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), tol);
+		assertEquals(3, m.v(), tol);
+
+		a.setV(-3);
+		b.setV(17);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), tol);
+		assertEquals(-3, m.v(), tol);
+
+		a.setV(3);
+		b.setV(-17);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), tol);
+		assertEquals(3, m.v(), tol);
+
+		a.setV(-3);
+		b.setV(-17);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), tol);
+		assertEquals(-3, m.v(), tol);
 	}
 }
