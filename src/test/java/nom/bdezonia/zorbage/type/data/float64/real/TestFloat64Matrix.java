@@ -53,7 +53,9 @@ public class TestFloat64Matrix {
 		if (RUN) {
 			System.out.println("Making a huge virtual matrix > 2 gig entries");
 			Float64MatrixMember m = G.DBL_MAT.construct(StorageConstruction.MEM_VIRTUAL, 50000, 50000);
+			System.out.println("Setting it's values to an identity matrix");
 			G.DBL_MAT.unity().call(m);
+			System.out.println("Walking through it's values and asserting they are correct");
 			Float64Member value = G.DBL.construct();
 			Float64Member zero = G.DBL.construct();
 			Float64Member one = G.DBL.construct();
