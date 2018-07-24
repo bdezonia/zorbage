@@ -42,5 +42,8 @@ public interface ModularDivision<U> {
 	Procedure4<U,U,U,U> divMod();
 	
 	// TODO add quot/rem/quotRem
+	
+	// Maybe this is helpful:
+	// https://medium.com/@drallarnnat/exploring-the-difference-between-modulus-and-remainder-in-rubys-numeric-class-65eb8b50a4b8
 
 }
