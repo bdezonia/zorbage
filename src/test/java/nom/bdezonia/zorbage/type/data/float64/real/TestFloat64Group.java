@@ -137,4 +137,57 @@ public class TestFloat64Group {
 		System.out.println("Times: sinh "+(q-p)+" cosh "+(r-q));
 	}
 	*/
+	
+	@Test
+	public void divmod() {
+		
+		final double tol = 0.000000000000001;
+		
+		Float64Member a = G.DBL.construct();
+		Float64Member b = G.DBL.construct();
+		Float64Member d = G.DBL.construct();
+		Float64Member m = G.DBL.construct();
+		
+		a.setV(0);
+		b.setV(66);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), 0);
+		assertEquals(0, m.v(), 0);
+
+		a.setV(44);
+		b.setV(66);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), 0);
+		assertEquals(44, m.v(), 0);
+
+		a.setV(0.5);
+		b.setV(1);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), tol);
+		assertEquals(0.5, m.v(), tol);
+		
+		a.setV(-0.5);
+		b.setV(1);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(0, d.v(), tol);
+		assertEquals(-0.5, m.v(), tol);
+		
+		a.setV(3.3);
+		b.setV(2);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(1, d.v(), tol);
+		assertEquals(1.3, m.v(), tol);
+		
+		a.setV(-3.3);
+		b.setV(2);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(-1, d.v(), tol);
+		assertEquals(-1.3, m.v(), tol);
+		
+		a.setV(-4);
+		b.setV(-2);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(2, d.v(), 0);
+		assertEquals(0, m.v(), 0);
+	}
 }
