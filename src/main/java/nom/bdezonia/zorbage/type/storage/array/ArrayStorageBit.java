@@ -45,13 +45,13 @@ public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
 	
 	public ArrayStorageBit(long size, U type) {
 	
-		final long totalBits = 64l * Integer.MAX_VALUE / type.bitCount();
+		final long maxBits = 64l * Integer.MAX_VALUE / type.bitCount();
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
-		if (size > totalBits)
+		if (size > maxBits)
 			throw new IllegalArgumentException("ArrayStorageBit can handle at most " + (64l * Integer.MAX_VALUE) + " bits");
-		int count = (int)(totalBits / 64);
-		if (totalBits % 64 > 0) count += 1;
+		int count = (int)((size * type.bitCount()) / 64);
+		if ((size * type.bitCount()) % 64 > 0) count += 1;
 		this.type = type.allocate();
 		this.data = new long[count];
 		this.size = size;
