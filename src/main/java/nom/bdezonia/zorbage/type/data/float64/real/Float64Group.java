@@ -1258,6 +1258,8 @@ public class Float64Group
 		return ULP;
 	}
 
+	// TODO: are the following two correctly divMod() or accidentally quotRem(). Investigate.
+	
 	private final Procedure3<Float64Member,Float64Member,Float64Member> DIV =
 			new Procedure3<Float64Member, Float64Member, Float64Member>()
 	{
@@ -1277,8 +1279,6 @@ public class Float64Group
 		return DIV;
 	}
 
-	// TODO: test. does these div and mod impls work together correctly? I think mod may be wrong
-	
 	private final Procedure3<Float64Member,Float64Member,Float64Member> MOD =
 			new Procedure3<Float64Member, Float64Member, Float64Member>()
 	{
