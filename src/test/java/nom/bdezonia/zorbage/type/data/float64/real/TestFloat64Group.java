@@ -189,5 +189,11 @@ public class TestFloat64Group {
 		G.DBL.divMod().call(a, b, d, m);
 		assertEquals(2, d.v(), 0);
 		assertEquals(0, m.v(), 0);
+
+		a.setV(4);
+		b.setV(2.3);
+		G.DBL.divMod().call(a, b, d, m);
+		assertEquals(1, d.v(), tol);
+		assertEquals(1.7, m.v(), tol);
 	}
 }
