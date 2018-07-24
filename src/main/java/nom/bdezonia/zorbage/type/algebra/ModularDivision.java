@@ -46,4 +46,5 @@ public interface ModularDivision<U> {
 	// Maybe this is helpful:
 	// https://medium.com/@drallarnnat/exploring-the-difference-between-modulus-and-remainder-in-rubys-numeric-class-65eb8b50a4b8
 
+	// Also it might be best to copy Fortran's definition of div/mod/quot/rem. Investigate.
 }
