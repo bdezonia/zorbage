@@ -44,15 +44,19 @@ public class TestSum {
 	@Test
 	public void test() {
 		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		// build the initial test data
-		for (long i = 0; i < storage.size(); i++) {
-			value.setV(i);
-			storage.set(i, value);
+		Float64Member sum = G.DBL.construct();
+		for (int i = 0; i < 256; i++) {
+			ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(i, value);
+			G.DBL.zero().call(sum);
+			// build the initial test data
+			for (long j = 0; j < storage.size(); j++) {
+				value.setV(j);
+				storage.set(j, value);
+				G.DBL.add().call(sum, value, sum);
+			}
+			Sum.compute(G.DBL, storage, value);
+			assertEquals(sum.v(), value.v(), 0);
 		}
-		Float64Member result = new Float64Member();
-		Sum.compute(G.DBL, storage, result);
-		assertEquals(45,result.v(),0.0000000001);
 	}
 
 }
