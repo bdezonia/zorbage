@@ -26,7 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
@@ -46,7 +47,7 @@ public class TwoElementFraction {
 	 * @param numer
 	 * @param denom
 	 */
-	public static <T extends AdditiveGroup<T,U> & Unity<U>,U>
+	public static <T extends Group<T,U> & Addition<U> & Unity<U>,U>
 		void compute(T grp, U result1, U result2, U numer, U denom)
 	{
 		U one = grp.construct();

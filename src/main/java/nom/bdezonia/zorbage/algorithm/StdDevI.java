@@ -26,7 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -48,7 +49,7 @@ public class StdDevI {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends AdditiveGroup<T,U> & Multiplication<U> & Unity<U> & ModularDivision<U> & Roots<U>, U>
+	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U> & ModularDivision<U> & Roots<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		VarianceI.compute(grp, storage, result);

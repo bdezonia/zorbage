@@ -29,7 +29,8 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
  * 
@@ -45,7 +46,7 @@ public class Average {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends AdditiveGroup<T,U> & Invertible<U> & Unity<U>, U>
+	public static <T extends Group<T,U> & Addition<U> & Invertible<U> & Unity<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		U sum = grp.construct();

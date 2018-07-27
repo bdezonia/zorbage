@@ -26,10 +26,27 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
+// TODO; for a floating sum a Neumaier sum might be best.
+
+//function NeumaierSum(input)
+//var sum = input[1]
+//var c = 0.0                 // A running compensation for lost low-order bits.
+//for i = 2 to input.length do
+//    var t = sum + input[i]
+//    if |sum| >= |input[i]| do
+//        c += (sum - t) + input[i] // If sum is bigger, low-order digits of input[i] are lost.
+//    else
+//        c += (input[i] - t) + sum // Else low-order digits of sum are lost
+//    sum = t
+//return sum + c              // Correction only applied once in the very end
+	
+// Note: for now will just recursively sum to eliminate some roundoff errors.
+		
 /**
  * 
  * @author Barry DeZonia
@@ -46,7 +63,7 @@ public class SumCount {
 	 * @param sum
 	 * @param count
 	 */
-	public static <T extends AdditiveGroup<T,U> & Unity<U>, U>
+	public static <T extends Group<T,U> & Addition<U> & Unity<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U sum, U count)
 	{
 		U tmp = grp.construct();

@@ -26,7 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -40,7 +41,7 @@ public class RModuleSubtract {
 		// do not instantiate
 	}
 	
-	public static <U extends RModuleMember<W>, V extends AdditiveGroup<V,W>, W>
+	public static <U extends RModuleMember<W>, V extends Group<V,W> & Addition<W>, W>
 		void compute(V memberGroup, U a, U b, U c)
 	{
 		W atmp = memberGroup.construct();

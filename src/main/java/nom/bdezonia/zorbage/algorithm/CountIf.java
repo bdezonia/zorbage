@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -49,7 +49,7 @@ public class CountIf {
 	 * @param condition
 	 * @param sum
 	 */
-	public static <T extends Group<T,U>, U, V extends AdditiveGroup<V,W> & Unity<W>, W>
+	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
 		void compute(T group, V addGroup, Condition<U> condition, IndexedDataSource<?,U> a, W sum)
 	{
 		compute(group, addGroup, condition, 0, a.size(), a, sum);
@@ -65,7 +65,7 @@ public class CountIf {
 	 * @param condition
 	 * @param sum
 	 */
-	public static <T extends Group<T,U>, U, V extends AdditiveGroup<V,W> & Unity<W>, W>
+	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
 		void compute(T group, V addGroup, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a, W sum)
 	{
 		U tmp = group.construct();
