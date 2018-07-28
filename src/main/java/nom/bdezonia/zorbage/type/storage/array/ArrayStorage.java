@@ -26,6 +26,12 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
@@ -76,6 +82,86 @@ public class ArrayStorage {
 		}
 		
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
+	}
+	
+	public static IndexedDataSource<?,SignedInt8Member> allocateBytes(byte[] bytes) {
+		SignedInt8Member type = new SignedInt8Member();
+		IndexedDataSource<?,SignedInt8Member> store =
+				new ArrayStorageSignedInt8<SignedInt8Member>(bytes.length, type);
+		for (int i = 0; i < bytes.length; i++) {
+			type.setV(bytes[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	public static IndexedDataSource<?,SignedInt16Member> allocateShorts(short[] shorts) {
+		SignedInt16Member type = new SignedInt16Member();
+		IndexedDataSource<?,SignedInt16Member> store =
+				new ArrayStorageSignedInt16<SignedInt16Member>(shorts.length, type);
+		for (int i = 0; i < shorts.length; i++) {
+			type.setV(shorts[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	public static IndexedDataSource<?,SignedInt32Member> allocateInts(int[] ints) {
+		SignedInt32Member type = new SignedInt32Member();
+		IndexedDataSource<?,SignedInt32Member> store =
+				new ArrayStorageSignedInt32<SignedInt32Member>(ints.length, type);
+		for (int i = 0; i < ints.length; i++) {
+			type.setV(ints[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	public static IndexedDataSource<?,SignedInt64Member> allocateLongs(long[] longs) {
+		SignedInt64Member type = new SignedInt64Member();
+		IndexedDataSource<?,SignedInt64Member> store =
+				new ArrayStorageSignedInt64<SignedInt64Member>(longs.length, type);
+		for (int i = 0; i < longs.length; i++) {
+			type.setV(longs[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	public static IndexedDataSource<?,SignedInt8Member> allocateFloats(float[] floats) {
+		throw new UnsupportedOperationException("must implement when 32 bit floats supported");
+		/*
+		Float32Member type = new Float32Member();
+		IndexedDataSource<?,Float32Member> store =
+				new ArrayStorageFloat32<Float32Member>(floats.length, type);
+		for (int i = 0; i < floats.length; i++) {
+			type.setV(floats[i]);
+			store.set(i, type);
+		}
+		return store;
+		*/
+	}
+	
+	public static IndexedDataSource<?,Float64Member> allocateDoubles(double[] doubles) {
+		Float64Member type = new Float64Member();
+		IndexedDataSource<?,Float64Member> store =
+				new ArrayStorageFloat64<Float64Member>(doubles.length, type);
+		for (int i = 0; i < doubles.length; i++) {
+			type.setV(doubles[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	public static IndexedDataSource<?,BooleanMember> allocateBooleans(boolean[] booleans) {
+		BooleanMember type = new BooleanMember();
+		IndexedDataSource<?,BooleanMember> store =
+				new ArrayStorageBoolean<BooleanMember>(booleans.length, type);
+		for (int i = 0; i < booleans.length; i++) {
+			type.setV(booleans[i]);
+			store.set(i, type);
+		}
+		return store;
 	}
 
 }
