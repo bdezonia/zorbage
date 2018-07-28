@@ -28,7 +28,9 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -49,20 +51,51 @@ public class SumSquareCount {
 	 * @param sumSqDevs
 	 * @param count
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U>,U>
+	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Ordered<U> & Invertible<U>,U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U avg, U sumSqDevs, U count)
 	{
-		U tmp = grp.construct();
+		U minDev = grp.construct();
+		U maxDev = grp.construct();
+		U val = grp.construct();
+		U cnt = grp.construct();
 		U one = grp.construct();
 		grp.unity().call(one);
-		grp.zero().call(sumSqDevs);
-		grp.zero().call(count);
 		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			grp.subtract().call(tmp, avg, tmp);
-			grp.multiply().call(tmp, tmp, tmp);
-			grp.add().call(sumSqDevs, tmp, sumSqDevs);
-			grp.add().call(count, one, count);
+			storage.get(i, val);
+			grp.subtract().call(val, avg, val);
+			if (grp.isLess().call(val,minDev))
+				grp.assign().call(val, minDev);
+			if (grp.isGreater().call(val, maxDev))
+				grp.assign().call(val, maxDev);
+			grp.add().call(cnt, one, cnt);
 		}
+		if (grp.isEqual().call(minDev, maxDev)) {
+			grp.zero().call(sumSqDevs);
+			grp.assign().call(cnt, count);
+			return;
+		}
+		U range = grp.construct();
+		U factor = grp.construct();
+		grp.subtract().call(maxDev, minDev, range);
+		U newRange = grp.construct("128");
+		U newOrigin = grp.construct("-64");
+		grp.divide().call(newRange, range, factor);
+		U sum = grp.construct();
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, val);
+			grp.subtract().call(val, avg, val);
+			grp.subtract().call(val, minDev, val);
+			grp.multiply().call(val, factor, val);
+			grp.add().call(val, newOrigin, val);
+			grp.multiply().call(val, val, val);
+			grp.add().call(sum, val, sum);
+		}
+		grp.divide().call(sum, factor, sum);
+		//grp.multiply().call(minDev, count, val);
+		//grp.add().call(sum, val, sum);
+		grp.divide().call(sum, factor, sum);
+		grp.assign().call(sum, sumSqDevs);
+		grp.assign().call(cnt, count);
 	}
+	
 }

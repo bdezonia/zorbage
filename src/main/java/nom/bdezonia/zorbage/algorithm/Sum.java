@@ -30,7 +30,7 @@ import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
-//TODO; for a floating sum a Neumaier sum might be best.
+//TODO: for a floating sum a Neumaier sum might be best.
 
 //function NeumaierSum(input)
 //var sum = input[1]
@@ -75,7 +75,10 @@ public class Sum {
 		sum(grp, start, count, storage, result);
 	}
 
-	//Note: for now will just recursively sum to eliminate some roundoff errors.
+	// Note: for now will just recursively sum to eliminate some roundoff errors. This is not
+	// great for summing a virtual storage structure. Maybe need a StraightlineSum algo for
+	// summing virtual structures. Maybe all sum oriented algos could switch on a boolean or
+	// on the passed storage type's backing data strategy.
 	
 	private static <T extends Group<T,U> & Addition<U>, U>
 		void sum(T grp, long start, long count, IndexedDataSource<?,U> storage, U result)
