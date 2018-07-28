@@ -79,6 +79,9 @@ public class Sum {
 	// great for summing a virtual storage structure. Maybe need a StraightlineSum algo for
 	// summing virtual structures. Maybe all sum oriented algos could switch on a boolean or
 	// on the passed storage type's backing data strategy.
+	// Later note: by using print statements where array is accessed it seems this code will
+	// visit a list in ascending order in all cases. So it is fine for a virtual backed data
+	// structure.
 	
 	private static <T extends Group<T,U> & Addition<U>, U>
 		void sum(T grp, long start, long count, IndexedDataSource<?,U> storage, U result)
