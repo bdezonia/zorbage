@@ -53,8 +53,7 @@ public class Variance {
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		if (storage.size() == 0 || storage.size() == 1) {
-			U zero = grp.construct();
-			grp.assign().call(zero, result);
+			grp.zero().call(result);
 			return;
 		}
 		U avg = grp.construct();
