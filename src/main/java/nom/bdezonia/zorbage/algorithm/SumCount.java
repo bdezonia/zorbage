@@ -31,22 +31,6 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
-// TODO; for a floating sum a Neumaier sum might be best.
-
-//function NeumaierSum(input)
-//var sum = input[1]
-//var c = 0.0                 // A running compensation for lost low-order bits.
-//for i = 2 to input.length do
-//    var t = sum + input[i]
-//    if |sum| >= |input[i]| do
-//        c += (sum - t) + input[i] // If sum is bigger, low-order digits of input[i] are lost.
-//    else
-//        c += (input[i] - t) + sum // Else low-order digits of sum are lost
-//    sum = t
-//return sum + c              // Correction only applied once in the very end
-	
-// Note: for now will just recursively sum to eliminate some roundoff errors.
-		
 /**
  * 
  * @author Barry DeZonia
@@ -66,15 +50,18 @@ public class SumCount {
 	public static <T extends Group<T,U> & Addition<U> & Unity<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U sum, U count)
 	{
+		Sum.compute(grp, storage, sum);
+
+		// This avoids a need to compute a value from a long size at the expense of calculation.
+		// Maybe this will get optimized away. If not then need to build a construct from long
+		// capability that succeeds if long fits in U's range else throws exception.
+		
 		U tmp = grp.construct();
 		U one = grp.construct();
 		grp.unity().call(one);
-		grp.zero().call(sum);
-		grp.zero().call(count);
 		for (long i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			grp.add().call(sum, tmp, sum);
-			grp.add().call(count, one, count);
+			grp.add().call(tmp, one, tmp);
 		}
+		grp.assign().call(tmp, count);
 	}
 }
