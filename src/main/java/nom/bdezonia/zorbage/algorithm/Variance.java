@@ -52,23 +52,19 @@ public class Variance {
 	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Ordered<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
+		if (storage.size() == 0 || storage.size() == 1) {
+			U zero = grp.construct();
+			grp.assign().call(zero, result);
+			return;
+		}
 		U avg = grp.construct();
 		U sum = grp.construct();
 		U count = grp.construct();
-		U zero = grp.construct();
 		U one = grp.construct();
 		grp.unity().call(one);
 		Average.compute(grp, storage, avg);
 		SumSquareCount.compute(grp, storage, avg, sum, count);
-		if (grp.isEqual().call(count, zero)) {
-			grp.assign().call(zero, result);
-		}
-		else if (grp.isEqual().call(count, one)) {
-			grp.assign().call(zero, result);
-		}
-		else {
-			grp.subtract().call(count, one, count);
-			grp.divide().call(sum, count, result);
-		}
+		grp.subtract().call(count, one, count);
+		grp.divide().call(sum, count, result);
 	}
 }

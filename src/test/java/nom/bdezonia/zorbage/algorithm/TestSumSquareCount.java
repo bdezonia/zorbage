@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestSumSquareCount {
 	
-	private final double tol = 0.00000000001;
+	private final double tol = 0.000000001;
 	
 	@Test
 	public void test() {
