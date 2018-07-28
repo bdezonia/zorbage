@@ -55,11 +55,20 @@ public class Variance {
 		U avg = grp.construct();
 		U sum = grp.construct();
 		U count = grp.construct();
+		U zero = grp.construct();
 		U one = grp.construct();
 		grp.unity().call(one);
 		Average.compute(grp, storage, avg);
 		SumSquareCount.compute(grp, storage, avg, sum, count);
-		grp.subtract().call(count, one, count);
-		grp.divide().call(sum, count, result);
+		if (grp.isEqual().call(count, zero)) {
+			grp.assign().call(zero, result);
+		}
+		else if (grp.isEqual().call(count, one)) {
+			grp.assign().call(zero, result);
+		}
+		else {
+			grp.subtract().call(count, one, count);
+			grp.divide().call(sum, count, result);
+		}
 	}
 }
