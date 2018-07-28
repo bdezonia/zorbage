@@ -62,9 +62,18 @@ public class Sum {
 	public static <T extends Group<T,U> & Addition<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
-		sum(grp,storage,0,storage.size(),result);
+		compute(grp, storage, 0, storage.size(), result);
 	}
 	
+	public static <T extends Group<T,U> & Addition<U>, U>
+		void compute(T grp, IndexedDataSource<?,U> storage, long start, long count, U result)
+	{
+		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Sum method");
+		if (count < 0) throw new IllegalArgumentException("count must be >= 0 in Sum method");
+		if (start + count > storage.size()) throw new IllegalArgumentException("start+count must be <= storage length in Sum method");
+		sum(grp, storage, start, count, result);
+	}
+
 	//Note: for now will just recursively sum to eliminate some roundoff errors.
 	
 	private static <T extends Group<T,U> & Addition<U>, U>
