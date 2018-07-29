@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  */
 public class SumSquareCount {
 
+	// TODO: maybe based upon data characteristics we can choose between impl 1 and impl 3
+	
 	private SumSquareCount() {}
 	
 	/**
@@ -54,6 +56,25 @@ public class SumSquareCount {
 	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Ordered<U> & Invertible<U>,U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U avg, U sumSqDevs, U count)
 	{
+		/* original: impl 1: naive but quick
+		
+		U tmp = grp.construct();
+		U one = grp.construct();
+		grp.unity().call(one);
+		grp.zero().call(sumSqDevs);
+		grp.zero().call(count);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			grp.subtract().call(tmp, avg, tmp);
+			grp.multiply().call(tmp, tmp, tmp);
+			grp.add().call(sumSqDevs, tmp, sumSqDevs);
+			grp.add().call(count, one, count);
+		}
+
+		 */
+		
+		/* first optimization: not fully working: impl 2
+		
 		U minDev = grp.construct();
 		U maxDev = grp.construct();
 		U val = grp.construct();
@@ -96,6 +117,100 @@ public class SumSquareCount {
 		grp.divide().call(sum, factor, sum);
 		grp.assign().call(sum, sumSqDevs);
 		grp.assign().call(cnt, count);
+		 */
+		
+		/* second optimization: based on some algebra I did: impl 3
+		 * The idea behind it is to scale big numbers into manageable range to avoid overflows
+		 * if possible. Might have an accuracy cost.
+		 */
+
+		if (storage.size() == 0)
+			throw new IllegalArgumentException("cannot compute values for empty list");
+		
+		U tmp = grp.construct();
+		U y = grp.construct();
+		U cnt = grp.construct();
+		U one = grp.construct();
+		U two = grp.construct();
+		grp.unity().call(one);
+		grp.add().call(one, one, two);
+
+		U val = grp.construct();
+		U a = grp.construct();
+		U m = grp.construct();
+		U b = grp.construct("-128");
+		U range = grp.construct("256");
+		U sumY = grp.construct();
+		U sumYsq = grp.construct();
+		U min = grp.construct();
+		U max = grp.construct();
+		Average.compute(grp, storage, a);
+		
+		grp.add().call(cnt, one, cnt);
+		storage.get(0, val);
+		grp.assign().call(val, min);
+		grp.assign().call(val, max);
+		for (long i = 1; i < storage.size(); i++) {
+			grp.add().call(cnt, one, cnt);
+			storage.get(i, val);
+			//grp.subtract().call(val, a, val);
+			if (grp.isLess().call(val, min))
+				grp.assign().call(val, min);
+			if (grp.isGreater().call(val, max))
+				grp.assign().call(val, max);
+		}
+
+		if (grp.isGreaterEqual().call(min, max)) {
+			grp.assign().call(cnt, count);
+			grp.zero().call(sumSqDevs);
+			return;
+		}
+
+		grp.subtract().call(max, min, tmp);
+		grp.divide().call(tmp, range, m);
+
+		for (long i = 0; i < storage.size(); i++) {
+			storage.get(i, val);
+			grp.subtract().call(val, b, val);
+			grp.divide().call(val, m, y);
+			grp.add().call(sumY, y, sumY);
+			grp.multiply().call(y, y, y);
+			grp.add().call(sumYsq, y, sumYsq);
+		}
+		
+		U term = grp.construct();
+		
+		grp.zero().call(tmp);
+		
+		grp.multiply().call(a, a, term);
+		grp.multiply().call(term, cnt, term);
+		grp.add().call(tmp, term, tmp);
+		
+		grp.multiply().call(b, b, term);
+		grp.multiply().call(term, cnt, term);
+		grp.add().call(tmp, term, tmp);
+		
+		grp.multiply().call(two, a, term);
+		grp.multiply().call(term, b, term);
+		grp.multiply().call(term, cnt, term);
+		grp.subtract().call(tmp, term, tmp);
+		
+		grp.multiply().call(m, m, term);
+		grp.multiply().call(term, sumYsq, term);
+		grp.add().call(tmp, term, tmp);
+		
+		grp.multiply().call(two, m, term);
+		grp.multiply().call(term, b, term);
+		grp.multiply().call(term, sumY, term);
+		grp.add().call(tmp, term, tmp);
+		
+		grp.multiply().call(two, m, term);
+		grp.multiply().call(term, a, term);
+		grp.multiply().call(term, sumY, term);
+		grp.subtract().call(tmp, term, tmp);
+		
+		grp.assign().call(cnt, count);
+		grp.assign().call(tmp, sumSqDevs);
 	}
 	
 }

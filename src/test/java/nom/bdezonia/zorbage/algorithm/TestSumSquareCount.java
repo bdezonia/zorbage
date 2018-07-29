@@ -33,7 +33,6 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
@@ -43,7 +42,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestSumSquareCount {
 	
-	private final double tol = 0.000000001;
+	private final double tol = 0.00000001;
 	
 	@Test
 	public void test() {
@@ -89,6 +88,16 @@ public class TestSumSquareCount {
 		
 		IndexedDataSource<?,Float64Member> data = ArrayStorage.allocateDoubles(nums);
 		Float64Member tmp = G.DBL.construct();
+		Float64Member sumSqDevs = G.DBL.construct();
+		Float64Member count = G.DBL.construct();
+		Float64Member avg = G.DBL.construct();
+		Average.compute(G.DBL, data, avg);
+		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
+		double expSumSq = 0;
+		for (int i = 0; i < nums.length; i++) {
+			expSumSq += (nums[i] - avg.v()) * (nums[i] - avg.v());
+		}
+		assertEquals(expSumSq,sumSqDevs.v(),0.1);
 		StdDev.compute(G.DBL, data, tmp);
 		assertEquals(13384.333819806,tmp.v(),tol);
 		// value according to https://www.calculator.net/statistics-calculator.html
