@@ -26,13 +26,18 @@
  */
 package nom.bdezonia.zorbage.type.data.bigint;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algorithm.MinMaxElement;
+import nom.bdezonia.zorbage.algorithm.Shuffle;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageGeneric;
 
 /**
  * 
@@ -50,5 +55,25 @@ public class TestUnboundedIntGroup {
 		G.BIGINT.multiply().call(a,b,product);
 		
 		assertTrue(new BigInteger("405828369621610135508").equals(product.v()));
+	}
+	
+	@Test
+	public void minmax() {
+		IndexedDataSource<?, UnboundedIntMember> list =
+				new ArrayStorageGeneric<UnboundedIntGroup,UnboundedIntMember>(5000, G.BIGINT);
+		UnboundedIntMember a = G.BIGINT.construct("1234567890");
+		UnboundedIntMember b = G.BIGINT.construct("55");
+		for (long i = 0, j = list.size()-1; i < list.size()/2; i++,j--) {
+			list.set(i, a);
+			list.set(j, b);
+			G.BIGINT.pred().call(a, a);
+			G.BIGINT.succ().call(b, b);
+		}
+		Shuffle.compute(G.BIGINT, list);
+		UnboundedIntMember min = G.BIGINT.construct();
+		UnboundedIntMember max = G.BIGINT.construct();
+		MinMaxElement.compute(G.BIGINT, list, min, max);
+		assertEquals(BigInteger.valueOf(55), min.v());
+		assertEquals(BigInteger.valueOf(1234567890), max.v());
 	}
 }
