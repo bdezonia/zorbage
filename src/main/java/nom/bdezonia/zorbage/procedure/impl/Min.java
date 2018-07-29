@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
@@ -36,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class Min<T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+public class Min<T extends Group<T,U> & Ordered<U>, U>
 	implements Procedure<U>
 {
 	private final T group;
@@ -51,8 +50,8 @@ public class Min<T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("min undefined for empty list");
 		U min = group.construct();
-		group.maxBound().call(min);
-		for (int i = 0; i < inputs.length; i++) {
+		group.assign().call(inputs[0],min);
+		for (int i = 1; i < inputs.length; i++) {
 			if (group.isLess().call(inputs[i], min)) {
 				group.assign().call(inputs[i], min);
 			}

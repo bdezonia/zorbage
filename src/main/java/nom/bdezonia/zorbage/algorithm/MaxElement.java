@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -46,7 +45,7 @@ public class MaxElement {
 	 * @param storage
 	 * @param max
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U max)
 	{
 		compute(grp, 0, storage.size(), storage, max);
@@ -60,14 +59,14 @@ public class MaxElement {
 	 * @param storage
 	 * @param max
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U max)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("max undefined for empty list");
 		U tmp = grp.construct();
-		grp.minBound().call(max);
-		for (long i = 0; i < count; i++) {
+		storage.get(start, max);
+		for (long i = 1; i < count; i++) {
 			storage.get(start+i, tmp);
 			if (grp.isGreater().call(tmp, max)) {
 				grp.assign().call(tmp, max);

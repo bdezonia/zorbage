@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -47,7 +46,7 @@ public class MinMaxElement {
 	 * @param min
 	 * @param max
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U min, U max)
 	{
 		compute(grp, 0, storage.size(), storage, min, max);
@@ -62,18 +61,18 @@ public class MinMaxElement {
 	 * @param min
 	 * @param max
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min, U max)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("minmax undefined for empty list");
 		U tmp1 = grp.construct();
 		U tmp2 = grp.construct();
-		grp.maxBound().call(min);
-		grp.minBound().call(max);
-		long i = 0;
-		if ((count & 1) == 1) {
-			storage.get(start, tmp1);
+		storage.get(start, min);
+		grp.assign().call(min, max);
+		long i = 1;
+		if ((count & 1) == 0) {
+			storage.get(start+1, tmp1);
 			if (grp.isGreater().call(tmp1, max)) {
 				grp.assign().call(tmp1, max);
 			}

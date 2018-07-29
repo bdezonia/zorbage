@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -46,7 +45,7 @@ public class MinElement {
 	 * @param storage
 	 * @param min
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U min)
 	{
 		compute(grp, 0, storage.size(), storage, min);
@@ -60,14 +59,14 @@ public class MinElement {
 	 * @param storage
 	 * @param min
 	 */
-	public static <T extends Group<T,U> & Ordered<U> & Bounded<U>, U>
+	public static <T extends Group<T,U> & Ordered<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("min undefined for empty list");
 		U tmp = grp.construct();
-		grp.maxBound().call(min);
-		for (long i = 0; i < count; i++) {
+		storage.get(start, min);
+		for (long i = 1; i < count; i++) {
 			storage.get(start+i, tmp);
 			if (grp.isLess().call(tmp, min)) {
 				grp.assign().call(tmp, min);
