@@ -1259,6 +1259,8 @@ public class Float64Group
 	}
 
 	// TODO: are the following two correctly divMod() or accidentally quotRem(). Investigate.
+	// Later edit: I have proven by junit test that divMod() behavior matches ints. Will
+	// need to implement quotRem() at some point.
 	
 	private final Procedure3<Float64Member,Float64Member,Float64Member> DIV =
 			new Procedure3<Float64Member, Float64Member, Float64Member>()
