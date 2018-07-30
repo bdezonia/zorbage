@@ -166,6 +166,10 @@ public class SumSquareCount {
 			return;
 		}
 
+		// TODO I am scaling min/max to -128/128. I used to do so with deviations but here I am
+		// doing with raw values. If dataset is not very symmetric this might be wrong. Maybe I
+		// need to go back to doing deviations. Investigate.
+		
 		grp.subtract().call(max, min, tmp);
 		grp.divide().call(tmp, range, m);
 

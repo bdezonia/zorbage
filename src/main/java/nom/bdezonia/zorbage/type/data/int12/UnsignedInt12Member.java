@@ -124,7 +124,7 @@ public class UnsignedInt12Member
 
 	@Override
 	public void toValue(long[] arr, int index, int offset) {
-		long oldVals, newVals;
+		long oldVals;
 		if (offset == 60) {
 			// 4 bits in 1st long
 			oldVals = arr[index] & ~(0xfL << 60);
