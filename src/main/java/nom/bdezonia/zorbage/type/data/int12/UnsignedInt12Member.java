@@ -133,7 +133,7 @@ public class UnsignedInt12Member
 		if (offset == 60) {
 			// 4 bits in 1st long
 			oldVals = arr[index] & ~(0xfL << 60);
-			v = (short) (oldVals >> 60);
+			v = (short) (oldVals >>> 60);
 			// 8 bits in 2nd long
 			oldVals = arr[index+1] & ~(0xffL);
 			v |= (short) (oldVals << 4);
@@ -141,7 +141,7 @@ public class UnsignedInt12Member
 		else if (offset == 56) {
 			// 8 bits in 1st long
 			oldVals = arr[index] & ~(0xffL << 56);
-			v = (short) (oldVals >> 56);
+			v = (short) (oldVals >>> 56);
 			// 4 bits in 2nd long
 			oldVals = arr[index+1] & ~(0xfL);
 			v |= (short) (oldVals << 8);
@@ -149,7 +149,7 @@ public class UnsignedInt12Member
 		else {
 			// 12 bits in 1st long
 			oldVals = arr[index] & ~(0xfffL << offset);
-			v = (short) (oldVals >> offset);
+			v = (short) (oldVals >>> offset);
 		}
 	}
 
