@@ -478,6 +478,8 @@ public class UnsignedInt12Group
 	{
 		@Override
 		public void call(UnsignedInt12Member a, UnsignedInt12Member b, UnsignedInt12Member c) {
+			if (a.v == 0 && b.v == 0)
+				throw new IllegalArgumentException("0^0 is not a number");
 			c.setV((int)Math.pow(a.v, b.v));
 		}
 	};
