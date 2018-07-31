@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
 
@@ -55,14 +56,10 @@ public class UnsignedInt12Member
 	UniversalRepresentation, NumberMember<UnsignedInt12Member>,
 	PrimitiveConversion
 {
-	private short v;
+	short v;
 	
 	private static final BigInteger MAX_BIG = BigInteger.valueOf(0x0fff);
 
-	private void setV(int val) {
-		v = (short) (val & 0x0fff);
-	}
-	
 	public UnsignedInt12Member() {
 		v = 0;
 	}
@@ -71,6 +68,13 @@ public class UnsignedInt12Member
 		set(other);
 	}
 
+	public UnsignedInt12Member(String value) {
+		TensorStringRepresentation rep = new TensorStringRepresentation(value);
+		OctonionRepresentation val = rep.firstValue();
+		int x = val.r().intValue();
+		setV(x);
+	}
+	
 	@Override
 	public void v(UnsignedInt12Member value) {
 		get(value);
@@ -81,6 +85,10 @@ public class UnsignedInt12Member
 		set(value);
 	}
 
+	void setV(int val) {
+		v = (short) (val & 0x0fff);
+	}
+	
 	@Override
 	public String toString() {
 		return String.valueOf(v);
