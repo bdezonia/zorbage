@@ -82,6 +82,11 @@ public class UnsignedInt12Member
 	}
 
 	@Override
+	public String toString() {
+		return String.valueOf(v);
+	}
+
+	@Override
 	public void getValue(TensorOctonionRepresentation rep) {
 		rep.setValue(new OctonionRepresentation(new BigDecimal(v)));
 	}
