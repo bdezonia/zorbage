@@ -48,13 +48,13 @@ import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
  * @author Barry DeZonia
  *
  */
-public class UnsignedInt12Member
+public final class UnsignedInt12Member
 	implements
-	BitCoder<UnsignedInt12Member>,
-	Allocatable<UnsignedInt12Member>, Duplicatable<UnsignedInt12Member>,
-	Settable<UnsignedInt12Member>, Gettable<UnsignedInt12Member>,
-	UniversalRepresentation, NumberMember<UnsignedInt12Member>,
-	PrimitiveConversion
+		BitCoder<UnsignedInt12Member>,
+		Allocatable<UnsignedInt12Member>, Duplicatable<UnsignedInt12Member>,
+		Settable<UnsignedInt12Member>, Gettable<UnsignedInt12Member>,
+		UniversalRepresentation, NumberMember<UnsignedInt12Member>,
+		PrimitiveConversion
 {
 	short v;
 	
