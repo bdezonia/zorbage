@@ -44,19 +44,55 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 public class TestUnsignedInt12 {
 	
 	@Test
-	public void test() {
+	public void testStorageMethods() {
 		
 		IndexedDataSource<?, UnsignedInt12Member> data =
-				ArrayStorage.allocate(100, new UnsignedInt12Member());
-		UnsignedInt12Member val = new UnsignedInt12Member();
+				ArrayStorage.allocate(6000, new UnsignedInt12Member());
+		UnsignedInt12Member in = new UnsignedInt12Member();
+		UnsignedInt12Member out = new UnsignedInt12Member();
+		in.setV(0);
 		for (long i = 0; i < data.size(); i++) {
-			data.get(i, val);
-			data.set(i, val);
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(0, out.v);
+		}
+		for (long i = 0; i < data.size(); i++) {
+			in.setV((int)i);
+			data.set(i, in);
+			out.setV(in.v-1);;
+			data.get(i, out);
+			assertEquals(in.v, out.v);
+		}
+		in.setV(0);
+		for (long i = 0; i < data.size(); i++) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(0, out.v);
+		}
+		for (long i = data.size()-1; i >= 0; i--) {
+			in.setV((int)i);
+			data.set(i, in);
+			out.setV(in.v-1);;
+			data.get(i, out);
+			assertEquals(in.v, out.v);
+		}
+		in.setV(0);
+		for (long i = data.size()-1; i >= 0; i--) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(0, out.v);
+		}
+		for (long i = data.size()-1; i >= 0; i--) {
+			in.setV((int)i);
+			data.set(i, in);
+			out.setV(in.v-1);;
+			data.get(i, out);
+			assertEquals(in.v, out.v);
 		}
 	}
 
 	@Test
-	public void exercise() {
+	public void testMathematicalMethods() {
 		UnsignedInt12Member a = G.UINT12.construct();
 		UnsignedInt12Member b = G.UINT12.construct();
 		UnsignedInt12Member c = G.UINT12.construct();

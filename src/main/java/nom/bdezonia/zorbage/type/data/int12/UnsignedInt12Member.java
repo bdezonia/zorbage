@@ -139,24 +139,24 @@ public class UnsignedInt12Member
 	public void toValue(long[] arr, int index, int offset) {
 		long oldVals;
 		if (offset == 60) {
-			// 4 bits in 1st long
-			oldVals = arr[index] & ~(0xfL << 60);
+			// last 4 bits in 1st long
+			oldVals = arr[index] & (0xfL << 60);
 			v = (short) (oldVals >>> 60);
-			// 8 bits in 2nd long
-			oldVals = arr[index+1] & ~(0xffL);
+			// first 8 bits in 2nd long
+			oldVals = arr[index+1] & (0xffL);
 			v |= (short) (oldVals << 4);
 		}
 		else if (offset == 56) {
-			// 8 bits in 1st long
-			oldVals = arr[index] & ~(0xffL << 56);
+			// last 8 bits in 1st long
+			oldVals = arr[index] & (0xffL << 56);
 			v = (short) (oldVals >>> 56);
-			// 4 bits in 2nd long
-			oldVals = arr[index+1] & ~(0xfL);
+			// first 4 bits in 2nd long
+			oldVals = arr[index+1] & (0xfL);
 			v |= (short) (oldVals << 8);
 		}
 		else {
 			// 12 bits in 1st long
-			oldVals = arr[index] & ~(0xfffL << offset);
+			oldVals = arr[index] & (0xfffL << offset);
 			v = (short) (oldVals >>> offset);
 		}
 	}
@@ -165,23 +165,23 @@ public class UnsignedInt12Member
 	public void toArray(long[] arr, int index, int offset) {
 		long oldVals, newVals;
 		if (offset == 60) {
-			// 4 bits in 1st long
+			// last 4 bits in 1st long
 			oldVals = arr[index] & ~(0xfL << 60);
-			newVals = ((long)v) << 60;
+			newVals = ((long)v & 0xf) << 60;
 			arr[index] = newVals | oldVals;
-			// 8 bits in 2nd long
+			// first 8 bits in 2nd long
 			oldVals = arr[index+1] & ~(0xffL);
-			newVals = ((long)v) & 0xffL;
+			newVals = ((long)v >>> 4) & 0xffL;
 			arr[index+1] = newVals | oldVals;
 		}
 		else if (offset == 56) {
-			// 8 bits in 1st long
+			// last 8 bits in 1st long
 			oldVals = arr[index] & ~(0xffL << 56);
-			newVals = ((long)v) << 56;
+			newVals = ((long)v & 0xff) << 56;
 			arr[index] = newVals | oldVals;
-			// 4 bits in 2nd long
+			// first 4 bits in 2nd long
 			oldVals = arr[index+1] & ~(0xfL);
-			newVals = ((long)v) & 0xfL;
+			newVals = ((long)v >>> 8) & 0xfL;
 			arr[index+1] = newVals | oldVals;
 		}
 		else {
