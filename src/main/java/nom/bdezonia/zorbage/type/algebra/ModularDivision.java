@@ -51,4 +51,7 @@ public interface ModularDivision<U> {
 	//   http://fortranwiki.org/fortran/show/mod
 	//     and
 	//   http://fortranwiki.org/fortran/show/modulo
+	
+	// I wrote programs to compare ruby and fortran. They are the same. Can use the ruby code as
+	// listed in that ruby page to implement remainder. Pretty sure quot is same as div.
 }
