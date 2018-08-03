@@ -122,6 +122,20 @@ public class BooleanGroup
 		return NOT;
 	}
 	
+	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> ANDNOT =
+			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
+	{
+		@Override
+		public void call(BooleanMember a, BooleanMember b, BooleanMember c) {
+			c.setV(a.v() && !b.v());
+		}
+	};
+
+	@Override
+	public Procedure3<BooleanMember, BooleanMember, BooleanMember> logicalAndNot() {
+		return ANDNOT;
+	}
+
 	private final Procedure4<BooleanMember, BooleanMember, BooleanMember, BooleanMember> TERN =
 			new Procedure4<BooleanMember, BooleanMember, BooleanMember, BooleanMember>()
 	{

@@ -39,4 +39,5 @@ public interface LogicalOperations<U> {
 	Procedure3<U,U,U> logicalOr();
 	Procedure3<U,U,U> logicalXor();
 	Procedure2<U,U> logicalNot();
+	Procedure3<U,U,U> logicalAndNot();
 }
