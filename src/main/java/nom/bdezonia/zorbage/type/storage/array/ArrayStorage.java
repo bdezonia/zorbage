@@ -52,11 +52,6 @@ public class ArrayStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
 
-		// Best if first: maybe preferred by bit types over other encodings for
-		//   space reasons
-		if (type instanceof BitCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
-		}
 		if (type instanceof DoubleCoder<?>) {
 			return (IndexedDataSource<?,U>) new ArrayStorageFloat64(size, (DoubleCoder<U>)type);
 		}
@@ -75,12 +70,17 @@ public class ArrayStorage {
 		if (type instanceof BooleanCoder<?>) {
 			return (IndexedDataSource<?,U>) new ArrayStorageBoolean(size, (BooleanCoder<U>)type);
 		}
-		// Best if last as many types might support Bytes by default but prefer
+		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
 		if (type instanceof ByteCoder<?>) {
 			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder<U>)type);
 		}
 		
+		// Best if last: since bit types are slow
+		if (type instanceof BitCoder<?>) {
+			return (IndexedDataSource<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
+		}
+
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
 	}
 	
