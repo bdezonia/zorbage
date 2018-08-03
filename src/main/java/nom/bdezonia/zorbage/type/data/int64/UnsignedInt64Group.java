@@ -557,6 +557,20 @@ public class UnsignedInt64Group
 		return BITNOT;
 	}
 
+	private final Procedure3<UnsignedInt64Member,UnsignedInt64Member,UnsignedInt64Member> BITANDNOT =
+			new Procedure3<UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
+			c.v = a.v & ~b.v;
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt64Member,UnsignedInt64Member,UnsignedInt64Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> BITSHL =
 			new Procedure3<java.lang.Integer, UnsignedInt64Member, UnsignedInt64Member>()
 	{

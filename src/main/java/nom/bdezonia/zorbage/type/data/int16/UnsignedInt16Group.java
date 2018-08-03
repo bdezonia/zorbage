@@ -550,6 +550,20 @@ public class UnsignedInt16Group
 		return BITNOT;
 	}
 
+	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> BITANDNOT =
+			new Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV( a.v & ~b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> BITSHL =
 			new Procedure3<java.lang.Integer, UnsignedInt16Member, UnsignedInt16Member>()
 	{

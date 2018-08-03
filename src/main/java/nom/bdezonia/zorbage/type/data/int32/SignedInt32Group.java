@@ -544,6 +544,20 @@ public class SignedInt32Group
 		return BITNOT;
 	}
 
+	private final Procedure3<SignedInt32Member,SignedInt32Member,SignedInt32Member> BITANDNOT =
+			new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
+	{
+		@Override
+		public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+			c.setV( a.v() & ~b.v() );
+		}
+	};
+
+	@Override
+	public Procedure3<SignedInt32Member,SignedInt32Member,SignedInt32Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,SignedInt32Member,SignedInt32Member> BITSHL =
 			new Procedure3<java.lang.Integer, SignedInt32Member, SignedInt32Member>()
 	{

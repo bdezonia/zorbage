@@ -560,6 +560,20 @@ public class UnsignedInt12Group
 		return NOT;
 	}
 
+	private final Procedure3<UnsignedInt12Member, UnsignedInt12Member, UnsignedInt12Member> ANDNOT =
+			new Procedure3<UnsignedInt12Member, UnsignedInt12Member, UnsignedInt12Member>()
+	{
+		@Override
+		public void call(UnsignedInt12Member a, UnsignedInt12Member b, UnsignedInt12Member c) {
+			c.setV(a.v & ~b.v);
+		}
+	};
+
+	@Override
+	public Procedure3<UnsignedInt12Member, UnsignedInt12Member, UnsignedInt12Member> bitAndNot() {
+		return ANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member> SHL =
 			new Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member>()
 	{

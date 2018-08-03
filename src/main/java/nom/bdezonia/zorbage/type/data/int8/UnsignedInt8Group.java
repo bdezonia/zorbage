@@ -549,6 +549,20 @@ public class UnsignedInt8Group
 		return BITNOT;
 	}
 
+	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> BITANDNOT =
+			new Procedure3<UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV( a.v & ~b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> BITSHL =
 			new Procedure3<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
 	{

@@ -547,6 +547,21 @@ public class SignedInt16Group
 		return BITNOT;
 	}
 
+
+	private final Procedure3<SignedInt16Member,SignedInt16Member,SignedInt16Member> BITANDNOT =
+			new Procedure3<SignedInt16Member, SignedInt16Member, SignedInt16Member>()
+	{
+		@Override
+		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
+			c.setV( (short)(a.v() & ~b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt16Member,SignedInt16Member,SignedInt16Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,SignedInt16Member,SignedInt16Member> BITSHL =
 			new Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member>()
 	{

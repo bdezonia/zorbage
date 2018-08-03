@@ -717,6 +717,21 @@ public class UnsignedInt128Group
 		return BITNOT;
 	}
 
+	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> BITANDNOT = 
+			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			c.lo = a.lo & ~b.lo;
+			c.hi = a.hi & ~b.hi;
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	// TODO improve performance
 	
 	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> BITSHL = 

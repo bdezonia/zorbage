@@ -542,6 +542,20 @@ public class UnboundedIntGroup
 		return NOT;
 	}
 
+	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> BITANDNOT =
+			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			c.setV( a.v().and(b.v().not()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> MIN =
 			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
 	{

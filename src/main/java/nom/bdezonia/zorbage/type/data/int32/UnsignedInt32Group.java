@@ -552,6 +552,20 @@ public class UnsignedInt32Group
 		return BITNOT;
 	}
 
+	private final Procedure3<UnsignedInt32Member,UnsignedInt32Member,UnsignedInt32Member> BITANDNOT =
+			new Procedure3<UnsignedInt32Member, UnsignedInt32Member, UnsignedInt32Member>()
+	{
+		@Override
+		public void call(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
+			c.setV( a.v & ~b.v );
+		}
+	};
+	
+	@Override
+	public Procedure3<UnsignedInt32Member,UnsignedInt32Member,UnsignedInt32Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,UnsignedInt32Member,UnsignedInt32Member> BITSHL =
 			new Procedure3<java.lang.Integer, UnsignedInt32Member, UnsignedInt32Member>()
 	{

@@ -545,6 +545,20 @@ public class SignedInt8Group
 		return BITNOT;
 	}
 
+	private final Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> BITANDNOT =
+			new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV( (byte)(a.v() & ~b.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	private final Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> BITSHL =
 			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
 	{

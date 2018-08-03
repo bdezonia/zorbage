@@ -542,6 +542,20 @@ public class SignedInt64Group
 		}
 	};
 	
+	private final Procedure3<SignedInt64Member,SignedInt64Member,SignedInt64Member> BITANDNOT =
+			new Procedure3<SignedInt64Member, SignedInt64Member, SignedInt64Member>()
+	{
+		@Override
+		public void call(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
+			c.setV( a.v() & ~b.v() );
+		}
+	};
+	
+	@Override
+	public Procedure3<SignedInt64Member,SignedInt64Member,SignedInt64Member> bitAndNot() {
+		return BITANDNOT;
+	}
+
 	@Override
 	public Procedure2<SignedInt64Member,SignedInt64Member> bitNot() {
 		return BITNOT;
