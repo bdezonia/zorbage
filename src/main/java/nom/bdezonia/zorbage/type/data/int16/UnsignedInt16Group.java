@@ -390,18 +390,9 @@ public class UnsignedInt16Group
 		return LCM;
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> NORM =
-			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
-	{
-		@Override
-		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
-			assign().call(a, b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> norm() {
-		return NORM;
+		return ASSIGN;
 	}
 
 	private final Function1<Boolean,UnsignedInt16Member> EVEN =

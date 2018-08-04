@@ -393,18 +393,9 @@ public class SignedInt16Group
 		return LCM;
 	}
 
-	private final Procedure2<SignedInt16Member,SignedInt16Member> NORM =
-			new Procedure2<SignedInt16Member, SignedInt16Member>()
-	{
-		@Override
-		public void call(SignedInt16Member a, SignedInt16Member b) {
-			abs().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<SignedInt16Member,SignedInt16Member> norm() {
-		return NORM;
+		return ABS;
 	}
 
 	private final Function1<Boolean,SignedInt16Member> EVEN =

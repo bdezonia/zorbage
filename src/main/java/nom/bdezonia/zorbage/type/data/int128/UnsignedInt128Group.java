@@ -429,18 +429,9 @@ public class UnsignedInt128Group
 		return ABS;
 	}
 
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> NORM =
-			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
-	{
-		@Override
-		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			assign().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> norm() {
-		return NORM;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> DIV = 

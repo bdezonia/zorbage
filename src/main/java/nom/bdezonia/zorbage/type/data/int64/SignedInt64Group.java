@@ -393,18 +393,9 @@ public class SignedInt64Group
 		return LCM;
 	}
 
-	private final Procedure2<SignedInt64Member,SignedInt64Member> NORM =
-			new Procedure2<SignedInt64Member, SignedInt64Member>()
-	{
-		@Override
-		public void call(SignedInt64Member a, SignedInt64Member b) {
-			abs().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<SignedInt64Member,SignedInt64Member> norm() {
-		return NORM;
+		return ABS;
 	}
 
 	private final Function1<Boolean,SignedInt64Member> EVEN =

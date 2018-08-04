@@ -389,18 +389,9 @@ public class UnsignedInt8Group
 		return LCM;
 	}
 
-	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> NORM =
-			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
-	{
-		@Override
-		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
-			assign().call(from,to);
-		}
-	};
-
 	@Override
 	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> norm() {
-		return NORM;
+		return ASSIGN;
 	}
 
 	private final Function1<Boolean,UnsignedInt8Member> EVEN =

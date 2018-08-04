@@ -390,18 +390,9 @@ public class SignedInt32Group
 		return LCM;
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> NORM =
-			new Procedure2<SignedInt32Member, SignedInt32Member>()
-	{
-		@Override
-		public void call(SignedInt32Member a, SignedInt32Member b) {
-			abs().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<SignedInt32Member,SignedInt32Member> norm() {
-		return NORM;
+		return ABS;
 	}
 
 	private final Function1<Boolean,SignedInt32Member> EVEN =

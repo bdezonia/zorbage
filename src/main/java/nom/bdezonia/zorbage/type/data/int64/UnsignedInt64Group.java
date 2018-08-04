@@ -397,18 +397,9 @@ public class UnsignedInt64Group
 		return LCM;
 	}
 
-	private final Procedure2<UnsignedInt64Member,UnsignedInt64Member> NORM =
-			new Procedure2<UnsignedInt64Member, UnsignedInt64Member>()
-	{
-		@Override
-		public void call(UnsignedInt64Member a, UnsignedInt64Member b) {
-			assign().call(a, b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt64Member,UnsignedInt64Member> norm() {
-		return NORM;
+		return ASSIGN;
 	}
 
 	private final Function1<Boolean,UnsignedInt64Member> EVEN =

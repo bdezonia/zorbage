@@ -392,18 +392,9 @@ public class UnsignedInt32Group
 		return LCM;
 	}
 
-	private final Procedure2<UnsignedInt32Member,UnsignedInt32Member> NORM =
-			new Procedure2<UnsignedInt32Member, UnsignedInt32Member>()
-	{
-		@Override
-		public void call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			assign().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt32Member,UnsignedInt32Member> norm() {
-		return NORM;
+		return ASSIGN;
 	}
 
 	private final Function1<Boolean,UnsignedInt32Member> EVEN =

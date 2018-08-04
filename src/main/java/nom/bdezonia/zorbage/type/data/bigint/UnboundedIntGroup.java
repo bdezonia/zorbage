@@ -388,18 +388,9 @@ public class UnboundedIntGroup
 		return LCM;
 	}
 
-	private final Procedure2<UnboundedIntMember,UnboundedIntMember> NRM =
-			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
-	{
-		@Override
-		public void call(UnboundedIntMember a, UnboundedIntMember b) {
-			abs().call(a,b);
-		}
-	};
-			
 	@Override
 	public Procedure2<UnboundedIntMember,UnboundedIntMember> norm() {
-		return NRM;
+		return ABS;
 	}
 
 	private final Function1<Boolean,UnboundedIntMember> EV =
