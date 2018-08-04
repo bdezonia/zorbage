@@ -100,7 +100,7 @@ public class QuaternionFloat64Matrix
 		public void call(java.lang.Integer power, QuaternionFloat64MatrixMember a,
 				QuaternionFloat64MatrixMember b)
 		{
-			MatrixPower.compute(power, G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
+			MatrixPower.compute(power, G.QDBL, G.QDBL_RMOD, G.QDBL_MAT, a, b);
 		}
 	};
 	
@@ -367,7 +367,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			MatrixInvert.compute(G.QDBL, G.QDBL_MOD, G.QDBL_MAT, a, b);
+			MatrixInvert.compute(G.QDBL, G.QDBL_RMOD, G.QDBL_MAT, a, b);
 		}
 	};
 

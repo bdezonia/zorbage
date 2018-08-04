@@ -84,12 +84,12 @@ public class G {
 	//TODO public static final ComplexFloat64TensorProduct CDBL_TEN = new Float64TensorProduct();
 
 	public static final QuaternionFloat64Group QDBL = new QuaternionFloat64Group();
-	public static final QuaternionFloat64RModule QDBL_MOD = new QuaternionFloat64RModule();
+	public static final QuaternionFloat64RModule QDBL_RMOD = new QuaternionFloat64RModule();
 	public static final QuaternionFloat64Matrix QDBL_MAT = new QuaternionFloat64Matrix();
 	//TODO public static final QuaternionFloat64TensorProduct QDBL_TEN = new QuaternionFloat64TensorProduct();
 
 	public static final OctonionFloat64Group ODBL = new OctonionFloat64Group();
-	public static final OctonionFloat64RModule ODBL_MOD = new OctonionFloat64RModule();
+	public static final OctonionFloat64RModule ODBL_RMOD = new OctonionFloat64RModule();
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
 	//TODO public static final OctonionFloat64TensorProduct ODBL_TEN = new OctonionFloat64TensorProduct();
 

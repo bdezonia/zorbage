@@ -153,7 +153,7 @@ public class TestLUDecomp {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		QuaternionFloat64RModuleMember b = G.QDBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
+		QuaternionFloat64RModuleMember b = G.QDBL_RMOD.construct(StorageConstruction.MEM_ARRAY, 3);
 		val = G.QDBL.construct("{4,0,0,0}");
 		b.setV(0, val);
 		val = G.QDBL.construct("{10,0,0,0}");
@@ -161,11 +161,11 @@ public class TestLUDecomp {
 		val = G.QDBL.construct("{20,0,0,0}");
 		b.setV(2, val);
 		
-		QuaternionFloat64RModuleMember x = G.QDBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
+		QuaternionFloat64RModuleMember x = G.QDBL_RMOD.construct(StorageConstruction.MEM_ARRAY, 3);
 
 		LUDecomp.compute(G.QDBL, G.QDBL_MAT, a);
 
-		LUSolve.compute(G.QDBL, G.QDBL_MOD, a, b, x);
+		LUSolve.compute(G.QDBL, G.QDBL_RMOD, a, b, x);
 
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		
@@ -204,7 +204,7 @@ public class TestLUDecomp {
 		a.setV(2, 0, val);
 		a.setV(2, 2, val);
 		
-		OctonionFloat64RModuleMember b = G.ODBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
+		OctonionFloat64RModuleMember b = G.ODBL_RMOD.construct(StorageConstruction.MEM_ARRAY, 3);
 		val = G.ODBL.construct("{4,0,0,0,0,0,0,0}");
 		b.setV(0, val);
 		val = G.ODBL.construct("{10,0,0,0,0,0,0,0}");
@@ -212,11 +212,11 @@ public class TestLUDecomp {
 		val = G.ODBL.construct("{20,0,0,0,0,0,0,0}");
 		b.setV(2, val);
 		
-		OctonionFloat64RModuleMember x = G.ODBL_MOD.construct(StorageConstruction.MEM_ARRAY, 3);
+		OctonionFloat64RModuleMember x = G.ODBL_RMOD.construct(StorageConstruction.MEM_ARRAY, 3);
 
 		LUDecomp.compute(G.ODBL, G.ODBL_MAT, a);
 
-		LUSolve.compute(G.ODBL, G.ODBL_MOD, a, b, x);
+		LUSolve.compute(G.ODBL, G.ODBL_RMOD, a, b, x);
 
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		

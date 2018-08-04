@@ -236,7 +236,7 @@ public class OctonionFloat64RModule
 	{
 		@Override
 		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
-			CrossProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
+			CrossProduct.compute(G.ODBL_RMOD, G.ODBL, a, b, c);
 		}
 	};
 	
@@ -264,7 +264,7 @@ public class OctonionFloat64RModule
 	{
 		@Override
 		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-			PerpDotProduct.compute(G.ODBL_MOD, G.ODBL, a, b, c);
+			PerpDotProduct.compute(G.ODBL_RMOD, G.ODBL, a, b, c);
 		}
 	};
 	

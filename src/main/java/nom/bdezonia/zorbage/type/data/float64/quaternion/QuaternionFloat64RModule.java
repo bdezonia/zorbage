@@ -238,7 +238,7 @@ public class QuaternionFloat64RModule
 		public void call(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b,
 				QuaternionFloat64RModuleMember c)
 		{
-			CrossProduct.compute(G.QDBL_MOD, G.QDBL, a, b, c);
+			CrossProduct.compute(G.QDBL_RMOD, G.QDBL, a, b, c);
 		}
 	};
 
@@ -266,7 +266,7 @@ public class QuaternionFloat64RModule
 	{
 		@Override
 		public void call(QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b, QuaternionFloat64Member c) {
-			PerpDotProduct.compute(G.QDBL_MOD, G.QDBL, a, b, c);
+			PerpDotProduct.compute(G.QDBL_RMOD, G.QDBL, a, b, c);
 		}
 	};
 	

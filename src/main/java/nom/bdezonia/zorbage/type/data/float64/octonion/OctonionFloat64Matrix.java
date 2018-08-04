@@ -96,7 +96,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(java.lang.Integer power, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			MatrixPower.compute(power, G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
+			MatrixPower.compute(power, G.ODBL, G.ODBL_RMOD, G.ODBL_MAT, a, b);
 		}
 	};
 	
@@ -359,7 +359,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			MatrixInvert.compute(G.ODBL, G.ODBL_MOD, G.ODBL_MAT, a, b);
+			MatrixInvert.compute(G.ODBL, G.ODBL_RMOD, G.ODBL_MAT, a, b);
 		}
 	};
 	
