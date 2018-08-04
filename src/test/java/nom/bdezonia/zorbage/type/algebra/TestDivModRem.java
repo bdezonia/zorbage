@@ -100,6 +100,50 @@ public class TestDivModRem {
 
 		assertEquals((int)f3.v(), i3.v());
 		assertEquals((int)f4.v(), i4.v());
+		f1.setV(17);
+		f2.setV(3);
+		G.DBL.divMod().call(f1,f2,f3,f4);
+		
+		i1.setV(17);
+		i2.setV(3);
+		G.INT32.divMod().call(i1,i2,i3,i4);
+
+		assertEquals((int)f3.v(), i3.v());
+		assertEquals((int)f4.v(), i4.v());
+		
+		f1.setV(-17);
+		f2.setV(3);
+		G.DBL.divMod().call(f1,f2,f3,f4);
+		
+		i1.setV(-17);
+		i2.setV(3);
+		G.INT32.divMod().call(i1,i2,i3,i4);
+
+		assertEquals((int)f3.v(), i3.v());
+		assertEquals((int)f4.v(), i4.v());
+		
+		f1.setV(17);
+		f2.setV(-3);
+		G.DBL.divMod().call(f1,f2,f3,f4);
+		
+		i1.setV(17);
+		i2.setV(-3);
+		G.INT32.divMod().call(i1,i2,i3,i4);
+
+		assertEquals((int)f3.v(), i3.v());
+		assertEquals((int)f4.v(), i4.v());
+		
+		f1.setV(-17);
+		f2.setV(-3);
+		G.DBL.divMod().call(f1,f2,f3,f4);
+		
+		i1.setV(-17);
+		i2.setV(-3);
+		G.INT32.divMod().call(i1,i2,i3,i4);
+
+		assertEquals((int)f3.v(), i3.v());
+		assertEquals((int)f4.v(), i4.v());
+		
 	}
 
 	@Test
