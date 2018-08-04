@@ -48,7 +48,7 @@ public class AdjacentFind {
 	public static <T extends Group<T,U>, U>
 		long compute(T group, IndexedDataSource<?,U> a)
 	{
-		return compute(group, a, 0, a.size());
+		return compute(group, 0, a.size(), a);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class AdjacentFind {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		long compute(T group, IndexedDataSource<?,U> a, long start, long count)
+		long compute(T group, long start, long count, IndexedDataSource<?,U> a)
 	{
 		if (start+count < 2) return start+count;
 		U tmp1 = group.construct();

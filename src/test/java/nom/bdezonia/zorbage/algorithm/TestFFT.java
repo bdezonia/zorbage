@@ -61,8 +61,8 @@ public class TestFFT {
 				new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32,start1,inc1);
 		Ramp<SignedInt32Group, SignedInt32Member> ramp2 =
 				new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32,start2,inc2);
-		FillN.compute(G.INT32, poly1, ramp1, 0, 3);
-		FillN.compute(G.INT32, poly2, ramp2, 0, 3);
+		FillN.compute(G.INT32, ramp1, 0, 3, poly1);
+		FillN.compute(G.INT32, ramp2, 0, 3, poly2);
 		long n = FFT.enclosingPowerOf2(poly1.size());
 		IndexedDataSource<?,ComplexFloat64Member> data1 =
 				Storage.allocate(n, cdbl);

@@ -50,7 +50,7 @@ public class Fill {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, IndexedDataSource<?,U> storage, U value)
 	{
-		FillN.compute(group, storage, value, 0, storage.size());
+		FillN.compute(group, value, 0, storage.size(), storage);
 	}
 
 	/**
@@ -62,6 +62,6 @@ public class Fill {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, IndexedDataSource<?,U> storage, Procedure1<U> proc)
 	{
-		FillN.compute(group, storage, proc, 0, storage.size());
+		FillN.compute(group, proc, 0, storage.size(), storage);
 	}
 }

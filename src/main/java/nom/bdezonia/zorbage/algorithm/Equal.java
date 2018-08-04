@@ -49,7 +49,7 @@ public class Equal {
 		boolean compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a.size() != b.size()) return false;
-		return compute(group, a, b, 0, 0, a.size());
+		return compute(group, 0, 0, a.size(), a, b);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Group<T,U>, U>
-		boolean compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, long aStart, long bStart, long count)
+		boolean compute(T group, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		U tmp1 = group.construct();
 		U tmp2 = group.construct();

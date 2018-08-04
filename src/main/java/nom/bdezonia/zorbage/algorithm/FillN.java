@@ -50,7 +50,7 @@ public class FillN {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, IndexedDataSource<?,U> storage, U value, long start, long count)
+		void compute(T group, U value, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		for (long i = 0; i < count; i++) {
 			storage.set(start+i, value);
@@ -66,7 +66,7 @@ public class FillN {
 	 * @param count
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, IndexedDataSource<?,U> storage, Procedure1<U> proc, long start, long count)
+		void compute(T group, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {

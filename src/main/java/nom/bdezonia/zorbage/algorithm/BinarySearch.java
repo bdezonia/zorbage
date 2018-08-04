@@ -54,7 +54,7 @@ public class BinarySearch {
 	 * @return
 	 */
 	public static <T extends Group<T,U> & Ordered<U>, U>
-		long compute(T group, IndexedDataSource<?,U> data, long start, long count, U value)
+		long compute(T group, U value, long start, long count, IndexedDataSource<?,U> data)
 	{
 		U tmp = group.construct();
 		long lo = 0;
