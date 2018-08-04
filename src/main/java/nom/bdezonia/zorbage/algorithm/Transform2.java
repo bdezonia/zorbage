@@ -26,60 +26,70 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestTransform {
+public class Transform2 {
 
-	@Test
-	public void testFloats()
+	private Transform2() { }
+
+	/**
+	 * 
+	 * @param grpU
+	 * @param grpW
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param a
+	 * @param b
+	 */
+	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W>
+		void compute(T grpU, V grpW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
-		test(G.DBL);
+		compute(grpU, grpW, grpW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
 	}
 
-	@Test
-	public void testComplexes() {
-		test(G.CDBL);
-	}
-	
-	@Test
-	public void testQuats() {
-		test(G.QDBL);
-	}
-	
-	@Test
-	public void testOcts() {
-		test(G.ODBL);
-	}
-
-	// an algorithm that applies Sin() op to a list of any type that
-	// supports sin()
-	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
-		void test(T group)
+	/**
+	 * 
+	 * @param grpU
+	 * @param grpW
+	 * @param grpY
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param cStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param cStride
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
+	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y>
+		void compute(T grpU, V grpW, X grpY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
-		// generic allocation
-		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, group.construct());
-		
-		// set values of storage to random doubles between 0 and 1
-		Generate.compute(group, group.random(), a);
-		
-		// transform each input[i] value to be the sin(input[i])
-		Transform1.compute(group, group.sin(), 0, a.size(), 1, a);
-		
-		assertTrue(true);
+		U valueU = grpU.construct();
+		W valueW = grpW.construct();
+		Y valueY = grpY.construct();
+		for (long i = aStart, j = bStart, k = cStart, m = 0; m < count; m++) {
+			a.get(i, valueU);
+			b.get(j, valueW);
+			proc.call(valueU, valueW, valueY);
+			c.set(k, valueY);
+			i += aStride;
+			j += bStride;
+			k += cStride;
+		}
 	}
+
 }

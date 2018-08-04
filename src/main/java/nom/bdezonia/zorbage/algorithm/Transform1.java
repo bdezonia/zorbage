@@ -26,60 +26,59 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestTransform {
+public class Transform1 {
 
-	@Test
-	public void testFloats()
+	private Transform1() { }
+
+	/**
+	 * 
+	 * @param grp
+	 * @param proc
+	 * @param start
+	 * @param count
+	 * @param stride
+	 * @param a
+	 */
+	public static final <T extends Group<T,U>,U>
+		void compute(T grp, Procedure2<U,U> proc, long start, long count, long stride, IndexedDataSource<?,U> a)
 	{
-		test(G.DBL);
+		compute(grp, grp, proc, start, start, count, stride, stride, a, a);
 	}
 
-	@Test
-	public void testComplexes() {
-		test(G.CDBL);
-	}
-	
-	@Test
-	public void testQuats() {
-		test(G.QDBL);
-	}
-	
-	@Test
-	public void testOcts() {
-		test(G.ODBL);
-	}
-
-	// an algorithm that applies Sin() op to a list of any type that
-	// supports sin()
-	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
-		void test(T group)
+	/**
+	 * 
+	 * @param grpU
+	 * @param grpW
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param a
+	 * @param b
+	 */
+	public static final <T extends Group<T,U>,U,V extends Group<V,W>,W>
+		void compute(T grpU, V grpW, Procedure2<U,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
-		// generic allocation
-		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, group.construct());
-		
-		// set values of storage to random doubles between 0 and 1
-		Generate.compute(group, group.random(), a);
-		
-		// transform each input[i] value to be the sin(input[i])
-		Transform1.compute(group, group.sin(), 0, a.size(), 1, a);
-		
-		assertTrue(true);
+		U valueU = grpU.construct();
+		W valueW = grpW.construct();
+		for (long i = aStart, j = bStart, c = 0; c < count; c++) {
+			a.get(i, valueU);
+			proc.call(valueU, valueW);
+			b.set(j, valueW);
+			i += aStride;
+			j += bStride;
+		}
 	}
+
 }
