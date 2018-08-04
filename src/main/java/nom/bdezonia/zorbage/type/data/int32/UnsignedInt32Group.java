@@ -120,18 +120,9 @@ public class UnsignedInt32Group
 		return ASSIGN;
 	}
 
-	private final Procedure2<UnsignedInt32Member,UnsignedInt32Member> ABS =
-			new Procedure2<UnsignedInt32Member, UnsignedInt32Member>()
-	{
-		@Override
-		public void call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			assign().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt32Member,UnsignedInt32Member> abs() {
-		return ABS;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt32Member,UnsignedInt32Member,UnsignedInt32Member> MUL =

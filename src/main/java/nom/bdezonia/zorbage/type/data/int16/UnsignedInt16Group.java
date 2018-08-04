@@ -118,18 +118,9 @@ public class UnsignedInt16Group
 		return ASSIGN;
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> ABS =
-			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
-	{
-		@Override
-		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
-			assign().call(a, b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> abs() {
-		return ABS;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> MUL =

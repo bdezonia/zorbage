@@ -118,18 +118,9 @@ public class UnsignedInt8Group
 		return ASSIGN;
 	}
 
-	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> ABS =
-			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
-	{
-		@Override
-		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
-			assign().call(from,to);
-		}
-	};
-
 	@Override
 	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> abs() {
-		return ABS;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> MUL =

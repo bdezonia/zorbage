@@ -415,18 +415,9 @@ public class UnsignedInt128Group
 		return MAX;
 	}
 
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> ABS =
-			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
-	{
-		@Override
-		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			assign().call(a,b); // ignore
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> abs() {
-		return ABS;
+		return ASSIGN;
 	}
 
 	@Override
