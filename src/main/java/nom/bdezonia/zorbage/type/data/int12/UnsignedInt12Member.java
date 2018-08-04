@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int12;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -42,6 +44,7 @@ import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
+import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 
 /**
  * 
@@ -50,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
  */
 public final class UnsignedInt12Member
 	implements
-		BitCoder<UnsignedInt12Member>,
+		BitCoder<UnsignedInt12Member>, ShortCoder<UnsignedInt12Member>,
 		Allocatable<UnsignedInt12Member>, Duplicatable<UnsignedInt12Member>,
 		Settable<UnsignedInt12Member>, Gettable<UnsignedInt12Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt12Member>,
@@ -190,6 +193,32 @@ public final class UnsignedInt12Member
 			newVals = ((long)v) << offset;
 			arr[index] = newVals | oldVals;
 		}
+	}
+
+
+	@Override
+	public int shortCount() {
+		return 1;
+	}
+
+	@Override
+	public void toValue(short[] arr, int index) {
+		v = arr[index];
+	}
+
+	@Override
+	public void toArray(short[] arr, int index) {
+		arr[index] = v;
+	}
+
+	@Override
+	public void toValue(RandomAccessFile raf) throws IOException {
+		v = raf.readShort();
+	}
+
+	@Override
+	public void toFile(RandomAccessFile raf) throws IOException {
+		raf.writeShort(v);
 	}
 
 	@Override
