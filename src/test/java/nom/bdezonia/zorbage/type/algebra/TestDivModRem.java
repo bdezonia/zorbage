@@ -42,8 +42,7 @@ import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 public class TestDivModRem {
 	
 	// prove that div and mod for floats match behavior of ints
-	//   Note that I think divMod results conflict with Ruby's behavior but matches Fortran's.
-	//   TODO: test each of these languages externally to verify.
+	//   This behavior also matches fortran and ruby
 	
 	@Test
 	public void testDivMod() {
