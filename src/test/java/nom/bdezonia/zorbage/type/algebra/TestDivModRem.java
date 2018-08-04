@@ -65,8 +65,10 @@ public class TestDivModRem {
 		i2.setV(4);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 		f1.setV(-13);
 		f2.setV(4);
@@ -76,8 +78,10 @@ public class TestDivModRem {
 		i2.setV(4);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 		f1.setV(13);
 		f2.setV(-4);
@@ -87,8 +91,10 @@ public class TestDivModRem {
 		i2.setV(-4);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 		f1.setV(-13);
 		f2.setV(-4);
@@ -98,8 +104,11 @@ public class TestDivModRem {
 		i2.setV(-4);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
+
 		f1.setV(17);
 		f2.setV(3);
 		G.DBL.divMod().call(f1,f2,f3,f4);
@@ -108,8 +117,10 @@ public class TestDivModRem {
 		i2.setV(3);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 		f1.setV(-17);
 		f2.setV(3);
@@ -119,8 +130,10 @@ public class TestDivModRem {
 		i2.setV(3);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 		f1.setV(17);
 		f2.setV(-3);
@@ -130,8 +143,10 @@ public class TestDivModRem {
 		i2.setV(-3);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 		f1.setV(-17);
 		f2.setV(-3);
@@ -141,8 +156,10 @@ public class TestDivModRem {
 		i2.setV(-3);
 		G.INT32.divMod().call(i1,i2,i3,i4);
 
-		assertEquals((int)f3.v(), i3.v());
-		assertEquals((int)f4.v(), i4.v());
+		assertEquals(Math.floor(f3.v()), i3.v(), 0);
+		assertEquals(Math.floor(f4.v()), i4.v(), 0);
+		assertEquals(Math.ceil(f3.v()), i3.v(), 0);
+		assertEquals(Math.ceil(f4.v()), i4.v(), 0);
 		
 	}
 
