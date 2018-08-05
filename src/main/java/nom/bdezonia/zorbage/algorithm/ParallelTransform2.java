@@ -65,8 +65,8 @@ public class ParallelTransform2 {
 			else {
 				thCount = count / numProcs;
 			}
-			Runnable c = new Computer<T,U,V,W>(grpU, grpW, proc, thAStart, thBStart, thCount, aStride, bStride, a, b);
-			threads[i] = new Thread(c);
+			Runnable r = new Computer<T,U,V,W>(grpU, grpW, proc, thAStart, thBStart, thCount, aStride, bStride, a, b);
+			threads[i] = new Thread(r);
 			thAStart += (aStride * thCount);
 			thBStart += (bStride * thCount);
 		}
