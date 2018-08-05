@@ -42,7 +42,7 @@ public class Generate {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
-		GenerateN.compute(group, proc, 0, storage.size(), 1, storage);
+		compute(group, proc, 0, storage.size(), 1, storage);
 	}
 
 	/**
@@ -56,7 +56,49 @@ public class Generate {
 	public static <T extends Group<T,U>,U>
 		void compute(T group, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
 	{
-		GenerateN.compute(group, proc, 0, storage.size(), 1, storage, inputs);
+		compute(group, proc, 0, storage.size(), 1, storage, inputs);
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param proc
+	 * @param start
+	 * @param count
+	 * @param stride
+	 * @param storage
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage)
+	{
+		U value = group.construct();
+		for (long i = start, c = 0; c < count; c++) {
+			proc.call(value);
+			storage.set(i, value);
+			i += stride;
+		}
+	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param proc
+	 * @param start
+	 * @param count
+	 * @param stride
+	 * @param storage
+	 * @param inputs
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Group<T,U>,U>
+		void compute(T group, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage, U... inputs)
+	{
+		U value = group.construct();
+		for (long i = start, c = 0; c < count; c++) {
+			proc.call(value, inputs);
+			storage.set(i, value);
+			i += stride;
+		}
 	}
 
 }
