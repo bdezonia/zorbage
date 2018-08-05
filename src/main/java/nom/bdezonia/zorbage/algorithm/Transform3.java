@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -41,65 +41,54 @@ public class Transform3 {
 
 	/**
 	 * 
-	 * @param grpM
-	 * @param grpO
-	 * @param grpQ
+	 * @param grpU
+	 * @param grpW
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
-	 * @param cStart
 	 * @param count
 	 * @param aStride
 	 * @param bStride
-	 * @param cStride
 	 * @param a
 	 * @param b
-	 * @param c
 	 */
-	public static final <L extends Group<L,M>, M, N extends Group<N,O>, O, P extends Group<P,Q>, Q>
-		void compute(L grpM, N grpO, P grpQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c)
+	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W>
+		void compute(T grpU, V grpW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
-		compute(grpM, grpO, grpQ, grpQ, proc, aStart, bStart, cStart, cStart, count, aStride, bStride, cStride, cStride, a, b, c, c);
+		compute(grpU, grpW, grpW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
 	}
 
 	/**
 	 * 
-	 * @param grpM
-	 * @param grpO
-	 * @param grpQ
-	 * @param grpS
+	 * @param grpU
+	 * @param grpW
+	 * @param grpY
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
 	 * @param cStart
-	 * @param dStart
 	 * @param count
 	 * @param aStride
 	 * @param bStride
 	 * @param cStride
-	 * @param dStride
 	 * @param a
 	 * @param b
 	 * @param c
-	 * @param d
 	 */
-	public static final <L extends Group<L,M>, M, N extends Group<N,O>, O, P extends Group<P,Q>, Q, R extends Group<R,S>, S>
-		void compute(L grpM, N grpO, P grpQ, R grpS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c, IndexedDataSource<?,S> d)
+	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y>
+		void compute(T grpU, V grpW, X grpY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
-		M valueM = grpM.construct();
-		O valueO = grpO.construct();
-		Q valueQ = grpQ.construct();
-		S valueS = grpS.construct();
-		for (long i = aStart, j = bStart, k = cStart, l = dStart, m = 0; m < count; m++) {
-			a.get(i, valueM);
-			b.get(j, valueO);
-			c.get(k, valueQ);
-			proc.call(valueM, valueO, valueQ, valueS);
-			d.set(l, valueS);
+		U valueU = grpU.construct();
+		W valueW = grpW.construct();
+		Y valueY = grpY.construct();
+		for (long i = aStart, j = bStart, k = cStart, m = 0; m < count; m++) {
+			a.get(i, valueU);
+			b.get(j, valueW);
+			proc.call(valueU, valueW, valueY);
+			c.set(k, valueY);
 			i += aStride;
 			j += bStride;
 			k += cStride;
-			l += dStride;
 		}
 	}
 

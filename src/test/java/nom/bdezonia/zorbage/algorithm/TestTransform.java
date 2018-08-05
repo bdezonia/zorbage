@@ -78,7 +78,7 @@ public class TestTransform {
 		Generate.compute(group, group.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		Transform1.compute(group, group.sin(), 0, a.size(), 1, a);
+		Transform2.compute(group, group.sin(), 0, a.size(), 1, a);
 		
 		assertTrue(true);
 	}

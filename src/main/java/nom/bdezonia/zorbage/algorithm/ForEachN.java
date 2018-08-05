@@ -48,7 +48,7 @@ public class ForEachN {
 	public static <T extends Group<T,U>, U>
 		void compute(T grpU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
 	{
-		Transform1.compute(grpU, proc, start, count, 1, a);
+		Transform2.compute(grpU, proc, start, count, 1, a);
 	}
 
 }

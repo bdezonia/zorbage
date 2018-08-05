@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -41,54 +41,43 @@ public class Transform2 {
 
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
+	 * @param grp
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
+	 * @param start
 	 * @param count
-	 * @param aStride
-	 * @param bStride
+	 * @param stride
 	 * @param a
-	 * @param b
 	 */
-	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W>
-		void compute(T grpU, V grpW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
+	public static final <T extends Group<T,U>,U>
+		void compute(T grp, Procedure2<U,U> proc, long start, long count, long stride, IndexedDataSource<?,U> a)
 	{
-		compute(grpU, grpW, grpW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
+		compute(grp, grp, proc, start, start, count, stride, stride, a, a);
 	}
 
 	/**
 	 * 
 	 * @param grpU
 	 * @param grpW
-	 * @param grpY
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
-	 * @param cStart
 	 * @param count
 	 * @param aStride
 	 * @param bStride
-	 * @param cStride
 	 * @param a
 	 * @param b
-	 * @param c
 	 */
-	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y>
-		void compute(T grpU, V grpW, X grpY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
+	public static final <T extends Group<T,U>,U,V extends Group<V,W>,W>
+		void compute(T grpU, V grpW, Procedure2<U,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		U valueU = grpU.construct();
 		W valueW = grpW.construct();
-		Y valueY = grpY.construct();
-		for (long i = aStart, j = bStart, k = cStart, m = 0; m < count; m++) {
+		for (long i = aStart, j = bStart, c = 0; c < count; c++) {
 			a.get(i, valueU);
-			b.get(j, valueW);
-			proc.call(valueU, valueW, valueY);
-			c.set(k, valueY);
+			proc.call(valueU, valueW);
+			b.set(j, valueW);
 			i += aStride;
 			j += bStride;
-			k += cStride;
 		}
 	}
 

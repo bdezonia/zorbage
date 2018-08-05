@@ -105,7 +105,7 @@ public class ParallelTransform {
 		}
 		
 		public void run() {
-			Transform1.compute(group1, group1, proc, aStart, bStart, count, 1, 1, list1, list2);
+			Transform2.compute(group1, group1, proc, aStart, bStart, count, 1, 1, list1, list2);
 		}
 	}
 }
