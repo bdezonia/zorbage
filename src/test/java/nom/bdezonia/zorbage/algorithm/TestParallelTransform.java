@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
@@ -69,7 +68,7 @@ public class TestParallelTransform {
 	// an algorithm that applies a group's sin() op to a list of any type that
 	// supports sin()
 	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U extends PrimitiveConversion>
+	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
 		void test(T group)
 	{
 		// generic allocation
@@ -80,7 +79,7 @@ public class TestParallelTransform {
 		Generate.compute(group, group.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		ParallelTransform.compute(group, group.sin(), 0, 0, a.size(), a, a);
+		ParallelTransform2.compute(group, group, group.sin(), 0, 0, a.size(), 1, 1, a, a);
 		
 		assertTrue(true);
 	}
