@@ -34,9 +34,14 @@ import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
+import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
+import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
+import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -44,8 +49,10 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -62,8 +69,8 @@ public class ComplexFloat64Vector
     Constructible1dLong<ComplexFloat64VectorMember>,
     Norm<ComplexFloat64VectorMember,Float64Member>,
     Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>,
-    DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>
-//TODO Round, Nan, Inf
+    DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>,
+    Rounding<Float64Member,ComplexFloat64VectorMember>, Infinite<ComplexFloat64VectorMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -347,6 +354,48 @@ public class ComplexFloat64Vector
 	public Procedure3<ComplexFloat64VectorMember,ComplexFloat64VectorMember,ComplexFloat64MatrixMember> directProduct()
 	{
 		return DP;
+	}
+
+	private final Function1<Boolean, ComplexFloat64VectorMember> NAN =
+			new Function1<Boolean, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64VectorMember a) {
+			return RModuleIsNaN.compute(G.CDBL, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat64VectorMember> isNaN() {
+		return NAN;
+	}
+
+	private final Function1<Boolean, ComplexFloat64VectorMember> INF =
+			new Function1<Boolean, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64VectorMember a) {
+			return RModuleIsInfinite.compute(G.CDBL, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat64VectorMember> isInfinite() {
+		return INF;
+	}
+
+	private final Procedure4<Mode, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> ROUND =
+			new Procedure4<Mode, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			RModuleRound.compute(G.CDBL, mode, delta, a, b);
+		}
+	};
+
+	@Override
+	public Procedure4<Mode, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> round() {
+		return ROUND;
 	}
 
 }

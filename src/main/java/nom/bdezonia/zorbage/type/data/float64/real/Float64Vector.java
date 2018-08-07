@@ -33,9 +33,14 @@ import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
+import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
+import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
+import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -43,8 +48,10 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -60,8 +67,8 @@ public class Float64Vector
     Constructible1dLong<Float64VectorMember>,
 	Norm<Float64VectorMember,Float64Member>,
 	Products<Float64VectorMember, Float64Member, Float64MatrixMember>,
-	DirectProduct<Float64VectorMember, Float64MatrixMember>
-//TODO Round, Nan, Inf
+	DirectProduct<Float64VectorMember, Float64MatrixMember>,
+	Rounding<Float64Member,Float64VectorMember>, Infinite<Float64VectorMember>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -347,4 +354,45 @@ public class Float64Vector
 		return DP;
 	}
 
+	private final Function1<Boolean, Float64VectorMember> NAN =
+			new Function1<Boolean, Float64VectorMember>()
+	{
+		@Override
+		public Boolean call(Float64VectorMember a) {
+			return RModuleIsNaN.compute(G.DBL, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64VectorMember> isNaN() {
+		return NAN;
+	}
+
+	private final Function1<Boolean, Float64VectorMember> INF =
+			new Function1<Boolean, Float64VectorMember>()
+	{
+		@Override
+		public Boolean call(Float64VectorMember a) {
+			return RModuleIsInfinite.compute(G.DBL, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64VectorMember> isInfinite() {
+		return INF;
+	}
+
+	private final Procedure4<Mode, Float64Member, Float64VectorMember, Float64VectorMember> ROUND =
+			new Procedure4<Mode, Float64Member, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, Float64VectorMember a, Float64VectorMember b) {
+			RModuleRound.compute(G.DBL, mode, delta, a, b);
+		}
+	};
+
+	@Override
+	public Procedure4<Mode, Float64Member, Float64VectorMember, Float64VectorMember> round() {
+		return ROUND;
+	}
 }

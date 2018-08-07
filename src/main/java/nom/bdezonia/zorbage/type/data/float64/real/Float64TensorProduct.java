@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -33,7 +35,9 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.
@@ -70,8 +74,8 @@ public class Float64TensorProduct
 		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
 		ConstructibleNdLong<Float64TensorProductMember>,
 		Norm<Float64TensorProductMember,Float64Member>,
-		Scale<Float64TensorProductMember,Float64Member>
-//TODO Round, Nan, Inf
+		Scale<Float64TensorProductMember,Float64Member>,
+		Rounding<Float64Member,Float64TensorProductMember>, Infinite<Float64TensorProductMember>
 {
 	@Override
 	public Float64TensorProductMember construct() {
@@ -574,5 +578,71 @@ public class Float64TensorProduct
 	@Override
 	public Procedure1<Float64TensorProductMember> unity() {
 		return UNITY;
+	}
+
+	private final Function1<Boolean, Float64TensorProductMember> NAN =
+			new Function1<Boolean, Float64TensorProductMember>()
+	{
+		@Override
+		public Boolean call(Float64TensorProductMember b) {
+			Float64Member value = G.DBL.construct();
+			for (long i = 0; i < b.numElems(); i++) {
+				b.v(i, value);
+				if (G.DBL.isNaN().call(value))
+					return true;
+			}
+			return false;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64TensorProductMember> isNaN() {
+		return NAN;
+	}
+
+	private final Function1<Boolean, Float64TensorProductMember> INF =
+			new Function1<Boolean, Float64TensorProductMember>()
+	{
+		@Override
+		public Boolean call(Float64TensorProductMember a) {
+			Float64Member value = G.DBL.construct();
+			for (long i = 0; i < a.numElems(); i++) {
+				a.v(i, value);
+				if (G.DBL.isInfinite().call(value))
+					return true;
+			}
+			return false;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64TensorProductMember> isInfinite() {
+		return INF;
+	}
+
+	private final Procedure4<Mode, Float64Member, Float64TensorProductMember, Float64TensorProductMember> ROUND =
+			new Procedure4<Mode, Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, Float64TensorProductMember a, Float64TensorProductMember b) {
+			if (a != b) {
+				long[] newDims = new long[a.numDimensions()];
+				for (int i = 0; i < newDims.length; i++) {
+					newDims[i] = a.dimension(i);
+				}
+				b.alloc(newDims);
+			}
+			Float64Member tmp = G.DBL.construct();
+			for (long i = 0; i < a.numElems(); i++) {
+				a.v(i, tmp);
+				G.DBL.round().call(mode, delta, tmp, tmp);
+				b.setV(i, tmp);
+			}
+		}
+	};
+
+	@Override
+	public Procedure4<Mode, Float64Member, Float64TensorProductMember, Float64TensorProductMember> round() {
+		return ROUND;
 	}
 }

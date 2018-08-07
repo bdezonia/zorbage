@@ -34,9 +34,14 @@ import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
+import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
+import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
+import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -44,9 +49,11 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -62,8 +69,8 @@ public class QuaternionFloat64RModule
     Constructible1dLong<QuaternionFloat64RModuleMember>,
     Norm<QuaternionFloat64RModuleMember,Float64Member>,
     Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, QuaternionFloat64MatrixMember>,
-    DirectProduct<QuaternionFloat64RModuleMember, QuaternionFloat64MatrixMember>
-//TODO Round, Nan, Inf
+    DirectProduct<QuaternionFloat64RModuleMember, QuaternionFloat64MatrixMember>,
+	Rounding<Float64Member,QuaternionFloat64RModuleMember>, Infinite<QuaternionFloat64RModuleMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
@@ -360,4 +367,45 @@ public class QuaternionFloat64RModule
 		return DP;
 	}
 
+	private final Function1<Boolean, QuaternionFloat64RModuleMember> NAN =
+			new Function1<Boolean, QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64RModuleMember a) {
+			return RModuleIsNaN.compute(G.QDBL, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionFloat64RModuleMember> isNaN() {
+		return NAN;
+	}
+
+	private final Function1<Boolean, QuaternionFloat64RModuleMember> INF =
+			new Function1<Boolean, QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64RModuleMember a) {
+			return RModuleIsInfinite.compute(G.QDBL, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionFloat64RModuleMember> isInfinite() {
+		return INF;
+	}
+
+	private final Procedure4<Mode, Float64Member, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> ROUND =
+			new Procedure4<Mode, Float64Member, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(Mode mode, Float64Member delta, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
+			RModuleRound.compute(G.QDBL, mode, delta, a, b);
+		}
+	};
+
+	@Override
+	public Procedure4<Mode, Float64Member, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> round() {
+		return ROUND;
+	}
 }
