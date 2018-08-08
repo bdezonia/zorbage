@@ -740,7 +740,7 @@ public final class Float16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigInteger.valueOf((long) v());
+			return BigInteger.valueOf((long)toDouble(toShort(v())));
 		}
 	}
 
@@ -762,7 +762,7 @@ public final class Float16Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(v());
+			return BigDecimal.valueOf(toDouble(toShort(v())));
 		}
 	}
 
