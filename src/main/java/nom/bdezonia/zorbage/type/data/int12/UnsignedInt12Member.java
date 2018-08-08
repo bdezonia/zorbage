@@ -89,7 +89,25 @@ public final class UnsignedInt12Member
 	}
 
 	void setV(int val) {
-		v = (short) (val & 0x0fff);
+		// TODO: this code makes all math ops test code pass
+		
+		v = (short) (val & 0xfff);
+		
+		// TODO: this is clampy code that makes sense but breaks math ops test code.
+		// Note that right now the primitive converters for this type may no longer
+		// be correct since they used to clamp and now no longer do. Test what java
+		// shorts do when handed ints out of bounds. Later edit: java does not clamp
+		// for other type conversions. It uses low byte patterns. I think I want to
+		// avoid the clampy code.
+		
+		/*
+		if (val < 0)
+			v = 0;
+		else if (val > 0x0fff)
+			v = 0x0fff;
+		else
+			v = (short) val;
+			*/
 	}
 	
 	@Override
@@ -104,13 +122,7 @@ public final class UnsignedInt12Member
 
 	@Override
 	public void setValue(TensorOctonionRepresentation rep) {
-		int val = rep.getValue().r().intValue();
-		if (val <= 0)
-			setV(0);
-		else if (val >= 0x0fff)
-			setV(0x0fff);
-		else
-			setV(val);
+		setV(rep.getValue().r().intValue());
 	}
 
 	@Override
@@ -213,10 +225,7 @@ public final class UnsignedInt12Member
 
 	@Override
 	public void toValue(RandomAccessFile raf) throws IOException {
-		short val = raf.readShort();
-		if (val < 0) val = 0;
-		else if (val > 0xfff) val = 0xfff;
-		v = val;
+		setV(raf.readShort());
 	}
 
 	@Override
@@ -246,72 +255,37 @@ public final class UnsignedInt12Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		if (v < 0)
-			setV(0);
-		else if (v > 0x0fff)
-			setV(0x0fff);
-		else
-			setV(v);
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		if (v < 0)
-			setV(0);
-		else if (v > 0x0fff)
-			setV(0x0fff);
-		else
-			setV(v);
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		if (v < 0)
-			setV(0);
-		else if (v > 0x0fff)
-			setV(0x0fff);
-		else
-			setV(v);
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		if (v < 0)
-			setV(0);
-		else if (v > 0x0fff)
-			setV(0x0fff);
-		else
-			setV((int)v);
+		setV((int)v);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		if (v < 0)
-			setV(0);
-		else if (v > 0x0fff)
-			setV(0x0fff);
-		else
-			setV((int)v);
+		setV((int)v);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		if (v < 0)
-			setV(0);
-		else if (v > 0x0fff)
-			setV(0x0fff);
-		else
-			setV((int)v);
+		setV((int)v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		if (v.signum() <= 0)
-			setV(0);
-		else if (v.compareTo(MAX_BIG) >= 0)
-			setV(0x0fff);
-		else
-			setV(v.intValue());
+		setV(v.intValue());
 	}
 
 	@Override
@@ -339,12 +313,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v < 0)
-				setV(0);
-			else if (v > 0x0fff)
-				setV(0x0fff);
-			else
-				setV(v);
+			setV(v);
 		}
 	}
 
@@ -368,12 +337,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v < 0)
-				setV(0);
-			else if (v > 0x0fff)
-				setV(0x0fff);
-			else
-				setV(v);
+			setV(v);
 		}
 	}
 
@@ -397,12 +361,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v < 0)
-				setV(0);
-			else if (v > 0x0fff)
-				setV(0x0fff);
-			else
-				setV(v);
+			setV(v);
 		}
 	}
 
@@ -426,12 +385,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v < 0)
-				setV(0);
-			else if (v > 0x0fff)
-				setV(0x0fff);
-			else
-				setV((int)v);
+			setV((int)v);
 		}
 	}
 
@@ -455,12 +409,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v < 0)
-				setV(0);
-			else if (v > 0x0fff)
-				setV(0x0fff);
-			else
-				setV((int)v);
+			setV((int)v);
 		}
 	}
 
@@ -484,12 +433,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v < 0)
-				setV(0);
-			else if (v > 0x0fff)
-				setV(0x0fff);
-			else
-				setV((int)v);
+			setV((int)v);
 		}
 	}
 
@@ -513,12 +457,7 @@ public final class UnsignedInt12Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			if (v.signum() <= 0)
-				setV(0);
-			else if (v.compareTo(MAX_BIG) >= 0)
-				setV(0x0fff);
-			else
-				setV(v.intValue());
+			setV(v.intValue());
 		}
 	}
 
