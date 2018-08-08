@@ -106,7 +106,7 @@ public final class QuaternionFloat64Member
 	
 	@Override
 	public void set(QuaternionFloat64Member other) {
-		if (this == other) return;
+		//if (this == other) return;
 		r = other.r;
 		i = other.i;
 		j = other.j;
