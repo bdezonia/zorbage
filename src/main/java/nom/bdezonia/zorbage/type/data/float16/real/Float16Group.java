@@ -141,7 +141,7 @@ public class Float16Group
 	{
 		@Override
 		public void call(Float16Member from, Float16Member to) {
-			to.setV( from.v() );
+			to.set(from);
 		}
 	};
 

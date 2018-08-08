@@ -207,7 +207,7 @@ public class UnboundedIntGroup
 	{
 		@Override
 		public void call(UnboundedIntMember from, UnboundedIntMember to) {
-			to.setV( from.v() );
+			to.set(from);
 		}
 	};
 

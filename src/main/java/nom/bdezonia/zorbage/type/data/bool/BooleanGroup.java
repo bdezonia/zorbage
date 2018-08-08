@@ -314,7 +314,7 @@ public class BooleanGroup
 	{
 		@Override
 		public void call(BooleanMember from, BooleanMember to) {
-			to.setV(from.v());
+			to.set(from);
 		}
 	};
 
