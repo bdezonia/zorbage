@@ -132,21 +132,9 @@ public class UnsignedInt128Group
 		return ZER;
 	}
 
-	// TODO: this shows that unsigned numbers aren't quite ints. They should derive slightly differently
-	// in the algebra hierarchy.
-	
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> NEG =
-			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
-	{
-		@Override
-		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			assign().call(a,b); // ignore
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt128Member,UnsignedInt128Member> negate() {
-		return NEG;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> ADD = 

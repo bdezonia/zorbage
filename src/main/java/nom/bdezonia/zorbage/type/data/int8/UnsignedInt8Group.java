@@ -165,18 +165,9 @@ public class UnsignedInt8Group
 		return ZER;
 	}
 
-	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> NEG =
-			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
-	{
-		@Override
-		public void call(UnsignedInt8Member from, UnsignedInt8Member to) {
-			assign().call(from,to); // ignore
-		}
-	};
-
 	@Override
 	public Procedure2<UnsignedInt8Member,UnsignedInt8Member> negate() {
-		return NEG;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt8Member,UnsignedInt8Member,UnsignedInt8Member> ADD =

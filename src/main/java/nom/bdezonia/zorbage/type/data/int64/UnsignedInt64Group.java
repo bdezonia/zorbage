@@ -168,18 +168,9 @@ public class UnsignedInt64Group
 		return ZER;
 	}
 
-	private final Procedure2<UnsignedInt64Member,UnsignedInt64Member> NEG =
-			new Procedure2<UnsignedInt64Member, UnsignedInt64Member>()
-	{
-		@Override
-		public void call(UnsignedInt64Member a, UnsignedInt64Member b) {
-			assign().call(a, b); // ignore
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt64Member,UnsignedInt64Member> negate() {
-		return NEG;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt64Member,UnsignedInt64Member,UnsignedInt64Member> ADD =

@@ -165,18 +165,9 @@ public class UnsignedInt16Group
 		return ZER;
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> NEG =
-			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
-	{
-		@Override
-		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
-			assign().call(a, b);
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt16Member,UnsignedInt16Member> negate() {
-		return NEG;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt16Member,UnsignedInt16Member,UnsignedInt16Member> ADD =

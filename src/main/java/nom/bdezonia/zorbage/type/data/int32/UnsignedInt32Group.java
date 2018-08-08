@@ -167,18 +167,9 @@ public class UnsignedInt32Group
 		return ZER;
 	}
 
-	private final Procedure2<UnsignedInt32Member,UnsignedInt32Member> NEG =
-			new Procedure2<UnsignedInt32Member, UnsignedInt32Member>()
-	{
-		@Override
-		public void call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			assign().call(a,b); // ignore
-		}
-	};
-	
 	@Override
 	public Procedure2<UnsignedInt32Member,UnsignedInt32Member> negate() {
-		return NEG;
+		return ASSIGN;
 	}
 
 	private final Procedure3<UnsignedInt32Member,UnsignedInt32Member,UnsignedInt32Member> ADD =
