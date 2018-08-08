@@ -77,9 +77,15 @@ public final class BooleanMember
 	}
 	
 	public BooleanMember(String value) {
-		if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("t") || value.equalsIgnoreCase("+"))
+		if (value.equalsIgnoreCase("true") ||
+				value.equalsIgnoreCase("t") ||
+				value.equalsIgnoreCase("+") ||
+				value.equalsIgnoreCase("1"))
 			v = true;
-		else if (value.equalsIgnoreCase("false") || value.equalsIgnoreCase("f") || value.equalsIgnoreCase("-"))
+		else if (value.equalsIgnoreCase("false") ||
+				value.equalsIgnoreCase("f") ||
+				value.equalsIgnoreCase("-") ||
+				value.equalsIgnoreCase("0"))
 			v = false;
 		else {
 			TensorStringRepresentation rep = new TensorStringRepresentation(value);
