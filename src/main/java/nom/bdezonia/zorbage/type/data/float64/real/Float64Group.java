@@ -1366,18 +1366,9 @@ public class Float64Group
 		return SINCPI;
 	}
 
-	private Procedure2<Float64Member,Float64Member> CONJ =
-			new Procedure2<Float64Member, Float64Member>()
-	{
-		@Override
-		public void call(Float64Member a, Float64Member b) {
-			assign().call(a, b);
-		}
-	};
-
 	@Override
 	public Procedure2<Float64Member,Float64Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	/*

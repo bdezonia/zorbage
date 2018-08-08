@@ -278,18 +278,9 @@ public class Float64Matrix
 		return INF;
 	}
 
-	private final Procedure2<Float64MatrixMember,Float64MatrixMember> CONJ =
-			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
-	{
-		@Override
-		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			assign().call(a, b);
-		}
-	};
-	
 	@Override
 	public Procedure2<Float64MatrixMember,Float64MatrixMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure2<Float64MatrixMember,Float64MatrixMember> TRANSP =

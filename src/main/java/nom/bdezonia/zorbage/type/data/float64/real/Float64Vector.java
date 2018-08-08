@@ -312,18 +312,9 @@ public class Float64Vector
 		return STRIPLE;
 	}
 
-	private final Procedure2<Float64VectorMember,Float64VectorMember> CONJ =
-			new Procedure2<Float64VectorMember, Float64VectorMember>()
-	{
-		@Override
-		public void call(Float64VectorMember a, Float64VectorMember b) {
-			assign().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<Float64VectorMember,Float64VectorMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<Float64VectorMember,Float64VectorMember,Float64MatrixMember> VDP =

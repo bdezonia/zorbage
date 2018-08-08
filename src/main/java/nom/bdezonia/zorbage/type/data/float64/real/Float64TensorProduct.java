@@ -293,20 +293,9 @@ public class Float64TensorProduct
 		return NORM;
 	}
 
-
-	private final Procedure2<Float64TensorProductMember,Float64TensorProductMember> CONJ =
-			new Procedure2<Float64TensorProductMember, Float64TensorProductMember>()
-	{
-		@Override
-		public void call(Float64TensorProductMember a, Float64TensorProductMember b) {
-			// TODO: is this correct?
-			assign().call(a,b);
-		}
-	};
-	
 	@Override
 	public Procedure2<Float64TensorProductMember,Float64TensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> SCALE =
