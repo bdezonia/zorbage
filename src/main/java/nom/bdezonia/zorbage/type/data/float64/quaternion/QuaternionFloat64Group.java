@@ -248,10 +248,7 @@ public class QuaternionFloat64Group
 	{
 		@Override
 		public void call(QuaternionFloat64Member from, QuaternionFloat64Member to) {
-			to.setR( from.r() );
-			to.setI( from.i() );
-			to.setJ( from.j() );
-			to.setK( from.k() );
+			to.set(from);
 		}
 	};
 

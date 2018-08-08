@@ -404,14 +404,7 @@ public class OctonionFloat64Group
 	{
 		@Override
 		public void call(OctonionFloat64Member from, OctonionFloat64Member to) {
-			to.setR( from.r() );
-			to.setI( from.i() );
-			to.setJ( from.j() );
-			to.setK( from.k() );
-			to.setL( from.l() );
-			to.setI0( from.i0() );
-			to.setJ0( from.j0() );
-			to.setK0( from.k0() );
+			to.set(from);
 		}
 	};
 	

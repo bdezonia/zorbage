@@ -146,7 +146,7 @@ public class Float64Group
 	{
 		@Override
 		public void call(Float64Member from, Float64Member to) {
-			to.setV( from.v() );
+			to.set(from);
 		}
 	};
 	

@@ -255,8 +255,7 @@ public class ComplexFloat64Group
 	{
 		@Override
 		public void call(ComplexFloat64Member from, ComplexFloat64Member to) {
-			to.setR( from.r() );
-			to.setI( from.i() );
+			to.set(from);
 		}
 	};
 	
