@@ -75,8 +75,7 @@ public final class UnsignedInt128Member
 	}
 	
 	public UnsignedInt128Member(UnsignedInt128Member value) {
-		lo = value.lo;
-		hi = value.hi;
+		set(value);
 	}
 	
 	public UnsignedInt128Member(String value) {

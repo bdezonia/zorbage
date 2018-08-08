@@ -70,7 +70,7 @@ public final class UnsignedInt16Member
 	}
 	
 	public UnsignedInt16Member(UnsignedInt16Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public UnsignedInt16Member(String value) {

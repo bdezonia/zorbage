@@ -78,14 +78,7 @@ public final class OctonionFloat64Member
 	}
 	
 	public OctonionFloat64Member(OctonionFloat64Member value) {
-		r = value.r;
-		i = value.i;
-		j = value.j;
-		k = value.k;
-		l = value.l;
-		i0 = value.i0;
-		j0 = value.j0;
-		k0 = value.k0;
+		set(value);
 	}
 
 	public OctonionFloat64Member(String value) {

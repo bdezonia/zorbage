@@ -71,8 +71,7 @@ public final class ComplexFloat64Member
 	}
 	
 	public ComplexFloat64Member(ComplexFloat64Member value) {
-		r = value.r;
-		i = value.i;
+		set(value);
 	}
 
 	public ComplexFloat64Member(String value) {

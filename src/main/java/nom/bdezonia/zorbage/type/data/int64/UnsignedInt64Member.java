@@ -72,7 +72,7 @@ public final class UnsignedInt64Member
 	}
 	
 	public UnsignedInt64Member(UnsignedInt64Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public UnsignedInt64Member(String value) {

@@ -69,7 +69,7 @@ public final class UnboundedIntMember
 	}
 	
 	public UnboundedIntMember(UnboundedIntMember value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public UnboundedIntMember(String value) {

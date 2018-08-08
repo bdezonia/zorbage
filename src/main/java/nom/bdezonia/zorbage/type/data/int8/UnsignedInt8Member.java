@@ -70,7 +70,7 @@ public final class UnsignedInt8Member
 	}
 	
 	public UnsignedInt8Member(UnsignedInt8Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public UnsignedInt8Member(String value) {

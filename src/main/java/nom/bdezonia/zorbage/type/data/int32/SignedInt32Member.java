@@ -70,7 +70,7 @@ public final class SignedInt32Member
 	}
 	
 	public SignedInt32Member(SignedInt32Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public SignedInt32Member(String value) {

@@ -70,7 +70,7 @@ public final class SignedInt64Member
 	}
 	
 	public SignedInt64Member(SignedInt64Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public SignedInt64Member(String value) {

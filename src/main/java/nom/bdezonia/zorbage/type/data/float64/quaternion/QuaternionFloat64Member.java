@@ -73,10 +73,7 @@ public final class QuaternionFloat64Member
 	}
 	
 	public QuaternionFloat64Member(QuaternionFloat64Member value) {
-		r = value.r;
-		i = value.i;
-		j = value.j;
-		k = value.k;
+		set(value);
 	}
 
 	public QuaternionFloat64Member(String value) {

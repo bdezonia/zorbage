@@ -70,7 +70,7 @@ public final class SignedInt8Member
 	}
 	
 	public SignedInt8Member(SignedInt8Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public SignedInt8Member(String value) {

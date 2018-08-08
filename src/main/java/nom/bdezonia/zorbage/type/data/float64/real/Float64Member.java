@@ -69,7 +69,7 @@ public final class Float64Member
 	}
 	
 	public Float64Member(Float64Member value) {
-		v = value.v;
+		set(value);
 	}
 
 	public Float64Member(String value) {

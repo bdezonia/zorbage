@@ -70,7 +70,7 @@ public final class UnsignedInt32Member
 	}
 	
 	public UnsignedInt32Member(UnsignedInt32Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public UnsignedInt32Member(String value) {

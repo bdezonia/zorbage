@@ -73,7 +73,7 @@ public final class BooleanMember
 	}
 	
 	public BooleanMember(BooleanMember value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public BooleanMember(String value) {

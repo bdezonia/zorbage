@@ -70,7 +70,7 @@ public final class SignedInt16Member
 	}
 	
 	public SignedInt16Member(SignedInt16Member value) {
-		v = value.v;
+		set(value);
 	}
 	
 	public SignedInt16Member(String value) {
