@@ -213,7 +213,10 @@ public final class UnsignedInt12Member
 
 	@Override
 	public void toValue(RandomAccessFile raf) throws IOException {
-		v = raf.readShort();
+		short val = raf.readShort();
+		if (val < 0) val = 0;
+		else if (val > 0xfff) val = 0xfff;
+		v = val;
 	}
 
 	@Override
