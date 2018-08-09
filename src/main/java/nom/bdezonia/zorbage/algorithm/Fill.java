@@ -41,16 +41,10 @@ public class Fill {
 	
 	private Fill() {}
 	
-	/**
-	 * 
-	 * @param group
-	 * @param storage
-	 * @param value
-	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, IndexedDataSource<?,U> storage, U value)
+		void compute(T group, U value, IndexedDataSource<?,U> storage)
 	{
-		FillN.compute(group, value, 0, storage.size(), storage);
+		compute(group, value, 0, storage.size(), storage);
 	}
 
 	/**
@@ -60,8 +54,43 @@ public class Fill {
 	 * @param proc
 	 */
 	public static <T extends Group<T,U>,U>
-		void compute(T group, IndexedDataSource<?,U> storage, Procedure1<U> proc)
+		void compute(T group, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
-		FillN.compute(group, proc, 0, storage.size(), storage);
+		compute(group, proc, 0, storage.size(), storage);
 	}
+
+	/**
+	 * 
+	 * @param group
+	 * @param storage
+	 * @param value
+	 * @param start
+	 * @param count
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, U value, long start, long count, IndexedDataSource<?,U> storage)
+	{
+		for (long i = 0; i < count; i++) {
+			storage.set(start+i, value);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @param storage
+	 * @param proc
+	 * @param start
+	 * @param count
+	 */
+	public static <T extends Group<T,U>,U>
+		void compute(T group, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
+	{
+		U tmp = group.construct();
+		for (long i = 0; i < count; i++) {
+			proc.call(tmp);
+			storage.set(start+i, tmp);
+		}
+	}
+
 }
