@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
+import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
@@ -392,7 +393,7 @@ public class OctonionFloat64RModule
 		return NAN;
 	}
 
-	private final Function1<Boolean, OctonionFloat64RModuleMember> INF =
+	private final Function1<Boolean, OctonionFloat64RModuleMember> ISINF =
 			new Function1<Boolean, OctonionFloat64RModuleMember>()
 	{
 		@Override
@@ -403,9 +404,23 @@ public class OctonionFloat64RModule
 
 	@Override
 	public Function1<Boolean, OctonionFloat64RModuleMember> isInfinite() {
-		return INF;
+		return ISINF;
 	}
 
+	private final Procedure2<Boolean, OctonionFloat64RModuleMember> INF =
+			new Procedure2<Boolean, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(Boolean positive, OctonionFloat64RModuleMember a) {
+			RModuleInfinite.compute(G.ODBL, positive, a);
+		}
+	};
+
+	@Override
+	public Procedure2<Boolean, OctonionFloat64RModuleMember> infinite() {
+		return INF;
+	}
+	
 	private final Procedure4<Mode, Float64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> ROUND =
 			new Procedure4<Mode, Float64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
 	{

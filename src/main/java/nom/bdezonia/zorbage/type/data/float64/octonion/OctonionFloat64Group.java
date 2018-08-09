@@ -528,7 +528,7 @@ public class OctonionFloat64Group
 		return NAN;
 	}
 
-	private Function1<Boolean,OctonionFloat64Member> INF =
+	private Function1<Boolean,OctonionFloat64Member> ISINF =
 			new Function1<Boolean, OctonionFloat64Member>()
 	{
 		@Override
@@ -542,6 +542,39 @@ public class OctonionFloat64Group
 	
 	@Override
 	public Function1<Boolean,OctonionFloat64Member> isInfinite() {
+		return ISINF;
+	}
+
+	private final Procedure2<Boolean, OctonionFloat64Member> INF =
+			new Procedure2<Boolean, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(Boolean positive, OctonionFloat64Member a) {
+			if (positive) {
+				a.setR(Double.POSITIVE_INFINITY);
+				a.setI(Double.POSITIVE_INFINITY);
+				a.setJ(Double.POSITIVE_INFINITY);
+				a.setK(Double.POSITIVE_INFINITY);
+				a.setL(Double.POSITIVE_INFINITY);
+				a.setI0(Double.POSITIVE_INFINITY);
+				a.setJ0(Double.POSITIVE_INFINITY);
+				a.setK0(Double.POSITIVE_INFINITY);
+			}
+			else {
+				a.setR(Double.NEGATIVE_INFINITY);
+				a.setI(Double.NEGATIVE_INFINITY);
+				a.setJ(Double.NEGATIVE_INFINITY);
+				a.setK(Double.NEGATIVE_INFINITY);
+				a.setL(Double.NEGATIVE_INFINITY);
+				a.setI0(Double.NEGATIVE_INFINITY);
+				a.setJ0(Double.NEGATIVE_INFINITY);
+				a.setK0(Double.NEGATIVE_INFINITY);
+			}
+		}
+	};
+	
+	@Override
+	public Procedure2<Boolean, OctonionFloat64Member> infinite() {
 		return INF;
 	}
 

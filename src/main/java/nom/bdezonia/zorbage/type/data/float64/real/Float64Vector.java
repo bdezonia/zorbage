@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
+import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
@@ -376,7 +377,7 @@ public class Float64Vector
 		return NAN;
 	}
 
-	private final Function1<Boolean, Float64VectorMember> INF =
+	private final Function1<Boolean, Float64VectorMember> ISINF =
 			new Function1<Boolean, Float64VectorMember>()
 	{
 		@Override
@@ -387,9 +388,23 @@ public class Float64Vector
 
 	@Override
 	public Function1<Boolean, Float64VectorMember> isInfinite() {
-		return INF;
+		return ISINF;
 	}
 
+	private final Procedure2<Boolean, Float64VectorMember> INF =
+			new Procedure2<Boolean, Float64VectorMember>()
+	{
+		@Override
+		public void call(Boolean positive, Float64VectorMember a) {
+			RModuleInfinite.compute(G.DBL, positive, a);
+		}
+	};
+
+	@Override
+	public Procedure2<Boolean, Float64VectorMember> infinite() {
+		return INF;
+	}
+	
 	private final Procedure4<Mode, Float64Member, Float64VectorMember, Float64VectorMember> ROUND =
 			new Procedure4<Mode, Float64Member, Float64VectorMember, Float64VectorMember>()
 	{

@@ -24,23 +24,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Infinite<T> {
+public class MatrixInfinite {
 
-	Function1<Boolean,T> isInfinite();
-
-	// positive or negative can be determined with signum() for Ordered groups.
-	// Complex has no concept of pos inf and neg inf.
+	private MatrixInfinite() { }
 	
-	Procedure2<Boolean,T> infinite();
-
+	/**
+	 * 
+	 * @param grp
+	 * @param a
+	 */
+	public static <T extends Group<T,U> & Infinite<U>, U>
+		void compute(T grp, boolean positive, MatrixMember<U> a)
+	{
+		// comment out this possible source of bugs. empty matrices will remain that way.
+		//if (a.rows() == 0 || a.cols() == 0) {
+		//	a.alloc(1,1);
+		//}
+		U value = grp.construct();
+		grp.infinite().call(positive,value);
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
+				a.setV(r, c, value);
+			}
+		}
+		
+	}
 }

@@ -24,23 +24,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Infinite<T> {
+public class RModuleInfinite {
 
-	Function1<Boolean,T> isInfinite();
-
-	// positive or negative can be determined with signum() for Ordered groups.
-	// Complex has no concept of pos inf and neg inf.
+	private RModuleInfinite() { }
 	
-	Procedure2<Boolean,T> infinite();
-
+	/**
+	 * 
+	 * @param grp
+	 * @param a
+	 */
+	public static <T extends Group<T,U> & Infinite<U>, U>
+		void compute(T grp, boolean positive, RModuleMember<U> a)
+	{
+		// comment out this possible source of bugs. empty rmodules will remain that way.
+		//if (a.length() == 0) {
+		//	a.alloc(1);
+		//}
+		U value = grp.construct();
+		grp.infinite().call(positive,value);
+		for (long i = 0; i < a.length(); i++) {
+			a.setV(i, value);
+		}
+		
+	}
 }

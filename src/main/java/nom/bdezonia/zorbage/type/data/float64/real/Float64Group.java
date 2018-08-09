@@ -997,7 +997,7 @@ public class Float64Group
 		return NAN;
 	}
 
-	private final Function1<Boolean,Float64Member> INF =
+	private final Function1<Boolean,Float64Member> ISINF =
 			new Function1<Boolean, Float64Member>()
 	{
 		@Override
@@ -1008,6 +1008,25 @@ public class Float64Group
 	
 	@Override
 	public Function1<Boolean,Float64Member> isInfinite() {
+		return ISINF;
+	}
+
+	private final Procedure2<Boolean, Float64Member> INF =
+			new Procedure2<Boolean, Float64Member>()
+	{
+		@Override
+		public void call(Boolean positive, Float64Member a) {
+			if (positive) {
+				a.setV(Double.POSITIVE_INFINITY);
+			}
+			else {
+				a.setV(Double.NEGATIVE_INFINITY);
+			}
+		}
+	};
+	
+	@Override
+	public Procedure2<Boolean, Float64Member> infinite() {
 		return INF;
 	}
 

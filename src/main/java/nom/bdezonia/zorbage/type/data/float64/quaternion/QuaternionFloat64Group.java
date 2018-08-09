@@ -419,7 +419,7 @@ public class QuaternionFloat64Group
 		return NAN;
 	}
 	
-	private Function1<Boolean,QuaternionFloat64Member> INF =
+	private Function1<Boolean,QuaternionFloat64Member> ISINF =
 			new Function1<Boolean, QuaternionFloat64Member>()
 	{
 		@Override
@@ -430,6 +430,31 @@ public class QuaternionFloat64Group
 	
 	@Override
 	public Function1<Boolean,QuaternionFloat64Member> isInfinite() {
+		return ISINF;
+	}
+
+	private final Procedure2<Boolean, QuaternionFloat64Member> INF =
+			new Procedure2<Boolean, QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(Boolean positive, QuaternionFloat64Member a) {
+			if (positive) {
+				a.setR(Double.POSITIVE_INFINITY);
+				a.setI(Double.POSITIVE_INFINITY);
+				a.setJ(Double.POSITIVE_INFINITY);
+				a.setK(Double.POSITIVE_INFINITY);
+			}
+			else {
+				a.setR(Double.NEGATIVE_INFINITY);
+				a.setI(Double.NEGATIVE_INFINITY);
+				a.setJ(Double.NEGATIVE_INFINITY);
+				a.setK(Double.NEGATIVE_INFINITY);
+			}
+		}
+	};
+	
+	@Override
+	public Procedure2<Boolean, QuaternionFloat64Member> infinite() {
 		return INF;
 	}
 

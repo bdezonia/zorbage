@@ -605,7 +605,7 @@ public class Float64TensorProduct
 		return NAN;
 	}
 
-	private final Function1<Boolean, Float64TensorProductMember> INF =
+	private final Function1<Boolean, Float64TensorProductMember> ISINF =
 			new Function1<Boolean, Float64TensorProductMember>()
 	{
 		@Override
@@ -622,9 +622,23 @@ public class Float64TensorProduct
 
 	@Override
 	public Function1<Boolean, Float64TensorProductMember> isInfinite() {
-		return INF;
+		return ISINF;
 	}
 
+	private final Procedure2<Boolean, Float64TensorProductMember> INF =
+			new Procedure2<Boolean, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Boolean a, Float64TensorProductMember b) {
+			throw new IllegalArgumentException("TODO");
+		}
+	};
+			
+	@Override
+	public Procedure2<Boolean, Float64TensorProductMember> infinite() {
+		return INF;
+	}
+	
 	private final Procedure4<Mode, Float64Member, Float64TensorProductMember, Float64TensorProductMember> ROUND =
 			new Procedure4<Mode, Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
 	{

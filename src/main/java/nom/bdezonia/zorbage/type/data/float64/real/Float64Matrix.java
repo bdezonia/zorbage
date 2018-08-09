@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
+import nom.bdezonia.zorbage.algorithm.MatrixInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
@@ -279,7 +280,7 @@ public class Float64Matrix
 		return NAN;
 	}
 	
-	private final Function1<Boolean,Float64MatrixMember> INF =
+	private final Function1<Boolean,Float64MatrixMember> ISINF =
 			new Function1<Boolean, Float64MatrixMember>()
 	{
 		@Override
@@ -290,6 +291,20 @@ public class Float64Matrix
 	
 	@Override
 	public Function1<Boolean,Float64MatrixMember> isInfinite() {
+		return ISINF;
+	}
+
+	private final Procedure2<Boolean, Float64MatrixMember> INF =
+			new Procedure2<Boolean, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Boolean positive, Float64MatrixMember a) {
+			MatrixInfinite.compute(G.DBL, positive, a);
+		}
+	};
+	
+	@Override
+	public Procedure2<Boolean, Float64MatrixMember> infinite() {
 		return INF;
 	}
 
