@@ -48,6 +48,7 @@ public class TestFill {
 
 	@Test
 	public void test() {
+		
 		long size = 10000;
 		SignedInt32Member type = new SignedInt32Member();
 		IndexedDataSource<?, SignedInt32Member> data = Storage.allocate(size, type);
@@ -64,10 +65,12 @@ public class TestFill {
 			data.get(i, type);
 			assertEquals(300-6*i, type.v());
 		}
+
 	}
 	
 	@Test
 	public void test2() {
+
 		Float64Member type = new Float64Member();
 		IndexedDataSource<?, Float64Member> data = Storage.allocate(1000, type);
 		Fill.compute(G.DBL, data, G.DBL.zero());
@@ -77,6 +80,7 @@ public class TestFill {
 		Fill.compute(G.DBL, data, G.DBL.E());
 		Fill.compute(G.DBL, data, G.DBL.PI());
 		Fill.compute(G.DBL, data, G.DBL.random());
+		Fill.compute(G.DBL, data, G.DBL.nan());
 		Fill.compute(G.DBL, data, new Float64Member(17.4));
 		assertTrue(true);
 
