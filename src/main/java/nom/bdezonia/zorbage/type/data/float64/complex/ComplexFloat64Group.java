@@ -60,6 +60,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Random;
@@ -88,6 +89,7 @@ public class ComplexFloat64Group
     Power<ComplexFloat64Member>,
     Rounding<Float64Member,ComplexFloat64Member>,
     Infinite<ComplexFloat64Member>,
+    NaN<ComplexFloat64Member>,
     Conjugate<ComplexFloat64Member>,
     Random<ComplexFloat64Member>,
     RealUnreal<ComplexFloat64Member,Float64Member>
@@ -105,7 +107,7 @@ public class ComplexFloat64Group
 	private static final ComplexFloat64Member TWO_I = new ComplexFloat64Member(0,2);
 	private static final ComplexFloat64Member MINUS_I = new ComplexFloat64Member(0,-1);
 	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
-	private static final ComplexFloat64Member NaN = new ComplexFloat64Member(Double.NaN,Double.NaN);
+	private static final ComplexFloat64Member NaN_ = new ComplexFloat64Member(Double.NaN,Double.NaN);
 
 	public ComplexFloat64Group() { }
 	
@@ -133,7 +135,7 @@ public class ComplexFloat64Group
 		@Override
 		public void call(Integer power, ComplexFloat64Member a, ComplexFloat64Member b) {
 			if (power == 0 && isEqual().call(a, ZERO)) {
-				assign().call(NaN, b);
+				assign().call(NaN_, b);
 				return;
 			}
 			double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
@@ -1073,7 +1075,7 @@ public class ComplexFloat64Group
 		return ROUND;
 	}
 
-	private final Function1<Boolean,ComplexFloat64Member> NAN =
+	private final Function1<Boolean,ComplexFloat64Member> ISNAN =
 			new Function1<Boolean, ComplexFloat64Member>()
 	{
 		@Override
@@ -1085,6 +1087,21 @@ public class ComplexFloat64Group
 	
 	@Override
 	public Function1<Boolean,ComplexFloat64Member> isNaN() {
+		return ISNAN;
+	}
+	
+	private final Procedure1<ComplexFloat64Member> NAN =
+			new Procedure1<ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a) {
+			a.setR(Double.NaN);
+			a.setI(Double.NaN);
+		}
+	};
+	
+	@Override
+	public Procedure1<ComplexFloat64Member> nan() {
 		return NAN;
 	}
 

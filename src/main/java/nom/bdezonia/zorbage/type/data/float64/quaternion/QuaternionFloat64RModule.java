@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -50,6 +51,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -70,7 +72,8 @@ public class QuaternionFloat64RModule
     Norm<QuaternionFloat64RModuleMember,Float64Member>,
     Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, QuaternionFloat64MatrixMember>,
     DirectProduct<QuaternionFloat64RModuleMember, QuaternionFloat64MatrixMember>,
-	Rounding<Float64Member,QuaternionFloat64RModuleMember>, Infinite<QuaternionFloat64RModuleMember>
+	Rounding<Float64Member,QuaternionFloat64RModuleMember>, Infinite<QuaternionFloat64RModuleMember>,
+	NaN<QuaternionFloat64RModuleMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 	
@@ -367,7 +370,7 @@ public class QuaternionFloat64RModule
 		return DP;
 	}
 
-	private final Function1<Boolean, QuaternionFloat64RModuleMember> NAN =
+	private final Function1<Boolean, QuaternionFloat64RModuleMember> ISNAN =
 			new Function1<Boolean, QuaternionFloat64RModuleMember>()
 	{
 		@Override
@@ -378,6 +381,20 @@ public class QuaternionFloat64RModule
 
 	@Override
 	public Function1<Boolean, QuaternionFloat64RModuleMember> isNaN() {
+		return ISNAN;
+	}
+
+	private final Procedure1<QuaternionFloat64RModuleMember> NAN =
+			new Procedure1<QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64RModuleMember a) {
+			RModuleNaN.compute(G.QDBL, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat64RModuleMember> nan() {
 		return NAN;
 	}
 

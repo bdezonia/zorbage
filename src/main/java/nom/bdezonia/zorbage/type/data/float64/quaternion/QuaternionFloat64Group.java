@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Random;
@@ -69,6 +70,7 @@ public class QuaternionFloat64Group
     Norm<QuaternionFloat64Member, Float64Member>,
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,
+    NaN<QuaternionFloat64Member>,
     Rounding<Float64Member,QuaternionFloat64Member>,
     Random<QuaternionFloat64Member>,
     Exponential<QuaternionFloat64Member>,
@@ -386,7 +388,7 @@ public class QuaternionFloat64Group
 		return ROUND;
 	}
 
-	private Function1<Boolean,QuaternionFloat64Member> NAN =
+	private Function1<Boolean,QuaternionFloat64Member> ISNAN =
 			new Function1<Boolean, QuaternionFloat64Member>()
 	{
 		@Override
@@ -397,9 +399,26 @@ public class QuaternionFloat64Group
 	
 	@Override
 	public Function1<Boolean,QuaternionFloat64Member> isNaN() {
+		return ISNAN;
+	}
+	
+	private final Procedure1<QuaternionFloat64Member> NAN =
+			new Procedure1<QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(QuaternionFloat64Member a) {
+			a.setR(Double.NaN);
+			a.setI(Double.NaN);
+			a.setJ(Double.NaN);
+			a.setK(Double.NaN);
+		}
+	};
+
+	@Override
+	public Procedure1<QuaternionFloat64Member> nan() {
 		return NAN;
 	}
-
+	
 	private Function1<Boolean,QuaternionFloat64Member> INF =
 			new Function1<Boolean, QuaternionFloat64Member>()
 	{

@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class MatrixIsNaN {
 
 	private MatrixIsNaN() { }
 	
-	public static <T extends Group<T,U> & Infinite<U>,U>
+	public static <T extends Group<T,U> & NaN<U>,U>
 		boolean compute(T group, MatrixMember<U> a)
 	{
 		U value = group.construct();

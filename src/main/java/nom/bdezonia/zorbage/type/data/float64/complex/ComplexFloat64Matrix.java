@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
@@ -253,7 +254,7 @@ public class ComplexFloat64Matrix
 		return ROUND;
 	}
 
-	private final Function1<Boolean,ComplexFloat64MatrixMember> NAN =
+	private final Function1<Boolean,ComplexFloat64MatrixMember> ISNAN =
 			new Function1<Boolean,ComplexFloat64MatrixMember>()
 	{
 		@Override
@@ -264,9 +265,23 @@ public class ComplexFloat64Matrix
 	
 	@Override
 	public Function1<Boolean,ComplexFloat64MatrixMember> isNaN() {
-		return NAN;
+		return ISNAN;
 	}
 
+	private final Procedure1<ComplexFloat64MatrixMember> NAN =
+			new Procedure1<ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64MatrixMember a) {
+			MatrixNaN.compute(G.CDBL, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat64MatrixMember> nan() {
+		return NAN;
+	}
+	
 	private final Function1<Boolean,ComplexFloat64MatrixMember> INF =
 			new Function1<Boolean,ComplexFloat64MatrixMember>()
 	{

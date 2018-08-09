@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Random;
@@ -71,6 +72,7 @@ public class OctonionFloat64Group
     Conjugate<OctonionFloat64Member>,
     Norm<OctonionFloat64Member,Float64Member>,
     Infinite<OctonionFloat64Member>,
+    NaN<OctonionFloat64Member>,
     Rounding<Float64Member,OctonionFloat64Member>,
     Constants<OctonionFloat64Member>,
     Random<OctonionFloat64Member>,
@@ -490,7 +492,7 @@ public class OctonionFloat64Group
 		return ROUND;
 	}
 
-	private Function1<Boolean,OctonionFloat64Member> NAN =
+	private Function1<Boolean,OctonionFloat64Member> ISNAN =
 			new Function1<Boolean, OctonionFloat64Member>()
 	{
 		@Override
@@ -502,6 +504,27 @@ public class OctonionFloat64Group
 
 	@Override
 	public Function1<Boolean,OctonionFloat64Member> isNaN() {
+		return ISNAN;
+	}
+
+	private final Procedure1<OctonionFloat64Member> NAN =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			a.setR(Double.NaN);
+			a.setI(Double.NaN);
+			a.setJ(Double.NaN);
+			a.setK(Double.NaN);
+			a.setL(Double.NaN);
+			a.setI0(Double.NaN);
+			a.setJ0(Double.NaN);
+			a.setK0(Double.NaN);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> nan() {
 		return NAN;
 	}
 

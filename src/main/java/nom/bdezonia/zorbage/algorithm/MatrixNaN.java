@@ -24,27 +24,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
-// TODO: matrices and tensors live in a vector space
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T> The matrix ring for manipulating matrix types
- * @param <U> The matrix type: e.g. Float64MatrixMember
- * @param <V> The matrix element ring with unity used for manipulating matrix elements
- * @param <W> The matrix element type: e.g. Float64Member
  */
-public interface MatrixRing<T extends RingWithUnity<T,U>, U,
-                        V extends RingWithUnity<V,W>, W>  // TODO W needs to be Invertible?
-  extends
-    //Norm<U,W>,
-    Infinite<U>,
-    NaN<U>,
-    Conjugate<U>,
-    Invertible<U>,
-    MatrixOps<U,W>
-{
+public class MatrixNaN {
+
+	private MatrixNaN() { }
+	
+	/**
+	 * 
+	 * @param grp
+	 * @param a
+	 */
+	public static <T extends Group<T,U> & NaN<U>, U>
+		void compute(T grp, MatrixMember<U> a)
+	{
+		if (a.rows() == 0 || a.cols() == 0) {
+			a.alloc(1,1);
+		}
+		U value = grp.construct();
+		grp.nan().call(value);
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
+				a.setV(r, c, value);
+			}
+		}
+		
+	}
 }

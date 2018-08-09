@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
@@ -75,7 +76,8 @@ public class Float64TensorProduct
 		ConstructibleNdLong<Float64TensorProductMember>,
 		Norm<Float64TensorProductMember,Float64Member>,
 		Scale<Float64TensorProductMember,Float64Member>,
-		Rounding<Float64Member,Float64TensorProductMember>, Infinite<Float64TensorProductMember>
+		Rounding<Float64Member,Float64TensorProductMember>, Infinite<Float64TensorProductMember>,
+		NaN<Float64TensorProductMember>
 {
 	@Override
 	public Float64TensorProductMember construct() {
@@ -569,7 +571,7 @@ public class Float64TensorProduct
 		return UNITY;
 	}
 
-	private final Function1<Boolean, Float64TensorProductMember> NAN =
+	private final Function1<Boolean, Float64TensorProductMember> ISNAN =
 			new Function1<Boolean, Float64TensorProductMember>()
 	{
 		@Override
@@ -586,6 +588,20 @@ public class Float64TensorProduct
 
 	@Override
 	public Function1<Boolean, Float64TensorProductMember> isNaN() {
+		return ISNAN;
+	}
+
+	private final Procedure1<Float64TensorProductMember> NAN =
+			new Procedure1<Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Float64TensorProductMember a) {
+			throw new IllegalArgumentException("TODO");
+		}
+	};
+	
+	@Override
+	public Procedure1<Float64TensorProductMember> nan() {
 		return NAN;
 	}
 

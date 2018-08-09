@@ -52,6 +52,7 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.MiscFloat;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
@@ -79,6 +80,7 @@ public class Float16Group
     Hyperbolic<Float16Member>,
     InverseHyperbolic<Float16Member>,
     Infinite<Float16Member>,
+    NaN<Float16Member>,
     Roots<Float16Member>,
     Power<Float16Member>,
     Rounding<Float16Member,Float16Member>,
@@ -948,7 +950,7 @@ public class Float16Group
 		return ACOTH;
 	}
 
-	private final Function1<Boolean,Float16Member> NAN =
+	private final Function1<Boolean,Float16Member> ISNAN =
 			new Function1<Boolean, Float16Member>()
 	{
 		@Override
@@ -959,9 +961,23 @@ public class Float16Group
 
 	@Override
 	public Function1<Boolean,Float16Member> isNaN() {
-		return NAN;
+		return ISNAN;
 	}
 
+	private final Procedure1<Float16Member> NAN =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			a.setV(Double.NaN);
+		}
+	};
+	
+	@Override
+	public Procedure1<Float16Member> nan() {
+		return NAN;
+	}
+	
 	private final Function1<Boolean,Float16Member> INF =
 			new Function1<Boolean, Float16Member>()
 	{

@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -50,6 +51,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
@@ -70,7 +72,8 @@ public class ComplexFloat64Vector
     Norm<ComplexFloat64VectorMember,Float64Member>,
     Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>,
     DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>,
-    Rounding<Float64Member,ComplexFloat64VectorMember>, Infinite<ComplexFloat64VectorMember>
+    Rounding<Float64Member,ComplexFloat64VectorMember>, Infinite<ComplexFloat64VectorMember>,
+    NaN<ComplexFloat64VectorMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -356,7 +359,7 @@ public class ComplexFloat64Vector
 		return DP;
 	}
 
-	private final Function1<Boolean, ComplexFloat64VectorMember> NAN =
+	private final Function1<Boolean, ComplexFloat64VectorMember> ISNAN =
 			new Function1<Boolean, ComplexFloat64VectorMember>()
 	{
 		@Override
@@ -367,6 +370,20 @@ public class ComplexFloat64Vector
 
 	@Override
 	public Function1<Boolean, ComplexFloat64VectorMember> isNaN() {
+		return ISNAN;
+	}
+	
+	private final Procedure1<ComplexFloat64VectorMember> NAN =
+			new Procedure1<ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a) {
+			RModuleNaN.compute(G.CDBL, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<ComplexFloat64VectorMember> nan() {
 		return NAN;
 	}
 

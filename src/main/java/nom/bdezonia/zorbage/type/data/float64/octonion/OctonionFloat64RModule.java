@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -50,6 +51,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
@@ -70,7 +72,8 @@ public class OctonionFloat64RModule
 	Norm<OctonionFloat64RModuleMember,Float64Member>,
 	Products<OctonionFloat64RModuleMember, OctonionFloat64Member, OctonionFloat64MatrixMember>,
 	DirectProduct<OctonionFloat64RModuleMember, OctonionFloat64MatrixMember>,
-	Rounding<Float64Member,OctonionFloat64RModuleMember>, Infinite<OctonionFloat64RModuleMember>
+	Rounding<Float64Member,OctonionFloat64RModuleMember>, Infinite<OctonionFloat64RModuleMember>,
+	NaN<OctonionFloat64RModuleMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 	
@@ -361,7 +364,7 @@ public class OctonionFloat64RModule
 		return DP;
 	}
 
-	private final Function1<Boolean, OctonionFloat64RModuleMember> NAN =
+	private final Function1<Boolean, OctonionFloat64RModuleMember> ISNAN =
 			new Function1<Boolean, OctonionFloat64RModuleMember>()
 	{
 		@Override
@@ -372,6 +375,20 @@ public class OctonionFloat64RModule
 
 	@Override
 	public Function1<Boolean, OctonionFloat64RModuleMember> isNaN() {
+		return ISNAN;
+	}
+
+	private final Procedure1<OctonionFloat64RModuleMember> NAN =
+			new Procedure1<OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat64RModuleMember a) {
+			RModuleNaN.compute(G.ODBL, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64RModuleMember> nan() {
 		return NAN;
 	}
 

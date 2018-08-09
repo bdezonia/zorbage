@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
@@ -252,7 +253,7 @@ public class OctonionFloat64Matrix
 		return ROUND;
 	}
 
-	private Function1<Boolean,OctonionFloat64MatrixMember> NAN =
+	private Function1<Boolean,OctonionFloat64MatrixMember> ISNAN =
 			new Function1<Boolean, OctonionFloat64MatrixMember>()
 	{
 		@Override
@@ -263,9 +264,23 @@ public class OctonionFloat64Matrix
 	
 	@Override
 	public Function1<Boolean,OctonionFloat64MatrixMember> isNaN() {
-		return NAN;
+		return ISNAN;
 	}
 
+	private final Procedure1<OctonionFloat64MatrixMember> NAN =
+			new Procedure1<OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a) {
+			MatrixNaN.compute(G.ODBL, a);
+		}
+	};
+
+	@Override
+	public Procedure1<OctonionFloat64MatrixMember> nan() {
+		return NAN;
+	}
+	
 	private Function1<Boolean,OctonionFloat64MatrixMember> INF =
 			new Function1<Boolean, OctonionFloat64MatrixMember>()
 	{

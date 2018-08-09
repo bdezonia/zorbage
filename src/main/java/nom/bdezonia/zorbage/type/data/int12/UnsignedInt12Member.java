@@ -60,8 +60,6 @@ public final class UnsignedInt12Member
 		PrimitiveConversion
 {
 	short v;
-	
-	private static final BigInteger MAX_BIG = BigInteger.valueOf(0x0fff);
 
 	public UnsignedInt12Member() {
 		v = 0;

@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -49,6 +50,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
@@ -68,7 +70,8 @@ public class Float64Vector
 	Norm<Float64VectorMember,Float64Member>,
 	Products<Float64VectorMember, Float64Member, Float64MatrixMember>,
 	DirectProduct<Float64VectorMember, Float64MatrixMember>,
-	Rounding<Float64Member,Float64VectorMember>, Infinite<Float64VectorMember>
+	Rounding<Float64Member,Float64VectorMember>, Infinite<Float64VectorMember>,
+	NaN<Float64VectorMember>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -345,7 +348,7 @@ public class Float64Vector
 		return DP;
 	}
 
-	private final Function1<Boolean, Float64VectorMember> NAN =
+	private final Function1<Boolean, Float64VectorMember> ISNAN =
 			new Function1<Boolean, Float64VectorMember>()
 	{
 		@Override
@@ -356,6 +359,20 @@ public class Float64Vector
 
 	@Override
 	public Function1<Boolean, Float64VectorMember> isNaN() {
+		return ISNAN;
+	}
+	
+	private final Procedure1<Float64VectorMember> NAN =
+			new Procedure1<Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64VectorMember a) {
+			RModuleNaN.compute(G.DBL, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<Float64VectorMember> nan() {
 		return NAN;
 	}
 

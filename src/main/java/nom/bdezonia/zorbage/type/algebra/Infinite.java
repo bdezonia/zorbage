@@ -34,8 +34,10 @@ import nom.bdezonia.zorbage.function.Function1;
  *
  */
 public interface Infinite<T> {
-	Function1<Boolean,T> isNaN();
+
 	Function1<Boolean,T> isInfinite();
+
 	// positive or negative can be determined with signum() for Ordered groups.
 	// Complex has no concept of pos inf and neg inf.
+
 }
