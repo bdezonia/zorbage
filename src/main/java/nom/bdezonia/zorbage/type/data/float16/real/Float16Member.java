@@ -80,8 +80,7 @@ public final class Float16Member
 	}
 	
 	public Float16Member(Float16Member value) {
-		this();
-		set(value);
+		v = new Float64Member(value.v);
 	}
 	
 	public Float16Member(String value) {
