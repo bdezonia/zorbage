@@ -545,36 +545,24 @@ public class OctonionFloat64Group
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, OctonionFloat64Member> INF =
-			new Procedure2<Boolean, OctonionFloat64Member>()
+	private final Procedure1<OctonionFloat64Member> INF =
+			new Procedure1<OctonionFloat64Member>()
 	{
 		@Override
-		public void call(Boolean positive, OctonionFloat64Member a) {
-			if (positive) {
-				a.setR(Double.POSITIVE_INFINITY);
-				a.setI(Double.POSITIVE_INFINITY);
-				a.setJ(Double.POSITIVE_INFINITY);
-				a.setK(Double.POSITIVE_INFINITY);
-				a.setL(Double.POSITIVE_INFINITY);
-				a.setI0(Double.POSITIVE_INFINITY);
-				a.setJ0(Double.POSITIVE_INFINITY);
-				a.setK0(Double.POSITIVE_INFINITY);
-			}
-			else {
-				a.setR(Double.NEGATIVE_INFINITY);
-				a.setI(Double.NEGATIVE_INFINITY);
-				a.setJ(Double.NEGATIVE_INFINITY);
-				a.setK(Double.NEGATIVE_INFINITY);
-				a.setL(Double.NEGATIVE_INFINITY);
-				a.setI0(Double.NEGATIVE_INFINITY);
-				a.setJ0(Double.NEGATIVE_INFINITY);
-				a.setK0(Double.NEGATIVE_INFINITY);
-			}
+		public void call(OctonionFloat64Member a) {
+			a.setR(Double.POSITIVE_INFINITY);
+			a.setI(Double.POSITIVE_INFINITY);
+			a.setJ(Double.POSITIVE_INFINITY);
+			a.setK(Double.POSITIVE_INFINITY);
+			a.setL(Double.POSITIVE_INFINITY);
+			a.setI0(Double.POSITIVE_INFINITY);
+			a.setJ0(Double.POSITIVE_INFINITY);
+			a.setK0(Double.POSITIVE_INFINITY);
 		}
 	};
 	
 	@Override
-	public Procedure2<Boolean, OctonionFloat64Member> infinite() {
+	public Procedure1<OctonionFloat64Member> infinite() {
 		return INF;
 	}
 

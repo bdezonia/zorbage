@@ -407,17 +407,17 @@ public class OctonionFloat64RModule
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, OctonionFloat64RModuleMember> INF =
-			new Procedure2<Boolean, OctonionFloat64RModuleMember>()
+	private final Procedure1<OctonionFloat64RModuleMember> INF =
+			new Procedure1<OctonionFloat64RModuleMember>()
 	{
 		@Override
-		public void call(Boolean positive, OctonionFloat64RModuleMember a) {
-			RModuleInfinite.compute(G.ODBL, positive, a);
+		public void call(OctonionFloat64RModuleMember a) {
+			RModuleInfinite.compute(G.ODBL, a);
 		}
 	};
 
 	@Override
-	public Procedure2<Boolean, OctonionFloat64RModuleMember> infinite() {
+	public Procedure1<OctonionFloat64RModuleMember> infinite() {
 		return INF;
 	}
 	

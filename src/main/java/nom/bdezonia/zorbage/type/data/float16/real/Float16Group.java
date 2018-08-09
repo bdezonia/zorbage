@@ -992,23 +992,31 @@ public class Float16Group
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, Float16Member> INF =
-			new Procedure2<Boolean, Float16Member>()
+	private final Procedure1<Float16Member> INF =
+			new Procedure1<Float16Member>()
 	{
 		@Override
-		public void call(Boolean positive, Float16Member a) {
-			if (positive) {
-				a.setV(Double.POSITIVE_INFINITY);
-			}
-			else {
-				a.setV(Double.NEGATIVE_INFINITY);
-			}
+		public void call(Float16Member a) {
+			a.setV(Double.POSITIVE_INFINITY);
 		}
 	};
 			
 	@Override
-	public Procedure2<Boolean, Float16Member> infinite() {
+	public Procedure1<Float16Member> infinite() {
 		return INF;
+	}
+	
+	private final Procedure1<Float16Member> NINF =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			a.setV(Double.NEGATIVE_INFINITY);
+		}
+	};
+			
+	public Procedure1<Float16Member> negInfinite() {
+		return NINF;
 	}
 	
 	private final Procedure2<Float16Member,Float16Member> SQRT =

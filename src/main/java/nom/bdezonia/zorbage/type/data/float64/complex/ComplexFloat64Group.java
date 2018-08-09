@@ -1120,24 +1120,18 @@ public class ComplexFloat64Group
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, ComplexFloat64Member> INF =
-			new Procedure2<Boolean, ComplexFloat64Member>()
+	private final Procedure1<ComplexFloat64Member> INF =
+			new Procedure1<ComplexFloat64Member>()
 	{
 		@Override
-		public void call(Boolean positive, ComplexFloat64Member a) {
-			if (positive) {
-				a.setR(Double.POSITIVE_INFINITY);
-				a.setI(Double.POSITIVE_INFINITY);
-			}
-			else {
-				a.setR(Double.NEGATIVE_INFINITY);
-				a.setI(Double.NEGATIVE_INFINITY);
-			}
+		public void call(ComplexFloat64Member a) {
+			a.setR(Double.POSITIVE_INFINITY);
+			a.setI(Double.POSITIVE_INFINITY);
 		}
 	};
 	
 	@Override
-	public Procedure2<Boolean, ComplexFloat64Member> infinite() {
+	public Procedure1<ComplexFloat64Member> infinite() {
 		return INF;
 	}
 

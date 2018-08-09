@@ -45,14 +45,14 @@ public class RModuleInfinite {
 	 * @param a
 	 */
 	public static <T extends Group<T,U> & Infinite<U>, U>
-		void compute(T grp, boolean positive, RModuleMember<U> a)
+		void compute(T grp, RModuleMember<U> a)
 	{
 		// comment out this possible source of bugs. empty rmodules will remain that way.
 		//if (a.length() == 0) {
 		//	a.alloc(1);
 		//}
 		U value = grp.construct();
-		grp.infinite().call(positive,value);
+		grp.infinite().call(value);
 		for (long i = 0; i < a.length(); i++) {
 			a.setV(i, value);
 		}

@@ -413,17 +413,17 @@ public class QuaternionFloat64RModule
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, QuaternionFloat64RModuleMember> INF =
-			new Procedure2<Boolean, QuaternionFloat64RModuleMember>()
+	private final Procedure1<QuaternionFloat64RModuleMember> INF =
+			new Procedure1<QuaternionFloat64RModuleMember>()
 	{
 		@Override
-		public void call(Boolean positive, QuaternionFloat64RModuleMember a) {
-			RModuleInfinite.compute(G.QDBL, positive, a);
+		public void call(QuaternionFloat64RModuleMember a) {
+			RModuleInfinite.compute(G.QDBL, a);
 		}
 	};
 
 	@Override
-	public Procedure2<Boolean, QuaternionFloat64RModuleMember> infinite() {
+	public Procedure1<QuaternionFloat64RModuleMember> infinite() {
 		return INF;
 	}
 	

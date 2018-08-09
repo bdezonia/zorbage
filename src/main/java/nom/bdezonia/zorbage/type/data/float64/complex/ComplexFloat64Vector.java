@@ -402,17 +402,17 @@ public class ComplexFloat64Vector
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, ComplexFloat64VectorMember> INF =
-			new Procedure2<Boolean, ComplexFloat64VectorMember>()
+	private final Procedure1<ComplexFloat64VectorMember> INF =
+			new Procedure1<ComplexFloat64VectorMember>()
 	{
 		@Override
-		public void call(Boolean positive, ComplexFloat64VectorMember a) {
-			RModuleInfinite.compute(G.CDBL, positive, a);
+		public void call(ComplexFloat64VectorMember a) {
+			RModuleInfinite.compute(G.CDBL, a);
 		}
 	};
 
 	@Override
-	public Procedure2<Boolean, ComplexFloat64VectorMember> infinite() {
+	public Procedure1<ComplexFloat64VectorMember> infinite() {
 		return INF;
 	}
 	

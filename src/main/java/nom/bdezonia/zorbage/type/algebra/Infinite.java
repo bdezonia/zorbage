@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.algebra;
 
 import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 
 /**
  * 
@@ -41,6 +41,6 @@ public interface Infinite<T> {
 	// positive or negative can be determined with signum() for Ordered groups.
 	// Complex has no concept of pos inf and neg inf.
 	
-	Procedure2<Boolean,T> infinite();
+	Procedure1<T> infinite();
 
 }

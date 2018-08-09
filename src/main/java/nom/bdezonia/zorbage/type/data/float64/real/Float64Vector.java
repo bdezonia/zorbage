@@ -391,17 +391,17 @@ public class Float64Vector
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, Float64VectorMember> INF =
-			new Procedure2<Boolean, Float64VectorMember>()
+	private final Procedure1<Float64VectorMember> INF =
+			new Procedure1<Float64VectorMember>()
 	{
 		@Override
-		public void call(Boolean positive, Float64VectorMember a) {
-			RModuleInfinite.compute(G.DBL, positive, a);
+		public void call(Float64VectorMember a) {
+			RModuleInfinite.compute(G.DBL, a);
 		}
 	};
 
 	@Override
-	public Procedure2<Boolean, Float64VectorMember> infinite() {
+	public Procedure1<Float64VectorMember> infinite() {
 		return INF;
 	}
 	

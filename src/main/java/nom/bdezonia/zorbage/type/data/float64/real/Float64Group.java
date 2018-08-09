@@ -1011,23 +1011,31 @@ public class Float64Group
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, Float64Member> INF =
-			new Procedure2<Boolean, Float64Member>()
+	private final Procedure1<Float64Member> INF =
+			new Procedure1<Float64Member>()
 	{
 		@Override
-		public void call(Boolean positive, Float64Member a) {
-			if (positive) {
-				a.setV(Double.POSITIVE_INFINITY);
-			}
-			else {
-				a.setV(Double.NEGATIVE_INFINITY);
-			}
+		public void call(Float64Member a) {
+			a.setV(Double.POSITIVE_INFINITY);
 		}
 	};
 	
 	@Override
-	public Procedure2<Boolean, Float64Member> infinite() {
+	public Procedure1<Float64Member> infinite() {
 		return INF;
+	}
+
+	private final Procedure1<Float64Member> NINF =
+			new Procedure1<Float64Member>()
+	{
+		@Override
+		public void call(Float64Member a) {
+			a.setV(Double.NEGATIVE_INFINITY);
+		}
+	};
+	
+	public Procedure1<Float64Member> negInfinite() {
+		return NINF;
 	}
 
 	private final Procedure2<Float64Member,Float64Member> SQRT =

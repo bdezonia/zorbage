@@ -296,17 +296,17 @@ public class OctonionFloat64Matrix
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, OctonionFloat64MatrixMember> INF =
-			new Procedure2<Boolean, OctonionFloat64MatrixMember>()
+	private final Procedure1<OctonionFloat64MatrixMember> INF =
+			new Procedure1<OctonionFloat64MatrixMember>()
 	{
 		@Override
-		public void call(Boolean positive, OctonionFloat64MatrixMember a) {
-			MatrixInfinite.compute(G.ODBL, positive, a);
+		public void call(OctonionFloat64MatrixMember a) {
+			MatrixInfinite.compute(G.ODBL, a);
 		}
 	};
 	
 	@Override
-	public Procedure2<Boolean, OctonionFloat64MatrixMember> infinite() {
+	public Procedure1<OctonionFloat64MatrixMember> infinite() {
 		return INF;
 	}
 

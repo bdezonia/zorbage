@@ -625,17 +625,17 @@ public class Float64TensorProduct
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, Float64TensorProductMember> INF =
-			new Procedure2<Boolean, Float64TensorProductMember>()
+	private final Procedure1<Float64TensorProductMember> INF =
+			new Procedure1<Float64TensorProductMember>()
 	{
 		@Override
-		public void call(Boolean a, Float64TensorProductMember b) {
+		public void call(Float64TensorProductMember a) {
 			throw new IllegalArgumentException("TODO");
 		}
 	};
 			
 	@Override
-	public Procedure2<Boolean, Float64TensorProductMember> infinite() {
+	public Procedure1<Float64TensorProductMember> infinite() {
 		return INF;
 	}
 	

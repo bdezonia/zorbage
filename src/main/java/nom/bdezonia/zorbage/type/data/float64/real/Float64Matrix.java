@@ -294,17 +294,17 @@ public class Float64Matrix
 		return ISINF;
 	}
 
-	private final Procedure2<Boolean, Float64MatrixMember> INF =
-			new Procedure2<Boolean, Float64MatrixMember>()
+	private final Procedure1<Float64MatrixMember> INF =
+			new Procedure1<Float64MatrixMember>()
 	{
 		@Override
-		public void call(Boolean positive, Float64MatrixMember a) {
-			MatrixInfinite.compute(G.DBL, positive, a);
+		public void call(Float64MatrixMember a) {
+			MatrixInfinite.compute(G.DBL, a);
 		}
 	};
 	
 	@Override
-	public Procedure2<Boolean, Float64MatrixMember> infinite() {
+	public Procedure1<Float64MatrixMember> infinite() {
 		return INF;
 	}
 

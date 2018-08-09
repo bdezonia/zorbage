@@ -297,17 +297,17 @@ public class ComplexFloat64Matrix
 		return ISINF;
 	}
 	
-	private final Procedure2<Boolean, ComplexFloat64MatrixMember> INF =
-			new Procedure2<Boolean, ComplexFloat64MatrixMember>()
+	private final Procedure1<ComplexFloat64MatrixMember> INF =
+			new Procedure1<ComplexFloat64MatrixMember>()
 	{
 		@Override
-		public void call(Boolean positive, ComplexFloat64MatrixMember a) {
-			MatrixInfinite.compute(G.CDBL, positive, a);
+		public void call(ComplexFloat64MatrixMember a) {
+			MatrixInfinite.compute(G.CDBL, a);
 		}
 	};
 	
 	@Override
-	public Procedure2<Boolean, ComplexFloat64MatrixMember> infinite() {
+	public Procedure1<ComplexFloat64MatrixMember> infinite() {
 		return INF;
 	}
 
