@@ -73,6 +73,7 @@ public class TestFill {
 
 		Float64Member type = new Float64Member();
 		IndexedDataSource<?, Float64Member> data = Storage.allocate(1000, type);
+		Fill.compute(G.DBL, data, new Float64Member(17.4));
 		Fill.compute(G.DBL, data, G.DBL.zero());
 		Fill.compute(G.DBL, data, G.DBL.unity());
 		Fill.compute(G.DBL, data, G.DBL.minBound());
@@ -81,7 +82,6 @@ public class TestFill {
 		Fill.compute(G.DBL, data, G.DBL.PI());
 		Fill.compute(G.DBL, data, G.DBL.random());
 		Fill.compute(G.DBL, data, G.DBL.nan());
-		Fill.compute(G.DBL, data, new Float64Member(17.4));
 		Fill.compute(G.DBL, data, G.DBL.infinite());
 		Fill.compute(G.DBL, data, G.DBL.negInfinite());
 		assertTrue(true);
