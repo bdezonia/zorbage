@@ -82,6 +82,9 @@ public class TestFill {
 		Fill.compute(G.DBL, data, G.DBL.random());
 		Fill.compute(G.DBL, data, G.DBL.nan());
 		Fill.compute(G.DBL, data, new Float64Member(17.4));
+		// TODO
+		//Fill.compute(G.DBL, data, G.DBL.infinite());
+		//Fill.compute(G.DBL, data, G.DBL.negInfinite());
 		assertTrue(true);
 
 	}
