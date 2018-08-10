@@ -43,6 +43,24 @@ public class Transform2 {
 	 * 
 	 * @param grp
 	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param a
+	 * @param b
+	 */
+	public static final <T extends Group<T,U>,U>
+		void compute(T grp, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+	{
+		compute(grp, grp, proc, aStart, bStart, count, aStride, bStride, a, b);
+	}
+
+	/**
+	 * 
+	 * @param grp
+	 * @param proc
 	 * @param start
 	 * @param count
 	 * @param stride

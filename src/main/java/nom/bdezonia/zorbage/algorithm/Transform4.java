@@ -46,18 +46,21 @@ public class Transform4 {
 	 * @param aStart
 	 * @param bStart
 	 * @param cStart
+	 * @param dStart
 	 * @param count
 	 * @param aStride
 	 * @param bStride
 	 * @param cStride
+	 * @param dStride
 	 * @param a
 	 * @param b
 	 * @param c
+	 * @param d
 	 */
 	public static final <L extends Group<L,M>, M>
-		void compute(L grpM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,M> a, IndexedDataSource<?,M> b, IndexedDataSource<?,M> c)
+		void compute(L grpM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,M> b, IndexedDataSource<?,M> c, IndexedDataSource<?,M> d)
 	{
-		compute(grpM, grpM, grpM, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);	
+		compute(grpM, grpM, grpM, grpM, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
 	}
 	
 	/**

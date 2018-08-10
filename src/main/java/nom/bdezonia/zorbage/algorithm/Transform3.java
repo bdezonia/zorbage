@@ -52,9 +52,9 @@ public class Transform3 {
 	 * @param b
 	 */
 	public static final <T extends Group<T,U>, U>
-		void compute(T grpU, Procedure3<U,U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T grpU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		compute(grpU, grpU, proc, aStart, bStart, count, aStride, bStride, a, b);
+		compute(grpU, grpU, grpU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
 	}
 	
 	/**

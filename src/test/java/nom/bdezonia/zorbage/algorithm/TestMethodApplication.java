@@ -21,7 +21,7 @@ public class TestMethodApplication {
 				new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(), new Float64Member(0.1));
 		Generate.compute(G.DBL, ramp, data);
 		// multiply list1 by list2 and store in list2: with 1 list == squared values in place
-		Transform3.compute(G.DBL, G.DBL.multiply(), 0, 0, data.size(), 1, 1, data, data);
+		Transform3.compute(G.DBL, G.DBL.multiply(), 0, 0, 0, data.size(), 1, 1, 1, data, data, data);
 		double tol = 0.0000000000001;
 		Float64Member tmp = G.DBL.construct();
 		data.get(0, tmp);
