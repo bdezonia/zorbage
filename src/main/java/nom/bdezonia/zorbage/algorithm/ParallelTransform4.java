@@ -37,6 +37,51 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  */
 public class ParallelTransform4 {
 
+	/**
+	 * 
+	 * @param grpU
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param cStart
+	 * @param dStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param cStride
+	 * @param dStride
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure4<U,U,U,U> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c, IndexedDataSource<?,U> d)
+	{
+		compute(grpU, grpU, grpU, grpU, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
+	}
+	
+	/**
+	 * 
+	 * @param grpU
+	 * @param grpW
+	 * @param grpY
+	 * @param grpA
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param cStart
+	 * @param dStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param cStride
+	 * @param dStride
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 */
 	public static <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y, Z extends Group<Z,A>, A>
 		void compute(T grpU, V grpW, X grpY, Z grpA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d)
 	{

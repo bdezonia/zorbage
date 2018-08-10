@@ -42,6 +42,24 @@ public class Transform3 {
 	/**
 	 * 
 	 * @param grpU
+	 * @param proc
+	 * @param aStart
+	 * @param bStart
+	 * @param count
+	 * @param aStride
+	 * @param bStride
+	 * @param a
+	 * @param b
+	 */
+	public static final <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure3<U,U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+	{
+		compute(grpU, grpU, proc, aStart, bStart, count, aStride, bStride, a, b);
+	}
+	
+	/**
+	 * 
+	 * @param grpU
 	 * @param grpW
 	 * @param proc
 	 * @param aStart
