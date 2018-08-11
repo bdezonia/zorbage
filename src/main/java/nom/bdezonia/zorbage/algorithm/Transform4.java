@@ -127,4 +127,26 @@ public class Transform4 {
 		}
 	}
 
+	/**
+	 * In place transformation of one whole list by a Procedure4.
+	 * 
+	 * @param grp
+	 * @param proc
+	 * @param a
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grp, Procedure4<U,U,U,U> proc, IndexedDataSource<?,U> a)
+	{
+		U value1 = grp.construct();
+		U value2 = grp.construct();
+		U value3 = grp.construct();
+		U value4 = grp.construct();
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, value1);
+			grp.assign().call(value1, value2);
+			grp.assign().call(value2, value3);
+			proc.call(value1, value2, value3, value4);
+			a.set(i, value4);
+		}
+	}
 }

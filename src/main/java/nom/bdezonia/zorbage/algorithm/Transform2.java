@@ -99,4 +99,22 @@ public class Transform2 {
 		}
 	}
 
+	/**
+	 * In place transformation of one whole list by a Procedure2.
+	 * 
+	 * @param grp
+	 * @param proc
+	 * @param a
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grp, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
+	{
+		U value1 = grp.construct();
+		U value2 = grp.construct();
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, value1);
+			proc.call(value1, value2);
+			a.set(i, value2);
+		}
+	}
 }
