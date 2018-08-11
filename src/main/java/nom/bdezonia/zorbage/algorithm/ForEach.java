@@ -46,7 +46,21 @@ public class ForEach {
 	public static <T extends Group<T,U>, U>
 		void compute(T grpU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
-		ForEachN.compute(grpU, proc, 0, a.size(), a);
+		compute(grpU, proc, 0, a.size(), a);
 	}
-	
+
+	/**
+	 * 
+	 * @param grpU
+	 * @param proc
+	 * @param start
+	 * @param count
+	 * @param a
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T grpU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
+	{
+		Transform2.compute(grpU, proc, start, start, count, 1, 1, a, a);
+	}
+
 }
