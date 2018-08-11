@@ -122,12 +122,10 @@ public class Transform3 {
 	{
 		U value1 = grp.construct();
 		U value2 = grp.construct();
-		U value3 = grp.construct();
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, value1);
-			grp.assign().call(value1, value2);
-			proc.call(value1, value2,value3);
-			a.set(i, value3);
+			proc.call(value1, value1, value2);
+			a.set(i, value2);
 		}
 	}
 }
