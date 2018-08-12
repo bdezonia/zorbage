@@ -299,5 +299,17 @@ public class TestUnsignedInt128 {
 		a.setV(BigInteger.valueOf(2));
 		G.UINT128.power().call(127,a,b);
 		assertEquals(two.pow(127), b.v());
+		
+		// value confirmed by https://www.symbolab.com/solver/gcd-calculator
+		a.setV(new BigInteger("4500000"));
+		b.setV(new BigInteger("260000"));
+		G.UINT128.gcd().call(a, b, c);
+		assertEquals(new BigInteger("20000"), c.v());
+		
+		// value confirmed by https://www.symbolab.com/solver/lcm-calculator
+		a.setV(new BigInteger("60491000"));
+		b.setV(new BigInteger("20000"));
+		G.UINT128.lcm().call(a, b, c);
+		assertEquals(new BigInteger("1209820000"), c.v());
 	}
 }
