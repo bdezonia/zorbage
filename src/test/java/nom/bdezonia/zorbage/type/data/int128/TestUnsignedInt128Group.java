@@ -60,7 +60,7 @@ public class TestUnsignedInt128Group {
 	@Test
 	public void testAllOpsForSomeNumbers() {
 		Random rng = new Random();
-		int loop_max = 1000;
+		int loop_max = 10; // Note: scaled back considerably after new test class added that is thorough
 		BigInteger max = BigInteger.ONE.add(BigInteger.ONE).pow(128);
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
