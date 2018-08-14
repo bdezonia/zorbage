@@ -108,11 +108,11 @@ public class TestUnsignedInt128 {
 				G.UINT128.random().call(b);
 				BigInteger bigB = b.v();
 
-				c.set(a);
+				c.set(b);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
-				G.UINT128.abs().call(a, c);
-				assertEquals(a.v(),c.v());
+				G.UINT128.abs().call(b, c);
+				assertEquals(b.v(),c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
@@ -120,11 +120,11 @@ public class TestUnsignedInt128 {
 				G.UINT128.add().call(a,b,c);
 				assertEquals(bigA.add(bigB).and(allOnes), c.v());
 				
-				c.set(a);
+				c.set(b);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
-				G.UINT128.assign().call(a, c);
-				assertEquals(a.v(),c.v());
+				G.UINT128.assign().call(b, c);
+				assertEquals(b.v(),c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
@@ -186,8 +186,8 @@ public class TestUnsignedInt128 {
 				// TODO: gcd()
 				// TODO: lcm()
 				
-				assertEquals((bigA.mod(two).equals(BigInteger.ZERO)), G.UINT128.isEven().call(a));
-				assertEquals((bigA.mod(two).equals(BigInteger.ONE)), G.UINT128.isOdd().call(a));
+				assertEquals((bigB.mod(two).equals(BigInteger.ZERO)), G.UINT128.isEven().call(b));
+				assertEquals((bigB.mod(two).equals(BigInteger.ONE)), G.UINT128.isOdd().call(b));
 				
 				assertEquals(bigA.compareTo(bigB) == 0,G.UINT128.isEqual().call(a, b));
 				assertEquals(bigA.compareTo(bigB) != 0,G.UINT128.isNotEqual().call(a, b));
@@ -242,21 +242,21 @@ public class TestUnsignedInt128 {
 
 				// pow() and power() lightly tested elsewhere
 				
-				c.set(a);
+				c.set(b);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
-				G.UINT128.pred().call(a, c);
-				BigInteger expected = (bigA.equals(BigInteger.ZERO) ? allOnes : bigA.subtract(BigInteger.ONE));
+				G.UINT128.pred().call(b, c);
+				BigInteger expected = (bigB.equals(BigInteger.ZERO) ? allOnes : bigB.subtract(BigInteger.ONE));
 				assertEquals(expected, c.v());
 				
-				c.set(a);
+				c.set(b);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
-				G.UINT128.succ().call(a, c);
-				expected = (bigA.equals(allOnes)) ? BigInteger.ZERO : bigA.add(BigInteger.ONE);
+				G.UINT128.succ().call(b, c);
+				expected = (bigB.equals(allOnes)) ? BigInteger.ZERO : bigB.add(BigInteger.ONE);
 				assertEquals(expected, c.v());
 				
-				assertEquals(bigA.signum(), (int) G.UINT128.signum().call(a));
+				assertEquals(bigB.signum(), (int) G.UINT128.signum().call(b));
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
