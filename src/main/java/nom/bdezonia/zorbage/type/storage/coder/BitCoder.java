@@ -35,6 +35,6 @@ package nom.bdezonia.zorbage.type.storage.coder;
 public interface BitCoder<V> {
 
 	int bitCount();
-	void toValue(long[] arr, int index, int offset);
+	void fromArray(long[] arr, int index, int offset);
 	void toArray(long[] arr, int index, int offset);
 }

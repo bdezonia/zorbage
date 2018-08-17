@@ -102,7 +102,7 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public void toValue(long[] arr, int index) {
+	public void fromArray(long[] arr, int index) {
 		v = arr[index];
 	}
 
@@ -112,7 +112,7 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		v = raf.readLong();
 	}
 

@@ -73,7 +73,7 @@ public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
 		final int bucketStart = (int)(bitIndex / 64);
 		final int bucketOffset = (int)(bitIndex % 64);
 		synchronized (data) {
-			value.toValue(data, bucketStart, bucketOffset);
+			value.fromArray(data, bucketStart, bucketOffset);
 		}
 	}
 	

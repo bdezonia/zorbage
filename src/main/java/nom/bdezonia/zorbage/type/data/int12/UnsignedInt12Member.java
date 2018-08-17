@@ -149,7 +149,7 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void toValue(long[] arr, int index, int offset) {
+	public void fromArray(long[] arr, int index, int offset) {
 		long oldVals;
 		if (offset == 60) {
 			// last 4 bits in 1st long
@@ -212,7 +212,7 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void toValue(short[] arr, int index) {
+	public void fromArray(short[] arr, int index) {
 		v = arr[index];
 	}
 
@@ -222,7 +222,7 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		setV(raf.readShort());
 	}
 

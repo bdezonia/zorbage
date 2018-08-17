@@ -165,7 +165,7 @@ public class FileStorageSignedInt16<U extends ShortCoder<U> & Allocatable<U>>
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.shortCount()*2);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.toValue(raf);
+					tmp.fromFile(raf);
 					buffer.set(i, tmp);
 				}
 				raf.close();

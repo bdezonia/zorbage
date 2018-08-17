@@ -57,7 +57,7 @@ public class ArrayStorageFloat64<U extends DoubleCoder<U>>
 
 	@Override
 	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.doubleCount()));
+		value.fromArray(data, (int)(index * type.doubleCount()));
 	}
 	
 	@Override

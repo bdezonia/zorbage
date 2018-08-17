@@ -134,7 +134,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void toValue(long[] arr, int index) {
+	public void fromArray(long[] arr, int index) {
 		lo = arr[index];
 		hi = arr[index+1];
 	}
@@ -146,7 +146,7 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		lo = raf.readLong();
 		hi = raf.readLong();
 	}

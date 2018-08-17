@@ -165,7 +165,7 @@ public class FileStorageFloat32<U extends FloatCoder<U> & Allocatable<U>>
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.floatCount()*4);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.toValue(raf);
+					tmp.fromFile(raf);
 					buffer.set(i, tmp);
 				}
 				raf.close();

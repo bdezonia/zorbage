@@ -103,7 +103,7 @@ public final class Float64Member
 	}
 
 	@Override
-	public void toValue(double[] arr, int index) {
+	public void fromArray(double[] arr, int index) {
 		v = arr[index];
 	}
 
@@ -113,7 +113,7 @@ public final class Float64Member
 	}
 
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		v = raf.readDouble();
 	}
 

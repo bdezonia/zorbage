@@ -57,7 +57,7 @@ public class ArrayStorageSignedInt64<U extends LongCoder<U>>
 
 	@Override
 	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.longCount()));
+		value.fromArray(data, (int)(index * type.longCount()));
 	}
 	
 	@Override

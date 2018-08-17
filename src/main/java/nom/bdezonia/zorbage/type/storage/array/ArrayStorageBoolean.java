@@ -57,7 +57,7 @@ public class ArrayStorageBoolean<U extends BooleanCoder<U>>
 
 	@Override
 	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.booleanCount()));
+		value.fromArray(data, (int)(index * type.booleanCount()));
 	}
 	
 	@Override

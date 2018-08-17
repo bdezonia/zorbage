@@ -57,7 +57,7 @@ public class ArrayStorageSignedInt32<U extends IntCoder<U>>
 
 	@Override
 	public void get(long index, U value) {
-		value.toValue(data, (int)(index * type.intCount()));
+		value.fromArray(data, (int)(index * type.intCount()));
 	}
 	
 	@Override

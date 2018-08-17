@@ -118,7 +118,7 @@ public final class Float16Member
 	}
 	
 	@Override
-	public void toValue(short[] arr, int index) {
+	public void fromArray(short[] arr, int index) {
 		v.setV(toDouble(arr[index]));
 	}
 	
@@ -128,7 +128,7 @@ public final class Float16Member
 	}
 	
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		v.setV(toDouble(raf.readShort()));
 	}
 	

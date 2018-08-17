@@ -181,7 +181,7 @@ public final class OctonionFloat64Member
 	}
 
 	@Override
-	public void toValue(double[] arr, int index) {
+	public void fromArray(double[] arr, int index) {
 		r = arr[index];
 		i = arr[index+1];
 		j = arr[index+2];
@@ -205,7 +205,7 @@ public final class OctonionFloat64Member
 	}
 
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		r = raf.readDouble();
 		i = raf.readDouble();
 		j = raf.readDouble();

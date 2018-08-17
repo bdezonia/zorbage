@@ -165,7 +165,7 @@ public class FileStorageSignedInt32<U extends IntCoder<U> & Allocatable<U>>
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.intCount()*4);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.toValue(raf);
+					tmp.fromFile(raf);
 					buffer.set(i, tmp);
 				}
 				raf.close();

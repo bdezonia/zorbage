@@ -117,7 +117,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void toValue(boolean[] arr, int index) {
+	public void fromArray(boolean[] arr, int index) {
 		v = arr[index];
 	}
 
@@ -127,7 +127,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void toValue(RandomAccessFile raf) throws IOException {
+	public void fromFile(RandomAccessFile raf) throws IOException {
 		v = raf.readBoolean();
 	}
 
@@ -142,7 +142,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void toValue(long[] arr, int index, int offset) {
+	public void fromArray(long[] arr, int index, int offset) {
 		final long bucket = arr[index];
 		v = (bucket & (1l << offset)) > 0;
 	}
