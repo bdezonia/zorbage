@@ -26,9 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.universal;
 
-import java.math.BigDecimal;
-
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Power;
 
 /**
@@ -39,9 +38,8 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 public class ExponentialCalculation {
 
 	/**
-	 * Create a numeric value from an exponential description. Works in
-	 * BigDecimals for accuracy. Can create nonreal values if necessary.
-	 * Result must support UniversalRepresentation.
+	 * Create a numeric value from an exponential description. Can create nonreal values
+	 * depending upon inputs.
 	 * 
 	 * @param group
 	 * @param fraction
@@ -49,14 +47,11 @@ public class ExponentialCalculation {
 	 * @param power
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Power<U>, U extends UniversalRepresentation>
-		void compute(T group, BigDecimal fraction, U base, U power, U result)
+	public static <T extends Group<T,U> & Power<U> & Multiplication<U>, U>
+		void compute(T group, U fraction, U base, U power, U result)
 	{
 		U tmp = group.construct();
 		group.pow().call(base, power, tmp);
-		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
-		tmp.toRep(rep);
-		rep.scaleBy(fraction);
-		result.fromRep(rep);
+		group.multiply().call(fraction, tmp, result);
 	}
 }
