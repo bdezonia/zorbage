@@ -106,12 +106,12 @@ public final class UnboundedIntMember
 	}
 	
 	@Override
-	public void getValue(TensorOctonionRepresentation rep) {
+	public void toRep(TensorOctonionRepresentation rep) {
 		rep.setValue(new OctonionRepresentation(new BigDecimal(v())));
 	}
 
 	@Override
-	public void setValue(TensorOctonionRepresentation rep) {
+	public void fromRep(TensorOctonionRepresentation rep) {
 		v = rep.getValue().r().toBigInteger();
 	}
 

@@ -60,6 +60,6 @@ public class ScientificNotation {
 		v.setR(value);
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
 		rep.setValue(v);
-		result.setValue(rep);
+		result.fromRep(rep);
 	}
 }

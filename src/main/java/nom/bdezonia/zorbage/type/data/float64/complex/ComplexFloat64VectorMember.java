@@ -139,7 +139,7 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
-	public void getValue(TensorOctonionRepresentation rep) {
+	public void toRep(TensorOctonionRepresentation rep) {
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
 		for (long i = 0; i < length(); i++) {
@@ -153,7 +153,7 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
-	public void setValue(TensorOctonionRepresentation rep) {
+	public void fromRep(TensorOctonionRepresentation rep) {
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
 		init(rmod.size());

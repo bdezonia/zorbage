@@ -55,8 +55,8 @@ public class ExponentialCalculation {
 		U tmp = group.construct();
 		group.pow().call(base, power, tmp);
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
-		tmp.getValue(rep);
+		tmp.toRep(rep);
 		rep.scaleBy(fraction);
-		result.setValue(rep);
+		result.fromRep(rep);
 	}
 }

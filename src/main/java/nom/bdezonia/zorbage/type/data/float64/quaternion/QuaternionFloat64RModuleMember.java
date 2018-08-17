@@ -143,7 +143,7 @@ public final class QuaternionFloat64RModuleMember
 	}
 
 	@Override
-	public void getValue(TensorOctonionRepresentation rep) {
+	public void toRep(TensorOctonionRepresentation rep) {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
 		for (long i = 0; i < length(); i++) {
@@ -159,7 +159,7 @@ public final class QuaternionFloat64RModuleMember
 	}
 
 	@Override
-	public void setValue(TensorOctonionRepresentation rep) {
+	public void fromRep(TensorOctonionRepresentation rep) {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
 		init(rmod.size());

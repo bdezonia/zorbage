@@ -197,7 +197,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void getValue(TensorOctonionRepresentation rep) {
+	public void toRep(TensorOctonionRepresentation rep) {
 		rep.setValue(
 			new OctonionRepresentation(
 				BigDecimal.valueOf(r()),
@@ -209,7 +209,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setValue(TensorOctonionRepresentation rep) {
+	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionRepresentation v = rep.getValue();
 		setR(v.r().doubleValue());
 		setI(v.i().doubleValue());
