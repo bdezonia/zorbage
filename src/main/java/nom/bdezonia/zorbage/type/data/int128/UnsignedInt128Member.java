@@ -146,13 +146,13 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromLongFile(RandomAccessFile raf) throws IOException {
 		lo = raf.readLong();
 		hi = raf.readLong();
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toLongFile(RandomAccessFile raf) throws IOException {
 		raf.writeLong(lo);
 		raf.writeLong(hi);
 	}

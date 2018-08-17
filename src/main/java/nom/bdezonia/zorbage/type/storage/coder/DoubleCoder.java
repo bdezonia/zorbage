@@ -40,6 +40,6 @@ public interface DoubleCoder<V> {
 	int doubleCount();
 	void fromArray(double[] arr, int index);
 	void toArray(double[] arr, int index);
-	void fromFile(RandomAccessFile raf) throws IOException;
-	void toFile(RandomAccessFile raf) throws IOException;
+	void fromDoubleFile(RandomAccessFile raf) throws IOException;
+	void toDoubleFile(RandomAccessFile raf) throws IOException;
 }

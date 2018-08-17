@@ -40,6 +40,6 @@ public interface ByteCoder<V> {
 	int byteCount();
 	void fromArray(byte[] arr, int index);
 	void toArray(byte[] arr, int index);
-	void fromFile(RandomAccessFile raf) throws IOException;
-	void toFile(RandomAccessFile raf) throws IOException;
+	void fromByteFile(RandomAccessFile raf) throws IOException;
+	void toByteFile(RandomAccessFile raf) throws IOException;
 }

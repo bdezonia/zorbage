@@ -117,12 +117,12 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromByteFile(RandomAccessFile raf) throws IOException {
 		v = raf.readByte();
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toByteFile(RandomAccessFile raf) throws IOException {
 		raf.writeByte(v);
 	}
 

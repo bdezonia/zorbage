@@ -70,12 +70,12 @@ public class TestSparseStorage {
 		}
 
 		@Override
-		public void fromFile(RandomAccessFile raf) throws IOException {
+		public void fromBooleanFile(RandomAccessFile raf) throws IOException {
 			throw new UnsupportedOperationException("unimplemented for example");
 		}
 
 		@Override
-		public void toFile(RandomAccessFile raf) throws IOException {
+		public void toBooleanFile(RandomAccessFile raf) throws IOException {
 			throw new UnsupportedOperationException("unimplemented for example");
 		}
 		

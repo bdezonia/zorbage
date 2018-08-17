@@ -213,7 +213,7 @@ public final class UnsignedInt12Member
 
 	@Override
 	public void fromArray(short[] arr, int index) {
-		v = arr[index];
+		setV(arr[index]);
 	}
 
 	@Override
@@ -222,12 +222,12 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromShortFile(RandomAccessFile raf) throws IOException {
 		setV(raf.readShort());
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toShortFile(RandomAccessFile raf) throws IOException {
 		raf.writeShort(v);
 	}
 

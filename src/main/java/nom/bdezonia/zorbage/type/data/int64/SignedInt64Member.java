@@ -112,12 +112,12 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromLongFile(RandomAccessFile raf) throws IOException {
 		v = raf.readLong();
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toLongFile(RandomAccessFile raf) throws IOException {
 		raf.writeLong(v);
 	}
 

@@ -40,6 +40,6 @@ public interface FloatCoder<V> {
 	int floatCount();
 	void fromArray(float[] arr, int index);
 	void toArray(float[] arr, int index);
-	void fromFile(RandomAccessFile raf) throws IOException;
-	void toFile(RandomAccessFile raf) throws IOException;
+	void fromFloatFile(RandomAccessFile raf) throws IOException;
+	void toFloatFile(RandomAccessFile raf) throws IOException;
 }

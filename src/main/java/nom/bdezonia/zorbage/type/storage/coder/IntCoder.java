@@ -40,6 +40,6 @@ public interface IntCoder<V> {
 	int intCount();
 	void fromArray(int[] arr, int index);
 	void toArray(int[] arr, int index);
-	void fromFile(RandomAccessFile raf) throws IOException;
-	void toFile(RandomAccessFile raf) throws IOException;
+	void fromIntFile(RandomAccessFile raf) throws IOException;
+	void toIntFile(RandomAccessFile raf) throws IOException;
 }

@@ -40,6 +40,6 @@ public interface LongCoder<V> {
 	int longCount();
 	void fromArray(long[] arr, int index);
 	void toArray(long[] arr, int index);
-	void fromFile(RandomAccessFile raf) throws IOException;
-	void toFile(RandomAccessFile raf) throws IOException;
+	void fromLongFile(RandomAccessFile raf) throws IOException;
+	void toLongFile(RandomAccessFile raf) throws IOException;
 }

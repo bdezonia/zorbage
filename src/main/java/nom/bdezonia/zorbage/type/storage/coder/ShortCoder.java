@@ -40,6 +40,6 @@ public interface ShortCoder<V> {
 	int shortCount();
 	void fromArray(short[] arr, int index);
 	void toArray(short[] arr, int index);
-	void fromFile(RandomAccessFile raf) throws IOException;
-	void toFile(RandomAccessFile raf) throws IOException;
+	void fromShortFile(RandomAccessFile raf) throws IOException;
+	void toShortFile(RandomAccessFile raf) throws IOException;
 }

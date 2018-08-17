@@ -112,12 +112,12 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromShortFile(RandomAccessFile raf) throws IOException {
 		v = raf.readShort();
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toShortFile(RandomAccessFile raf) throws IOException {
 		raf.writeShort(v);
 	}
 

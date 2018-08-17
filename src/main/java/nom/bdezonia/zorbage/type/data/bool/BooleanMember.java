@@ -127,12 +127,12 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromBooleanFile(RandomAccessFile raf) throws IOException {
 		v = raf.readBoolean();
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toBooleanFile(RandomAccessFile raf) throws IOException {
 		raf.writeBoolean(v);
 	}
 

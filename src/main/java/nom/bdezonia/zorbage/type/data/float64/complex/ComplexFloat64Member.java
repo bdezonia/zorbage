@@ -130,13 +130,13 @@ public final class ComplexFloat64Member
 	}
 
 	@Override
-	public void fromFile(RandomAccessFile raf) throws IOException {
+	public void fromDoubleFile(RandomAccessFile raf) throws IOException {
 		r = raf.readDouble();
 		i = raf.readDouble();
 	}
 
 	@Override
-	public void toFile(RandomAccessFile raf) throws IOException {
+	public void toDoubleFile(RandomAccessFile raf) throws IOException {
 		raf.writeDouble(r);
 		raf.writeDouble(i);
 	}

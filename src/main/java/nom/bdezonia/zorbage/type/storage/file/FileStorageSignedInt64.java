@@ -141,7 +141,7 @@ public class FileStorageSignedInt64<U extends LongCoder<U> & Allocatable<U>>
 			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.longCount()*8);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
-				tmp.toFile(raf);
+				tmp.toLongFile(raf);
 			}
 			raf.close();
 		} catch (Exception e) {
@@ -165,7 +165,7 @@ public class FileStorageSignedInt64<U extends LongCoder<U> & Allocatable<U>>
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.longCount()*8);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.fromFile(raf);
+					tmp.fromLongFile(raf);
 					buffer.set(i, tmp);
 				}
 				raf.close();

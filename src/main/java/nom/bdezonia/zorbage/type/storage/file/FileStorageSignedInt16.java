@@ -141,7 +141,7 @@ public class FileStorageSignedInt16<U extends ShortCoder<U> & Allocatable<U>>
 			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.shortCount()*2);
 			for (long i = 0; i < BUFFERSIZE; i++) {
 				buffer.get(i, tmp);
-				tmp.toFile(raf);
+				tmp.toShortFile(raf);
 			}
 			raf.close();
 		} catch (Exception e) {
@@ -165,7 +165,7 @@ public class FileStorageSignedInt16<U extends ShortCoder<U> & Allocatable<U>>
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
 				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.shortCount()*2);
 				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.fromFile(raf);
+					tmp.fromShortFile(raf);
 					buffer.set(i, tmp);
 				}
 				raf.close();
