@@ -24,42 +24,34 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.universal;
+package nom.bdezonia.zorbage.algorithm;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Power;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ScientificNotation {
-
-	private static final MathContext context = new MathContext(100, RoundingMode.HALF_EVEN);
+public class ExponentialCalculation {
 
 	/**
-	 * Create a numeric value from an scientific notation description.
-	 * Works in BigDecimals for up to 100 decimal places of accuracy.
-	 * Can only create real values using this method. Result must
-	 * support UniversalRepresentation.
+	 * Create a numeric value from an exponential description. Can create nonreal values
+	 * depending upon inputs.
 	 * 
+	 * @param group
 	 * @param fraction
 	 * @param base
 	 * @param power
 	 * @param result
 	 */
-	public static <U extends UniversalRepresentation>
-		void compute(BigDecimal fraction, int base, int power, U result)
+	public static <T extends Group<T,U> & Power<U> & Multiplication<U>, U>
+		void compute(T group, U fraction, U base, U power, U result)
 	{
-		BigDecimal b = BigDecimal.valueOf(base);
-		BigDecimal tmp = b.pow(power, context);
-		BigDecimal value = tmp.multiply(fraction, context);
-		OctonionRepresentation v = new OctonionRepresentation();
-		v.setR(value);
-		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
-		rep.setValue(v);
-		result.fromRep(rep);
+		U tmp = group.construct();
+		group.pow().call(base, power, tmp);
+		group.multiply().call(fraction, tmp, result);
 	}
 }
