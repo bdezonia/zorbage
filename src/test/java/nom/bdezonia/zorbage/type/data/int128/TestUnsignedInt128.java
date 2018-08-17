@@ -169,8 +169,8 @@ public class TestUnsignedInt128 {
 				UnsignedInt128Member v = G.UINT128.construct();
 				assertEquals(BigInteger.ZERO, v.v());
 				
-				v = G.UINT128.construct(""+(bigA.add(bigB).mod(allOnes)));
-				assertEquals(bigA.add(bigB).mod(allOnes), v.v());
+				v = G.UINT128.construct(""+(bigA.add(bigB).and(allOnes)));
+				assertEquals(bigA.add(bigB).and(allOnes), v.v());
 				
 				v = G.UINT128.construct(a);
 				assertEquals(bigA,v.v());
@@ -232,7 +232,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.multiply().call(a,b,c);
-				assertEquals(bigA.multiply(bigB).mod(two128),c.v());
+				assertEquals(bigA.multiply(bigB).and(allOnes),c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
@@ -262,7 +262,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.subtract().call(a, b, c);
-				assertEquals(bigA.subtract(bigB).add(two128).mod(two128), c.v());
+				assertEquals(bigA.subtract(bigB).add(two128).and(allOnes), c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
