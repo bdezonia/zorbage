@@ -34,7 +34,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBit;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt16;
 
 /**
  * 
@@ -43,11 +44,8 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestUnsignedInt12 {
 	
-	@Test
-	public void testStorageMethods() {
+	void testStorageMethods(IndexedDataSource<?, UnsignedInt12Member> data) {
 		
-		IndexedDataSource<?, UnsignedInt12Member> data =
-				ArrayStorage.allocate(6000, new UnsignedInt12Member());
 		UnsignedInt12Member in = new UnsignedInt12Member();
 		UnsignedInt12Member out = new UnsignedInt12Member();
 		in.setV(0);
@@ -91,6 +89,12 @@ public class TestUnsignedInt12 {
 		}
 	}
 
+	@Test
+	public void testStorage() {
+		testStorageMethods(new ArrayStorageBit<UnsignedInt12Member>(6000, G.UINT12.construct()));
+		testStorageMethods(new ArrayStorageSignedInt16<UnsignedInt12Member>(6000, G.UINT12.construct()));
+	}
+	
 	@Test
 	public void testMathematicalMethods() {
 		UnsignedInt12Member a = G.UINT12.construct();
