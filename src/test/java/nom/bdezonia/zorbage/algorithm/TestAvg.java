@@ -32,7 +32,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
@@ -43,13 +44,8 @@ public class TestAvg {
 
 	@Test
 	public void test() {
-		Float64Member value = new Float64Member();
-		ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(10, value);
-		// build the initial test data
-		for (int i = 0; i < storage.size(); i++) {
-			value.setV(i);
-			storage.set(i, value);
-		}
+		IndexedDataSource<?,Float64Member> storage =
+				ArrayStorage.allocateDoubles(new double[]{0,1,2,3,4,5,6,7,8,9});
 		Float64Member result = new Float64Member();
 		Average.compute(G.DBL, storage, result);
 		assertEquals(4.5, result.v(), 0);
