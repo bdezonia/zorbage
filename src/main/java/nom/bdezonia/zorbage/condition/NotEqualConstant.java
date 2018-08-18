@@ -36,11 +36,12 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class NotEqualConstant<T extends Group<T,U>,U>
 	implements Condition<U>
 {
-	private T group;
-	private U constant;
+	private final T group;
+	private final U constant;
 	
 	public NotEqualConstant(T group, U value) {
 		this.group = group;
+		this.constant = group.construct();
 		group.assign().call(value, constant);
 	}
 
