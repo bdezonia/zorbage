@@ -52,6 +52,6 @@ public class TestAvg {
 		}
 		Float64Member result = new Float64Member();
 		Average.compute(G.DBL, storage, result);
-		assertEquals(4.5, result.v(), 0.000000001);
+		assertEquals(4.5, result.v(), 0);
 	}
 }
