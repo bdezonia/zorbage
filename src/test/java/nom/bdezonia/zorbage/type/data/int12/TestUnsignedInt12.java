@@ -169,8 +169,8 @@ public class TestUnsignedInt12 {
 				UnsignedInt12Member v = G.UINT12.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT12.construct(""+((i+j) % 0xfff));
-				assertEquals(((i+j) % 0xfff), v.v);
+				v = G.UINT12.construct(""+((i+j) & 0xfff));
+				assertEquals(((i+j) & 0xfff), v.v);
 				
 				v = G.UINT12.construct(a);
 				assertEquals(i,v.v);
@@ -232,7 +232,7 @@ public class TestUnsignedInt12 {
 				G.UINT12.pred().call(c, c);
 				G.UINT12.pred().call(c, c);
 				G.UINT12.multiply().call(a,b,c);
-				assertEquals((i*j)%0x1000,c.v);
+				assertEquals((i*j) & 0xfff,c.v);
 				
 				c.set(a);
 				G.UINT12.pred().call(c, c);
@@ -260,7 +260,7 @@ public class TestUnsignedInt12 {
 					G.UINT12.pow().call(a, b, c);
 					p = Math.pow(i, j);
 					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j))%0x1000, c.v);
+						assertEquals(((long)Math.pow(i, j)) & 0xfff, c.v);
 				}
 				
 				if (i == 0 && j == 0) {
@@ -281,7 +281,7 @@ public class TestUnsignedInt12 {
 					G.UINT12.power().call(j, a, c);
 					p = Math.pow(i, j);
 					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j))%0x1000, c.v);
+						assertEquals(((long)Math.pow(i, j)) & 0xfff, c.v);
 				}
 				
 				c.set(a);
@@ -309,7 +309,7 @@ public class TestUnsignedInt12 {
 				G.UINT12.pred().call(c, c);
 				G.UINT12.pred().call(c, c);
 				G.UINT12.subtract().call(a, b, c);
-				assertEquals((i-j+0x1000)%0x1000, c.v);
+				assertEquals((i-j) & 0xfff, c.v);
 				
 				c.set(a);
 				G.UINT12.pred().call(c, c);
