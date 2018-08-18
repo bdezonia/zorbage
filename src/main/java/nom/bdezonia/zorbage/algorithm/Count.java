@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.condition.EqualConstant;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Unity;
@@ -67,16 +68,8 @@ public class Count {
 	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
 		void compute(T group, V addGroup, U value, long start, long count, IndexedDataSource<?,U> a, W sum)
 	{
-		U tmp = group.construct();
-		W tmpSum = addGroup.construct();
-		W one = addGroup.construct();
-		addGroup.unity().call(one);
-		for (long i = 0; i < count; i++) {
-			a.get(start+i, tmp);
-			if (group.isEqual().call(tmp, value))
-				addGroup.add().call(tmpSum, one, tmpSum);
-		}
-		addGroup.assign().call(tmpSum, sum);
+		EqualConstant<T, U> cond = new EqualConstant<T, U>(group, value);
+		CountIf.compute(group, addGroup, cond, start, count, a, sum);
 	}
 
 }
