@@ -140,7 +140,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void fromArray(double[] arr, int index) {
+	public void fromDoubleArray(double[] arr, int index) {
 		r = arr[index];
 		i = arr[index+1];
 		j = arr[index+2];
@@ -148,7 +148,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void toArray(double[] arr, int index) {
+	public void toDoubleArray(double[] arr, int index) {
 		arr[index] = r;
 		arr[index+1] = i;
 		arr[index+2] = j;

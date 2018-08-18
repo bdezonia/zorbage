@@ -102,12 +102,12 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public void fromArray(short[] arr, int index) {
+	public void fromShortArray(short[] arr, int index) {
 		v = arr[index];
 	}
 
 	@Override
-	public void toArray(short[] arr, int index) {
+	public void toShortArray(short[] arr, int index) {
 		arr[index] = v;
 	}
 

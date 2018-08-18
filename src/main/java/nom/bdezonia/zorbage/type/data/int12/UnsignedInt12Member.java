@@ -149,7 +149,7 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void fromArray(long[] arr, int index, int offset) {
+	public void fromBitArray(long[] arr, int index, int offset) {
 		long oldVals;
 		if (offset == 60) {
 			// last 4 bits in 1st long
@@ -175,7 +175,7 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void toArray(long[] arr, int index, int offset) {
+	public void toBitArray(long[] arr, int index, int offset) {
 		long oldVals, newVals;
 		if (offset == 60) {
 			// last 4 bits in 1st long
@@ -212,12 +212,12 @@ public final class UnsignedInt12Member
 	}
 
 	@Override
-	public void fromArray(short[] arr, int index) {
+	public void fromShortArray(short[] arr, int index) {
 		setV(arr[index]);
 	}
 
 	@Override
-	public void toArray(short[] arr, int index) {
+	public void toShortArray(short[] arr, int index) {
 		arr[index] = v;
 	}
 

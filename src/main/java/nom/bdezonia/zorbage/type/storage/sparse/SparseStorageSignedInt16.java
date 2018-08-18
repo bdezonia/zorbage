@@ -65,7 +65,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder<U>>
 			nodes.push(data.root);
 			while (!nodes.isEmpty()) {
 				RedBlackTree<short[]>.Node n = nodes.pop();
-				type.fromArray(n.value, 0);
+				type.fromShortArray(n.value, 0);
 				list.set(n.key, type);
 				if (n.left != data.nil) nodes.push(n.left);
 				if (n.right != data.nil) nodes.push(n.right);
@@ -78,7 +78,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		value.toArray(tmp, 0);
+		value.toShortArray(tmp, 0);
 		RedBlackTree<short[]>.Node node = data.findElement(index);
 		if (Arrays.equals(tmp, zero)) {
 			if (node != data.nil)
@@ -98,7 +98,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder<U>>
 				data.insert(n);
 			}
 			else {
-				value.toArray(node.value, 0);
+				value.toShortArray(node.value, 0);
 			}
 		}
 	}
@@ -109,10 +109,10 @@ public class SparseStorageSignedInt16<U extends ShortCoder<U>>
 			throw new IllegalArgumentException("index out of bounds");
 		RedBlackTree<short[]>.Node node = data.findElement(index);
 		if (node == data.nil) {
-			value.fromArray(zero, 0);
+			value.fromShortArray(zero, 0);
 		}
 		else { // nonzero
-			value.fromArray(node.value, 0);
+			value.fromShortArray(node.value, 0);
 		}
 	}
 

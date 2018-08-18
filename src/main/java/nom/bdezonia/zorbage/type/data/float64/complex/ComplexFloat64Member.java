@@ -118,13 +118,13 @@ public final class ComplexFloat64Member
 	}
 
 	@Override
-	public void fromArray(double[] arr, int index) {
+	public void fromDoubleArray(double[] arr, int index) {
 		r = arr[index];
 		i = arr[index+1];
 	}
 
 	@Override
-	public void toArray(double[] arr, int index) {
+	public void toDoubleArray(double[] arr, int index) {
 		arr[index] = r;
 		arr[index+1] = i;
 	}

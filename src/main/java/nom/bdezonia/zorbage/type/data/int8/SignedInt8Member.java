@@ -102,12 +102,12 @@ public final class SignedInt8Member
 	}
 
 	@Override
-	public void fromArray(byte[] arr, int index) {
+	public void fromByteArray(byte[] arr, int index) {
 		v = arr[index];
 	}
 
 	@Override
-	public void toArray(byte[] arr, int index) {
+	public void toByteArray(byte[] arr, int index) {
 		arr[index] = v;
 	}
 

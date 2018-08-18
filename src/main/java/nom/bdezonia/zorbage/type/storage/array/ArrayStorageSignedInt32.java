@@ -52,12 +52,12 @@ public class ArrayStorageSignedInt32<U extends IntCoder<U>>
 
 	@Override
 	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.intCount()));
+		value.toIntArray(data, (int)(index * type.intCount()));
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.fromArray(data, (int)(index * type.intCount()));
+		value.fromIntArray(data, (int)(index * type.intCount()));
 	}
 	
 	@Override

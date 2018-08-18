@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface DoubleCoder<V> {
 
 	int doubleCount();
-	void fromArray(double[] arr, int index);
-	void toArray(double[] arr, int index);
+	void fromDoubleArray(double[] arr, int index);
+	void toDoubleArray(double[] arr, int index);
 	void fromDoubleFile(RandomAccessFile raf) throws IOException;
 	void toDoubleFile(RandomAccessFile raf) throws IOException;
 }

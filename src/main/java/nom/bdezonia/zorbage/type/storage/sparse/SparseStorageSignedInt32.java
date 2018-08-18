@@ -65,7 +65,7 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 			nodes.push(data.root);
 			while (!nodes.isEmpty()) {
 				RedBlackTree<int[]>.Node n = nodes.pop();
-				type.fromArray(n.value, 0);
+				type.fromIntArray(n.value, 0);
 				list.set(n.key, type);
 				if (n.left != data.nil) nodes.push(n.left);
 				if (n.right != data.nil) nodes.push(n.right);
@@ -78,7 +78,7 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		value.toArray(tmp, 0);
+		value.toIntArray(tmp, 0);
 		RedBlackTree<int[]>.Node node = data.findElement(index);
 		if (Arrays.equals(tmp, zero)) {
 			if (node != data.nil)
@@ -98,7 +98,7 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 				data.insert(n);
 			}
 			else {
-				value.toArray(node.value, 0);
+				value.toIntArray(node.value, 0);
 			}
 		}
 	}
@@ -109,10 +109,10 @@ public class SparseStorageSignedInt32<U extends IntCoder<U>>
 			throw new IllegalArgumentException("index out of bounds");
 		RedBlackTree<int[]>.Node node = data.findElement(index);
 		if (node == data.nil) {
-			value.fromArray(zero, 0);
+			value.fromIntArray(zero, 0);
 		}
 		else { // nonzero
-			value.fromArray(node.value, 0);
+			value.fromIntArray(node.value, 0);
 		}
 	}
 

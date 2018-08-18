@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface BooleanCoder<V> {
 
 	int booleanCount();
-	void fromArray(boolean[] arr, int index);
-	void toArray(boolean[] arr, int index);
+	void fromBooleanArray(boolean[] arr, int index);
+	void toBooleanArray(boolean[] arr, int index);
 	void fromBooleanFile(RandomAccessFile raf) throws IOException;
 	void toBooleanFile(RandomAccessFile raf) throws IOException;
 }

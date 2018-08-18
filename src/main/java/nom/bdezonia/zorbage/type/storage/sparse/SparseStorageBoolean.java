@@ -65,7 +65,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 			nodes.push(data.root);
 			while (!nodes.isEmpty()) {
 				RedBlackTree<boolean[]>.Node n = nodes.pop();
-				type.fromArray(n.value, 0);
+				type.fromBooleanArray(n.value, 0);
 				list.set(n.key, type);
 				if (n.left != data.nil) nodes.push(n.left);
 				if (n.right != data.nil) nodes.push(n.right);
@@ -78,7 +78,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		value.toArray(tmp, 0);
+		value.toBooleanArray(tmp, 0);
 		RedBlackTree<boolean[]>.Node node = data.findElement(index);
 		if (Arrays.equals(tmp, zero)) {
 			if (node != data.nil)
@@ -98,7 +98,7 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 				data.insert(n);
 			}
 			else {
-				value.toArray(node.value, 0);
+				value.toBooleanArray(node.value, 0);
 			}
 		}
 	}
@@ -109,10 +109,10 @@ public class SparseStorageBoolean<U extends BooleanCoder<U>>
 			throw new IllegalArgumentException("index out of bounds");
 		RedBlackTree<boolean[]>.Node node = data.findElement(index);
 		if (node == data.nil) {
-			value.fromArray(zero, 0);
+			value.fromBooleanArray(zero, 0);
 		}
 		else { // nonzero
-			value.fromArray(node.value, 0);
+			value.fromBooleanArray(node.value, 0);
 		}
 	}
 

@@ -54,7 +54,7 @@ public class TestSparseStorage {
 		}
 
 		@Override
-		public void fromArray(boolean[] arr, int index) {
+		public void fromBooleanArray(boolean[] arr, int index) {
 			a = arr[index+0];
 			b = arr[index+1];
 			c = arr[index+2];
@@ -62,7 +62,7 @@ public class TestSparseStorage {
 		}
 
 		@Override
-		public void toArray(boolean[] arr, int index) {
+		public void toBooleanArray(boolean[] arr, int index) {
 			arr[index+0] = a;
 			arr[index+1] = b;
 			arr[index+2] = c;

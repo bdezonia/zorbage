@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface ShortCoder<V> {
 
 	int shortCount();
-	void fromArray(short[] arr, int index);
-	void toArray(short[] arr, int index);
+	void fromShortArray(short[] arr, int index);
+	void toShortArray(short[] arr, int index);
 	void fromShortFile(RandomAccessFile raf) throws IOException;
 	void toShortFile(RandomAccessFile raf) throws IOException;
 }

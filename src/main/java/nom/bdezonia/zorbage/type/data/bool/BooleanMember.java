@@ -117,12 +117,12 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void fromArray(boolean[] arr, int index) {
+	public void fromBooleanArray(boolean[] arr, int index) {
 		v = arr[index];
 	}
 
 	@Override
-	public void toArray(boolean[] arr, int index) {
+	public void toBooleanArray(boolean[] arr, int index) {
 		arr[index] = v;
 	}
 
@@ -142,13 +142,13 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void fromArray(long[] arr, int index, int offset) {
+	public void fromBitArray(long[] arr, int index, int offset) {
 		final long bucket = arr[index];
 		v = (bucket & (1l << offset)) > 0;
 	}
 
 	@Override
-	public void toArray(long[] arr, int index, int offset) {
+	public void toBitArray(long[] arr, int index, int offset) {
 		long bucket = arr[index];
 		if (v) {
 			bucket |= (1l << offset);

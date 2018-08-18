@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface FloatCoder<V> {
 
 	int floatCount();
-	void fromArray(float[] arr, int index);
-	void toArray(float[] arr, int index);
+	void fromFloatArray(float[] arr, int index);
+	void toFloatArray(float[] arr, int index);
 	void fromFloatFile(RandomAccessFile raf) throws IOException;
 	void toFloatFile(RandomAccessFile raf) throws IOException;
 }

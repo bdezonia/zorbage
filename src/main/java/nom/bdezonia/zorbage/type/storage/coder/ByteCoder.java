@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface ByteCoder<V> {
 
 	int byteCount();
-	void fromArray(byte[] arr, int index);
-	void toArray(byte[] arr, int index);
+	void fromByteArray(byte[] arr, int index);
+	void toByteArray(byte[] arr, int index);
 	void fromByteFile(RandomAccessFile raf) throws IOException;
 	void toByteFile(RandomAccessFile raf) throws IOException;
 }

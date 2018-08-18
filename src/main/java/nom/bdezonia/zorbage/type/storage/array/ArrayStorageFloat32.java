@@ -52,12 +52,12 @@ public class ArrayStorageFloat32<U extends FloatCoder<U>>
 
 	@Override
 	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.floatCount()));
+		value.toFloatArray(data, (int)(index * type.floatCount()));
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.fromArray(data, (int)(index * type.floatCount()));
+		value.fromFloatArray(data, (int)(index * type.floatCount()));
 	}
 	
 	@Override

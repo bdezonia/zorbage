@@ -107,12 +107,12 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public void fromArray(int[] arr, int index) {
+	public void fromIntArray(int[] arr, int index) {
 		v = arr[index];
 	}
 
 	@Override
-	public void toArray(int[] arr, int index) {
+	public void toIntArray(int[] arr, int index) {
 		arr[index] = v;
 	}
 

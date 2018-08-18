@@ -113,12 +113,12 @@ public final class UnsignedInt64Member
 	}
 
 	@Override
-	public void fromArray(long[] arr, int index) {
+	public void fromLongArray(long[] arr, int index) {
 		v = arr[index];
 	}
 
 	@Override
-	public void toArray(long[] arr, int index) {
+	public void toLongArray(long[] arr, int index) {
 		arr[index] = v;
 	}
 

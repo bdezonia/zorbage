@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface LongCoder<V> {
 
 	int longCount();
-	void fromArray(long[] arr, int index);
-	void toArray(long[] arr, int index);
+	void fromLongArray(long[] arr, int index);
+	void toLongArray(long[] arr, int index);
 	void fromLongFile(RandomAccessFile raf) throws IOException;
 	void toLongFile(RandomAccessFile raf) throws IOException;
 }

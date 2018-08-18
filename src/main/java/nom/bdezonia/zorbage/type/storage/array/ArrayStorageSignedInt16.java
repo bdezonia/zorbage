@@ -52,12 +52,12 @@ public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
 
 	@Override
 	public void set(long index, U value) {
-		value.toArray(data, (int)index * type.shortCount());
+		value.toShortArray(data, (int)index * type.shortCount());
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.fromArray(data, (int)index * type.shortCount());
+		value.fromShortArray(data, (int)index * type.shortCount());
 	}
 	
 	@Override

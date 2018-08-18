@@ -134,13 +134,13 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void fromArray(long[] arr, int index) {
+	public void fromLongArray(long[] arr, int index) {
 		lo = arr[index];
 		hi = arr[index+1];
 	}
 
 	@Override
-	public void toArray(long[] arr, int index) {
+	public void toLongArray(long[] arr, int index) {
 		arr[index] = lo;
 		arr[index+1] = hi;
 	}

@@ -118,12 +118,12 @@ public final class Float16Member
 	}
 	
 	@Override
-	public void fromArray(short[] arr, int index) {
+	public void fromShortArray(short[] arr, int index) {
 		v.setV(toDouble(arr[index]));
 	}
 	
 	@Override
-	public void toArray(short[] arr, int index) {
+	public void toShortArray(short[] arr, int index) {
 		arr[index] = toShort(v());
 	}
 	

@@ -103,12 +103,12 @@ public final class Float64Member
 	}
 
 	@Override
-	public void fromArray(double[] arr, int index) {
+	public void fromDoubleArray(double[] arr, int index) {
 		v = arr[index];
 	}
 
 	@Override
-	public void toArray(double[] arr, int index) {
+	public void toDoubleArray(double[] arr, int index) {
 		arr[index] = v;
 	}
 

@@ -52,12 +52,12 @@ public class ArrayStorageSignedInt8<U extends ByteCoder<U>>
 
 	@Override
 	public void set(long index, U value) {
-		value.toArray(data, (int)(index * type.byteCount()));
+		value.toByteArray(data, (int)(index * type.byteCount()));
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.fromArray(data, (int)(index * type.byteCount()));
+		value.fromByteArray(data, (int)(index * type.byteCount()));
 	}
 	
 	@Override

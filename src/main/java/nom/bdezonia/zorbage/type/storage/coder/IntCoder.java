@@ -38,8 +38,8 @@ import java.io.RandomAccessFile;
 public interface IntCoder<V> {
 
 	int intCount();
-	void fromArray(int[] arr, int index);
-	void toArray(int[] arr, int index);
+	void fromIntArray(int[] arr, int index);
+	void toIntArray(int[] arr, int index);
 	void fromIntFile(RandomAccessFile raf) throws IOException;
 	void toIntFile(RandomAccessFile raf) throws IOException;
 }
