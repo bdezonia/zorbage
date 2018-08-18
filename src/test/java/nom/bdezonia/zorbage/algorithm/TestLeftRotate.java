@@ -26,41 +26,45 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RotateCopy {
+public class TestLeftRotate {
 
-	/**
-	 * 
-	 * @param group
-	 * @param delta
-	 * @param a
-	 */
-	public static <T extends Group<T,U>, U>
-		void compute(T group, long delta, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
-	{
-		if (a == b)
-			throw new IllegalArgumentException("RotateCopy does not work in place");
-		long sz = a.size();
-		if (sz == 0) return;
-		if (delta == 0) return; // nothing to do
-		if (Math.abs(delta) >= sz)
-			throw new IllegalArgumentException("delta magnitude too large");
+	@Test
+	public void test() {
 		
-		U tmp1 = group.construct();
-		long index = 0;
-		for (long i = 0; i < sz; i++) {
-			index = i - delta; // delta can be pos or neg
-			if (index < 0) index += sz; 
-			if (index >= a.size()) index -= sz; 
-			a.get(i, tmp1);
-			b.set(index, tmp1);
-		}
+		SignedInt16Member value = G.INT16.construct();
+
+		short[] numbers = new short[] {0, 10, 20, 30, 40, 50};
+		
+		IndexedDataSource<?,SignedInt16Member> data = ArrayStorage.allocateShorts(numbers);
+		
+		LeftRotate.compute(G.INT16, 2, data);
+		
+		data.get(0, value);
+		assertEquals(20, value.v());
+		data.get(1, value);
+		assertEquals(30, value.v());
+		data.get(2, value);
+		assertEquals(40, value.v());
+		data.get(3, value);
+		assertEquals(50, value.v());
+		data.get(4, value);
+		assertEquals(0, value.v());
+		data.get(5, value);
+		assertEquals(10, value.v());
+		
 	}
 }

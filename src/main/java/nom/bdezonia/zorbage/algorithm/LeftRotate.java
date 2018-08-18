@@ -34,9 +34,10 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Rotate {
+public class LeftRotate {
 
 	/**
+	 * Do a left rotation of a set of values.
 	 * 
 	 * @param group
 	 * @param delta
@@ -45,32 +46,44 @@ public class Rotate {
 	public static <T extends Group<T,U>, U>
 		void compute(T group, long delta, IndexedDataSource<?,U> a)
 	{
-		compute(group, delta, 0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param group
-	 * @param delta
-	 * @param start
-	 * @param count
-	 * @param a
-	 */
-	public static <T extends Group<T,U>, U>
-		void compute(T group, long delta, long start, long count, IndexedDataSource<?,U> a)
-	{
-		if (delta == 0) return;
+		if (a.size() == 0) return;
+		if (delta < 0) throw new IllegalArgumentException("delta too small");
+		delta = delta % a.size();
+		if (delta == 0) return; // nothing to do
+		
 		U tmp1 = group.construct();
 		U tmp2 = group.construct();
-		long index = 0;
-		for (long i = 0; i < count; i++) {
-			index = i - delta; // delta can be pos or neg
-			if (index < 0) index += count; 
-			if (index >= count) index -= count; 
-			a.get(start+i, tmp1);
-			a.get(start+index, tmp2);
-			a.set(start+i, tmp2);
-			a.set(start+index, tmp1);
+
+		long n = a.size();
+		
+		for (long i = 0; i < gcd(delta, n); i++)
+		{
+			/* move i-th values of blocks */
+			a.get(i, tmp1);
+			long j = i;
+
+			while (true)
+			{
+				long k = j + delta;
+				if (k >= n)
+					k = k - n;
+
+				if (k == i)
+					break;
+
+				a.get(k, tmp2);
+				a.set(j, tmp2);
+				j = k;
+			}
+			a.set(j, tmp1);
 		}
+	}
+	
+	private static long gcd(long a, long b)
+	{
+		if (b == 0)
+			return a;
+		else
+			return gcd(b, a%b);
 	}
 }
