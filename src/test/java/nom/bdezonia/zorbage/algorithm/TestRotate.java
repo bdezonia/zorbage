@@ -40,10 +40,10 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestLeftRotate {
+public class TestRotate {
 
 	@Test
-	public void test() {
+	public void testL() {
 		
 		SignedInt16Member value = G.INT16.construct();
 
@@ -65,6 +65,62 @@ public class TestLeftRotate {
 		assertEquals(0, value.v());
 		data.get(5, value);
 		assertEquals(10, value.v());
+		
+		LeftRotate.compute(G.INT16, -4, data);
+		
+		data.get(0, value);
+		assertEquals(40, value.v());
+		data.get(1, value);
+		assertEquals(50, value.v());
+		data.get(2, value);
+		assertEquals(0, value.v());
+		data.get(3, value);
+		assertEquals(10, value.v());
+		data.get(4, value);
+		assertEquals(20, value.v());
+		data.get(5, value);
+		assertEquals(30, value.v());
+		
+	}
+
+	@Test
+	public void testR() {
+		
+		SignedInt16Member value = G.INT16.construct();
+
+		short[] numbers = new short[] {0, 10, 20, 30, 40, 50};
+		
+		IndexedDataSource<?,SignedInt16Member> data = ArrayStorage.allocateShorts(numbers);
+		
+		RightRotate.compute(G.INT16, 3, data);
+		
+		data.get(0, value);
+		assertEquals(30, value.v());
+		data.get(1, value);
+		assertEquals(40, value.v());
+		data.get(2, value);
+		assertEquals(50, value.v());
+		data.get(3, value);
+		assertEquals(0, value.v());
+		data.get(4, value);
+		assertEquals(10, value.v());
+		data.get(5, value);
+		assertEquals(20, value.v());
+		
+		RightRotate.compute(G.INT16, -2, data);
+		
+		data.get(0, value);
+		assertEquals(50, value.v());
+		data.get(1, value);
+		assertEquals(0, value.v());
+		data.get(2, value);
+		assertEquals(10, value.v());
+		data.get(3, value);
+		assertEquals(20, value.v());
+		data.get(4, value);
+		assertEquals(30, value.v());
+		data.get(5, value);
+		assertEquals(40, value.v());
 		
 	}
 }
