@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestParallelTransform {
+public class TestParallelTransform2 {
 
 	@Test
 	public void testFloats()
