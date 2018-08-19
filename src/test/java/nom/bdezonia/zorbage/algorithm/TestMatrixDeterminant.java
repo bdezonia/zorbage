@@ -46,16 +46,10 @@ public class TestMatrixDeterminant {
 	public void testReal2x2Det() {
 		Float64Member val = G.DBL.construct();
 
-		Float64MatrixMember a = G.DBL_MAT.construct(StorageConstruction.MEM_ARRAY, 2, 2);
-		val.setV(1);
-		a.setV(0, 0, val);
-		val.setV(2);
-		a.setV(0, 1, val);
-		val.setV(3);
-		a.setV(1, 0, val);
-		val.setV(4);
-		a.setV(1, 1, val);
-		
+		Float64MatrixMember a = new Float64MatrixMember(2, 2,
+				new double[] {1,2,
+						      3,4});
+
 		MatrixDeterminant.compute(G.DBL_MAT, G.DBL, a, val);
 
 		assertEquals(-2, val.v(), 0);
@@ -69,43 +63,13 @@ public class TestMatrixDeterminant {
 	public void testReal4x4Det() {
 		Float64Member val = G.DBL.construct();
 
-		Float64MatrixMember a = G.DBL_MAT.construct(StorageConstruction.MEM_ARRAY, 4, 4);
-		
-		val.setV(4);
-		a.setV(0, 0, val);
-		val.setV(3);
-		a.setV(0, 1, val);
-		val.setV(2);
-		a.setV(0, 2, val);
-		val.setV(1);
-		a.setV(0, 3, val);
-
-		val.setV(1);
-		a.setV(1, 0, val);
-		val.setV(10);
-		a.setV(1, 1, val);
-		val.setV(3);
-		a.setV(1, 2, val);
-		val.setV(4);
-		a.setV(1, 3, val);
-
-		val.setV(5);
-		a.setV(2, 0, val);
-		val.setV(3);
-		a.setV(2, 1, val);
-		val.setV(2);
-		a.setV(2, 2, val);
-		val.setV(-4);
-		a.setV(2, 3, val);
-
-		val.setV(4);
-		a.setV(3, 0, val);
-		val.setV(8);
-		a.setV(3, 1, val);
-		val.setV(7);
-		a.setV(3, 2, val);
-		val.setV(9);
-		a.setV(3, 3, val);
+		Float64MatrixMember a = new Float64MatrixMember(4, 4,
+				new double[] {
+						4,3,2,1,
+						1,10,3,4,
+						5,3,2,-4,
+						4,8,7,9
+				});
 		
 		MatrixDeterminant.compute(G.DBL_MAT, G.DBL, a, val);
 
