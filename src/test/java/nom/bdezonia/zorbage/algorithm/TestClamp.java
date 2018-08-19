@@ -26,35 +26,67 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Clamp {
+public class TestClamp {
 
-	/**
-	 * 
-	 * @param group
-	 * @param min
-	 * @param max
-	 * @param value
-	 * @param result
-	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
-		void compute(T group, U min, U max, U value, U result)
-	{
-		if (group.isLess().call(max, min))
-			throw new IllegalArgumentException("Clamp boundaries are malformed");
+	@Test
+	public void test() {
+		SignedInt64Member min = new SignedInt64Member();
+		SignedInt64Member max = new SignedInt64Member();
+		SignedInt64Member value = new SignedInt64Member();
+		SignedInt64Member result = new SignedInt64Member();
+		
+		min.setV(-100);
+		max.setV(200);
+		
+		value.setV(-99);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(-99, result.v());
+		
+		value.setV(199);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(199, result.v());
+		
+		value.setV(-100);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(-100, result.v());
+		
+		value.setV(200);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(200, result.v());
+		
+		value.setV(-101);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(-100, result.v());
+		
+		value.setV(201);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(200, result.v());
+		
+		value.setV(-99);
+		Clamp.compute(G.INT64, min, max, value, result);
+		assertEquals(-99, result.v());
 
-		if (group.isLess().call(value, min))
-			group.assign().call(min, result);
-		else if (group.isGreater().call(value, max))
-			group.assign().call(max, result);
-		else
-			group.assign().call(value, result);
+		min.setV(max.v()+1);
+		try {
+			Clamp.compute(G.INT64, min, max, value, result);
+			fail();
+		}
+		catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 	}
 }
