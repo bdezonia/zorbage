@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestTransform {
+public class TestTransform2 {
 
 	@Test
 	public void testFloats()
@@ -78,7 +78,7 @@ public class TestTransform {
 		Generate.compute(group, group.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		Transform2.compute(group, group.sin(), 0, 0, a.size(), 1, 1, a, a);
+		Transform2.compute(group, group.sin(), a);
 		
 		assertTrue(true);
 	}
