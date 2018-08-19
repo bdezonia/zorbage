@@ -34,10 +34,10 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class LeftRotate {
+public class RightRotate {
 
 	/**
-	 * Do a left rotation of a set of values.
+	 * Do a right rotation of a set of values.
 	 * 
 	 * @param group
 	 * @param delta
@@ -48,41 +48,9 @@ public class LeftRotate {
 	{
 		if (a.size() == 0) return;
 		if (delta < 0) {
-			RightRotate.compute(group, Math.abs(delta), a);
+			LeftRotate.compute(group, Math.abs(delta), a);
 			return;
 		}
-		delta = delta % a.size();
-		if (delta == 0) return; // nothing to do
-		
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
-
-		long n = a.size();
-		
-		for (long i = 0; i < gcd(delta, n); i++)
-		{
-			a.get(i, tmp1);
-			long j = i;
-			while (true)
-			{
-				long k = j + delta;
-				if (k >= n)
-					k = k - n;
-				if (k == i)
-					break;
-				a.get(k, tmp2);
-				a.set(j, tmp2);
-				j = k;
-			}
-			a.set(j, tmp1);
-		}
-	}
-	
-	private static long gcd(long a, long b)
-	{
-		if (b == 0)
-			return a;
-		else
-			return gcd(b, a%b);
+		LeftRotate.compute(group, a.size()-delta, a);
 	}
 }
