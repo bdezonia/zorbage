@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.condition;
 
+// TODO: eliminate? It's possible to wrap the group's method call in a BooleanCondition.
+
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
