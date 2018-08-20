@@ -38,11 +38,11 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 public class PowL<T extends Group<T,U> & Power<U>, U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor1;
-	private Procedure<U> ancestor2;
-	private Pow<T,U> lowerProc;
-	private U tmp1;
-	private U tmp2;
+	private final Procedure<U> ancestor1;
+	private final Procedure<U> ancestor2;
+	private final Pow<T,U> lowerProc;
+	private final U tmp1;
+	private final U tmp2;
 	
 	public PowL(T group, Procedure<U> ancestor1, Procedure<U> ancestor2) {
 		this.ancestor1 = ancestor1;

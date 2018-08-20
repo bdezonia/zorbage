@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class CosL<T extends Group<T,U> & Trigonometric<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Cos<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Cos<T,U> lowerProc;
+	private final U tmp;
 	
 	public CosL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

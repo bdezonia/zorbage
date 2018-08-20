@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class AtanL<T extends Group<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Atan<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Atan<T,U> lowerProc;
+	private final U tmp;
 	
 	public AtanL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

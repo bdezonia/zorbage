@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class Tan<T extends Group<T,U> & Trigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Tan(T group) {
 		this.group = group;

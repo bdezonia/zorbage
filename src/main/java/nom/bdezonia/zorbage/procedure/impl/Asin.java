@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class Asin<T extends Group<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Asin(T group) {
 		this.group = group;

@@ -37,8 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class Constant<T extends Group<T,U>,U>
 	implements Procedure1<U>
 {
-	private T group;
-	
+	private final T group;
 	private U c;
 	
 	public Constant(T group, U c) {

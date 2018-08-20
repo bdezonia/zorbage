@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class LogL<T extends Group<T,U> & Exponential<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Log<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Log<T,U> lowerProc;
+	private final U tmp;
 	
 	public LogL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

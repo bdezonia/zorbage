@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class SinL<T extends Group<T,U> & Trigonometric<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Sin<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Sin<T,U> lowerProc;
+	private final U tmp;
 	
 	public SinL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 public class Asinh<T extends Group<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Asinh(T group) {
 		this.group = group;

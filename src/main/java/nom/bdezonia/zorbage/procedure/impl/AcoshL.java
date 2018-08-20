@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 public class AcoshL<T extends Group<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Acosh<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Acosh<T,U> lowerProc;
+	private final U tmp;
 	
 	public AcoshL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

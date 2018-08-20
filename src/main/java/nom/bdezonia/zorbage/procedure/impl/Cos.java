@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class Cos<T extends Group<T,U> & Trigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Cos(T group) {
 		this.group = group;

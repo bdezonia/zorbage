@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 public class RandL<T extends Group<T,U> & Random<U>,U>
 	implements Procedure<U>
 {
-	private Rand<T,U> lowerProc;
+	private final Rand<T,U> lowerProc;
 	
 	public RandL(T group) {
 		this.lowerProc = new Rand<T,U>(group);

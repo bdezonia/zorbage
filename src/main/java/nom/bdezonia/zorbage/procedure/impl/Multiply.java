@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Multiplication;
 public class Multiply<T extends Group<T,U> & Multiplication<U>,U>
 	implements Procedure3<U,U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Multiply(T group) {
 		this.group = group;

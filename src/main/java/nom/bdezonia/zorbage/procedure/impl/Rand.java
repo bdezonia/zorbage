@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 public class Rand<T extends Group<T,U> & Random<U>,U>
 	implements Procedure1<U>
 {
-	private T group;
+	private final T group;
 	
 	public Rand(T group) {
 		this.group = group;

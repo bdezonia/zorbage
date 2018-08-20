@@ -39,9 +39,9 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class Step<T extends Group<T,U> & Ordered<U> & Unity<U>, U>
 	implements Procedure2<U,U>
 {
-	private T group;
-	private U zero;
-	private U h0;
+	private final T group;
+	private final U zero;
+	private final U h0;
 	
 	/**
 	 * Heaviside step function. 

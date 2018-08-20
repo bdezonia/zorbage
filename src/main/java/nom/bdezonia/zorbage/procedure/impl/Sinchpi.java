@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Sinchpi<T extends Group<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Sinchpi(T group) {
 		this.group = group;

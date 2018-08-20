@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Sinch<T extends Group<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Sinch(T group) {
 		this.group = group;

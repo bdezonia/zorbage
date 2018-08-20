@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class SinchL<T extends Group<T,U> & Hyperbolic<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Sinch<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Sinch<T,U> lowerProc;
+	private final U tmp;
 	
 	public SinchL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

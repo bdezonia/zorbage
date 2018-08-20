@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 public class Sqrt<T extends Group<T,U> & Roots<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Sqrt(T group) {
 		this.group = group;

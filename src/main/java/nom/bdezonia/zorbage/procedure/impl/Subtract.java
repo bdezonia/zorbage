@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class Subtract<T extends Group<T,U> & Addition<U>, U>
 	implements Procedure3<U,U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Subtract(T group) {
 		this.group = group;

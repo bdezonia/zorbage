@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class Log<T extends Group<T,U> & Exponential<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Log(T group) {
 		this.group = group;

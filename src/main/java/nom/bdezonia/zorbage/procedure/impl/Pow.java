@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 public class Pow<T extends Group<T,U> & Power<U>,U>
 	implements Procedure3<U,U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Pow(T group) {
 		this.group = group;

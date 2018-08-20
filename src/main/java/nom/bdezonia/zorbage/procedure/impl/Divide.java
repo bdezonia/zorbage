@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
 public class Divide<T extends Group<T,U> & Invertible<U>,U>
 	implements Procedure3<U,U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Divide(T group) {
 		this.group = group;

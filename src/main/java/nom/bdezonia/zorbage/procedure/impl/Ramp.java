@@ -37,9 +37,9 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  */
 public class Ramp<T extends Group<T,U> & Addition<U>, U> implements Procedure1<U> {
 
-	private T group;
-	private U currValue;
-	private U delta;
+	private final T group;
+	private final U currValue;
+	private final U delta;
 	
 	public Ramp(T group, U startValue, U delta) {
 		this.group = group;

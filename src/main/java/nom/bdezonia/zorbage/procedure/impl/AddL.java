@@ -38,11 +38,11 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class AddL<T extends Group<T,U> & Addition<U>, U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor1;
-	private Procedure<U> ancestor2;
-	private Add<T,U> lowerProc;
-	private U tmp1;
-	private U tmp2;
+	private final Procedure<U> ancestor1;
+	private final Procedure<U> ancestor2;
+	private final Add<T,U> lowerProc;
+	private final U tmp1;
+	private final U tmp2;
 	
 	public AddL(T group, Procedure<U> ancestor1, Procedure<U> ancestor2) {
 		this.ancestor1 = ancestor1;

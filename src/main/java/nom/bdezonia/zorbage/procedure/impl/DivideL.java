@@ -38,11 +38,11 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
 public class DivideL<T extends Group<T,U> & Invertible<U>, U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor1;
-	private Procedure<U> ancestor2;
-	private Divide<T,U> lowerProc;
-	private U tmp1;
-	private U tmp2;
+	private final Procedure<U> ancestor1;
+	private final Procedure<U> ancestor2;
+	private final Divide<T,U> lowerProc;
+	private final U tmp1;
+	private final U tmp2;
 	
 	public DivideL(T group, Procedure<U> ancestor1, Procedure<U> ancestor2) {
 		this.ancestor1 = ancestor1;

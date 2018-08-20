@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class ConstantL<T extends Group<T,U>,U>
 	implements Procedure<U>
 {
-	private Constant<T,U> lowerProc;
+	private final Constant<T,U> lowerProc;
 	
 	public ConstantL(T group, U c) {
 		this.lowerProc = new Constant<T,U>(group, c);

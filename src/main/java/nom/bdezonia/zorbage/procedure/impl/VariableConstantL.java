@@ -37,8 +37,8 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class VariableConstantL<T extends Group<T,U>, U>
 	implements Procedure<U>
 {
-	private T group;
-	private int index;
+	private final T group;
+	private final int index;
 	
 	public VariableConstantL(T group, int index) {
 		if (index < 0)

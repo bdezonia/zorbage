@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class RampL<T extends Group<T,U> & Addition<U>,U>
 	implements Procedure<U>
 {
-	private Ramp<T,U> lowerProc;
+	private final Ramp<T,U> lowerProc;
 	
 	public RampL(T group, U origin, U delta) {
 		this.lowerProc = new Ramp<T,U>(group, origin, delta);

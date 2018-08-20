@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class SinhL<T extends Group<T,U> & Hyperbolic<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Sinh<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Sinh<T,U> lowerProc;
+	private final U tmp;
 	
 	public SinhL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

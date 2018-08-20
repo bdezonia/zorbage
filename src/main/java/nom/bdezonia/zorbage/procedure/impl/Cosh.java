@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Cosh<T extends Group<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private T group;
+	private final T group;
 	
 	public Cosh(T group) {
 		this.group = group;

@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class TanhL<T extends Group<T,U> & Hyperbolic<U>,U>
 	implements Procedure<U>
 {
-	private Procedure<U> ancestor;
-	private Tanh<T,U> lowerProc;
-	private U tmp;
+	private final Procedure<U> ancestor;
+	private final Tanh<T,U> lowerProc;
+	private final U tmp;
 	
 	public TanhL(T group, Procedure<U> ancestor) {
 		this.ancestor = ancestor;

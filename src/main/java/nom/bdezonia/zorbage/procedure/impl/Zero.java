@@ -37,9 +37,8 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 public class Zero<T extends Group<T,U>,U>
 	implements Procedure1<U>
 {
-	private T group;
-	
-	private U zero;
+	private final T group;
+	private final U zero;
 	
 	public Zero(T group) {
 		this.group = group;
