@@ -29,12 +29,10 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertEquals;
 
 import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.condition.GreaterThan;
 import nom.bdezonia.zorbage.condition.GreaterThanConstant;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Group;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.type.data.int8.SignedInt8Group;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
