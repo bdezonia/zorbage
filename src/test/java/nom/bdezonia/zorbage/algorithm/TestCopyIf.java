@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestCopyIf {
 
+	@Test
 	public void test() {
 		IndexedDataSource<?, SignedInt16Member> a = ArrayStorage.allocateShorts(
 				new short[] {1,2,3,4,5,6,7,8,9});

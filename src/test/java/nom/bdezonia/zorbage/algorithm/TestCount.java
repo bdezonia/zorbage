@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
@@ -41,6 +43,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestCount {
 	
+	@Test
 	public void test() {
 		
 		SignedInt32Member value = G.INT32.construct("14");

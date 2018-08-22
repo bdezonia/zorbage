@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
@@ -41,6 +43,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestConjugate {
 	
+	@Test
 	public void test() {
 		
 		ComplexFloat64Member tmp = G.CDBL.construct();
