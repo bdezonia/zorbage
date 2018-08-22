@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.GreaterThanConstant;
 import nom.bdezonia.zorbage.groups.G;
