@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 
 /**
  * 
@@ -41,7 +42,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class TestExponentialCalculation {
 	
 	@Test
-	public void test() {
+	public void test1() {
 		
 		Float64Member v = G.DBL.construct();
 		Float64Member fraction = G.DBL.construct("0.5");
@@ -51,5 +52,18 @@ public class TestExponentialCalculation {
 		ExponentialCalculation.compute(G.DBL, fraction, base, power, v);
 		
 		assertEquals(0.5*4*4*4, v.v(), 0);
+	}
+
+	@Test
+	public void test2() {
+		
+		SignedInt16Member v = G.INT16.construct();
+		SignedInt16Member fraction = G.INT16.construct("7");
+		SignedInt16Member base = G.INT16.construct("2");
+		SignedInt16Member power = G.INT16.construct("5");
+		
+		ExponentialCalculation.compute(G.INT16, fraction, base, power, v);
+		
+		assertEquals(7*2*2*2*2*2, v.v(), 0);
 	}
 }
