@@ -49,7 +49,7 @@ public class CrossProduct {
 					W>
 		void compute(T rmodGroup, V memberGroup, U a, U b, U c)
 	{
-		if ((a.numDimensions() != 3) || (b.numDimensions() != 3))
+		if ((a.length() != 3) || (b.length() != 3))
 			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
 		U tmp = rmodGroup.construct(StorageConstruction.MEM_ARRAY, 3);
 		W atmp = memberGroup.construct();
