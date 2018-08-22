@@ -76,4 +76,15 @@ public class TestUnboundedIntGroup {
 		assertEquals(BigInteger.valueOf(55), min.v());
 		assertEquals(BigInteger.valueOf(1234567890), max.v());
 	}
+	
+	@Test
+	public void bigpower() {
+		UnboundedIntMember a = G.BIGINT.construct("3");
+		UnboundedIntMember b = G.BIGINT.construct("100");
+		UnboundedIntMember c = G.BIGINT.construct();
+		
+		G.BIGINT.pow().call(a, b, c);
+		
+		assertEquals(new BigInteger("515377520732011331036461129765621272702107522001"), c.v());
+	}
 }
