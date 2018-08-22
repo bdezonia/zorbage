@@ -39,6 +39,18 @@ public class CopyBackward {
 	/**
 	 * 
 	 * @param group
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Group<T,U>, U>
+		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+	{
+		compute(group,0,b.size()-1,a.size(),a,b);
+	}
+	
+	/**
+	 * 
+	 * @param group
 	 * @param aStart
 	 * @param bLast
 	 * @param count
@@ -48,9 +60,11 @@ public class CopyBackward {
 	public static <T extends Group<T,U>, U>
 		void compute(T group, long aStart, long bLast, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
+		if (a == b)
+			throw new IllegalArgumentException("in place reversal not done yet");
 		U tmp = group.construct();
 		for (long i = 0; i < count; i++) {
-			a.get(aStart+count-i-1, tmp);
+			a.get(aStart+i, tmp);
 			b.set(bLast-i, tmp);
 		}
 	}
