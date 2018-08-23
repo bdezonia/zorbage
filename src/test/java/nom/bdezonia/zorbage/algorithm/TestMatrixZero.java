@@ -22,6 +22,7 @@ public class TestMatrixZero {
 		G.DBL_MAT.zero().call(a);
 		for (int i = 0; i < a.rows(); i++) {
 			for (int j = 0; j < a.cols(); j++) {
+				a.v(i, j, value);
 				assertEquals(0, value.v(), 0);
 			}
 		}
