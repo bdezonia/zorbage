@@ -47,31 +47,18 @@ public class TestMatrixUnity {
 		Float64MatrixMember b = new Float64MatrixMember(2, 3, new double[6]);
 		Float64MatrixMember c = new Float64MatrixMember(3, 2, new double[6]);
 
-		Float64Member value = G.DBL.construct();
-		
 		G.DBL_MAT.unity().call(a);
-		for (int i = 0; i < a.rows(); i++) {
-			for (int j = 0; j < a.cols(); j++) {
-				a.v(i, j, value);
-				if (i == j)
-					assertEquals(1, value.v(), 0);
-				else
-					assertEquals(0, value.v(), 0);
-			}
-		}
+		assertValues(a);
 		
 		G.DBL_MAT.unity().call(b);
-		for (int i = 0; i < a.rows(); i++) {
-			for (int j = 0; j < a.cols(); j++) {
-				a.v(i, j, value);
-				if (i == j)
-					assertEquals(1, value.v(), 0);
-				else
-					assertEquals(0, value.v(), 0);
-			}
-		}
+		assertValues(b);
 		
 		G.DBL_MAT.unity().call(c);
+		assertValues(c);
+	}
+	
+	private void assertValues(Float64MatrixMember a) {
+		Float64Member value = G.DBL.construct();
 		for (int i = 0; i < a.rows(); i++) {
 			for (int j = 0; j < a.cols(); j++) {
 				a.v(i, j, value);
