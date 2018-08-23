@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
