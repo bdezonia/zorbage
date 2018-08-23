@@ -60,7 +60,7 @@ public class MatrixInvert {
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("can only invert square matrices");
 		if (a.rows() != b.rows() || a.cols() != b.cols())
-			throw new IllegalArgumentException("invert: destination matrix is not same shape as source matrix");
+			b.alloc(a.rows(), a.cols());
 		MATRIX_MEMBER lu = matGroup.construct(a);
 		LUDecomp.compute(numGroup, matGroup, lu);
 		RMODULE_MEMBER bCol =
