@@ -64,15 +64,20 @@ public class IsPartitioned {
 	{
 		U tmp = group.construct();
 		long i = 0;
+		boolean first = false;
+		if (count > 0) {
+			a.get(start+i, tmp);
+			first = cond.isTrue(tmp);
+		}
 		while (i < count) {
 			a.get(start+i, tmp);
-			if (!cond.isTrue(tmp)) break;
+			if (cond.isTrue(tmp) != first) break;
 			i++;
 		}
 		while (i < count) {
 			a.get(start+i, tmp);
 			i++;
-			if (cond.isTrue(tmp)) return false;
+			if (cond.isTrue(tmp) == first) return false;
 		}
 		return true;
 	}
