@@ -65,12 +65,15 @@ public class FindFirstOf {
 	{
 		U tmpA = group.construct();
 		U element = group.construct();
-		for (long i = 0; i < count; i++) {
+		for (long i = 0; i < count-elements.size(); i++) {
 			a.get(start+i, tmpA);
 			for (long j = 0; j < elements.size(); j++) {
 				elements.get(j, element);
-				if (group.isEqual().call(tmpA, element))
-					return start+i;
+				if (!group.isEqual().call(tmpA, element))
+					break;
+				if (j == elements.size()-1)
+					return start + i;
+				a.get(start+i+j+1, tmpA);
 			}
 		}
 		return start + count;
