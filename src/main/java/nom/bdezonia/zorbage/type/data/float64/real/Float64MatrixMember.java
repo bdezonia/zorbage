@@ -71,7 +71,7 @@ public final class Float64MatrixMember
 	}
 	
 	public Float64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length*1 != r*c)
+		if (vals.length != r*c*1)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;

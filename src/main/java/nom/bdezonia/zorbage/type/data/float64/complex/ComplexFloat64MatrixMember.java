@@ -78,7 +78,7 @@ public final class ComplexFloat64MatrixMember
 	}
 	
 	public ComplexFloat64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length*2 != r*c)
+		if (vals.length != r*c*2)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;

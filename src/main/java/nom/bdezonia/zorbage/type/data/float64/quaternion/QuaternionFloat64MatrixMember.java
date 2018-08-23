@@ -71,7 +71,7 @@ public final class QuaternionFloat64MatrixMember
 	}
 	
 	public QuaternionFloat64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length*4 != r*c)
+		if (vals.length != r*c*4)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;

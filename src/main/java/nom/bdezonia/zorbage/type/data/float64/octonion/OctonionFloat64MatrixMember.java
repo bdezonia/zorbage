@@ -71,7 +71,7 @@ public final class OctonionFloat64MatrixMember
 	}
 	
 	public OctonionFloat64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length*8 != r*c)
+		if (vals.length != r*c*8)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
 		cols = -1;
