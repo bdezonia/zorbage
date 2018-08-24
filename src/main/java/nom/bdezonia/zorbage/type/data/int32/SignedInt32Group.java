@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
-import nom.bdezonia.zorbage.algorithm.PowerI;
+import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
@@ -152,7 +152,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(java.lang.Integer power, SignedInt32Member a, SignedInt32Member b) {
-			PowerI.compute(G.INT32, power, a, b);
+			PowerNonNegative.compute(G.INT32, power, a, b);
 		}
 	};
 	

@@ -30,7 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
-import nom.bdezonia.zorbage.algorithm.PowerI;
+import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.groups.G;
@@ -179,7 +179,7 @@ public class UnsignedInt12Group
 	{
 		@Override
 		public void call(java.lang.Integer power, UnsignedInt12Member a, UnsignedInt12Member b) {
-			PowerI.compute(G.UINT12, power, a, b);
+			PowerNonNegative.compute(G.UINT12, power, a, b);
 		}
 	};
 

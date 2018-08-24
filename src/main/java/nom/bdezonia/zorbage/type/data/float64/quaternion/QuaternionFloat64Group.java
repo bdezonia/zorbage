@@ -131,7 +131,7 @@ public class QuaternionFloat64Group
 	{
 		@Override
 		public void call(java.lang.Integer power, QuaternionFloat64Member a, QuaternionFloat64Member b) {
-			nom.bdezonia.zorbage.algorithm.Power.compute(G.QDBL, power, a, b);
+			nom.bdezonia.zorbage.algorithm.PowerAny.compute(G.QDBL, power, a, b);
 		}
 	};
 	

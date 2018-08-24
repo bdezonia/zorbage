@@ -27,31 +27,38 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestPower {
+public class TestPowerNonNegative {
 
 	@Test
 	public void test() {
-		Float64Member a = G.DBL.construct("4");
-		Float64Member b = G.DBL.construct();
+		SignedInt32Member a = G.INT32.construct("4");
+		SignedInt32Member b = G.INT32.construct();
 
-		Power.compute(G.DBL, 3, a, b);
+		PowerNonNegative.compute(G.INT32, 3, a, b);
 		assertEquals(4*4*4, b.v(), 0);
 		
-		Power.compute(G.DBL, -3, a, b);
-		assertEquals(1.0/(4*4*4), b.v(), 0);
+		try {
+			PowerNonNegative.compute(G.INT32, -3, a, b);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 
-		Power.compute(G.DBL, 0, a, b);
+		PowerNonNegative.compute(G.INT32, 0, a, b);
 		assertEquals(1, b.v(), 0);
 	}
 }

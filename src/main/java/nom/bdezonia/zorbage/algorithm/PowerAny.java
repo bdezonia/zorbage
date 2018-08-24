@@ -26,39 +26,46 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestPowerI {
+public class PowerAny {
 
-	@Test
-	public void test() {
-		SignedInt32Member a = G.INT32.construct("4");
-		SignedInt32Member b = G.INT32.construct();
-
-		PowerI.compute(G.INT32, 3, a, b);
-		assertEquals(4*4*4, b.v(), 0);
-		
-		try {
-			PowerI.compute(G.INT32, -3, a, b);
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
+	private PowerAny() {}
+	
+	/**
+	 * 
+	 * @param group
+	 * @param power
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Group<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
+		void compute(T group, int power, U a, U b)
+	{
+		if (power == 0) {
+			U tmp = group.construct();
+			if (group.isEqual().call(a,tmp))
+				throw new IllegalArgumentException("0^0 is not a number");
+			group.unity().call(tmp);
+			group.assign().call(tmp, b);
+			return;
 		}
+		// else power != 0
 
-		PowerI.compute(G.INT32, 0, a, b);
-		assertEquals(1, b.v(), 0);
+		if (power < 0) {
+			U invA = group.construct();
+			group.invert().call(a, invA);
+			PowerNonNegative.compute(group, -power, invA, b);
+		}
+		else
+			PowerNonNegative.compute(group, power, a, b);
 	}
 }

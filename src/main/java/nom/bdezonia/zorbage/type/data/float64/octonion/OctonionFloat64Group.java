@@ -278,7 +278,7 @@ public class OctonionFloat64Group
 	{
 		@Override
 		public void call(java.lang.Integer power, OctonionFloat64Member a, OctonionFloat64Member b) {
-			nom.bdezonia.zorbage.algorithm.Power.compute(G.ODBL, power, a, b);
+			nom.bdezonia.zorbage.algorithm.PowerAny.compute(G.ODBL, power, a, b);
 		}
 	};
 

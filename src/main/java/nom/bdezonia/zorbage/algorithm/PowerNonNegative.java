@@ -35,9 +35,9 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  * @author Barry DeZonia
  *
  */
-public class PowerI {
+public class PowerNonNegative {
 
-	private PowerI() {}
+	private PowerNonNegative() {}
 	
 	/**
 	 * 

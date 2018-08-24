@@ -26,46 +26,32 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Power {
+public class TestPowerAny {
 
-	private Power() {}
-	
-	/**
-	 * 
-	 * @param group
-	 * @param power
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Group<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void compute(T group, int power, U a, U b)
-	{
-		if (power == 0) {
-			U tmp = group.construct();
-			if (group.isEqual().call(a,tmp))
-				throw new IllegalArgumentException("0^0 is not a number");
-			group.unity().call(tmp);
-			group.assign().call(tmp, b);
-			return;
-		}
-		// else power != 0
+	@Test
+	public void test() {
+		Float64Member a = G.DBL.construct("4");
+		Float64Member b = G.DBL.construct();
 
-		if (power < 0) {
-			U invA = group.construct();
-			group.invert().call(a, invA);
-			PowerI.compute(group, -power, invA, b);
-		}
-		else
-			PowerI.compute(group, power, a, b);
+		PowerAny.compute(G.DBL, 3, a, b);
+		assertEquals(4*4*4, b.v(), 0);
+		
+		PowerAny.compute(G.DBL, -3, a, b);
+		assertEquals(1.0/(4*4*4), b.v(), 0);
+
+		PowerAny.compute(G.DBL, 0, a, b);
+		assertEquals(1, b.v(), 0);
 	}
 }
