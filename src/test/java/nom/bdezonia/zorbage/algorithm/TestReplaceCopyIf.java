@@ -55,6 +55,7 @@ public class TestReplaceCopyIf {
 		Float64Member value = G.DBL.construct();
 		Condition<Float64Member> cond =
 				new EqualConstant<Float64Group, Float64Member>(G.DBL, new Float64Member(1));
+
 		ReplaceCopyIf.compute(G.DBL, cond, new Float64Member(88), a, b);
 		assertEquals(9, b.size());
 		b.get(0, value);
