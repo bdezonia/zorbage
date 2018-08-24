@@ -59,9 +59,7 @@ public class TestSample {
 			if (value.v() > 0)
 				count++;
 			assertTrue(
-					value.v()==1 || value.v()==4 || value.v()==5 ||
-					value.v()==2 || value.v()==6 || value.v()==9 ||
-					value.v()==3 || value.v()==17
+					value.v()==1 || value.v()==4 || value.v()==5 || value.v()==2
 			);
 		}
 		assertEquals(9, count);
