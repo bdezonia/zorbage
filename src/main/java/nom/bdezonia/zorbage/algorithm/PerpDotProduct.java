@@ -47,7 +47,7 @@ public class PerpDotProduct {
 					W>
 		void compute(T rmodGroup, V memberGroup, U a, U b, W c)
 	{
-		if ((a.numDimensions() != 2) || (b.numDimensions() != 2))
+		if ((a.length() != 2) || (b.length() != 2))
 			throw new UnsupportedOperationException("perp dot product only defined for 2 dimensions");
 		W atmp = memberGroup.construct();
 		W btmp = memberGroup.construct();
