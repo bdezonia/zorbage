@@ -117,8 +117,8 @@ public class Mismatch {
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmpA);
 			b.get(bStart+i, tmpB);
-			tuple.setA(tmpA);
-			tuple.setB(tmpB);
+			//tuple.setA(tmpA);
+			//tuple.setB(tmpB);
 			if (!cond.isTrue(tuple)) {
 				retVal.setA(aStart+i);
 				retVal.setB(bStart+i);
