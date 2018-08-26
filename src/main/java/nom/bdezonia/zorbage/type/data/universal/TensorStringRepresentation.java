@@ -50,8 +50,8 @@ public class TensorStringRepresentation {
 		elements = new BigList<OctonionRepresentation>();
 		gatherOctonions(chars);
 		if (elements.size() != LongUtils.numElements(dimensions)) {
-			System.out.println("Parsed "+elements.size()+" values");
-			System.out.println("Dims "+Arrays.toString(dimensions));
+			//System.out.println("Parsed "+elements.size()+" values");
+			//System.out.println("Dims "+Arrays.toString(dimensions));
 			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 		}
 	}
@@ -147,11 +147,14 @@ public class TensorStringRepresentation {
 		}
 		if (unmatchedBrackets != 0)
 			throw new IllegalArgumentException("unmatched [ ] brackets in tensor definition");
-		for (int i = reverseDims.size()-1; i > 0; i--) {
-			long sz = 1;
-			for (int j = 0; j < i; j++) {
-				sz *= reverseDims.get(j);
-			}
+		for (int i = reverseDims.size()-1; i > 1; i--) {
+			// new
+			long sz = reverseDims.get(i-1);
+			// old
+			//long sz = 1;
+			//for (int j = 0; j < i; j++) {
+			//	sz *= reverseDims.get(j);
+			//}
 			reverseDims.set(i, reverseDims.get(i) / sz);
 		}
 		reverseDims.add(innermostDim);
