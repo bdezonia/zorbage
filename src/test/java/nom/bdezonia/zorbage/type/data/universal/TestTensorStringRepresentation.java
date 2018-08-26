@@ -188,16 +188,16 @@ public class TestTensorStringRepresentation {
 
 	@Test
 	public void test2d3x1() {
-		TensorStringRepresentation a = new TensorStringRepresentation("[[1],[1],[1]]");
-		TensorStringRepresentation b = new TensorStringRepresentation("[[{1}],[{1}],[{1}]]") ;
-		TensorStringRepresentation c = new TensorStringRepresentation("[[{1,1}],[{1,1}],[{1,1}]]");
-		TensorStringRepresentation d = new TensorStringRepresentation("[[{1,1,1}],[{1,1,1}],[{1,1,1}]]");
-		TensorStringRepresentation e = new TensorStringRepresentation("[[{1,1,1,1}],[{1,1,1,1}],[{1,1,1,1}]]");
-		TensorStringRepresentation f = new TensorStringRepresentation("[[{1,1,1,1,1}],[{1,1,1,1,1}],[{1,1,1,1,1}]]");
-		TensorStringRepresentation g = new TensorStringRepresentation("[[{1,1,1,1,1,1}],[{1,1,1,1,1,1}],[{1,1,1,1,1,1}]]");
-		TensorStringRepresentation h = new TensorStringRepresentation("[[{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1}]]");
-		TensorStringRepresentation i = new TensorStringRepresentation("[[{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1}]]");
-		TensorStringRepresentation j = new TensorStringRepresentation("[[{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1}]]");
+		TensorStringRepresentation a = new TensorStringRepresentation("[[1],[2],[3]]");
+		TensorStringRepresentation b = new TensorStringRepresentation("[[{1}],[{2}],[{3}]]") ;
+		TensorStringRepresentation c = new TensorStringRepresentation("[[{1,2}],[{3,4}],[{5,6}]]");
+		TensorStringRepresentation d = new TensorStringRepresentation("[[{1,2,3}],[{4,5,6}],[{7,8,9}]]");
+		TensorStringRepresentation e = new TensorStringRepresentation("[[{1,2,3,4}],[{5,6,7,8}],[{9,10,11,12}]]");
+		TensorStringRepresentation f = new TensorStringRepresentation("[[{1,2,3,4,5}],[{6,7,8,9,10}],[{11,12,13,14,15}]]");
+		TensorStringRepresentation g = new TensorStringRepresentation("[[{1,2,3,4,5,6}],[{7,8,9,10,11,12}],[{13,14,15,16,17,18}]]");
+		TensorStringRepresentation h = new TensorStringRepresentation("[[{1,2,3,4,5,6,7}],[{8,9,10,11,12,13,14}],[{15,16,17,18,19,20,21}]]");
+		TensorStringRepresentation i = new TensorStringRepresentation("[[{1,2,3,4,5,6,7,8}],[{9,10,11,12,13,14,15,16}],[{17,18,19,20,21,22,23,24}]]");
+		TensorStringRepresentation j = new TensorStringRepresentation("[[{1,2,3,4,5,6,7,8,9}],[{10,11,12,13,14,15,16,17,18}],[{19,20,21,22,23,24,25,26,27}]]");
 		assertTrue(true);
 	}
 
@@ -418,7 +418,7 @@ public class TestTensorStringRepresentation {
 		TensorStringRepresentation c = new TensorStringRepresentation("[[[{1,1}],[{1,1}]],[[{1,1}],[{1,1}]]]");
 		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1}],[{1,1,1}]],[[{1,1,1}],[{1,1,1}]]]");
 		TensorStringRepresentation e = new TensorStringRepresentation("[[[{1,1,1,1}],[{1,1,1,1}]],[[{1,1,1,1}],[{1,1,1,1}]]]");
-		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1}],[{1,1,1,1,1,}]],[[{1,1,1,1,1}],[{1,1,1,1,1}]]]");
+		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1}],[{1,1,1,1,1}]],[[{1,1,1,1,1}],[{1,1,1,1,1}]]]");
 		TensorStringRepresentation g = new TensorStringRepresentation("[[[{1,1,1,1,1,1}],[{1,1,1,1,1,1}]],[[{1,1,1,1,1,1}],[{1,1,1,1,1,1}]]]");
 		TensorStringRepresentation h = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1}]]]");
 		TensorStringRepresentation i = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1}]]]");
@@ -433,7 +433,7 @@ public class TestTensorStringRepresentation {
 		TensorStringRepresentation c = new TensorStringRepresentation("[[[{1,1},{1,1}],[{1,1},{1,1}]],[[{1,1},{1,1}],[{1,1},{1,1}]]]");
 		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1},{1,1,1}],[{1,1,1},{1,1,1}]],[[{1,1,1},{1,1,1}],[{1,1,1},{1,1,1}]]]");
 		TensorStringRepresentation e = new TensorStringRepresentation("[[[{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1}]],[[{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1}]]]");
-		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1,},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}]]]");
+		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}]]]");
 		TensorStringRepresentation g = new TensorStringRepresentation("[[[{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}]],[[{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}]]]");
 		TensorStringRepresentation h = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]]]");
 		TensorStringRepresentation i = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]]]");
@@ -448,7 +448,7 @@ public class TestTensorStringRepresentation {
 		TensorStringRepresentation c = new TensorStringRepresentation("[[[{1,1},{1,1},{1,1}],[{1,1},{1,1},{1,1}]],[[{1,1},{1,1},{1,1}],[{1,1},{1,1},{1,1}]]]");
 		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}]],[[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}]]]");
 		TensorStringRepresentation e = new TensorStringRepresentation("[[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]],[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]]]");
-		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1,},{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]]]");
+		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]]]");
 		TensorStringRepresentation g = new TensorStringRepresentation("[[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}]],[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}]]]");
 		TensorStringRepresentation h = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]]]");
 		TensorStringRepresentation i = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]]]");
@@ -477,7 +477,7 @@ public class TestTensorStringRepresentation {
 		TensorStringRepresentation a = new TensorStringRepresentation("[[[1,1],[1,1],[1,1]],[[1,1],[1,1],[1,1]]]");
 		TensorStringRepresentation b = new TensorStringRepresentation("[[[{1},{1}],[{1},{1}],[{1},{1}]],[[{1},{1}],[{1},{1}],[{1},{1}]]]");
 		TensorStringRepresentation c = new TensorStringRepresentation("[[[{1,1},{1,1}],[{1,1},{1,1}],[{1,1},{1,1}]],[[{1,1},{1,1}],[{1,1},{1,1}],[{1,1},{1,1}]]]");
-		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1},[{1,1,1}],[{1,1,1},[{1,1,1}],[{1,1,1},[{1,1,1}]],[[{1,1,1},[{1,1,1}],[{1,1,1}],[{1,1,1},[{1,1,1}]]]");
+		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1},{1,1,1}],[{1,1,1},{1,1,1}],[{1,1,1},{1,1,1}]],[[{1,1,1},{1,1,1}],[{1,1,1},{1,1,1}],[{1,1,1},{1,1,1}]]]");
 		TensorStringRepresentation e = new TensorStringRepresentation("[[[{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1}]],[[{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1}]]]");
 		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1}]]]");
 		TensorStringRepresentation g = new TensorStringRepresentation("[[[{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}]],[[{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}]]]");
@@ -492,9 +492,9 @@ public class TestTensorStringRepresentation {
 		TensorStringRepresentation a = new TensorStringRepresentation("[[[1,1,1],[1,1,1],[1,1,1]],[[1,1,1],[1,1,1],[1,1,1]]]");
 		TensorStringRepresentation b = new TensorStringRepresentation("[[[{1},{1},{1}],[{1},{1},{1}],[{1},{1},{1}]],[[{1},{1},{1}],[{1},{1},{1}],[{1},{1},{1}]]]");
 		TensorStringRepresentation c = new TensorStringRepresentation("[[[{1,1},{1,1},{1,1}],[{1,1},{1,1},{1,1}],[{1,1},{1,1},{1,1}]],[[{1,1},{1,1},{1,1}],[{1,1},{1,1},{1,1}],[{1,1},{1,1},{1,1}]]]");
-		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}]],[[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1,{1,1,1},{1,1,1}}],[{1,1,1},{1,1,1},{1,1,1}]]]");
+		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}]],[[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}],[{1,1,1},{1,1,1},{1,1,1}]]]");
 		TensorStringRepresentation e = new TensorStringRepresentation("[[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]],[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]]]");
-		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]]]");
+		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]]]");
 		TensorStringRepresentation g = new TensorStringRepresentation("[[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1}],{1,1,1,1,1,1}],[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}]]]");
 		TensorStringRepresentation h = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]]]");
 		TensorStringRepresentation i = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]]]");
@@ -551,7 +551,7 @@ public class TestTensorStringRepresentation {
 	@Test
 	public void test3d3x2x1() {
 		// [[[],[]],[[],[]],[[],[]]]
-		TensorStringRepresentation a = new TensorStringRepresentation("[[[1],[1]],[[1],[1]],[1[],[1]]]");
+		TensorStringRepresentation a = new TensorStringRepresentation("[[[1],[1]],[[1],[1]],[[1],[1]]]");
 		TensorStringRepresentation b = new TensorStringRepresentation("[[[{1}],[{1}]],[[{1}],[{1}]],[[{1}],[{1}]]]");
 		TensorStringRepresentation c = new TensorStringRepresentation("[[[{1,1}],[{1,1}]],[[{1,1}],[{1,1}]],[[{1,1}],[{1,1}]]]");
 		TensorStringRepresentation d = new TensorStringRepresentation("[[[{1,1,1}],[]{1,1,1}],[[{1,1,1}],[{1,1,1}]],[[{1,1,1}],[{1,1,1}]]]");
@@ -634,7 +634,7 @@ public class TestTensorStringRepresentation {
 		TensorStringRepresentation e = new TensorStringRepresentation("[[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]],[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]],[[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}],[{1,1,1,1},{1,1,1,1},{1,1,1,1}]]]");
 		TensorStringRepresentation f = new TensorStringRepresentation("[[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]],[[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}],[{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}]]]");
 		TensorStringRepresentation g = new TensorStringRepresentation("[[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}]],[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}]],[[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}],[{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}]]]");
-		TensorStringRepresentation h = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]]]");
+		TensorStringRepresentation h = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}]]]");
 		TensorStringRepresentation i = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}]]]");
 		TensorStringRepresentation j = new TensorStringRepresentation("[[[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}]],[[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}],[{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}]]]");
 		assertTrue(true);
@@ -642,6 +642,7 @@ public class TestTensorStringRepresentation {
 
 	@Test
 	public void test4d2x3x4x1() {
+		// [[[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]],[[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]]]
 		// [[[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]],[[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]]]
 		TensorStringRepresentation a = new TensorStringRepresentation("[[[[1],[1],[1],[1]],[[1],[1],[1],[1]],[[1],[1],[1],[1]]],[[[1],[1],[1],[1]],[[1],[1],[1],[1]],[[1],[1],[1],[1]]]]");
 		TensorStringRepresentation b = new TensorStringRepresentation("[[[[{1}],[{1}],[{1}],[{1}]],[[{1}],[{1}],[{1}],[{1}]],[[{1}],[{1}],[{1}],[{1}]]],[[[{1}],[{1}],[{1}],[{1}]],[[{1}],[{1}],[{1}],[{1}]],[[{1}],[{1}],[{1}],[{1}]]]]");
