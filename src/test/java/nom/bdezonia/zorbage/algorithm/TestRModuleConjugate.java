@@ -44,8 +44,6 @@ public class TestRModuleConjugate {
 	
 	@Test
 	public void test() {
-		//TODO: fix this crash:
-		// ComplexFloat64VectorMember a = G.CDBL_VEC.construct("[{1,0},{2,-7},{3,5}]");
 		ComplexFloat64Member value = G.CDBL.construct();
 		ComplexFloat64VectorMember a = new ComplexFloat64VectorMember(
 				new double[] {1,0,2,-7,3,5});
