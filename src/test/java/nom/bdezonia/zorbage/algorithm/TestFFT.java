@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -90,6 +92,55 @@ public class TestFFT {
 		for (int i = 5; i < n; i++) {
 			result.get(i, int32);
 			assertEquals(0, int32.v());
+		}
+	}
+	
+	@Test
+	public void testEnclosingCalcs() {
+		try {
+			FFT.enclosingPowerOf2(-1);
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+		try {
+			FFT.enclosingPowerOf2(0);
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertTrue(true);
+		}
+		
+		assertEquals(1, FFT.enclosingPowerOf2(1));
+		
+		assertEquals(2, FFT.enclosingPowerOf2(2));
+		
+		assertEquals(4, FFT.enclosingPowerOf2(3));
+		assertEquals(4, FFT.enclosingPowerOf2(4));
+
+		assertEquals(8, FFT.enclosingPowerOf2(5));
+		assertEquals(8, FFT.enclosingPowerOf2(7));
+		assertEquals(8, FFT.enclosingPowerOf2(8));
+
+		assertEquals(16, FFT.enclosingPowerOf2(9));
+		assertEquals(16, FFT.enclosingPowerOf2(15));
+		assertEquals(16, FFT.enclosingPowerOf2(16));
+
+		assertEquals(32, FFT.enclosingPowerOf2(17));
+		assertEquals(32, FFT.enclosingPowerOf2(31));
+		assertEquals(32, FFT.enclosingPowerOf2(32));
+
+		assertEquals(64, FFT.enclosingPowerOf2(33));
+		assertEquals(64, FFT.enclosingPowerOf2(63));
+		assertEquals(64, FFT.enclosingPowerOf2(64));
+
+		assertEquals(1L<<62, FFT.enclosingPowerOf2((1L<<62)-1));
+		assertEquals(1L<<62, FFT.enclosingPowerOf2(1L<<62));
+		try {
+			FFT.enclosingPowerOf2((1L<<62)+1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
 		}
 	}
 }

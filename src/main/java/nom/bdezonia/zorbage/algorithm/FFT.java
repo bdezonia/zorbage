@@ -109,6 +109,6 @@ public class FFT {
 			if (num <= max) return max;
 			max <<= 1;
 		}
-		throw new IllegalArgumentException("num too big");
+		throw new IllegalArgumentException("number passed ("+num+") does not have an enclosing power of two that fits into a positive long");
 	}
 }
