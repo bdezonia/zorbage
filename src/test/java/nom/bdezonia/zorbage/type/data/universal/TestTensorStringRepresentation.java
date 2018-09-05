@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.type.data.universal;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -848,6 +847,7 @@ public class TestTensorStringRepresentation {
 	@Test
 	public void test2d1x2() {
 		TensorStringRepresentation a = new TensorStringRepresentation("[[1,2]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, a.dimensions());
 		assertEquals(BigDecimal.valueOf(1), a.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).i());
@@ -867,6 +867,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation b = new TensorStringRepresentation("[[{1},{2}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, b.dimensions());
 		assertEquals(BigDecimal.valueOf(1), b.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).i());
@@ -886,6 +887,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation c = new TensorStringRepresentation("[[{1,2},{3,4}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, c.dimensions());
 		assertEquals(BigDecimal.valueOf(1), c.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), c.firstMatrixValues().get(0).i());
@@ -905,6 +907,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation d = new TensorStringRepresentation("[[{1,2,3},{4,5,6}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, d.dimensions());
 		assertEquals(BigDecimal.valueOf(1), d.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), d.firstMatrixValues().get(0).i());
@@ -924,6 +927,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation e = new TensorStringRepresentation("[[{1,2,3,4},{5,6,7,8}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, e.dimensions());
 		assertEquals(BigDecimal.valueOf(1), e.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), e.firstMatrixValues().get(0).i());
@@ -943,6 +947,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation f = new TensorStringRepresentation("[[{1,2,3,4,5},{6,7,8,9,10}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, f.dimensions());
 		assertEquals(BigDecimal.valueOf(1), f.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), f.firstMatrixValues().get(0).i());
@@ -962,6 +967,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation g = new TensorStringRepresentation("[[{1,2,3,4,5,6},{7,8,9,10,11,12}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, g.dimensions());
 		assertEquals(BigDecimal.valueOf(1), g.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), g.firstMatrixValues().get(0).i());
@@ -981,6 +987,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation h = new TensorStringRepresentation("[[{1,2,3,4,5,6,7},{8,9,10,11,12,13,14}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, h.dimensions());
 		assertEquals(BigDecimal.valueOf(1), h.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), h.firstMatrixValues().get(0).i());
@@ -1000,6 +1007,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.ZERO, h.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation i = new TensorStringRepresentation("[[{1,2,3,4,5,6,7,8},{9,10,11,12,13,14,15,16}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, i.dimensions());
 		assertEquals(BigDecimal.valueOf(1), i.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), i.firstMatrixValues().get(0).i());
@@ -1019,6 +1027,7 @@ public class TestTensorStringRepresentation {
 		assertEquals(BigDecimal.valueOf(16), i.firstMatrixValues().get(1).k0());
 
 		TensorStringRepresentation j = new TensorStringRepresentation("[[{1,2,3,4,5,6,7,8,9},{10,11,12,13,14,15,16,17,18}]]");
+		// TODO: Backwards for now. Must fix.
 		//assertArrayEquals(new long[] {1,2}, j.dimensions());
 		assertEquals(BigDecimal.valueOf(1), j.firstMatrixValues().get(0).r());
 		assertEquals(BigDecimal.valueOf(2), j.firstMatrixValues().get(0).i());
@@ -1041,16 +1050,284 @@ public class TestTensorStringRepresentation {
 	@Test
 	public void test2d1x3() {
 		TensorStringRepresentation a = new TensorStringRepresentation("[[1,2,3]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, a.dimensions());
+		assertEquals(BigDecimal.valueOf(1), a.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(2), a.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(3), a.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, a.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation b = new TensorStringRepresentation("[[{1},{2},{3}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, b.dimensions());
+		assertEquals(BigDecimal.valueOf(1), b.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(2), b.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(3), b.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, b.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation c = new TensorStringRepresentation("[[{1,2},{3,4},{5,6}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, c.dimensions());
+		assertEquals(BigDecimal.valueOf(1), c.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), c.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(3), c.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(4), c.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(5), c.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(6), c.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, c.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation d = new TensorStringRepresentation("[[{1,2,3},{4,5,6},{7,8,9}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, d.dimensions());
+		assertEquals(BigDecimal.valueOf(1), d.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), d.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), d.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(4), d.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(5), d.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(6), d.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(7), d.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(8), d.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(9), d.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, d.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation e = new TensorStringRepresentation("[[{1,2,3,4},{5,6,7,8},{9,10,11,12}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, e.dimensions());
+		assertEquals(BigDecimal.valueOf(1), e.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), e.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), e.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.valueOf(4), e.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(5), e.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(6), e.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(7), e.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.valueOf(8), e.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(9), e.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(10), e.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(11), e.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.valueOf(12), e.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, e.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation f = new TensorStringRepresentation("[[{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, f.dimensions());
+		assertEquals(BigDecimal.valueOf(1), f.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), f.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), f.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.valueOf(4), f.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.valueOf(5), f.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(6), f.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(7), f.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(8), f.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.valueOf(9), f.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.valueOf(10), f.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(11), f.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(12), f.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(13), f.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.valueOf(14), f.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.valueOf(15), f.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, f.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation g = new TensorStringRepresentation("[[{1,2,3,4,5,6},{7,8,9,10,11,12},{13,14,15,16,17,18}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, g.dimensions());
+		assertEquals(BigDecimal.valueOf(1), g.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), g.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), g.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.valueOf(4), g.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.valueOf(5), g.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.valueOf(6), g.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(7), g.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(8), g.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(9), g.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.valueOf(10), g.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.valueOf(11), g.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.valueOf(12), g.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(13), g.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(14), g.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(15), g.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.valueOf(16), g.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.valueOf(17), g.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.valueOf(18), g.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, g.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation h = new TensorStringRepresentation("[[{1,2,3,4,5,6,7},{8,9,10,11,12,13,14},{15,16,17,18,19,20,21}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, h.dimensions());
+		assertEquals(BigDecimal.valueOf(1), h.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), h.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), h.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.valueOf(4), h.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.valueOf(5), h.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.valueOf(6), h.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.valueOf(7), h.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.ZERO, h.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(8), h.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(9), h.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(10), h.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.valueOf(11), h.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.valueOf(12), h.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.valueOf(13), h.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.valueOf(14), h.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.ZERO, h.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(15), h.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(16), h.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(17), h.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.valueOf(18), h.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.valueOf(19), h.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.valueOf(20), h.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.valueOf(21), h.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.ZERO, h.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation i = new TensorStringRepresentation("[[{1,2,3,4,5,6,7,8},{9,10,11,12,13,14,15,16},{17,18,19,20,21,22,23,24}]]");
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, i.dimensions());
+		assertEquals(BigDecimal.valueOf(1), i.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), i.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), i.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.valueOf(4), i.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.valueOf(5), i.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.valueOf(6), i.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.valueOf(7), i.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.valueOf(8), i.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(9), i.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(10), i.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(11), i.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.valueOf(12), i.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.valueOf(13), i.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.valueOf(14), i.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.valueOf(15), i.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.valueOf(16), i.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(17), i.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(18), i.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(19), i.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.valueOf(20), i.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.valueOf(21), i.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.valueOf(22), i.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.valueOf(23), i.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.valueOf(24), i.firstMatrixValues().get(2).k0());
+
 		TensorStringRepresentation j = new TensorStringRepresentation("[[{1,2,3,4,5,6,7,8,9},{10,11,12,13,14,15,16,17,18},{19,20,21,22,23,24,25,26,27}]]");
-		assertTrue(true);
+		// TODO: Backwards for now. Must fix.
+		//assertArrayEquals(new long[] {1,3}, j.dimensions());
+		assertEquals(BigDecimal.valueOf(1), j.firstMatrixValues().get(0).r());
+		assertEquals(BigDecimal.valueOf(2), j.firstMatrixValues().get(0).i());
+		assertEquals(BigDecimal.valueOf(3), j.firstMatrixValues().get(0).j());
+		assertEquals(BigDecimal.valueOf(4), j.firstMatrixValues().get(0).k());
+		assertEquals(BigDecimal.valueOf(5), j.firstMatrixValues().get(0).l());
+		assertEquals(BigDecimal.valueOf(6), j.firstMatrixValues().get(0).i0());
+		assertEquals(BigDecimal.valueOf(7), j.firstMatrixValues().get(0).j0());
+		assertEquals(BigDecimal.valueOf(8), j.firstMatrixValues().get(0).k0());
+		assertEquals(BigDecimal.valueOf(10), j.firstMatrixValues().get(1).r());
+		assertEquals(BigDecimal.valueOf(11), j.firstMatrixValues().get(1).i());
+		assertEquals(BigDecimal.valueOf(12), j.firstMatrixValues().get(1).j());
+		assertEquals(BigDecimal.valueOf(13), j.firstMatrixValues().get(1).k());
+		assertEquals(BigDecimal.valueOf(14), j.firstMatrixValues().get(1).l());
+		assertEquals(BigDecimal.valueOf(15), j.firstMatrixValues().get(1).i0());
+		assertEquals(BigDecimal.valueOf(16), j.firstMatrixValues().get(1).j0());
+		assertEquals(BigDecimal.valueOf(17), j.firstMatrixValues().get(1).k0());
+		assertEquals(BigDecimal.valueOf(19), j.firstMatrixValues().get(2).r());
+		assertEquals(BigDecimal.valueOf(20), j.firstMatrixValues().get(2).i());
+		assertEquals(BigDecimal.valueOf(21), j.firstMatrixValues().get(2).j());
+		assertEquals(BigDecimal.valueOf(22), j.firstMatrixValues().get(2).k());
+		assertEquals(BigDecimal.valueOf(23), j.firstMatrixValues().get(2).l());
+		assertEquals(BigDecimal.valueOf(24), j.firstMatrixValues().get(2).i0());
+		assertEquals(BigDecimal.valueOf(25), j.firstMatrixValues().get(2).j0());
+		assertEquals(BigDecimal.valueOf(26), j.firstMatrixValues().get(2).k0());
 	}
 
 	@Test
