@@ -24,14 +24,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage.linear;
+package nom.bdezonia.zorbage.type.storage;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.LinearAccessor;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
 
 /**
@@ -39,28 +41,58 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
  * @author Barry DeZonia
  *
  */
-public class TestLinearAccessor {
+public class TestConversion {
 
+	// Scale a collection of Int32s by a floating point number
+	
+	// Made before universal conversion facilities in place
+	
 	@Test
-	public void testAccessor() {
-		SignedInt32Member value = new SignedInt32Member();
-		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(10, new SignedInt32Member());
-		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
+	public void test() {
 		// build the initial test data
-		int i = 0;
-		while (accessor.hasNext()) {
-			accessor.fwd();
-			accessor.get();
-			value.setV(i++);
-			accessor.put();
+		IndexedDataSource<?,SignedInt32Member> storage = ArrayStorage.allocateInts(
+				new int[] {0,1,2,3,4,5,6,7,8,9});
+		// scale it by 6.3
+		Float64Member scale = new Float64Member(6.3);
+		Float64Member tmp = new Float64Member();
+		SignedInt32Member value = new SignedInt32Member();
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i,  value);
+			tmp.setV(value.v());
+			G.DBL.multiply().call(tmp, scale, tmp);
+			value.setV((int)Math.round(tmp.v()));
+			storage.set(i, value);
 		}
-		// visit the data in reverse order
-		accessor.afterLast();
-		while (accessor.hasPrev()) {
-			accessor.back();
-			accessor.get();
-			assertEquals(value.v(), accessor.pos());
-		}
-	}
+		
+		storage.get(0, value);
+		assertEquals(0, value.v());
 
+		storage.get(1, value);
+		assertEquals(6, value.v());
+		
+		storage.get(2, value);
+		assertEquals(13, value.v());
+		
+		storage.get(3, value);
+		assertEquals(19, value.v());
+		
+		storage.get(4, value);
+		assertEquals(25, value.v());
+		
+		storage.get(5, value);
+		assertEquals(32, value.v());
+		
+		storage.get(6, value);
+		assertEquals(38, value.v());
+		
+		storage.get(7, value);
+		assertEquals(44, value.v());
+		
+		storage.get(8, value);
+		assertEquals(50, value.v());
+		
+		storage.get(9, value);
+		assertEquals(57, value.v());
+				
+	}
 }
