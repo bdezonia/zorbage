@@ -45,6 +45,7 @@ public interface MatrixRing<T extends RingWithUnity<T,U>, U,
     NaN<U>,
     Conjugate<U>,
     Invertible<U>,
-    MatrixOps<U,W>
+    MatrixOps<U,W>,
+    Scale<U,W>
 {
 }

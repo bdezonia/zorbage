@@ -414,4 +414,26 @@ public class Float64Matrix
 		return DP;
 	}
 
+	private final Procedure3<Float64Member, Float64MatrixMember, Float64MatrixMember> SCALE =
+			new Procedure3<Float64Member, Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64Member a, Float64MatrixMember b, Float64MatrixMember c) {
+			c.alloc(b.rows(), b.cols());
+			Float64Member val = G.DBL.construct();
+			for (long i = 0; i < b.rows(); i++) {
+				for (long j = 0; j < b.cols(); j++) {
+					b.v(i, j, val);
+					G.DBL.multiply().call(a, val, val);
+					c.setV(i, j, val);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<Float64Member, Float64MatrixMember, Float64MatrixMember> scale() {
+		return SCALE;
+	}
+
 }

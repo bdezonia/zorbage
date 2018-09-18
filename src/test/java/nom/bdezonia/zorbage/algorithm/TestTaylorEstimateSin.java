@@ -24,74 +24,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestConversion {
+public class TestTaylorEstimateSin {
 
-	// Scale a collection of Int32s by a floating point number
-	
-	// Made before universal conversion facilities in place
-	
 	@Test
 	public void test() {
-		// build the initial test data
-		IndexedDataSource<?,SignedInt32Member> storage = ArrayStorage.allocateInts(
-				new int[] {0,1,2,3,4,5,6,7,8,9});
-		// scale it by 6.3
-		Float64Member scale = new Float64Member(6.3);
-		Float64Member tmp = new Float64Member();
-		SignedInt32Member value = new SignedInt32Member();
-		for (int i = 0; i < storage.size(); i++) {
-			storage.get(i,  value);
-			tmp.setV(value.v());
-			G.DBL.multiply().call(tmp, scale, tmp);
-			value.setV((int)Math.round(tmp.v()));
-			storage.set(i, value);
-		}
-		
-		storage.get(0, value);
-		assertEquals(0, value.v());
-
-		storage.get(1, value);
-		assertEquals(6, value.v());
-		
-		storage.get(2, value);
-		assertEquals(13, value.v());
-		
-		storage.get(3, value);
-		assertEquals(19, value.v());
-		
-		storage.get(4, value);
-		assertEquals(25, value.v());
-		
-		storage.get(5, value);
-		assertEquals(32, value.v());
-		
-		storage.get(6, value);
-		assertEquals(38, value.v());
-		
-		storage.get(7, value);
-		assertEquals(44, value.v());
-		
-		storage.get(8, value);
-		assertEquals(50, value.v());
-		
-		storage.get(9, value);
-		assertEquals(57, value.v());
-				
+		Float64MatrixMember x = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
+		Float64MatrixMember result = G.DBL_MAT.construct();
+		TaylorEstimateSin.compute(8, G.DBL_MAT, G.DBL, x, result);
+		// TODO: check results
+		assertTrue(true);
 	}
 }
