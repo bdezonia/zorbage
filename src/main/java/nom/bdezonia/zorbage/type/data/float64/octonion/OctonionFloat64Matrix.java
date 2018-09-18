@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
+import nom.bdezonia.zorbage.algorithm.MatrixScale;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -429,4 +430,19 @@ public class OctonionFloat64Matrix
 	{
 		return DP;
 	}
+
+	private final Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SCALE =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			MatrixScale.compute(G.ODBL, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> scale() {
+		return SCALE;
+	}
+
 }

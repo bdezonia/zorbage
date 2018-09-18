@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
+import nom.bdezonia.zorbage.algorithm.MatrixScale;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -441,6 +442,21 @@ public class QuaternionFloat64Matrix
 	public Procedure3<QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember,QuaternionFloat64MatrixMember> directProduct()
 	{
 		return DP;
+	}
+
+
+	private final Procedure3<QuaternionFloat64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SCALE =
+			new Procedure3<QuaternionFloat64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64Member a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
+			MatrixScale.compute(G.QDBL, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<QuaternionFloat64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> scale() {
+		return SCALE;
 	}
 
 }

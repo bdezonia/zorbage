@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
+import nom.bdezonia.zorbage.algorithm.MatrixScale;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -427,6 +428,21 @@ public class ComplexFloat64Matrix
 	public Procedure3<ComplexFloat64MatrixMember,ComplexFloat64MatrixMember,ComplexFloat64MatrixMember> directProduct()
 	{
 		return DP;
+	}
+
+
+	private final Procedure3<ComplexFloat64Member, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SCALE =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+			MatrixScale.compute(G.CDBL, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat64Member, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> scale() {
+		return SCALE;
 	}
 
 }

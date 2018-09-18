@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
+import nom.bdezonia.zorbage.algorithm.MatrixScale;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -419,15 +420,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64Member a, Float64MatrixMember b, Float64MatrixMember c) {
-			c.alloc(b.rows(), b.cols());
-			Float64Member val = G.DBL.construct();
-			for (long i = 0; i < b.rows(); i++) {
-				for (long j = 0; j < b.cols(); j++) {
-					b.v(i, j, val);
-					G.DBL.multiply().call(a, val, val);
-					c.setV(i, j, val);
-				}
-			}
+			MatrixScale.compute(G.DBL, a, b, c);
 		}
 	};
 
