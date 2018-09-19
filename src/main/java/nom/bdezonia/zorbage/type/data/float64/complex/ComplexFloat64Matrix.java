@@ -49,6 +49,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -598,9 +599,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			// TODO
-			//TaylorEstimateExp.compute(8, G.CDBL_MAT, G.CDBL, a, b);
-			throw new UnsupportedOperationException("implment me");
+			TaylorEstimateExp.compute(8, G.CDBL_MAT, G.CDBL, a, b);
 		}
 	};
 
