@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -56,10 +58,13 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
+import nom.bdezonia.zorbage.type.algebra.Exponential;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -76,7 +81,10 @@ public class OctonionFloat64Matrix
 		Constructible2dLong<OctonionFloat64MatrixMember>,
 		Rounding<Float64Member, OctonionFloat64MatrixMember>,
 		Norm<OctonionFloat64MatrixMember,Float64Member>,
-		DirectProduct<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember>
+		DirectProduct<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember>,
+		Exponential<OctonionFloat64MatrixMember>,
+		Trigonometric<OctonionFloat64MatrixMember>,
+		Hyperbolic<OctonionFloat64MatrixMember>
 {
 	public OctonionFloat64Matrix() { }
 
@@ -443,6 +451,178 @@ public class OctonionFloat64Matrix
 	@Override
 	public Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> scale() {
 		return SCALE;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINH =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinh() {
+		return SINH;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> COSH =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> cosh() {
+		return COSH;
+	}
+
+	private final Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINHANDCOSH = 
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember s, OctonionFloat64MatrixMember c) {
+			sinh().call(a, s);
+			cosh().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinhAndCosh() {
+		return SINHANDCOSH;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> TANH =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember s = G.ODBL_MAT.construct();
+			OctonionFloat64MatrixMember c = G.ODBL_MAT.construct();
+			sinhAndCosh().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> tanh() {
+		return TANH;
+	}
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinch() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinchpi() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SIN =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			TaylorEstimateSin.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sin() {
+		return SIN;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> COS =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			TaylorEstimateCos.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> cos() {
+		return COS;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> TAN =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember s = G.ODBL_MAT.construct();
+			OctonionFloat64MatrixMember c = G.ODBL_MAT.construct();
+			sinAndCos().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> tan() {
+		return TAN;
+	}
+
+	private final Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINANDCOS =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember s, OctonionFloat64MatrixMember c) {
+			sin().call(a, s);
+			cos().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinAndCos() {
+		return SINANDCOS;
+	}
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinc() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sincpi() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> EXP =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			// TODO
+			//TaylorEstimateExp.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> exp() {
+		return EXP;
+	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> LOG =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			// TODO
+			//TaylorEstimateLog.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> log() {
+		return LOG;
 	}
 
 }

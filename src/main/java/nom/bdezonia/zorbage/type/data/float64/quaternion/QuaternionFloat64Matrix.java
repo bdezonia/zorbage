@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -56,10 +58,13 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
+import nom.bdezonia.zorbage.type.algebra.Exponential;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -76,7 +81,10 @@ public class QuaternionFloat64Matrix
 		Constructible2dLong<QuaternionFloat64MatrixMember>,
 		Rounding<Float64Member, QuaternionFloat64MatrixMember>,
 		Norm<QuaternionFloat64MatrixMember,Float64Member>,
-		DirectProduct<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>
+		DirectProduct<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>,
+		Exponential<QuaternionFloat64MatrixMember>,
+		Trigonometric<QuaternionFloat64MatrixMember>,
+		Hyperbolic<QuaternionFloat64MatrixMember>
 {
 	public QuaternionFloat64Matrix() { }
 
@@ -457,6 +465,178 @@ public class QuaternionFloat64Matrix
 	@Override
 	public Procedure3<QuaternionFloat64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> scale() {
 		return SCALE;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINH =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinh() {
+		return SINH;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> COSH =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> cosh() {
+		return COSH;
+	}
+
+	private final Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINHANDCOSH = 
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember s, QuaternionFloat64MatrixMember c) {
+			sinh().call(a, s);
+			cosh().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinhAndCosh() {
+		return SINHANDCOSH;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> TANH =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember s = G.QDBL_MAT.construct();
+			QuaternionFloat64MatrixMember c = G.QDBL_MAT.construct();
+			sinhAndCosh().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> tanh() {
+		return TANH;
+	}
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinch() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinchpi() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SIN =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			TaylorEstimateSin.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sin() {
+		return SIN;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> COS =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			TaylorEstimateCos.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> cos() {
+		return COS;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> TAN =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember s = G.QDBL_MAT.construct();
+			QuaternionFloat64MatrixMember c = G.QDBL_MAT.construct();
+			sinAndCos().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> tan() {
+		return TAN;
+	}
+
+	private final Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINANDCOS =
+			new Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember s, QuaternionFloat64MatrixMember c) {
+			sin().call(a, s);
+			cos().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinAndCos() {
+		return SINANDCOS;
+	}
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinc() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sincpi() {
+		throw new UnsupportedOperationException("implment me");
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> EXP =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			// TODO
+			//TaylorEstimateExp.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> exp() {
+		return EXP;
+	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> LOG =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			// TODO
+			//TaylorEstimateLog.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			throw new UnsupportedOperationException("implment me");
+		}
+	};
+
+	@Override
+	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> log() {
+		return LOG;
 	}
 
 }

@@ -31,7 +31,6 @@ import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
@@ -54,7 +53,7 @@ public class TaylorEstimateCos {
 	 * @param result
 	 */
 	
-	public static <T extends Group<T,U> & Unity<U> & PredSucc<U> & Multiplication<U> & Invertible<U>,
+	public static <T extends Group<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
 					V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W>,
 					W extends MatrixMember<U>>
@@ -83,9 +82,9 @@ public class TaylorEstimateCos {
 			else
 				matGroup.subtract().call(sum, term, sum);
 			matGroup.power().call(2*i, x, term); // a little wasteful
-			numGroup.succ().call(inc,inc);
+			numGroup.add().call(inc,one,inc);
 			numGroup.multiply().call(factorial, inc, factorial);
-			numGroup.succ().call(inc,inc);
+			numGroup.add().call(inc,one,inc);
 			numGroup.multiply().call(factorial, inc, factorial);
 		}
 		matGroup.assign().call(sum, result);
