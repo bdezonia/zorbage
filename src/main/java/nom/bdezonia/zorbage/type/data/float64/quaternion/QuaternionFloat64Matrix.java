@@ -49,6 +49,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
@@ -627,9 +628,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			// TODO
-			//TaylorEstimateLog.compute(8, G.QDBL_MAT, G.QDBL, a, b);
-			throw new UnsupportedOperationException("implment me");
+			TaylorEstimateLog.compute(8, G.QDBL_MAT, G.QDBL, a, b);
 		}
 	};
 

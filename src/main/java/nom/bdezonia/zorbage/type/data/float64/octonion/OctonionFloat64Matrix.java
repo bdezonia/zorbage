@@ -49,6 +49,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
@@ -613,9 +614,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			// TODO
-			//TaylorEstimateLog.compute(8, G.ODBL_MAT, G.ODBL, a, b);
-			throw new UnsupportedOperationException("implment me");
+			TaylorEstimateLog.compute(8, G.ODBL_MAT, G.ODBL, a, b);
 		}
 	};
 
