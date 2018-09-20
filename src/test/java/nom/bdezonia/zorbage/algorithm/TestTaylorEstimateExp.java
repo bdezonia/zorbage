@@ -63,7 +63,7 @@ public class TestTaylorEstimateExp {
 			result.v(0, 0, one);
 			result.v(0, 1, two);
 			result.v(1, 0, three);
-			result.v(1, 0, four);
+			result.v(1, 1, four);
 			System.out.println(one.v()+","+two.v()+","+three.v()+","+four.v());
 		}
 	}

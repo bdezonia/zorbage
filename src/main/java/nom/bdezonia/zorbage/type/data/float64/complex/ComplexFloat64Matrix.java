@@ -462,7 +462,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			TaylorEstimateSinh.compute(8, G.CDBL_MAT, G.CDBL, a, b);
+			TaylorEstimateSinh.compute(18, G.CDBL_MAT, G.CDBL, a, b);
 		}
 	};
 
@@ -476,7 +476,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			TaylorEstimateCosh.compute(8, G.CDBL_MAT, G.CDBL, a, b);
+			TaylorEstimateCosh.compute(18, G.CDBL_MAT, G.CDBL, a, b);
 		}
 	};
 
@@ -573,7 +573,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			TaylorEstimateSin.compute(8, G.CDBL_MAT, G.CDBL, a, b);
+			TaylorEstimateSin.compute(18, G.CDBL_MAT, G.CDBL, a, b);
 		}
 	};
 
@@ -587,7 +587,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			TaylorEstimateCos.compute(8, G.CDBL_MAT, G.CDBL, a, b);
+			TaylorEstimateCos.compute(18, G.CDBL_MAT, G.CDBL, a, b);
 		}
 	};
 

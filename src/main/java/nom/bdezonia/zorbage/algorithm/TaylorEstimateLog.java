@@ -62,6 +62,8 @@ public class TaylorEstimateLog {
 
 		// ln(x) = (x-1)/1 - (x-1)^2/2 + (x-1)^3/3 + ...
 		
+		// TODO: this algorithm dpes not seem to converge
+
 		W xMinusI = matGroup.construct(x);
 		W I = matGroup.construct();
 		I.alloc(x.rows(), x.cols());

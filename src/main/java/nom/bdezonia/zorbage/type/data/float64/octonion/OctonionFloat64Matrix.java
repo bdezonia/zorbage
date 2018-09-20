@@ -462,7 +462,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			TaylorEstimateSinh.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			TaylorEstimateSinh.compute(18, G.ODBL_MAT, G.ODBL, a, b);
 		}
 	};
 
@@ -476,7 +476,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			TaylorEstimateCosh.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			TaylorEstimateCosh.compute(18, G.ODBL_MAT, G.ODBL, a, b);
 		}
 	};
 
@@ -573,7 +573,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			TaylorEstimateSin.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			TaylorEstimateSin.compute(18, G.ODBL_MAT, G.ODBL, a, b);
 		}
 	};
 
@@ -587,7 +587,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			TaylorEstimateCos.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			TaylorEstimateCos.compute(18, G.ODBL_MAT, G.ODBL, a, b);
 		}
 	};
 

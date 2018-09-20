@@ -62,7 +62,7 @@ public class TaylorEstimateSinh {
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
 
-		// sin(x) = x + x^3/3! + x^5/5! + x^7/7! ...
+		// sinh(x) = x + x^3/3! + x^5/5! + x^7/7! ...
 		
 		W sum = matGroup.construct();
 		sum.alloc(x.rows(), x.cols());

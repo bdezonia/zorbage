@@ -476,7 +476,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			TaylorEstimateSinh.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			TaylorEstimateSinh.compute(18, G.QDBL_MAT, G.QDBL, a, b);
 		}
 	};
 
@@ -490,7 +490,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			TaylorEstimateCosh.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			TaylorEstimateCosh.compute(18, G.QDBL_MAT, G.QDBL, a, b);
 		}
 	};
 
@@ -587,7 +587,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			TaylorEstimateSin.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			TaylorEstimateSin.compute(18, G.QDBL_MAT, G.QDBL, a, b);
 		}
 	};
 
@@ -601,7 +601,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			TaylorEstimateCos.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			TaylorEstimateCos.compute(18, G.QDBL_MAT, G.QDBL, a, b);
 		}
 	};
 

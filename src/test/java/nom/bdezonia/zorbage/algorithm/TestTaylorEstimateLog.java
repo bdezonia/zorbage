@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -47,5 +48,23 @@ public class TestTaylorEstimateLog {
 		TaylorEstimateLog.compute(8, G.DBL_MAT, G.DBL, x, result);
 		// TODO: check results
 		assertTrue(true);
+	}
+	
+	//@Test
+	public void tmp() {
+		Float64MatrixMember x = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
+		Float64MatrixMember result = G.DBL_MAT.construct();
+		Float64Member one = G.DBL.construct();
+		Float64Member two = G.DBL.construct();
+		Float64Member three = G.DBL.construct();
+		Float64Member four = G.DBL.construct();
+		for (int i = 1; i <= 50; i++) {
+			TaylorEstimateLog.compute(i, G.DBL_MAT, G.DBL, x, result);
+			result.v(0, 0, one);
+			result.v(0, 1, two);
+			result.v(1, 0, three);
+			result.v(1, 1, four);
+			System.out.println(one.v()+","+two.v()+","+three.v()+","+four.v());
+		}
 	}
 }

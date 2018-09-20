@@ -446,7 +446,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			TaylorEstimateSinh.compute(8, G.DBL_MAT, G.DBL, a, b);
+			TaylorEstimateSinh.compute(18, G.DBL_MAT, G.DBL, a, b);
 		}
 	};
 
@@ -460,7 +460,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			TaylorEstimateCosh.compute(8, G.DBL_MAT, G.DBL, a, b);
+			TaylorEstimateCosh.compute(18, G.DBL_MAT, G.DBL, a, b);
 		}
 	};
 
@@ -557,7 +557,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			TaylorEstimateSin.compute(8, G.DBL_MAT, G.DBL, a, b);
+			TaylorEstimateSin.compute(18, G.DBL_MAT, G.DBL, a, b);
 		}
 	};
 
@@ -571,7 +571,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			TaylorEstimateCos.compute(8, G.DBL_MAT, G.DBL, a, b);
+			TaylorEstimateCos.compute(18, G.DBL_MAT, G.DBL, a, b);
 		}
 	};
 
