@@ -53,24 +53,29 @@ public class TaylorEstimateLog {
 	 */
 	public static <T extends Group<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
-					V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W>,
+					V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
 					W extends MatrixMember<U>>
 		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
 	{
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
 
-		// ln(x) = (x-1)/1 - (x-1)^2/2 + (x-1)^3/3 + ...
+		// ln(x) = 2 * [(x-1)/(x+1) + (1/3)(x-1)^3/(x+1)^3) + (1/5)(x-1)^5/(x+1)^5) + ...]
+		// x > 0
 		
-		// TODO: this algorithm dpes not seem to converge
-
-		W xMinusI = matGroup.construct(x);
-		W I = matGroup.construct();
-		I.alloc(x.rows(), x.cols());
-		W sum = matGroup.construct(I);
+		// TODO: this second formulation is not converging either
+		
+		W xMinusI = matGroup.construct();
+		W xPlusI = matGroup.construct();
+		W I = matGroup.construct(x);
 		matGroup.unity().call(I);
+		matGroup.add().call(x, I, xPlusI);
 		matGroup.subtract().call(x, I, xMinusI);
-		W term = matGroup.construct(xMinusI);
+		W sum = matGroup.construct(x);
+		matGroup.zero().call(sum);
+		W subTerm = matGroup.construct();
+		matGroup.divide().call(xMinusI, xPlusI, subTerm);
+		W term = matGroup.construct(subTerm);
 		U one = numGroup.construct();
 		numGroup.unity().call(one);
 		U inc = numGroup.construct(one);
@@ -78,13 +83,15 @@ public class TaylorEstimateLog {
 		for (int i = 0; i < numTerms; i++) {
 			numGroup.divide().call(one, inc, scale);
 			matGroup.scale().call(scale, term, term);
-			if ((i % 2) == 0)
-				matGroup.add().call(sum, term, sum);
-			else
-				matGroup.subtract().call(sum, term, sum);
-			matGroup.power().call(i+2, xMinusI, term); // a little wasteful
+			matGroup.add().call(sum, term, sum);
+			matGroup.power().call(2*i+3, subTerm, term); // a little wasteful
+			numGroup.add().call(inc, one, inc);
 			numGroup.add().call(inc, one, inc);
 		}
+		U two = numGroup.construct();
+		numGroup.unity().call(two);
+		numGroup.add().call(two, two, two);
+		matGroup.scale().call(two, sum, sum);
 		matGroup.assign().call(sum, result);
 	}
 }
