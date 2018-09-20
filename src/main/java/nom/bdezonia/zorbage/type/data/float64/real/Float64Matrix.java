@@ -501,14 +501,55 @@ public class Float64Matrix
 		return TANH;
 	}
 
+	private final Procedure2<Float64MatrixMember, Float64MatrixMember> SINCH =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			Float64MatrixMember zero = new Float64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			Float64MatrixMember sinha = G.DBL_MAT.construct();
+			sinh().call(a, sinha);
+			divide().call(sinha, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<Float64MatrixMember, Float64MatrixMember> sinch() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCH;
 	}
+
+	private final Procedure2<Float64MatrixMember, Float64MatrixMember> SINCHPI =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			Float64MatrixMember zero = new Float64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			Float64Member pi = G.DBL.construct();
+			G.DBL.PI().call(pi);
+			Float64MatrixMember sinha = G.DBL_MAT.construct();
+			sinh().call(a, sinha);
+			scale().call(pi, sinha, sinha);
+			Float64MatrixMember pi_a = G.DBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sinha, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<Float64MatrixMember, Float64MatrixMember> sinchpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCHPI;
 	}
 
 	private final Procedure2<Float64MatrixMember, Float64MatrixMember> SIN =
@@ -571,14 +612,55 @@ public class Float64Matrix
 		return SINANDCOS;
 	}
 
+	private final Procedure2<Float64MatrixMember, Float64MatrixMember> SINC =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			Float64MatrixMember zero = new Float64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			Float64MatrixMember sina = G.DBL_MAT.construct();
+			sin().call(a, sina);
+			divide().call(sina, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<Float64MatrixMember, Float64MatrixMember> sinc() {
-		throw new UnsupportedOperationException("implment me");
+		return SINC;
 	}
+
+	private final Procedure2<Float64MatrixMember, Float64MatrixMember> SINCPI =
+			new Procedure2<Float64MatrixMember, Float64MatrixMember>()
+	{
+		@Override
+		public void call(Float64MatrixMember a, Float64MatrixMember b) {
+			Float64MatrixMember zero = new Float64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			Float64Member pi = G.DBL.construct();
+			G.DBL.PI().call(pi);
+			Float64MatrixMember sina = G.DBL_MAT.construct();
+			sin().call(a, sina);
+			scale().call(pi, sina, sina);
+			Float64MatrixMember pi_a = G.DBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sina, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<Float64MatrixMember, Float64MatrixMember> sincpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCPI;
 	}
 
 	private final Procedure2<Float64MatrixMember, Float64MatrixMember> EXP =

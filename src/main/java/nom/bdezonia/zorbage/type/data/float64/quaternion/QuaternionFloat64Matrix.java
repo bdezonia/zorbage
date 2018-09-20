@@ -531,14 +531,55 @@ public class QuaternionFloat64Matrix
 		return TANH;
 	}
 
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINCH =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			QuaternionFloat64MatrixMember sinha = G.QDBL_MAT.construct();
+			sinh().call(a, sinha);
+			divide().call(sinha, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinch() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCH;
 	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINCHPI =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			QuaternionFloat64Member pi = G.QDBL.construct();
+			G.QDBL.PI().call(pi);
+			QuaternionFloat64MatrixMember sinha = G.QDBL_MAT.construct();
+			sinh().call(a, sinha);
+			scale().call(pi, sinha, sinha);
+			QuaternionFloat64MatrixMember pi_a = G.QDBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sinha, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinchpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCHPI;
 	}
 
 	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SIN =
@@ -601,14 +642,55 @@ public class QuaternionFloat64Matrix
 		return SINANDCOS;
 	}
 
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINC =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			QuaternionFloat64MatrixMember sina = G.QDBL_MAT.construct();
+			sin().call(a, sina);
+			divide().call(sina, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sinc() {
-		throw new UnsupportedOperationException("implment me");
+		return SINC;
 	}
+
+	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SINCPI =
+			new Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			QuaternionFloat64Member pi = G.QDBL.construct();
+			G.QDBL.PI().call(pi);
+			QuaternionFloat64MatrixMember sina = G.QDBL_MAT.construct();
+			sin().call(a, sina);
+			scale().call(pi, sina, sina);
+			QuaternionFloat64MatrixMember pi_a = G.QDBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sina, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> sincpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCPI;
 	}
 
 	private final Procedure2<QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> EXP =

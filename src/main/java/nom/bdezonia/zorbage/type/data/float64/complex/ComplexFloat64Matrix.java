@@ -517,14 +517,55 @@ public class ComplexFloat64Matrix
 		return TANH;
 	}
 
+	private final Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SINCH =
+			new Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat64MatrixMember sinha = G.CDBL_MAT.construct();
+			sinh().call(a, sinha);
+			divide().call(sinha, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> sinch() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCH;
 	}
+
+	private final Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SINCHPI =
+			new Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat64Member pi = G.CDBL.construct();
+			G.CDBL.PI().call(pi);
+			ComplexFloat64MatrixMember sinha = G.CDBL_MAT.construct();
+			sinh().call(a, sinha);
+			scale().call(pi, sinha, sinha);
+			ComplexFloat64MatrixMember pi_a = G.CDBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sinha, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> sinchpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCHPI;
 	}
 
 	private final Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SIN =
@@ -587,14 +628,55 @@ public class ComplexFloat64Matrix
 		return SINANDCOS;
 	}
 
+	private final Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SINC =
+			new Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat64MatrixMember sina = G.CDBL_MAT.construct();
+			sin().call(a, sina);
+			divide().call(sina, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> sinc() {
-		throw new UnsupportedOperationException("implment me");
+		return SINC;
 	}
+
+	private final Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SINCPI =
+			new Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat64Member pi = G.CDBL.construct();
+			G.CDBL.PI().call(pi);
+			ComplexFloat64MatrixMember sina = G.CDBL_MAT.construct();
+			sin().call(a, sina);
+			scale().call(pi, sina, sina);
+			ComplexFloat64MatrixMember pi_a = G.CDBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sina, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> sincpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCPI;
 	}
 
 	private final Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> EXP =

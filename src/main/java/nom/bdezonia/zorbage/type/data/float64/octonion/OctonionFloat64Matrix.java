@@ -517,14 +517,55 @@ public class OctonionFloat64Matrix
 		return TANH;
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINCH =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember zero = new OctonionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			OctonionFloat64MatrixMember sinha = G.ODBL_MAT.construct();
+			sinh().call(a, sinha);
+			divide().call(sinha, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinch() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCH;
 	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINCHPI =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember zero = new OctonionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			OctonionFloat64Member pi = G.ODBL.construct();
+			G.ODBL.PI().call(pi);
+			OctonionFloat64MatrixMember sinha = G.ODBL_MAT.construct();
+			sinh().call(a, sinha);
+			scale().call(pi, sinha, sinha);
+			OctonionFloat64MatrixMember pi_a = G.ODBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sinha, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinchpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCHPI;
 	}
 
 	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SIN =
@@ -587,14 +628,55 @@ public class OctonionFloat64Matrix
 		return SINANDCOS;
 	}
 
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINC =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember zero = new OctonionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			OctonionFloat64MatrixMember sina = G.ODBL_MAT.construct();
+			sin().call(a, sina);
+			divide().call(sina, a, b);
+		}
+	};
+
 	@Override
 	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sinc() {
-		throw new UnsupportedOperationException("implment me");
+		return SINC;
 	}
+
+	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SINCPI =
+			new Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64MatrixMember zero = new OctonionFloat64MatrixMember(a);
+			zero().call(zero);
+			if (isEqual().call(a, zero)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			OctonionFloat64Member pi = G.ODBL.construct();
+			G.ODBL.PI().call(pi);
+			OctonionFloat64MatrixMember sina = G.ODBL_MAT.construct();
+			sin().call(a, sina);
+			scale().call(pi, sina, sina);
+			OctonionFloat64MatrixMember pi_a = G.ODBL_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sina, pi_a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> sincpi() {
-		throw new UnsupportedOperationException("implment me");
+		return SINCPI;
 	}
 
 	private final Procedure2<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> EXP =
