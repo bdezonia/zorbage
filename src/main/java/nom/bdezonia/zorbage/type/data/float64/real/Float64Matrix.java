@@ -584,7 +584,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			TaylorEstimateExp.compute(8, G.DBL_MAT, G.DBL, a, b);
+			TaylorEstimateExp.compute(35, G.DBL_MAT, G.DBL, a, b);
 		}
 	};
 

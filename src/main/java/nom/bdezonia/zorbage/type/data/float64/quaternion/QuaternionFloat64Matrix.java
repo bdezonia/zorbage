@@ -614,7 +614,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			TaylorEstimateExp.compute(8, G.QDBL_MAT, G.QDBL, a, b);
+			TaylorEstimateExp.compute(35, G.QDBL_MAT, G.QDBL, a, b);
 		}
 	};
 

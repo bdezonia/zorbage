@@ -600,7 +600,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			TaylorEstimateExp.compute(8, G.CDBL_MAT, G.CDBL, a, b);
+			TaylorEstimateExp.compute(35, G.CDBL_MAT, G.CDBL, a, b);
 		}
 	};
 

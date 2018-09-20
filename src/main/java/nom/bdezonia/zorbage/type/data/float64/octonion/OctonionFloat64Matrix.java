@@ -600,7 +600,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			TaylorEstimateExp.compute(8, G.ODBL_MAT, G.ODBL, a, b);
+			TaylorEstimateExp.compute(35, G.ODBL_MAT, G.ODBL, a, b);
 		}
 	};
 
