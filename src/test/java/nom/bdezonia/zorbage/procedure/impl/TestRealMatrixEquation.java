@@ -26,38 +26,30 @@
  */
 package nom.bdezonia.zorbage.procedure.impl;
 
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RealEquation implements Procedure<Float64Member>{
+public class TestRealMatrixEquation {
 
-	private final Tuple2<String, Procedure<Float64Member>> tuple;
-	
-	public RealEquation(String eqn) {
-		EquationParser<Float64Group, Float64Member> parser =
-				new EquationParser<Float64Group, Float64Member>();
-		tuple = parser.parse(G.DBL, eqn);
+	@Test
+	public void test1() {
+		
+		EquationParser<Float64Matrix,Float64MatrixMember> parser =
+				new EquationParser<Float64Matrix,Float64MatrixMember>();
+		Tuple2<String, Procedure<Float64MatrixMember>> result =
+				parser.parse(G.DBL_MAT, "[[1,2],[3,4]]");
+		System.out.println(result.a());
+		System.out.println(result.b());
 	}
-	
-	@Override
-	public void call(Float64Member result, Float64Member... inputs) {
-		if (error() == null)
-			tuple.b().call(result, inputs);
-		else
-			G.DBL.zero().call(result);
-	}
-	
-	public String error() {
-		return tuple.a();
-	}
-
 }

@@ -24,35 +24,19 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.parse;
+package nom.bdezonia.zorbage.procedure.impl;
 
-import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.procedure.impl.ConstantL;
-import nom.bdezonia.zorbage.procedure.impl.SinL;
-import nom.bdezonia.zorbage.procedure.impl.ZeroL;
-import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import org.junit.Test;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class EquationParser<T extends Group<T,U> & Trigonometric<U>,U> {
+public class TestRealNumberEquation {
 
-	public Tuple2<String,Procedure<U>> parse(T group, String string) {
-		Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);
+	@Test
+	public void test1() {
 		
-		tuple.setA("Unimplemented");
-		tuple.setB(new ZeroL<T,U>(group));
-		
-		//tuple.setA(null);
-		//tuple.setB(new SinL<T,U>(group, new ConstantL<T,U>(group,group.construct())));
-		
-		return tuple;
 	}
-	
-	
 }

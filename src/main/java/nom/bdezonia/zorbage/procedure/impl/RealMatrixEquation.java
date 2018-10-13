@@ -24,35 +24,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.parse;
+package nom.bdezonia.zorbage.procedure.impl;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.procedure.impl.ConstantL;
-import nom.bdezonia.zorbage.procedure.impl.SinL;
-import nom.bdezonia.zorbage.procedure.impl.ZeroL;
+import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class EquationParser<T extends Group<T,U> & Trigonometric<U>,U> {
+public class RealMatrixEquation implements Procedure<Float64MatrixMember>{
 
-	public Tuple2<String,Procedure<U>> parse(T group, String string) {
-		Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);
-		
-		tuple.setA("Unimplemented");
-		tuple.setB(new ZeroL<T,U>(group));
-		
-		//tuple.setA(null);
-		//tuple.setB(new SinL<T,U>(group, new ConstantL<T,U>(group,group.construct())));
-		
-		return tuple;
+	private final Tuple2<String, Procedure<Float64MatrixMember>> tuple;
+	
+	public RealMatrixEquation(String eqn) {
+		EquationParser<Float64Matrix, Float64MatrixMember> parser =
+				new EquationParser<Float64Matrix, Float64MatrixMember>();
+		tuple = parser.parse(G.DBL_MAT, eqn);
 	}
 	
+	@Override
+	public void call(Float64MatrixMember result, Float64MatrixMember... inputs) {
+		if (error() == null)
+			tuple.b().call(result, inputs);
+		else
+			G.DBL_MAT.zero().call(result);
+	}
 	
+	public String error() {
+		return tuple.a();
+	}
+
 }
