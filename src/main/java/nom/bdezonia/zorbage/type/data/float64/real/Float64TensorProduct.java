@@ -523,6 +523,9 @@ public class Float64TensorProduct
 				throw new IllegalArgumentException("negative powers not supported");
 			}
 			else if (power == 0) {
+				if (isZero().call(a)) {
+					throw new IllegalArgumentException("0^0 is not a number");
+				}
 				assign().call(a, b);
 				unity().call(b);
 			}

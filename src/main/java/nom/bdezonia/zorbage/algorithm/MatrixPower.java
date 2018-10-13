@@ -61,7 +61,9 @@ public class MatrixPower {
 			MatrixPower.compute(-power, numGroup, rmodGroup, matGroup, aInv, b);
 		}
 		else if (power == 0) {
-			// TODO if (isEqual(a, ZERO)) throw new IllegalArgumentException("0^0 is not a number");
+			if (matGroup.isZero().call(a)) {
+				throw new IllegalArgumentException("0^0 is not a number");
+			}
 			b.alloc(a.rows(), a.cols());
 			MatrixUnity.compute(numGroup, b);
 		}
