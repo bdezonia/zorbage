@@ -80,9 +80,7 @@ public class TaylorEstimateCosh {
 			numGroup.divide().call(one, factorial, scale);
 			matGroup.scale().call(scale, term, term2);
 			matGroup.add().call(sum, term2, sum);
-			matGroup.assign().call(term, term3);
-			matGroup.multiply().call(term3, x, term);
-			matGroup.assign().call(term, term3);
+			matGroup.multiply().call(term, x, term3);
 			matGroup.multiply().call(term3, x, term);
 			numGroup.add().call(inc,one,inc);
 			numGroup.multiply().call(factorial, inc, factorial);
