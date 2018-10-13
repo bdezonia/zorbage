@@ -661,4 +661,19 @@ public class UnsignedInt64Group
 		return POW;
 	}
 
+	private final Function1<Boolean, UnsignedInt64Member> ISZERO =
+			new Function1<Boolean, UnsignedInt64Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt64Member b) {
+			return b.v == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt64Member> isZero() {
+		return ISZERO;
+	}
+
+
 }

@@ -536,9 +536,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -559,9 +557,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -647,9 +643,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -670,9 +664,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64MatrixMember zero = new QuaternionFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -721,4 +713,24 @@ public class QuaternionFloat64Matrix
 		return LOG;
 	}
 
+	private final Function1<Boolean, QuaternionFloat64MatrixMember> ISZERO =
+			new Function1<Boolean, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64MatrixMember b) {
+			QuaternionFloat64Member value = G.QDBL.construct();
+			for (long r = 0; r < b.rows(); r++) {
+				for (long c = 0; c < b.cols(); c++) {
+					b.v(r, c, value);
+					if (!G.QDBL.isZero().call(value)) return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionFloat64MatrixMember> isZero() {
+		return ISZERO;
+	}
 }

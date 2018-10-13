@@ -1121,4 +1121,20 @@ public class OctonionFloat64Group
 	public Procedure2<OctonionFloat64Member,OctonionFloat64Member> cbrt() {
 		return CBRT;
 	}
+
+	private final Function1<Boolean, OctonionFloat64Member> ISZERO =
+			new Function1<Boolean, OctonionFloat64Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64Member b) {
+			return b.r() == 0 && b.i() == 0 && b.j() == 0 && b.k() == 0 && b.l() == 0 &&
+					b.i0() == 0 && b.j0() == 0 && b.k0() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, OctonionFloat64Member> isZero() {
+		return ISZERO;
+	}
+
 }

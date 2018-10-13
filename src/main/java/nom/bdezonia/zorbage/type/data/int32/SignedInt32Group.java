@@ -658,4 +658,18 @@ public class SignedInt32Group
 		return POW;
 	}
 
+	private final Function1<Boolean, SignedInt32Member> ISZERO =
+			new Function1<Boolean, SignedInt32Member>()
+	{
+		@Override
+		public Boolean call(SignedInt32Member b) {
+			return b.v() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt32Member> isZero() {
+		return ISZERO;
+	}
+
 }

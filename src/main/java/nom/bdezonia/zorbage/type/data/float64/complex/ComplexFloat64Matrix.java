@@ -522,9 +522,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -545,9 +543,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -633,9 +629,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -656,9 +650,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember zero = new ComplexFloat64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -707,4 +699,24 @@ public class ComplexFloat64Matrix
 		return LOG;
 	}
 
+	private final Function1<Boolean, ComplexFloat64MatrixMember> ISZERO =
+			new Function1<Boolean, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64MatrixMember b) {
+			ComplexFloat64Member value = G.CDBL.construct();
+			for (long r = 0; r < b.rows(); r++) {
+				for (long c = 0; c < b.cols(); c++) {
+					b.v(r, c, value);
+					if (!G.CDBL.isZero().call(value)) return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat64MatrixMember> isZero() {
+		return ISZERO;
+	}
 }

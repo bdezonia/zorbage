@@ -659,4 +659,18 @@ public class SignedInt8Group
 		return POW;
 	}
 
+	private final Function1<Boolean, SignedInt8Member> ISZERO =
+			new Function1<Boolean, SignedInt8Member>()
+	{
+		@Override
+		public Boolean call(SignedInt8Member b) {
+			return b.v() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt8Member> isZero() {
+		return ISZERO;
+	}
+
 }

@@ -783,6 +783,20 @@ public class UnsignedInt128Group
 		return MINBOUND;
 	}
 
+	private final Function1<Boolean, UnsignedInt128Member> ISZERO =
+			new Function1<Boolean, UnsignedInt128Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt128Member b) {
+			return b.lo == 0 && b.hi == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt128Member> isZero() {
+		return ISZERO;
+	}
+
 	private void shiftLeftOneBit(UnsignedInt128Member val) {
 		boolean transitionBit = (val.lo & 0x8000000000000000L) != 0;
 		val.lo = val.lo << 1;

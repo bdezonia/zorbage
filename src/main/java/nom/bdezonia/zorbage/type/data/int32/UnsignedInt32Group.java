@@ -656,4 +656,18 @@ public class UnsignedInt32Group
 		return POW;
 	}
 
+	private final Function1<Boolean, UnsignedInt32Member> ISZERO =
+			new Function1<Boolean, UnsignedInt32Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt32Member b) {
+			return b.v == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt32Member> isZero() {
+		return ISZERO;
+	}
+
 }

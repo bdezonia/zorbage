@@ -435,5 +435,23 @@ public class OctonionFloat64RModule
 		return ROUND;
 	}
 
+	private final Function1<Boolean, OctonionFloat64RModuleMember> ISZERO =
+			new Function1<Boolean, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat64RModuleMember b) {
+			OctonionFloat64Member value = G.ODBL.construct();
+			for (long i = 0; i < b.length(); i++) {
+				b.v(i, value);
+				if (!G.ODBL.isZero().call(value)) return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, OctonionFloat64RModuleMember> isZero() {
+		return ISZERO;
+	}
 
 }

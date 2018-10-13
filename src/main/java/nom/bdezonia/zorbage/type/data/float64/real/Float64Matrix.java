@@ -506,9 +506,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			Float64MatrixMember zero = new Float64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -529,9 +527,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			Float64MatrixMember zero = new Float64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -617,9 +613,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			Float64MatrixMember zero = new Float64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -640,9 +634,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			Float64MatrixMember zero = new Float64MatrixMember(a);
-			zero().call(zero);
-			if (isEqual().call(a, zero)) {
+			if (isZero().call(a)) {
 				b.alloc(a.rows(), a.cols());
 				unity().call(b);
 				return;
@@ -691,4 +683,24 @@ public class Float64Matrix
 		return LOG;
 	}
 
+	private final Function1<Boolean, Float64MatrixMember> ISZERO =
+			new Function1<Boolean, Float64MatrixMember>()
+	{
+		@Override
+		public Boolean call(Float64MatrixMember b) {
+			Float64Member value = G.DBL.construct();
+			for (long r = 0; r < b.rows(); r++) {
+				for (long c = 0; c < b.cols(); c++) {
+					b.v(r, c, value);
+					if (!G.DBL.isZero().call(value)) return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64MatrixMember> isZero() {
+		return ISZERO;
+	}
 }

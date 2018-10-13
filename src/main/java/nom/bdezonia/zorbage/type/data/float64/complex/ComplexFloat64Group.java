@@ -1253,4 +1253,19 @@ public class ComplexFloat64Group
 	public Procedure2<ComplexFloat64Member,ComplexFloat64Member> sincpi() {
 		return SINCPI;
 	}
+
+	private final Function1<Boolean, ComplexFloat64Member> ISZERO =
+			new Function1<Boolean, ComplexFloat64Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64Member b) {
+			return b.r() == 0 && b.i() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat64Member> isZero() {
+		return ISZERO;
+	}
+
 }

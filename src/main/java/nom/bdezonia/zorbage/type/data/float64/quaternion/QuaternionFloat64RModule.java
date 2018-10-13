@@ -440,4 +440,24 @@ public class QuaternionFloat64RModule
 	public Procedure4<Mode, Float64Member, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> round() {
 		return ROUND;
 	}
+
+	private final Function1<Boolean, QuaternionFloat64RModuleMember> ISZERO =
+			new Function1<Boolean, QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64RModuleMember b) {
+			QuaternionFloat64Member value = G.QDBL.construct();
+			for (long i = 0; i < b.length(); i++) {
+				b.v(i, value);
+				if (!G.QDBL.isZero().call(value)) return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionFloat64RModuleMember> isZero() {
+		return ISZERO;
+	}
+
 }

@@ -645,4 +645,19 @@ public class UnsignedInt8Group
 		return POW;
 	}
 
+	private final Function1<Boolean, UnsignedInt8Member> ISZERO =
+			new Function1<Boolean, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member b) {
+			return b.v == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt8Member> isZero() {
+		return ISZERO;
+	}
+
+
 }

@@ -662,4 +662,18 @@ public class SignedInt16Group
 		return POW;
 	}
 
+	private final Function1<Boolean, SignedInt16Member> ISZERO =
+			new Function1<Boolean, SignedInt16Member>()
+	{
+		@Override
+		public Boolean call(SignedInt16Member b) {
+			return b.v() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt16Member> isZero() {
+		return ISZERO;
+	}
+
 }

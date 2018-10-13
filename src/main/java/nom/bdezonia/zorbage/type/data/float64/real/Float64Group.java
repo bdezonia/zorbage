@@ -1414,6 +1414,21 @@ public class Float64Group
 		return ASSIGN;
 	}
 
+	private final Function1<Boolean, Float64Member> ISZERO =
+			new Function1<Boolean, Float64Member>()
+	{
+		@Override
+		public Boolean call(Float64Member b) {
+			return b.v() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64Member> isZero() {
+		return ISZERO;
+	}
+
+
 	/*
 	Boost Software License - Version 1.0 - August 17th, 2003
 

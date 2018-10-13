@@ -430,4 +430,22 @@ public class ComplexFloat64Vector
 		return ROUND;
 	}
 
+	private final Function1<Boolean, ComplexFloat64VectorMember> ISZERO =
+			new Function1<Boolean, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64VectorMember b) {
+			ComplexFloat64Member value = G.CDBL.construct();
+			for (long i = 0; i < b.length(); i++) {
+				b.v(i, value);
+				if (!G.CDBL.isZero().call(value)) return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat64VectorMember> isZero() {
+		return ISZERO;
+	}
 }

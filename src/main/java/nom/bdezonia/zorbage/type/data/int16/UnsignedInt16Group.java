@@ -646,4 +646,18 @@ public class UnsignedInt16Group
 		return POW;
 	}
 
+	private final Function1<Boolean, UnsignedInt16Member> ISZERO =
+			new Function1<Boolean, UnsignedInt16Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt16Member b) {
+			return b.v == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt16Member> isZero() {
+		return ISZERO;
+	}
+
 }

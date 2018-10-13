@@ -671,4 +671,18 @@ public class SignedInt64Group
 		return POW;
 	}
 
+	private final Function1<Boolean, SignedInt64Member> ISZERO =
+			new Function1<Boolean, SignedInt64Member>()
+	{
+		@Override
+		public Boolean call(SignedInt64Member b) {
+			return b.v() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt64Member> isZero() {
+		return ISZERO;
+	}
+
 }

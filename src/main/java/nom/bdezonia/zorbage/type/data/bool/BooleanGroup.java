@@ -63,8 +63,7 @@ public class BooleanGroup
     Power<BooleanMember>
 {
 	
-	public BooleanGroup() {
-	}
+	public BooleanGroup() { }
 
 	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> AND =
 			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
@@ -502,6 +501,20 @@ public class BooleanGroup
 	@Override
 	public Procedure3<BooleanMember, BooleanMember, BooleanMember> pow() {
 		return POW;
+	}
+	
+	private final Function1<Boolean, BooleanMember> ISZERO =
+			new Function1<Boolean, BooleanMember>()
+	{
+		@Override
+		public Boolean call(BooleanMember b) {
+			return b.v() == false;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, BooleanMember> isZero() {
+		return ISZERO;
 	}
 
 }

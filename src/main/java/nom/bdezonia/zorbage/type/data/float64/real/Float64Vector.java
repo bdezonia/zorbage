@@ -418,4 +418,23 @@ public class Float64Vector
 	public Procedure4<Mode, Float64Member, Float64VectorMember, Float64VectorMember> round() {
 		return ROUND;
 	}
+
+	private final Function1<Boolean, Float64VectorMember> ISZERO =
+			new Function1<Boolean, Float64VectorMember>()
+	{
+		@Override
+		public Boolean call(Float64VectorMember b) {
+			Float64Member value = G.DBL.construct();
+			for (long i = 0; i < b.length(); i++) {
+				b.v(i, value);
+				if (!G.DBL.isZero().call(value)) return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64VectorMember> isZero() {
+		return ISZERO;
+	}
 }

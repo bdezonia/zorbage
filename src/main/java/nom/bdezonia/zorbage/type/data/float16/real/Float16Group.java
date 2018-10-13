@@ -1376,4 +1376,18 @@ public class Float16Group
 	public Procedure2<Float16Member,Float16Member> sincpi() {
 		return SINCPI;
 	}
+
+	private final Function1<Boolean, Float16Member> ISZERO =
+			new Function1<Boolean, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member b) {
+			return b.v() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float16Member> isZero() {
+		return ISZERO;
+	}
 }

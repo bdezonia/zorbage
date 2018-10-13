@@ -664,4 +664,24 @@ public class Float64TensorProduct
 	public Procedure4<Mode, Float64Member, Float64TensorProductMember, Float64TensorProductMember> round() {
 		return ROUND;
 	}
+
+	private final Function1<Boolean, Float64TensorProductMember> ISZERO =
+			new Function1<Boolean, Float64TensorProductMember>()
+	{
+		@Override
+		public Boolean call(Float64TensorProductMember b) {
+			Float64Member value = G.DBL.construct();
+			for (long i = 0; i < b.numElems(); i++) {
+				b.v(i, value);
+				if (!G.DBL.isZero().call(value)) return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64TensorProductMember> isZero() {
+		return ISZERO;
+	}
+
 }

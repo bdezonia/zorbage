@@ -766,4 +766,18 @@ public class UnboundedIntGroup
 		return POW;
 	}	
 
+	private final Function1<Boolean, UnboundedIntMember> ISZERO =
+			new Function1<Boolean, UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember b) {
+			return b.v() == BigInteger.ZERO;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnboundedIntMember> isZero() {
+		return ISZERO;
+	}
+
 }

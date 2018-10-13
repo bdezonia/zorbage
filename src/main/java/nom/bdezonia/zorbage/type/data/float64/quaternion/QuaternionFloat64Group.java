@@ -844,4 +844,19 @@ public class QuaternionFloat64Group
 	public Procedure2<QuaternionFloat64Member,QuaternionFloat64Member> cbrt() {
 		return CBRT;
 	}
+
+	private final Function1<Boolean, QuaternionFloat64Member> ISZERO =
+			new Function1<Boolean, QuaternionFloat64Member>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64Member b) {
+			return b.r() == 0 && b.i() == 0 && b.j() == 0 && b.k() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionFloat64Member> isZero() {
+		return ISZERO;
+	}
+
 }

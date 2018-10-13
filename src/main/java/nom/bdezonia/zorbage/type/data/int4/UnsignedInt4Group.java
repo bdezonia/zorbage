@@ -654,4 +654,19 @@ public class UnsignedInt4Group
 		return MINBOUND;
 	}
 
+	private final Function1<Boolean, UnsignedInt4Member> ISZERO =
+			new Function1<Boolean, UnsignedInt4Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt4Member b) {
+			return b.v == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt4Member> isZero() {
+		return ISZERO;
+	}
+
+
 }
