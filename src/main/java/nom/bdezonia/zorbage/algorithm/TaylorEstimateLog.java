@@ -76,15 +76,20 @@ public class TaylorEstimateLog {
 		W subTerm = matGroup.construct();
 		matGroup.divide().call(xMinusI, xPlusI, subTerm);
 		W term = matGroup.construct(subTerm);
+		W term2 = matGroup.construct();
+		W term3 = matGroup.construct();
 		U one = numGroup.construct();
 		numGroup.unity().call(one);
 		U inc = numGroup.construct(one);
 		U scale = numGroup.construct();
 		for (int i = 0; i < numTerms; i++) {
 			numGroup.divide().call(one, inc, scale);
-			matGroup.scale().call(scale, term, term);
-			matGroup.add().call(sum, term, sum);
-			matGroup.power().call(2*i+3, subTerm, term); // a little wasteful
+			matGroup.scale().call(scale, term, term2);
+			matGroup.add().call(sum, term2, sum);
+			matGroup.assign().call(term, term3);
+			matGroup.multiply().call(term3, subTerm, term);
+			matGroup.assign().call(term, term3);
+			matGroup.multiply().call(term3, subTerm, term);
 			numGroup.add().call(inc, one, inc);
 			numGroup.add().call(inc, one, inc);
 		}

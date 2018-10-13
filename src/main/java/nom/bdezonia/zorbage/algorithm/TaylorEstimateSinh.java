@@ -67,6 +67,8 @@ public class TaylorEstimateSinh {
 		W sum = matGroup.construct();
 		sum.alloc(x.rows(), x.cols());
 		W term = matGroup.construct(x);
+		W term2 = matGroup.construct();
+		W term3 = matGroup.construct();
 		U one = numGroup.construct();
 		numGroup.unity().call(one);
 		U factorial = numGroup.construct(one);
@@ -74,9 +76,12 @@ public class TaylorEstimateSinh {
 		U scale = numGroup.construct();
 		for (int i = 0; i < numTerms; i++) {
 			numGroup.divide().call(one, factorial, scale);
-			matGroup.scale().call(scale, term, term);
-			matGroup.add().call(sum, term, sum);
-			matGroup.power().call(2*i+1, x, term); // a little wasteful
+			matGroup.scale().call(scale, term, term2);
+			matGroup.add().call(sum, term2, sum);
+			matGroup.assign().call(term, term3);
+			matGroup.multiply().call(term3, x, term);
+			matGroup.assign().call(term, term3);
+			matGroup.multiply().call(term3, x, term);
 			numGroup.add().call(inc,one,inc);
 			numGroup.multiply().call(factorial, inc, factorial);
 			numGroup.add().call(inc,one,inc);
