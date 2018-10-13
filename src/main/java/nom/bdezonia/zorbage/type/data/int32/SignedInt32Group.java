@@ -662,8 +662,8 @@ public class SignedInt32Group
 			new Function1<Boolean, SignedInt32Member>()
 	{
 		@Override
-		public Boolean call(SignedInt32Member b) {
-			return b.v() == 0;
+		public Boolean call(SignedInt32Member a) {
+			return a.v() == 0;
 		}
 	};
 

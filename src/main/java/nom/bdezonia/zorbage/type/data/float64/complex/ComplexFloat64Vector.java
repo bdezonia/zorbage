@@ -434,10 +434,10 @@ public class ComplexFloat64Vector
 			new Function1<Boolean, ComplexFloat64VectorMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat64VectorMember b) {
+		public Boolean call(ComplexFloat64VectorMember a) {
 			ComplexFloat64Member value = G.CDBL.construct();
-			for (long i = 0; i < b.length(); i++) {
-				b.v(i, value);
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, value);
 				if (!G.CDBL.isZero().call(value)) return false;
 			}
 			return true;

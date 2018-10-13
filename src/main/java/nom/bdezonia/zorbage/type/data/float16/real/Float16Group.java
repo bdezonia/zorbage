@@ -1381,8 +1381,8 @@ public class Float16Group
 			new Function1<Boolean, Float16Member>()
 	{
 		@Override
-		public Boolean call(Float16Member b) {
-			return b.v() == 0;
+		public Boolean call(Float16Member a) {
+			return a.v() == 0;
 		}
 	};
 

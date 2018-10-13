@@ -1418,8 +1418,8 @@ public class Float64Group
 			new Function1<Boolean, Float64Member>()
 	{
 		@Override
-		public Boolean call(Float64Member b) {
-			return b.v() == 0;
+		public Boolean call(Float64Member a) {
+			return a.v() == 0;
 		}
 	};
 

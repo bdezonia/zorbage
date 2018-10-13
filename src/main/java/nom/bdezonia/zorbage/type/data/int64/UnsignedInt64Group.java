@@ -665,8 +665,8 @@ public class UnsignedInt64Group
 			new Function1<Boolean, UnsignedInt64Member>()
 	{
 		@Override
-		public Boolean call(UnsignedInt64Member b) {
-			return b.v == 0;
+		public Boolean call(UnsignedInt64Member a) {
+			return a.v == 0;
 		}
 	};
 

@@ -1258,8 +1258,8 @@ public class ComplexFloat64Group
 			new Function1<Boolean, ComplexFloat64Member>()
 	{
 		@Override
-		public Boolean call(ComplexFloat64Member b) {
-			return b.r() == 0 && b.i() == 0;
+		public Boolean call(ComplexFloat64Member a) {
+			return a.r() == 0 && a.i() == 0;
 		}
 	};
 

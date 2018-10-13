@@ -658,8 +658,8 @@ public class UnsignedInt2Group
 			new Function1<Boolean, UnsignedInt2Member>()
 	{
 		@Override
-		public Boolean call(UnsignedInt2Member b) {
-			return b.v == 0;
+		public Boolean call(UnsignedInt2Member a) {
+			return a.v == 0;
 		}
 	};
 

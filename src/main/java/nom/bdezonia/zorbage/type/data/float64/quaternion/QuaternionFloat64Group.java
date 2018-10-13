@@ -849,8 +849,8 @@ public class QuaternionFloat64Group
 			new Function1<Boolean, QuaternionFloat64Member>()
 	{
 		@Override
-		public Boolean call(QuaternionFloat64Member b) {
-			return b.r() == 0 && b.i() == 0 && b.j() == 0 && b.k() == 0;
+		public Boolean call(QuaternionFloat64Member a) {
+			return a.r() == 0 && a.i() == 0 && a.j() == 0 && a.k() == 0;
 		}
 	};
 

@@ -703,11 +703,11 @@ public class ComplexFloat64Matrix
 			new Function1<Boolean, ComplexFloat64MatrixMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat64MatrixMember b) {
+		public Boolean call(ComplexFloat64MatrixMember a) {
 			ComplexFloat64Member value = G.CDBL.construct();
-			for (long r = 0; r < b.rows(); r++) {
-				for (long c = 0; c < b.cols(); c++) {
-					b.v(r, c, value);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, value);
 					if (!G.CDBL.isZero().call(value)) return false;
 				}
 			}

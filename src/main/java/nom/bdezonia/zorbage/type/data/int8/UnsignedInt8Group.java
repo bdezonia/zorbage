@@ -649,8 +649,8 @@ public class UnsignedInt8Group
 			new Function1<Boolean, UnsignedInt8Member>()
 	{
 		@Override
-		public Boolean call(UnsignedInt8Member b) {
-			return b.v == 0;
+		public Boolean call(UnsignedInt8Member a) {
+			return a.v == 0;
 		}
 	};
 

@@ -663,8 +663,8 @@ public class SignedInt8Group
 			new Function1<Boolean, SignedInt8Member>()
 	{
 		@Override
-		public Boolean call(SignedInt8Member b) {
-			return b.v() == 0;
+		public Boolean call(SignedInt8Member a) {
+			return a.v() == 0;
 		}
 	};
 

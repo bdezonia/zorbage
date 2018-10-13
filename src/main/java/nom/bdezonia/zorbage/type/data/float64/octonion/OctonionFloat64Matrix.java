@@ -703,11 +703,11 @@ public class OctonionFloat64Matrix
 			new Function1<Boolean, OctonionFloat64MatrixMember>()
 	{
 		@Override
-		public Boolean call(OctonionFloat64MatrixMember b) {
+		public Boolean call(OctonionFloat64MatrixMember a) {
 			OctonionFloat64Member value = G.ODBL.construct();
-			for (long r = 0; r < b.rows(); r++) {
-				for (long c = 0; c < b.cols(); c++) {
-					b.v(r, c, value);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, value);
 					if (!G.ODBL.isZero().call(value)) return false;
 				}
 			}

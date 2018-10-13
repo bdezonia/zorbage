@@ -717,11 +717,11 @@ public class QuaternionFloat64Matrix
 			new Function1<Boolean, QuaternionFloat64MatrixMember>()
 	{
 		@Override
-		public Boolean call(QuaternionFloat64MatrixMember b) {
+		public Boolean call(QuaternionFloat64MatrixMember a) {
 			QuaternionFloat64Member value = G.QDBL.construct();
-			for (long r = 0; r < b.rows(); r++) {
-				for (long c = 0; c < b.cols(); c++) {
-					b.v(r, c, value);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, value);
 					if (!G.QDBL.isZero().call(value)) return false;
 				}
 			}

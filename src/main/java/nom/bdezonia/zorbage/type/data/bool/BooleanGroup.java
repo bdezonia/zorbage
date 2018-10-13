@@ -507,8 +507,8 @@ public class BooleanGroup
 			new Function1<Boolean, BooleanMember>()
 	{
 		@Override
-		public Boolean call(BooleanMember b) {
-			return b.v() == false;
+		public Boolean call(BooleanMember a) {
+			return a.v() == false;
 		}
 	};
 

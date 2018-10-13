@@ -770,8 +770,8 @@ public class UnboundedIntGroup
 			new Function1<Boolean, UnboundedIntMember>()
 	{
 		@Override
-		public Boolean call(UnboundedIntMember b) {
-			return b.v() == BigInteger.ZERO;
+		public Boolean call(UnboundedIntMember a) {
+			return a.v() == BigInteger.ZERO;
 		}
 	};
 

@@ -787,8 +787,8 @@ public class UnsignedInt128Group
 			new Function1<Boolean, UnsignedInt128Member>()
 	{
 		@Override
-		public Boolean call(UnsignedInt128Member b) {
-			return b.lo == 0 && b.hi == 0;
+		public Boolean call(UnsignedInt128Member a) {
+			return a.lo == 0 && a.hi == 0;
 		}
 	};
 

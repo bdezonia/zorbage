@@ -423,10 +423,10 @@ public class Float64Vector
 			new Function1<Boolean, Float64VectorMember>()
 	{
 		@Override
-		public Boolean call(Float64VectorMember b) {
+		public Boolean call(Float64VectorMember a) {
 			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < b.length(); i++) {
-				b.v(i, value);
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, value);
 				if (!G.DBL.isZero().call(value)) return false;
 			}
 			return true;

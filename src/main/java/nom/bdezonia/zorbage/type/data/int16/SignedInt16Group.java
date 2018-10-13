@@ -666,8 +666,8 @@ public class SignedInt16Group
 			new Function1<Boolean, SignedInt16Member>()
 	{
 		@Override
-		public Boolean call(SignedInt16Member b) {
-			return b.v() == 0;
+		public Boolean call(SignedInt16Member a) {
+			return a.v() == 0;
 		}
 	};
 

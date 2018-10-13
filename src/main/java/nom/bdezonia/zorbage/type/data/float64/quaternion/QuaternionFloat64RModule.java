@@ -445,10 +445,10 @@ public class QuaternionFloat64RModule
 			new Function1<Boolean, QuaternionFloat64RModuleMember>()
 	{
 		@Override
-		public Boolean call(QuaternionFloat64RModuleMember b) {
+		public Boolean call(QuaternionFloat64RModuleMember a) {
 			QuaternionFloat64Member value = G.QDBL.construct();
-			for (long i = 0; i < b.length(); i++) {
-				b.v(i, value);
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, value);
 				if (!G.QDBL.isZero().call(value)) return false;
 			}
 			return true;

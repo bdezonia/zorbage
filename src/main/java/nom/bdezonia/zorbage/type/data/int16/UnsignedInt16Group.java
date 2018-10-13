@@ -650,8 +650,8 @@ public class UnsignedInt16Group
 			new Function1<Boolean, UnsignedInt16Member>()
 	{
 		@Override
-		public Boolean call(UnsignedInt16Member b) {
-			return b.v == 0;
+		public Boolean call(UnsignedInt16Member a) {
+			return a.v == 0;
 		}
 	};
 

@@ -687,11 +687,11 @@ public class Float64Matrix
 			new Function1<Boolean, Float64MatrixMember>()
 	{
 		@Override
-		public Boolean call(Float64MatrixMember b) {
+		public Boolean call(Float64MatrixMember a) {
 			Float64Member value = G.DBL.construct();
-			for (long r = 0; r < b.rows(); r++) {
-				for (long c = 0; c < b.cols(); c++) {
-					b.v(r, c, value);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, value);
 					if (!G.DBL.isZero().call(value)) return false;
 				}
 			}

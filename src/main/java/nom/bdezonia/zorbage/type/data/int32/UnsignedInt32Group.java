@@ -660,8 +660,8 @@ public class UnsignedInt32Group
 			new Function1<Boolean, UnsignedInt32Member>()
 	{
 		@Override
-		public Boolean call(UnsignedInt32Member b) {
-			return b.v == 0;
+		public Boolean call(UnsignedInt32Member a) {
+			return a.v == 0;
 		}
 	};
 

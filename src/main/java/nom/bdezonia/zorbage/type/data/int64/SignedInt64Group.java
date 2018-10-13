@@ -675,8 +675,8 @@ public class SignedInt64Group
 			new Function1<Boolean, SignedInt64Member>()
 	{
 		@Override
-		public Boolean call(SignedInt64Member b) {
-			return b.v() == 0;
+		public Boolean call(SignedInt64Member a) {
+			return a.v() == 0;
 		}
 	};
 
