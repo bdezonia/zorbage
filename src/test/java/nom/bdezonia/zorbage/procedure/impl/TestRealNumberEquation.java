@@ -28,6 +28,13 @@ package nom.bdezonia.zorbage.procedure.impl;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
+import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+
 /**
  * 
  * @author Barry DeZonia
@@ -38,5 +45,11 @@ public class TestRealNumberEquation {
 	@Test
 	public void test1() {
 		
+		EquationParser<Float64Group,Float64Member> parser =
+				new EquationParser<Float64Group,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "4.7315");
+		System.out.println(result.a());
+		System.out.println(result.b());
 	}
 }
