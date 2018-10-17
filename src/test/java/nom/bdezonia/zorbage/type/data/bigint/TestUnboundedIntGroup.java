@@ -113,50 +113,14 @@ public class TestUnboundedIntGroup {
 
 		// add
 		
-		a.setV(BigInteger.valueOf(-1));
-		b.setV(BigInteger.valueOf(-1));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(-2), c.v());
-
-		a.setV(BigInteger.valueOf(-1));
-		b.setV(BigInteger.valueOf(0));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(-1), c.v());
-		
-		a.setV(BigInteger.valueOf(0));
-		b.setV(BigInteger.valueOf(-1));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(-1), c.v());
-
-		a.setV(BigInteger.valueOf(0));
-		b.setV(BigInteger.valueOf(0));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(0), c.v());
-
-		a.setV(BigInteger.valueOf(0));
-		b.setV(BigInteger.valueOf(1));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(1), c.v());
-
-		a.setV(BigInteger.valueOf(1));
-		b.setV(BigInteger.valueOf(0));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(1), c.v());
-
-		a.setV(BigInteger.valueOf(1));
-		b.setV(BigInteger.valueOf(1));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(2), c.v());
-
-		a.setV(BigInteger.valueOf(-1));
-		b.setV(BigInteger.valueOf(1));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(0), c.v());
-
-		a.setV(BigInteger.valueOf(1));
-		b.setV(BigInteger.valueOf(-1));
-		G.BIGINT.add().call(a, b, c);
-		assertEquals(BigInteger.valueOf(0), c.v());
+		for (int i = -50; i <= 50; i++) {
+			a.setV(BigInteger.valueOf(i));
+			for (int j = -50; j <= 50; j++) {
+				b.setV(BigInteger.valueOf(j));
+				G.BIGINT.add().call(a, b, c);
+				assertEquals(i+j, c.v().intValue());
+			}
+		}
 		
 		// andNot
 		
