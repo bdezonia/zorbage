@@ -36,7 +36,6 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algorithm.MinMaxElement;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageGeneric;
 
@@ -95,7 +94,6 @@ public class TestUnboundedIntGroup {
 		UnboundedIntMember a = G.BIGINT.construct();
 		UnboundedIntMember b = G.BIGINT.construct();
 		UnboundedIntMember c = G.BIGINT.construct();
-		SignedInt32Member d = G.INT32.construct();
 		
 		// abs
 		
@@ -239,16 +237,14 @@ public class TestUnboundedIntGroup {
 
 		for (int i = -65536; i <= 65536; i++) {
 			a.setV(BigInteger.valueOf(i));
-			G.BIGINT.bitCount().call(a, d);
-			assertEquals(BigInteger.valueOf(i).bitCount(), d.v());
+			assertEquals((int) BigInteger.valueOf(i).bitCount(), (int) G.BIGINT.bitCount().call(a));
 		}
 		
 		// bitLength
 
 		for (int i = -65536; i <= 65536; i++) {
 			a.setV(BigInteger.valueOf(i));
-			G.BIGINT.bitLength().call(a, d);
-			assertEquals(BigInteger.valueOf(i).bitLength(), d.v());
+			assertEquals((int) BigInteger.valueOf(i).bitLength(), (int) G.BIGINT.bitLength().call(a));
 		}
 		
 		// bitNot
@@ -487,24 +483,19 @@ public class TestUnboundedIntGroup {
 		// getLowestBitSet
 
 		a.setV(BigInteger.valueOf(0));
-		G.BIGINT.getLowestSetBit().call(a, d);
-		assertEquals(-1, d.v());
+		assertEquals(-1, (int) G.BIGINT.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(1));
-		G.BIGINT.getLowestSetBit().call(a, d);
-		assertEquals(0, d.v());
+		assertEquals(0, (int) G.BIGINT.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(2));
-		G.BIGINT.getLowestSetBit().call(a, d);
-		assertEquals(1, d.v());
+		assertEquals(1, (int) G.BIGINT.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(4));
-		G.BIGINT.getLowestSetBit().call(a, d);
-		assertEquals(2, d.v());
+		assertEquals(2, (int) G.BIGINT.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(8));
-		G.BIGINT.getLowestSetBit().call(a, d);
-		assertEquals(3, d.v());
+		assertEquals(3, (int) G.BIGINT.getLowestSetBit().call(a));
 		
 		// isEqual
 		

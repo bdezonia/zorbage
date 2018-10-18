@@ -39,7 +39,6 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
@@ -588,42 +587,42 @@ public class UnboundedIntGroup
 		return ANDNOT;
 	}
 	
-	private final Procedure2<UnboundedIntMember,SignedInt32Member> BC =
-			new Procedure2<UnboundedIntMember, SignedInt32Member>()
+	private final Function1<java.lang.Integer,UnboundedIntMember> BC =
+			new Function1<java.lang.Integer,UnboundedIntMember>()
 	{
 		@Override
-		public void call(UnboundedIntMember a, SignedInt32Member b) {
-			b.setV( a.v().bitCount() );
+		public java.lang.Integer call(UnboundedIntMember a) {
+			return a.v().bitCount();
 		}
 	};
 
-	public Procedure2<UnboundedIntMember,SignedInt32Member> bitCount() {
+	public Function1<java.lang.Integer,UnboundedIntMember> bitCount() {
 		return BC;
 	}
 	
-	private final Procedure2<UnboundedIntMember,SignedInt32Member> BL =
-			new Procedure2<UnboundedIntMember, SignedInt32Member>()
+	private final Function1<java.lang.Integer,UnboundedIntMember> BL =
+			new Function1<java.lang.Integer,UnboundedIntMember>()
 	{
 		@Override
-		public void call(UnboundedIntMember a, SignedInt32Member b) {
-			b.setV( a.v().bitLength() );
+		public java.lang.Integer call(UnboundedIntMember a) {
+			return a.v().bitLength();
 		}
 	};
 
-	public Procedure2<UnboundedIntMember,SignedInt32Member> bitLength() {
+	public Function1<java.lang.Integer,UnboundedIntMember> bitLength() {
 		return BL;
 	}
 	
-	private final Procedure2<UnboundedIntMember,SignedInt32Member> LSB =
-			new Procedure2<UnboundedIntMember, SignedInt32Member>()
+	private final Function1<java.lang.Integer,UnboundedIntMember> LSB =
+			new Function1<java.lang.Integer,UnboundedIntMember>()
 	{
 		@Override
-		public void call(UnboundedIntMember a, SignedInt32Member b) {
-			b.setV( a.v().getLowestSetBit() );
+		public java.lang.Integer call(UnboundedIntMember a) {
+			return a.v().getLowestSetBit();
 		}
 	};
 
-	public Procedure2<UnboundedIntMember,SignedInt32Member> getLowestSetBit() {
+	public Function1<java.lang.Integer,UnboundedIntMember> getLowestSetBit() {
 		return LSB;
 	}
 	
