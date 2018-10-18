@@ -51,9 +51,9 @@ public class PowerAny {
 		void compute(T group, int power, U a, U b)
 	{
 		if (power == 0) {
-			U tmp = group.construct();
-			if (group.isEqual().call(a,tmp))
+			if (group.isZero().call(a))
 				throw new IllegalArgumentException("0^0 is not a number");
+			U tmp = group.construct();
 			group.unity().call(tmp);
 			group.assign().call(tmp, b);
 			return;

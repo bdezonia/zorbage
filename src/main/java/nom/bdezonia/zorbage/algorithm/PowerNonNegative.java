@@ -52,9 +52,9 @@ public class PowerNonNegative {
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
-			U tmp = group.construct();
-			if (group.isEqual().call(a,tmp))
+			if (group.isZero().call(a))
 				throw new IllegalArgumentException("0^0 is not a number");
+			U tmp = group.construct();
 			group.unity().call(tmp);
 			group.assign().call(tmp, b);
 			return;
