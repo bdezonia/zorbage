@@ -42,8 +42,11 @@ public class TestMatrixPower {
 		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {7,-21,44,13});
 		Float64MatrixMember b = G.DBL_MAT.construct();
 		Float64MatrixMember c = G.DBL_MAT.construct();
-		G.DBL_MAT.power().call(3, a, b);
+		G.DBL_MAT.power().call(6, a, b);
 		G.DBL_MAT.multiply().call(a, a, c);
+		G.DBL_MAT.multiply().call(c, a, c);
+		G.DBL_MAT.multiply().call(c, a, c);
+		G.DBL_MAT.multiply().call(c, a, c);
 		G.DBL_MAT.multiply().call(c, a, c);
 		assertTrue(G.DBL_MAT.isEqual().call(b, c));
 	}
