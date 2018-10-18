@@ -71,10 +71,13 @@ public class MatrixPower {
 			MatrixAssign.compute(numGroup, a, b);
 		else { // power >= 2
 			MATRIX_MEMBER tmp = matGroup.construct(a);
-			MATRIX_MEMBER tmp2 = matGroup.construct();
-			for (int i = 2; i <= power; i++) {
-				MatrixMultiply.compute(numGroup, tmp, a, tmp2);
-				MatrixAssign.compute(numGroup, tmp2, tmp);
+			MATRIX_MEMBER tmp2 = matGroup.construct(a.storageType(),a.cols(),a.rows());
+			while (power > 0) {
+				if ((power & 1) > 0) {
+					MatrixAddition.compute(numGroup, tmp2, tmp, tmp2);
+				}
+				MatrixMultiply.compute(numGroup, tmp, a, tmp);
+				power >>= 1;
 			}
 			MatrixAssign.compute(numGroup, tmp, b);
 		}
