@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 
@@ -38,16 +40,18 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
  */
 public class TestMatrixPower {
 
+	@Test
 	public void test() {
 		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {7,-21,44,13});
 		Float64MatrixMember b = G.DBL_MAT.construct();
 		Float64MatrixMember c = G.DBL_MAT.construct();
+		Float64MatrixMember d = G.DBL_MAT.construct();
 		G.DBL_MAT.power().call(6, a, b);
 		G.DBL_MAT.multiply().call(a, a, c);
-		G.DBL_MAT.multiply().call(c, a, c);
-		G.DBL_MAT.multiply().call(c, a, c);
-		G.DBL_MAT.multiply().call(c, a, c);
-		G.DBL_MAT.multiply().call(c, a, c);
+		G.DBL_MAT.multiply().call(c, a, d);
+		G.DBL_MAT.multiply().call(d, a, c);
+		G.DBL_MAT.multiply().call(c, a, d);
+		G.DBL_MAT.multiply().call(d, a, c);
 		assertTrue(G.DBL_MAT.isEqual().call(b, c));
 	}
 }

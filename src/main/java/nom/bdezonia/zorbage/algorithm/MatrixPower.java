@@ -70,16 +70,27 @@ public class MatrixPower {
 		else if (power == 1)
 			MatrixAssign.compute(numGroup, a, b);
 		else { // power >= 2
-			MATRIX_MEMBER tmp = matGroup.construct(a);
-			MATRIX_MEMBER tmp2 = matGroup.construct(a.storageType(),a.cols(),a.rows());
-			while (power > 0) {
-				if ((power & 1) > 0) {
-					MatrixAddition.compute(numGroup, tmp2, tmp, tmp2);
-				}
-				MatrixMultiply.compute(numGroup, tmp, a, tmp);
-				power >>= 1;
+			// Higham, Functions of Matrices, page 72
+			//   my impl is not speed optimized
+			MATRIX_MEMBER p = matGroup.construct(a);
+			MATRIX_MEMBER tmp = matGroup.construct();
+			int i = 0;
+			while ((power & (1 << i)) == 0) {
+				MatrixMultiply.compute(numGroup, p, a, tmp);
+				MatrixAssign.compute(numGroup, tmp, p);
+				i = i + 1;
 			}
-			MatrixAssign.compute(numGroup, tmp, b);
+			MATRIX_MEMBER x = matGroup.construct(p); 
+			int maxBit = Integer.highestOneBit(power);
+			for (int j = i + 1; j <= maxBit; j++) {
+				MatrixMultiply.compute(numGroup, p, p, tmp);
+				MatrixAssign.compute(numGroup, tmp, p);
+				if ((power & (1 << j)) > 0) {
+					MatrixMultiply.compute(numGroup, x, p, tmp);
+					MatrixAssign.compute(numGroup, tmp, x);
+				}
+			}
+			MatrixAssign.compute(numGroup, x, b);
 		}
 	}
 }
