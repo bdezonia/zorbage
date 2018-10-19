@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -39,6 +41,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  */
 public class TestMatrixAssign {
 
+	@Test
 	public void test() {
 		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		Float64MatrixMember b = new Float64MatrixMember();
