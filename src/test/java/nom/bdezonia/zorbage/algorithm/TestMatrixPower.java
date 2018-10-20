@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -48,7 +47,7 @@ public class TestMatrixPower {
 		Float64Member vc = G.DBL.construct();
 		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {7,-21,44,13});
 		Float64MatrixMember b = G.DBL_MAT.construct();
-		for (int i = -8; i <= 8; i++) {
+		for (int i = -11; i <= 11; i++) {
 			G.DBL_MAT.power().call(i, a, b);
 			if (i < 0) {
 				Float64MatrixMember invA = G.DBL_MAT.construct();
