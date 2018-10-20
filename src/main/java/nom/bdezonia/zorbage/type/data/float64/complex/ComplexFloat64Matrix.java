@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
+import nom.bdezonia.zorbage.algorithm.MatrixIsZero;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
@@ -704,14 +705,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat64MatrixMember a) {
-			ComplexFloat64Member value = G.CDBL.construct();
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, value);
-					if (!G.CDBL.isZero().call(value)) return false;
-				}
-			}
-			return true;
+			return MatrixIsZero.compute(G.CDBL, a);
 		}
 	};
 

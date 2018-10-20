@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
+import nom.bdezonia.zorbage.algorithm.MatrixIsZero;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
@@ -688,14 +689,7 @@ public class Float64Matrix
 	{
 		@Override
 		public Boolean call(Float64MatrixMember a) {
-			Float64Member value = G.DBL.construct();
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, value);
-					if (!G.DBL.isZero().call(value)) return false;
-				}
-			}
-			return true;
+			return MatrixIsZero.compute(G.DBL, a);
 		}
 	};
 
