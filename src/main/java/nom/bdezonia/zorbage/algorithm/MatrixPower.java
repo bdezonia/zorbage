@@ -71,12 +71,12 @@ public class MatrixPower {
 			MatrixAssign.compute(numGroup, a, b);
 		else { // power >= 2
 			// Higham, Functions of Matrices, page 72
-			//   my impl is not speed optimized
+			//   my impl is not completely speed optimized
 			MATRIX_MEMBER p = matGroup.construct(a);
 			MATRIX_MEMBER tmp = matGroup.construct();
 			int i = 0;
 			while ((power & (1 << i)) == 0) {
-				MatrixMultiply.compute(numGroup, p, a, tmp);
+				MatrixMultiply.compute(numGroup, p, p, tmp);
 				MatrixAssign.compute(numGroup, tmp, p);
 				i = i + 1;
 			}

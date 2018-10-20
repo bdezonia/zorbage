@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -42,16 +44,57 @@ public class TestMatrixPower {
 
 	@Test
 	public void test() {
+		Float64Member vb = G.DBL.construct();
+		Float64Member vc = G.DBL.construct();
 		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {7,-21,44,13});
 		Float64MatrixMember b = G.DBL_MAT.construct();
-		Float64MatrixMember c = G.DBL_MAT.construct();
-		Float64MatrixMember d = G.DBL_MAT.construct();
-		G.DBL_MAT.power().call(6, a, b);
-		G.DBL_MAT.multiply().call(a, a, c);
-		G.DBL_MAT.multiply().call(c, a, d);
-		G.DBL_MAT.multiply().call(d, a, c);
-		G.DBL_MAT.multiply().call(c, a, d);
-		G.DBL_MAT.multiply().call(d, a, c);
-		assertTrue(G.DBL_MAT.isEqual().call(b, c));
+		for (int i = -8; i <= 8; i++) {
+			G.DBL_MAT.power().call(i, a, b);
+			if (i < 0) {
+				Float64MatrixMember invA = G.DBL_MAT.construct();
+				G.DBL_MAT.invert().call(a, invA);
+				Float64MatrixMember c = G.DBL_MAT.construct(invA);
+				Float64MatrixMember d = G.DBL_MAT.construct();
+				for (int j = 1; j < -i; j++) {
+					G.DBL_MAT.multiply().call(c, invA, d);
+					G.DBL_MAT.assign().call(d, c);
+				}
+				for (int rr = 0; rr < b.rows(); rr++) {
+					for (int cc = 0; cc < b.cols(); cc++) {
+						b.v(rr, cc, vb);
+						c.v(rr, cc, vc);
+						assertEquals(vb.v(), vc.v(), 0.0000000000001);
+					}
+				}
+			}
+			else if (i > 0) {
+				Float64MatrixMember c = G.DBL_MAT.construct(a);
+				Float64MatrixMember d = G.DBL_MAT.construct();
+				for (int j = 1; j < i; j++) {
+					G.DBL_MAT.multiply().call(c, a, d);
+					G.DBL_MAT.assign().call(d, c);
+				}
+				for (int rr = 0; rr < b.rows(); rr++) {
+					for (int cc = 0; cc < b.cols(); cc++) {
+						b.v(rr, cc, vb);
+						c.v(rr, cc, vc);
+						assertEquals(vb.v(), vc.v(), 0.0000000000001);
+					}
+				}
+			}
+			else {
+				// i == 0
+				assertEquals(2, b.rows());
+				assertEquals(2, b.cols());
+				b.v(0, 0, vb);
+				assertEquals(1, vb.v(), 0);
+				b.v(0, 1, vb);
+				assertEquals(0, vb.v(), 0);
+				b.v(1, 0, vb);
+				assertEquals(0, vb.v(), 0);
+				b.v(1, 1, vb);
+				assertEquals(1, vb.v(), 0);
+			}
+		}
 	}
 }
