@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleIsZero;
 import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
@@ -424,12 +425,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a) {
-			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, value);
-				if (!G.DBL.isZero().call(value)) return false;
-			}
-			return true;
+			return RModuleIsZero.compute(G.DBL, a);
 		}
 	};
 

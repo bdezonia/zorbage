@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleIsZero;
 import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
@@ -446,12 +447,7 @@ public class QuaternionFloat64RModule
 	{
 		@Override
 		public Boolean call(QuaternionFloat64RModuleMember a) {
-			QuaternionFloat64Member value = G.QDBL.construct();
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, value);
-				if (!G.QDBL.isZero().call(value)) return false;
-			}
-			return true;
+			return RModuleIsZero.compute(G.QDBL, a);
 		}
 	};
 

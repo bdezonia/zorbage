@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleIsInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleIsNaN;
+import nom.bdezonia.zorbage.algorithm.RModuleIsZero;
 import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
@@ -435,12 +436,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat64VectorMember a) {
-			ComplexFloat64Member value = G.CDBL.construct();
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, value);
-				if (!G.CDBL.isZero().call(value)) return false;
-			}
-			return true;
+			return RModuleIsZero.compute(G.CDBL, a);
 		}
 	};
 
