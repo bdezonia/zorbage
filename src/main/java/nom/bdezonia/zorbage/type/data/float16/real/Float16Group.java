@@ -1233,7 +1233,7 @@ public class Float16Group
 			new Function1<Integer, Float16Member>()
 	{
 		@Override
-		public Integer call(Float16Member b) {
+		public Integer call(Float16Member a) {
 			// TODO
 			throw new UnsupportedOperationException("Not yet implemented");
 		}

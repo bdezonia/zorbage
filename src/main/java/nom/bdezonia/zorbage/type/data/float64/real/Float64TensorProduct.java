@@ -578,10 +578,10 @@ public class Float64TensorProduct
 			new Function1<Boolean, Float64TensorProductMember>()
 	{
 		@Override
-		public Boolean call(Float64TensorProductMember b) {
+		public Boolean call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < b.numElems(); i++) {
-				b.v(i, value);
+			for (long i = 0; i < a.numElems(); i++) {
+				a.v(i, value);
 				if (G.DBL.isNaN().call(value))
 					return true;
 			}
