@@ -332,7 +332,7 @@ public class UnboundedIntGroup
 	{
 		@Override
 		public void call(UnboundedIntMember a, UnboundedIntMember b,UnboundedIntMember c) {
-			c.setV( a.v().mod(b.v()) );
+			c.setV( a.v().remainder(b.v()) );
 		}
 	};
 	

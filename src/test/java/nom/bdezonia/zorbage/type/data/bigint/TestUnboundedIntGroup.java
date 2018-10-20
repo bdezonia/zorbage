@@ -652,7 +652,7 @@ public class TestUnboundedIntGroup {
 				b.setV(BigInteger.valueOf(j));
 				if (j > 0) {
 					G.BIGINT.mod().call(a, b, c);
-					assertEquals(a.v().mod(b.v()), c.v());
+					assertEquals(i%j, c.v().intValue());
 				}
 			}
 		}
