@@ -424,7 +424,8 @@ public class QuaternionFloat64Group
 	{
 		@Override
 		public Boolean call(QuaternionFloat64Member a) {
-			return Double.isNaN(a.r()) || Double.isNaN(a.i()) || Double.isNaN(a.j()) || Double.isNaN(a.k());
+			return !isNaN().call(a) && (
+					Double.isInfinite(a.r()) || Double.isInfinite(a.i()) || Double.isInfinite(a.j()) || Double.isInfinite(a.k()));
 		}
 	};
 	
