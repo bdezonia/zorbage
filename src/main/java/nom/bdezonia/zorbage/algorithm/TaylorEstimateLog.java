@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.Unity;
@@ -54,7 +53,7 @@ public class TaylorEstimateLog {
 	public static <T extends Group<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
 					V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
-					W extends MatrixMember<U>>
+					W /*extends MatrixMember<U>*/>
 		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
 	{
 		if (numTerms < 1)

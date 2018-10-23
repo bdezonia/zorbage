@@ -46,7 +46,7 @@ public class TaylorEstimateTanh {
 	public static <T extends Group<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 		U,
 		V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
-		W extends MatrixMember<U>>
+		W /*extends MatrixMember<U>*/>
 		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
 	{
 		W s = matGroup.construct();

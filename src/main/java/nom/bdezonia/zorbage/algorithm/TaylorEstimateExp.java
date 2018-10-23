@@ -56,7 +56,7 @@ public class TaylorEstimateExp {
 	public static <T extends Group<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
 					V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W>,
-					W extends MatrixMember<U>>
+					W /*extends MatrixMember<U>*/>
 		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
 	{
 		if (numTerms < 1)
@@ -64,10 +64,9 @@ public class TaylorEstimateExp {
 
 		// exp(x) = 1 + x^1/1! + x^2/2! + x^3/3! + x^4/4! ...
 		
-		W sum = matGroup.construct();
-		sum.alloc(x.rows(), x.cols());
-		W term = matGroup.construct();
-		term.alloc(x.rows(), x.cols());
+		W sum = matGroup.construct(x);
+		matGroup.zero().call(sum);;
+		W term = matGroup.construct(x);
 		matGroup.unity().call(term);
 		W term2 = matGroup.construct();
 		W term3 = matGroup.construct();

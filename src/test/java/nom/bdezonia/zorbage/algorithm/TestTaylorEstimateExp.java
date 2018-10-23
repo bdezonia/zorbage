@@ -50,6 +50,14 @@ public class TestTaylorEstimateExp {
 		assertTrue(true);
 	}
 	
+	@Test
+	public void test1() {
+		Float64Member x = new Float64Member(0.135);
+		Float64Member result = G.DBL.construct();
+		TaylorEstimateExp.compute(8, G.DBL, G.DBL, x, result);
+		assertTrue(true);
+	}
+	
 	//@Test
 	public void tmp() {
 		Float64MatrixMember x = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
