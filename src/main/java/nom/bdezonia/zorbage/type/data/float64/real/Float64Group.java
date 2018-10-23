@@ -62,6 +62,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -90,7 +91,8 @@ public class Float64Group
     PredSucc<Float64Member>,
     MiscFloat<Float64Member>,
     ModularDivision<Float64Member>,
-    Conjugate<Float64Member>
+    Conjugate<Float64Member>,
+    Scale<Float64Member,Float64Member>
 {
 	private static final double taylor_0_bound = Math.ulp(1.0);
 	private static final double taylor_2_bound = Math.sqrt(taylor_0_bound);
@@ -1507,6 +1509,11 @@ public class Float64Group
 			
 			return(result);
 		}
+	}
+
+	@Override
+	public Procedure3<Float64Member, Float64Member, Float64Member> scale() {
+		return MUL;
 	}
 
 }

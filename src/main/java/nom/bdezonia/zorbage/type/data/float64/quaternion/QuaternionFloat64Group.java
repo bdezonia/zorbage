@@ -51,6 +51,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
@@ -78,7 +79,8 @@ public class QuaternionFloat64Group
     Hyperbolic<QuaternionFloat64Member>,
     Power<QuaternionFloat64Member>,
     Roots<QuaternionFloat64Member>,
-    RealUnreal<QuaternionFloat64Member,Float64Member>
+    RealUnreal<QuaternionFloat64Member,Float64Member>,
+    Scale<QuaternionFloat64Member,QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE_THIRD = new QuaternionFloat64Member(1.0/3,0,0,0);
@@ -858,6 +860,11 @@ public class QuaternionFloat64Group
 	@Override
 	public Function1<Boolean, QuaternionFloat64Member> isZero() {
 		return ISZERO;
+	}
+
+	@Override
+	public Procedure3<QuaternionFloat64Member, QuaternionFloat64Member, QuaternionFloat64Member> scale() {
+		return MUL;
 	}
 
 }

@@ -66,6 +66,7 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -92,7 +93,8 @@ public class ComplexFloat64Group
     NaN<ComplexFloat64Member>,
     Conjugate<ComplexFloat64Member>,
     Random<ComplexFloat64Member>,
-    RealUnreal<ComplexFloat64Member,Float64Member>
+    RealUnreal<ComplexFloat64Member,Float64Member>,
+    Scale<ComplexFloat64Member,ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
@@ -1266,6 +1268,11 @@ public class ComplexFloat64Group
 	@Override
 	public Function1<Boolean, ComplexFloat64Member> isZero() {
 		return ISZERO;
+	}
+
+	@Override
+	public Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member> scale() {
+		return MUL;
 	}
 
 }
