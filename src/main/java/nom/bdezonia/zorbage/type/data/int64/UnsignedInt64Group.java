@@ -675,5 +675,10 @@ public class UnsignedInt64Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member> scale() {
+		return MUL;
+	}
+
 
 }

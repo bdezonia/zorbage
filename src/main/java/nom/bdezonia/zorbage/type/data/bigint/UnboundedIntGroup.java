@@ -53,8 +53,7 @@ public class UnboundedIntGroup
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
 	
-	public UnboundedIntGroup() {
-	}
+	public UnboundedIntGroup() { }
 
 	private final Procedure2<UnboundedIntMember,UnboundedIntMember> ABS =
 			new Procedure2<UnboundedIntMember,UnboundedIntMember>()
@@ -777,6 +776,11 @@ public class UnboundedIntGroup
 	@Override
 	public Function1<Boolean, UnboundedIntMember> isZero() {
 		return ISZERO;
+	}
+
+	@Override
+	public Procedure3<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> scale() {
+		return MUL;
 	}
 
 }

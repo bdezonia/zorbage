@@ -670,4 +670,9 @@ public class UnsignedInt32Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<UnsignedInt32Member, UnsignedInt32Member, UnsignedInt32Member> scale() {
+		return MUL;
+	}
+
 }

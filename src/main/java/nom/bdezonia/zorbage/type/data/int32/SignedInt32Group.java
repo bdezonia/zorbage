@@ -672,4 +672,9 @@ public class SignedInt32Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> scale() {
+		return MUL;
+	}
+
 }

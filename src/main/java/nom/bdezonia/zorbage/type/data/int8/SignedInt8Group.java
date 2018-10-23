@@ -673,4 +673,9 @@ public class SignedInt8Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member> scale() {
+		return MUL;
+	}
+
 }

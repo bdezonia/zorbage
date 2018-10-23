@@ -668,5 +668,10 @@ public class UnsignedInt2Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<UnsignedInt2Member, UnsignedInt2Member, UnsignedInt2Member> scale() {
+		return MUL;
+	}
+
 
 }

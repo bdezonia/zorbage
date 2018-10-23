@@ -660,4 +660,9 @@ public class UnsignedInt16Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member> scale() {
+		return MUL;
+	}
+
 }

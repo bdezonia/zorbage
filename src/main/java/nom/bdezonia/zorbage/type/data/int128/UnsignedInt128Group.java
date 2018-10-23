@@ -813,4 +813,9 @@ public class UnsignedInt128Group
 			val.lo |= 0x8000000000000000L;
 	}
 
+	@Override
+	public Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member> scale() {
+		return MUL;
+	}
+
 }

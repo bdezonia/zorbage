@@ -676,4 +676,9 @@ public class SignedInt16Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<SignedInt16Member, SignedInt16Member, SignedInt16Member> scale() {
+		return MUL;
+	}
+
 }

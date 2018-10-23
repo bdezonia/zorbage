@@ -685,4 +685,9 @@ public class SignedInt64Group
 		return ISZERO;
 	}
 
+	@Override
+	public Procedure3<SignedInt64Member, SignedInt64Member, SignedInt64Member> scale() {
+		return MUL;
+	}
+
 }
