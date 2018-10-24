@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
@@ -252,8 +253,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, Float64Member b) {
-			// TODO
-			throw new IllegalArgumentException("TODO");
+			MatrixSpectralNorm.compute(G.QDBL_MAT, G.DBL, a, b);
 		}
 	};
 	

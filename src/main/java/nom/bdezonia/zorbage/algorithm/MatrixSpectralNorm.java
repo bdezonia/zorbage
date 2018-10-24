@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.Group;
+
 /**
  * 
  * @author Barry DeZonia
@@ -39,7 +41,9 @@ public class MatrixSpectralNorm {
 	
 	private MatrixSpectralNorm() {}
 	
-	public static void compute() {
+	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
+		void compute(T matGroup, V numGroup, U matrix, W normValue)
+	{
 		throw new IllegalArgumentException("TODO");
 	}
 }
