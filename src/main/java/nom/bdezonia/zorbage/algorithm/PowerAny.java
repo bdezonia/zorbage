@@ -53,12 +53,7 @@ public class PowerAny {
 		if (power == 0) {
 			if (group.isZero().call(a))
 				throw new IllegalArgumentException("0^0 is not a number");
-			U tmp = group.construct();
-			group.unity().call(tmp);
-			group.assign().call(tmp, b);
-			return;
 		}
-		// else power != 0
 
 		if (power < 0) {
 			U invA = group.construct();
