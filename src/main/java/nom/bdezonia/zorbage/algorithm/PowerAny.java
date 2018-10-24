@@ -50,11 +50,6 @@ public class PowerAny {
 	public static <T extends Group<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
 		void compute(T group, int power, U a, U b)
 	{
-		if (power == 0) {
-			if (group.isZero().call(a))
-				throw new IllegalArgumentException("0^0 is not a number");
-		}
-
 		if (power < 0) {
 			U invA = group.construct();
 			group.invert().call(a, invA);
