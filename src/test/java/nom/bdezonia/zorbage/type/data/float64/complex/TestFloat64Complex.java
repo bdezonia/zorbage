@@ -51,6 +51,8 @@ public class TestFloat64Complex {
 	@Test
 	public void mathematicalMethods() {
 		
+		double tol = 0.00000000001;
+		
 		ComplexFloat64Member a = G.CDBL.construct();
 		ComplexFloat64Member b = G.CDBL.construct();
 		ComplexFloat64Member c = G.CDBL.construct();
@@ -97,6 +99,11 @@ public class TestFloat64Complex {
 		// G.CDBL.atanh();
 		
 		// G.CDBL.cbrt();
+		a.setR(8);
+		a.setI(0);
+		G.CDBL.cbrt().call(a, b);
+		assertEquals(2, b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.conjugate();
 		a.setR(66);
@@ -121,8 +128,18 @@ public class TestFloat64Complex {
 		assertEquals(7, b.i(), 0);
 		
 		// G.CDBL.cos();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.cos().call(a, b);
+		assertEquals(Math.cos(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.cosh();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.cosh().call(a, b);
+		assertEquals(Math.cosh(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.cot();
 		
@@ -145,8 +162,18 @@ public class TestFloat64Complex {
 		assertEquals(0, a.i(), 0);
 		
 		// G.CDBL.exp();
+		a.setR(4);
+		a.setI(0);
+		G.CDBL.exp().call(a, b);
+		assertEquals(Math.exp(4), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.expm1();
+		a.setR(4);
+		a.setI(0);
+		G.CDBL.expm1().call(a, b);
+		assertEquals(Math.expm1(4), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.infinite();
 		a = G.CDBL.construct();
@@ -155,6 +182,13 @@ public class TestFloat64Complex {
 		assertTrue(G.CDBL.isInfinite().call(a));
 		
 		// G.CDBL.invert();
+		a.setR(14);
+		a.setI(-3);
+		G.CDBL.invert().call(a, b);
+		G.CDBL.unity().call(c);
+		G.CDBL.divide().call(c, a, c);
+		assertEquals(c.r(), b.r(), tol);
+		assertEquals(c.i(), b.i(), tol);
 		
 		// G.CDBL.isEqual();
 		a = new ComplexFloat64Member(44,7);
@@ -180,8 +214,18 @@ public class TestFloat64Complex {
 		// tested by zero() test below
 		
 		// G.CDBL.log();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.log().call(a, b);
+		assertEquals(Math.log(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.log1p();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.log1p().call(a, b);
+		assertEquals(Math.log1p(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.multiply();
 		a = new ComplexFloat64Member(-8, 1);
@@ -218,15 +262,15 @@ public class TestFloat64Complex {
 		G.CDBL.pow().call(a, b, c);
 		ComplexFloat64Member t = G.CDBL.construct();
 		G.CDBL.multiply().call(a, a, t);
-		assertEquals(t.r(), c.r(), 0.00000000001);
-		assertEquals(t.i(), c.i(), 0.00000000001);
+		assertEquals(t.r(), c.r(), tol);
+		assertEquals(t.i(), c.i(), tol);
 		
 		// G.CDBL.power();
 		a = new ComplexFloat64Member(-7,-4);
 		G.CDBL.power().call(2, a, b);
 		G.CDBL.multiply().call(a, a, t);
-		assertEquals(t.r(), b.r(), 0.00000000001);
-		assertEquals(t.i(), b.i(), 0.00000000001);
+		assertEquals(t.r(), b.r(), tol);
+		assertEquals(t.i(), b.i(), tol);
 		
 		// G.CDBL.random();
 		// TODO: not sure how to test
@@ -256,6 +300,11 @@ public class TestFloat64Complex {
 		// G.CDBL.sech();
 		
 		// G.CDBL.sin();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.sin().call(a, b);
+		assertEquals(Math.sin(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.sinAndCos();
 		
@@ -268,10 +317,20 @@ public class TestFloat64Complex {
 		// G.CDBL.sincpi();
 		
 		// G.CDBL.sinh();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.sinh().call(a, b);
+		assertEquals(Math.sinh(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.sinhAndCosh();
 		
 		// G.CDBL.sqrt();
+		a.setR(8);
+		a.setI(0);
+		G.CDBL.sqrt().call(a, b);
+		assertEquals(Math.sqrt(8), b.r(), tol);
+		assertEquals(0, b.i(), tol);
 		
 		// G.CDBL.subtract();
 		a.setR(1);
@@ -283,9 +342,19 @@ public class TestFloat64Complex {
 		assertEquals(3, c.i(), 0);
 		
 		// G.CDBL.tan();
-		
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.tan().call(a, b);
+		assertEquals(Math.tan(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
+
 		// G.CDBL.tanh();
-		
+		a.setR(Math.PI/2);
+		a.setI(0);
+		G.CDBL.tanh().call(a, b);
+		assertEquals(Math.tanh(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
+
 		// G.CDBL.unity();
 		a = new ComplexFloat64Member(0.1, 0.9);
 		G.CDBL.unity().call(a);
