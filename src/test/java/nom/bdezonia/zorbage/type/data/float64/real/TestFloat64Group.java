@@ -244,4 +244,6 @@ public class TestFloat64Group {
 		assertEquals(0, d.v(), tol);
 		assertEquals(-3, m.v(), tol);
 	}
+	
+	
 }

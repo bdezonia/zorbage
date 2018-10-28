@@ -26,12 +26,16 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
@@ -44,6 +48,263 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
  */
 public class TestFloat64Complex {
 
+	@Test
+	public void mathematicalMethods() {
+		
+		ComplexFloat64Member a = G.CDBL.construct();
+		ComplexFloat64Member b = G.CDBL.construct();
+		ComplexFloat64Member c = G.CDBL.construct();
+		Float64Member d = G.DBL.construct();
+
+		// G.CDBL.acos();
+		
+		// G.CDBL.acosh();
+		
+		// G.CDBL.acot();
+		
+		// G.CDBL.acoth();
+		
+		// G.CDBL.acsc();
+		
+		// G.CDBL.acsch();
+		
+		// G.CDBL.add();
+		a.setR(1);
+		a.setI(2);
+		b.setR(4);
+		b.setI(-1);
+		G.CDBL.add().call(a, b, c);
+		assertEquals(5, c.r(), 0);
+		assertEquals(1, c.i(), 0);
+		
+		// G.CDBL.asec();
+		
+		// G.CDBL.asech();
+		
+		// G.CDBL.asin();
+		
+		// G.CDBL.asinh();
+		
+		// G.CDBL.assign();
+		a.setR(66);
+		a.setI(99);
+		G.CDBL.assign().call(a, b);
+		assertEquals(66,b.r(),0);
+		assertEquals(99,b.i(),0);
+		
+		// G.CDBL.atan();
+		
+		// G.CDBL.atanh();
+		
+		// G.CDBL.cbrt();
+		
+		// G.CDBL.conjugate();
+		a.setR(66);
+		a.setI(99);
+		G.CDBL.conjugate().call(a, b);
+		assertEquals(66,b.r(),0);
+		assertEquals(-99,b.i(),0);
+		
+		// G.CDBL.construct();
+		a = G.CDBL.construct();
+		assertEquals(0, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+
+		// G.CDBL.construct("{14,7}");
+		a = G.CDBL.construct("{14,7}");
+		assertEquals(14, a.r(), 0);
+		assertEquals(7, a.i(), 0);
+		
+		// G.CDBL.construct(other);
+		b = G.CDBL.construct(a);
+		assertEquals(14, b.r(), 0);
+		assertEquals(7, b.i(), 0);
+		
+		// G.CDBL.cos();
+		
+		// G.CDBL.cosh();
+		
+		// G.CDBL.cot();
+		
+		// G.CDBL.coth();
+		
+		// G.CDBL.csc();
+		
+		// G.CDBL.csch();
+		
+		// G.CDBL.divide();
+		a = new ComplexFloat64Member(7,3);
+		b = new ComplexFloat64Member(3, 0);
+		G.CDBL.divide().call(a, b, c);
+		assertEquals(7.0/3, c.r(), 0);
+		assertEquals(1, c.i(), 0);
+
+		// G.CDBL.E();
+		G.CDBL.E().call(a);
+		assertEquals(Math.E, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		
+		// G.CDBL.exp();
+		
+		// G.CDBL.expm1();
+		
+		// G.CDBL.infinite();
+		a = G.CDBL.construct();
+		assertFalse(G.CDBL.isInfinite().call(a));
+		G.CDBL.infinite().call(a);
+		assertTrue(G.CDBL.isInfinite().call(a));
+		
+		// G.CDBL.invert();
+		
+		// G.CDBL.isEqual();
+		a = new ComplexFloat64Member(44,7);
+		b = new ComplexFloat64Member(12,7);
+		assertFalse(G.CDBL.isEqual().call(a, b));
+		b = G.CDBL.construct(a);
+		assertTrue(G.CDBL.isEqual().call(a, b));
+		
+		// G.CDBL.isInfinite();
+		// tested by infinite() test above
+		
+		// G.CDBL.isNaN();
+		// tested by nan() test below
+		
+		// G.CDBL.isNotEqual();
+		a = new ComplexFloat64Member(44,7);
+		b = new ComplexFloat64Member(12,7);
+		assertTrue(G.CDBL.isNotEqual().call(a, b));
+		b = G.CDBL.construct(a);
+		assertFalse(G.CDBL.isNotEqual().call(a, b));
+		
+		// G.CDBL.isZero();
+		// tested by zero() test below
+		
+		// G.CDBL.log();
+		
+		// G.CDBL.log1p();
+		
+		// G.CDBL.multiply();
+		a = new ComplexFloat64Member(-8, 1);
+		b = new ComplexFloat64Member(-2, 0);
+		G.CDBL.multiply().call(a,b,c);
+		assertEquals(16, c.r(), 0);
+		assertEquals(-2, c.i(), 0);
+		
+		// G.CDBL.nan();
+		a = new ComplexFloat64Member(44,7);
+		assertFalse(G.CDBL.isNaN().call(a));
+		G.CDBL.nan().call(a);
+		assertTrue(G.CDBL.isNaN().call(a));
+		
+		// G.CDBL.negate();
+		a = new ComplexFloat64Member(44,7);
+		G.CDBL.negate().call(a, b);
+		assertEquals(-44, b.r(), 0);
+		assertEquals(-7, b.i(), 0);
+		
+		// G.CDBL.norm();
+		a = new ComplexFloat64Member(3,4);
+		G.CDBL.norm().call(a, d);
+		assertEquals(5,d.v(),0);
+		
+		// G.CDBL.PI();
+		G.CDBL.PI().call(a);
+		assertEquals(Math.PI, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		
+		// G.CDBL.pow();
+		a = new ComplexFloat64Member(-7,-4);
+		b = new ComplexFloat64Member(2,0);
+		G.CDBL.pow().call(a, b, c);
+		ComplexFloat64Member t = G.CDBL.construct();
+		G.CDBL.multiply().call(a, a, t);
+		assertEquals(t.r(), c.r(), 0.00000000001);
+		assertEquals(t.i(), c.i(), 0.00000000001);
+		
+		// G.CDBL.power();
+		a = new ComplexFloat64Member(-7,-4);
+		G.CDBL.power().call(2, a, b);
+		G.CDBL.multiply().call(a, a, t);
+		assertEquals(t.r(), b.r(), 0.00000000001);
+		assertEquals(t.i(), b.i(), 0.00000000001);
+		
+		// G.CDBL.random();
+		// TODO: not sure how to test
+		G.CDBL.random().call(a);
+		
+		// G.CDBL.real();
+		a = new ComplexFloat64Member(0.1, 0.9);
+		G.CDBL.real().call(a, d);
+		assertEquals(0.1, d.v(), 0);
+		
+		// G.CDBL.round();
+		d = new Float64Member(1);
+		a = new ComplexFloat64Member(3.3, -4.1);
+		G.CDBL.round().call(Mode.TOWARDS_ORIGIN, d, a, b);
+		assertEquals(3, b.r(), 0);
+		assertEquals(-4, b.i(), 0);
+		
+		// G.CDBL.scale();
+		a = new ComplexFloat64Member(3, -4);
+		b = new ComplexFloat64Member(3, 0);
+		G.CDBL.scale().call(a,b,c);
+		assertEquals(9, c.r(), 0);
+		assertEquals(-12, c.i(), 0);
+		
+		// G.CDBL.sec();
+		
+		// G.CDBL.sech();
+		
+		// G.CDBL.sin();
+		
+		// G.CDBL.sinAndCos();
+		
+		// G.CDBL.sinc();
+		
+		// G.CDBL.sinch();
+		
+		// G.CDBL.sinchpi();
+		
+		// G.CDBL.sincpi();
+		
+		// G.CDBL.sinh();
+		
+		// G.CDBL.sinhAndCosh();
+		
+		// G.CDBL.sqrt();
+		
+		// G.CDBL.subtract();
+		a.setR(1);
+		a.setI(2);
+		b.setR(4);
+		b.setI(-1);
+		G.CDBL.subtract().call(a, b, c);
+		assertEquals(-3, c.r(), 0);
+		assertEquals(3, c.i(), 0);
+		
+		// G.CDBL.tan();
+		
+		// G.CDBL.tanh();
+		
+		// G.CDBL.unity();
+		a = new ComplexFloat64Member(0.1, 0.9);
+		G.CDBL.unity().call(a);
+		assertEquals(1, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		
+		// G.CDBL.unreal();
+		a = new ComplexFloat64Member(0.1, 0.9);
+		G.CDBL.unreal().call(a, b);
+		assertEquals(0, b.r(), 0);
+		assertEquals(0.9, b.i(), 0);
+		
+		// G.CDBL.zero();
+		a = new ComplexFloat64Member(0.1, 0.9);
+		assertFalse(G.CDBL.isZero().call(a));
+		G.CDBL.zero().call(a);
+		assertTrue(G.CDBL.isZero().call(a));
+	}
+	
 	@Test
 	public void run() {
 		long[] times = new long[20];
