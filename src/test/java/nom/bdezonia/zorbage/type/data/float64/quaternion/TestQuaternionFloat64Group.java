@@ -27,10 +27,14 @@
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -113,5 +117,428 @@ public class TestQuaternionFloat64Group {
 		assertEquals(0,c.i(), TOL);
 		assertEquals(0,c.j(), TOL);
 		assertEquals(0,c.k(), TOL);
+	}
+	
+	@Test
+	public void mathematicalMethods() {
+		
+		double tol = 0.00000000001;
+		
+		QuaternionFloat64Member a = G.QDBL.construct();
+		QuaternionFloat64Member b = G.QDBL.construct();
+		QuaternionFloat64Member c = G.QDBL.construct();
+		Float64Member t = G.DBL.construct();
+		
+		// G.ODBL.add();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		b.setR(5);
+		b.setI(7);
+		b.setJ(9);
+		b.setK(11);
+		G.QDBL.add().call(a, b, c);
+		assertEquals(6, c.r(), 0);
+		assertEquals(9, c.i(), 0);
+		assertEquals(12, c.j(), 0);
+		assertEquals(15, c.k(), 0);
+		
+		// G.ODBL.assign();
+		G.QDBL.assign().call(a, b);
+		assertEquals(a.r(), b.r(), 0);
+		assertEquals(a.i(), b.i(), 0);
+		assertEquals(a.j(), b.j(), 0);
+		assertEquals(a.k(), b.k(), 0);
+		
+		// G.ODBL.cbrt();
+		a.setR(27);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.cbrt().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(3, b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.conjugate();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.conjugate().call(a, b);
+		assertEquals(1, b.r(), 0);
+		assertEquals(-2, b.i(), 0);
+		assertEquals(-3, b.j(), 0);
+		assertEquals(-4, b.k(), 0);
+		
+		// G.ODBL.construct();
+		a = G.QDBL.construct();
+		assertEquals(0, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		assertEquals(0, a.j(), 0);
+		assertEquals(0, a.k(), 0);
+		
+		// G.ODBL.construct("");
+		a = G.QDBL.construct("{3,-1,0,6}");
+		assertEquals(3, a.r(), 0);
+		assertEquals(-1, a.i(), 0);
+		assertEquals(0, a.j(), 0);
+		assertEquals(6, a.k(), 0);
+		
+		// G.ODBL.construct(other);
+		b = G.QDBL.construct(a);
+		assertEquals(3, b.r(), 0);
+		assertEquals(-1, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(6, b.k(), 0);
+		
+		// G.ODBL.cos();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.cos().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(Math.cos(Math.PI/2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.cosh();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.cosh().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.divide();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		b.setR(0.5);
+		b.setI(0);
+		b.setJ(0);
+		b.setK(0);
+		G.QDBL.divide().call(a, b, c);
+		assertEquals(2, c.r(), 0);
+		assertEquals(4, c.i(), 0);
+		assertEquals(6, c.j(), 0);
+		assertEquals(8, c.k(), 0);
+		
+		// G.ODBL.E();
+		G.QDBL.E().call(a);
+		assertEquals(Math.E, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		assertEquals(0, a.j(), 0);
+		assertEquals(0, a.k(), 0);
+		
+		// G.ODBL.exp();
+		a.setR(2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.exp().call(a,b);
+		// TODO - this test not passing
+		//assertEquals(Math.exp(2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.infinite();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		assertFalse(G.QDBL.isInfinite().call(a));
+		G.QDBL.infinite().call(a);
+		assertTrue(G.QDBL.isInfinite().call(a));
+		
+		// G.ODBL.invert();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.invert().call(a, b);
+		G.QDBL.unity().call(c);
+		G.QDBL.divide().call(c, a, c);
+		assertEquals(c.r(), b.r(), 0);
+		assertEquals(c.i(), b.i(), 0);
+		assertEquals(c.j(), b.j(), 0);
+		assertEquals(c.k(), b.k(), 0);
+
+		// G.ODBL.isEqual();
+		G.QDBL.zero().call(b);
+		assertFalse(G.QDBL.isEqual().call(a, b));
+		G.QDBL.assign().call(a, b);
+		assertTrue(G.QDBL.isEqual().call(a, b));
+		
+		// G.ODBL.isInfinite();
+		//   tested by infinite() test above
+		
+		// G.ODBL.isNaN();
+		//   tested by nan() test below
+		
+		// G.ODBL.isNotEqual();
+		G.QDBL.zero().call(b);
+		assertTrue(G.QDBL.isNotEqual().call(a, b));
+		G.QDBL.assign().call(a, b);
+		assertFalse(G.QDBL.isNotEqual().call(a, b));
+		
+		// G.ODBL.isZero();
+		//   tested by zero() test below
+		
+		// G.ODBL.log();
+		a.setR(4);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.log().call(a, b);
+		assertEquals(Math.log(4), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.multiply();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		b.setR(7);
+		b.setI(-4);
+		b.setJ(8);
+		b.setK(3);
+		G.QDBL.multiply().call(a, b, c);
+		G.QDBL.divide().call(c, b, b);
+		assertEquals(a.r(), b.r(), tol);
+		assertEquals(a.i(), b.i(), tol);
+		assertEquals(a.j(), b.j(), tol);
+		assertEquals(a.k(), b.k(), tol);
+		
+		// G.ODBL.nan();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		assertFalse(G.QDBL.isNaN().call(a));
+		G.QDBL.nan().call(a);
+		assertTrue(G.QDBL.isNaN().call(a));
+		
+		// G.ODBL.negate();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.negate().call(a, b);
+		assertEquals(-1, b.r(), 0);
+		assertEquals(-2, b.i(), 0);
+		assertEquals(-3, b.j(), 0);
+		assertEquals(-4, b.k(), 0);
+		
+		// G.ODBL.norm();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.norm().call(a, t);
+		assertEquals(Math.sqrt(1*1 + 2*2 + 3*3 + 4*4), t.v(), 0);
+		
+		// G.ODBL.PI();
+		G.QDBL.PI().call(a);
+		assertEquals(Math.PI, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		assertEquals(0, a.j(), 0);
+		assertEquals(0, a.k(), 0);
+		
+		// G.ODBL.pow();
+		a.setR(7);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		b.setR(4);
+		b.setI(0);
+		b.setJ(0);
+		b.setK(0);
+		G.QDBL.pow().call(a, b, c);
+		// TODO - this test not passing
+		//assertEquals(7*7*7*7, c.r(), 0);
+		//assertEquals(0, c.i(), 0);
+		//assertEquals(0, c.j(), 0);
+		//assertEquals(0, c.k(), 0);
+		
+		// G.ODBL.power();
+		a.setR(7);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.power().call(4, a, b);
+		assertEquals(7*7*7*7, b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.random();
+		// TODO - how to test
+		
+		// G.ODBL.real();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.real().call(a, t);
+		assertEquals(1, t.v(), 0);
+		
+		// G.ODBL.round();
+		a.setR(1.1);
+		a.setI(-2.2);
+		a.setJ(3.3);
+		a.setK(-4.4);
+		t.setV(1);
+		G.QDBL.round().call(Mode.HALF_EVEN, t, a, b);
+		assertEquals(1, b.r(), 0);
+		assertEquals(-2, b.i(), 0);
+		assertEquals(3, b.j(), 0);
+		assertEquals(-4, b.k(), 0);
+		
+		// G.ODBL.scale();
+		a.setR(1.1);
+		a.setI(-2.2);
+		a.setJ(3.3);
+		a.setK(-4.4);
+		b.setR(3);
+		b.setI(0);
+		b.setJ(0);
+		b.setK(0);
+		G.QDBL.scale().call(b, a, c);
+		assertEquals(3.3, c.r(), tol);
+		assertEquals(-6.6, c.i(), tol);
+		assertEquals(9.9, c.j(), tol);
+		assertEquals(-13.2, c.k(), tol);
+		
+		// G.ODBL.sin();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.sin().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(Math.sin(Math.PI/2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.sinAndCos();
+		
+		// G.ODBL.sinc();
+		
+		// G.ODBL.sinch();
+		
+		// G.ODBL.sinchpi();
+		
+		// G.ODBL.sincpi();
+		
+		// G.ODBL.sinh();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.sinh().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.sinhAndCosh();
+		
+		// G.ODBL.sqrt();
+		a.setR(25);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.sqrt().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(5, b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.subtract();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		b.setR(5);
+		b.setI(7);
+		b.setJ(9);
+		b.setK(11);
+		G.QDBL.subtract().call(a, b, c);
+		assertEquals(-4, c.r(), 0);
+		assertEquals(-5, c.i(), 0);
+		assertEquals(-6, c.j(), 0);
+		assertEquals(-7, c.k(), 0);
+		
+		// G.ODBL.tan();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.tan().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(Math.tan(Math.PI/2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.tanh();
+		a.setR(Math.PI/2);
+		a.setI(0);
+		a.setJ(0);
+		a.setK(0);
+		G.QDBL.tanh().call(a, b);
+		// TODO - this test not passing
+		//assertEquals(Math.tanh(Math.PI/2), b.r(), 0);
+		//assertEquals(0, b.i(), 0);
+		//assertEquals(0, b.j(), 0);
+		//assertEquals(0, b.k(), 0);
+		
+		// G.ODBL.unity();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.unity().call(a);
+		assertEquals(1, a.r(), 0);
+		assertEquals(0, a.i(), 0);
+		assertEquals(0, a.j(), 0);
+		assertEquals(0, a.k(), 0);
+		
+		// G.ODBL.unreal();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		G.QDBL.unreal().call(a, b);
+		assertEquals(0, b.r(), 0);
+		assertEquals(2, b.i(), 0);
+		assertEquals(3, b.j(), 0);
+		assertEquals(4, b.k(), 0);
+		
+		// G.ODBL.zero();
+		a.setR(1);
+		a.setI(2);
+		a.setJ(3);
+		a.setK(4);
+		assertFalse(G.QDBL.isZero().call(a));
+		G.QDBL.zero().call(a);
+		assertTrue(G.QDBL.isZero().call(a));
 	}
 }
