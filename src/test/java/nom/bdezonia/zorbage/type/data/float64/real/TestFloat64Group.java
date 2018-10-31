@@ -559,26 +559,105 @@ public class TestFloat64Group {
 		G.DBL.div().call(a, b, c);
 		assertEquals(Math.floor(a.v()/b.v()), c.v(), 0);
 		
-		// TODO: these following methods need tests
-		
 		// G.DBL.getExponent();
+		a.setV(4.712345677532);
+		assertEquals(Math.getExponent(a.v()), G.DBL.getExponent().call(a), 0);
+
 		// G.DBL.IEEEremainder();
+		a.setV(4.712345677532);
+		b.setV(4);
+		G.DBL.IEEEremainder().call(a, b, c);
+		assertEquals(Math.IEEEremainder(a.v(), b.v()), c.v(), 0);
+
 		// G.DBL.isGreater();
 		// G.DBL.isGreaterEqual();
 		// G.DBL.isLess();
 		// G.DBL.isLessEqual();
+
+		a.setV(4);
+		
+		b.setV(3);
+		assertTrue(G.DBL.isGreater().call(a, b));
+		assertTrue(G.DBL.isGreaterEqual().call(a, b));
+		assertFalse(G.DBL.isLess().call(a, b));
+		assertFalse(G.DBL.isLessEqual().call(a, b));
+		
+		b.setV(4);
+		assertFalse(G.DBL.isGreater().call(a, b));
+		assertTrue(G.DBL.isGreaterEqual().call(a, b));
+		assertFalse(G.DBL.isLess().call(a, b));
+		assertTrue(G.DBL.isLessEqual().call(a, b));
+		
+		b.setV(5);
+		assertFalse(G.DBL.isGreater().call(a, b));
+		assertFalse(G.DBL.isGreaterEqual().call(a, b));
+		assertTrue(G.DBL.isLess().call(a, b));
+		assertTrue(G.DBL.isLessEqual().call(a, b));
+		
 		// G.DBL.log10();
-		// G.DBL.log10();
+		a.setV(7);
+		G.DBL.log10().call(a, b);
+		assertEquals(Math.log10(7), b.v(), 0);
+		
 		// G.DBL.max();
-		// G.DBL.maxBound();
 		// G.DBL.min();
+		a.setV(1);
+		
+		b.setV(2);
+		G.DBL.max().call(a, b, c);
+		assertEquals(2, c.v(), 0);
+		G.DBL.min().call(a, b, c);
+		assertEquals(1, c.v(), 0);
+
+		b.setV(-1);
+		G.DBL.max().call(a, b, c);
+		assertEquals(1, c.v(), 0);
+		G.DBL.min().call(a, b, c);
+		assertEquals(-1, c.v(), 0);
+
+		// G.DBL.maxBound();
+		G.DBL.maxBound().call(a);
+		assertEquals(Double.MAX_VALUE, a.v(), 0);
+		
 		// G.DBL.minBound();
-		// G.DBL.mod();
-		// G.DBL.negInfinite();
+		G.DBL.minBound().call(a);
+		assertEquals(-Double.MAX_VALUE, a.v(), 0);
+		
 		// G.DBL.pred();
-		// G.DBL.scalb();
-		// G.DBL.signum();
 		// G.DBL.succ();
+		a.setV(4);
+		G.DBL.pred().call(a, b);
+		assertEquals(Math.nextDown(a.v()), b.v(), 0);
+		G.DBL.succ().call(a, b);
+		assertEquals(Math.nextUp(a.v()), b.v(), 0);
+
+		// G.DBL.mod();
+		a.setV(4.2);
+		b.setV(-Math.PI);
+		G.DBL.mod().call(a, b, c);
+		assertEquals(a.v() % b.v(), c.v(), 0);
+		
+		// G.DBL.negInfinite();
+		G.DBL.negInfinite().call(a);
+		assertTrue(Double.isInfinite(a.v()));
+		assertTrue(a.v() < 0);
+		
+		// G.DBL.scalb();
+		a.setV(47.3107);
+		G.DBL.scalb().call(3, a, b);
+		assertEquals(Math.scalb(a.v(), 3), b.v(), 0);
+		
+		// G.DBL.signum();
+		a.setV(-5);
+		assertEquals(-1, G.DBL.signum().call(a), 0);
+		a.setV(0);
+		assertEquals(0, G.DBL.signum().call(a), 0);
+		a.setV(5);
+		assertEquals(1, G.DBL.signum().call(a), 0);
+		
 		// G.DBL.ulp();
+		a.setV(-14.2);
+		G.DBL.ulp().call(a, b);
+		assertEquals(Math.ulp(a.v()), b.v(), 0);
 	}
 }
