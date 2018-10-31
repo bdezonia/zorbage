@@ -57,7 +57,6 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 
@@ -808,12 +807,14 @@ public class OctonionFloat64Group
 		@Override
 		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
 			Float64Member z = new Float64Member();
+			Float64Member z2 = new Float64Member();
 			OctonionFloat64Member tmp = new OctonionFloat64Member();
 			unreal().call(a, tmp);
-			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			norm().call(tmp, z);
+			G.DBL.sinch().call(z, z2);
 			double cos = Math.cos(a.r());
 			double sin = Math.sin(a.r());
-			double sinhc_pi = Float64Group.sinhc_pi(z.v());
+			double sinhc_pi = z2.v();
 			double cosh = Math.cosh(z.v());
 			double ws = cos * sinhc_pi;
 			b.setR(sin * cosh);
@@ -838,12 +839,14 @@ public class OctonionFloat64Group
 		@Override
 		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
 			Float64Member z = new Float64Member();
+			Float64Member z2 = new Float64Member();
 			OctonionFloat64Member tmp = new OctonionFloat64Member();
 			unreal().call(a, tmp);
-			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			norm().call(tmp, z);
+			G.DBL.sinch().call(z, z2);
 			double cos = Math.cos(a.r());
 			double sin = Math.sin(a.r());
-			double sinhc_pi = Float64Group.sinhc_pi(z.v());
+			double sinhc_pi = z2.v();
 			double cosh = Math.cosh(z.v());
 			double wc = -sin * sinhc_pi;
 			b.setR(cos * cosh);
@@ -868,12 +871,14 @@ public class OctonionFloat64Group
 		@Override
 		public void call(OctonionFloat64Member a, OctonionFloat64Member s, OctonionFloat64Member c) {
 			Float64Member z = new Float64Member();
+			Float64Member z2 = new Float64Member();
 			OctonionFloat64Member tmp = new OctonionFloat64Member();
 			unreal().call(a, tmp);
-			norm().call(tmp, z); // TODO or abs() whatever that is in boost
+			norm().call(tmp, z);
+			G.DBL.sinch().call(z, z2);
 			double cos = Math.cos(a.r());
 			double sin = Math.sin(a.r());
-			double sinhc_pi = Float64Group.sinhc_pi(z.v());
+			double sinhc_pi = z2.v();
 			double cosh = Math.cosh(z.v());
 			double ws = cos * sinhc_pi;
 			double wc = -sin * sinhc_pi;
@@ -924,11 +929,13 @@ public class OctonionFloat64Group
 		@Override
 		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
 			Float64Member z = new Float64Member();
+			Float64Member z2 = new Float64Member();
 			OctonionFloat64Member tmp = new OctonionFloat64Member();
 			double u = Math.exp(a.r());
 			unreal().call(a, tmp);
-			norm().call(tmp, z); // TODO or abs() whatever that is in boost
-			double w = Float64Group.sinc_pi(z.v());
+			norm().call(tmp, z);
+			G.DBL.sinc().call(z, z2);
+			double w = z2.v();
 			b.setR(u * Math.cos(z.v()));
 			b.setI(u * w * a.i());
 			b.setJ(u * w * a.j());
