@@ -47,11 +47,11 @@ public class Sinch {
 	public static <T extends Group<T,U> & Invertible<U> & Unity<U> & Hyperbolic<U>,U>
 		void compute(T group, U x, U result)
 	{
-		U tmp = group.construct();
-		if (group.isEqual().call(tmp, x)) {
+		if (group.isZero().call(x)) {
 			group.unity().call(result);
 		}
 		else {
+			U tmp = group.construct();
 			group.sinh().call(x, tmp);
 			group.divide().call(tmp, x, result);
 		}

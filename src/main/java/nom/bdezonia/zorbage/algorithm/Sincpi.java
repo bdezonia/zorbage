@@ -49,11 +49,11 @@ public class Sincpi {
 	public static <T extends Group<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Trigonometric<U> & Constants<U>,U>
 		void compute(T group, U x, U result)
 	{
-		U tmp = group.construct();
-		if (group.isEqual().call(tmp, x)) {
+		if (group.isZero().call(x)) {
 			group.unity().call(result);
 		}
 		else {
+			U tmp = group.construct();
 			U piX = group.construct();
 			group.PI().call(piX);
 			group.multiply().call(piX, x, piX);
