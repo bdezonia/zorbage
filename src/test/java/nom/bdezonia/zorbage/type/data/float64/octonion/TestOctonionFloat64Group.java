@@ -125,15 +125,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.cbrt().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(3, b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(3, b.r(), tol);
+		assertEquals(0, b.i(), tol);
+		assertEquals(0, b.j(), tol);
+		assertEquals(0, b.k(), tol);
+		assertEquals(0, b.l(), tol);
+		assertEquals(0, b.i0(), tol);
+		assertEquals(0, b.j0(), tol);
+		assertEquals(0, b.k0(), tol);
 		
 		// G.ODBL.conjugate();
 		a.setR(1);
@@ -197,15 +196,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.cos().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.cos(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.cos(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.cosh();
 		a.setR(Math.PI/2);
@@ -217,15 +215,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.cosh().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.divide();
 		a.setR(1);
@@ -275,15 +272,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.exp().call(a,b);
-		// TODO - this test fails
-		//assertEquals(Math.exp(2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.exp(2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.infinite();
 		a.setR(1);
@@ -350,15 +346,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.log().call(a, b);
-		// TODO - this test fails
-		//assertEquals(Math.log(4), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.log(4), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.multiply();
 		a.setR(1);
@@ -461,15 +456,14 @@ public class TestOctonionFloat64Group {
 		b.setJ0(0);
 		b.setK0(0);
 		G.ODBL.pow().call(a, b, c);
-		// TODO - this test fails
-		//assertEquals(7*7*7*7, c.r(), 0);
-		//assertEquals(0, c.i(), 0);
-		//assertEquals(0, c.j(), 0);
-		//assertEquals(0, c.k(), 0);
-		//assertEquals(0, c.l(), 0);
-		//assertEquals(0, c.i0(), 0);
-		//assertEquals(0, c.j0(), 0);
-		//assertEquals(0, c.k0(), 0);
+		assertEquals(7*7*7*7, c.r(), tol);
+		assertEquals(0, c.i(), tol);
+		assertEquals(0, c.j(), tol);
+		assertEquals(0, c.k(), tol);
+		assertEquals(0, c.l(), tol);
+		assertEquals(0, c.i0(), tol);
+		assertEquals(0, c.j0(), tol);
+		assertEquals(0, c.k0(), tol);
 		
 		// G.ODBL.power();
 		a.setR(7);
@@ -562,15 +556,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.sin().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.sin(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.sin(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.sinAndCos();
 		
@@ -592,15 +585,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.sinh().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.sinhAndCosh();
 		
@@ -614,15 +606,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.sqrt().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(5, b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(5, b.r(), tol);
+		assertEquals(0, b.i(), tol);
+		assertEquals(0, b.j(), tol);
+		assertEquals(0, b.k(), tol);
+		assertEquals(0, b.l(), tol);
+		assertEquals(0, b.i0(), tol);
+		assertEquals(0, b.j0(), tol);
+		assertEquals(0, b.k0(), tol);
 		
 		// G.ODBL.subtract();
 		a.setR(1);
@@ -661,15 +652,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.tan().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.tan(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.tan(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.ODBL.tanh();
 		a.setR(Math.PI/2);
@@ -681,15 +671,14 @@ public class TestOctonionFloat64Group {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.tanh().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.tanh(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
-		//assertEquals(0, b.l(), 0);
-		//assertEquals(0, b.i0(), 0);
-		//assertEquals(0, b.j0(), 0);
-		//assertEquals(0, b.k0(), 0);
+		assertEquals(Math.tanh(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
+		assertEquals(0, b.j(), tol);
+		assertEquals(0, b.k(), tol);
+		assertEquals(0, b.l(), tol);
+		assertEquals(0, b.i0(), tol);
+		assertEquals(0, b.j0(), tol);
+		assertEquals(0, b.k0(), tol);
 		
 		// G.ODBL.unity();
 		a.setR(1);

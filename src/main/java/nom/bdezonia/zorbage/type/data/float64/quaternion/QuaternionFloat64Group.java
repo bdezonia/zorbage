@@ -322,11 +322,16 @@ public class QuaternionFloat64Group
 			double max = Math.max(Math.abs(a.r()), Math.abs(a.i()));
 			max = Math.max(max, Math.abs(a.j()));
 			max = Math.max(max, Math.abs(a.k()));
-			double sum = (a.r()/max) * (a.r()/max);
-			sum += (a.i()/max) * (a.i()/max);
-			sum += (a.j()/max) * (a.j()/max);
-			sum += (a.k()/max) * (a.k()/max);
-			b.setV( max * Math.sqrt(sum) );
+			if (max == 0) {
+				b.setV(0);
+			}
+			else {
+				double sum = (a.r()/max) * (a.r()/max);
+				sum += (a.i()/max) * (a.i()/max);
+				sum += (a.j()/max) * (a.j()/max);
+				sum += (a.k()/max) * (a.k()/max);
+				b.setV( max * Math.sqrt(sum) );
+			}
 		}
 	};
 	

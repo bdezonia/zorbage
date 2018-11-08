@@ -590,15 +590,20 @@ public class OctonionFloat64Group
 		max = Math.max(max, Math.abs(a.i0()));
 		max = Math.max(max, Math.abs(a.j0()));
 		max = Math.max(max, Math.abs(a.k0()));
-		double sum = (a.r()/max) * (a.r()/max);
-		sum += (a.i()/max) * (a.i()/max);
-		sum += (a.j()/max) * (a.j()/max);
-		sum += (a.k()/max) * (a.k()/max);
-		sum += (a.l()/max) * (a.l()/max);
-		sum += (a.i0()/max) * (a.i0()/max);
-		sum += (a.j0()/max) * (a.j0()/max);
-		sum += (a.k0()/max) * (a.k0()/max);
-		return max * Math.sqrt(sum);
+		if (max == 0) {
+			return 0;
+		}
+		else {
+			double sum = (a.r()/max) * (a.r()/max);
+			sum += (a.i()/max) * (a.i()/max);
+			sum += (a.j()/max) * (a.j()/max);
+			sum += (a.k()/max) * (a.k()/max);
+			sum += (a.l()/max) * (a.l()/max);
+			sum += (a.i0()/max) * (a.i0()/max);
+			sum += (a.j0()/max) * (a.j0()/max);
+			sum += (a.k0()/max) * (a.k0()/max);
+			return max * Math.sqrt(sum);
+		}
 	}
 	
 	private double norm2(OctonionFloat64Member a) {

@@ -156,11 +156,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.cbrt().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(3, b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(3, b.r(), tol);
+		assertEquals(0, b.i(), tol);
+		assertEquals(0, b.j(), tol);
+		assertEquals(0, b.k(), tol);
 		
 		// G.ODBL.conjugate();
 		a.setR(1);
@@ -200,11 +199,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.cos().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.cos(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.cos(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
 		
 		// G.ODBL.cosh();
 		a.setR(Math.PI/2);
@@ -212,11 +210,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.cosh().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
 		
 		// G.ODBL.divide();
 		a.setR(1);
@@ -246,11 +243,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.exp().call(a,b);
-		// TODO - this test not passing
-		//assertEquals(Math.exp(2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.exp(2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
 		
 		// G.ODBL.infinite();
 		a.setR(1);
@@ -367,11 +363,10 @@ public class TestQuaternionFloat64Group {
 		b.setJ(0);
 		b.setK(0);
 		G.QDBL.pow().call(a, b, c);
-		// TODO - this test not passing
-		//assertEquals(7*7*7*7, c.r(), 0);
-		//assertEquals(0, c.i(), 0);
-		//assertEquals(0, c.j(), 0);
-		//assertEquals(0, c.k(), 0);
+		assertEquals(7*7*7*7, c.r(), tol);
+		assertEquals(0, c.i(), tol);
+		assertEquals(0, c.j(), tol);
+		assertEquals(0, c.k(), tol);
 		
 		// G.ODBL.power();
 		a.setR(7);
@@ -428,11 +423,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.sin().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.sin(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.sin(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
 		
 		// G.ODBL.sinAndCos();
 		
@@ -450,11 +444,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.sinh().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
 		
 		// G.ODBL.sinhAndCosh();
 		
@@ -464,11 +457,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.sqrt().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(5, b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(5, b.r(), tol);
+		assertEquals(0, b.i(), tol);
+		assertEquals(0, b.j(), tol);
+		assertEquals(0, b.k(), tol);
 		
 		// G.ODBL.subtract();
 		a.setR(1);
@@ -491,11 +483,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.tan().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.tan(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.tan(Math.PI/2), b.r(), 0);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
 		
 		// G.ODBL.tanh();
 		a.setR(Math.PI/2);
@@ -503,11 +494,10 @@ public class TestQuaternionFloat64Group {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.tanh().call(a, b);
-		// TODO - this test not passing
-		//assertEquals(Math.tanh(Math.PI/2), b.r(), 0);
-		//assertEquals(0, b.i(), 0);
-		//assertEquals(0, b.j(), 0);
-		//assertEquals(0, b.k(), 0);
+		assertEquals(Math.tanh(Math.PI/2), b.r(), tol);
+		assertEquals(0, b.i(), tol);
+		assertEquals(0, b.j(), tol);
+		assertEquals(0, b.k(), tol);
 		
 		// G.ODBL.unity();
 		a.setR(1);
