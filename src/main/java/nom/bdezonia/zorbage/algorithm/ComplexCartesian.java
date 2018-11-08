@@ -40,12 +40,22 @@ public class ComplexCartesian {
 
 	/**
 	 * 
-	 * @param x
-	 * @param y
+	 * @param real
+	 * @param imag
+	 */
+	public static void compute(double real, double imag, ComplexFloat64Member out)
+	{
+		out.setR(real);
+		out.setI(imag);
+	}
+
+	/**
+	 * 
+	 * @param real
+	 * @param imag
 	 */
 	public static void compute(Float64Member real, Float64Member imag, ComplexFloat64Member out)
 	{
-		out.setR(real.v());
-		out.setI(imag.v());
+		compute(real.v(), imag.v(), out);
 	}
 }

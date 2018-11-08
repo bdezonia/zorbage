@@ -43,9 +43,19 @@ public class ComplexPolar {
 	 * @param r
 	 * @param theta
 	 */
+	public static void compute(double r, double theta, ComplexFloat64Member out)
+	{
+		out.setR(r * Math.cos(theta));
+		out.setI(r * Math.sin(theta));
+	}
+
+	/**
+	 * 
+	 * @param r
+	 * @param theta
+	 */
 	public static void compute(Float64Member r, Float64Member theta, ComplexFloat64Member out)
 	{
-		out.setR(r.v() * Math.cos(theta.v()));
-		out.setI(r.v() * Math.sin(theta.v()));
+		compute(r.v(), theta.v(), out);
 	}
 }
