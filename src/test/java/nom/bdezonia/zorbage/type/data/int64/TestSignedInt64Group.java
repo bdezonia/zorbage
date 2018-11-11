@@ -116,12 +116,12 @@ public class TestSignedInt64Group {
 			G.INT64.norm().call(a, c);
 			assertEquals(Math.abs(a.v()), c.v());
 			
-			if (a.v() > Integer.MIN_VALUE) {
+			if (a.v() > Long.MIN_VALUE) {
 				G.INT64.pred().call(a, c);
 				assertEquals(a.v()-1, c.v());
 			}
 			
-			if (a.v() < Integer.MAX_VALUE) {
+			if (a.v() < Long.MAX_VALUE) {
 				G.INT64.succ().call(a, c);
 				assertEquals(a.v()+1, c.v());
 			}
