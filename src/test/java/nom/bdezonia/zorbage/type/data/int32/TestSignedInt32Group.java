@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
@@ -83,4 +84,176 @@ public class TestSignedInt32Group {
 		return total;
 	}
 	
+	@Test
+	public void mathematicalMethods() {
+		SignedInt32Member x = G.INT32.construct();
+		assertEquals(0, x.v());
+	
+		SignedInt32Member y = G.INT32.construct("4431");
+		assertEquals(4431, y.v());
+		
+		SignedInt32Member z = G.INT32.construct(y);
+		assertEquals(4431, z.v());
+		
+		G.INT32.unity().call(z);
+		assertEquals(1, z.v());
+		
+		G.INT32.zero().call(z);
+		assertEquals(0, z.v());
+
+		G.INT32.maxBound().call(x);
+		assertEquals(Integer.MAX_VALUE, x.v());
+		
+		G.INT32.minBound().call(x);
+		assertEquals(Integer.MIN_VALUE, x.v());
+
+		SignedInt32Member a = G.INT32.construct();
+		SignedInt32Member b = G.INT32.construct();
+		SignedInt32Member c = G.INT32.construct();
+		SignedInt32Member d = G.INT32.construct();
+		
+		for (int g = 0; g < 1000; g++) {
+			G.INT32.random().call(a);
+			
+			G.INT32.abs().call(a, c);
+			assertEquals(Math.abs(a.v()), c.v());
+			
+			G.INT32.assign().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			G.INT32.bitNot().call(a, c);
+			assertEquals(~a.v(), c.v());
+			
+			for (int p = 0; p < 32; p++) {
+				
+				G.INT32.bitShiftLeft().call(p, a, c);
+				assertEquals((int)(a.v() << p), c.v());
+				
+				G.INT32.bitShiftRight().call(p, a, c);
+				assertEquals((int)(a.v() >> p), c.v());
+				
+				G.INT32.bitShiftRightFillZero().call(p, a, c);
+				assertEquals((int)(a.v() >>> p), c.v());
+
+				if (a.v() != 0 || p != 0) {
+					G.INT32.power().call(p, a, c);
+					int t = (p == 0) ? 1 : a.v();
+					for (int i = 1; i < p; i++) {
+						t *= a.v();
+					}
+					assertEquals(t, c.v());
+				}
+			}
+			
+			assertEquals((a.v() & 1) == 0, G.INT32.isEven().call(a));
+			
+			assertEquals((a.v() & 1) == 1, G.INT32.isOdd().call(a));
+			
+			assertEquals(a.v()==0, G.INT32.isZero().call(a));
+
+			G.INT32.negate().call(a, c);
+			assertEquals(-a.v(), c.v());
+			
+			G.INT32.norm().call(a, c);
+			assertEquals(Math.abs(a.v()), c.v());
+			
+			if (a.v() > Integer.MIN_VALUE) {
+				G.INT32.pred().call(a, c);
+				assertEquals(a.v()-1, c.v());
+			}
+			
+			if (a.v() < Integer.MAX_VALUE) {
+				G.INT32.succ().call(a, c);
+				assertEquals(a.v()+1, c.v());
+			}
+
+			int v = G.INT32.signum().call(a);
+			if (a.v() < 0)
+				assertEquals(-1, v);
+			else if (a.v() > 0)
+				assertEquals(1, v);
+			else
+				assertEquals(0, v);
+				
+			for (int h = 0; h < 1000; h++) {
+				G.INT32.random().call(b);
+				
+				G.INT32.add().call(a, b, c);
+				assertEquals((int)(a.v()+b.v()), c.v());
+
+				G.INT32.bitAnd().call(a, b, c);
+				assertEquals(a.v() & b.v(), c.v());
+
+				G.INT32.bitAndNot().call(a, b, c);
+				assertEquals(a.v() & ~b.v(), c.v());
+
+				G.INT32.bitOr().call(a, b, c);
+				assertEquals(a.v() | b.v(), c.v());
+
+				G.INT32.bitXor().call(a, b, c);
+				assertEquals(a.v() ^ b.v(), c.v());
+
+				if (a.v() < b.v())
+					assertEquals(-1, (int) G.INT32.compare().call(a, b));
+				else if (a.v() > b.v())
+					assertEquals(1, (int) G.INT32.compare().call(a, b));
+				else
+					assertEquals(0, (int) G.INT32.compare().call(a, b));
+
+				if (b.v() != 0) {
+					
+					G.INT32.div().call(a, b, x);
+					assertEquals(a.v()/b.v(), x.v());
+
+					G.INT32.mod().call(a, b, y);
+					assertEquals(a.v()%b.v(), y.v());
+					
+					G.INT32.divMod().call(a, b, c, d);
+					assertEquals(x.v(), c.v());
+					assertEquals(y.v(), d.v());
+				}
+				
+				assertEquals(a.v()==b.v(), G.INT32.isEqual().call(a, b));
+				
+				assertEquals(a.v()!=b.v(), G.INT32.isNotEqual().call(a, b));
+				
+				assertEquals(a.v()<b.v(), G.INT32.isLess().call(a, b));
+				
+				assertEquals(a.v()<=b.v(), G.INT32.isLessEqual().call(a, b));
+				
+				assertEquals(a.v()>b.v(), G.INT32.isGreater().call(a, b));
+				
+				assertEquals(a.v()>=b.v(), G.INT32.isGreaterEqual().call(a, b));
+
+				G.INT32.max().call(a, b, c);
+				assertEquals((a.v()>b.v() ? a.v() : b.v()), c.v());
+				
+				G.INT32.min().call(a, b, c);
+				assertEquals((a.v()<b.v() ? a.v() : b.v()), c.v());
+
+				G.INT32.multiply().call(a, b, c);
+				assertEquals((int)(a.v()*b.v()), c.v());
+
+				if (a.v() != 0 && b.v() > 0 && b.v() < 100) {
+					G.INT32.pow().call(a, b, c);
+					int t = a.v();
+					for (int i = 1; i < b.v(); i++) {
+						t *= a.v();
+					}
+					assertEquals(t,c.v());
+				}
+
+				G.INT32.scale().call(a, b, c);
+				assertEquals((int)(a.v()*b.v()), c.v());
+
+				G.INT32.subtract().call(a, b, c);
+				assertEquals((int)(a.v()-b.v()), c.v());
+
+			}
+		}
+
+		// tested as an algorithm elsewhere
+		G.INT32.gcd();
+		G.INT32.lcm();
+	}
 }
