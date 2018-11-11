@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int16;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigInteger;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
@@ -105,4 +107,171 @@ public class TestUnsignedInt16Group {
 		assertEquals(0x8002, v.v());
 	}
 
+	@Test
+	public void mathematicalMethods() {
+		UnsignedInt16Member x = G.UINT16.construct();
+		assertEquals(0, x.v);
+	
+		UnsignedInt16Member y = G.UINT16.construct("4431");
+		assertEquals(4431, y.v);
+		
+		UnsignedInt16Member z = G.UINT16.construct(y);
+		assertEquals(4431, z.v);
+		
+		G.UINT16.unity().call(z);
+		assertEquals(1, z.v);
+		
+		G.UINT16.zero().call(z);
+		assertEquals(0, z.v);
+
+		G.UINT16.maxBound().call(x);
+		assertEquals(0xffff, x.v());
+		
+		G.UINT16.minBound().call(x);
+		assertEquals(0, x.v());
+
+		UnsignedInt16Member a = G.UINT16.construct();
+		UnsignedInt16Member b = G.UINT16.construct();
+		UnsignedInt16Member c = G.UINT16.construct();
+		UnsignedInt16Member d = G.UINT16.construct();
+		
+		for (int g = 0; g < 1000; g++) {
+			G.UINT16.random().call(a);
+			
+			G.UINT16.abs().call(a, c);
+			assertEquals(a.v, c.v);
+			
+			G.UINT16.assign().call(a, c);
+			assertEquals(a.v, c.v);
+			
+			G.UINT16.bitNot().call(a, c);
+			assertEquals(~a.v, c.v);
+			
+			for (int p = 0; p < 16; p++) {
+				
+				G.UINT16.bitShiftLeft().call(p, a, c);
+				assertEquals((a.v() << p) & 0xffff, c.v());
+				
+				G.UINT16.bitShiftRight().call(p, a, c);
+				assertEquals(a.v() >> p, c.v());
+				
+				G.UINT16.bitShiftRightFillZero().call(p, a, c);
+				assertEquals(a.v() >>> p, c.v());
+
+				if (a.v() != 0 || p != 0) {
+					G.UINT16.power().call(p, a, c);
+					assertEquals(BigInteger.valueOf(a.v()).pow(p).and(BigInteger.valueOf(0xffff)).longValue(), c.v());
+				}
+			}
+			
+			assertEquals((a.v() & 1) == 0, G.UINT16.isEven().call(a));
+			
+			assertEquals((a.v() & 1) == 1, G.UINT16.isOdd().call(a));
+			
+			assertEquals(a.v()==0, G.UINT16.isZero().call(a));
+
+			G.UINT16.negate().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			G.UINT16.norm().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			if (a.v() > 0) {
+				G.UINT16.pred().call(a, c);
+				assertEquals(a.v()-1, c.v());
+			}
+			
+			if (a.v() < 0xffff) {
+				G.UINT16.succ().call(a, c);
+				assertEquals(a.v()+1, c.v());
+			}
+
+			int v = G.UINT16.signum().call(a);
+			if (a.v() < 0)
+				assertEquals(-1, v);
+			else if (a.v() > 0)
+				assertEquals(1, v);
+			else
+				assertEquals(0, v);
+				
+			for (int h = 0; h < 1000; h++) {
+				G.UINT16.random().call(b);
+				
+				G.UINT16.add().call(a, b, c);
+				assertEquals((a.v()+b.v()) & 0xffff, c.v());
+
+				G.UINT16.bitAnd().call(a, b, c);
+				assertEquals(a.v & b.v, c.v);
+
+				G.UINT16.bitAndNot().call(a, b, c);
+				assertEquals(a.v & ~b.v, c.v);
+
+				G.UINT16.bitOr().call(a, b, c);
+				assertEquals(a.v | b.v, c.v);
+
+				G.UINT16.bitXor().call(a, b, c);
+				assertEquals(a.v ^ b.v, c.v);
+
+				if (a.v() < b.v())
+					assertEquals(-1, (int) G.UINT16.compare().call(a, b));
+				else if (a.v() > b.v())
+					assertEquals(1, (int) G.UINT16.compare().call(a, b));
+				else
+					assertEquals(0, (int) G.UINT16.compare().call(a, b));
+
+				if (b.v() != 0) {
+					
+					G.UINT16.div().call(a, b, x);
+					assertEquals(a.v()/b.v(), x.v());
+
+					G.UINT16.mod().call(a, b, y);
+					assertEquals(a.v()%b.v(), y.v());
+					
+					G.UINT16.divMod().call(a, b, c, d);
+					assertEquals(x.v, c.v);
+					assertEquals(y.v, d.v);
+				}
+				
+				assertEquals(a.v()==b.v(), G.UINT16.isEqual().call(a, b));
+				
+				assertEquals(a.v()!=b.v(), G.UINT16.isNotEqual().call(a, b));
+				
+				assertEquals(a.v()<b.v(), G.UINT16.isLess().call(a, b));
+				
+				assertEquals(a.v()<=b.v(), G.UINT16.isLessEqual().call(a, b));
+				
+				assertEquals(a.v()>b.v(), G.UINT16.isGreater().call(a, b));
+				
+				assertEquals(a.v()>=b.v(), G.UINT16.isGreaterEqual().call(a, b));
+
+				G.UINT16.max().call(a, b, c);
+				assertEquals((a.v()>b.v() ? a.v() : b.v()), c.v());
+				
+				G.UINT16.min().call(a, b, c);
+				assertEquals((a.v()<b.v() ? a.v() : b.v()), c.v());
+
+				G.UINT16.multiply().call(a, b, c);
+				assertEquals((a.v()*b.v())&0xffff, c.v());
+
+				if (a.v() != 0 || b.v() != 0 && a.v() < 10000 && b.v() < 16) {
+					G.UINT16.pow().call(a, b, c);
+					assertEquals(BigInteger.valueOf(a.v()).pow(b.v()).and(BigInteger.valueOf(0xffff)).longValue(),c.v());
+				}
+
+				G.UINT16.scale().call(a, b, c);
+				assertEquals((a.v()*b.v())&0xffff, c.v());
+
+				G.UINT16.subtract().call(a, b, c);
+				assertEquals((a.v()-b.v())&0xffff, c.v());
+
+			}
+		}
+
+		// tested as an algorithm elsewhere
+		G.UINT16.gcd();
+		G.UINT16.lcm();
+		
+		// don't know how to test
+		G.UINT16.random();
+	}
 }
