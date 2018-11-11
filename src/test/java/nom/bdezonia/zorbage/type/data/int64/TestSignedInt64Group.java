@@ -74,8 +74,10 @@ public class TestSignedInt64Group {
 		for (int g = 0; g < 1000; g++) {
 			G.INT64.random().call(a);
 			
-			G.INT64.abs().call(a, c);
-			assertEquals(Math.abs(a.v()), c.v());
+			if (a.v() != Long.MIN_VALUE) {
+				G.INT64.abs().call(a, c);
+				assertEquals(Math.abs(a.v()), c.v());
+			}
 			
 			G.INT64.assign().call(a, c);
 			assertEquals(a.v(), c.v());
@@ -110,11 +112,15 @@ public class TestSignedInt64Group {
 			
 			assertEquals(a.v()==0, G.INT64.isZero().call(a));
 
-			G.INT64.negate().call(a, c);
-			assertEquals(-a.v(), c.v());
+			if (a.v() != Long.MIN_VALUE) {
+				G.INT64.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 			
-			G.INT64.norm().call(a, c);
-			assertEquals(Math.abs(a.v()), c.v());
+			if (a.v() != Long.MIN_VALUE) {
+				G.INT64.norm().call(a, c);
+				assertEquals(Math.abs(a.v()), c.v());
+			}
 			
 			if (a.v() > Long.MIN_VALUE) {
 				G.INT64.pred().call(a, c);

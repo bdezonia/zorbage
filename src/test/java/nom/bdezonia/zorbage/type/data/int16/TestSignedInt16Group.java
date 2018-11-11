@@ -138,8 +138,10 @@ public class TestSignedInt16Group {
 		for (int g = 0; g < 1000; g++) {
 			G.INT16.random().call(a);
 			
-			G.INT16.abs().call(a, c);
-			assertEquals(Math.abs(a.v()), c.v());
+			if (a.v() != Short.MIN_VALUE) {
+				G.INT16.abs().call(a, c);
+				assertEquals(Math.abs(a.v()), c.v());
+			}
 			
 			G.INT16.assign().call(a, c);
 			assertEquals(a.v(), c.v());
@@ -174,11 +176,15 @@ public class TestSignedInt16Group {
 			
 			assertEquals(a.v()==0, G.INT16.isZero().call(a));
 
-			G.INT16.negate().call(a, c);
-			assertEquals(-a.v(), c.v());
+			if (a.v() != Short.MIN_VALUE) {
+				G.INT16.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 			
-			G.INT16.norm().call(a, c);
-			assertEquals(Math.abs(a.v()), c.v());
+			if (a.v() != Short.MIN_VALUE) {
+				G.INT16.norm().call(a, c);
+				assertEquals(Math.abs(a.v()), c.v());
+			}
 			
 			if (a.v() > Short.MIN_VALUE) {
 				G.INT16.pred().call(a, c);

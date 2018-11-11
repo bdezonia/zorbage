@@ -115,8 +115,10 @@ public class TestSignedInt32Group {
 		for (int g = 0; g < 1000; g++) {
 			G.INT32.random().call(a);
 			
-			G.INT32.abs().call(a, c);
-			assertEquals(Math.abs(a.v()), c.v());
+			if (a.v() != Integer.MIN_VALUE) {
+				G.INT32.abs().call(a, c);
+				assertEquals(Math.abs(a.v()), c.v());
+			}
 			
 			G.INT32.assign().call(a, c);
 			assertEquals(a.v(), c.v());
@@ -151,11 +153,15 @@ public class TestSignedInt32Group {
 			
 			assertEquals(a.v()==0, G.INT32.isZero().call(a));
 
-			G.INT32.negate().call(a, c);
-			assertEquals(-a.v(), c.v());
+			if (a.v() != Integer.MIN_VALUE) {
+				G.INT32.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 			
-			G.INT32.norm().call(a, c);
-			assertEquals(Math.abs(a.v()), c.v());
+			if (a.v() != Integer.MIN_VALUE) {
+				G.INT32.norm().call(a, c);
+				assertEquals(Math.abs(a.v()), c.v());
+			}
 			
 			if (a.v() > Integer.MIN_VALUE) {
 				G.INT32.pred().call(a, c);
