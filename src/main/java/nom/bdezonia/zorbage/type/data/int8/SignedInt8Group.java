@@ -401,7 +401,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public Boolean call(SignedInt8Member a) {
-			return a.v() % 2 == 0;
+			return (a.v() & 1) == 0;
 		}
 	};
 	
@@ -415,7 +415,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public Boolean call(SignedInt8Member a) {
-			return a.v() % 2 == 1;
+			return (a.v() & 1) == 1;
 		}
 	};
 	

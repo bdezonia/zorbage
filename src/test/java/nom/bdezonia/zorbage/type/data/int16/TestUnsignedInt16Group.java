@@ -270,8 +270,5 @@ public class TestUnsignedInt16Group {
 		// tested as an algorithm elsewhere
 		G.UINT16.gcd();
 		G.UINT16.lcm();
-		
-		// don't know how to test
-		G.UINT16.random();
 	}
 }

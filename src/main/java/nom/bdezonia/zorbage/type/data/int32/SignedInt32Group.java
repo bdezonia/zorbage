@@ -400,7 +400,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public Boolean call(SignedInt32Member a) {
-			return a.v() % 2 == 0;
+			return (a.v() & 1) == 0;
 		}
 	};
 	
@@ -414,7 +414,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public Boolean call(SignedInt32Member a) {
-			return a.v() % 2 == 1;
+			return (a.v() & 1) == 1;
 		}
 	};
 	
