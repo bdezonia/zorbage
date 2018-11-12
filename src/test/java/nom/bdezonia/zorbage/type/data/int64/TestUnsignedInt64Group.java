@@ -34,7 +34,7 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Member;
 
 /**
  * 
@@ -116,4 +116,169 @@ public class TestUnsignedInt64Group {
 		assertTrue(a.v().equals(new BigInteger("2",16)));
 	}
 
+	@Test
+	public void mathematicalMethods() {
+		
+		BigInteger two64minus1 = BigInteger.ONE.add(BigInteger.ONE).pow(64).subtract(BigInteger.ONE);
+		
+		UnsignedInt64Member x = G.UINT64.construct();
+		assertEquals(0, x.v);
+	
+		UnsignedInt64Member y = G.UINT64.construct("4431");
+		assertEquals(4431, y.v);
+		
+		UnsignedInt64Member z = G.UINT64.construct(y);
+		assertEquals(4431, z.v);
+		
+		G.UINT64.unity().call(z);
+		assertEquals(1, z.v);
+		
+		G.UINT64.zero().call(z);
+		assertEquals(0, z.v);
+
+		G.UINT64.maxBound().call(x);
+		assertEquals(two64minus1, x.v());
+		
+		G.UINT64.minBound().call(x);
+		assertEquals(BigInteger.ZERO, x.v());
+
+		UnsignedInt64Member a = G.UINT64.construct();
+		UnsignedInt64Member b = G.UINT64.construct();
+		UnsignedInt64Member c = G.UINT64.construct();
+		UnsignedInt64Member d = G.UINT64.construct();
+		
+		for (int g = 0; g < 1000; g++) {
+			G.UINT64.random().call(a);
+			
+			G.UINT64.abs().call(a, c);
+			assertEquals(a.v, c.v);
+			
+			G.UINT64.assign().call(a, c);
+			assertEquals(a.v, c.v);
+			
+			G.UINT64.bitNot().call(a, c);
+			assertEquals(~a.v, c.v);
+			
+			for (int p = 0; p < 64; p++) {
+				
+				G.UINT64.bitShiftLeft().call(p, a, c);
+				// TODO - broken
+				assertEquals(a.v().shiftLeft(p), c.v());
+				
+				G.UINT64.bitShiftRight().call(p, a, c);
+				// TODO - broken
+				assertEquals(a.v().shiftRight(p), c.v());
+				
+				G.UINT64.bitShiftRightFillZero().call(p, a, c);
+				assertEquals(a.v().shiftRight(p), c.v());
+
+				if (!a.v().equals(BigInteger.ZERO) || p != 0) {
+					BigInteger t = (p == 0) ? BigInteger.ONE : a.v();
+					for (int i = 1; i < p; i++) {
+						t = t.multiply(a.v());
+					}
+					G.UINT64.power().call(p, a, c);
+					// TODO - broken
+					assertEquals(t, c.v());
+					b.setV(BigInteger.valueOf(p));
+					G.UINT64.pow().call(a, b, c);
+					// TODO - broken
+					assertEquals(t, c.v());
+				}
+			}
+			
+			assertEquals((a.v().and(BigInteger.ONE)).equals(BigInteger.ZERO), G.UINT64.isEven().call(a));
+			
+			assertEquals((a.v().and(BigInteger.ONE)).equals(BigInteger.ONE), G.UINT64.isOdd().call(a));
+			
+			assertEquals(a.v().equals(BigInteger.ZERO), G.UINT64.isZero().call(a));
+
+			G.UINT64.negate().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			G.UINT64.norm().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			if (a.v().compareTo(BigInteger.ZERO) > 0) {
+				G.UINT64.pred().call(a, c);
+				assertEquals(a.v().subtract(BigInteger.ONE), c.v());
+			}
+			
+			if (a.v().compareTo(BigInteger.valueOf(0xffffffffL)) < 0) {
+				G.UINT64.succ().call(a, c);
+				assertEquals(a.v().add(BigInteger.ONE), c.v());
+			}
+
+			int v = G.UINT64.signum().call(a);
+			assertEquals(a.v().signum(), v);
+				
+			for (int h = 0; h < 1000; h++) {
+				G.UINT64.random().call(b);
+				
+				G.UINT64.add().call(a, b, c);
+				assertEquals(a.v().add(b.v()).and(two64minus1), c.v());
+
+				G.UINT64.bitAnd().call(a, b, c);
+				assertEquals(a.v().and(b.v()), c.v());
+
+				G.UINT64.bitAndNot().call(a, b, c);
+				assertEquals(a.v().and(b.v().not()), c.v());
+
+				G.UINT64.bitOr().call(a, b, c);
+				assertEquals(a.v().or(b.v()), c.v());
+
+				G.UINT64.bitXor().call(a, b, c);
+				assertEquals(a.v().xor(b.v()), c.v());
+
+				assertEquals(a.v().compareTo(b.v()), (int) G.UINT64.compare().call(a, b));
+
+				if (!b.v().equals(BigInteger.ZERO)) {
+					
+					G.UINT64.div().call(a, b, x);
+					// TODO - broken
+					assertEquals(a.v().divide(b.v()), x.v());
+
+					G.UINT64.mod().call(a, b, y);
+					// TODO - broken
+					assertEquals(a.v().remainder(b.v()), y.v());
+					
+					G.UINT64.divMod().call(a, b, c, d);
+					assertEquals(x.v, c.v);
+					assertEquals(y.v, d.v);
+				}
+				
+				assertEquals(a.v()==b.v(), G.UINT64.isEqual().call(a, b));
+				
+				assertEquals(a.v()!=b.v(), G.UINT64.isNotEqual().call(a, b));
+				
+				assertEquals(a.v().compareTo(b.v()) < 0, G.UINT64.isLess().call(a, b));
+				
+				assertEquals(a.v().compareTo(b.v()) <= 0, G.UINT64.isLessEqual().call(a, b));
+				
+				assertEquals(a.v().compareTo(b.v()) > 0, G.UINT64.isGreater().call(a, b));
+				
+				assertEquals(a.v().compareTo(b.v()) >= 0, G.UINT64.isGreaterEqual().call(a, b));
+
+				G.UINT64.max().call(a, b, c);
+				assertEquals(a.v().max(b.v()), c.v());
+				
+				G.UINT64.min().call(a, b, c);
+				assertEquals(a.v().min(b.v()), c.v());
+
+				G.UINT64.multiply().call(a, b, c);
+				assertEquals(a.v().multiply(b.v()).and(two64minus1), c.v());
+
+				G.UINT64.scale().call(a, b, c);
+				assertEquals(a.v().multiply(b.v()).and(two64minus1), c.v());
+
+				G.UINT64.subtract().call(a, b, c);
+				assertEquals(a.v().subtract(b.v()).and(two64minus1), c.v());
+
+			}
+		}
+
+		// tested as an algorithm elsewhere
+		G.UINT64.gcd();
+		G.UINT64.lcm();
+	}
 }

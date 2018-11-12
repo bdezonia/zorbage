@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
 
 /**
  * 
@@ -105,4 +106,171 @@ public class TestUnsignedInt32Group {
 		assertEquals(0x80000002L, v.v());
 	}
 
+
+	@Test
+	public void mathematicalMethods() {
+		UnsignedInt32Member x = G.UINT32.construct();
+		assertEquals(0, x.v);
+	
+		UnsignedInt32Member y = G.UINT32.construct("4431");
+		assertEquals(4431, y.v);
+		
+		UnsignedInt32Member z = G.UINT32.construct(y);
+		assertEquals(4431, z.v);
+		
+		G.UINT32.unity().call(z);
+		assertEquals(1, z.v);
+		
+		G.UINT32.zero().call(z);
+		assertEquals(0, z.v);
+
+		G.UINT32.maxBound().call(x);
+		assertEquals(0xffffffffL, x.v());
+		
+		G.UINT32.minBound().call(x);
+		assertEquals(0, x.v());
+
+		UnsignedInt32Member a = G.UINT32.construct();
+		UnsignedInt32Member b = G.UINT32.construct();
+		UnsignedInt32Member c = G.UINT32.construct();
+		UnsignedInt32Member d = G.UINT32.construct();
+		
+		for (int g = 0; g < 1000; g++) {
+			G.UINT32.random().call(a);
+			
+			G.UINT32.abs().call(a, c);
+			assertEquals(a.v, c.v);
+			
+			G.UINT32.assign().call(a, c);
+			assertEquals(a.v, c.v);
+			
+			G.UINT32.bitNot().call(a, c);
+			assertEquals(~a.v, c.v);
+			
+			for (int p = 0; p < 16; p++) {
+				
+				G.UINT32.bitShiftLeft().call(p, a, c);
+				assertEquals((a.v() << p) & 0xffffffffL, c.v());
+				
+				G.UINT32.bitShiftRight().call(p, a, c);
+				assertEquals(a.v() >> p, c.v());
+				
+				G.UINT32.bitShiftRightFillZero().call(p, a, c);
+				assertEquals(a.v() >>> p, c.v());
+
+				if (a.v() != 0 || p != 0) {
+					long t = (p == 0) ? 1 : a.v();
+					for (int i = 1; i < p; i++) {
+						t *= a.v();
+					}
+					G.UINT32.power().call(p, a, c);
+					assertEquals(t & 0xffffffffL, c.v());
+					b.setV(p);
+					G.UINT32.pow().call(a, b, c);
+					assertEquals(t & 0xffffffffL, c.v());
+				}
+			}
+			
+			assertEquals((a.v() & 1) == 0, G.UINT32.isEven().call(a));
+			
+			assertEquals((a.v() & 1) == 1, G.UINT32.isOdd().call(a));
+			
+			assertEquals(a.v()==0, G.UINT32.isZero().call(a));
+
+			G.UINT32.negate().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			G.UINT32.norm().call(a, c);
+			assertEquals(a.v(), c.v());
+			
+			if (a.v() > 0) {
+				G.UINT32.pred().call(a, c);
+				assertEquals(a.v()-1, c.v());
+			}
+			
+			if (a.v() < 0xffff) {
+				G.UINT32.succ().call(a, c);
+				assertEquals(a.v()+1, c.v());
+			}
+
+			int v = G.UINT32.signum().call(a);
+			if (a.v() < 0)
+				assertEquals(-1, v);
+			else if (a.v() > 0)
+				assertEquals(1, v);
+			else
+				assertEquals(0, v);
+				
+			for (int h = 0; h < 1000; h++) {
+				G.UINT32.random().call(b);
+				
+				G.UINT32.add().call(a, b, c);
+				assertEquals((a.v()+b.v()) & 0xffffffffL, c.v());
+
+				G.UINT32.bitAnd().call(a, b, c);
+				assertEquals(a.v & b.v, c.v);
+
+				G.UINT32.bitAndNot().call(a, b, c);
+				assertEquals(a.v & ~b.v, c.v);
+
+				G.UINT32.bitOr().call(a, b, c);
+				assertEquals(a.v | b.v, c.v);
+
+				G.UINT32.bitXor().call(a, b, c);
+				assertEquals(a.v ^ b.v, c.v);
+
+				if (a.v() < b.v())
+					assertEquals(-1, (int) G.UINT32.compare().call(a, b));
+				else if (a.v() > b.v())
+					assertEquals(1, (int) G.UINT32.compare().call(a, b));
+				else
+					assertEquals(0, (int) G.UINT32.compare().call(a, b));
+
+				if (b.v() != 0) {
+					
+					G.UINT32.div().call(a, b, x);
+					assertEquals(a.v()/b.v(), x.v());
+
+					G.UINT32.mod().call(a, b, y);
+					assertEquals(a.v()%b.v(), y.v());
+					
+					G.UINT32.divMod().call(a, b, c, d);
+					assertEquals(x.v, c.v);
+					assertEquals(y.v, d.v);
+				}
+				
+				assertEquals(a.v()==b.v(), G.UINT32.isEqual().call(a, b));
+				
+				assertEquals(a.v()!=b.v(), G.UINT32.isNotEqual().call(a, b));
+				
+				assertEquals(a.v()<b.v(), G.UINT32.isLess().call(a, b));
+				
+				assertEquals(a.v()<=b.v(), G.UINT32.isLessEqual().call(a, b));
+				
+				assertEquals(a.v()>b.v(), G.UINT32.isGreater().call(a, b));
+				
+				assertEquals(a.v()>=b.v(), G.UINT32.isGreaterEqual().call(a, b));
+
+				G.UINT32.max().call(a, b, c);
+				assertEquals((a.v()>b.v() ? a.v() : b.v()), c.v());
+				
+				G.UINT32.min().call(a, b, c);
+				assertEquals((a.v()<b.v() ? a.v() : b.v()), c.v());
+
+				G.UINT32.multiply().call(a, b, c);
+				assertEquals((a.v()*b.v())&0xffffffffL, c.v());
+
+				G.UINT32.scale().call(a, b, c);
+				assertEquals((a.v()*b.v())&0xffffffffL, c.v());
+
+				G.UINT32.subtract().call(a, b, c);
+				assertEquals((a.v()-b.v())&0xffffffffL, c.v());
+
+			}
+		}
+
+		// tested as an algorithm elsewhere
+		G.UINT32.gcd();
+		G.UINT32.lcm();
+	}
 }
