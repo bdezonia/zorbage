@@ -159,8 +159,15 @@ public class TestUnsignedInt16Group {
 				assertEquals(a.v() >>> p, c.v());
 
 				if (a.v() != 0 || p != 0) {
+					int t = (p == 0) ? 1 : a.v();
+					for (int i = 1; i < p; i++) {
+						t *= a.v();
+					}
 					G.UINT16.power().call(p, a, c);
-					assertEquals(BigInteger.valueOf(a.v()).pow(p).and(BigInteger.valueOf(0xffff)).longValue(), c.v());
+					assertEquals(t & 0xffff, c.v());
+					b.setV(p);
+					G.UINT16.pow().call(a, b, c);
+					assertEquals(t & 0xffff, c.v());
 				}
 			}
 			
@@ -252,11 +259,6 @@ public class TestUnsignedInt16Group {
 
 				G.UINT16.multiply().call(a, b, c);
 				assertEquals((a.v()*b.v())&0xffff, c.v());
-
-				if (a.v() != 0 || b.v() != 0 && a.v() < 10000 && b.v() < 16) {
-					G.UINT16.pow().call(a, b, c);
-					assertEquals(BigInteger.valueOf(a.v()).pow(b.v()).and(BigInteger.valueOf(0xffff)).longValue(),c.v());
-				}
 
 				G.UINT16.scale().call(a, b, c);
 				assertEquals((a.v()*b.v())&0xffff, c.v());

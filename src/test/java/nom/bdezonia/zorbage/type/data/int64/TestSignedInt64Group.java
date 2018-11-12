@@ -85,7 +85,7 @@ public class TestSignedInt64Group {
 			G.INT64.bitNot().call(a, c);
 			assertEquals(~a.v(), c.v());
 			
-			for (int p = 0; p < 32; p++) {
+			for (int p = 0; p < 64; p++) {
 				
 				G.INT64.bitShiftLeft().call(p, a, c);
 				assertEquals((long)(a.v() << p), c.v());
@@ -97,11 +97,14 @@ public class TestSignedInt64Group {
 				assertEquals((long)(a.v() >>> p), c.v());
 
 				if (a.v() != 0 || p != 0) {
-					G.INT64.power().call(p, a, c);
 					long t = (p == 0) ? 1 : a.v();
 					for (int i = 1; i < p; i++) {
 						t *= a.v();
 					}
+					G.INT64.power().call(p, a, c);
+					assertEquals(t, c.v());
+					b.setV(p);
+					G.INT64.pow().call(a, b, c);
 					assertEquals(t, c.v());
 				}
 			}
@@ -165,7 +168,7 @@ public class TestSignedInt64Group {
 				else
 					assertEquals(0, (int) G.INT64.compare().call(a, b));
 
-				if (b.v() != 0) {
+				if ((b.v() != 0) && !(a.v() == Long.MIN_VALUE && b.v() == -1)) {
 					
 					G.INT64.div().call(a, b, x);
 					assertEquals(a.v()/b.v(), x.v());
@@ -198,15 +201,6 @@ public class TestSignedInt64Group {
 
 				G.INT64.multiply().call(a, b, c);
 				assertEquals((long)(a.v()*b.v()), c.v());
-
-				if (a.v() != 0 && b.v() > 0 && b.v() < 100) {
-					G.INT64.pow().call(a, b, c);
-					long t = a.v();
-					for (int i = 1; i < b.v(); i++) {
-						t *= a.v();
-					}
-					assertEquals(t,c.v());
-				}
 
 				G.INT64.scale().call(a, b, c);
 				assertEquals((long)(a.v()*b.v()), c.v());

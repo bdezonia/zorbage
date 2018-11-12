@@ -161,11 +161,14 @@ public class TestSignedInt16Group {
 				assertEquals((short)(a.v() >>> p), c.v());
 
 				if (a.v() != 0 || p != 0) {
-					G.INT16.power().call(p, a, c);
 					short t = (p == 0) ? 1 : a.v();
 					for (int i = 1; i < p; i++) {
 						t *= a.v();
 					}
+					G.INT16.power().call(p, a, c);
+					assertEquals(t, c.v());
+					b.setV((short)p);
+					G.INT16.pow().call(a, b, c);
 					assertEquals(t, c.v());
 				}
 			}
@@ -229,7 +232,7 @@ public class TestSignedInt16Group {
 				else
 					assertEquals(0, (int) G.INT16.compare().call(a, b));
 
-				if (b.v() != 0) {
+				if ((b.v() != 0) && !(a.v() == Short.MIN_VALUE && b.v() == -1)) {
 					
 					G.INT16.div().call(a, b, x);
 					assertEquals(a.v()/b.v(), x.v());
@@ -262,15 +265,6 @@ public class TestSignedInt16Group {
 
 				G.INT16.multiply().call(a, b, c);
 				assertEquals((short)(a.v()*b.v()), c.v());
-
-				if (a.v() != 0 && b.v() > 0 && b.v() < 100) {
-					G.INT16.pow().call(a, b, c);
-					short t = a.v();
-					for (int i = 1; i < b.v(); i++) {
-						t *= a.v();
-					}
-					assertEquals(t,c.v());
-				}
 
 				G.INT16.scale().call(a, b, c);
 				assertEquals((short)(a.v()*b.v()), c.v());

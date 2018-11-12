@@ -138,11 +138,14 @@ public class TestSignedInt32Group {
 				assertEquals((int)(a.v() >>> p), c.v());
 
 				if (a.v() != 0 || p != 0) {
-					G.INT32.power().call(p, a, c);
 					int t = (p == 0) ? 1 : a.v();
 					for (int i = 1; i < p; i++) {
 						t *= a.v();
 					}
+					G.INT32.power().call(p, a, c);
+					assertEquals(t, c.v());
+					b.setV(p);
+					G.INT32.pow().call(a, b, c);
 					assertEquals(t, c.v());
 				}
 			}
@@ -206,7 +209,7 @@ public class TestSignedInt32Group {
 				else
 					assertEquals(0, (int) G.INT32.compare().call(a, b));
 
-				if (b.v() != 0) {
+				if ((b.v() != 0) && !(a.v() == Integer.MIN_VALUE && b.v() == -1)) {
 					
 					G.INT32.div().call(a, b, x);
 					assertEquals(a.v()/b.v(), x.v());
@@ -239,15 +242,6 @@ public class TestSignedInt32Group {
 
 				G.INT32.multiply().call(a, b, c);
 				assertEquals((int)(a.v()*b.v()), c.v());
-
-				if (a.v() != 0 && b.v() > 0 && b.v() < 100) {
-					G.INT32.pow().call(a, b, c);
-					int t = a.v();
-					for (int i = 1; i < b.v(); i++) {
-						t *= a.v();
-					}
-					assertEquals(t,c.v());
-				}
 
 				G.INT32.scale().call(a, b, c);
 				assertEquals((int)(a.v()*b.v()), c.v());

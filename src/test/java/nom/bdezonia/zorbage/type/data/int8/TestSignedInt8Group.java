@@ -94,11 +94,14 @@ public class TestSignedInt8Group {
 				assertEquals((byte)(a.v() >>> p), c.v());
 
 				if (a.v() != 0 || p != 0) {
-					G.INT8.power().call(p, a, c);
 					byte t = (p == 0) ? 1 : a.v();
 					for (int i = 1; i < p; i++) {
 						t *= a.v();
 					}
+					G.INT8.power().call(p, a, c);
+					assertEquals(t, c.v());
+					b.setV((byte)p);
+					G.INT8.pow().call(a, b, c);
 					assertEquals(t, c.v());
 				}
 			}
@@ -162,7 +165,7 @@ public class TestSignedInt8Group {
 				else
 					assertEquals(0, (int) G.INT8.compare().call(a, b));
 
-				if (b.v() != 0) {
+				if ((b.v() != 0) && !(a.v() == Byte.MIN_VALUE && b.v() == -1)) {
 					
 					G.INT8.div().call(a, b, x);
 					assertEquals((byte)(a.v()/b.v()), x.v());
@@ -196,7 +199,7 @@ public class TestSignedInt8Group {
 				G.INT8.multiply().call(a, b, c);
 				assertEquals((byte)(a.v()*b.v()), c.v());
 
-				if (a.v() != 0 && b.v() > 0 && b.v() < 100) {
+				if (a.v() != 0 && b.v() > 0) {
 					G.INT8.pow().call(a, b, c);
 					byte t = a.v();
 					for (int i = 1; i < b.v(); i++) {
