@@ -325,6 +325,8 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
+			if (b.v() == -1 && a.v() == Byte.MIN_VALUE)
+				throw new IllegalArgumentException("cannot divide minint by -1");
 			c.setV( (byte) (a.v() / b.v()) );
 		}
 	};

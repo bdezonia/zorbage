@@ -324,6 +324,8 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member d) {
+			if (b.v() == -1 && a.v() == java.lang.Integer.MIN_VALUE)
+				throw new IllegalArgumentException("cannot divide minint by -1");
 			d.setV( a.v() / b.v() );
 		}
 	};
