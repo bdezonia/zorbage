@@ -28,8 +28,6 @@ package nom.bdezonia.zorbage.type.data.int16;
 
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigInteger;
-
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;

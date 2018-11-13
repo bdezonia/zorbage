@@ -27,9 +27,6 @@
 package nom.bdezonia.zorbage.type.data.int64;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.math.BigInteger;
 
 import org.junit.Test;
 
