@@ -574,10 +574,16 @@ public class UnsignedInt64Group
 		public void call(java.lang.Integer count, UnsignedInt64Member a, UnsignedInt64Member b) {
 			if (count < 0)
 				bitShiftLeft().call(Math.abs(count), a, b);
-			else
-				b.setV(a.v().shiftRight(count)); // slow/expensive but correct
-				// TODO ideally I could just do some quick math op but the following doesn't work
-				// b.v = a.v >> count;
+			else {
+				if (count == 0) {
+					b.v = a.v;
+				}
+				else { // count >= 1
+					long val = (0x7FFFFFFFFFFFFFFFl & a.v) >> 1;
+					if (a.v < 0) val |= 0x4000000000000000L;
+					b.v = val >> (count-1);
+				}
+			}
 		}
 	};
 
