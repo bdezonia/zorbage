@@ -45,7 +45,7 @@ public class TestUnsignedInt128 {
 
 	BigInteger two = BigInteger.valueOf(2);
 	BigInteger two128 = two.pow(128);
-	BigInteger allOnes = two128.subtract(BigInteger.ONE);
+	BigInteger two128minus1 = two128.subtract(BigInteger.ONE);
 	
 	@Test
 	public void testStorageMethods() {
@@ -118,7 +118,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.add().call(a,b,c);
-				assertEquals(bigA.add(bigB).and(allOnes), c.v());
+				assertEquals(bigA.add(bigB).and(two128minus1), c.v());
 				
 				c.set(b);
 				G.UINT128.pred().call(c, c);
@@ -130,25 +130,25 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.bitAnd().call(a, b, c);
-				assertEquals(bigA.and(bigB).and(allOnes), c.v());
+				assertEquals(bigA.and(bigB).and(two128minus1), c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.bitOr().call(a, b, c);
-				assertEquals(bigA.or(bigB).and(allOnes), c.v());
+				assertEquals(bigA.or(bigB).and(two128minus1), c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.bitShiftLeft().call(j, a, c);
-				assertEquals(bigA.shiftLeft(j%128).and(allOnes), c.v());
+				assertEquals(bigA.shiftLeft(j%128).and(two128minus1), c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.bitShiftRight().call(j, a, c);
-				assertEquals(bigA.shiftRight(j).and(allOnes), c.v());
+				assertEquals(bigA.shiftRight(j).and(two128minus1), c.v());
 
 				/*
 				c.set(a);
@@ -162,15 +162,15 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.bitXor().call(a, b, c);
-				assertEquals(bigA.xor(bigB).and(allOnes), c.v());
+				assertEquals(bigA.xor(bigB).and(two128minus1), c.v());
 				
 				assertEquals((long)bigA.compareTo(bigB),(long)G.UINT128.compare().call(a, b));
 				
 				UnsignedInt128Member v = G.UINT128.construct();
 				assertEquals(BigInteger.ZERO, v.v());
 				
-				v = G.UINT128.construct(""+(bigA.add(bigB).and(allOnes)));
-				assertEquals(bigA.add(bigB).and(allOnes), v.v());
+				v = G.UINT128.construct(""+(bigA.add(bigB).and(two128minus1)));
+				assertEquals(bigA.add(bigB).and(two128minus1), v.v());
 				
 				v = G.UINT128.construct(a);
 				assertEquals(bigA,v.v());
@@ -212,7 +212,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.maxBound().call(c);
-				assertEquals(allOnes, c.v());
+				assertEquals(two128minus1, c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
@@ -232,7 +232,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.multiply().call(a,b,c);
-				assertEquals(bigA.multiply(bigB).and(allOnes),c.v());
+				assertEquals(bigA.multiply(bigB).and(two128minus1),c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
@@ -246,14 +246,14 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(b, c);
-				BigInteger expected = (bigB.equals(BigInteger.ZERO) ? allOnes : bigB.subtract(BigInteger.ONE));
+				BigInteger expected = (bigB.equals(BigInteger.ZERO) ? two128minus1 : bigB.subtract(BigInteger.ONE));
 				assertEquals(expected, c.v());
 				
 				c.set(b);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.succ().call(b, c);
-				expected = (bigB.equals(allOnes)) ? BigInteger.ZERO : bigB.add(BigInteger.ONE);
+				expected = (bigB.equals(two128minus1)) ? BigInteger.ZERO : bigB.add(BigInteger.ONE);
 				assertEquals(expected, c.v());
 				
 				assertEquals(bigB.signum(), (int) G.UINT128.signum().call(b));
@@ -262,7 +262,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.subtract().call(a, b, c);
-				assertEquals(bigA.subtract(bigB).add(two128).and(allOnes), c.v());
+				assertEquals(bigA.subtract(bigB).add(two128).and(two128minus1), c.v());
 				
 				c.set(a);
 				G.UINT128.pred().call(c, c);
