@@ -186,8 +186,8 @@ public class TestUnsignedInt128 {
 				// TODO: gcd()
 				// TODO: lcm()
 				
-				assertEquals((bigB.mod(two).equals(BigInteger.ZERO)), G.UINT128.isEven().call(b));
-				assertEquals((bigB.mod(two).equals(BigInteger.ONE)), G.UINT128.isOdd().call(b));
+				assertEquals((bigB.and(BigInteger.ONE).equals(BigInteger.ZERO)), G.UINT128.isEven().call(b));
+				assertEquals((bigB.and(BigInteger.ONE).equals(BigInteger.ONE)), G.UINT128.isOdd().call(b));
 				
 				assertEquals(bigA.compareTo(bigB) == 0,G.UINT128.isEqual().call(a, b));
 				assertEquals(bigA.compareTo(bigB) != 0,G.UINT128.isNotEqual().call(a, b));
