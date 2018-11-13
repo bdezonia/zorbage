@@ -313,7 +313,9 @@ public class UnsignedInt64Group
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d) {
-			d.v = a.v / b.v;
+			// TODO ideally I could just do some quick math op but the following doesn't work
+			//d.v = a.v / b.v;
+			d.setV(a.v().divide(b.v())); // expensive/slow but correct
 		}
 	};
 	
@@ -327,7 +329,9 @@ public class UnsignedInt64Group
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member m) {
-			m.v = a.v % b.v;
+			// TODO ideally I could just do some quick math op but the following doesn't work
+			// m.v = a.v % b.v;
+			m.setV(a.v().remainder(b.v())); // expensive/slow but correct
 		}
 	};
 	
@@ -341,8 +345,8 @@ public class UnsignedInt64Group
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d, UnsignedInt64Member m) {
-			d.v = a.v / b.v;
-			m.v = a.v % b.v;
+			DIV.call(a, b, d);
+			MOD.call(a, b, m);
 		}
 	};
 	
@@ -571,29 +575,15 @@ public class UnsignedInt64Group
 			if (count < 0)
 				bitShiftLeft().call(Math.abs(count), a, b);
 			else
-				b.v = a.v >> count;
+				b.setV(a.v().shiftRight(count)); // slow/expensive but correct
+				// TODO ideally I could just do some quick math op but the following doesn't work
+				// b.v = a.v >> count;
 		}
 	};
 
 	@Override
 	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRight() {
 		return BITSHR;
-	}
-
-	private final Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> BITSHRZ =
-			new Procedure3<java.lang.Integer, UnsignedInt64Member, UnsignedInt64Member>()
-	{
-		@Override
-		public void call(java.lang.Integer count, UnsignedInt64Member a, UnsignedInt64Member b) {
-			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
-			else
-				b.v = a.v >>> count;
-		}
-	};
-
-	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRightFillZero() {
-		return BITSHRZ;
 	}
 
 	private final Procedure3<UnsignedInt64Member,UnsignedInt64Member,UnsignedInt64Member> MIN =

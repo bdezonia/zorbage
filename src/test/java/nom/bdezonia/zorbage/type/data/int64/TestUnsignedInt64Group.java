@@ -162,27 +162,21 @@ public class TestUnsignedInt64Group {
 			for (int p = 0; p < 64; p++) {
 				
 				G.UINT64.bitShiftLeft().call(p, a, c);
-				// TODO - broken
-				assertEquals(a.v().shiftLeft(p), c.v());
+				assertEquals(a.v().shiftLeft(p).and(two64minus1), c.v());
 				
 				G.UINT64.bitShiftRight().call(p, a, c);
-				// TODO - broken
 				assertEquals(a.v().shiftRight(p), c.v());
 				
-				G.UINT64.bitShiftRightFillZero().call(p, a, c);
-				assertEquals(a.v().shiftRight(p), c.v());
-
 				if (!a.v().equals(BigInteger.ZERO) || p != 0) {
 					BigInteger t = (p == 0) ? BigInteger.ONE : a.v();
 					for (int i = 1; i < p; i++) {
 						t = t.multiply(a.v());
 					}
+					t = t.and(two64minus1);
 					G.UINT64.power().call(p, a, c);
-					// TODO - broken
 					assertEquals(t, c.v());
 					b.setV(BigInteger.valueOf(p));
 					G.UINT64.pow().call(a, b, c);
-					// TODO - broken
 					assertEquals(t, c.v());
 				}
 			}
@@ -235,11 +229,9 @@ public class TestUnsignedInt64Group {
 				if (!b.v().equals(BigInteger.ZERO)) {
 					
 					G.UINT64.div().call(a, b, x);
-					// TODO - broken
 					assertEquals(a.v().divide(b.v()), x.v());
 
 					G.UINT64.mod().call(a, b, y);
-					// TODO - broken
 					assertEquals(a.v().remainder(b.v()), y.v());
 					
 					G.UINT64.divMod().call(a, b, c, d);
