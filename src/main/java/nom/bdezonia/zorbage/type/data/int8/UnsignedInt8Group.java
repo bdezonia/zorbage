@@ -555,21 +555,10 @@ public class UnsignedInt8Group
 		return BITSHL;
 	}
 
-	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> BITSHR =
-			new Procedure3<java.lang.Integer, UnsignedInt8Member, UnsignedInt8Member>()
-	{
-		@Override
-		public void call(java.lang.Integer count, UnsignedInt8Member a, UnsignedInt8Member b) {
-			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
-			else
-				b.setV( a.v() >> count );
-		}
-	};
-	
 	@Override
 	public  Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> bitShiftRight() {
-		return BITSHR;
+		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
+		return BITSHRZ;
 	}
 
 	private final Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> BITSHRZ =

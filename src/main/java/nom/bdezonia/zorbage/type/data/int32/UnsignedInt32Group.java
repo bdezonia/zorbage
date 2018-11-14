@@ -558,21 +558,10 @@ public class UnsignedInt32Group
 		return BITSHL;
 	}
 
-	private final Procedure3<java.lang.Integer,UnsignedInt32Member,UnsignedInt32Member> BITSHR =
-			new Procedure3<java.lang.Integer, UnsignedInt32Member, UnsignedInt32Member>()
-	{
-		@Override
-		public void call(java.lang.Integer count, UnsignedInt32Member a, UnsignedInt32Member b) {
-			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
-			else
-				b.setV( a.v() >> count );
-		}
-	};
-	
 	@Override
 	public Procedure3<java.lang.Integer,UnsignedInt32Member,UnsignedInt32Member> bitShiftRight() {
-		return BITSHR;
+		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
+		return BITSHRZ;
 	}
 
 	private final Procedure3<java.lang.Integer,UnsignedInt32Member,UnsignedInt32Member> BITSHRZ =

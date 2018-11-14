@@ -593,21 +593,10 @@ public class UnsignedInt2Group
 		return SHL;
 	}
 
-	private final Procedure3<java.lang.Integer, UnsignedInt2Member, UnsignedInt2Member> SHR =
-			new Procedure3<java.lang.Integer, UnsignedInt2Member, UnsignedInt2Member>()
-	{
-		@Override
-		public void call(java.lang.Integer count, UnsignedInt2Member a, UnsignedInt2Member b) {
-			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
-			else
-				b.setV( a.v >> count );
-		}
-	};
-
 	@Override
 	public Procedure3<java.lang.Integer, UnsignedInt2Member, UnsignedInt2Member> bitShiftRight() {
-		return SHR;
+		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
+		return SHRZ;
 	}
 
 	private final Procedure3<java.lang.Integer, UnsignedInt2Member, UnsignedInt2Member> SHRZ =

@@ -567,7 +567,12 @@ public class UnsignedInt64Group
 		return BITSHL;
 	}
 
-	private final Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> BITSHR =
+	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRight() {
+		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
+		return BITSHRZ;
+	}
+
+	private final Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> BITSHRZ =
 			new Procedure3<java.lang.Integer, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
@@ -585,9 +590,8 @@ public class UnsignedInt64Group
 		}
 	};
 
-	@Override
-	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRight() {
-		return BITSHR;
+	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRightfillZero() {
+		return BITSHRZ;
 	}
 
 	private final Procedure3<UnsignedInt64Member,UnsignedInt64Member,UnsignedInt64Member> MIN =
