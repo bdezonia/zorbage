@@ -727,9 +727,15 @@ public class UnsignedInt128Group
 		return BITSHL;
 	}
 
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRight() {
+		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
+		return BITSHRZ;
+	}
+
 	// TODO improve performance
 	
-	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> BITSHR = 
+	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> BITSHRZ = 
 			new Procedure3<java.lang.Integer, UnsignedInt128Member, UnsignedInt128Member>()
 	{
 		@Override
@@ -748,9 +754,8 @@ public class UnsignedInt128Group
 		}
 	};
 	
-	@Override
-	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRight() {
-		return BITSHR;
+	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRightFillZero() {
+		return BITSHRZ;
 	}
 
 	private Procedure1<UnsignedInt128Member> MAXBOUND =
