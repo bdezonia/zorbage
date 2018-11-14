@@ -574,15 +574,13 @@ public class UnsignedInt64Group
 		public void call(java.lang.Integer count, UnsignedInt64Member a, UnsignedInt64Member b) {
 			if (count < 0)
 				bitShiftLeft().call(Math.abs(count), a, b);
+			else if (count == 0)
+				b.v = a.v;
 			else {
-				if (count == 0) {
-					b.v = a.v;
-				}
-				else { // count >= 1
-					long val = (0x7FFFFFFFFFFFFFFFl & a.v) >> 1;
-					if (a.v < 0) val |= 0x4000000000000000L;
-					b.v = val >> (count-1);
-				}
+				// count >= 1
+				long val = (0x7FFFFFFFFFFFFFFFl & a.v) >> 1;
+				if (a.v < 0) val |= 0x4000000000000000L;
+				b.v = val >> (count-1);
 			}
 		}
 	};
