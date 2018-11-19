@@ -28,28 +28,31 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.data.helper.MatrixDiagonalRModuleBridge;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MatrixTrace {
+public class RModuleSum {
 
-	private MatrixTrace() { }
+	private RModuleSum() { }
 	
 	/**
 	 * 
 	 * @param group
-	 * @param matrix
+	 * @param rmod
 	 * @param result
 	 */
 	public static <T extends Group<T,U> & Addition<U>,U>
-		void compute(T group, MatrixMember<U> matrix, U result)
+		void compute(T group, RModuleMember<U> rmod, U result)
 	{
-		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(group, matrix);
-		RModuleSum.compute(group, diag, result);
+		U value = group.construct();
+		group.zero().call(result);
+		for (long i = 0; i < rmod.length(); i++) {
+			rmod.v(i, value);
+			group.add().call(result, value, result);
+		}
 	}
 }
