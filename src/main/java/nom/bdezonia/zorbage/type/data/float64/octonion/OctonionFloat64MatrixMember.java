@@ -29,6 +29,8 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.MatrixReshape;
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -256,8 +258,7 @@ public final class OctonionFloat64MatrixMember
 
 	@Override
 	public void reshape(long rows, long cols) {
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("implement me");
+		MatrixReshape.compute(G.ODBL_MAT, G.ODBL, rows, cols, this);
 	}
 	
 	@Override

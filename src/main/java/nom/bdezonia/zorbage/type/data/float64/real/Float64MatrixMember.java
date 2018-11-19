@@ -29,6 +29,8 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.MatrixReshape;
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -227,7 +229,7 @@ public final class Float64MatrixMember
 
 	@Override
 	public void reshape(long rows, long cols) {
-		throw new IllegalArgumentException("not implemented yet");
+		MatrixReshape.compute(G.DBL_MAT, G.DBL, rows, cols, this);
 	}
 
 	@Override
