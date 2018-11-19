@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.RModuleReshape;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -202,8 +203,7 @@ public final class Float64VectorMember
 
 	@Override
 	public void reshape(long len) {
-		// copy from complex vector code
-		throw new IllegalArgumentException("TODO");
+		RModuleReshape.compute(G.DBL_VEC, G.DBL, len, this);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.RModuleReshape;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -231,8 +232,7 @@ public final class OctonionFloat64RModuleMember
 
 	@Override
 	public void reshape(long len) {
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("implement me");
+		RModuleReshape.compute(G.ODBL_RMOD, G.ODBL, len, this);
 	}
 
 	@Override

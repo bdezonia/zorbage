@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.RModuleReshape;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -207,18 +208,7 @@ public final class ComplexFloat64VectorMember
 
 	@Override
 	public void reshape(long len) {
-		if (len == storage.size()) return;
-		IndexedDataSource<?, ComplexFloat64Member> orig = storage;
-		init(len);
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (long i = orig.size(); i < storage.size(); i++) {
-			storage.set(i, value);
-		}
-		long size = Math.min(storage.size(), orig.size());
-		for (long i = 0; i < size; i++) {
-			orig.get(i, value);
-			storage.set(i, value);
-		}
+		RModuleReshape.compute(G.CDBL_VEC, G.CDBL, len, this);
 	}
 
 	@Override
