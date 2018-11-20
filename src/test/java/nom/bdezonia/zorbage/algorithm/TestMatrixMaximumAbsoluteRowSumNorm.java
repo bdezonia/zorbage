@@ -45,7 +45,7 @@ public class TestMatrixMaximumAbsoluteRowSumNorm {
 	public void test() {
 		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {6,-4,3,-8});
 		Float64Member norm = G.DBL.construct();
-		MatrixMaximumAbsoluteRowSumNorm.compute(G.DBL, a, norm);
+		MatrixMaximumAbsoluteRowSumNorm.compute(G.DBL, G.DBL, a, norm);
 		assertEquals(11, norm.v(), 0);
 	}
 }

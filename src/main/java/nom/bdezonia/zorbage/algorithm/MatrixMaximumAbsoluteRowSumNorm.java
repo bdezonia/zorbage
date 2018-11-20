@@ -26,12 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Norm;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
  * 
@@ -39,13 +38,13 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  *
  */
 public class MatrixMaximumAbsoluteRowSumNorm {
-
+	
 	// http://mathworld.wolfram.com/MatrixNorm.html
 
 	// do not instantiate
 	
 	private MatrixMaximumAbsoluteRowSumNorm() {}
-	
+
 	/**
 	 * 
 	 * @param numGroup
@@ -53,24 +52,22 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 	 * @param norm
 	 */
 	public static
-		<S extends MatrixMember<U>,
-		T extends Group<T,U> & Addition<U> & Norm<U,Float64Member>,
-		U>
-	void compute(T numGroup, S matrix, Float64Member norm)
+		<T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Addition<W> & Ordered<W>, W>
+	void compute(T group1, V group2, MatrixMember<U> matrix, W result)
 	{
-		Float64Member tmp = new Float64Member();
-		Float64Member max = new Float64Member(); 
+		W tmp = group2.construct();
+		W max = group2.construct();
 		for (long r = 0; r < matrix.rows(); r++) {
-			Float64Member rowSum = new Float64Member();
-			U value = numGroup.construct();
+			W colSum = group2.construct();
+			U value = group1.construct();
 			for (long c = 0; c < matrix.cols(); c++) {
 				matrix.v(r, c, value);
-				numGroup.norm().call(value, tmp);
-				G.DBL.add().call(rowSum, tmp, rowSum);
+				group1.norm().call(value, tmp);
+				group2.add().call(colSum, tmp, colSum);
 			}
-			if (G.DBL.isGreater().call(rowSum, max))
-				G.DBL.assign().call(rowSum, max);
+			if (group2.isGreater().call(colSum, max))
+				group2.assign().call(colSum, max);
 		}
-		G.DBL.assign().call(max, norm);
+		group2.assign().call(max, result);
 	}
 }

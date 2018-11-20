@@ -45,7 +45,7 @@ public class TestMatrixMaximumAbsoluteColumnSumNorm {
 	public void test() {
 		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {7,-4,3,-8});
 		Float64Member norm = G.DBL.construct();
-		MatrixMaximumAbsoluteColumnSumNorm.compute(G.DBL, a, norm);
+		MatrixMaximumAbsoluteColumnSumNorm.compute(G.DBL, G.DBL, a, norm);
 		assertEquals(12, norm.v(), 0);
 	}
 }

@@ -46,7 +46,7 @@ public class TestFloat64ComplexMatrixNorms {
 	public void test1() {
 		Float64Member norm = new Float64Member();
 		ComplexFloat64MatrixMember matrix = new ComplexFloat64MatrixMember();
-		MatrixMaximumAbsoluteColumnSumNorm.compute(G.CDBL, matrix, norm);
+		MatrixMaximumAbsoluteColumnSumNorm.compute(G.CDBL, G.DBL, matrix, norm);
 		assertTrue(true);
 	}
 
@@ -54,7 +54,7 @@ public class TestFloat64ComplexMatrixNorms {
 	public void test2() {
 		Float64Member norm = new Float64Member();
 		ComplexFloat64MatrixMember matrix = new ComplexFloat64MatrixMember();
-		MatrixMaximumAbsoluteRowSumNorm.compute(G.CDBL, matrix, norm);
+		MatrixMaximumAbsoluteRowSumNorm.compute(G.CDBL, G.DBL, matrix, norm);
 		assertTrue(true);
 	}
 }
