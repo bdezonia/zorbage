@@ -46,19 +46,19 @@ public class RModuleL0Norm {
 	 * @param rmod
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Unity<U>,U>
-		void compute(T group, RModuleMember<U> rmod, U result)
+	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
+		void compute(T group1, V group2, RModuleMember<U> rmod, W result)
 	{
-		U value = group.construct();
-		U sum = group.construct();
-		U one = group.construct();
-		group.unity().call(one);
+		U value = group1.construct();
+		W sum = group2.construct();
+		W one = group2.construct();
+		group2.unity().call(one);
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			if (!group.isZero().call(value)) {
-				group.add().call(sum, one, sum);
+			if (!group1.isZero().call(value)) {
+				group2.add().call(sum, one, sum);
 			}
 		}
-		group.assign().call(sum, result);
+		group2.assign().call(sum, result);
 	}
 }
