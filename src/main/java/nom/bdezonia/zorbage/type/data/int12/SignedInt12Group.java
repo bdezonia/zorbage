@@ -508,7 +508,7 @@ public class SignedInt12Group
 		public void call(SignedInt12Member a, SignedInt12Member b, SignedInt12Member c) {
 			if (a.v == 0 && b.v == 0)
 				throw new IllegalArgumentException("0^0 is not a number");
-			c.setV((int)Math.pow(a.v, b.v));
+			PowerNonNegative.compute(G.INT12, b.v, a, c);
 		}
 	};
 
