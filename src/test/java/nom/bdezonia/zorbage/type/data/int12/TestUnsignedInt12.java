@@ -106,6 +106,8 @@ public class TestUnsignedInt12 {
 			for (int j = 0; j < 0x1000; j++) {
 				b.setV(j);
 
+				//System.out.println(i+" op "+j);
+				
 				c.set(a);
 				G.UINT12.pred().call(c, c);
 				G.UINT12.pred().call(c, c);
@@ -259,8 +261,8 @@ public class TestUnsignedInt12 {
 					G.UINT12.pred().call(c, c);
 					G.UINT12.pow().call(a, b, c);
 					p = Math.pow(i, j);
-					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j)) & 0xfff, c.v);
+					if (0 <= p && p <= Math.pow(2,51))
+						assertEquals(((long)p) & 0xfff, c.v);
 				}
 				
 				if (i == 0 && j == 0) {
@@ -280,8 +282,8 @@ public class TestUnsignedInt12 {
 					G.UINT12.pred().call(c, c);
 					G.UINT12.power().call(j, a, c);
 					p = Math.pow(i, j);
-					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j)) & 0xfff, c.v);
+					if (0 <= p && p <= Math.pow(2, 51))
+						assertEquals(((long)p) & 0xfff, c.v);
 				}
 				
 				c.set(a);
