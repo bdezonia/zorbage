@@ -259,8 +259,8 @@ public class TestUnsignedInt4 {
 					G.UINT4.pred().call(c, c);
 					G.UINT4.pow().call(a, b, c);
 					p = Math.pow(i, j);
-					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j)) & 0xf, c.v);
+					if (0 <= p && p <= Math.pow(2, 51))
+						assertEquals(((long)p) & 0xf, c.v);
 				}
 				
 				if (i == 0 && j == 0) {
@@ -280,8 +280,8 @@ public class TestUnsignedInt4 {
 					G.UINT4.pred().call(c, c);
 					G.UINT4.power().call(j, a, c);
 					p = Math.pow(i, j);
-					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j)) & 0xf, c.v);
+					if (0 <= p && p <= Math.pow(2, 51))
+						assertEquals(((long)p) & 0xf, c.v);
 				}
 				
 				c.set(a);
