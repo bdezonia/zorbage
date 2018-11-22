@@ -93,20 +93,11 @@ public final class SignedInt2Member
 		}
 		else {
 			// val < -2
-			switch ((val % 4) + 2) {
-			case -1:
+			int mod = val % 4;
+			if (mod == -3)
 				v = 1;
-				break;
-			case 2:
-				v = 0;
-				break;
-			case 1:
-				v = -1;
-				break;
-			default: // case 0:
-				v = -2;
-				break;
-			}
+			else // mod == 0, -1, or -2
+				v = (byte) mod;
 		}
 	}
 	

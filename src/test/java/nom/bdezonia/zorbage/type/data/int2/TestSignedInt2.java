@@ -51,17 +51,11 @@ public class TestSignedInt2 {
 		}
 		else {
 			// val < -2
-			switch ((val % 4) + 2) {
-			case -1:
+			int mod = val % 4;
+			if (mod == -3)
 				return 1;
-			case 2:
-				return 0;
-			case 1:
-				return -1;
-			default: // case 0:
-				return -2;
-			}
-
+			else // mod == 0, -1, or -2
+				return mod;
 		}
 	}
 	
