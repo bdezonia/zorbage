@@ -354,26 +354,11 @@ public class TestSignedInt2 {
 	@Test
 	public void rollover() {
 		SignedInt2Member num = G.INT2.construct();
-		num.setV(-10); assertEquals(-2, num.v);
-		num.setV(-9); assertEquals(-1, num.v);
-		num.setV(-8); assertEquals(0, num.v);
-		num.setV(-7); assertEquals(1, num.v);
-		num.setV(-6); assertEquals(-2, num.v);
-		num.setV(-5); assertEquals(-1, num.v);
-		num.setV(-4); assertEquals(0, num.v);
-		num.setV(-3); assertEquals(1, num.v);
-		num.setV(-2); assertEquals(-2, num.v);
-		num.setV(-1); assertEquals(-1, num.v);
-		num.setV(0); assertEquals(0, num.v);
-		num.setV(1); assertEquals(1, num.v);
-		num.setV(2); assertEquals(-2, num.v);
-		num.setV(3); assertEquals(-1, num.v);
-		num.setV(4); assertEquals(0, num.v);
-		num.setV(5); assertEquals(1, num.v);
-		num.setV(6); assertEquals(-2, num.v);
-		num.setV(7); assertEquals(-1, num.v);
-		num.setV(8); assertEquals(0, num.v);
-		num.setV(9); assertEquals(1, num.v);
-		num.setV(10); assertEquals(-2, num.v);
+		for (int offset : new int[] {0, 4, 8, 12, 16, 20, -4, -8, -12,-16, -20}) {
+			for (int i = -2; i < 2; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v);
+			}
+		}
 	}
 }
