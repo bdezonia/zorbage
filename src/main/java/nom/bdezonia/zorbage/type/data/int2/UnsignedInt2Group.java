@@ -480,7 +480,7 @@ public class UnsignedInt2Group
 		public void call(UnsignedInt2Member a, UnsignedInt2Member b, UnsignedInt2Member c) {
 			if (a.v == 0 && b.v == 0)
 				throw new IllegalArgumentException("0^0 is not a number");
-			c.setV((int)Math.pow(a.v, b.v));
+			PowerNonNegative.compute(G.UINT2, b.v, a, c);
 		}
 	};
 

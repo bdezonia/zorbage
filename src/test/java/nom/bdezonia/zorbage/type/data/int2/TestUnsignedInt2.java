@@ -259,8 +259,8 @@ public class TestUnsignedInt2 {
 					G.UINT2.pred().call(c, c);
 					G.UINT2.pow().call(a, b, c);
 					p = Math.pow(i, j);
-					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j)) & 0x03, c.v);
+					if (0 <= p && p <= Math.pow(2,51))
+						assertEquals(((long)p) & 0x03, c.v);
 				}
 				
 				if (i == 0 && j == 0) {
@@ -280,8 +280,8 @@ public class TestUnsignedInt2 {
 					G.UINT2.pred().call(c, c);
 					G.UINT2.power().call(j, a, c);
 					p = Math.pow(i, j);
-					if (Long.MIN_VALUE >= p && p <= Long.MAX_VALUE)
-						assertEquals(((long)Math.pow(i, j)) & 0x03, c.v);
+					if (0 <= p && p <= Math.pow(2, 51))
+						assertEquals(((long)p) & 0x03, c.v);
 				}
 				
 				c.set(a);
