@@ -87,13 +87,19 @@ public final class SignedInt12Member
 	}
 
 	void setV(int val) {
-		v = (short) (val % 2048);
-		if (v == 0) {
-			
+		if ((val < -2047 || val > 2047) && ((val % 2048) == 0)) {
+			if (((val / -2048) & 1) == 1)
+				v = -2048;
+			else
+				v = 0;
 		}
-		if (val < 0 && v == 0) {
-			v = -2048;
-		}
+		else
+			v = (short) (val % 2048);
+		
+		//if (v == 0 && val != 0) {
+		//	if ((val / 4096) % 2 == 0)
+		//		v = -2048;
+		//}
 	}
 	
 	@Override
@@ -139,34 +145,29 @@ public final class SignedInt12Member
 	@Override
 	public void fromBitArray(long[] arr, int index, int offset) {
 		long oldVals;
-		short tmp;
+		int tmp;
 		if (offset == 60) {
 			// last 4 bits in 1st long
 			oldVals = arr[index] & (0xfL << 60);
-			tmp = (short) (oldVals >>> 60);
+			tmp = (int) (oldVals >>> 60);
 			// first 8 bits in 2nd long
 			oldVals = arr[index+1] & (0xffL);
-			tmp |= (short) (oldVals << 4);
+			tmp |= (int) (oldVals << 4);
 		}
 		else if (offset == 56) {
 			// last 8 bits in 1st long
 			oldVals = arr[index] & (0xffL << 56);
-			tmp = (short) (oldVals >>> 56);
+			tmp = (int) (oldVals >>> 56);
 			// first 4 bits in 2nd long
 			oldVals = arr[index+1] & (0xfL);
-			tmp |= (short) (oldVals << 8);
+			tmp |= (int) (oldVals << 8);
 		}
 		else {
 			// 12 bits in 1st long
 			oldVals = arr[index] & (0xfffL << offset);
-			tmp = (short) (oldVals >>> offset);
+			tmp = (int) (oldVals >>> offset);
 		}
-		if (tmp < 0x800) {
-			v = tmp;
-		}
-		else {
-			v = (short)(0xfff - tmp - 1);
-		}
+		setV(tmp);
 	}
 
 	@Override

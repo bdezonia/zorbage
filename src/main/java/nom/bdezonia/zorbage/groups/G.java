@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
+import nom.bdezonia.zorbage.type.data.int12.SignedInt12Group;
 import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Group;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Group;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Group;
@@ -107,7 +108,7 @@ public class G {
 	//public static final SignedInt2Group INT2 = new SignedInt2Group();
 	//public static final SignedInt4Group INT4 = new SignedInt4Group();
 	public static final SignedInt8Group INT8 = new SignedInt8Group();
-	//public static final SignedInt12Group INT12 = new SignedInt12Group();
+	public static final SignedInt12Group INT12 = new SignedInt12Group();
 	public static final SignedInt16Group INT16 = new SignedInt16Group();
 	public static final SignedInt32Group INT32 = new SignedInt32Group();
 	public static final SignedInt64Group INT64 = new SignedInt64Group();
