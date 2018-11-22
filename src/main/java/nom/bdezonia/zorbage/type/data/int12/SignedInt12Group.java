@@ -608,7 +608,7 @@ public class SignedInt12Group
 		@Override
 		public void call(java.lang.Integer count, SignedInt12Member a, SignedInt12Member b) {
 			if (count < 0)
-				bitShiftRight().call(Math.abs(count), a, b);
+				bitShiftRight().call(-count, a, b);
 			else {
 				count = count % 12;
 				b.setV( a.v << count );
@@ -627,7 +627,7 @@ public class SignedInt12Group
 		@Override
 		public void call(java.lang.Integer count, SignedInt12Member a, SignedInt12Member b) {
 			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
+				bitShiftLeft().call(-count, a, b);
 			else {
 				int val = a.v >> count;
 				if (a.v < 0 && val == 0) {
@@ -651,7 +651,7 @@ public class SignedInt12Group
 		@Override
 		public void call(java.lang.Integer count, SignedInt12Member a, SignedInt12Member b) {
 			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
+				bitShiftLeft().call(-count, a, b);
 			else
 				b.setV( a.v >>> count );
 		}

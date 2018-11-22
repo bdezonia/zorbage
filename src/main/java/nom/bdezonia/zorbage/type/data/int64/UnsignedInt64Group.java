@@ -554,7 +554,7 @@ public class UnsignedInt64Group
 		@Override
 		public void call(java.lang.Integer count, UnsignedInt64Member a, UnsignedInt64Member b) {
 			if (count < 0)
-				bitShiftRight().call(Math.abs(count), a, b);
+				bitShiftRight().call(-count, a, b);
 			else {
 				count = count % 64;
 				b.v = a.v << count;
@@ -578,7 +578,7 @@ public class UnsignedInt64Group
 		@Override
 		public void call(java.lang.Integer count, UnsignedInt64Member a, UnsignedInt64Member b) {
 			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
+				bitShiftLeft().call(-count, a, b);
 			else if (count == 0)
 				b.v = a.v;
 			else {

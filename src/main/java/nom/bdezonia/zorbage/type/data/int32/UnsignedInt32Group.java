@@ -545,7 +545,7 @@ public class UnsignedInt32Group
 		@Override
 		public void call(java.lang.Integer count, UnsignedInt32Member a, UnsignedInt32Member b) {
 			if (count < 0)
-				bitShiftRight().call(Math.abs(count), a, b);
+				bitShiftRight().call(-count, a, b);
 			else {
 				count = count % 32;
 				b.setV( a.v() << count );
@@ -570,7 +570,7 @@ public class UnsignedInt32Group
 		@Override
 		public void call(java.lang.Integer count, UnsignedInt32Member a, UnsignedInt32Member b) {
 			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
+				bitShiftLeft().call(-count, a, b);
 			else
 				b.setV( a.v() >>> count );
 		}

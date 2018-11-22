@@ -559,7 +559,7 @@ public class SignedInt16Group
 		@Override
 		public void call(java.lang.Integer count, SignedInt16Member a, SignedInt16Member b) {
 			if (count < 0)
-				bitShiftRight().call(Math.abs(count), a, b);
+				bitShiftRight().call(-count, a, b);
 			else {
 				count = count % 16;
 				b.setV( (short)(a.v() << count) );
@@ -578,7 +578,7 @@ public class SignedInt16Group
 		@Override
 		public void call(java.lang.Integer count, SignedInt16Member a, SignedInt16Member b) {
 			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
+				bitShiftLeft().call(-count, a, b);
 			else
 				b.setV( (short)(a.v() >> count) );
 		}
@@ -595,7 +595,7 @@ public class SignedInt16Group
 		@Override
 		public void call(java.lang.Integer count, SignedInt16Member a, SignedInt16Member b) {
 			if (count < 0)
-				bitShiftLeft().call(Math.abs(count), a, b);
+				bitShiftLeft().call(-count, a, b);
 			else
 				b.setV( (short)(a.v() >>> count) );
 		}
