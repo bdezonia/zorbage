@@ -45,18 +45,15 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt8;
 public class TestSignedInt2 {
 
 	private int v(int val) {
-		if (val >= -2) {
-			val += 2;
-			return ((val % 4) - 2);
+		int v = val % 4;
+		if (val < 0) {
+			if (v < -2) v += 4;
 		}
 		else {
-			// val < -2
-			int mod = val % 4;
-			if (mod == -3)
-				return 1;
-			else // mod == 0, -1, or -2
-				return mod;
+			// val >= 0
+			if (v > 1) v -= 4;
 		}
+		return v;
 	}
 	
 	private void testStorageMethods(IndexedDataSource<?, SignedInt2Member> data) {
