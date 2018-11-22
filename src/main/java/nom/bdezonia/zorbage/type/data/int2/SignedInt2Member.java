@@ -87,14 +87,27 @@ public final class SignedInt2Member
 	}
 
 	void setV(int val) {
-		if ((val < -1 || val > 1) && ((val % 2) == 0)) {
-			if (((val / -2) & 1) == 1)
-				v = -2;
-			else
-				v = 0;
+		if (val >= -2) {
+			val += 2;
+			v = (byte) ((val % 4) - 2);
 		}
-		else
-			v = (byte) (val % 2);
+		else {
+			// val < -2
+			switch ((val % 4) + 2) {
+			case -1:
+				v = 1;
+				break;
+			case 2:
+				v = 0;
+				break;
+			case 1:
+				v = -1;
+				break;
+			default: // case 0:
+				v = -2;
+				break;
+			}
+		}
 	}
 	
 	@Override

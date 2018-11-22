@@ -45,14 +45,24 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt8;
 public class TestSignedInt2 {
 
 	private int v(int val) {
-		if ((val < -1 || val > 1) && ((val % 2) == 0)) {
-			if (((val / -2) & 1) == 1)
-				return -2;
-			else
-				return 0;
+		if (val >= -2) {
+			val += 2;
+			return ((val % 4) - 2);
 		}
-		else
-			return (short) (val % 2);
+		else {
+			// val < -2
+			switch ((val % 4) + 2) {
+			case -1:
+				return 1;
+			case 2:
+				return 0;
+			case 1:
+				return -1;
+			default: // case 0:
+				return -2;
+			}
+
+		}
 	}
 	
 	private void testStorageMethods(IndexedDataSource<?, SignedInt2Member> data) {
@@ -345,5 +355,31 @@ public class TestSignedInt2 {
 				assertEquals(0, c.v);
 			}
 		}
+	}
+	
+	@Test
+	public void rollover() {
+		SignedInt2Member num = G.INT2.construct();
+		num.setV(-10); assertEquals(-2, num.v);
+		num.setV(-9); assertEquals(-1, num.v);
+		num.setV(-8); assertEquals(0, num.v);
+		num.setV(-7); assertEquals(1, num.v);
+		num.setV(-6); assertEquals(-2, num.v);
+		num.setV(-5); assertEquals(-1, num.v);
+		num.setV(-4); assertEquals(0, num.v);
+		num.setV(-3); assertEquals(1, num.v);
+		num.setV(-2); assertEquals(-2, num.v);
+		num.setV(-1); assertEquals(-1, num.v);
+		num.setV(0); assertEquals(0, num.v);
+		num.setV(1); assertEquals(1, num.v);
+		num.setV(2); assertEquals(-2, num.v);
+		num.setV(3); assertEquals(-1, num.v);
+		num.setV(4); assertEquals(0, num.v);
+		num.setV(5); assertEquals(1, num.v);
+		num.setV(6); assertEquals(-2, num.v);
+		num.setV(7); assertEquals(-1, num.v);
+		num.setV(8); assertEquals(0, num.v);
+		num.setV(9); assertEquals(1, num.v);
+		num.setV(10); assertEquals(-2, num.v);
 	}
 }
