@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -45,16 +46,18 @@ public class TestFloat64ComplexMatrixNorms {
 	@Test
 	public void test1() {
 		Float64Member norm = new Float64Member();
-		ComplexFloat64MatrixMember matrix = new ComplexFloat64MatrixMember();
+		ComplexFloat64MatrixMember matrix = new ComplexFloat64MatrixMember(
+				2, 2, new double[] {4,0,-3, 0, 18, 0, -11, 0});
 		MatrixMaximumAbsoluteColumnSumNorm.compute(G.CDBL, G.DBL, matrix, norm);
-		assertTrue(true);
+		assertEquals(22, norm.v(), 0);
 	}
 
 	@Test
 	public void test2() {
 		Float64Member norm = new Float64Member();
-		ComplexFloat64MatrixMember matrix = new ComplexFloat64MatrixMember();
+		ComplexFloat64MatrixMember matrix = new ComplexFloat64MatrixMember(
+				2, 2, new double[] {4,0,-3, 0, 18, 0, -11, 0});
 		MatrixMaximumAbsoluteRowSumNorm.compute(G.CDBL, G.DBL, matrix, norm);
-		assertTrue(true);
+		assertEquals(29, norm.v(), 0);
 	}
 }
