@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Group;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Group;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Group;
 import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Group;
+import nom.bdezonia.zorbage.type.data.int2.SignedInt2Group;
 import nom.bdezonia.zorbage.type.data.int2.UnsignedInt2Group;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
 import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Group;
@@ -105,7 +106,7 @@ public class G {
 	public static final UnsignedInt64Group UINT64 = new UnsignedInt64Group();
 	public static final UnsignedInt128Group UINT128 = new UnsignedInt128Group();
 
-	//public static final SignedInt2Group INT2 = new SignedInt2Group();
+	public static final SignedInt2Group INT2 = new SignedInt2Group();
 	//public static final SignedInt4Group INT4 = new SignedInt4Group();
 	public static final SignedInt8Group INT8 = new SignedInt8Group();
 	public static final SignedInt12Group INT12 = new SignedInt12Group();
