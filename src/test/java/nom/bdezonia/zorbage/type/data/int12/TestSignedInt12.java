@@ -45,14 +45,18 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt16;
 public class TestSignedInt12 {
 
 	private int v(int val) {
-		if ((val < -2047 || val > 2047) && ((val % 2048) == 0)) {
-			if (((val / -2048) & 1) == 1)
-				return -2048;
-			else
-				return 0;
+		if (val >= -2048) {
+			val += 2048;
+			return (val % 4096) - 2048;
 		}
-		else
-			return (short) (val % 2048);
+		else {
+			// val < -8
+			int mod = val % 4096;
+			if (mod < -2048)
+				return mod + 4096;
+			else // 0 <= mod <= -2047
+				return mod;
+		}
 	}
 	
 	private void testStorageMethods(IndexedDataSource<?, SignedInt12Member> data) {
@@ -343,6 +347,17 @@ public class TestSignedInt12 {
 				G.INT12.pred().call(c, c);
 				G.INT12.zero().call(c);
 				assertEquals(0, c.v);
+			}
+		}
+	}
+	
+	@Test
+	public void rollover() {
+		SignedInt12Member num = G.INT12.construct();
+		for (int offset : new int[] {0, 4096, 8192, 12288, -12288, -8192, -4096}) {
+			for (int i = -2048; i < 2048; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v);
 			}
 		}
 	}

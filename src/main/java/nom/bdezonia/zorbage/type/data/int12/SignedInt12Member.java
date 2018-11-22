@@ -87,19 +87,18 @@ public final class SignedInt12Member
 	}
 
 	void setV(int val) {
-		if ((val < -2047 || val > 2047) && ((val % 2048) == 0)) {
-			if (((val / -2048) & 1) == 1)
-				v = -2048;
-			else
-				v = 0;
+		if (val >= -2048) {
+			val += 2048;
+			v = (short) ((val % 4096) - 2048);
 		}
-		else
-			v = (short) (val % 2048);
-		
-		//if (v == 0 && val != 0) {
-		//	if ((val / 4096) % 2 == 0)
-		//		v = -2048;
-		//}
+		else {
+			// val < -8
+			int mod = val % 4096;
+			if (mod < -2048)
+				v = (short) (mod + 4096);
+			else // 0 <= mod <= -2047
+				v = (short) mod;
+		}
 	}
 	
 	@Override
