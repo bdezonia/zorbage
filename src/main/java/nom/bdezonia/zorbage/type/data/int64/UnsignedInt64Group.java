@@ -345,8 +345,8 @@ public class UnsignedInt64Group
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d, UnsignedInt64Member m) {
-			DIV.call(a, b, d);
-			MOD.call(a, b, m);
+			div().call(a, b, d);
+			mod().call(a, b, m);
 		}
 	};
 	
