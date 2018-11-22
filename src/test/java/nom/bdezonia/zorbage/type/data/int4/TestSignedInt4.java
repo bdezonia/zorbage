@@ -45,14 +45,18 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt8;
 public class TestSignedInt4 {
 
 	private int v(int val) {
-		if ((val < -7 || val > 7) && ((val % 8) == 0)) {
-			if (((val / -8) & 1) == 1)
-				return -8;
-			else
-				return 0;
+		if (val >= -8) {
+			val += 8;
+			return ((val % 16) - 8);
 		}
-		else
-			return (short) (val % 8);
+		else {
+			// val < -8
+			int mod = val % 16;
+			if (mod < -8)
+				return (mod + 16);
+			else // 0 <= mod <= -7
+				return mod;
+		}
 	}
 	
 	private void testStorageMethods(IndexedDataSource<?, SignedInt4Member> data) {
@@ -345,5 +349,58 @@ public class TestSignedInt4 {
 				assertEquals(0, c.v);
 			}
 		}
+	}
+	
+	@Test
+	public void rollover() {
+		SignedInt4Member num = G.INT4.construct();
+		num.setV(-20); assertEquals(-4, num.v);
+		num.setV(-19); assertEquals(-3, num.v);
+		num.setV(-18); assertEquals(-2, num.v);
+		num.setV(-17); assertEquals(-1, num.v);
+		num.setV(-16); assertEquals(0, num.v);
+		num.setV(-15); assertEquals(1, num.v);
+		num.setV(-14); assertEquals(2, num.v);
+		num.setV(-13); assertEquals(3, num.v);
+		num.setV(-12); assertEquals(4, num.v);
+		num.setV(-11); assertEquals(5, num.v);
+		num.setV(-10); assertEquals(6, num.v);
+		num.setV(-9); assertEquals(7, num.v);
+		num.setV(-8); assertEquals(-8, num.v);
+		num.setV(-7); assertEquals(-7, num.v);
+		num.setV(-6); assertEquals(-6, num.v);
+		num.setV(-5); assertEquals(-5, num.v);
+		num.setV(-4); assertEquals(-4, num.v);
+		num.setV(-3); assertEquals(-3, num.v);
+		num.setV(-2); assertEquals(-2, num.v);
+		num.setV(-1); assertEquals(-1, num.v);
+		num.setV(0); assertEquals(0, num.v);
+		num.setV(1); assertEquals(1, num.v);
+		num.setV(2); assertEquals(2, num.v);
+		num.setV(3); assertEquals(3, num.v);
+		num.setV(4); assertEquals(4, num.v);
+		num.setV(5); assertEquals(5, num.v);
+		num.setV(6); assertEquals(6, num.v);
+		num.setV(7); assertEquals(7, num.v);
+		num.setV(8); assertEquals(-8, num.v);
+		num.setV(9); assertEquals(-7, num.v);
+		num.setV(10); assertEquals(-6, num.v);
+		num.setV(11); assertEquals(-5, num.v);
+		num.setV(12); assertEquals(-4, num.v);
+		num.setV(13); assertEquals(-3, num.v);
+		num.setV(14); assertEquals(-2, num.v);
+		num.setV(15); assertEquals(-1, num.v);
+		num.setV(16); assertEquals(0, num.v);
+		num.setV(17); assertEquals(1, num.v);
+		num.setV(18); assertEquals(2, num.v);
+		num.setV(19); assertEquals(3, num.v);
+		num.setV(20); assertEquals(4, num.v);
+		num.setV(21); assertEquals(5, num.v);
+		num.setV(22); assertEquals(6, num.v);
+		num.setV(23); assertEquals(7, num.v);
+		num.setV(24); assertEquals(-8, num.v);
+		num.setV(25); assertEquals(-7, num.v);
+		num.setV(26); assertEquals(-6, num.v);
+		num.setV(27); assertEquals(-5, num.v);
 	}
 }

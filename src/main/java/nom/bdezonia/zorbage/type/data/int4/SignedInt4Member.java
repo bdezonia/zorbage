@@ -87,14 +87,18 @@ public final class SignedInt4Member
 	}
 
 	void setV(int val) {
-		if ((val < -7 || val > 7) && ((val % 8) == 0)) {
-			if (((val / -8) & 1) == 1)
-				v = -8;
-			else
-				v = 0;
+		if (val >= -8) {
+			val += 8;
+			v = (byte) ((val % 16) - 8);
 		}
-		else
-			v = (byte) (val % 8);
+		else {
+			// val < -8
+			int mod = val % 16;
+			if (mod < -8)
+				v = (byte) (mod + 16);
+			else // 0 <= mod <= -7
+				v = (byte) mod;
+		}
 	}
 	
 	@Override
