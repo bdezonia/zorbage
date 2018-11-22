@@ -154,7 +154,7 @@ public class TestSignedInt2 {
 				G.INT2.pred().call(c, c);
 				if (j >= 0) {
 					G.INT2.bitShiftLeft().call(j, a, c);
-					assertEquals(v(i << (j%12)), c.v);
+					assertEquals(v(i << (j%2)), c.v);
 				}
 				
 				c.set(a);

@@ -342,10 +342,6 @@ public class SignedInt2Group
 		return MAX;
 	}
 
-	{
-
-	}
-
 	private final Procedure2<SignedInt2Member, SignedInt2Member> ABS =
 			new Procedure2<SignedInt2Member, SignedInt2Member>()
 	{
@@ -431,6 +427,8 @@ public class SignedInt2Group
 	{
 		@Override
 		public void call(SignedInt2Member a, SignedInt2Member b, SignedInt2Member d) {
+			if (b.v == -1 && a.v == -2)
+				throw new IllegalArgumentException("cannot divide minint by -1");
 			d.setV(a.v / b.v);
 		}
 	};
