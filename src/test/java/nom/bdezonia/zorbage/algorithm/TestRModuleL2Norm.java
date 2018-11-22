@@ -30,10 +30,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.algorithm.RModuleL0Norm;
-import nom.bdezonia.zorbage.algorithm.RModuleL1Norm;
 import nom.bdezonia.zorbage.algorithm.RModuleL2Norm;
-import nom.bdezonia.zorbage.algorithm.RModuleLInfinityNorm;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModuleMember;
