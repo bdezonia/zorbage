@@ -7,7 +7,7 @@ Goals:
 Support for:
   1) integers, reals, complex numbers, quaternions, octonions
   2) numbers, vectors, matrices, and tensors
-  3) various precisions: 1-bit to 128-bit
+  3) various precisions: 1-bit to 128-bit (signed and unsigned and float)
   4) very large datasets
   5) generic programming
   6) group theoretical algorithms
