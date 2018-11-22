@@ -51,32 +51,32 @@ public class TestMatrixLInfinityNorm {
 	@Test
 	public void testReal() {
 		Float64Member result = G.DBL.construct();
-		Float64MatrixMember rmod = new Float64MatrixMember(2, 3, new double[] {0,-2,4,-6,8,-10});
-		MatrixLInfinityNorm.compute(G.DBL, G.DBL, rmod, result);
+		Float64MatrixMember mat = new Float64MatrixMember(2, 3, new double[] {0,-2,4,-6,8,-10});
+		MatrixLInfinityNorm.compute(G.DBL, G.DBL, mat, result);
 		assertEquals(10, result.v(), 0);
 	}
 
 	@Test
 	public void testComplex() {
 		Float64Member result = G.DBL.construct();
-		ComplexFloat64MatrixMember rmod = new ComplexFloat64MatrixMember(2, 3, new double[] {0, 0, -2, 0, 4, 0, -6, 0, 8, 0, -10, 0});
-		MatrixLInfinityNorm.compute(G.CDBL, G.DBL, rmod, result);
+		ComplexFloat64MatrixMember mat = new ComplexFloat64MatrixMember(2, 3, new double[] {0, 0, -2, 0, 4, 0, -6, 0, 8, 0, -10, 0});
+		MatrixLInfinityNorm.compute(G.CDBL, G.DBL, mat, result);
 		assertEquals(10, result.v(), 0);
 	}
 
 	@Test
 	public void testQuat() {
 		Float64Member result = G.DBL.construct();
-		QuaternionFloat64MatrixMember rmod = new QuaternionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, -2, 0, 0, 0, 4, 0, 0, 0, -6, 0, 0, 0, 8, 0, 0, 0, -10, 0, 0, 0});
-		MatrixLInfinityNorm.compute(G.QDBL, G.DBL, rmod, result);
+		QuaternionFloat64MatrixMember mat = new QuaternionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, -2, 0, 0, 0, 4, 0, 0, 0, -6, 0, 0, 0, 8, 0, 0, 0, -10, 0, 0, 0});
+		MatrixLInfinityNorm.compute(G.QDBL, G.DBL, mat, result);
 		assertEquals(10, result.v(), 0);
 	}
 
 	@Test
 	public void testOct() {
 		Float64Member result = G.DBL.construct();
-		OctonionFloat64MatrixMember rmod = new OctonionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0});
-		MatrixLInfinityNorm.compute(G.ODBL, G.DBL, rmod, result);
+		OctonionFloat64MatrixMember mat = new OctonionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0});
+		MatrixLInfinityNorm.compute(G.ODBL, G.DBL, mat, result);
 		assertEquals(10, result.v(), 0);
 	}
 }
