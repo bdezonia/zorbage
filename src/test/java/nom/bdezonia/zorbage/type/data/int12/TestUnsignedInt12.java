@@ -188,8 +188,8 @@ public class TestUnsignedInt12 {
 				// TODO: gcd()
 				// TODO: lcm()
 				
-				assertEquals((i%2 == 0), G.UINT12.isEven().call(a));
-				assertEquals((i%2 == 1), G.UINT12.isOdd().call(a));
+				assertEquals((i&1) == 0, G.UINT12.isEven().call(a));
+				assertEquals((i&1) == 1, G.UINT12.isOdd().call(a));
 				
 				assertEquals(i==j,G.UINT12.isEqual().call(a, b));
 				assertEquals(i!=j,G.UINT12.isNotEqual().call(a, b));
