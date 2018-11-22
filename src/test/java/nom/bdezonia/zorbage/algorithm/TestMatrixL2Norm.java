@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64;
+package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
@@ -46,61 +46,37 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestMatrixNorms {
+public class TestMatrixL2Norm {
 
 	@Test
 	public void testReal() {
 		Float64Member result = G.DBL.construct();
 		Float64MatrixMember rmod = new Float64MatrixMember(2, 3, new double[] {0,-2,4,-6,8,-10});
-		MatrixL0Norm.compute(G.DBL, G.DBL, rmod, result);
-		assertEquals(5, result.v(), 0);
-		MatrixL1Norm.compute(G.DBL, G.DBL, rmod, result);
-		assertEquals(30, result.v(), 0);
 		MatrixL2Norm.compute(G.DBL, G.DBL, rmod, result);
 		assertEquals(Math.sqrt(220), result.v(), 0);
-		MatrixLInfinityNorm.compute(G.DBL, G.DBL, rmod, result);
-		assertEquals(10, result.v(), 0);
 	}
 
 	@Test
 	public void testComplex() {
 		Float64Member result = G.DBL.construct();
 		ComplexFloat64MatrixMember rmod = new ComplexFloat64MatrixMember(2, 3, new double[] {0, 0, -2, 0, 4, 0, -6, 0, 8, 0, -10, 0});
-		MatrixL0Norm.compute(G.CDBL, G.DBL, rmod, result);
-		assertEquals(5, result.v(), 0);
-		MatrixL1Norm.compute(G.CDBL, G.DBL, rmod, result);
-		assertEquals(30, result.v(), 0);
 		MatrixL2Norm.compute(G.CDBL, G.DBL, rmod, result);
 		assertEquals(Math.sqrt(220), result.v(), 0);
-		MatrixLInfinityNorm.compute(G.CDBL, G.DBL, rmod, result);
-		assertEquals(10, result.v(), 0);
 	}
 
 	@Test
 	public void testQuat() {
 		Float64Member result = G.DBL.construct();
 		QuaternionFloat64MatrixMember rmod = new QuaternionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, -2, 0, 0, 0, 4, 0, 0, 0, -6, 0, 0, 0, 8, 0, 0, 0, -10, 0, 0, 0});
-		MatrixL0Norm.compute(G.QDBL, G.DBL, rmod, result);
-		assertEquals(5, result.v(), 0);
-		MatrixL1Norm.compute(G.QDBL, G.DBL, rmod, result);
-		assertEquals(30, result.v(), 0);
 		MatrixL2Norm.compute(G.QDBL, G.DBL, rmod, result);
 		assertEquals(Math.sqrt(220), result.v(), 0);
-		MatrixLInfinityNorm.compute(G.QDBL, G.DBL, rmod, result);
-		assertEquals(10, result.v(), 0);
 	}
 
 	@Test
 	public void testOct() {
 		Float64Member result = G.DBL.construct();
 		OctonionFloat64MatrixMember rmod = new OctonionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0});
-		MatrixL0Norm.compute(G.ODBL, G.DBL, rmod, result);
-		assertEquals(5, result.v(), 0);
-		MatrixL1Norm.compute(G.ODBL, G.DBL, rmod, result);
-		assertEquals(30, result.v(), 0);
 		MatrixL2Norm.compute(G.ODBL, G.DBL, rmod, result);
 		assertEquals(Math.sqrt(220), result.v(), 0);
-		MatrixLInfinityNorm.compute(G.ODBL, G.DBL, rmod, result);
-		assertEquals(10, result.v(), 0);
 	}
 }
