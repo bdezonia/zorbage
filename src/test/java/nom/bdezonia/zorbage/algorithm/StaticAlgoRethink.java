@@ -46,7 +46,7 @@ public class StaticAlgoRethink {
 		group.add().call(result, result, result);
 	}
 	
-	private class OO<T extends Group<T,U> & Addition<U>, U>
+	private class ClassAlgoRethink<T extends Group<T,U> & Addition<U>, U>
 		implements Procedure2<T,U>
 	{
 		@Override
@@ -67,7 +67,7 @@ public class StaticAlgoRethink {
 		
 		// OR THIS?
 		
-		new OO<Float64Group,Float64Member>().call(G.DBL, result);
+		new ClassAlgoRethink<Float64Group,Float64Member>().call(G.DBL, result);
 		
 		// I really don't like the second. It requires an object allocation and it requires
 		// the specifying of the template parameter types.
