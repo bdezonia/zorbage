@@ -56,7 +56,7 @@ public class TestTaylorEstimateExp {
 		Float64Member x = new Float64Member(0.135);
 		Float64Member result = G.DBL.construct();
 		TaylorEstimateExp.compute(11, G.DBL, G.DBL, x, result);
-		assertEquals(Math.exp(0.135), result.v(), 0.0000000000000001);
+		assertEquals(Math.exp(x.v()), result.v(), 0.0000000000000001);
 	}
 	
 	//@Test

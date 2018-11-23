@@ -56,7 +56,7 @@ public class TestTaylorEstimateCos {
 		Float64Member x = new Float64Member(Math.PI/4);
 		Float64Member result = G.DBL.construct();
 		TaylorEstimateCos.compute(8, G.DBL, G.DBL, x, result);
-		assertEquals(Math.sqrt(2)/2, result.v(), 0.00000000000001);
+		assertEquals(Math.cos(x.v()), result.v(), 0.00000000000001);
 	}
 	
 	//@Test

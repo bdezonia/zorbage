@@ -56,7 +56,7 @@ public class TestTaylorEstimateSinh {
 		Float64Member x = new Float64Member(Math.PI/4);
 		Float64Member result = G.DBL.construct();
 		TaylorEstimateSinh.compute(8, G.DBL, G.DBL, x, result);
-		assertEquals(Math.sinh(Math.PI/4), result.v(), 0.00000000000001);
+		assertEquals(Math.sinh(x.v()), result.v(), 0.00000000000001);
 	}
 	
 	//@Test
