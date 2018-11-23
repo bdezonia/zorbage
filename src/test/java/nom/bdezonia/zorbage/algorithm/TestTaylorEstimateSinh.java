@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -52,10 +53,10 @@ public class TestTaylorEstimateSinh {
 	
 	@Test
 	public void test1() {
-		Float64Member x = new Float64Member(0.135);
+		Float64Member x = new Float64Member(Math.PI/4);
 		Float64Member result = G.DBL.construct();
 		TaylorEstimateSinh.compute(8, G.DBL, G.DBL, x, result);
-		assertTrue(true);
+		assertEquals(Math.sinh(Math.PI/4), result.v(), 0.00000000000001);
 	}
 	
 	//@Test
