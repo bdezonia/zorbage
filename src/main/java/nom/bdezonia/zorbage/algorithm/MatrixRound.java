@@ -40,6 +40,14 @@ public class MatrixRound {
 
 	private MatrixRound() { }
 	
+	/**
+	 * 
+	 * @param entityGroup
+	 * @param mode
+	 * @param delta
+	 * @param a
+	 * @param b
+	 */
 	public static <T extends Group<T,U> & Rounding<W,U>, U extends NumberMember<U>, W>
 		void compute(T entityGroup, Round.Mode mode, W delta, MatrixMember<U> a, MatrixMember<U> b)
 	{

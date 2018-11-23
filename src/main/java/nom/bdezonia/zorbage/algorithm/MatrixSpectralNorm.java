@@ -41,6 +41,13 @@ public class MatrixSpectralNorm {
 	
 	private MatrixSpectralNorm() {}
 	
+	/**
+	 * 
+	 * @param matGroup
+	 * @param numGroup
+	 * @param matrix
+	 * @param normValue
+	 */
 	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
 		void compute(T matGroup, V numGroup, U matrix, W normValue)
 	{

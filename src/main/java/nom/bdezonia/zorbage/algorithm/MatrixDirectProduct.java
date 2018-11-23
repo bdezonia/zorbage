@@ -39,6 +39,13 @@ public class MatrixDirectProduct {
 
 	private MatrixDirectProduct() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param in1
+	 * @param in2
+	 * @param out
+	 */
 	public static <T extends Group<T,U> & Multiplication<U>,U,W extends MatrixMember<U>>
 		void compute(T group, W in1, W in2, W out)
 	{

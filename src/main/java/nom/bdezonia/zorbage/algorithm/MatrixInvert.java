@@ -47,6 +47,14 @@ public class MatrixInvert {
 	
 	private MatrixInvert() {}
 
+	/**
+	 * 
+	 * @param numGroup
+	 * @param rmodGroup
+	 * @param matGroup
+	 * @param a
+	 * @param b
+	 */
 	@SuppressWarnings("unchecked")
 	public static
 		<BASETYPE, // the base type like Float64Member or Octonion etc.

@@ -65,6 +65,14 @@ public class Sum {
 		compute(grp, 0, storage.size(), storage, result);
 	}
 	
+	/**
+	 * 
+	 * @param grp
+	 * @param start
+	 * @param count
+	 * @param storage
+	 * @param result
+	 */
 	public static <T extends Group<T,U> & Addition<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U result)
 	{

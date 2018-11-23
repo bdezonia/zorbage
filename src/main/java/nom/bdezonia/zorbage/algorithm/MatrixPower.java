@@ -43,7 +43,16 @@ import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 public class MatrixPower {
 
 	private MatrixPower() { }
-	
+
+	/**
+	 * 
+	 * @param power
+	 * @param numGroup
+	 * @param rmodGroup
+	 * @param matGroup
+	 * @param a
+	 * @param b
+	 */
 	public static
 	<BASETYPE, // the base type like Float64Member or Octonion etc.
 	BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,

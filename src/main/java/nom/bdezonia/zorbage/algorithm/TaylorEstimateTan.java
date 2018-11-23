@@ -42,6 +42,14 @@ public class TaylorEstimateTan {
 
 	private TaylorEstimateTan() { }
 	
+	/**
+	 * 
+	 * @param numTerms
+	 * @param matGroup
+	 * @param numGroup
+	 * @param x
+	 * @param result
+	 */
 	public static <T extends Group<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 		U,
 		V extends Group<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,

@@ -40,6 +40,13 @@ public class RModuleIsEqual {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param memberGroup
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static <T extends Group<T,V>, U extends RModuleMember<V>, V>
 		boolean compute(T memberGroup, U a, U b)
 	{

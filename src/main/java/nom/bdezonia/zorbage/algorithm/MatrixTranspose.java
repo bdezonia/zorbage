@@ -40,6 +40,12 @@ public class MatrixTranspose {
 	
 	private MatrixTranspose() {}
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 */
 	public static <T extends Group<T,U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b)
 	{

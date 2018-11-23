@@ -13,6 +13,11 @@ public class MatrixUnity {
 
 	private MatrixUnity() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 */
 	public static <T extends Group<T,U> & Unity<U>, U>
 		void compute(T group, MatrixMember<U> a)
 	{

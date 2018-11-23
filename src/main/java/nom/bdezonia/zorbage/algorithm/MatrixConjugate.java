@@ -39,6 +39,12 @@ public class MatrixConjugate {
 
 	private MatrixConjugate() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 */
 	public static <T extends Group<T,U> & Conjugate<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b)
 	{

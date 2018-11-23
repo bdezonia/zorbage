@@ -38,6 +38,13 @@ public class MatrixEqual {
 
 	private MatrixEqual() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static <T extends Group<T,U>,U>
 		boolean compute(T group, MatrixMember<U> a, MatrixMember<U> b)
 	{

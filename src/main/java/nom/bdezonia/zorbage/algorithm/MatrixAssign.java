@@ -38,6 +38,12 @@ public class MatrixAssign {
 
 	private MatrixAssign() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param from
+	 * @param to
+	 */
 	public static <T extends Group<T,U>,U>
 		void compute(T group, MatrixMember<U> from, MatrixMember<U> to)
 	{

@@ -40,6 +40,14 @@ public class RModuleRound {
 
 	private RModuleRound() { }
 	
+	/**
+	 * 
+	 * @param entityGroup
+	 * @param mode
+	 * @param delta
+	 * @param a
+	 * @param b
+	 */
 	public static <T extends Group<T,U> & Rounding<W,U>, U extends NumberMember<U>, W>
 		void compute(T entityGroup, Round.Mode mode, W delta, RModuleMember<U> a, RModuleMember<U> b)
 	{

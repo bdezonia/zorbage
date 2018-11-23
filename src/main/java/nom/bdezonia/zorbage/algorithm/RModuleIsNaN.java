@@ -39,6 +39,12 @@ public class RModuleIsNaN {
 
 	private RModuleIsNaN() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @return
+	 */
 	public static <T extends Group<T,U> & NaN<U>,U>
 		boolean compute(T group, RModuleMember<U> a)
 	{

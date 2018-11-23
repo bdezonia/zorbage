@@ -40,6 +40,13 @@ public class RModuleScale {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param memberGroup
+	 * @param scalar
+	 * @param a
+	 * @param b
+	 */
 	public static <U extends RModuleMember<W>, V extends Ring<V,W>, W>
 		void compute(V memberGroup, W scalar, U a, U b)
 	{

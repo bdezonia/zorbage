@@ -40,6 +40,12 @@ public class RModuleAssign {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param group
+	 * @param from
+	 * @param to
+	 */
 	public static <T extends Group<T,V>, U extends RModuleMember<V>, V>
 		void compute(T group, U from, U to)
 	{

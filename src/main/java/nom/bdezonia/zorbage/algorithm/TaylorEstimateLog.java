@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class TaylorEstimateLog {
 
 	private TaylorEstimateLog() {}
-	
+
 	/**
 	 * 
 	 * @param numTerms

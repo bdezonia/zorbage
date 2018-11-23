@@ -42,6 +42,13 @@ public class MatrixMultiply {
 	
 	private MatrixMultiply() {}
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <T extends Group<T,U> & Addition<U> & Multiplication<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{

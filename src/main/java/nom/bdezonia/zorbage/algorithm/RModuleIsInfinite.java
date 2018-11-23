@@ -39,6 +39,12 @@ public class RModuleIsInfinite {
 	
 	private RModuleIsInfinite() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @return
+	 */
 	public static <T extends Group<T,U> & Infinite<U>,U>
 		boolean compute(T group, RModuleMember<U> a)
 	{

@@ -39,6 +39,12 @@ public class MatrixIsInfinite {
 
 	private MatrixIsInfinite() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @return
+	 */
 	public static <T extends Group<T,U> & Infinite<U>,U>
 		boolean compute(T group, MatrixMember<U> a)
 	{

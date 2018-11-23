@@ -39,7 +39,14 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 public class RModuleDirectProduct {
 
 	private RModuleDirectProduct() { }
-	
+
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <T extends Group<T,U> & Multiplication<U>,U>
 		void compute(T group, RModuleMember<U> a, RModuleMember<U> b, MatrixMember<U> c)
 	{

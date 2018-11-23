@@ -41,6 +41,13 @@ public class RModuleAdd {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param memberGroup
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <U extends RModuleMember<W>, V extends Group<V,W> & Addition<W>, W>
 		void compute(V memberGroup, U a, U b, U c)
 	{

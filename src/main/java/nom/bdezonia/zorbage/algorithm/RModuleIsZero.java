@@ -38,6 +38,12 @@ public class RModuleIsZero {
 
 	private RModuleIsZero() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @return
+	 */
 	public static <T extends Group<T,U>,U>
 		boolean compute(T group, RModuleMember<U> a)
 	{

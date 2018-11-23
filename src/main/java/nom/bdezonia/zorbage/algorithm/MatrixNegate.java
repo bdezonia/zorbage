@@ -39,6 +39,12 @@ public class MatrixNegate {
 
 	private MatrixNegate() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 */
 	public static <T extends Group<T,U> & Addition<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b)
 	{

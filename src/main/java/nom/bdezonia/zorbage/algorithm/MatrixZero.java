@@ -38,6 +38,11 @@ public class MatrixZero {
 
 	private MatrixZero() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 */
 	public static <T extends Group<T,U>, U>
 		void compute(T group, MatrixMember<U> a)
 	{

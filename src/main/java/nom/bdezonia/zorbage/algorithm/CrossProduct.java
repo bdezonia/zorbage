@@ -43,6 +43,14 @@ public class CrossProduct {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param rmodGroup
+	 * @param memberGroup
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <T extends RModule<T,U,V,W> & Constructible1dLong<U>,
 					U extends RModuleMember<W>,
 					V extends Ring<V,W>,

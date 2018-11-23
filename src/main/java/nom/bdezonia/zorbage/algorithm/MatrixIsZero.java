@@ -38,6 +38,12 @@ public class MatrixIsZero {
 
 	private MatrixIsZero() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @return
+	 */
 	public static <T extends Group<T,U>,U>
 		boolean compute(T group, MatrixMember<U> a)
 	{

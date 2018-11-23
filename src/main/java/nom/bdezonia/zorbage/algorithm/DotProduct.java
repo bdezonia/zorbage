@@ -41,6 +41,13 @@ public class DotProduct {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param memberGroup
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <T extends RModule<T,U,V,W>,
 					U extends RModuleMember<W>,
 					V extends Ring<V,W>,

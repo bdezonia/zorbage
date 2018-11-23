@@ -41,6 +41,12 @@ public class Fill {
 	
 	private Fill() {}
 	
+	/**
+	 * 
+	 * @param group
+	 * @param value
+	 * @param storage
+	 */
 	public static <T extends Group<T,U>,U>
 		void compute(T group, U value, IndexedDataSource<?,U> storage)
 	{

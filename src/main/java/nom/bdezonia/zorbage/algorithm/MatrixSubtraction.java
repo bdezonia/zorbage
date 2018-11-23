@@ -39,6 +39,13 @@ public class MatrixSubtraction {
 
 	private MatrixSubtraction() { }
 	
+	/**
+	 * 
+	 * @param group
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <T extends Group<T,U> & Addition<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{

@@ -41,6 +41,12 @@ public class RModuleNegate {
 		// do not instantiate
 	}
 	
+	/**
+	 * 
+	 * @param memberGroup
+	 * @param a
+	 * @param b
+	 */
 	public static <U extends RModuleMember<W>, V extends Group<V,W> & Addition<W>, W>
 		void compute(V memberGroup, U a, U b)
 	{
