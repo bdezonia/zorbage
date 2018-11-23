@@ -42,25 +42,26 @@ public class MatrixL0Norm {
 
 	/**
 	 * 
-	 * @param group
+	 * @param matGroup
+	 * @param numGroup
 	 * @param mat
 	 * @param result
 	 */
 	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T group1, V group2, MatrixMember<U> mat, W result)
+		void compute(T matGroup, V numGroup, MatrixMember<U> mat, W result)
 	{
-		U value = group1.construct();
-		W sum = group2.construct();
-		W one = group2.construct();
-		group2.unity().call(one);
+		U value = matGroup.construct();
+		W sum = numGroup.construct();
+		W one = numGroup.construct();
+		numGroup.unity().call(one);
 		for (long r = 0; r < mat.rows(); r++) {
 			for (long c = 0; c < mat.cols(); c++) {
 				mat.v(r, c, value);
-				if (!group1.isZero().call(value)) {
-					group2.add().call(sum, one, sum);
+				if (!matGroup.isZero().call(value)) {
+					numGroup.add().call(sum, one, sum);
 				}
 			}
 		}
-		group2.assign().call(sum, result);
+		numGroup.assign().call(sum, result);
 	}
 }

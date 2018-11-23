@@ -42,24 +42,24 @@ public class MatrixLInfinityNorm {
 
 	/**
 	 * 
-	 * @param group1
-	 * @param group2
+	 * @param matGroup
+	 * @param numGroup
 	 * @param mat
 	 * @param result
 	 */
 	public static <T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Ordered<W>, W>
-		void compute(T group1, V group2, MatrixMember<U> mat, W result)
+		void compute(T matGroup, V numGroup, MatrixMember<U> mat, W result)
 	{
-		U value = group1.construct();
-		W max = group2.construct();
-		W tmp = group2.construct();
+		U value = matGroup.construct();
+		W max = numGroup.construct();
+		W tmp = numGroup.construct();
 		for (long r = 0; r < mat.rows(); r++) {
 			for (long c = 0; c < mat.cols(); c++) {
 				mat.v(r, c, value);
-				group1.norm().call(value, tmp);
-				group2.max().call(max, tmp, max);
+				matGroup.norm().call(value, tmp);
+				numGroup.max().call(max, tmp, max);
 			}
 		}
-		group2.assign().call(max, result);
+		numGroup.assign().call(max, result);
 	}
 }

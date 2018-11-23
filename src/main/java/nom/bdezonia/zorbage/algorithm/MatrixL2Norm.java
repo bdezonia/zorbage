@@ -44,27 +44,27 @@ public class MatrixL2Norm {
 
 	/**
 	 * 
-	 * @param group1
-	 * @param group2
+	 * @param matGroup
+	 * @param numGroup
 	 * @param mat
 	 * @param result
 	 */
 	public static <T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Addition<W> & Multiplication<W> & Roots<W>, W>
-		void compute(T group1, V group2, MatrixMember<U> mat, W result)
+		void compute(T matGroup, V numGroup, MatrixMember<U> mat, W result)
 	{
-		U value = group1.construct();
-		W sum = group2.construct();
-		W tmp = group2.construct();
+		U value = matGroup.construct();
+		W sum = numGroup.construct();
+		W tmp = numGroup.construct();
 		// TODO: this code does not avoid overflow which it could do in a hypot-like fashion
 		for (long r = 0; r < mat.rows(); r++) {
 			for (long c = 0; c < mat.cols(); c++) {
 				mat.v(r, c, value);
-				group1.norm().call(value, tmp);
-				group2.multiply().call(tmp, tmp, tmp);
-				group2.add().call(sum, tmp, sum);
+				matGroup.norm().call(value, tmp);
+				numGroup.multiply().call(tmp, tmp, tmp);
+				numGroup.add().call(sum, tmp, sum);
 			}
 		}
-		group2.sqrt().call(sum, sum);
-		group2.assign().call(sum, result);
+		numGroup.sqrt().call(sum, sum);
+		numGroup.assign().call(sum, result);
 	}
 }

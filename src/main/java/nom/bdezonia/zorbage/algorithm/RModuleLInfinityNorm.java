@@ -42,22 +42,22 @@ public class RModuleLInfinityNorm {
 
 	/**
 	 * 
-	 * @param group1
-	 * @param group2
+	 * @param rmodGroup
+	 * @param numGroup
 	 * @param rmod
 	 * @param result
 	 */
 	public static <T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Ordered<W>, W>
-		void compute(T group1, V group2, RModuleMember<U> rmod, W result)
+		void compute(T rmodGroup, V numGroup, RModuleMember<U> rmod, W result)
 	{
-		U value = group1.construct();
-		W max = group2.construct();
-		W tmp = group2.construct();
+		U value = rmodGroup.construct();
+		W max = numGroup.construct();
+		W tmp = numGroup.construct();
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			group1.norm().call(value, tmp);
-			group2.max().call(max, tmp, max);
+			rmodGroup.norm().call(value, tmp);
+			numGroup.max().call(max, tmp, max);
 		}
-		group2.assign().call(max, result);
+		numGroup.assign().call(max, result);
 	}
 }
