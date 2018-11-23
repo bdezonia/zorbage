@@ -75,6 +75,9 @@ public class StaticAlgoRethink {
 		// The second has the good effect that algorithms could be passed around as procedures
 		// and invoked. Imagine a class that works for any possible norm. You could pass in a
 		// norm procedure and get different behavior. Otherwise you need one implementation of
-		// the algorithm for each norm type you're interested in.
+		// the algorithm for each norm type you're interested in. Later edit: not entirely
+		// true. A static algorithm could be passed a norm procedure as well. But note that
+		// all the norm algorithms that exist when this note was entered are static algos and
+		// can't be passed.
 	}
 }
