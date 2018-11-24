@@ -49,10 +49,11 @@ public class RModuleSum {
 		void compute(T group, RModuleMember<U> rmod, U result)
 	{
 		U value = group.construct();
-		group.zero().call(result);
+		U sum = group.construct();
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			group.add().call(result, value, result);
+			group.add().call(sum, value, sum);
 		}
+		group.assign().call(sum, result);
 	}
 }
