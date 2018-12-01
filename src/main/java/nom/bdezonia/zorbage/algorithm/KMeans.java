@@ -103,7 +103,7 @@ public class KMeans {
 				input.get(i, point);
 				Point ctrSum = centers.get(point.clusterNumber());
 				for (int j = 0; j < ctrSum.dimension(); j++) {
-					ctrSum.setComponents(j, ctrSum.component(j) + point.component(j));
+					ctrSum.setComponent(j, ctrSum.component(j) + point.component(j));
 				}
 				counts.set(point.clusterNumber(), (counts.get(point.clusterNumber()))+1);
 			}
@@ -111,7 +111,7 @@ public class KMeans {
 				Point ctrSum = centers.get(i);
 				long count = counts.get(i);
 				for (int j = 0; j < ctrSum.dimension(); j++) {
-					ctrSum.setComponents(j, ctrSum.component(j) / count);
+					ctrSum.setComponent(j, ctrSum.component(j) / count);
 				}
 			}
 			

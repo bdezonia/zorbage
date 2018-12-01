@@ -51,7 +51,7 @@ public class PointGroup implements Group<PointGroup,Point> {
 
 	@Override
 	public Point construct(String str) {
-		throw new IllegalArgumentException("not yet implemented");
+		return new Point(str);
 	}
 
 	private final Function2<Boolean, Point, Point> EQ =

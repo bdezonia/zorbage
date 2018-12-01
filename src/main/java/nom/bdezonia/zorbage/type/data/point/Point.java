@@ -30,8 +30,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 
+import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
 /**
@@ -41,8 +44,14 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  */
 public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 
+	// this field is a holdover from kmeans algo. kmeas should reallu store these.
 	private int clusterNum;
 	private double[] vector;
+	
+	public Point(int dimension) {
+		clusterNum = -1;
+		vector = new double[dimension];
+	}
 	
 	public Point() {
 		this(0);
@@ -52,9 +61,17 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		set(other);
 	}
 
-	public Point(int dimension) {
+	public Point(String str) {
+		Float64Member val = G.DBL.construct();
+		Float64VectorMember vec = new Float64VectorMember(str);
+		if (vec.length() > Integer.MAX_VALUE)
+			throw new IllegalArgumentException("string has too many components to fit in a Point");
 		clusterNum = -1;
-		vector = new double[dimension];
+		vector = new double[(int)vec.length()];
+		for (int i = 0; i < vector.length; i++) {
+			vec.v(i, val);
+			setComponent(i, val.v());
+		}
 	}
 	
 	public int dimension() {
@@ -65,7 +82,7 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		return vector[i];
 	}
 	
-	public void setComponents(int i, double value) {
+	public void setComponent(int i, double value) {
 		vector[i] = value;
 	}
 	
