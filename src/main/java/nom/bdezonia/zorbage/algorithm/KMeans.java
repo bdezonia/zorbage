@@ -45,23 +45,6 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 public class KMeans {
 
 	/**
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static double dist(Point a, Point b) {
-		if (a.dimension() != b.dimension())
-			throw new IllegalArgumentException("all points must share the same dimensionality");
-		// TODO: two pass hypot approach to avoid overflow
-		double sum = 0;
-		for (int i = 0; i < a.dimension(); i++) {
-			sum += (a.component(i)-b.component(i)) * (a.component(i)-b.component(i)); 
-		}
-		return Math.sqrt(sum);
-	}
-	
-	/**
 	 * KMeans.compute()
 	 * Usage: Pass in a list of points (all of the same dimension > 0) that span any region.
 	 *        Pass in a list of ints that will track which points go with which clusters.
@@ -91,6 +74,8 @@ public class KMeans {
 		Point point = group.construct();
 		SignedInt32Member clusterNum = G.INT32.construct();
 		Float64Member scale = G.DBL.construct();
+		Float64Member dist = G.DBL.construct();
+		Float64Member minDist = G.DBL.construct();
 		
 		// assign initial clusters randomly
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
@@ -137,14 +122,14 @@ public class KMeans {
 			for (long i = 0; i < points.size(); i++) {
 				points.get(i,  point);
 				Point clusterCtr = centers.get(0);
-				double minDist = dist(point, clusterCtr);
+				PointDistance.compute(point, clusterCtr, minDist);
 				int minCluster = 0;
 				//   find closest cluster
 				for (int j = 1; j < numClusters; j++) {
 					Point ctr = centers.get(j);
-					double dist = dist(point, ctr);
-					if (dist < minDist) {
-						minDist = dist;
+					PointDistance.compute(point, ctr, dist);
+					if (G.DBL.isLess().call(dist,minDist)) {
+						G.DBL.assign().call(dist, minDist);
 						minCluster = j;
 					}
 				}
