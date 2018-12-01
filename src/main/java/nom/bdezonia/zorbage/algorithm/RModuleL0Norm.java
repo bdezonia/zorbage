@@ -56,7 +56,7 @@ public class RModuleL0Norm {
 		numGroup.unity().call(one);
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			if (rmodGroup.isZero().call(value)) {
+			if (!rmodGroup.isZero().call(value)) {
 				numGroup.add().call(sum, one, sum);
 			}
 		}
