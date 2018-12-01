@@ -82,39 +82,43 @@ public class KMeans {
 
 		if (points.size() != clusterIndices.size())
 			throw new IllegalArgumentException("points and clusterIndices length must match");
+
+		if (points.size() < numClusters)
+			throw new IllegalArgumentException("number of points given must be >= to the number of clusters");
 		
 		int MAX_ITERS = 1000;
 		
 		Point point = group.construct();
-		SignedInt32Member num = G.INT32.construct();
+		SignedInt32Member clusterNum = G.INT32.construct();
 		Float64Member scale = G.DBL.construct();
 		
 		// assign initial clusters randomly
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		for (long i = 0; i < clusterIndices.size(); i++) {
 			int k = rng.nextInt(numClusters);
-			clusterIndices.get(i, num);
-			num.setV(k);
-			clusterIndices.set(i, num);
+			clusterNum.setV(k);
+			clusterIndices.set(i, clusterNum);
 		}
 		
+		// set the dimensionality of the set of points
+		points.get(0, point);
+		
+		List<Point> centers = new ArrayList<Point>();
+		List<Long> counts = new ArrayList<Long>();
+		for (int i = 0; i < numClusters; i++) {
+			centers.add(new Point(point.dimension()));
+			counts.add(new Long(0));
+		}
+
 		for (int k = 0; k < MAX_ITERS; k++) {
 			
-			boolean converged = true;
-			
 			// calc centroids of clusters
-			List<Point> centers = new ArrayList<Point>();
-			List<Long> counts = new ArrayList<Long>();
-			for (int i = 0; i < numClusters; i++) {
-				centers.add(new Point(point.dimension()));
-				counts.add(new Long(0));
-			}
 			for (long i = 0; i < points.size(); i++) {
 				points.get(i, point);
-				clusterIndices.get(i, num);
-				Point ctrSum = centers.get(num.v());
+				clusterIndices.get(i, clusterNum);
+				Point ctrSum = centers.get(clusterNum.v());
 				group.add().call(ctrSum, point, ctrSum);
-				counts.set(num.v(), (counts.get(num.v()))+1);
+				counts.set(clusterNum.v(), (counts.get(clusterNum.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
@@ -124,29 +128,33 @@ public class KMeans {
 			}
 			
 			// for each point
+
+			boolean converged = true;
+			
 			for (long i = 0; i < points.size(); i++) {
 				points.get(i,  point);
 				Point clusterCtr = centers.get(0);
 				double minDist = dist(point, clusterCtr);
-				int minIndex = 0;
+				int minCluster = 0;
 				//   find closest cluster
 				for (int j = 1; j < numClusters; j++) {
-					Point pt = centers.get(j);
-					double dist = dist(point, pt);
+					Point ctr = centers.get(j);
+					double dist = dist(point, ctr);
 					if (dist < minDist) {
 						minDist = dist;
-						minIndex = j;
+						minCluster = j;
 					}
 				}
-				clusterIndices.get(i, num);
-				if (minIndex != num.v()) {
+				clusterIndices.get(i, clusterNum);
+				if (minCluster != clusterNum.v()) {
 					converged = false;
-					num.setV(minIndex);
-					clusterIndices.set(i, num);
+					clusterNum.setV(minCluster);
+					clusterIndices.set(i, clusterNum);
 				}
 			}
 			
-			if (converged) return;
+			if (converged)
+				return;
 		}
 		
 		System.out.println("Did not converge after "+MAX_ITERS+" iterations. Best approximation returned.");
