@@ -1,0 +1,192 @@
+/*
+ * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ *
+ * Copyright (C) 2016-2018 Barry DeZonia
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package nom.bdezonia.zorbage.type.data.point;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
+
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
+public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
+
+	private int clusterNum;
+	private double[] vector;
+	
+	public Point() {
+		this(0);
+	}
+	
+	public Point(Point other) {
+		set(other);
+	}
+
+	public Point(int dimension) {
+		clusterNum = -1;
+		vector = new double[dimension];
+	}
+	
+	public int dimension() {
+		return vector.length;
+	}
+
+	public double component(int i) {
+		return vector[i];
+	}
+	
+	public void setComponents(int i, double value) {
+		vector[i] = value;
+	}
+	
+	public int clusterNumber() {
+		return clusterNum;
+	}
+	
+	public void setClusterNumber(int num) {
+		clusterNum = num;
+	}
+
+	@Override
+	public int byteCount() {
+		return 8 + dimension() * 8;
+	}
+
+	@Override
+	public void fromByteArray(byte[] arr, int index) {
+		ByteBuffer buff = ByteBuffer.allocate(4);
+		buff.put(0, arr[index+0]);
+		buff.put(1, arr[index+1]);
+		buff.put(2, arr[index+2]);
+		buff.put(3, arr[index+3]);
+		int n = buff.getInt();
+		if (this.dimension() != n) {
+			this.vector = new double[n];
+		}
+		buff.put(0, arr[index+4+0]);
+		buff.put(1, arr[index+4+1]);
+		buff.put(2, arr[index+4+2]);
+		buff.put(3, arr[index+4+3]);
+		this.clusterNum = buff.getInt();
+		buff = ByteBuffer.allocate(8);
+		for (int k = 0; k < n; k++) {
+			for (int i = 0; i < 8; i++) {
+				buff.put(i, arr[index+8+i]); 
+			}
+			this.vector[k] = buff.getDouble();
+		}
+	}
+
+	@Override
+	public void toByteArray(byte[] arr, int index) {
+		ByteBuffer buff = ByteBuffer.allocate(4);
+		byte[] bytes = buff.putInt(this.vector.length).array();
+		for (int i = 0; i < 4; i++) {
+			arr[index+i] = bytes[i];
+		}
+		bytes = buff.putInt(this.clusterNum).array();
+		for (int i = 0; i < 4; i++) {
+			arr[index+4+i] = bytes[i];
+		}
+		buff = ByteBuffer.allocate(8);
+		for (int k = 0; k < vector.length; k++) {
+			bytes = buff.putDouble(this.vector[k]).array();
+			for (int i = 0; i < 8; i++) {
+				arr[index+8+i] = bytes[i];
+			}
+		}
+	}
+
+	@Override
+	public void fromByteFile(RandomAccessFile raf) throws IOException {
+		ByteBuffer buff = ByteBuffer.allocate(4);
+		buff.put(0, raf.readByte());
+		buff.put(1, raf.readByte());
+		buff.put(2, raf.readByte());
+		buff.put(3, raf.readByte());
+		int n = buff.getInt();
+		if (this.dimension() != n) {
+			this.vector = new double[n];
+		}
+		buff.put(0, raf.readByte());
+		buff.put(1, raf.readByte());
+		buff.put(2, raf.readByte());
+		buff.put(3, raf.readByte());
+		this.clusterNum = buff.getInt();
+		buff = ByteBuffer.allocate(8);
+		for (int k = 0; k < n; k++) {
+			for (int i = 0; i < 8; i++) {
+				buff.put(i, raf.readByte()); 
+			}
+			this.vector[k] = buff.getDouble();
+		}
+	}
+
+	@Override
+	public void toByteFile(RandomAccessFile raf) throws IOException {
+		ByteBuffer buff = ByteBuffer.allocate(4);
+		byte[] bytes = buff.putInt(this.vector.length).array();
+		for (int i = 0; i < 4; i++) {
+			raf.writeByte(bytes[i]);
+		}
+		bytes = buff.putInt(this.clusterNum).array();
+		for (int i = 0; i < 4; i++) {
+			raf.writeByte(bytes[i]);
+		}
+		buff = ByteBuffer.allocate(8);
+		for (int k = 0; k < vector.length; k++) {
+			bytes = buff.putDouble(this.vector[k]).array();
+			for (int i = 0; i < 8; i++) {
+				raf.writeByte(bytes[i]);
+			}
+		}
+	}
+
+	@Override
+	public void get(Point other) {
+		other.clusterNum = clusterNum;
+		other.vector = new double[dimension()];
+		for (int i = 0; i < vector.length; i++) {
+			other.vector[i] = vector[i];
+		}
+	}
+
+	@Override
+	public void set(Point other) {
+		clusterNum = other.clusterNum;
+		vector = new double[other.dimension()];
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = other.vector[i];
+		}
+	}
+}
