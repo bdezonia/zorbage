@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface IntCoder<V> {
+public interface IntCoder {
 
 	int intCount();
 	void fromIntArray(int[] arr, int index);

@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  *
  * @param <U>
  */
-public class ArrayStorageFloat32<U extends FloatCoder<U>>
+public class ArrayStorageFloat32<U extends FloatCoder>
 	implements IndexedDataSource<ArrayStorageFloat32<U>, U>
 {
 	private final U type;

@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;;
  * @author Barry DeZonia
  *
  */
-public class FileStorageSignedInt16<U extends ShortCoder<U> & Allocatable<U>>
+public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	implements IndexedDataSource<FileStorageSignedInt16<U>,U>
 {
 	// TODO

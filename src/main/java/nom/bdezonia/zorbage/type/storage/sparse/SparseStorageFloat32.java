@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageFloat32<U extends FloatCoder<U>>
+public class SparseStorageFloat32<U extends FloatCoder>
 	implements IndexedDataSource<SparseStorageFloat32<U>, U>
 {
 	private final RedBlackTree<float[]> data;

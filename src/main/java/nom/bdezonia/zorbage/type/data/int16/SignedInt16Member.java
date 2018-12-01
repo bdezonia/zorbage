@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  */
 public final class SignedInt16Member
 	implements
-		ShortCoder<SignedInt16Member>,
+		ShortCoder,
 		Allocatable<SignedInt16Member>, Duplicatable<SignedInt16Member>,
 		Settable<SignedInt16Member>, Gettable<SignedInt16Member>,
 		UniversalRepresentation, NumberMember<SignedInt16Member>,

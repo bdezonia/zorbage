@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface BooleanCoder<V> {
+public interface BooleanCoder {
 
 	int booleanCount();
 	void fromBooleanArray(boolean[] arr, int index);

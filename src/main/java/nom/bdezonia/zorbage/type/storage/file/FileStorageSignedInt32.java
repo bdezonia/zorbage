@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
  * @author Barry DeZonia
  *
  */
-public class FileStorageSignedInt32<U extends IntCoder<U> & Allocatable<U>>
+public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	implements IndexedDataSource<FileStorageSignedInt32<U>,U>
 {
 	// TODO

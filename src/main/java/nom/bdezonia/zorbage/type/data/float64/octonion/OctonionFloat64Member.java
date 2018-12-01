@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 public final class OctonionFloat64Member
 	implements
 		NumberMember<OctonionFloat64Member>,
-		DoubleCoder<OctonionFloat64Member>,
+		DoubleCoder,
 		Allocatable<OctonionFloat64Member>, Duplicatable<OctonionFloat64Member>,
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion,

@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageSignedInt16<U extends ShortCoder<U>>
+public class SparseStorageSignedInt16<U extends ShortCoder>
 	implements IndexedDataSource<SparseStorageSignedInt16<U>, U>
 {
 	private final RedBlackTree<short[]> data;

@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt8<U extends ByteCoder<U>>
+public class ArrayStorageSignedInt8<U extends ByteCoder>
 	implements IndexedDataSource<ArrayStorageSignedInt8<U>,U>
 {
 

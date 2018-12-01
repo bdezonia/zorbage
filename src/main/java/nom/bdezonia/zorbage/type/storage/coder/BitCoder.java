@@ -30,9 +30,8 @@ package nom.bdezonia.zorbage.type.storage.coder;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface BitCoder<V> {
+public interface BitCoder {
 
 	int bitCount();
 	void fromBitArray(long[] arr, int index, int offset);

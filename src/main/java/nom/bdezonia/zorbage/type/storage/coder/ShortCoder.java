@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface ShortCoder<V> {
+public interface ShortCoder {
 
 	int shortCount();
 	void fromShortArray(short[] arr, int index);

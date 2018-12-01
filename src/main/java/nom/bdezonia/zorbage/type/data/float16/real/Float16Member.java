@@ -57,7 +57,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  */
 public final class Float16Member
 	implements
-	ShortCoder<Float16Member>,
+	ShortCoder,
 	Allocatable<Float16Member>, Duplicatable<Float16Member>,
 	Settable<Float16Member>, Gettable<Float16Member>,
 	UniversalRepresentation, PrimitiveConversion

@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  * @author Barry DeZonia
  *
  */
-public class FileStorageBoolean<U extends BooleanCoder<U> & Allocatable<U>>
+public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	implements IndexedDataSource<FileStorageBoolean<U>,U>
 {
 	// TODO

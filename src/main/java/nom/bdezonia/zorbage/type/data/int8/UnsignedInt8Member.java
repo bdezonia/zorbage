@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  */
 public final class UnsignedInt8Member
 	implements
-		ByteCoder<UnsignedInt8Member>,
+		ByteCoder,
 		Allocatable<UnsignedInt8Member>, Duplicatable<UnsignedInt8Member>,
 		Settable<UnsignedInt8Member>, Gettable<UnsignedInt8Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt8Member>,

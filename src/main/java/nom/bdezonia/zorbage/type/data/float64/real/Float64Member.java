@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 public final class Float64Member
 	implements
 		NumberMember<Float64Member>,
-		DoubleCoder<Float64Member>,
+		DoubleCoder,
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
 		Settable<Float64Member>, Gettable<Float64Member>,
 		UniversalRepresentation, PrimitiveConversion

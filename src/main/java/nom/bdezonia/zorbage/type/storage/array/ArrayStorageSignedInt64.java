@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt64<U extends LongCoder<U>>
+public class ArrayStorageSignedInt64<U extends LongCoder>
 	implements IndexedDataSource<ArrayStorageSignedInt64<U>,U>
 {
 

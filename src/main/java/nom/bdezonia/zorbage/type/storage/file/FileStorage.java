@@ -44,27 +44,27 @@ public class FileStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
-		if (type instanceof DoubleCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageFloat64(size, (DoubleCoder<U>)type);
+		if (type instanceof DoubleCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageFloat64(size, (DoubleCoder)type);
 		}
-		if (type instanceof FloatCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageFloat32(size, (FloatCoder<U>)type);
+		if (type instanceof FloatCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageFloat32(size, (FloatCoder)type);
 		}
-		if (type instanceof LongCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageSignedInt64(size, (LongCoder<U>)type);
+		if (type instanceof LongCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt64(size, (LongCoder)type);
 		}
-		if (type instanceof IntCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageSignedInt32(size, (IntCoder<U>)type);
+		if (type instanceof IntCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt32(size, (IntCoder)type);
 		}
-		if (type instanceof ShortCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageSignedInt16(size, (ShortCoder<U>)type);
+		if (type instanceof ShortCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt16(size, (ShortCoder)type);
 		}
-		if (type instanceof BooleanCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageBoolean(size, (BooleanCoder<U>)type);
+		if (type instanceof BooleanCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageBoolean(size, (BooleanCoder)type);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
-		if (type instanceof ByteCoder<?>) {
-			return (IndexedDataSource<?,U>) new FileStorageSignedInt8(size, (ByteCoder<U>)type);
+		if (type instanceof ByteCoder) {
+			return (IndexedDataSource<?,U>) new FileStorageSignedInt8(size, (ByteCoder)type);
 		}
 		
 		// TODO: add bitCoder when it is done. It should certainly be last as it will

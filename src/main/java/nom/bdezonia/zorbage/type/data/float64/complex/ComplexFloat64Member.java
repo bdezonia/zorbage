@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  */
 public final class ComplexFloat64Member
 	implements
-		DoubleCoder<ComplexFloat64Member>,
+		DoubleCoder,
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,

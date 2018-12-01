@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  * @author Barry DeZonia
  *
  */
-public class FileStorageFloat64<U extends DoubleCoder<U> & Allocatable<U>>
+public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	implements IndexedDataSource<FileStorageFloat64<U>,U>
 {
 	// TODO

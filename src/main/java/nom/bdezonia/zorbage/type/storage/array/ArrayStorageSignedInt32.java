@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt32<U extends IntCoder<U>>
+public class ArrayStorageSignedInt32<U extends IntCoder>
 	implements IndexedDataSource<ArrayStorageSignedInt32<U>,U>
 {
 

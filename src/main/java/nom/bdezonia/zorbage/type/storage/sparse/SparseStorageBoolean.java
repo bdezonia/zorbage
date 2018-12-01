@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageBoolean<U extends BooleanCoder<U>>
+public class SparseStorageBoolean<U extends BooleanCoder>
 	implements IndexedDataSource<SparseStorageBoolean<U>, U>
 {
 	private final RedBlackTree<boolean[]> data;

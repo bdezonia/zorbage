@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface LongCoder<V> {
+public interface LongCoder {
 
 	int longCount();
 	void fromLongArray(long[] arr, int index);

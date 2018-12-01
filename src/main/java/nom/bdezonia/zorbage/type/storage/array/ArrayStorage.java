@@ -52,33 +52,33 @@ public class ArrayStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
 
-		if (type instanceof DoubleCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageFloat64(size, (DoubleCoder<U>)type);
+		if (type instanceof DoubleCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageFloat64(size, (DoubleCoder)type);
 		}
-		if (type instanceof FloatCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageFloat32(size, (FloatCoder<U>)type);
+		if (type instanceof FloatCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageFloat32(size, (FloatCoder)type);
 		}
-		if (type instanceof LongCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt64(size, (LongCoder<U>)type);
+		if (type instanceof LongCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt64(size, (LongCoder)type);
 		}
-		if (type instanceof IntCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt32(size, (IntCoder<U>)type);
+		if (type instanceof IntCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt32(size, (IntCoder)type);
 		}
-		if (type instanceof ShortCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt16(size, (ShortCoder<U>)type);
+		if (type instanceof ShortCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt16(size, (ShortCoder)type);
 		}
-		if (type instanceof BooleanCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageBoolean(size, (BooleanCoder<U>)type);
+		if (type instanceof BooleanCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageBoolean(size, (BooleanCoder)type);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
-		if (type instanceof ByteCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder<U>)type);
+		if (type instanceof ByteCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder)type);
 		}
 		
 		// Best if last: since bit types are slow
-		if (type instanceof BitCoder<?>) {
-			return (IndexedDataSource<?,U>) new ArrayStorageBit(size, (BitCoder<U>)type);
+		if (type instanceof BitCoder) {
+			return (IndexedDataSource<?,U>) new ArrayStorageBit(size, (BitCoder)type);
 		}
 
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");

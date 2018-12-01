@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface DoubleCoder<V> {
+public interface DoubleCoder {
 
 	int doubleCount();
 	void fromDoubleArray(double[] arr, int index);

@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  */
 public class TestSparseStorage {
 
-	private class Data implements BooleanCoder<Data> {
+	private class Data implements BooleanCoder {
 
 		private boolean a,b,c,d;
 		

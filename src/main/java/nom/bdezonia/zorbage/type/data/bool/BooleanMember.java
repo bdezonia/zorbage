@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  */
 public final class BooleanMember
 	implements
-		BitCoder<BooleanMember>, BooleanCoder<BooleanMember>,
+		BitCoder, BooleanCoder,
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,

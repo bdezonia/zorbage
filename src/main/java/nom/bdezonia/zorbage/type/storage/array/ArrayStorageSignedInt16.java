@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt16<U extends ShortCoder<U>>
+public class ArrayStorageSignedInt16<U extends ShortCoder>
 	implements IndexedDataSource<ArrayStorageSignedInt16<U>,U>
 {
 

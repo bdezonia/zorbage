@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  */
 public final class UnsignedInt4Member
 	implements
-		BitCoder<UnsignedInt4Member>, ByteCoder<UnsignedInt4Member>,
+		BitCoder, ByteCoder,
 		Allocatable<UnsignedInt4Member>, Duplicatable<UnsignedInt4Member>,
 		Settable<UnsignedInt4Member>, Gettable<UnsignedInt4Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt4Member>,

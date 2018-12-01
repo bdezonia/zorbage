@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  */
 public final class SignedInt2Member
 	implements
-		BitCoder<SignedInt2Member>, ByteCoder<SignedInt2Member>,
+		BitCoder, ByteCoder,
 		Allocatable<SignedInt2Member>, Duplicatable<SignedInt2Member>,
 		Settable<SignedInt2Member>, Gettable<SignedInt2Member>,
 		UniversalRepresentation, NumberMember<SignedInt2Member>,

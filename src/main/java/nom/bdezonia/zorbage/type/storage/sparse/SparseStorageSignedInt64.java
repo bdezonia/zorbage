@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageSignedInt64<U extends LongCoder<U>>
+public class SparseStorageSignedInt64<U extends LongCoder>
 	implements IndexedDataSource<SparseStorageSignedInt64<U>, U>
 {
 	private final RedBlackTree<long[]> data;

@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface ByteCoder<V> {
+public interface ByteCoder {
 
 	int byteCount();
 	void fromByteArray(byte[] arr, int index);

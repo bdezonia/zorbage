@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageSignedInt8<U extends ByteCoder<U>>
+public class SparseStorageSignedInt8<U extends ByteCoder>
 	implements IndexedDataSource<SparseStorageSignedInt8<U>, U>
 {
 	private final RedBlackTree<byte[]> data;

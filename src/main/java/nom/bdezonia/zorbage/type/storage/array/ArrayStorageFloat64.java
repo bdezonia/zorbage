@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  *
  * @param <U>
  */
-public class ArrayStorageFloat64<U extends DoubleCoder<U>>
+public class ArrayStorageFloat64<U extends DoubleCoder>
 	implements IndexedDataSource<ArrayStorageFloat64<U>, U>
 {
 	private final U type;

@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
  *
  * @param <U>
  */
-public class ArrayStorageBit<U extends BitCoder<U> & Allocatable<U>>
+public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageBit<U>,U>
 {
 	private final U type;

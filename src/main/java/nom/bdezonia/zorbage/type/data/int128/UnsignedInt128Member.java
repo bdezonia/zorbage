@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  */
 public final class UnsignedInt128Member
 	implements
-		LongCoder<UnsignedInt128Member>,
+		LongCoder,
 		Allocatable<UnsignedInt128Member>, Duplicatable<UnsignedInt128Member>,
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt128Member>,

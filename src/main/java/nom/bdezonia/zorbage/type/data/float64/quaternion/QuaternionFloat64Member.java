@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 public final class QuaternionFloat64Member 
 	implements
 		NumberMember<QuaternionFloat64Member>,
-		DoubleCoder<QuaternionFloat64Member>,
+		DoubleCoder,
 		Allocatable<QuaternionFloat64Member>, Duplicatable<QuaternionFloat64Member>,
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion, UniversalRepresentation

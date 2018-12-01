@@ -33,9 +33,8 @@ import java.io.RandomAccessFile;
  * 
  * @author Barry DeZonia
  *
- * @param <V>
  */
-public interface FloatCoder<V> {
+public interface FloatCoder {
 
 	int floatCount();
 	void fromFloatArray(float[] arr, int index);

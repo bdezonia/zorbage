@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  */
 public final class SignedInt64Member
 	implements
-		LongCoder<SignedInt64Member>,
+		LongCoder,
 		Allocatable<SignedInt64Member>, Duplicatable<SignedInt64Member>,
 		Settable<SignedInt64Member>, Gettable<SignedInt64Member>,
 		UniversalRepresentation, NumberMember<SignedInt64Member>,

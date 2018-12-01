@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  * @author Barry DeZonia
  *
  */
-public class FileStorageFloat32<U extends FloatCoder<U> & Allocatable<U>>
+public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	implements IndexedDataSource<FileStorageFloat32<U>,U>
 {
 	// TODO

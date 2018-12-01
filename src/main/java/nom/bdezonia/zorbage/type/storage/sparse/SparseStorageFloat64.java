@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageFloat64<U extends DoubleCoder<U>>
+public class SparseStorageFloat64<U extends DoubleCoder>
 	implements IndexedDataSource<SparseStorageFloat64<U>, U>
 {
 	private final RedBlackTree<double[]> data;

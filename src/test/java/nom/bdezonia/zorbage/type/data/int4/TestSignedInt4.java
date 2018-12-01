@@ -33,7 +33,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.data.int2.SignedInt2Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBit;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt8;

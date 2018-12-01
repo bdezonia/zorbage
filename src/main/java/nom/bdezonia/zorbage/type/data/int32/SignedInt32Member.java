@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
  */
 public final class SignedInt32Member
 	implements
-		IntCoder<SignedInt32Member>,
+		IntCoder,
 		Allocatable<SignedInt32Member>, Duplicatable<SignedInt32Member>,
 		Settable<SignedInt32Member>, Gettable<SignedInt32Member>,
 		UniversalRepresentation, NumberMember<SignedInt32Member>,

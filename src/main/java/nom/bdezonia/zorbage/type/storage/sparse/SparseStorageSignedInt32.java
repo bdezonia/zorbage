@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageSignedInt32<U extends IntCoder<U>>
+public class SparseStorageSignedInt32<U extends IntCoder>
 	implements IndexedDataSource<SparseStorageSignedInt32<U>, U>
 {
 	private final RedBlackTree<int[]> data;

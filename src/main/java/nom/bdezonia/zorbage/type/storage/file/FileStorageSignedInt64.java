@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  * @author Barry DeZonia
  *
  */
-public class FileStorageSignedInt64<U extends LongCoder<U> & Allocatable<U>>
+public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	implements IndexedDataSource<FileStorageSignedInt64<U>,U>
 {
 	// TODO
