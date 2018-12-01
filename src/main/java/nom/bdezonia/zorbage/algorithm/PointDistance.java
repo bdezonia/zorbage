@@ -36,6 +36,11 @@ import nom.bdezonia.zorbage.type.data.point.Point;
  */
 public class PointDistance {
 
+	// TODO this class is poorly named. What kind of distance? Euclidean? Put in name?
+	// Is it a norm? L2?
+	
+	// TODO - relies on doubles. Could rely on a U type that currently is Float64Member.
+	
 	/**
 	 * 
 	 * @param a
@@ -46,12 +51,22 @@ public class PointDistance {
 		void compute(Point a, Point b, Float64Member result) {
 		if (a.dimension() != b.dimension())
 			throw new IllegalArgumentException("points do not share the same dimensionality");
-		// TODO: two pass hypot approach to avoid overflow
+		// Do a two pass hypot approach to avoid overflow
+		double max = 0;
+		for (int i = 0; i < a.dimension(); i++) {
+			double term = Math.abs(a.component(i) - b.component(i));
+			max = Math.max(term, max);
+		}
+		if (max == 0) {
+			result.setV(0);
+			return;
+		}
 		double sum = 0;
 		for (int i = 0; i < a.dimension(); i++) {
-			sum += (a.component(i)-b.component(i)) * (a.component(i)-b.component(i)); 
+			double term = (a.component(i) - b.component(i)) / max;
+			sum += term * term; 
 		}
-		result.setV(Math.sqrt(sum));
+		result.setV(max * Math.sqrt(sum));
 	}
 	
 }
