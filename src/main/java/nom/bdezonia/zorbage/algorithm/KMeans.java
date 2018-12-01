@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.point.Point;
 import nom.bdezonia.zorbage.type.data.point.PointGroup;
@@ -86,6 +87,7 @@ public class KMeans {
 		
 		Point point = group.construct();
 		SignedInt32Member num = G.INT32.construct();
+		Float64Member scale = G.DBL.construct();
 		
 		// assign initial clusters randomly
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
@@ -111,17 +113,14 @@ public class KMeans {
 				points.get(i, point);
 				clusterIndices.get(i, num);
 				Point ctrSum = centers.get(num.v());
-				for (int j = 0; j < ctrSum.dimension(); j++) {
-					ctrSum.setComponent(j, ctrSum.component(j) + point.component(j));
-				}
+				group.add().call(ctrSum, point, ctrSum);
 				counts.set(num.v(), (counts.get(num.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
 				long count = counts.get(i);
-				for (int j = 0; j < ctrSum.dimension(); j++) {
-					ctrSum.setComponent(j, ctrSum.component(j) / count);
-				}
+				scale.setV(1.0/count);
+				group.scale().call(scale, ctrSum, ctrSum);
 			}
 			
 			// for each point

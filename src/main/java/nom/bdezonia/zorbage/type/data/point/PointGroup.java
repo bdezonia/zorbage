@@ -34,6 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -41,7 +43,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  *
  */
 public class PointGroup
-	implements Group<PointGroup,Point>, Addition<Point>
+	implements Group<PointGroup,Point>, Addition<Point>, Scale<Point, Float64Member>
 {
 
 	@Override
@@ -195,6 +197,25 @@ public class PointGroup
 	@Override
 	public Procedure3<Point, Point, Point> subtract() {
 		return SUB;
+	}
+
+	
+	private final Procedure3<Float64Member, Point, Point> SCALE =
+			new Procedure3<Float64Member, Point, Point>()
+	{
+		@Override
+		public void call(Float64Member a, Point b, Point c) {
+			if (b.dimension() != c.dimension())
+				throw new IllegalArgumentException("mismatched point dimensionality");
+			for (int i = 0; i < b.dimension(); i++) {
+				c.setComponent(i, a.v() * b.component(i));
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<Float64Member, Point, Point> scale() {
+		return SCALE;
 	}
 	
 }
