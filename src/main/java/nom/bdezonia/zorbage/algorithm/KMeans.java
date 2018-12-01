@@ -63,13 +63,15 @@ public class KMeans {
 	/**
 	 * KMeans.compute()
 	 * Usage: Pass in a list of points (all of the same dimension > 0) that span any region.
+	 *        Pass in a list of ints that will track which points go with which clusters.
+	 *        The two lists must be of the same length.
 	 *        Pass in the number of clusters you want to divide the point set into.
-	 *        Run the algorithm. The points are assigned cluster numbers in place. You can
-	 *        then iterate the list of points and pull them into separate lists or sort
-	 *        the list on clusterNumber.
+	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
+	 *        list.
 	 * @param group The PointGroup to be used to manipulate Points.
-	 * @param numClusters The number of clusters to fivide the list of Points into.
-	 * @param input The list of Points to analyze.
+	 * @param numClusters The number of clusters to divide the list of Points into.
+	 * @param points The list of Points to analyze.
+	 * @param clusterIndices The list tracking which Point is in which cluster.
 	 */
 	public static
 		void compute(PointGroup group, int numClusters, IndexedDataSource<?,Point> points, IndexedDataSource<?,SignedInt32Member> clusterIndices)
