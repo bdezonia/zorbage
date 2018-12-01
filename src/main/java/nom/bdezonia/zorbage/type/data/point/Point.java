@@ -44,12 +44,9 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  */
 public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 
-	// this field is a holdover from kmeans algo. kmeas should reallu store these.
-	private int clusterNum;
 	private double[] vector;
 	
 	public Point(int dimension) {
-		clusterNum = -1;
 		vector = new double[dimension];
 	}
 	
@@ -66,7 +63,6 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		Float64VectorMember vec = new Float64VectorMember(str);
 		if (vec.length() > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("string has too many components to fit in a Point");
-		clusterNum = -1;
 		vector = new double[(int)vec.length()];
 		for (int i = 0; i < vector.length; i++) {
 			vec.v(i, val);
@@ -86,17 +82,9 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		vector[i] = value;
 	}
 	
-	public int clusterNumber() {
-		return clusterNum;
-	}
-	
-	public void setClusterNumber(int num) {
-		clusterNum = num;
-	}
-
 	@Override
 	public int byteCount() {
-		return 8 + dimension() * 8;
+		return 4 + dimension() * 8;
 	}
 
 	@Override
@@ -110,15 +98,10 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		if (this.dimension() != n) {
 			this.vector = new double[n];
 		}
-		buff.put(0, arr[index+4+0]);
-		buff.put(1, arr[index+4+1]);
-		buff.put(2, arr[index+4+2]);
-		buff.put(3, arr[index+4+3]);
-		this.clusterNum = buff.getInt();
 		buff = ByteBuffer.allocate(8);
 		for (int k = 0; k < n; k++) {
 			for (int i = 0; i < 8; i++) {
-				buff.put(i, arr[index+8+i]); 
+				buff.put(i, arr[index+4+(k*8)+i]); 
 			}
 			this.vector[k] = buff.getDouble();
 		}
@@ -131,15 +114,11 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		for (int i = 0; i < 4; i++) {
 			arr[index+i] = bytes[i];
 		}
-		bytes = buff.putInt(this.clusterNum).array();
-		for (int i = 0; i < 4; i++) {
-			arr[index+4+i] = bytes[i];
-		}
 		buff = ByteBuffer.allocate(8);
 		for (int k = 0; k < vector.length; k++) {
 			bytes = buff.putDouble(this.vector[k]).array();
 			for (int i = 0; i < 8; i++) {
-				arr[index+8+i] = bytes[i];
+				arr[index+4+(k*8)+i] = bytes[i];
 			}
 		}
 	}
@@ -155,11 +134,6 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		if (this.dimension() != n) {
 			this.vector = new double[n];
 		}
-		buff.put(0, raf.readByte());
-		buff.put(1, raf.readByte());
-		buff.put(2, raf.readByte());
-		buff.put(3, raf.readByte());
-		this.clusterNum = buff.getInt();
 		buff = ByteBuffer.allocate(8);
 		for (int k = 0; k < n; k++) {
 			for (int i = 0; i < 8; i++) {
@@ -176,10 +150,6 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		for (int i = 0; i < 4; i++) {
 			raf.writeByte(bytes[i]);
 		}
-		bytes = buff.putInt(this.clusterNum).array();
-		for (int i = 0; i < 4; i++) {
-			raf.writeByte(bytes[i]);
-		}
 		buff = ByteBuffer.allocate(8);
 		for (int k = 0; k < vector.length; k++) {
 			bytes = buff.putDouble(this.vector[k]).array();
@@ -191,7 +161,6 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 
 	@Override
 	public void get(Point other) {
-		other.clusterNum = clusterNum;
 		other.vector = new double[dimension()];
 		for (int i = 0; i < vector.length; i++) {
 			other.vector[i] = vector[i];
@@ -200,7 +169,6 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 
 	@Override
 	public void set(Point other) {
-		clusterNum = other.clusterNum;
 		vector = new double[other.dimension()];
 		for (int i = 0; i < vector.length; i++) {
 			vector[i] = other.vector[i];

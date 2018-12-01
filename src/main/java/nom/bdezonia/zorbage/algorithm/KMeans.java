@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.point.Point;
 import nom.bdezonia.zorbage.type.data.point.PointGroup;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -70,22 +72,26 @@ public class KMeans {
 	 * @param input The list of Points to analyze.
 	 */
 	public static
-		void compute(PointGroup group, int numClusters, IndexedDataSource<?,Point> input)
+		void compute(PointGroup group, int numClusters, IndexedDataSource<?,Point> points, IndexedDataSource<?,SignedInt32Member> clusterIndices)
 	{
 		if (numClusters < 1)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");
 
+		if (points.size() != clusterIndices.size())
+			throw new IllegalArgumentException("points and clusterIndices length must match");
+		
 		int MAX_ITERS = 1000;
 		
 		Point point = group.construct();
+		SignedInt32Member num = G.INT32.construct();
 		
 		// assign initial clusters randomly
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
-		for (long i = 0; i < input.size(); i++) {
+		for (long i = 0; i < clusterIndices.size(); i++) {
 			int k = rng.nextInt(numClusters);
-			input.get(i, point);
-			point.setClusterNumber(k);
-			input.set(i, point);
+			clusterIndices.get(i, num);
+			num.setV(k);
+			clusterIndices.set(i, num);
 		}
 		
 		for (int k = 0; k < MAX_ITERS; k++) {
@@ -99,13 +105,14 @@ public class KMeans {
 				centers.add(new Point(point.dimension()));
 				counts.add(new Long(0));
 			}
-			for (long i = 0; i < input.size(); i++) {
-				input.get(i, point);
-				Point ctrSum = centers.get(point.clusterNumber());
+			for (long i = 0; i < points.size(); i++) {
+				points.get(i, point);
+				clusterIndices.get(i, num);
+				Point ctrSum = centers.get(num.v());
 				for (int j = 0; j < ctrSum.dimension(); j++) {
 					ctrSum.setComponent(j, ctrSum.component(j) + point.component(j));
 				}
-				counts.set(point.clusterNumber(), (counts.get(point.clusterNumber()))+1);
+				counts.set(num.v(), (counts.get(num.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
@@ -116,8 +123,8 @@ public class KMeans {
 			}
 			
 			// for each point
-			for (long i = 0; i < input.size(); i++) {
-				input.get(i,  point);
+			for (long i = 0; i < points.size(); i++) {
+				points.get(i,  point);
 				Point clusterCtr = centers.get(0);
 				double minDist = dist(point, clusterCtr);
 				int minIndex = 0;
@@ -130,10 +137,11 @@ public class KMeans {
 						minIndex = j;
 					}
 				}
-				if (minIndex != point.clusterNumber()) {
+				clusterIndices.get(i, num);
+				if (minIndex != num.v()) {
 					converged = false;
-					point.setClusterNumber(minIndex);
-					input.set(i, point);
+					num.setV(minIndex);
+					clusterIndices.set(i, num);
 				}
 			}
 			
