@@ -82,7 +82,7 @@ public class KMeans {
 
 		@Override
 		public int byteCount() {
-			return 4 + dimension() * 8;
+			return 8 + dimension() * 8;
 		}
 
 		@Override
