@@ -29,7 +29,10 @@ package nom.bdezonia.zorbage.type.data.point;
 
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
 
 /**
@@ -37,7 +40,9 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @author Barry DeZonia
  *
  */
-public class PointGroup implements Group<PointGroup,Point> {
+public class PointGroup
+	implements Group<PointGroup,Point>, Addition<Point>
+{
 
 	@Override
 	public Point construct() {
@@ -104,7 +109,7 @@ public class PointGroup implements Group<PointGroup,Point> {
 		return ASSIGN;
 	}
 
-	private final Function1<Boolean, Point> ZER =
+	private final Function1<Boolean, Point> EQZER =
 			new Function1<Boolean, Point>()
 	{
 		@Override
@@ -119,7 +124,77 @@ public class PointGroup implements Group<PointGroup,Point> {
 
 	@Override
 	public Function1<Boolean, Point> isZero() {
+		return EQZER;
+	}
+
+	private final Procedure1<Point> ZER =
+			new Procedure1<Point>()
+	{
+		@Override
+		public void call(Point a) {
+			for (int i = 0; i < a.dimension(); i++) {
+				a.setComponent(i, 0);
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Point> zero() {
 		return ZER;
+	}
+
+	private final Procedure2<Point, Point> NEG =
+			new Procedure2<Point, Point>()
+	{
+		@Override
+		public void call(Point a, Point b) {
+			if (a.dimension() != b.dimension())
+				throw new IllegalArgumentException("mismatched point dimensions");
+			for (int i = 0; i < a.dimension(); i++) {
+				b.setComponent(i, -a.component(i));
+			}
+		}
+	};
+
+	@Override
+	public Procedure2<Point, Point> negate() {
+		return NEG;
+	}
+
+	private final Procedure3<Point, Point, Point> ADD =
+			new Procedure3<Point, Point, Point>()
+	{
+		@Override
+		public void call(Point a, Point b, Point c) {
+			if (a.dimension() != b.dimension() || a.dimension() != c.dimension())
+				throw new IllegalArgumentException("mismatched point dimensions");
+			for (int i = 0; i < a.dimension(); i++) {
+				c.setComponent(i, a.component(i)+b.component(i));
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<Point, Point, Point> add() {
+		return ADD;
+	}
+
+	private final Procedure3<Point, Point, Point> SUB =
+			new Procedure3<Point, Point, Point>()
+	{
+		@Override
+		public void call(Point a, Point b, Point c) {
+			if (a.dimension() != b.dimension() || a.dimension() != c.dimension())
+				throw new IllegalArgumentException("mismatched point dimensions");
+			for (int i = 0; i < a.dimension(); i++) {
+				c.setComponent(i, a.component(i)-b.component(i));
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<Point, Point, Point> subtract() {
+		return SUB;
 	}
 	
 }
