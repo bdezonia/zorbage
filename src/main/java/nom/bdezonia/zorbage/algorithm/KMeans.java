@@ -113,6 +113,9 @@ public class KMeans {
 		for (int k = 0; k < MAX_ITERS; k++) {
 			
 			// calc centroids of clusters
+			for (int i = 0; i < numClusters; i++) {
+				group.zero().call(centers.get(i));
+			}
 			for (long i = 0; i < points.size(); i++) {
 				points.get(i, point);
 				clusterIndices.get(i, clusterNum);
