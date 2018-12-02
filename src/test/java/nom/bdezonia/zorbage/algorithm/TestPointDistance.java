@@ -57,6 +57,7 @@ public class TestPointDistance {
 		Point c = new Point(3);
 		
 		Point d = new Point(0);
+		Point e = new Point(0);
 		
 		Float64Member result = G.DBL.construct();
 		
@@ -66,11 +67,14 @@ public class TestPointDistance {
 		try {
 			PointDistance.compute(a, c, result);
 			fail();
-		} catch (Exception e) {
+		} catch (Exception exc) {
 			assertTrue(true);
 		}
 
 		PointDistance.compute(d, d, result);
+		assertEquals(0, result.v(), 0);
+		
+		PointDistance.compute(d, e, result);
 		assertEquals(0, result.v(), 0);
 		
 	}
