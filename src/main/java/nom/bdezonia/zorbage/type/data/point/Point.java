@@ -31,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -42,8 +43,9 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  * @author Barry DeZonia
  *
  */
-public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
-
+public class Point
+	implements ByteCoder, Settable<Point>, Gettable<Point>, DimensionCount
+{
 	private double[] vector;
 	
 	public Point(int dimension) {
@@ -69,8 +71,9 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 			setComponent(i, val.v());
 		}
 	}
-	
-	public int dimension() {
+
+	@Override
+	public int numDimensions() {
 		return vector.length;
 	}
 
@@ -84,7 +87,7 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 	
 	@Override
 	public int byteCount() {
-		return 4 + dimension() * 8;
+		return 4 + numDimensions() * 8;
 	}
 
 	@Override
@@ -95,7 +98,7 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		buff.put(2, arr[index+2]);
 		buff.put(3, arr[index+3]);
 		int n = buff.getInt();
-		if (this.dimension() != n) {
+		if (this.numDimensions() != n) {
 			this.vector = new double[n];
 		}
 		buff = ByteBuffer.allocate(8);
@@ -131,7 +134,7 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 		buff.put(2, raf.readByte());
 		buff.put(3, raf.readByte());
 		int n = buff.getInt();
-		if (this.dimension() != n) {
+		if (this.numDimensions() != n) {
 			this.vector = new double[n];
 		}
 		buff = ByteBuffer.allocate(8);
@@ -161,7 +164,7 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 
 	@Override
 	public void get(Point other) {
-		other.vector = new double[dimension()];
+		other.vector = new double[numDimensions()];
 		for (int i = 0; i < vector.length; i++) {
 			other.vector[i] = vector[i];
 		}
@@ -169,7 +172,7 @@ public class Point implements ByteCoder, Settable<Point>, Gettable<Point> {
 
 	@Override
 	public void set(Point other) {
-		vector = new double[other.dimension()];
+		vector = new double[other.numDimensions()];
 		for (int i = 0; i < vector.length; i++) {
 			vector[i] = other.vector[i];
 		}

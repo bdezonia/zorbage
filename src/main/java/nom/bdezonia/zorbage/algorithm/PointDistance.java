@@ -49,11 +49,11 @@ public class PointDistance {
 	 */
 	public static
 		void compute(Point a, Point b, Float64Member result) {
-		if (a.dimension() != b.dimension())
+		if (a.numDimensions() != b.numDimensions())
 			throw new IllegalArgumentException("points do not share the same dimensionality");
 		// Do a two pass hypot approach to avoid overflow
 		double max = 0;
-		for (int i = 0; i < a.dimension(); i++) {
+		for (int i = 0; i < a.numDimensions(); i++) {
 			double term = Math.abs(a.component(i) - b.component(i));
 			max = Math.max(term, max);
 		}
@@ -62,7 +62,7 @@ public class PointDistance {
 			return;
 		}
 		double sum = 0;
-		for (int i = 0; i < a.dimension(); i++) {
+		for (int i = 0; i < a.numDimensions(); i++) {
 			double term = (a.component(i) - b.component(i)) / max;
 			sum += term * term; 
 		}

@@ -91,7 +91,7 @@ public class KMeans {
 		List<Point> centers = new ArrayList<Point>();
 		List<Long> counts = new ArrayList<Long>();
 		for (int i = 0; i < numClusters; i++) {
-			centers.add(new Point(point.dimension()));
+			centers.add(new Point(point.numDimensions()));
 			counts.add(new Long(0));
 		}
 

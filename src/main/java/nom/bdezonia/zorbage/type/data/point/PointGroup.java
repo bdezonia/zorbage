@@ -67,8 +67,8 @@ public class PointGroup
 		@Override
 		public Boolean call(Point a, Point b) {
 			if (a == b) return true;
-			if (a.dimension() != b.dimension()) return false;
-			for (int i = 0; i < a.dimension(); i++) {
+			if (a.numDimensions() != b.numDimensions()) return false;
+			for (int i = 0; i < a.numDimensions(); i++) {
 				if (a.component(i) != b.component(i)) return false;
 			}
 			return true;
@@ -100,7 +100,7 @@ public class PointGroup
 		@Override
 		public void call(Point a, Point b) {
 			if (a == b) return;
-			if (a.dimension() != b.dimension()) {
+			if (a.numDimensions() != b.numDimensions()) {
 				a.set(b);
 			}
 		}
@@ -116,7 +116,7 @@ public class PointGroup
 	{
 		@Override
 		public Boolean call(Point a) {
-			for (int i = 0; i < a.dimension(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				if (a.component(i) != 0)
 					return false;
 			}
@@ -134,7 +134,7 @@ public class PointGroup
 	{
 		@Override
 		public void call(Point a) {
-			for (int i = 0; i < a.dimension(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				a.setComponent(i, 0);
 			}
 		}
@@ -150,9 +150,9 @@ public class PointGroup
 	{
 		@Override
 		public void call(Point a, Point b) {
-			if (a.dimension() != b.dimension())
+			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensions");
-			for (int i = 0; i < a.dimension(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				b.setComponent(i, -a.component(i));
 			}
 		}
@@ -168,9 +168,9 @@ public class PointGroup
 	{
 		@Override
 		public void call(Point a, Point b, Point c) {
-			if (a.dimension() != b.dimension() || a.dimension() != c.dimension())
+			if (a.numDimensions() != b.numDimensions() || a.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensions");
-			for (int i = 0; i < a.dimension(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				c.setComponent(i, a.component(i)+b.component(i));
 			}
 		}
@@ -186,9 +186,9 @@ public class PointGroup
 	{
 		@Override
 		public void call(Point a, Point b, Point c) {
-			if (a.dimension() != b.dimension() || a.dimension() != c.dimension())
+			if (a.numDimensions() != b.numDimensions() || a.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensions");
-			for (int i = 0; i < a.dimension(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				c.setComponent(i, a.component(i)-b.component(i));
 			}
 		}
@@ -205,9 +205,9 @@ public class PointGroup
 	{
 		@Override
 		public void call(Float64Member a, Point b, Point c) {
-			if (b.dimension() != c.dimension())
+			if (b.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
-			for (int i = 0; i < b.dimension(); i++) {
+			for (int i = 0; i < b.numDimensions(); i++) {
 				c.setComponent(i, a.v() * b.component(i));
 			}
 		}
