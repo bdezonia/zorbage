@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 
@@ -35,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  *
  * @param <U>
  */
-public class ArrayStorageBoolean<U extends BooleanCoder>
+public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageBoolean<U>, U>
 {
 	private final U type;
@@ -46,7 +47,7 @@ public class ArrayStorageBoolean<U extends BooleanCoder>
 			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.booleanCount()))
 			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " boolean based entities");
-		this.type = type;
+		this.type = type.allocate();
 		this.data = new boolean[(int)size * type.booleanCount()];
 	}
 

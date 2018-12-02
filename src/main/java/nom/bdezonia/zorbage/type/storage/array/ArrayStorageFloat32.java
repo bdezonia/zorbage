@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 
@@ -35,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  *
  * @param <U>
  */
-public class ArrayStorageFloat32<U extends FloatCoder>
+public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageFloat32<U>, U>
 {
 	private final U type;
@@ -46,7 +47,7 @@ public class ArrayStorageFloat32<U extends FloatCoder>
 			throw new IllegalArgumentException("ArrayStorageFloat32 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.floatCount()))
 			throw new IllegalArgumentException("ArrayStorageFloat32 can handle at most " + (Integer.MAX_VALUE / type.floatCount()) + " float based entities");
-		this.type = type;
+		this.type = type.allocate();
 		this.data = new float[(int)size * type.floatCount()];
 	}
 

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 
@@ -34,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt16<U extends ShortCoder>
+public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageSignedInt16<U>,U>
 {
 
@@ -46,7 +47,7 @@ public class ArrayStorageSignedInt16<U extends ShortCoder>
 			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.shortCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " short based entities");
-		this.type = type;
+		this.type = type.allocate();
 		this.data = new short[(int)size * type.shortCount()];
 	}
 

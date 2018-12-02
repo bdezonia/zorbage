@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 
@@ -34,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt64<U extends LongCoder>
+public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageSignedInt64<U>,U>
 {
 
@@ -46,7 +47,7 @@ public class ArrayStorageSignedInt64<U extends LongCoder>
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.longCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " long based entities");
-		this.type = type;
+		this.type = type.allocate();
 		this.data = new long[(int)size * type.longCount()];
 	}
 

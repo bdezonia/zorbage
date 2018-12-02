@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
@@ -34,7 +35,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  * @author Barry DeZonia
  *
  */
-public class ArrayStorageSignedInt8<U extends ByteCoder>
+public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageSignedInt8<U>,U>
 {
 
@@ -46,7 +47,7 @@ public class ArrayStorageSignedInt8<U extends ByteCoder>
 			throw new IllegalArgumentException("ArrayStorageSignedInt8 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.byteCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt8 can handle at most " + (Integer.MAX_VALUE / type.byteCount()) + " byte based entities");
-		this.type = type;
+		this.type = type.allocate();
 		this.data = new byte[(int)size * type.byteCount()];
 	}
 

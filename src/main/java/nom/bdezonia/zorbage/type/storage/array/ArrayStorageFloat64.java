@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
@@ -35,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  *
  * @param <U>
  */
-public class ArrayStorageFloat64<U extends DoubleCoder>
+public class ArrayStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	implements IndexedDataSource<ArrayStorageFloat64<U>, U>
 {
 	private final U type;
@@ -46,7 +47,7 @@ public class ArrayStorageFloat64<U extends DoubleCoder>
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.doubleCount()))
 			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " double based entities");
-		this.type = type;
+		this.type = type.allocate();
 		this.data = new double[(int)size * type.doubleCount()];
 	}
 
