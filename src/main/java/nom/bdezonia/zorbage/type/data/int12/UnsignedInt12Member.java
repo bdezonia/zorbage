@@ -76,6 +76,10 @@ public final class UnsignedInt12Member
 		setV(x);
 	}
 	
+	public UnsignedInt12Member(int v) {
+		setV(v);
+	}
+	
 	@Override
 	public void v(UnsignedInt12Member value) {
 		get(value);

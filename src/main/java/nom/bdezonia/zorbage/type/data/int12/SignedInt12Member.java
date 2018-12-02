@@ -76,6 +76,10 @@ public final class SignedInt12Member
 		setV(x);
 	}
 	
+	public SignedInt12Member(int v) {
+		setV(v);
+	}
+
 	@Override
 	public void v(SignedInt12Member value) {
 		get(value);

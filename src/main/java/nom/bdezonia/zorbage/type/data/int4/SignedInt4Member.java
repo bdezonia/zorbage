@@ -76,6 +76,10 @@ public final class SignedInt4Member
 		setV(x);
 	}
 	
+	public SignedInt4Member(int v) {
+		setV(v);
+	}
+	
 	@Override
 	public void v(SignedInt4Member value) {
 		get(value);

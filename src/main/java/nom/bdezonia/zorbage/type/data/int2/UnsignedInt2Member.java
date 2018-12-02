@@ -76,6 +76,10 @@ public final class UnsignedInt2Member
 		setV(x);
 	}
 	
+	public UnsignedInt2Member(int v) {
+		setV(v);
+	}
+	
 	@Override
 	public void v(UnsignedInt2Member value) {
 		get(value);
