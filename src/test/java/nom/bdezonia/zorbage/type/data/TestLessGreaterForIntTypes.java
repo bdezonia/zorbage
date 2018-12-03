@@ -268,11 +268,11 @@ public class TestLessGreaterForIntTypes {
 	@Test
 	public void int16() {
 		SignedInt16Member a = new SignedInt16Member(Short.MIN_VALUE);
-		SignedInt16Member b = new SignedInt16Member((short)(Short.MIN_VALUE+1));
-		SignedInt16Member c = new SignedInt16Member((short)-1);
-		SignedInt16Member d = new SignedInt16Member((short)0);
-		SignedInt16Member e = new SignedInt16Member((short)1);
-		SignedInt16Member f = new SignedInt16Member((short)(Short.MAX_VALUE-1));
+		SignedInt16Member b = new SignedInt16Member(Short.MIN_VALUE+1);
+		SignedInt16Member c = new SignedInt16Member(-1);
+		SignedInt16Member d = new SignedInt16Member(0);
+		SignedInt16Member e = new SignedInt16Member(1);
+		SignedInt16Member f = new SignedInt16Member(Short.MAX_VALUE-1);
 		SignedInt16Member g = new SignedInt16Member(Short.MAX_VALUE);
 		
 		assertTrue(G.INT16.isLess().call(a, b));
