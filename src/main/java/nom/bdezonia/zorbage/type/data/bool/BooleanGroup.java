@@ -38,11 +38,11 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.CommutativeRingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.LogicalOperations;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 // TODO - do I need a BitType that is stored within an int? Or just use BooleanMember?
 
@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.type.algebra.Random;
  */
 public class BooleanGroup
   implements
-    CommutativeRingWithUnity<BooleanGroup, BooleanMember>,
+  	Group<BooleanGroup, BooleanMember>,
+  	Unity<BooleanMember>,
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,
     LogicalOperations<BooleanMember>,
-    Random<BooleanMember>,
-    Power<BooleanMember>
+    Random<BooleanMember>
 {
 	
 	public BooleanGroup() { }
@@ -350,115 +350,6 @@ public class BooleanGroup
 		return MAX;
 	}
 
-	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> MUL =
-			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
-	{
-		@Override
-		public void call(BooleanMember a, BooleanMember b, BooleanMember c) {
-			c.setV(a.v() && b.v());
-		}
-	};
-
-	@Override
-	public Procedure3<BooleanMember, BooleanMember, BooleanMember> multiply() {
-		return MUL;
-	}
-
-	private final Procedure3<java.lang.Integer, BooleanMember, BooleanMember> POWER =
-			new Procedure3<java.lang.Integer, BooleanMember, BooleanMember>()
-	{
-		@Override
-		public void call(java.lang.Integer power, BooleanMember a, BooleanMember b) {
-			if (power < 0)
-				throw new IllegalArgumentException("booleans cannot handle negative powers");
-			if (power == 0) {
-				if (a.v() == false) throw new IllegalArgumentException("0^0 is not a number");
-				b.setV(true);
-			}
-			else
-				b.setV(a.v());
-		}
-	};
-
-	@Override
-	public Procedure3<java.lang.Integer, BooleanMember, BooleanMember> power() {
-		return POWER;
-	}
-
-	private final Procedure1<BooleanMember> ZERO =
-			new Procedure1<BooleanMember>()
-	{
-		@Override
-		public void call(BooleanMember a) {
-			a.setV(false);
-		}
-	};
-	
-	@Override
-	public Procedure1<BooleanMember> zero() {
-		return ZERO;
-	}
-
-	private final Procedure2<BooleanMember,BooleanMember> NEG =
-			new Procedure2<BooleanMember, BooleanMember>()
-	{
-		@Override
-		public void call(BooleanMember a, BooleanMember b) {
-			b.setV(!a.v());
-		}
-	};
-
-	@Override
-	public Procedure2<BooleanMember,BooleanMember> negate() {
-		return NEG;
-	}
-
-	// overflow possible: not sure if I like the placement of this class in the algebra hierarchy.
-	//   Maybe it points out a new type that hase zero() and unity() but not msubtract() or add().
-	//   Also note if we support the overflowers then the type should add pred() and succ(). And
-	//   maybe also the BitOperations
-	
-	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> ADD =
-			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
-	{
-		@Override
-		public void call(BooleanMember a, BooleanMember b, BooleanMember c) {
-			if (a.v()) {
-				c.setV(!b.v()); // includes overflow case
-			} else { // a.v == false
-				c.setV(b.v());
-			}
-		}
-	};
-
-	@Override
-	public Procedure3<BooleanMember, BooleanMember, BooleanMember> add() {
-		return ADD;
-	}
-
-	// underflow possible: not sure if I like the placement of this class in the algebra hierarchy.
-	//   Maybe it points out a new type that hase zero() and unity() but not msubtract() or add().
-	//   Also note if we support the overflowers then the type should add pred() and succ(). And
-	//   maybe also the BitOperations
-	
-	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> SUB =
-			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
-	{
-		@Override
-		public void call(BooleanMember a, BooleanMember b, BooleanMember c) {
-			if (a.v()) {
-				c.setV(!b.v());
-			} else { // a.v == false
-				c.setV(b.v()); // includes underflow case
-			}
-		}
-	};
-
-	@Override
-	public Procedure3<BooleanMember, BooleanMember, BooleanMember> subtract() {
-		return SUB;
-	}
-
 	private final Procedure1<BooleanMember> ONE =
 			new Procedure1<BooleanMember>()
 	{
@@ -488,21 +379,6 @@ public class BooleanGroup
 		return RAND;
 	}
 
-	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> POW =
-			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
-	{
-		@Override
-		public void call(BooleanMember a, BooleanMember b, BooleanMember c) {
-			int p = b.v() ? 1 : 0;
-			power().call(p, a, c);
-		}
-	};
-
-	@Override
-	public Procedure3<BooleanMember, BooleanMember, BooleanMember> pow() {
-		return POW;
-	}
-	
 	private final Function1<Boolean, BooleanMember> ISZERO =
 			new Function1<Boolean, BooleanMember>()
 	{
