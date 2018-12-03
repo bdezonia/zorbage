@@ -49,7 +49,7 @@ public class TestFindIf {
 	public void test() {
 		IndexedDataSource<?,SignedInt8Member> list = ArrayStorage.allocateBytes(
 				new byte[] {1,2,3,4,5,1,2,3,4,5});
-		Condition<SignedInt8Member> condition = new EqualConstant<SignedInt8Group, SignedInt8Member>(G.INT8, new SignedInt8Member((byte)5));
+		Condition<SignedInt8Member> condition = new EqualConstant<SignedInt8Group, SignedInt8Member>(G.INT8, new SignedInt8Member(5));
 		assertEquals(4, FindIf.compute(G.INT8, condition, list));
 	}
 }

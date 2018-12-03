@@ -65,8 +65,8 @@ public final class SignedInt16Member
 		v = 0;
 	}
 	
-	public SignedInt16Member(short value) {
-		v = value;
+	public SignedInt16Member(int value) {
+		v = (short) value;
 	}
 	
 	public SignedInt16Member(SignedInt16Member value) {

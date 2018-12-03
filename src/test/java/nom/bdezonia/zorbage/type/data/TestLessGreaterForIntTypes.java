@@ -151,13 +151,13 @@ public class TestLessGreaterForIntTypes {
 	
 	@Test
 	public void int8() {
-		SignedInt8Member a = new SignedInt8Member((byte) Byte.MIN_VALUE);
-		SignedInt8Member b = new SignedInt8Member((byte) (Byte.MIN_VALUE+1));
-		SignedInt8Member c = new SignedInt8Member((byte)-1);
-		SignedInt8Member d = new SignedInt8Member((byte)0);
-		SignedInt8Member e = new SignedInt8Member((byte)1);
-		SignedInt8Member f = new SignedInt8Member((byte) (Byte.MAX_VALUE-1));
-		SignedInt8Member g = new SignedInt8Member((byte) Byte.MAX_VALUE);
+		SignedInt8Member a = new SignedInt8Member(Byte.MIN_VALUE);
+		SignedInt8Member b = new SignedInt8Member(Byte.MIN_VALUE+1);
+		SignedInt8Member c = new SignedInt8Member(-1);
+		SignedInt8Member d = new SignedInt8Member(0);
+		SignedInt8Member e = new SignedInt8Member(1);
+		SignedInt8Member f = new SignedInt8Member(Byte.MAX_VALUE-1);
+		SignedInt8Member g = new SignedInt8Member(Byte.MAX_VALUE);
 		
 		assertTrue(G.INT8.isLess().call(a, b));
 		assertFalse(G.INT8.isGreater().call(a, b));

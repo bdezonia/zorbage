@@ -65,8 +65,8 @@ public final class SignedInt8Member
 		v = 0;
 	}
 	
-	public SignedInt8Member(byte value) {
-		v = value;
+	public SignedInt8Member(int value) {
+		v = (byte) value;
 	}
 	
 	public SignedInt8Member(SignedInt8Member value) {
