@@ -327,4 +327,15 @@ public class TestUnsignedInt12 {
 			}
 		}
 	}
+	
+	@Test
+	public void rollover() {
+		UnsignedInt12Member num = G.UINT12.construct();
+		for (int offset : new int[] {0, 4096, 8192, 12288, -12288, -8192, -4096}) {
+			for (int i = 0; i < 4095; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v);
+			}
+		}
+	}
 }

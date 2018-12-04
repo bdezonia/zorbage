@@ -291,4 +291,15 @@ public class TestUnsignedInt1 {
 			}
 		}
 	}
+	
+	@Test
+	public void rollover() {
+		UnsignedInt1Member num = G.UINT1.construct();
+		for (int offset : new int[] {0, 2, 4, 6, 8, 10, -2, -4, -6, -8, -10}) {
+			for (int i = 0; i < 2; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v);
+			}
+		}
+	}
 }

@@ -277,4 +277,15 @@ public class TestSignedInt16Group {
 		G.INT16.gcd();
 		G.INT16.lcm();
 	}
+	
+	@Test
+	public void rollover() {
+		SignedInt16Member num = G.INT16.construct();
+		for (int offset : new int[] {0, 65536, 131072, 196608, -65536, -131072, -196608}) {
+			for (int i = Short.MIN_VALUE; i < Short.MAX_VALUE; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v());
+			}
+		}
+	}
 }

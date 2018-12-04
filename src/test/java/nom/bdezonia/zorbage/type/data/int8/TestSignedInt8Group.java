@@ -221,5 +221,15 @@ public class TestSignedInt8Group {
 		G.INT8.gcd();
 		G.INT8.lcm();
 	}
-
+	
+	@Test
+	public void rollover() {
+		SignedInt8Member num = G.INT8.construct();
+		for (int offset : new int[] {0, 256, 512, 768, 1024, 1280, -256, -512, -768, -1024, -1280}) {
+			for (int i = -128; i < 128; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v());
+			}
+		}
+	}
 }

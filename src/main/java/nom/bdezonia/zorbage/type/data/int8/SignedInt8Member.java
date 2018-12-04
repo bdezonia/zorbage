@@ -81,7 +81,7 @@ public final class SignedInt8Member
 
 	public byte v() { return v; }
 
-	public void setV(byte val) { v = val; }
+	public void setV(int val) { v = (byte) val; }
 	
 	@Override
 	public void set(SignedInt8Member other) {

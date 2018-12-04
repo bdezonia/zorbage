@@ -273,4 +273,18 @@ public class TestUnsignedInt8Group {
 		G.UINT8.gcd();
 		G.UINT8.lcm();
 	}
+	
+	@Test
+	public void rollover() {
+		UnsignedInt8Member num = G.UINT8.construct();
+		for (int offset : new int[] {0, 256, 512, 768, 1024, 1280, -256, -512, -768, -1024, -1280}) {
+			for (int i = 0; i < 256; i++) {
+				num.setV(offset + i);
+				if (i < 128)
+					assertEquals(i, num.v);
+				else
+					assertEquals(-(256-i), num.v);
+			}
+		}
+	}
 }

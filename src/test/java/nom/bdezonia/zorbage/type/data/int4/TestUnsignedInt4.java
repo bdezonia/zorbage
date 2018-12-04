@@ -325,4 +325,15 @@ public class TestUnsignedInt4 {
 			}
 		}
 	}
+	
+	@Test
+	public void rollover() {
+		UnsignedInt4Member num = G.UINT4.construct();
+		for (int offset : new int[] {0, 16, 32, 48, 64, 80, -16, -32, -48,-64, -80}) {
+			for (int i = 0; i < 16; i++) {
+				num.setV(offset + i);
+				assertEquals(i, num.v);
+			}
+		}
+	}
 }

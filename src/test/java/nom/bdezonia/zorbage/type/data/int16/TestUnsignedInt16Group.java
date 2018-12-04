@@ -271,4 +271,18 @@ public class TestUnsignedInt16Group {
 		G.UINT16.gcd();
 		G.UINT16.lcm();
 	}
+	
+	@Test
+	public void rollover() {
+		UnsignedInt16Member num = G.UINT16.construct();
+		for (int offset : new int[] {0, 65536, 131072, 196608, -65536, -131072, -196608}) {
+			for (int i = 0; i < 65536; i++) {
+				num.setV(offset + i);
+				if (i < 32768)
+					assertEquals(i, num.v);
+				else
+					assertEquals(-(65536-i), num.v);
+			}
+		}
+	}
 }

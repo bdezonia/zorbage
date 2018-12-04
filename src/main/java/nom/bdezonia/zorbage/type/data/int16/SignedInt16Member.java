@@ -81,7 +81,7 @@ public final class SignedInt16Member
 
 	public short v() { return v; }
 	
-	public void setV(short val) { v = val; }
+	public void setV(int val) { v = (short) val; }
 	
 	@Override
 	public void set(SignedInt16Member other) {
