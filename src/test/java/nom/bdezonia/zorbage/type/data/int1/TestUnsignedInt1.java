@@ -281,7 +281,7 @@ public class TestUnsignedInt1 {
 				assertEquals((a.v==1) && (b.v==0), (c.v == 1));
 				
 				G.UINT1.logicalNot().call(a, c);
-				assertEquals(a.v==1 ? 0 : 1, c.v);
+				assertEquals((a.v==1 ? false : true), (c.v == 1));
 				
 				G.UINT1.logicalOr().call(a, b, c);
 				assertEquals((a.v==1) || (b.v==1), (c.v == 1));
