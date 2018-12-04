@@ -125,7 +125,7 @@ public class SignedInt16Group
 		public void call(SignedInt16Member a, SignedInt16Member b) {
 			if (a.v() == Short.MIN_VALUE)
 				throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
-			b.setV( (short) Math.abs(a.v()) );
+			b.setV( Math.abs(a.v()) );
 		}
 	};
 	
@@ -139,7 +139,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short) (a.v() * b.v()) );
+			c.setV( a.v() * b.v() );
 		}
 	};
 	
@@ -167,7 +167,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.setV( (short) 0 );
+			a.setV( 0 );
 		}
 	};
 	
@@ -181,7 +181,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b) {
-			b.setV( (short) -a.v() );
+			b.setV( -a.v() );
 		}
 	};
 	
@@ -195,7 +195,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short)(a.v() + b.v()) );
+			c.setV( a.v() + b.v() );
 		}
 	};
 	
@@ -209,7 +209,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short)(a.v() - b.v()) );
+			c.setV( a.v() - b.v() );
 		}
 	};
 	
@@ -223,7 +223,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.setV( (short) 1 );
+			a.setV( 1 );
 		}
 	};
 	
@@ -327,7 +327,7 @@ public class SignedInt16Group
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member d) {
 			if (b.v() == -1 && a.v() == Short.MIN_VALUE)
 				throw new IllegalArgumentException("cannot divide minint by -1");
-			d.setV( (short)(a.v() / b.v()) );
+			d.setV( a.v() / b.v() );
 		}
 	};
 	
@@ -341,7 +341,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member m) {
-			m.setV( (short)(a.v() % b.v()) );
+			m.setV( a.v() % b.v() );
 		}
 	};
 	
@@ -431,7 +431,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b) {
-			b.setV( (short)(a.v() - 1) );
+			b.setV( a.v() - 1 );
 		}
 	};
 	
@@ -445,7 +445,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b) {
-			b.setV( (short)(a.v() + 1) );
+			b.setV( a.v() + 1 );
 		}
 	};
 	
@@ -487,7 +487,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short)(a.v() & b.v()) );
+			c.setV( a.v() & b.v() );
 		}
 	};
 	
@@ -501,7 +501,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short)(a.v() | b.v()) );
+			c.setV( a.v() | b.v() );
 		}
 	};
 	
@@ -515,7 +515,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short)(a.v() ^ b.v()) );
+			c.setV( a.v() ^ b.v() );
 		}
 	};
 	
@@ -529,7 +529,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b) {
-			b.setV( (short) ~a.v() );
+			b.setV( ~a.v() );
 		}
 	};
 	
@@ -544,7 +544,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-			c.setV( (short)(a.v() & ~b.v()) );
+			c.setV( a.v() & ~b.v() );
 		}
 	};
 	
@@ -562,7 +562,7 @@ public class SignedInt16Group
 				bitShiftRight().call(-count, a, b);
 			else {
 				count = count % 16;
-				b.setV( (short)(a.v() << count) );
+				b.setV( a.v() << count );
 			}
 		}
 	};
@@ -580,7 +580,7 @@ public class SignedInt16Group
 			if (count < 0)
 				bitShiftLeft().call(-count, a, b);
 			else
-				b.setV( (short)(a.v() >> count) );
+				b.setV( a.v() >> count );
 		}
 	};
 	
@@ -597,7 +597,7 @@ public class SignedInt16Group
 			if (count < 0)
 				bitShiftLeft().call(-count, a, b);
 			else
-				b.setV( (short)(a.v() >>> count) );
+				b.setV( a.v() >>> count );
 		}
 	};
 	
@@ -639,7 +639,7 @@ public class SignedInt16Group
 		@Override
 		public void call(SignedInt16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV( (short) (java.lang.Short.MIN_VALUE + rng.nextInt(0x10000)));
+			a.setV( java.lang.Short.MIN_VALUE + rng.nextInt(0x10000));
 		}
 	};
 	

@@ -56,7 +56,7 @@ public class TestArrayStorageBit {
 		}
 		long b = System.currentTimeMillis();
 		long c = System.currentTimeMillis();
-		byt.setV((byte)1);
+		byt.setV(1);
 		for (long i = 0; i < iterations; i++) {
 			bytes.set(i%size, byt);
 		}

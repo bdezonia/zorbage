@@ -48,57 +48,57 @@ public class TestMax {
 		SignedInt16Member result = G.INT16.construct();
 		
 		a.setV(Short.MIN_VALUE);
-		b.setV((short)(Short.MIN_VALUE+1));
+		b.setV(Short.MIN_VALUE+1);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(Short.MIN_VALUE+1, result.v());
 		
 		b.setV(Short.MIN_VALUE);
-		a.setV((short)(Short.MIN_VALUE+1));
+		a.setV(Short.MIN_VALUE+1);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(Short.MIN_VALUE+1, result.v());
 		
 		a.setV(Short.MAX_VALUE);
-		b.setV((short)(Short.MAX_VALUE-1));
+		b.setV(Short.MAX_VALUE-1);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(Short.MAX_VALUE, result.v());
 		
 		b.setV(Short.MAX_VALUE);
-		a.setV((short)(Short.MAX_VALUE-1));
+		a.setV(Short.MAX_VALUE-1);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(Short.MAX_VALUE, result.v());
 		
-		a.setV((short)5);
-		b.setV((short)2);
+		a.setV(5);
+		b.setV(2);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(5, result.v());
 		
-		a.setV((short)-5);
-		b.setV((short)-2);
+		a.setV(-5);
+		b.setV(-2);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(-2, result.v());
 		
-		a.setV((short)-3);
-		b.setV((short)0);
+		a.setV(-3);
+		b.setV(0);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(0, result.v());
 		
-		b.setV((short)-3);
-		a.setV((short)0);
+		b.setV(-3);
+		a.setV(0);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(0, result.v());
 		
-		a.setV((short)3);
-		b.setV((short)0);
+		a.setV(3);
+		b.setV(0);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(3, result.v());
 		
-		b.setV((short)3);
-		a.setV((short)0);
+		b.setV(3);
+		a.setV(0);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(3, result.v());
 		
-		a.setV((short)67);
-		b.setV((short)67);
+		a.setV(67);
+		b.setV(67);
 		Max.compute(G.INT16, a, b, result);
 		assertEquals(67, result.v());
 	}

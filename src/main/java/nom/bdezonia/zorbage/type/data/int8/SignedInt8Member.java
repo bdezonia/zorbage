@@ -178,12 +178,12 @@ public final class SignedInt8Member
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV((byte)v);
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV((byte)v);
+		setV(v);
 	}
 
 	@Override
@@ -255,7 +255,7 @@ public final class SignedInt8Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV((byte)v);
+			setV(v);
 		}
 	}
 
@@ -279,7 +279,7 @@ public final class SignedInt8Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV((byte)v);
+			setV(v);
 		}
 	}
 

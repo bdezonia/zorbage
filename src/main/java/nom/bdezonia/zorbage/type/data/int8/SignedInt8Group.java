@@ -125,7 +125,7 @@ public class SignedInt8Group
 		public void call(SignedInt8Member a, SignedInt8Member b) {
 			if (a.v() == Byte.MIN_VALUE)
 				throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
-			b.setV( (byte) Math.abs(a.v()) );
+			b.setV( Math.abs(a.v()) );
 		}
 	};
 
@@ -139,7 +139,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte) (a.v() * b.v()) );
+			c.setV( a.v() * b.v() );
 		}
 	};
 	
@@ -167,7 +167,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a) {
-			a.setV( (byte) 0 );
+			a.setV( 0 );
 		}
 	};
 	
@@ -181,7 +181,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b) {
-			b.setV( (byte) -a.v() );
+			b.setV( -a.v() );
 		}
 	};
 
@@ -195,7 +195,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte) (a.v() + b.v()) );
+			c.setV( a.v() + b.v() );
 		}
 	};
 	
@@ -209,7 +209,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte) (a.v() - b.v()) );
+			c.setV( a.v() - b.v() );
 		}
 	};
 	
@@ -223,7 +223,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a) {
-			a.setV( (byte) 1 );
+			a.setV( 1 );
 		}
 	};
 	
@@ -327,7 +327,7 @@ public class SignedInt8Group
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
 			if (b.v() == -1 && a.v() == Byte.MIN_VALUE)
 				throw new IllegalArgumentException("cannot divide minint by -1");
-			c.setV( (byte) (a.v() / b.v()) );
+			c.setV( (a.v() / b.v()) );
 		}
 	};
 	
@@ -341,7 +341,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte) (a.v() % b.v()) );
+			c.setV( (a.v() % b.v()) );
 		}
 	};
 	
@@ -431,7 +431,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b) {
-			b.setV( (byte)(a.v() - 1) );
+			b.setV( (a.v() - 1) );
 		}
 	};
 
@@ -445,7 +445,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b) {
-			b.setV( (byte)(a.v() + 1) );
+			b.setV( (a.v() + 1) );
 		}
 	};
 
@@ -487,7 +487,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte)(a.v() & b.v()) );
+			c.setV( (a.v() & b.v()) );
 		}
 	};
 	
@@ -501,7 +501,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte)(a.v() | b.v()) );
+			c.setV( (a.v() | b.v()) );
 		}
 	};
 	
@@ -515,7 +515,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte)(a.v() ^ b.v()) );
+			c.setV( (a.v() ^ b.v()) );
 		}
 	};
 	
@@ -529,7 +529,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b) {
-			b.setV( (byte) ~a.v() );
+			b.setV( ~a.v() );
 		}
 	};
 
@@ -543,7 +543,7 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member c) {
-			c.setV( (byte)(a.v() & ~b.v()) );
+			c.setV( (a.v() & ~b.v()) );
 		}
 	};
 	
@@ -561,7 +561,7 @@ public class SignedInt8Group
 				bitShiftRight().call(-count, a, b);
 			else {
 				count = count % 8;
-				b.setV( (byte)(a.v() << count) );
+				b.setV( (a.v() << count) );
 			}
 		}
 	};
@@ -579,7 +579,7 @@ public class SignedInt8Group
 			if (count < 0)
 				bitShiftLeft().call(-count, a, b);
 			else
-				b.setV( (byte)(a.v() >> count) );
+				b.setV( (a.v() >> count) );
 		}
 	};
 	
@@ -596,7 +596,7 @@ public class SignedInt8Group
 			if (count < 0)
 				bitShiftLeft().call(-count, a, b);
 			else
-				b.setV( (byte)(a.v() >>> count) );
+				b.setV( (a.v() >>> count) );
 		}
 	};
 	
@@ -638,7 +638,7 @@ public class SignedInt8Group
 		@Override
 		public void call(SignedInt8Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV( (byte) (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
+			a.setV( (java.lang.Byte.MIN_VALUE + rng.nextInt(0x100)));
 		}
 	};
 	

@@ -43,7 +43,7 @@ public class TestSignedInt16Group {
 	public void testPred() {
 		SignedInt16Member v = new SignedInt16Member();
 		
-		v.setV((short)-32765);
+		v.setV(-32765);
 		assertEquals(-32765, v.v());
 		G.INT16.pred().call(v, v);
 		assertEquals(-32766, v.v());
@@ -58,7 +58,7 @@ public class TestSignedInt16Group {
 		G.INT16.pred().call(v, v);
 		assertEquals(32765, v.v());
 
-		v.setV((short)3);
+		v.setV(3);
 		assertEquals(3, v.v());
 		G.INT16.pred().call(v, v);
 		assertEquals(2, v.v());
@@ -76,7 +76,7 @@ public class TestSignedInt16Group {
 	public void testSucc() {
 		SignedInt16Member v = new SignedInt16Member();
 		
-		v.setV((short)32765);
+		v.setV(32765);
 		assertEquals(32765, v.v());
 		G.INT16.succ().call(v, v);
 		assertEquals(32766, v.v());
@@ -91,7 +91,7 @@ public class TestSignedInt16Group {
 		G.INT16.succ().call(v, v);
 		assertEquals(-32765, v.v());
 
-		v.setV((short)-2);
+		v.setV(-2);
 		assertEquals(-2, v.v());
 		G.INT16.succ().call(v, v);
 		assertEquals(-1, v.v());
@@ -165,7 +165,7 @@ public class TestSignedInt16Group {
 					}
 					G.INT16.power().call(p, a, c);
 					assertEquals(t, c.v());
-					b.setV((short)p);
+					b.setV(p);
 					G.INT16.pow().call(a, b, c);
 					assertEquals(t, c.v());
 				}

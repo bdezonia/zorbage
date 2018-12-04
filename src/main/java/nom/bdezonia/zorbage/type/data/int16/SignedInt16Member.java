@@ -183,7 +183,7 @@ public final class SignedInt16Member
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV((short)v);
+		setV(v);
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public final class SignedInt16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV((short)v);
+			setV(v);
 		}
 	}
 
