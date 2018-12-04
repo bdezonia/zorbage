@@ -80,11 +80,15 @@ public final class BooleanMember
 		if (value.equalsIgnoreCase("true") ||
 				value.equalsIgnoreCase("t") ||
 				value.equalsIgnoreCase("+") ||
+				value.equalsIgnoreCase("y") ||
+				value.equalsIgnoreCase("yes") ||
 				value.equalsIgnoreCase("1"))
 			v = true;
 		else if (value.equalsIgnoreCase("false") ||
 				value.equalsIgnoreCase("f") ||
 				value.equalsIgnoreCase("-") ||
+				value.equalsIgnoreCase("n") ||
+				value.equalsIgnoreCase("no") ||
 				value.equalsIgnoreCase("0"))
 			v = false;
 		else {
