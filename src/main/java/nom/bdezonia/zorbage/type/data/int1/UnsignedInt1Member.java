@@ -85,12 +85,16 @@ public final class UnsignedInt1Member
 		get(value);
 	}
 
+	public int v() {
+		return v;
+	}
+
 	@Override
 	public void setV(UnsignedInt1Member value) {
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 
 		v = (byte) (val & 0x1);
 		
