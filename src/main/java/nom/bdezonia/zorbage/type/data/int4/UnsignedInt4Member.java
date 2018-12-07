@@ -85,6 +85,10 @@ public final class UnsignedInt4Member
 		get(value);
 	}
 
+	public byte v() {
+		return v;
+	}
+	
 	@Override
 	public void setV(UnsignedInt4Member value) {
 		set(value);

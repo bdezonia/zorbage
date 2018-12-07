@@ -85,6 +85,10 @@ public final class SignedInt12Member
 		get(value);
 	}
 
+	public short v() {
+		return v;
+	}
+	
 	@Override
 	public void setV(SignedInt12Member value) {
 		set(value);

@@ -85,7 +85,7 @@ public final class UnsignedInt1Member
 		get(value);
 	}
 
-	public int v() {
+	public byte v() {
 		return v;
 	}
 

@@ -85,6 +85,10 @@ public final class SignedInt2Member
 		get(value);
 	}
 
+	public byte v() {
+		return v;
+	}
+	
 	@Override
 	public void setV(SignedInt2Member value) {
 		set(value);

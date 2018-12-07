@@ -85,6 +85,10 @@ public final class UnsignedInt12Member
 		get(value);
 	}
 
+	public short v() {
+		return v;
+	}
+	
 	@Override
 	public void setV(UnsignedInt12Member value) {
 		set(value);

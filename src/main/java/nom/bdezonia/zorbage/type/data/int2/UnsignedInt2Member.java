@@ -85,6 +85,10 @@ public final class UnsignedInt2Member
 		get(value);
 	}
 
+	public byte v() {
+		return v;
+	}
+	
 	@Override
 	public void setV(UnsignedInt2Member value) {
 		set(value);
