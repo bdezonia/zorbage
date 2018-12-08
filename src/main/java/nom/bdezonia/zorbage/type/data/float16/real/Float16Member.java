@@ -96,7 +96,6 @@ public final class Float16Member
 	
 	@Override
 	public String toString() {
-		// make sure we don't stray from values of format
 		return String.valueOf(v());
 	}
 	
