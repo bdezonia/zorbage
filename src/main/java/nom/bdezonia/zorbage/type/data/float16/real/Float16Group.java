@@ -63,6 +63,9 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
+// TODO read the following code:
+// https://github.com/g-truc/glm/blob/master/glm/detail/type_half.inl
+	
 /**
  * 
  * @author Barry DeZonia
