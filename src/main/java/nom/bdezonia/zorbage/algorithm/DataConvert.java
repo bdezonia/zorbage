@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.util.List;
 
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -52,10 +53,12 @@ public class DataConvert {
 	 * @param fromList
 	 * @param toList
 	 */
-	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, IndexedDataSource<?,V> fromList, IndexedDataSource<?,W> toList)
+	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
+		void compute(T fromGroup, V toGroup, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
 	{
-		compute(fromGroup, toGroup, 0, 0, fromList.size(), fromList, toList);
+		if (from.size() != to.size())
+			throw new IllegalArgumentException("mismatched list sizes");
+		compute(fromGroup, toGroup, 0, 0, from.size(), from, to);
 	}
 
 	/**
@@ -68,10 +71,10 @@ public class DataConvert {
 	 * @param toStart
 	 * @param count
 	 */
-	public static <T extends Group<T,V>, U extends Group<U,W>, V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(T fromGroup, U toGroup, long fromStart, long toStart, long count, IndexedDataSource<?,V> fromList, IndexedDataSource<?,W> toList)
+	public static <T extends Group<T,U>, U extends PrimitiveConversion, V  extends Group<V,W>, W extends PrimitiveConversion>
+		void compute(T fromGroup, V toGroup, long fromStart, long toStart, long count, IndexedDataSource<?,U> fromList, IndexedDataSource<?,W> toList)
 	{
-		V from = fromGroup.construct();
+		U from = fromGroup.construct();
 		W to = toGroup.construct();
 		int numD = Math.max(from.numDimensions(), to.numDimensions());
 		IntegerIndex tmp1 = new IntegerIndex(numD);
@@ -90,17 +93,58 @@ public class DataConvert {
 	 * @param input
 	 * @param output
 	 */
-	public static <V extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(List<V> input, List<W> output)
+	public static <U extends PrimitiveConversion, W extends PrimitiveConversion>
+		void compute(List<U> from, List<W> to)
 	{
-		if (input.size() == 0 || output.size() == 0)
+		if (from.size() == 0 || to.size() == 0)
 			throw new IllegalArgumentException("cannot work with empty lists");
-		int numD = Math.max(input.get(0).numDimensions(), output.get(0).numDimensions());
+		if (from.size() != to.size())
+			throw new IllegalArgumentException("mismatched list sizes");
+		int numD = Math.max(from.get(0).numDimensions(), to.get(0).numDimensions());
 		IntegerIndex tmp1 = new IntegerIndex(numD);
 		IntegerIndex tmp2 = new IntegerIndex(numD);
 		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (int i = 0; i < input.size(); i++) {
-			PrimitiveConverter.convert(tmp1, tmp2, tmp3, input.get(i), output.get(i));
+		for (int i = 0; i < from.size(); i++) {
+			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from.get(i), to.get(i));
+		}
+	}
+	
+	/**
+	 * 
+	 * @param fromGrp
+	 * @param toGrp
+	 * @param proc
+	 * @param from
+	 * @param to
+	 */
+	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
+		void compute(T fromGrp, V toGrp, Procedure2<U,W> proc, IndexedDataSource<?, U> from, IndexedDataSource<?, W> to)
+	{
+		if (from.size() != to.size())
+			throw new IllegalArgumentException("mismatched list sizes");
+		compute(fromGrp,toGrp,proc,0,0,from.size(),from,to);	
+	}
+	
+	/**
+	 * 
+	 * @param fromGrp
+	 * @param toGrp
+	 * @param proc
+	 * @param fromStart
+	 * @param toStart
+	 * @param count
+	 * @param from
+	 * @param to
+	 */
+	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
+		void compute(T fromGrp, V toGrp, Procedure2<U,W> proc, long fromStart, long toStart, long count, IndexedDataSource<?, U> from, IndexedDataSource<?, W> to)
+	{
+		U tmp1 = fromGrp.construct();
+		W tmp2 = toGrp.construct();
+		for (long i = 0; i < count; i++) {
+			from.get(fromStart + i, tmp1);
+			proc.call(tmp1, tmp2);
+			to.set(toStart + i, tmp2);
 		}
 	}
 }
