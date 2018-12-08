@@ -108,6 +108,8 @@ public class DataConvert {
 		}
 	}
 
+	// TODO: do these next two methods belong in Travsform2 algorithm?
+	
 	/**
 	 * 
 	 * @param fromGrp
