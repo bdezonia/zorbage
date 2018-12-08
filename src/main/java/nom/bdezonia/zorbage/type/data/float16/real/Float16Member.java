@@ -97,7 +97,7 @@ public final class Float16Member
 	@Override
 	public String toString() {
 		// make sure we don't stray from values of format
-		return String.valueOf(Float16Util.convertHFloatToFloat(v));
+		return String.valueOf(v());
 	}
 	
 	@Override
@@ -137,8 +137,7 @@ public final class Float16Member
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		float val = Float16Util.convertHFloatToFloat(v);
-		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(val)));
+		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(v())));
 	}
 
 	@Override
@@ -403,7 +402,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (byte) Float16Util.convertHFloatToFloat(v);
+		if (component == 0) return (byte) v();
 		return 0;
 	}
 
@@ -412,7 +411,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (short) Float16Util.convertHFloatToFloat(v);
+		if (component == 0) return (short) v();
 		return 0;
 	}
 
@@ -421,7 +420,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (int) Float16Util.convertHFloatToFloat(v);
+		if (component == 0) return (int) v();
 		return 0;
 	}
 
@@ -430,7 +429,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (long) Float16Util.convertHFloatToFloat(v);
+		if (component == 0) return (long) v();
 		return 0;
 	}
 
@@ -439,7 +438,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return Float16Util.convertHFloatToFloat(v);
+		if (component == 0) return v();
 		return 0;
 	}
 
@@ -448,7 +447,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return Float16Util.convertHFloatToFloat(v);
+		if (component == 0) return v();
 		return 0;
 	}
 
@@ -457,7 +456,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigInteger.valueOf((long) Float16Util.convertHFloatToFloat(v));
+		if (component == 0) return BigInteger.valueOf((long) v());
 		return BigInteger.ZERO;
 	}
 
@@ -466,7 +465,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return new BigDecimal(Float16Util.convertHFloatToFloat(v));
+		if (component == 0) return new BigDecimal(v());
 		return BigDecimal.ZERO;
 	}
 
@@ -488,7 +487,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (byte) Float16Util.convertHFloatToFloat(v);
+			return (byte) v();
 		}
 	}
 
@@ -510,7 +509,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (short) Float16Util.convertHFloatToFloat(v);
+			return (short) v();
 		}
 	}
 
@@ -532,7 +531,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (int) Float16Util.convertHFloatToFloat(v);
+			return (int) v();
 		}
 	}
 
@@ -554,7 +553,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (long) Float16Util.convertHFloatToFloat(v);
+			return (long) v();
 		}
 	}
 
@@ -576,7 +575,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return Float16Util.convertHFloatToFloat(v);
+			return v();
 		}
 	}
 
@@ -598,7 +597,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return Float16Util.convertHFloatToFloat(v);
+			return v();
 		}
 	}
 
@@ -620,7 +619,7 @@ public final class Float16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigInteger.valueOf((long) Float16Util.convertHFloatToFloat(v));
+			return BigInteger.valueOf((long) v());
 		}
 	}
 
@@ -642,7 +641,7 @@ public final class Float16Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(Float16Util.convertHFloatToFloat(v));
+			return BigDecimal.valueOf(v());
 		}
 	}
 
