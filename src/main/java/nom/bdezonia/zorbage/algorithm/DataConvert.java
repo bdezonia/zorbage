@@ -45,13 +45,13 @@ public class DataConvert {
 	// do not instantiate
 	
 	private DataConvert() {}
-	
+
 	/**
 	 * 
 	 * @param fromGroup
 	 * @param toGroup
-	 * @param fromList
-	 * @param toList
+	 * @param from
+	 * @param to
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
 		void compute(T fromGroup, V toGroup, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
@@ -65,11 +65,11 @@ public class DataConvert {
 	 * 
 	 * @param fromGroup
 	 * @param toGroup
-	 * @param fromList
-	 * @param toList
 	 * @param fromStart
 	 * @param toStart
 	 * @param count
+	 * @param fromList
+	 * @param toList
 	 */
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V  extends Group<V,W>, W extends PrimitiveConversion>
 		void compute(T fromGroup, V toGroup, long fromStart, long toStart, long count, IndexedDataSource<?,U> fromList, IndexedDataSource<?,W> toList)
@@ -88,10 +88,9 @@ public class DataConvert {
 	}
 
 	/**
-	 * DataConvert.compute()
 	 * 
-	 * @param input
-	 * @param output
+	 * @param from
+	 * @param to
 	 */
 	public static <U extends PrimitiveConversion, W extends PrimitiveConversion>
 		void compute(List<U> from, List<W> to)
@@ -108,7 +107,7 @@ public class DataConvert {
 			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from.get(i), to.get(i));
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param fromGrp
@@ -124,7 +123,7 @@ public class DataConvert {
 			throw new IllegalArgumentException("mismatched list sizes");
 		compute(fromGrp,toGrp,proc,0,0,from.size(),from,to);	
 	}
-	
+
 	/**
 	 * 
 	 * @param fromGrp

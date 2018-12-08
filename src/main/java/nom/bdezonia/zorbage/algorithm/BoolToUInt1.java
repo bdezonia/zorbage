@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -39,7 +40,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 public class BoolToUInt1 {
 
 	private BoolToUInt1() { }
-	
+
 	/**
 	 * 
 	 * @param bools
@@ -48,14 +49,15 @@ public class BoolToUInt1 {
 	public static
 		void compute(IndexedDataSource<?,BooleanMember> bools, IndexedDataSource<?,UnsignedInt1Member> ints)
 	{
-		if (bools.size() != ints.size())
-			throw new IllegalArgumentException("mismatched list sizes");
-		BooleanMember B = G.BOOL.construct();
-		UnsignedInt1Member I = G.UINT1.construct();
-		for (long i = 0; i < bools.size(); i++) {
-			bools.get(i, B);
-			I.setV(B.v() ? 1 : 0);
-			ints.set(i, I);
-		}
+		DataConvert.compute(G.BOOL, G.UINT1, converter, bools, ints);
 	}
+	
+	private static Procedure2<BooleanMember,UnsignedInt1Member> converter =
+			new Procedure2<BooleanMember, UnsignedInt1Member>()
+	{
+		@Override
+		public void call(BooleanMember a, UnsignedInt1Member b) {
+			b.setV(a.v() ? 1 : 0);
+		}
+	};
 }
