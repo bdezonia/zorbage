@@ -31,13 +31,11 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -62,54 +60,44 @@ public final class Float16Member
 	Settable<Float16Member>, Gettable<Float16Member>,
 	UniversalRepresentation, PrimitiveConversion
 {
-	private static final double SUBNORMAL_BOUND = Math.pow(2,-14);
-	private static final short MAX_BOUND_I = (short) 0b0111101111111111;
-	private static final short MIN_BOUND_I = (short) 0b1111101111111111;
-	private static final double MAX_BOUND_R = toDouble(MAX_BOUND_I);
-	private static final double MIN_BOUND_R = toDouble(MIN_BOUND_I);
-	
-	private Float64Member v;
+	private short v;
 	
 	public Float16Member() {
-		v = new Float64Member();
+		v = Float16Util.convertFloatToHFloat(0);
 	}
 	
-	public Float16Member(double value) {
-		value = toDouble(toShort(value));
-		v = new Float64Member(value);
+	public Float16Member(float value) {
+		v = Float16Util.convertFloatToHFloat(value);
 	}
 	
 	public Float16Member(Float16Member value) {
-		v = new Float64Member(value.v);
+		v = value.v;
 	}
 	
 	public Float16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		v = new Float64Member(toDouble(toShort(val.r().doubleValue())));
+		v = Float16Util.convertFloatToHFloat(val.r().floatValue());
 	}
 	
-	public double v() { return v.v(); }
+	public float v() { return Float16Util.convertHFloatToFloat(v); }
 	
-	// Note: I am going to let internal values stray from Float16 format for performance reasons.
-	// Only deal with format conversions when writing to or reading from a Float16 container.
-	
-	public void setV(double val) { v.setV(val); }
+	public void setV(double val) { v = Float16Util.convertFloatToHFloat((float)val); }
 	
 	@Override
 	public void set(Float16Member other) {
-		G.DBL.assign().call(other.v, v);
+		v = other.v;
 	}
 	
 	@Override
 	public void get(Float16Member other) {
-		G.DBL.assign().call(v, other.v);
+		other.v = v;
 	}
 	
 	@Override
 	public String toString() {
 		// make sure we don't stray from values of format
-		return String.valueOf(toDouble(toShort(v())));
+		return String.valueOf(Float16Util.convertHFloatToFloat(v));
 	}
 	
 	@Override
@@ -119,22 +107,22 @@ public final class Float16Member
 	
 	@Override
 	public void fromShortArray(short[] arr, int index) {
-		v.setV(toDouble(arr[index]));
+		v = arr[index];
 	}
 	
 	@Override
 	public void toShortArray(short[] arr, int index) {
-		arr[index] = toShort(v());
+		arr[index] = v;
 	}
 	
 	@Override
 	public void fromShortFile(RandomAccessFile raf) throws IOException {
-		v.setV(toDouble(raf.readShort()));
+		v = raf.readShort();
 	}
 	
 	@Override
 	public void toShortFile(RandomAccessFile raf) throws IOException {
-		raf.writeShort(toShort(v()));
+		raf.writeShort(v);
 	}
 	
 	@Override
@@ -149,121 +137,13 @@ public final class Float16Member
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		double val = toDouble(toShort(v()));
+		float val = Float16Util.convertHFloatToFloat(v);
 		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(val)));
 	}
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		setV(rep.getValue().r().doubleValue());
-	}
-
-	static short toShort(double value) {
-		if (value == Double.NEGATIVE_INFINITY) return (short) 0b1111110000000000;
-			
-		if (value == Double.POSITIVE_INFINITY) return (short) 0b0111110000000000;
-			
-		if (Double.isNaN(value)) return (short) 0b0111111111111111;
-		
-		if (value == +0) return (short) 0b0000000000000000;
-		
-		if (value == -0) return (short) 0b1000000000000000;
-
-		if (value <= MIN_BOUND_R) return MIN_BOUND_I;
-					
-		if (value >= MAX_BOUND_R) return MAX_BOUND_I;
-					
-		// if here its a number in representational range
-		
-// https://stackoverflow.com/questions/6162651/half-precision-floating-point-in-java/6162687#6162687
-		
-		int sign = (value < 0 ? 0b1000000000000000 : 0);
-		value = Math.abs(value);
-		if (value < SUBNORMAL_BOUND) {
-			// encode as a subnormal number
-			double tmp = value / SUBNORMAL_BOUND;
-			double frac = 0.5;
-			int mask = 512;
-			int signif = 0;
-			while (mask > 0) {
-				if (tmp >= frac) {
-					signif |= mask;
-					tmp -= frac;
-				}
-				mask >>= 1;
-				frac /= 2.0;
-			}
-			return (short) (sign | signif);
-		}
-		else {
-			// encode as a normalized number
-			// sign already set
-			// exp ranges -14 to 15  (1 to 30)
-			int exp = (int) Math.floor(Math.log(value) / Math.log(2));
-			if (exp < -14) throw new IllegalArgumentException("whoops 1");
-			if (exp > 15) throw new IllegalArgumentException("whoops 2");
-			value = value / Math.pow(2,exp);
-			double tmp = value - 1.0;
-			double frac = 0.5;
-			int mask = 512;
-			int signif = 0;
-			while (mask > 0) {
-				if (tmp >= frac) {
-					signif |= mask;
-					tmp -= frac;
-				}
-				mask >>= 1;
-				frac /= 2.0;
-			}
-			return (short) (sign | ((exp + 15) << 10) | signif);
-		}
-	}
-	
-	static double toDouble(short value) {
-		int exponent = ((value & 0b0111110000000000) >> 10);
-		int significand = (value & 0b0000001111111111);
-		int sign = (value & 0b1000000000000000) >>> 15;
-		if (exponent == 0){
-			if (significand == 0) {
-				if (sign > 0)
-					return -0;
-				else
-					return +0;
-			}
-			else {
-				// subnormal numbers
-				return (sign != 0 ? -1 : 1) * Math.pow(2, -14) * (fraction(significand));
-			}
-		}
-		else if (exponent == 31) {
-			if (significand == 0) {
-				if (sign > 0)
-					return Double.NEGATIVE_INFINITY;
-				else
-					return Double.POSITIVE_INFINITY;
-			}
-			else { // significand != 0
-				return Double.NaN;
-			}
-		}
-		else // exponent: 1 <= exponent <= 30
-		{
-			// normalized numbers
-			return (sign != 0 ? -1 : 1) * Math.pow(2, exponent-15) * (1.0 + fraction(significand));
-		}
-	}
-	
-	private static double fraction(int significand) {
-		double result = 0;
-		double frac = 0.5;
-		int mask = 512;
-		while (mask > 0) {
-			if ((significand & mask) > 0)
-				result += frac;
-			mask >>= 1;
-			frac /= 2.0;
-		}
-		return result;
 	}
 
 	@Override
@@ -288,42 +168,42 @@ public final class Float16Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setV(toDouble(toShort(v)));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV(toDouble(toShort(v)));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV(toDouble(toShort(v)));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setV(toDouble(toShort(v)));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(toDouble(toShort(v)));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(toDouble(toShort(v)));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(toDouble(toShort(v.doubleValue())));
+		setV(v.doubleValue());
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setV(toDouble(toShort(v.doubleValue())));
+		setV(v.doubleValue());
 	}
 
 	@Override
@@ -346,7 +226,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v)));
+			setV(v);
 		}
 	}
 
@@ -370,7 +250,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v)));
+			setV(v);
 		}
 	}
 
@@ -394,7 +274,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v)));
+			setV(v);
 		}
 	}
 
@@ -418,7 +298,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v)));
+			setV(v);
 		}
 	}
 
@@ -442,7 +322,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v)));
+			setV(v);
 		}
 	}
 
@@ -466,7 +346,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v)));
+			setV(v);
 		}
 	}
 
@@ -490,7 +370,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v.doubleValue())));
+			setV(v.doubleValue());
 		}
 	}
 
@@ -514,7 +394,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(toDouble(toShort(v.doubleValue())));
+			setV(v.doubleValue());
 		}
 	}
 
@@ -523,7 +403,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (byte) toDouble(toShort(v()));
+		if (component == 0) return (byte) Float16Util.convertHFloatToFloat(v);
 		return 0;
 	}
 
@@ -532,7 +412,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (short) toDouble(toShort(v()));
+		if (component == 0) return (short) Float16Util.convertHFloatToFloat(v);
 		return 0;
 	}
 
@@ -541,7 +421,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (int) toDouble(toShort(v()));
+		if (component == 0) return (int) Float16Util.convertHFloatToFloat(v);
 		return 0;
 	}
 
@@ -550,7 +430,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (long) toDouble(toShort(v()));
+		if (component == 0) return (long) Float16Util.convertHFloatToFloat(v);
 		return 0;
 	}
 
@@ -559,7 +439,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (float) toDouble(toShort(v()));
+		if (component == 0) return Float16Util.convertHFloatToFloat(v);
 		return 0;
 	}
 
@@ -568,7 +448,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return toDouble(toShort(v()));
+		if (component == 0) return Float16Util.convertHFloatToFloat(v);
 		return 0;
 	}
 
@@ -577,7 +457,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigInteger.valueOf((long)toDouble(toShort(v())));
+		if (component == 0) return BigInteger.valueOf((long) Float16Util.convertHFloatToFloat(v));
 		return BigInteger.ZERO;
 	}
 
@@ -586,7 +466,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return new BigDecimal(toDouble(toShort(v())));
+		if (component == 0) return new BigDecimal(Float16Util.convertHFloatToFloat(v));
 		return BigDecimal.ZERO;
 	}
 
@@ -608,7 +488,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (byte) toDouble(toShort(v()));
+			return (byte) Float16Util.convertHFloatToFloat(v);
 		}
 	}
 
@@ -630,7 +510,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (short) toDouble(toShort(v()));
+			return (short) Float16Util.convertHFloatToFloat(v);
 		}
 	}
 
@@ -652,7 +532,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (int) toDouble(toShort(v()));
+			return (int) Float16Util.convertHFloatToFloat(v);
 		}
 	}
 
@@ -674,7 +554,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (long) toDouble(toShort(v()));
+			return (long) Float16Util.convertHFloatToFloat(v);
 		}
 	}
 
@@ -696,7 +576,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (float) toDouble(toShort(v()));
+			return Float16Util.convertHFloatToFloat(v);
 		}
 	}
 
@@ -718,7 +598,7 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return toDouble(toShort(v()));
+			return Float16Util.convertHFloatToFloat(v);
 		}
 	}
 
@@ -740,7 +620,7 @@ public final class Float16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigInteger.valueOf((long)toDouble(toShort(v())));
+			return BigInteger.valueOf((long) Float16Util.convertHFloatToFloat(v));
 		}
 	}
 
@@ -762,14 +642,13 @@ public final class Float16Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(toDouble(toShort(v())));
+			return BigDecimal.valueOf(Float16Util.convertHFloatToFloat(v));
 		}
 	}
 
 	@Override
 	public void primitiveInit() {
-		setV(0);  // TODO is this good enough? As used by primconvert yes.
-		          //   But maybe not if used generally.
+		setV(0);
 	}
 	
 }

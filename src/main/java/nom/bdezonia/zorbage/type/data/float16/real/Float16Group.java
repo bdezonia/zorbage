@@ -50,22 +50,17 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
-import nom.bdezonia.zorbage.type.algebra.MiscFloat;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Power;
-import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
-// TODO read the following code:
-// https://github.com/g-truc/glm/blob/master/glm/detail/type_half.inl
-	
 /**
  * 
  * @author Barry DeZonia
@@ -89,12 +84,10 @@ public class Float16Group
     Rounding<Float16Member,Float16Member>,
     Random<Float16Member>,
     RealUnreal<Float16Member,Float16Member>,
-    PredSucc<Float16Member>,
-    MiscFloat<Float16Member>,
     ModularDivision<Float16Member>
 {
-	private static final Float16Member PI = new Float16Member(Math.PI);
-	private static final Float16Member E = new Float16Member(Math.E);
+	private static final Float16Member PI = new Float16Member((float)Math.PI);
+	private static final Float16Member E = new Float16Member((float)Math.E);
 
 	public Float16Group() { }
 	
@@ -314,8 +307,10 @@ public class Float16Group
 	{
 		@Override
 		public Integer call(Float16Member a, Float16Member b) {
-			if (a.v() < b.v()) return -1;
-			if (a.v() > b.v()) return  1;
+			float x = a.v();
+			float y = b.v();
+			if (x < y) return -1;
+			if (x > y) return  1;
 			return 0;
 		}
 	};
@@ -330,8 +325,9 @@ public class Float16Group
 	{
 		@Override
 		public Integer call(Float16Member a) {
-			if (a.v() < 0) return -1;
-			if (a.v() > 0) return  1;
+			float x = a.v();
+			if (x < 0) return -1;
+			if (x > 0) return  1;
 			return 0;
 		}
 	};
@@ -346,7 +342,7 @@ public class Float16Group
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV( Float16Member.toDouble((short) 0b0111101111111111));
+			a.setV( Float16Util.convertHFloatToFloat((short) 0b0111101111111111) );
 		}
 	};
 
@@ -360,7 +356,7 @@ public class Float16Group
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV( Float16Member.toDouble((short) 0b1111101111111111));
+			a.setV( Float16Util.convertHFloatToFloat((short) 0b1111101111111111) );
 		}
 	};
 
@@ -389,11 +385,9 @@ public class Float16Group
 		@Override
 		public void call(Integer power, Float16Member a, Float16Member b) {
 			if (power == 0 && a.v() == 0) {
-				b.setV(Double.NaN);
+				throw new IllegalArgumentException("0^0 is not a number");
 			}
-			else {
-				b.setV( Math.pow(a.v(), power) );
-			}
+			b.setV( Math.pow(a.v(), power) );
 		}
 	};
 
@@ -547,25 +541,6 @@ public class Float16Group
 		public void call(Float16Member a, Float16Member s, Float16Member c) {
 			sin().call(a,s);
 			cos().call(a,c);
-			
-			/*
-			
-			// This might be too inaccurate to be worth optimization
-			
-			double arg = a.v() % TWO_PI;  // this might be faster than some while (arg < 0 || arg >= TWO_PI) loops
-			double cosine = Math.cos(arg);
-			double sine = Math.sqrt(1 - cosine * cosine);
-			if ( arg < 0) {
-				if (arg < -Math.PI)
-					sine = -sine;
-			}+
-			else { // arg >= 0
-				if (arg > Math.PI)
-					sine = -sine;
-			}
-			s.setV( sine );
-			c.setV( cosine );
-			*/
 		}
 	};
 	
@@ -669,7 +644,6 @@ public class Float16Group
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member s, Float16Member c) {
-			// TODO - is there a speedup?
 			sinh().call(a, s);
 			cosh().call(a, c);
 		}
@@ -858,7 +832,8 @@ public class Float16Group
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.log(a.v() + Math.sqrt(a.v()*a.v() - 1)) );
+			float x = a.v();
+			b.setV( Math.log(x + Math.sqrt(x*x - 1)) );
 		}
 	};
 	
@@ -874,7 +849,8 @@ public class Float16Group
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.log(a.v() + Math.sqrt(a.v()*a.v() + 1)) );
+			float x = a.v();
+			b.setV( Math.log(x + Math.sqrt(x*x + 1)) );
 		}
 	};
 	
@@ -890,7 +866,8 @@ public class Float16Group
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 0.5 * (-Math.log(1 - a.v()) + Math.log(1 + a.v())) );
+			float x = a.v();
+			b.setV( 0.5 * (-Math.log(1 - x) + Math.log(1 + x)) );
 		}
 	};
 	
@@ -958,7 +935,7 @@ public class Float16Group
 	{
 		@Override
 		public Boolean call(Float16Member a) {
-			return Double.isNaN(a.v());
+			return Float.isNaN(a.v());
 		}
 	};
 
@@ -986,7 +963,7 @@ public class Float16Group
 	{
 		@Override
 		public Boolean call(Float16Member a) {
-			return Double.isInfinite(a.v());
+			return Float.isInfinite(a.v());
 		}
 	};
 
@@ -1151,7 +1128,7 @@ public class Float16Group
 		@Override
 		public void call(Float16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextDouble());
+			a.setV(rng.nextFloat());
 		}
 	};
 	
@@ -1188,93 +1165,6 @@ public class Float16Group
 		return UNREAL;
 	}
 
-
-	private final Procedure2<Float16Member,Float16Member> PRED =
-			new Procedure2<Float16Member, Float16Member>()
-	{	
-		@Override
-		public void call(Float16Member a, Float16Member b) {
-			// TODO
-			throw new UnsupportedOperationException("Not yet implemented");
-		}
-	};
-
-	@Override
-	public Procedure2<Float16Member,Float16Member> pred() {
-		return PRED;
-	}
-
-	private final Procedure2<Float16Member,Float16Member> SUCC =
-			new Procedure2<Float16Member, Float16Member>()
-	{	
-		@Override
-		public void call(Float16Member a, Float16Member b) {
-			// TODO
-			throw new UnsupportedOperationException("Not yet implemented");
-		}
-	};
-
-	public Procedure2<Float16Member,Float16Member> succ() {
-		return SUCC;
-	}
-
-	private final Procedure3<Float16Member,Float16Member,Float16Member> CPS =
-			new Procedure3<Float16Member, Float16Member, Float16Member>()
-	{
-		@Override
-		public void call(Float16Member a, Float16Member b, Float16Member c) {
-			c.setV( Math.copySign(a.v(), b.v()) );
-		}
-	};
-
-	@Override
-	public Procedure3<Float16Member,Float16Member,Float16Member> copySign() {
-		return CPS;
-	}
-	
-	private final Function1<java.lang.Integer,Float16Member> GEXP =
-			new Function1<Integer, Float16Member>()
-	{
-		@Override
-		public Integer call(Float16Member a) {
-			// TODO
-			throw new UnsupportedOperationException("Not yet implemented");
-		}
-	};
-	
-	@Override
-	public Function1<java.lang.Integer,Float16Member> getExponent() {
-		return GEXP;
-	}
-
-	private final Procedure3<java.lang.Integer,Float16Member,Float16Member> SCALB =
-			new Procedure3<Integer, Float16Member, Float16Member>()
-	{		
-		@Override
-		public void call(Integer scaleFactor, Float16Member a, Float16Member b) {
-			b.setV(Math.scalb(a.v(),scaleFactor));
-		}
-	};
-	
-	@Override
-	public Procedure3<java.lang.Integer,Float16Member,Float16Member> scalb() {
-		return SCALB;
-	}
-
-	private final Procedure2<Float16Member,Float16Member> ULP =
-			new Procedure2<Float16Member, Float16Member>()
-	{	
-		@Override
-		public void call(Float16Member a, Float16Member b) {
-			// TODO
-			throw new UnsupportedOperationException("Not yet implemented");
-		}
-	};
-
-	@Override
-	public Procedure2<Float16Member,Float16Member> ulp() {
-		return ULP;
-	}
 
 	private final Procedure3<Float16Member,Float16Member,Float16Member> DIV =
 			new Procedure3<Float16Member, Float16Member, Float16Member>()
