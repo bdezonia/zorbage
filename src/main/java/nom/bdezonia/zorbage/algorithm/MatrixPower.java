@@ -70,11 +70,13 @@ public class MatrixPower {
 			MatrixPower.compute(-power, numGroup, rmodGroup, matGroup, aInv, b);
 		}
 		else if (power == 0) {
-			if (matGroup.isZero().call(a)) {
-				throw new IllegalArgumentException("0^0 is not a number");
-			}
 			b.alloc(a.rows(), a.cols());
-			MatrixUnity.compute(numGroup, b);
+			if (matGroup.isZero().call(a)) {
+				MatrixNaN.compute(numGrpoup, a);
+			}
+			else {
+				MatrixUnity.compute(numGroup, b);
+			}
 		}
 		else if (power == 1)
 			MatrixAssign.compute(numGroup, a, b);
