@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.util.List;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -108,44 +107,4 @@ public class DataConvert {
 		}
 	}
 
-	// TODO: do these next two methods belong in Travsform2 algorithm?
-	
-	/**
-	 * 
-	 * @param fromGrp
-	 * @param toGrp
-	 * @param proc
-	 * @param from
-	 * @param to
-	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
-		void compute(T fromGrp, V toGrp, Procedure2<U,W> proc, IndexedDataSource<?, U> from, IndexedDataSource<?, W> to)
-	{
-		if (from.size() != to.size())
-			throw new IllegalArgumentException("mismatched list sizes");
-		compute(fromGrp,toGrp,proc,0,0,from.size(),from,to);	
-	}
-
-	/**
-	 * 
-	 * @param fromGrp
-	 * @param toGrp
-	 * @param proc
-	 * @param fromStart
-	 * @param toStart
-	 * @param count
-	 * @param from
-	 * @param to
-	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
-		void compute(T fromGrp, V toGrp, Procedure2<U,W> proc, long fromStart, long toStart, long count, IndexedDataSource<?, U> from, IndexedDataSource<?, W> to)
-	{
-		U tmp1 = fromGrp.construct();
-		W tmp2 = toGrp.construct();
-		for (long i = 0; i < count; i++) {
-			from.get(fromStart + i, tmp1);
-			proc.call(tmp1, tmp2);
-			to.set(toStart + i, tmp2);
-		}
-	}
 }

@@ -49,7 +49,10 @@ public class BoolToUInt1 {
 	public static
 		void compute(IndexedDataSource<?,BooleanMember> bools, IndexedDataSource<?,UnsignedInt1Member> ints)
 	{
-		DataConvert.compute(G.BOOL, G.UINT1, converter, bools, ints);
+		if (bools.size() != ints.size())
+			throw new IllegalArgumentException("mismatched list sizes");
+		
+		Transform2.compute(G.BOOL, G.UINT1, converter, 0, 0, bools.size(), 1, 1, bools, ints);
 	}
 	
 	private static Procedure2<BooleanMember,UnsignedInt1Member> converter =
