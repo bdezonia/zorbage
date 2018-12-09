@@ -385,9 +385,10 @@ public class Float16Group
 		@Override
 		public void call(Integer power, Float16Member a, Float16Member b) {
 			if (power == 0 && a.v() == 0) {
-				throw new IllegalArgumentException("0^0 is not a number");
+				b.setV(Double.NaN);
 			}
-			b.setV( Math.pow(a.v(), power) );
+			else
+				b.setV( Math.pow(a.v(), power) );
 		}
 	};
 
@@ -1074,7 +1075,10 @@ public class Float16Group
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b, Float16Member c) {
-			c.setV( Math.pow(a.v(), b.v()) );
+			if (a.v() == 0 && b.v() == 0)
+				c.setV(Double.NaN);
+			else
+				c.setV( Math.pow(a.v(), b.v()) );
 		}
 	};
 

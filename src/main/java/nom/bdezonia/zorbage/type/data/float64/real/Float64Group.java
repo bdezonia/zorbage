@@ -391,9 +391,9 @@ public class Float64Group
 		public void call(Integer power, Float64Member a, Float64Member b) {
 			if (power == 0 && a.v() == 0) {
 				b.setV(Double.NaN);
-				return;
 			}
-			b.setV( Math.pow(a.v(), power) );
+			else
+				b.setV( Math.pow(a.v(), power) );
 		}
 	};
 	
@@ -1112,7 +1112,11 @@ public class Float64Group
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b, Float64Member c) {
-			c.setV( Math.pow(a.v(), b.v()) );
+			if (a.v() == 0 && b.v() == 0) {
+				c.setV(Double.NaN);
+			}
+			else
+				c.setV( Math.pow(a.v(), b.v()) );
 		}
 	};
 	
