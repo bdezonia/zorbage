@@ -169,15 +169,6 @@ public class TestSignedInt1 {
 				v = G.INT1.construct(a);
 				assertEquals(i,v.v);
 				
-				if (j != 0) {
-					c.setV(i+1);
-					G.INT1.div().call(a, b, c);
-					assertEquals(v(i / j), c.v);
-				}
-				
-				// TODO: gcd()
-				// TODO: lcm()
-				
 				assertEquals(i == 0, G.INT1.isEven().call(a));
 				assertEquals(i == -1, G.INT1.isOdd().call(a));
 				
@@ -204,26 +195,9 @@ public class TestSignedInt1 {
 				G.INT1.minBound().call(c);
 				assertEquals(-1, c.v);
 				
-				if (j != 0) {
-					c.setV(i+1);
-					G.INT1.mod().call(a, b, c);
-					assertEquals(v(i%j), c.v);
-				}
-				
 				c.setV(i+1);
 				G.INT1.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
-				
-				c.setV(i+1);
-				G.INT1.norm().call(a, c);
-				assertEquals(i, c.v);
-				
-				try {
-					G.INT1.pow().call(a, b, c);
-					fail();
-				} catch (IllegalArgumentException e) {
-					assertTrue(true);
-				}
 				
 				try {
 					G.INT1.power().call(j, a, c);

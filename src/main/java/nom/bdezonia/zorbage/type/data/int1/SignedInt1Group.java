@@ -28,19 +28,20 @@ package nom.bdezonia.zorbage.type.data.int1;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.Integer;
+import nom.bdezonia.zorbage.type.algebra.EvenOdd;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Ring;
+import nom.bdezonia.zorbage.type.algebra.Scale;
 
 /**
  * 
@@ -49,8 +50,13 @@ import nom.bdezonia.zorbage.type.algebra.Random;
  */
 public class SignedInt1Group
 	implements
-		Integer<SignedInt1Group, SignedInt1Member>,
+		Ring<SignedInt1Group, SignedInt1Member>,
+		Ordered<SignedInt1Member>,
+		PredSucc<SignedInt1Member>,
+		EvenOdd<SignedInt1Member>,
+		Scale<SignedInt1Member,SignedInt1Member>,
 		Bounded<SignedInt1Member>,
+		AbsoluteValue<SignedInt1Member>,
 		BitOperations<SignedInt1Member>,
 		Random<SignedInt1Member>
 {
@@ -179,29 +185,27 @@ public class SignedInt1Group
 	{
 		@Override
 		public void call(java.lang.Integer power, SignedInt1Member a, SignedInt1Member b) {
-			if (power == 0 && a.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
-			throw new IllegalArgumentException("signed int1's can't really support powers");
+			if (power < 0)
+				throw new IllegalArgumentException("negative power of an integral type is impossible");
+			else if (power == 0) {
+				if (a.v == 0)
+					throw new IllegalArgumentException("0^0 is not a number");
+				else
+					throw new IllegalArgumentException("1 bit signed int does not have the concept of 1");
+			}
+			else if (power == 1) {
+				b.v = a.v;
+			}
+			else {
+				// power = 2 or more. at least 1 number is 0. product must be 0.
+				b.v = 0;
+			}
 		}
 	};
 
 	@Override
 	public Procedure3<java.lang.Integer, SignedInt1Member, SignedInt1Member> power() {
 		return POWER;
-	}
-
-	private final Procedure1<SignedInt1Member> UNITY =
-			new Procedure1<SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a) {
-			throw new IllegalArgumentException("signed int1's do not really have Unity. Must fix hierarchy.");
-		}
-	};
-
-	@Override
-	public Procedure1<SignedInt1Member> unity() {
-		return UNITY;
 	}
 
 	private final Function2<Boolean, SignedInt1Member, SignedInt1Member> LESS =
@@ -336,41 +340,6 @@ public class SignedInt1Group
 		return ASSIGN;
 	}
 
-	@Override
-	public Procedure2<SignedInt1Member, SignedInt1Member> norm() {
-		// in other types norm -minint stays at -minint. so I think this method has nothing to do.
-		// but norms might be illegal < 0. TODO investigate. Throw? Change hierarchy?
-		return ASSIGN;
-	}
-
-	private final Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> GCD =
-			new Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a, SignedInt1Member b, SignedInt1Member c) {
-			Gcd.compute(G.INT1, a, b, c);
-		}
-	};
-	
-	@Override
-	public Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> gcd() {
-		return GCD;
-	}
-
-	private final Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> LCM =
-			new Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a, SignedInt1Member b, SignedInt1Member c) {
-			Lcm.compute(G.INT1, a, b, c);
-		}
-	};
-	
-	@Override
-	public Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> lcm() {
-		return LCM;
-	}
-
 	private final Function1<Boolean, SignedInt1Member> EVEN =
 			new Function1<Boolean, SignedInt1Member>()
 	{
@@ -397,49 +366,6 @@ public class SignedInt1Group
 	@Override
 	public Function1<Boolean, SignedInt1Member> isOdd() {
 		return ODD;
-	}
-
-	private final Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> DIV =
-			new Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a, SignedInt1Member b, SignedInt1Member d) {
-			d.setV(a.v / b.v);
-		}
-	};
-
-	@Override
-	public Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> div() {
-		return DIV;
-	}
-
-	private final Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> MOD =
-			new Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a, SignedInt1Member b, SignedInt1Member m) {
-			m.setV(a.v % b.v);
-		}
-	};
-
-	@Override
-	public Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> mod() {
-		return MOD;
-	}
-
-	private final Procedure4<SignedInt1Member, SignedInt1Member, SignedInt1Member, SignedInt1Member> DIVMOD =
-			new Procedure4<SignedInt1Member, SignedInt1Member, SignedInt1Member, SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a, SignedInt1Member b, SignedInt1Member d, SignedInt1Member m) {
-			div().call(a, b, d);
-			mod().call(a, b, m);
-		}
-	};
-
-	@Override
-	public Procedure4<SignedInt1Member, SignedInt1Member, SignedInt1Member, SignedInt1Member> divMod() {
-		return DIVMOD;
 	}
 
 	private final Procedure2<SignedInt1Member, SignedInt1Member> PRED =
@@ -474,22 +400,6 @@ public class SignedInt1Group
 	@Override
 	public Procedure2<SignedInt1Member, SignedInt1Member> succ() {
 		return SUCC;
-	}
-
-	private final Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> POW =
-			new Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member>()
-	{
-		@Override
-		public void call(SignedInt1Member a, SignedInt1Member b, SignedInt1Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
-			throw new IllegalArgumentException("signed int1's can't really support powers");
-		}
-	};
-
-	@Override
-	public Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> pow() {
-		return POW;
 	}
 
 	private final Procedure1<SignedInt1Member> RAND =
