@@ -55,7 +55,7 @@ public class DataConvert {
 	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
 		void compute(T fromGroup, V toGroup, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
 	{
-		if (from.size() != to.size())
+		if (from.size() > to.size())
 			throw new IllegalArgumentException("mismatched list sizes");
 		compute(fromGroup, toGroup, 0, 0, from.size(), from, to);
 	}
@@ -96,7 +96,7 @@ public class DataConvert {
 	{
 		if (from.size() == 0 || to.size() == 0)
 			throw new IllegalArgumentException("cannot work with empty lists");
-		if (from.size() != to.size())
+		if (from.size() > to.size())
 			throw new IllegalArgumentException("mismatched list sizes");
 		int numD = Math.max(from.get(0).numDimensions(), to.get(0).numDimensions());
 		IntegerIndex tmp1 = new IntegerIndex(numD);
