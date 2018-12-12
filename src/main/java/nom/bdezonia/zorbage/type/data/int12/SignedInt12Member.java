@@ -96,13 +96,10 @@ public final class SignedInt12Member
 
 	void setV(int val) {
 		v = (short) (val % 4096);
-		if (val < 0) {
-			if (v < -2048) v += 4096;
-		}
-		else {
-			// val >= 0
-			if (v > 2047) v -= 4096;
-		}
+		if (v < -2048)
+			v += 4096;
+		else if (v > 2047)
+			v -= 4096;
 	}
 	
 	@Override

@@ -96,13 +96,10 @@ public final class SignedInt2Member
 
 	void setV(int val) {
 		v = (byte) (val % 4);
-		if (val < 0) {
-			if (v < -2) v += 4;
-		}
-		else {
-			// val >= 0
-			if (v > 1) v -= 4;
-		}
+		if (v < -2)
+			v += 4;
+		else if (v > 1)
+			v -= 4;
 	}
 	
 	@Override

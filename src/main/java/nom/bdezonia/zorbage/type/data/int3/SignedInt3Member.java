@@ -96,13 +96,10 @@ public final class SignedInt3Member
 
 	void setV(int val) {
 		v = (byte) (val % 8);
-		if (val < 0) {
-			if (v < -4) v += 8;
-		}
-		else {
-			// val >= 0
-			if (v > 3) v -= 8;
-		}
+		if (v < -4)
+			v += 8;
+		else if (v > 3)
+			v -= 8;
 	}
 	
 	@Override
