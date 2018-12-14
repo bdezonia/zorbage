@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
@@ -45,7 +46,8 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  *
  */
 public class Point
-	implements ByteCoder, Settable<Point>, Gettable<Point>, DimensionCount, Allocatable<Point>
+	implements ByteCoder, Settable<Point>, Gettable<Point>, DimensionCount, Allocatable<Point>,
+		Duplicatable<Point>
 {
 	private double[] vector;
 	
@@ -182,5 +184,14 @@ public class Point
 	@Override
 	public Point allocate() {
 		return new Point(numDimensions());
+	}
+
+	@Override
+	public Point duplicate() {
+		Point p = allocate();
+		for (int i = 0; i < this.vector.length; i++) {
+			p.setComponent(i, this.vector[i]);
+		}
+		return p;
 	}
 }
