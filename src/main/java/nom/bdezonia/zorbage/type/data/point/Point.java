@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
 /**
  * 
@@ -46,8 +47,8 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  *
  */
 public class Point
-	implements ByteCoder, Settable<Point>, Gettable<Point>, DimensionCount, Allocatable<Point>,
-		Duplicatable<Point>
+	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>, DimensionCount,
+		Allocatable<Point>, Duplicatable<Point>
 {
 	private double[] vector;
 	
@@ -162,6 +163,50 @@ public class Point
 			for (int i = 0; i < 8; i++) {
 				raf.writeByte(bytes[i]);
 			}
+		}
+	}
+
+
+	@Override
+	public int doubleCount() {
+		return numDimensions() + 1;
+	}
+
+	@Override
+	public void fromDoubleArray(double[] arr, int index) {
+		int dim = (int) arr[index];
+		if (dim != numDimensions()) {
+			this.vector = new double[dim];
+		}
+		for (int i = 0; i < dim; i++) {
+			this.vector[i] = arr[index + 1 + i];
+		}
+	}
+
+	@Override
+	public void toDoubleArray(double[] arr, int index) {
+		arr[index] = numDimensions();
+		for (int i = 0; i < numDimensions(); i++) {
+			arr[index + 1 + i] = this.vector[i];
+		}
+	}
+
+	@Override
+	public void fromDoubleFile(RandomAccessFile raf) throws IOException {
+		int dim = (int) raf.readDouble();
+		if (dim != numDimensions()) {
+			this.vector = new double[dim];
+		}
+		for (int i = 0; i < dim; i++) {
+			this.vector[i] = raf.readDouble();
+		}
+	}
+
+	@Override
+	public void toDoubleFile(RandomAccessFile raf) throws IOException {
+		raf.writeDouble(numDimensions());
+		for (int i = 0; i < numDimensions(); i++) {
+			raf.writeDouble(this.vector[i]);
 		}
 	}
 

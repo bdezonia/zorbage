@@ -63,8 +63,6 @@ public class TestKMeans {
 
 		IndexedDataSource<?, SignedInt32Member> clusterIndices = ArrayStorage.allocate(NUMELEMS, num);
 
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
-
 		for (int i = 0; i < NUMELEMS; i++) {
 			points.get(i, point);
 			group.random().call(point);
