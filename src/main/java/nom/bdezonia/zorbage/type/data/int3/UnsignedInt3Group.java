@@ -493,7 +493,7 @@ public class UnsignedInt3Group
 		@Override
 		public void call(UnsignedInt3Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextInt(8) );
+			a.setV( rng.nextInt(8) );
 		}
 	};
 	

@@ -495,7 +495,7 @@ public class UnsignedInt2Group
 		@Override
 		public void call(UnsignedInt2Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextInt(0x4) );
+			a.setV( rng.nextInt(4) );
 		}
 	};
 	

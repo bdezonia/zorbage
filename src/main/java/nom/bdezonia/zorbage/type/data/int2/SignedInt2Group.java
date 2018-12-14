@@ -523,7 +523,7 @@ public class SignedInt2Group
 		@Override
 		public void call(SignedInt2Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextInt(0x4)-2);
+			a.setV(rng.nextInt(4)-2);
 		}
 	};
 	
