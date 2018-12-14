@@ -120,7 +120,7 @@ public class G {
 	public static final SignedInt2Group INT2 = new SignedInt2Group();
 	public static final SignedInt3Group INT3 = new SignedInt3Group();
 	public static final SignedInt4Group INT4 = new SignedInt4Group();
-	// TODO public static final SignedInt5Group INT5 = new SignedInt5Group();
+	public static final SignedInt5Group INT5 = new SignedInt5Group();
 	public static final SignedInt8Group INT8 = new SignedInt8Group();
 	public static final SignedInt12Group INT12 = new SignedInt12Group();
 	public static final SignedInt16Group INT16 = new SignedInt16Group();
