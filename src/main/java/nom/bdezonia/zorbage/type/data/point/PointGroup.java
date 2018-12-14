@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.data.point;
 
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -34,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -43,7 +46,8 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  *
  */
 public class PointGroup
-	implements Group<PointGroup,Point>, Addition<Point>, Scale<Point, Float64Member>
+	implements Group<PointGroup,Point>, Addition<Point>, Scale<Point, Float64Member>,
+		Random<Point>
 {
 
 	@Override
@@ -221,6 +225,22 @@ public class PointGroup
 	@Override
 	public Procedure3<Float64Member, Point, Point> scale() {
 		return SCALE;
+	}
+
+	private final Procedure1<Point> RAND = new Procedure1<Point>()
+	{
+		@Override
+		public void call(Point a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			for (int i = 0; i < a.numDimensions(); i++) {
+				a.setComponent(i, rng.nextDouble());
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Point> random() {
+		return RAND;
 	}
 	
 }

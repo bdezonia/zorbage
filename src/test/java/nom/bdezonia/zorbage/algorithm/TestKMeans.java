@@ -67,9 +67,7 @@ public class TestKMeans {
 
 		for (int i = 0; i < NUMELEMS; i++) {
 			points.get(i, point);
-			for (int j = 0; j < point.numDimensions(); j++) {
-				point.setComponent(j, rng.nextDouble(-5, 5));
-			}
+			group.random().call(point);
 		}
 		
 		KMeans.compute(group, numClusters, points, clusterIndices);
