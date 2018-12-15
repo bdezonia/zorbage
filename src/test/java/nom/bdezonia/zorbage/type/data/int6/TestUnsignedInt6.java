@@ -100,10 +100,10 @@ public class TestUnsignedInt6 {
 		UnsignedInt6Member a = G.UINT6.construct();
 		UnsignedInt6Member b = G.UINT6.construct();
 		UnsignedInt6Member c = G.UINT6.construct();
-		for (int i = 0; i < 63; i++) {
+		for (int i = 0; i < 64; i++) {
 			a.setV(i);
 			
-			for (int j = 0; j < 63; j++) {
+			for (int j = 0; j < 64; j++) {
 				b.setV(j);
 
 				c.set(a);
