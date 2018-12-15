@@ -168,7 +168,7 @@ public final class UnsignedInt6Member
 		}
 		else if (offset == 59) {
 			// 5 bits in 1st long, 1 bit in second long
-			long b1b2b3b4b5 = (arr[index] >>> 60) & 31L;
+			long b1b2b3b4b5 = (arr[index] >>> 59) & 31L;
 			long b6 = (arr[index+1] & 1L);
 			v = (byte) ((b1b2b3b4b5 << 1) | b6);
 		}
