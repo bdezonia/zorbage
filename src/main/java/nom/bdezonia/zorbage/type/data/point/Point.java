@@ -220,6 +220,7 @@ public class Point
 
 	@Override
 	public void set(Point other) {
+		if (this == other) return;
 		vector = new double[other.numDimensions()];
 		for (int i = 0; i < vector.length; i++) {
 			vector[i] = other.vector[i];

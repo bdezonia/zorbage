@@ -103,15 +103,7 @@ public class PointGroup
 	{
 		@Override
 		public void call(Point a, Point b) {
-			if (a == b) return;
-			if (a.numDimensions() != b.numDimensions()) {
-				b.set(a);
-			}
-			else {
-				for (int i = 0; i < a.numDimensions(); i++) {
-					b.setComponent(i, a.component(i));
-				}
-			}
+			b.set(a);
 		}
 	};
 
