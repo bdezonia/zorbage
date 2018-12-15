@@ -53,7 +53,7 @@ public class TestFloats {
 		U val2 = group.construct("5.3");
 		U val3 = group.construct();
 		group.add().call(val1, val2, val3);
-		PrimitiveConverter.convert(new IntegerIndex(0), new IntegerIndex(0), new IntegerIndex(0), val3, dbl);
+		PrimitiveConverter.convert(val3, dbl);
 		assertEquals(6.7, dbl.v(), 0.01);
 	}
 	

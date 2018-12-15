@@ -45,6 +45,26 @@ public class PrimitiveConverter {
 	private PrimitiveConverter() {}
 
 	/**
+	 * Primitiveconverter.convert()
+	 * 
+	 * Translate data from one value to another. This version of convert is very expensive
+	 * since it allocates all necessary temp values each time it is called. It is liekly
+	 * better to use the other signature for PrimitiveConverter.convert() where temps are
+	 * passed in and a reusable from call to call. This routine useful if just converting
+	 * one value once.
+	 *  
+	 * @param from The value being converted from.
+	 * @param to The value receiving the conversion.
+	 */
+	public static void convert(PrimitiveConversion from, PrimitiveConversion to)
+	{
+		IntegerIndex tmp1 = new IntegerIndex(Math.max(from.numDimensions(), to.numDimensions()));
+		IntegerIndex tmp2 = new IntegerIndex(tmp1.numDimensions());
+		IntegerIndex tmp3 = new IntegerIndex(tmp1.numDimensions());
+		convert(tmp1,  tmp2, tmp3, from, to);
+	}
+	
+	/**
 	 * PrimitiveConverter.convert()
 	 * 
 	 * @param tmp1 An IntegerIndex whose size = max dim of from and to. Contents overwritten.
