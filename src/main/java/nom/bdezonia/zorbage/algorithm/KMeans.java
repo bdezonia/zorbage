@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -77,11 +76,9 @@ public class KMeans {
 		Float64Member dist = G.DBL.construct();
 		Float64Member minDist = G.DBL.construct();
 		
-		// assign initial clusters randomly
-		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		// assign initial clusters arbitrarily
 		for (long i = 0; i < clusterIndices.size(); i++) {
-			int k = rng.nextInt(numClusters);
-			clusterNum.setV(k);
+			clusterNum.setV((int)(i % numClusters));
 			clusterIndices.set(i, clusterNum);
 		}
 		
