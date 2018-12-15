@@ -28,8 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
