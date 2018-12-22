@@ -68,6 +68,8 @@ import nom.bdezonia.zorbage.type.data.int7.SignedInt7Group;
 import nom.bdezonia.zorbage.type.data.int7.UnsignedInt7Group;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Group;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Group;
+import nom.bdezonia.zorbage.type.data.int9.SignedInt9Group;
+import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Group;
 
 /**
  * G is the container for the global set of defined groups.
@@ -117,6 +119,7 @@ public class G {
 	public static final UnsignedInt6Group UINT6 = new UnsignedInt6Group();
 	public static final UnsignedInt7Group UINT7 = new UnsignedInt7Group();
 	public static final UnsignedInt8Group UINT8 = new UnsignedInt8Group();
+	public static final UnsignedInt9Group UINT9 = new UnsignedInt9Group();
 	public static final UnsignedInt12Group UINT12 = new UnsignedInt12Group();
 	public static final UnsignedInt16Group UINT16 = new UnsignedInt16Group();
 	public static final UnsignedInt32Group UINT32 = new UnsignedInt32Group();
@@ -131,6 +134,7 @@ public class G {
 	public static final SignedInt6Group INT6 = new SignedInt6Group();
 	public static final SignedInt7Group INT7 = new SignedInt7Group();
 	public static final SignedInt8Group INT8 = new SignedInt8Group();
+	public static final SignedInt9Group INT9 = new SignedInt9Group();
 	public static final SignedInt12Group INT12 = new SignedInt12Group();
 	public static final SignedInt16Group INT16 = new SignedInt16Group();
 	public static final SignedInt32Group INT32 = new SignedInt32Group();
