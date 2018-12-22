@@ -144,7 +144,12 @@ public final class SignedInt9Member
 
 	@Override
 	public void fromBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 56) {
+			// 9 bits in 1st long
+			long b1b2b3b4b5b6b7b8b9 = (arr[index] >>> offset) & 511L;
+			setV( (int) b1b2b3b4b5b6b7b8b9 );
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 8 bits in second long
 			long b1 = (arr[index] >>> 63) & 1L;
 			long b2b3b4b5b6b7b8b9 = (arr[index+1] & 255L);
@@ -186,22 +191,23 @@ public final class SignedInt9Member
 			long b8b9 = (arr[index+1] & 3L);
 			setV( (int) ((b1b2b3b4b5b6b7 << 2) | b8b9) );
 		}
-		else if (offset == 56) {
+		else { // (offset == 56) {
 			// 8 bits in 1st long, 1 bit in second long
 			long b1b2b3b4b5b6b7b8 = (arr[index] >>> 56) & 255L;
 			long b9 = (arr[index+1] & 1L);
 			setV( (int) ((b1b2b3b4b5b6b7b8 << 1) | b9) );
 		}
-		else { // offset >= 0 and < 56
-			// 9 bits in 1st long
-			long b1b2b3b4b5b6b7b8b9 = (arr[index] >>> offset) & 511L;
-			setV( (int) b1b2b3b4b5b6b7b8b9 );
-		}
 	}
 
 	@Override
 	public void toBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 56) {
+			// 9 bits in 1st long
+			long oldVals = arr[index] & ~(511L << offset);
+			long newVals = ((long)v) << offset;
+			arr[index] = newVals | oldVals;
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 8 bits in second long
 			long b1 = (v & 256L) >>> 8;
 			long b2b3b4b5b6b7b8b9 = (v & 255L);
@@ -278,7 +284,7 @@ public final class SignedInt9Member
 			newVals = b8b9 << 0;
 			arr[index+1] = newVals | oldVals;
 		}
-		else if (offset == 56) {
+		else { // (offset == 56) {
 			// 8 bits in 1st long, 1 bit in second long
 			long b1b2b3b4b5b6b7b8 = (v & 510L) >>> 1;
 			long b9 = (v & 1L);
@@ -288,12 +294,6 @@ public final class SignedInt9Member
 			oldVals = arr[index+1] & ~(1L << 0);
 			newVals = b9 << 0;
 			arr[index+1] = newVals | oldVals;
-		}
-		else { // offset >= 0 and < 56
-			// 9 bits in 1st long
-			long oldVals = arr[index] & ~(511L << offset);
-			long newVals = ((long)v) << offset;
-			arr[index] = newVals | oldVals;
 		}
 	}
 

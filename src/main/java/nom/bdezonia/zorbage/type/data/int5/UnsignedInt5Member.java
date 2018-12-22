@@ -142,40 +142,46 @@ public final class UnsignedInt5Member
 
 	@Override
 	public void fromBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 60) {
+			// 5 bits in 1st long
+			long b1b2b3b4b5 = (arr[index] >>> offset) & 31L;
+			setV( (int) b1b2b3b4b5);
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 4 bits in second long
 			long b1 = (arr[index] >>> 63) & 1L;
 			long b2b3b4b5 = (arr[index+1] & 15L);
-			v = (byte) ((b1 << 4) | b2b3b4b5);
+			setV( (int) ((b1 << 4) | b2b3b4b5) );
 		}
 		else if (offset == 62) {
 			// 2 bits in 1st long, 3 bits in second long
 			long b1b2 = (arr[index] >>> 62) & 3L;
 			long b3b4b5 = (arr[index+1] & 7L);
-			v = (byte) ((b1b2 << 3) | b3b4b5);
+			setV( (int) ((b1b2 << 3) | b3b4b5) );
 		}
 		else if (offset == 61) {
 			// 3 bits in 1st long, 2 bits in second long
 			long b1b2b3 = (arr[index] >>> 61) & 7L;
 			long b4b5 = (arr[index+1] & 3L);
-			v = (byte) ((b1b2b3 << 2) | b4b5);
+			setV( (int) ((b1b2b3 << 2) | b4b5) );
 		}
-		else if (offset == 60) {
+		else { // if (offset == 60) {
 			// 4 bits in 1st long, 1 bit in second long
 			long b1b2b3b4 = (arr[index] >>> 60) & 15L;
 			long b5 = (arr[index+1] & 1L);
-			v = (byte) ((b1b2b3b4 << 1) | b5);
-		}
-		else { // offset >= 0 and < 60
-			// 5 bits in 1st long
-			long b1b2b3b4b5 = (arr[index] >>> offset) & 31L;
-			v = (byte) b1b2b3b4b5;
+			setV( (int) ((b1b2b3b4 << 1) | b5) );
 		}
 	}
 
 	@Override
 	public void toBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 60) {
+			// 5 bits in 1st long
+			long oldVals = arr[index] & ~(31L << offset);
+			long newVals = ((long)v) << offset;
+			arr[index] = newVals | oldVals;
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 4 bits in second long
 			long b1 = (v & 16L) >>> 4;
 			long b2b3b4b5 = (v & 15L);
@@ -208,7 +214,7 @@ public final class UnsignedInt5Member
 			newVals = b4b5 << 0;
 			arr[index+1] = newVals | oldVals;
 		}
-		else if (offset == 60) {
+		else { //  (offset == 60) {
 			// 4 bits in 1st long, 1 bit in second long
 			long b1b2b3b4 = (v & 30L) >>> 1;
 			long b5 = (v & 1L);
@@ -218,12 +224,6 @@ public final class UnsignedInt5Member
 			oldVals = arr[index+1] & ~(1L << 0);
 			newVals = b5 << 0;
 			arr[index+1] = newVals | oldVals;
-		}
-		else { // offset >= 0 and < 60
-			// 5 bits in 1st long
-			long oldVals = arr[index] & ~(31L << offset);
-			long newVals = ((long)v) << offset;
-			arr[index] = newVals | oldVals;
 		}
 	}
 

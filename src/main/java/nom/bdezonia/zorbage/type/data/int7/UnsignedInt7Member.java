@@ -142,52 +142,58 @@ public final class UnsignedInt7Member
 
 	@Override
 	public void fromBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 58) {
+			// 7 bits in 1st long
+			long b1b2b3b4b5b67 = (arr[index] >>> offset) & 127L;
+			setV( (int) b1b2b3b4b5b67 );
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 6 bits in second long
 			long b1 = (arr[index] >>> 63) & 1L;
 			long b2b3b4b5b6b7 = (arr[index+1] & 63L);
-			v = (byte) ((b1 << 6) | b2b3b4b5b6b7);
+			setV( (int) ((b1 << 6) | b2b3b4b5b6b7) );
 		}
 		else if (offset == 62) {
 			// 2 bits in 1st long, 5 bits in second long
 			long b1b2 = (arr[index] >>> 62) & 3L;
 			long b3b4b5b6b7 = (arr[index+1] & 31L);
-			v = (byte) ((b1b2 << 5) | b3b4b5b6b7);
+			setV( (int) ((b1b2 << 5) | b3b4b5b6b7) );
 		}
 		else if (offset == 61) {
 			// 3 bits in 1st long, 4 bits in second long
 			long b1b2b3 = (arr[index] >>> 61) & 7L;
 			long b4b5b6b7 = (arr[index+1] & 15L);
-			v = (byte) ((b1b2b3 << 4) | b4b5b6b7);
+			setV( (int) ((b1b2b3 << 4) | b4b5b6b7) );
 		}
 		else if (offset == 60) {
 			// 4 bits in 1st long, 3 bits in second long
 			long b1b2b3b4 = (arr[index] >>> 60) & 15L;
 			long b5b6b7 = (arr[index+1] & 7L);
-			v = (byte) ((b1b2b3b4 << 3) | b5b6b7);
+			setV( (int) ((b1b2b3b4 << 3) | b5b6b7) );
 		}
 		else if (offset == 59) {
 			// 5 bits in 1st long, 2 bits in second long
 			long b1b2b3b4b5 = (arr[index] >>> 59) & 31L;
 			long b6b7 = (arr[index+1] & 3L);
-			v = (byte) ((b1b2b3b4b5 << 2) | b6b7);
+			setV( (int) ((b1b2b3b4b5 << 2) | b6b7) );
 		}
-		else if (offset == 58) {
+		else { // (offset == 58) {
 			// 6 bits in 1st long, 1 bit in second long
 			long b1b2b3b4b5b6 = (arr[index] >>> 58) & 63L;
 			long b7 = (arr[index+1] & 1L);
-			v = (byte) ((b1b2b3b4b5b6 << 1) | b7);
-		}
-		else { // offset >= 0 and < 58
-			// 7 bits in 1st long
-			long b1b2b3b4b5b67 = (arr[index] >>> offset) & 127L;
-			v = (byte) b1b2b3b4b5b67;
+			setV( (int) ((b1b2b3b4b5b6 << 1) | b7) );
 		}
 	}
 
 	@Override
 	public void toBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 58) {
+			// 7 bits in 1st long
+			long oldVals = arr[index] & ~(127L << offset);
+			long newVals = ((long)v) << offset;
+			arr[index] = newVals | oldVals;
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 6 bits in second long
 			long b1 = (v & 64L) >>> 6;
 			long b2b3b4b5b6b7 = (v & 63L);
@@ -242,7 +248,7 @@ public final class UnsignedInt7Member
 			newVals = b6b7 << 0;
 			arr[index+1] = newVals | oldVals;
 		}
-		else if (offset == 58) {
+		else { // (offset == 58) {
 			// 6 bits in 1st long, 1 bit in second long
 			long b1b2b3b4b5b6 = (v & 126L) >>> 1;
 			long b7 = (v & 1L);
@@ -252,12 +258,6 @@ public final class UnsignedInt7Member
 			oldVals = arr[index+1] & ~(1L << 0);
 			newVals = b7 << 0;
 			arr[index+1] = newVals | oldVals;
-		}
-		else { // offset >= 0 and < 58
-			// 7 bits in 1st long
-			long oldVals = arr[index] & ~(127L << offset);
-			long newVals = ((long)v) << offset;
-			arr[index] = newVals | oldVals;
 		}
 	}
 

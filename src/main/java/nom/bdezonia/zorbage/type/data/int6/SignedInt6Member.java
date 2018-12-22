@@ -144,7 +144,12 @@ public final class SignedInt6Member
 
 	@Override
 	public void fromBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 59) {
+			// 5 bits in 1st long
+			long b1b2b3b4b5b6 = (arr[index] >>> offset) & 63L;
+			setV( (int) b1b2b3b4b5b6 );
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 5 bits in second long
 			long b1 = (arr[index] >>> 63) & 1L;
 			long b2b3b4b5b6 = (arr[index+1] & 31L);
@@ -168,22 +173,23 @@ public final class SignedInt6Member
 			long b5b6 = (arr[index+1] & 3L);
 			setV( (int) ((b1b2b3b4 << 2) | b5b6) );
 		}
-		else if (offset == 59) {
+		else { //  (offset == 59) {
 			// 5 bits in 1st long, 1 bit in second long
 			long b1b2b3b4b5 = (arr[index] >>> 60) & 31L;
 			long b6 = (arr[index+1] & 1L);
 			setV( (int) ((b1b2b3b4b5 << 1) | b6) );
 		}
-		else { // offset >= 0 and < 59
-			// 5 bits in 1st long
-			long b1b2b3b4b5b6 = (arr[index] >>> offset) & 63L;
-			setV( (int) b1b2b3b4b5b6 );
-		}
 	}
 
 	@Override
 	public void toBitArray(long[] arr, int index, int offset) {
-		if (offset == 63) {
+		if (offset < 59) { // offset >= 0 and < 59
+			// 6 bits in 1st long
+			long oldVals = arr[index] & ~(63L << offset);
+			long newVals = ((long)v) << offset;
+			arr[index] = newVals | oldVals;
+		}
+		else if (offset == 63) {
 			// 1 bits in 1st long, 5 bits in second long
 			long b1 = (v & 32L) >>> 5;
 			long b2b3b4b5b6 = (v & 31L);
@@ -227,7 +233,7 @@ public final class SignedInt6Member
 			newVals = b5b6 << 0;
 			arr[index+1] = newVals | oldVals;
 		}
-		else if (offset == 59) {
+		else { // (offset == 59) {
 			// 5 bits in 1st long, 1 bit in second long
 			long b1b2b3b4b5 = (v & 62L) >>> 1;
 			long b6 = (v & 1L);
@@ -238,14 +244,7 @@ public final class SignedInt6Member
 			newVals = b6 << 0;
 			arr[index+1] = newVals | oldVals;
 		}
-		else { // offset >= 0 and < 59
-			// 6 bits in 1st long
-			long oldVals = arr[index] & ~(63L << offset);
-			long newVals = ((long)v) << offset;
-			arr[index] = newVals | oldVals;
-		}
 	}
-
 
 	@Override
 	public int byteCount() {
