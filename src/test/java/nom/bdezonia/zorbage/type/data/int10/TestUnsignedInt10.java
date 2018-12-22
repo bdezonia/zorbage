@@ -171,7 +171,7 @@ public class TestUnsignedInt10 {
 				UnsignedInt10Member v = G.UINT10.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT10.construct(""+((i+j) & 0xfff));
+				v = G.UINT10.construct(""+((i+j) & 1023));
 				assertEquals(((i+j) & 1023), v.v);
 				
 				v = G.UINT10.construct(a);
