@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.int14;
+package nom.bdezonia.zorbage.type.data.int15;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -42,21 +42,21 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt16;
  * @author Barry DeZonia
  *
  */
-public class TestSignedInt14 {
+public class TestSignedInt15 {
 
 	private int v(int val) {
-		int v = val % 16384;
-		if (v < -8192)
-			v += 16384;
-		else if (v > 8191)
-			v -= 16384;
+		int v = val % 32768;
+		if (v < -16384)
+			v += 32768;
+		else if (v > 16383)
+			v -= 32768;
 		return v;
 	}
 	
-	private void testStorageMethods(IndexedDataSource<?, SignedInt14Member> data) {
+	private void testStorageMethods(IndexedDataSource<?, SignedInt15Member> data) {
 		
-		SignedInt14Member in = new SignedInt14Member();
-		SignedInt14Member out = new SignedInt14Member();
+		SignedInt15Member in = new SignedInt15Member();
+		SignedInt15Member out = new SignedInt15Member();
 		in.setV(0);
 		for (long i = 0; i < data.size(); i++) {
 			data.set(i, in);
@@ -100,106 +100,106 @@ public class TestSignedInt14 {
 
 	@Test
 	public void testStorage() {
-		testStorageMethods(new ArrayStorageBit<SignedInt14Member>(50000, G.INT14.construct()));
-		testStorageMethods(new ArrayStorageSignedInt16<SignedInt14Member>(50000, G.INT14.construct()));
+		testStorageMethods(new ArrayStorageBit<SignedInt15Member>(50000, G.INT15.construct()));
+		testStorageMethods(new ArrayStorageSignedInt16<SignedInt15Member>(50000, G.INT15.construct()));
 	}
 	
 	@Test
 	public void testMathematicalMethods() {
-		SignedInt14Member a = G.INT14.construct();
-		SignedInt14Member b = G.INT14.construct();
-		SignedInt14Member c = G.INT14.construct();
-		for (int i = -8192; i < 8192; i++) {
+		SignedInt15Member a = G.INT15.construct();
+		SignedInt15Member b = G.INT15.construct();
+		SignedInt15Member c = G.INT15.construct();
+		for (int i = -16384; i < 16384; i++) {
 			a.setV(i);
 			
-			for (int j = -8192; j < 8192; j++) {
+			for (int j = -16384; j < 16384; j++) {
 				b.setV(j);
 
 //				System.out.println(i+" op "+j);
 
-				if (i != -8192) {
+				if (i != -16384) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
-					G.INT14.abs().call(a, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.abs().call(a, c);
 					assertEquals(Math.abs(a.v),c.v);
 				}
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.add().call(a,b,c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.add().call(a,b,c);
 				assertEquals(v(i+j), (int)c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.assign().call(a, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.assign().call(a, c);
 				assertEquals(a.v,c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.bitAnd().call(a, b, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.bitAnd().call(a, b, c);
 				assertEquals(v(i & j), c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.bitOr().call(a, b, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.bitOr().call(a, b, c);
 				assertEquals(v(i | j), c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
 				if (j >= 0) {
-					G.INT14.bitShiftLeft().call(j, a, c);
-					assertEquals(v(i << (j%14)), c.v);
+					G.INT15.bitShiftLeft().call(j, a, c);
+					assertEquals(v(i << (j%15)), c.v);
 				}
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
 				if (j >= 0) {
-					G.INT14.bitShiftRight().call(j, a, c);
+					G.INT15.bitShiftRight().call(j, a, c);
 					assertEquals(v(i >> j), c.v);
 				}
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
 				if (j >= 0) {
-					G.INT14.bitShiftRightFillZero().call(j, a, c);
+					G.INT15.bitShiftRightFillZero().call(j, a, c);
 					assertEquals(v(i >>> j), c.v);
 				}
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.bitXor().call(a, b, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.bitXor().call(a, b, c);
 				assertEquals(v(i ^ j), c.v);
 				
 				int expected;
 				if (i > j) expected = 1;
 				else if (i < j) expected = -1;
 				else expected = 0;
-				assertEquals(expected,(int)G.INT14.compare().call(a, b));
+				assertEquals(expected,(int)G.INT15.compare().call(a, b));
 				
-				SignedInt14Member v = G.INT14.construct();
+				SignedInt15Member v = G.INT15.construct();
 				assertEquals(0, v.v);
 				
-				v = G.INT14.construct(""+(i+j));
+				v = G.INT15.construct(""+(i+j));
 				assertEquals(v(i+j), v.v);
 				
-				v = G.INT14.construct(a);
+				v = G.INT15.construct(a);
 				assertEquals(i,v.v);
 				
 				if (j != 0) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
-					if (i != -8192 || j != -1) {
-						G.INT14.div().call(a, b, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					if (i != -16384 || j != -1) {
+						G.INT15.div().call(a, b, c);
 						assertEquals((i / j), c.v);
 					}
 				}
@@ -207,59 +207,59 @@ public class TestSignedInt14 {
 				// TODO: gcd()
 				// TODO: lcm()
 				
-				assertEquals(((i&1) == 0), G.INT14.isEven().call(a));
-				assertEquals(((i&1) == 1), G.INT14.isOdd().call(a));
+				assertEquals(((i&1) == 0), G.INT15.isEven().call(a));
+				assertEquals(((i&1) == 1), G.INT15.isOdd().call(a));
 				
-				assertEquals(i==j,G.INT14.isEqual().call(a, b));
-				assertEquals(i!=j,G.INT14.isNotEqual().call(a, b));
-				assertEquals(i<j,G.INT14.isLess().call(a, b));
-				assertEquals(i<=j,G.INT14.isLessEqual().call(a, b));
-				assertEquals(i>j,G.INT14.isGreater().call(a, b));
-				assertEquals(i>=j,G.INT14.isGreaterEqual().call(a, b));
+				assertEquals(i==j,G.INT15.isEqual().call(a, b));
+				assertEquals(i!=j,G.INT15.isNotEqual().call(a, b));
+				assertEquals(i<j,G.INT15.isLess().call(a, b));
+				assertEquals(i<=j,G.INT15.isLessEqual().call(a, b));
+				assertEquals(i>j,G.INT15.isGreater().call(a, b));
+				assertEquals(i>=j,G.INT15.isGreaterEqual().call(a, b));
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.max().call(a, b, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.max().call(a, b, c);
 				assertEquals(Math.max(i, j), c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.min().call(a, b, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.min().call(a, b, c);
 				assertEquals(Math.min(i, j), c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.maxBound().call(c);
-				assertEquals(8191, c.v);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.maxBound().call(c);
+				assertEquals(16383, c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.minBound().call(c);
-				assertEquals(-8192, c.v);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.minBound().call(c);
+				assertEquals(-16384, c.v);
 				
 				if (j != 0) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
-					G.INT14.mod().call(a, b, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.mod().call(a, b, c);
 					assertEquals(i%j, c.v);
 				}
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.multiply().call(a,b,c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				if (i != -8192) {
+				if (i != -16384) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
-					G.INT14.norm().call(a, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.norm().call(a, c);
 					assertEquals(Math.abs(a.v), c.v);
 				}
 				
@@ -267,10 +267,10 @@ public class TestSignedInt14 {
 				
 				if (i == 0 && j == 0) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
 					try {
-						G.INT14.pow().call(a, b, c);
+						G.INT15.pow().call(a, b, c);
 						fail();
 					} catch (IllegalArgumentException e) {
 						assertTrue(true);
@@ -278,9 +278,9 @@ public class TestSignedInt14 {
 				}
 				else if (j >= 0) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
-					G.INT14.pow().call(a, b, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pow().call(a, b, c);
 					p = Math.pow(i, j);
 					if (0 <= p && p <= Integer.MAX_VALUE)
 						assertEquals(v((int)p), c.v);
@@ -288,10 +288,10 @@ public class TestSignedInt14 {
 				
 				if (i == 0 && j == 0) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
 					try {
-						G.INT14.power().call(j, a, c);
+						G.INT15.power().call(j, a, c);
 						fail();
 					} catch (IllegalArgumentException e) {
 						assertTrue(true);
@@ -299,51 +299,51 @@ public class TestSignedInt14 {
 				}
 				else if (j > 0) {
 					c.set(a);
-					G.INT14.pred().call(c, c);
-					G.INT14.pred().call(c, c);
-					G.INT14.power().call(j, a, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.pred().call(c, c);
+					G.INT15.power().call(j, a, c);
 					p = Math.pow(i, j);
 					if (0 <= p && p <= Integer.MAX_VALUE)
 						assertEquals(v((int)p), c.v);
 				}
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(a, c);
-				expected = (a.v == -8192) ? 8191 : a.v-1;
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(a, c);
+				expected = (a.v == -16384) ? 16383 : a.v-1;
 				assertEquals(expected, c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.succ().call(a, c);
-				expected = (a.v == 8191) ? -8192 : a.v+1;
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.succ().call(a, c);
+				expected = (a.v == 16383) ? -16384 : a.v+1;
 				assertEquals(expected, c.v);
 				
-				G.INT14.random().call(c);
+				G.INT15.random().call(c);
 				
 				if (i < 0) expected = -1;
 				else if (i > 0) expected = 1;
 				else expected = 0;
-				assertEquals(expected, (int)G.INT14.signum().call(a));
+				assertEquals(expected, (int)G.INT15.signum().call(a));
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.subtract().call(a, b, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.subtract().call(a, b, c);
 				assertEquals(v(i-j), c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.unity().call(c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.unity().call(c);
 				assertEquals(1, c.v);
 				
 				c.set(a);
-				G.INT14.pred().call(c, c);
-				G.INT14.pred().call(c, c);
-				G.INT14.zero().call(c);
+				G.INT15.pred().call(c, c);
+				G.INT15.pred().call(c, c);
+				G.INT15.zero().call(c);
 				assertEquals(0, c.v);
 			}
 		}
@@ -351,9 +351,9 @@ public class TestSignedInt14 {
 	
 	@Test
 	public void rollover() {
-		SignedInt14Member num = G.INT14.construct();
-		for (int offset : new int[] {0, 16384, 32768, 49152, -16384, -32768, -49152}) {
-			for (int i = -8192; i < 8192; i++) {
+		SignedInt15Member num = G.INT15.construct();
+		for (int offset : new int[] {0, 32768, 65536, 98304, -32768, -65536, -98304}) {
+			for (int i = -16384; i < 16384; i++) {
 				num.setV(offset + i);
 				assertEquals(i, num.v);
 			}
