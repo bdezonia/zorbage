@@ -117,11 +117,13 @@ public class TestSignedInt13 {
 
 //				System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT13.pred().call(c, c);
-				G.INT13.pred().call(c, c);
-				G.INT13.abs().call(a, c);
-				assertEquals(a.v == -4096 ? -4096 : Math.abs(a.v),c.v);
+				if (i != -4096) {
+					c.set(a);
+					G.INT13.pred().call(c, c);
+					G.INT13.pred().call(c, c);
+					G.INT13.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT13.pred().call(c, c);
@@ -253,11 +255,13 @@ public class TestSignedInt13 {
 				G.INT13.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT13.pred().call(c, c);
-				G.INT13.pred().call(c, c);
-				G.INT13.norm().call(a, c);
-				assertEquals(i == -4096 ? -4096 : Math.abs(a.v), c.v);
+				if (i != -4096) {
+					c.set(a);
+					G.INT13.pred().call(c, c);
+					G.INT13.pred().call(c, c);
+					G.INT13.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

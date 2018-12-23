@@ -123,7 +123,7 @@ public class SignedInt32Group
 		@Override
 		public void call(SignedInt32Member a, SignedInt32Member b) {
 			if (a.v() == java.lang.Integer.MIN_VALUE)
-				throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
 			b.setV( Math.abs(a.v()) );
 		}
 	};

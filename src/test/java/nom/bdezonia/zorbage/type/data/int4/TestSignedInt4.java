@@ -120,11 +120,13 @@ public class TestSignedInt4 {
 
 //				System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT4.pred().call(c, c);
-				G.INT4.pred().call(c, c);
-				G.INT4.abs().call(a, c);
-				assertEquals(a.v == -8 ? -8 : Math.abs(a.v),c.v);
+				if (i != -8) {
+					c.set(a);
+					G.INT4.pred().call(c, c);
+					G.INT4.pred().call(c, c);
+					G.INT4.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT4.pred().call(c, c);
@@ -256,11 +258,13 @@ public class TestSignedInt4 {
 				G.INT4.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT4.pred().call(c, c);
-				G.INT4.pred().call(c, c);
-				G.INT4.norm().call(a, c);
-				assertEquals(i == -8 ? -8 : Math.abs(a.v), c.v);
+				if (i != -8) {
+					c.set(a);
+					G.INT4.pred().call(c, c);
+					G.INT4.pred().call(c, c);
+					G.INT4.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

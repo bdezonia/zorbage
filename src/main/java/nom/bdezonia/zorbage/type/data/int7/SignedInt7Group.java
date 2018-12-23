@@ -348,8 +348,8 @@ public class SignedInt7Group
 		@Override
 		public void call(SignedInt7Member a, SignedInt7Member b) {
 			if (a.v == -64)
-				b.v = -64;
-			else if (a.v < 0)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			if (a.v < 0)
 				b.v = (byte) -a.v;
 			else
 				b.v = a.v;

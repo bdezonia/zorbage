@@ -117,11 +117,13 @@ public class TestSignedInt9 {
 
 //				System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT9.pred().call(c, c);
-				G.INT9.pred().call(c, c);
-				G.INT9.abs().call(a, c);
-				assertEquals(a.v == -256 ? -256 : Math.abs(a.v),c.v);
+				if (i != -256) {
+					c.set(a);
+					G.INT9.pred().call(c, c);
+					G.INT9.pred().call(c, c);
+					G.INT9.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT9.pred().call(c, c);
@@ -253,11 +255,13 @@ public class TestSignedInt9 {
 				G.INT9.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT9.pred().call(c, c);
-				G.INT9.pred().call(c, c);
-				G.INT9.norm().call(a, c);
-				assertEquals(i == -256 ? -256 : Math.abs(a.v), c.v);
+				if (i != -256) {
+					c.set(a);
+					G.INT9.pred().call(c, c);
+					G.INT9.pred().call(c, c);
+					G.INT9.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

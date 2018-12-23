@@ -120,11 +120,13 @@ public class TestSignedInt5 {
 
 				// System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT5.pred().call(c, c);
-				G.INT5.pred().call(c, c);
-				G.INT5.abs().call(a, c);
-				assertEquals(a.v == -16 ? -16 : Math.abs(a.v),c.v);
+				if (i != -16) {
+					c.set(a);
+					G.INT5.pred().call(c, c);
+					G.INT5.pred().call(c, c);
+					G.INT5.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT5.pred().call(c, c);
@@ -256,11 +258,13 @@ public class TestSignedInt5 {
 				G.INT5.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT5.pred().call(c, c);
-				G.INT5.pred().call(c, c);
-				G.INT5.norm().call(a, c);
-				assertEquals(i == -16 ? -16 : Math.abs(a.v), c.v);
+				if (i != -16) {
+					c.set(a);
+					G.INT5.pred().call(c, c);
+					G.INT5.pred().call(c, c);
+					G.INT5.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

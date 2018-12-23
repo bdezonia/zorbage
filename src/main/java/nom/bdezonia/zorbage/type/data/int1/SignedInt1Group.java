@@ -334,10 +334,20 @@ public class SignedInt1Group
 		return MAX;
 	}
 
+	private final Procedure2<SignedInt1Member, SignedInt1Member> ABS =
+			new Procedure2<SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(SignedInt1Member a, SignedInt1Member b) {
+			if (a.v == -1)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			b.v = 0;
+		}
+	};
+
 	@Override
 	public Procedure2<SignedInt1Member, SignedInt1Member> abs() {
-		// in other types abs -minint stays at -minint. so I think this method has nothing to do.
-		return ASSIGN;
+		return ABS;
 	}
 
 	private final Function1<Boolean, SignedInt1Member> EVEN =

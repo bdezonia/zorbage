@@ -112,9 +112,11 @@ public class TestSignedInt1 {
 			for (int j = -1; j < 1; j++) {
 				b.setV(j);
 
-				c.setV(i+1);
-				G.INT1.abs().call(a, c);
-				assertEquals(a.v,c.v);
+				if (i != -1) {
+					c.setV(i+1);
+					G.INT1.abs().call(a, c);
+					assertEquals(a.v,c.v);
+				}
 				
 				c.setV(i+1);
 				G.INT1.add().call(a,b,c);

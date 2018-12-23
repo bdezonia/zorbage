@@ -348,8 +348,8 @@ public class SignedInt6Group
 		@Override
 		public void call(SignedInt6Member a, SignedInt6Member b) {
 			if (a.v == -32)
-				b.v = -32;
-			else if (a.v < 0)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			if (a.v < 0)
 				b.v = (byte) -a.v;
 			else
 				b.v = a.v;

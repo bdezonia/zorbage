@@ -120,11 +120,13 @@ public class TestSignedInt3 {
 
 //				System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT3.pred().call(c, c);
-				G.INT3.pred().call(c, c);
-				G.INT3.abs().call(a, c);
-				assertEquals(a.v == -4 ? -4 : Math.abs(a.v),c.v);
+				if (i != -4) {
+					c.set(a);
+					G.INT3.pred().call(c, c);
+					G.INT3.pred().call(c, c);
+					G.INT3.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT3.pred().call(c, c);
@@ -256,11 +258,13 @@ public class TestSignedInt3 {
 				G.INT3.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT3.pred().call(c, c);
-				G.INT3.pred().call(c, c);
-				G.INT3.norm().call(a, c);
-				assertEquals(i == -4 ? -4 : Math.abs(a.v), c.v);
+				if (i != -4) {
+					c.set(a);
+					G.INT3.pred().call(c, c);
+					G.INT3.pred().call(c, c);
+					G.INT3.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

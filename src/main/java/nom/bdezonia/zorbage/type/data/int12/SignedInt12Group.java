@@ -348,8 +348,8 @@ public class SignedInt12Group
 		@Override
 		public void call(SignedInt12Member a, SignedInt12Member b) {
 			if (a.v == -2048)
-				b.v = -2048;
-			else if (a.v < 0)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			if (a.v < 0)
 				b.v = (short) -a.v;
 			else
 				b.v = a.v;

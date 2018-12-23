@@ -124,7 +124,7 @@ public class SignedInt8Group
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b) {
 			if (a.v() == Byte.MIN_VALUE)
-				throw new IllegalArgumentException("abs() cannot convert negative minint to positive value");
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
 			b.setV( Math.abs(a.v()) );
 		}
 	};

@@ -120,11 +120,13 @@ public class TestSignedInt7 {
 
 				// System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT7.pred().call(c, c);
-				G.INT7.pred().call(c, c);
-				G.INT7.abs().call(a, c);
-				assertEquals(a.v == -64 ? -64 : Math.abs(a.v),c.v);
+				if (i != -64) {
+					c.set(a);
+					G.INT7.pred().call(c, c);
+					G.INT7.pred().call(c, c);
+					G.INT7.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT7.pred().call(c, c);
@@ -256,11 +258,13 @@ public class TestSignedInt7 {
 				G.INT7.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT7.pred().call(c, c);
-				G.INT7.pred().call(c, c);
-				G.INT7.norm().call(a, c);
-				assertEquals(i == -64 ? -64 : Math.abs(a.v), c.v);
+				if (i != -64) {
+					c.set(a);
+					G.INT7.pred().call(c, c);
+					G.INT7.pred().call(c, c);
+					G.INT7.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

@@ -120,11 +120,13 @@ public class TestSignedInt6 {
 
 				// System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT6.pred().call(c, c);
-				G.INT6.pred().call(c, c);
-				G.INT6.abs().call(a, c);
-				assertEquals(a.v == -32 ? -32 : Math.abs(a.v),c.v);
+				if (i != -32) {
+					c.set(a);
+					G.INT6.pred().call(c, c);
+					G.INT6.pred().call(c, c);
+					G.INT6.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT6.pred().call(c, c);
@@ -256,11 +258,13 @@ public class TestSignedInt6 {
 				G.INT6.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT6.pred().call(c, c);
-				G.INT6.pred().call(c, c);
-				G.INT6.norm().call(a, c);
-				assertEquals(i == -32 ? -32 : Math.abs(a.v), c.v);
+				if (i != -32) {
+					c.set(a);
+					G.INT6.pred().call(c, c);
+					G.INT6.pred().call(c, c);
+					G.INT6.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				

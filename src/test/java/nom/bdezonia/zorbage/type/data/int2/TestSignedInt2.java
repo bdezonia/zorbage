@@ -120,11 +120,13 @@ public class TestSignedInt2 {
 
 //				System.out.println(i+" op "+j);
 
-				c.set(a);
-				G.INT2.pred().call(c, c);
-				G.INT2.pred().call(c, c);
-				G.INT2.abs().call(a, c);
-				assertEquals(a.v == -2 ? -2 : Math.abs(a.v),c.v);
+				if (i != -2) {
+					c.set(a);
+					G.INT2.pred().call(c, c);
+					G.INT2.pred().call(c, c);
+					G.INT2.abs().call(a, c);
+					assertEquals(Math.abs(a.v),c.v);
+				}
 				
 				c.set(a);
 				G.INT2.pred().call(c, c);
@@ -256,11 +258,13 @@ public class TestSignedInt2 {
 				G.INT2.multiply().call(a,b,c);
 				assertEquals(v(i*j),c.v);
 				
-				c.set(a);
-				G.INT2.pred().call(c, c);
-				G.INT2.pred().call(c, c);
-				G.INT2.norm().call(a, c);
-				assertEquals(i == -2 ? -2 : Math.abs(a.v), c.v);
+				if (i != -2) {
+					c.set(a);
+					G.INT2.pred().call(c, c);
+					G.INT2.pred().call(c, c);
+					G.INT2.norm().call(a, c);
+					assertEquals(Math.abs(a.v), c.v);
+				}
 				
 				double p;
 				
