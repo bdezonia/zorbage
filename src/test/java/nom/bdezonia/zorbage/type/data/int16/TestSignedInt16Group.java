@@ -271,6 +271,10 @@ public class TestSignedInt16Group {
 				assertEquals((short)(a.v()-b.v()), c.v());
 
 			}
+			if (a.v() != Short.MIN_VALUE) {
+				G.INT16.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 
 		// tested as an algorithm elsewhere

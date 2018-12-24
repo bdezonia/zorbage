@@ -181,6 +181,8 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a, SignedInt16Member b) {
+			if (a.v() == Short.MIN_VALUE)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
 			b.setV( -a.v() );
 		}
 	};

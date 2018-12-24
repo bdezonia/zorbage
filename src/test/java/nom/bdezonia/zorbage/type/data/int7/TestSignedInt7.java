@@ -349,6 +349,10 @@ public class TestSignedInt7 {
 				G.INT7.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -64) {
+				G.INT7.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

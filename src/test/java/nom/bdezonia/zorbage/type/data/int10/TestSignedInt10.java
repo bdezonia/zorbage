@@ -346,6 +346,10 @@ public class TestSignedInt10 {
 				G.INT10.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -512) {
+				G.INT10.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

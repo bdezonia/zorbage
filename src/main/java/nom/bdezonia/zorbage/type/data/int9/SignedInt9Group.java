@@ -133,9 +133,8 @@ public class SignedInt9Group
 		@Override
 		public void call(SignedInt9Member a, SignedInt9Member b) {
 			if (a.v == -256)
-				b.v = a.v;
-			else
-				b.v = (short) -a.v;
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			b.v = (short) -a.v;
 		}
 	};
 	

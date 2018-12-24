@@ -346,6 +346,10 @@ public class TestSignedInt13 {
 				G.INT13.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -4096) {
+				G.INT13.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

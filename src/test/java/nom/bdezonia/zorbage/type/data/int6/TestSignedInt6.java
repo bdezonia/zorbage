@@ -349,6 +349,10 @@ public class TestSignedInt6 {
 				G.INT6.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -32) {
+				G.INT6.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

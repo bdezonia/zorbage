@@ -235,6 +235,10 @@ public class TestSignedInt1 {
 				assertEquals(0, c.v);
 				
 			}
+			if (i != -1) {
+				G.INT1.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

@@ -349,6 +349,10 @@ public class TestSignedInt2 {
 				G.INT2.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -2) {
+				G.INT2.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

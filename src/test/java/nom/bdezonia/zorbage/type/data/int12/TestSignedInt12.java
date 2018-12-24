@@ -349,6 +349,10 @@ public class TestSignedInt12 {
 				G.INT12.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -2048) {
+				G.INT12.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

@@ -132,10 +132,20 @@ public class SignedInt1Group
 		return ZER;
 	}
 
+	private final Procedure2<SignedInt1Member, SignedInt1Member> NEG =
+			new Procedure2<SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(SignedInt1Member a, SignedInt1Member b) {
+			if (a.v == -1)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			b.v = 0;
+		}
+	};
+
 	@Override
 	public Procedure2<SignedInt1Member, SignedInt1Member> negate() {
-		// in other types -minint negated stays at -minint. so I think this method has nothing to do.
-		return ASSIGN;
+		return NEG;
 	}
 
 	private final Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> ADD =

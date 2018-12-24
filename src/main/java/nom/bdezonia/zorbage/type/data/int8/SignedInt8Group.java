@@ -181,6 +181,8 @@ public class SignedInt8Group
 	{
 		@Override
 		public void call(SignedInt8Member a, SignedInt8Member b) {
+			if (a.v() == Byte.MIN_VALUE)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
 			b.setV( -a.v() );
 		}
 	};

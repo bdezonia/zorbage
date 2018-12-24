@@ -346,6 +346,10 @@ public class TestSignedInt14 {
 				G.INT14.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -8192) {
+				G.INT14.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

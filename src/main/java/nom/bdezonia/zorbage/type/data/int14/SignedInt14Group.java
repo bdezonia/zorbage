@@ -133,9 +133,8 @@ public class SignedInt14Group
 		@Override
 		public void call(SignedInt14Member a, SignedInt14Member b) {
 			if (a.v == -8192)
-				b.v = a.v;
-			else
-				b.v = (short) -a.v;
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			b.v = (short) -a.v;
 		}
 	};
 	

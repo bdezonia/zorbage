@@ -133,9 +133,8 @@ public class SignedInt13Group
 		@Override
 		public void call(SignedInt13Member a, SignedInt13Member b) {
 			if (a.v == -4096)
-				b.v = a.v;
-			else
-				b.v = (short) -a.v;
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			b.v = (short) -a.v;
 		}
 	};
 	

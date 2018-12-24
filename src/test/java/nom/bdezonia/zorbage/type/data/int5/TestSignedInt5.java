@@ -349,6 +349,10 @@ public class TestSignedInt5 {
 				G.INT5.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -16) {
+				G.INT5.negate().call(a, b);
+				assertEquals(-a.v(), b.v());
+			}
 		}
 	}
 	

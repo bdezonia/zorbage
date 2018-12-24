@@ -133,9 +133,8 @@ public class SignedInt5Group
 		@Override
 		public void call(SignedInt5Member a, SignedInt5Member b) {
 			if (a.v == -16)
-				b.v = a.v;
-			else
-				b.v = (byte) -a.v;
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
+			b.v = (byte) -a.v;
 		}
 	};
 

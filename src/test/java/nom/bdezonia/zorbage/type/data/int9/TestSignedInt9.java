@@ -346,6 +346,10 @@ public class TestSignedInt9 {
 				G.INT9.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -256) {
+				G.INT9.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

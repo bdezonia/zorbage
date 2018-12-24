@@ -349,6 +349,10 @@ public class TestSignedInt3 {
 				G.INT3.zero().call(c);
 				assertEquals(0, c.v);
 			}
+			if (i != -4) {
+				G.INT3.negate().call(a, c);
+				assertEquals(-a.v(), c.v());
+			}
 		}
 	}
 	

@@ -183,6 +183,8 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a, SignedInt64Member b) {
+			if (a.v() == Long.MIN_VALUE)
+				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
 			b.setV( -a.v() );
 		}
 	};
