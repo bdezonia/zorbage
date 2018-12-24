@@ -478,8 +478,6 @@ public class UnsignedInt10Group
 	{
 		@Override
 		public void call(UnsignedInt10Member a, UnsignedInt10Member b, UnsignedInt10Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT10, b.v, a, c);
 		}
 	};

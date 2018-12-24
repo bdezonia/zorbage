@@ -476,8 +476,6 @@ public class UnsignedInt6Group
 	{
 		@Override
 		public void call(UnsignedInt6Member a, UnsignedInt6Member b, UnsignedInt6Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT6, b.v, a, c);
 		}
 	};

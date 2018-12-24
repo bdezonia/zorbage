@@ -505,8 +505,6 @@ public class SignedInt14Group
 	{
 		@Override
 		public void call(SignedInt14Member a, SignedInt14Member b, SignedInt14Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.INT14, b.v, a, c);
 		}
 	};

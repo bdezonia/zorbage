@@ -478,8 +478,6 @@ public class UnsignedInt9Group
 	{
 		@Override
 		public void call(UnsignedInt9Member a, UnsignedInt9Member b, UnsignedInt9Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT9, b.v, a, c);
 		}
 	};

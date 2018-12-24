@@ -478,8 +478,6 @@ public class UnsignedInt4Group
 	{
 		@Override
 		public void call(UnsignedInt4Member a, UnsignedInt4Member b, UnsignedInt4Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT4, b.v, a, c);
 		}
 	};

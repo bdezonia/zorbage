@@ -476,8 +476,6 @@ public class UnsignedInt7Group
 	{
 		@Override
 		public void call(UnsignedInt7Member a, UnsignedInt7Member b, UnsignedInt7Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT7, b.v, a, c);
 		}
 	};

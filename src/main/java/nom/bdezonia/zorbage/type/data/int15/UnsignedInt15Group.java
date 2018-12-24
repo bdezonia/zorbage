@@ -476,8 +476,6 @@ public class UnsignedInt15Group
 	{
 		@Override
 		public void call(UnsignedInt15Member a, UnsignedInt15Member b, UnsignedInt15Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT15, b.v, a, c);
 		}
 	};

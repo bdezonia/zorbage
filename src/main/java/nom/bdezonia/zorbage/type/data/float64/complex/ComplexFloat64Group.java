@@ -136,7 +136,7 @@ public class ComplexFloat64Group
 	{
 		@Override
 		public void call(Integer power, ComplexFloat64Member a, ComplexFloat64Member b) {
-			if (power == 0 && isEqual().call(a, ZERO)) {
+			if (power == 0 && isZero().call(a)) {
 				assign().call(NaN_, b);
 				return;
 			}

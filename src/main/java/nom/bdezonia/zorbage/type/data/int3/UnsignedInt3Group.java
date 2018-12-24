@@ -476,8 +476,6 @@ public class UnsignedInt3Group
 	{
 		@Override
 		public void call(UnsignedInt3Member a, UnsignedInt3Member b, UnsignedInt3Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT3, b.v, a, c);
 		}
 	};

@@ -478,8 +478,6 @@ public class UnsignedInt13Group
 	{
 		@Override
 		public void call(UnsignedInt13Member a, UnsignedInt13Member b, UnsignedInt13Member c) {
-			if (a.v == 0 && b.v == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
 			PowerNonNegative.compute(G.UINT13, b.v, a, c);
 		}
 	};
