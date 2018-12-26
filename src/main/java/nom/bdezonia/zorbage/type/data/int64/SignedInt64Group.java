@@ -111,7 +111,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member from, SignedInt64Member to) {
-			to.setV( from.v() );
+			to.v = from.v;
 		}
 	};
 	
@@ -127,7 +127,7 @@ public class SignedInt64Group
 		public void call(SignedInt64Member a, SignedInt64Member b) {
 			if (a.v() == Long.MIN_VALUE)
 				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
-			b.setV( Math.abs(a.v()) );
+			b.v = Math.abs(a.v);
 		}
 	};
 	
@@ -169,7 +169,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a) {
-			a.setV( 0 );
+			a.v = 0;
 		}
 	};
 	
@@ -185,7 +185,7 @@ public class SignedInt64Group
 		public void call(SignedInt64Member a, SignedInt64Member b) {
 			if (a.v() == Long.MIN_VALUE)
 				throw new IllegalArgumentException("Cannot convert -minint symmetrically");
-			b.setV( -a.v() );
+			b.v = -a.v;
 		}
 	};
 	
@@ -227,7 +227,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a) {
-			a.setV( 1 );
+			a.v  = 1;
 		}
 	};
 	
@@ -435,7 +435,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a, SignedInt64Member b) {
-			b.setV( a.v() - 1 );
+			b.v = a.v - 1;
 		}
 	};
 	
@@ -449,7 +449,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a, SignedInt64Member b) {
-			b.setV( a.v() + 1 );
+			b.v = a.v + 1;
 		}
 	};
 	
@@ -463,7 +463,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a) {
-			a.setV( java.lang.Long.MAX_VALUE );
+			a.v = java.lang.Long.MAX_VALUE;
 		}
 	};
 	
@@ -477,7 +477,7 @@ public class SignedInt64Group
 	{
 		@Override
 		public void call(SignedInt64Member a) {
-			a.setV( java.lang.Long.MIN_VALUE );
+			a.v = java.lang.Long.MIN_VALUE;
 		}
 	};
 	
@@ -642,7 +642,7 @@ public class SignedInt64Group
 		@Override
 		public void call(SignedInt64Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextLong());
+			a.v = rng.nextLong();
 		}
 	};
 	

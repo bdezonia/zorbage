@@ -59,7 +59,7 @@ public final class SignedInt16Member
 		PrimitiveConversion
 {
 
-	private short v;
+	short v;
 	
 	public SignedInt16Member() {
 		v = 0;

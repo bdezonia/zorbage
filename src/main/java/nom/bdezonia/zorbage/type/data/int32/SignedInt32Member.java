@@ -59,7 +59,7 @@ public final class SignedInt32Member
 		PrimitiveConversion
 {
 
-	private int v;
+	int v;
 	
 	public SignedInt32Member() {
 		v = 0;

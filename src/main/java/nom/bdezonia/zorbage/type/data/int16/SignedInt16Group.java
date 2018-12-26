@@ -109,7 +109,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member from, SignedInt16Member to) {
-			to.setV( from.v() );
+			to.v = from.v;
 		}
 	};
 	
@@ -167,7 +167,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.setV( 0 );
+			a.v = 0;
 		}
 	};
 	
@@ -225,7 +225,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.setV( 1 );
+			a.v = 1;
 		}
 	};
 	
@@ -461,7 +461,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.setV( java.lang.Short.MAX_VALUE );
+			a.v = java.lang.Short.MAX_VALUE;
 		}
 	};
 	
@@ -475,7 +475,7 @@ public class SignedInt16Group
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.setV( java.lang.Short.MIN_VALUE );
+			a.v = java.lang.Short.MIN_VALUE;
 		}
 	};
 	
@@ -641,7 +641,7 @@ public class SignedInt16Group
 		@Override
 		public void call(SignedInt16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV( java.lang.Short.MIN_VALUE + rng.nextInt(0x10000));
+			a.setV(rng.nextInt(65536) - 32768);
 		}
 	};
 	

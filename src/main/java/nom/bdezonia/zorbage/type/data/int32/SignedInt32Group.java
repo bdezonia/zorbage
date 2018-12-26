@@ -108,7 +108,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(SignedInt32Member from, SignedInt32Member to) {
-			to.setV( from.v() );
+			to.v = from.v;
 		}
 	};
 	
@@ -166,7 +166,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(SignedInt32Member a) {
-			a.setV( 0 );
+			a.v = 0;
 		}
 	};
 	
@@ -224,7 +224,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(SignedInt32Member a) {
-			a.setV( 1 );
+			a.v = 1 ;
 		}
 	};
 	
@@ -460,7 +460,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(SignedInt32Member a) {
-			a.setV( java.lang.Integer.MAX_VALUE );
+			a.v = java.lang.Integer.MAX_VALUE;
 		}
 	};
 	
@@ -474,7 +474,7 @@ public class SignedInt32Group
 	{
 		@Override
 		public void call(SignedInt32Member a) {
-			a.setV( java.lang.Integer.MIN_VALUE );
+			a.v = java.lang.Integer.MIN_VALUE;
 		}
 	};
 	
@@ -639,7 +639,7 @@ public class SignedInt32Group
 		@Override
 		public void call(SignedInt32Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextInt());
+			a.v = rng.nextInt();
 		}
 	};
 	

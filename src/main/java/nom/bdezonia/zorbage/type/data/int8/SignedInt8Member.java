@@ -59,7 +59,7 @@ public final class SignedInt8Member
 		PrimitiveConversion
 {
 
-	private byte v;
+	byte v;
 	
 	public SignedInt8Member() {
 		v = 0;

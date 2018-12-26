@@ -59,7 +59,7 @@ public final class SignedInt64Member
 		PrimitiveConversion
 {
 
-	private long v;
+	long v;
 	
 	public SignedInt64Member() {
 		v = 0;
