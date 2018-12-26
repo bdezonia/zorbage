@@ -109,7 +109,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		String statement = sb.toString();
 		try {
 			Statement s = conn.createStatement();
-			s.executeQuery(statement);
+			s.executeUpdate(statement);
 			s.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
