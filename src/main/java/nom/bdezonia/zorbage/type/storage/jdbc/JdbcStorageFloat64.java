@@ -78,6 +78,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		try {
 			Statement s = conn.createStatement();
 			s.executeQuery(statement);
+			s.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -109,6 +110,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		try {
 			Statement s = conn.createStatement();
 			s.executeQuery(statement);
+			s.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -139,6 +141,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			for (int i = 0; i < arr.length; i++) {
 				arr[i] = result.getDouble(i);
 			}
+			s.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -185,8 +188,10 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			sb2.append(sb.toString());
 			sb2.append(" LIMIT 1;");
 			String statement = sb2.toString();
+			Statement s = null;
+			String name = null;
 			try {
-				Statement s = conn.createStatement();
+				s = conn.createStatement();
 				s.executeQuery(statement);
 				// If reach here the table selection succeeded and the table exists
 				// So loop and try a new filename
@@ -195,8 +200,15 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 				//
 				// TODO: test the actual exception to make sure its about the missing table
 				//   with given name.
-				return sb.toString();
+				name = sb.toString();
 			}
+			try {
+				if (s != null) s.close();
+			} catch (SQLException e) {
+				;
+			}
+			if (name != null)
+				return name;
 		}
 	}
 	
