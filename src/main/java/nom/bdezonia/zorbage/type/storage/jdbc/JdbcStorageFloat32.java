@@ -32,25 +32,25 @@ import java.sql.SQLException;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
+import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
+public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<JdbcStorageFloat64<U>, U>
+	implements IndexedDataSource<JdbcStorageFloat32<U>, U>
 {
-	public JdbcStorageFloat64(long size, U type, Connection conn, String dbName) {
+	public JdbcStorageFloat32(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "double", type.doubleCount(), size);
+		createTable(conn, dbName, tableName, "float", type.floatCount(), size);
 	}
 
 	@Override
-	public JdbcStorageFloat64<U> duplicate() {
-		JdbcStorageFloat64<U> newContainer = new JdbcStorageFloat64<U>(size, type, conn, dbName);
+	public JdbcStorageFloat32<U> duplicate() {
+		JdbcStorageFloat32<U> newContainer = new JdbcStorageFloat32<U>(size, type, conn, dbName);
 		copyTableToTable(conn, dbName, tableName, newContainer.tableName);
 		return newContainer;
 	}
@@ -59,30 +59,30 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= size)
 			throw new IllegalArgumentException("index out of bounds");
-		double[] arr = tmpSpace.get();
-		value.toDoubleArray(arr, 0);
+		float[] arr = tmpSpace.get();
+		value.toFloatArray(arr, 0);
 		setHelper(index, arr);
 	}
 
 	@Override
 	public void get(long index, U value) {
-		ResultSet result = getHelper(index, type.doubleCount());
-		double[] arr = tmpSpace.get();
+		ResultSet result = getHelper(index, type.floatCount());
+		float[] arr = tmpSpace.get();
 		try {
 			for (int i = 0; i < arr.length; i++) {
-				arr[i] = result.getDouble(i);
+				arr[i] = result.getFloat(i);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		value.fromDoubleArray(arr, 0);
+		value.fromFloatArray(arr, 0);
 	}
 
 	// Thread local variable containing each thread's temp array
-    private final ThreadLocal<double[]> tmpSpace =
-        new ThreadLocal<double[]>() {
-            @Override protected double[] initialValue() {
-                return new double[type.doubleCount()];
+    private final ThreadLocal<float[]> tmpSpace =
+        new ThreadLocal<float[]>() {
+            @Override protected float[] initialValue() {
+                return new float[type.floatCount()];
         }
     };
     
