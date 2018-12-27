@@ -30,6 +30,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -87,6 +88,8 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public void set(long index, U value) {
+		if (index < 0 || index >= size)
+			throw new IllegalArgumentException("index out of bounds");
 		double[] arr = tmpSpace.get();
 		value.toDoubleArray(arr, 0);
 		StringBuilder sb = new StringBuilder();
@@ -118,6 +121,8 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
+		if (index < 0 || index >= size)
+			throw new IllegalArgumentException("index out of bounds");
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
 		for (int i = 0; i < value.doubleCount(); i++) {
@@ -170,18 +175,25 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			System.out.println(e);
 		}
 	}
+
+	private char randomChar(Random rng) {
+		return (char)(rng.nextInt('z' - 'a') + 'a');
+	}
 	
 	private String newTableName() {
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		while (true) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("t_");
-			sb.append((char)(rng.nextInt('z' - 'a') + 'a'));
-			sb.append((char)(rng.nextInt('z' - 'a') + 'a'));
-			sb.append((char)(rng.nextInt('z' - 'a') + 'a'));
-			sb.append((char)(rng.nextInt('z' - 'a') + 'a'));
-			sb.append((char)(rng.nextInt('z' - 'a') + 'a'));
-			sb.append((char)(rng.nextInt('z' - 'a') + 'a'));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
+			sb.append(randomChar(rng));
 			StringBuilder sb2 = new StringBuilder();
 			sb2.append("SELECT 1 FROM ");
 			sb2.append(dbName);
