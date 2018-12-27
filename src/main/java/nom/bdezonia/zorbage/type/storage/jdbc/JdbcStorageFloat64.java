@@ -74,11 +74,11 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		sb.append(".");
 		sb.append(tableName);
 		sb.append(" WHERE 1 = 1;");
-		String statement = sb.toString();
+		String sql = sb.toString();
 		try {
-			Statement s = conn.createStatement();
-			s.executeQuery(statement);
-			s.close();
+			Statement statement = conn.createStatement();
+			statement.executeQuery(sql);
+			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -106,11 +106,11 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		sb.append(" WHERE id = ");
 		sb.append(index);
 		sb.append(";");
-		String statement = sb.toString();
+		String sql = sb.toString();
 		try {
-			Statement s = conn.createStatement();
-			s.executeUpdate(statement);
-			s.close();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(sql);
+			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -133,15 +133,15 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		sb.append(" WHERE id = ");
 		sb.append(index);
 		sb.append(";");
-		String statement = sb.toString();
+		String sql = sb.toString();
 		double[] arr = tmpSpace.get();
 		try {
-			Statement s = conn.createStatement();
-			ResultSet result = s.executeQuery(statement);
+			Statement statement = conn.createStatement();
+			ResultSet result = statement.executeQuery(sql);
 			for (int i = 0; i < arr.length; i++) {
 				arr[i] = result.getDouble(i);
 			}
-			s.close();
+			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -154,17 +154,18 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 
 	public void cleanup() {
-		Statement stmt;
+		Statement statement;
 		try {
-			stmt = conn.createStatement();
+			statement = conn.createStatement();
 			StringBuilder sb = new StringBuilder();
 			sb.append("DROP TABLE ");
 			sb.append(dbName);
 			sb.append(".");
 			sb.append(tableName);
 			sb.append(";");
-			stmt.execute(sb.toString());
-			stmt.close();
+			String sql = sb.toString();
+			statement.execute(sql);
+			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -187,12 +188,12 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			sb2.append(".");
 			sb2.append(sb.toString());
 			sb2.append(" LIMIT 1;");
-			String statement = sb2.toString();
-			Statement s = null;
+			String sql = sb2.toString();
+			Statement statement = null;
 			String name = null;
 			try {
-				s = conn.createStatement();
-				s.executeQuery(statement);
+				statement = conn.createStatement();
+				statement.executeQuery(sql);
 				// If reach here the table selection succeeded and the table exists
 				// So loop and try a new filename
 			} catch (SQLException e) {
@@ -203,7 +204,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 				name = sb.toString();
 			}
 			try {
-				if (s != null) s.close();
+				if (statement != null) statement.close();
 			} catch (SQLException e) {
 				;
 			}
@@ -225,11 +226,12 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			sb.append(" double NOT NULL,");
 		}
 		sb.append(" PRIMARY KEY (ID));");
-		Statement stmt = null;
+		String sql = sb.toString();
+		Statement statement = null;
 		try {
-			stmt = conn.createStatement();
-			stmt.execute(sb.toString());
-			stmt.close();
+			statement = conn.createStatement();
+			statement.execute(sql);
+			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -237,17 +239,18 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		// then fill with SELECT INTO FROM 0,0,0,0 for some n. research.
 		// TODO: just to get working insert rows iteratively : very inefficient
 		try {
-			stmt = conn.createStatement();
+			statement = conn.createStatement();
 			StringBuilder sb2 = new StringBuilder();
 			sb2.append("INSERT INTO ");
 			sb2.append(dbName);
 			sb2.append(".");
 			sb2.append(tableName);
 			sb2.append(" VALUES;");
+			sql = sb2.toString();
 			for (long i = 0; i < size; i++) {
-				stmt.execute(sb2.toString());
+				statement.execute(sql);
 			}
-			stmt.close();
+			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
