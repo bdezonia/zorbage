@@ -43,12 +43,12 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
 	implements IndexedDataSource<JdbcStorageFloat64<U>, U>
 {
+	// string passed to createTable based on info from:
+	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
+	
 	public JdbcStorageFloat64(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
-		// TODO the string representing the type in the following call may not be portable.
-		// It is entirely possible that I need to look at the Connection's metadata and
-		// determine the best string to pass based on installed db.
-		createTable(conn, dbName, tableName, "double", type.doubleCount(), size);
+		createTable(conn, dbName, tableName, "DOUBLE", type.doubleCount(), size);
 	}
 
 	@Override

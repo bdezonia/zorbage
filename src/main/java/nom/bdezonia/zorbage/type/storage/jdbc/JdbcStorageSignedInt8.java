@@ -43,9 +43,12 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
 	implements IndexedDataSource<JdbcStorageSignedInt8<U>, U>
 {
+	// string passed to createTable based on info from:
+	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
+	
 	public JdbcStorageSignedInt8(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "tinyint", type.byteCount(), size);
+		createTable(conn, dbName, tableName, "TINYINT", type.byteCount(), size);
 	}
 
 	@Override

@@ -43,9 +43,12 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
 	implements IndexedDataSource<JdbcStorageSignedInt16<U>, U>
 {
+	// string passed to createTable based on info from:
+	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
+	
 	public JdbcStorageSignedInt16(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "smallint", type.shortCount(), size);
+		createTable(conn, dbName, tableName, "SMALLINT", type.shortCount(), size);
 	}
 
 	@Override

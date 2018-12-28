@@ -43,9 +43,12 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
 	implements IndexedDataSource<JdbcStorageSignedInt64<U>, U>
 {
+	// string passed to createTable based on info from:
+	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
+	
 	public JdbcStorageSignedInt64(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "bigint", type.longCount(), size);
+		createTable(conn, dbName, tableName, "BIGINT", type.longCount(), size);
 	}
 
 	@Override

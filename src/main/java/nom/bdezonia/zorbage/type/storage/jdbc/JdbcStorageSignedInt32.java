@@ -43,9 +43,12 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
 	implements IndexedDataSource<JdbcStorageSignedInt32<U>, U>
 {
+	// string passed to createTable based on info from:
+	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
+	
 	public JdbcStorageSignedInt32(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "int", type.intCount(), size);
+		createTable(conn, dbName, tableName, "INTEGER", type.intCount(), size);
 	}
 
 	@Override
