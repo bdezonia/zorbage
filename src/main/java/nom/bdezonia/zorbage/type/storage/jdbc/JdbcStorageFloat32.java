@@ -45,6 +45,9 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 {
 	public JdbcStorageFloat32(long size, U type, Connection conn, String dbName) {
 		super(size, type, conn, dbName);
+		// TODO the string representing the type in the following call may not be portable.
+		// It is entirely possible that I need to look at the Connection's metadata and
+		// determine the best string to pass based on installed db.
 		createTable(conn, dbName, tableName, "float", type.floatCount(), size);
 	}
 
