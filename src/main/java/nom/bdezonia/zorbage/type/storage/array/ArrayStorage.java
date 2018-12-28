@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -51,7 +52,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 public class ArrayStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
+	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(long size, U type) {
 
 		if (type instanceof DoubleCoder) {
 			return (IndexedDataSource<?,U>) new ArrayStorageFloat64(size, (DoubleCoder)type);

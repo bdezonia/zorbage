@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
 
@@ -39,7 +40,7 @@ import nom.bdezonia.zorbage.type.storage.Storage;
  * @author Barry DeZonia
  *
  */
-public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U>
+public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
 	implements Procedure<U>
 {
 	private final T group;

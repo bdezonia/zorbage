@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.algebra.Group;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
@@ -68,7 +69,7 @@ public class TestTransform2 {
 	// an algorithm that applies Sin() op to a list of any type that
 	// supports sin()
 	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U>
+	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
 		void test(T group)
 	{
 		// generic allocation

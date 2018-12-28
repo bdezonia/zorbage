@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.file;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
@@ -43,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 public class FileStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
+	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(long size, U type) {
 		if (type instanceof DoubleCoder) {
 			return (IndexedDataSource<?,U>) new FileStorageFloat64(size, (DoubleCoder)type);
 		}
