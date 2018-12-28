@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.array;
 
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
@@ -128,9 +129,7 @@ public class ArrayStorage {
 		return store;
 	}
 	
-	public static IndexedDataSource<?,SignedInt8Member> allocateFloats(float[] floats) {
-		throw new UnsupportedOperationException("must implement when 32 bit floats supported");
-		/*
+	public static IndexedDataSource<?,Float32Member> allocateFloats(float[] floats) {
 		Float32Member type = new Float32Member();
 		IndexedDataSource<?,Float32Member> store =
 				new ArrayStorageFloat32<Float32Member>(floats.length, type);
@@ -139,7 +138,6 @@ public class ArrayStorage {
 			store.set(i, type);
 		}
 		return store;
-		*/
 	}
 	
 	public static IndexedDataSource<?,Float64Member> allocateDoubles(double[] doubles) {
