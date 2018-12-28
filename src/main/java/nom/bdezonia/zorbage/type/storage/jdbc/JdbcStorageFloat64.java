@@ -69,6 +69,8 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
+		if (index < 0 || index >= size)
+			throw new IllegalArgumentException("index out of bounds");
 		ResultSet result = getHelper(index, type.doubleCount());
 		double[] arr = tmpSpace.get();
 		try {

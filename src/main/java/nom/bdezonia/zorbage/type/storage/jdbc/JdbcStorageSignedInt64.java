@@ -69,6 +69,8 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
+		if (index < 0 || index >= size)
+			throw new IllegalArgumentException("index out of bounds");
 		ResultSet result = getHelper(index, type.longCount());
 		long[] arr = tmpSpace.get();
 		try {

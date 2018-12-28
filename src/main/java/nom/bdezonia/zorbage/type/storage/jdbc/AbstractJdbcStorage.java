@@ -193,8 +193,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	}
 
 	protected ResultSet getHelper(long index, int count) {
-		if (index < 0 || index >= size)
-			throw new IllegalArgumentException("index out of bounds");
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
 		for (int i = 0; i < count; i++) {

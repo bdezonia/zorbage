@@ -69,6 +69,8 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
+		if (index < 0 || index >= size)
+			throw new IllegalArgumentException("index out of bounds");
 		ResultSet result = getHelper(index, type.booleanCount());
 		boolean[] arr = tmpSpace.get();
 		try {
