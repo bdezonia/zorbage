@@ -51,6 +51,12 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  */
 public class ArrayStorage {
 	
+	/**
+	 * 
+	 * @param size
+	 * @param type
+	 * @return
+	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(long size, U type) {
 
@@ -86,6 +92,11 @@ public class ArrayStorage {
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
 	}
 	
+	/**
+	 * 
+	 * @param bytes
+	 * @return
+	 */
 	public static IndexedDataSource<?,SignedInt8Member> allocateBytes(byte[] bytes) {
 		SignedInt8Member type = new SignedInt8Member();
 		IndexedDataSource<?,SignedInt8Member> store =
@@ -97,6 +108,11 @@ public class ArrayStorage {
 		return store;
 	}
 	
+	/**
+	 * 
+	 * @param shorts
+	 * @return
+	 */
 	public static IndexedDataSource<?,SignedInt16Member> allocateShorts(short[] shorts) {
 		SignedInt16Member type = new SignedInt16Member();
 		IndexedDataSource<?,SignedInt16Member> store =
@@ -108,6 +124,11 @@ public class ArrayStorage {
 		return store;
 	}
 	
+	/**
+	 * 
+	 * @param ints
+	 * @return
+	 */
 	public static IndexedDataSource<?,SignedInt32Member> allocateInts(int[] ints) {
 		SignedInt32Member type = new SignedInt32Member();
 		IndexedDataSource<?,SignedInt32Member> store =
@@ -119,6 +140,11 @@ public class ArrayStorage {
 		return store;
 	}
 	
+	/**
+	 * 
+	 * @param longs
+	 * @return
+	 */
 	public static IndexedDataSource<?,SignedInt64Member> allocateLongs(long[] longs) {
 		SignedInt64Member type = new SignedInt64Member();
 		IndexedDataSource<?,SignedInt64Member> store =
@@ -130,6 +156,11 @@ public class ArrayStorage {
 		return store;
 	}
 	
+	/**
+	 * 
+	 * @param floats
+	 * @return
+	 */
 	public static IndexedDataSource<?,Float32Member> allocateFloats(float[] floats) {
 		Float32Member type = new Float32Member();
 		IndexedDataSource<?,Float32Member> store =
@@ -141,6 +172,11 @@ public class ArrayStorage {
 		return store;
 	}
 	
+	/**
+	 * 
+	 * @param doubles
+	 * @return
+	 */
 	public static IndexedDataSource<?,Float64Member> allocateDoubles(double[] doubles) {
 		Float64Member type = new Float64Member();
 		IndexedDataSource<?,Float64Member> store =
@@ -152,6 +188,11 @@ public class ArrayStorage {
 		return store;
 	}
 	
+	/**
+	 * 
+	 * @param booleans
+	 * @return
+	 */
 	public static IndexedDataSource<?,BooleanMember> allocateBooleans(boolean[] booleans) {
 		BooleanMember type = new BooleanMember();
 		IndexedDataSource<?,BooleanMember> store =

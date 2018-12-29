@@ -43,6 +43,12 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  */
 public class FileStorage {
 	
+	/**
+	 * 
+	 * @param size
+	 * @param type
+	 * @return
+	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(long size, U type) {
 		if (type instanceof DoubleCoder) {
