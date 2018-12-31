@@ -36,9 +36,19 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.int1.SignedInt1Member;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.data.int10.SignedInt10Member;
+import nom.bdezonia.zorbage.type.data.int10.UnsignedInt10Member;
+import nom.bdezonia.zorbage.type.data.int11.SignedInt11Member;
+import nom.bdezonia.zorbage.type.data.int11.UnsignedInt11Member;
 import nom.bdezonia.zorbage.type.data.int12.SignedInt12Member;
 import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Member;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
+import nom.bdezonia.zorbage.type.data.int13.SignedInt13Member;
+import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Member;
+import nom.bdezonia.zorbage.type.data.int14.SignedInt14Member;
+import nom.bdezonia.zorbage.type.data.int14.UnsignedInt14Member;
+import nom.bdezonia.zorbage.type.data.int15.SignedInt15Member;
+import nom.bdezonia.zorbage.type.data.int15.UnsignedInt15Member;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int2.SignedInt2Member;
@@ -59,6 +69,8 @@ import nom.bdezonia.zorbage.type.data.int7.SignedInt7Member;
 import nom.bdezonia.zorbage.type.data.int7.UnsignedInt7Member;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.data.int9.SignedInt9Member;
+import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Member;
 
 /**
  * 
@@ -450,7 +462,7 @@ public class TestLessGreaterForIntTypes {
 	public void uint8() {
 		UnsignedInt8Member a = new UnsignedInt8Member(0);
 		UnsignedInt8Member b = new UnsignedInt8Member(1);
-		UnsignedInt8Member c = new UnsignedInt8Member(2);
+		UnsignedInt8Member c = new UnsignedInt8Member(126);
 		UnsignedInt8Member d = new UnsignedInt8Member(127);
 		UnsignedInt8Member e = new UnsignedInt8Member(128);
 		UnsignedInt8Member f = new UnsignedInt8Member(254);
@@ -473,6 +485,180 @@ public class TestLessGreaterForIntTypes {
 		
 		assertTrue(G.UINT8.isLess().call(f, g));
 		assertFalse(G.UINT8.isGreater().call(f, g));
+	}
+
+	@Test
+	public void int9() {
+		SignedInt9Member a = new SignedInt9Member(-256);
+		SignedInt9Member b = new SignedInt9Member(-255);
+		SignedInt9Member c = new SignedInt9Member(-1);
+		SignedInt9Member d = new SignedInt9Member(0);
+		SignedInt9Member e = new SignedInt9Member(1);
+		SignedInt9Member f = new SignedInt9Member(254);
+		SignedInt9Member g = new SignedInt9Member(255);
+		
+		assertTrue(G.INT9.isLess().call(a, b));
+		assertFalse(G.INT9.isGreater().call(a, b));
+		
+		assertTrue(G.INT9.isLess().call(b, c));
+		assertFalse(G.INT9.isGreater().call(b, c));
+		
+		assertTrue(G.INT9.isLess().call(c, d));
+		assertFalse(G.INT9.isGreater().call(c, d));
+		
+		assertTrue(G.INT9.isLess().call(d, e));
+		assertFalse(G.INT9.isGreater().call(d, e));
+		
+		assertTrue(G.INT9.isLess().call(e, f));
+		assertFalse(G.INT9.isGreater().call(e, f));
+		
+		assertTrue(G.INT9.isLess().call(f, g));
+		assertFalse(G.INT9.isGreater().call(f, g));
+	}
+
+	@Test
+	public void uint9() {
+		UnsignedInt9Member a = new UnsignedInt9Member(0);
+		UnsignedInt9Member b = new UnsignedInt9Member(1);
+		UnsignedInt9Member c = new UnsignedInt9Member(255);
+		UnsignedInt9Member d = new UnsignedInt9Member(256);
+		UnsignedInt9Member e = new UnsignedInt9Member(257);
+		UnsignedInt9Member f = new UnsignedInt9Member(510);
+		UnsignedInt9Member g = new UnsignedInt9Member(511);
+		
+		assertTrue(G.UINT9.isLess().call(a, b));
+		assertFalse(G.UINT9.isGreater().call(a, b));
+		
+		assertTrue(G.UINT9.isLess().call(b, c));
+		assertFalse(G.UINT9.isGreater().call(b, c));
+		
+		assertTrue(G.UINT9.isLess().call(c, d));
+		assertFalse(G.UINT9.isGreater().call(c, d));
+		
+		assertTrue(G.UINT9.isLess().call(d, e));
+		assertFalse(G.UINT9.isGreater().call(d, e));
+		
+		assertTrue(G.UINT9.isLess().call(e, f));
+		assertFalse(G.UINT9.isGreater().call(e, f));
+		
+		assertTrue(G.UINT9.isLess().call(f, g));
+		assertFalse(G.UINT9.isGreater().call(f, g));
+	}
+
+	@Test
+	public void int10() {
+		SignedInt10Member a = new SignedInt10Member(-512);
+		SignedInt10Member b = new SignedInt10Member(-511);
+		SignedInt10Member c = new SignedInt10Member(-1);
+		SignedInt10Member d = new SignedInt10Member(0);
+		SignedInt10Member e = new SignedInt10Member(1);
+		SignedInt10Member f = new SignedInt10Member(510);
+		SignedInt10Member g = new SignedInt10Member(511);
+		
+		assertTrue(G.INT10.isLess().call(a, b));
+		assertFalse(G.INT10.isGreater().call(a, b));
+		
+		assertTrue(G.INT10.isLess().call(b, c));
+		assertFalse(G.INT10.isGreater().call(b, c));
+		
+		assertTrue(G.INT10.isLess().call(c, d));
+		assertFalse(G.INT10.isGreater().call(c, d));
+		
+		assertTrue(G.INT10.isLess().call(d, e));
+		assertFalse(G.INT10.isGreater().call(d, e));
+		
+		assertTrue(G.INT10.isLess().call(e, f));
+		assertFalse(G.INT10.isGreater().call(e, f));
+		
+		assertTrue(G.INT10.isLess().call(f, g));
+		assertFalse(G.INT10.isGreater().call(f, g));
+	}
+
+	@Test
+	public void uint10() {
+		UnsignedInt10Member a = new UnsignedInt10Member(0);
+		UnsignedInt10Member b = new UnsignedInt10Member(1);
+		UnsignedInt10Member c = new UnsignedInt10Member(510);
+		UnsignedInt10Member d = new UnsignedInt10Member(511);
+		UnsignedInt10Member e = new UnsignedInt10Member(512);
+		UnsignedInt10Member f = new UnsignedInt10Member(1022);
+		UnsignedInt10Member g = new UnsignedInt10Member(1023);
+		
+		assertTrue(G.UINT10.isLess().call(a, b));
+		assertFalse(G.UINT10.isGreater().call(a, b));
+		
+		assertTrue(G.UINT10.isLess().call(b, c));
+		assertFalse(G.UINT10.isGreater().call(b, c));
+		
+		assertTrue(G.UINT10.isLess().call(c, d));
+		assertFalse(G.UINT10.isGreater().call(c, d));
+		
+		assertTrue(G.UINT10.isLess().call(d, e));
+		assertFalse(G.UINT10.isGreater().call(d, e));
+		
+		assertTrue(G.UINT10.isLess().call(e, f));
+		assertFalse(G.UINT10.isGreater().call(e, f));
+		
+		assertTrue(G.UINT10.isLess().call(f, g));
+		assertFalse(G.UINT10.isGreater().call(f, g));
+	}
+
+	@Test
+	public void int11() {
+		SignedInt11Member a = new SignedInt11Member(-1024);
+		SignedInt11Member b = new SignedInt11Member(-1023);
+		SignedInt11Member c = new SignedInt11Member(-1);
+		SignedInt11Member d = new SignedInt11Member(0);
+		SignedInt11Member e = new SignedInt11Member(1);
+		SignedInt11Member f = new SignedInt11Member(1022);
+		SignedInt11Member g = new SignedInt11Member(1023);
+		
+		assertTrue(G.INT11.isLess().call(a, b));
+		assertFalse(G.INT11.isGreater().call(a, b));
+		
+		assertTrue(G.INT11.isLess().call(b, c));
+		assertFalse(G.INT11.isGreater().call(b, c));
+		
+		assertTrue(G.INT11.isLess().call(c, d));
+		assertFalse(G.INT11.isGreater().call(c, d));
+		
+		assertTrue(G.INT11.isLess().call(d, e));
+		assertFalse(G.INT11.isGreater().call(d, e));
+		
+		assertTrue(G.INT11.isLess().call(e, f));
+		assertFalse(G.INT11.isGreater().call(e, f));
+		
+		assertTrue(G.INT11.isLess().call(f, g));
+		assertFalse(G.INT11.isGreater().call(f, g));
+	}
+
+	@Test
+	public void uint11() {
+		UnsignedInt11Member a = new UnsignedInt11Member(0);
+		UnsignedInt11Member b = new UnsignedInt11Member(1);
+		UnsignedInt11Member c = new UnsignedInt11Member(1023);
+		UnsignedInt11Member d = new UnsignedInt11Member(1024);
+		UnsignedInt11Member e = new UnsignedInt11Member(1025);
+		UnsignedInt11Member f = new UnsignedInt11Member(2046);
+		UnsignedInt11Member g = new UnsignedInt11Member(2047);
+		
+		assertTrue(G.UINT11.isLess().call(a, b));
+		assertFalse(G.UINT11.isGreater().call(a, b));
+		
+		assertTrue(G.UINT11.isLess().call(b, c));
+		assertFalse(G.UINT11.isGreater().call(b, c));
+		
+		assertTrue(G.UINT11.isLess().call(c, d));
+		assertFalse(G.UINT11.isGreater().call(c, d));
+		
+		assertTrue(G.UINT11.isLess().call(d, e));
+		assertFalse(G.UINT11.isGreater().call(d, e));
+		
+		assertTrue(G.UINT11.isLess().call(e, f));
+		assertFalse(G.UINT11.isGreater().call(e, f));
+		
+		assertTrue(G.UINT11.isLess().call(f, g));
+		assertFalse(G.UINT11.isGreater().call(f, g));
 	}
 
 	@Test
@@ -534,6 +720,180 @@ public class TestLessGreaterForIntTypes {
 	}
 	
 	@Test
+	public void int13() {
+		SignedInt13Member a = new SignedInt13Member(-4096);
+		SignedInt13Member b = new SignedInt13Member(-4095);
+		SignedInt13Member c = new SignedInt13Member(-1);
+		SignedInt13Member d = new SignedInt13Member(0);
+		SignedInt13Member e = new SignedInt13Member(1);
+		SignedInt13Member f = new SignedInt13Member(4094);
+		SignedInt13Member g = new SignedInt13Member(4095);
+		
+		assertTrue(G.INT13.isLess().call(a, b));
+		assertFalse(G.INT13.isGreater().call(a, b));
+		
+		assertTrue(G.INT13.isLess().call(b, c));
+		assertFalse(G.INT13.isGreater().call(b, c));
+		
+		assertTrue(G.INT13.isLess().call(c, d));
+		assertFalse(G.INT13.isGreater().call(c, d));
+		
+		assertTrue(G.INT13.isLess().call(d, e));
+		assertFalse(G.INT13.isGreater().call(d, e));
+		
+		assertTrue(G.INT13.isLess().call(e, f));
+		assertFalse(G.INT13.isGreater().call(e, f));
+		
+		assertTrue(G.INT13.isLess().call(f, g));
+		assertFalse(G.INT13.isGreater().call(f, g));
+	}
+
+	@Test
+	public void uint13() {
+		UnsignedInt13Member a = new UnsignedInt13Member(0);
+		UnsignedInt13Member b = new UnsignedInt13Member(1);
+		UnsignedInt13Member c = new UnsignedInt13Member(4095);
+		UnsignedInt13Member d = new UnsignedInt13Member(4096);
+		UnsignedInt13Member e = new UnsignedInt13Member(4097);
+		UnsignedInt13Member f = new UnsignedInt13Member(8190);
+		UnsignedInt13Member g = new UnsignedInt13Member(8191);
+		
+		assertTrue(G.UINT13.isLess().call(a, b));
+		assertFalse(G.UINT13.isGreater().call(a, b));
+		
+		assertTrue(G.UINT13.isLess().call(b, c));
+		assertFalse(G.UINT13.isGreater().call(b, c));
+		
+		assertTrue(G.UINT13.isLess().call(c, d));
+		assertFalse(G.UINT13.isGreater().call(c, d));
+		
+		assertTrue(G.UINT13.isLess().call(d, e));
+		assertFalse(G.UINT13.isGreater().call(d, e));
+		
+		assertTrue(G.UINT13.isLess().call(e, f));
+		assertFalse(G.UINT13.isGreater().call(e, f));
+		
+		assertTrue(G.UINT13.isLess().call(f, g));
+		assertFalse(G.UINT13.isGreater().call(f, g));
+	}
+
+	@Test
+	public void int14() {
+		SignedInt14Member a = new SignedInt14Member(-8192);
+		SignedInt14Member b = new SignedInt14Member(-8191);
+		SignedInt14Member c = new SignedInt14Member(-1);
+		SignedInt14Member d = new SignedInt14Member(0);
+		SignedInt14Member e = new SignedInt14Member(1);
+		SignedInt14Member f = new SignedInt14Member(8190);
+		SignedInt14Member g = new SignedInt14Member(8191);
+		
+		assertTrue(G.INT14.isLess().call(a, b));
+		assertFalse(G.INT14.isGreater().call(a, b));
+		
+		assertTrue(G.INT14.isLess().call(b, c));
+		assertFalse(G.INT14.isGreater().call(b, c));
+		
+		assertTrue(G.INT14.isLess().call(c, d));
+		assertFalse(G.INT14.isGreater().call(c, d));
+		
+		assertTrue(G.INT14.isLess().call(d, e));
+		assertFalse(G.INT14.isGreater().call(d, e));
+		
+		assertTrue(G.INT14.isLess().call(e, f));
+		assertFalse(G.INT14.isGreater().call(e, f));
+		
+		assertTrue(G.INT14.isLess().call(f, g));
+		assertFalse(G.INT14.isGreater().call(f, g));
+	}
+
+	@Test
+	public void uint14() {
+		UnsignedInt14Member a = new UnsignedInt14Member(0);
+		UnsignedInt14Member b = new UnsignedInt14Member(1);
+		UnsignedInt14Member c = new UnsignedInt14Member(8191);
+		UnsignedInt14Member d = new UnsignedInt14Member(8192);
+		UnsignedInt14Member e = new UnsignedInt14Member(8193);
+		UnsignedInt14Member f = new UnsignedInt14Member(16382);
+		UnsignedInt14Member g = new UnsignedInt14Member(16383);
+		
+		assertTrue(G.UINT14.isLess().call(a, b));
+		assertFalse(G.UINT14.isGreater().call(a, b));
+		
+		assertTrue(G.UINT14.isLess().call(b, c));
+		assertFalse(G.UINT14.isGreater().call(b, c));
+		
+		assertTrue(G.UINT14.isLess().call(c, d));
+		assertFalse(G.UINT14.isGreater().call(c, d));
+		
+		assertTrue(G.UINT14.isLess().call(d, e));
+		assertFalse(G.UINT14.isGreater().call(d, e));
+		
+		assertTrue(G.UINT14.isLess().call(e, f));
+		assertFalse(G.UINT14.isGreater().call(e, f));
+		
+		assertTrue(G.UINT14.isLess().call(f, g));
+		assertFalse(G.UINT14.isGreater().call(f, g));
+	}
+
+	@Test
+	public void int15() {
+		SignedInt15Member a = new SignedInt15Member(-16384);
+		SignedInt15Member b = new SignedInt15Member(-16383);
+		SignedInt15Member c = new SignedInt15Member(-1);
+		SignedInt15Member d = new SignedInt15Member(0);
+		SignedInt15Member e = new SignedInt15Member(1);
+		SignedInt15Member f = new SignedInt15Member(16382);
+		SignedInt15Member g = new SignedInt15Member(16383);
+		
+		assertTrue(G.INT15.isLess().call(a, b));
+		assertFalse(G.INT15.isGreater().call(a, b));
+		
+		assertTrue(G.INT15.isLess().call(b, c));
+		assertFalse(G.INT15.isGreater().call(b, c));
+		
+		assertTrue(G.INT15.isLess().call(c, d));
+		assertFalse(G.INT15.isGreater().call(c, d));
+		
+		assertTrue(G.INT15.isLess().call(d, e));
+		assertFalse(G.INT15.isGreater().call(d, e));
+		
+		assertTrue(G.INT15.isLess().call(e, f));
+		assertFalse(G.INT15.isGreater().call(e, f));
+		
+		assertTrue(G.INT15.isLess().call(f, g));
+		assertFalse(G.INT15.isGreater().call(f, g));
+	}
+
+	@Test
+	public void uint15() {
+		UnsignedInt15Member a = new UnsignedInt15Member(0);
+		UnsignedInt15Member b = new UnsignedInt15Member(1);
+		UnsignedInt15Member c = new UnsignedInt15Member(16383);
+		UnsignedInt15Member d = new UnsignedInt15Member(16384);
+		UnsignedInt15Member e = new UnsignedInt15Member(16385);
+		UnsignedInt15Member f = new UnsignedInt15Member(32766);
+		UnsignedInt15Member g = new UnsignedInt15Member(32767);
+		
+		assertTrue(G.UINT15.isLess().call(a, b));
+		assertFalse(G.UINT15.isGreater().call(a, b));
+		
+		assertTrue(G.UINT15.isLess().call(b, c));
+		assertFalse(G.UINT15.isGreater().call(b, c));
+		
+		assertTrue(G.UINT15.isLess().call(c, d));
+		assertFalse(G.UINT15.isGreater().call(c, d));
+		
+		assertTrue(G.UINT15.isLess().call(d, e));
+		assertFalse(G.UINT15.isGreater().call(d, e));
+		
+		assertTrue(G.UINT15.isLess().call(e, f));
+		assertFalse(G.UINT15.isGreater().call(e, f));
+		
+		assertTrue(G.UINT15.isLess().call(f, g));
+		assertFalse(G.UINT15.isGreater().call(f, g));
+	}
+
+	@Test
 	public void int16() {
 		SignedInt16Member a = new SignedInt16Member(Short.MIN_VALUE);
 		SignedInt16Member b = new SignedInt16Member(Short.MIN_VALUE+1);
@@ -566,7 +926,7 @@ public class TestLessGreaterForIntTypes {
 	public void uint16() {
 		UnsignedInt16Member a = new UnsignedInt16Member(0);
 		UnsignedInt16Member b = new UnsignedInt16Member(1);
-		UnsignedInt16Member c = new UnsignedInt16Member(2);
+		UnsignedInt16Member c = new UnsignedInt16Member(32766);
 		UnsignedInt16Member d = new UnsignedInt16Member(32767);
 		UnsignedInt16Member e = new UnsignedInt16Member(32768);
 		UnsignedInt16Member f = new UnsignedInt16Member(65534);
@@ -624,7 +984,7 @@ public class TestLessGreaterForIntTypes {
 	public void uint32() {
 		UnsignedInt32Member a = new UnsignedInt32Member(0);
 		UnsignedInt32Member b = new UnsignedInt32Member(1);
-		UnsignedInt32Member c = new UnsignedInt32Member(2);
+		UnsignedInt32Member c = new UnsignedInt32Member(0x7ffffffeL);
 		UnsignedInt32Member d = new UnsignedInt32Member(0x7fffffffL);
 		UnsignedInt32Member e = new UnsignedInt32Member(0x80000000L);
 		UnsignedInt32Member f = new UnsignedInt32Member(0xffffffffL-1);
