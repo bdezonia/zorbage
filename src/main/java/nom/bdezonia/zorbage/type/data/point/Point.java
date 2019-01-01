@@ -212,6 +212,7 @@ public class Point
 
 	@Override
 	public void get(Point other) {
+		if (this == other) return;
 		other.vector = new double[numDimensions()];
 		for (int i = 0; i < vector.length; i++) {
 			other.vector[i] = vector[i];
