@@ -462,9 +462,9 @@ public class TestLessGreaterForIntTypes {
 	public void uint8() {
 		UnsignedInt8Member a = new UnsignedInt8Member(0);
 		UnsignedInt8Member b = new UnsignedInt8Member(1);
-		UnsignedInt8Member c = new UnsignedInt8Member(126);
-		UnsignedInt8Member d = new UnsignedInt8Member(127);
-		UnsignedInt8Member e = new UnsignedInt8Member(128);
+		UnsignedInt8Member c = new UnsignedInt8Member(127);
+		UnsignedInt8Member d = new UnsignedInt8Member(128);
+		UnsignedInt8Member e = new UnsignedInt8Member(129);
 		UnsignedInt8Member f = new UnsignedInt8Member(254);
 		UnsignedInt8Member g = new UnsignedInt8Member(255);
 		
@@ -578,9 +578,9 @@ public class TestLessGreaterForIntTypes {
 	public void uint10() {
 		UnsignedInt10Member a = new UnsignedInt10Member(0);
 		UnsignedInt10Member b = new UnsignedInt10Member(1);
-		UnsignedInt10Member c = new UnsignedInt10Member(510);
-		UnsignedInt10Member d = new UnsignedInt10Member(511);
-		UnsignedInt10Member e = new UnsignedInt10Member(512);
+		UnsignedInt10Member c = new UnsignedInt10Member(511);
+		UnsignedInt10Member d = new UnsignedInt10Member(512);
+		UnsignedInt10Member e = new UnsignedInt10Member(513);
 		UnsignedInt10Member f = new UnsignedInt10Member(1022);
 		UnsignedInt10Member g = new UnsignedInt10Member(1023);
 		
@@ -926,9 +926,9 @@ public class TestLessGreaterForIntTypes {
 	public void uint16() {
 		UnsignedInt16Member a = new UnsignedInt16Member(0);
 		UnsignedInt16Member b = new UnsignedInt16Member(1);
-		UnsignedInt16Member c = new UnsignedInt16Member(32766);
-		UnsignedInt16Member d = new UnsignedInt16Member(32767);
-		UnsignedInt16Member e = new UnsignedInt16Member(32768);
+		UnsignedInt16Member c = new UnsignedInt16Member(32767);
+		UnsignedInt16Member d = new UnsignedInt16Member(32768);
+		UnsignedInt16Member e = new UnsignedInt16Member(32769);
 		UnsignedInt16Member f = new UnsignedInt16Member(65534);
 		UnsignedInt16Member g = new UnsignedInt16Member(65535);
 		
@@ -1042,10 +1042,10 @@ public class TestLessGreaterForIntTypes {
 	public void uint64() {
 		UnsignedInt64Member a = new UnsignedInt64Member(BigInteger.ZERO);
 		UnsignedInt64Member b = new UnsignedInt64Member(BigInteger.ONE);
-		UnsignedInt64Member c = new UnsignedInt64Member(BigInteger.ONE.add(BigInteger.ONE));
-		UnsignedInt64Member d = new UnsignedInt64Member(new BigInteger("7fffffffffffffff",16));
-		UnsignedInt64Member e = new UnsignedInt64Member(new BigInteger("8000000000000000",16));
-		UnsignedInt64Member f = new UnsignedInt64Member(new BigInteger("ffffffffffffffff",16).subtract(BigInteger.ONE));
+		UnsignedInt64Member c = new UnsignedInt64Member(new BigInteger("7fffffffffffffff",16));
+		UnsignedInt64Member d = new UnsignedInt64Member(new BigInteger("8000000000000000",16));
+		UnsignedInt64Member e = new UnsignedInt64Member(new BigInteger("8000000000000001",16));
+		UnsignedInt64Member f = new UnsignedInt64Member(new BigInteger("fffffffffffffffe",16));
 		UnsignedInt64Member g = new UnsignedInt64Member(new BigInteger("ffffffffffffffff",16));
 		
 		assertTrue(G.UINT64.isLess().call(a, b));
@@ -1104,10 +1104,10 @@ public class TestLessGreaterForIntTypes {
 	public void uint128() {
 		UnsignedInt128Member a = new UnsignedInt128Member(BigInteger.ZERO);
 		UnsignedInt128Member b = new UnsignedInt128Member(BigInteger.ONE);
-		UnsignedInt128Member c = new UnsignedInt128Member(BigInteger.ONE.add(BigInteger.ONE));
-		UnsignedInt128Member d = new UnsignedInt128Member(new BigInteger("7fffffffffffffffffffffffffffffff",16));
-		UnsignedInt128Member e = new UnsignedInt128Member(new BigInteger("80000000000000000000000000000000",16));
-		UnsignedInt128Member f = new UnsignedInt128Member(new BigInteger("ffffffffffffffffffffffffffffffff",16).subtract(BigInteger.ONE));
+		UnsignedInt128Member c = new UnsignedInt128Member(new BigInteger("7fffffffffffffffffffffffffffffff",16));
+		UnsignedInt128Member d = new UnsignedInt128Member(new BigInteger("80000000000000000000000000000000",16));
+		UnsignedInt128Member e = new UnsignedInt128Member(new BigInteger("80000000000000000000000000000001",16));
+		UnsignedInt128Member f = new UnsignedInt128Member(new BigInteger("fffffffffffffffffffffffffffffffe",16));
 		UnsignedInt128Member g = new UnsignedInt128Member(new BigInteger("ffffffffffffffffffffffffffffffff",16));
 		
 		assertTrue(G.UINT128.isLess().call(a, b));
