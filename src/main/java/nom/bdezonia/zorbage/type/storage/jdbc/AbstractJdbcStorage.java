@@ -34,6 +34,7 @@ import java.sql.Statement;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
 /**
@@ -97,6 +98,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 		sb.append(" PRIMARY KEY (ID));");
 		String sql = sb.toString();
+		System.out.println(sql);
 		Statement statement = null;
 		try {
 			statement = conn.createStatement();
@@ -110,14 +112,21 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		// TODO: just to get working insert rows iteratively : very inefficient
 		try {
 			statement = conn.createStatement();
-			StringBuilder sb2 = new StringBuilder();
-			sb2.append("INSERT INTO ");
-			sb2.append(dbName);
-			sb2.append(".");
-			sb2.append(tableName);
-			sb2.append(" VALUES;");
-			sql = sb2.toString();
-			for (long i = 0; i < size; i++) {
+			for (long c = 0; c < size; c++) {
+				StringBuilder sb2 = new StringBuilder();
+				sb2.append("INSERT INTO ");
+				sb2.append(dbName);
+				sb2.append(".");
+				sb2.append(tableName);
+				sb2.append(" VALUES (");
+				sb2.append(c);
+				for (int i = 0; i < count; i++) {
+					sb2.append(",");
+					sb2.append("0");
+				}
+				sb2.append(");");
+				sql = sb2.toString();
+				System.out.println(sql);
 				statement.execute(sql);
 			}
 			statement.close();
@@ -192,7 +201,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 
-	protected ResultSet getHelper(long index, int count) {
+	protected Tuple2<Statement,ResultSet> getHelper(long index, int count) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
 		for (int i = 0; i < count; i++) {
@@ -209,13 +218,13 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		sb.append(index);
 		sb.append(";");
 		String sql = sb.toString();
+		Statement statement = null;
 		try {
-			Statement statement = conn.createStatement();
+			statement = conn.createStatement();
 			ResultSet result = statement.executeQuery(sql);
-			statement.close();
-			return result;
+			return new Tuple2<Statement,ResultSet>(statement,result);
 		} catch (SQLException e) {
-			return null;
+			return new Tuple2<Statement,ResultSet>(null,null);
 		}
 	}
 	

@@ -29,7 +29,9 @@ package nom.bdezonia.zorbage.type.storage.jdbc;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
@@ -71,16 +73,18 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	public void get(long index, U value) {
 		if (index < 0 || index >= size)
 			throw new IllegalArgumentException("index out of bounds");
-		ResultSet result = getHelper(index, type.intCount());
+		Tuple2<Statement,ResultSet> result = getHelper(index, type.intCount());
 		int[] arr = tmpSpace.get();
 		try {
+			result.b().next();
 			for (int i = 0; i < arr.length; i++) {
-				arr[i] = result.getInt(i);
+				arr[i] = result.b().getInt(i+1);
 			}
+			value.fromIntArray(arr, 0);
+			result.a().close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		value.fromIntArray(arr, 0);
 	}
 
 	// Thread local variable containing each thread's temp array
