@@ -54,28 +54,28 @@ public class JdbcStorage {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(Connection conn, String dbName, long size, U type) {
+	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(Connection conn, long size, U type) {
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageFloat64(size, (DoubleCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageFloat64(size, (DoubleCoder)type, conn);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageFloat32(size, (FloatCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageFloat32(size, (FloatCoder)type, conn);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt64(size, (LongCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt64(size, (LongCoder)type, conn);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt32(size, (IntCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt32(size, (IntCoder)type, conn);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt16(size, (ShortCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt16(size, (ShortCoder)type, conn);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageBoolean(size, (BooleanCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageBoolean(size, (BooleanCoder)type, conn);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt8(size, (ByteCoder)type, conn, dbName);
+			return (IndexedDataSource<?,U>) new JdbcStorageSignedInt8(size, (ByteCoder)type, conn);
 		}
 		
 		// TODO: add bitCoder when it is done. It should certainly be last as it will

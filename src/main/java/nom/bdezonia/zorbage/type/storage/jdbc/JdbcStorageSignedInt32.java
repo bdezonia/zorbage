@@ -48,15 +48,15 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageSignedInt32(long size, U type, Connection conn, String dbName) {
-		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "INTEGER", type.intCount(), size);
+	public JdbcStorageSignedInt32(long size, U type, Connection conn) {
+		super(size, type, conn);
+		createTable(conn, tableName, "INTEGER", type.intCount(), size);
 	}
 
 	@Override
 	public JdbcStorageSignedInt32<U> duplicate() {
-		JdbcStorageSignedInt32<U> newContainer = new JdbcStorageSignedInt32<U>(size, type, conn, dbName);
-		copyTableToTable(conn, dbName, tableName, newContainer.tableName);
+		JdbcStorageSignedInt32<U> newContainer = new JdbcStorageSignedInt32<U>(size, type, conn);
+		copyTableToTable(conn, tableName, newContainer.tableName);
 		return newContainer;
 	}
 

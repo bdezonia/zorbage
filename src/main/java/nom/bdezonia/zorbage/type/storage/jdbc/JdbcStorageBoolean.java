@@ -48,15 +48,15 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageBoolean(long size, U type, Connection conn, String dbName) {
-		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "BIT", type.booleanCount(), size);
+	public JdbcStorageBoolean(long size, U type, Connection conn) {
+		super(size, type, conn);
+		createTable(conn, tableName, "BIT", type.booleanCount(), size);
 	}
 
 	@Override
 	public JdbcStorageBoolean<U> duplicate() {
-		JdbcStorageBoolean<U> newContainer = new JdbcStorageBoolean<U>(size, type, conn, dbName);
-		copyTableToTable(conn, dbName, tableName, newContainer.tableName);
+		JdbcStorageBoolean<U> newContainer = new JdbcStorageBoolean<U>(size, type, conn);
+		copyTableToTable(conn, tableName, newContainer.tableName);
 		return newContainer;
 	}
 

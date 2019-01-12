@@ -46,18 +46,16 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 {
 	protected final U type;
 	protected final long size;
-	protected final String dbName;
 	protected final String tableName;
 	protected final Connection conn;
 	
-	protected AbstractJdbcStorage(long size, U type, Connection conn, String dbName) {
+	protected AbstractJdbcStorage(long size, U type, Connection conn) {
 		if (size < 0)
 			throw new IllegalArgumentException("jdbc storage size must be >= 0");
 		this.size = size;
 		this.type = type.allocate();
 		this.conn = conn;
-		this.dbName = dbName;
-		this.tableName = newTableName(conn, dbName);
+		this.tableName = newTableName(conn);
 	}
 	
 	public long size() {
@@ -70,8 +68,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			statement = conn.createStatement();
 			StringBuilder sb = new StringBuilder();
 			sb.append("DROP TABLE ");
-			sb.append(dbName);
-			sb.append(".");
 			sb.append(tableName);
 			sb.append(";");
 			String sql = sb.toString();
@@ -82,11 +78,9 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 
-	protected void createTable(Connection conn, String dbName, String tableName, String sqlType, int count, long size) {
+	protected void createTable(Connection conn, String tableName, String sqlType, int count, long size) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("CREATE TABLE ");
-		sb.append(dbName);
-		sb.append(".");
 		sb.append(tableName);
 		sb.append("(ID bigint NOT NULL, ");
 		for (int i = 0; i < count; i++) {
@@ -98,7 +92,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 		sb.append(" PRIMARY KEY (ID));");
 		String sql = sb.toString();
-		System.out.println(sql);
 		Statement statement = null;
 		try {
 			statement = conn.createStatement();
@@ -115,8 +108,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			for (long c = 0; c < size; c++) {
 				StringBuilder sb2 = new StringBuilder();
 				sb2.append("INSERT INTO ");
-				sb2.append(dbName);
-				sb2.append(".");
 				sb2.append(tableName);
 				sb2.append(" VALUES (");
 				sb2.append(c);
@@ -126,7 +117,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 				}
 				sb2.append(");");
 				sql = sb2.toString();
-				System.out.println(sql);
 				statement.execute(sql);
 			}
 			statement.close();
@@ -135,15 +125,11 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 
-	protected void copyTableToTable(Connection conn, String dbName, String fromTable, String toTable) {
+	protected void copyTableToTable(Connection conn, String fromTable, String toTable) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT * INTO ");
-		sb.append(dbName);
-		sb.append(".");
 		sb.append(toTable);
 		sb.append(" FROM ");
-		sb.append(dbName);
-		sb.append(".");
 		sb.append(fromTable);
 		sb.append(" WHERE 1 = 1;");
 		String sql = sb.toString();
@@ -156,7 +142,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 
-	protected String newTableName(Connection conn, String dbName) {
+	protected String newTableName(Connection conn) {
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		while (true) {
 			StringBuilder sb = new StringBuilder();
@@ -172,8 +158,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			sb.append(randomChar(rng));
 			StringBuilder sb2 = new StringBuilder();
 			sb2.append("SELECT 1 FROM ");
-			sb2.append(dbName);
-			sb2.append(".");
 			sb2.append(sb.toString());
 			sb2.append(" LIMIT 1;");
 			String sql = sb2.toString();
@@ -211,8 +195,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 				sb.append(",");
 		}
 		sb.append(" FROM ");
-		sb.append(dbName);
-		sb.append(".");
 		sb.append(tableName);
 		sb.append(" WHERE id = ");
 		sb.append(index);
@@ -231,8 +213,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	protected void setHelper(long index, Object array) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE ");
-		sb.append(dbName);
-		sb.append(".");
 		sb.append(tableName);
 		sb.append(" SET ");
 		for (int i = 0; i < Array.getLength(array); i++) {

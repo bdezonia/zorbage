@@ -48,15 +48,15 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageFloat32(long size, U type, Connection conn, String dbName) {
-		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "REAL", type.floatCount(), size);
+	public JdbcStorageFloat32(long size, U type, Connection conn) {
+		super(size, type, conn);
+		createTable(conn, tableName, "REAL", type.floatCount(), size);
 	}
 
 	@Override
 	public JdbcStorageFloat32<U> duplicate() {
-		JdbcStorageFloat32<U> newContainer = new JdbcStorageFloat32<U>(size, type, conn, dbName);
-		copyTableToTable(conn, dbName, tableName, newContainer.tableName);
+		JdbcStorageFloat32<U> newContainer = new JdbcStorageFloat32<U>(size, type, conn);
+		copyTableToTable(conn, tableName, newContainer.tableName);
 		return newContainer;
 	}
 

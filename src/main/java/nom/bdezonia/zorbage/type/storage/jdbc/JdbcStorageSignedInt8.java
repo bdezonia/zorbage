@@ -48,15 +48,15 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageSignedInt8(long size, U type, Connection conn, String dbName) {
-		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "TINYINT", type.byteCount(), size);
+	public JdbcStorageSignedInt8(long size, U type, Connection conn) {
+		super(size, type, conn);
+		createTable(conn, tableName, "TINYINT", type.byteCount(), size);
 	}
 
 	@Override
 	public JdbcStorageSignedInt8<U> duplicate() {
-		JdbcStorageSignedInt8<U> newContainer = new JdbcStorageSignedInt8<U>(size, type, conn, dbName);
-		copyTableToTable(conn, dbName, tableName, newContainer.tableName);
+		JdbcStorageSignedInt8<U> newContainer = new JdbcStorageSignedInt8<U>(size, type, conn);
+		copyTableToTable(conn, tableName, newContainer.tableName);
 		return newContainer;
 	}
 

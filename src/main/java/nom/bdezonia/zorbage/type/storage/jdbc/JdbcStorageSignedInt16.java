@@ -48,15 +48,15 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageSignedInt16(long size, U type, Connection conn, String dbName) {
-		super(size, type, conn, dbName);
-		createTable(conn, dbName, tableName, "SMALLINT", type.shortCount(), size);
+	public JdbcStorageSignedInt16(long size, U type, Connection conn) {
+		super(size, type, conn);
+		createTable(conn, tableName, "SMALLINT", type.shortCount(), size);
 	}
 
 	@Override
 	public JdbcStorageSignedInt16<U> duplicate() {
-		JdbcStorageSignedInt16<U> newContainer = new JdbcStorageSignedInt16<U>(size, type, conn, dbName);
-		copyTableToTable(conn, dbName, tableName, newContainer.tableName);
+		JdbcStorageSignedInt16<U> newContainer = new JdbcStorageSignedInt16<U>(size, type, conn);
+		copyTableToTable(conn, tableName, newContainer.tableName);
 		return newContainer;
 	}
 

@@ -49,7 +49,7 @@ public class TestJdbc {
 		try {
 			Connection conn = getConnection();
 			
-			JdbcStorageFloat64<QuaternionFloat64Member> storage = new JdbcStorageFloat64<QuaternionFloat64Member>(19, G.QDBL.construct(), conn, "zorbage");
+			JdbcStorageFloat64<QuaternionFloat64Member> storage = new JdbcStorageFloat64<QuaternionFloat64Member>(19, G.QDBL.construct(), conn);
 			
 			QuaternionFloat64Member value = G.QDBL.construct();
 			for (long i = 0; i < storage.size(); i++) {
