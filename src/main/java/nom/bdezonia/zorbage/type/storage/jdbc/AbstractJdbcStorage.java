@@ -69,7 +69,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			StringBuilder sb = new StringBuilder();
 			sb.append("DROP TABLE ");
 			sb.append(tableName);
-			sb.append(";");
+			sb.append(';');
 			String sql = sb.toString();
 			statement.execute(sql);
 			statement.close();
@@ -86,7 +86,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		for (int i = 0; i < count; i++) {
 			sb.append(" v");
 			sb.append(i);
-			sb.append(" ");
+			sb.append(' ');
 			sb.append(sqlType);
 			sb.append(" NOT NULL,");
 		}
@@ -101,22 +101,26 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			System.out.println(e);
 		}
 
-		// then fill with SELECT INTO FROM 0,0,0,0 for some n. research.
-		// TODO: just to get working insert rows iteratively : very inefficient
+		zeroFill(count);
+	}
+
+	protected void zeroFill(int valueCount) {
+		
+		final long MAX = 500;
+		
 		try {
-			statement = conn.createStatement();
-			for (long c = 0; c < size; c++) {
-				StringBuilder sb2 = new StringBuilder();
-				sb2.append("INSERT INTO ");
-				sb2.append(tableName);
-				sb2.append(" VALUES (");
-				sb2.append(c);
-				for (int i = 0; i < count; i++) {
-					sb2.append(",");
-					sb2.append("0");
+			Statement statement = conn.createStatement();
+			long i = 0;
+			while (i < size) {
+				long num;
+				if (size - i > MAX) {
+					num = size - i;
 				}
-				sb2.append(");");
-				sql = sb2.toString();
+				else {
+					num = MAX;
+				}
+				String sql = makeInsertZeroesStatement(i,num, valueCount);
+				i += num;
 				statement.execute(sql);
 			}
 			statement.close();
@@ -124,12 +128,32 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			System.out.println(e);
 		}
 	}
+	
+	protected String makeInsertZeroesStatement(long offset, long count, int valueCount) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("INSERT INTO ");
+		sb.append(tableName);
+		sb.append(" VALUES ");
+		for (long c = 0; c < count; c++) {
+			sb.append('(');
+			sb.append(offset+c);
+			for (int i = 0; i < valueCount; i++) {
+				sb.append(',');
+				sb.append('0');
+			}
+			sb.append(')');
+			if (c != count-1)
+				sb.append(',');
+		}
+		sb.append(';');
+		return sb.toString();
+	}
 
 	protected void copyTableToTable(Connection conn, String fromTable, String toTable) {
 		StringBuilder sb2 = new StringBuilder();
 		sb2.append("TRUNCATE TABLE ");
 		sb2.append(toTable);
-		sb2.append(";");
+		sb2.append(';');
 		String sql = sb2.toString();
 		try {
 			Statement statement = conn.createStatement();
@@ -201,16 +225,16 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ");
 		for (int i = 0; i < count; i++) {
-			sb.append("v");
+			sb.append('v');
 			sb.append(i);
 			if (i != count-1)
-				sb.append(",");
+				sb.append(',');
 		}
 		sb.append(" FROM ");
 		sb.append(tableName);
 		sb.append(" WHERE id = ");
 		sb.append(index);
-		sb.append(";");
+		sb.append(';');
 		String sql = sb.toString();
 		Statement statement = null;
 		try {
@@ -228,16 +252,16 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		sb.append(tableName);
 		sb.append(" SET ");
 		for (int i = 0; i < Array.getLength(array); i++) {
-			sb.append("v");
+			sb.append('v');
 			sb.append(i);
-			sb.append(" = ");
+			sb.append('=');
 			sb.append(Array.get(array, i).toString());
 			if (i != Array.getLength(array)-1)
-				sb.append(",");
+				sb.append(',');
 		}
 		sb.append(" WHERE id = ");
 		sb.append(index);
-		sb.append(";");
+		sb.append(';');
 		String sql = sb.toString();
 		try {
 			Statement statement = conn.createStatement();
