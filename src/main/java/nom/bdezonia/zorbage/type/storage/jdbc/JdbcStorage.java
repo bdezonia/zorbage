@@ -48,7 +48,6 @@ public class JdbcStorage {
 	/**
 	 * 
 	 * @param conn
-	 * @param dbName
 	 * @param size
 	 * @param type
 	 * @return
