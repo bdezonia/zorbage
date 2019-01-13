@@ -54,15 +54,15 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		zeroFill(type.longCount());
 	}
 
-	private JdbcStorageSignedInt64(long size, U type, Connection conn, String sourceTableName) {
-		super(size, type, conn);
+	public JdbcStorageSignedInt64(JdbcStorageSignedInt64<U> other) {
+		super(other.size, other.type, other.conn);
 		createTable(conn, tableName, "BIGINT", type.longCount(), size);
-		copyTableToTable(conn, sourceTableName, tableName);
+		copyTableToTable(conn, other.tableName, tableName);
 	}
 
 	@Override
 	public JdbcStorageSignedInt64<U> duplicate() {
-		return new JdbcStorageSignedInt64<U>(size, type, conn, tableName);
+		return new JdbcStorageSignedInt64<U>(this);
 	}
 
 	@Override

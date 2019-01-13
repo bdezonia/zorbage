@@ -54,15 +54,15 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 		zeroFill(type.booleanCount());
 	}
 
-	private JdbcStorageBoolean(long size, U type, Connection conn, String sourceTableName) {
-		super(size, type, conn);
+	public JdbcStorageBoolean(JdbcStorageBoolean<U> other) {
+		super(other.size, other.type, other.conn);
 		createTable(conn, tableName, "BIT", type.booleanCount(), size);
-		copyTableToTable(conn, sourceTableName, tableName);
+		copyTableToTable(conn, other.tableName, tableName);
 	}
 	
 	@Override
 	public JdbcStorageBoolean<U> duplicate() {
-		return new JdbcStorageBoolean<U>(size, type, conn, tableName);
+		return new JdbcStorageBoolean<U>(this);
 	}
 
 	@Override

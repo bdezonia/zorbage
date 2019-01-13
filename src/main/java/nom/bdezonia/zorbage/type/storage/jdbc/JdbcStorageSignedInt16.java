@@ -54,15 +54,15 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		zeroFill(type.shortCount());
 	}
 
-	private JdbcStorageSignedInt16(long size, U type, Connection conn, String sourceTableName) {
-		super(size, type, conn);
+	public JdbcStorageSignedInt16(JdbcStorageSignedInt16<U> other) {
+		super(other.size, other.type, other.conn);
 		createTable(conn, tableName, "SMALLINT", type.shortCount(), size);
-		copyTableToTable(conn, sourceTableName, tableName);
+		copyTableToTable(conn, other.tableName, tableName);
 	}
 
 	@Override
 	public JdbcStorageSignedInt16<U> duplicate() {
-		return new JdbcStorageSignedInt16<U>(size, type, conn, tableName);
+		return new JdbcStorageSignedInt16<U>(this);
 	}
 
 	@Override

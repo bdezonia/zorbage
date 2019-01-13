@@ -54,15 +54,15 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		zeroFill(type.doubleCount());
 	}
 
-	private JdbcStorageFloat64(long size, U type, Connection conn, String sourceTableName) {
-		super(size, type, conn);
+	public JdbcStorageFloat64(JdbcStorageFloat64<U> other) {
+		super(other.size, other.type, other.conn);
 		createTable(conn, tableName, "DOUBLE", type.doubleCount(), size);
-		copyTableToTable(conn, sourceTableName, tableName);
+		copyTableToTable(conn, other.tableName, tableName);
 	}
 
 	@Override
 	public JdbcStorageFloat64<U> duplicate() {
-		return new JdbcStorageFloat64<U>(size, type, conn, tableName);
+		return new JdbcStorageFloat64<U>(this);
 	}
 
 	@Override
