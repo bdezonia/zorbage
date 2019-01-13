@@ -35,6 +35,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 
 /**
  * 
@@ -44,7 +45,7 @@ import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member
 public class TestJdbc {
 
 	@Test
-	public void test() {
+	public void test1() {
 		
 		try {
 			Connection conn = getConnection();
@@ -75,6 +76,47 @@ public class TestJdbc {
 			}
 			
 			storage.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Test
+	public void test2() {
+		
+		try {
+			Connection conn = getConnection();
+			
+			JdbcStorageSignedInt16<SignedInt16Member> storage = new JdbcStorageSignedInt16<SignedInt16Member>(19, G.INT16.construct(), conn);
+			
+			SignedInt16Member value = G.INT16.construct();
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(0, value.v());
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				short v = (short) i;
+				value.setV(v);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(i, value.v());
+			}
+			
+			JdbcStorageSignedInt16<SignedInt16Member> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				storage2.get(i, value);
+				assertEquals(i, value.v());
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());

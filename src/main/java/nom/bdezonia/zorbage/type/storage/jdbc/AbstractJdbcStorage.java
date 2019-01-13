@@ -126,16 +126,28 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	}
 
 	protected void copyTableToTable(Connection conn, String fromTable, String toTable) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * INTO ");
-		sb.append(toTable);
-		sb.append(" FROM ");
-		sb.append(fromTable);
-		sb.append(" WHERE 1 = 1;");
-		String sql = sb.toString();
+		StringBuilder sb2 = new StringBuilder();
+		sb2.append("TRUNCATE TABLE ");
+		sb2.append(toTable);
+		sb2.append(";");
+		String sql = sb2.toString();
 		try {
 			Statement statement = conn.createStatement();
-			statement.executeQuery(sql);
+			statement.execute(sql);
+			statement.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("INSERT INTO ");
+		sb.append(toTable);
+		sb.append(" SELECT * FROM ");
+		sb.append(fromTable);
+		sb.append(" WHERE 1 = 1;");
+		sql = sb.toString();
+		try {
+			Statement statement = conn.createStatement();
+			statement.execute(sql);
 			statement.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
