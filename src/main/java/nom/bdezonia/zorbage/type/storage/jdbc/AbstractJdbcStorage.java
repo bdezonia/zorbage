@@ -100,8 +100,6 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-
-		zeroFill(count);
 	}
 
 	protected void zeroFill(int valueCount) {

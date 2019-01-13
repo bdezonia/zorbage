@@ -51,13 +51,18 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	public JdbcStorageBoolean(long size, U type, Connection conn) {
 		super(size, type, conn);
 		createTable(conn, tableName, "BIT", type.booleanCount(), size);
+		zeroFill(type.booleanCount());
 	}
 
+	private JdbcStorageBoolean(long size, U type, Connection conn, String sourceTableName) {
+		super(size, type, conn);
+		createTable(conn, tableName, "BIT", type.booleanCount(), size);
+		copyTableToTable(conn, sourceTableName, tableName);
+	}
+	
 	@Override
 	public JdbcStorageBoolean<U> duplicate() {
-		JdbcStorageBoolean<U> newContainer = new JdbcStorageBoolean<U>(size, type, conn);
-		copyTableToTable(conn, tableName, newContainer.tableName);
-		return newContainer;
+		return new JdbcStorageBoolean<U>(size, type, conn, tableName);
 	}
 
 	@Override
