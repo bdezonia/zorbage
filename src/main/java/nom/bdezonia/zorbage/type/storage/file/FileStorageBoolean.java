@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
-	implements IndexedDataSource<FileStorageBoolean<U>,U>
+	implements IndexedDataSource<FileStorageBoolean<U>,U>, Allocatable<FileStorageBoolean<U>>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -175,5 +175,10 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 			}
 			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
+	}
+
+	@Override
+	public FileStorageBoolean<U> allocate() {
+		return new FileStorageBoolean<U>(size(), type);
 	}
 }

@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  *
  */
 public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
-	implements IndexedDataSource<FileStorageSignedInt64<U>,U>
+	implements IndexedDataSource<FileStorageSignedInt64<U>,U>, Allocatable<FileStorageSignedInt64<U>>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -175,5 +175,10 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 			}
 			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
+	}
+
+	@Override
+	public FileStorageSignedInt64<U> allocate() {
+		return new FileStorageSignedInt64<U>(size(), type);
 	}
 }

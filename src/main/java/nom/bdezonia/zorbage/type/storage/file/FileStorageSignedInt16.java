@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;;
  *
  */
 public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
-	implements IndexedDataSource<FileStorageSignedInt16<U>,U>
+	implements IndexedDataSource<FileStorageSignedInt16<U>,U>, Allocatable<FileStorageSignedInt16<U>>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -175,5 +175,10 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 			}
 			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
+	}
+
+	@Override
+	public FileStorageSignedInt16<U> allocate() {
+		return new FileStorageSignedInt16<U>(size(), type);
 	}
 }

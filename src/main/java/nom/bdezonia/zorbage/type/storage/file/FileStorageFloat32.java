@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  *
  */
 public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
-	implements IndexedDataSource<FileStorageFloat32<U>,U>
+	implements IndexedDataSource<FileStorageFloat32<U>,U>, Allocatable<FileStorageFloat32<U>>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -175,5 +175,10 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			}
 			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
+	}
+
+	@Override
+	public FileStorageFloat32<U> allocate() {
+		return new FileStorageFloat32<U>(size(), type);
 	}
 }

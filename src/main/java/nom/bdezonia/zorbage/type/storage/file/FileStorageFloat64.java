@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
-	implements IndexedDataSource<FileStorageFloat64<U>,U>
+	implements IndexedDataSource<FileStorageFloat64<U>,U>, Allocatable<FileStorageFloat64<U>>
 {
 	// TODO
 	// 1) add low level array access to Array storage classes so can do block reads/writes
@@ -175,5 +175,10 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			}
 			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
 		}
+	}
+
+	@Override
+	public FileStorageFloat64<U> allocate() {
+		return new FileStorageFloat64<U>(size(), type);
 	}
 }
