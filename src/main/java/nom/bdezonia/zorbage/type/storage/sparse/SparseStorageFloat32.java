@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.storage.sparse;
 import java.util.Arrays;
 import java.util.Stack;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  *
  */
 public class SparseStorageFloat32<U extends FloatCoder>
-	implements IndexedDataSource<SparseStorageFloat32<U>, U>
+	implements IndexedDataSource<SparseStorageFloat32<U>, U>, Allocatable<SparseStorageFloat32<U>>
 {
 	private final RedBlackTree<float[]> data;
 	private final long numElements;
@@ -119,6 +120,11 @@ public class SparseStorageFloat32<U extends FloatCoder>
 	@Override
 	public long size() {
 		return numElements;
+	}
+
+	@Override
+	public SparseStorageFloat32<U> allocate() {
+		return new SparseStorageFloat32<U>(numElements, type);
 	}
 
 }

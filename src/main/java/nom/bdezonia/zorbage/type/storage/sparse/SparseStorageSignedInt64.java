@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.storage.sparse;
 import java.util.Arrays;
 import java.util.Stack;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  *
  */
 public class SparseStorageSignedInt64<U extends LongCoder>
-	implements IndexedDataSource<SparseStorageSignedInt64<U>, U>
+	implements IndexedDataSource<SparseStorageSignedInt64<U>, U>, Allocatable<SparseStorageSignedInt64<U>>
 {
 	private final RedBlackTree<long[]> data;
 	private final long numElements;
@@ -119,6 +120,11 @@ public class SparseStorageSignedInt64<U extends LongCoder>
 	@Override
 	public long size() {
 		return numElements;
+	}
+
+	@Override
+	public SparseStorageSignedInt64<U> allocate() {
+		return new SparseStorageSignedInt64<U>(numElements, type);
 	}
 
 }

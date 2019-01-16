@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.storage.sparse;
 import java.util.Arrays;
 import java.util.Stack;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public class SparseStorageBoolean<U extends BooleanCoder>
-	implements IndexedDataSource<SparseStorageBoolean<U>, U>
+	implements IndexedDataSource<SparseStorageBoolean<U>, U>, Allocatable<SparseStorageBoolean<U>>
 {
 	private final RedBlackTree<boolean[]> data;
 	private final long numElements;
@@ -119,6 +120,11 @@ public class SparseStorageBoolean<U extends BooleanCoder>
 	@Override
 	public long size() {
 		return numElements;
+	}
+
+	@Override
+	public SparseStorageBoolean<U> allocate() {
+		return new SparseStorageBoolean<U>(numElements, type);
 	}
 
 }

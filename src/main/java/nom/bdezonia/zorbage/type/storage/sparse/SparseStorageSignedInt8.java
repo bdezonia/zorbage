@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.storage.sparse;
 import java.util.Arrays;
 import java.util.Stack;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  *
  */
 public class SparseStorageSignedInt8<U extends ByteCoder>
-	implements IndexedDataSource<SparseStorageSignedInt8<U>, U>
+	implements IndexedDataSource<SparseStorageSignedInt8<U>, U>, Allocatable<SparseStorageSignedInt8<U>>
 {
 	private final RedBlackTree<byte[]> data;
 	private final long numElements;
@@ -119,6 +120,11 @@ public class SparseStorageSignedInt8<U extends ByteCoder>
 	@Override
 	public long size() {
 		return numElements;
+	}
+
+	@Override
+	public SparseStorageSignedInt8<U> allocate() {
+		return new SparseStorageSignedInt8<U>(numElements, type);
 	}
 
 }
