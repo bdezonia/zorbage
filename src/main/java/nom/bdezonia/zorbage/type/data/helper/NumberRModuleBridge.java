@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,12 +39,12 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
 	private final U zero;
-	private final Algebra<?,U> group;
+	private final Algebra<?,U> Algebra;
 	private NumberMember<U> num;
 	
-	public NumberRModuleBridge(Algebra<?,U> group, NumberMember<U> num) {
-		this.zero = group.construct();
-		this.group = group;
+	public NumberRModuleBridge(Algebra<?,U> Algebra, NumberMember<U> num) {
+		this.zero = Algebra.construct();
+		this.Algebra = Algebra;
 		this.num = num;
 	}
 	
@@ -93,14 +93,14 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 		if (i == 0)
 			num.v(value);
 		else
-			group.assign().call(zero, value);
+			Algebra.assign().call(zero, value);
 	}
 
 	@Override
 	public void setV(long i, U value) {
 		if (i == 0)
 			num.setV(value);
-		else if (group.isNotEqual().call(zero, value))
+		else if (Algebra.isNotEqual().call(zero, value))
 			throw new IllegalArgumentException("out of bounds nonzero write");
 
 	}

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -72,7 +72,7 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class Float64TensorProduct
 	implements
-		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Group,Float64Member>,
+		TensorProduct<Float64TensorProduct,Float64TensorProductMember,Float64Algebra,Float64Member>,
 		ConstructibleNdLong<Float64TensorProductMember>,
 		Norm<Float64TensorProductMember,Float64Member>,
 		Scale<Float64TensorProductMember,Float64Member>,

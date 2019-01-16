@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,18 +39,18 @@ public class RightRotate {
 	/**
 	 * Do a right rotation of a set of values.
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param delta
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, long delta, IndexedDataSource<?,U> a)
+		void compute(T Algebra, long delta, IndexedDataSource<?,U> a)
 	{
 		if (a.size() == 0) return;
 		if (delta < 0) {
-			LeftRotate.compute(group, Math.abs(delta), a);
+			LeftRotate.compute(Algebra, Math.abs(delta), a);
 			return;
 		}
-		LeftRotate.compute(group, a.size()-delta, a);
+		LeftRotate.compute(Algebra, a.size()-delta, a);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,10 +38,10 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class Max<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Procedure<U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Max(T group) {
-		this.group = group;
+	public Max(T Algebra) {
+		this.Algebra = Algebra;
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -49,13 +49,13 @@ public class Max<T extends Algebra<T,U> & Ordered<U>, U>
 	public void call(U result, U... inputs) {
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("max undefined for empty list");
-		U max = group.construct();
-		group.assign().call(inputs[0],max);
+		U max = Algebra.construct();
+		Algebra.assign().call(inputs[0],max);
 		for (int i = 1; i < inputs.length; i++) {
-			if (group.isGreater().call(inputs[i], max)) {
-				group.assign().call(inputs[i], max);
+			if (Algebra.isGreater().call(inputs[i], max)) {
+				Algebra.assign().call(inputs[i], max);
 			}
 		}
-		group.assign().call(max, result);
+		Algebra.assign().call(max, result);
 	}
 }

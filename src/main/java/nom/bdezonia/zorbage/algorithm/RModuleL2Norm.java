@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -44,25 +44,25 @@ public class RModuleL2Norm {
 
 	/**
 	 * 
-	 * @param rmodGroup
-	 * @param numGroup
+	 * @param rmodAlgebra
+	 * @param numAlgebra
 	 * @param rmod
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Roots<W>, W>
-		void compute(T rmodGroup, V numGroup, RModuleMember<U> rmod, W result)
+		void compute(T rmodAlgebra, V numAlgebra, RModuleMember<U> rmod, W result)
 	{
-		U value = rmodGroup.construct();
-		W sum = numGroup.construct();
-		W tmp = numGroup.construct();
+		U value = rmodAlgebra.construct();
+		W sum = numAlgebra.construct();
+		W tmp = numAlgebra.construct();
 		// TODO: this code does not avoid overflow which it could do in a hypot-like fashion
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			rmodGroup.norm().call(value, tmp);
-			numGroup.multiply().call(tmp, tmp, tmp);
-			numGroup.add().call(sum, tmp, sum);
+			rmodAlgebra.norm().call(value, tmp);
+			numAlgebra.multiply().call(tmp, tmp, tmp);
+			numAlgebra.add().call(sum, tmp, sum);
 		}
-		numGroup.sqrt().call(sum, sum);
-		numGroup.assign().call(sum, result);
+		numAlgebra.sqrt().call(sum, sum);
+		numAlgebra.assign().call(sum, result);
 	}
 }

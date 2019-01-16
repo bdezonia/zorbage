@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,20 +40,20 @@ public class Sinc {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param x
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Invertible<U> & Unity<U> & Trigonometric<U>,U>
-		void compute(T group, U x, U result)
+		void compute(T Algebra, U x, U result)
 	{
-		if (group.isZero().call(x)) {
-			group.unity().call(result);
+		if (Algebra.isZero().call(x)) {
+			Algebra.unity().call(result);
 		}
 		else {
-			U tmp = group.construct();
-			group.sin().call(x, tmp);
-			group.divide().call(tmp, x, result);
+			U tmp = Algebra.construct();
+			Algebra.sin().call(x, tmp);
+			Algebra.divide().call(tmp, x, result);
 		}
 	
 	}

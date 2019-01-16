@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,17 +43,17 @@ public class Correlate {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		U tmpA = group.construct();
-		U tmpB = group.construct();
-		U tmpC = group.construct();
+		U tmpA = Algebra.construct();
+		U tmpB = Algebra.construct();
+		U tmpC = Algebra.construct();
 		if (a.size() != b.size())
 			throw new IllegalArgumentException("mismatched inputs");
 		if (a.size() != c.size())
@@ -61,7 +61,7 @@ public class Correlate {
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, tmpA);
 			b.get(i, tmpB);
-			group.multiply().call(tmpA, tmpB, tmpC);
+			Algebra.multiply().call(tmpA, tmpB, tmpC);
 			c.set(i, tmpC);
 		}
 	}

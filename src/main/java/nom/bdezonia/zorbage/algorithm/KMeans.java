@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.point.Point;
-import nom.bdezonia.zorbage.type.data.point.PointGroup;
+import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -51,13 +51,13 @@ public class KMeans {
 	 *        Pass in the number of clusters you want to divide the point set into.
 	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
 	 *        list.
-	 * @param group The PointGroup to be used to manipulate Points.
+	 * @param Algebra The PointAlgebra to be used to manipulate Points.
 	 * @param numClusters The number of clusters to divide the list of Points into.
 	 * @param points The list of Points to analyze.
 	 * @param clusterIndices The list tracking which Point is in which cluster.
 	 */
 	public static
-		void compute(PointGroup group, int numClusters, IndexedDataSource<?,Point> points, IndexedDataSource<?,SignedInt32Member> clusterIndices)
+		void compute(PointAlgebra Algebra, int numClusters, IndexedDataSource<?,Point> points, IndexedDataSource<?,SignedInt32Member> clusterIndices)
 	{
 		if (numClusters < 1)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");
@@ -70,7 +70,7 @@ public class KMeans {
 		
 		int MAX_ITERS = 1000;
 		
-		Point point = group.construct();
+		Point point = Algebra.construct();
 		SignedInt32Member clusterNum = G.INT32.construct();
 		Float64Member scale = G.DBL.construct();
 		Float64Member dist = G.DBL.construct();
@@ -96,20 +96,20 @@ public class KMeans {
 			
 			// calc centroids of clusters
 			for (int i = 0; i < numClusters; i++) {
-				group.zero().call(centers.get(i));
+				Algebra.zero().call(centers.get(i));
 			}
 			for (long i = 0; i < points.size(); i++) {
 				points.get(i, point);
 				clusterIndices.get(i, clusterNum);
 				Point ctrSum = centers.get(clusterNum.v());
-				group.add().call(ctrSum, point, ctrSum);
+				Algebra.add().call(ctrSum, point, ctrSum);
 				counts.set(clusterNum.v(), (counts.get(clusterNum.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
 				long count = counts.get(i);
 				scale.setV(1.0/count);
-				group.scale().call(scale, ctrSum, ctrSum);
+				Algebra.scale().call(scale, ctrSum, ctrSum);
 			}
 			
 			// for each point

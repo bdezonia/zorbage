@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,17 +41,17 @@ public class ExponentialCalculation {
 	 * Create a numeric value from an exponential description. Can create nonreal values
 	 * depending upon inputs.
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param fraction
 	 * @param base
 	 * @param power
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Power<U> & Multiplication<U>, U>
-		void compute(T group, U fraction, U base, U power, U result)
+		void compute(T Algebra, U fraction, U base, U power, U result)
 	{
-		U tmp = group.construct();
-		group.pow().call(base, power, tmp);
-		group.multiply().call(fraction, tmp, result);
+		U tmp = Algebra.construct();
+		Algebra.pow().call(base, power, tmp);
+		Algebra.multiply().call(fraction, tmp, result);
 	}
 }

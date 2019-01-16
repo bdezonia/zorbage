@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.GreaterThanConstant;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -54,8 +54,8 @@ public class TestCountIf {
 		
 		UnsignedInt32Member sum = G.UINT32.construct();
 		
-		GreaterThanConstant<Float64Group, Float64Member> condition =
-				new GreaterThanConstant<Float64Group, Float64Member>(G.DBL, new Float64Member(14));
+		GreaterThanConstant<Float64Algebra, Float64Member> condition =
+				new GreaterThanConstant<Float64Algebra, Float64Member>(G.DBL, new Float64Member(14));
 		
 		CountIf.compute(G.DBL, G.UINT32, condition, data, sum);
 		

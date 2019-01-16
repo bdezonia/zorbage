@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,21 +42,21 @@ public class Conjugate {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Conjugate<U>,U>
-		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmpA = group.construct();
-		U tmpB = group.construct();
+		U tmpA = Algebra.construct();
+		U tmpB = Algebra.construct();
 		if (a.size() != b.size())
 			throw new IllegalArgumentException("mismatched input/output");
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, tmpA);
-			group.conjugate().call(tmpA, tmpB);
+			Algebra.conjugate().call(tmpA, tmpB);
 			b.set(i, tmpB);
 		}
 	}

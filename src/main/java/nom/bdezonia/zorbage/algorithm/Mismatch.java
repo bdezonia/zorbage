@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,20 +40,20 @@ public class Mismatch {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T group, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T Algebra, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		return compute(group, 0, 0, a.size(), a, b);
+		return compute(Algebra, 0, 0, a.size(), a, b);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param aStart
 	 * @param bStart
 	 * @param count
@@ -62,15 +62,15 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T group, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T Algebra, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		U tmpA = group.construct();
-		U tmpB = group.construct();
+		U tmpA = Algebra.construct();
+		U tmpB = Algebra.construct();
 		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmpA);
 			b.get(bStart+i, tmpB);
-			if (group.isNotEqual().call(tmpA, tmpB)) {
+			if (Algebra.isNotEqual().call(tmpA, tmpB)) {
 				retVal.setA(aStart+i);
 				retVal.setB(bStart+i);
 				return retVal;
@@ -84,21 +84,21 @@ public class Mismatch {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param cond
 	 * @param a
 	 * @param b
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T Algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		return compute(group, cond, 0, 0, a.size(), a, b);
+		return compute(Algebra, cond, 0, 0, a.size(), a, b);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param cond
 	 * @param aStart
 	 * @param bStart
@@ -108,10 +108,10 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T group, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T Algebra, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		U tmpA = group.construct();
-		U tmpB = group.construct();
+		U tmpA = Algebra.construct();
+		U tmpB = Algebra.construct();
 		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
 		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, tmpB);
 		for (long i = 0; i < count; i++) {

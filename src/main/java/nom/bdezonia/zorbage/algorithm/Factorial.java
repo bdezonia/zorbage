@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,27 +43,27 @@ public class Factorial {
 	/**
 	 * Factorial.compute()
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param result
 	 */
 	public static <T extends RingWithUnity<T,U> & Ordered<U>, U>
-		void compute(T group, U a, U result)
+		void compute(T Algebra, U a, U result)
 	{
-		U tmp = group.construct();
-		if (group.isLess().call(a, tmp))
+		U tmp = Algebra.construct();
+		if (Algebra.isLess().call(a, tmp))
 			throw new IllegalArgumentException("Cannot take factorial of negative input");
-		group.unity().call(tmp);
-		if (group.isLessEqual().call(a, tmp))
-			group.assign().call(tmp, result);
+		Algebra.unity().call(tmp);
+		if (Algebra.isLessEqual().call(a, tmp))
+			Algebra.assign().call(tmp, result);
 		else {
-			U product = group.construct(tmp);
-			U multiplier = group.construct(a);
-			while (group.isGreater().call(multiplier, tmp)) {
-				group.multiply().call(product, multiplier, product);
-				group.subtract().call(multiplier, tmp, multiplier);
+			U product = Algebra.construct(tmp);
+			U multiplier = Algebra.construct(a);
+			while (Algebra.isGreater().call(multiplier, tmp)) {
+				Algebra.multiply().call(product, multiplier, product);
+				Algebra.subtract().call(multiplier, tmp, multiplier);
 			}
-			group.assign().call(product, result);
+			Algebra.assign().call(product, result);
 		}
 	}
 }

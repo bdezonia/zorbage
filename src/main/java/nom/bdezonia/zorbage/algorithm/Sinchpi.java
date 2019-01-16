@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,23 +42,23 @@ public class Sinchpi {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param x
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Hyperbolic<U> & Constants<U>,U>
-		void compute(T group, U x, U result)
+		void compute(T Algebra, U x, U result)
 	{
-		if (group.isZero().call(x)) {
-			group.unity().call(result);
+		if (Algebra.isZero().call(x)) {
+			Algebra.unity().call(result);
 		}
 		else {
-			U tmp = group.construct();
-			U piX = group.construct();
-			group.PI().call(piX);
-			group.multiply().call(piX, x, piX);
-			group.sinh().call(piX, tmp);
-			group.divide().call(tmp, piX, result);
+			U tmp = Algebra.construct();
+			U piX = Algebra.construct();
+			Algebra.PI().call(piX);
+			Algebra.multiply().call(piX, x, piX);
+			Algebra.sinh().call(piX, tmp);
+			Algebra.divide().call(tmp, piX, result);
 		}
 	
 	}

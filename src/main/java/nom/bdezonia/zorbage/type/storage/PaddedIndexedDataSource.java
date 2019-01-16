@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,26 +38,26 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class PaddedIndexedDataSource<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<PaddedIndexedDataSource<T,U>, U>
 {
-	final private T group;
+	final private T Algebra;
 	final private IndexedDataSource<?,U> storage;
 	final private U zero;
 	
-	public PaddedIndexedDataSource(T group, IndexedDataSource<?,U> storage) {
-		this.group = group;
+	public PaddedIndexedDataSource(T Algebra, IndexedDataSource<?,U> storage) {
+		this.Algebra = Algebra;
 		this.storage = storage;
-		this.zero = group.construct();
+		this.zero = Algebra.construct();
 	}
 
 	@Override
 	public PaddedIndexedDataSource<T, U> duplicate() {
 		IndexedDataSource<?,U> otherStorage = storage.duplicate();
-		return new PaddedIndexedDataSource<T,U>(group, otherStorage);
+		return new PaddedIndexedDataSource<T,U>(Algebra, otherStorage);
 	}
 
 	@Override
 	public void set(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			if (group.isNotEqual().call(zero, value))
+			if (Algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
 		}
 		else {
@@ -68,7 +68,7 @@ public class PaddedIndexedDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public void get(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			group.assign().call(zero, value);
+			Algebra.assign().call(zero, value);
 		}
 		else {
 			storage.get(index, value);

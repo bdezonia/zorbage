@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -34,7 +34,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.impl.Ramp;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
@@ -53,13 +53,13 @@ public class TestFill {
 		SignedInt32Member type = new SignedInt32Member();
 		IndexedDataSource<?, SignedInt32Member> data = Storage.allocate(size, type);
 		assertEquals(size, data.size());
-		Ramp<SignedInt32Group, SignedInt32Member> ramp1 = new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32, new SignedInt32Member(-25), new SignedInt32Member(3));
+		Ramp<SignedInt32Algebra, SignedInt32Member> ramp1 = new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(-25), new SignedInt32Member(3));
 		Fill.compute(G.INT32, ramp1, data);
 		for (long i = 0; i < size; i++) {
 			data.get(i, type);
 			assertEquals(-25+3*i, type.v());
 		}
-		Ramp<SignedInt32Group, SignedInt32Member> ramp2 = new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32, new SignedInt32Member(300), new SignedInt32Member(-6));
+		Ramp<SignedInt32Algebra, SignedInt32Member> ramp2 = new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(300), new SignedInt32Member(-6));
 		Fill.compute(G.INT32, ramp2, data);
 		for (long i = 0; i < size; i++) {
 			data.get(i, type);

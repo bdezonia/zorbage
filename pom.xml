@@ -9,7 +9,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Zorbage</name>
-  <description>An algebraic data hierarchy for use in numeric processing</description>
+  <description>An Algebraic data hierarchy for use in numeric processing</description>
   <url>https://github.com/bdezonia/zorbage</url>
   <inceptionYear>2016</inceptionYear>
 
@@ -35,7 +35,7 @@
   <properties>
     <package-name>nom.bdezonia</package-name>
     <license.licenseName>bsd_2</license.licenseName>
-    <license.projectName>Zorbage: an algebraic data hierarchy for use in numeric processing.</license.projectName>
+    <license.projectName>Zorbage: an Algebraic data hierarchy for use in numeric processing.</license.projectName>
     <license.organizationName>Zorbage authors</license.organizationName>
     <license.copyrightOwners>Barry DeZonia</license.copyrightOwners>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

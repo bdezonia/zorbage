@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,26 +42,26 @@ public class SumCount {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param sum
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U sum, U count)
+		void compute(T alg, IndexedDataSource<?,U> storage, U sum, U count)
 	{
-		Sum.compute(grp, storage, sum);
+		Sum.compute(alg, storage, sum);
 
 		// This avoids a need to compute a value from a long size at the expense of calculation.
 		// Maybe this will get optimized away. If not then need to build a construct from long
 		// capability that succeeds if long fits in U's range else throws exception.
 		
-		U tmp = grp.construct();
-		U one = grp.construct();
-		grp.unity().call(one);
+		U tmp = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
 		for (long i = 0; i < storage.size(); i++) {
-			grp.add().call(tmp, one, tmp);
+			alg.add().call(tmp, one, tmp);
 		}
-		grp.assign().call(tmp, count);
+		alg.assign().call(tmp, count);
 	}
 }

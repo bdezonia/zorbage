@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class CbrtL<T extends Algebra<T,U> & Roots<U>,U>
 	private final Cbrt<T,U> lowerProc;
 	private final U tmp;
 	
-	public CbrtL(T group, Procedure<U> ancestor) {
+	public CbrtL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Cbrt<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Cbrt<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -69,7 +69,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  */
 public class QuaternionFloat64RModule
   implements
-    RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Group,QuaternionFloat64Member>,
+    RModule<QuaternionFloat64RModule,QuaternionFloat64RModuleMember,QuaternionFloat64Algebra,QuaternionFloat64Member>,
     Constructible1dLong<QuaternionFloat64RModuleMember>,
     Norm<QuaternionFloat64RModuleMember,Float64Member>,
     Products<QuaternionFloat64RModuleMember,QuaternionFloat64Member, QuaternionFloat64MatrixMember>,

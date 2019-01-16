@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 public class Asinh<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Asinh(T group) {
-		this.group = group;
+	public Asinh(T Algebra) {
+		this.Algebra = Algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		group.asinh().call(a, b);
+		Algebra.asinh().call(a, b);
 	}
 
 }

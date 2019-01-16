@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,23 +38,23 @@ public class Clamp {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param min
 	 * @param max
 	 * @param value
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T group, U min, U max, U value, U result)
+		void compute(T Algebra, U min, U max, U value, U result)
 	{
-		if (group.isLess().call(max, min))
+		if (Algebra.isLess().call(max, min))
 			throw new IllegalArgumentException("Clamp boundaries are malformed");
 
-		if (group.isLess().call(value, min))
-			group.assign().call(min, result);
-		else if (group.isGreater().call(value, max))
-			group.assign().call(max, result);
+		if (Algebra.isLess().call(value, min))
+			Algebra.assign().call(min, result);
+		else if (Algebra.isGreater().call(value, max))
+			Algebra.assign().call(max, result);
 		else
-			group.assign().call(value, result);
+			Algebra.assign().call(value, result);
 	}
 }

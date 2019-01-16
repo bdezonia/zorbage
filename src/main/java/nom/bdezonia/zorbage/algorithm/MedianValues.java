@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,20 +41,20 @@ public class MedianValues {
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param result1
 	 * @param result2
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U result1, U result2)
+		void compute(T alg, IndexedDataSource<?,U> storage, U result1, U result2)
 	{
 		IndexedDataSource<?,U> localStorage = storage.duplicate();
-		Sort.compute(grp, localStorage);
+		Sort.compute(alg, localStorage);
 		if (localStorage.size() == 0) {
-			U zero = grp.construct();
-			grp.assign().call(zero, result1);
-			grp.assign().call(zero, result2);
+			U zero = alg.construct();
+			alg.assign().call(zero, result1);
+			alg.assign().call(zero, result2);
 		}
 		else if (localStorage.size() % 2 == 0) {
 			localStorage.get(localStorage.size()/2 - 1, result1);
@@ -62,7 +62,7 @@ public class MedianValues {
 		}
 		else {
 			localStorage.get(localStorage.size()/2, result1);
-			grp.assign().call(result1, result2);
+			alg.assign().call(result1, result2);
 		}
 	}
 }

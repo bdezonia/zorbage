@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,23 +39,23 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Product<T extends Algebra<T,U> & Multiplication<U> & Unity<U>,U>
 	implements Procedure<U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Product(T group) {
-		this.group = group;
+	public Product(T Algebra) {
+		this.Algebra = Algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		U prod = group.construct();
+		U prod = Algebra.construct();
 		if (inputs.length != 0) {
-			group.unity().call(prod);
+			Algebra.unity().call(prod);
 		}
 		for (int i = 0; i < inputs.length; i++) {
-			group.multiply().call(prod, inputs[i], prod);
+			Algebra.multiply().call(prod, inputs[i], prod);
 		}
-		group.assign().call(prod, result);
+		Algebra.assign().call(prod, result);
 	}
 
 }

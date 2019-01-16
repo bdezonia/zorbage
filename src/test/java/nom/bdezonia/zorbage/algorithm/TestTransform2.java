@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -70,16 +70,16 @@ public class TestTransform2 {
 	// supports sin()
 	
 	private <T extends Algebra<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
-		void test(T group)
+		void test(T Algebra)
 	{
 		// generic allocation
-		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, group.construct());
+		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, Algebra.construct());
 		
 		// set values of storage to random doubles between 0 and 1
-		Generate.compute(group, group.random(), a);
+		Generate.compute(Algebra, Algebra.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		Transform2.compute(group, group.sin(), a);
+		Transform2.compute(Algebra, Algebra.sin(), a);
 		
 		assertTrue(true);
 	}

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class AcoshL<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 	private final Acosh<T,U> lowerProc;
 	private final U tmp;
 	
-	public AcoshL(T group, Procedure<U> ancestor) {
+	public AcoshL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Acosh<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Acosh<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

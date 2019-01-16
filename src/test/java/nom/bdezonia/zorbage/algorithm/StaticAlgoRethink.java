@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -30,7 +30,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -41,18 +41,18 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class StaticAlgoRethink {
 
 	private static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T group, U result)
+		void compute(T Algebra, U result)
 	{
-		group.add().call(result, result, result);
+		Algebra.add().call(result, result, result);
 	}
 	
 	private class ClassAlgoRethink<T extends Algebra<T,U> & Addition<U>, U>
 		implements Procedure2<T,U>
 	{
 		@Override
-		public void call(T group, U result) {
+		public void call(T Algebra, U result) {
 			
-			group.add().call(result, result, result);
+			Algebra.add().call(result, result, result);
 		}
 		
 	}
@@ -67,7 +67,7 @@ public class StaticAlgoRethink {
 		
 		// OR THIS?
 		
-		new ClassAlgoRethink<Float64Group,Float64Member>().call(G.DBL, result);
+		new ClassAlgoRethink<Float64Algebra,Float64Member>().call(G.DBL, result);
 		
 		// I really don't like the second. It requires an object allocation and it requires
 		// the specifying of the template parameter types.

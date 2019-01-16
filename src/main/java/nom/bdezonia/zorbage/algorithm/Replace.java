@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,20 +42,20 @@ public class Replace {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param storage
 	 * @param target
 	 * @param replacement
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, U target, U replacement, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, U target, U replacement, IndexedDataSource<?,U> storage)
 	{
-		compute(group, target, replacement, 0, storage.size(), storage);
+		compute(Algebra, target, replacement, 0, storage.size(), storage);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param storage
 	 * @param target
 	 * @param replacement
@@ -63,12 +63,12 @@ public class Replace {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, U target, U replacement, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, U target, U replacement, long start, long count, IndexedDataSource<?,U> storage)
 	{
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (group.isEqual().call(tmp, target))
+			if (Algebra.isEqual().call(tmp, target))
 				storage.set(start+i, replacement);
 		}
 	}

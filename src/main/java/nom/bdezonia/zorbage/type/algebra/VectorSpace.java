@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,7 +38,7 @@ package nom.bdezonia.zorbage.type.algebra;
 public interface VectorSpace<T extends VectorSpace<T,U,V,W>, U, V extends Field<V,W>, W>
   extends
   	RModule<T,U,V,W>
-    //AdditiveGroup<T,U>,
+    //AdditiveAlgebra<T,U>,
     //Norm<U,W>,
     //Products<U,W>,  // TODO: not necessarily true of all vector spaces?
     //Conjugate<U>

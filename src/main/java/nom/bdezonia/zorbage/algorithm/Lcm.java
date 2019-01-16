@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -48,24 +48,24 @@ public class Lcm {
 	/**
 	 * Sets the result to the least common multiple of a and b. Result is always nonnegative.
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & AbsoluteValue<U> & ModularDivision<U> & Multiplication<U> & Ordered<U>, U>
-		void compute(T group, U a, U b, U result)
+		void compute(T algebra, U a, U b, U result)
 	{
-		U gcd = group.construct();
-		U a1 = group.construct();
-		U b1 = group.construct();
-		Gcd.compute(group, a, b, gcd);
-		group.div().call(a, gcd, a1);
-		group.div().call(b, gcd, b1);
-		group.abs().call(a1, a1);
-		group.abs().call(b1, b1);
-		group.multiply().call(a1, b1, result);
-		group.multiply().call(result, gcd, result);
+		U gcd = algebra.construct();
+		U a1 = algebra.construct();
+		U b1 = algebra.construct();
+		Gcd.compute(algebra, a, b, gcd);
+		algebra.div().call(a, gcd, a1);
+		algebra.div().call(b, gcd, b1);
+		algebra.abs().call(a1, a1);
+		algebra.abs().call(b1, b1);
+		algebra.multiply().call(a1, b1, result);
+		algebra.multiply().call(result, gcd, result);
 	}
 
 }

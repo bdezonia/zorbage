@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,37 +39,37 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class Step<T extends Algebra<T,U> & Ordered<U> & Unity<U>, U>
 	implements Procedure2<U,U>
 {
-	private final T group;
+	private final T Algebra;
 	private final U zero;
 	private final U h0;
 	
 	/**
 	 * Heaviside step function. 
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param h0 The value to return if the input is 0. Common values
 	 *   are 0, 1/2, and 1.
 	 */
-	public Step(T group, U h0) {
-		this.group = group;
-		this.zero = group.construct();
-		this.h0 = group.construct();
-		group.assign().call(h0, this.h0);
-		U one = group.construct();
-		group.unity().call(one);
-		if (group.isLess().call(h0, zero) || group.isGreater().call(h0, one))
+	public Step(T Algebra, U h0) {
+		this.Algebra = Algebra;
+		this.zero = Algebra.construct();
+		this.h0 = Algebra.construct();
+		Algebra.assign().call(h0, this.h0);
+		U one = Algebra.construct();
+		Algebra.unity().call(one);
+		if (Algebra.isLess().call(h0, zero) || Algebra.isGreater().call(h0, one))
 			throw new IllegalArgumentException("step: h0 out of sensible range");
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		int s = group.signum().call(a);
+		int s = Algebra.signum().call(a);
 		if (s < 0)
-			group.assign().call(zero, b);
+			Algebra.assign().call(zero, b);
 		else if (s > 0)
-			group.unity().call(b);
+			Algebra.unity().call(b);
 		else
-			group.assign().call(h0, b);
+			Algebra.assign().call(h0, b);
 	}
 
 }

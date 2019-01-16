@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,20 +40,20 @@ public class Sample {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param n
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, int n, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, int n, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(group, n, 0, 0, a.size(), a, b);
+		compute(Algebra, n, 0, 0, a.size(), a, b);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param n
 	 * @param aStart
 	 * @param bStart
@@ -62,11 +62,11 @@ public class Sample {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, int n, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, int n, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (n > count)
 			throw new IllegalArgumentException("n too large");
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		Random rng = new Random(System.currentTimeMillis());
 		for (long i = 0; i < count; i++) {
 			int j = rng.nextInt(n);

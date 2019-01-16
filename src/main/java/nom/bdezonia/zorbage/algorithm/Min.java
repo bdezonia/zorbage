@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,18 +38,18 @@ public class Min {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T group, U a, U b, U result)
+		void compute(T Algebra, U a, U b, U result)
 	{
-		if (group.isLess().call(a, b))
-			group.assign().call(a, result);
+		if (Algebra.isLess().call(a, b))
+			Algebra.assign().call(a, result);
 		else
-			group.assign().call(b, result);
+			Algebra.assign().call(b, result);
 	}
 
 }

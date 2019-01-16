@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -33,7 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.point.Point;
-import nom.bdezonia.zorbage.type.data.point.PointGroup;
+import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
@@ -49,7 +49,7 @@ public class TestKMeans {
 		
 		int NUMELEMS = 100;
 		
-		PointGroup group = new PointGroup();
+		PointAlgebra Algebra = new PointAlgebra();
 
 		Point point = new Point(2); // we will work in 2 dimensions
 		
@@ -63,10 +63,10 @@ public class TestKMeans {
 
 		for (int i = 0; i < NUMELEMS; i++) {
 			points.get(i, point);
-			group.random().call(point);
+			Algebra.random().call(point);
 		}
 		
-		KMeans.compute(group, numClusters, points, clusterIndices);
+		KMeans.compute(Algebra, numClusters, points, clusterIndices);
 		
 		assertTrue(true);
 	}

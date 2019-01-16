@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class AsinL<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 	private final Asin<T,U> lowerProc;
 	private final U tmp;
 	
-	public AsinL(T group, Procedure<U> ancestor) {
+	public AsinL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Asin<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Asin<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

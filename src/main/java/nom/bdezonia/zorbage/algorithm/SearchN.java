@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,21 +39,21 @@ public class SearchN {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param n
 	 * @param value
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, long n, U value, IndexedDataSource<?,U> a)
+		long compute(T Algebra, long n, U value, IndexedDataSource<?,U> a)
 	{
-		return compute(group, n, value, 0, a.size(), a);
+		return compute(Algebra, n, value, 0, a.size(), a);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param n
 	 * @param value
 	 * @param start
@@ -62,13 +62,13 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, long n, U value, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T Algebra, long n, U value, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U tmpA = group.construct();
+		U tmpA = Algebra.construct();
 		for (long i = 0; i < count-n; i++) {
 			for (long j = 0; j < n; j++) {
 				a.get(start+i+j, tmpA);
-				if (group.isNotEqual().call(tmpA, value))
+				if (Algebra.isNotEqual().call(tmpA, value))
 					break;
 				if (j == n-1)
 					return start+i;
@@ -79,21 +79,21 @@ public class SearchN {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param n
 	 * @param cond
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, long n, Condition<U> cond, IndexedDataSource<?,U> a)
+		long compute(T Algebra, long n, Condition<U> cond, IndexedDataSource<?,U> a)
 	{
-		return compute(group, n, cond, 0, a.size(), a);
+		return compute(Algebra, n, cond, 0, a.size(), a);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param n
 	 * @param cond
 	 * @param start
@@ -102,9 +102,9 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, long n, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T Algebra, long n, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U tmpA = group.construct();
+		U tmpA = Algebra.construct();
 		for (long i = 0; i < count-n; i++) {
 			for (long j = 0; j < n; j++) {
 				a.get(start+i+j, tmpA);

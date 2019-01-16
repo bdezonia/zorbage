@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -192,9 +192,9 @@ public class TensorStringRepresentation {
 		}
 	}
 
-	// tensor = number | numberGroups
-	// numberGroups = [ numberGroups ] | numbers
-	// numberGroup = numbers | numberGroups
+	// tensor = number | numberAlgebras
+	// numberAlgebras = [ numberAlgebras ] | numbers
+	// numberAlgebra = numbers | numberAlgebras
 	// numbers = number | number , numbers
     // number = num | ( 1-8 csv nums )
 	// num = +|- digits . digits 1.4e+05 etc.

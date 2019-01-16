@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,16 +42,16 @@ public class Average {
 	private Average() {}
 
 	/**
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Unity<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<?,U> storage, U result)
 	{
-		U sum = grp.construct();
-		U count = grp.construct();
-		SumCount.compute(grp, storage, sum, count);
-		grp.divide().call(sum, count, result);
+		U sum = alg.construct();
+		U count = alg.construct();
+		SumCount.compute(alg, storage, sum, count);
+		alg.divide().call(sum, count, result);
 	}
 }

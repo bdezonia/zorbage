@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,7 +39,7 @@ public class ParallelTransform3 {
 
 	/**
 	 * 
-	 * @param grpU
+	 * @param algU
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -53,16 +53,16 @@ public class ParallelTransform3 {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grpU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T algU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		compute(grpU, grpU, grpU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
+		compute(algU, algU, algU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
 	}
 	
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
-	 * @param grpY
+	 * @param algU
+	 * @param algW
+	 * @param algY
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -76,7 +76,7 @@ public class ParallelTransform3 {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T grpU, V grpW, X grpY, Procedure3<U, W, Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
+		void compute(T algU, V algW, X algY, Procedure3<U, W, Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -91,7 +91,7 @@ public class ParallelTransform3 {
 			else {
 				thCount = count / numProcs;
 			}
-			Runnable r = new Computer<T,U,V,W,X,Y>(grpU, grpW, grpY, proc, thAStart, thBStart, thCStart, thCount, aStride, bStride, cStride, a, b, c);
+			Runnable r = new Computer<T,U,V,W,X,Y>(algU, algW, algY, proc, thAStart, thBStart, thCStart, thCount, aStride, bStride, cStride, a, b, c);
 			threads[i] = new Thread(r);
 			thAStart += (aStride * thCount);
 			thBStart += (bStride * thCount);
@@ -112,9 +112,9 @@ public class ParallelTransform3 {
 	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
 		implements Runnable
 	{
-		private final T groupU;
-		private final V groupW;
-		private final X groupY;
+		private final T AlgebraU;
+		private final V AlgebraW;
+		private final X AlgebraY;
 		private final IndexedDataSource<?,U> list1;
 		private final IndexedDataSource<?,W> list2;
 		private final IndexedDataSource<?,Y> list3;
@@ -127,10 +127,10 @@ public class ParallelTransform3 {
 		private final long bStride;
 		private final long cStride;
 		
-		Computer(T grpU, V grpW, X grpY, Procedure3<U, W, Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c) {
-			groupU = grpU;
-			groupW = grpW;
-			groupY = grpY;
+		Computer(T algU, V algW, X algY, Procedure3<U, W, Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c) {
+			AlgebraU = algU;
+			AlgebraW = algW;
+			AlgebraY = algY;
 			list1 = a;
 			list2 = b;
 			list3 = c;
@@ -145,7 +145,7 @@ public class ParallelTransform3 {
 		}
 		
 		public void run() {
-			Transform3.compute(groupU, groupW, groupY, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, list1, list2, list3);
+			Transform3.compute(AlgebraU, AlgebraW, AlgebraY, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, list1, list2, list3);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,18 +45,18 @@ public class LUDecomp {
 	
 	/**
 	 * 
-	 * @param numGroup The group that can do primitive type math.
-	 * @param matGroup The group that can do matrix type math.
+	 * @param numAlgebra The Algebra that can do primitive type math.
+	 * @param matAlgebra The Algebra that can do matrix type math.
 	 * @param a The matrix that will be modified into LU format.
 	 */
 	public static
 	
 		<BASETYPE, // the base type like Float64Member or Octonion etc.
-		BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+		BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
 		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-		MATRIX_GROUP extends Algebra<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+		MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
 		
-	void compute(BASETYPE_GROUP numGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a)
+	void compute(BASETYPE_Algebra numAlgebra, MATRIX_Algebra matAlgebra, MATRIX_MEMBER a)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("LUDecomp requires square matrix input");
@@ -65,47 +65,47 @@ public class LUDecomp {
 	
 		// decomposition of matrix
 		
-		MATRIX_MEMBER lu = matGroup.construct(a.storageType(), n, n);
-		BASETYPE sum = numGroup.construct();
-		BASETYPE value1 = numGroup.construct();
-		BASETYPE value2 = numGroup.construct();
-		BASETYPE term = numGroup.construct();
-		BASETYPE tmp = numGroup.construct();
+		MATRIX_MEMBER lu = matAlgebra.construct(a.storageType(), n, n);
+		BASETYPE sum = numAlgebra.construct();
+		BASETYPE value1 = numAlgebra.construct();
+		BASETYPE value2 = numAlgebra.construct();
+		BASETYPE term = numAlgebra.construct();
+		BASETYPE tmp = numAlgebra.construct();
 		
 		for (long i = 0; i < n; i++)
 		{
 			for (long j = i; j < n; j++)
 			{
-				numGroup.zero().call(sum);
+				numAlgebra.zero().call(sum);
 				for (long k = 0; k < i; k++) {
 					lu.v(i, k, value1);
 					lu.v(k, j, value2);
-					numGroup.multiply().call(value1, value2, term);
-					numGroup.add().call(sum, term, sum);
+					numAlgebra.multiply().call(value1, value2, term);
+					numAlgebra.add().call(sum, term, sum);
 				}
 				a.v(i, j, term);
-				numGroup.subtract().call(term, sum, term);
+				numAlgebra.subtract().call(term, sum, term);
 				lu.setV(i, j, term);
 			}
 			for (long j = i + 1; j < n; j++)
 			{
-				numGroup.zero().call(sum);
+				numAlgebra.zero().call(sum);
 				for (long k = 0; k < i; k++) {
 					lu.v(j, k, value1);
 					lu.v(k, i, value2);
-					numGroup.multiply().call(value1, value2, term);
-					numGroup.add().call(sum, term, sum);
+					numAlgebra.multiply().call(value1, value2, term);
+					numAlgebra.add().call(sum, term, sum);
 				}
-				numGroup.unity().call(value1);
+				numAlgebra.unity().call(value1);
 				lu.v(i, i, tmp);
-				numGroup.divide().call(value1, tmp, value1);
+				numAlgebra.divide().call(value1, tmp, value1);
 				a.v(j, i, tmp);
-				numGroup.subtract().call(tmp, sum, value2);
-				numGroup.multiply().call(value1, value2, term);
+				numAlgebra.subtract().call(tmp, sum, value2);
+				numAlgebra.multiply().call(value1, value2, term);
 				lu.setV(j, i, term);
 			}
 		}
 		
-		matGroup.assign().call(lu, a);
+		matAlgebra.assign().call(lu, a);
 	}
 }

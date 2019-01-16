@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,19 +38,19 @@ public class CopyBackward {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(group,0,b.size()-1,a.size(),a,b);
+		compute(Algebra,0,b.size()-1,a.size(),a,b);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param aStart
 	 * @param bLast
 	 * @param count
@@ -58,11 +58,11 @@ public class CopyBackward {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, long aStart, long bLast, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, long aStart, long bLast, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a == b)
 			throw new IllegalArgumentException("in place reversal not done yet");
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp);
 			b.set(bLast-i, tmp);

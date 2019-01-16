@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,8 +43,8 @@ public class PerpDotProduct {
 	
 	/**
 	 * 
-	 * @param rmodGroup
-	 * @param memberGroup
+	 * @param rmodAlgebra
+	 * @param memberAlgebra
 	 * @param a
 	 * @param b
 	 * @param c
@@ -53,21 +53,21 @@ public class PerpDotProduct {
 					U extends RModuleMember<W>,
 					V extends Ring<V,W>,
 					W>
-		void compute(T rmodGroup, V memberGroup, U a, U b, W c)
+		void compute(T rmodAlgebra, V memberAlgebra, U a, U b, W c)
 	{
 		if ((a.length() != 2) || (b.length() != 2))
 			throw new UnsupportedOperationException("perp dot product only defined for 2 dimensions");
-		W atmp = memberGroup.construct();
-		W btmp = memberGroup.construct();
-		W term1 = memberGroup.construct();
-		W term2 = memberGroup.construct();
+		W atmp = memberAlgebra.construct();
+		W btmp = memberAlgebra.construct();
+		W term1 = memberAlgebra.construct();
+		W term2 = memberAlgebra.construct();
 		a.v(1, atmp);
 		b.v(0, btmp);
-		memberGroup.negate().call(atmp, atmp);
-		memberGroup.multiply().call(atmp, btmp, term1);
+		memberAlgebra.negate().call(atmp, atmp);
+		memberAlgebra.multiply().call(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		memberGroup.multiply().call(atmp, btmp, term2);
-		memberGroup.add().call(term1, term2, c);
+		memberAlgebra.multiply().call(atmp, btmp, term2);
+		memberAlgebra.add().call(term1, term2, c);
 	}
 }

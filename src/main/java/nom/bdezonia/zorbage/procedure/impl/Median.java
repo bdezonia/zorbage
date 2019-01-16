@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,10 +43,10 @@ import nom.bdezonia.zorbage.type.storage.Storage;
 public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
 	implements Procedure<U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Median(T group) {
-		this.group = group;
+	public Median(T Algebra) {
+		this.Algebra = Algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -56,7 +56,7 @@ public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Or
 		for (int i = 0; i < inputs.length; i++) {
 			storage.set(i, inputs[i]);
 		}
-		nom.bdezonia.zorbage.algorithm.Median.compute(group, storage, result);
+		nom.bdezonia.zorbage.algorithm.Median.compute(Algebra, storage, result);
 	}
 
 }

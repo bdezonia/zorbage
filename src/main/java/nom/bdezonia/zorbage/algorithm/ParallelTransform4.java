@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,7 +39,7 @@ public class ParallelTransform4 {
 
 	/**
 	 * 
-	 * @param grpU
+	 * @param algU
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -56,17 +56,17 @@ public class ParallelTransform4 {
 	 * @param d
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grpU, Procedure4<U,U,U,U> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c, IndexedDataSource<?,U> d)
+		void compute(T algU, Procedure4<U,U,U,U> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c, IndexedDataSource<?,U> d)
 	{
-		compute(grpU, grpU, grpU, grpU, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
+		compute(algU, algU, algU, algU, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
 	}
 	
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
-	 * @param grpY
-	 * @param grpA
+	 * @param algU
+	 * @param algW
+	 * @param algY
+	 * @param algA
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -83,7 +83,7 @@ public class ParallelTransform4 {
 	 * @param d
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
-		void compute(T grpU, V grpW, X grpY, Z grpA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d)
+		void compute(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -99,7 +99,7 @@ public class ParallelTransform4 {
 			else {
 				thCount = count / numProcs;
 			}
-			Runnable r = new Computer<T,U,V,W,X,Y,Z,A>(grpU, grpW, grpY, grpA, proc, thAStart, thBStart, thCStart, thDStart, thCount, aStride, bStride, cStride, dStride, a, b, c, d);
+			Runnable r = new Computer<T,U,V,W,X,Y,Z,A>(algU, algW, algY, algA, proc, thAStart, thBStart, thCStart, thDStart, thCount, aStride, bStride, cStride, dStride, a, b, c, d);
 			threads[i] = new Thread(r);
 			thAStart += (aStride * thCount);
 			thBStart += (bStride * thCount);
@@ -121,10 +121,10 @@ public class ParallelTransform4 {
 	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
 		implements Runnable
 	{
-		private final T groupU;
-		private final V groupW;
-		private final X groupY;
-		private final Z groupA;
+		private final T AlgebraU;
+		private final V AlgebraW;
+		private final X AlgebraY;
+		private final Z AlgebraA;
 		private final IndexedDataSource<?,U> list1;
 		private final IndexedDataSource<?,W> list2;
 		private final IndexedDataSource<?,Y> list3;
@@ -140,11 +140,11 @@ public class ParallelTransform4 {
 		private final long cStride;
 		private final long dStride;
 		
-		Computer(T grpU, V grpW, X grpY, Z grpA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d) {
-			groupU = grpU;
-			groupW = grpW;
-			groupY = grpY;
-			groupA = grpA;
+		Computer(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d) {
+			AlgebraU = algU;
+			AlgebraW = algW;
+			AlgebraY = algY;
+			AlgebraA = algA;
 			list1 = a;
 			list2 = b;
 			list3 = c;
@@ -162,7 +162,7 @@ public class ParallelTransform4 {
 		}
 		
 		public void run() {
-			Transform4.compute(groupU, groupW, groupY, groupA, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, list1, list2, list3, list4);
+			Transform4.compute(AlgebraU, AlgebraW, AlgebraY, AlgebraA, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, list1, list2, list3, list4);
 		}
 	}
 }

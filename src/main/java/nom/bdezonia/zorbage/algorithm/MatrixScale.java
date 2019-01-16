@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,20 +41,20 @@ public class MatrixScale {
 
 	/**
 	 * 
-	 * @param numGroup
+	 * @param numAlgebra
 	 * @param scale
 	 * @param matrixIn
 	 * @param matrixOut
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U,V extends MatrixMember<U>>
-		void compute(T numGroup, U scale, V matrixIn, V matrixOut)
+		void compute(T numAlgebra, U scale, V matrixIn, V matrixOut)
 	{
 		matrixOut.alloc(matrixIn.rows(), matrixIn.cols());
-		U val = numGroup.construct();
+		U val = numAlgebra.construct();
 		for (long i = 0; i < matrixIn.rows(); i++) {
 			for (long j = 0; j < matrixIn.cols(); j++) {
 				matrixIn.v(i, j, val);
-				numGroup.multiply().call(scale, val, val);
+				numAlgebra.multiply().call(scale, val, val);
 				matrixOut.setV(i, j, val);
 			}
 		}

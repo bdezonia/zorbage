@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,21 +39,21 @@ public class ReplaceCopyIf {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param cond
 	 * @param new_value
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, Condition<U> cond, U new_value, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, Condition<U> cond, U new_value, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(group, cond, new_value, 0, 0, a.size(), a, b);
+		compute(Algebra, cond, new_value, 0, 0, a.size(), a, b);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param cond
 	 * @param new_value
 	 * @param aStart
@@ -63,9 +63,9 @@ public class ReplaceCopyIf {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, Condition<U> cond, U new_value, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, Condition<U> cond, U new_value, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp);
 			if (cond.isTrue(tmp))

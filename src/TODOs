@@ -15,7 +15,7 @@ Other needs
   polynomials
   gaussian integers
     are they integers? do they not divide?
-  group ring, modules (and l and r versions)
+  Algebra ring, modules (and l and r versions)
   functions of a real variable as a vector space
   vector direct product creating tensors
   improve exp() and log() accuracy near 1.0 / - 1.0
@@ -37,11 +37,11 @@ Other needs
     differently? I am hoping that I can calc one from the other.
   there are numerous kinds of norms. can embed a default impl for some
     types. but should implement families of reusable norm implementations
-  group hierarchy could be multithreaded
+  Algebra hierarchy could be multithreaded
   must finish tensor classes
   must finish octonion classes
   must finish rmodule classes
-  numerical algorithms put in place: matrix algebra, odes, pdes,
+  numerical algorithms put in place: matrix Algebra, odes, pdes,
     interpolation, etc.
   underflow avoidance on sqrt calls
   bessel functions, legendre functions, airy functions, others
@@ -49,7 +49,7 @@ Other needs
     to support huge math operations
   make vectors, rmodules, matrices use multidimaccessor
   apache commons math4 does a lot of things my code does
-    it doesn't have all of algebra hierarchy and it doesn't have octs or
+    it doesn't have all of Algebra hierarchy and it doesn't have octs or
     all the data types I support and it doesn't handle huge datasets and
     it might be slow due to lots of memory allocation
 Sparse vector/matrix/tensor storage
@@ -106,7 +106,7 @@ Support unsigned int types for all defined int types
 It's becoming more apparent that all types should implement ByteCoder.
 RGB could be a BitCoder of three 8 bit values
   This might be a good test of BitCoder. BitCount = 24. Read or write 1
-  or 2 longs in BitCoder impl. How is RGB a numeric type? What algebra
+  or 2 longs in BitCoder impl. How is RGB a numeric type? What Algebra
   does it support? Maybe as a test make a 4 bit unsigned type and a 132
   bit unsigned type.
 FileStorage bit is possible but slow. It could do file reads and rewind
@@ -157,16 +157,16 @@ Text specified region or sampling. The text can be multiple equations with &&
 The goal is to get back to text specified functions and samplings/regions.
   Need to write an equation language and a parser again.
 What improvements can I make to Function idea? One input? Multiple? None?
-  How do I make the groups that are real/complex/quat/oct function spaces?
-Weird idea: make a group with methods that are (static?) Functions that
-  implement the group methods. So dbl.multiply().compute(a,b,c); The definition
-  of groups reuses the Function idea. And one can pass around functions as
+  How do I make the Algebras that are real/complex/quat/oct function spaces?
+Weird idea: make a Algebra with methods that are (static?) Functions that
+  implement the Algebra methods. So dbl.multiply().compute(a,b,c); The definition
+  of Algebras reuses the Function idea. And one can pass around functions as
   first class objects if needed. This implies Function1<a>, Function2<a,b>,
   Function3<a,b,c>, and can support any num and type of params. A procedural
   approach to java with all pass by reference and efficient. But also functional.
   And supporting more than the typical primitive types.
-Do I need to locate regions and samplings in algebra hierarchy and define
-  their group?
+Do I need to locate regions and samplings in Algebra hierarchy and define
+  their Algebra?
 Tricky definition: the function that takes an average. It has to take
   as input a set of functions that match in param count and type. And
   then applied for a snapshot of params to the full set and added and
@@ -179,11 +179,11 @@ I have purposely not made things like Matrix<Float64Member> and
   Matrix<Float32Member> to facilitate simple optimization. This results in
   some code duplication.
 Constructors are functions like function1, function2, etc. that take
-  various parameters and return a type. A group can define the ctors
+  various parameters and return a type. A Algebra can define the ctors
   it provides.
 Conditions can be like functions and ctors: condition1, condition2, etc.
 How does previous line affect my current definitions of and or not classes?
-Do we get rid of rigid algebraic type hierarchy and define skewfield for
+Do we get rid of rigid Algebraic type hierarchy and define skewfield for
   instance to have multiply function and x function and y function etc.
   Then Octonions aren't quite a skewfield. But they support most of it's
   operations and can be passed to methods that use a subset of skewfield
@@ -287,7 +287,7 @@ LinearStorage should implement the Duplicatable interface. Maybe also a
   Sortable interface. Median would require a Sortable DataSource. Does a
   DataSource have a size()? What about streams?
 The array storage classes should duplicate the input type maybe. maybe not.
-Make signed 128-bit code, add non-exhaustive tests, and enable group in G
+Make signed 128-bit code, add non-exhaustive tests, and enable Algebra in G
 Add more constants to the Constants interface
 Find all places that might try to find hiBit and use Integer.numLeadZero()
 Make Power and PowerI applicable to matrices and maybe tensors. Think.

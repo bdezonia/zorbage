@@ -15,15 +15,15 @@ public class MatrixUnity {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U> & Unity<U>, U>
-		void compute(T group, MatrixMember<U> a)
+		void compute(T Algebra, MatrixMember<U> a)
 	{
-		U zero = group.construct();
-		U one = group.construct();
-		group.unity().call(one);
+		U zero = Algebra.construct();
+		U one = Algebra.construct();
+		Algebra.unity().call(one);
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				if (r == c)

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.condition;
 
-//TODO: eliminate? It's possible to wrap the group's method call in a BooleanCondition.
+//TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class NaN<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.NaN<U>,U>
 	implements Condition<U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public NaN(T group) {
-		this.group = group;
+	public NaN(T Algebra) {
+		this.Algebra = Algebra;
 	}
 	
 	@Override
 	public boolean isTrue(U value) {
-		return group.isNaN().call(value);
+		return Algebra.isNaN().call(value);
 	}
 }

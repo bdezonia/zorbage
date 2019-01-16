@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -45,8 +45,8 @@ public class TestRealNumberEquation {
 	@Test
 	public void test1() {
 		
-		EquationParser<Float64Group,Float64Member> parser =
-				new EquationParser<Float64Group,Float64Member>();
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
 		Tuple2<String, Procedure<Float64Member>> result =
 				parser.parse(G.DBL, "4.7315");
 		System.out.println(result.a());

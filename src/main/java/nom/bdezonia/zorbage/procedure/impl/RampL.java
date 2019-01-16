@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,8 +40,8 @@ public class RampL<T extends Algebra<T,U> & Addition<U>,U>
 {
 	private final Ramp<T,U> lowerProc;
 	
-	public RampL(T group, U origin, U delta) {
-		this.lowerProc = new Ramp<T,U>(group, origin, delta);
+	public RampL(T Algebra, U origin, U delta) {
+		this.lowerProc = new Ramp<T,U>(Algebra, origin, delta);
 	}
 	
 	@Override

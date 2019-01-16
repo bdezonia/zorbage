@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,42 +41,42 @@ public class PowerNonNegative {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param power
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void compute(T group, int power, U a, U b)
+		void compute(T Algebra, int power, U a, U b)
 	{
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
-			if (group.isZero().call(a))
+			if (Algebra.isZero().call(a))
 				throw new IllegalArgumentException("0^0 is not a number");
 		}
-		pow(group, power, a, b);
+		pow(Algebra, power, a, b);
 	}
 	
 	// this algorithm adapted from boost
 	
 	private static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void pow(T group, int pow, U a, U b)
+		void pow(T Algebra, int pow, U a, U b)
 	{
 		if (pow == 0) {
-			group.unity().call(b);
+			Algebra.unity().call(b);
 		}
 		else if (pow == 1) {
-			group.assign().call(a, b);
+			Algebra.assign().call(a, b);
 		}
 		else {
-			U tmp = group.construct();
+			U tmp = Algebra.construct();
 			int halfPow = pow >>> 1;
-			pow(group, halfPow, a, tmp);
-			group.multiply().call(tmp, tmp, tmp);
+			pow(Algebra, halfPow, a, tmp);
+			Algebra.multiply().call(tmp, tmp, tmp);
 			if (pow != (halfPow << 1))
-				group.multiply().call(tmp, a, tmp);
-			group.assign().call(tmp, b);
+				Algebra.multiply().call(tmp, a, tmp);
+			Algebra.assign().call(tmp, b);
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,24 +41,24 @@ public class TwoElementFraction {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param result1
 	 * @param result2
 	 * @param numer
 	 * @param denom
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>,U>
-		void compute(T grp, U result1, U result2, U numer, U denom)
+		void compute(T alg, U result1, U result2, U numer, U denom)
 	{
-		U one = grp.construct();
-		grp.unity().call(one);
-		if (grp.isEqual().call(result1, result2)) {
-			grp.assign().call(result1, numer);
-			grp.assign().call(one, denom);
+		U one = alg.construct();
+		alg.unity().call(one);
+		if (alg.isEqual().call(result1, result2)) {
+			alg.assign().call(result1, numer);
+			alg.assign().call(one, denom);
 		}
 		else {
-			grp.add().call(result1, result2, numer);
-			grp.add().call(one, one, denom);
+			alg.add().call(result1, result2, numer);
+			alg.add().call(one, one, denom);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,27 +41,27 @@ public class MatrixAddition {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
+		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
 			c.alloc(a.rows(), a.cols());
 		}
-		U atmp = group.construct();
-		U btmp = group.construct();
-		U tmp = group.construct();
+		U atmp = Algebra.construct();
+		U btmp = Algebra.construct();
+		U tmp = Algebra.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				group.add().call(atmp, btmp, tmp);
+				Algebra.add().call(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}

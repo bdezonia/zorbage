@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -47,23 +47,23 @@ public class DataConvert {
 
 	/**
 	 * 
-	 * @param fromGroup
-	 * @param toGroup
+	 * @param fromAlgebra
+	 * @param toAlgebra
 	 * @param from
 	 * @param to
 	 */
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V extends Algebra<V,W>, W extends PrimitiveConversion>
-		void compute(T fromGroup, V toGroup, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
+		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
 	{
 		if (from.size() > to.size())
 			throw new IllegalArgumentException("mismatched list sizes");
-		compute(fromGroup, toGroup, 0, 0, from.size(), from, to);
+		compute(fromAlgebra, toAlgebra, 0, 0, from.size(), from, to);
 	}
 
 	/**
 	 * 
-	 * @param fromGroup
-	 * @param toGroup
+	 * @param fromAlgebra
+	 * @param toAlgebra
 	 * @param fromStart
 	 * @param toStart
 	 * @param count
@@ -71,10 +71,10 @@ public class DataConvert {
 	 * @param toList
 	 */
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
-		void compute(T fromGroup, V toGroup, long fromStart, long toStart, long count, IndexedDataSource<?,U> fromList, IndexedDataSource<?,W> toList)
+		void compute(T fromAlgebra, V toAlgebra, long fromStart, long toStart, long count, IndexedDataSource<?,U> fromList, IndexedDataSource<?,W> toList)
 	{
-		U from = fromGroup.construct();
-		W to = toGroup.construct();
+		U from = fromAlgebra.construct();
+		W to = toAlgebra.construct();
 		int numD = Math.max(from.numDimensions(), to.numDimensions());
 		IntegerIndex tmp1 = new IntegerIndex(numD);
 		IntegerIndex tmp2 = new IntegerIndex(numD);

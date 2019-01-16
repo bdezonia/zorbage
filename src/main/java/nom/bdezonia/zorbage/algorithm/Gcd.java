@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -47,30 +47,30 @@ public class Gcd {
 	/**
 	 * Sets the result to the greatest common divisor of a and b. Result is always nonnegative.
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & AbsoluteValue<U> & ModularDivision<U> & Ordered<U>, U>
-		void compute(T group, U a, U b, U result)
+		void compute(T Algebra, U a, U b, U result)
 	{
-		U aTmp = group.construct(a);
-		U bTmp = group.construct(b);
-		U t = group.construct();
-		U zero = group.construct();
-		group.abs().call(aTmp, aTmp);
-		group.abs().call(bTmp, bTmp);
-		if (group.isLess().call(aTmp, bTmp)) {
-			group.assign().call(aTmp, t);
-			group.assign().call(bTmp, aTmp);
-			group.assign().call(t, bTmp);
+		U aTmp = Algebra.construct(a);
+		U bTmp = Algebra.construct(b);
+		U t = Algebra.construct();
+		U zero = Algebra.construct();
+		Algebra.abs().call(aTmp, aTmp);
+		Algebra.abs().call(bTmp, bTmp);
+		if (Algebra.isLess().call(aTmp, bTmp)) {
+			Algebra.assign().call(aTmp, t);
+			Algebra.assign().call(bTmp, aTmp);
+			Algebra.assign().call(t, bTmp);
 		}
-		while (group.isNotEqual().call(bTmp, zero)) {
-			group.assign().call(bTmp, t);
-			group.mod().call(aTmp, bTmp, bTmp);
-			group.assign().call(t, aTmp);
+		while (Algebra.isNotEqual().call(bTmp, zero)) {
+			Algebra.assign().call(bTmp, t);
+			Algebra.mod().call(aTmp, bTmp, bTmp);
+			Algebra.assign().call(t, aTmp);
 		}
-		group.assign().call(aTmp, result);
+		Algebra.assign().call(aTmp, result);
 	}
 }

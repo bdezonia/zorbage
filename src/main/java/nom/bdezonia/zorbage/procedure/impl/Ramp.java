@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -37,21 +37,21 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  */
 public class Ramp<T extends Algebra<T,U> & Addition<U>, U> implements Procedure1<U> {
 
-	private final T group;
+	private final T Algebra;
 	private final U currValue;
 	private final U delta;
 	
-	public Ramp(T group, U startValue, U delta) {
-		this.group = group;
-		this.currValue = group.construct(startValue);
-		this.delta = group.construct(delta);
+	public Ramp(T Algebra, U startValue, U delta) {
+		this.Algebra = Algebra;
+		this.currValue = Algebra.construct(startValue);
+		this.delta = Algebra.construct(delta);
 	}
 
 	@Override
 	public void call(U a) {
 		// assign curr value to output
-		group.assign().call(currValue, a);
+		Algebra.assign().call(currValue, a);
 		// setup next value
-		group.add().call(currValue, delta, currValue);
+		Algebra.add().call(currValue, delta, currValue);
 	}
 }

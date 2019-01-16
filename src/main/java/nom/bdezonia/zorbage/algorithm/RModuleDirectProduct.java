@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,22 +42,22 @@ public class RModuleDirectProduct {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T group, RModuleMember<U> a, RModuleMember<U> b, MatrixMember<U> c)
+		void compute(T Algebra, RModuleMember<U> a, RModuleMember<U> b, MatrixMember<U> c)
 	{
 		c.alloc(a.length(), b.length());
-		U val1 = group.construct();
-		U val2 = group.construct();
+		U val1 = Algebra.construct();
+		U val2 = Algebra.construct();
 		for (long row = 0; row < a.length(); row++) {
 			a.v(row, val1);
 			for (long col = 0; col < b.length(); col++) {
 				b.v(col, val2);
-				group.multiply().call(val1, val2, val2);
+				Algebra.multiply().call(val1, val2, val2);
 				c.setV(row, col, val2);
 			}
 		}

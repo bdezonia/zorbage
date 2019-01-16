@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,15 +39,15 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class TensorRModuleBridge<U> implements RModuleMember<U> {
 
-	private final Algebra<?,U> group;
+	private final Algebra<?,U> Algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private final IntegerIndex fixedDims;
 	private int rangingDim;
 
-	public TensorRModuleBridge(Algebra<?,U> group, TensorMember<U> tensor) {
-		this.group = group;
-		this.zero = group.construct();
+	public TensorRModuleBridge(Algebra<?,U> Algebra, TensorMember<U> tensor) {
+		this.Algebra = Algebra;
+		this.zero = Algebra.construct();
 		this.tensor = tensor;
 		this.fixedDims = new IntegerIndex(tensor.numDimensions());
 		this.rangingDim = 0;
@@ -108,7 +108,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void v(long i, U value) {
 		if (i < 0 || i >= length())
-			group.assign().call(zero, value);
+			Algebra.assign().call(zero, value);
 		else {
 			fixedDims.set(rangingDim, i);
 			tensor.v(fixedDims, value);
@@ -118,7 +118,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void setV(long i, U value) {
 		if (i < 0 || i >= length()) {
-			if (group.isNotEqual().call(zero, value))
+			if (Algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else {

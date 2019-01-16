@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,12 +40,12 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
-	private final Algebra<?,U> group;
+	private final Algebra<?,U> Algebra;
 	private NumberMember<U> num;
 	
-	public NumberTensorBridge(Algebra<?,U> group, NumberMember<U> num) {
-		this.zero = group.construct();
-		this.group = group;
+	public NumberTensorBridge(Algebra<?,U> Algebra, NumberMember<U> num) {
+		this.zero = Algebra.construct();
+		this.Algebra = Algebra;
 		this.num = num;
 	}
 	
@@ -89,7 +89,7 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	public void v(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				group.assign().call(zero, value);
+				Algebra.assign().call(zero, value);
 				return;
 			}
 		}
@@ -100,7 +100,7 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	public void setV(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				if (group.isNotEqual().call(zero, value))
+				if (Algebra.isNotEqual().call(zero, value))
 					throw new IllegalArgumentException("out of bounds nonzero write");
 			}
 		}

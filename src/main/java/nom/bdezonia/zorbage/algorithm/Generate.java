@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -35,33 +35,33 @@ public class Generate {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param proc
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, Procedure1<U> proc, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
-		compute(group, proc, 0, storage.size(), 1, storage);
+		compute(Algebra, proc, 0, storage.size(), 1, storage);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param proc
 	 * @param storage
 	 * @param inputs
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
+		void compute(T Algebra, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
 	{
-		compute(group, proc, 0, storage.size(), 1, storage, inputs);
+		compute(Algebra, proc, 0, storage.size(), 1, storage, inputs);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param proc
 	 * @param start
 	 * @param count
@@ -69,9 +69,9 @@ public class Generate {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage)
 	{
-		U value = group.construct();
+		U value = Algebra.construct();
 		for (long i = start, c = 0; c < count; c++) {
 			proc.call(value);
 			storage.set(i, value);
@@ -81,7 +81,7 @@ public class Generate {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param proc
 	 * @param start
 	 * @param count
@@ -91,9 +91,9 @@ public class Generate {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage, U... inputs)
+		void compute(T Algebra, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage, U... inputs)
 	{
-		U value = group.construct();
+		U value = Algebra.construct();
 		for (long i = start, c = 0; c < count; c++) {
 			proc.call(value, inputs);
 			storage.set(i, value);

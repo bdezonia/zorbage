@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,7 +39,7 @@ public class ParallelTransform2 {
 
 	/**
 	 * 
-	 * @param grpU
+	 * @param algU
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -50,15 +50,15 @@ public class ParallelTransform2 {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algU, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(grpU, grpU, proc, aStart, bStart, count, aStride, bStride, a, b);	
+		compute(algU, algU, proc, aStart, bStart, count, aStride, bStride, a, b);	
 	}
 	
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
+	 * @param algU
+	 * @param algW
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -69,7 +69,7 @@ public class ParallelTransform2 {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T grpU, V grpW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
+		void compute(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -83,7 +83,7 @@ public class ParallelTransform2 {
 			else {
 				thCount = count / numProcs;
 			}
-			Runnable r = new Computer<T,U,V,W>(grpU, grpW, proc, thAStart, thBStart, thCount, aStride, bStride, a, b);
+			Runnable r = new Computer<T,U,V,W>(algU, algW, proc, thAStart, thBStart, thCount, aStride, bStride, a, b);
 			threads[i] = new Thread(r);
 			thAStart += (aStride * thCount);
 			thBStart += (bStride * thCount);
@@ -103,8 +103,8 @@ public class ParallelTransform2 {
 	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
 		implements Runnable
 	{
-		private final T groupU;
-		private final V groupW;
+		private final T AlgebraU;
+		private final V AlgebraW;
 		private final IndexedDataSource<?,U> list1;
 		private final IndexedDataSource<?,W> list2;
 		private final Procedure2<U, W> proc;
@@ -114,9 +114,9 @@ public class ParallelTransform2 {
 		private final long aStride;
 		private final long bStride;
 		
-		Computer(T grpU, V grpW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b) {
-			groupU = grpU;
-			groupW = grpW;
+		Computer(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b) {
+			AlgebraU = algU;
+			AlgebraW = algW;
 			list1 = a;
 			list2 = b;
 			this.proc = proc;
@@ -128,7 +128,7 @@ public class ParallelTransform2 {
 		}
 		
 		public void run() {
-			Transform2.compute(groupU, groupW, proc, aStart, bStart, count, aStride, bStride, list1, list2);
+			Transform2.compute(AlgebraU, AlgebraW, proc, aStart, bStart, count, aStride, bStride, list1, list2);
 		}
 	}
 }

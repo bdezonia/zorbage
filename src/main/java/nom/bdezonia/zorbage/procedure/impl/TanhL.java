@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class TanhL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	private final Tanh<T,U> lowerProc;
 	private final U tmp;
 	
-	public TanhL(T group, Procedure<U> ancestor) {
+	public TanhL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Tanh<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Tanh<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,20 +39,20 @@ public class IsPartitioned {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param cond
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T group, Condition<U> cond, IndexedDataSource<?,U> a)
+		boolean compute(T Algebra, Condition<U> cond, IndexedDataSource<?,U> a)
 	{
-		return compute(group, cond, 0, a.size(), a);
+		return compute(Algebra, cond, 0, a.size(), a);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param cond
 	 * @param start
 	 * @param count
@@ -60,9 +60,9 @@ public class IsPartitioned {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T group, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
+		boolean compute(T Algebra, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		long i = 0;
 		boolean first = false;
 		if (count > 0) {

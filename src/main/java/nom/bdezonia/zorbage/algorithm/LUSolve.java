@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -53,52 +53,52 @@ public class LUSolve {
 	 * @param x
 	 */
 	public static <BASETYPE, // the base type like Float64Member or Octonion etc.
-					BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+					BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
 					RMODULE_MEMBER extends RModuleMember<BASETYPE>,
-					RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+					RMODULE_Algebra extends RModule<RMODULE_Algebra,RMODULE_MEMBER,BASETYPE_Algebra,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 					MATRIX_MEMBER extends MatrixMember<BASETYPE>>
-		void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
+		void compute(BASETYPE_Algebra numAlgebra, RMODULE_Algebra rmodAlgebra, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
 	{
 		final long n = x.length();
 		
-		BASETYPE tmp = numGroup.construct();
-		BASETYPE value1 = numGroup.construct();
-		BASETYPE value2 = numGroup.construct();
-		BASETYPE sum = numGroup.construct();
-		BASETYPE term = numGroup.construct();
+		BASETYPE tmp = numAlgebra.construct();
+		BASETYPE value1 = numAlgebra.construct();
+		BASETYPE value2 = numAlgebra.construct();
+		BASETYPE sum = numAlgebra.construct();
+		BASETYPE term = numAlgebra.construct();
 		
 		// find solution of Ly = b
-		RMODULE_MEMBER y = rmodGroup.construct(x.storageType(), n);
+		RMODULE_MEMBER y = rmodAlgebra.construct(x.storageType(), n);
 		for (long i = 0; i < n; i++)
 		{
-			numGroup.zero().call(sum);
+			numAlgebra.zero().call(sum);
 			for (long k = 0; k < i; k++) {
 				a.v(i, k, value1);
 				y.v(k, value2);
-				numGroup.multiply().call(value1, value2, term);
-				numGroup.add().call(sum, term, sum);
+				numAlgebra.multiply().call(value1, value2, term);
+				numAlgebra.add().call(sum, term, sum);
 			}
 			b.v(i, value1);
-			numGroup.subtract().call(value1, sum, term);
+			numAlgebra.subtract().call(value1, sum, term);
 			y.setV(i, term);
 		}
 
 		// find solution of Ux = y
 		for (long i = n - 1; i >= 0; i--)
 		{
-			numGroup.zero().call(sum);
+			numAlgebra.zero().call(sum);
 			for (long k = i + 1; k < n; k++) {
 				a.v(i, k, value1);
 				x.v(k, value2);
-				numGroup.multiply().call(value1, value2, term);
-				numGroup.add().call(sum, term, sum);
+				numAlgebra.multiply().call(value1, value2, term);
+				numAlgebra.add().call(sum, term, sum);
 			}
-			numGroup.unity().call(tmp);
+			numAlgebra.unity().call(tmp);
 			a.v(i, i, value1);
-			numGroup.divide().call(tmp, value1, value1);
+			numAlgebra.divide().call(tmp, value1, value1);
 			y.v(i, value2);
-			numGroup.subtract().call(value2, sum, value2);
-			numGroup.multiply().call(value1, value2, term);
+			numAlgebra.subtract().call(value2, sum, value2);
+			numAlgebra.multiply().call(value1, value2, term);
 			x.setV(i, term);
 		}
 

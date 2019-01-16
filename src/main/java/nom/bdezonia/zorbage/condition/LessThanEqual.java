@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class LessThanEqual<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Condition<Tuple2<U,U>>
 {
-	private T group;
+	private T Algebra;
 	
-	public LessThanEqual(T group) {
-		this.group = group;
+	public LessThanEqual(T Algebra) {
+		this.Algebra = Algebra;
 	}
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return group.isLessEqual().call(value.a(), value.b());
+		return Algebra.isLessEqual().call(value.a(), value.b());
 	}
 }

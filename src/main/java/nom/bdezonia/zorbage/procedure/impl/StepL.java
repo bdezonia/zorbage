@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,10 +43,10 @@ public class StepL<T extends Algebra<T,U> & Ordered<U> & Unity<U>,U>
 	private final Step<T,U> lowerProc;
 	private final U tmp;
 	
-	public StepL(T group, Procedure<U> ancestor, U h0) {
+	public StepL(T Algebra, Procedure<U> ancestor, U h0) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Step<T,U>(group,h0);
-		this.tmp = group.construct();
+		this.lowerProc = new Step<T,U>(Algebra,h0);
+		this.tmp = Algebra.construct();
 	}
 	
 	@Override

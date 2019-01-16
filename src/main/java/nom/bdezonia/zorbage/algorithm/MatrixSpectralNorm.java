@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,13 +43,13 @@ public class MatrixSpectralNorm {
 	
 	/**
 	 * 
-	 * @param matGroup
-	 * @param numGroup
+	 * @param matAlgebra
+	 * @param numAlgebra
 	 * @param matrix
 	 * @param normValue
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T matGroup, V numGroup, U matrix, W normValue)
+		void compute(T matAlgebra, V numAlgebra, U matrix, W normValue)
 	{
 		throw new IllegalArgumentException("TODO");
 	}

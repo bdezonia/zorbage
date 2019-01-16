@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -33,7 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.EqualConstant;
-import nom.bdezonia.zorbage.type.data.bool.BooleanGroup;
+import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -50,7 +50,7 @@ public class TestAnyOf {
 		
 		IndexedDataSource<?,BooleanMember> storage;
 		
-		Condition<BooleanMember> condition = new EqualConstant<BooleanGroup,BooleanMember>(G.BOOL, new BooleanMember(false));
+		Condition<BooleanMember> condition = new EqualConstant<BooleanAlgebra,BooleanMember>(G.BOOL, new BooleanMember(false));
 
 		storage = ArrayStorage.allocateBooleans(new boolean[]{});
 				

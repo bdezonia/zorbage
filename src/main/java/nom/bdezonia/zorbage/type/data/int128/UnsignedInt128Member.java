@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -64,7 +64,7 @@ public final class UnsignedInt128Member
 	static final BigInteger TWO63 = TWO.pow(63);
 	static final BigInteger TWO63_MINUS_ONE = TWO63.subtract(BigInteger.ONE);
 	
-	long lo, hi; // package access is necessary so group can manipulate values
+	long lo, hi; // package access is necessary so Algebra can manipulate values
 	
 	public UnsignedInt128Member() {
 		lo = hi = 0;

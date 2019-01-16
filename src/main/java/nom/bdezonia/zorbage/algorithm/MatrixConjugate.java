@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,22 +41,22 @@ public class MatrixConjugate {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Conjugate<U>,U>
-		void compute(T group, MatrixMember<U> a, MatrixMember<U> b)
+		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b)
 	{
-		U atmp = group.construct();
-		U btmp = group.construct();
+		U atmp = Algebra.construct();
+		U btmp = Algebra.construct();
 		if (a != b) {
 			b.alloc(a.rows(), a.cols());
 		}
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				group.conjugate().call(atmp, btmp);
+				Algebra.conjugate().call(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}

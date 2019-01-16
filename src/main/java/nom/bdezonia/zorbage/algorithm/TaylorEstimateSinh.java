@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -47,8 +47,8 @@ public class TaylorEstimateSinh {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matGroup
-	 * @param numGroup
+	 * @param matAlgebra
+	 * @param numAlgebra
 	 * @param x
 	 * @param result
 	 */
@@ -56,34 +56,34 @@ public class TaylorEstimateSinh {
 					U,
 					V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U>,
 					W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
+		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
 	{
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
 
 		// sinh(x) = x + x^3/3! + x^5/5! + x^7/7! ...
 		
-		W sum = matGroup.construct(x);
-		matGroup.zero().call(sum);
-		W term = matGroup.construct(x);
-		W term2 = matGroup.construct();
-		W term3 = matGroup.construct();
-		U one = numGroup.construct();
-		numGroup.unity().call(one);
-		U factorial = numGroup.construct(one);
-		U inc = numGroup.construct(one);
-		U scale = numGroup.construct();
+		W sum = matAlgebra.construct(x);
+		matAlgebra.zero().call(sum);
+		W term = matAlgebra.construct(x);
+		W term2 = matAlgebra.construct();
+		W term3 = matAlgebra.construct();
+		U one = numAlgebra.construct();
+		numAlgebra.unity().call(one);
+		U factorial = numAlgebra.construct(one);
+		U inc = numAlgebra.construct(one);
+		U scale = numAlgebra.construct();
 		for (int i = 0; i < numTerms; i++) {
-			numGroup.divide().call(one, factorial, scale);
-			matGroup.scale().call(scale, term, term2);
-			matGroup.add().call(sum, term2, sum);
-			matGroup.multiply().call(term, x, term3);
-			matGroup.multiply().call(term3, x, term);
-			numGroup.add().call(inc,one,inc);
-			numGroup.multiply().call(factorial, inc, factorial);
-			numGroup.add().call(inc,one,inc);
-			numGroup.multiply().call(factorial, inc, factorial);
+			numAlgebra.divide().call(one, factorial, scale);
+			matAlgebra.scale().call(scale, term, term2);
+			matAlgebra.add().call(sum, term2, sum);
+			matAlgebra.multiply().call(term, x, term3);
+			matAlgebra.multiply().call(term3, x, term);
+			numAlgebra.add().call(inc,one,inc);
+			numAlgebra.multiply().call(factorial, inc, factorial);
+			numAlgebra.add().call(inc,one,inc);
+			numAlgebra.multiply().call(factorial, inc, factorial);
 		}
-		matGroup.assign().call(sum, result);
+		matAlgebra.assign().call(sum, result);
 	}
 }

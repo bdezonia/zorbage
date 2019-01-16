@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,20 +41,20 @@ public class FindIf {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param condition
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, Condition<U> condition, IndexedDataSource<?,U> a)
+		long compute(T Algebra, Condition<U> condition, IndexedDataSource<?,U> a)
 	{
-		return compute(group, condition, 0, a.size(), a);
+		return compute(Algebra, condition, 0, a.size(), a);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param condition
 	 * @param start
@@ -62,9 +62,9 @@ public class FindIf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T Algebra, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U value = group.construct();
+		U value = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, value);
 			if (condition.isTrue(value))

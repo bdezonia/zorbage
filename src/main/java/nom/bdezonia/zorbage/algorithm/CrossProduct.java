@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,8 +45,8 @@ public class CrossProduct {
 	
 	/**
 	 * 
-	 * @param rmodGroup
-	 * @param memberGroup
+	 * @param rmodAlgebra
+	 * @param memberAlgebra
 	 * @param a
 	 * @param b
 	 * @param c
@@ -55,40 +55,40 @@ public class CrossProduct {
 					U extends RModuleMember<W>,
 					V extends Ring<V,W>,
 					W>
-		void compute(T rmodGroup, V memberGroup, U a, U b, U c)
+		void compute(T rmodAlgebra, V memberAlgebra, U a, U b, U c)
 	{
 		if ((a.length() != 3) || (b.length() != 3))
 			throw new UnsupportedOperationException("vector cross product defined for 3 dimensions");
-		U tmp = rmodGroup.construct(StorageConstruction.MEM_ARRAY, 3);
-		W atmp = memberGroup.construct();
-		W btmp = memberGroup.construct();
-		W term1 = memberGroup.construct();
-		W term2 = memberGroup.construct();
-		W t = memberGroup.construct();
+		U tmp = rmodAlgebra.construct(StorageConstruction.MEM_ARRAY, 3);
+		W atmp = memberAlgebra.construct();
+		W btmp = memberAlgebra.construct();
+		W term1 = memberAlgebra.construct();
+		W term2 = memberAlgebra.construct();
+		W t = memberAlgebra.construct();
 		a.v(1, atmp);
 		b.v(2, btmp);
-		memberGroup.multiply().call(atmp, btmp, term1);
+		memberAlgebra.multiply().call(atmp, btmp, term1);
 		a.v(2, atmp);
 		b.v(1, btmp);
-		memberGroup.multiply().call(atmp, btmp, term2);
-		memberGroup.subtract().call(term1, term2, t);
+		memberAlgebra.multiply().call(atmp, btmp, term2);
+		memberAlgebra.subtract().call(term1, term2, t);
 		tmp.setV(0, t);
 		a.v(2, atmp);
 		b.v(0, btmp);
-		memberGroup.multiply().call(atmp, btmp, term1);
+		memberAlgebra.multiply().call(atmp, btmp, term1);
 		a.v(0, atmp);
 		b.v(2, btmp);
-		memberGroup.multiply().call(atmp, btmp, term2);
-		memberGroup.subtract().call(term1, term2, t);
+		memberAlgebra.multiply().call(atmp, btmp, term2);
+		memberAlgebra.subtract().call(term1, term2, t);
 		tmp.setV(1, t);
 		a.v(0, atmp);
 		b.v(1, btmp);
-		memberGroup.multiply().call(atmp, btmp, term1);
+		memberAlgebra.multiply().call(atmp, btmp, term1);
 		a.v(1, atmp);
 		b.v(0, btmp);
-		memberGroup.multiply().call(atmp, btmp, term2);
-		memberGroup.subtract().call(term1, term2, t);
+		memberAlgebra.multiply().call(atmp, btmp, term2);
+		memberAlgebra.subtract().call(term1, term2, t);
 		tmp.setV(2, t);
-		rmodGroup.assign().call(tmp, c);
+		rmodAlgebra.assign().call(tmp, c);
 	}
 }

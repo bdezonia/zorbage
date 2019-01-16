@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,28 +39,28 @@ public class ForEach {
 
 	/**
 	 * 
-	 * @param grpU
+	 * @param algU
 	 * @param proc
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
-		compute(grpU, proc, 0, a.size(), a);
+		compute(algU, proc, 0, a.size(), a);
 	}
 
 	/**
 	 * 
-	 * @param grpU
+	 * @param algU
 	 * @param proc
 	 * @param start
 	 * @param count
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grpU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
+		void compute(T algU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
 	{
-		Transform2.compute(grpU, proc, start, start, count, 1, 1, a, a);
+		Transform2.compute(algU, proc, start, start, count, 1, 1, a, a);
 	}
 
 }

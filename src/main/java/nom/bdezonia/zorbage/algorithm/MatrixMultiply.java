@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -44,13 +44,13 @@ public class MatrixMultiply {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,U>
-		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
+		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
@@ -58,18 +58,18 @@ public class MatrixMultiply {
 		long cols = b.cols();
 		long common = a.cols(); 
 		c.alloc(rows, cols);
-		U sum = group.construct();
-		U atmp = group.construct();
-		U btmp = group.construct();
-		U term = group.construct();
+		U sum = Algebra.construct();
+		U atmp = Algebra.construct();
+		U btmp = Algebra.construct();
+		U term = Algebra.construct();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				group.zero().call(sum);
+				Algebra.zero().call(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					group.multiply().call(atmp, btmp, term);
-					group.add().call(sum, term, sum);
+					Algebra.multiply().call(atmp, btmp, term);
+					Algebra.add().call(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}

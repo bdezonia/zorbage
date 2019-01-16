@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,12 +38,12 @@ public class RotateCopy {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param delta
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, long delta, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, long delta, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a == b)
 			throw new IllegalArgumentException("RotateCopy does not work in place");
@@ -53,7 +53,7 @@ public class RotateCopy {
 		if (Math.abs(delta) >= sz)
 			throw new IllegalArgumentException("delta magnitude too large");
 		
-		U tmp1 = group.construct();
+		U tmp1 = Algebra.construct();
 		long index = 0;
 		for (long i = 0; i < sz; i++) {
 			index = i - delta; // delta can be pos or neg

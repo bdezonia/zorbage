@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,18 +40,18 @@ public class RModuleReshape {
 
 	/**
 	 * 
-	 * @param rmodGroup
-	 * @param numberGroup
+	 * @param rmodAlgebra
+	 * @param numberAlgebra
 	 * @param len
 	 * @param rmod
 	 */
 	public static <T extends Algebra<T,U>, U extends RModuleMember<W>, V extends Algebra<V,W>, W>
-		void compute(T rmodGroup, V numberGroup, long len, U rmod)
+		void compute(T rmodAlgebra, V numberAlgebra, long len, U rmod)
 	{
 		if (len == rmod.length()) return;
-		U orig = rmodGroup.construct(rmod);
+		U orig = rmodAlgebra.construct(rmod);
 		rmod.alloc(len);
-		W value = numberGroup.construct();
+		W value = numberAlgebra.construct();
 		long size = Math.min(len, orig.length());
 		for (long i = 0; i < size; i++) {
 			orig.v(i, value);

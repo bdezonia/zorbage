@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,22 +42,22 @@ public class RModuleIsEqual {
 	
 	/**
 	 * 
-	 * @param memberGroup
+	 * @param memberAlgebra
 	 * @param a
 	 * @param b
 	 * @return
 	 */
 	public static <T extends Algebra<T,V>, U extends RModuleMember<V>, V>
-		boolean compute(T memberGroup, U a, U b)
+		boolean compute(T memberAlgebra, U a, U b)
 	{
 		if (a.length() != b.length())
 			return false;
-		V aTmp = memberGroup.construct();
-		V bTmp = memberGroup.construct();
+		V aTmp = memberAlgebra.construct();
+		V bTmp = memberAlgebra.construct();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, aTmp);
 			b.v(i, bTmp);
-			if (memberGroup.isNotEqual().call(aTmp, bTmp))
+			if (memberAlgebra.isNotEqual().call(aTmp, bTmp))
 				return false;
 		}
 		return true;

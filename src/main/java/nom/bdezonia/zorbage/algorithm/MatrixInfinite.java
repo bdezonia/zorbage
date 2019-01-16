@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,18 +41,18 @@ public class MatrixInfinite {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U> & Infinite<U>, U>
-		void compute(T grp, MatrixMember<U> a)
+		void compute(T alg, MatrixMember<U> a)
 	{
 		// comment out this possible source of bugs. empty matrices will remain that way.
 		//if (a.rows() == 0 || a.cols() == 0) {
 		//	a.alloc(1,1);
 		//}
-		U value = grp.construct();
-		grp.infinite().call(value);
+		U value = alg.construct();
+		alg.infinite().call(value);
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.setV(r, c, value);

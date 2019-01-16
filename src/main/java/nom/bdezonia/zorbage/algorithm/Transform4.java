@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,7 +41,7 @@ public class Transform4 {
 
 	/**
 	 * 
-	 * @param grpM
+	 * @param algM
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -58,16 +58,16 @@ public class Transform4 {
 	 * @param d
 	 */
 	public static final <L extends Algebra<L,M>, M>
-		void compute(L grpM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,M> b, IndexedDataSource<?,M> c, IndexedDataSource<?,M> d)
+		void compute(L algM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,M> b, IndexedDataSource<?,M> c, IndexedDataSource<?,M> d)
 	{
-		compute(grpM, grpM, grpM, grpM, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
+		compute(algM, algM, algM, algM, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
 	}
 	
 	/**
 	 * 
-	 * @param grpM
-	 * @param grpO
-	 * @param grpQ
+	 * @param algM
+	 * @param algO
+	 * @param algQ
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -81,17 +81,17 @@ public class Transform4 {
 	 * @param c
 	 */
 	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q>
-		void compute(L grpM, N grpO, P grpQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c)
+		void compute(L algM, N algO, P algQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c)
 	{
-		compute(grpM, grpO, grpQ, grpQ, proc, aStart, bStart, cStart, cStart, count, aStride, bStride, cStride, cStride, a, b, c, c);
+		compute(algM, algO, algQ, algQ, proc, aStart, bStart, cStart, cStart, count, aStride, bStride, cStride, cStride, a, b, c, c);
 	}
 
 	/**
 	 * 
-	 * @param grpM
-	 * @param grpO
-	 * @param grpQ
-	 * @param grpS
+	 * @param algM
+	 * @param algO
+	 * @param algQ
+	 * @param algS
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -108,12 +108,12 @@ public class Transform4 {
 	 * @param d
 	 */
 	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q, R extends Algebra<R,S>, S>
-		void compute(L grpM, N grpO, P grpQ, R grpS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c, IndexedDataSource<?,S> d)
+		void compute(L algM, N algO, P algQ, R algS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c, IndexedDataSource<?,S> d)
 	{
-		M valueM = grpM.construct();
-		O valueO = grpO.construct();
-		Q valueQ = grpQ.construct();
-		S valueS = grpS.construct();
+		M valueM = algM.construct();
+		O valueO = algO.construct();
+		Q valueQ = algQ.construct();
+		S valueS = algS.construct();
 		for (long i = aStart, j = bStart, k = cStart, l = dStart, m = 0; m < count; m++) {
 			a.get(i, valueM);
 			b.get(j, valueO);
@@ -130,15 +130,15 @@ public class Transform4 {
 	/**
 	 * In place transformation of one whole list by a Procedure4.
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grp, Procedure4<U,U,U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T alg, Procedure4<U,U,U,U> proc, IndexedDataSource<?,U> a)
 	{
-		U value1 = grp.construct();
-		U value2 = grp.construct();
+		U value1 = alg.construct();
+		U value2 = alg.construct();
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, value1);
 			proc.call(value1, value1, value1, value2);

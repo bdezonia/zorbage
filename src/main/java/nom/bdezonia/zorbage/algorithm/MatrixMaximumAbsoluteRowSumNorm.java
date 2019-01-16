@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -47,27 +47,27 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 
 	/**
 	 * 
-	 * @param numGroup
+	 * @param numAlgebra
 	 * @param matrix
 	 * @param norm
 	 */
 	public static
 		<T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Ordered<W>, W>
-	void compute(T group1, V group2, MatrixMember<U> matrix, W result)
+	void compute(T Algebra1, V Algebra2, MatrixMember<U> matrix, W result)
 	{
-		W tmp = group2.construct();
-		W max = group2.construct();
+		W tmp = Algebra2.construct();
+		W max = Algebra2.construct();
 		for (long r = 0; r < matrix.rows(); r++) {
-			W colSum = group2.construct();
-			U value = group1.construct();
+			W colSum = Algebra2.construct();
+			U value = Algebra1.construct();
 			for (long c = 0; c < matrix.cols(); c++) {
 				matrix.v(r, c, value);
-				group1.norm().call(value, tmp);
-				group2.add().call(colSum, tmp, colSum);
+				Algebra1.norm().call(value, tmp);
+				Algebra2.add().call(colSum, tmp, colSum);
 			}
-			if (group2.isGreater().call(colSum, max))
-				group2.assign().call(colSum, max);
+			if (Algebra2.isGreater().call(colSum, max))
+				Algebra2.assign().call(colSum, max);
 		}
-		group2.assign().call(max, result);
+		Algebra2.assign().call(max, result);
 	}
 }

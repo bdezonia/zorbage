@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class LogL<T extends Algebra<T,U> & Exponential<U>,U>
 	private final Log<T,U> lowerProc;
 	private final U tmp;
 	
-	public LogL(T group, Procedure<U> ancestor) {
+	public LogL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Log<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Log<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

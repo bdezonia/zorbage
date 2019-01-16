@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,20 +40,20 @@ public class AdjacentFind {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param value
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, IndexedDataSource<?,U> a)
+		long compute(T Algebra, IndexedDataSource<?,U> a)
 	{
-		return compute(group, 0, a.size(), a);
+		return compute(Algebra, 0, a.size(), a);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param value
 	 * @param start
@@ -61,17 +61,17 @@ public class AdjacentFind {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T Algebra, long start, long count, IndexedDataSource<?,U> a)
 	{
 		if (start+count < 2) return start+count;
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
+		U tmp1 = Algebra.construct();
+		U tmp2 = Algebra.construct();
 		a.get(start, tmp1);
 		for (long i = 1; i < count; i++) {
 			a.get(start+i, tmp2);
-			if (group.isEqual().call(tmp1, tmp2))
+			if (Algebra.isEqual().call(tmp1, tmp2))
 				return start + i - 1;
-			group.assign().call(tmp2, tmp1);
+			Algebra.assign().call(tmp2, tmp1);
 		}
 		return start + count;
 	}

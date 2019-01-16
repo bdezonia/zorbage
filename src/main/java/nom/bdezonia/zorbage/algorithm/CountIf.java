@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,22 +43,22 @@ public class CountIf {
 
 	/**
 	 * 
-	 * @param group
-	 * @param addGroup
+	 * @param Algebra
+	 * @param addAlgebra
 	 * @param a
 	 * @param condition
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T group, V addGroup, Condition<U> condition, IndexedDataSource<?,U> a, W sum)
+		void compute(T Algebra, V addAlgebra, Condition<U> condition, IndexedDataSource<?,U> a, W sum)
 	{
-		compute(group, addGroup, condition, 0, a.size(), a, sum);
+		compute(Algebra, addAlgebra, condition, 0, a.size(), a, sum);
 	}
 
 	/**
 	 * 
-	 * @param group
-	 * @param addGroup
+	 * @param Algebra
+	 * @param addAlgebra
 	 * @param a
 	 * @param start
 	 * @param count
@@ -66,18 +66,18 @@ public class CountIf {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T group, V addGroup, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a, W sum)
+		void compute(T Algebra, V addAlgebra, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a, W sum)
 	{
-		U tmp = group.construct();
-		W tmpSum = addGroup.construct();
-		W one = addGroup.construct();
-		addGroup.unity().call(one);
+		U tmp = Algebra.construct();
+		W tmpSum = addAlgebra.construct();
+		W one = addAlgebra.construct();
+		addAlgebra.unity().call(one);
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmp);
 			if (condition.isTrue(tmp))
-				addGroup.add().call(tmpSum, one, tmpSum);
+				addAlgebra.add().call(tmpSum, one, tmpSum);
 		}
-		addGroup.assign().call(tmpSum, sum);
+		addAlgebra.assign().call(tmpSum, sum);
 	}
 
 }

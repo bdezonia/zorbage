@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -33,7 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.GreaterThanConstant;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Group;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Algebra;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -51,7 +51,7 @@ public class TestCopyIf {
 				new short[] {1,2,3,4,5,6,7,8,9});
 		IndexedDataSource<?, SignedInt16Member> b = ArrayStorage.allocateShorts(
 				new short[] {0,0,0,0,0,0,0,0,0});
-		Condition<SignedInt16Member> cond = new GreaterThanConstant<SignedInt16Group,SignedInt16Member>(G.INT16, new SignedInt16Member(4));
+		Condition<SignedInt16Member> cond = new GreaterThanConstant<SignedInt16Algebra,SignedInt16Member>(G.INT16, new SignedInt16Member(4));
 		CopyIf.compute(G.INT16, cond, a, b);
 		SignedInt16Member value = G.INT16.construct();
 		b.get(0, value);

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -47,79 +47,79 @@ public class SumSquareCount {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param avg
 	 * @param sumSqDevs
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Ordered<U> & Invertible<U>,U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U avg, U sumSqDevs, U count)
+		void compute(T alg, IndexedDataSource<?,U> storage, U avg, U sumSqDevs, U count)
 	{
 		/* original: impl 1: naive but quick
 		
-		U tmp = grp.construct();
-		U one = grp.construct();
-		grp.unity().call(one);
-		grp.zero().call(sumSqDevs);
-		grp.zero().call(count);
+		U tmp = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
+		alg.zero().call(sumSqDevs);
+		alg.zero().call(count);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			grp.subtract().call(tmp, avg, tmp);
-			grp.multiply().call(tmp, tmp, tmp);
-			grp.add().call(sumSqDevs, tmp, sumSqDevs);
-			grp.add().call(count, one, count);
+			alg.subtract().call(tmp, avg, tmp);
+			alg.multiply().call(tmp, tmp, tmp);
+			alg.add().call(sumSqDevs, tmp, sumSqDevs);
+			alg.add().call(count, one, count);
 		}
 
 		 */
 		
 		/* first optimization: not fully working: impl 2
 		
-		U minDev = grp.construct();
-		U maxDev = grp.construct();
-		U val = grp.construct();
-		U cnt = grp.construct();
-		U one = grp.construct();
-		grp.unity().call(one);
+		U minDev = alg.construct();
+		U maxDev = alg.construct();
+		U val = alg.construct();
+		U cnt = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, val);
-			grp.subtract().call(val, avg, val);
-			if (grp.isLess().call(val,minDev))
-				grp.assign().call(val, minDev);
-			if (grp.isGreater().call(val, maxDev))
-				grp.assign().call(val, maxDev);
-			grp.add().call(cnt, one, cnt);
+			alg.subtract().call(val, avg, val);
+			if (alg.isLess().call(val,minDev))
+				alg.assign().call(val, minDev);
+			if (alg.isGreater().call(val, maxDev))
+				alg.assign().call(val, maxDev);
+			alg.add().call(cnt, one, cnt);
 		}
-		if (grp.isEqual().call(minDev, maxDev)) {
-			grp.zero().call(sumSqDevs);
-			grp.assign().call(cnt, count);
+		if (alg.isEqual().call(minDev, maxDev)) {
+			alg.zero().call(sumSqDevs);
+			alg.assign().call(cnt, count);
 			return;
 		}
-		U range = grp.construct();
-		U factor = grp.construct();
-		grp.subtract().call(maxDev, minDev, range);
-		U newRange = grp.construct("128");
-		U newOrigin = grp.construct("-64");
-		grp.divide().call(newRange, range, factor);
-		U sum = grp.construct();
+		U range = alg.construct();
+		U factor = alg.construct();
+		alg.subtract().call(maxDev, minDev, range);
+		U newRange = alg.construct("128");
+		U newOrigin = alg.construct("-64");
+		alg.divide().call(newRange, range, factor);
+		U sum = alg.construct();
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, val);
-			grp.subtract().call(val, avg, val);
-			grp.subtract().call(val, minDev, val);
-			grp.multiply().call(val, factor, val);
-			grp.add().call(val, newOrigin, val);
-			grp.multiply().call(val, val, val);
-			grp.add().call(sum, val, sum);
+			alg.subtract().call(val, avg, val);
+			alg.subtract().call(val, minDev, val);
+			alg.multiply().call(val, factor, val);
+			alg.add().call(val, newOrigin, val);
+			alg.multiply().call(val, val, val);
+			alg.add().call(sum, val, sum);
 		}
-		grp.divide().call(sum, factor, sum);
-		//grp.multiply().call(minDev, count, val);
-		//grp.add().call(sum, val, sum);
-		grp.divide().call(sum, factor, sum);
-		grp.assign().call(sum, sumSqDevs);
-		grp.assign().call(cnt, count);
+		alg.divide().call(sum, factor, sum);
+		//alg.multiply().call(minDev, count, val);
+		//alg.add().call(sum, val, sum);
+		alg.divide().call(sum, factor, sum);
+		alg.assign().call(sum, sumSqDevs);
+		alg.assign().call(cnt, count);
 		 */
 		
-		/* second optimization: based on some algebra I did: impl 3
+		/* second optimization: based on some Algebra I did: impl 3
 		 * The idea behind it is to scale big numbers into manageable range to avoid overflows
 		 * if possible. Might have an accuracy cost.
 		 */
@@ -127,42 +127,42 @@ public class SumSquareCount {
 		if (storage.size() == 0)
 			throw new IllegalArgumentException("cannot compute values for empty list");
 		
-		U tmp = grp.construct();
-		U y = grp.construct();
-		U cnt = grp.construct();
-		U one = grp.construct();
-		U two = grp.construct();
-		grp.unity().call(one);
-		grp.add().call(one, one, two);
+		U tmp = alg.construct();
+		U y = alg.construct();
+		U cnt = alg.construct();
+		U one = alg.construct();
+		U two = alg.construct();
+		alg.unity().call(one);
+		alg.add().call(one, one, two);
 
-		U val = grp.construct();
-		U a = grp.construct();
-		U m = grp.construct();
-		U b = grp.construct("-128");
-		U range = grp.construct("256");
-		U sumY = grp.construct();
-		U sumYsq = grp.construct();
-		U min = grp.construct();
-		U max = grp.construct();
-		Average.compute(grp, storage, a);
+		U val = alg.construct();
+		U a = alg.construct();
+		U m = alg.construct();
+		U b = alg.construct("-128");
+		U range = alg.construct("256");
+		U sumY = alg.construct();
+		U sumYsq = alg.construct();
+		U min = alg.construct();
+		U max = alg.construct();
+		Average.compute(alg, storage, a);
 		
-		grp.add().call(cnt, one, cnt);
+		alg.add().call(cnt, one, cnt);
 		storage.get(0, val);
-		grp.assign().call(val, min);
-		grp.assign().call(val, max);
+		alg.assign().call(val, min);
+		alg.assign().call(val, max);
 		for (long i = 1; i < storage.size(); i++) {
-			grp.add().call(cnt, one, cnt);
+			alg.add().call(cnt, one, cnt);
 			storage.get(i, val);
-			//grp.subtract().call(val, a, val);
-			if (grp.isLess().call(val, min))
-				grp.assign().call(val, min);
-			if (grp.isGreater().call(val, max))
-				grp.assign().call(val, max);
+			//alg.subtract().call(val, a, val);
+			if (alg.isLess().call(val, min))
+				alg.assign().call(val, min);
+			if (alg.isGreater().call(val, max))
+				alg.assign().call(val, max);
 		}
 
-		if (grp.isGreaterEqual().call(min, max)) {
-			grp.assign().call(cnt, count);
-			grp.zero().call(sumSqDevs);
+		if (alg.isGreaterEqual().call(min, max)) {
+			alg.assign().call(cnt, count);
+			alg.zero().call(sumSqDevs);
 			return;
 		}
 
@@ -170,51 +170,51 @@ public class SumSquareCount {
 		// doing with raw values. If dataset is not very symmetric this might be wrong. Maybe I
 		// need to go back to doing deviations. Investigate.
 		
-		grp.subtract().call(max, min, tmp);
-		grp.divide().call(tmp, range, m);
+		alg.subtract().call(max, min, tmp);
+		alg.divide().call(tmp, range, m);
 
 		for (long i = 0; i < storage.size(); i++) {
 			storage.get(i, val);
-			grp.subtract().call(val, b, val);
-			grp.divide().call(val, m, y);
-			grp.add().call(sumY, y, sumY);
-			grp.multiply().call(y, y, y);
-			grp.add().call(sumYsq, y, sumYsq);
+			alg.subtract().call(val, b, val);
+			alg.divide().call(val, m, y);
+			alg.add().call(sumY, y, sumY);
+			alg.multiply().call(y, y, y);
+			alg.add().call(sumYsq, y, sumYsq);
 		}
 		
-		U term = grp.construct();
+		U term = alg.construct();
 		
-		grp.zero().call(tmp);
+		alg.zero().call(tmp);
 		
-		grp.multiply().call(a, a, term);
-		grp.multiply().call(term, cnt, term);
-		grp.add().call(tmp, term, tmp);
+		alg.multiply().call(a, a, term);
+		alg.multiply().call(term, cnt, term);
+		alg.add().call(tmp, term, tmp);
 		
-		grp.multiply().call(b, b, term);
-		grp.multiply().call(term, cnt, term);
-		grp.add().call(tmp, term, tmp);
+		alg.multiply().call(b, b, term);
+		alg.multiply().call(term, cnt, term);
+		alg.add().call(tmp, term, tmp);
 		
-		grp.multiply().call(two, a, term);
-		grp.multiply().call(term, b, term);
-		grp.multiply().call(term, cnt, term);
-		grp.subtract().call(tmp, term, tmp);
+		alg.multiply().call(two, a, term);
+		alg.multiply().call(term, b, term);
+		alg.multiply().call(term, cnt, term);
+		alg.subtract().call(tmp, term, tmp);
 		
-		grp.multiply().call(m, m, term);
-		grp.multiply().call(term, sumYsq, term);
-		grp.add().call(tmp, term, tmp);
+		alg.multiply().call(m, m, term);
+		alg.multiply().call(term, sumYsq, term);
+		alg.add().call(tmp, term, tmp);
 		
-		grp.multiply().call(two, m, term);
-		grp.multiply().call(term, b, term);
-		grp.multiply().call(term, sumY, term);
-		grp.add().call(tmp, term, tmp);
+		alg.multiply().call(two, m, term);
+		alg.multiply().call(term, b, term);
+		alg.multiply().call(term, sumY, term);
+		alg.add().call(tmp, term, tmp);
 		
-		grp.multiply().call(two, m, term);
-		grp.multiply().call(term, a, term);
-		grp.multiply().call(term, sumY, term);
-		grp.subtract().call(tmp, term, tmp);
+		alg.multiply().call(two, m, term);
+		alg.multiply().call(term, a, term);
+		alg.multiply().call(term, sumY, term);
+		alg.subtract().call(tmp, term, tmp);
 		
-		grp.assign().call(cnt, count);
-		grp.assign().call(tmp, sumSqDevs);
+		alg.assign().call(cnt, count);
+		alg.assign().call(tmp, sumSqDevs);
 	}
 	
 }

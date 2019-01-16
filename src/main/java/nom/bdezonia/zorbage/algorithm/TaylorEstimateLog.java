@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,8 +45,8 @@ public class TaylorEstimateLog {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matGroup
-	 * @param numGroup
+	 * @param matAlgebra
+	 * @param numAlgebra
 	 * @param x
 	 * @param result
 	 */
@@ -54,7 +54,7 @@ public class TaylorEstimateLog {
 					U,
 					V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
 					W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
+		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
 	{
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
@@ -64,36 +64,36 @@ public class TaylorEstimateLog {
 		
 		// TODO: this second formulation is not converging either
 		
-		W xMinusI = matGroup.construct();
-		W xPlusI = matGroup.construct();
-		W I = matGroup.construct(x);
-		matGroup.unity().call(I);
-		matGroup.add().call(x, I, xPlusI);
-		matGroup.subtract().call(x, I, xMinusI);
-		W sum = matGroup.construct(x);
-		matGroup.zero().call(sum);
-		W subTerm = matGroup.construct();
-		matGroup.divide().call(xMinusI, xPlusI, subTerm);
-		W term = matGroup.construct(subTerm);
-		W term2 = matGroup.construct();
-		W term3 = matGroup.construct();
-		U one = numGroup.construct();
-		numGroup.unity().call(one);
-		U inc = numGroup.construct(one);
-		U scale = numGroup.construct();
+		W xMinusI = matAlgebra.construct();
+		W xPlusI = matAlgebra.construct();
+		W I = matAlgebra.construct(x);
+		matAlgebra.unity().call(I);
+		matAlgebra.add().call(x, I, xPlusI);
+		matAlgebra.subtract().call(x, I, xMinusI);
+		W sum = matAlgebra.construct(x);
+		matAlgebra.zero().call(sum);
+		W subTerm = matAlgebra.construct();
+		matAlgebra.divide().call(xMinusI, xPlusI, subTerm);
+		W term = matAlgebra.construct(subTerm);
+		W term2 = matAlgebra.construct();
+		W term3 = matAlgebra.construct();
+		U one = numAlgebra.construct();
+		numAlgebra.unity().call(one);
+		U inc = numAlgebra.construct(one);
+		U scale = numAlgebra.construct();
 		for (int i = 0; i < numTerms; i++) {
-			numGroup.divide().call(one, inc, scale);
-			matGroup.scale().call(scale, term, term2);
-			matGroup.add().call(sum, term2, sum);
-			matGroup.multiply().call(term, subTerm, term3);
-			matGroup.multiply().call(term3, subTerm, term);
-			numGroup.add().call(inc, one, inc);
-			numGroup.add().call(inc, one, inc);
+			numAlgebra.divide().call(one, inc, scale);
+			matAlgebra.scale().call(scale, term, term2);
+			matAlgebra.add().call(sum, term2, sum);
+			matAlgebra.multiply().call(term, subTerm, term3);
+			matAlgebra.multiply().call(term3, subTerm, term);
+			numAlgebra.add().call(inc, one, inc);
+			numAlgebra.add().call(inc, one, inc);
 		}
-		U two = numGroup.construct();
-		numGroup.unity().call(two);
-		numGroup.add().call(two, two, two);
-		matGroup.scale().call(two, sum, sum);
-		matGroup.assign().call(sum, result);
+		U two = numAlgebra.construct();
+		numAlgebra.unity().call(two);
+		numAlgebra.add().call(two, two, two);
+		matAlgebra.scale().call(two, sum, sum);
+		matAlgebra.assign().call(sum, result);
 	}
 }

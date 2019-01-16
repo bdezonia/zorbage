@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,18 +39,18 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class TensorMatrixBridge<U> implements MatrixMember<U> {
 
-	private final Algebra<?,U> group;
+	private final Algebra<?,U> Algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private final IntegerIndex fixedDims;
 	private int rangingDimR;
 	private int rangingDimC;
 
-	public TensorMatrixBridge(Algebra<?,U> group, TensorMember<U> tensor) {
+	public TensorMatrixBridge(Algebra<?,U> Algebra, TensorMember<U> tensor) {
 		if (tensor.numDimensions() < 2)
 			throw new IllegalArgumentException();
-		this.group = group;
-		this.zero = group.construct();
+		this.Algebra = Algebra;
+		this.zero = Algebra.construct();
 		this.tensor = tensor;
 		this.fixedDims = new IntegerIndex(tensor.numDimensions());
 		this.rangingDimC = 0;
@@ -125,7 +125,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void v(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols())
-			group.assign().call(zero, value);
+			Algebra.assign().call(zero, value);
 		else {
 			fixedDims.set(rangingDimR, r);
 			fixedDims.set(rangingDimC, c);
@@ -136,7 +136,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void setV(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols()) {
-			if (group.isNotEqual().call(zero, value))
+			if (Algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else {

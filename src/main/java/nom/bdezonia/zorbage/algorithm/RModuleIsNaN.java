@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,17 +41,17 @@ public class RModuleIsNaN {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & NaN<U>,U>
-		boolean compute(T group, RModuleMember<U> a)
+		boolean compute(T Algebra, RModuleMember<U> a)
 	{
-		U value = group.construct();
+		U value = Algebra.construct();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, value);
-			if (group.isNaN().call(value))
+			if (Algebra.isNaN().call(value))
 				return true;
 		}
 		return false;

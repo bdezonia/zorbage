@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,17 +41,17 @@ public class MatrixDirectProduct {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param in1
 	 * @param in2
 	 * @param out
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U,W extends MatrixMember<U>>
-		void compute(T group, W in1, W in2, W out)
+		void compute(T Algebra, W in1, W in2, W out)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
-		U tmp3 = group.construct();
+		U tmp1 = Algebra.construct();
+		U tmp2 = Algebra.construct();
+		U tmp3 = Algebra.construct();
 		if (out == in1 || out == in2)
 			throw new IllegalArgumentException("output matrix must not be one of input matrices");
 		out.alloc(in1.rows() * in2.rows(), in1.cols() * in2.cols());
@@ -61,7 +61,7 @@ public class MatrixDirectProduct {
 				for (long r2 = 0; r2 < in2.rows(); r2++) {
 					for (long c2 = 0; c2 < in2.cols(); c2++) {
 						in2.v(r2, c2, tmp2);
-						group.multiply().call(tmp1, tmp2, tmp3);
+						Algebra.multiply().call(tmp1, tmp2, tmp3);
 						out.setV(r1*in2.rows()+r2, c1*in2.cols()+c2, tmp3);
 					}
 				}

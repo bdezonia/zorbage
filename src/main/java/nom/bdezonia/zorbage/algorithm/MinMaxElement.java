@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,20 +41,20 @@ public class MinMaxElement {
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param min
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U min, U max)
+		void compute(T alg, IndexedDataSource<?,U> storage, U min, U max)
 	{
-		compute(grp, 0, storage.size(), storage, min, max);
+		compute(alg, 0, storage.size(), storage, min, max);
 	}
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param start
 	 * @param count
 	 * @param storage
@@ -62,42 +62,42 @@ public class MinMaxElement {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min, U max)
+		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U min, U max)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("minmax undefined for empty list");
-		U tmp1 = grp.construct();
-		U tmp2 = grp.construct();
+		U tmp1 = alg.construct();
+		U tmp2 = alg.construct();
 		storage.get(start, min);
-		grp.assign().call(min, max);
+		alg.assign().call(min, max);
 		long i = 1;
 		if ((count & 1) == 0) {
 			storage.get(start+1, tmp1);
-			if (grp.isGreater().call(tmp1, max)) {
-				grp.assign().call(tmp1, max);
+			if (alg.isGreater().call(tmp1, max)) {
+				alg.assign().call(tmp1, max);
 			}
-			if (grp.isLess().call(tmp1, min)) {
-				grp.assign().call(tmp1, min);
+			if (alg.isLess().call(tmp1, min)) {
+				alg.assign().call(tmp1, min);
 			}
 			i++;
 		}
 		while (i < count) {
 			storage.get(start+i, tmp1);
 			storage.get(start+i+1, tmp2);
-			if (grp.isGreater().call(tmp1, tmp2)) {
-				if (grp.isGreater().call(tmp1, max)) {
-					grp.assign().call(tmp1, max);
+			if (alg.isGreater().call(tmp1, tmp2)) {
+				if (alg.isGreater().call(tmp1, max)) {
+					alg.assign().call(tmp1, max);
 				}
-				if (grp.isLess().call(tmp2, min)) {
-					grp.assign().call(tmp2, min);
+				if (alg.isLess().call(tmp2, min)) {
+					alg.assign().call(tmp2, min);
 				}
 			}
 			else { // tmp2 >= tmp1
-				if (grp.isGreater().call(tmp2, max)) {
-					grp.assign().call(tmp2, max);
+				if (alg.isGreater().call(tmp2, max)) {
+					alg.assign().call(tmp2, max);
 				}
-				if (grp.isLess().call(tmp1, min)) {
-					grp.assign().call(tmp1, min);
+				if (alg.isLess().call(tmp1, min)) {
+					alg.assign().call(tmp1, min);
 				}
 			}
 			i += 2;

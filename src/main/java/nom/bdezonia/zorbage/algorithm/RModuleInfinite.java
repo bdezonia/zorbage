@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,18 +41,18 @@ public class RModuleInfinite {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U> & Infinite<U>, U>
-		void compute(T grp, RModuleMember<U> a)
+		void compute(T alg, RModuleMember<U> a)
 	{
 		// comment out this possible source of bugs. empty rmodules will remain that way.
 		//if (a.length() == 0) {
 		//	a.alloc(1);
 		//}
-		U value = grp.construct();
-		grp.infinite().call(value);
+		U value = alg.construct();
+		alg.infinite().call(value);
 		for (long i = 0; i < a.length(); i++) {
 			a.setV(i, value);
 		}

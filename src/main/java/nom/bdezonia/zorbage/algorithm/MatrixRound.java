@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,22 +42,22 @@ public class MatrixRound {
 	
 	/**
 	 * 
-	 * @param entityGroup
+	 * @param entityAlgebra
 	 * @param mode
 	 * @param delta
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Rounding<W,U>, U extends NumberMember<U>, W>
-		void compute(T entityGroup, Round.Mode mode, W delta, MatrixMember<U> a, MatrixMember<U> b)
+		void compute(T entityAlgebra, Round.Mode mode, W delta, MatrixMember<U> a, MatrixMember<U> b)
 	{
 		if (a != b)
 			b.alloc(a.rows(), a.cols());
-		U tmp = entityGroup.construct();
+		U tmp = entityAlgebra.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				entityGroup.round().call(mode, delta, tmp, tmp);
+				entityAlgebra.round().call(mode, delta, tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

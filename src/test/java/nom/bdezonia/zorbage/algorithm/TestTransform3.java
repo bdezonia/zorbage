@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.impl.Ramp;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
@@ -48,8 +48,8 @@ public class TestTransform3 {
 	public void test1() {
 		
 		IndexedDataSource<?, Float64Member> data = Storage.allocate(1000, G.DBL.construct());
-		Ramp<Float64Group, Float64Member> ramp =
-				new Ramp<Float64Group, Float64Member>(G.DBL, new Float64Member(), new Float64Member(0.1));
+		Ramp<Float64Algebra, Float64Member> ramp =
+				new Ramp<Float64Algebra, Float64Member>(G.DBL, new Float64Member(), new Float64Member(0.1));
 		Generate.compute(G.DBL, ramp, data);
 		// multiply list1 by list2 and store in list2: with 1 list == squared values in place
 		Transform3.compute(G.DBL, G.DBL.multiply(), data);

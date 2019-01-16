@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class SinhL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	private final Sinh<T,U> lowerProc;
 	private final U tmp;
 	
-	public SinhL(T group, Procedure<U> ancestor) {
+	public SinhL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Sinh<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Sinh<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

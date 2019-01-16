@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,8 +41,8 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	private final MatrixMember<U> mat;
 	private long startRow, countRows, startCol, countCols;
 	
-	public SubMatrixBridge(Algebra<?,U> group, MatrixMember<U> mat) {
-		this.zero = group.construct();
+	public SubMatrixBridge(Algebra<?,U> Algebra, MatrixMember<U> mat) {
+		this.zero = Algebra.construct();
 		this.mat = mat;
 		this.startRow = 0;
 		this.startCol = 0;

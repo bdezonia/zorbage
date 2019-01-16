@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,7 +38,7 @@ public interface Infinite<T> {
 
 	Function1<Boolean,T> isInfinite();
 
-	// positive or negative can be determined with signum() for Ordered groups.
+	// positive or negative can be determined with signum() for Ordered Algebras.
 	// Complex has no concept of pos inf and neg inf.
 	
 	Procedure1<T> infinite();

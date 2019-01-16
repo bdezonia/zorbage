@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,14 +42,14 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
  */
 public class EquationParser<T extends Algebra<T,U> & Trigonometric<U>,U> {
 
-	public Tuple2<String,Procedure<U>> parse(T group, String string) {
+	public Tuple2<String,Procedure<U>> parse(T Algebra, String string) {
 		Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);
 		
 		tuple.setA("Unimplemented");
-		tuple.setB(new ZeroL<T,U>(group));
+		tuple.setB(new ZeroL<T,U>(Algebra));
 		
 		//tuple.setA(null);
-		//tuple.setB(new SinL<T,U>(group, new ConstantL<T,U>(group,group.construct())));
+		//tuple.setB(new SinL<T,U>(Algebra, new ConstantL<T,U>(Algebra,Algebra.construct())));
 		
 		return tuple;
 	}

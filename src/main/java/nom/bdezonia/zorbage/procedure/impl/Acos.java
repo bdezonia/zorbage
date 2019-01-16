@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class Acos<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Acos(T group) {
-		this.group = group;
+	public Acos(T Algebra) {
+		this.Algebra = Algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		group.acos().call(a, b);
+		Algebra.acos().call(a, b);
 	}
 
 }

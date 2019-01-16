@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Group;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -43,20 +43,20 @@ public class FFT {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 */
 	public static
-		void compute(ComplexFloat64Group group, IndexedDataSource<?,ComplexFloat64Member> a, IndexedDataSource<?,ComplexFloat64Member> b)
+		void compute(ComplexFloat64Algebra Algebra, IndexedDataSource<?,ComplexFloat64Member> a, IndexedDataSource<?,ComplexFloat64Member> b)
 	{
 		if (a.size() != FFT.enclosingPowerOf2(a.size()))
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (a.size() != b.size())
 			throw new IllegalArgumentException("output size does not match input size");
 		
-		ComplexFloat64Member tmp1 = group.construct();
-		ComplexFloat64Member tmp2 = group.construct();
+		ComplexFloat64Member tmp1 = Algebra.construct();
+		ComplexFloat64Member tmp2 = Algebra.construct();
 
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(a.size());
@@ -74,8 +74,8 @@ public class FFT {
 			}
 		}
 
-		ComplexFloat64Member w = group.construct();
-		ComplexFloat64Member tao = group.construct();
+		ComplexFloat64Member w = Algebra.construct();
+		ComplexFloat64Member tao = Algebra.construct();
 
 		// butterfly updates
 		for (long L = 2; L <= a.size(); L = L+L) {
@@ -85,11 +85,11 @@ public class FFT {
 				w.setI(Math.sin(kth));
 				for (long j = 0; j < a.size()/L; j++) {
 					b.get(j*L + k + L/2, tmp1);
-					group.multiply().call(w, tmp1, tao);
+					Algebra.multiply().call(w, tmp1, tao);
 					b.get(j*L + k, tmp2);
-					group.subtract().call(tmp2, tao, tmp1);
+					Algebra.subtract().call(tmp2, tao, tmp1);
 					b.set(j*L + k + L/2, tmp1);
-					group.add().call(tmp2, tao, tmp1);
+					Algebra.add().call(tmp2, tao, tmp1);
 					b.set(j*L + k, tmp1);
 				}
 			}

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,31 +40,31 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>, Allocatable<ArrayStorageGeneric<T,U>>
 {
 
-	private final T grp;
+	private final T alg;
 	private final Object[] data;
 	
-	public ArrayStorageGeneric(long size, T grp) {
+	public ArrayStorageGeneric(long size, T alg) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
-		this.grp = grp;
+		this.alg = alg;
 		this.data = new Object[(int)size];
 		for (int i = 0; i < size; i++) {
-			this.data[i] = grp.construct();
+			this.data[i] = alg.construct();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void set(long index, U value) {
-		grp.assign().call(value, (U)data[(int)index]);
+		alg.assign().call(value, (U)data[(int)index]);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void get(long index, U value) {
-		grp.assign().call((U)data[(int)index], value);
+		alg.assign().call((U)data[(int)index], value);
 	}
 	
 	@Override
@@ -75,15 +75,15 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayStorageGeneric<T,U> duplicate() {
-		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),grp);
+		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),alg);
 		for (int i = 0; i < data.length; i++)
-			grp.assign().call((U)data[i], (U)s.data[i]);
+			alg.assign().call((U)data[i], (U)s.data[i]);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageGeneric<T,U> allocate() {
-		return new ArrayStorageGeneric<T,U>(size(), grp);
+		return new ArrayStorageGeneric<T,U>(size(), alg);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,35 +41,35 @@ public class MaxElement {
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U max)
+		void compute(T alg, IndexedDataSource<?,U> storage, U max)
 	{
-		compute(grp, 0, storage.size(), storage, max);
+		compute(alg, 0, storage.size(), storage, max);
 	}
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param start
 	 * @param count
 	 * @param storage
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U max)
+		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U max)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("max undefined for empty list");
-		U tmp = grp.construct();
+		U tmp = alg.construct();
 		storage.get(start, max);
 		for (long i = 1; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (grp.isGreater().call(tmp, max)) {
-				grp.assign().call(tmp, max);
+			if (alg.isGreater().call(tmp, max)) {
+				alg.assign().call(tmp, max);
 			}
 		}
 	}

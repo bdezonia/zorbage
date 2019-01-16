@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 public class Rand<T extends Algebra<T,U> & Random<U>,U>
 	implements Procedure1<U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Rand(T group) {
-		this.group = group;
+	public Rand(T Algebra) {
+		this.Algebra = Algebra;
 	}
 	
 	@Override
 	public void call(U a) {
-		group.random().call(a);
+		Algebra.random().call(a);
 	}
 
 }

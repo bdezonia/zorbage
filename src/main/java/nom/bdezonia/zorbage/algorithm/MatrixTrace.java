@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,14 +42,14 @@ public class MatrixTrace {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param matrix
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T group, MatrixMember<U> matrix, U result)
+		void compute(T Algebra, MatrixMember<U> matrix, U result)
 	{
-		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(group, matrix);
-		RModuleSum.compute(group, diag, result);
+		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(Algebra, matrix);
+		RModuleSum.compute(Algebra, diag, result);
 	}
 }

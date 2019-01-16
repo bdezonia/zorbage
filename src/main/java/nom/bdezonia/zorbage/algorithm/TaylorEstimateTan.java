@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,8 +45,8 @@ public class TaylorEstimateTan {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matGroup
-	 * @param numGroup
+	 * @param matAlgebra
+	 * @param numAlgebra
 	 * @param x
 	 * @param result
 	 */
@@ -54,12 +54,12 @@ public class TaylorEstimateTan {
 		U,
 		V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
 		W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matGroup, T numGroup, W x, W result)
+		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
 	{
-		W s = matGroup.construct();
-		W c = matGroup.construct();
-		TaylorEstimateSin.compute(numTerms, matGroup, numGroup, x, s);
-		TaylorEstimateCos.compute(numTerms, matGroup, numGroup, x, c);
-		matGroup.divide().call(s, c, result);
+		W s = matAlgebra.construct();
+		W c = matAlgebra.construct();
+		TaylorEstimateSin.compute(numTerms, matAlgebra, numAlgebra, x, s);
+		TaylorEstimateCos.compute(numTerms, matAlgebra, numAlgebra, x, c);
+		matAlgebra.divide().call(s, c, result);
 	}
 }

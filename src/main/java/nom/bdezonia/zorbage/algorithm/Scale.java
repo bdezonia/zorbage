@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,19 +43,19 @@ public class Scale {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T group, U factor, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, U factor, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a.size() != b.size())
 			throw new IllegalArgumentException("input/output size mismatch");
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i,  tmp);
-			group.multiply().call(tmp, factor, tmp);
+			Algebra.multiply().call(tmp, factor, tmp);
 			b.set(i, tmp);
 		}
 	}

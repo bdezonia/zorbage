@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,20 +42,20 @@ public class PowerAny {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param power
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void compute(T group, int power, U a, U b)
+		void compute(T Algebra, int power, U a, U b)
 	{
 		if (power < 0) {
-			U invA = group.construct();
-			group.invert().call(a, invA);
-			PowerNonNegative.compute(group, -power, invA, b);
+			U invA = Algebra.construct();
+			Algebra.invert().call(a, invA);
+			PowerNonNegative.compute(Algebra, -power, invA, b);
 		}
 		else
-			PowerNonNegative.compute(group, power, a, b);
+			PowerNonNegative.compute(Algebra, power, a, b);
 	}
 }

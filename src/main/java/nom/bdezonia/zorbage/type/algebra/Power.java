@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.type.algebra;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
 
-// TODO: locate me in algebra hierarchy
+// TODO: locate me in Algebra hierarchy
 
 /**
  * 

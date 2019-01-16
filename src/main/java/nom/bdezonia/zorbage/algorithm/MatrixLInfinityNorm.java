@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,24 +42,24 @@ public class MatrixLInfinityNorm {
 
 	/**
 	 * 
-	 * @param matGroup
-	 * @param numGroup
+	 * @param matAlgebra
+	 * @param numAlgebra
 	 * @param mat
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Ordered<W>, W>
-		void compute(T matGroup, V numGroup, MatrixMember<U> mat, W result)
+		void compute(T matAlgebra, V numAlgebra, MatrixMember<U> mat, W result)
 	{
-		U value = matGroup.construct();
-		W max = numGroup.construct();
-		W tmp = numGroup.construct();
+		U value = matAlgebra.construct();
+		W max = numAlgebra.construct();
+		W tmp = numAlgebra.construct();
 		for (long r = 0; r < mat.rows(); r++) {
 			for (long c = 0; c < mat.cols(); c++) {
 				mat.v(r, c, value);
-				matGroup.norm().call(value, tmp);
-				numGroup.max().call(max, tmp, max);
+				matAlgebra.norm().call(value, tmp);
+				numAlgebra.max().call(max, tmp, max);
 			}
 		}
-		numGroup.assign().call(max, result);
+		numAlgebra.assign().call(max, result);
 	}
 }

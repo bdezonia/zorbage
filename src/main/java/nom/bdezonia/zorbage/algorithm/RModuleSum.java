@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,19 +41,19 @@ public class RModuleSum {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param rmod
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T group, RModuleMember<U> rmod, U result)
+		void compute(T Algebra, RModuleMember<U> rmod, U result)
 	{
-		U value = group.construct();
-		U sum = group.construct();
+		U value = Algebra.construct();
+		U sum = Algebra.construct();
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			group.add().call(sum, value, sum);
+			Algebra.add().call(sum, value, sum);
 		}
-		group.assign().call(sum, result);
+		Algebra.assign().call(sum, result);
 	}
 }

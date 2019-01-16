@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -50,9 +50,9 @@ public class StdDev {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U> & Ordered<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<?,U> storage, U result)
 	{
-		Variance.compute(grp, storage, result);
-		grp.sqrt().call(result, result);
+		Variance.compute(alg, storage, result);
+		alg.sqrt().call(result, result);
 	}
 }

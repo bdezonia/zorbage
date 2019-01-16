@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,10 +38,10 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class Min<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Procedure<U>
 {
-	private final T group;
+	private final T Algebra;
 	
-	public Min(T group) {
-		this.group = group;
+	public Min(T Algebra) {
+		this.Algebra = Algebra;
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -49,13 +49,13 @@ public class Min<T extends Algebra<T,U> & Ordered<U>, U>
 	public void call(U result, U... inputs) {
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("min undefined for empty list");
-		U min = group.construct();
-		group.assign().call(inputs[0],min);
+		U min = Algebra.construct();
+		Algebra.assign().call(inputs[0],min);
 		for (int i = 1; i < inputs.length; i++) {
-			if (group.isLess().call(inputs[i], min)) {
-				group.assign().call(inputs[i], min);
+			if (Algebra.isLess().call(inputs[i], min)) {
+				Algebra.assign().call(inputs[i], min);
 			}
 		}
-		group.assign().call(min, result);
+		Algebra.assign().call(min, result);
 	}
 }

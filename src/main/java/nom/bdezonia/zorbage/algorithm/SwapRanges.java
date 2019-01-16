@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,19 +42,19 @@ public class SwapRanges {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(group, 0, 0, a.size(), a, b);
+		compute(Algebra, 0, 0, a.size(), a, b);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param aStart
@@ -62,10 +62,10 @@ public class SwapRanges {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
+		U tmp1 = Algebra.construct();
+		U tmp2 = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp1);
 			b.get(bStart+i, tmp2);

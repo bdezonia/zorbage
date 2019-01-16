@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,32 +45,32 @@ public class MatrixDeterminant {
 	
 	/**
 	 * Calculate the determinant of a matrix.
-	 * @param matGroup
-	 * @param numGroup
+	 * @param matAlgebra
+	 * @param numAlgebra
 	 * @param matrix
 	 * @param det
 	 */
 	public static
 	
 	<BASETYPE, // the base type like Float64Member or Octonion etc.
-	BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+	BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
 	MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-	MATRIX_GROUP extends Algebra<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+	MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
 		
-	void compute(MATRIX_GROUP matGroup, BASETYPE_GROUP numGroup, MATRIX_MEMBER a, BASETYPE det)
+	void compute(MATRIX_Algebra matAlgebra, BASETYPE_Algebra numAlgebra, MATRIX_MEMBER a, BASETYPE det)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("determinant requires square matrix");
-		MATRIX_MEMBER tmpMat = matGroup.construct(a);
-		LUDecomp.compute(numGroup, matGroup, tmpMat);
-		BASETYPE tmp = numGroup.construct();
-		BASETYPE prod = numGroup.construct();
-		numGroup.unity().call(prod);
+		MATRIX_MEMBER tmpMat = matAlgebra.construct(a);
+		LUDecomp.compute(numAlgebra, matAlgebra, tmpMat);
+		BASETYPE tmp = numAlgebra.construct();
+		BASETYPE prod = numAlgebra.construct();
+		numAlgebra.unity().call(prod);
 		for (long i = 0; i < tmpMat.rows(); i++) {
 			tmpMat.v(i, i, tmp);
-			numGroup.multiply().call(prod, tmp, prod);
+			numAlgebra.multiply().call(prod, tmp, prod);
 		}
-		numGroup.assign().call(prod, det);
+		numAlgebra.assign().call(prod, det);
 	}
 	
 }

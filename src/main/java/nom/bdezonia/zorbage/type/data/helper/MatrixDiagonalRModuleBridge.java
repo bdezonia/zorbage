@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,8 +45,8 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 	private Origin origin;
 	private long diagNumber;
 	
-	public MatrixDiagonalRModuleBridge(Algebra<?,U> group, MatrixMember<U> mat) {
-		this.zero = group.construct();
+	public MatrixDiagonalRModuleBridge(Algebra<?,U> Algebra, MatrixMember<U> mat) {
+		this.zero = Algebra.construct();
 		this.mat = mat;
 		this.origin = Origin.UpperLeft;
 		this.diagNumber = 0;

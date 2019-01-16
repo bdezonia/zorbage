@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,21 +38,21 @@ public class ReplaceCopy {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param old_value
 	 * @param new_value
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, U old_value, U new_value, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, U old_value, U new_value, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(group, old_value, new_value, 0, 0, a.size(), a, b);
+		compute(Algebra, old_value, new_value, 0, 0, a.size(), a, b);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param old_value
 	 * @param new_value
 	 * @param aStart
@@ -62,12 +62,12 @@ public class ReplaceCopy {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, U old_value, U new_value, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T Algebra, U old_value, U new_value, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp);
-			if (group.isEqual().call(tmp, old_value))
+			if (Algebra.isEqual().call(tmp, old_value))
 				b.set(bStart+i, new_value);
 			else
 				b.set(bStart+i, tmp);

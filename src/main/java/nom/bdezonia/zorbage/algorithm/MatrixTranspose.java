@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,15 +42,15 @@ public class MatrixTranspose {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, MatrixMember<U> a, MatrixMember<U> b)
+		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b)
 	{
-		U value1 = group.construct();
-		U value2 = group.construct();
+		U value1 = Algebra.construct();
+		U value2 = Algebra.construct();
 		if (a == b) {
 			if (a.rows() != a.cols())
 				throw new IllegalArgumentException("in place transpose only works for square matrices");

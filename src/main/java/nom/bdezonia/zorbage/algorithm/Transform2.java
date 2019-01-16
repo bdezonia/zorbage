@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,7 +41,7 @@ public class Transform2 {
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -52,14 +52,14 @@ public class Transform2 {
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>,U>
-		void compute(T grp, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T alg, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(grp, grp, proc, aStart, bStart, count, aStride, bStride, a, b);
+		compute(alg, alg, proc, aStart, bStart, count, aStride, bStride, a, b);
 	}
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param proc
 	 * @param start
 	 * @param count
@@ -67,15 +67,15 @@ public class Transform2 {
 	 * @param a
 	 */
 	public static final <T extends Algebra<T,U>,U>
-		void compute(T grp, Procedure2<U,U> proc, long start, long count, long stride, IndexedDataSource<?,U> a)
+		void compute(T alg, Procedure2<U,U> proc, long start, long count, long stride, IndexedDataSource<?,U> a)
 	{
-		compute(grp, grp, proc, start, start, count, stride, stride, a, a);
+		compute(alg, alg, proc, start, start, count, stride, stride, a, a);
 	}
 
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
+	 * @param algU
+	 * @param algW
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -86,10 +86,10 @@ public class Transform2 {
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>,U,V extends Algebra<V,W>,W>
-		void compute(T grpU, V grpW, Procedure2<U,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
+		void compute(T algU, V algW, Procedure2<U,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
-		U valueU = grpU.construct();
-		W valueW = grpW.construct();
+		U valueU = algU.construct();
+		W valueW = algW.construct();
 		for (long i = aStart, j = bStart, c = 0; c < count; c++) {
 			a.get(i, valueU);
 			proc.call(valueU, valueW);
@@ -102,15 +102,15 @@ public class Transform2 {
 	/**
 	 * In place transformation of one whole list by a Procedure2.
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grp, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T alg, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
-		U value1 = grp.construct();
-		U value2 = grp.construct();
+		U value1 = alg.construct();
+		U value2 = alg.construct();
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, value1);
 			proc.call(value1, value2);

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -48,61 +48,61 @@ public class MatrixPower {
 	/**
 	 * 
 	 * @param power
-	 * @param numGroup
-	 * @param rmodGroup
-	 * @param matGroup
+	 * @param numAlgebra
+	 * @param rmodAlgebra
+	 * @param matAlgebra
 	 * @param a
 	 * @param b
 	 */
 	public static
 	<BASETYPE, // the base type like Float64Member or Octonion etc.
-	BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE> & NaN<BASETYPE>,
+	BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE> & NaN<BASETYPE>,
 	RMODULE_MEMBER extends RModuleMember<BASETYPE>,
-	RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+	RMODULE_Algebra extends RModule<RMODULE_Algebra,RMODULE_MEMBER,BASETYPE_Algebra,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 	MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-	MATRIX_GROUP extends Algebra<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
-		void compute(int power, BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, MATRIX_MEMBER b)
+	MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+		void compute(int power, BASETYPE_Algebra numAlgebra, RMODULE_Algebra rmodAlgebra, MATRIX_Algebra matAlgebra, MATRIX_MEMBER a, MATRIX_MEMBER b)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("power requires a square matrix as input");
 		if (power < 0) {
-			MATRIX_MEMBER aInv = matGroup.construct();
-			MatrixInvert.compute(numGroup, rmodGroup, matGroup, a, aInv);
-			MatrixPower.compute(-power, numGroup, rmodGroup, matGroup, aInv, b);
+			MATRIX_MEMBER aInv = matAlgebra.construct();
+			MatrixInvert.compute(numAlgebra, rmodAlgebra, matAlgebra, a, aInv);
+			MatrixPower.compute(-power, numAlgebra, rmodAlgebra, matAlgebra, aInv, b);
 		}
 		else if (power == 0) {
 			b.alloc(a.rows(), a.cols());
-			if (matGroup.isZero().call(a)) {
-				MatrixNaN.compute(numGroup, b);
+			if (matAlgebra.isZero().call(a)) {
+				MatrixNaN.compute(numAlgebra, b);
 			}
 			else {
-				MatrixUnity.compute(numGroup, b);
+				MatrixUnity.compute(numAlgebra, b);
 			}
 		}
 		else if (power == 1)
-			MatrixAssign.compute(numGroup, a, b);
+			MatrixAssign.compute(numAlgebra, a, b);
 		else { // power >= 2
 			// Higham, Functions of Matrices, page 72
 			//   my impl is not completely speed optimized
-			MATRIX_MEMBER p = matGroup.construct(a);
-			MATRIX_MEMBER tmp = matGroup.construct();
+			MATRIX_MEMBER p = matAlgebra.construct(a);
+			MATRIX_MEMBER tmp = matAlgebra.construct();
 			int i = 0;
 			while ((power & (1 << i)) == 0) {
-				MatrixMultiply.compute(numGroup, p, p, tmp);
-				MatrixAssign.compute(numGroup, tmp, p);
+				MatrixMultiply.compute(numAlgebra, p, p, tmp);
+				MatrixAssign.compute(numAlgebra, tmp, p);
 				i = i + 1;
 			}
-			MATRIX_MEMBER x = matGroup.construct(p); 
+			MATRIX_MEMBER x = matAlgebra.construct(p); 
 			int maxBit = Integer.highestOneBit(power);
 			for (int j = i + 1; j <= maxBit; j++) {
-				MatrixMultiply.compute(numGroup, p, p, tmp);
-				MatrixAssign.compute(numGroup, tmp, p);
+				MatrixMultiply.compute(numAlgebra, p, p, tmp);
+				MatrixAssign.compute(numAlgebra, tmp, p);
 				if ((power & (1 << j)) > 0) {
-					MatrixMultiply.compute(numGroup, x, p, tmp);
-					MatrixAssign.compute(numGroup, tmp, x);
+					MatrixMultiply.compute(numAlgebra, x, p, tmp);
+					MatrixAssign.compute(numAlgebra, tmp, x);
 				}
 			}
-			MatrixAssign.compute(numGroup, x, b);
+			MatrixAssign.compute(numAlgebra, x, b);
 		}
 	}
 }

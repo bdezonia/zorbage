@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,20 +38,20 @@ public class FindEnd {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param values
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, IndexedDataSource<?,U> values, IndexedDataSource<?,U> a)
+		long compute(T Algebra, IndexedDataSource<?,U> values, IndexedDataSource<?,U> a)
 	{
-		return compute(group, values, 0, a.size(), a);
+		return compute(Algebra, values, 0, a.size(), a);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param values
 	 * @param start
 	 * @param count
@@ -59,17 +59,17 @@ public class FindEnd {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T group, IndexedDataSource<?,U> values, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T Algebra, IndexedDataSource<?,U> values, long start, long count, IndexedDataSource<?,U> a)
 	{
 		long sz = values.size();
 		if (sz == 0 || count < sz) return start + count;
-		U tmpA = group.construct();
-		U tmpV = group.construct();
+		U tmpA = Algebra.construct();
+		U tmpV = Algebra.construct();
 		for (long i = start+count-sz; i >= 0; i--) {
 			for (int j = 0; j < sz; j++) {
 				a.get(i+j, tmpA);
 				values.get(j, tmpV);
-				if (group.isNotEqual().call(tmpA, tmpV))
+				if (Algebra.isNotEqual().call(tmpA, tmpV))
 					break;
 				if (j == sz-1)
 					return i;

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 
-	private final Algebra<?,U> group;
+	private final Algebra<?,U> Algebra;
 	private final U zero;
 	private final RModuleMember<U> rmod;
 	private boolean isColumn;
 	
-	public RModuleMatrixBridge(Algebra<?,U> group, RModuleMember<U> rmod) {
-		this.group = group;
-		this.zero = group.construct();
+	public RModuleMatrixBridge(Algebra<?,U> Algebra, RModuleMember<U> rmod) {
+		this.Algebra = Algebra;
+		this.zero = Algebra.construct();
 		this.rmod = rmod;
 		this.isColumn = true;
 	}
@@ -127,13 +127,13 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	public void v(long r, long c, U value) {
 		if (isColumn) {
 			if (r != 0)
-				group.assign().call(zero, value);
+				Algebra.assign().call(zero, value);
 			else
 				rmod.v(c, value);
 		}
 		else {
 			if (c != 0)
-				group.assign().call(zero, value);
+				Algebra.assign().call(zero, value);
 			else
 				rmod.v(r, value);
 		}
@@ -142,13 +142,13 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void setV(long r, long c, U value) {
 		if (isColumn) {
-			if (r != 0 && group.isNotEqual().call(zero, value))
+			if (r != 0 && Algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 			else
 				rmod.setV(c, value);
 		}
 		else {
-			if (c != 0 && group.isNotEqual().call(zero, value))
+			if (c != 0 && Algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 			else
 				rmod.setV(r, value);

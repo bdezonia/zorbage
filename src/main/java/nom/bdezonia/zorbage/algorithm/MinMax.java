@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -38,22 +38,22 @@ public class MinMax {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param min
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T group, U a, U b, U min, U max)
+		void compute(T Algebra, U a, U b, U min, U max)
 	{
-		if (group.isGreater().call(a, b)) {
-			group.assign().call(a, max);
-			group.assign().call(b, min);
+		if (Algebra.isGreater().call(a, b)) {
+			Algebra.assign().call(a, max);
+			Algebra.assign().call(b, min);
 		}
 		else {
-			group.assign().call(a, min);
-			group.assign().call(b, max);
+			Algebra.assign().call(a, min);
+			Algebra.assign().call(b, max);
 		}
 	}
 

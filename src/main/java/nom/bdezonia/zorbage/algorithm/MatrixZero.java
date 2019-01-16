@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,13 +40,13 @@ public class MatrixZero {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, MatrixMember<U> a)
+		void compute(T Algebra, MatrixMember<U> a)
 	{
-		U zero = group.construct();
+		U zero = Algebra.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.setV(row, col, zero);

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -35,7 +35,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.impl.Ramp;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
@@ -59,10 +59,10 @@ public class TestFFT {
 		SignedInt32Member start2 = new SignedInt32Member(-5);
 		SignedInt32Member inc1 = new SignedInt32Member(-1);
 		SignedInt32Member inc2 = new SignedInt32Member(1);
-		Ramp<SignedInt32Group, SignedInt32Member> ramp1 =
-				new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32,start1,inc1);
-		Ramp<SignedInt32Group, SignedInt32Member> ramp2 =
-				new Ramp<SignedInt32Group, SignedInt32Member>(G.INT32,start2,inc2);
+		Ramp<SignedInt32Algebra, SignedInt32Member> ramp1 =
+				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start1,inc1);
+		Ramp<SignedInt32Algebra, SignedInt32Member> ramp2 =
+				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start2,inc2);
 		Fill.compute(G.INT32, ramp1, 0, 3, poly1);
 		Fill.compute(G.INT32, ramp2, 0, 3, poly2);
 		long n = FFT.enclosingPowerOf2(poly1.size());

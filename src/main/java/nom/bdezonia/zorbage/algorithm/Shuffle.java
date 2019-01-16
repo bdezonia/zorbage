@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,27 +40,27 @@ public class Shuffle {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, IndexedDataSource<?,U> a)
+		void compute(T Algebra, IndexedDataSource<?,U> a)
 	{
-		compute(group, 0, a.size(), a);
+		compute(Algebra, 0, a.size(), a);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param start
 	 * @param count
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T group, long start, long count, IndexedDataSource<?,U> a)
+		void compute(T Algebra, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
+		U tmp1 = Algebra.construct();
+		U tmp2 = Algebra.construct();
 		Random rng = new Random(System.currentTimeMillis());
 		for (long i = 0; i < count-1; i++) {
 			long index = (long)(Math.round((count-1-i)*rng.nextDouble()));

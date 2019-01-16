@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -55,32 +55,32 @@ public class Sum {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<?,U> storage, U result)
 	{
-		compute(grp, 0, storage.size(), storage, result);
+		compute(alg, 0, storage.size(), storage, result);
 	}
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param start
 	 * @param count
 	 * @param storage
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U result)
 	{
 		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Sum method");
 		if (count < 0) throw new IllegalArgumentException("count must be >= 0 in Sum method");
 		if (start + count > storage.size()) throw new IllegalArgumentException("start+count must be <= storage length in Sum method");
 
-		sum(grp, start, count, storage, result);
+		sum(alg, start, count, storage, result);
 	}
 
 	// Note: for now will just recursively sum to eliminate some roundoff errors. This is not
@@ -92,19 +92,19 @@ public class Sum {
 	// structure.
 	
 	private static <T extends Algebra<T,U> & Addition<U>, U>
-		void sum(T grp, long start, long count, IndexedDataSource<?,U> storage, U result)
+		void sum(T alg, long start, long count, IndexedDataSource<?,U> storage, U result)
 	{
-		U tmp1 = grp.construct();
-		U tmp2 = grp.construct();
+		U tmp1 = alg.construct();
+		U tmp2 = alg.construct();
 		if (count == 0)
-			grp.zero().call(result);
+			alg.zero().call(result);
 		else if (count == 1) {
 			storage.get(start, result);
 		}
 		else if (count == 2) {
 			storage.get(start, tmp1);
 			storage.get(start+1, tmp2);
-			grp.add().call(tmp1, tmp2, result);
+			alg.add().call(tmp1, tmp2, result);
 		}
 		else {
 			long cnt1 = count/2;
@@ -112,10 +112,10 @@ public class Sum {
 			long st1 = start;
 			long st2 = start + cnt1;
 			
-			sum(grp, st1, cnt1, storage, tmp1);
-			sum(grp, st2, cnt2, storage, tmp2);
+			sum(alg, st1, cnt1, storage, tmp1);
+			sum(alg, st2, cnt2, storage, tmp2);
 			
-			grp.add().call(tmp1, tmp2, result);
+			alg.add().call(tmp1, tmp2, result);
 		}
 	}
 }

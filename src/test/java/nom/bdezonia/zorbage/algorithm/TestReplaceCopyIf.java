@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -33,7 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.EqualConstant;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -54,7 +54,7 @@ public class TestReplaceCopyIf {
 				new double[9]);
 		Float64Member value = G.DBL.construct();
 		Condition<Float64Member> cond =
-				new EqualConstant<Float64Group, Float64Member>(G.DBL, new Float64Member(1));
+				new EqualConstant<Float64Algebra, Float64Member>(G.DBL, new Float64Member(1));
 
 		ReplaceCopyIf.compute(G.DBL, cond, new Float64Member(88), a, b);
 		assertEquals(9, b.size());

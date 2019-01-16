@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,35 +41,35 @@ public class MinElement {
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param min
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U min)
+		void compute(T alg, IndexedDataSource<?,U> storage, U min)
 	{
-		compute(grp, 0, storage.size(), storage, min);
+		compute(alg, 0, storage.size(), storage, min);
 	}
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param start
 	 * @param count
 	 * @param storage
 	 * @param min
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min)
+		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U min)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("min undefined for empty list");
-		U tmp = grp.construct();
+		U tmp = alg.construct();
 		storage.get(start, min);
 		for (long i = 1; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (grp.isLess().call(tmp, min)) {
-				grp.assign().call(tmp, min);
+			if (alg.isLess().call(tmp, min)) {
+				alg.assign().call(tmp, min);
 			}
 		}
 	}

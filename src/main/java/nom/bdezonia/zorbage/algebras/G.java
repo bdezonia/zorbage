@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -26,63 +26,63 @@
  */
 package nom.bdezonia.zorbage.algebras;
 
-import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntGroup;
-import nom.bdezonia.zorbage.type.data.bool.BooleanGroup;
-import nom.bdezonia.zorbage.type.data.float16.real.Float16Group;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Group;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Group;
+import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntAlgebra;
+import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Algebra;
+import nom.bdezonia.zorbage.type.data.float32.real.Float32Algebra;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Vector;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Group;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModule;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Group;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModule;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
-import nom.bdezonia.zorbage.type.data.int1.SignedInt1Group;
-import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Group;
-import nom.bdezonia.zorbage.type.data.int10.SignedInt10Group;
-import nom.bdezonia.zorbage.type.data.int10.UnsignedInt10Group;
-import nom.bdezonia.zorbage.type.data.int11.SignedInt11Group;
-import nom.bdezonia.zorbage.type.data.int11.UnsignedInt11Group;
-import nom.bdezonia.zorbage.type.data.int12.SignedInt12Group;
-import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Group;
-import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Group;
-import nom.bdezonia.zorbage.type.data.int13.SignedInt13Group;
-import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Group;
-import nom.bdezonia.zorbage.type.data.int14.SignedInt14Group;
-import nom.bdezonia.zorbage.type.data.int14.UnsignedInt14Group;
-import nom.bdezonia.zorbage.type.data.int15.SignedInt15Group;
-import nom.bdezonia.zorbage.type.data.int15.UnsignedInt15Group;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Group;
-import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Group;
-import nom.bdezonia.zorbage.type.data.int2.SignedInt2Group;
-import nom.bdezonia.zorbage.type.data.int2.UnsignedInt2Group;
-import nom.bdezonia.zorbage.type.data.int3.SignedInt3Group;
-import nom.bdezonia.zorbage.type.data.int3.UnsignedInt3Group;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Group;
-import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Group;
-import nom.bdezonia.zorbage.type.data.int4.SignedInt4Group;
-import nom.bdezonia.zorbage.type.data.int4.UnsignedInt4Group;
-import nom.bdezonia.zorbage.type.data.int5.SignedInt5Group;
-import nom.bdezonia.zorbage.type.data.int5.UnsignedInt5Group;
-import nom.bdezonia.zorbage.type.data.int6.SignedInt6Group;
-import nom.bdezonia.zorbage.type.data.int6.UnsignedInt6Group;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Group;
-import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Group;
-import nom.bdezonia.zorbage.type.data.int7.SignedInt7Group;
-import nom.bdezonia.zorbage.type.data.int7.UnsignedInt7Group;
-import nom.bdezonia.zorbage.type.data.int8.SignedInt8Group;
-import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Group;
-import nom.bdezonia.zorbage.type.data.int9.SignedInt9Group;
-import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Group;
+import nom.bdezonia.zorbage.type.data.int1.SignedInt1Algebra;
+import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Algebra;
+import nom.bdezonia.zorbage.type.data.int10.SignedInt10Algebra;
+import nom.bdezonia.zorbage.type.data.int10.UnsignedInt10Algebra;
+import nom.bdezonia.zorbage.type.data.int11.SignedInt11Algebra;
+import nom.bdezonia.zorbage.type.data.int11.UnsignedInt11Algebra;
+import nom.bdezonia.zorbage.type.data.int12.SignedInt12Algebra;
+import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Algebra;
+import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Algebra;
+import nom.bdezonia.zorbage.type.data.int13.SignedInt13Algebra;
+import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Algebra;
+import nom.bdezonia.zorbage.type.data.int14.SignedInt14Algebra;
+import nom.bdezonia.zorbage.type.data.int14.UnsignedInt14Algebra;
+import nom.bdezonia.zorbage.type.data.int15.SignedInt15Algebra;
+import nom.bdezonia.zorbage.type.data.int15.UnsignedInt15Algebra;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Algebra;
+import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Algebra;
+import nom.bdezonia.zorbage.type.data.int2.SignedInt2Algebra;
+import nom.bdezonia.zorbage.type.data.int2.UnsignedInt2Algebra;
+import nom.bdezonia.zorbage.type.data.int3.SignedInt3Algebra;
+import nom.bdezonia.zorbage.type.data.int3.UnsignedInt3Algebra;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
+import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Algebra;
+import nom.bdezonia.zorbage.type.data.int4.SignedInt4Algebra;
+import nom.bdezonia.zorbage.type.data.int4.UnsignedInt4Algebra;
+import nom.bdezonia.zorbage.type.data.int5.SignedInt5Algebra;
+import nom.bdezonia.zorbage.type.data.int5.UnsignedInt5Algebra;
+import nom.bdezonia.zorbage.type.data.int6.SignedInt6Algebra;
+import nom.bdezonia.zorbage.type.data.int6.UnsignedInt6Algebra;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Algebra;
+import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Algebra;
+import nom.bdezonia.zorbage.type.data.int7.SignedInt7Algebra;
+import nom.bdezonia.zorbage.type.data.int7.UnsignedInt7Algebra;
+import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
+import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Algebra;
+import nom.bdezonia.zorbage.type.data.int9.SignedInt9Algebra;
+import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Algebra;
 
 /**
- * G is the container for the global set of defined groups.
+ * G is the container for the global set of defined Algebras.
  * 
  * @author Barry DeZonia
  *
@@ -91,73 +91,73 @@ public class G {
 	
 	private G() {}
 	
-	public static final UnboundedIntGroup BIGINT = new UnboundedIntGroup();
+	public static final UnboundedIntAlgebra BIGINT = new UnboundedIntAlgebra();
 	
-	public static final BooleanGroup BOOL = new BooleanGroup();
+	public static final BooleanAlgebra BOOL = new BooleanAlgebra();
 	
-	public static final Float16Group HLF = new Float16Group();
+	public static final Float16Algebra HLF = new Float16Algebra();
 	// TODO and num, vec, mat, ten for real, complex, quat, oct
 	
-	public static final Float32Group FLT = new Float32Group();
+	public static final Float32Algebra FLT = new Float32Algebra();
 	// TODO and num, vec, mat, ten for real, complex, quat, oct
 	
-	public static final Float64Group DBL = new Float64Group();
+	public static final Float64Algebra DBL = new Float64Algebra();
 	public static final Float64Vector DBL_VEC = new Float64Vector();
 	public static final Float64Matrix DBL_MAT = new Float64Matrix();
 	public static final Float64TensorProduct DBL_TEN = new Float64TensorProduct();
 	
-	public static final ComplexFloat64Group CDBL = new ComplexFloat64Group();
+	public static final ComplexFloat64Algebra CDBL = new ComplexFloat64Algebra();
 	public static final ComplexFloat64Vector CDBL_VEC = new ComplexFloat64Vector();
 	public static final ComplexFloat64Matrix CDBL_MAT = new ComplexFloat64Matrix();
 	//TODO public static final ComplexFloat64TensorProduct CDBL_TEN = new Float64TensorProduct();
 
-	public static final QuaternionFloat64Group QDBL = new QuaternionFloat64Group();
+	public static final QuaternionFloat64Algebra QDBL = new QuaternionFloat64Algebra();
 	public static final QuaternionFloat64RModule QDBL_RMOD = new QuaternionFloat64RModule();
 	public static final QuaternionFloat64Matrix QDBL_MAT = new QuaternionFloat64Matrix();
 	//TODO public static final QuaternionFloat64TensorProduct QDBL_TEN = new QuaternionFloat64TensorProduct();
 
-	public static final OctonionFloat64Group ODBL = new OctonionFloat64Group();
+	public static final OctonionFloat64Algebra ODBL = new OctonionFloat64Algebra();
 	public static final OctonionFloat64RModule ODBL_RMOD = new OctonionFloat64RModule();
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
 	//TODO public static final OctonionFloat64TensorProduct ODBL_TEN = new OctonionFloat64TensorProduct();
 
-	public static final UnsignedInt1Group UINT1 = new UnsignedInt1Group();
-	public static final UnsignedInt2Group UINT2 = new UnsignedInt2Group();
-	public static final UnsignedInt3Group UINT3 = new UnsignedInt3Group();
-	public static final UnsignedInt4Group UINT4 = new UnsignedInt4Group();
-	public static final UnsignedInt5Group UINT5 = new UnsignedInt5Group();
-	public static final UnsignedInt6Group UINT6 = new UnsignedInt6Group();
-	public static final UnsignedInt7Group UINT7 = new UnsignedInt7Group();
-	public static final UnsignedInt8Group UINT8 = new UnsignedInt8Group();
-	public static final UnsignedInt9Group UINT9 = new UnsignedInt9Group();
-	public static final UnsignedInt10Group UINT10 = new UnsignedInt10Group();
-	public static final UnsignedInt11Group UINT11 = new UnsignedInt11Group();
-	public static final UnsignedInt12Group UINT12 = new UnsignedInt12Group();
-	public static final UnsignedInt13Group UINT13 = new UnsignedInt13Group();
-	public static final UnsignedInt14Group UINT14 = new UnsignedInt14Group();
-	public static final UnsignedInt15Group UINT15 = new UnsignedInt15Group();
-	public static final UnsignedInt16Group UINT16 = new UnsignedInt16Group();
-	public static final UnsignedInt32Group UINT32 = new UnsignedInt32Group();
-	public static final UnsignedInt64Group UINT64 = new UnsignedInt64Group();
-	public static final UnsignedInt128Group UINT128 = new UnsignedInt128Group();
+	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
+	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();
+	public static final UnsignedInt3Algebra UINT3 = new UnsignedInt3Algebra();
+	public static final UnsignedInt4Algebra UINT4 = new UnsignedInt4Algebra();
+	public static final UnsignedInt5Algebra UINT5 = new UnsignedInt5Algebra();
+	public static final UnsignedInt6Algebra UINT6 = new UnsignedInt6Algebra();
+	public static final UnsignedInt7Algebra UINT7 = new UnsignedInt7Algebra();
+	public static final UnsignedInt8Algebra UINT8 = new UnsignedInt8Algebra();
+	public static final UnsignedInt9Algebra UINT9 = new UnsignedInt9Algebra();
+	public static final UnsignedInt10Algebra UINT10 = new UnsignedInt10Algebra();
+	public static final UnsignedInt11Algebra UINT11 = new UnsignedInt11Algebra();
+	public static final UnsignedInt12Algebra UINT12 = new UnsignedInt12Algebra();
+	public static final UnsignedInt13Algebra UINT13 = new UnsignedInt13Algebra();
+	public static final UnsignedInt14Algebra UINT14 = new UnsignedInt14Algebra();
+	public static final UnsignedInt15Algebra UINT15 = new UnsignedInt15Algebra();
+	public static final UnsignedInt16Algebra UINT16 = new UnsignedInt16Algebra();
+	public static final UnsignedInt32Algebra UINT32 = new UnsignedInt32Algebra();
+	public static final UnsignedInt64Algebra UINT64 = new UnsignedInt64Algebra();
+	public static final UnsignedInt128Algebra UINT128 = new UnsignedInt128Algebra();
 
-	public static final SignedInt1Group INT1 = new SignedInt1Group();
-	public static final SignedInt2Group INT2 = new SignedInt2Group();
-	public static final SignedInt3Group INT3 = new SignedInt3Group();
-	public static final SignedInt4Group INT4 = new SignedInt4Group();
-	public static final SignedInt5Group INT5 = new SignedInt5Group();
-	public static final SignedInt6Group INT6 = new SignedInt6Group();
-	public static final SignedInt7Group INT7 = new SignedInt7Group();
-	public static final SignedInt8Group INT8 = new SignedInt8Group();
-	public static final SignedInt9Group INT9 = new SignedInt9Group();
-	public static final SignedInt10Group INT10 = new SignedInt10Group();
-	public static final SignedInt11Group INT11 = new SignedInt11Group();
-	public static final SignedInt12Group INT12 = new SignedInt12Group();
-	public static final SignedInt13Group INT13 = new SignedInt13Group();
-	public static final SignedInt14Group INT14 = new SignedInt14Group();
-	public static final SignedInt15Group INT15 = new SignedInt15Group();
-	public static final SignedInt16Group INT16 = new SignedInt16Group();
-	public static final SignedInt32Group INT32 = new SignedInt32Group();
-	public static final SignedInt64Group INT64 = new SignedInt64Group();
-	//TODO public static final SignedInt128Group INT128 = new SignedInt128Group();
+	public static final SignedInt1Algebra INT1 = new SignedInt1Algebra();
+	public static final SignedInt2Algebra INT2 = new SignedInt2Algebra();
+	public static final SignedInt3Algebra INT3 = new SignedInt3Algebra();
+	public static final SignedInt4Algebra INT4 = new SignedInt4Algebra();
+	public static final SignedInt5Algebra INT5 = new SignedInt5Algebra();
+	public static final SignedInt6Algebra INT6 = new SignedInt6Algebra();
+	public static final SignedInt7Algebra INT7 = new SignedInt7Algebra();
+	public static final SignedInt8Algebra INT8 = new SignedInt8Algebra();
+	public static final SignedInt9Algebra INT9 = new SignedInt9Algebra();
+	public static final SignedInt10Algebra INT10 = new SignedInt10Algebra();
+	public static final SignedInt11Algebra INT11 = new SignedInt11Algebra();
+	public static final SignedInt12Algebra INT12 = new SignedInt12Algebra();
+	public static final SignedInt13Algebra INT13 = new SignedInt13Algebra();
+	public static final SignedInt14Algebra INT14 = new SignedInt14Algebra();
+	public static final SignedInt15Algebra INT15 = new SignedInt15Algebra();
+	public static final SignedInt16Algebra INT16 = new SignedInt16Algebra();
+	public static final SignedInt32Algebra INT32 = new SignedInt32Algebra();
+	public static final SignedInt64Algebra INT64 = new SignedInt64Algebra();
+	//TODO public static final SignedInt128Algebra INT128 = new SignedInt128Algebra();
 }

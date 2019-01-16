@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,25 +45,25 @@ public class Variance {
 	
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Ordered<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<?,U> storage, U result)
 	{
 		if (storage.size() == 0 || storage.size() == 1) {
-			grp.zero().call(result);
+			alg.zero().call(result);
 			return;
 		}
-		U avg = grp.construct();
-		U sum = grp.construct();
-		U count = grp.construct();
-		U one = grp.construct();
-		grp.unity().call(one);
-		Average.compute(grp, storage, avg);
-		SumSquareCount.compute(grp, storage, avg, sum, count);
-		grp.subtract().call(count, one, count);
-		grp.divide().call(sum, count, result);
+		U avg = alg.construct();
+		U sum = alg.construct();
+		U count = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
+		Average.compute(alg, storage, avg);
+		SumSquareCount.compute(alg, storage, avg, sum, count);
+		alg.subtract().call(count, one, count);
+		alg.divide().call(sum, count, result);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,20 +43,20 @@ public class Convolve {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		U tmpA1 = group.construct();
-		U tmpA2 = group.construct();
-		U tmpB1 = group.construct();
-		U tmpB2 = group.construct();
-		U tmpC1 = group.construct();
-		U tmpC2 = group.construct();
+		U tmpA1 = Algebra.construct();
+		U tmpA2 = Algebra.construct();
+		U tmpB1 = Algebra.construct();
+		U tmpB2 = Algebra.construct();
+		U tmpC1 = Algebra.construct();
+		U tmpC2 = Algebra.construct();
 
 		if (a.size() != b.size())
 			throw new IllegalArgumentException("mismatched inputs");
@@ -70,10 +70,10 @@ public class Convolve {
 			// convolution will not break.
 			a.get(i, tmpA1);
 			b.get(j, tmpB1);
-			group.multiply().call(tmpA1, tmpB1, tmpC1);
+			Algebra.multiply().call(tmpA1, tmpB1, tmpC1);
 			a.get(j, tmpA2);
 			b.get(i, tmpB2);
-			group.multiply().call(tmpA2, tmpB2, tmpC2);
+			Algebra.multiply().call(tmpA2, tmpB2, tmpC2);
 			c.set(i, tmpC1);
 			c.set(j, tmpC2);
 		}

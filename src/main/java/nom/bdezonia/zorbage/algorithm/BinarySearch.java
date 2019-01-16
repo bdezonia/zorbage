@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -46,7 +46,7 @@ public class BinarySearch {
 	 * Return the index within the list where the value is found. Return
 	 * -1 if the element is not found.
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param data
 	 * @param start
 	 * @param count
@@ -54,15 +54,15 @@ public class BinarySearch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		long compute(T group, U value, long start, long count, IndexedDataSource<?,U> data)
+		long compute(T Algebra, U value, long start, long count, IndexedDataSource<?,U> data)
 	{
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		long lo = 0;
 		long hi = count-1;
 		while (hi >= lo) {
 			long mid = (lo + hi) / 2;
 			data.get(start+mid, tmp);
-			int cmp = group.compare().call(value, tmp);
+			int cmp = Algebra.compare().call(value, tmp);
 			if (cmp == 0)
 				return start + mid;
 			else if (cmp > 0)

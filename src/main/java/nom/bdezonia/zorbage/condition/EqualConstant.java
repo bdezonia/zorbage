@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -36,17 +36,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class EqualConstant<T extends Algebra<T,U>,U>
 	implements Condition<U>
 {
-	private final T group;
+	private final T Algebra;
 	private final U constant;
 	
-	public EqualConstant(T group, U value) {
-		this.group = group;
-		this.constant = group.construct();
-		group.assign().call(value, constant);
+	public EqualConstant(T Algebra, U value) {
+		this.Algebra = Algebra;
+		this.constant = Algebra.construct();
+		Algebra.assign().call(value, constant);
 	}
 
 	@Override
 	public boolean isTrue(U value) {
-		return group.isEqual().call(value, constant);
+		return Algebra.isEqual().call(value, constant);
 	}
 }

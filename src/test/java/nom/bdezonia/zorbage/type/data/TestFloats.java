@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -45,13 +45,13 @@ import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 public class TestFloats {
 
 	private <T extends Algebra<T,U> & Addition<U>, U extends PrimitiveConversion>
-		void test(T group)
+		void test(T Algebra)
 	{
 		Float64Member dbl = G.DBL.construct();
-		U val1 = group.construct("1.4");
-		U val2 = group.construct("5.3");
-		U val3 = group.construct();
-		group.add().call(val1, val2, val3);
+		U val1 = Algebra.construct("1.4");
+		U val2 = Algebra.construct("5.3");
+		U val3 = Algebra.construct();
+		Algebra.add().call(val1, val2, val3);
 		PrimitiveConverter.convert(val3, dbl);
 		assertEquals(6.7, dbl.v(), 0.01);
 	}

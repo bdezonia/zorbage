@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,8 +39,8 @@ public class ZeroL<T extends Algebra<T,U>,U>
 {
 	private final Zero<T,U> lowerProc;
 	
-	public ZeroL(T group) {
-		this.lowerProc = new Zero<T,U>(group);
+	public ZeroL(T Algebra) {
+		this.lowerProc = new Zero<T,U>(Algebra);
 	}
 	
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,10 +42,10 @@ public class CosL<T extends Algebra<T,U> & Trigonometric<U>,U>
 	private final Cos<T,U> lowerProc;
 	private final U tmp;
 	
-	public CosL(T group, Procedure<U> ancestor) {
+	public CosL(T Algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Cos<T,U>(group);
-		this.tmp = group.construct();
+		this.lowerProc = new Cos<T,U>(Algebra);
+		this.tmp = Algebra.construct();
 	}
 
 	@Override

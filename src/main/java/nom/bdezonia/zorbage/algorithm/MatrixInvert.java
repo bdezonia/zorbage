@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -49,35 +49,35 @@ public class MatrixInvert {
 
 	/**
 	 * 
-	 * @param numGroup
-	 * @param rmodGroup
-	 * @param matGroup
+	 * @param numAlgebra
+	 * @param rmodAlgebra
+	 * @param matAlgebra
 	 * @param a
 	 * @param b
 	 */
 	@SuppressWarnings("unchecked")
 	public static
 		<BASETYPE, // the base type like Float64Member or Octonion etc.
-		BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
+		BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
 		RMODULE_MEMBER extends RModuleMember<BASETYPE>,
-		RMODULE_GROUP extends RModule<RMODULE_GROUP,RMODULE_MEMBER,BASETYPE_GROUP,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+		RMODULE_Algebra extends RModule<RMODULE_Algebra,RMODULE_MEMBER,BASETYPE_Algebra,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-		MATRIX_GROUP extends Algebra<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
-	void compute(BASETYPE_GROUP numGroup, RMODULE_GROUP rmodGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a, MATRIX_MEMBER b)
+		MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+	void compute(BASETYPE_Algebra numAlgebra, RMODULE_Algebra rmodAlgebra, MATRIX_Algebra matAlgebra, MATRIX_MEMBER a, MATRIX_MEMBER b)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("can only invert square matrices");
 		if (a.rows() != b.rows() || a.cols() != b.cols())
 			b.alloc(a.rows(), a.cols());
-		MATRIX_MEMBER lu = matGroup.construct(a);
-		LUDecomp.compute(numGroup, matGroup, lu);
+		MATRIX_MEMBER lu = matAlgebra.construct(a);
+		LUDecomp.compute(numAlgebra, matAlgebra, lu);
 		RMODULE_MEMBER bCol =
-				rmodGroup.construct(b.storageType(), b.rows());
+				rmodAlgebra.construct(b.storageType(), b.rows());
 		MatrixColumnRModuleBridge<BASETYPE> xBridge =
-				new MatrixColumnRModuleBridge<BASETYPE>(numGroup, b);
-		BASETYPE zero = numGroup.construct();
-		BASETYPE one = numGroup.construct();
-		numGroup.unity().call(one);
+				new MatrixColumnRModuleBridge<BASETYPE>(numAlgebra, b);
+		BASETYPE zero = numAlgebra.construct();
+		BASETYPE one = numAlgebra.construct();
+		numAlgebra.unity().call(one);
 		for (long c = 0; c < b.cols(); c++) {
 			xBridge.setCol(c);
 			bCol.setV(c, one);
@@ -85,7 +85,7 @@ public class MatrixInvert {
 			// implement Constructable1d. I think I can manipulate generics
 			// with a separate rmod type decl that does not require it that
 			// x can satisfy.
-			LUSolve.compute(numGroup, rmodGroup, lu, bCol, (RMODULE_MEMBER) xBridge);
+			LUSolve.compute(numAlgebra, rmodAlgebra, lu, bCol, (RMODULE_MEMBER) xBridge);
 			bCol.setV(c, zero);
 		}
 		

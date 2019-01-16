@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -40,21 +40,21 @@ public class Equal {
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		boolean compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a.size() != b.size()) return false;
-		return compute(group, 0, 0, a.size(), a, b);
+		return compute(Algebra, 0, 0, a.size(), a, b);
 	}
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param a
 	 * @param b
 	 * @param aStart
@@ -63,14 +63,14 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T group, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		boolean compute(T Algebra, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmp1 = group.construct();
-		U tmp2 = group.construct();
+		U tmp1 = Algebra.construct();
+		U tmp2 = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp1);
 			b.get(bStart+i, tmp2);
-			if (group.isNotEqual().call(tmp1, tmp2))
+			if (Algebra.isNotEqual().call(tmp1, tmp2))
 				return false;
 		}
 		return true;

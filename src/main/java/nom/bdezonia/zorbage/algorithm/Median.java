@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -44,16 +44,16 @@ public class Median {
 
 	/**
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param storage
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Ordered<U> & Unity<U>, U>
-		void compute(T grp, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<?,U> storage, U result)
 	{
-		U numer = grp.construct();
-		U denom = grp.construct();
-		FindMedianFraction.compute(grp, storage, numer, denom);
-		grp.divide().call(numer, denom, result);
+		U numer = alg.construct();
+		U denom = alg.construct();
+		FindMedianFraction.compute(alg, storage, numer, denom);
+		alg.divide().call(numer, denom, result);
 	}
 }

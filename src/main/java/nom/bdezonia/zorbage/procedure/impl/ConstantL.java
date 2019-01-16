@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,8 +39,8 @@ public class ConstantL<T extends Algebra<T,U>,U>
 {
 	private final Constant<T,U> lowerProc;
 	
-	public ConstantL(T group, U c) {
-		this.lowerProc = new Constant<T,U>(group, c);
+	public ConstantL(T Algebra, U c) {
+		this.lowerProc = new Constant<T,U>(Algebra, c);
 	}
 	
 	@Override

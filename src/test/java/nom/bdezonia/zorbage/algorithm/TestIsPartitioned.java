@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.EqualConstant;
 import nom.bdezonia.zorbage.condition.GreaterThanConstant;
 import nom.bdezonia.zorbage.condition.LessThanConstant;
-import nom.bdezonia.zorbage.type.data.int8.SignedInt8Group;
+import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -53,13 +53,13 @@ public class TestIsPartitioned {
 		IndexedDataSource<?, SignedInt8Member> a = ArrayStorage.allocateBytes(
 				new byte[] {1,2,3,4,5,6,7,8});
 		
-		Condition<SignedInt8Member> cond1 = new EqualConstant<SignedInt8Group, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
+		Condition<SignedInt8Member> cond1 = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
 		assertFalse(IsPartitioned.compute(G.INT8, cond1, a));
 
-		Condition<SignedInt8Member> cond2 = new LessThanConstant<SignedInt8Group, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
+		Condition<SignedInt8Member> cond2 = new LessThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
 		assertTrue(IsPartitioned.compute(G.INT8, cond2, a));
 
-		Condition<SignedInt8Member> cond3 = new GreaterThanConstant<SignedInt8Group, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
+		Condition<SignedInt8Member> cond3 = new GreaterThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
 		assertTrue(IsPartitioned.compute(G.INT8, cond3, a));
 	}
 }

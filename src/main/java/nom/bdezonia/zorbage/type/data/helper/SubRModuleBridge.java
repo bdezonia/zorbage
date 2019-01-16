@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,8 +41,8 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 	private final RModuleMember<U> rmod;
 	private long startElem, countElems;
 	
-	public SubRModuleBridge(Algebra<?,U> group, RModuleMember<U> rmod) {
-		this.zero = group.construct();
+	public SubRModuleBridge(Algebra<?,U> Algebra, RModuleMember<U> rmod) {
+		this.zero = Algebra.construct();
 		this.rmod = rmod;
 		this.startElem = 0;
 		this.countElems = rmod.length();

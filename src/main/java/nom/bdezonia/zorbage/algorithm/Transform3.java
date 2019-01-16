@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -41,7 +41,7 @@ public class Transform3 {
 
 	/**
 	 * 
-	 * @param grpU
+	 * @param algU
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -52,15 +52,15 @@ public class Transform3 {
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>, U>
-		void compute(T grpU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T algU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		compute(grpU, grpU, grpU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
+		compute(algU, algU, algU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
 	}
 	
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
+	 * @param algU
+	 * @param algW
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -71,16 +71,16 @@ public class Transform3 {
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T grpU, V grpW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
+		void compute(T algU, V algW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
-		compute(grpU, grpW, grpW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
+		compute(algU, algW, algW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
 	}
 
 	/**
 	 * 
-	 * @param grpU
-	 * @param grpW
-	 * @param grpY
+	 * @param algU
+	 * @param algW
+	 * @param algY
 	 * @param proc
 	 * @param aStart
 	 * @param bStart
@@ -94,11 +94,11 @@ public class Transform3 {
 	 * @param c
 	 */
 	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T grpU, V grpW, X grpY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
+		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
-		U valueU = grpU.construct();
-		W valueW = grpW.construct();
-		Y valueY = grpY.construct();
+		U valueU = algU.construct();
+		W valueW = algW.construct();
+		Y valueY = algY.construct();
 		for (long i = aStart, j = bStart, k = cStart, m = 0; m < count; m++) {
 			a.get(i, valueU);
 			b.get(j, valueW);
@@ -113,15 +113,15 @@ public class Transform3 {
 	/**
 	 * In place transformation of one whole list by a Procedure3.
 	 * 
-	 * @param grp
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T grp, Procedure3<U,U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T alg, Procedure3<U,U,U> proc, IndexedDataSource<?,U> a)
 	{
-		U value1 = grp.construct();
-		U value2 = grp.construct();
+		U value1 = alg.construct();
+		U value2 = alg.construct();
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, value1);
 			proc.call(value1, value1, value2);

@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -42,22 +42,22 @@ public class RModuleLInfinityNorm {
 
 	/**
 	 * 
-	 * @param rmodGroup
-	 * @param numGroup
+	 * @param rmodAlgebra
+	 * @param numAlgebra
 	 * @param rmod
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Ordered<W>, W>
-		void compute(T rmodGroup, V numGroup, RModuleMember<U> rmod, W result)
+		void compute(T rmodAlgebra, V numAlgebra, RModuleMember<U> rmod, W result)
 	{
-		U value = rmodGroup.construct();
-		W max = numGroup.construct();
-		W tmp = numGroup.construct();
+		U value = rmodAlgebra.construct();
+		W max = numAlgebra.construct();
+		W tmp = numAlgebra.construct();
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			rmodGroup.norm().call(value, tmp);
-			numGroup.max().call(max, tmp, max);
+			rmodAlgebra.norm().call(value, tmp);
+			numAlgebra.max().call(max, tmp, max);
 		}
-		numGroup.assign().call(max, result);
+		numAlgebra.assign().call(max, result);
 	}
 }

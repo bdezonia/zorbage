@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -39,13 +39,13 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class RModuleTensorBridge<U> implements TensorMember<U> {
 
-	private final Algebra<?,U> group;
+	private final Algebra<?,U> Algebra;
 	private final U zero;
 	private final RModuleMember<U> rmod;
 	
-	public RModuleTensorBridge(Algebra<?,U> group, RModuleMember<U> rmod) {
-		this.group = group;
-		this.zero = group.construct();
+	public RModuleTensorBridge(Algebra<?,U> Algebra, RModuleMember<U> rmod) {
+		this.Algebra = Algebra;
+		this.zero = Algebra.construct();
 		this.rmod = rmod;
 	}
 	
@@ -88,7 +88,7 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	public void v(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				group.assign().call(zero, value);
+				Algebra.assign().call(zero, value);
 				return;
 			}
 		}
@@ -100,7 +100,7 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	public void setV(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				if (group.isNotEqual().call(zero, value))
+				if (Algebra.isNotEqual().call(zero, value))
 					throw new IllegalArgumentException("out of bounds nonzero write");
 			}
 		}

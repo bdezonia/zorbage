@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -83,7 +83,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class QuaternionFloat64Matrix
 	implements
 		RingWithUnity<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember>,
-		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Group, QuaternionFloat64Member>,
+		MatrixRing<QuaternionFloat64Matrix, QuaternionFloat64MatrixMember, QuaternionFloat64Algebra, QuaternionFloat64Member>,
 		Constructible2dLong<QuaternionFloat64MatrixMember>,
 		Rounding<Float64Member, QuaternionFloat64MatrixMember>,
 		Norm<QuaternionFloat64MatrixMember,Float64Member>,

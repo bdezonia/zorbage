@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -44,12 +44,12 @@ public class PowL<T extends Algebra<T,U> & Power<U>, U>
 	private final U tmp1;
 	private final U tmp2;
 	
-	public PowL(T group, Procedure<U> ancestor1, Procedure<U> ancestor2) {
+	public PowL(T Algebra, Procedure<U> ancestor1, Procedure<U> ancestor2) {
 		this.ancestor1 = ancestor1;
 		this.ancestor2 = ancestor2;
-		this.lowerProc = new Pow<T,U>(group);
-		tmp1 = group.construct();
-		tmp2 = group.construct();
+		this.lowerProc = new Pow<T,U>(Algebra);
+		tmp1 = Algebra.construct();
+		tmp2 = Algebra.construct();
 	}
 
 	@Override

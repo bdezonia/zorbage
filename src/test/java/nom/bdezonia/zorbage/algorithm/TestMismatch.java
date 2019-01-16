@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.LessThanEqual;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Group;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Algebra;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -65,7 +65,7 @@ public class TestMismatch {
 				new long[] {1,2,3,7,4,3,2});
 		IndexedDataSource<?,SignedInt64Member> b = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,7,5,1,1});
-		Condition<Tuple2<SignedInt64Member,SignedInt64Member>> cond = new LessThanEqual<SignedInt64Group, SignedInt64Member>(G.INT64);
+		Condition<Tuple2<SignedInt64Member,SignedInt64Member>> cond = new LessThanEqual<SignedInt64Algebra, SignedInt64Member>(G.INT64);
 		Tuple2<Long,Long> result = Mismatch.compute(G.INT64, cond, a, b);
 		assertEquals(5, (long) result.a());
 		assertEquals(5, (long) result.b());

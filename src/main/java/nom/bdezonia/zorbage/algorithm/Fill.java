@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,38 +43,38 @@ public class Fill {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param value
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, U value, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, U value, IndexedDataSource<?,U> storage)
 	{
-		compute(group, value, 0, storage.size(), storage);
+		compute(Algebra, value, 0, storage.size(), storage);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param storage
 	 * @param proc
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, Procedure1<U> proc, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
-		compute(group, proc, 0, storage.size(), storage);
+		compute(Algebra, proc, 0, storage.size(), storage);
 	}
 
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param storage
 	 * @param value
 	 * @param start
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, U value, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, U value, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		for (long i = 0; i < count; i++) {
 			storage.set(start+i, value);
@@ -83,16 +83,16 @@ public class Fill {
 	
 	/**
 	 * 
-	 * @param group
+	 * @param Algebra
 	 * @param storage
 	 * @param proc
 	 * @param start
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T group, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T Algebra, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
 	{
-		U tmp = group.construct();
+		U tmp = Algebra.construct();
 		for (long i = 0; i < count; i++) {
 			proc.call(tmp);
 			storage.set(start+i, tmp);

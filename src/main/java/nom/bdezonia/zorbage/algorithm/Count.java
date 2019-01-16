@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ * Zorbage: an Algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2018 Barry DeZonia
  * 
@@ -43,22 +43,22 @@ public class Count {
 
 	/**
 	 * 
-	 * @param group
-	 * @param addGroup
+	 * @param Algebra
+	 * @param addAlgebra
 	 * @param a
 	 * @param value
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T group, V addGroup, U value, IndexedDataSource<?,U> a, W sum)
+		void compute(T Algebra, V addAlgebra, U value, IndexedDataSource<?,U> a, W sum)
 	{
-		compute(group, addGroup, value, 0, a.size(), a, sum);
+		compute(Algebra, addAlgebra, value, 0, a.size(), a, sum);
 	}
 	
 	/**
 	 * 
-	 * @param group
-	 * @param addGroup
+	 * @param Algebra
+	 * @param addAlgebra
 	 * @param a
 	 * @param start
 	 * @param count
@@ -66,10 +66,10 @@ public class Count {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T group, V addGroup, U value, long start, long count, IndexedDataSource<?,U> a, W sum)
+		void compute(T Algebra, V addAlgebra, U value, long start, long count, IndexedDataSource<?,U> a, W sum)
 	{
-		EqualConstant<T, U> cond = new EqualConstant<T, U>(group, value);
-		CountIf.compute(group, addGroup, cond, start, count, a, sum);
+		EqualConstant<T, U> cond = new EqualConstant<T, U>(Algebra, value);
+		CountIf.compute(Algebra, addAlgebra, cond, start, count, a, sum);
 	}
 
 }
