@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  */
 public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<JdbcStorageSignedInt8<U>, U>
+	implements IndexedDataSource<JdbcStorageSignedInt8<U>, U>, Allocatable<JdbcStorageSignedInt8<U>>
 {
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
@@ -99,5 +99,10 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
                 return new byte[type.byteCount()];
         }
     };
+
+	@Override
+	public JdbcStorageSignedInt8<U> allocate() {
+		return new JdbcStorageSignedInt8<U>(size, type, conn);
+	}
     
 }

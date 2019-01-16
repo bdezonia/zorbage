@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  */
 public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<JdbcStorageSignedInt16<U>, U>
+	implements IndexedDataSource<JdbcStorageSignedInt16<U>, U>, Allocatable<JdbcStorageSignedInt16<U>>
 {
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
@@ -99,5 +99,10 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
                 return new short[type.shortCount()];
         }
     };
+
+	@Override
+	public JdbcStorageSignedInt16<U> allocate() {
+		return new JdbcStorageSignedInt16<U>(size, type, conn);
+	}
     
 }

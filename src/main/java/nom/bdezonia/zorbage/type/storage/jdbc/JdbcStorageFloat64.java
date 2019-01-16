@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  */
 public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<JdbcStorageFloat64<U>, U>
+	implements IndexedDataSource<JdbcStorageFloat64<U>, U>, Allocatable<JdbcStorageFloat64<U>>
 {
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
@@ -99,5 +99,10 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
                 return new double[type.doubleCount()];
         }
     };
+
+	@Override
+	public JdbcStorageFloat64<U> allocate() {
+		return new JdbcStorageFloat64<U>(size, type, conn);
+	}
     
 }
