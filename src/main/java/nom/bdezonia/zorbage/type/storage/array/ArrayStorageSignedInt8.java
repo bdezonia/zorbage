@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  *
  */
 public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt8<U>,U>
+	implements IndexedDataSource<ArrayStorageSignedInt8<U>,U>, Allocatable<ArrayStorageSignedInt8<U>>
 {
 
 	private final U type;
@@ -73,5 +73,11 @@ public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 			s.data[i] = data[i];
 		return s;
 	}
+
+	@Override
+	public ArrayStorageSignedInt8<U> allocate() {
+		return new ArrayStorageSignedInt8<U>(size(), type);
+	}
+
 
 }

@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  * @param <U>
  */
 public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageFloat32<U>, U>
+	implements IndexedDataSource<ArrayStorageFloat32<U>, U>, Allocatable<ArrayStorageFloat32<U>>
 {
 	private final U type;
 	private final float[] data;
@@ -72,6 +72,11 @@ public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];
 		return s;
+	}
+
+	@Override
+	public ArrayStorageFloat32<U> allocate() {
+		return new ArrayStorageFloat32<U>(size(), type);
 	}
 
 }

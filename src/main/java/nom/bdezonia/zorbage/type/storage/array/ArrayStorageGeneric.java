@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.array;
 
 import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -36,7 +37,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @param <U>
  */
 public class ArrayStorageGeneric<T extends Group<T,U>,U>
-	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>
+	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>, Allocatable<ArrayStorageGeneric<T,U>>
 {
 
 	private final T grp;
@@ -78,6 +79,11 @@ public class ArrayStorageGeneric<T extends Group<T,U>,U>
 		for (int i = 0; i < data.length; i++)
 			grp.assign().call((U)data[i], (U)s.data[i]);
 		return s;
+	}
+
+	@Override
+	public ArrayStorageGeneric<T,U> allocate() {
+		return new ArrayStorageGeneric<T,U>(size(), grp);
 	}
 
 }
