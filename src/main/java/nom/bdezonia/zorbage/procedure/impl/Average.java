@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  * @author Barry DeZonia
  *
  */
-public class Average<T extends Group<T,U> & Unity<U> & Addition<U> & Invertible<U>,U>
+public class Average<T extends Algebra<T,U> & Unity<U> & Addition<U> & Invertible<U>,U>
 	implements Procedure<U>
 {
 	private final T group;

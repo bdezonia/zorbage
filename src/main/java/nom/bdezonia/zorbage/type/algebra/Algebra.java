@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Group<T extends Group<T,U>, U>
+public interface Algebra<T extends Algebra<T,U>, U>
   extends
     Constructable<U>,
     Equality<U>

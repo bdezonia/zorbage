@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -42,7 +42,7 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 	private final MatrixMember<U> mat;
 	private long row;
 	
-	public MatrixRowRModuleBridge(Group<?,U> group, MatrixMember<U> mat) {
+	public MatrixRowRModuleBridge(Algebra<?,U> group, MatrixMember<U> mat) {
 		this.zero = group.construct();
 		this.mat = mat;
 		this.row = 0;

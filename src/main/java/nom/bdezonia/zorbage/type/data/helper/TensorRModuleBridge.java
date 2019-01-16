@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.data.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -39,13 +39,13 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class TensorRModuleBridge<U> implements RModuleMember<U> {
 
-	private final Group<?,U> group;
+	private final Algebra<?,U> group;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private final IntegerIndex fixedDims;
 	private int rangingDim;
 
-	public TensorRModuleBridge(Group<?,U> group, TensorMember<U> tensor) {
+	public TensorRModuleBridge(Algebra<?,U> group, TensorMember<U> tensor) {
 		this.group = group;
 		this.zero = group.construct();
 		this.tensor = tensor;

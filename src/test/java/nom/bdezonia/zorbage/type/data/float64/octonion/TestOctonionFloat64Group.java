@@ -32,8 +32,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -45,7 +45,7 @@ public class AdjacentFind {
 	 * @param value
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, IndexedDataSource<?,U> a)
 	{
 		return compute(group, 0, a.size(), a);
@@ -60,7 +60,7 @@ public class AdjacentFind {
 	 * @param count
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, long start, long count, IndexedDataSource<?,U> a)
 	{
 		if (start+count < 2) return start+count;

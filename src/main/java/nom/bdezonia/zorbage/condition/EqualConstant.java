@@ -26,14 +26,14 @@
  */
 package nom.bdezonia.zorbage.condition;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class EqualConstant<T extends Group<T,U>,U>
+public class EqualConstant<T extends Algebra<T,U>,U>
 	implements Condition<U>
 {
 	private final T group;

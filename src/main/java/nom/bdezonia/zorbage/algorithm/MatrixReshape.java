@@ -26,7 +26,7 @@
 	 */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
@@ -46,7 +46,7 @@ public class MatrixReshape {
 	 * @param cols
 	 * @param mat
 	 */
-	public static <T extends Group<T,U>, U extends MatrixMember<W>, V extends Group<V,W>, W>
+	public static <T extends Algebra<T,U>, U extends MatrixMember<W>, V extends Algebra<V,W>, W>
 		void compute(T matGroup, V numberGroup, long rows, long cols, U mat)
 	{
 		if (rows == mat.rows() && cols == mat.cols()) return;

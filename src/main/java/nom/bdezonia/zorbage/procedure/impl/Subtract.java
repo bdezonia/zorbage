@@ -28,14 +28,14 @@ package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Subtract<T extends Group<T,U> & Addition<U>, U>
+public class Subtract<T extends Algebra<T,U> & Addition<U>, U>
 	implements Procedure3<U,U,U>
 {
 	private final T group;

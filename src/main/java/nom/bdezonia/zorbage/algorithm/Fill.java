@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure1;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -47,7 +47,7 @@ public class Fill {
 	 * @param value
 	 * @param storage
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, U value, IndexedDataSource<?,U> storage)
 	{
 		compute(group, value, 0, storage.size(), storage);
@@ -59,7 +59,7 @@ public class Fill {
 	 * @param storage
 	 * @param proc
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
 		compute(group, proc, 0, storage.size(), storage);
@@ -73,7 +73,7 @@ public class Fill {
 	 * @param start
 	 * @param count
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, U value, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		for (long i = 0; i < count; i++) {
@@ -89,7 +89,7 @@ public class Fill {
 	 * @param start
 	 * @param count
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		U tmp = group.construct();

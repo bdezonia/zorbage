@@ -30,9 +30,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.LessThanEqual;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Group;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;

@@ -30,8 +30,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -69,7 +69,7 @@ public class TestParallelTransform2 {
 	// an algorithm that applies a group's sin() op to a list of any type that
 	// supports sin()
 	
-	private <T extends Group<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
+	private <T extends Algebra<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
 		void test(T group)
 	{
 		// generic allocation

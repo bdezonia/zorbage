@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -53,7 +53,7 @@ public class BinarySearch {
 	 * @param value
 	 * @return
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		long compute(T group, U value, long start, long count, IndexedDataSource<?,U> data)
 	{
 		U tmp = group.construct();

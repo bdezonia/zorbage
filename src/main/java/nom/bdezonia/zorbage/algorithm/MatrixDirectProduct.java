@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 
@@ -46,7 +46,7 @@ public class MatrixDirectProduct {
 	 * @param in2
 	 * @param out
 	 */
-	public static <T extends Group<T,U> & Multiplication<U>,U,W extends MatrixMember<U>>
+	public static <T extends Algebra<T,U> & Multiplication<U>,U,W extends MatrixMember<U>>
 		void compute(T group, W in1, W in2, W out)
 	{
 		U tmp1 = group.construct();

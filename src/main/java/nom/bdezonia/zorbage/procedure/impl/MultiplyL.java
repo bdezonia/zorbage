@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Multiplication;
  * @author Barry DeZonia
  *
  */
-public class MultiplyL<T extends Group<T,U> & Multiplication<U>, U>
+public class MultiplyL<T extends Algebra<T,U> & Multiplication<U>, U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor1;

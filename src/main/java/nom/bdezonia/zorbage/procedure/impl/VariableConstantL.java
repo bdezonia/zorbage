@@ -27,14 +27,14 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class VariableConstantL<T extends Group<T,U>, U>
+public class VariableConstantL<T extends Algebra<T,U>, U>
 	implements Procedure<U>
 {
 	private final T group;

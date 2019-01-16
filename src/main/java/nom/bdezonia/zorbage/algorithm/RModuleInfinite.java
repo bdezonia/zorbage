@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
@@ -44,7 +44,7 @@ public class RModuleInfinite {
 	 * @param grp
 	 * @param a
 	 */
-	public static <T extends Group<T,U> & Infinite<U>, U>
+	public static <T extends Algebra<T,U> & Infinite<U>, U>
 		void compute(T grp, RModuleMember<U> a)
 	{
 		// comment out this possible source of bugs. empty rmodules will remain that way.

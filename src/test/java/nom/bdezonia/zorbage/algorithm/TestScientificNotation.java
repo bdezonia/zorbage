@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**

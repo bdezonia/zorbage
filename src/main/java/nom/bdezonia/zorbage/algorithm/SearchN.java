@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -45,7 +45,7 @@ public class SearchN {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, long n, U value, IndexedDataSource<?,U> a)
 	{
 		return compute(group, n, value, 0, a.size(), a);
@@ -61,7 +61,7 @@ public class SearchN {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, long n, U value, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmpA = group.construct();
@@ -85,7 +85,7 @@ public class SearchN {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, long n, Condition<U> cond, IndexedDataSource<?,U> a)
 	{
 		return compute(group, n, cond, 0, a.size(), a);
@@ -101,7 +101,7 @@ public class SearchN {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, long n, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmpA = group.construct();

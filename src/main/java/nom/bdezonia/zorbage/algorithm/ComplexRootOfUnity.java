@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 
 /**

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
@@ -54,7 +54,7 @@ public class LUDecomp {
 		<BASETYPE, // the base type like Float64Member or Octonion etc.
 		BASETYPE_GROUP extends RingWithUnity<BASETYPE_GROUP,BASETYPE> & Invertible<BASETYPE>,
 		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-		MATRIX_GROUP extends Group<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+		MATRIX_GROUP extends Algebra<MATRIX_GROUP,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
 		
 	void compute(BASETYPE_GROUP numGroup, MATRIX_GROUP matGroup, MATRIX_MEMBER a)
 	{

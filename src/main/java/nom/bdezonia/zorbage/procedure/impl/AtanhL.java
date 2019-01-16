@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
  * @author Barry DeZonia
  *
  */
-public class AtanhL<T extends Group<T,U> & InverseHyperbolic<U>,U>
+public class AtanhL<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor;

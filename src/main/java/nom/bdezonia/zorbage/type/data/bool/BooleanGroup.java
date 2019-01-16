@@ -28,17 +28,17 @@ package nom.bdezonia.zorbage.type.data.bool;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.LogicalOperations;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Random;
@@ -55,7 +55,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class BooleanGroup
   implements
-  	Group<BooleanGroup, BooleanMember>,
+  	Algebra<BooleanGroup, BooleanMember>,
   	Unity<BooleanMember>,
     Bounded<BooleanMember>,
     Ordered<BooleanMember>,

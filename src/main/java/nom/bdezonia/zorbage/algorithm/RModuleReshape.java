@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -45,7 +45,7 @@ public class RModuleReshape {
 	 * @param len
 	 * @param rmod
 	 */
-	public static <T extends Group<T,U>, U extends RModuleMember<W>, V extends Group<V,W>, W>
+	public static <T extends Algebra<T,U>, U extends RModuleMember<W>, V extends Algebra<V,W>, W>
 		void compute(T rmodGroup, V numberGroup, long len, U rmod)
 	{
 		if (len == rmod.length()) return;

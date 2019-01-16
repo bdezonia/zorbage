@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.data.helper.MatrixDiagonalRModuleBridge;
 
@@ -46,7 +46,7 @@ public class MatrixTrace {
 	 * @param matrix
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Addition<U>,U>
+	public static <T extends Algebra<T,U> & Addition<U>,U>
 		void compute(T group, MatrixMember<U> matrix, U result)
 	{
 		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(group, matrix);

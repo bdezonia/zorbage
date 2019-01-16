@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Power;
 
@@ -47,7 +47,7 @@ public class ExponentialCalculation {
 	 * @param power
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Power<U> & Multiplication<U>, U>
+	public static <T extends Algebra<T,U> & Power<U> & Multiplication<U>, U>
 		void compute(T group, U fraction, U base, U power, U result)
 	{
 		U tmp = group.construct();

@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class MinElement {
 	 * @param storage
 	 * @param min
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U min)
 	{
 		compute(grp, 0, storage.size(), storage, min);
@@ -59,7 +59,7 @@ public class MinElement {
 	 * @param storage
 	 * @param min
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U min)
 	{
 		if (count <= 0)

@@ -1,6 +1,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
@@ -18,7 +18,7 @@ public class MatrixUnity {
 	 * @param group
 	 * @param a
 	 */
-	public static <T extends Group<T,U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Unity<U>, U>
 		void compute(T group, MatrixMember<U> a)
 	{
 		U zero = group.construct();

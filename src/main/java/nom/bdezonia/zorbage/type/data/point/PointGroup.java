@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -46,7 +46,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  *
  */
 public class PointGroup
-	implements Group<PointGroup,Point>, Addition<Point>, Scale<Point, Float64Member>,
+	implements Algebra<PointGroup,Point>, Addition<Point>, Scale<Point, Float64Member>,
 		Random<Point>
 {
 

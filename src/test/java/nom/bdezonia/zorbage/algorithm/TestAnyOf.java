@@ -30,9 +30,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.condition.EqualConstant;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.type.data.bool.BooleanGroup;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;

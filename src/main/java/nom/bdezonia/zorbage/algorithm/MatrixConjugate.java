@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
@@ -45,7 +45,7 @@ public class MatrixConjugate {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U> & Conjugate<U>,U>
+	public static <T extends Algebra<T,U> & Conjugate<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b)
 	{
 		U atmp = group.construct();

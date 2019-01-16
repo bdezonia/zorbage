@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 
@@ -46,7 +46,7 @@ public class MatrixScale {
 	 * @param matrixIn
 	 * @param matrixOut
 	 */
-	public static <T extends Group<T,U> & Multiplication<U>,U,V extends MatrixMember<U>>
+	public static <T extends Algebra<T,U> & Multiplication<U>,U,V extends MatrixMember<U>>
 		void compute(T numGroup, U scale, V matrixIn, V matrixOut)
 	{
 		matrixOut.alloc(matrixIn.rows(), matrixIn.cols());

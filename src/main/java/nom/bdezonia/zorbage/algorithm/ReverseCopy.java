@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -41,7 +41,7 @@ public class ReverseCopy {
 	 * @param group
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(group, 0, 0, a.size(), a, b);
@@ -56,7 +56,7 @@ public class ReverseCopy {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T group, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		U tmp = group.construct();

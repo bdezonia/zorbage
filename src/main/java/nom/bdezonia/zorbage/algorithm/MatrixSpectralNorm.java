@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class MatrixSpectralNorm {
 	 * @param matrix
 	 * @param normValue
 	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
+	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
 		void compute(T matGroup, V numGroup, U matrix, W normValue)
 	{
 		throw new IllegalArgumentException("TODO");

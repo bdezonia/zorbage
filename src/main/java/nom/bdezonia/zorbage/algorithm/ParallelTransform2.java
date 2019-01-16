@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -49,7 +49,7 @@ public class ParallelTransform2 {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T grpU, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(grpU, grpU, proc, aStart, bStart, count, aStride, bStride, a, b);	
@@ -68,7 +68,7 @@ public class ParallelTransform2 {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W>, W>
+	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
 		void compute(T grpU, V grpW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
@@ -100,7 +100,7 @@ public class ParallelTransform2 {
 		}
 	}
 	
-	private static class Computer<T extends Group<T,U>, U, V extends Group<V,W>, W>
+	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
 		implements Runnable
 	{
 		private final T groupU;

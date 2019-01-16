@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -45,7 +45,7 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 	private Origin origin;
 	private long diagNumber;
 	
-	public MatrixDiagonalRModuleBridge(Group<?,U> group, MatrixMember<U> mat) {
+	public MatrixDiagonalRModuleBridge(Algebra<?,U> group, MatrixMember<U> mat) {
 		this.zero = group.construct();
 		this.mat = mat;
 		this.origin = Origin.UpperLeft;

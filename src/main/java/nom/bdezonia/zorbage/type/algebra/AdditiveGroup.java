@@ -33,7 +33,7 @@ package nom.bdezonia.zorbage.type.algebra;
  */
 public interface AdditiveGroup<T extends AdditiveGroup<T,U>, U>
   extends
-    Group<T,U>,
+    Algebra<T,U>,
     Addition<U>
 {
 }

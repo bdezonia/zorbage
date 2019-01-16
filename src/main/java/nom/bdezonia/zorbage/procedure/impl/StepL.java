@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  * @author Barry DeZonia
  *
  */
-public class StepL<T extends Group<T,U> & Ordered<U> & Unity<U>,U>
+public class StepL<T extends Algebra<T,U> & Ordered<U> & Unity<U>,U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor;

@@ -31,7 +31,7 @@ import nom.bdezonia.zorbage.procedure.impl.ConstantL;
 import nom.bdezonia.zorbage.procedure.impl.SinL;
 import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
  *
  * @param <U>
  */
-public class EquationParser<T extends Group<T,U> & Trigonometric<U>,U> {
+public class EquationParser<T extends Algebra<T,U> & Trigonometric<U>,U> {
 
 	public Tuple2<String,Procedure<U>> parse(T group, String string) {
 		Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);

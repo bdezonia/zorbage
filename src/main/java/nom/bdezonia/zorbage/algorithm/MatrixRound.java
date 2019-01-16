@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
@@ -48,7 +48,7 @@ public class MatrixRound {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U> & Rounding<W,U>, U extends NumberMember<U>, W>
+	public static <T extends Algebra<T,U> & Rounding<W,U>, U extends NumberMember<U>, W>
 		void compute(T entityGroup, Round.Mode mode, W delta, MatrixMember<U> a, MatrixMember<U> b)
 	{
 		if (a != b)

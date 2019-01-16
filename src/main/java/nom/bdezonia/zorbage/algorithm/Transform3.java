@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -51,7 +51,7 @@ public class Transform3 {
 	 * @param a
 	 * @param b
 	 */
-	public static final <T extends Group<T,U>, U>
+	public static final <T extends Algebra<T,U>, U>
 		void compute(T grpU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
 		compute(grpU, grpU, grpU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
@@ -70,7 +70,7 @@ public class Transform3 {
 	 * @param a
 	 * @param b
 	 */
-	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W>
+	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
 		void compute(T grpU, V grpW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		compute(grpU, grpW, grpW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
@@ -93,7 +93,7 @@ public class Transform3 {
 	 * @param b
 	 * @param c
 	 */
-	public static final <T extends Group<T,U>, U, V extends Group<V,W>, W, X extends Group<X,Y>, Y>
+	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
 		void compute(T grpU, V grpW, X grpY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
 	{
 		U valueU = grpU.construct();
@@ -117,7 +117,7 @@ public class Transform3 {
 	 * @param proc
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T grp, Procedure3<U,U,U> proc, IndexedDataSource<?,U> a)
 	{
 		U value1 = grp.construct();

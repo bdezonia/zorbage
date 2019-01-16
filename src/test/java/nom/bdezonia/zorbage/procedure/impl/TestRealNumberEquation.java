@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.procedure.impl;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;

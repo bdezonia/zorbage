@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.groups;
+package nom.bdezonia.zorbage.algebras;
 
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntGroup;
 import nom.bdezonia.zorbage.type.data.bool.BooleanGroup;

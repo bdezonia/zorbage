@@ -30,9 +30,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
  */
 public class TestFloats {
 
-	private <T extends Group<T,U> & Addition<U>, U extends PrimitiveConversion>
+	private <T extends Algebra<T,U> & Addition<U>, U extends PrimitiveConversion>
 		void test(T group)
 	{
 		Float64Member dbl = G.DBL.construct();

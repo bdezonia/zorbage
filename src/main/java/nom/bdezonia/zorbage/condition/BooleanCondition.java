@@ -27,14 +27,14 @@
 package nom.bdezonia.zorbage.condition;
 
 import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class BooleanCondition<T extends Group<T,U>,U>
+public class BooleanCondition<T extends Algebra<T,U>,U>
 	implements Condition<U>
 {
 	private final Function1<Boolean, U> testFunc;

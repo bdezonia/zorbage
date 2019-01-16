@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;

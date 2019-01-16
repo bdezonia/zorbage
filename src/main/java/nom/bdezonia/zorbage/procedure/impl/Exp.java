@@ -28,14 +28,14 @@ package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Exp<T extends Group<T,U> & Exponential<U>,U>
+public class Exp<T extends Algebra<T,U> & Exponential<U>,U>
 	implements Procedure2<U,U>
 {
 	private final T group;

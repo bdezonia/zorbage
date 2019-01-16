@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
@@ -47,7 +47,7 @@ public class RModuleLInfinityNorm {
 	 * @param rmod
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Ordered<W>, W>
+	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Ordered<W>, W>
 		void compute(T rmodGroup, V numGroup, RModuleMember<U> rmod, W result)
 	{
 		U value = rmodGroup.construct();

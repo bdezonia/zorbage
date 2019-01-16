@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
@@ -41,7 +41,7 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 	private final RModuleMember<U> rmod;
 	private long startElem, countElems;
 	
-	public SubRModuleBridge(Group<?,U> group, RModuleMember<U> rmod) {
+	public SubRModuleBridge(Algebra<?,U> group, RModuleMember<U> rmod) {
 		this.zero = group.construct();
 		this.rmod = rmod;
 		this.startElem = 0;

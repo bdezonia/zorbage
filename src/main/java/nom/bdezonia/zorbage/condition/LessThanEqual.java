@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.condition;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class LessThanEqual<T extends Group<T,U> & Ordered<U>, U>
+public class LessThanEqual<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Condition<Tuple2<U,U>>
 {
 	private T group;

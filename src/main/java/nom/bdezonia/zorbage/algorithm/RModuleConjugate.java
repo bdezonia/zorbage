@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -47,7 +47,7 @@ public class RModuleConjugate {
 	 * @param a
 	 * @param b
 	 */
-	public static <U extends RModuleMember<W>, V extends Group<V,W> & Conjugate<W>, W>
+	public static <U extends RModuleMember<W>, V extends Algebra<V,W> & Conjugate<W>, W>
 		void compute(V memberGroup, U a, U b)
 	{
 		W tmp = memberGroup.construct();

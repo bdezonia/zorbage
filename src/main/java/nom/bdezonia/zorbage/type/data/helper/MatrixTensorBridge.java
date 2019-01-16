@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.type.data.helper;
 
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -40,12 +40,12 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class MatrixTensorBridge<U> implements TensorMember<U> {
 
-	private final Group<?,U> group;
+	private final Algebra<?,U> group;
 	private final U zero;
 	private MatrixMember<U> mat;
 	private long startRow, startCol, size;
 	
-	public MatrixTensorBridge(Group<?,U> group, MatrixMember<U> mat) {
+	public MatrixTensorBridge(Algebra<?,U> group, MatrixMember<U> mat) {
 		this.mat = mat;
 		this.group = group;
 		this.zero = group.construct();

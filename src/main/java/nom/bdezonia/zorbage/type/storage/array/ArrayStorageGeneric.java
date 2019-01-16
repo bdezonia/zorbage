@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  *
  * @param <U>
  */
-public class ArrayStorageGeneric<T extends Group<T,U>,U>
+public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>, Allocatable<ArrayStorageGeneric<T,U>>
 {
 

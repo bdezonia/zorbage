@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.Unity;
@@ -44,7 +44,7 @@ public class Sinc {
 	 * @param x
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Invertible<U> & Unity<U> & Trigonometric<U>,U>
+	public static <T extends Algebra<T,U> & Invertible<U> & Unity<U> & Trigonometric<U>,U>
 		void compute(T group, U x, U result)
 	{
 		if (group.isZero().call(x)) {

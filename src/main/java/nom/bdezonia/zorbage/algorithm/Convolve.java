@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -48,7 +48,7 @@ public class Convolve {
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends Group<T,U> & Multiplication<U>,U>
+	public static <T extends Algebra<T,U> & Multiplication<U>,U>
 		void compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
 		U tmpA1 = group.construct();

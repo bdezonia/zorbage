@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.data.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -40,10 +40,10 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
-	private final Group<?,U> group;
+	private final Algebra<?,U> group;
 	private NumberMember<U> num;
 	
-	public NumberTensorBridge(Group<?,U> group, NumberMember<U> num) {
+	public NumberTensorBridge(Algebra<?,U> group, NumberMember<U> num) {
 		this.zero = group.construct();
 		this.group = group;
 		this.num = num;

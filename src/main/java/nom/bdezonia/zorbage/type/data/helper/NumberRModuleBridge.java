@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -39,10 +39,10 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
 	private final U zero;
-	private final Group<?,U> group;
+	private final Algebra<?,U> group;
 	private NumberMember<U> num;
 	
-	public NumberRModuleBridge(Group<?,U> group, NumberMember<U> num) {
+	public NumberRModuleBridge(Algebra<?,U> group, NumberMember<U> num) {
 		this.zero = group.construct();
 		this.group = group;
 		this.num = num;

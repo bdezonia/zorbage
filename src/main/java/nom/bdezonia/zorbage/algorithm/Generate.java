@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.Procedure1;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 public class Generate {
@@ -39,7 +39,7 @@ public class Generate {
 	 * @param proc
 	 * @param storage
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
 		compute(group, proc, 0, storage.size(), 1, storage);
@@ -53,7 +53,7 @@ public class Generate {
 	 * @param inputs
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
 	{
 		compute(group, proc, 0, storage.size(), 1, storage, inputs);
@@ -68,7 +68,7 @@ public class Generate {
 	 * @param stride
 	 * @param storage
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage)
 	{
 		U value = group.construct();
@@ -90,7 +90,7 @@ public class Generate {
 	 * @param inputs
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage, U... inputs)
 	{
 		U value = group.construct();

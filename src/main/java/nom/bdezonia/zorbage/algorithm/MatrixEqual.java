@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
@@ -45,7 +45,7 @@ public class MatrixEqual {
 	 * @param b
 	 * @return
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		boolean compute(T group, MatrixMember<U> a, MatrixMember<U> b)
 	{
 		if (a == b) return true;

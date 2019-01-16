@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
@@ -44,7 +44,7 @@ public class MatrixAssign {
 	 * @param from
 	 * @param to
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, MatrixMember<U> from, MatrixMember<U> to)
 	{
 		if (from == to) return;

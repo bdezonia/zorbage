@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -46,7 +46,7 @@ public class NoneOf {
 	 * @param condition
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		boolean compute(T group, Condition<U> condition, IndexedDataSource<?,U> a)
 	{
 		return compute(group, condition, 0, a.size(), a);
@@ -61,7 +61,7 @@ public class NoneOf {
 	 * @param count
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		boolean compute(T group, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U value = group.construct();

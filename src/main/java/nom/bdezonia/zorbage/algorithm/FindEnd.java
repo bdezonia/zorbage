@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -43,7 +43,7 @@ public class FindEnd {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, IndexedDataSource<?,U> values, IndexedDataSource<?,U> a)
 	{
 		return compute(group, values, 0, a.size(), a);
@@ -58,7 +58,7 @@ public class FindEnd {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, IndexedDataSource<?,U> values, long start, long count, IndexedDataSource<?,U> a)
 	{
 		long sz = values.size();

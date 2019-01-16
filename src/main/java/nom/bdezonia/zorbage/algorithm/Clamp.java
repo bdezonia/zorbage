@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
@@ -44,7 +44,7 @@ public class Clamp {
 	 * @param value
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T group, U min, U max, U value, U result)
 	{
 		if (group.isLess().call(max, min))

@@ -29,8 +29,8 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.RModuleReshape;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;

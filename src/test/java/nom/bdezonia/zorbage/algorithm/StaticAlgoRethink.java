@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Group;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -40,13 +40,13 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  */
 public class StaticAlgoRethink {
 
-	private static <T extends Group<T,U> & Addition<U>, U>
+	private static <T extends Algebra<T,U> & Addition<U>, U>
 		void compute(T group, U result)
 	{
 		group.add().call(result, result, result);
 	}
 	
-	private class ClassAlgoRethink<T extends Group<T,U> & Addition<U>, U>
+	private class ClassAlgoRethink<T extends Algebra<T,U> & Addition<U>, U>
 		implements Procedure2<T,U>
 	{
 		@Override

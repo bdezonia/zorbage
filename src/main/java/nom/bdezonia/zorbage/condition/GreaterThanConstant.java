@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.condition;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class GreaterThanConstant<T extends Group<T,U> & Ordered<U>,U>
+public class GreaterThanConstant<T extends Algebra<T,U> & Ordered<U>,U>
 	implements Condition<U>
 {
 	private final T group;

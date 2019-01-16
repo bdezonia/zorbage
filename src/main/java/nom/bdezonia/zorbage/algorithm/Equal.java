@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -45,7 +45,7 @@ public class Equal {
 	 * @param b
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		boolean compute(T group, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a.size() != b.size()) return false;
@@ -62,7 +62,7 @@ public class Equal {
 	 * @param count
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		boolean compute(T group, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		U tmp1 = group.construct();

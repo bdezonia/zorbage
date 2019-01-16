@@ -33,7 +33,7 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int1.SignedInt1Member;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.data.int10.SignedInt10Member;

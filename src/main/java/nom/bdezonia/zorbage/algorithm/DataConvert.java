@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import java.util.List;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -52,7 +52,7 @@ public class DataConvert {
 	 * @param from
 	 * @param to
 	 */
-	public static <T extends Group<T,U>, U extends PrimitiveConversion, V extends Group<V,W>, W extends PrimitiveConversion>
+	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V extends Algebra<V,W>, W extends PrimitiveConversion>
 		void compute(T fromGroup, V toGroup, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
 	{
 		if (from.size() > to.size())
@@ -70,7 +70,7 @@ public class DataConvert {
 	 * @param fromList
 	 * @param toList
 	 */
-	public static <T extends Group<T,U>, U extends PrimitiveConversion, V  extends Group<V,W>, W extends PrimitiveConversion>
+	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
 		void compute(T fromGroup, V toGroup, long fromStart, long toStart, long count, IndexedDataSource<?,U> fromList, IndexedDataSource<?,W> toList)
 	{
 		U from = fromGroup.construct();

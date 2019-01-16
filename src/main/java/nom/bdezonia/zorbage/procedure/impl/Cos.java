@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
  * @author Barry DeZonia
  *
  */
-public class Cos<T extends Group<T,U> & Trigonometric<U>,U>
+public class Cos<T extends Algebra<T,U> & Trigonometric<U>,U>
 	implements Procedure2<U,U>
 {
 	private final T group;

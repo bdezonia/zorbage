@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
  * @author Barry DeZonia
  *
  */
-public class SqrtL<T extends Group<T,U> & Roots<U>,U>
+public class SqrtL<T extends Algebra<T,U> & Roots<U>,U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor;

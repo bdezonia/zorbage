@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -45,7 +45,7 @@ public class Find {
 	 * @param value
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, U value, IndexedDataSource<?,U> a)
 	{
 		return compute(group, value, 0, a.size(), a);
@@ -60,7 +60,7 @@ public class Find {
 	 * @param count
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, U value, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmp = group.construct();

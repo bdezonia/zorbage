@@ -30,8 +30,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.groups.G;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;

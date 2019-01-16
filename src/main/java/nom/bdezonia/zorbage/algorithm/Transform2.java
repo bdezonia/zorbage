@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -51,7 +51,7 @@ public class Transform2 {
 	 * @param a
 	 * @param b
 	 */
-	public static final <T extends Group<T,U>,U>
+	public static final <T extends Algebra<T,U>,U>
 		void compute(T grp, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		compute(grp, grp, proc, aStart, bStart, count, aStride, bStride, a, b);
@@ -66,7 +66,7 @@ public class Transform2 {
 	 * @param stride
 	 * @param a
 	 */
-	public static final <T extends Group<T,U>,U>
+	public static final <T extends Algebra<T,U>,U>
 		void compute(T grp, Procedure2<U,U> proc, long start, long count, long stride, IndexedDataSource<?,U> a)
 	{
 		compute(grp, grp, proc, start, start, count, stride, stride, a, a);
@@ -85,7 +85,7 @@ public class Transform2 {
 	 * @param a
 	 * @param b
 	 */
-	public static final <T extends Group<T,U>,U,V extends Group<V,W>,W>
+	public static final <T extends Algebra<T,U>,U,V extends Algebra<V,W>,W>
 		void compute(T grpU, V grpW, Procedure2<U,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
 	{
 		U valueU = grpU.construct();
@@ -106,7 +106,7 @@ public class Transform2 {
 	 * @param proc
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T grp, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
 		U value1 = grp.construct();

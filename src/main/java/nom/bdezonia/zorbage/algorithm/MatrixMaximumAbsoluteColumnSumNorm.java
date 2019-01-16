@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -52,7 +52,7 @@ public class MatrixMaximumAbsoluteColumnSumNorm {
 	 * @param norm
 	 */
 	public static
-		<T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Addition<W> & Ordered<W>, W>
+		<T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Ordered<W>, W>
 	void compute(T group1, V group2, MatrixMember<U> matrix, W result)
 	{
 		W tmp = group2.construct();

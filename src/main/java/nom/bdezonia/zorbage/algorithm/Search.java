@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 // TODO - use boyer moore algorithm
@@ -49,7 +49,7 @@ public class Search {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
 	{
 		return compute(group,elements,0, a.size(), a);
@@ -64,7 +64,7 @@ public class Search {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
 	{
 		U tmpA = group.construct();
@@ -91,7 +91,7 @@ public class Search {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
 	{
 		return compute(group, cond, elements, 0, a.size(), a);
@@ -107,7 +107,7 @@ public class Search {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		long compute(T group, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
 	{
 		U tmpA = group.construct();

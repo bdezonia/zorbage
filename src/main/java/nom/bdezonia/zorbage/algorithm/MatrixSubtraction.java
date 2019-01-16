@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
@@ -46,7 +46,7 @@ public class MatrixSubtraction {
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends Group<T,U> & Addition<U>,U>
+	public static <T extends Algebra<T,U> & Addition<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot subtract matrices of different shapes");

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -38,11 +38,11 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class NumberMatrixBridge<U> implements MatrixMember<U> {
 
-	private final Group<?,U> group;
+	private final Algebra<?,U> group;
 	private final U zero;
 	private NumberMember<U> num;
 	
-	public NumberMatrixBridge(Group<?,U> group, NumberMember<U> num) {
+	public NumberMatrixBridge(Algebra<?,U> group, NumberMember<U> num) {
 		this.group = group;
 		this.zero = group.construct();
 		this.num = num;

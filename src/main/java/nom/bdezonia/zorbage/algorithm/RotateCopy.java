@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -42,7 +42,7 @@ public class RotateCopy {
 	 * @param delta
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T group, long delta, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		if (a == b)

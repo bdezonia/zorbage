@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
@@ -44,7 +44,7 @@ public class MatrixInfinite {
 	 * @param grp
 	 * @param a
 	 */
-	public static <T extends Group<T,U> & Infinite<U>, U>
+	public static <T extends Algebra<T,U> & Infinite<U>, U>
 		void compute(T grp, MatrixMember<U> a)
 	{
 		// comment out this possible source of bugs. empty matrices will remain that way.

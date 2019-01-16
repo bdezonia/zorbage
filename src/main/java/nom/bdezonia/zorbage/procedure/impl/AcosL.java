@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
  * @author Barry DeZonia
  *
  */
-public class AcosL<T extends Group<T,U> & InverseTrigonometric<U>,U>
+public class AcosL<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor;

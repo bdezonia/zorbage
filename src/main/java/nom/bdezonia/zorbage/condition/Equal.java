@@ -27,14 +27,14 @@
 package nom.bdezonia.zorbage.condition;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Equal<T extends Group<T,U>,U>
+public class Equal<T extends Algebra<T,U>,U>
 	implements Condition<Tuple2<U,U>>
 {
 	private T group;

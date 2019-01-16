@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
@@ -48,7 +48,7 @@ public class Median {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Invertible<U> & Ordered<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Ordered<U> & Unity<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		U numer = grp.construct();

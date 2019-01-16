@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -43,7 +43,7 @@ public class ForEach {
 	 * @param proc
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T grpU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
 	{
 		compute(grpU, proc, 0, a.size(), a);
@@ -57,7 +57,7 @@ public class ForEach {
 	 * @param count
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T grpU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
 	{
 		Transform2.compute(grpU, proc, start, start, count, 1, 1, a, a);

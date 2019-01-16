@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.type.data.helper;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
@@ -40,14 +40,14 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class SubTensorBridge<U> implements TensorMember<U> {
 
-	private final Group<?,U> group;
+	private final Algebra<?,U> group;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private IntegerIndex index;
 	private int[] rangingDims;
 	private long dim;
 
-	public SubTensorBridge(Group<?,U> group, TensorMember<U> tensor) {
+	public SubTensorBridge(Algebra<?,U> group, TensorMember<U> tensor) {
 		if (tensor.numDimensions() < 2)
 			throw new IllegalArgumentException("subtensor can only be constructed on tensor with 2 or more dimensions");
 		this.group = group;

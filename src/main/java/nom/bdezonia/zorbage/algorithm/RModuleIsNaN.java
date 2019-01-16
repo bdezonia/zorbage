@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
@@ -45,7 +45,7 @@ public class RModuleIsNaN {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Group<T,U> & NaN<U>,U>
+	public static <T extends Algebra<T,U> & NaN<U>,U>
 		boolean compute(T group, RModuleMember<U> a)
 	{
 		U value = group.construct();

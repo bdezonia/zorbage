@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
@@ -46,7 +46,7 @@ public class PowerNonNegative {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Group<T,U> & Multiplication<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
 		void compute(T group, int power, U a, U b)
 	{
 		if (power < 0)
@@ -60,7 +60,7 @@ public class PowerNonNegative {
 	
 	// this algorithm adapted from boost
 	
-	private static <T extends Group<T,U> & Multiplication<U> & Unity<U>, U>
+	private static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
 		void pow(T group, int pow, U a, U b)
 	{
 		if (pow == 0) {

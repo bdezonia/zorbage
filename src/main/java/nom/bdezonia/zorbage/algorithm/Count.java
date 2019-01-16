@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.condition.EqualConstant;
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -49,7 +49,7 @@ public class Count {
 	 * @param value
 	 * @param sum
 	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
+	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
 		void compute(T group, V addGroup, U value, IndexedDataSource<?,U> a, W sum)
 	{
 		compute(group, addGroup, value, 0, a.size(), a, sum);
@@ -65,7 +65,7 @@ public class Count {
 	 * @param value
 	 * @param sum
 	 */
-	public static <T extends Group<T,U>, U, V extends Group<V,W> & Addition<W> & Unity<W>, W>
+	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
 		void compute(T group, V addGroup, U value, long start, long count, IndexedDataSource<?,U> a, W sum)
 	{
 		EqualConstant<T, U> cond = new EqualConstant<T, U>(group, value);

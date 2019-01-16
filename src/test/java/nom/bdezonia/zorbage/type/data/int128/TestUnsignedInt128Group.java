@@ -34,7 +34,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
 
 /**

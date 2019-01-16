@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 
@@ -49,7 +49,7 @@ public class MatrixMultiply {
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Multiplication<U>,U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,U>
 		void compute(T group, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");

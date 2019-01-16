@@ -27,14 +27,14 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConstantL<T extends Group<T,U>,U>
+public class ConstantL<T extends Algebra<T,U>,U>
 	implements Procedure<U>
 {
 	private final Constant<T,U> lowerProc;

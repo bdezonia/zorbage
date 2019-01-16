@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.helper;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
@@ -41,7 +41,7 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	private final MatrixMember<U> mat;
 	private long startRow, countRows, startCol, countCols;
 	
-	public SubMatrixBridge(Group<?,U> group, MatrixMember<U> mat) {
+	public SubMatrixBridge(Algebra<?,U> group, MatrixMember<U> mat) {
 		this.zero = group.construct();
 		this.mat = mat;
 		this.startRow = 0;

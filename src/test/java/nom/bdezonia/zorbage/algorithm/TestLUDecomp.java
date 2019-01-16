@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;

@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -49,7 +49,7 @@ public class MatrixL2Norm {
 	 * @param mat
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Norm<U,W>, U, V extends Group<V,W> & Addition<W> & Multiplication<W> & Roots<W>, W>
+	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Roots<W>, W>
 		void compute(T matGroup, V numGroup, MatrixMember<U> mat, W result)
 	{
 		U value = matGroup.construct();

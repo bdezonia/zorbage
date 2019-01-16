@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -49,7 +49,7 @@ public class Variance {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Ordered<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		if (storage.size() == 0 || storage.size() == 1) {

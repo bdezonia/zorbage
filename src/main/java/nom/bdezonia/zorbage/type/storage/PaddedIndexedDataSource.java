@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Group;
  * @param <T>
  * @param <U>
  */
-public class PaddedIndexedDataSource<T extends Group<T,U>,U>
+public class PaddedIndexedDataSource<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<PaddedIndexedDataSource<T,U>, U>
 {
 	final private T group;

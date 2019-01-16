@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -47,7 +47,7 @@ public class Replace {
 	 * @param target
 	 * @param replacement
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T group, U target, U replacement, IndexedDataSource<?,U> storage)
 	{
 		compute(group, target, replacement, 0, storage.size(), storage);
@@ -62,7 +62,7 @@ public class Replace {
 	 * @param start
 	 * @param count
 	 */
-	public static <T extends Group<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T group, U target, U replacement, long start, long count, IndexedDataSource<?,U> storage)
 	{
 		U tmp = group.construct();

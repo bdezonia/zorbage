@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Power;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Power;
  * @author Barry DeZonia
  *
  */
-public class Pow<T extends Group<T,U> & Power<U>,U>
+public class Pow<T extends Algebra<T,U> & Power<U>,U>
 	implements Procedure3<U,U,U>
 {
 	private final T group;

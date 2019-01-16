@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -53,7 +53,7 @@ public class SumSquareCount {
 	 * @param sumSqDevs
 	 * @param count
 	 */
-	public static <T extends Group<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Ordered<U> & Invertible<U>,U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Ordered<U> & Invertible<U>,U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U avg, U sumSqDevs, U count)
 	{
 		/* original: impl 1: naive but quick

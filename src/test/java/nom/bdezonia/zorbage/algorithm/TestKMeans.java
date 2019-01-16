@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.point.Point;
 import nom.bdezonia.zorbage.type.data.point.PointGroup;

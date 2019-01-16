@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -44,7 +44,7 @@ public class Product {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Multiplication<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
 		void compute(T grp, IndexedDataSource<?,U> storage, U result)
 	{
 		compute(grp, 0, storage.size(), storage, result);
@@ -58,7 +58,7 @@ public class Product {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Multiplication<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
 		void compute(T grp, long start, long count, IndexedDataSource<?,U> storage, U result)
 	{
 		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Product method");

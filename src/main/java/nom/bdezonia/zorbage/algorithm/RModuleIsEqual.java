@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -47,7 +47,7 @@ public class RModuleIsEqual {
 	 * @param b
 	 * @return
 	 */
-	public static <T extends Group<T,V>, U extends RModuleMember<V>, V>
+	public static <T extends Algebra<T,V>, U extends RModuleMember<V>, V>
 		boolean compute(T memberGroup, U a, U b)
 	{
 		if (a.length() != b.length())

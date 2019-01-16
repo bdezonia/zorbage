@@ -28,14 +28,14 @@ package nom.bdezonia.zorbage.condition;
 
 // TODO: eliminate? It's possible to wrap the group's method call in a BooleanCondition.
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Infinite<T extends Group<T,U> & nom.bdezonia.zorbage.type.algebra.Infinite<U>,U>
+public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Infinite<U>,U>
 	implements Condition<U>
 {
 	private final T group;

@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
  * @author Barry DeZonia
  *
  */
-public class SinhL<T extends Group<T,U> & Hyperbolic<U>,U>
+public class SinhL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor;

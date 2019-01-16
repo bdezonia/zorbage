@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.util.Random;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -43,7 +43,7 @@ public class Shuffle {
 	 * @param group
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T group, IndexedDataSource<?,U> a)
 	{
 		compute(group, 0, a.size(), a);
@@ -56,7 +56,7 @@ public class Shuffle {
 	 * @param count
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T group, long start, long count, IndexedDataSource<?,U> a)
 	{
 		U tmp1 = group.construct();

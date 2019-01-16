@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure4;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -57,7 +57,7 @@ public class Transform4 {
 	 * @param c
 	 * @param d
 	 */
-	public static final <L extends Group<L,M>, M>
+	public static final <L extends Algebra<L,M>, M>
 		void compute(L grpM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,M> b, IndexedDataSource<?,M> c, IndexedDataSource<?,M> d)
 	{
 		compute(grpM, grpM, grpM, grpM, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
@@ -80,7 +80,7 @@ public class Transform4 {
 	 * @param b
 	 * @param c
 	 */
-	public static final <L extends Group<L,M>, M, N extends Group<N,O>, O, P extends Group<P,Q>, Q>
+	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q>
 		void compute(L grpM, N grpO, P grpQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c)
 	{
 		compute(grpM, grpO, grpQ, grpQ, proc, aStart, bStart, cStart, cStart, count, aStride, bStride, cStride, cStride, a, b, c, c);
@@ -107,7 +107,7 @@ public class Transform4 {
 	 * @param c
 	 * @param d
 	 */
-	public static final <L extends Group<L,M>, M, N extends Group<N,O>, O, P extends Group<P,Q>, Q, R extends Group<R,S>, S>
+	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q, R extends Algebra<R,S>, S>
 		void compute(L grpM, N grpO, P grpQ, R grpS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c, IndexedDataSource<?,S> d)
 	{
 		M valueM = grpM.construct();
@@ -134,7 +134,7 @@ public class Transform4 {
 	 * @param proc
 	 * @param a
 	 */
-	public static <T extends Group<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T grp, Procedure4<U,U,U,U> proc, IndexedDataSource<?,U> a)
 	{
 		U value1 = grp.construct();

@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure1;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Random;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
  * @author Barry DeZonia
  *
  */
-public class Rand<T extends Group<T,U> & Random<U>,U>
+public class Rand<T extends Algebra<T,U> & Random<U>,U>
 	implements Procedure1<U>
 {
 	private final T group;

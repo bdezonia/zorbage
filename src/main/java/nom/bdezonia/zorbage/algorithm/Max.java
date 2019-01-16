@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
@@ -43,7 +43,7 @@ public class Max {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Group<T,U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T group, U a, U b, U result)
 	{
 		if (group.isGreater().call(a, b))

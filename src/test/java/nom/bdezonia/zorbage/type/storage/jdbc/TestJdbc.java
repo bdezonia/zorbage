@@ -33,7 +33,7 @@ import java.sql.DriverManager;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.groups.G;
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 

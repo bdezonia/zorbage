@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Group;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 
 /**
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
  * @author Barry DeZonia
  *
  */
-public class DivideL<T extends Group<T,U> & Invertible<U>, U>
+public class DivideL<T extends Algebra<T,U> & Invertible<U>, U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor1;
