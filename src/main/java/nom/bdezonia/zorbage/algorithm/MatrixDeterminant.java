@@ -53,11 +53,11 @@ public class MatrixDeterminant {
 	public static
 	
 	<BASETYPE, // the base type like Float64Member or Octonion etc.
-	BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
+	BASETYPE_ALGEBRA extends RingWithUnity<BASETYPE_ALGEBRA,BASETYPE> & Invertible<BASETYPE>,
 	MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-	MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+	MATRIX_ALGEBRA extends Algebra<MATRIX_ALGEBRA,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
 		
-	void compute(MATRIX_Algebra matAlgebra, BASETYPE_Algebra numAlgebra, MATRIX_MEMBER a, BASETYPE det)
+	void compute(MATRIX_ALGEBRA matAlgebra, BASETYPE_ALGEBRA numAlgebra, MATRIX_MEMBER a, BASETYPE det)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("determinant requires square matrix");

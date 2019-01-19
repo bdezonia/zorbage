@@ -53,11 +53,11 @@ public class LUSolve {
 	 * @param x
 	 */
 	public static <BASETYPE, // the base type like Float64Member or Octonion etc.
-					BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
+					BASETYPE_ALGEBRA extends RingWithUnity<BASETYPE_ALGEBRA,BASETYPE> & Invertible<BASETYPE>,
 					RMODULE_MEMBER extends RModuleMember<BASETYPE>,
-					RMODULE_Algebra extends RModule<RMODULE_Algebra,RMODULE_MEMBER,BASETYPE_Algebra,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+					RMODULE_ALGEBRA extends RModule<RMODULE_ALGEBRA,RMODULE_MEMBER,BASETYPE_ALGEBRA,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 					MATRIX_MEMBER extends MatrixMember<BASETYPE>>
-		void compute(BASETYPE_Algebra numAlgebra, RMODULE_Algebra rmodAlgebra, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
+		void compute(BASETYPE_ALGEBRA numAlgebra, RMODULE_ALGEBRA rmodAlgebra, MATRIX_MEMBER a, RMODULE_MEMBER b, RMODULE_MEMBER x)
 	{
 		final long n = x.length();
 		

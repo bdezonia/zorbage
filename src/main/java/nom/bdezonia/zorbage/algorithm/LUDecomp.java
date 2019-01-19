@@ -52,11 +52,11 @@ public class LUDecomp {
 	public static
 	
 		<BASETYPE, // the base type like Float64Member or Octonion etc.
-		BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
+		BASETYPE_ALGEBRA extends RingWithUnity<BASETYPE_ALGEBRA,BASETYPE> & Invertible<BASETYPE>,
 		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-		MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+		MATRIX_ALGEBRA extends Algebra<MATRIX_ALGEBRA,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
 		
-	void compute(BASETYPE_Algebra numAlgebra, MATRIX_Algebra matAlgebra, MATRIX_MEMBER a)
+	void compute(BASETYPE_ALGEBRA numAlgebra, MATRIX_ALGEBRA matAlgebra, MATRIX_MEMBER a)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("LUDecomp requires square matrix input");

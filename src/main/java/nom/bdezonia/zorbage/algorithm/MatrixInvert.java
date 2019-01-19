@@ -58,12 +58,12 @@ public class MatrixInvert {
 	@SuppressWarnings("unchecked")
 	public static
 		<BASETYPE, // the base type like Float64Member or Octonion etc.
-		BASETYPE_Algebra extends RingWithUnity<BASETYPE_Algebra,BASETYPE> & Invertible<BASETYPE>,
+		BASETYPE_ALGEBRA extends RingWithUnity<BASETYPE_ALGEBRA,BASETYPE> & Invertible<BASETYPE>,
 		RMODULE_MEMBER extends RModuleMember<BASETYPE>,
-		RMODULE_Algebra extends RModule<RMODULE_Algebra,RMODULE_MEMBER,BASETYPE_Algebra,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
+		RMODULE_ALGEBRA extends RModule<RMODULE_ALGEBRA,RMODULE_MEMBER,BASETYPE_ALGEBRA,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 		MATRIX_MEMBER extends MatrixMember<BASETYPE>,
-		MATRIX_Algebra extends Algebra<MATRIX_Algebra,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
-	void compute(BASETYPE_Algebra numAlgebra, RMODULE_Algebra rmodAlgebra, MATRIX_Algebra matAlgebra, MATRIX_MEMBER a, MATRIX_MEMBER b)
+		MATRIX_ALGEBRA extends Algebra<MATRIX_ALGEBRA,MATRIX_MEMBER> & Constructible2dLong<MATRIX_MEMBER>>
+	void compute(BASETYPE_ALGEBRA numAlgebra, RMODULE_ALGEBRA rmodAlgebra, MATRIX_ALGEBRA matAlgebra, MATRIX_MEMBER a, MATRIX_MEMBER b)
 	{
 		if (a.rows() != a.cols())
 			throw new IllegalArgumentException("can only invert square matrices");
