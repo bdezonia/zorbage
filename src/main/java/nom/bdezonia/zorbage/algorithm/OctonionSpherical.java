@@ -65,32 +65,32 @@ public class OctonionSpherical {
 		double tmpPhi6C = Math.cos(phi6);
 		double tmpPhi6S = Math.sin(phi6);
 		
-        double k0 = tmpPhi6S;
-        double j0 = tmpPhi5S * tmpPhi6C;
-        double i0 = tmpPhi4S * tmpPhi5C * tmpPhi6C;
-        double l = tmpPhi3S * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-        double k = tmpPhi2S * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-        double j = tmpPhi1S * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-        double i = tmpThS * tmpPhi1C * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-        double r = tmpThC * tmpPhi1C * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-        
-        r *= rho;
-        i *= rho;
-        j *= rho;
-        k *= rho;
-        l *= rho;
-        i0 *= rho;
-        j0 *= rho;
-        k0 *= rho;
-        
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
-        out.setL(l);
-        out.setI0(i0);
-        out.setJ0(j0);
-        out.setK0(k0);
+		double k0 = tmpPhi6S;
+		double j0 = tmpPhi5S * tmpPhi6C;
+		double i0 = tmpPhi4S * tmpPhi5C * tmpPhi6C;
+		double l = tmpPhi3S * tmpPhi4C * tmpPhi5C * tmpPhi6C;
+		double k = tmpPhi2S * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
+		double j = tmpPhi1S * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
+		double i = tmpThS * tmpPhi1C * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
+		double r = tmpThC * tmpPhi1C * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
+		
+		r *= rho;
+		i *= rho;
+		j *= rho;
+		k *= rho;
+		l *= rho;
+		i0 *= rho;
+		j0 *= rho;
+		k0 *= rho;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
+		out.setL(l);
+		out.setI0(i0);
+		out.setJ0(j0);
+		out.setK0(k0);
 	}
 
 	/**

@@ -51,15 +51,15 @@ public class QuaternionMultiPolar {
 		double tmpTh2C = Math.cos(theta2);
 		double tmpTh2S = Math.sin(theta2);
 		
-        double r = rho1 * tmpTh1C;
-        double i = rho1 * tmpTh1S;
-        double j = rho2 * tmpTh2C;
-        double k = rho2 * tmpTh2S;
-
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
+		double r = rho1 * tmpTh1C;
+		double i = rho1 * tmpTh1S;
+		double j = rho2 * tmpTh2C;
+		double k = rho2 * tmpTh2S;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
 	}
 
 	/**

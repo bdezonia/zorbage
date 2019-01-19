@@ -53,20 +53,20 @@ public class QuaternionSpherical {
 		double tmpPhi2C = Math.cos(phi2);
 		double tmpPhi2S = Math.sin(phi2);
 		
-        double r = tmpThC * tmpPhi1C * tmpPhi2C;
-        double i = tmpThS * tmpPhi1C * tmpPhi2C;
-        double j = tmpPhi1S * tmpPhi2C;
-        double k = tmpPhi2S;
-
-        r *= rho;
-        i *= rho;
-        j *= rho;
-        k *= rho;
-        
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
+		double r = tmpThC * tmpPhi1C * tmpPhi2C;
+		double i = tmpThS * tmpPhi1C * tmpPhi2C;
+		double j = tmpPhi1S * tmpPhi2C;
+		double k = tmpPhi2S;
+		
+		r *= rho;
+		i *= rho;
+		j *= rho;
+		k *= rho;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
 	}
 
 	/**

@@ -59,23 +59,23 @@ public class OctonionMultiPolar {
 		double tmpTh4C = Math.cos(theta4);
 		double tmpTh4S = Math.sin(theta4);
 		
-        double r = rho1 * tmpTh1C;
-        double i = rho1 * tmpTh1S;
-        double j = rho2 * tmpTh2C;
-        double k = rho2 * tmpTh2S;
-        double l = rho3 * tmpTh3C;
-        double i0 = rho3 * tmpTh3S;
-        double j0 = rho4 * tmpTh4C;
-        double k0 = rho4 * tmpTh4S;
-
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
-        out.setL(l);
-        out.setI0(i0);
-        out.setJ0(j0);
-        out.setK0(k0);
+		double r = rho1 * tmpTh1C;
+		double i = rho1 * tmpTh1S;
+		double j = rho2 * tmpTh2C;
+		double k = rho2 * tmpTh2S;
+		double l = rho3 * tmpTh3C;
+		double i0 = rho3 * tmpTh3S;
+		double j0 = rho4 * tmpTh4C;
+		double k0 = rho4 * tmpTh4S;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
+		out.setL(l);
+		out.setI0(i0);
+		out.setJ0(j0);
+		out.setK0(k0);
 	}
 
 	/**

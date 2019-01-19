@@ -51,14 +51,14 @@ public class QuaternionCylindroSpherical {
 		double tmpLatC = Math.cos(latitude);
 		double tmpLatS = Math.sin(latitude);
 		
-        double i = rad * tmpLngC * tmpLatC;
-        double j = rad * tmpLngS * tmpLatC;
-        double k = rad * tmpLatS;
-        
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
+		double i = rad * tmpLngC * tmpLatC;
+		double j = rad * tmpLngS * tmpLatC;
+		double k = rad * tmpLatS;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
 	}
 
 	/**

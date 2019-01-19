@@ -54,16 +54,16 @@ public class OctonionCylindrical {
 		double tmpAngS = Math.sin(angle);
 
 		double r = rad * tmpAngC;
-        double i = rad * tmpAngS;
+		double i = rad * tmpAngS;
         
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
-        out.setL(l);
-        out.setI0(i0);
-        out.setJ0(j0);
-        out.setK0(k0);
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
+		out.setL(l);
+		out.setI0(i0);
+		out.setJ0(j0);
+		out.setK0(k0);
 	}
 
 	/**

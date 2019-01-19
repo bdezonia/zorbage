@@ -50,12 +50,12 @@ public class QuaternionCylindrical {
 		double tmpAngS = Math.sin(angle);
 
 		double r = rad * tmpAngC;
-        double i = rad * tmpAngS;
-        
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
+		double i = rad * tmpAngS;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
 	}
 
 	/**

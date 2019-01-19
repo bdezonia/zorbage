@@ -53,20 +53,20 @@ public class QuaternionSemiPolar {
 		double tmpTh2C = Math.cos(theta2);
 		double tmpTh2S = Math.sin(theta2);
 		
-        double r = tmpAlC * tmpTh1C;
-        double i = tmpAlC * tmpTh1S;
-        double j = tmpAlS * tmpTh2C;
-        double k = tmpAlS * tmpTh2S;
-
-        r *= rho;
-        i *= rho;
-        j *= rho;
-        k *= rho;
-        
-        out.setR(r);
-        out.setI(i);
-        out.setJ(j);
-        out.setK(k);
+		double r = tmpAlC * tmpTh1C;
+		double i = tmpAlC * tmpTh1S;
+		double j = tmpAlS * tmpTh2C;
+		double k = tmpAlS * tmpTh2S;
+		
+		r *= rho;
+		i *= rho;
+		j *= rho;
+		k *= rho;
+		
+		out.setR(r);
+		out.setI(i);
+		out.setJ(j);
+		out.setK(k);
 	}
 
 	/**
