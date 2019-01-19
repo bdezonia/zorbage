@@ -53,9 +53,9 @@ public class QuaternionCylindrical {
         double i = rad * tmpAngS;
         
         out.setR(r);
-        out.setR(i);
-        out.setR(j);
-        out.setR(k);
+        out.setI(i);
+        out.setJ(j);
+        out.setK(k);
 	}
 
 	/**

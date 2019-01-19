@@ -64,9 +64,9 @@ public class QuaternionSpherical {
         k *= rho;
         
         out.setR(r);
-        out.setR(i);
-        out.setR(j);
-        out.setR(k);
+        out.setI(i);
+        out.setJ(j);
+        out.setK(k);
 	}
 
 	/**

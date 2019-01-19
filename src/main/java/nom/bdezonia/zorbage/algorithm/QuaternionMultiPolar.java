@@ -57,9 +57,9 @@ public class QuaternionMultiPolar {
         double k = rho2 * tmpTh2S;
 
         out.setR(r);
-        out.setR(i);
-        out.setR(j);
-        out.setR(k);
+        out.setI(i);
+        out.setJ(j);
+        out.setK(k);
 	}
 
 	/**
