@@ -102,7 +102,7 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageSignedInt8<U> allocate() {
-		return new JdbcStorageSignedInt8<U>(size, type, conn);
+		return new JdbcStorageSignedInt8<U>(size(), type, conn);
 	}
     
 }

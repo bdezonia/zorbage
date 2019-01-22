@@ -102,7 +102,7 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageSignedInt16<U> allocate() {
-		return new JdbcStorageSignedInt16<U>(size, type, conn);
+		return new JdbcStorageSignedInt16<U>(size(), type, conn);
 	}
     
 }

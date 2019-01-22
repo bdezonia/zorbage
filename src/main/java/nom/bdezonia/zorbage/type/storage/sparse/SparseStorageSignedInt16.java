@@ -124,7 +124,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder>
 
 	@Override
 	public SparseStorageSignedInt16<U> allocate() {
-		return new SparseStorageSignedInt16<U>(numElements, type);
+		return new SparseStorageSignedInt16<U>(size(), type);
 	}
 
 }

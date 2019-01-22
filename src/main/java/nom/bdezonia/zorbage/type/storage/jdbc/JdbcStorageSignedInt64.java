@@ -102,7 +102,7 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageSignedInt64<U> allocate() {
-		return new JdbcStorageSignedInt64<U>(size, type, conn);
+		return new JdbcStorageSignedInt64<U>(size(), type, conn);
 	}
     
 }

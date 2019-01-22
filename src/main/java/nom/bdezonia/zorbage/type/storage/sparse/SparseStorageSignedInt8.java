@@ -124,7 +124,7 @@ public class SparseStorageSignedInt8<U extends ByteCoder>
 
 	@Override
 	public SparseStorageSignedInt8<U> allocate() {
-		return new SparseStorageSignedInt8<U>(numElements, type);
+		return new SparseStorageSignedInt8<U>(size(), type);
 	}
 
 }

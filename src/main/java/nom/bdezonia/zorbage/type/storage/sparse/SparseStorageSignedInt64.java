@@ -124,7 +124,7 @@ public class SparseStorageSignedInt64<U extends LongCoder>
 
 	@Override
 	public SparseStorageSignedInt64<U> allocate() {
-		return new SparseStorageSignedInt64<U>(numElements, type);
+		return new SparseStorageSignedInt64<U>(size(), type);
 	}
 
 }

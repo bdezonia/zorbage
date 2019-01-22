@@ -124,7 +124,7 @@ public class SparseStorageBoolean<U extends BooleanCoder>
 
 	@Override
 	public SparseStorageBoolean<U> allocate() {
-		return new SparseStorageBoolean<U>(numElements, type);
+		return new SparseStorageBoolean<U>(size(), type);
 	}
 
 }

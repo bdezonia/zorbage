@@ -102,7 +102,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageFloat64<U> allocate() {
-		return new JdbcStorageFloat64<U>(size, type, conn);
+		return new JdbcStorageFloat64<U>(size(), type, conn);
 	}
     
 }

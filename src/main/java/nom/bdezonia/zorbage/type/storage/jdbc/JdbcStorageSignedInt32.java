@@ -102,7 +102,7 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageSignedInt32<U> allocate() {
-		return new JdbcStorageSignedInt32<U>(size, type, conn);
+		return new JdbcStorageSignedInt32<U>(size(), type, conn);
 	}
     
 }

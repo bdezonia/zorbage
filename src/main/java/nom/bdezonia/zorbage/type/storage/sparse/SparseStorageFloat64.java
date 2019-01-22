@@ -124,7 +124,7 @@ public class SparseStorageFloat64<U extends DoubleCoder>
 
 	@Override
 	public SparseStorageFloat64<U> allocate() {
-		return new SparseStorageFloat64<U>(numElements, type);
+		return new SparseStorageFloat64<U>(size(), type);
 	}
 
 }

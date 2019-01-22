@@ -124,7 +124,7 @@ public class SparseStorageFloat32<U extends FloatCoder>
 
 	@Override
 	public SparseStorageFloat32<U> allocate() {
-		return new SparseStorageFloat32<U>(numElements, type);
+		return new SparseStorageFloat32<U>(size(), type);
 	}
 
 }

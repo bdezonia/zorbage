@@ -124,7 +124,7 @@ public class SparseStorageSignedInt32<U extends IntCoder>
 
 	@Override
 	public SparseStorageSignedInt32<U> allocate() {
-		return new SparseStorageSignedInt32<U>(numElements, type);
+		return new SparseStorageSignedInt32<U>(size(), type);
 	}
 
 }

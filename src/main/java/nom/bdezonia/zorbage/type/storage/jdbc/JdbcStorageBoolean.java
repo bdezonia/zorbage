@@ -102,7 +102,7 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageBoolean<U> allocate() {
-		return new JdbcStorageBoolean<U>(size, type, conn);
+		return new JdbcStorageBoolean<U>(size(), type, conn);
 	}
     
 }

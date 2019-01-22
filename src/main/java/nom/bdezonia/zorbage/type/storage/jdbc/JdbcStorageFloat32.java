@@ -103,7 +103,7 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageFloat32<U> allocate() {
-		return new JdbcStorageFloat32<U>(size, type, conn);
+		return new JdbcStorageFloat32<U>(size(), type, conn);
 	}
     
 }
