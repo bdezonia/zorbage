@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
  * @param <U>
  */
 public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageBit<U>,U>
+	implements IndexedDataSource<ArrayStorageBit<U>,U>, Allocatable<ArrayStorageBit<U>>
 {
 	private final U type;
 	private final long[] data;
@@ -90,6 +90,11 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 				s.data[i] = data[i];
 		}
 		return s;
+	}
+
+	@Override
+	public ArrayStorageBit<U> allocate() {
+		return new ArrayStorageBit<U>(size(), type);
 	}
 	
 }
