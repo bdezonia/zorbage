@@ -37,23 +37,16 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W>
 	implements IndexedDataSource<V,W>
 {
-	private final IndexedDataSource<T,U> source;
-	private final Procedure2<U,W> dProc;
-	private final Procedure2<W,U> sProc;
-	private final Algebra<?, U> sAlg;
+	private final IndexedDataSource<T,U> uCollection;
+	private final Algebra<?, U> uAlg;
+	private final Procedure2<W,U> wToU;
+	private final Procedure2<U,W> uToW;
 	
-	/**
-	 * 
-	 * @param source
-	 * @param sAlg
-	 * @param sProc
-	 * @param dProc
-	 */
-	public FilteredSource(IndexedDataSource<T,U> source, Algebra<?,U> sAlg, Procedure2<W,U> sProc, Procedure2<U,W> dProc) {
-		this.source = source;
-		this.sAlg = sAlg;
-		this.sProc = sProc;
-		this.dProc = dProc;
+	public FilteredSource(IndexedDataSource<T,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
+		this.uCollection = uCollection;
+		this.uAlg = uAlg;
+		this.wToU = wToU;
+		this.uToW = uToW;
 	}
 
 	/**
@@ -63,7 +56,7 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	@Override
 	public V duplicate() {
 		// TODO: this cast might be broken. I am supressing warnings. Must test.
-		return (V) new FilteredSource<T,U,V,W>(source, sAlg, sProc, dProc);
+		return (V) new FilteredSource<T,U,V,W>(uCollection, uAlg, wToU, uToW);
 	}
 
 	/**
@@ -71,10 +64,9 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	 */
 	@Override
 	public void set(long index, W value) {
-		// TODO make tmp U into a threadlocal variable. Don't hatch on every proc call.
-		U tmp = sAlg.construct();
-		sProc.call(value, tmp);
-		source.set(index, tmp);
+		U tmp = tmpU.get();
+		wToU.call(value, tmp);
+		uCollection.set(index, tmp);
 	}
 
 	/**
@@ -82,10 +74,9 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	 */
 	@Override
 	public void get(long index, W value) {
-		// TODO make tmp U into a threadlocal variable. Don't hatch on every proc call.
-		U tmp = sAlg.construct();
-		source.get(index, tmp);
-		dProc.call(tmp, value);
+		U tmp = tmpU.get();
+		uCollection.get(index, tmp);
+		uToW.call(tmp, value);
 	}
 
 	/**
@@ -93,6 +84,13 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	 */
 	@Override
 	public long size() {
-		return source.size();
+		return uCollection.size();
 	}
+	
+	private ThreadLocal<U> tmpU = new ThreadLocal<U>() {
+		@Override
+		protected U initialValue() {
+			return uAlg.construct();
+		}
+	};
 }
