@@ -34,15 +34,14 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W>
-	implements IndexedDataSource<V,W>
+public class TransformedDataSource<T extends IndexedDataSource<T,W>, U, W> implements IndexedDataSource<T,W>
 {
-	private final IndexedDataSource<T,U> uCollection;
+	private final IndexedDataSource<?,U> uCollection;
 	private final Algebra<?, U> uAlg;
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
 	
-	public TransformedDataSource(IndexedDataSource<T,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
+	public TransformedDataSource(IndexedDataSource<?,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
 		this.uCollection = uCollection;
 		this.uAlg = uAlg;
 		this.wToU = wToU;
@@ -52,11 +51,9 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	/**
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public V duplicate() {
-		// TODO: this cast might be broken. I am supressing warnings. Must test.
-		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, wToU, uToW);
+	public T duplicate() {
+		throw new UnsupportedOperationException("Have not yet figured out how to support this");
 	}
 
 	/**
