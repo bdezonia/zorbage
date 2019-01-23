@@ -41,37 +41,56 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	private final Procedure2<U,W> dProc;
 	private final Procedure2<W,U> sProc;
 	private final Algebra<?, U> sAlg;
-	private final Algebra<?, W> dAlg;
 	
-	public FilteredSource(IndexedDataSource<T,U> source, Procedure2<W,U> sProc, Algebra<?,U> sAlg, Procedure2<U,W> dProc, Algebra<?,W> dAlg) {
+	/**
+	 * 
+	 * @param source
+	 * @param sAlg
+	 * @param sProc
+	 * @param dProc
+	 */
+	public FilteredSource(IndexedDataSource<T,U> source, Algebra<?,U> sAlg, Procedure2<W,U> sProc, Procedure2<U,W> dProc) {
 		this.source = source;
+		this.sAlg = sAlg;
 		this.sProc = sProc;
 		this.dProc = dProc;
-		this.sAlg = sAlg;
-		this.dAlg = dAlg;
 	}
 
+	/**
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public V duplicate() {
 		// TODO: this cast might be broken. I am supressing warnings. Must test.
-		return (V) new FilteredSource<T,U,V,W>(source, sProc, sAlg, dProc, dAlg);
+		return (V) new FilteredSource<T,U,V,W>(source, sAlg, sProc, dProc);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void set(long index, W value) {
+		// TODO make tmp U into a threadlocal variable. Don't hatch on every proc call.
 		U tmp = sAlg.construct();
 		sProc.call(value, tmp);
 		source.set(index, tmp);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void get(long index, W value) {
+		// TODO make tmp U into a threadlocal variable. Don't hatch on every proc call.
 		U tmp = sAlg.construct();
 		source.get(index, tmp);
 		dProc.call(tmp, value);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public long size() {
 		return source.size();
