@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W>
+public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W>
 	implements IndexedDataSource<V,W>
 {
 	private final IndexedDataSource<T,U> uCollection;
@@ -42,7 +42,7 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
 	
-	public FilteredSource(IndexedDataSource<T,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
+	public TransformedDataSource(IndexedDataSource<T,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
 		this.uCollection = uCollection;
 		this.uAlg = uAlg;
 		this.wToU = wToU;
@@ -56,7 +56,7 @@ public class FilteredSource<T extends IndexedDataSource<T,U>, U, V extends Index
 	@Override
 	public V duplicate() {
 		// TODO: this cast might be broken. I am supressing warnings. Must test.
-		return (V) new FilteredSource<T,U,V,W>(uCollection, uAlg, wToU, uToW);
+		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, wToU, uToW);
 	}
 
 	/**
