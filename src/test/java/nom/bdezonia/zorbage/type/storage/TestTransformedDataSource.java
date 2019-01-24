@@ -33,10 +33,8 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
-
-// TODO declaration of TransformedDataSource seems to be impossible to instantiate in a type
-// safe way that will compile correctly. Must investigate.
 
 /**
  * 
@@ -45,11 +43,10 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  */
 public class TestTransformedDataSource {
 
-	@SuppressWarnings({"unchecked","rawtypes"})
 	@Test
 	public void test1() {
 		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource wrappedData = new TransformedDataSource<>(doubles, G.DBL, ident, ident);
+		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, ident, ident);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			wrappedData.get(i, value);
@@ -63,11 +60,10 @@ public class TestTransformedDataSource {
 		}
 	}
 	
-	@SuppressWarnings({"unchecked","rawtypes"})
 	@Test
 	public void test2() {
 		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource wrappedData = new TransformedDataSource<>(doubles, G.DBL, half, dbl);
+		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, half, dbl);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			doubles.get(i, value);
@@ -82,6 +78,30 @@ public class TestTransformedDataSource {
 			assertEquals(i/2.0, value.v(), 0);
 			wrappedData.get(i, value);
 			assertEquals(i, value.v(), 0);
+		}
+	}
+	
+	@Test
+	public void test3() {
+		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, ident, ident);
+		@SuppressWarnings("unchecked") // TODO: unchecked cast required. I can't find workaround. 
+		TransformedDataSource<?,Float64Member,?,Float64Member> dupe = (TransformedDataSource<?, Float64Member, ?, Float64Member>) wrappedData.duplicate();
+		Float64Member value = G.DBL.construct();
+		for (long i = 0; i < doubles.size(); i++) {
+			dupe.get(i, value);
+			assertEquals(i, value.v(), 0);
+		}
+	}
+	
+	@Test
+	public void test4() {
+		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		TransformedDataSource<?,Float64Member,?,SignedInt32Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, intToDbl, dblToInt);
+		SignedInt32Member value = G.INT32.construct();
+		for (long i = 0; i < doubles.size(); i++) {
+			wrappedData.get(i, value);
+			assertEquals(i, value.v());
 		}
 	}
 	
@@ -106,6 +126,24 @@ public class TestTransformedDataSource {
 		@Override
 		public void call(Float64Member a, Float64Member b) {
 			b.setV(a.v() * 2.0);
+		}
+	};
+
+	private Procedure2<SignedInt32Member,Float64Member> intToDbl = new Procedure2<SignedInt32Member, Float64Member>() {
+		
+		@Override
+		public void call(SignedInt32Member a, Float64Member b) {
+			
+			b.setV(a.v());
+		}
+	};
+
+	private Procedure2<Float64Member,SignedInt32Member> dblToInt = new Procedure2<Float64Member, SignedInt32Member>() {
+		
+		@Override
+		public void call(Float64Member a, SignedInt32Member b) {
+			
+			b.setV((int)a.v());
 		}
 	};
 }

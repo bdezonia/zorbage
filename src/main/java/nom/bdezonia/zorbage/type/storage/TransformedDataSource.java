@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class TransformedDataSource<T extends IndexedDataSource<T,W>, U, W> implements IndexedDataSource<T,W>
+public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W> implements IndexedDataSource<V,W>
 {
 	private final IndexedDataSource<?,U> uCollection;
 	private final Algebra<?, U> uAlg;
@@ -44,16 +44,17 @@ public class TransformedDataSource<T extends IndexedDataSource<T,W>, U, W> imple
 	public TransformedDataSource(IndexedDataSource<?,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
 		this.uCollection = uCollection;
 		this.uAlg = uAlg;
-		this.wToU = wToU;
 		this.uToW = uToW;
+		this.wToU = wToU;
 	}
 
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked") // TODO: unchecked cast required. I can't find workaround. 
 	@Override
-	public T duplicate() {
-		throw new UnsupportedOperationException("Have not yet figured out how to support this");
+	public V duplicate() {
+		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, wToU, uToW);
 	}
 
 	/**
