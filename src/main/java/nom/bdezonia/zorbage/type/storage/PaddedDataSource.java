@@ -35,23 +35,23 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @param <T>
  * @param <U>
  */
-public class PaddedIndexedDataSource<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<PaddedIndexedDataSource<T,U>, U>
+public class PaddedDataSource<T extends Algebra<T,U>,U>
+	implements IndexedDataSource<PaddedDataSource<T,U>, U>
 {
 	final private T algebra;
 	final private IndexedDataSource<?,U> storage;
 	final private U zero;
 	
-	public PaddedIndexedDataSource(T algebra, IndexedDataSource<?,U> storage) {
+	public PaddedDataSource(T algebra, IndexedDataSource<?,U> storage) {
 		this.algebra = algebra;
 		this.storage = storage;
 		this.zero = algebra.construct();
 	}
 
 	@Override
-	public PaddedIndexedDataSource<T, U> duplicate() {
+	public PaddedDataSource<T, U> duplicate() {
 		// shallow copy
-		return new PaddedIndexedDataSource<T,U>(algebra, storage);
+		return new PaddedDataSource<T,U>(algebra, storage);
 	}
 
 	@Override
