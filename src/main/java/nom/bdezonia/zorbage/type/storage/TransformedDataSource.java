@@ -93,7 +93,7 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 		return uCollection.size();
 	}
 	
-	private ThreadLocal<U> tmpU = new ThreadLocal<U>() {
+	private final ThreadLocal<U> tmpU = new ThreadLocal<U>() {
 		@Override
 		protected U initialValue() {
 			return uAlg.construct();
