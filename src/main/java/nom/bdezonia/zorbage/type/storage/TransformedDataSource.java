@@ -48,9 +48,9 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	 * @param uToW
 	 * @param wToU
 	 */
-	public TransformedDataSource(IndexedDataSource<?,U> uCollection, Algebra<?,U> uAlg, Procedure2<U,W> uToW, Procedure2<W,U> wToU) {
-		this.uCollection = uCollection;
+	public TransformedDataSource(Algebra<?,U> uAlg, IndexedDataSource<?,U> uCollection, Procedure2<U,W> uToW, Procedure2<W,U> wToU) {
 		this.uAlg = uAlg;
+		this.uCollection = uCollection;
 		this.uToW = uToW;
 		this.wToU = wToU;
 	}
@@ -62,7 +62,7 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	@Override
 	public V duplicate() {
 		// shallow copy
-		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, uToW, wToU);
+		return (V) new TransformedDataSource<T,U,V,W>(uAlg, uCollection, uToW, wToU);
 	}
 
 	/**
