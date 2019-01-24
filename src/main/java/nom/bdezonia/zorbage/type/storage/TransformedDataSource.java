@@ -61,6 +61,7 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	@SuppressWarnings("unchecked") // TODO: unchecked cast required. I can't find workaround. 
 	@Override
 	public V duplicate() {
+		// shallow copy
 		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, uToW, wToU);
 	}
 
