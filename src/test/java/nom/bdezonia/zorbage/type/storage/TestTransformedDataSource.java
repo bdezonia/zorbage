@@ -85,8 +85,7 @@ public class TestTransformedDataSource {
 	public void test3() {
 		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, ident, ident);
-		@SuppressWarnings("unchecked") // TODO: unchecked cast required. I can't find workaround. 
-		TransformedDataSource<?,Float64Member,?,Float64Member> dupe = (TransformedDataSource<?,Float64Member,?,Float64Member>) wrappedData.duplicate();
+		IndexedDataSource<?,Float64Member> dupe = wrappedData.duplicate();
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			dupe.get(i, value);
@@ -103,6 +102,9 @@ public class TestTransformedDataSource {
 			wrappedData.get(i, value);
 			assertEquals(i, value.v());
 		}
+		// Do this just to test warning free compilation of duplicate() with mixed types
+		IndexedDataSource<?,SignedInt32Member> tmp = wrappedData.duplicate();
+		assertEquals(doubles.size(), tmp.size());
 	}
 	
 	private Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
