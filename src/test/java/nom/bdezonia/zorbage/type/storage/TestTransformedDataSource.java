@@ -86,7 +86,7 @@ public class TestTransformedDataSource {
 		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, ident, ident);
 		@SuppressWarnings("unchecked") // TODO: unchecked cast required. I can't find workaround. 
-		TransformedDataSource<?,Float64Member,?,Float64Member> dupe = (TransformedDataSource<?, Float64Member, ?, Float64Member>) wrappedData.duplicate();
+		TransformedDataSource<?,Float64Member,?,Float64Member> dupe = (TransformedDataSource<?,Float64Member,?,Float64Member>) wrappedData.duplicate();
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			dupe.get(i, value);

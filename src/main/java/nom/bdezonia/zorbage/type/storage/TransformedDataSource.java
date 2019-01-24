@@ -41,6 +41,13 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
 	
+	/**
+	 * 
+	 * @param uCollection
+	 * @param uAlg
+	 * @param wToU
+	 * @param uToW
+	 */
 	public TransformedDataSource(IndexedDataSource<?,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
 		this.uCollection = uCollection;
 		this.uAlg = uAlg;
