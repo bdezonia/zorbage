@@ -45,10 +45,10 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	 * 
 	 * @param uCollection
 	 * @param uAlg
-	 * @param wToU
 	 * @param uToW
+	 * @param wToU
 	 */
-	public TransformedDataSource(IndexedDataSource<?,U> uCollection, Algebra<?,U> uAlg, Procedure2<W,U> wToU, Procedure2<U,W> uToW) {
+	public TransformedDataSource(IndexedDataSource<?,U> uCollection, Algebra<?,U> uAlg, Procedure2<U,W> uToW, Procedure2<W,U> wToU) {
 		this.uCollection = uCollection;
 		this.uAlg = uAlg;
 		this.uToW = uToW;
@@ -61,7 +61,7 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	@SuppressWarnings("unchecked") // TODO: unchecked cast required. I can't find workaround. 
 	@Override
 	public V duplicate() {
-		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, wToU, uToW);
+		return (V) new TransformedDataSource<T,U,V,W>(uCollection, uAlg, uToW, wToU);
 	}
 
 	/**

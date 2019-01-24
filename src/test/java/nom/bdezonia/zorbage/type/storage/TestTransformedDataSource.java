@@ -63,7 +63,7 @@ public class TestTransformedDataSource {
 	@Test
 	public void test2() {
 		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, half, dbl);
+		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, dbl, half);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			doubles.get(i, value);
@@ -96,7 +96,7 @@ public class TestTransformedDataSource {
 	@Test
 	public void test4() {
 		IndexedDataSource<?, Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource<?,Float64Member,?,SignedInt32Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, intToDbl, dblToInt);
+		TransformedDataSource<?,Float64Member,?,SignedInt32Member> wrappedData = new TransformedDataSource<>(doubles, G.DBL, dblToInt, intToDbl);
 		SignedInt32Member value = G.INT32.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			wrappedData.get(i, value);
