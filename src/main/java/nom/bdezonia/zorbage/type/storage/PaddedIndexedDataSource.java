@@ -38,26 +38,26 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class PaddedIndexedDataSource<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<PaddedIndexedDataSource<T,U>, U>
 {
-	final private T Algebra;
+	final private T algebra;
 	final private IndexedDataSource<?,U> storage;
 	final private U zero;
 	
-	public PaddedIndexedDataSource(T Algebra, IndexedDataSource<?,U> storage) {
-		this.Algebra = Algebra;
+	public PaddedIndexedDataSource(T algebra, IndexedDataSource<?,U> storage) {
+		this.algebra = algebra;
 		this.storage = storage;
-		this.zero = Algebra.construct();
+		this.zero = algebra.construct();
 	}
 
 	@Override
 	public PaddedIndexedDataSource<T, U> duplicate() {
-		IndexedDataSource<?,U> otherStorage = storage.duplicate();
-		return new PaddedIndexedDataSource<T,U>(Algebra, otherStorage);
+		// shallow copy
+		return new PaddedIndexedDataSource<T,U>(algebra, storage);
 	}
 
 	@Override
 	public void set(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			if (Algebra.isNotEqual().call(zero, value))
+			if (algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
 		}
 		else {
@@ -68,7 +68,7 @@ public class PaddedIndexedDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public void get(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			Algebra.assign().call(zero, value);
+			algebra.assign().call(zero, value);
 		}
 		else {
 			storage.get(index, value);
