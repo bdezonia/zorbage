@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.type.storage;
  * @author Barry DeZonia
  *
  */
-public class TrimmedStorage<T extends IndexedDataSource<T,U>, U>
+public class TrimmedDataSource<T extends IndexedDataSource<T,U>, U>
 	implements
 		IndexedDataSource<T,U>
 {
@@ -45,7 +45,7 @@ public class TrimmedStorage<T extends IndexedDataSource<T,U>, U>
 	 * @param first
 	 * @param last
 	 */
-	public TrimmedStorage(IndexedDataSource<T,U> list, long first, long last) {
+	public TrimmedDataSource(IndexedDataSource<T,U> list, long first, long last) {
 		if (first < 0 || last < 0 || first > last || 
 				first >= list.size() || last >= list.size() ||
 				(last - first) >= list.size())
@@ -59,7 +59,7 @@ public class TrimmedStorage<T extends IndexedDataSource<T,U>, U>
 	public T duplicate() {
 		// shallow copy
 		// TODO: WTH? Why does this warning keep cropping up?
-		return (T) new TrimmedStorage<>(list, first, last);
+		return (T) new TrimmedDataSource<>(list, first, last);
 	}
 
 	@Override
