@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
+import java.math.BigInteger;
+
 /**
  * 
  * @author Barry DeZonia
@@ -38,6 +40,8 @@ public class ConcatenatedStorage<T extends IndexedDataSource<T,U>,U>
 	private final IndexedDataSource<T,U> second;
 
 	public ConcatenatedStorage(IndexedDataSource<T,U> a, IndexedDataSource<T,U> b) {
+		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+			throw new IllegalArgumentException("the two input lists are too long to add together");
 		this.first = a;
 		this.second = b;
 	}
