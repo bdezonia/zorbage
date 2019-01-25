@@ -66,7 +66,7 @@ public class TrimmedStorage<T extends IndexedDataSource<T,U>, U>
 	public void set(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		if (index > size())
+		if (index >= size())
 			throw new IllegalArgumentException("out of bounds index exception");
 		list.set(index+first, value);
 	}
@@ -75,7 +75,7 @@ public class TrimmedStorage<T extends IndexedDataSource<T,U>, U>
 	public void get(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		if (index > size())
+		if (index >= size())
 			throw new IllegalArgumentException("out of bounds index exception");
 		list.get(index+first, value);
 	}
