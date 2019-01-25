@@ -52,9 +52,11 @@ public class Conjugate {
 	{
 		U tmpA = Algebra.construct();
 		U tmpB = Algebra.construct();
-		if (a.size() != b.size())
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != bSize)
 			throw new IllegalArgumentException("mismatched input/output");
-		for (long i = 0; i < a.size(); i++) {
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
 			Algebra.conjugate().call(tmpA, tmpB);
 			b.set(i, tmpB);

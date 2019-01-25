@@ -34,13 +34,15 @@ package nom.bdezonia.zorbage.type.storage;
  */
 public class LinearAccessor<U> {
 	
-	private U value;
-	private IndexedDataSource<?,U> storage;
+	private final U value;
+	private final IndexedDataSource<?,U> storage;
 	private long pos;
+	private final long size;
 
 	public LinearAccessor(U value, IndexedDataSource<?,U> storage) {
 		this.value = value;
 		this.storage = storage;
+		this.size = storage.size();
 		beforeFirst();
 	}
 	
@@ -53,19 +55,19 @@ public class LinearAccessor<U> {
 	}
 	
 	public boolean hasNext() {
-		return (pos+1) >= 0 && (pos+1) < storage.size();
+		return (pos+1) >= 0 && (pos+1) < size;
 	}
 	
 	public boolean hasPrev() {
-		return (pos-1) >= 0 && (pos-1) < storage.size();
+		return (pos-1) >= 0 && (pos-1) < size;
 	}
 	
 	public boolean hasNext(long steps) {
-		return (pos+steps) >= 0 && (pos+steps) < storage.size();
+		return (pos+steps) >= 0 && (pos+steps) < size;
 	}
 	
 	public boolean hasPrev(long steps) {
-		return (pos-steps) >= 0 && (pos-steps) < storage.size();
+		return (pos-steps) >= 0 && (pos-steps) < size;
 	}
 	
 	public void fwd() { pos++; }
@@ -74,7 +76,7 @@ public class LinearAccessor<U> {
 	public void back(long steps) { pos -= steps; }
 	
 	public void afterLast() {
-		pos = storage.size();
+		pos = size;
 	}
 	
 	public void beforeFirst() {

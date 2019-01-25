@@ -39,6 +39,11 @@ public class ConcatenatedStorage<T extends IndexedDataSource<T,U>,U>
 	private final IndexedDataSource<T,U> first;
 	private final IndexedDataSource<T,U> second;
 
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 */
 	public ConcatenatedStorage(IndexedDataSource<T,U> a, IndexedDataSource<T,U> b) {
 		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
 			throw new IllegalArgumentException("the two input lists are too long to add together");
@@ -57,20 +62,22 @@ public class ConcatenatedStorage<T extends IndexedDataSource<T,U>,U>
 	public void set(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		else if (index < first.size())
+		long firstSize = first.size();
+		if (index < firstSize)
 			first.set(index, value);
 		else
-			second.set(index-first.size(), value);
+			second.set(index-firstSize, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		else if (index < first.size())
+		long firstSize = first.size();
+		if (index < firstSize)
 			first.get(index, value);
 		else
-			second.get(index-first.size(), value);
+			second.get(index-firstSize, value);
 	}
 
 	@Override

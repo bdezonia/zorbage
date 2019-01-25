@@ -42,6 +42,11 @@ public class PaddedDataSource<T extends Algebra<T,U>,U>
 	final private IndexedDataSource<?,U> storage;
 	final private U zero;
 	
+	/**
+	 * 
+	 * @param algebra
+	 * @param storage
+	 */
 	public PaddedDataSource(T algebra, IndexedDataSource<?,U> storage) {
 		this.algebra = algebra;
 		this.storage = storage;

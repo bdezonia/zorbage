@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W> implements IndexedDataSource<V,W>
 {
 	private final IndexedDataSource<?,U> uCollection;
-	private final Algebra<?, U> uAlg;
+	private final Algebra<?,U> uAlg;
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
 	

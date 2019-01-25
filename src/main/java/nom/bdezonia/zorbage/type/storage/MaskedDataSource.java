@@ -53,6 +53,8 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 	public MaskedDataSource(IndexedDataSource<T,U> list, IndexedDataSource<?,BooleanMember> mask) {
 		this.list = list;
 		this.mask = mask;
+		if (mask.size() == 0)
+			throw new IllegalArgumentException("mask must not be of length 0");
 	}
 	
 	@Override
@@ -68,8 +70,9 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 			throw new IllegalArgumentException("negative index exception");
 		BooleanMember b = G.BOOL.construct();
 		long count = -1;
+		long maskSize = mask.size();
 		for (long i = 0; i < list.size(); i++) {
-			mask.get(i % mask.size(), b);
+			mask.get(i % maskSize, b);
 			if (b.v()) {
 				count++;
 				if (count == index) {
@@ -87,8 +90,9 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 			throw new IllegalArgumentException("negative index exception");
 		BooleanMember b = G.BOOL.construct();
 		long count = -1;
+		long maskSize = mask.size();
 		for (long i = 0; i < list.size(); i++) {
-			mask.get(i % mask.size(), b);
+			mask.get(i % maskSize, b);
 			if (b.v()) {
 				count++;
 				if (count == index) {
@@ -103,9 +107,10 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 	@Override
 	public long size() {
 		BooleanMember b = G.BOOL.construct();
+		long maskSize = mask.size();
 		long sz = 0;
 		for (long i = 0; i < list.size(); i++) {
-			mask.get(i % mask.size(), b);
+			mask.get(i % maskSize, b);
 			if (b.v()) sz++;
 		}
 		return sz;

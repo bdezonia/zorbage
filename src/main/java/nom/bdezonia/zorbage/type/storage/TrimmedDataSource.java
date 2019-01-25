@@ -46,9 +46,10 @@ public class TrimmedDataSource<T extends IndexedDataSource<T,U>, U>
 	 * @param last
 	 */
 	public TrimmedDataSource(IndexedDataSource<T,U> list, long first, long last) {
+		long listSize = list.size();
 		if (first < 0 || last < 0 || first > last || 
-				first >= list.size() || last >= list.size() ||
-				(last - first) >= list.size())
+				first >= listSize || last >= listSize ||
+				(last - first) >= listSize)
 			throw new IllegalArgumentException("poor definition of first/last/list size");
 		this.list = list;
 		this.first = first;
