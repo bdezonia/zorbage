@@ -54,12 +54,16 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 		this.list = list;
 		this.mask = mask;
 		this.listSize = list.size();
-		this.maskSize = mask.size();
+		long mSz = mask.size();
+		if (mSz > listSize)
+			this.maskSize = listSize;
+		else
+			this.maskSize = mSz;
 		if (maskSize == 0)
 			throw new IllegalArgumentException("mask must not be of length 0");
 		BooleanMember b = G.BOOL.construct();
 		long count = 0;
-		for (long i = 0; i < Math.min(maskSize, listSize); i++) {
+		for (long i = 0; i < maskSize; i++) {
 			mask.get(i, b);
 			if (b.v())
 				count++;
@@ -114,7 +118,9 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 		long numFullReps = index / trueCount;
 		long pos = numFullReps * maskSize;
 		long found = 0;
-		long mustFind = index % trueCount;
+		long mustFind = (index % trueCount) + 1;
+		//long mustFind = index % trueCount;
+		//if (mustFind == 0) mustFind = 1;
 		long i = 0;
 		while (found < mustFind) {
 			mask.get(i, b);
@@ -124,6 +130,7 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 				i++;
 		}
 		pos += i;
+		//System.out.println("in " + index + "  out " + pos);
 		return pos;
 	}
 }

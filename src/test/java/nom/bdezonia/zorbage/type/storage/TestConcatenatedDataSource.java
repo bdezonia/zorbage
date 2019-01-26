@@ -26,64 +26,46 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
-import java.math.BigInteger;
+import static org.junit.Assert.assertEquals;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConcatenatedStorage<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<ConcatenatedStorage<T,U>,U>
-{
-	private final IndexedDataSource<?,U> first;
-	private final IndexedDataSource<?,U> second;
+public class TestConcatenatedDataSource {
 
-	/**
-	 * 
-	 * @param a
-	 * @param b
-	 */
-	public ConcatenatedStorage(IndexedDataSource<?,U> a, IndexedDataSource<?,U> b) {
-		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
-			throw new IllegalArgumentException("the two input lists are too long to add together");
-		this.first = a;
-		this.second = b;
-	}
-	
-	@Override
-	public ConcatenatedStorage<T,U> duplicate() {
-		// shallow copy
-		return new ConcatenatedStorage<>(first, second);
-	}
+	@Test
+	public void test() {
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<?,SignedInt32Member> a = ArrayStorage.allocateInts(new int[] {1,2,3});
+		IndexedDataSource<?,SignedInt32Member> b = ArrayStorage.allocateInts(new int[] {4,5,6,7,8});
+		IndexedDataSource<?,SignedInt32Member> c = new ConcatenatedDataSource<>(a,b);
 
-	@Override
-	public void set(long index, U value) {
-		if (index < 0)
-			throw new IllegalArgumentException("negative index exception");
-		long firstSize = first.size();
-		if (index < firstSize)
-			first.set(index, value);
-		else
-			second.set(index-firstSize, value);
+		assertEquals(a.size()+b.size(),c.size());
+		
+		c.get(0, value);
+		assertEquals(1, value.v());
+		c.get(1, value);
+		assertEquals(2, value.v());
+		c.get(2, value);
+		assertEquals(3, value.v());
+		c.get(3, value);
+		assertEquals(4, value.v());
+		c.get(4, value);
+		assertEquals(5, value.v());
+		c.get(5, value);
+		assertEquals(6, value.v());
+		c.get(6, value);
+		assertEquals(7, value.v());
+		c.get(7, value);
+		assertEquals(8, value.v());
 	}
-
-	@Override
-	public void get(long index, U value) {
-		if (index < 0)
-			throw new IllegalArgumentException("negative index exception");
-		long firstSize = first.size();
-		if (index < firstSize)
-			first.get(index, value);
-		else
-			second.get(index-firstSize, value);
-	}
-
-	@Override
-	public long size() {
-		return first.size() + second.size();
-	}
-
 }
