@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -43,7 +45,22 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 public class TestMaskedDataSource {
 
 	@Test
-	public void test() {
+	public void zero() {
+
+		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<?,BooleanMember> mask;
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {});
+		try {
+			new MaskedDataSource<>(list, mask);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void one() {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
@@ -68,7 +85,17 @@ public class TestMaskedDataSource {
 		assertEquals(4, value.v());
 		result.get(4, value);
 		assertEquals(5, value.v());
+	}
 
+	@Test
+	public void two() {
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<?,BooleanMember> mask;
+		IndexedDataSource<?,SignedInt32Member> result;
+		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
@@ -104,7 +131,17 @@ public class TestMaskedDataSource {
 		assertEquals(4, value.v());
 		result.get(4, value);
 		assertEquals(5, value.v());
+	}
 
+	@Test
+	public void three() {
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<?,BooleanMember> mask;
+		IndexedDataSource<?,SignedInt32Member> result;
+		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
@@ -164,6 +201,756 @@ public class TestMaskedDataSource {
 		assertEquals(5, value.v());
 
 		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(5, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(4, value.v());
+		result.get(4, value);
+		assertEquals(5, value.v());
+	}
+
+	@Test
+	public void four() {
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<?,BooleanMember> mask;
+		IndexedDataSource<?,SignedInt32Member> result;
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(0, result.size());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(4, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(5, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(4, value.v());
+		result.get(4, value);
+		assertEquals(5, value.v());
+	}
+
+	@Test
+	public void five() {
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<?,BooleanMember> mask;
+		IndexedDataSource<?,SignedInt32Member> result;
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(0, result.size());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(4, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(5, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(4, value.v());
+		result.get(4, value);
+		assertEquals(5, value.v());
+	}
+
+	@Test
+	public void six() {
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<?,BooleanMember> mask;
+		IndexedDataSource<?,SignedInt32Member> result;
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(0, result.size());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(4, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(3, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(2, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(1, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(4, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(3, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(2, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,true,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(4, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,false,false});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(3, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,true,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(5, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,false,true});
+		result = new MaskedDataSource<>(list, mask);
+		assertEquals(4, result.size());
+		result.get(0, value);
+		assertEquals(1, value.v());
+		result.get(1, value);
+		assertEquals(2, value.v());
+		result.get(2, value);
+		assertEquals(3, value.v());
+		result.get(3, value);
+		assertEquals(4, value.v());
+		
+		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);
