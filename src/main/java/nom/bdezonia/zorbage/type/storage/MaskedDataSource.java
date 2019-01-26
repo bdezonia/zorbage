@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 
 /**
@@ -34,11 +35,11 @@ import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
  * @author Barry DeZonia
  *
  */
-public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
+public class MaskedDataSource<T extends Algebra<T,U>,U>
 	implements
-		IndexedDataSource<T,U>
+		IndexedDataSource<MaskedDataSource<T,U>,U>
 {
-	private final IndexedDataSource<T,U> list;
+	private final IndexedDataSource<?,U> list;
 	private final IndexedDataSource<?,BooleanMember> mask;
 	private final long listSize;
 	private final long maskSize;
@@ -49,7 +50,7 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 	 * @param list
 	 * @param mask
 	 */
-	public MaskedDataSource(IndexedDataSource<T,U> list, IndexedDataSource<?,BooleanMember> mask) {
+	public MaskedDataSource(IndexedDataSource<?,U> list, IndexedDataSource<?,BooleanMember> mask) {
 		this.list = list;
 		this.mask = mask;
 		this.listSize = list.size();
@@ -67,10 +68,9 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 	}
 	
 	@Override
-	public T duplicate() {
+	public MaskedDataSource<T,U> duplicate() {
 		// shallow copy
-		// TODO: WTH? Why does this warning keep cropping up?
-		return (T) new MaskedDataSource<>(list, mask);
+		return new MaskedDataSource<>(list, mask);
 	}
 
 	@Override

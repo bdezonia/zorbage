@@ -26,16 +26,18 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TrimmedDataSource<T extends IndexedDataSource<T,U>, U>
+public class TrimmedDataSource<T extends Algebra<T,U>, U>
 	implements
-		IndexedDataSource<T,U>
+		IndexedDataSource<TrimmedDataSource<T,U>,U>
 {
-	private final IndexedDataSource<T,U> list;
+	private final IndexedDataSource<?,U> list;
 	private final long first;
 	private final long last;
 	
@@ -45,7 +47,7 @@ public class TrimmedDataSource<T extends IndexedDataSource<T,U>, U>
 	 * @param first
 	 * @param last
 	 */
-	public TrimmedDataSource(IndexedDataSource<T,U> list, long first, long last) {
+	public TrimmedDataSource(IndexedDataSource<?,U> list, long first, long last) {
 		long listSize = list.size();
 		if (first < 0 || last < 0 || first > last || 
 				first >= listSize || last >= listSize ||
@@ -57,10 +59,9 @@ public class TrimmedDataSource<T extends IndexedDataSource<T,U>, U>
 	}
 	
 	@Override
-	public T duplicate() {
+	public TrimmedDataSource<T,U> duplicate() {
 		// shallow copy
-		// TODO: WTH? Why does this warning keep cropping up?
-		return (T) new TrimmedDataSource<>(list, first, last);
+		return new TrimmedDataSource<>(list, first, last);
 	}
 
 	@Override

@@ -34,7 +34,9 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extends IndexedDataSource<V,W>, W> implements IndexedDataSource<V,W>
+public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
+	implements
+		IndexedDataSource<TransformedDataSource<T,U,V,W>,W>
 {
 	private final IndexedDataSource<?,U> uCollection;
 	private final Algebra<?,U> uAlg;
@@ -59,10 +61,9 @@ public class TransformedDataSource<T extends IndexedDataSource<T,U>, U, V extend
 	 * 
 	 */
 	@Override
-	public V duplicate() {
+	public TransformedDataSource<T,U,V,W> duplicate() {
 		// shallow copy
-		// TODO: WTH? Why does this warning keep cropping up?
-		return (V) new TransformedDataSource<T,U,V,W>(uAlg, uCollection, uToW, wToU);
+		return new TransformedDataSource<T,U,V,W>(uAlg, uCollection, uToW, wToU);
 	}
 
 	/**

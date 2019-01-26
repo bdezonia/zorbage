@@ -28,23 +28,25 @@ package nom.bdezonia.zorbage.type.storage;
 
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConcatenatedStorage<T extends IndexedDataSource<T,U>,U>
-	implements IndexedDataSource<T,U>
+public class ConcatenatedStorage<T extends Algebra<T,U>,U>
+	implements IndexedDataSource<ConcatenatedStorage<T,U>,U>
 {
-	private final IndexedDataSource<T,U> first;
-	private final IndexedDataSource<T,U> second;
+	private final IndexedDataSource<?,U> first;
+	private final IndexedDataSource<?,U> second;
 
 	/**
 	 * 
 	 * @param a
 	 * @param b
 	 */
-	public ConcatenatedStorage(IndexedDataSource<T,U> a, IndexedDataSource<T,U> b) {
+	public ConcatenatedStorage(IndexedDataSource<?,U> a, IndexedDataSource<?,U> b) {
 		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
 			throw new IllegalArgumentException("the two input lists are too long to add together");
 		this.first = a;
@@ -52,10 +54,9 @@ public class ConcatenatedStorage<T extends IndexedDataSource<T,U>,U>
 	}
 	
 	@Override
-	public T duplicate() {
+	public ConcatenatedStorage<T,U> duplicate() {
 		// shallow copy
-		// TODO: WTH? Why does this warning keep cropping up?
-		return (T) new ConcatenatedStorage<>(first, second);
+		return new ConcatenatedStorage<>(first, second);
 	}
 
 	@Override
