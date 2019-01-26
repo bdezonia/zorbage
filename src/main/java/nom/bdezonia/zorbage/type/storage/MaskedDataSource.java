@@ -29,10 +29,6 @@ package nom.bdezonia.zorbage.type.storage;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 
-// TODO: this class does a lot of recalculation. It is likely slow. But it can adapt to changes
-// in the underlying list and the underlying mask. It is completely dynamic. Users must take
-// care in a multithreaded environment.
-
 /**
  * 
  * @author Barry DeZonia
@@ -44,6 +40,9 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 {
 	private final IndexedDataSource<T,U> list;
 	private final IndexedDataSource<?,BooleanMember> mask;
+	private final long listSize;
+	private final long maskSize;
+	private final long trueCount;
 	
 	/**
 	 * 
@@ -53,8 +52,18 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 	public MaskedDataSource(IndexedDataSource<T,U> list, IndexedDataSource<?,BooleanMember> mask) {
 		this.list = list;
 		this.mask = mask;
-		if (mask.size() == 0)
+		this.listSize = list.size();
+		this.maskSize = mask.size();
+		if (maskSize == 0)
 			throw new IllegalArgumentException("mask must not be of length 0");
+		BooleanMember b = G.BOOL.construct();
+		long count = 0;
+		for (long i = 0; i < Math.min(maskSize, listSize); i++) {
+			mask.get(i, b);
+			if (b.v())
+				count++;
+		}
+		trueCount = count;
 	}
 	
 	@Override
@@ -68,52 +77,53 @@ public class MaskedDataSource<T extends IndexedDataSource<T,U>,U>
 	public void set(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		BooleanMember b = G.BOOL.construct();
-		long count = -1;
-		long maskSize = mask.size();
-		for (long i = 0; i < list.size(); i++) {
-			mask.get(i % maskSize, b);
-			if (b.v()) {
-				count++;
-				if (count == index) {
-					list.set(i, value);
-					return;
-				}
-			}
-		}
-		throw new IllegalArgumentException("accessing masked data source off the end");
+		long pos = findPosition(index);
+		if (pos >= 0)
+			list.set(pos, value);
+		else
+			throw new IllegalArgumentException("accessing masked data source off the end");
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		BooleanMember b = G.BOOL.construct();
-		long count = -1;
-		long maskSize = mask.size();
-		for (long i = 0; i < list.size(); i++) {
-			mask.get(i % maskSize, b);
-			if (b.v()) {
-				count++;
-				if (count == index) {
-					list.get(i, value);
-					return;
-				}
-			}
-		}
-		throw new IllegalArgumentException("accessing masked data source off the end");
+		long pos = findPosition(index);
+		if (pos >= 0)
+			list.get(pos, value);
+		else
+			throw new IllegalArgumentException("accessing masked data source off the end");
 	}
 
 	@Override
 	public long size() {
 		BooleanMember b = G.BOOL.construct();
-		long maskSize = mask.size();
-		long sz = 0;
-		for (long i = 0; i < list.size(); i++) {
-			mask.get(i % maskSize, b);
-			if (b.v()) sz++;
+		long numFullReps = listSize / maskSize;
+		long sz = numFullReps * trueCount;
+		long partialMaskSize = listSize % maskSize;
+		for (long i = 0; i < partialMaskSize; i++) {
+			mask.get(i, b);
+			if (b.v())
+				sz++;
 		}
 		return sz;
 	}
 
+	private long findPosition(long index) {
+		BooleanMember b = G.BOOL.construct();
+		long numFullReps = index / trueCount;
+		long pos = numFullReps * maskSize;
+		long found = 0;
+		long mustFind = index % trueCount;
+		long i = 0;
+		while (found < mustFind) {
+			mask.get(i, b);
+			if (b.v())
+				found++;
+			if (found != mustFind)
+				i++;
+		}
+		pos += i;
+		return pos;
+	}
 }
