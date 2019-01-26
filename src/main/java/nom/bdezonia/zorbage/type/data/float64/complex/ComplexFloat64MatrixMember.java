@@ -147,7 +147,7 @@ public final class ComplexFloat64MatrixMember
 	@Override
 	public void init(long r, long c) {
 		if (!alloc(r,c)) {
-			long storageSize = storage.size();
+			long storageSize = r*c;
 			for (long i = 0; i < storageSize; i++)
 				storage.set(i, ZERO);
 		}

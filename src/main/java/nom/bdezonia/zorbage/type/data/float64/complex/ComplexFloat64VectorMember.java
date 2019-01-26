@@ -198,8 +198,7 @@ public final class ComplexFloat64VectorMember
 	@Override
 	public void init(long size) {
 		if (!alloc(size)) {
-			long storageSize = storage.size();
-			for (long i = 0; i < storageSize; i++) {
+			for (long i = 0; i < size; i++) {
 				storage.set(i, ZERO);
 			}
 		}
