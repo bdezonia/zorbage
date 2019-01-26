@@ -111,7 +111,8 @@ public class Transform2 {
 	{
 		U value1 = alg.construct();
 		U value2 = alg.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, value1);
 			proc.call(value1, value2);
 			a.set(i, value2);

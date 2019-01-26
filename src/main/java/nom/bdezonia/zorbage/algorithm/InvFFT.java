@@ -49,12 +49,14 @@ public class InvFFT {
 	public static
 		void compute(IndexedDataSource<?,ComplexFloat64Member> a,IndexedDataSource<?,ComplexFloat64Member> b)
 	{
-		if (a.size() != FFT.enclosingPowerOf2(a.size()))
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != FFT.enclosingPowerOf2(aSize))
 			throw new IllegalArgumentException("input size is not a power of 2");
-		if (a.size() != b.size())
+		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		ComplexFloat64Member one_over_n =
-			new ComplexFloat64Member(1.0/a.size(),0);
+			new ComplexFloat64Member(1.0/aSize,0);
 		Conjugate.compute(G.CDBL, a, b);
 		FFT.compute(G.CDBL, b, b); // TODO: does this work in place?
 		Conjugate.compute(G.CDBL, b, b);

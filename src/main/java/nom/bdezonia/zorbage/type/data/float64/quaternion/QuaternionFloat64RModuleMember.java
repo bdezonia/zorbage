@@ -94,7 +94,8 @@ public final class QuaternionFloat64RModuleMember
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, data.size(), new QuaternionFloat64Member());
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());
@@ -163,8 +164,9 @@ public final class QuaternionFloat64RModuleMember
 	public void fromRep(TensorOctonionRepresentation rep) {
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
-		init(rmod.size());
-		for (long i = 0; i < rmod.size(); i++) {
+		long rmodSize = rmod.size();
+		init(rmodSize);
+		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
 			value.setR(o.r().doubleValue());
 			value.setI(o.i().doubleValue());
@@ -182,7 +184,8 @@ public final class QuaternionFloat64RModuleMember
 		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			if (i != 0)
 				builder.append(',');
 			v(i, tmp);
@@ -203,7 +206,8 @@ public final class QuaternionFloat64RModuleMember
 	@Override
 	public void init(long size) {
 		if (!alloc(size)) {
-			for (long i = 0; i < storage.size(); i++) {
+			long storageSize = storage.size();
+			for (long i = 0; i < storageSize; i++) {
 				storage.set(i, ZERO);
 			}
 		}
@@ -1336,7 +1340,8 @@ public final class QuaternionFloat64RModuleMember
 
 	@Override
 	public void primitiveInit() {
-		for (long i = 0; i < storage.size(); i++)
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
 	}
 }

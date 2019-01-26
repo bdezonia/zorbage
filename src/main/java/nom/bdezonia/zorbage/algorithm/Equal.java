@@ -48,8 +48,10 @@ public class Equal {
 	public static <T extends Algebra<T,U>, U>
 		boolean compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		if (a.size() != b.size()) return false;
-		return compute(Algebra, 0, 0, a.size(), a, b);
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != bSize) return false;
+		return compute(Algebra, 0, 0, aSize, a, b);
 	}
 	
 	/**

@@ -88,9 +88,10 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	public void setRModule(long n, BigList<OctonionRepresentation> values) {
 		setDims(new long[] {n});
-		if (this.values.size() != values.size())
+		long thisValsSize = this.values.size();
+		if (thisValsSize != values.size())
 			throw new IllegalArgumentException("Incorrect number of values passed");
-		for (long i = 0; i < this.values.size(); i++) {
+		for (long i = 0; i < thisValsSize; i++) {
 			this.values.set(i, values.get(i));
 		}
 	}
@@ -99,9 +100,10 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	public void setMatrix(long r, long c, BigList<OctonionRepresentation> values) {
 		setDims(new long[] {c,r});
-		if (this.values.size() != values.size())
+		long thisValsSize = this.values.size();
+		if (thisValsSize != values.size())
 			throw new IllegalArgumentException("Incorrect number of values passed");
-		for (long i = 0; i < this.values.size(); i++) {
+		for (long i = 0; i < thisValsSize; i++) {
 			this.values.set(i, values.get(i));
 		}
 	}
@@ -110,9 +112,10 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	public void setTensor(long[] dims, BigList<OctonionRepresentation> values) {
 		setDims(dims);
-		if (this.values.size() != values.size())
+		long thisValsSize = this.values.size();
+		if (thisValsSize != values.size())
 			throw new IllegalArgumentException("Incorrect number of values passed");
-		for (long i = 0; i < this.values.size(); i++) {
+		for (long i = 0; i < thisValsSize; i++) {
 			this.values.set(i, values.get(i));
 		}
 	}
@@ -167,8 +170,9 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	}
 
 	public BigList<OctonionRepresentation> getTensor() {
-		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(values.size());
-		for (long i = 0; i < values.size(); i++) {
+		long valuesSize = values.size();
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(valuesSize);
+		for (long i = 0; i < valuesSize; i++) {
 			list.set(i, nonNull(values.get(i)));
 		}
 		return list;

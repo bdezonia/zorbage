@@ -310,7 +310,8 @@ public final class Float64TensorProductMember
 	@Override
 	public void init(long[] newDims) {
 		if (!alloc(newDims)) {
-			for (long i = 0; i < storage.size(); i++) {
+			long storageSize = storage.size();
+			for (long i = 0; i < storageSize; i++) {
 				storage.set(i, ZERO);
 			}
 		}
@@ -346,9 +347,10 @@ public final class Float64TensorProductMember
 	
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
+		long storageSize = storage.size();
 		Float64Member value = new Float64Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
-		for (long i = 0; i < storage.size(); i++) {
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = BigDecimal.valueOf(value.v());
 			OctonionRepresentation o = new OctonionRepresentation(re);
@@ -362,7 +364,8 @@ public final class Float64TensorProductMember
 		Float64Member value = new Float64Member();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
-		for (long i = 0; i < tensor.size(); i++) {
+		long tensorSize = tensor.size();
+		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
 			value.setV(o.r().doubleValue());
 			storage.set(i,value);
@@ -386,7 +389,8 @@ public final class Float64TensorProductMember
 		// [1,0,1]  [[[num,num][num,num]][[num,num
 		// [0,1,1]  [[[num,num][num,num]][[num,num][num
 		// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, tmp);
 			longToIntegerIndex(i, index);
 			int j = 0;
@@ -878,7 +882,8 @@ public final class Float64TensorProductMember
 
 	@Override
 	public void primitiveInit() {
-		for (long i = 0; i < storage.size(); i++)
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
 	}
 }

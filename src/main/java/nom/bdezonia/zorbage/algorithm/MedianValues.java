@@ -51,17 +51,18 @@ public class MedianValues {
 	{
 		IndexedDataSource<?,U> localStorage = storage.duplicate();
 		Sort.compute(alg, localStorage);
-		if (localStorage.size() == 0) {
+		long localStorageSize = localStorage.size();
+		if (localStorageSize == 0) {
 			U zero = alg.construct();
 			alg.assign().call(zero, result1);
 			alg.assign().call(zero, result2);
 		}
-		else if (localStorage.size() % 2 == 0) {
-			localStorage.get(localStorage.size()/2 - 1, result1);
-			localStorage.get(localStorage.size()/2, result2);
+		else if (localStorageSize % 2 == 0) {
+			localStorage.get(localStorageSize/2 - 1, result1);
+			localStorage.get(localStorageSize/2, result2);
 		}
 		else {
-			localStorage.get(localStorage.size()/2, result1);
+			localStorage.get(localStorageSize/2, result1);
 			alg.assign().call(result1, result2);
 		}
 	}

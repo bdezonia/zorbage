@@ -50,10 +50,12 @@ public class Scale {
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
 		void compute(T Algebra, U factor, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		if (a.size() != b.size())
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != bSize)
 			throw new IllegalArgumentException("input/output size mismatch");
 		U tmp = Algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		for (long i = 0; i < aSize; i++) {
 			a.get(i,  tmp);
 			Algebra.multiply().call(tmp, factor, tmp);
 			b.set(i, tmp);

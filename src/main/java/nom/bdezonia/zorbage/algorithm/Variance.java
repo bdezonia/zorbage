@@ -52,7 +52,8 @@ public class Variance {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Ordered<U>, U>
 		void compute(T alg, IndexedDataSource<?,U> storage, U result)
 	{
-		if (storage.size() == 0 || storage.size() == 1) {
+		long storageSize = storage.size();
+		if (storageSize == 0 || storageSize == 1) {
 			alg.zero().call(result);
 			return;
 		}

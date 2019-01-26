@@ -58,7 +58,7 @@ public class RotateCopy {
 		for (long i = 0; i < sz; i++) {
 			index = i - delta; // delta can be pos or neg
 			if (index < 0) index += sz; 
-			if (index >= a.size()) index -= sz; 
+			if (index >= sz) index -= sz; 
 			a.get(i, tmp1);
 			b.set(index, tmp1);
 		}

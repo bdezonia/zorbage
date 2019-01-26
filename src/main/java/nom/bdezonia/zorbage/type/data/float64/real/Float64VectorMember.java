@@ -89,7 +89,8 @@ public final class Float64VectorMember
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, data.size(), new Float64Member());
 		Float64Member tmp = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setV(val.r().doubleValue());
 			storage.set(i, tmp);
@@ -153,8 +154,9 @@ public final class Float64VectorMember
 	public void fromRep(TensorOctonionRepresentation rep) {
 		Float64Member value = new Float64Member();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
-		init(rmod.size());
-		for (long i = 0; i < rmod.size(); i++) {
+		long rmodSize = rmod.size();
+		init(rmodSize);
+		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
 			value.setV(o.r().doubleValue());
 			storage.set(i,value);
@@ -169,7 +171,8 @@ public final class Float64VectorMember
 		Float64Member tmp = new Float64Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			if (i != 0)
 				builder.append(',');
 			v(i, tmp);
@@ -190,7 +193,8 @@ public final class Float64VectorMember
 	@Override
 	public void init(long size) {
 		if (!alloc(size)) {
-			for (long i = 0; i < storage.size(); i++) {
+			long storageSize = storage.size();
+			for (long i = 0; i < storageSize; i++) {
 				storage.set(i, ZERO);
 			}
 		}
@@ -907,7 +911,8 @@ public final class Float64VectorMember
 
 	@Override
 	public void primitiveInit() {
-		for (long i = 0; i < storage.size(); i++)
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
 	}
 }

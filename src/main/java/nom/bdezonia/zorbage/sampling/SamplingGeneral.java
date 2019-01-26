@@ -65,7 +65,8 @@ public class SamplingGeneral<U extends Duplicatable<U> & DimensionCount & Settab
 	public boolean contains(U samplePoint) {
 		if (samplePoint.numDimensions() != numDimensions())
 			throw new IllegalArgumentException("mismatched dimensions in SamplingGeneral::contains()");
-		for (int i = 0; i < points.size(); i++) {
+		int pointsSize = points.size();
+		for (int i = 0; i < pointsSize; i++) {
 			if (points.get(i).equals(samplePoint))
 				return true;
 		}

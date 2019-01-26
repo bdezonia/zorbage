@@ -124,7 +124,8 @@ public class SumSquareCount {
 		 * if possible. Might have an accuracy cost.
 		 */
 
-		if (storage.size() == 0)
+		long storageSize = storage.size();
+		if (storageSize == 0)
 			throw new IllegalArgumentException("cannot compute values for empty list");
 		
 		U tmp = alg.construct();
@@ -150,7 +151,7 @@ public class SumSquareCount {
 		storage.get(0, val);
 		alg.assign().call(val, min);
 		alg.assign().call(val, max);
-		for (long i = 1; i < storage.size(); i++) {
+		for (long i = 1; i < storageSize; i++) {
 			alg.add().call(cnt, one, cnt);
 			storage.get(i, val);
 			//alg.subtract().call(val, a, val);
@@ -173,7 +174,7 @@ public class SumSquareCount {
 		alg.subtract().call(max, min, tmp);
 		alg.divide().call(tmp, range, m);
 
-		for (long i = 0; i < storage.size(); i++) {
+		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, val);
 			alg.subtract().call(val, b, val);
 			alg.divide().call(val, m, y);

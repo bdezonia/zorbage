@@ -61,11 +61,14 @@ public class KMeans {
 	{
 		if (numClusters < 1)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");
+		
+		long pointsSize = points.size();
+		long clusterIndicesSize = clusterIndices.size();
 
-		if (points.size() != clusterIndices.size())
+		if (pointsSize != clusterIndicesSize)
 			throw new IllegalArgumentException("points and clusterIndices length must match");
 
-		if (points.size() < numClusters)
+		if (pointsSize < numClusters)
 			throw new IllegalArgumentException("number of points given must be >= to the number of clusters");
 		
 		int MAX_ITERS = 1000;
@@ -77,7 +80,7 @@ public class KMeans {
 		Float64Member minDist = G.DBL.construct();
 		
 		// assign initial clusters arbitrarily
-		for (long i = 0; i < clusterIndices.size(); i++) {
+		for (long i = 0; i < clusterIndicesSize; i++) {
 			clusterNum.setV((int)(i % numClusters));
 			clusterIndices.set(i, clusterNum);
 		}
@@ -98,7 +101,7 @@ public class KMeans {
 			for (int i = 0; i < numClusters; i++) {
 				Algebra.zero().call(centers.get(i));
 			}
-			for (long i = 0; i < points.size(); i++) {
+			for (long i = 0; i < pointsSize; i++) {
 				points.get(i, point);
 				clusterIndices.get(i, clusterNum);
 				Point ctrSum = centers.get(clusterNum.v());
@@ -116,7 +119,7 @@ public class KMeans {
 
 			boolean converged = true;
 			
-			for (long i = 0; i < points.size(); i++) {
+			for (long i = 0; i < pointsSize; i++) {
 				points.get(i,  point);
 				Point clusterCtr = centers.get(0);
 				PointDistance.compute(point, clusterCtr, minDist);

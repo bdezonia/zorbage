@@ -55,9 +55,11 @@ public class DataConvert {
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V extends Algebra<V,W>, W extends PrimitiveConversion>
 		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
 	{
-		if (from.size() > to.size())
+		long fromSize = from.size();
+		long toSize = to.size();
+		if (fromSize > toSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-		compute(fromAlgebra, toAlgebra, 0, 0, from.size(), from, to);
+		compute(fromAlgebra, toAlgebra, 0, 0, fromSize, from, to);
 	}
 
 	/**
@@ -94,15 +96,17 @@ public class DataConvert {
 	public static <U extends PrimitiveConversion, W extends PrimitiveConversion>
 		void compute(List<U> from, List<W> to)
 	{
-		if (from.size() == 0 || to.size() == 0)
+		long fromSize = from.size();
+		long toSize = to.size();
+		if (fromSize == 0 || toSize == 0)
 			throw new IllegalArgumentException("cannot work with empty lists");
-		if (from.size() > to.size())
+		if (fromSize > toSize)
 			throw new IllegalArgumentException("mismatched list sizes");
 		int numD = Math.max(from.get(0).numDimensions(), to.get(0).numDimensions());
 		IntegerIndex tmp1 = new IntegerIndex(numD);
 		IntegerIndex tmp2 = new IntegerIndex(numD);
 		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (int i = 0; i < from.size(); i++) {
+		for (int i = 0; i < fromSize; i++) {
 			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from.get(i), to.get(i));
 		}
 	}

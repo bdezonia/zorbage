@@ -102,7 +102,8 @@ public final class Float64MatrixMember
 		this.s = StorageConstruction.MEM_ARRAY;
 		init(dimensions[1],dimensions[0]);
 		Float64Member tmp = new Float64Member();
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setV(val.r().doubleValue());
 			storage.set(i, tmp);
@@ -143,7 +144,8 @@ public final class Float64MatrixMember
 	@Override
 	public void init(long r, long c) {
 		if (!alloc(r,c)) {
-			for (long i = 0; i < storage.size(); i++)
+			long storageSize = storage.size();
+			for (long i = 0; i < storageSize; i++)
 				storage.set(i, ZERO);
 		}
 	}
@@ -180,9 +182,10 @@ public final class Float64MatrixMember
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
+		long storageSize = storage.size();
 		Float64Member value = new Float64Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
-		for (long i = 0; i < storage.size(); i++) {
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = BigDecimal.valueOf(value.v());
 			OctonionRepresentation o = new OctonionRepresentation(re);
@@ -196,7 +199,8 @@ public final class Float64MatrixMember
 		Float64Member value = new Float64Member();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
-		for (long i = 0; i < mat.size(); i++) {
+		long matSize = mat.size();
+		for (long i = 0; i < matSize; i++) {
 			OctonionRepresentation o = mat.get(i);
 			value.setV(o.r().doubleValue());
 			storage.set(i,value);
@@ -1046,7 +1050,8 @@ public final class Float64MatrixMember
 
 	@Override
 	public void primitiveInit() {
-		for (long i = 0; i < storage.size(); i++)
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
 	}
 }

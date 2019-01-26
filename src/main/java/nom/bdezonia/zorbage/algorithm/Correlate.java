@@ -54,11 +54,14 @@ public class Correlate {
 		U tmpA = Algebra.construct();
 		U tmpB = Algebra.construct();
 		U tmpC = Algebra.construct();
-		if (a.size() != b.size())
+		long aSize = a.size();
+		long bSize = b.size();
+		long cSize = c.size();
+		if (aSize != bSize)
 			throw new IllegalArgumentException("mismatched inputs");
-		if (a.size() != c.size())
+		if (aSize != cSize)
 			throw new IllegalArgumentException("mismatched input/output");
-		for (long i = 0; i < a.size(); i++) {
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
 			b.get(i, tmpB);
 			Algebra.multiply().call(tmpA, tmpB, tmpC);

@@ -50,17 +50,19 @@ public class FFT {
 	public static
 		void compute(ComplexFloat64Algebra Algebra, IndexedDataSource<?,ComplexFloat64Member> a, IndexedDataSource<?,ComplexFloat64Member> b)
 	{
-		if (a.size() != FFT.enclosingPowerOf2(a.size()))
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != FFT.enclosingPowerOf2(aSize))
 			throw new IllegalArgumentException("input size is not a power of 2");
-		if (a.size() != b.size())
+		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
 		ComplexFloat64Member tmp1 = Algebra.construct();
 		ComplexFloat64Member tmp2 = Algebra.construct();
 
 		// bit reversal permutation
-		int shift = 1 + Long.numberOfLeadingZeros(a.size());
-		for (long k = 0; k < a.size(); k++) {
+		int shift = 1 + Long.numberOfLeadingZeros(aSize);
+		for (long k = 0; k < aSize; k++) {
 			long j = Long.reverse(k) >>> shift;
 			a.get(j, tmp1);
 			a.get(k, tmp2);
@@ -78,12 +80,12 @@ public class FFT {
 		ComplexFloat64Member tao = Algebra.construct();
 
 		// butterfly updates
-		for (long L = 2; L <= a.size(); L = L+L) {
+		for (long L = 2; L <= aSize; L = L+L) {
 			for (long k = 0; k < L/2; k++) {
 				double kth = -2 * k * Math.PI / L;
 				w.setR(Math.cos(kth));
 				w.setI(Math.sin(kth));
-				for (long j = 0; j < a.size()/L; j++) {
+				for (long j = 0; j < aSize/L; j++) {
 					b.get(j*L + k + L/2, tmp1);
 					Algebra.multiply().call(w, tmp1, tao);
 					b.get(j*L + k, tmp2);

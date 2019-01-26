@@ -58,12 +58,15 @@ public class Convolve {
 		U tmpC1 = Algebra.construct();
 		U tmpC2 = Algebra.construct();
 
-		if (a.size() != b.size())
+		long aSize = a.size();
+		long bSize = b.size();
+		long cSize = c.size();
+		if (aSize != bSize)
 			throw new IllegalArgumentException("mismatched inputs");
-		if (a.size() != c.size())
+		if (aSize != cSize)
 			throw new IllegalArgumentException("mismatched input/output");
 		
-		for (long i = 0, j = a.size()-1; i <= j; i++,j--) {
+		for (long i = 0, j = aSize-1; i <= j; i++,j--) {
 			// Note:
 			// The order of these operations is designed so that
 			// c can possibly be a or b or some other list and the

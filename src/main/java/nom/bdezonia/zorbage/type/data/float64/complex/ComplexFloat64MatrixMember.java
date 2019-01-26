@@ -104,7 +104,8 @@ public final class ComplexFloat64MatrixMember
 		this.s = StorageConstruction.MEM_ARRAY;
 		init(dimensions[1],dimensions[0]);
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		for (long i = 0; i < storage.size(); i++) {
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
 			tmp.setR(val.r().doubleValue());
 			tmp.setI(val.i().doubleValue());
@@ -146,7 +147,8 @@ public final class ComplexFloat64MatrixMember
 	@Override
 	public void init(long r, long c) {
 		if (!alloc(r,c)) {
-			for (long i = 0; i < storage.size(); i++)
+			long storageSize = storage.size();
+			for (long i = 0; i < storageSize; i++)
 				storage.set(i, ZERO);
 		}
 	}
@@ -183,9 +185,10 @@ public final class ComplexFloat64MatrixMember
 	
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
+		long storageSize = storage.size();
 		ComplexFloat64Member value = new ComplexFloat64Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storage.size());
-		for (long i = 0; i < storage.size(); i++) {
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = BigDecimal.valueOf(value.r());
 			BigDecimal im = BigDecimal.valueOf(value.i());
@@ -200,7 +203,8 @@ public final class ComplexFloat64MatrixMember
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
-		for (long i = 0; i < mat.size(); i++) {
+		long matSize = mat.size();
+		for (long i = 0; i < matSize; i++) {
 			OctonionRepresentation o = mat.get(i);
 			value.setR(o.r().doubleValue());
 			value.setI(o.i().doubleValue());
@@ -1115,7 +1119,8 @@ public final class ComplexFloat64MatrixMember
 
 	@Override
 	public void primitiveInit() {
-		for (long i = 0; i < storage.size(); i++)
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
 	}
 }
