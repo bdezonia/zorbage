@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -51,31 +52,31 @@ public class TestSinchpi {
 		
 		x.setV(1.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(Math.PI/4)/(Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sinh(Math.PI/4)/(Math.PI/4), result.v(), 0);
 		
 		x.setV(2.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(Math.PI/2)/(Math.PI/2), result.v(), 0);
+		assertEquals(FastMath.sinh(Math.PI/2)/(Math.PI/2), result.v(), 0);
 		
 		x.setV(3.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(3*Math.PI/4)/(3*Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sinh(3*Math.PI/4)/(3*Math.PI/4), result.v(), 0);
 		
 		x.setV(4.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(Math.PI)/(Math.PI), result.v(), 0);
+		assertEquals(FastMath.sinh(Math.PI)/(Math.PI), result.v(), 0);
 
 		x.setV(5.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(5*Math.PI/4)/(5*Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sinh(5*Math.PI/4)/(5*Math.PI/4), result.v(), 0);
 		
 		x.setV(6.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(3*Math.PI/2)/(3*Math.PI/2), result.v(), 0);
+		assertEquals(FastMath.sinh(3*Math.PI/2)/(3*Math.PI/2), result.v(), 0);
 
 		x.setV(7.0/4);
 		Sinchpi.compute(G.DBL, x, result);
-		assertEquals(Math.sinh(7*Math.PI/4)/(7*Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sinh(7*Math.PI/4)/(7*Math.PI/4), result.v(), 0);
 		
 	}
 }

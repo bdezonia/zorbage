@@ -51,7 +51,7 @@ public class TestExponentialCalculation {
 		
 		ExponentialCalculation.compute(G.DBL, fraction, base, power, v);
 		
-		assertEquals(0.5*4*4*4, v.v(), 0);
+		assertEquals(0.5*4*4*4, v.v(), 0.0000000000001);
 	}
 
 	@Test

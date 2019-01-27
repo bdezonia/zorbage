@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -51,31 +52,31 @@ public class TestSinc {
 		
 		x.setV(Math.PI/4);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(Math.PI/4)/(Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sin(Math.PI/4)/(Math.PI/4), result.v(), 0);
 		
 		x.setV(Math.PI/2);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(Math.PI/2)/(Math.PI/2), result.v(), 0);
+		assertEquals(FastMath.sin(Math.PI/2)/(Math.PI/2), result.v(), 0);
 		
 		x.setV(3*Math.PI/4);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(3*Math.PI/4)/(3*Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sin(3*Math.PI/4)/(3*Math.PI/4), result.v(), 0);
 		
 		x.setV(Math.PI);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(Math.PI)/(Math.PI), result.v(), 0);
+		assertEquals(FastMath.sin(Math.PI)/(Math.PI), result.v(), 0);
 
 		x.setV(5*Math.PI/4);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(5*Math.PI/4)/(5*Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sin(5*Math.PI/4)/(5*Math.PI/4), result.v(), 0);
 		
 		x.setV(3*Math.PI/2);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(3*Math.PI/2)/(3*Math.PI/2), result.v(), 0);
+		assertEquals(FastMath.sin(3*Math.PI/2)/(3*Math.PI/2), result.v(), 0);
 
 		x.setV(7*Math.PI/4);
 		Sinc.compute(G.DBL, x, result);
-		assertEquals(Math.sin(7*Math.PI/4)/(7*Math.PI/4), result.v(), 0);
+		assertEquals(FastMath.sin(7*Math.PI/4)/(7*Math.PI/4), result.v(), 0);
 		
 	}
 }

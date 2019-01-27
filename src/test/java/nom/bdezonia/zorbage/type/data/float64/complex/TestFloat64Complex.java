@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
@@ -345,7 +346,7 @@ public class TestFloat64Complex {
 		a.setR(Math.PI/2);
 		a.setI(0);
 		G.CDBL.tan().call(a, b);
-		assertEquals(Math.tan(Math.PI/2), b.r(), tol);
+		assertEquals(FastMath.tan(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 
 		// G.CDBL.tanh();

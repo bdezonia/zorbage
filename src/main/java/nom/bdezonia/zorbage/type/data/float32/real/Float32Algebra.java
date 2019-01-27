@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float32.real;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
@@ -393,7 +394,7 @@ public class Float32Algebra
 				b.setV(Float.NaN);
 			}
 			else
-				b.setV( (float) Math.pow(a.v(), power) );
+				b.setV( (float) FastMath.pow(a.v(), power) );
 		}
 	};
 	
@@ -463,7 +464,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.exp(a.v()) );
+			b.setV( (float) FastMath.exp(a.v()) );
 		}
 	};
 	
@@ -477,7 +478,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.expm1(a.v()) );
+			b.setV( (float) FastMath.expm1(a.v()) );
 		}
 	};
 	
@@ -517,7 +518,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.cos(a.v()) );
+			b.setV( (float) FastMath.cos(a.v()) );
 		}
 	};
 	
@@ -531,7 +532,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.sin(a.v()) );
+			b.setV( (float) FastMath.sin(a.v()) );
 		}
 	};
 	
@@ -560,7 +561,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.tan(a.v()) );
+			b.setV( (float) FastMath.tan(a.v()) );
 		}
 	};
 	
@@ -576,7 +577,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) (1.0 / Math.sin(a.v())) );
+			b.setV( (float) (1.0 / FastMath.sin(a.v())) );
 		}
 	};
 	
@@ -592,7 +593,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) (1.0 / Math.cos(a.v())) );
+			b.setV( (float) (1.0 / FastMath.cos(a.v())) );
 		}
 	};
 	
@@ -608,7 +609,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) (1.0 / Math.tan(a.v())) );
+			b.setV( (float) (1.0 / FastMath.tan(a.v())) );
 		}
 	};
 	
@@ -622,7 +623,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.cosh(a.v()) );
+			b.setV( (float) FastMath.cosh(a.v()) );
 		}
 	};
 	
@@ -636,7 +637,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.sinh(a.v()) );
+			b.setV( (float) FastMath.sinh(a.v()) );
 		}
 	};
 	
@@ -665,7 +666,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.tanh(a.v()) );
+			b.setV( (float) FastMath.tanh(a.v()) );
 		}
 	};
 	
@@ -681,7 +682,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) (1.0 / Math.sinh(a.v())) );
+			b.setV( (float) (1.0 / FastMath.sinh(a.v())) );
 		}
 	};
 	
@@ -697,7 +698,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) (1.0 / Math.cosh(a.v())) );
+			b.setV( (float) (1.0 / FastMath.cosh(a.v())) );
 		}
 	};
 	
@@ -713,7 +714,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) (1.0 / Math.tanh(a.v())) );
+			b.setV( (float) (1.0 / FastMath.tanh(a.v())) );
 		}
 	};
 	
@@ -727,7 +728,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.acos(a.v()) );
+			b.setV( (float) FastMath.acos(a.v()) );
 		}
 	};
 	
@@ -741,7 +742,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.asin(a.v()) );
+			b.setV( (float) FastMath.asin(a.v()) );
 		}
 	};
 	
@@ -755,7 +756,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.atan(a.v()) );
+			b.setV( (float) FastMath.atan(a.v()) );
 		}
 	};
 	
@@ -769,7 +770,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b, Float32Member c) {
-			c.setV( (float) Math.atan2(a.v(), b.v()) );
+			c.setV( (float) FastMath.atan2(a.v(), b.v()) );
 		}
 	};
 	
@@ -1021,7 +1022,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( (float) Math.cbrt(a.v()) );
+			b.setV( (float) FastMath.cbrt(a.v()) );
 		}
 	};
 	
@@ -1081,7 +1082,7 @@ public class Float32Algebra
 				c.setV(Float.NaN);
 			}
 			else
-				c.setV( (float) Math.pow(a.v(), b.v()) );
+				c.setV( (float) FastMath.pow(a.v(), b.v()) );
 		}
 	};
 	

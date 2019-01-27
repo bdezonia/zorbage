@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -45,8 +46,8 @@ public class ComplexPolar {
 	 */
 	public static void compute(double r, double theta, ComplexFloat64Member out)
 	{
-		out.setR(r * Math.cos(theta));
-		out.setI(r * Math.sin(theta));
+		out.setR(r * FastMath.cos(theta));
+		out.setI(r * FastMath.sin(theta));
 	}
 
 	/**

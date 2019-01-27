@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -83,8 +84,8 @@ public class FFT {
 		for (long L = 2; L <= aSize; L = L+L) {
 			for (long k = 0; k < L/2; k++) {
 				double kth = -2 * k * Math.PI / L;
-				w.setR(Math.cos(kth));
-				w.setI(Math.sin(kth));
+				w.setR(FastMath.cos(kth));
+				w.setI(FastMath.sin(kth));
 				for (long j = 0; j < aSize/L; j++) {
 					b.get(j*L + k + L/2, tmp1);
 					Algebra.multiply().call(w, tmp1, tao);

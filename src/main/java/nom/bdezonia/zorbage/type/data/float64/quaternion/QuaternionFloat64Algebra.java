@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
@@ -465,12 +466,12 @@ public class QuaternionFloat64Algebra
 			Float64Member z = new Float64Member();
 			Float64Member z2 = new Float64Member();
 			QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-			double u = Math.exp(a.r());
+			double u = FastMath.exp(a.r());
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.DBL.sinc().call(z, z2);
 			double w = z2.v();
-			b.setR(u * Math.cos(z.v()));
+			b.setR(u * FastMath.cos(z.v()));
 			b.setI(u * w * a.i());
 			b.setJ(u * w * a.j());
 			b.setK(u * w * a.k());
@@ -663,10 +664,10 @@ public class QuaternionFloat64Algebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.DBL.sinch().call(z, z2);
-			double cos = Math.cos(a.r());
-			double sin = Math.sin(a.r());
+			double cos = FastMath.cos(a.r());
+			double sin = FastMath.sin(a.r());
 			double sinhc_pi = z2.v();
-			double cosh = Math.cosh(z.v());
+			double cosh = FastMath.cosh(z.v());
 			double ws = cos * sinhc_pi;
 			b.setR(sin * cosh);
 			b.setI(ws * a.i());
@@ -691,10 +692,10 @@ public class QuaternionFloat64Algebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.DBL.sinch().call(z, z2);
-			double cos = Math.cos(a.r());
-			double sin = Math.sin(a.r());
+			double cos = FastMath.cos(a.r());
+			double sin = FastMath.sin(a.r());
 			double sinhc_pi = z2.v();
-			double cosh = Math.cosh(z.v());
+			double cosh = FastMath.cosh(z.v());
 			double wc = -sin * sinhc_pi;
 			b.setR(cos * cosh);
 			b.setI(wc * a.i());
@@ -719,10 +720,10 @@ public class QuaternionFloat64Algebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.DBL.sinch().call(z, z2);
-			double cos = Math.cos(a.r());
-			double sin = Math.sin(a.r());
+			double cos = FastMath.cos(a.r());
+			double sin = FastMath.sin(a.r());
 			double sinhc_pi = z2.v();
-			double cosh = Math.cosh(z.v());
+			double cosh = FastMath.cosh(z.v());
 			double ws = cos * sinhc_pi;
 			double wc = -sin * sinhc_pi;
 			s.setR(sin * cosh);

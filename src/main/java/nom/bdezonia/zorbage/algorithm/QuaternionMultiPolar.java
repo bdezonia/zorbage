@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -46,10 +47,10 @@ public class QuaternionMultiPolar {
 	 */
 	public static void compute(double rho1, double theta1, double rho2, double theta2, QuaternionFloat64Member out) {
 		
-		double tmpTh1C = Math.cos(theta1);
-		double tmpTh1S = Math.sin(theta1);
-		double tmpTh2C = Math.cos(theta2);
-		double tmpTh2S = Math.sin(theta2);
+		double tmpTh1C = FastMath.cos(theta1);
+		double tmpTh1S = FastMath.sin(theta1);
+		double tmpTh2C = FastMath.cos(theta2);
+		double tmpTh2S = FastMath.sin(theta2);
 		
 		double r = rho1 * tmpTh1C;
 		double i = rho1 * tmpTh1S;

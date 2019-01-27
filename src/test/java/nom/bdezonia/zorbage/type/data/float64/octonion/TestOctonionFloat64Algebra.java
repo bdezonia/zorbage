@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -196,7 +197,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.cos().call(a, b);
-		assertEquals(Math.cos(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.cos(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -215,7 +216,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.cosh().call(a, b);
-		assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.cosh(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -253,7 +254,7 @@ public class TestOctonionFloat64Algebra {
 		
 		// G.ODBL.E();
 		G.ODBL.E().call(a);
-		assertEquals(Math.E, a.r(), 0);
+		assertEquals(FastMath.E, a.r(), 0);
 		assertEquals(0, a.i(), 0);
 		assertEquals(0, a.j(), 0);
 		assertEquals(0, a.k(), 0);
@@ -272,7 +273,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.exp().call(a,b);
-		assertEquals(Math.exp(2), b.r(), 0);
+		assertEquals(FastMath.exp(2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -556,7 +557,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.sin().call(a, b);
-		assertEquals(Math.sin(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.sin(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -585,7 +586,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.sinh().call(a, b);
-		assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.sinh(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -652,7 +653,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.tan().call(a, b);
-		assertEquals(Math.tan(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.tan(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -671,7 +672,7 @@ public class TestOctonionFloat64Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.ODBL.tanh().call(a, b);
-		assertEquals(Math.tanh(Math.PI/2), b.r(), tol);
+		assertEquals(FastMath.tanh(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 		assertEquals(0, b.j(), tol);
 		assertEquals(0, b.k(), tol);

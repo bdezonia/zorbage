@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -50,20 +51,20 @@ public class OctonionSpherical {
 	 */
 	public static void compute(double rho, double theta, double phi1, double phi2, double phi3, double phi4, double phi5, double phi6, OctonionFloat64Member out) {
 		
-		double tmpThC = Math.cos(theta);
-		double tmpThS = Math.sin(theta);
-		double tmpPhi1C = Math.cos(phi1);
-		double tmpPhi1S = Math.sin(phi1);
-		double tmpPhi2C = Math.cos(phi2);
-		double tmpPhi2S = Math.sin(phi2);
-		double tmpPhi3C = Math.cos(phi3);
-		double tmpPhi3S = Math.sin(phi3);
-		double tmpPhi4C = Math.cos(phi4);
-		double tmpPhi4S = Math.sin(phi4);
-		double tmpPhi5C = Math.cos(phi5);
-		double tmpPhi5S = Math.sin(phi5);
-		double tmpPhi6C = Math.cos(phi6);
-		double tmpPhi6S = Math.sin(phi6);
+		double tmpThC = FastMath.cos(theta);
+		double tmpThS = FastMath.sin(theta);
+		double tmpPhi1C = FastMath.cos(phi1);
+		double tmpPhi1S = FastMath.sin(phi1);
+		double tmpPhi2C = FastMath.cos(phi2);
+		double tmpPhi2S = FastMath.sin(phi2);
+		double tmpPhi3C = FastMath.cos(phi3);
+		double tmpPhi3S = FastMath.sin(phi3);
+		double tmpPhi4C = FastMath.cos(phi4);
+		double tmpPhi4S = FastMath.sin(phi4);
+		double tmpPhi5C = FastMath.cos(phi5);
+		double tmpPhi5S = FastMath.sin(phi5);
+		double tmpPhi6C = FastMath.cos(phi6);
+		double tmpPhi6S = FastMath.sin(phi6);
 		
 		double k0 = tmpPhi6S;
 		double j0 = tmpPhi5S * tmpPhi6C;

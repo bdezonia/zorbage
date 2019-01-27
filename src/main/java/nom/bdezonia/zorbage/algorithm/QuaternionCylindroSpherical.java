@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -46,10 +47,10 @@ public class QuaternionCylindroSpherical {
 	 */
 	public static void compute(double r, double rad, double longitude, double latitude, QuaternionFloat64Member out) {
 		
-		double tmpLngC = Math.cos(longitude);
-		double tmpLngS = Math.sin(longitude);
-		double tmpLatC = Math.cos(latitude);
-		double tmpLatS = Math.sin(latitude);
+		double tmpLngC = FastMath.cos(longitude);
+		double tmpLngS = FastMath.sin(longitude);
+		double tmpLatC = FastMath.cos(latitude);
+		double tmpLatS = FastMath.sin(latitude);
 		
 		double i = rad * tmpLngC * tmpLatC;
 		double j = rad * tmpLngS * tmpLatC;

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
@@ -85,7 +86,7 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 		if (r < Math.min(r1, r2) - TOL) return false;
 		if (r > Math.max(r1, r2) + TOL) return false;
 		if (!RealUtils.near((r - this.r) % dr, 0, TOL)) return false;
-		double theta = Math.acos(z/r);
+		double theta = FastMath.acos(z/r);
 		double theta1 = this.theta;
 		double theta2 = this.theta + dtheta * thetaCount;
 		while (theta < 0) theta += Math.PI * 2;
@@ -101,7 +102,7 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 			if (theta < theta2 - TOL) return false;
 			if (!RealUtils.near((theta - theta2) % dtheta, 0, TOL)) return false;
 		}
-		double phi = Math.atan2(y,x);
+		double phi = FastMath.atan2(y,x);
 		double phi1 = this.phi;
 		double phi2 = this.phi + dphi*phiCount;
 		while (phi < 0) phi += Math.PI * 2;
@@ -162,9 +163,11 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 			final double radius = r + tr*dr;
 			final double angleTheta = theta + ttheta*dtheta;
 			final double anglePhi = phi + tphi*dphi;
-			value.set(0, Math.sin(angleTheta) * Math.cos(anglePhi) * radius);  // xcoord
-			value.set(1, Math.sin(angleTheta) * Math.sin(anglePhi) * radius);  // ycoord
-			value.set(2, Math.cos(anglePhi) * radius);  // zcoord		}
+			final double s = FastMath.sin(angleTheta);
+			final double c = FastMath.cos(angleTheta);
+			value.set(0, s * FastMath.cos(anglePhi) * radius);  // xcoord
+			value.set(1, s * FastMath.sin(anglePhi) * radius);  // ycoord
+			value.set(2, c * radius);  // zcoord		}
 		}
 	}
 

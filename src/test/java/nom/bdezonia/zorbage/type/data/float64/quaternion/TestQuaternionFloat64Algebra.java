@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -199,7 +200,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.cos().call(a, b);
-		assertEquals(Math.cos(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.cos(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -210,7 +211,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.cosh().call(a, b);
-		assertEquals(Math.cosh(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.cosh(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -243,7 +244,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.exp().call(a,b);
-		assertEquals(Math.exp(2), b.r(), 0);
+		assertEquals(FastMath.exp(2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -423,7 +424,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.sin().call(a, b);
-		assertEquals(Math.sin(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.sin(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -444,7 +445,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.sinh().call(a, b);
-		assertEquals(Math.sinh(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.sinh(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -483,7 +484,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.tan().call(a, b);
-		assertEquals(Math.tan(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.tan(Math.PI/2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -494,7 +495,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setJ(0);
 		a.setK(0);
 		G.QDBL.tanh().call(a, b);
-		assertEquals(Math.tanh(Math.PI/2), b.r(), tol);
+		assertEquals(FastMath.tanh(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 		assertEquals(0, b.j(), tol);
 		assertEquals(0, b.k(), tol);

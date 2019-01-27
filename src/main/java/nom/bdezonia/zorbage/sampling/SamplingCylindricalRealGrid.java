@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
@@ -150,8 +151,8 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 			final double radius = r + tr*dr;
 			final double angle = theta + ttheta*dtheta;
 			final double height = z + tz*dz;
-			value.set(0, Math.cos(angle) * radius);  // xcoord
-			value.set(1, Math.sin(angle) * radius);  // ycoord
+			value.set(0, FastMath.cos(angle) * radius);  // xcoord
+			value.set(1, FastMath.sin(angle) * radius);  // ycoord
 			value.set(2, height);  // zcoord
 		}
 		

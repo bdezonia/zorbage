@@ -39,6 +39,7 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
@@ -140,10 +141,10 @@ public class ComplexFloat64Algebra
 				assign().call(NaN_, b);
 				return;
 			}
-			double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
+			double rToTheN = FastMath.pow(FastMath.hypot(a.r(), a.i()), power);
 			double nTheta = power * getArgument(a);
-			b.setR(rToTheN * Math.cos(nTheta));
-			b.setI(rToTheN * Math.sin(nTheta));
+			b.setR(rToTheN * FastMath.cos(nTheta));
+			b.setI(rToTheN * FastMath.sin(nTheta));
 		}
 	};
 
@@ -335,7 +336,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, Float64Member b) {
-			b.setV( Math.hypot(a.r(),a.i()) );
+			b.setV( FastMath.hypot(a.r(),a.i()) );
 		}
 	};
 
@@ -934,9 +935,9 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
-			double constant = Math.exp(a.r());
-			b.setR( constant * Math.cos(a.i()) );
-			b.setI( constant * Math.sin(a.i()) );
+			double constant = FastMath.exp(a.r());
+			b.setR( constant * FastMath.cos(a.i()) );
+			b.setI( constant * FastMath.sin(a.i()) );
 		}
 	};
 	
@@ -967,7 +968,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
-			double modulus = Math.hypot(a.r(), a.i());
+			double modulus = FastMath.hypot(a.r(), a.i());
 			double argument = getArgument(a);
 			b.setR( Math.log(modulus) );
 			b.setI( getPrincipalArgument(argument) );
@@ -998,7 +999,7 @@ public class ComplexFloat64Algebra
 				theta = Math.PI;
 		}
 		else // x && y both != 0
-			theta = Math.atan2(y,x);
+			theta = FastMath.atan2(y,x);
 		
 		return theta;
 	}

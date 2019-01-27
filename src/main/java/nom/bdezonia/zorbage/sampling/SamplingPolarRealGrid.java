@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
+import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
@@ -79,7 +80,7 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 		if (r < Math.min(r1, r2) - TOL) return false;
 		if (r > Math.max(r1, r2) + TOL) return false;
 		if (!RealUtils.near((r - this.r) % dr, 0, TOL)) return false;
-		double theta = Math.atan2(y, x);
+		double theta = FastMath.atan2(y, x);
 		double theta1 = this.theta;
 		double theta2 = this.theta + dtheta * thetaCount;
 		while (theta < 0) theta += Math.PI * 2;
@@ -133,8 +134,8 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 			}
 			final double radius = r + tr*dr;
 			final double angle = theta + ttheta*dtheta;
-			value.set(0, Math.cos(angle) * radius);  // xcoord
-			value.set(1, Math.sin(angle) * radius);  // ycoord
+			value.set(0, FastMath.cos(angle) * radius);  // xcoord
+			value.set(1, FastMath.sin(angle) * radius);  // ycoord
 		}
 		
 	}
