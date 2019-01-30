@@ -76,7 +76,9 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long dimension(int d) {
-		return dims[d];
+		if (d < 0) throw new IllegalArgumentException("negative index exception");
+		if (d < dims.length) return dims[d];
+		return 1;
 	}
 	
 	public Function1<BigDecimal,Long> getAxis(int i) {
