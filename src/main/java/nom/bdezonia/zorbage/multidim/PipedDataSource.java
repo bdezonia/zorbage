@@ -30,13 +30,25 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
 
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
 public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSource<PipedDataSource<X,Y>,Y> {
 
 	private MultiDimDataSource<X,Y> d;
 	private int dim;
+	private long[] parentDims;
 	private long[] coords;
 	private IndexedDataSource<?,Y> data;
 	
+	/**
+	 * 
+	 * @param d
+	 * @param dim
+	 * @param coords
+	 */
 	public PipedDataSource(MultiDimDataSource<X,Y> d, int dim, long[] coords) {
 		this.d = d;
 		this.dim = dim;
@@ -50,6 +62,10 @@ public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSo
 				if (coords[i] < 0 || coords[i] >= d.dimension(i))
 					throw new IllegalArgumentException("coordinate is outside bounds of multidim data");
 			}
+		}
+		this.parentDims = new long[d.numDimensions()];
+		for (int i = 0; i < d.numDimensions(); i++) {
+			this.parentDims[i] = d.dimension(i);
 		}
 		this.data = findSubset();
 	}
@@ -81,18 +97,9 @@ public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSo
 		start[dim] = 0;
 		stop[dim] = d.dimension(dim)-1;
 		long count = d.dimension(dim);
-		long offset = index(start);
-		long stride = (index(stop) - offset + 1) / count;
+		long offset = IndexUtils.indexToLong(parentDims,start);
+		long stride = (IndexUtils.indexToLong(parentDims,stop) - offset + 1) / count;
 		return new SequencedDataSource<>(d.rawData(), offset, stride, count);
 	}
 	
-	private long index(long[] pos) {
-		long n = 0;
-		long stride = 1;
-		for (int i = 0; i < pos.length; i++) {
-			n += (pos[i] * stride);
-			stride *= d.dimension(i);
-		}
-		return n;
-	}
 }
