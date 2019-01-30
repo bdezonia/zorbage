@@ -81,6 +81,10 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 		return 1;
 	}
 	
+	public long numElements() {
+		return data.size();
+	}
+
 	public Function1<BigDecimal,Long> getAxis(int i) {
 		return this.axes.get(i);
 	}
