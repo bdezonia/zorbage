@@ -69,7 +69,6 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 		return data;
 	}
 
-
 	@Override
 	public int numDimensions() {
 		return dims.length;
@@ -91,5 +90,49 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	public IndexedDataSource<?,U> piped(int dim, long[] coord) {
 		return new PipedDataSource<>(this, dim, coord);
 	}
-
+	
+	public void set(long[] index, U v) {
+		long idx = indexToLong(index);
+		data.set(idx, v);
+	}
+	
+	public void setSafe(long[] index, U v) {
+		boundsCheck(index);
+		set(index, v);
+	}
+	
+	public void get(long[] index, U v) {
+		long idx = indexToLong(index);
+		data.get(idx, v);
+	}
+	
+	public void getSafe(long[] index, U v) {
+		boundsCheck(index);
+		get(index, v);
+	}
+	
+	private void boundsCheck(long[] index) {
+		if (index.length != this.dims.length)
+			throw new IllegalArgumentException("index dimensionality not the same as multidim dimensions");
+		for (int i = 0; i < index.length; i++) {
+			if (index[i] < 0 || index[i] >= this.dims[i])
+				throw new IllegalArgumentException("index out of bounds of multidim dimensions");
+		}
+	}
+	
+	/*
+	 * dims = [4,5,6]
+	 * idx = [1,2,3]
+	 * long = 3*5*4 + 2*4 + 1;
+	 */
+	private long indexToLong(long[] idx) {
+		if (idx.length == 0) return 0;
+		long index = 0;
+		long mult = 1;
+		for (int i = 0; i < idx.length; i++) {
+			index += mult * idx[i];
+			mult *= dims[i];
+		}
+		return index;
+	}
 }
