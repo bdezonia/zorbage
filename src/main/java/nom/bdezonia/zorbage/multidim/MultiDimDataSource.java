@@ -30,16 +30,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.axis.IdentityAxis;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
