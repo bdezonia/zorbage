@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -43,16 +43,64 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 public class TestPipedDataSource {
 
 	@Test
-	public void tmp() {
+	public void test() {
 		SignedInt32Member value = G.INT32.construct("44");
 		long[] dims = new long[] {2,3,4};
 		IndexedDataSource<?,SignedInt32Member> data = ArrayStorage.allocateInts(new int[24]);
 		MultiDimDataSource<?,SignedInt32Member> md = new MultiDimDataSource<>(G.INT32, dims, data);
 		IndexedDataSource<?,SignedInt32Member> p = md.piped(1, new long[] {1,1,1});
+		assertEquals(3, p.size());
 		for (long i = 0; i < p.size(); i++) {
 			p.set(i, value);
 		}
-		assertTrue(true);
+		md.get(new long[] {0,0,0}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,0,0}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,1,0}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,1,0}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,2,0}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,2,0}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,0,1}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,0,1}, value);
+		assertEquals(44, value.v());
+		md.get(new long[] {0,1,1}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,1,1}, value);
+		assertEquals(44, value.v());
+		md.get(new long[] {0,2,1}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,2,1}, value);
+		assertEquals(44, value.v());
+		md.get(new long[] {0,0,2}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,0,2}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,1,2}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,1,2}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,2,2}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,2,2}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,0,3}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,0,3}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,1,3}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,1,3}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {0,2,3}, value);
+		assertEquals(0, value.v());
+		md.get(new long[] {1,2,3}, value);
+		assertEquals(0, value.v());
 	}
 
 }

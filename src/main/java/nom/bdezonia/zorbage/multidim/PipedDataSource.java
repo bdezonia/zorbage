@@ -98,8 +98,13 @@ public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSo
 		stop[dim] = d.dimension(dim)-1;
 		long count = d.dimension(dim);
 		long offset = IndexUtils.indexToLong(parentDims,start);
-		long stride = (IndexUtils.indexToLong(parentDims,stop) - offset + 1) / count;
-		return new SequencedDataSource<>(d.rawData(), offset, stride, count);
+		if (count <= 1) {
+			return new SequencedDataSource<>(d.rawData(), offset, 1, count);
+		}
+		else {
+			long stride = (IndexUtils.indexToLong(parentDims,stop) - offset) / (count - 1);
+			return new SequencedDataSource<>(d.rawData(), offset, stride, count);
+		}
 	}
 	
 }
