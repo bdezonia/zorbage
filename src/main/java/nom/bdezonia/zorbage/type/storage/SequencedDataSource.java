@@ -55,10 +55,19 @@ public class SequencedDataSource<T extends Algebra<?,U>,U>
 		this.count = count;
 		if (count < 0)
 			throw new IllegalArgumentException("count must be >= 1");
-		if (start < 0)
-			throw new IllegalArgumentException("start cannot be negative");
-		if ((start + stride*(count-1)) >= data.size())
-			throw new IllegalArgumentException("the specified sequence reaches beyond the end of the dataset");
+		if (start < 0 || start >= data.size())
+			throw new IllegalArgumentException("start is outside the bounds of the dataset");
+		if (stride == 0)
+			throw new IllegalArgumentException("stride must be nonzero");
+		if (stride > 0) {
+			if ((start + stride*(count-1)) >= data.size())
+				throw new IllegalArgumentException("the specified sequence reaches beyond the end of the dataset");
+		}
+		else {
+			// stride < 0
+			if ((start + stride*(count-1)) < 0)
+				throw new IllegalArgumentException("the specified sequence reaches beyond the beginning of the dataset");
+		}
 	}
 	
 	@Override
