@@ -56,6 +56,8 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	 * @param data
 	 */
 	public MultiDimDataSource(T alg, long[] dims, IndexedDataSource<?,U> data) {
+		if (dims.length == 0)
+			throw new IllegalArgumentException("multidim data source must have 1 or more dimensions");
 		if (LongUtils.numElements(dims) != data.size())
 			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
 		this.dims = dims;
