@@ -34,14 +34,17 @@ import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
  * 
  * @author Barry DeZonia
  *
+ * A {@link DataSource} that is a one dimensional column within a {@link MultiDimDataSource}.
+ * Pronounced as "pie" "ped".
+ * 
  */
-public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSource<PipedDataSource<X,Y>,Y> {
+public class PipedDataSource <T extends Algebra<T,U>,U> implements IndexedDataSource<PipedDataSource<T,U>,U> {
 
-	private MultiDimDataSource<X,Y> d;
+	private MultiDimDataSource<T,U> d;
 	private int dim;
 	private long[] parentDims;
 	private long[] coords;
-	private IndexedDataSource<?,Y> data;
+	private IndexedDataSource<?,U> data;
 	
 	/**
 	 * 
@@ -49,7 +52,7 @@ public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSo
 	 * @param dim
 	 * @param coords
 	 */
-	public PipedDataSource(MultiDimDataSource<X,Y> d, int dim, long[] coords) {
+	public PipedDataSource(MultiDimDataSource<T,U> d, int dim, long[] coords) {
 		this.d = d;
 		this.dim = dim;
 		this.coords = coords;
@@ -71,18 +74,18 @@ public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSo
 	}
 	
 	@Override
-	public PipedDataSource<X,Y> duplicate() {
+	public PipedDataSource<T,U> duplicate() {
 		// shallow copy
-		return new PipedDataSource<X,Y>(d,dim,coords);
+		return new PipedDataSource<T,U>(d,dim,coords);
 	}
 
 	@Override
-	public void set(long index, Y value) {
+	public void set(long index, U value) {
 		data.set(index, value);
 	}
 
 	@Override
-	public void get(long index, Y value) {
+	public void get(long index, U value) {
 		data.get(index, value);
 	}
 
@@ -91,7 +94,7 @@ public class PipedDataSource <X extends Algebra<X,Y>,Y> implements IndexedDataSo
 		return data.size();
 	}
 
-	private IndexedDataSource<?,Y> findSubset() {
+	private IndexedDataSource<?,U> findSubset() {
 		long[] start = coords.clone();
 		long[] stop = coords.clone();
 		start[dim] = 0;
