@@ -45,7 +45,6 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned
 {
-
 	private List<Function1<BigDecimal,Long>> axes;
 	private IndexedDataSource<?,U> data;
 	private long[] dims;

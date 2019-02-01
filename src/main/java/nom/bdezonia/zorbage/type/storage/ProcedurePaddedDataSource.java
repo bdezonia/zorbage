@@ -41,25 +41,26 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 {
 	final private T algebra;
 	final private IndexedDataSource<?,U> storage;
-	final private Procedure2<Long,U> func;
+	final private Procedure2<Long,U> proc;
 	final private U zero;
-	
+
 	/**
 	 * 
 	 * @param algebra
 	 * @param storage
+	 * @param proc
 	 */
-	public ProcedurePaddedDataSource(T algebra, IndexedDataSource<?,U> storage, Procedure2<Long,U> func) {
+	public ProcedurePaddedDataSource(T algebra, IndexedDataSource<?,U> storage, Procedure2<Long,U> proc) {
 		this.algebra = algebra;
 		this.storage = storage;
-		this.func = func;
+		this.proc = proc;
 		this.zero = algebra.construct();
 	}
 
 	@Override
 	public ProcedurePaddedDataSource<T, U> duplicate() {
 		// shallow copy
-		return new ProcedurePaddedDataSource<T,U>(algebra, storage, func);
+		return new ProcedurePaddedDataSource<T,U>(algebra, storage, proc);
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public void get(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			func.call(index, value);
+			proc.call(index, value);
 		}
 		else {
 			storage.get(index, value);

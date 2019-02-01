@@ -62,7 +62,7 @@ public class ZeroPaddedDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public void set(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			if (algebra.isNotEqual().call(zero, value))
+			if (!algebra.isZero().call(value))
 				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
 		}
 		else {
