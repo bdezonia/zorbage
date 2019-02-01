@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.type.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -76,6 +78,13 @@ public class TestSequencedDataSource {
 		seq.get(4, value);
 		assertEquals(11, value.v());
 
+		try {
+			seq = new SequencedDataSource<>(ints, 3, 2, 8);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
 		// test backish to frontish with gaps
 		
 		seq = new SequencedDataSource<>(ints, 12, -3, 5);
@@ -90,5 +99,12 @@ public class TestSequencedDataSource {
 		assertEquals(3, value.v());
 		seq.get(4, value);
 		assertEquals(0, value.v());
+		
+		try {
+			seq = new SequencedDataSource<>(ints, 12, -3, 6);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 	}
 }
