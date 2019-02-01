@@ -34,8 +34,6 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
-// TODO - write some tests
-
 /**
  * 
  * @author Barry DeZonia
@@ -45,7 +43,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned
 {
 	private final T algebra;
-	private final MultiDimDataSource<T,U> md;
+	private final MultiDimDataSource<?,U> md;
 	private final Procedure2<long[],U> proc;
 
 	/**
@@ -54,7 +52,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	 * @param md
 	 * @param proc
 	 */
-	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<T,U> md, Procedure2<long[],U> proc) {
+	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<?,U> md, Procedure2<long[],U> proc) {
 		this.algebra = alg;
 		this.md = md;
 		this.proc = proc;
