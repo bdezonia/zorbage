@@ -89,7 +89,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	public void set(long[] index, U v) {
-		if (oob(index)) {
+		if (md.oob(index)) {
 			if (!algebra.isZero().call(v))
 				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
 		}
@@ -99,7 +99,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	public void get(long[] index, U v) {
-		if (oob(index)) {
+		if (md.oob(index)) {
 			proc.call(index, v);
 		}
 		else {
@@ -107,13 +107,4 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		}
 	}
 	
-	private boolean oob(long[] index) {
-		if (index.length != md.numDimensions())
-			throw new IllegalArgumentException("index dimensionality not the same as multidim dimensions");
-		for (int i = 0; i < index.length; i++) {
-			if (index[i] < 0 || index[i] >= md.dimension(i))
-				return true;
-		}
-		return false;
-	}
 }

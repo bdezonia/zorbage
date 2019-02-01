@@ -104,7 +104,8 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	public void setSafe(long[] index, U v) {
-		boundsCheck(index);
+		if (oob(index))
+			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		set(index, v);
 	}
 	
@@ -114,17 +115,18 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	public void getSafe(long[] index, U v) {
-		boundsCheck(index);
+		if (oob(index))
+			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		get(index, v);
 	}
 	
-	private void boundsCheck(long[] index) {
-		if (index.length != this.dims.length)
+	public boolean oob(long[] index) {
+		if (index.length != numDimensions())
 			throw new IllegalArgumentException("index dimensionality not the same as multidim dimensions");
 		for (int i = 0; i < index.length; i++) {
-			if (index[i] < 0 || index[i] >= this.dims[i])
-				throw new IllegalArgumentException("index out of bounds of multidim dimensions");
+			if (index[i] < 0 || index[i] >= dimension(i))
+				return true;
 		}
+		return false;
 	}
-	
 }
