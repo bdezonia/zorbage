@@ -26,43 +26,62 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
+ * @param <U>
  */
-public class TestPaddedDataSource {
+public class ZeroPaddedDataSource<T extends Algebra<T,U>,U>
+	implements IndexedDataSource<ZeroPaddedDataSource<T,U>, U>
+{
+	final private T algebra;
+	final private IndexedDataSource<?,U> storage;
+	final private U zero;
+	
+	/**
+	 * 
+	 * @param algebra
+	 * @param storage
+	 */
+	public ZeroPaddedDataSource(T algebra, IndexedDataSource<?,U> storage) {
+		this.algebra = algebra;
+		this.storage = storage;
+		this.zero = algebra.construct();
+	}
 
-	@Test
-	public void test() {
-		IndexedDataSource<?,SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
-		IndexedDataSource<?,SignedInt32Member> padded = new PaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
-		SignedInt32Member value = G.INT32.construct();
-		
-		assertEquals(ints.size(), padded.size());
-		
-		padded.get(0, value);
-		assertEquals(1, value.v());
-		padded.get(1, value);
-		assertEquals(2, value.v());
-		padded.get(2, value);
-		assertEquals(3, value.v());
-		padded.get(3, value);
-		assertEquals(4, value.v());
+	@Override
+	public ZeroPaddedDataSource<T, U> duplicate() {
+		// shallow copy
+		return new ZeroPaddedDataSource<T,U>(algebra, storage);
+	}
 
-		padded.get(4, value);
-		assertEquals(0, value.v());
-		
-		padded.get(-1, value);
-		assertEquals(0, value.v());
+	@Override
+	public void set(long index, U value) {
+		if (index < 0 || index >= storage.size()) {
+			if (algebra.isNotEqual().call(zero, value))
+				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
+		}
+		else {
+			storage.set(index, value);
+		}
+	}
+
+	@Override
+	public void get(long index, U value) {
+		if (index < 0 || index >= storage.size()) {
+			algebra.assign().call(zero, value);
+		}
+		else {
+			storage.get(index, value);
+		}
+	}
+
+	@Override
+	public long size() {
+		return storage.size();
 	}
 }
