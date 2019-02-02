@@ -31,9 +31,8 @@ package nom.bdezonia.zorbage.type.algebra;
  * @author Barry DeZonia
  *
  */
-public interface EuclideanDomain<T extends EuclideanDomain<T,U>,U>
-  extends
-    PrincipalIdealDomain<T,U>,
-    EuclideanRing<T,U>
+public interface UniqueFactorizationDomain<T extends UniqueFactorizationDomain<T,U>,U>
+	extends IntegralDomain<T,U>
 {
+
 }
