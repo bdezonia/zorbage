@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 
@@ -123,24 +124,24 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setBuffer(long idx, U value) {
+	protected void setBufferValue(long idx, U value) {
 		buffer.set(idx, value);
 	}
 
 	@Override
-	protected void getBuffer(long idx, U value) {
+	protected void getBufferValue(long idx, U value) {
 		buffer.get(idx, value);
 	}
 
 	@Override
-	protected void duplicateBuffer(Object other) {
+	protected void duplicateBuffer(IndexedDataSource<?,U> other) {
 		@SuppressWarnings("unchecked")
 		ArrayStorageSignedInt32<U> otherBuffer = (ArrayStorageSignedInt32<U>) other;
 		buffer = otherBuffer.duplicate();
 	}
 
 	@Override
-	protected Object buffer() {
+	protected IndexedDataSource<?,U> buffer() {
 		return buffer;
 	}
 }

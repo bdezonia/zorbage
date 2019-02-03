@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBoolean;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 
@@ -123,24 +124,24 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setBuffer(long idx, U value) {
+	protected void setBufferValue(long idx, U value) {
 		buffer.set(idx, value);
 	}
 
 	@Override
-	protected void getBuffer(long idx, U value) {
+	protected void getBufferValue(long idx, U value) {
 		buffer.get(idx, value);
 	}
 
 	@Override
-	protected void duplicateBuffer(Object other) {
+	protected void duplicateBuffer(IndexedDataSource<?,U> other) {
 		@SuppressWarnings("unchecked")
 		ArrayStorageBoolean<U> otherBuffer = (ArrayStorageBoolean<U>) other;
 		buffer = otherBuffer.duplicate();
 	}
 
 	@Override
-	protected Object buffer() {
+	protected IndexedDataSource<?,U> buffer() {
 		return buffer;
 	}
 }

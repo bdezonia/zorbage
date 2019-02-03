@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat64;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
@@ -123,24 +124,24 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setBuffer(long idx, U value) {
+	protected void setBufferValue(long idx, U value) {
 		buffer.set(idx, value);
 	}
 
 	@Override
-	protected void getBuffer(long idx, U value) {
+	protected void getBufferValue(long idx, U value) {
 		buffer.get(idx, value);
 	}
 
 	@Override
-	protected void duplicateBuffer(Object other) {
+	protected void duplicateBuffer(IndexedDataSource<?,U> other) {
 		@SuppressWarnings("unchecked")
 		ArrayStorageFloat64<U> otherBuffer = (ArrayStorageFloat64<U>) other;
 		buffer = otherBuffer.duplicate();
 	}
 
 	@Override
-	protected Object buffer() {
+	protected IndexedDataSource<?,U> buffer() {
 		return buffer;
 	}
 }

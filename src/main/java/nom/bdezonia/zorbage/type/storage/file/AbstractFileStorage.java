@@ -52,10 +52,10 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	protected abstract int elementByteSize();
 	protected abstract void writeFromBufferToRaf(RandomAccessFile raf, long i) throws IOException;
 	protected abstract void readFromRafIntoBuffer(RandomAccessFile raf, long i) throws IOException;
-	protected abstract void setBuffer(long idx, U value);
-	protected abstract void getBuffer(long idx, U value);
-	protected abstract Object buffer();
-	protected abstract void duplicateBuffer(Object buffer);
+	protected abstract void setBufferValue(long idx, U value);
+	protected abstract void getBufferValue(long idx, U value);
+	protected abstract IndexedDataSource<?,U> buffer();
+	protected abstract void duplicateBuffer(IndexedDataSource<?,U> buffer);
 	
 	private long numElements;
 	private File file;
@@ -119,7 +119,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	public void set(long index, U value) {
 		synchronized (this) {
 			load(index);
-			setBuffer(index % BUFFERSIZE, value);
+			setBufferValue(index % BUFFERSIZE, value);
 			dirty = true;
 		}
 	}
@@ -128,7 +128,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	public void get(long index, U value) {
 		synchronized (this) {
 			load(index);
-			getBuffer(index % BUFFERSIZE, value);
+			getBufferValue(index % BUFFERSIZE, value);
 		}
 	}
 
