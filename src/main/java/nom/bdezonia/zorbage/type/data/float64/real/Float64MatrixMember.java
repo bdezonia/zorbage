@@ -87,10 +87,7 @@ public final class Float64MatrixMember
 	}
 	
 	public Float64MatrixMember(Float64MatrixMember other) {
-		rows = other.rows;
-		cols = other.cols;
-		s = other.s;
-		storage = other.storage.duplicate();
+		set(other);
 	}
 	
 	public Float64MatrixMember(String s) {

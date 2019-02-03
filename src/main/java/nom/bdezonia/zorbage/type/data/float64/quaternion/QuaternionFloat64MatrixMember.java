@@ -91,10 +91,7 @@ public final class QuaternionFloat64MatrixMember
 	}
 	
 	public QuaternionFloat64MatrixMember(QuaternionFloat64MatrixMember other) {
-		storage = other.storage.duplicate();
-		rows = other.rows;
-		cols = other.cols;
-		s = other.s;
+		set(other);
 	}
 	
 	public QuaternionFloat64MatrixMember(String s) {

@@ -73,10 +73,7 @@ public final class ComplexFloat64MatrixMember
 	}
 	
 	public ComplexFloat64MatrixMember(ComplexFloat64MatrixMember other) {
-		rows = other.rows;
-		cols = other.cols;
-		s = other.s;
-		storage = other.storage.duplicate();
+		set(other);
 	}
 	
 	public ComplexFloat64MatrixMember(int r, int c, double[] vals) {

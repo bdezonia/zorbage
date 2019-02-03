@@ -95,10 +95,7 @@ public final class OctonionFloat64MatrixMember
 	}
 	
 	public OctonionFloat64MatrixMember(OctonionFloat64MatrixMember other) {
-		rows = other.rows;
-		cols = other.cols;
-		s = other.s;
-		storage = other.storage.duplicate();
+		set(other);
 	}
 	
 	public OctonionFloat64MatrixMember(String s) {
