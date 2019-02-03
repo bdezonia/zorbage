@@ -49,7 +49,7 @@ public class TestRealNumberEquation {
 				new EquationParser<Float64Algebra,Float64Member>();
 		Tuple2<String, Procedure<Float64Member>> result =
 				parser.parse(G.DBL, "4.7315");
-		System.out.println(result.a());
-		System.out.println(result.b());
+		System.out.println("real parse result message   " + result.a());
+		System.out.println("real parse result procedure " + result.b());
 	}
 }

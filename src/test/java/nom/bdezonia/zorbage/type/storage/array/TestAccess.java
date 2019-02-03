@@ -44,6 +44,7 @@ public class TestAccess {
 
 	@Test
 	public void test() {
+		System.out.println("Speed of setting and getting in a list of octonions");
 		for (int i = 0; i < 20; i++)
 			doit();
 		System.out.println();

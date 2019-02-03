@@ -49,7 +49,7 @@ public class TestRealMatrixEquation {
 				new EquationParser<Float64Matrix,Float64MatrixMember>();
 		Tuple2<String, Procedure<Float64MatrixMember>> result =
 				parser.parse(G.DBL_MAT, "[[1,2],[3,4]]");
-		System.out.println(result.a());
-		System.out.println(result.b());
+		System.out.println("matrix parse result message   " + result.a());
+		System.out.println("matrix parse result procedure " + result.b());
 	}
 }
