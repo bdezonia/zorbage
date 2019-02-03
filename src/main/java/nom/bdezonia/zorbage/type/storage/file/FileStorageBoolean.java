@@ -26,16 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.storage.file;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBoolean;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 
@@ -45,140 +39,108 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
-	implements IndexedDataSource<FileStorageBoolean<U>,U>, Allocatable<FileStorageBoolean<U>>
+	extends AbstractFileStorage<U>
+	implements Allocatable<FileStorageBoolean<U>>
 {
-	// TODO
-	// 1) add low level array access to Array storage classes so can do block reads/writes
-	// 2) make BUFFERSIZE and numBuffers configurable
-	
-	private final U type;
-	private long numElements;
 	private ArrayStorageBoolean<U> buffer;
-	private File file;
-	private boolean dirty;
-	private long pageIndex;
+	private U type;
+	private ThreadLocal<boolean[]> tmpA;
+	private ThreadLocal<U> tmpU;
 	
-	private static final long BUFFERSIZE = 2048;
-
 	public FileStorageBoolean(long numElements, U type) {
-		if (numElements < 0)
-			throw new IllegalArgumentException("size must be >= 0");
-		this.type = type.allocate();
-		this.numElements = numElements;
-		this.dirty = false;
-		this.buffer = new ArrayStorageBoolean<U>(BUFFERSIZE,type);
-		this.pageIndex = numElements;
-		try { 
-			this.file = File.createTempFile("Storage", ".storage");
-			// if the file is new set it all to zero
-			if (!file.exists() || file.length() == 0) {
-				RandomAccessFile raf = new RandomAccessFile(file, "rw");
-				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
-					for (int i = 0; i < type.booleanCount(); i++) {
-						raf.writeBoolean(false);
-					}
-				}
-				raf.close();
-			}
-			this.file.deleteOnExit();
-		}
-		catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
+		super(numElements,type);
 	}
 	
-	@Override
-	public void set(long index, U value) {
-		synchronized (this) {
-			load(index);
-			buffer.set(index % BUFFERSIZE, value);
-			dirty = true;
-		}
+	public FileStorageBoolean(FileStorageBoolean<U> other, U t) {
+		super(other, t);
 	}
-
-	@Override
-	public void get(long index, U value) {
-		synchronized (this) {
-			load(index);
-			buffer.get(index % BUFFERSIZE, value);
-		}
-	}
-
-	@Override
-	public long size() {
-		return numElements;
-	}
-
+	
 	@Override
 	public FileStorageBoolean<U> duplicate() {
-		synchronized (this) {
-			flush();
-			try {
-				FileStorageBoolean<U> other = new FileStorageBoolean<U>(numElements,type);
-				other.buffer = buffer.duplicate();
-				other.dirty = dirty;
-				other.pageIndex = pageIndex;
-				Path FROM = Paths.get(file.getAbsolutePath());
-				Path TO = Paths.get(other.file.getAbsolutePath());
-				//overwrite existing file, if exists
-				CopyOption[] options = new CopyOption[]{
-						StandardCopyOption.REPLACE_EXISTING,
-						StandardCopyOption.COPY_ATTRIBUTES
-				}; 
-				Files.copy(FROM, TO, options);
-				return other;
-			} catch (Exception e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
+		return new FileStorageBoolean<U>(this, this.type);
 	}
 	
-	private void flush() {
-		if (!dirty) return;
-		try {
-			U tmp = type.allocate();
-			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.booleanCount()*1);
-			for (long i = 0; i < BUFFERSIZE; i++) {
-				buffer.get(i, tmp);
-				tmp.toBooleanFile(raf);
-			}
-			raf.close();
-		} catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
-		dirty = false;
-	}
-
-	// TODO: improve performance. use java 8. use nio?
-
-	private void load(long index) {
-		if (index < 0 || index >= numElements)
-			throw new IllegalArgumentException("index out of bounds");
-		if (index < pageIndex || index >= pageIndex + BUFFERSIZE) {
-			if (dirty) {
-				flush();
-			}
-			// read file data into array using sizeof()
-			try {
-				U tmp = type.allocate();
-				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.booleanCount()*1);
-				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.fromBooleanFile(raf);
-					buffer.set(i, tmp);
-				}
-				raf.close();
-			} catch (Exception e) {
-				System.out.println(e);
-				throw new IllegalArgumentException(e.getMessage());
-			}
-			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
-		}
-	}
-
 	@Override
 	public FileStorageBoolean<U> allocate() {
 		return new FileStorageBoolean<U>(size(), type);
+	}
+
+	@Override
+	protected void setLocals(U type) {
+		this.type = type.allocate();
+		this.tmpA = new ThreadLocal<boolean[]>() {
+			@Override
+			protected boolean[] initialValue() {
+				return new boolean[type.booleanCount()];
+			}
+		};
+		this.tmpU = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return type.allocate();
+			}
+		};
+	}
+	
+	@Override
+	protected void allocateBuffer(long numElements, U type) {
+		buffer = new ArrayStorageBoolean<U>(numElements, type);
+	}
+
+	@Override
+	protected void writeZeroElement(RandomAccessFile raf) throws IOException {
+		boolean[] arr = tmpA.get();
+		for (int i = 0; i < arr.length; i++) {
+			raf.writeBoolean(false);
+		}
+	}
+
+	@Override
+	protected void writeFromBufferToRaf(RandomAccessFile raf, long index) throws IOException {
+		U value = tmpU.get();
+		buffer.get(index, value);
+		boolean arr[] = tmpA.get();
+		value.toBooleanArray(arr, 0);
+		for (int i = 0; i < arr.length; i++) {
+			raf.writeBoolean(arr[i]);
+		}
+	}
+
+	@Override
+	protected void readFromRafIntoBuffer(RandomAccessFile raf, long index) throws IOException {
+		boolean arr[] = tmpA.get();
+		for (int i = 0; i < type.booleanCount(); i++) {
+			arr[i] = raf.readBoolean();
+		}
+		U value = tmpU.get();
+		value.fromBooleanArray(arr, 0);
+		buffer.set(index, value);
+	}
+
+	@Override
+	protected int elementByteSize() {
+		return type.booleanCount() * 1;
+	}
+
+	@Override
+	protected void setBuffer(long idx, U value) {
+		buffer.set(idx, value);
+	}
+
+	@Override
+	protected void getBuffer(long idx, U value) {
+		buffer.get(idx, value);
+	}
+
+	@Override
+	protected void duplicateBuffer(Object other) {
+		@SuppressWarnings("unchecked")
+		ArrayStorageBoolean<U> otherBuffer = (ArrayStorageBoolean<U>) other;
+		buffer = otherBuffer.duplicate();
+	}
+
+	@Override
+	protected Object buffer() {
+		return buffer;
 	}
 }

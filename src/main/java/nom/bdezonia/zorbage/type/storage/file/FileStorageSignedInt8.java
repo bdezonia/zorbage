@@ -26,16 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.storage.file;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt8;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
@@ -44,141 +38,109 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  * @author Barry DeZonia
  *
  */
-public class FileStorageSignedInt8<U extends ByteCoder &  Allocatable<U>>
-	implements IndexedDataSource<FileStorageSignedInt8<U>,U>, Allocatable<FileStorageSignedInt8<U>>
+public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
+	extends AbstractFileStorage<U>
+	implements Allocatable<FileStorageSignedInt8<U>>
 {
-	// TODO
-	// 1) add low level array access to Array storage classes so can do block reads/writes
-	// 2) make BUFFERSIZE and numBuffers configurable
-	
-	private final U type;
-	private long numElements;
 	private ArrayStorageSignedInt8<U> buffer;
-	private File file;
-	private boolean dirty;
-	private long pageIndex;
+	private U type;
+	private ThreadLocal<byte[]> tmpA;
+	private ThreadLocal<U> tmpU;
 	
-	private static final long BUFFERSIZE = 2048;
-
 	public FileStorageSignedInt8(long numElements, U type) {
-		if (numElements < 0)
-			throw new IllegalArgumentException("size must be >= 0");
-		this.type = type.allocate();
-		this.numElements = numElements;
-		this.dirty = false;
-		this.buffer = new ArrayStorageSignedInt8<U>(BUFFERSIZE,type);
-		this.pageIndex = numElements;
-		try { 
-			this.file = File.createTempFile("Storage", ".storage");
-			// if the file is new set it all to zero
-			if (!file.exists() || file.length() == 0) {
-				RandomAccessFile raf = new RandomAccessFile(file, "rw");
-				for (long l = 0; l < (numElements+BUFFERSIZE); l++) {
-					for (int i = 0; i < type.byteCount(); i++) {
-						raf.writeByte(0);
-					}
-				}
-				raf.close();
-			}
-			this.file.deleteOnExit();
-		}
-		catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
+		super(numElements,type);
 	}
 	
-	@Override
-	public void set(long index, U value) {
-		synchronized (this) {
-			load(index);
-			buffer.set(index % BUFFERSIZE, value);
-			dirty = true;
-		}
+	public FileStorageSignedInt8(FileStorageSignedInt8<U> other, U t) {
+		super(other, t);
 	}
-
-	@Override
-	public void get(long index, U value) {
-		synchronized (this) {
-			load(index);
-			buffer.get(index % BUFFERSIZE, value);
-		}
-	}
-
-	@Override
-	public long size() {
-		return numElements;
-	}
-
+	
 	@Override
 	public FileStorageSignedInt8<U> duplicate() {
-		synchronized (this) {
-			flush();
-			try {
-				FileStorageSignedInt8<U> other = new FileStorageSignedInt8<U>(numElements,type);
-				other.buffer = buffer.duplicate();
-				other.dirty = dirty;
-				other.pageIndex = pageIndex;
-			    Path FROM = Paths.get(file.getAbsolutePath());
-			    Path TO = Paths.get(other.file.getAbsolutePath());
-			    //overwrite existing file, if exists
-			    CopyOption[] options = new CopyOption[]{
-			      StandardCopyOption.REPLACE_EXISTING,
-			      StandardCopyOption.COPY_ATTRIBUTES
-			    }; 
-			    Files.copy(FROM, TO, options);
-				return other;
-			} catch (Exception e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
+		return new FileStorageSignedInt8<U>(this, this.type);
 	}
 	
-	private void flush() {
-		if (!dirty) return;
-		try {
-			U tmp = type.allocate();
-			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek((pageIndex/BUFFERSIZE)*BUFFERSIZE*type.byteCount()*1);
-			for (long i = 0; i < BUFFERSIZE; i++) {
-				buffer.get(i, tmp);
-				tmp.toByteFile(raf);
-			}
-			raf.close();
-		} catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
-		dirty = false;
-	}
-
-	// TODO: improve performance. use java 8. use nio?
-
-	private void load(long index) {
-		if (index < 0 || index >= numElements)
-			throw new IllegalArgumentException("index out of bounds");
-		if (index < pageIndex || index >= pageIndex + BUFFERSIZE) {
-			if (dirty) {
-				flush();
-			}
-			// read file data into array using sizeof()
-			try {
-				U tmp = type.allocate();
-				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek((index/BUFFERSIZE)*BUFFERSIZE*type.byteCount()*1);
-				for (long i = 0; i < BUFFERSIZE; i++) {
-					tmp.fromByteFile(raf);
-					buffer.set(i, tmp);
-				}
-				raf.close();
-			} catch (Exception e) {
-				System.out.println(e);
-				throw new IllegalArgumentException(e.getMessage());
-			}
-			pageIndex = (index / BUFFERSIZE) * BUFFERSIZE;
-		}
-	}
-
 	@Override
 	public FileStorageSignedInt8<U> allocate() {
 		return new FileStorageSignedInt8<U>(size(), type);
+	}
+
+	@Override
+	protected void setLocals(U type) {
+		this.type = type.allocate();
+		this.tmpA = new ThreadLocal<byte[]>() {
+			@Override
+			protected byte[] initialValue() {
+				return new byte[type.byteCount()];
+			}
+		};
+		this.tmpU = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return type.allocate();
+			}
+		};
+	}
+	
+	@Override
+	protected void allocateBuffer(long numElements, U type) {
+		buffer = new ArrayStorageSignedInt8<U>(numElements, type);
+	}
+
+	@Override
+	protected void writeZeroElement(RandomAccessFile raf) throws IOException {
+		byte arr[] = tmpA.get();
+		for (int i = 0; i < arr.length; i++) {
+			raf.writeByte(0);
+		}
+	}
+
+	@Override
+	protected void writeFromBufferToRaf(RandomAccessFile raf, long index) throws IOException {
+		U value = tmpU.get();
+		buffer.get(index, value);
+		byte arr[] = tmpA.get();
+		value.toByteArray(arr, 0);
+		for (int i = 0; i < arr.length; i++) {
+			raf.writeByte(arr[i]);
+		}
+	}
+
+	@Override
+	protected void readFromRafIntoBuffer(RandomAccessFile raf, long index) throws IOException {
+		byte arr[] = tmpA.get();
+		for (int i = 0; i < type.byteCount(); i++) {
+			arr[i] = raf.readByte();
+		}
+		U value = tmpU.get();
+		value.fromByteArray(arr, 0);
+		buffer.set(index, value);
+	}
+
+	@Override
+	protected int elementByteSize() {
+		return type.byteCount() * 1;
+	}
+
+	@Override
+	protected void setBuffer(long idx, U value) {
+		buffer.set(idx, value);
+	}
+
+	@Override
+	protected void getBuffer(long idx, U value) {
+		buffer.get(idx, value);
+	}
+
+	@Override
+	protected void duplicateBuffer(Object other) {
+		@SuppressWarnings("unchecked")
+		ArrayStorageSignedInt8<U> otherBuffer = (ArrayStorageSignedInt8<U>) other;
+		buffer = otherBuffer.duplicate();
+	}
+
+	@Override
+	protected Object buffer() {
+		return buffer;
 	}
 }
