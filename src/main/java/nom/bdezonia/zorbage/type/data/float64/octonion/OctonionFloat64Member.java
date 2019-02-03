@@ -294,7 +294,7 @@ public final class OctonionFloat64Member
 
 	@Override
 	public int componentCount() {
-		return 2;
+		return 8;
 	}
 
 	@Override
