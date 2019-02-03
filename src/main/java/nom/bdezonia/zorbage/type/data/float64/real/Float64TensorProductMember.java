@@ -169,12 +169,7 @@ public final class Float64TensorProductMember
 	}
 	
 	public Float64TensorProductMember(Float64TensorProductMember other) {
-		rank = other.rank;
-		dimCount = other.dimCount;
-		dims = other.dims.clone();
-		storage = other.storage.duplicate();
-		multipliers = other.multipliers.clone();
-		s = other.s;
+		set(other);
 	}
 	
 	public Float64TensorProductMember(String s) {
