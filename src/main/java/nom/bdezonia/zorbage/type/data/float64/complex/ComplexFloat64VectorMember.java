@@ -82,8 +82,7 @@ public final class ComplexFloat64VectorMember
 	}
 	
 	public ComplexFloat64VectorMember(ComplexFloat64VectorMember other) {
-		storage = other.storage.duplicate();
-		s = other.s;
+		set(other);
 	}
 	
 	public ComplexFloat64VectorMember(String value) {

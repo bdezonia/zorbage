@@ -88,8 +88,7 @@ public final class OctonionFloat64RModuleMember
 	}
 	
 	public OctonionFloat64RModuleMember(OctonionFloat64RModuleMember other) {
-		storage = other.storage.duplicate();
-		s = other.s;
+		set(other);
 	}
 	
 	public OctonionFloat64RModuleMember(String value) {

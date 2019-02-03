@@ -84,8 +84,7 @@ public final class QuaternionFloat64RModuleMember
 	}
 	
 	public QuaternionFloat64RModuleMember(QuaternionFloat64RModuleMember other) {
-		storage = other.storage.duplicate();
-		s = other.s;
+		set(other);
 	}
 	
 	public QuaternionFloat64RModuleMember(String value) {

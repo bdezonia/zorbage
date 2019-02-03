@@ -79,8 +79,7 @@ public final class Float64VectorMember
 	}
 	
 	public Float64VectorMember(Float64VectorMember other) {
-		storage = other.storage.duplicate();
-		s = other.s;
+		set(other);
 	}
 	
 	public Float64VectorMember(String value) {
