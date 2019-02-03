@@ -1122,9 +1122,6 @@ public final class QuaternionFloat64Member
 
 	@Override
 	public void primitiveInit() {
-		setR(0);
-		setI(0);
-		setJ(0);
-		setK(0);
+		r = i = j = k = 0;
 	}
 }

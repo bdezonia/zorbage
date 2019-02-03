@@ -1763,14 +1763,7 @@ public final class OctonionFloat64Member
 
 	@Override
 	public void primitiveInit() {
-		setR(0);
-		setI(0);
-		setJ(0);
-		setK(0);
-		setL(0);
-		setI0(0);
-		setJ0(0);
-		setK0(0);
+		r = i = j = k = l = i0 = j0 = k0 = 0;
 	}
 
 }
