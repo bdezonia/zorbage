@@ -45,7 +45,8 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	private final T algebra;
 	private final MultiDimDataSource<?,U> md;
 	private final Procedure2<long[],U> proc;
-
+	private final ThreadLocal<U> tmp;
+	
 	/**
 	 * 
 	 * @param alg
@@ -56,6 +57,12 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		this.algebra = alg;
 		this.md = md;
 		this.proc = proc;
+		this.tmp = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return alg.construct();
+			}
+		};
 	}
 
 	public IndexedDataSource<?,U> rawData() {
@@ -90,8 +97,10 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	
 	public void set(long[] index, U v) {
 		if (md.oob(index)) {
-			if (!algebra.isZero().call(v))
-				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
+			U t = tmp.get();
+			proc.call(index,t);
+			if (!algebra.isEqual().call(t,v))
+				throw new IllegalArgumentException("Cannot set out of bounds value in conflict with out of bounds procedure");
 		}
 		else {
 			md.set(index, v);
