@@ -231,12 +231,12 @@ public final class UnsignedInt128Member
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(BigInteger.valueOf((long)v));
+		setV(BigDecimal.valueOf(v).toBigInteger());
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(BigInteger.valueOf((long)v));
+		setV(BigDecimal.valueOf(v).toBigInteger());
 	}
 
 	@Override
@@ -365,7 +365,7 @@ public final class UnsignedInt128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigInteger.valueOf((long)v));
+			setV(BigDecimal.valueOf(v).toBigInteger());
 		}
 	}
 
@@ -389,7 +389,7 @@ public final class UnsignedInt128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigInteger.valueOf((long)v));
+			setV(BigDecimal.valueOf(v).toBigInteger());
 		}
 	}
 
