@@ -482,7 +482,7 @@ public final class UnsignedInt128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().longValue();
+		if (component == 0) return v().floatValue();
 		return 0;
 	}
 
@@ -491,7 +491,7 @@ public final class UnsignedInt128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().longValue();
+		if (component == 0) return v().doubleValue();
 		return 0;
 	}
 
@@ -619,7 +619,7 @@ public final class UnsignedInt128Member
 			return 0;
 		}
 		else {
-			return v().longValue();
+			return v().floatValue();
 		}
 	}
 
@@ -641,7 +641,7 @@ public final class UnsignedInt128Member
 			return 0;
 		}
 		else {
-			return v().longValue();
+			return v().doubleValue();
 		}
 	}
 
