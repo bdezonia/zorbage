@@ -60,7 +60,7 @@ public final class SignedInt128Member
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO128 = TWO.pow(128);
-	static final BigInteger TWO64 = TWO.pow(64);
+	static final BigInteger TWO127 = TWO.pow(127);
 	static final BigInteger TWO63 = TWO.pow(63);
 	static final BigInteger TWO63_MINUS_ONE = TWO63.subtract(BigInteger.ONE);
 	
@@ -90,6 +90,12 @@ public final class SignedInt128Member
 		this.hi = hi;
 	}
 
+	/*
+	 * ff 255 -1 1:127
+	 * fe 254 -2 1:126
+	 * fd 253 -3 1:125
+	 */
+	
 	// expensive but shouldn't need to call very often
 	
 	public BigInteger v() {
@@ -99,7 +105,7 @@ public final class SignedInt128Member
 		BigInteger bits127 = low.add(lowInc).add(high);
 		if ((hi & 0x8000000000000000L) != 0) {
 			// sign bit set
-			return TWO128.subtract(bits127).negate();
+			return TWO127.subtract(bits127).negate();
 		}
 		else {
 			// sign bit not set
@@ -110,12 +116,19 @@ public final class SignedInt128Member
 	// expensive but shouldn't need to call very often
 	
 	public void setV(BigInteger val) {
+		val = val.remainder(TWO128);
+		if (val.compareTo(BigInteger.ZERO) < 0) {
+			// negative
+			val = TWO128.add(val);
+		}
 		lo = val.and(TWO63_MINUS_ONE).longValue();
-		if (val.testBit(63))
+		if (val.testBit(63)) {
 			lo |= 0x8000000000000000L;
+		}
 		hi = val.shiftRight(64).and(TWO63_MINUS_ONE).longValue();
-		if (val.testBit(127))
+		if (val.testBit(127)) {
 			hi |= 0x8000000000000000L;
+		}
 	}
 	
 	@Override

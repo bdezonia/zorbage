@@ -51,6 +51,7 @@ import nom.bdezonia.zorbage.type.data.int11.SignedInt11Algebra;
 import nom.bdezonia.zorbage.type.data.int11.UnsignedInt11Algebra;
 import nom.bdezonia.zorbage.type.data.int12.SignedInt12Algebra;
 import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Algebra;
+import nom.bdezonia.zorbage.type.data.int128.SignedInt128Algebra;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Algebra;
 import nom.bdezonia.zorbage.type.data.int13.SignedInt13Algebra;
 import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Algebra;
@@ -159,5 +160,5 @@ public class G {
 	public static final SignedInt16Algebra INT16 = new SignedInt16Algebra();
 	public static final SignedInt32Algebra INT32 = new SignedInt32Algebra();
 	public static final SignedInt64Algebra INT64 = new SignedInt64Algebra();
-	//TODO public static final SignedInt128Algebra INT128 = new SignedInt128Algebra();
+	public static final SignedInt128Algebra INT128 = new SignedInt128Algebra();
 }
