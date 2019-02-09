@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
 /**
  * 
@@ -52,19 +52,17 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  */
 public final class SignedInt128Member
 	implements
-		LongCoder,
+		ByteCoder,
 		Allocatable<SignedInt128Member>, Duplicatable<SignedInt128Member>,
 		Settable<SignedInt128Member>, Gettable<SignedInt128Member>,
 		UniversalRepresentation, NumberMember<SignedInt128Member>,
 		PrimitiveConversion
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
-	static final BigInteger TWO128 = TWO.pow(128);
-	static final BigInteger TWO127 = TWO.pow(127);
-	static final BigInteger TWO63 = TWO.pow(63);
-	static final BigInteger TWO63_MINUS_ONE = TWO63.subtract(BigInteger.ONE);
+	static final BigInteger TWO7 = TWO.pow(7);
+	static final BigInteger TWO15 = TWO.pow(15);
 	
-	long lo, hi; // package access is necessary so Algebra can manipulate values
+	byte lo, hi; // package access is necessary so Algebra can manipulate values
 	
 	public SignedInt128Member() {
 		lo = hi = 0;
@@ -85,50 +83,29 @@ public final class SignedInt128Member
 		setV(r);
 	}
 
-	SignedInt128Member(long hi, long lo) {
+	SignedInt128Member(byte hi, byte lo) {
 		this.lo = lo;
 		this.hi = hi;
 	}
 
-	/*
-	 * ff 255 -1 1:127
-	 * fe 254 -2 1:126
-	 * fd 253 -3 1:125
-	 */
-	
-	// expensive but shouldn't need to call very often
-	
 	public BigInteger v() {
-		BigInteger low = BigInteger.valueOf(lo & 0x7fffffffffffffffL);
-		BigInteger lowInc = ((lo & 0x8000000000000000L) != 0) ? TWO63 : BigInteger.ZERO;
-		BigInteger high = BigInteger.valueOf(hi & 0x7fffffffffffffffL).shiftLeft(64);
-		BigInteger bits127 = low.add(lowInc).add(high);
-		if ((hi & 0x8000000000000000L) != 0) {
+		BigInteger low = BigInteger.valueOf(lo & 0x7f);
+		BigInteger lowInc = ((lo & 0x80) != 0) ? TWO7 : BigInteger.ZERO;
+		BigInteger high = BigInteger.valueOf(hi & 0x7f).shiftLeft(8);
+		BigInteger bits15 = low.add(lowInc).add(high);
+		if ((hi & 0x80) != 0) {
 			// sign bit set
-			return TWO127.subtract(bits127).negate();
+			return TWO15.subtract(bits15).negate();
 		}
 		else {
 			// sign bit not set
-			return bits127;
+			return bits15;
 		}
 	}
 	
-	// expensive but shouldn't need to call very often
-	
 	public void setV(BigInteger val) {
-		val = val.remainder(TWO128);
-		if (val.compareTo(BigInteger.ZERO) < 0) {
-			// negative
-			val = TWO128.add(val);
-		}
-		lo = val.and(TWO63_MINUS_ONE).longValue();
-		if (val.testBit(63)) {
-			lo |= 0x8000000000000000L;
-		}
-		hi = val.shiftRight(64).and(TWO63_MINUS_ONE).longValue();
-		if (val.testBit(127)) {
-			hi |= 0x8000000000000000L;
-		}
+		hi = val.shiftRight(8).and(BigInteger.valueOf(0xff)).byteValue();
+		lo = val.and(BigInteger.valueOf(0xff)).byteValue();
 	}
 	
 	@Override
@@ -149,32 +126,32 @@ public final class SignedInt128Member
 	public String toString() { return v().toString(); }
 
 	@Override
-	public int longCount() {
+	public int byteCount() {
 		return 2;
 	}
 
 	@Override
-	public void fromLongArray(long[] arr, int index) {
+	public void fromByteArray(byte[] arr, int index) {
 		lo = arr[index];
 		hi = arr[index+1];
 	}
 
 	@Override
-	public void toLongArray(long[] arr, int index) {
+	public void toByteArray(byte[] arr, int index) {
 		arr[index] = lo;
 		arr[index+1] = hi;
 	}
 
 	@Override
-	public void fromLongFile(RandomAccessFile raf) throws IOException {
-		lo = raf.readLong();
-		hi = raf.readLong();
+	public void fromByteFile(RandomAccessFile raf) throws IOException {
+		lo = raf.readByte();
+		hi = raf.readByte();
 	}
 
 	@Override
-	public void toLongFile(RandomAccessFile raf) throws IOException {
-		raf.writeLong(lo);
-		raf.writeLong(hi);
+	public void toByteFile(RandomAccessFile raf) throws IOException {
+		raf.writeByte(lo);
+		raf.writeByte(hi);
 	}
 
 	@Override

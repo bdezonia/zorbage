@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.Multiply;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -59,8 +60,7 @@ public class SignedInt128Algebra
 		Random<SignedInt128Member>
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
-	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
-	private static final SignedInt128Member MINUS_ONE = new SignedInt128Member(BigInteger.valueOf(-1));
+	private static final SignedInt128Member ONE = new SignedInt128Member((byte)0,(byte)1);
 
 	@Override
 	public SignedInt128Member construct() {
@@ -139,9 +139,9 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b) {
-			if (a.hi == 0x8000000000000000L && a.lo == 0)
+			if (a.hi == (byte)0x80 && a.lo == 0)
 				throw new IllegalArgumentException("can't negate -minint");
-			multiply().call(a, MINUS_ONE, b);
+			subtract().call(ZERO, a, b);
 		}
 	};
 
@@ -155,23 +155,26 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			long cLo = a.lo + b.lo;
-			long cHi = a.hi + b.hi;
-			int correction = 0;
-			long alh = a.lo & 0x8000000000000000L;
-			long blh = b.lo & 0x8000000000000000L;
-			if (alh != 0 && blh != 0) {
-				correction = 1;
-			}
-			else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
-				long all = a.lo & 0x7fffffffffffffffL;
-				long bll = b.lo & 0x7fffffffffffffffL;
-				if ((all + bll) < 0)
-					correction = 1;
-			}
-			cHi += correction;
-			c.lo = cLo;
-			c.hi = cHi;
+//			byte cLo = (byte)(a.lo + b.lo);
+//			byte cHi = (byte)(a.hi + b.hi);
+//			int correction = 0;
+//			byte alh = (byte)(a.lo & 0x80);
+//			byte blh = (byte)(b.lo & 0x80);
+//			if (alh != 0 && blh != 0) {
+//				correction = 1;
+//			}
+//			else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
+//				byte all = (byte)(a.lo & 0x7f);
+//				byte bll = (byte)(b.lo & 0x7f);
+//				if ((all + bll) < 0)
+//					correction = 1;
+//			}
+//			cHi += correction;
+//			c.lo = cLo;
+//			c.hi = cHi;
+			// TODO - replace me with above commented out code and debug it when I can
+			// define a passing test with this stopgap
+			c.setV(a.v().add(b.v()));
 		}
 	};
 	
@@ -185,19 +188,19 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			long cHi = a.hi - b.hi;
-			long cLo = a.lo - b.lo;
+			byte cHi = (byte)(a.hi - b.hi);
+			byte cLo = (byte)(a.lo - b.lo);
 			final int correction;
-			long alh = a.lo & 0x8000000000000000L;
-			long blh = b.lo & 0x8000000000000000L;
+			byte alh = (byte)(a.lo & 0x80);
+			byte blh = (byte)(b.lo & 0x80);
 			if (alh == 0 && blh != 0)
 				correction = 1;
 			else if (alh != 0 && blh == 0) {
 				correction = 0;
 			}
 			else { // alh == blh
-				long all = a.lo & 0x7fffffffffffffffL;
-				long bll = b.lo & 0x7fffffffffffffffL;
+				byte all = (byte)(a.lo & 0x7f);
+				byte bll = (byte)(b.lo & 0x7f);
 				if (all < bll)
 					correction = 1;
 				else // (all >= bll)
@@ -219,17 +222,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			SignedInt128Member bTmp = new SignedInt128Member(b);
-			SignedInt128Member tmp = new SignedInt128Member();
-			SignedInt128Member part = new SignedInt128Member(a);
-			while (isNotEqual().call(bTmp,ZERO)) {
-				if ((bTmp.lo & 1) != 0) {
-					add().call(tmp, part, tmp);
-				}
-				shiftLeftOneBit(part);
-				shiftRightOneBit(bTmp);
-			}
-			assign().call(tmp,c);
+			Multiply.compute(G.INT128, a, b, c);
 		}
 	};
 
@@ -255,7 +248,6 @@ public class SignedInt128Algebra
 	private Procedure1<SignedInt128Member> UNITY =
 			new Procedure1<SignedInt128Member>()
 	{
-		
 		@Override
 		public void call(SignedInt128Member a) {
 			assign().call(ONE, a);
@@ -328,9 +320,9 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public java.lang.Integer call(SignedInt128Member a, SignedInt128Member b) {
-			long along, blong;
-			long ab = a.hi & 0x8000000000000000L;
-			long bb = b.hi & 0x8000000000000000L;
+			byte along, blong;
+			byte ab = (byte) (a.hi & 0x80);
+			byte bb = (byte) (b.hi & 0x80);
 			if (ab == 0 && bb != 0) {
 				return 1;
 			}
@@ -338,15 +330,15 @@ public class SignedInt128Algebra
 				return -1;
 			}
 			else { // ab == bb
-				along = a.hi & 0x7fffffffffffffffL;
-				blong = b.hi & 0x7fffffffffffffffL;
+				along = (byte) (a.hi & 0x7f);
+				blong = (byte) (b.hi & 0x7f);
 				if (along < blong)
 					return -1;
 				else if (along > blong)
 					return 1;
 				else { // a.hi == b.hi
-					ab = a.lo & 0x8000000000000000L;
-					bb = b.lo & 0x8000000000000000L;
+					ab = (byte) (a.lo & 0x80);
+					bb = (byte) (b.lo & 0x80);
 					if (ab == 0 && bb != 0) {
 						return -1;
 					}
@@ -354,8 +346,8 @@ public class SignedInt128Algebra
 						return 1;
 					}
 					else { // ab == bb
-						along = a.lo & 0x7fffffffffffffffL;
-						blong = b.lo & 0x7fffffffffffffffL;
+						along = (byte) (a.lo & 0x7f);
+						blong = (byte) (b.lo & 0x7f);
 						if (along < blong)
 							return -1;
 						else if (along > blong)
@@ -378,8 +370,9 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public java.lang.Integer call(SignedInt128Member a) {
-			if (isEqual().call(a, ZERO)) return 0;
-			if ((a.hi & 0x8000000000000000L) != 0)
+			if (isEqual().call(a, ZERO))
+				return 0;
+			else if ((a.hi & 0x80) != 0)
 				return -1;
 			else
 				return 1;
@@ -478,6 +471,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member d, SignedInt128Member m) {
+			// TODO - make a faster version that uses primitives
 			BigInteger[] dm = a.v().divideAndRemainder(b.v());
 			d.setV(dm[0]);
 			m.setV(dm[1]);
@@ -601,8 +595,8 @@ public class SignedInt128Algebra
 		@Override
 		public void call(SignedInt128Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.lo = rng.nextLong();
-			a.hi = rng.nextLong();
+			a.lo = (byte) rng.nextInt(0x100);
+			a.hi = (byte) rng.nextInt(0x100);
 		}
 	};
 	
@@ -616,8 +610,8 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			c.lo = a.lo & b.lo;
-			c.hi = a.hi & b.hi;
+			c.lo = (byte)(a.lo & b.lo);
+			c.hi = (byte)(a.hi & b.hi);
 		}
 	};
 	
@@ -631,8 +625,8 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			c.lo = a.lo | b.lo;
-			c.hi = a.hi | b.hi;
+			c.lo = (byte) (a.lo | b.lo);
+			c.hi = (byte) (a.hi | b.hi);
 		}
 	};
 	
@@ -646,8 +640,8 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			c.lo = a.lo ^ b.lo;
-			c.hi = a.hi ^ b.hi;
+			c.lo = (byte)(a.lo ^ b.lo);
+			c.hi = (byte)(a.hi ^ b.hi);
 		}
 	};
 	
@@ -661,8 +655,8 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b) {
-			b.lo = ~a.lo;
-			b.hi = ~a.hi;
+			b.lo = (byte)(~a.lo);
+			b.hi = (byte)(~a.hi);
 		}
 	};
 	
@@ -676,8 +670,8 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			c.lo = a.lo & ~b.lo;
-			c.hi = a.hi & ~b.hi;
+			c.lo = (byte)(a.lo & ~b.lo);
+			c.hi = (byte)(a.hi & ~b.hi);
 		}
 	};
 	
@@ -696,7 +690,7 @@ public class SignedInt128Algebra
 			if (count < 0)
 				bitShiftRight().call(-count, a, b);
 			else {
-				count = count % 0x80;
+				count = count % 16;
 				SignedInt128Member tmp = new SignedInt128Member(a);
 				for (int i = 0; i < count; i++) {
 					shiftLeftOneBit(tmp);
@@ -721,7 +715,7 @@ public class SignedInt128Algebra
 			else {
 				SignedInt128Member tmp = new SignedInt128Member(a);
 				for (int i = 0; i < count; i++) {
-					if (tmp.hi == 0xffffffffffffffffL && tmp.lo == 0xffffffffffffffffL)
+					if (tmp.hi == (byte)0xff && tmp.lo == (byte)0xff)
 						break;
 					shiftRightOneBit(tmp);
 				}
@@ -744,7 +738,7 @@ public class SignedInt128Algebra
 		public void call(java.lang.Integer count, SignedInt128Member a, SignedInt128Member b) {
 			if (count < 0)
 				bitShiftLeft().call(-count, a, b);
-			else if (count > 0x7f)
+			else if (count > 15)
 				assign().call(ZERO, b);
 			else {
 				SignedInt128Member tmp = new SignedInt128Member(a);
@@ -765,8 +759,8 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a) {
-			a.lo = 0xffffffffffffffffL;
-			a.hi = 0x7fffffffffffffffL;
+			a.lo = (byte)0xff;
+			a.hi = (byte)0x7f;
 		}
 	};
 	
@@ -781,7 +775,7 @@ public class SignedInt128Algebra
 		@Override
 		public void call(SignedInt128Member a) {
 			a.lo = 0;
-			a.hi = 0x8000000000000000L;
+			a.hi = (byte)0x80;
 		}
 	};
 	
@@ -805,19 +799,25 @@ public class SignedInt128Algebra
 	}
 
 	private void shiftLeftOneBit(SignedInt128Member val) {
-		boolean transitionBit = (val.lo & 0x8000000000000000L) != 0;
-		val.lo = val.lo << 1;
-		val.hi = val.hi << 1;
+		boolean transitionBit = (val.lo & (byte)0x80) != 0;
+		val.lo = (byte)((val.lo) << 1);
+		val.hi = (byte)((val.hi) << 1);
 		if (transitionBit)
-			val.hi |= 1;
+			val.hi |= (byte)1;
 	}
 
 	private void shiftRightOneBit(SignedInt128Member val) {
+		//System.out.println("  in val.hi="+(val.hi & 0xff)+" val.lo="+(val.lo & 0xff));
 		boolean transitionBit = (val.hi & 1) != 0;
-		val.lo = val.lo >>> 1;
-		val.hi = val.hi >>> 1;
+		boolean loHBit = (val.lo & (byte)0x80) != 0;
+		val.lo = (byte)((val.lo & 0x7f) >>> 1);
+		if (loHBit) val.lo |= 0x40;
+		boolean hiHBit = (val.hi & (byte)0x80) != 0;
+		val.hi = (byte)((val.hi & 0x7f) >>> 1);
+		if (hiHBit) val.hi |= 0x40;
 		if (transitionBit)
-			val.lo |= 0x8000000000000000L;
+			val.lo |= (byte)0x80;
+		//System.out.println("  out val.hi="+(val.hi & 0xff)+" val.lo="+(val.lo & 0xff));
 	}
 
 	@Override
