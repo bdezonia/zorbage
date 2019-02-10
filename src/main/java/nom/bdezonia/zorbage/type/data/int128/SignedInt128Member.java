@@ -61,6 +61,7 @@ public final class SignedInt128Member
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO7 = TWO.pow(7);
 	static final BigInteger TWO15 = TWO.pow(15);
+	static final BigInteger FF = BigInteger.valueOf(0xff);
 	
 	byte lo, hi; // package access is necessary so Algebra can manipulate values
 	
@@ -104,8 +105,8 @@ public final class SignedInt128Member
 	}
 	
 	public void setV(BigInteger val) {
-		hi = val.shiftRight(8).and(BigInteger.valueOf(0xff)).byteValue();
-		lo = val.and(BigInteger.valueOf(0xff)).byteValue();
+		hi = val.shiftRight(8).and(FF).byteValue();
+		lo = val.and(FF).byteValue();
 	}
 	
 	@Override
