@@ -654,6 +654,7 @@ public class SignedInt9Algebra
 		}
 	};
 
+	@Override
 	public Procedure3<java.lang.Integer, SignedInt9Member, SignedInt9Member> bitShiftRightFillZero() {
 		return SHRZ;
 	}

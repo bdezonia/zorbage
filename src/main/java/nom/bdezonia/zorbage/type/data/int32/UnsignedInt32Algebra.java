@@ -575,7 +575,8 @@ public class UnsignedInt32Algebra
 				b.setV( a.v() >>> count );
 		}
 	};
-	
+
+	@Override
 	public Procedure3<java.lang.Integer,UnsignedInt32Member,UnsignedInt32Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}

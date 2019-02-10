@@ -604,6 +604,7 @@ public class SignedInt64Algebra
 		}
 	};
 	
+	@Override
 	public Procedure3<java.lang.Integer,SignedInt64Member,SignedInt64Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}

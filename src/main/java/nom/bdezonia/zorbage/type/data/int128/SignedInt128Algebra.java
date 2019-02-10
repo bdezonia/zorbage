@@ -716,6 +716,7 @@ public class SignedInt128Algebra
 						break;
 					shiftRightOneBit(tmp);
 				}
+				System.out.println("result ("+tmp.hi+","+tmp.lo+")");
 				assign().call(tmp, b);
 			}
 		}
@@ -747,6 +748,7 @@ public class SignedInt128Algebra
 		}
 	};
 	
+	@Override
 	public Procedure3<java.lang.Integer,SignedInt128Member,SignedInt128Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}

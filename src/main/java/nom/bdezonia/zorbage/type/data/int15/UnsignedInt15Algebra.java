@@ -607,6 +607,7 @@ public class UnsignedInt15Algebra
 		}
 	};
 
+	@Override
 	public Procedure3<java.lang.Integer, UnsignedInt15Member, UnsignedInt15Member> bitShiftRightFillZero() {
 		return SHRZ;
 	}

@@ -590,7 +590,8 @@ public class UnsignedInt64Algebra
 		}
 	};
 
-	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRightfillZero() {
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}
 

@@ -654,6 +654,7 @@ public class SignedInt6Algebra
 		}
 	};
 
+	@Override
 	public Procedure3<java.lang.Integer, SignedInt6Member, SignedInt6Member> bitShiftRightFillZero() {
 		return SHRZ;
 	}

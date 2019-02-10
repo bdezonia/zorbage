@@ -475,6 +475,11 @@ public class UnboundedIntAlgebra
 		return SHR;
 	}
 
+	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> bitShiftRightFillZero() {
+		// no real impl of zero fill. treat as shift right.
+		return SHR;
+	}
+	
 	private final Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember> AND =
 			new Procedure3<UnboundedIntMember,UnboundedIntMember,UnboundedIntMember>()
 	{

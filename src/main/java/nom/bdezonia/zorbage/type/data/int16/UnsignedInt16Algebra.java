@@ -574,6 +574,7 @@ public class UnsignedInt16Algebra
 		}
 	};
 	
+	@Override
 	public Procedure3<java.lang.Integer,UnsignedInt16Member,UnsignedInt16Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}

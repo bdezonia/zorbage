@@ -43,4 +43,5 @@ public interface BitOperations<T> {
 	Procedure3<T,T,T> bitAndNot();
 	Procedure3<java.lang.Integer,T,T> bitShiftLeft();
 	Procedure3<java.lang.Integer,T,T> bitShiftRight();
+	Procedure3<java.lang.Integer,T,T> bitShiftRightFillZero();
 }

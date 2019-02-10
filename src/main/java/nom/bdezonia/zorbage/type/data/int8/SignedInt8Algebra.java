@@ -602,6 +602,7 @@ public class SignedInt8Algebra
 		}
 	};
 	
+	@Override
 	public Procedure3<java.lang.Integer,SignedInt8Member,SignedInt8Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}

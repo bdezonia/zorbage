@@ -609,6 +609,7 @@ public class UnsignedInt10Algebra
 		}
 	};
 
+	@Override
 	public Procedure3<java.lang.Integer, UnsignedInt10Member, UnsignedInt10Member> bitShiftRightFillZero() {
 		return SHRZ;
 	}

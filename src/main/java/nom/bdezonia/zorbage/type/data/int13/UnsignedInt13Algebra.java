@@ -609,6 +609,7 @@ public class UnsignedInt13Algebra
 		}
 	};
 
+	@Override
 	public Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member> bitShiftRightFillZero() {
 		return SHRZ;
 	}

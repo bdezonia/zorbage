@@ -573,6 +573,7 @@ public class UnsignedInt8Algebra
 		}
 	};
 	
+	@Override
 	public Procedure3<java.lang.Integer,UnsignedInt8Member,UnsignedInt8Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}

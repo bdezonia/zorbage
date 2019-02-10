@@ -603,6 +603,7 @@ public class SignedInt16Algebra
 		}
 	};
 	
+	@Override
 	public Procedure3<java.lang.Integer,SignedInt16Member,SignedInt16Member> bitShiftRightFillZero() {
 		return BITSHRZ;
 	}
