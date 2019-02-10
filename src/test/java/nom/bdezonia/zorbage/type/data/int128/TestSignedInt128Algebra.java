@@ -42,12 +42,11 @@ import nom.bdezonia.zorbage.type.data.int128.SignedInt128Member;
  */
 public class TestSignedInt128Algebra {
 
-	BigInteger RANGE = BigInteger.ONE.add(BigInteger.ONE).pow(15);
-	BigInteger LORANGE = RANGE.negate();
-	BigInteger DOUBLE_RANGE = RANGE.add(RANGE);
 	BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
-	BigInteger MIN = TWO.pow(15).negate();
-	BigInteger MAX = TWO.pow(15).subtract(BigInteger.ONE);
+	BigInteger TWO15 = TWO.pow(15);
+	BigInteger TWO16 = TWO.pow(16);
+	BigInteger MIN = TWO15.negate();
+	BigInteger MAX = TWO15.subtract(BigInteger.ONE);
 	
 	@Test
 	public void mathematicalMethods() {
@@ -82,26 +81,30 @@ public class TestSignedInt128Algebra {
 		SignedInt128Member d = G.INT128.construct();
 		
 		for (int g = -32768; g < 32768; g += 1) {
-			System.out.println(g);
+			if (g % 100 == 0)
+				System.out.println(g);
 			
 			BigInteger bg = BigInteger.valueOf(g);
-			d.setV(bg);
-			assertEquals(bg, d.v());
+
+//WORKS			d.setV(bg);
+//WORKS			assertEquals(bg, d.v());
+//WORKS			
+//WORKS			a.set(d);
 			
-			a.set(d);
+			a.setV(bg);
 			
 			//G.INT128.random().call(a);
 
-			if (a.v().compareTo(MIN) != 0) {
-				G.INT128.abs().call(a, c);
-				assertEquals(a.v().abs(), c.v());
-			}
+			//WORKS if (a.v().compareTo(MIN) != 0) {
+			//WORKS	G.INT128.abs().call(a, c);
+			//WORKS	assertEquals(a.v().abs(), c.v());
+			//WORKS}
 			
-			G.INT128.assign().call(a, c);
-			assertEquals(a.v(), c.v());
+			//WORKS G.INT128.assign().call(a, c);
+			//WORKS assertEquals(a.v(), c.v());
 			
-			G.INT128.bitNot().call(a, c);
-			assertEquals(a.v().not(), c.v());
+			//WORKS G.INT128.bitNot().call(a, c);
+			//WORKS assertEquals(a.v().not(), c.v());
 			
 //			for (int p = 0; p < 128; p++) {
 //				
@@ -127,74 +130,74 @@ public class TestSignedInt128Algebra {
 //				}
 //			}
 //			
-			assertEquals((a.v().and(BigInteger.ONE).compareTo(BigInteger.ZERO) == 0), G.INT128.isEven().call(a));
+			//WORKS assertEquals((a.v().and(BigInteger.ONE).compareTo(BigInteger.ZERO) == 0), G.INT128.isEven().call(a));
 			
-			assertEquals((a.v().and(BigInteger.ONE).compareTo(BigInteger.ONE) == 0), G.INT128.isOdd().call(a));
+			//WORKS assertEquals((a.v().and(BigInteger.ONE).compareTo(BigInteger.ONE) == 0), G.INT128.isOdd().call(a));
 			
-			assertEquals(a.v().compareTo(BigInteger.ZERO) == 0, G.INT128.isZero().call(a));
+			//WORKS assertEquals(a.v().compareTo(BigInteger.ZERO) == 0, G.INT128.isZero().call(a));
 
-			if (a.v().compareTo(MIN) != 0) {
-				G.INT128.negate().call(a, c);
-				assertEquals(a.v().negate(), c.v());
-			}
+			//WORKS if (a.v().compareTo(MIN) != 0) {
+			//WORKS 	G.INT128.negate().call(a, c);
+			//WORKS 	assertEquals(a.v().negate(), c.v());
+			//WORKS }
 			
-			if (a.v().compareTo(MIN) != 0) {
-				G.INT128.norm().call(a, c);
-				assertEquals(a.v().abs(), c.v());
-			}
+			//WORKS if (a.v().compareTo(MIN) != 0) {
+			//WORKS 	G.INT128.norm().call(a, c);
+			//WORKS 	assertEquals(a.v().abs(), c.v());
+			//WORKS }
 			
-			if (a.v().compareTo(MIN) > 0) {
-				G.INT128.pred().call(a, c);
-				assertEquals(a.v().subtract(BigInteger.ONE), c.v());
-			}
+			//WORKS if (a.v().compareTo(MIN) > 0) {
+			//WORKS 	G.INT128.pred().call(a, c);
+			//WORKS 	assertEquals(a.v().subtract(BigInteger.ONE), c.v());
+			//WORKS }
 			
-			if (a.v().compareTo(MAX) < 0) {
-				G.INT128.succ().call(a, c);
-				assertEquals(a.v().add(BigInteger.ONE), c.v());
-			}
+			//WORKS if (a.v().compareTo(MAX) < 0) {
+			//WORKS 	G.INT128.succ().call(a, c);
+			//WORKS 	assertEquals(a.v().add(BigInteger.ONE), c.v());
+			//WORKS }
 
-			int v = G.INT128.signum().call(a);
-			if (a.v().compareTo(BigInteger.ZERO) < 0)
-				assertEquals(-1, v);
-			else if (a.v().compareTo(BigInteger.ZERO) > 0)
-				assertEquals(1, v);
-			else
-				assertEquals(0, v);
+			//WORKS int v = G.INT128.signum().call(a);
+			//WORKS if (a.v().compareTo(BigInteger.ZERO) < 0)
+			//WORKS 	assertEquals(-1, v);
+			//WORKS else if (a.v().compareTo(BigInteger.ZERO) > 0)
+			//WORKS 	assertEquals(1, v);
+			//WORKS else
+			//WORKS 	assertEquals(0, v);
 				
 			for (int h = -32768; h < 32768; h += 1) {
 				
 				b.setV(BigInteger.valueOf(h));
 				
 //				// G.INT128.random().call(b);
-//				
-//				G.INT128.add().call(a, b, c);
-//				testIt(g+h, c.v());
-//				testIt(a.v().add(b.v()), c.v());
-//
-				G.INT128.bitAnd().call(a, b, c);
-				testIt(g&h, c.v());
-				assertEquals(a.v().and(b.v()), c.v());
+				
+				//WORKS G.INT128.add().call(a, b, c);
+				//WORKS testIt(g+h, c.v());
+				//WORKS testIt(a.v().add(b.v()), c.v());
 
-				G.INT128.bitAndNot().call(a, b, c);
-				testIt(g&~h, c.v());
-				assertEquals(a.v().andNot(b.v()), c.v());
+				//WORKS G.INT128.bitAnd().call(a, b, c);
+				//WORKS testIt(g&h, c.v());
+				//WORKS assertEquals(a.v().and(b.v()), c.v());
 
-				G.INT128.bitOr().call(a, b, c);
-				testIt(g|h, c.v());
-				assertEquals(a.v().or(b.v()), c.v());
+				//WORKS G.INT128.bitAndNot().call(a, b, c);
+				//WORKS testIt(g&~h, c.v());
+				//WORKS assertEquals(a.v().andNot(b.v()), c.v());
 
-				G.INT128.bitXor().call(a, b, c);
-				testIt(g^h, c.v());
-				assertEquals(a.v().xor(b.v()), c.v());
+				//WORKS G.INT128.bitOr().call(a, b, c);
+				//WORKS testIt(g|h, c.v());
+				//WORKS assertEquals(a.v().or(b.v()), c.v());
 
-				if (g < h)
+				//WORKS G.INT128.bitXor().call(a, b, c);
+				//WORKS testIt(g^h, c.v());
+				//WORKS assertEquals(a.v().xor(b.v()), c.v());
+
+				//WORKS if (g < h)
 //				if (a.v().compareTo(b.v()) < 0)
-					assertEquals(-1, (int) G.INT128.compare().call(a, b));
-				else if (g > h)
+				//WORKS 	assertEquals(-1, (int) G.INT128.compare().call(a, b));
+				//WORKS else if (g > h)
 //				else if (a.v().compareTo(b.v()) > 0)
-					assertEquals(1, (int) G.INT128.compare().call(a, b));
-				else
-					assertEquals(0, (int) G.INT128.compare().call(a, b));
+				//WORKS 	assertEquals(1, (int) G.INT128.compare().call(a, b));
+				//WORKS else
+				//WORKS 	assertEquals(0, (int) G.INT128.compare().call(a, b));
 
 //				if ((b.v().signum() != 0) && !(a.v().compareTo(MIN) == 0 && b.v().compareTo(BigInteger.ONE.negate()) == 0)) {
 //					
@@ -213,31 +216,31 @@ public class TestSignedInt128Algebra {
 //					assertEquals(y.v(), d.v());
 //				}
 //				
-				assertEquals((g == h), G.INT128.isEqual().call(a, b));
-				assertEquals(a.v().compareTo(b.v()) == 0, G.INT128.isEqual().call(a, b));
+				//WORKS assertEquals((g == h), G.INT128.isEqual().call(a, b));
+				//WORKS assertEquals(a.v().compareTo(b.v()) == 0, G.INT128.isEqual().call(a, b));
 				
-				assertEquals((g != h), G.INT128.isNotEqual().call(a, b));
-				assertEquals(a.v().compareTo(b.v()) != 0, G.INT128.isNotEqual().call(a, b));
+				//WORKS assertEquals((g != h), G.INT128.isNotEqual().call(a, b));
+				//WORKS assertEquals(a.v().compareTo(b.v()) != 0, G.INT128.isNotEqual().call(a, b));
 				
-				assertEquals((g < h), G.INT128.isLess().call(a, b));
-				assertEquals(a.v().compareTo(b.v()) < 0, G.INT128.isLess().call(a, b));
+				//WORKS assertEquals((g < h), G.INT128.isLess().call(a, b));
+				//WORKS assertEquals(a.v().compareTo(b.v()) < 0, G.INT128.isLess().call(a, b));
 				
-				assertEquals((g <= h), G.INT128.isLessEqual().call(a, b));
-				assertEquals(a.v().compareTo(b.v()) <= 0, G.INT128.isLessEqual().call(a, b));
+				//WORKS assertEquals((g <= h), G.INT128.isLessEqual().call(a, b));
+				//WORKS assertEquals(a.v().compareTo(b.v()) <= 0, G.INT128.isLessEqual().call(a, b));
 				
-				assertEquals((g > h), G.INT128.isGreater().call(a, b));
-				assertEquals(a.v().compareTo(b.v()) > 0, G.INT128.isGreater().call(a, b));
+				//WORKS assertEquals((g > h), G.INT128.isGreater().call(a, b));
+				//WORKS assertEquals(a.v().compareTo(b.v()) > 0, G.INT128.isGreater().call(a, b));
 				
-				assertEquals((g >= h), G.INT128.isGreaterEqual().call(a, b));
-				assertEquals(a.v().compareTo(b.v()) >= 0, G.INT128.isGreaterEqual().call(a, b));
+				//WORKS assertEquals((g >= h), G.INT128.isGreaterEqual().call(a, b));
+				//WORKS assertEquals(a.v().compareTo(b.v()) >= 0, G.INT128.isGreaterEqual().call(a, b));
 
-				G.INT128.max().call(a, b, c);
-				assertEquals((g > h) ? a.v() : b.v(), c.v());
-				assertEquals((a.v().compareTo(b.v()) > 0 ? a.v() : b.v()), c.v());
+				//WORKS G.INT128.max().call(a, b, c);
+				//WORKS assertEquals((g > h) ? a.v() : b.v(), c.v());
+				//WORKS assertEquals((a.v().compareTo(b.v()) > 0 ? a.v() : b.v()), c.v());
 				
-				G.INT128.min().call(a, b, c);
-				assertEquals((g < h) ? a.v() : b.v(), c.v());
-				assertEquals((a.v().compareTo(b.v()) < 0 ? a.v() : b.v()), c.v());
+				//WORKS G.INT128.min().call(a, b, c);
+				//WORKS assertEquals((g < h) ? a.v() : b.v(), c.v());
+				//WORKS assertEquals((a.v().compareTo(b.v()) < 0 ? a.v() : b.v()), c.v());
 
 
 //WORKING				G.INT128.multiply().call(a, b, c);
@@ -247,8 +250,8 @@ public class TestSignedInt128Algebra {
 // will not test: scale delegates to multiply
 //				G.INT128.scale().call(a, b, c);
 
-//				G.INT128.subtract().call(a, b, c);
-//				testIt(g-h, c.v());
+				//WORKS G.INT128.subtract().call(a, b, c);
+				//WORKS testIt(g-h, c.v());
 //				testIt(a.v().subtract(b.v()), c.v());
 
 			}
@@ -264,11 +267,11 @@ public class TestSignedInt128Algebra {
 	}
 	
 	private void testIt(BigInteger raw, BigInteger int128) {
-		raw = raw.mod(DOUBLE_RANGE);
-		if (raw.compareTo(RANGE) >= 0)
-			raw = raw.subtract(DOUBLE_RANGE);
-		else if (raw.compareTo(LORANGE) < 0)
-			raw = raw.add(DOUBLE_RANGE);
+		raw = raw.mod(TWO16);
+		if (raw.compareTo(MAX) > 0)
+			raw = raw.subtract(TWO16);
+		else if (raw.compareTo(MIN) < 0)
+			raw = raw.add(TWO16);
 		assertEquals(raw, int128);
 	}
 }

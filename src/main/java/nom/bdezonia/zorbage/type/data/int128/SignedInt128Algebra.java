@@ -155,26 +155,23 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-//			byte cLo = (byte)(a.lo + b.lo);
-//			byte cHi = (byte)(a.hi + b.hi);
-//			int correction = 0;
-//			byte alh = (byte)(a.lo & 0x80);
-//			byte blh = (byte)(b.lo & 0x80);
-//			if (alh != 0 && blh != 0) {
-//				correction = 1;
-//			}
-//			else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
-//				byte all = (byte)(a.lo & 0x7f);
-//				byte bll = (byte)(b.lo & 0x7f);
-//				if ((all + bll) < 0)
-//					correction = 1;
-//			}
-//			cHi += correction;
-//			c.lo = cLo;
-//			c.hi = cHi;
-			// TODO - replace me with above commented out code and debug it when I can
-			// define a passing test with this stopgap
-			c.setV(a.v().add(b.v()));
+			byte cLo = (byte)(a.lo + b.lo);
+			byte cHi = (byte)(a.hi + b.hi);
+			int correction = 0;
+			byte alh = (byte)(a.lo & (byte)0x80);
+			byte blh = (byte)(b.lo & (byte)0x80);
+			if (alh != 0 && blh != 0) {
+				correction = 1;
+			}
+			else if ((alh != 0 && blh == 0) || (alh == 0 && blh != 0)) {
+				byte all = (byte)(a.lo & 0x7f);
+				byte bll = (byte)(b.lo & 0x7f);
+				if ((byte)(all + bll) < 0)
+					correction = 1;
+			}
+			cHi += correction;
+			c.lo = cLo;
+			c.hi = cHi;
 		}
 	};
 	
@@ -191,8 +188,8 @@ public class SignedInt128Algebra
 			byte cHi = (byte)(a.hi - b.hi);
 			byte cLo = (byte)(a.lo - b.lo);
 			final int correction;
-			byte alh = (byte)(a.lo & 0x80);
-			byte blh = (byte)(b.lo & 0x80);
+			byte alh = (byte)(a.lo & (byte)0x80);
+			byte blh = (byte)(b.lo & (byte)0x80);
 			if (alh == 0 && blh != 0)
 				correction = 1;
 			else if (alh != 0 && blh == 0) {
@@ -806,8 +803,9 @@ public class SignedInt128Algebra
 			val.hi |= (byte)1;
 	}
 
+	// TODO: why did UINT128 shift not require all the extra ops this one does?
+	
 	private void shiftRightOneBit(SignedInt128Member val) {
-		//System.out.println("  in val.hi="+(val.hi & 0xff)+" val.lo="+(val.lo & 0xff));
 		boolean transitionBit = (val.hi & 1) != 0;
 		boolean loHBit = (val.lo & (byte)0x80) != 0;
 		val.lo = (byte)((val.lo & 0x7f) >>> 1);
@@ -817,7 +815,6 @@ public class SignedInt128Algebra
 		if (hiHBit) val.hi |= 0x40;
 		if (transitionBit)
 			val.lo |= (byte)0x80;
-		//System.out.println("  out val.hi="+(val.hi & 0xff)+" val.lo="+(val.lo & 0xff));
 	}
 
 	@Override
