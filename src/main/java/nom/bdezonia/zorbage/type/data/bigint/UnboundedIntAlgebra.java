@@ -475,6 +475,7 @@ public class UnboundedIntAlgebra
 		return SHR;
 	}
 
+	@Override
 	public Procedure3<java.lang.Integer,UnboundedIntMember,UnboundedIntMember> bitShiftRightFillZero() {
 		// no real impl of zero fill. treat as shift right.
 		return SHR;

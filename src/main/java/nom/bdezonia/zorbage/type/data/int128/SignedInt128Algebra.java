@@ -712,11 +712,12 @@ public class SignedInt128Algebra
 			else {
 				SignedInt128Member tmp = new SignedInt128Member(a);
 				for (int i = 0; i < count; i++) {
+					if (tmp.hi == 0 && tmp.lo == 0)
+						break;
 					if (tmp.hi == (byte)0xff && tmp.lo == (byte)0xff)
 						break;
 					shiftRightOneBit(tmp);
 				}
-				System.out.println("result ("+tmp.hi+","+tmp.lo+")");
 				assign().call(tmp, b);
 			}
 		}
@@ -808,6 +809,7 @@ public class SignedInt128Algebra
 	// TODO: why did UINT128 shift not require all the extra ops this one does?
 	
 	private void shiftRightOneBit(SignedInt128Member val) {
+		boolean neg = (val.hi & (byte)(0x80)) != 0;
 		boolean transitionBit = (val.hi & 1) != 0;
 		boolean loHBit = (val.lo & (byte)0x80) != 0;
 		val.lo = (byte)((val.lo & 0x7f) >>> 1);
@@ -817,6 +819,8 @@ public class SignedInt128Algebra
 		if (hiHBit) val.hi |= 0x40;
 		if (transitionBit)
 			val.lo |= (byte)0x80;
+		if (neg)
+			val.hi |= (byte)0x80;
 	}
 
 	@Override
