@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.int128;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.DivMod;
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -448,37 +449,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member d, UnsignedInt128Member m) {
-			if (isEqual().call(b, ZERO)) {
-				throw new IllegalArgumentException("divide by zero error in UnsignedInt128Algebra");
-			}
-			int comparison = compare().call(a,b);
-			if (comparison == 0) { // a is equal b
-				assign().call(ONE, d);
-				assign().call(ZERO, m);
-				return;
-			}
-			if (comparison < 0) { // a is less than b
-				assign().call(ZERO, d);
-				assign().call(a, m);
-				return;
-			}
-			// if here a is greater than b
-			UnsignedInt128Member quotient = new UnsignedInt128Member();
-			UnsignedInt128Member dividend = new UnsignedInt128Member(a);
-			UnsignedInt128Member divisor = new UnsignedInt128Member(b);
-			int dividendLeadingNonzeroBit = leadingNonZeroBit(a);
-			int divisorLeadingNonzeroBit = leadingNonZeroBit(b);
-			bitShiftLeft().call((dividendLeadingNonzeroBit - divisorLeadingNonzeroBit), divisor, divisor);
-			for (int i = 0; i < dividendLeadingNonzeroBit-divisorLeadingNonzeroBit+1; i++) {
-				shiftLeftOneBit(quotient);
-				if (isGreaterEqual().call(dividend, divisor)) {
-					subtract().call(dividend, divisor, dividend);
-					quotient.lo |= 1;
-				}
-				shiftRightOneBit(divisor);
-			}
-			assign().call(quotient, d);
-			assign().call(dividend, m);
+			DivMod.compute(G.UINT128, a, b, d, m);
 		}
 	};
 	

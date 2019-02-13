@@ -80,7 +80,7 @@ public class TestSignedInt128Algebra {
 		SignedInt128Member c = G.INT128.construct();
 		SignedInt128Member d = G.INT128.construct();
 		
-		for (int g = -32768; g < 32768; g += 1) {
+		for (int g = 0; g < 32768; g += 1) {
 			if (g % 100 == 0) System.out.println(g);
 			
 			BigInteger bg = BigInteger.valueOf(g);
@@ -166,7 +166,7 @@ public class TestSignedInt128Algebra {
 			//WORKS else
 			//WORKS 	assertEquals(0, v);
 				
-			for (int h = -32768; h < 32768; h += 1) {
+			for (int h = 0; h < 32768; h += 1) {
 				
 				//System.out.println("  "+h);
 				

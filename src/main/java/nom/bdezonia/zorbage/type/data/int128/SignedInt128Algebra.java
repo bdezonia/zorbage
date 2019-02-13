@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.type.data.int128;
 
-import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.DivMod;
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -468,10 +468,9 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member d, SignedInt128Member m) {
-			// TODO - make a faster version that uses primitives
-			BigInteger[] dm = a.v().divideAndRemainder(b.v());
-			d.setV(dm[0]);
-			m.setV(dm[1]);
+			if (a.hi == 0x80 && a.lo == 0 && b.hi == (byte) 0xff && b.lo == (byte) 0xff)
+				throw new IllegalArgumentException("cannot divide -minint by -1");
+			DivMod.compute(G.INT128, a, b, d, m);
 		}
 	};
 	
