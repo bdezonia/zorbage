@@ -458,24 +458,6 @@ public class UnsignedInt128Algebra
 		return DIVMOD;
 	}
 
-	private int leadingNonZeroBit(UnsignedInt128Member num) {
-		long mask = 0x8000000000000000L;
-		for (int i = 0; i < 64; i++) {
-			if ((num.hi & mask) != 0) {
-				return 127 - i;
-			}
-			mask >>>= 1;
-		}
-		mask = 0x8000000000000000L;
-		for (int i = 0; i < 64; i++) {
-			if ((num.lo & mask) != 0) {
-				return 63 - i;
-			}
-			mask >>>= 1;
-		}
-		return -1;
-	}
-	
 	private final Procedure3<UnsignedInt128Member,UnsignedInt128Member,UnsignedInt128Member> GCD = 
 			new Procedure3<UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
 	{
