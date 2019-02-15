@@ -50,8 +50,8 @@ public class FindFixedPoint {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T alg, Procedure2<U,U> proc, Function2<Boolean,U,U> closeEnough, U firstGuess, long maxIters, U result)
 	{
-		if (maxIters < 0)
-			throw new IllegalArgumentException("maxIters must be >= 0");
+		if (maxIters < 1)
+			throw new IllegalArgumentException("maxIters must be > 0");
 		U guess = alg.construct(firstGuess);
 		U tmp = alg.construct();
 		return iterate(alg, proc, closeEnough, guess, tmp, maxIters, result);
