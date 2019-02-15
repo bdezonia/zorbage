@@ -49,11 +49,13 @@ public class TestFindFixedPoint {
 		Float64Member result = G.DBL.construct();
 		
 		if (FindFixedPoint.compute(G.DBL, cos, closeEnough, firstGuess, 50, result) >= 0) {
-			assertEquals(0.73908, result.v(), 0.0001);
+			assertEquals(0.73908, result.v(), 0.00001);
 		}
 		else
 			fail();
 	}
+	
+	// TODO: make more general? Procedure3<algebra<t,u>,u,u>?
 	
 	private Procedure2<Float64Member, Float64Member> cos = new Procedure2<Float64Member, Float64Member>() {
 		
@@ -67,7 +69,7 @@ public class TestFindFixedPoint {
 		
 		@Override
 		public Boolean call(Float64Member a, Float64Member b) {
-			return Math.abs(a.v()-b.v()) < 0.0001;
+			return Math.abs(a.v()-b.v()) < 0.00001;
 		}
 	};
 }
