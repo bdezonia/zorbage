@@ -468,7 +468,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member d, SignedInt128Member m) {
-			if (a.hi == 0x80 && a.lo == 0 && b.hi == (byte) 0xff && b.lo == (byte) 0xff)
+			if (a.hi == (byte) 0x80 && a.lo == 0 && b.hi == (byte) 0xff && b.lo == (byte) 0xff)
 				throw new IllegalArgumentException("cannot divide -minint by -1");
 			DivMod.compute(G.INT128, a, b, d, m);
 		}
