@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 
 /**
@@ -37,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
  * @author Barry DeZonia
  *
  */
-public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>, U>
+public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U> & Infinite<U>, U>
 	implements Function2<Boolean,U,U>
 {
 	// x1 = x0 - f(x0) / f'(x0)
@@ -46,7 +47,7 @@ public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>,
 	private final T alg;
 	private final Procedure2<U,U> f;
 	private final Derivative<T,U> fPrime;
-	private final long maxIters;
+	private long maxIters;
 
 	/**
 	 * 
@@ -63,9 +64,17 @@ public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>,
 		if (maxIters < 1)
 			throw new IllegalArgumentException("number of iterations must be > 0");
 	}
-	
-	// TODO: detect convergence status. return true if converged and false if not.
 
+	public long getMaxIters() {
+		return maxIters;
+	}
+	
+	public void setMaxIters(long maxIters) {
+		this.maxIters = maxIters;
+		if (maxIters < 1)
+			throw new IllegalArgumentException("number of iterations must be > 0");
+	}
+	
 	@Override
 	public Boolean call(U guess, U result) {
 		U tmp = alg.construct(guess);
@@ -74,7 +83,11 @@ public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>,
 		U correction = alg.construct();
 		for (long i = 0; i < maxIters; i++) {
 			f.call(tmp, n);
+			if (alg.isInfinite().call(n))
+				return false;
 			fPrime.call(tmp, d);
+			if (alg.isZero().call(d))
+				return false;
 			alg.divide().call(n, d, correction);
 			alg.subtract().call(tmp, correction, tmp);
 		}
