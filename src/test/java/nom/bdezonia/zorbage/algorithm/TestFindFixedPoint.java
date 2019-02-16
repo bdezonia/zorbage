@@ -33,6 +33,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -47,7 +48,8 @@ public class TestFindFixedPoint {
 		Float64Member firstGuess = G.DBL.construct("1");
 		Float64Member result = G.DBL.construct();
 		
-		if (FindFixedPoint.compute(G.DBL, G.DBL.cos(), closeEnough, firstGuess, 50, result) >= 0) {
+		FindFixedPoint<Float64Algebra, Float64Member> fp = new FindFixedPoint<>(G.DBL, G.DBL.cos(), closeEnough, 50);
+		if (fp.call(firstGuess, result) >= 0) {
 			assertEquals(0.73908, result.v(), 0.00001);
 		}
 		else

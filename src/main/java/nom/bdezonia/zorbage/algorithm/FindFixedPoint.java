@@ -35,30 +35,49 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class FindFixedPoint {
-
+public class FindFixedPoint<T extends Algebra<T,U>, U>
+	implements Function2<Long,U,U>
+{
+	private final Algebra<T,U> alg;
+	private final Procedure2<U,U> proc;
+	private final Function2<Boolean,U,U> closeEnough;
+	private long maxIters;
+	
 	/**
 	 * 
 	 * @param alg
 	 * @param proc
 	 * @param closeEnough
-	 * @param firstGuess
 	 * @param maxIters
-	 * @param result
-	 * @return
 	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T alg, Procedure2<U,U> proc, Function2<Boolean,U,U> closeEnough, U firstGuess, long maxIters, U result)
-	{
+	public FindFixedPoint(T alg, Procedure2<U,U> proc, Function2<Boolean,U,U> closeEnough, long maxIters) {
+		this.alg = alg;
+		this.proc = proc;
+		this.closeEnough = closeEnough;
+		this.maxIters = maxIters;
 		if (maxIters < 1)
 			throw new IllegalArgumentException("maxIters must be > 0");
-		U guess = alg.construct(firstGuess);
-		U tmp = alg.construct();
-		return iterate(alg, proc, closeEnough, guess, tmp, maxIters, result);
 	}
 	
-	private static <T extends Algebra<T,U>, U>
-		long iterate(T alg, Procedure2<U,U> proc, Function2<Boolean,U,U> closeEnough, U guess, U tmp, long iters, U result)
+	public long getMaxIters() {
+		return maxIters;
+	}
+	
+	public void setMaxIters(long maxIters) {
+		if (maxIters < 1)
+			throw new IllegalArgumentException("maxIters must be > 0");
+		this.maxIters = maxIters;
+	}
+
+	@Override
+	public Long call(U firstGuess, U result)
+	{
+		U guess = alg.construct(firstGuess);
+		U tmp = alg.construct();
+		return iterate(guess, tmp, maxIters, result);
+	}
+	
+	private long iterate(U guess, U tmp, long iters, U result)
 	{
 		if (iters == 0)
 			return -1;
@@ -69,7 +88,7 @@ public class FindFixedPoint {
 		}
 		else {
 			alg.assign().call(tmp, guess);
-			return iterate(alg, proc, closeEnough, guess, tmp, iters-1, result);
+			return iterate(guess, tmp, iters-1, result);
 		}			
 	}
 }
