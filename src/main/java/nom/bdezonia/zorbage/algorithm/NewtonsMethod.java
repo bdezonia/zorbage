@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
@@ -37,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
  *
  */
 public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>, U>
-	implements Procedure2<U,U>
+	implements Function2<Boolean,U,U>
 {
 	// x1 = x0 - f(x0) / f'(x0)
 	// iterate
@@ -59,10 +60,14 @@ public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>,
 		this.f = f;
 		this.fPrime = new Derivative<T,U>(alg, f, delta);
 		this.maxIters = maxIters;
+		if (maxIters < 1)
+			throw new IllegalArgumentException("number of iterations must be > 0");
 	}
 	
+	// TODO: detect convergence status. return true if converged and false if not.
+
 	@Override
-	public void call(U guess, U result) {
+	public Boolean call(U guess, U result) {
 		U tmp = alg.construct(guess);
 		U n = alg.construct();
 		U d = alg.construct();
@@ -74,5 +79,6 @@ public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U>,
 			alg.subtract().call(tmp, correction, tmp);
 		}
 		alg.assign().call(tmp, result);
+		return true;
 	}
 }
