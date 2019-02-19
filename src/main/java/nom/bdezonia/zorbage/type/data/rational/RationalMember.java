@@ -92,8 +92,7 @@ public class RationalMember
 	}
 
 	public void setV(BigDecimal v) {
-		this.n = v.multiply(SHIFTBD, MC).toBigInteger();
-		this.d = SHIFT;
+		setV(v.multiply(SHIFTBD, MC).toBigInteger(), SHIFT);
 	}
 
 	public void setV(BigInteger n) {

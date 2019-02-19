@@ -330,19 +330,9 @@ public class RationalAlgebra
 			// sig_a == sig_b
 			if (sig_a == 0)
 				return 0;
-			if (sig_a < 0) {
-				// comparing negative numbers				
-				if (a.n.multiply(b.d).compareTo(b.n.multiply(a.d)) > 0)
-					return -1;
-				return 1;
-			}
-			else {
-				// sig_a > 0
-				// comparing positive numbers
-				if (a.n.multiply(b.d).compareTo(b.n.multiply(a.d)) < 0)
-					return -1;
-				return 1;
-			}
+			if (a.n.multiply(b.d).compareTo(b.n.multiply(a.d)) < 0)
+				return -1;
+			return 1;
 		}
 	};
 
