@@ -81,6 +81,7 @@ import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Algebra;
+import nom.bdezonia.zorbage.type.data.rational.RationalAlgebra;
 
 /**
  * G is the container for the global set of defined Algebras.
@@ -93,6 +94,8 @@ public class G {
 	private G() {}
 	
 	public static final UnboundedIntAlgebra BIGINT = new UnboundedIntAlgebra();
+	
+	public static final RationalAlgebra RAT = new RationalAlgebra();
 	
 	public static final BooleanAlgebra BOOL = new BooleanAlgebra();
 	
