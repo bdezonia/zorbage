@@ -265,8 +265,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			// maybe there are less expensive approaches than this?
-			return a.v().compareTo(b.v()) < 0;
+			return compare().call(a,b) < 0;
 		}
 	};
 
@@ -280,8 +279,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			// maybe there are less expensive approaches than this?
-			return a.v().compareTo(b.v()) <= 0;
+			return compare().call(a,b) <= 0;
 		}
 	};
 
@@ -295,8 +293,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			// maybe there are less expensive approaches than this?
-			return a.v().compareTo(b.v()) > 0;
+			return compare().call(a,b) > 0;
 		}
 	};
 
@@ -310,8 +307,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			// maybe there are less expensive approaches than this?
-			return a.v().compareTo(b.v()) >= 0;
+			return compare().call(a,b) >= 0;
 		}
 	};
 
@@ -325,8 +321,28 @@ public class RationalAlgebra
 	{
 		@Override
 		public Integer call(RationalMember a, RationalMember b) {
-			// maybe there are less expensive approaches than this?
-			return a.v().compareTo(b.v());
+			int sig_a = signum().call(a);
+			int sig_b = signum().call(b);
+			if (sig_a < sig_b)
+				return -1;
+			if (sig_a > sig_b)
+				return 1;
+			// sig_a == sig_b
+			if (sig_a == 0)
+				return 0;
+			if (sig_a < 0) {
+				// comparing negative numbers				
+				if (a.n.multiply(b.d).compareTo(b.n.multiply(a.d)) > 0)
+					return -1;
+				return 1;
+			}
+			else {
+				// sig_a > 0
+				// comparing positive numbers
+				if (a.n.multiply(b.d).compareTo(b.n.multiply(a.d)) < 0)
+					return -1;
+				return 1;
+			}
 		}
 	};
 
