@@ -80,21 +80,7 @@ public class TestSignedInt128Algebra {
 		SignedInt128Member c = G.INT128.construct();
 		SignedInt128Member d = G.INT128.construct();
 		
-		int pp,qq;
-		pp = 32767; qq = 3113;
-		a.setV(BigInteger.valueOf(pp));
-		b.setV(BigInteger.valueOf(qq));
-		G.INT128.divMod().call(a, b, c, d);
-		testIt(pp/qq, c.v());
-		//testIt(pp%qq, d.v());
-		pp = -32767; qq = -3113;
-		a.setV(BigInteger.valueOf(pp));
-		b.setV(BigInteger.valueOf(qq));
-		G.INT128.divMod().call(a, b, c, d);
-		testIt(pp/qq, c.v());
-		//testIt(pp%qq, d.v());
-
-		for (int g = -32767; g < 32768; g += 1) {
+		for (int g = -32768; g < 32768; g += 1) {
 			if (g % 100 == 0)
 				System.out.println(g);
 			
@@ -186,7 +172,7 @@ public class TestSignedInt128Algebra {
 				
 			//	int h = nums[q];
 				
-			for (int h = -32767; h < 32768; h+=1) {
+			for (int h = -32768; h < 32768; h+=1) {
 				
 				//System.out.println("  "+h);
 				

@@ -63,7 +63,19 @@ public class DivMod {
 		alg.minBound().call(min);
 		
 		if (alg.isLess().call(min, zero)) {
-			// signed numbers: work in negative numbers to accommodate -minint asymmetry
+			// signed numbers
+
+			// capture one problematic edge case for signed math: dividing -minint by 1 will
+			//   force a sign change and an illegal negation. but we know the right result in
+			//   all divide by 1 cases. so just assign it and return.
+			if (alg.isEqual().call(one, b)) {
+				alg.assign().call(a, d);
+				alg.zero().call(m);
+				return;
+			}
+			
+			// work in negative numbers to accommodate -minint asymmetry
+			
 			boolean aPos;
 			boolean bPos;
 			U aNeg = alg.construct();
@@ -94,12 +106,6 @@ public class DivMod {
 			}
 			U c = alg.construct();
 			largestDoublingN(alg, aNeg, bNeg, c);
-			if (alg.isGreater().call(aNeg, zero))
-				throw new IllegalArgumentException("bad aNeg");
-			if (alg.isGreater().call(bNeg, zero))
-				throw new IllegalArgumentException("bad bNeg");
-			if (alg.isGreater().call(c, zero))
-				throw new IllegalArgumentException("bad c");
 			U n = alg.construct(one);
 			alg.subtract().call(aNeg, c, aNeg);
 			while (!alg.isEqual().call(c, bNeg)) {
@@ -109,12 +115,6 @@ public class DivMod {
 					alg.subtract().call(aNeg, c, aNeg);
 					alg.add().call(n, one, n);
 				}
-				if (alg.isGreater().call(aNeg, zero))
-					throw new IllegalArgumentException("bad aNeg");
-				if (alg.isGreater().call(bNeg, zero))
-					throw new IllegalArgumentException("bad bNeg");
-				if (alg.isGreater().call(c, zero))
-					throw new IllegalArgumentException("bad c");
 			}
 			if (aPos != bPos)
 				alg.negate().call(n, n);
@@ -124,7 +124,10 @@ public class DivMod {
 			alg.assign().call(aNeg, m);
 		}
 		else {
-			// unsigned numbers: work with positive number algorithm
+			// unsigned numbers
+			
+			// work with positive number algorithm
+			
 			U aPos = alg.construct(a);
 			U bPos = alg.construct(b);
 			if (alg.isLess().call(aPos, bPos)) 
