@@ -34,5 +34,6 @@ package nom.bdezonia.zorbage.type.algebra;
 public interface PrincipalIdealDomain<T extends PrincipalIdealDomain<T,U>,U>
 	extends UniqueFactorizationDomain<T,U>
 {
+	// TODO: should some of EuclideanRing percolate down to this level?
 
 }
