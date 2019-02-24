@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -147,8 +148,57 @@ public class TestUnsignedInt64Algebra {
 		UnsignedInt64Member c = G.UINT64.construct();
 		UnsignedInt64Member d = G.UINT64.construct();
 		
-		for (int g = 0; g < 1000; g++) {
-			G.UINT64.random().call(a);
+		ArrayList<UnsignedInt64Member> numsg = new ArrayList<>();
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0xffffffffffffffffL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffeL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffdL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.ZERO));
+		numsg.add(new UnsignedInt64Member(BigInteger.ONE));
+		numsg.add(new UnsignedInt64Member(BigInteger.TEN));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(10303)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(103031)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(1030399)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(1030344)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(10303948282L)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(1030294836L)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(22222)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(33333)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(77777)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(191919191)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(804872527)));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt64Member num = G.UINT64.construct();
+			G.UINT64.random().call(num);
+			numsg.add(num);
+		}
+		
+		ArrayList<UnsignedInt64Member> numsh = new ArrayList<>();
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0xffffffffffffffffL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffeL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffdL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.ZERO));
+		numsh.add(new UnsignedInt64Member(BigInteger.ONE));
+		numsh.add(new UnsignedInt64Member(BigInteger.TEN));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(10303)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(103031)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(1030399)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(1030344)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(10303948282L)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(1030294836L)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(22222)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(33333)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(77777)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(191919191)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(804872527)));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt64Member num = G.UINT64.construct();
+			G.UINT64.random().call(num);
+			numsh.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
+			
+			a.set(numsg.get(g));
 			
 			G.UINT64.abs().call(a, c);
 			assertEquals(a.v, c.v);
@@ -206,8 +256,9 @@ public class TestUnsignedInt64Algebra {
 			int v = G.UINT64.signum().call(a);
 			assertEquals(a.v().signum(), v);
 				
-			for (int h = 0; h < 1000; h++) {
-				G.UINT64.random().call(b);
+			for (int h = 0; h < numsh.size(); h++) {
+				
+				b.set(numsh.get(h));
 				
 				G.UINT64.add().call(a, b, c);
 				assertEquals(a.v().add(b.v()).and(two64minus1), c.v());
@@ -239,9 +290,9 @@ public class TestUnsignedInt64Algebra {
 					assertEquals(y.v, d.v);
 				}
 				
-				assertEquals(a.v()==b.v(), G.UINT64.isEqual().call(a, b));
+				assertEquals(a.v().equals(b.v()), G.UINT64.isEqual().call(a, b));
 				
-				assertEquals(a.v()!=b.v(), G.UINT64.isNotEqual().call(a, b));
+				assertEquals(!a.v().equals(b.v()), G.UINT64.isNotEqual().call(a, b));
 				
 				assertEquals(a.v().compareTo(b.v()) < 0, G.UINT64.isLess().call(a, b));
 				

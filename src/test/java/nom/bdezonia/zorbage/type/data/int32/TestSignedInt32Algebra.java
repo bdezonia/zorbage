@@ -30,6 +30,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -112,8 +114,55 @@ public class TestSignedInt32Algebra {
 		SignedInt32Member c = G.INT32.construct();
 		SignedInt32Member d = G.INT32.construct();
 		
-		for (int g = 0; g < 1000; g++) {
-			G.INT32.random().call(a);
+		ArrayList<SignedInt32Member> numsh = new ArrayList<>();
+		numsh.add(new SignedInt32Member(Integer.MIN_VALUE));
+		numsh.add(new SignedInt32Member(Integer.MIN_VALUE+1));
+		numsh.add(new SignedInt32Member(Integer.MIN_VALUE+2));
+		numsh.add(new SignedInt32Member(-2));
+		numsh.add(new SignedInt32Member(-1));
+		numsh.add(new SignedInt32Member(-0));
+		numsh.add(new SignedInt32Member(0));
+		numsh.add(new SignedInt32Member(1));
+		numsh.add(new SignedInt32Member(2));
+		numsh.add(new SignedInt32Member(-100));
+		numsh.add(new SignedInt32Member(100));
+		numsh.add(new SignedInt32Member(-22717));
+		numsh.add(new SignedInt32Member(22717));
+		numsh.add(new SignedInt32Member(Integer.MAX_VALUE-2));
+		numsh.add(new SignedInt32Member(Integer.MAX_VALUE-1));
+		numsh.add(new SignedInt32Member(Integer.MAX_VALUE));
+		for (int i = 0; i < 4000; i++) {
+			SignedInt32Member num = G.INT32.construct();
+			G.INT32.random().call(num);
+			numsh.add(num);
+		}
+		
+		ArrayList<SignedInt32Member> numsg = new ArrayList<>();
+		numsg.add(new SignedInt32Member(Integer.MIN_VALUE));
+		numsg.add(new SignedInt32Member(Integer.MIN_VALUE+1));
+		numsg.add(new SignedInt32Member(Integer.MIN_VALUE+2));
+		numsg.add(new SignedInt32Member(-2));
+		numsg.add(new SignedInt32Member(-1));
+		numsg.add(new SignedInt32Member(-0));
+		numsg.add(new SignedInt32Member(0));
+		numsg.add(new SignedInt32Member(1));
+		numsg.add(new SignedInt32Member(2));
+		numsg.add(new SignedInt32Member(-100));
+		numsg.add(new SignedInt32Member(100));
+		numsg.add(new SignedInt32Member(-22717));
+		numsg.add(new SignedInt32Member(22717));
+		numsg.add(new SignedInt32Member(Integer.MAX_VALUE-2));
+		numsg.add(new SignedInt32Member(Integer.MAX_VALUE-1));
+		numsg.add(new SignedInt32Member(Integer.MAX_VALUE));
+		for (int i = 0; i < 4000; i++) {
+			SignedInt32Member num = G.INT32.construct();
+			G.INT32.random().call(num);
+			numsg.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
+			
+			a.set(numsg.get(g));
 			
 			if (a.v() != Integer.MIN_VALUE) {
 				G.INT32.abs().call(a, c);
@@ -184,8 +233,9 @@ public class TestSignedInt32Algebra {
 			else
 				assertEquals(0, v);
 				
-			for (int h = 0; h < 1000; h++) {
-				G.INT32.random().call(b);
+			for (int h = 0; h < numsh.size(); h++) {
+
+				b.set(numsg.get(h));
 				
 				G.INT32.add().call(a, b, c);
 				assertEquals((int)(a.v()+b.v()), c.v());

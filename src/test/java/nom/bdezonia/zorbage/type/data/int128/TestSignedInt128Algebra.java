@@ -35,6 +35,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int128.SignedInt128Member;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
@@ -49,6 +51,96 @@ public class TestSignedInt128Algebra {
 	BigInteger MIN = TWO127.negate();
 	BigInteger MAX = TWO127.subtract(BigInteger.ONE);
 	
+	@Test
+	public void testStorageMethods() {
+
+		IndexedDataSource<?, SignedInt128Member> data =
+				ArrayStorage.allocate(6000, new SignedInt128Member());
+		SignedInt128Member in = new SignedInt128Member();
+		SignedInt128Member out = new SignedInt128Member();
+		in.setV(BigInteger.ZERO);
+		for (long i = 0; i < data.size(); i++) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(BigInteger.ZERO, out.v());
+		}
+		for (long i = 0; i < data.size(); i++) {
+			in.setV(BigInteger.valueOf(i));
+			data.set(i, in);
+			out.setV(in.v().subtract(BigInteger.ONE));
+			data.get(i, out);
+			assertEquals(in.v(), out.v());
+		}
+		in.setV(BigInteger.ZERO);
+		for (long i = 0; i < data.size(); i++) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(BigInteger.ZERO, out.v());
+		}
+		for (long i = data.size()-1; i >= 0; i--) {
+			in.setV(BigInteger.valueOf(i));
+			data.set(i, in);
+			out.setV(in.v().subtract(BigInteger.ONE));
+			data.get(i, out);
+			assertEquals(in.v(), out.v());
+		}
+		in.setV(BigInteger.ZERO);
+		for (long i = data.size()-1; i >= 0; i--) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(BigInteger.ZERO, out.v());
+		}
+		for (long i = data.size()-1; i >= 0; i--) {
+			in.setV(BigInteger.valueOf(i));
+			data.set(i, in);
+			out.setV(in.v().subtract(BigInteger.ONE));
+			data.get(i, out);
+			assertEquals(in.v(), out.v());
+		}
+		in.setV(BigInteger.ZERO);
+		for (long i = 0; i < data.size(); i++) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(BigInteger.ZERO, out.v());
+		}
+
+		
+		
+		for (long i = 0; i < data.size(); i++) {
+			in.setV(TWO128.subtract(BigInteger.valueOf(i)));
+			data.set(i, in);
+			out.setV(in.v().add(BigInteger.ONE));
+			data.get(i, out);
+			assertEquals(in.v(), out.v());
+		}
+		in.setV(BigInteger.ZERO);
+		for (long i = 0; i < data.size(); i++) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(BigInteger.ZERO, out.v());
+		}
+		for (long i = data.size()-1; i >= 0; i--) {
+			in.setV(TWO128.subtract(BigInteger.valueOf(i)));
+			data.set(i, in);
+			out.setV(in.v().add(BigInteger.ONE));
+			data.get(i, out);
+			assertEquals(in.v(), out.v());
+		}
+		in.setV(BigInteger.ZERO);
+		for (long i = data.size()-1; i >= 0; i--) {
+			data.set(i, in);
+			data.get(i, out);
+			assertEquals(BigInteger.ZERO, out.v());
+		}
+		for (long i = data.size()-1; i >= 0; i--) {
+			in.setV(TWO.subtract(BigInteger.valueOf(i)));
+			data.set(i, in);
+			out.setV(in.v().add(BigInteger.ONE));
+			data.get(i, out);
+			assertEquals(in.v(), out.v());
+		}
+	}
+
 	@Test
 	public void mathematicalMethods() {
 		
@@ -99,7 +191,7 @@ public class TestSignedInt128Algebra {
 		numsg.add(new SignedInt128Member(BigInteger.valueOf(111111111111111L)));
 		numsg.add(new SignedInt128Member(MAX.subtract(BigInteger.ONE)));
 		numsg.add(new SignedInt128Member(MAX));
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 4000; i++) {
 			SignedInt128Member num = G.INT128.construct();
 			G.INT128.random().call(num);
 			numsg.add(num);
@@ -123,7 +215,7 @@ public class TestSignedInt128Algebra {
 		numsh.add(new SignedInt128Member(BigInteger.valueOf(111111111111111L)));
 		numsh.add(new SignedInt128Member(MAX.subtract(BigInteger.ONE)));
 		numsh.add(new SignedInt128Member(MAX));
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 4000; i++) {
 			SignedInt128Member num = G.INT128.construct();
 			G.INT128.random().call(num);
 			numsh.add(num);

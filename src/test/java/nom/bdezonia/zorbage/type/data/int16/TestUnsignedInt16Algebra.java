@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int16;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -133,8 +135,57 @@ public class TestUnsignedInt16Algebra {
 		UnsignedInt16Member c = G.UINT16.construct();
 		UnsignedInt16Member d = G.UINT16.construct();
 		
-		for (int g = 0; g < 1000; g++) {
-			G.UINT16.random().call(a);
+		ArrayList<UnsignedInt16Member> numsh = new ArrayList<>();
+		numsh.add(new UnsignedInt16Member(0));
+		numsh.add(new UnsignedInt16Member(1));
+		numsh.add(new UnsignedInt16Member(0x32));
+		numsh.add(new UnsignedInt16Member(0x64));
+		numsh.add(new UnsignedInt16Member(0x128));
+		numsh.add(new UnsignedInt16Member(0x519));
+		numsh.add(new UnsignedInt16Member(0x1001));
+		numsh.add(new UnsignedInt16Member(0x2000));
+		numsh.add(new UnsignedInt16Member(0x3166));
+		numsh.add(new UnsignedInt16Member(0x4163));
+		numsh.add(new UnsignedInt16Member(0x5112));
+		numsh.add(new UnsignedInt16Member(0x6944));
+		numsh.add(new UnsignedInt16Member(0x7357));
+		numsh.add(new UnsignedInt16Member(0x8166));
+		numsh.add(new UnsignedInt16Member(0x9112));
+		numsh.add(new UnsignedInt16Member(0xaf01));
+		numsh.add(new UnsignedInt16Member(0xffff));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt16Member num = G.UINT16.construct();
+			G.UINT16.random().call(num);
+			numsh.add(num);
+		}
+		
+		ArrayList<UnsignedInt16Member> numsg = new ArrayList<>();
+		numsg.add(new UnsignedInt16Member(0));
+		numsg.add(new UnsignedInt16Member(1));
+		numsg.add(new UnsignedInt16Member(0x32));
+		numsg.add(new UnsignedInt16Member(0x64));
+		numsg.add(new UnsignedInt16Member(0x128));
+		numsg.add(new UnsignedInt16Member(0x519));
+		numsg.add(new UnsignedInt16Member(0x1001));
+		numsg.add(new UnsignedInt16Member(0x2000));
+		numsg.add(new UnsignedInt16Member(0x3166));
+		numsg.add(new UnsignedInt16Member(0x4163));
+		numsg.add(new UnsignedInt16Member(0x5112));
+		numsg.add(new UnsignedInt16Member(0x6944));
+		numsg.add(new UnsignedInt16Member(0x7357));
+		numsg.add(new UnsignedInt16Member(0x8166));
+		numsg.add(new UnsignedInt16Member(0x9112));
+		numsg.add(new UnsignedInt16Member(0xaf01));
+		numsg.add(new UnsignedInt16Member(0xffff));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt16Member num = G.UINT16.construct();
+			G.UINT16.random().call(num);
+			numsg.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
+			
+			a.set(numsg.get(g));
 			
 			G.UINT16.abs().call(a, c);
 			assertEquals(a.v, c.v);
@@ -199,8 +250,9 @@ public class TestUnsignedInt16Algebra {
 			else
 				assertEquals(0, v);
 				
-			for (int h = 0; h < 1000; h++) {
-				G.UINT16.random().call(b);
+			for (int h = 0; h < numsh.size(); h++) {
+				
+				b.set(numsh.get(h));
 				
 				G.UINT16.add().call(a, b, c);
 				assertEquals((a.v()+b.v()) & 0xffff, c.v());

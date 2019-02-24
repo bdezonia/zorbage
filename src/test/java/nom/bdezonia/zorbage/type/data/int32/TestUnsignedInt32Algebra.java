@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int32;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -135,8 +137,55 @@ public class TestUnsignedInt32Algebra {
 		UnsignedInt32Member c = G.UINT32.construct();
 		UnsignedInt32Member d = G.UINT32.construct();
 		
-		for (int g = 0; g < 1000; g++) {
-			G.UINT32.random().call(a);
+		ArrayList<UnsignedInt32Member> numsg = new ArrayList<>();
+		numsg.add(new UnsignedInt32Member(Integer.MIN_VALUE));
+		numsg.add(new UnsignedInt32Member(Integer.MIN_VALUE+1));
+		numsg.add(new UnsignedInt32Member(Integer.MIN_VALUE+2));
+		numsg.add(new UnsignedInt32Member(-2));
+		numsg.add(new UnsignedInt32Member(-1));
+		numsg.add(new UnsignedInt32Member(-0));
+		numsg.add(new UnsignedInt32Member(0));
+		numsg.add(new UnsignedInt32Member(1));
+		numsg.add(new UnsignedInt32Member(2));
+		numsg.add(new UnsignedInt32Member(-100));
+		numsg.add(new UnsignedInt32Member(100));
+		numsg.add(new UnsignedInt32Member(-22717));
+		numsg.add(new UnsignedInt32Member(22717));
+		numsg.add(new UnsignedInt32Member(Integer.MAX_VALUE-2));
+		numsg.add(new UnsignedInt32Member(Integer.MAX_VALUE-1));
+		numsg.add(new UnsignedInt32Member(Integer.MAX_VALUE));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt32Member num = G.UINT32.construct();
+			G.UINT32.random().call(num);
+			numsg.add(num);
+		}
+		
+		ArrayList<UnsignedInt32Member> numsh = new ArrayList<>();
+		numsh.add(new UnsignedInt32Member(Integer.MIN_VALUE));
+		numsh.add(new UnsignedInt32Member(Integer.MIN_VALUE+1));
+		numsh.add(new UnsignedInt32Member(Integer.MIN_VALUE+2));
+		numsh.add(new UnsignedInt32Member(-2));
+		numsh.add(new UnsignedInt32Member(-1));
+		numsh.add(new UnsignedInt32Member(-0));
+		numsh.add(new UnsignedInt32Member(0));
+		numsh.add(new UnsignedInt32Member(1));
+		numsh.add(new UnsignedInt32Member(2));
+		numsh.add(new UnsignedInt32Member(-100));
+		numsh.add(new UnsignedInt32Member(100));
+		numsh.add(new UnsignedInt32Member(-22717));
+		numsh.add(new UnsignedInt32Member(22717));
+		numsh.add(new UnsignedInt32Member(Integer.MAX_VALUE-2));
+		numsh.add(new UnsignedInt32Member(Integer.MAX_VALUE-1));
+		numsh.add(new UnsignedInt32Member(Integer.MAX_VALUE));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt32Member num = G.UINT32.construct();
+			G.UINT32.random().call(num);
+			numsh.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
+			
+			a.set(numsg.get(g));
 			
 			G.UINT32.abs().call(a, c);
 			assertEquals(a.v, c.v);
@@ -201,8 +250,9 @@ public class TestUnsignedInt32Algebra {
 			else
 				assertEquals(0, v);
 				
-			for (int h = 0; h < 1000; h++) {
-				G.UINT32.random().call(b);
+			for (int h = 0; h < numsh.size(); h++) {
+				
+				b.set(numsh.get(h));
 				
 				G.UINT32.add().call(a, b, c);
 				assertEquals((a.v()+b.v()) & 0xffffffffL, c.v());

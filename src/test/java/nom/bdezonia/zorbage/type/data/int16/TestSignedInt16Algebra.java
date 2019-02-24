@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int16;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -133,9 +135,64 @@ public class TestSignedInt16Algebra {
 		SignedInt16Member c = G.INT16.construct();
 		SignedInt16Member d = G.INT16.construct();
 		
-		for (int g = 0; g < 1000; g++) {
-			G.INT16.random().call(a);
+		ArrayList<SignedInt16Member> numsg = new ArrayList<>();
+		numsg.add(new SignedInt16Member(-32678));
+		numsg.add(new SignedInt16Member(-32767));
+		numsg.add(new SignedInt16Member(-32765));
+		numsg.add(new SignedInt16Member(-2));
+		numsg.add(new SignedInt16Member(-5));
+		numsg.add(new SignedInt16Member(-11));
+		numsg.add(new SignedInt16Member(-23));
+		numsg.add(new SignedInt16Member(-47));
+		numsg.add(new SignedInt16Member(-95));
+		numsg.add(new SignedInt16Member(-1));
+		numsg.add(new SignedInt16Member(0));
+		numsg.add(new SignedInt16Member(1));
+		numsg.add(new SignedInt16Member(2));
+		numsg.add(new SignedInt16Member(5));
+		numsg.add(new SignedInt16Member(11));
+		numsg.add(new SignedInt16Member(23));
+		numsg.add(new SignedInt16Member(47));
+		numsg.add(new SignedInt16Member(95));
+		numsg.add(new SignedInt16Member(32765));
+		numsg.add(new SignedInt16Member(32767));
+		for (int i = 0; i < 4000; i++) {
+			SignedInt16Member num = G.INT16.construct();
+			G.INT16.random().call(num);
+			numsg.add(num);
+		}
+		
+		ArrayList<SignedInt16Member> numsh = new ArrayList<>();
+		numsh.add(new SignedInt16Member(-32678));
+		numsh.add(new SignedInt16Member(-32767));
+		numsh.add(new SignedInt16Member(-32765));
+		numsh.add(new SignedInt16Member(-2));
+		numsh.add(new SignedInt16Member(-5));
+		numsh.add(new SignedInt16Member(-11));
+		numsh.add(new SignedInt16Member(-23));
+		numsh.add(new SignedInt16Member(-47));
+		numsh.add(new SignedInt16Member(-95));
+		numsh.add(new SignedInt16Member(-1));
+		numsh.add(new SignedInt16Member(0));
+		numsh.add(new SignedInt16Member(1));
+		numsh.add(new SignedInt16Member(2));
+		numsh.add(new SignedInt16Member(5));
+		numsh.add(new SignedInt16Member(11));
+		numsh.add(new SignedInt16Member(23));
+		numsh.add(new SignedInt16Member(47));
+		numsh.add(new SignedInt16Member(95));
+		numsh.add(new SignedInt16Member(32765));
+		numsh.add(new SignedInt16Member(32767));
+		for (int i = 0; i < 4000; i++) {
+			SignedInt16Member num = G.INT16.construct();
+			G.INT16.random().call(num);
+			numsh.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
 			
+			a.set(numsg.get(g));
+
 			if (a.v() != Short.MIN_VALUE) {
 				G.INT16.abs().call(a, c);
 				assertEquals(Math.abs(a.v()), c.v());
@@ -205,8 +262,9 @@ public class TestSignedInt16Algebra {
 			else
 				assertEquals(0, v);
 				
-			for (int h = 0; h < 1000; h++) {
-				G.INT16.random().call(b);
+			for (int h = 0; h < numsh.size(); h++) {
+				
+				b.set(numsh.get(h));
 				
 				G.INT16.add().call(a, b, c);
 				assertEquals((short)(a.v()+b.v()), c.v());

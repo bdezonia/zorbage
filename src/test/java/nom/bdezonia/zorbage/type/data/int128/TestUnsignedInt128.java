@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.int128;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -100,12 +101,68 @@ public class TestUnsignedInt128 {
 		UnsignedInt128Member a = G.UINT128.construct();
 		UnsignedInt128Member b = G.UINT128.construct();
 		UnsignedInt128Member c = G.UINT128.construct();
-		for (int i = 0; i < 0x1000; i++) {
-			G.UINT128.random().call(a);
+
+		G.UINT128.minBound().call(a);
+		G.UINT128.maxBound().call(b);
+		
+		ArrayList<UnsignedInt128Member> numsg = new ArrayList<>();
+		numsg.add(new UnsignedInt128Member(a));
+		numsg.add(new UnsignedInt128Member(a.v().add(BigInteger.ONE)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(-111111111111111L)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(-2048)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(-1024)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(-512)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(-256)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(-1)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(0)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(1)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(256)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(512)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(1024)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(2048)));
+		numsg.add(new UnsignedInt128Member(BigInteger.valueOf(111111111111111L)));
+		numsg.add(new UnsignedInt128Member(b.v().subtract(BigInteger.ONE)));
+		numsg.add(new UnsignedInt128Member(b));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt128Member num = G.UINT128.construct();
+			G.UINT128.random().call(num);
+			numsg.add(num);
+		}
+		
+		ArrayList<UnsignedInt128Member> numsh = new ArrayList<>();
+		numsh.add(new UnsignedInt128Member(a));
+		numsh.add(new UnsignedInt128Member(a.v().add(BigInteger.ONE)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(-111111111111111L)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(-2048)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(-1024)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(-512)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(-256)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(-1)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(0)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(1)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(256)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(512)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(1024)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(2048)));
+		numsh.add(new UnsignedInt128Member(BigInteger.valueOf(111111111111111L)));
+		numsh.add(new UnsignedInt128Member(b.v().subtract(BigInteger.ONE)));
+		numsh.add(new UnsignedInt128Member(b));
+		for (int i = 0; i < 4000; i++) {
+			UnsignedInt128Member num = G.UINT128.construct();
+			G.UINT128.random().call(num);
+			numsh.add(num);
+		}
+		
+		for (int i = 0; i < numsg.size(); i++) {
+			
+			a.set(numsg.get(i));
+
 			BigInteger bigA = a.v();
 			
-			for (int j = 0; j < 0x1000; j++) {
-				G.UINT128.random().call(b);
+			for (int j = 0; j < numsh.size(); j++) {
+
+				b.set(numsh.get(i));
+
 				BigInteger bigB = b.v();
 
 				c.set(b);

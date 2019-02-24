@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.int64;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -68,8 +70,57 @@ public class TestSignedInt64Algebra {
 		SignedInt64Member c = G.INT64.construct();
 		SignedInt64Member d = G.INT64.construct();
 		
-		for (int g = 0; g < 1000; g++) {
-			G.INT64.random().call(a);
+		ArrayList<SignedInt64Member> numsg = new ArrayList<>();
+		numsg.add(new SignedInt64Member(Long.MIN_VALUE));
+		numsg.add(new SignedInt64Member(Long.MIN_VALUE+1));
+		numsg.add(new SignedInt64Member(Long.MIN_VALUE+2));
+		numsg.add(new SignedInt64Member(Long.MAX_VALUE));
+		numsg.add(new SignedInt64Member(Long.MAX_VALUE-1));
+		numsg.add(new SignedInt64Member(Long.MAX_VALUE-2));
+		numsg.add(new SignedInt64Member(-1));
+		numsg.add(new SignedInt64Member(0));
+		numsg.add(new SignedInt64Member(1));
+		numsg.add(new SignedInt64Member(-2));
+		numsg.add(new SignedInt64Member(2));
+		numsg.add(new SignedInt64Member(3));
+		numsg.add(new SignedInt64Member(-3));
+		numsg.add(new SignedInt64Member(0xaf8304));
+		numsg.add(new SignedInt64Member(-0xaf8304));
+		numsg.add(new SignedInt64Member(-1111111));
+		numsg.add(new SignedInt64Member(1111111));
+		for (int i = 0; i < 4000; i++) {
+			SignedInt64Member num = G.INT64.construct();
+			G.INT64.random().call(num);
+			numsg.add(num);
+		}
+		
+		ArrayList<SignedInt64Member> numsh = new ArrayList<>();
+		numsh.add(new SignedInt64Member(Long.MIN_VALUE));
+		numsh.add(new SignedInt64Member(Long.MIN_VALUE+1));
+		numsh.add(new SignedInt64Member(Long.MIN_VALUE+2));
+		numsh.add(new SignedInt64Member(Long.MAX_VALUE-2));
+		numsh.add(new SignedInt64Member(Long.MAX_VALUE-1));
+		numsh.add(new SignedInt64Member(Long.MAX_VALUE-2));
+		numsh.add(new SignedInt64Member(-1));
+		numsh.add(new SignedInt64Member(0));
+		numsh.add(new SignedInt64Member(1));
+		numsh.add(new SignedInt64Member(-2));
+		numsh.add(new SignedInt64Member(2));
+		numsh.add(new SignedInt64Member(3));
+		numsh.add(new SignedInt64Member(-3));
+		numsh.add(new SignedInt64Member(0xaf8304));
+		numsh.add(new SignedInt64Member(-0xaf8304));
+		numsh.add(new SignedInt64Member(-1111111));
+		numsh.add(new SignedInt64Member(1111111));
+		for (int i = 0; i < 4000; i++) {
+			SignedInt64Member num = G.INT64.construct();
+			G.INT64.random().call(num);
+			numsh.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
+			
+			a.set(numsg.get(g));
 			
 			if (a.v() != Long.MIN_VALUE) {
 				G.INT64.abs().call(a, c);
@@ -140,7 +191,10 @@ public class TestSignedInt64Algebra {
 			else
 				assertEquals(0, v);
 				
-			for (int h = 0; h < 1000; h++) {
+			for (int h = 0; h < numsh.size(); h++) {
+				
+				b.set(numsh.get(h));
+				
 				G.INT64.random().call(b);
 				
 				G.INT64.add().call(a, b, c);
