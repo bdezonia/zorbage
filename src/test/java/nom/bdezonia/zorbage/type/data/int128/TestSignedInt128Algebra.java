@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.int128;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -43,10 +44,10 @@ import nom.bdezonia.zorbage.type.data.int128.SignedInt128Member;
 public class TestSignedInt128Algebra {
 
 	BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
-	BigInteger TWO15 = TWO.pow(15);
-	BigInteger TWO16 = TWO.pow(16);
-	BigInteger MIN = TWO15.negate();
-	BigInteger MAX = TWO15.subtract(BigInteger.ONE);
+	BigInteger TWO127 = TWO.pow(127);
+	BigInteger TWO128 = TWO.pow(128);
+	BigInteger MIN = TWO127.negate();
+	BigInteger MAX = TWO127.subtract(BigInteger.ONE);
 	
 	@Test
 	public void mathematicalMethods() {
@@ -80,19 +81,62 @@ public class TestSignedInt128Algebra {
 		SignedInt128Member c = G.INT128.construct();
 		SignedInt128Member d = G.INT128.construct();
 		
-		for (int g = -32768; g < 32768; g += 1) {
-			if (g % 70 == 0)
-				System.out.println(g);
+		ArrayList<SignedInt128Member> numsg = new ArrayList<>();
+		numsg.add(new SignedInt128Member(MIN));
+		numsg.add(new SignedInt128Member(MIN.add(BigInteger.ONE)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(-111111111111111L)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(-2048)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(-1024)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(-512)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(-256)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(-1)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(0)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(1)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(256)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(512)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(1024)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(2048)));
+		numsg.add(new SignedInt128Member(BigInteger.valueOf(111111111111111L)));
+		numsg.add(new SignedInt128Member(MAX.subtract(BigInteger.ONE)));
+		numsg.add(new SignedInt128Member(MAX));
+		for (int i = 0; i < 1000; i++) {
+			SignedInt128Member num = G.INT128.construct();
+			G.INT128.random().call(num);
+			numsg.add(num);
+		}
+		
+		ArrayList<SignedInt128Member> numsh = new ArrayList<>();
+		numsh.add(new SignedInt128Member(MIN));
+		numsh.add(new SignedInt128Member(MIN.add(BigInteger.ONE)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(-111111111111111L)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(-2048)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(-1024)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(-512)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(-256)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(-1)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(0)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(1)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(256)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(512)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(1024)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(2048)));
+		numsh.add(new SignedInt128Member(BigInteger.valueOf(111111111111111L)));
+		numsh.add(new SignedInt128Member(MAX.subtract(BigInteger.ONE)));
+		numsh.add(new SignedInt128Member(MAX));
+		for (int i = 0; i < 1000; i++) {
+			SignedInt128Member num = G.INT128.construct();
+			G.INT128.random().call(num);
+			numsh.add(num);
+		}
+		
+		for (int g = 0; g < numsg.size(); g++) {
+			//if (g % 70 == 0)
+			//	System.out.println(g);
 			
-			BigInteger bg = BigInteger.valueOf(g);
-
-			d.setV(bg);
-			assertEquals(bg, d.v());
+			a.set(numsg.get(g));
 			
-			a.set(d);
+			//System.out.println("a = "+a);
 			
-			//G.INT128.random().call(a);
-
 			if (a.v().compareTo(MIN) != 0) {
 				G.INT128.abs().call(a, c);
 				assertEquals(a.v().abs(), c.v());
@@ -104,7 +148,9 @@ public class TestSignedInt128Algebra {
 			G.INT128.bitNot().call(a, c);
 			assertEquals(a.v().not(), c.v());
 			
-			for (int p = 0; p < 16; p++) {
+			for (int p = 0; p < 128; p++) {
+				
+				//System.out.println("  p " + p);
 				
 				G.INT128.bitShiftLeft().call(p, a, c);
 				testIt(a.v().shiftLeft(p), c.v());
@@ -165,18 +211,11 @@ public class TestSignedInt128Algebra {
 			else
 				assertEquals(0, v);
 			
-			//int[] nums = new int[] {-32768, -32767, -4000, -1, 0, 1, 3113, 32767};
-			//for (int q = 0; q < nums.length; q += 1) {
+			for (int h = 0; h < numsh.size(); h++) {
 				
-			//	int h = nums[q];
+				b.set(numsh.get(h));
 				
-			for (int h = -32768; h < 32768; h+=1) {
-				
-				//System.out.println("  "+h);
-				
-				b.setV(BigInteger.valueOf(h));
-				
-//				// G.INT128.random().call(b);
+				//System.out.println(" b = " + b);
 				
 				G.INT128.add().call(a, b, c);
 				//testIt(g+h, c.v());
@@ -275,11 +314,11 @@ public class TestSignedInt128Algebra {
 	//}
 	
 	private void testIt(BigInteger raw, BigInteger int128) {
-		raw = raw.mod(TWO16);
+		raw = raw.mod(TWO128);
 		if (raw.compareTo(MAX) > 0)
-			raw = raw.subtract(TWO16);
+			raw = raw.subtract(TWO128);
 		else if (raw.compareTo(MIN) < 0)
-			raw = raw.add(TWO16);
+			raw = raw.add(TWO128);
 		assertEquals(raw, int128);
 	}
 }
