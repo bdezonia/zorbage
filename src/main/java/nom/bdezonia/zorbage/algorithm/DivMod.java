@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
@@ -105,7 +106,7 @@ public class DivMod {
 				return;
 			}
 			U c = alg.construct();
-			largestDoublingN(alg, aNeg, bNeg, c);
+			largestDoubling(alg, alg.isLessEqual(), aNeg, bNeg, c);
 			U n = alg.construct(one);
 			alg.subtract().call(aNeg, c, aNeg);
 			while (!alg.isEqual().call(c, bNeg)) {
@@ -137,7 +138,7 @@ public class DivMod {
 				return;
 			}
 			U c = alg.construct();
-			largestDoublingP(alg, aPos, bPos, c);
+			largestDoubling(alg, alg.isGreaterEqual(), aPos, bPos, c);
 			U n = alg.construct(one);
 			alg.subtract().call(aPos, c, aPos);
 			while (!alg.isEqual().call(c, bPos)) {
@@ -154,29 +155,16 @@ public class DivMod {
 	}
 
 	private static <T extends Algebra<T,U> & Ordered<U> & Addition<U>,U>
-		void largestDoublingP(T alg, U a, U b, U c)
+		void largestDoubling(T alg, Function2<Boolean,U,U> test, U a, U b, U c)
 	{
 		U tmpB = alg.construct(b);
 		U diff = alg.construct();
 		alg.subtract().call(a, tmpB, diff);
-		while (alg.isGreaterEqual().call(diff, tmpB)) {
+		while (test.call(diff, tmpB)) {
 			alg.add().call(tmpB, tmpB, tmpB);
 			alg.subtract().call(a, tmpB, diff);
 		}
 		alg.assign().call(tmpB, c);
 	}
 	
-	private static <T extends Algebra<T,U> & Ordered<U> & Addition<U>,U>
-		void largestDoublingN(T alg, U a, U b, U c)
-	{
-		U tmpB = alg.construct(b);
-		U diff = alg.construct();
-		alg.subtract().call(a, tmpB, diff);
-		while (alg.isLessEqual().call(diff, tmpB)) {
-			alg.add().call(tmpB, tmpB, tmpB);
-			alg.subtract().call(a, tmpB, diff);
-		}
-		alg.assign().call(tmpB, c);
-	}
-
 }
