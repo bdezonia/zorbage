@@ -45,13 +45,13 @@ import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 public class TestFloats {
 
 	private <T extends Algebra<T,U> & Addition<U>, U extends PrimitiveConversion>
-		void test(T Algebra)
+		void test(T algebra)
 	{
 		Float64Member dbl = G.DBL.construct();
-		U val1 = Algebra.construct("1.4");
-		U val2 = Algebra.construct("5.3");
-		U val3 = Algebra.construct();
-		Algebra.add().call(val1, val2, val3);
+		U val1 = algebra.construct("1.4");
+		U val2 = algebra.construct("5.3");
+		U val3 = algebra.construct();
+		algebra.add().call(val1, val2, val3);
 		PrimitiveConverter.convert(val3, dbl);
 		assertEquals(6.7, dbl.v(), 0.01);
 	}

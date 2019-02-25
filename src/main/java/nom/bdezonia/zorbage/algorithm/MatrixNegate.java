@@ -46,15 +46,15 @@ public class MatrixNegate {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b)
+		void compute(T algebra, MatrixMember<U> a, MatrixMember<U> b)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		if (a != b)
 			b.alloc(a.rows(), a.cols());
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, tmp);
-				Algebra.negate().call(tmp, tmp);
+				algebra.negate().call(tmp, tmp);
 				b.setV(row, col, tmp);
 			}
 		}

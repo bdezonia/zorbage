@@ -39,23 +39,23 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Product<T extends Algebra<T,U> & Multiplication<U> & Unity<U>,U>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Product(T Algebra) {
-		this.Algebra = Algebra;
+	public Product(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		U prod = Algebra.construct();
+		U prod = algebra.construct();
 		if (inputs.length != 0) {
-			Algebra.unity().call(prod);
+			algebra.unity().call(prod);
 		}
 		for (int i = 0; i < inputs.length; i++) {
-			Algebra.multiply().call(prod, inputs[i], prod);
+			algebra.multiply().call(prod, inputs[i], prod);
 		}
-		Algebra.assign().call(prod, result);
+		algebra.assign().call(prod, result);
 	}
 
 }

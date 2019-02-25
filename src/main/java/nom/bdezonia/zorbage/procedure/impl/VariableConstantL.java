@@ -37,13 +37,13 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class VariableConstantL<T extends Algebra<T,U>, U>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	private final int index;
 	
-	public VariableConstantL(T Algebra, int index) {
+	public VariableConstantL(T algebra, int index) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		this.Algebra = Algebra;
+		this.algebra = algebra;
 		this.index = index;
 	}
 
@@ -52,7 +52,7 @@ public class VariableConstantL<T extends Algebra<T,U>, U>
 	public void call(U result, U... inputs) {
 		if (index >= inputs.length)
 			throw new IllegalArgumentException("unspecified variable #"+index);
-		Algebra.assign().call(inputs[index], result);
+		algebra.assign().call(inputs[index], result);
 	}
 	
 }

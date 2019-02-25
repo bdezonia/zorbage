@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Infinite<U>,U>
 	implements Condition<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Infinite(T Algebra) {
-		this.Algebra = Algebra;
+	public Infinite(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public boolean isTrue(U value) {
-		return Algebra.isInfinite().call(value);
+		return algebra.isInfinite().call(value);
 	}
 }

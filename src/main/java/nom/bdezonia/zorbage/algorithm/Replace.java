@@ -48,9 +48,9 @@ public class Replace {
 	 * @param replacement
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, U target, U replacement, IndexedDataSource<?,U> storage)
+		void compute(T algebra, U target, U replacement, IndexedDataSource<?,U> storage)
 	{
-		compute(Algebra, target, replacement, 0, storage.size(), storage);
+		compute(algebra, target, replacement, 0, storage.size(), storage);
 	}
 	
 	/**
@@ -63,12 +63,12 @@ public class Replace {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, U target, U replacement, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T algebra, U target, U replacement, long start, long count, IndexedDataSource<?,U> storage)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
-			if (Algebra.isEqual().call(tmp, target))
+			if (algebra.isEqual().call(tmp, target))
 				storage.set(start+i, replacement);
 		}
 	}

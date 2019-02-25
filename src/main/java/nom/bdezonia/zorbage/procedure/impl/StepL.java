@@ -43,10 +43,10 @@ public class StepL<T extends Algebra<T,U> & Ordered<U> & Unity<U>,U>
 	private final Step<T,U> lowerProc;
 	private final U tmp;
 	
-	public StepL(T Algebra, Procedure<U> ancestor, U h0) {
+	public StepL(T algebra, Procedure<U> ancestor, U h0) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Step<T,U>(Algebra,h0);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Step<T,U>(algebra,h0);
+		this.tmp = algebra.construct();
 	}
 	
 	@Override

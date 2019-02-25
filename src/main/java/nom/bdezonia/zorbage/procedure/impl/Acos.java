@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class Acos<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Acos(T Algebra) {
-		this.Algebra = Algebra;
+	public Acos(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		Algebra.acos().call(a, b);
+		algebra.acos().call(a, b);
 	}
 
 }

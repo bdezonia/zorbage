@@ -41,18 +41,18 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class StaticAlgoRethink {
 
 	private static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T Algebra, U result)
+		void compute(T algebra, U result)
 	{
-		Algebra.add().call(result, result, result);
+		algebra.add().call(result, result, result);
 	}
 	
 	private class ClassAlgoRethink<T extends Algebra<T,U> & Addition<U>, U>
 		implements Procedure2<T,U>
 	{
 		@Override
-		public void call(T Algebra, U result) {
+		public void call(T algebra, U result) {
 			
-			Algebra.add().call(result, result, result);
+			algebra.add().call(result, result, result);
 		}
 		
 	}

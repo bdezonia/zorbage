@@ -46,9 +46,9 @@ public class Find {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, U value, IndexedDataSource<?,U> a)
+		long compute(T algebra, U value, IndexedDataSource<?,U> a)
 	{
-		return compute(Algebra, value, 0, a.size(), a);
+		return compute(algebra, value, 0, a.size(), a);
 	}
 	
 	/**
@@ -61,12 +61,12 @@ public class Find {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, U value, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T algebra, U value, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, tmp);
-			if (Algebra.isEqual().call(tmp, value))
+			if (algebra.isEqual().call(tmp, value))
 				return start + i;
 		}
 		return start + count;

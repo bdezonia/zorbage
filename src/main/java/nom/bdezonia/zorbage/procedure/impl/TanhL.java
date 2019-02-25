@@ -42,10 +42,10 @@ public class TanhL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	private final Tanh<T,U> lowerProc;
 	private final U tmp;
 	
-	public TanhL(T Algebra, Procedure<U> ancestor) {
+	public TanhL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Tanh<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Tanh<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

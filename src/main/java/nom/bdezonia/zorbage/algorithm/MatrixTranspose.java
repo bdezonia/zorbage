@@ -47,10 +47,10 @@ public class MatrixTranspose {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b)
+		void compute(T algebra, MatrixMember<U> a, MatrixMember<U> b)
 	{
-		U value1 = Algebra.construct();
-		U value2 = Algebra.construct();
+		U value1 = algebra.construct();
+		U value2 = algebra.construct();
 		if (a == b) {
 			if (a.rows() != a.cols())
 				throw new IllegalArgumentException("in place transpose only works for square matrices");

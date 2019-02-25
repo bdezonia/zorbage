@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 public class Sqrt<T extends Algebra<T,U> & Roots<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Sqrt(T Algebra) {
-		this.Algebra = Algebra;
+	public Sqrt(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		Algebra.sqrt().call(a, b);
+		algebra.sqrt().call(a, b);
 	}
 
 }

@@ -47,9 +47,9 @@ public class MatrixTrace {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T Algebra, MatrixMember<U> matrix, U result)
+		void compute(T algebra, MatrixMember<U> matrix, U result)
 	{
-		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(Algebra, matrix);
-		RModuleSum.compute(Algebra, diag, result);
+		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(algebra, matrix);
+		RModuleSum.compute(algebra, diag, result);
 	}
 }

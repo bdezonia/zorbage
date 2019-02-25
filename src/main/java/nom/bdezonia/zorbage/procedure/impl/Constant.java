@@ -37,17 +37,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Constant<T extends Algebra<T,U>,U>
 	implements Procedure1<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	private U c;
 	
-	public Constant(T Algebra, U c) {
-		this.Algebra = Algebra;
-		Algebra.assign().call(c, this.c);
+	public Constant(T algebra, U c) {
+		this.algebra = algebra;
+		algebra.assign().call(c, this.c);
 	}
 	
 	@Override
 	public void call(U a) {
-		Algebra.assign().call(c, a);
+		algebra.assign().call(c, a);
 	}
 
 }

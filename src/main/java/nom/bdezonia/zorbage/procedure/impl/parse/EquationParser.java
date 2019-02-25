@@ -42,11 +42,11 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
  */
 public class EquationParser<T extends Algebra<T,U> & Trigonometric<U>,U> {
 
-	public Tuple2<String,Procedure<U>> parse(T Algebra, String string) {
+	public Tuple2<String,Procedure<U>> parse(T algebra, String string) {
 		Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);
 		
 		tuple.setA("Unimplemented");
-		tuple.setB(new ZeroL<T,U>(Algebra));
+		tuple.setB(new ZeroL<T,U>(algebra));
 		
 		//tuple.setA(null);
 		//tuple.setB(new SinL<T,U>(Algebra, new ConstantL<T,U>(Algebra,Algebra.construct())));

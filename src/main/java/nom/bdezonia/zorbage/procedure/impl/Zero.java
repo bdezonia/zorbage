@@ -37,17 +37,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Zero<T extends Algebra<T,U>,U>
 	implements Procedure1<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	private final U zero;
 	
-	public Zero(T Algebra) {
-		this.Algebra = Algebra;
-		this.zero = Algebra.construct();
+	public Zero(T algebra) {
+		this.algebra = algebra;
+		this.zero = algebra.construct();
 	}
 	
 	@Override
 	public void call(U a) {
-		Algebra.assign().call(zero, a);
+		algebra.assign().call(zero, a);
 	}
 
 }

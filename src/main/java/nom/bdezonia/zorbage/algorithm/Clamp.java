@@ -45,16 +45,16 @@ public class Clamp {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T Algebra, U min, U max, U value, U result)
+		void compute(T algebra, U min, U max, U value, U result)
 	{
-		if (Algebra.isLess().call(max, min))
+		if (algebra.isLess().call(max, min))
 			throw new IllegalArgumentException("Clamp boundaries are malformed");
 
-		if (Algebra.isLess().call(value, min))
-			Algebra.assign().call(min, result);
-		else if (Algebra.isGreater().call(value, max))
-			Algebra.assign().call(max, result);
+		if (algebra.isLess().call(value, min))
+			algebra.assign().call(min, result);
+		else if (algebra.isGreater().call(value, max))
+			algebra.assign().call(max, result);
 		else
-			Algebra.assign().call(value, result);
+			algebra.assign().call(value, result);
 	}
 }

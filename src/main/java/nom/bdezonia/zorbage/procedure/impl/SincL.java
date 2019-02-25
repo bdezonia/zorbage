@@ -42,10 +42,10 @@ public class SincL<T extends Algebra<T,U> & Trigonometric<U>,U>
 	private final Sinc<T,U> lowerProc;
 	private final U tmp;
 	
-	public SincL(T Algebra, Procedure<U> ancestor) {
+	public SincL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Sinc<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Sinc<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

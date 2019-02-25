@@ -49,9 +49,9 @@ public class ReplaceIf {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, Condition<U> cond, U replacement, IndexedDataSource<?,U> storage)
+		void compute(T algebra, Condition<U> cond, U replacement, IndexedDataSource<?,U> storage)
 	{
-		compute(Algebra, cond, replacement, 0, storage.size(), storage);
+		compute(algebra, cond, replacement, 0, storage.size(), storage);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class ReplaceIf {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, Condition<U> cond, U replacement, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T algebra, Condition<U> cond, U replacement, long start, long count, IndexedDataSource<?,U> storage)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {
 			storage.get(start+i, tmp);
 			if (cond.isTrue(tmp))

@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Sinh<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Sinh(T Algebra) {
-		this.Algebra = Algebra;
+	public Sinh(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.sinh().call(a, b);
+		algebra.sinh().call(a, b);
 	}
 
 }

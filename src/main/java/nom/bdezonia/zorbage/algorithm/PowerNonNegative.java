@@ -47,36 +47,36 @@ public class PowerNonNegative {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void compute(T Algebra, int power, U a, U b)
+		void compute(T algebra, int power, U a, U b)
 	{
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
-			if (Algebra.isZero().call(a))
+			if (algebra.isZero().call(a))
 				throw new IllegalArgumentException("0^0 is not a number");
 		}
-		pow(Algebra, power, a, b);
+		pow(algebra, power, a, b);
 	}
 	
 	// this algorithm adapted from boost
 	
 	private static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void pow(T Algebra, int pow, U a, U b)
+		void pow(T algebra, int pow, U a, U b)
 	{
 		if (pow == 0) {
-			Algebra.unity().call(b);
+			algebra.unity().call(b);
 		}
 		else if (pow == 1) {
-			Algebra.assign().call(a, b);
+			algebra.assign().call(a, b);
 		}
 		else {
-			U tmp = Algebra.construct();
+			U tmp = algebra.construct();
 			int halfPow = pow >>> 1;
-			pow(Algebra, halfPow, a, tmp);
-			Algebra.multiply().call(tmp, tmp, tmp);
+			pow(algebra, halfPow, a, tmp);
+			algebra.multiply().call(tmp, tmp, tmp);
 			if (pow != (halfPow << 1))
-				Algebra.multiply().call(tmp, a, tmp);
-			Algebra.assign().call(tmp, b);
+				algebra.multiply().call(tmp, a, tmp);
+			algebra.assign().call(tmp, b);
 		}
 	}
 

@@ -48,14 +48,14 @@ public class PowerAny {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void compute(T Algebra, int power, U a, U b)
+		void compute(T algebra, int power, U a, U b)
 	{
 		if (power < 0) {
-			U invA = Algebra.construct();
-			Algebra.invert().call(a, invA);
-			PowerNonNegative.compute(Algebra, -power, invA, b);
+			U invA = algebra.construct();
+			algebra.invert().call(a, invA);
+			PowerNonNegative.compute(algebra, -power, invA, b);
 		}
 		else
-			PowerNonNegative.compute(Algebra, power, a, b);
+			PowerNonNegative.compute(algebra, power, a, b);
 	}
 }

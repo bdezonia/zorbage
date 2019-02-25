@@ -42,10 +42,10 @@ public class TanL<T extends Algebra<T,U> & Trigonometric<U>,U>
 	private final Tan<T,U> lowerProc;
 	private final U tmp;
 	
-	public TanL(T Algebra, Procedure<U> ancestor) {
+	public TanL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Tan<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Tan<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

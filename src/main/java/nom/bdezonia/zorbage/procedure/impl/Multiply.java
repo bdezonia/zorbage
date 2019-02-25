@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Multiplication;
 public class Multiply<T extends Algebra<T,U> & Multiplication<U>,U>
 	implements Procedure3<U,U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Multiply(T Algebra) {
-		this.Algebra = Algebra;
+	public Multiply(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b, U c) {
-		Algebra.multiply().call(a, b, c);
+		algebra.multiply().call(a, b, c);
 	}
 
 }

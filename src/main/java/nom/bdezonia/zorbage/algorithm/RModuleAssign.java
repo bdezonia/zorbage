@@ -47,9 +47,9 @@ public class RModuleAssign {
 	 * @param to
 	 */
 	public static <T extends Algebra<T,V>, U extends RModuleMember<V>, V>
-		void compute(T Algebra, U from, U to)
+		void compute(T algebra, U from, U to)
 	{
-		V tmp = Algebra.construct();
+		V tmp = algebra.construct();
 		final long length = from.length();
 		to.alloc(length);
 		for (long i = 0; i < length; i++) {

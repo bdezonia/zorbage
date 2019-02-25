@@ -50,9 +50,9 @@ public class Count {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T Algebra, V addAlgebra, U value, IndexedDataSource<?,U> a, W sum)
+		void compute(T algebra, V addAlgebra, U value, IndexedDataSource<?,U> a, W sum)
 	{
-		compute(Algebra, addAlgebra, value, 0, a.size(), a, sum);
+		compute(algebra, addAlgebra, value, 0, a.size(), a, sum);
 	}
 	
 	/**
@@ -66,10 +66,10 @@ public class Count {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T Algebra, V addAlgebra, U value, long start, long count, IndexedDataSource<?,U> a, W sum)
+		void compute(T algebra, V addAlgebra, U value, long start, long count, IndexedDataSource<?,U> a, W sum)
 	{
-		EqualConstant<T, U> cond = new EqualConstant<T, U>(Algebra, value);
-		CountIf.compute(Algebra, addAlgebra, cond, start, count, a, sum);
+		EqualConstant<T, U> cond = new EqualConstant<T, U>(algebra, value);
+		CountIf.compute(algebra, addAlgebra, cond, start, count, a, sum);
 	}
 
 }

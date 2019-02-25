@@ -42,10 +42,10 @@ public class CosL<T extends Algebra<T,U> & Trigonometric<U>,U>
 	private final Cos<T,U> lowerProc;
 	private final U tmp;
 	
-	public CosL(T Algebra, Procedure<U> ancestor) {
+	public CosL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Cos<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Cos<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

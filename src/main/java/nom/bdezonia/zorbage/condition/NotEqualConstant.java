@@ -36,17 +36,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class NotEqualConstant<T extends Algebra<T,U>,U>
 	implements Condition<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	private final U constant;
 	
-	public NotEqualConstant(T Algebra, U value) {
-		this.Algebra = Algebra;
-		this.constant = Algebra.construct();
-		Algebra.assign().call(value, constant);
+	public NotEqualConstant(T algebra, U value) {
+		this.algebra = algebra;
+		this.constant = algebra.construct();
+		algebra.assign().call(value, constant);
 	}
 
 	@Override
 	public boolean isTrue(U value) {
-		return Algebra.isNotEqual().call(value, constant);
+		return algebra.isNotEqual().call(value, constant);
 	}
 }

@@ -70,17 +70,17 @@ public class TestParallelTransform2 {
 	// supports sin()
 	
 	private <T extends Algebra<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
-		void test(T Algebra)
+		void test(T algebra)
 	{
 		// generic allocation
-		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, Algebra.construct());
+		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, algebra.construct());
 		
 		// set values of storage to random doubles between 0 and 1
 		// TODO: some day convert this to a parallel xform call that handles Procedure1's
-		Generate.compute(Algebra, Algebra.random(), a);
+		Generate.compute(algebra, algebra.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		ParallelTransform2.compute(Algebra, Algebra, Algebra.sin(), 0, 0, a.size(), 1, 1, a, a);
+		ParallelTransform2.compute(algebra, algebra, algebra.sin(), 0, 0, a.size(), 1, 1, a, a);
 		
 		assertTrue(true);
 	}

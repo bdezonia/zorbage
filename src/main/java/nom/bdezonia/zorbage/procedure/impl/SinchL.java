@@ -42,10 +42,10 @@ public class SinchL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	private final Sinch<T,U> lowerProc;
 	private final U tmp;
 	
-	public SinchL(T Algebra, Procedure<U> ancestor) {
+	public SinchL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Sinch<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Sinch<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

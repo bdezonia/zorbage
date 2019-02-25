@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Tanh<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Tanh(T Algebra) {
-		this.Algebra = Algebra;
+	public Tanh(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.tanh().call(a, b);
+		algebra.tanh().call(a, b);
 	}
 
 }

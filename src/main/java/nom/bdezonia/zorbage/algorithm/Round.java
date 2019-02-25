@@ -60,114 +60,114 @@ public class Round {
 	 * @param b
 	 */
 	public static <T extends RingWithUnity<T,U> & ModularDivision<U> & Ordered<U> & AbsoluteValue<U>,U>
-		void compute(T Algebra, Mode mode, U delta, U a, U b)
+		void compute(T algebra, Mode mode, U delta, U a, U b)
 	{
 		// For symmetry provide a NONE option. This simplifies algorithms
 		// from having to check "if mode == NONE should I skip Round?".
 		if (mode == Mode.NONE) {
-			Algebra.assign().call(a,b);
+			algebra.assign().call(a,b);
 			return;
 		}
-		U zero = Algebra.construct();
-		if (Algebra.isLessEqual().call(delta,zero))
+		U zero = algebra.construct();
+		if (algebra.isLessEqual().call(delta,zero))
 			throw new IllegalArgumentException("rounding error: delta must be > 0");
-		U d = Algebra.construct();
-		U m = Algebra.construct();
-		U absM = Algebra.construct();
-		U bTmp = Algebra.construct();
-		U d1 = Algebra.construct();
-		U m1 = Algebra.construct();
-		U two = Algebra.construct();
-		Algebra.unity().call(two);
-		Algebra.add().call(two, two, two);
-		Algebra.divMod().call(a, delta, d, m);
-		Algebra.multiply().call(delta, d, bTmp);
-		if (Algebra.isNotEqual().call(m, zero)) {
+		U d = algebra.construct();
+		U m = algebra.construct();
+		U absM = algebra.construct();
+		U bTmp = algebra.construct();
+		U d1 = algebra.construct();
+		U m1 = algebra.construct();
+		U two = algebra.construct();
+		algebra.unity().call(two);
+		algebra.add().call(two, two, two);
+		algebra.divMod().call(a, delta, d, m);
+		algebra.multiply().call(delta, d, bTmp);
+		if (algebra.isNotEqual().call(m, zero)) {
 			switch (mode) {
 				case NEGATIVE:
-					if (Algebra.isEqual().call(bTmp, zero)) {
-						if (Algebra.isLess().call(m, zero))
-							Algebra.subtract().call(bTmp, delta, bTmp);
+					if (algebra.isEqual().call(bTmp, zero)) {
+						if (algebra.isLess().call(m, zero))
+							algebra.subtract().call(bTmp, delta, bTmp);
 					}
-					else if (Algebra.isLess().call(bTmp, zero))
-						Algebra.subtract().call(bTmp, delta, bTmp);
+					else if (algebra.isLess().call(bTmp, zero))
+						algebra.subtract().call(bTmp, delta, bTmp);
 					break;
 				case POSITIVE:
-					if (Algebra.isEqual().call(bTmp, zero)) {
-						if (Algebra.isGreater().call(m, zero))
-							Algebra.add().call(bTmp, delta, bTmp);
+					if (algebra.isEqual().call(bTmp, zero)) {
+						if (algebra.isGreater().call(m, zero))
+							algebra.add().call(bTmp, delta, bTmp);
 					}
-					else if (Algebra.isGreater().call(bTmp, zero))
-						Algebra.add().call(bTmp, delta, bTmp);
+					else if (algebra.isGreater().call(bTmp, zero))
+						algebra.add().call(bTmp, delta, bTmp);
 					break;
 				case TOWARDS_ORIGIN:
 					// nothing to do: modular math has already chopped b
 					break;
 				case AWAY_FROM_ORIGIN:
-					if (Algebra.isEqual().call(bTmp, zero)) {
-						if (Algebra.isGreater().call(m, zero))
-							Algebra.add().call(bTmp, delta, bTmp);
+					if (algebra.isEqual().call(bTmp, zero)) {
+						if (algebra.isGreater().call(m, zero))
+							algebra.add().call(bTmp, delta, bTmp);
 						else
-							Algebra.subtract().call(bTmp, delta, bTmp);
+							algebra.subtract().call(bTmp, delta, bTmp);
 					}
-					else if (Algebra.isGreater().call(bTmp, zero))
-						Algebra.add().call(bTmp, delta, bTmp);
+					else if (algebra.isGreater().call(bTmp, zero))
+						algebra.add().call(bTmp, delta, bTmp);
 					else
-						Algebra.subtract().call(bTmp, delta, bTmp);
+						algebra.subtract().call(bTmp, delta, bTmp);
 					break;
 				case HALF_UP:
 					// towards the origin unless it's >= half and then away
-					Algebra.abs().call(m, absM);
-					Algebra.subtract().call(delta, absM, d1);
-					if (Algebra.isGreater().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isGreater().call(m, zero))) {
-						if (Algebra.isGreaterEqual().call(absM, d1))
-							Algebra.add().call(bTmp, delta, bTmp);
+					algebra.abs().call(m, absM);
+					algebra.subtract().call(delta, absM, d1);
+					if (algebra.isGreater().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isGreater().call(m, zero))) {
+						if (algebra.isGreaterEqual().call(absM, d1))
+							algebra.add().call(bTmp, delta, bTmp);
 					}
-					else if (Algebra.isLess().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isLess().call(m, zero))) {
-						if (Algebra.isGreaterEqual().call(absM, d1))
-							Algebra.subtract().call(bTmp, delta, bTmp);
+					else if (algebra.isLess().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isLess().call(m, zero))) {
+						if (algebra.isGreaterEqual().call(absM, d1))
+							algebra.subtract().call(bTmp, delta, bTmp);
 					}
 					// else bTmp == 0 and no rounding needed
 					break;
 				case HALF_DOWN:
 					// towards the origin unless it's > half and then away
-					Algebra.abs().call(m, absM);
-					Algebra.subtract().call(delta, absM, d1);
-					if (Algebra.isGreater().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isGreater().call(m, zero))) {
-						if (Algebra.isGreater().call(absM, d1))
-							Algebra.add().call(bTmp, delta, bTmp);
+					algebra.abs().call(m, absM);
+					algebra.subtract().call(delta, absM, d1);
+					if (algebra.isGreater().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isGreater().call(m, zero))) {
+						if (algebra.isGreater().call(absM, d1))
+							algebra.add().call(bTmp, delta, bTmp);
 					}
-					else if (Algebra.isLess().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isLess().call(m, zero))) {
-						if (Algebra.isGreater().call(absM, d1))
-							Algebra.subtract().call(bTmp, delta, bTmp);
+					else if (algebra.isLess().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isLess().call(m, zero))) {
+						if (algebra.isGreater().call(absM, d1))
+							algebra.subtract().call(bTmp, delta, bTmp);
 					}
 					// else bTmp == 0 and no rounding needed
 					break;
 				case HALF_EVEN:
 					// towards nearest boundary but prefer even result
-					Algebra.abs().call(m, absM);
-					Algebra.subtract().call(delta, absM, d1);
-					if (Algebra.isGreater().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isGreater().call(m, zero))) {
-						if (Algebra.isGreater().call(absM, d1))
-							Algebra.add().call(bTmp, delta, bTmp);
-						else if (Algebra.isEqual().call(absM, d1)) {
+					algebra.abs().call(m, absM);
+					algebra.subtract().call(delta, absM, d1);
+					if (algebra.isGreater().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isGreater().call(m, zero))) {
+						if (algebra.isGreater().call(absM, d1))
+							algebra.add().call(bTmp, delta, bTmp);
+						else if (algebra.isEqual().call(absM, d1)) {
 							// half case
-							Algebra.mod().call(d, two, m1);
+							algebra.mod().call(d, two, m1);
 							// if is odd number of deltas from origin
-							if (Algebra.isNotEqual().call(m1, zero)) {
-								Algebra.add().call(bTmp, delta, bTmp);
+							if (algebra.isNotEqual().call(m1, zero)) {
+								algebra.add().call(bTmp, delta, bTmp);
 							}
 						}
 					}
-					else if (Algebra.isLess().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isLess().call(m, zero))) {
-						if (Algebra.isGreater().call(absM, d1))
-							Algebra.subtract().call(bTmp, delta, bTmp);
-						else if (Algebra.isEqual().call(absM, d1)) {
+					else if (algebra.isLess().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isLess().call(m, zero))) {
+						if (algebra.isGreater().call(absM, d1))
+							algebra.subtract().call(bTmp, delta, bTmp);
+						else if (algebra.isEqual().call(absM, d1)) {
 							// half case
-							Algebra.mod().call(d, two, m1);
+							algebra.mod().call(d, two, m1);
 							// if is odd number of deltas from origin
-							if (Algebra.isNotEqual().call(m1, zero)) {
-								Algebra.subtract().call(bTmp, delta, bTmp);
+							if (algebra.isNotEqual().call(m1, zero)) {
+								algebra.subtract().call(bTmp, delta, bTmp);
 							}
 						}
 					}
@@ -175,29 +175,29 @@ public class Round {
 					break;
 				case HALF_ODD:
 					// towards nearest boundary but prefer odd result
-					Algebra.abs().call(m, absM);
-					Algebra.subtract().call(delta, absM, d1);
-					if (Algebra.isGreater().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isGreater().call(m, zero))) {
-						if (Algebra.isGreater().call(absM, d1))
-							Algebra.add().call(bTmp, delta, bTmp);
-						else if (Algebra.isEqual().call(absM, d1)) {
+					algebra.abs().call(m, absM);
+					algebra.subtract().call(delta, absM, d1);
+					if (algebra.isGreater().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isGreater().call(m, zero))) {
+						if (algebra.isGreater().call(absM, d1))
+							algebra.add().call(bTmp, delta, bTmp);
+						else if (algebra.isEqual().call(absM, d1)) {
 							// half case
-							Algebra.mod().call(d, two, m1);
+							algebra.mod().call(d, two, m1);
 							// if is even number of deltas from origin
-							if (Algebra.isEqual().call(m1, zero)) {
-								Algebra.add().call(bTmp, delta, bTmp);
+							if (algebra.isEqual().call(m1, zero)) {
+								algebra.add().call(bTmp, delta, bTmp);
 							}
 						}
 					}
-					else if (Algebra.isLess().call(bTmp, zero) || (Algebra.isEqual().call(bTmp, zero) && Algebra.isLess().call(m, zero))) {
-						if (Algebra.isGreater().call(absM, d1))
-							Algebra.subtract().call(bTmp, delta, bTmp);
-						else if (Algebra.isEqual().call(absM, d1)) {
+					else if (algebra.isLess().call(bTmp, zero) || (algebra.isEqual().call(bTmp, zero) && algebra.isLess().call(m, zero))) {
+						if (algebra.isGreater().call(absM, d1))
+							algebra.subtract().call(bTmp, delta, bTmp);
+						else if (algebra.isEqual().call(absM, d1)) {
 							// half case
-							Algebra.mod().call(d, two, m1);
+							algebra.mod().call(d, two, m1);
 							// if is even number of deltas from origin
-							if (Algebra.isEqual().call(m1, zero)) {
-								Algebra.subtract().call(bTmp, delta, bTmp);
+							if (algebra.isEqual().call(m1, zero)) {
+								algebra.subtract().call(bTmp, delta, bTmp);
 							}
 						}
 					}
@@ -211,7 +211,7 @@ public class Round {
 								"Unknown rounding mode: "+mode);
 			}
 		}
-		Algebra.assign().call(bTmp, b);
+		algebra.assign().call(bTmp, b);
 	}
 
 }

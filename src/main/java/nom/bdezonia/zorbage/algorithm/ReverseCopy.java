@@ -42,9 +42,9 @@ public class ReverseCopy {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(Algebra, 0, 0, a.size(), a, b);
+		compute(algebra, 0, 0, a.size(), a, b);
 	}	
 
 	/**
@@ -57,9 +57,9 @@ public class ReverseCopy {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp);
 			b.set(bStart+count-1-i, tmp);

@@ -47,11 +47,11 @@ public class MatrixDirectProduct {
 	 * @param out
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U,W extends MatrixMember<U>>
-		void compute(T Algebra, W in1, W in2, W out)
+		void compute(T algebra, W in1, W in2, W out)
 	{
-		U tmp1 = Algebra.construct();
-		U tmp2 = Algebra.construct();
-		U tmp3 = Algebra.construct();
+		U tmp1 = algebra.construct();
+		U tmp2 = algebra.construct();
+		U tmp3 = algebra.construct();
 		if (out == in1 || out == in2)
 			throw new IllegalArgumentException("output matrix must not be one of input matrices");
 		out.alloc(in1.rows() * in2.rows(), in1.cols() * in2.cols());
@@ -61,7 +61,7 @@ public class MatrixDirectProduct {
 				for (long r2 = 0; r2 < in2.rows(); r2++) {
 					for (long c2 = 0; c2 < in2.cols(); c2++) {
 						in2.v(r2, c2, tmp2);
-						Algebra.multiply().call(tmp1, tmp2, tmp3);
+						algebra.multiply().call(tmp1, tmp2, tmp3);
 						out.setV(r1*in2.rows()+r2, c1*in2.cols()+c2, tmp3);
 					}
 				}

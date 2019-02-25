@@ -38,10 +38,10 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class Min<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Min(T Algebra) {
-		this.Algebra = Algebra;
+	public Min(T algebra) {
+		this.algebra = algebra;
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -49,13 +49,13 @@ public class Min<T extends Algebra<T,U> & Ordered<U>, U>
 	public void call(U result, U... inputs) {
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("min undefined for empty list");
-		U min = Algebra.construct();
-		Algebra.assign().call(inputs[0],min);
+		U min = algebra.construct();
+		algebra.assign().call(inputs[0],min);
 		for (int i = 1; i < inputs.length; i++) {
-			if (Algebra.isLess().call(inputs[i], min)) {
-				Algebra.assign().call(inputs[i], min);
+			if (algebra.isLess().call(inputs[i], min)) {
+				algebra.assign().call(inputs[i], min);
 			}
 		}
-		Algebra.assign().call(min, result);
+		algebra.assign().call(min, result);
 	}
 }

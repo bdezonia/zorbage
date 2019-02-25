@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class Tan<T extends Algebra<T,U> & Trigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Tan(T Algebra) {
-		this.Algebra = Algebra;
+	public Tan(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.tan().call(a, b);
+		algebra.tan().call(a, b);
 	}
 
 }

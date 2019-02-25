@@ -42,10 +42,10 @@ public class CoshL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	private final Cosh<T,U> lowerProc;
 	private final U tmp;
 	
-	public CoshL(T Algebra, Procedure<U> ancestor) {
+	public CoshL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Cosh<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Cosh<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

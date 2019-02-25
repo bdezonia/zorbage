@@ -44,9 +44,9 @@ public class MatrixZero {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, MatrixMember<U> a)
+		void compute(T algebra, MatrixMember<U> a)
 	{
-		U zero = Algebra.construct();
+		U zero = algebra.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.setV(row, col, zero);

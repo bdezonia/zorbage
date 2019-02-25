@@ -42,10 +42,10 @@ public class AtanhL<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 	private final Atanh<T,U> lowerProc;
 	private final U tmp;
 	
-	public AtanhL(T Algebra, Procedure<U> ancestor) {
+	public AtanhL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Atanh<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Atanh<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

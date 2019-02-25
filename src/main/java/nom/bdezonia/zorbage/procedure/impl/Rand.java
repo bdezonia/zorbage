@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 public class Rand<T extends Algebra<T,U> & Random<U>,U>
 	implements Procedure1<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Rand(T Algebra) {
-		this.Algebra = Algebra;
+	public Rand(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a) {
-		Algebra.random().call(a);
+		algebra.random().call(a);
 	}
 
 }

@@ -48,22 +48,22 @@ public class Factorial {
 	 * @param result
 	 */
 	public static <T extends RingWithUnity<T,U> & Ordered<U>, U>
-		void compute(T Algebra, U a, U result)
+		void compute(T algebra, U a, U result)
 	{
-		U tmp = Algebra.construct();
-		if (Algebra.isLess().call(a, tmp))
+		U tmp = algebra.construct();
+		if (algebra.isLess().call(a, tmp))
 			throw new IllegalArgumentException("Cannot take factorial of negative input");
-		Algebra.unity().call(tmp);
-		if (Algebra.isLessEqual().call(a, tmp))
-			Algebra.assign().call(tmp, result);
+		algebra.unity().call(tmp);
+		if (algebra.isLessEqual().call(a, tmp))
+			algebra.assign().call(tmp, result);
 		else {
-			U product = Algebra.construct(tmp);
-			U multiplier = Algebra.construct(a);
-			while (Algebra.isGreater().call(multiplier, tmp)) {
-				Algebra.multiply().call(product, multiplier, product);
-				Algebra.subtract().call(multiplier, tmp, multiplier);
+			U product = algebra.construct(tmp);
+			U multiplier = algebra.construct(a);
+			while (algebra.isGreater().call(multiplier, tmp)) {
+				algebra.multiply().call(product, multiplier, product);
+				algebra.subtract().call(multiplier, tmp, multiplier);
 			}
-			Algebra.assign().call(product, result);
+			algebra.assign().call(product, result);
 		}
 	}
 }

@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Log<T extends Algebra<T,U> & Exponential<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Log(T Algebra) {
-		this.Algebra = Algebra;
+	public Log(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.log().call(a, b);
+		algebra.log().call(a, b);
 	}
 
 }

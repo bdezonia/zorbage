@@ -39,8 +39,8 @@ public class ZeroL<T extends Algebra<T,U>,U>
 {
 	private final Zero<T,U> lowerProc;
 	
-	public ZeroL(T Algebra) {
-		this.lowerProc = new Zero<T,U>(Algebra);
+	public ZeroL(T algebra) {
+		this.lowerProc = new Zero<T,U>(algebra);
 	}
 	
 	@Override

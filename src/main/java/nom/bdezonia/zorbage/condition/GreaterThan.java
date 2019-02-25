@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class GreaterThan<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Condition<Tuple2<U,U>>
 {
-	private T Algebra;
+	private T algebra;
 	
-	public GreaterThan(T Algebra) {
-		this.Algebra = Algebra;
+	public GreaterThan(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return Algebra.isGreater().call(value.a(), value.b());
+		return algebra.isGreater().call(value.a(), value.b());
 	}
 }

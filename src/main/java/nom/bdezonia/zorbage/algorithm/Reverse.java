@@ -42,9 +42,9 @@ public class Reverse {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, IndexedDataSource<?,U> a)
+		void compute(T algebra, IndexedDataSource<?,U> a)
 	{
-		compute(Algebra, 0, a.size(), a);
+		compute(algebra, 0, a.size(), a);
 	}	
 
 	/**
@@ -55,10 +55,10 @@ public class Reverse {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, long start, long count, IndexedDataSource<?,U> a)
+		void compute(T algebra, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U tmp1 = Algebra.construct();
-		U tmp2 = Algebra.construct();
+		U tmp1 = algebra.construct();
+		U tmp2 = algebra.construct();
 		for (long i = 0; i < count/2; i++) {
 			a.get(start+i, tmp1);
 			a.get(start+count-1-i, tmp2);

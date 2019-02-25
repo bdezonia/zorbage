@@ -46,18 +46,18 @@ public class MatrixEqual {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>,U>
-		boolean compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b)
+		boolean compute(T algebra, MatrixMember<U> a, MatrixMember<U> b)
 	{
 		if (a == b) return true;
 		if (a.rows() != b.rows()) return false;
 		if (a.cols() != b.cols()) return false;
-		U value1 = Algebra.construct();
-		U value2 = Algebra.construct();
+		U value1 = algebra.construct();
+		U value2 = algebra.construct();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value1);
 				b.v(r, c, value2);
-				if (Algebra.isNotEqual().call(value1, value2))
+				if (algebra.isNotEqual().call(value1, value2))
 					return false;
 			}
 		}

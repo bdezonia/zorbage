@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Sinchpi<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Sinchpi(T Algebra) {
-		this.Algebra = Algebra;
+	public Sinchpi(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.sinchpi().call(a, b);
+		algebra.sinchpi().call(a, b);
 	}
 
 }

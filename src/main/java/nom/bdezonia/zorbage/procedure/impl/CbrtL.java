@@ -42,10 +42,10 @@ public class CbrtL<T extends Algebra<T,U> & Roots<U>,U>
 	private final Cbrt<T,U> lowerProc;
 	private final U tmp;
 	
-	public CbrtL(T Algebra, Procedure<U> ancestor) {
+	public CbrtL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Cbrt<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Cbrt<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

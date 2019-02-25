@@ -42,10 +42,10 @@ public class SqrtL<T extends Algebra<T,U> & Roots<U>,U>
 	private final Sqrt<T,U> lowerProc;
 	private final U tmp;
 	
-	public SqrtL(T Algebra, Procedure<U> ancestor) {
+	public SqrtL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Sqrt<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Sqrt<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

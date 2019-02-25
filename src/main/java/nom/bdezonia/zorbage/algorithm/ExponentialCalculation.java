@@ -48,10 +48,10 @@ public class ExponentialCalculation {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Power<U> & Multiplication<U>, U>
-		void compute(T Algebra, U fraction, U base, U power, U result)
+		void compute(T algebra, U fraction, U base, U power, U result)
 	{
-		U tmp = Algebra.construct();
-		Algebra.pow().call(base, power, tmp);
-		Algebra.multiply().call(fraction, tmp, result);
+		U tmp = algebra.construct();
+		algebra.pow().call(base, power, tmp);
+		algebra.multiply().call(fraction, tmp, result);
 	}
 }

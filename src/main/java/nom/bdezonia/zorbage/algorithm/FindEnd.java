@@ -44,9 +44,9 @@ public class FindEnd {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, IndexedDataSource<?,U> values, IndexedDataSource<?,U> a)
+		long compute(T algebra, IndexedDataSource<?,U> values, IndexedDataSource<?,U> a)
 	{
-		return compute(Algebra, values, 0, a.size(), a);
+		return compute(algebra, values, 0, a.size(), a);
 	}
 
 	/**
@@ -59,17 +59,17 @@ public class FindEnd {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, IndexedDataSource<?,U> values, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T algebra, IndexedDataSource<?,U> values, long start, long count, IndexedDataSource<?,U> a)
 	{
 		long sz = values.size();
 		if (sz == 0 || count < sz) return start + count;
-		U tmpA = Algebra.construct();
-		U tmpV = Algebra.construct();
+		U tmpA = algebra.construct();
+		U tmpV = algebra.construct();
 		for (long i = start+count-sz; i >= 0; i--) {
 			for (int j = 0; j < sz; j++) {
 				a.get(i+j, tmpA);
 				values.get(j, tmpV);
-				if (Algebra.isNotEqual().call(tmpA, tmpV))
+				if (algebra.isNotEqual().call(tmpA, tmpV))
 					break;
 				if (j == sz-1)
 					return i;

@@ -45,15 +45,15 @@ public class Sinch {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Invertible<U> & Unity<U> & Hyperbolic<U>,U>
-		void compute(T Algebra, U x, U result)
+		void compute(T algebra, U x, U result)
 	{
-		if (Algebra.isZero().call(x)) {
-			Algebra.unity().call(result);
+		if (algebra.isZero().call(x)) {
+			algebra.unity().call(result);
 		}
 		else {
-			U tmp = Algebra.construct();
-			Algebra.sinh().call(x, tmp);
-			Algebra.divide().call(tmp, x, result);
+			U tmp = algebra.construct();
+			algebra.sinh().call(x, tmp);
+			algebra.divide().call(tmp, x, result);
 		}
 	
 	}

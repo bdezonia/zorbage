@@ -53,24 +53,24 @@ public class Gcd {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & AbsoluteValue<U> & ModularDivision<U> & Ordered<U>, U>
-		void compute(T Algebra, U a, U b, U result)
+		void compute(T algebra, U a, U b, U result)
 	{
-		U aTmp = Algebra.construct(a);
-		U bTmp = Algebra.construct(b);
-		U t = Algebra.construct();
-		U zero = Algebra.construct();
-		Algebra.abs().call(aTmp, aTmp);
-		Algebra.abs().call(bTmp, bTmp);
-		if (Algebra.isLess().call(aTmp, bTmp)) {
-			Algebra.assign().call(aTmp, t);
-			Algebra.assign().call(bTmp, aTmp);
-			Algebra.assign().call(t, bTmp);
+		U aTmp = algebra.construct(a);
+		U bTmp = algebra.construct(b);
+		U t = algebra.construct();
+		U zero = algebra.construct();
+		algebra.abs().call(aTmp, aTmp);
+		algebra.abs().call(bTmp, bTmp);
+		if (algebra.isLess().call(aTmp, bTmp)) {
+			algebra.assign().call(aTmp, t);
+			algebra.assign().call(bTmp, aTmp);
+			algebra.assign().call(t, bTmp);
 		}
-		while (Algebra.isNotEqual().call(bTmp, zero)) {
-			Algebra.assign().call(bTmp, t);
-			Algebra.mod().call(aTmp, bTmp, bTmp);
-			Algebra.assign().call(t, aTmp);
+		while (algebra.isNotEqual().call(bTmp, zero)) {
+			algebra.assign().call(bTmp, t);
+			algebra.mod().call(aTmp, bTmp, bTmp);
+			algebra.assign().call(t, aTmp);
 		}
-		Algebra.assign().call(aTmp, result);
+		algebra.assign().call(aTmp, result);
 	}
 }

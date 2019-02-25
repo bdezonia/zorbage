@@ -46,13 +46,13 @@ public class MatrixIsInfinite {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Infinite<U>,U>
-		boolean compute(T Algebra, MatrixMember<U> a)
+		boolean compute(T algebra, MatrixMember<U> a)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (Algebra.isInfinite().call(value))
+				if (algebra.isInfinite().call(value))
 					return true;
 			}
 		}

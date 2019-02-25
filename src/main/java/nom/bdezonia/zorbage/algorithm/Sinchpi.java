@@ -47,18 +47,18 @@ public class Sinchpi {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Hyperbolic<U> & Constants<U>,U>
-		void compute(T Algebra, U x, U result)
+		void compute(T algebra, U x, U result)
 	{
-		if (Algebra.isZero().call(x)) {
-			Algebra.unity().call(result);
+		if (algebra.isZero().call(x)) {
+			algebra.unity().call(result);
 		}
 		else {
-			U tmp = Algebra.construct();
-			U piX = Algebra.construct();
-			Algebra.PI().call(piX);
-			Algebra.multiply().call(piX, x, piX);
-			Algebra.sinh().call(piX, tmp);
-			Algebra.divide().call(tmp, piX, result);
+			U tmp = algebra.construct();
+			U piX = algebra.construct();
+			algebra.PI().call(piX);
+			algebra.multiply().call(piX, x, piX);
+			algebra.sinh().call(piX, tmp);
+			algebra.divide().call(tmp, piX, result);
 		}
 	
 	}

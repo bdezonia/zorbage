@@ -45,15 +45,15 @@ public class MinMax {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T Algebra, U a, U b, U min, U max)
+		void compute(T algebra, U a, U b, U min, U max)
 	{
-		if (Algebra.isGreater().call(a, b)) {
-			Algebra.assign().call(a, max);
-			Algebra.assign().call(b, min);
+		if (algebra.isGreater().call(a, b)) {
+			algebra.assign().call(a, max);
+			algebra.assign().call(b, min);
 		}
 		else {
-			Algebra.assign().call(a, min);
-			Algebra.assign().call(b, max);
+			algebra.assign().call(a, min);
+			algebra.assign().call(b, max);
 		}
 	}
 

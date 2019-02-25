@@ -40,8 +40,8 @@ public class RampL<T extends Algebra<T,U> & Addition<U>,U>
 {
 	private final Ramp<T,U> lowerProc;
 	
-	public RampL(T Algebra, U origin, U delta) {
-		this.lowerProc = new Ramp<T,U>(Algebra, origin, delta);
+	public RampL(T algebra, U origin, U delta) {
+		this.lowerProc = new Ramp<T,U>(algebra, origin, delta);
 	}
 	
 	@Override

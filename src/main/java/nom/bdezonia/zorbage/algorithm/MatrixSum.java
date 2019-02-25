@@ -46,14 +46,14 @@ public class MatrixSum {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T Algebra, MatrixMember<U> mat, U result)
+		void compute(T algebra, MatrixMember<U> mat, U result)
 	{
-		U value = Algebra.construct();
-		Algebra.zero().call(result);
+		U value = algebra.construct();
+		algebra.zero().call(result);
 		for (long r = 0; r < mat.rows(); r++) {
 			for (long c = 0; c < mat.cols(); c++) {
 				mat.v(r, c, value);
-				Algebra.add().call(result, value, result);
+				algebra.add().call(result, value, result);
 			}
 		}
 	}

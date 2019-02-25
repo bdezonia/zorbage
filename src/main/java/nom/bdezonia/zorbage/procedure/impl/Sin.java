@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class Sin<T extends Algebra<T,U> & Trigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Sin(T Algebra) {
-		this.Algebra = Algebra;
+	public Sin(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.sin().call(a, b);
+		algebra.sin().call(a, b);
 	}
 
 }

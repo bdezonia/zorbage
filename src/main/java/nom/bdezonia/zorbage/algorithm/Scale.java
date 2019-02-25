@@ -48,16 +48,16 @@ public class Scale {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T Algebra, U factor, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, U factor, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
 		if (aSize != bSize)
 			throw new IllegalArgumentException("input/output size mismatch");
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long i = 0; i < aSize; i++) {
 			a.get(i,  tmp);
-			Algebra.multiply().call(tmp, factor, tmp);
+			algebra.multiply().call(tmp, factor, tmp);
 			b.set(i, tmp);
 		}
 	}

@@ -46,9 +46,9 @@ public class AdjacentFind {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, IndexedDataSource<?,U> a)
+		long compute(T algebra, IndexedDataSource<?,U> a)
 	{
-		return compute(Algebra, 0, a.size(), a);
+		return compute(algebra, 0, a.size(), a);
 	}
 	
 	/**
@@ -61,17 +61,17 @@ public class AdjacentFind {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T algebra, long start, long count, IndexedDataSource<?,U> a)
 	{
 		if (start+count < 2) return start+count;
-		U tmp1 = Algebra.construct();
-		U tmp2 = Algebra.construct();
+		U tmp1 = algebra.construct();
+		U tmp2 = algebra.construct();
 		a.get(start, tmp1);
 		for (long i = 1; i < count; i++) {
 			a.get(start+i, tmp2);
-			if (Algebra.isEqual().call(tmp1, tmp2))
+			if (algebra.isEqual().call(tmp1, tmp2))
 				return start + i - 1;
-			Algebra.assign().call(tmp2, tmp1);
+			algebra.assign().call(tmp2, tmp1);
 		}
 		return start + count;
 	}

@@ -42,10 +42,10 @@ public class SincpiL<T extends Algebra<T,U> & Trigonometric<U>,U>
 	private final Sincpi<T,U> lowerProc;
 	private final U tmp;
 	
-	public SincpiL(T Algebra, Procedure<U> ancestor) {
+	public SincpiL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Sincpi<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Sincpi<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

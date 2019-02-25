@@ -46,9 +46,9 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
+		long compute(T algebra, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
 	{
-		return compute(Algebra, elements, 0, a.size(), a);
+		return compute(algebra, elements, 0, a.size(), a);
 	}
 
 	/**
@@ -61,16 +61,16 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
+		long compute(T algebra, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
 	{
-		U tmpA = Algebra.construct();
-		U element = Algebra.construct();
+		U tmpA = algebra.construct();
+		U element = algebra.construct();
 		long elementsSize = elements.size();
 		for (long i = 0; i < count-elementsSize; i++) {
 			a.get(start+i, tmpA);
 			for (long j = 0; j < elementsSize; j++) {
 				elements.get(j, element);
-				if (!Algebra.isEqual().call(tmpA, element))
+				if (!algebra.isEqual().call(tmpA, element))
 					break;
 				if (j == elementsSize-1)
 					return start + i;
@@ -89,9 +89,9 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
+		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
 	{
-		return compute(Algebra, cond, elements, 0, a.size(), a);
+		return compute(algebra, cond, elements, 0, a.size(), a);
 	}
 
 	/**
@@ -105,10 +105,10 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T Algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
+		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
 	{
-		U tmpA = Algebra.construct();
-		U element = Algebra.construct();
+		U tmpA = algebra.construct();
+		U element = algebra.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA,element);
 		long elementsSize = elements.size();
 		for (long i = 0; i < count; i++) {

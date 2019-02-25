@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class Step<T extends Algebra<T,U> & Ordered<U> & Unity<U>, U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	private final U zero;
 	private final U h0;
 	
@@ -50,26 +50,26 @@ public class Step<T extends Algebra<T,U> & Ordered<U> & Unity<U>, U>
 	 * @param h0 The value to return if the input is 0. Common values
 	 *   are 0, 1/2, and 1.
 	 */
-	public Step(T Algebra, U h0) {
-		this.Algebra = Algebra;
-		this.zero = Algebra.construct();
-		this.h0 = Algebra.construct();
-		Algebra.assign().call(h0, this.h0);
-		U one = Algebra.construct();
-		Algebra.unity().call(one);
-		if (Algebra.isLess().call(h0, zero) || Algebra.isGreater().call(h0, one))
+	public Step(T algebra, U h0) {
+		this.algebra = algebra;
+		this.zero = algebra.construct();
+		this.h0 = algebra.construct();
+		algebra.assign().call(h0, this.h0);
+		U one = algebra.construct();
+		algebra.unity().call(one);
+		if (algebra.isLess().call(h0, zero) || algebra.isGreater().call(h0, one))
 			throw new IllegalArgumentException("step: h0 out of sensible range");
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		int s = Algebra.signum().call(a);
+		int s = algebra.signum().call(a);
 		if (s < 0)
-			Algebra.assign().call(zero, b);
+			algebra.assign().call(zero, b);
 		else if (s > 0)
-			Algebra.unity().call(b);
+			algebra.unity().call(b);
 		else
-			Algebra.assign().call(h0, b);
+			algebra.assign().call(h0, b);
 	}
 
 }

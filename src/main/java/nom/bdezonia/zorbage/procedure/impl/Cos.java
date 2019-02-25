@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 public class Cos<T extends Algebra<T,U> & Trigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Cos(T Algebra) {
-		this.Algebra = Algebra;
+	public Cos(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.cos().call(a, b);
+		algebra.cos().call(a, b);
 	}
 
 }

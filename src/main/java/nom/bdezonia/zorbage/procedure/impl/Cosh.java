@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 public class Cosh<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Cosh(T Algebra) {
-		this.Algebra = Algebra;
+	public Cosh(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public void call(U a, U b) {
-		Algebra.cosh().call(a, b);
+		algebra.cosh().call(a, b);
 	}
 
 }

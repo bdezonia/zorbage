@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 public class Atanh<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Atanh(T Algebra) {
-		this.Algebra = Algebra;
+	public Atanh(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		Algebra.atanh().call(a, b);
+		algebra.atanh().call(a, b);
 	}
 
 }

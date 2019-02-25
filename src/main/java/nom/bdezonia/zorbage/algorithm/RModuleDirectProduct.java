@@ -48,16 +48,16 @@ public class RModuleDirectProduct {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T Algebra, RModuleMember<U> a, RModuleMember<U> b, MatrixMember<U> c)
+		void compute(T algebra, RModuleMember<U> a, RModuleMember<U> b, MatrixMember<U> c)
 	{
 		c.alloc(a.length(), b.length());
-		U val1 = Algebra.construct();
-		U val2 = Algebra.construct();
+		U val1 = algebra.construct();
+		U val2 = algebra.construct();
 		for (long row = 0; row < a.length(); row++) {
 			a.v(row, val1);
 			for (long col = 0; col < b.length(); col++) {
 				b.v(col, val2);
-				Algebra.multiply().call(val1, val2, val2);
+				algebra.multiply().call(val1, val2, val2);
 				c.setV(row, col, val2);
 			}
 		}

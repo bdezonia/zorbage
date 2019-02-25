@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 public class Acosh<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Acosh(T Algebra) {
-		this.Algebra = Algebra;
+	public Acosh(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		Algebra.acosh().call(a, b);
+		algebra.acosh().call(a, b);
 	}
 
 }

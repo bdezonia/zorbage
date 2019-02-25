@@ -40,9 +40,9 @@ public class Generate {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, Procedure1<U> proc, IndexedDataSource<?,U> storage)
+		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<?,U> storage)
 	{
-		compute(Algebra, proc, 0, storage.size(), 1, storage);
+		compute(algebra, proc, 0, storage.size(), 1, storage);
 	}
 
 	/**
@@ -54,9 +54,9 @@ public class Generate {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
+		void compute(T algebra, Procedure<U> proc, IndexedDataSource<?,U> storage, U... inputs)
 	{
-		compute(Algebra, proc, 0, storage.size(), 1, storage, inputs);
+		compute(algebra, proc, 0, storage.size(), 1, storage, inputs);
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class Generate {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage)
+		void compute(T algebra, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		for (long i = start, c = 0; c < count; c++) {
 			proc.call(value);
 			storage.set(i, value);
@@ -91,9 +91,9 @@ public class Generate {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage, U... inputs)
+		void compute(T algebra, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<?,U> storage, U... inputs)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		for (long i = start, c = 0; c < count; c++) {
 			proc.call(value, inputs);
 			storage.set(i, value);

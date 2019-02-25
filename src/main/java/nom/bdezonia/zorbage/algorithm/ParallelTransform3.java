@@ -112,9 +112,9 @@ public class ParallelTransform3 {
 	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
 		implements Runnable
 	{
-		private final T AlgebraU;
-		private final V AlgebraW;
-		private final X AlgebraY;
+		private final T algebraU;
+		private final V algebraW;
+		private final X algebraY;
 		private final IndexedDataSource<?,U> list1;
 		private final IndexedDataSource<?,W> list2;
 		private final IndexedDataSource<?,Y> list3;
@@ -128,9 +128,9 @@ public class ParallelTransform3 {
 		private final long cStride;
 		
 		Computer(T algU, V algW, X algY, Procedure3<U, W, Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c) {
-			AlgebraU = algU;
-			AlgebraW = algW;
-			AlgebraY = algY;
+			algebraU = algU;
+			algebraW = algW;
+			algebraY = algY;
 			list1 = a;
 			list2 = b;
 			list3 = c;
@@ -145,7 +145,7 @@ public class ParallelTransform3 {
 		}
 		
 		public void run() {
-			Transform3.compute(AlgebraU, AlgebraW, AlgebraY, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, list1, list2, list3);
+			Transform3.compute(algebraU, algebraW, algebraY, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, list1, list2, list3);
 		}
 	}
 }

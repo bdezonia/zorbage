@@ -45,13 +45,13 @@ public class MatrixIsZero {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>,U>
-		boolean compute(T Algebra, MatrixMember<U> a)
+		boolean compute(T algebra, MatrixMember<U> a)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				a.v(r, c, value);
-				if (!Algebra.isZero().call(value))
+				if (!algebra.isZero().call(value))
 					return false;
 			}
 		}

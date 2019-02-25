@@ -48,17 +48,17 @@ public class Conjugate {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Conjugate<U>,U>
-		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmpA = Algebra.construct();
-		U tmpB = Algebra.construct();
+		U tmpA = algebra.construct();
+		U tmpB = algebra.construct();
 		long aSize = a.size();
 		long bSize = b.size();
 		if (aSize != bSize)
 			throw new IllegalArgumentException("mismatched input/output");
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
-			Algebra.conjugate().call(tmpA, tmpB);
+			algebra.conjugate().call(tmpA, tmpB);
 			b.set(i, tmpB);
 		}
 	}

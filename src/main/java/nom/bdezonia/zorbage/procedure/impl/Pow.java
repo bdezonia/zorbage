@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 public class Pow<T extends Algebra<T,U> & Power<U>,U>
 	implements Procedure3<U,U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Pow(T Algebra) {
-		this.Algebra = Algebra;
+	public Pow(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b, U c) {
-		Algebra.pow().call(a, b, c);
+		algebra.pow().call(a, b, c);
 	}
 
 }

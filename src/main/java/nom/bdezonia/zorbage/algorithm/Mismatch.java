@@ -46,9 +46,9 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T Algebra, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		return compute(Algebra, 0, 0, a.size(), a, b);
+		return compute(algebra, 0, 0, a.size(), a, b);
 	}
 
 	/**
@@ -62,15 +62,15 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T Algebra, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		U tmpA = Algebra.construct();
-		U tmpB = Algebra.construct();
+		U tmpA = algebra.construct();
+		U tmpB = algebra.construct();
 		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmpA);
 			b.get(bStart+i, tmpB);
-			if (Algebra.isNotEqual().call(tmpA, tmpB)) {
+			if (algebra.isNotEqual().call(tmpA, tmpB)) {
 				retVal.setA(aStart+i);
 				retVal.setB(bStart+i);
 				return retVal;
@@ -91,9 +91,9 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T Algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		return compute(Algebra, cond, 0, 0, a.size(), a, b);
+		return compute(algebra, cond, 0, 0, a.size(), a, b);
 	}
 
 	/**
@@ -108,10 +108,10 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T Algebra, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
 	{
-		U tmpA = Algebra.construct();
-		U tmpB = Algebra.construct();
+		U tmpA = algebra.construct();
+		U tmpB = algebra.construct();
 		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
 		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, tmpB);
 		for (long i = 0; i < count; i++) {

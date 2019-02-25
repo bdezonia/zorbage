@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 public class Cbrt<T extends Algebra<T,U> & Roots<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Cbrt(T Algebra) {
-		this.Algebra = Algebra;
+	public Cbrt(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		Algebra.cbrt().call(a, b);
+		algebra.cbrt().call(a, b);
 	}
 
 }

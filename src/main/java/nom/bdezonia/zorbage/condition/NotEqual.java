@@ -37,14 +37,14 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class NotEqual<T extends Algebra<T,U>,U>
 	implements Condition<Tuple2<U,U>>
 {
-	private T Algebra;
+	private T algebra;
 	
-	public NotEqual(T Algebra) {
-		this.Algebra = Algebra;
+	public NotEqual(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return Algebra.isNotEqual().call(value.a(), value.b());
+		return algebra.isNotEqual().call(value.a(), value.b());
 	}
 }

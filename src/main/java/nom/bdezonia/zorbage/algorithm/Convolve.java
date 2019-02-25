@@ -49,14 +49,14 @@ public class Convolve {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		U tmpA1 = Algebra.construct();
-		U tmpA2 = Algebra.construct();
-		U tmpB1 = Algebra.construct();
-		U tmpB2 = Algebra.construct();
-		U tmpC1 = Algebra.construct();
-		U tmpC2 = Algebra.construct();
+		U tmpA1 = algebra.construct();
+		U tmpA2 = algebra.construct();
+		U tmpB1 = algebra.construct();
+		U tmpB2 = algebra.construct();
+		U tmpC1 = algebra.construct();
+		U tmpC2 = algebra.construct();
 
 		long aSize = a.size();
 		long bSize = b.size();
@@ -73,10 +73,10 @@ public class Convolve {
 			// convolution will not break.
 			a.get(i, tmpA1);
 			b.get(j, tmpB1);
-			Algebra.multiply().call(tmpA1, tmpB1, tmpC1);
+			algebra.multiply().call(tmpA1, tmpB1, tmpC1);
 			a.get(j, tmpA2);
 			b.get(i, tmpB2);
-			Algebra.multiply().call(tmpA2, tmpB2, tmpC2);
+			algebra.multiply().call(tmpA2, tmpB2, tmpC2);
 			c.set(i, tmpC1);
 			c.set(j, tmpC2);
 		}

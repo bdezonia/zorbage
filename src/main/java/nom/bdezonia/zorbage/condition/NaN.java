@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class NaN<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.NaN<U>,U>
 	implements Condition<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public NaN(T Algebra) {
-		this.Algebra = Algebra;
+	public NaN(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
 	public boolean isTrue(U value) {
-		return Algebra.isNaN().call(value);
+		return algebra.isNaN().call(value);
 	}
 }

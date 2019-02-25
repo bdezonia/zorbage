@@ -54,15 +54,15 @@ public class BinarySearch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		long compute(T Algebra, U value, long start, long count, IndexedDataSource<?,U> data)
+		long compute(T algebra, U value, long start, long count, IndexedDataSource<?,U> data)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		long lo = 0;
 		long hi = count-1;
 		while (hi >= lo) {
 			long mid = (lo + hi) / 2;
 			data.get(start+mid, tmp);
-			int cmp = Algebra.compare().call(value, tmp);
+			int cmp = algebra.compare().call(value, tmp);
 			if (cmp == 0)
 				return start + mid;
 			else if (cmp > 0)

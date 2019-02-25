@@ -43,10 +43,10 @@ import nom.bdezonia.zorbage.type.storage.Storage;
 public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Median(T Algebra) {
-		this.Algebra = Algebra;
+	public Median(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -56,7 +56,7 @@ public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Or
 		for (int i = 0; i < inputs.length; i++) {
 			storage.set(i, inputs[i]);
 		}
-		nom.bdezonia.zorbage.algorithm.Median.compute(Algebra, storage, result);
+		nom.bdezonia.zorbage.algorithm.Median.compute(algebra, storage, result);
 	}
 
 }

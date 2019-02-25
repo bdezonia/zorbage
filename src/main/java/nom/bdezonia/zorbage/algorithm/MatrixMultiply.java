@@ -50,7 +50,7 @@ public class MatrixMultiply {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,U>
-		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
+		void compute(T algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
 		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
 		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
@@ -58,18 +58,18 @@ public class MatrixMultiply {
 		long cols = b.cols();
 		long common = a.cols(); 
 		c.alloc(rows, cols);
-		U sum = Algebra.construct();
-		U atmp = Algebra.construct();
-		U btmp = Algebra.construct();
-		U term = Algebra.construct();
+		U sum = algebra.construct();
+		U atmp = algebra.construct();
+		U btmp = algebra.construct();
+		U term = algebra.construct();
 		for (long row = 0; row < rows; row++) {
 			for (long col = 0; col < cols; col++) {
-				Algebra.zero().call(sum);
+				algebra.zero().call(sum);
 				for (long i = 0; i < common; i++) {
 					a.v(row, i, atmp);
 					b.v(i, col, btmp);
-					Algebra.multiply().call(atmp, btmp, term);
-					Algebra.add().call(sum, term, sum);
+					algebra.multiply().call(atmp, btmp, term);
+					algebra.add().call(sum, term, sum);
 				}
 				c.setV(row, col, sum);
 			}

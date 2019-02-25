@@ -45,12 +45,12 @@ public class RModuleIsZero {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>,U>
-		boolean compute(T Algebra, RModuleMember<U> a)
+		boolean compute(T algebra, RModuleMember<U> a)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, value);
-			if (!Algebra.isZero().call(value))
+			if (!algebra.isZero().call(value))
 				return false;
 		}
 		return true;

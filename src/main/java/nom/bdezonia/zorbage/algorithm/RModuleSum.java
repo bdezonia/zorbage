@@ -46,14 +46,14 @@ public class RModuleSum {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T Algebra, RModuleMember<U> rmod, U result)
+		void compute(T algebra, RModuleMember<U> rmod, U result)
 	{
-		U value = Algebra.construct();
-		U sum = Algebra.construct();
+		U value = algebra.construct();
+		U sum = algebra.construct();
 		for (long i = 0; i < rmod.length(); i++) {
 			rmod.v(i, value);
-			Algebra.add().call(sum, value, sum);
+			algebra.add().call(sum, value, sum);
 		}
-		Algebra.assign().call(sum, result);
+		algebra.assign().call(sum, result);
 	}
 }

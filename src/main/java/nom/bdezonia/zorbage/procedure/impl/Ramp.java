@@ -37,21 +37,21 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  */
 public class Ramp<T extends Algebra<T,U> & Addition<U>, U> implements Procedure1<U> {
 
-	private final T Algebra;
+	private final T algebra;
 	private final U currValue;
 	private final U delta;
 	
-	public Ramp(T Algebra, U startValue, U delta) {
-		this.Algebra = Algebra;
-		this.currValue = Algebra.construct(startValue);
-		this.delta = Algebra.construct(delta);
+	public Ramp(T algebra, U startValue, U delta) {
+		this.algebra = algebra;
+		this.currValue = algebra.construct(startValue);
+		this.delta = algebra.construct(delta);
 	}
 
 	@Override
 	public void call(U a) {
 		// assign curr value to output
-		Algebra.assign().call(currValue, a);
+		algebra.assign().call(currValue, a);
 		// setup next value
-		Algebra.add().call(currValue, delta, currValue);
+		algebra.add().call(currValue, delta, currValue);
 	}
 }

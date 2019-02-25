@@ -39,8 +39,8 @@ public class ConstantL<T extends Algebra<T,U>,U>
 {
 	private final Constant<T,U> lowerProc;
 	
-	public ConstantL(T Algebra, U c) {
-		this.lowerProc = new Constant<T,U>(Algebra, c);
+	public ConstantL(T algebra, U c) {
+		this.lowerProc = new Constant<T,U>(algebra, c);
 	}
 	
 	@Override

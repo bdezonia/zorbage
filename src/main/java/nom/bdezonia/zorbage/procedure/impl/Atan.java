@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 public class Atan<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 	implements Procedure2<U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Atan(T Algebra) {
-		this.Algebra = Algebra;
+	public Atan(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b) {
-		Algebra.atan().call(a, b);
+		algebra.atan().call(a, b);
 	}
 
 }

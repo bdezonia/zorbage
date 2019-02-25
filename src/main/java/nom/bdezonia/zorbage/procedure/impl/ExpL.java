@@ -42,10 +42,10 @@ public class ExpL<T extends Algebra<T,U> & Exponential<U>,U>
 	private final Exp<T,U> lowerProc;
 	private final U tmp;
 	
-	public ExpL(T Algebra, Procedure<U> ancestor) {
+	public ExpL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Exp<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Exp<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

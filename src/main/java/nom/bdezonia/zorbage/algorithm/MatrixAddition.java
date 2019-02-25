@@ -47,21 +47,21 @@ public class MatrixAddition {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
+		void compute(T algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
 		if (a.rows() != b.rows()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (a.cols() != b.cols()) throw new IllegalArgumentException("cannot add matrices of different shapes");
 		if (c != a && c != b) {
 			c.alloc(a.rows(), a.cols());
 		}
-		U atmp = Algebra.construct();
-		U btmp = Algebra.construct();
-		U tmp = Algebra.construct();
+		U atmp = algebra.construct();
+		U btmp = algebra.construct();
+		U tmp = algebra.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
 				b.v(row, col, btmp);
-				Algebra.add().call(atmp, btmp, tmp);
+				algebra.add().call(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}
 		}

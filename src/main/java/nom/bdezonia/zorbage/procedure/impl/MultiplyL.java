@@ -44,12 +44,12 @@ public class MultiplyL<T extends Algebra<T,U> & Multiplication<U>, U>
 	private final U tmp1;
 	private final U tmp2;
 	
-	public MultiplyL(T Algebra, Procedure<U> ancestor1, Procedure<U> ancestor2) {
+	public MultiplyL(T algebra, Procedure<U> ancestor1, Procedure<U> ancestor2) {
 		this.ancestor1 = ancestor1;
 		this.ancestor2 = ancestor2;
-		this.lowerProc = new Multiply<T,U>(Algebra);
-		tmp1 = Algebra.construct();
-		tmp2 = Algebra.construct();
+		this.lowerProc = new Multiply<T,U>(algebra);
+		tmp1 = algebra.construct();
+		tmp2 = algebra.construct();
 	}
 
 	@Override

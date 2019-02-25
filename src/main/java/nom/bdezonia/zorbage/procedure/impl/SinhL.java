@@ -42,10 +42,10 @@ public class SinhL<T extends Algebra<T,U> & Hyperbolic<U>,U>
 	private final Sinh<T,U> lowerProc;
 	private final U tmp;
 	
-	public SinhL(T Algebra, Procedure<U> ancestor) {
+	public SinhL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Sinh<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Sinh<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

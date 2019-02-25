@@ -45,9 +45,9 @@ public class CopyIf {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, Condition<U> cond, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, Condition<U> cond, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		compute(Algebra, cond, 0, 0, a.size(), a, b);
+		compute(algebra, cond, 0, 0, a.size(), a, b);
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class CopyIf {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, Condition<U> cond, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, Condition<U> cond, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
 	{
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {
 			a.get(aStart+i, tmp);
 			if (cond.isTrue(tmp))

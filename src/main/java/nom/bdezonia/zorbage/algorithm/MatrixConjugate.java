@@ -46,17 +46,17 @@ public class MatrixConjugate {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Conjugate<U>,U>
-		void compute(T Algebra, MatrixMember<U> a, MatrixMember<U> b)
+		void compute(T algebra, MatrixMember<U> a, MatrixMember<U> b)
 	{
-		U atmp = Algebra.construct();
-		U btmp = Algebra.construct();
+		U atmp = algebra.construct();
+		U btmp = algebra.construct();
 		if (a != b) {
 			b.alloc(a.rows(), a.cols());
 		}
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
 				a.v(row, col, atmp);
-				Algebra.conjugate().call(atmp, btmp);
+				algebra.conjugate().call(atmp, btmp);
 				b.setV(row, col, btmp);
 			}
 		}

@@ -38,20 +38,20 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Sum<T extends Algebra<T,U> & Addition<U>,U>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Sum(T Algebra) {
-		this.Algebra = Algebra;
+	public Sum(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		U sum = Algebra.construct();
+		U sum = algebra.construct();
 		for (int i = 0; i < inputs.length; i++) {
-			Algebra.add().call(sum, inputs[i], sum);
+			algebra.add().call(sum, inputs[i], sum);
 		}
-		Algebra.assign().call(sum, result);
+		algebra.assign().call(sum, result);
 	}
 
 }

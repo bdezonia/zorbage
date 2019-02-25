@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class Add<T extends Algebra<T,U> & Addition<U>, U>
 	implements Procedure3<U,U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Add(T Algebra) {
-		this.Algebra = Algebra;
+	public Add(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b, U c) {
-		Algebra.add().call(a, b, c);
+		algebra.add().call(a, b, c);
 	}
 
 }

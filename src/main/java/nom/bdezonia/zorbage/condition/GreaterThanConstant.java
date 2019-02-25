@@ -37,17 +37,17 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class GreaterThanConstant<T extends Algebra<T,U> & Ordered<U>,U>
 	implements Condition<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	private final U constant;
 	
-	public GreaterThanConstant(T Algebra, U value) {
-		this.Algebra = Algebra;
-		this.constant = Algebra.construct();
-		Algebra.assign().call(value, constant);
+	public GreaterThanConstant(T algebra, U value) {
+		this.algebra = algebra;
+		this.constant = algebra.construct();
+		algebra.assign().call(value, constant);
 	}
 
 	@Override
 	public boolean isTrue(U value) {
-		return Algebra.isGreater().call(value, constant);
+		return algebra.isGreater().call(value, constant);
 	}
 }

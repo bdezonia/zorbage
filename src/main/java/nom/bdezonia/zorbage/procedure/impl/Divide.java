@@ -38,15 +38,15 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
 public class Divide<T extends Algebra<T,U> & Invertible<U>,U>
 	implements Procedure3<U,U,U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Divide(T Algebra) {
-		this.Algebra = Algebra;
+	public Divide(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public void call(U a, U b, U c) {
-		Algebra.divide().call(a, b, c);
+		algebra.divide().call(a, b, c);
 	}
 
 }

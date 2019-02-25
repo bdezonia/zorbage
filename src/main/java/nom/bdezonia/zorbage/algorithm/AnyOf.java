@@ -47,9 +47,9 @@ public class AnyOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T Algebra, Condition<U> condition, IndexedDataSource<?,U> a)
+		boolean compute(T algebra, Condition<U> condition, IndexedDataSource<?,U> a)
 	{
-		return compute(Algebra, condition, 0, a.size(), a);
+		return compute(algebra, condition, 0, a.size(), a);
 	}
 	
 	/**
@@ -62,9 +62,9 @@ public class AnyOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T Algebra, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a)
+		boolean compute(T algebra, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		if (count == 0) return false;
 		for (long i = 0; i < count; i++) {
 			a.get(start+i, value);

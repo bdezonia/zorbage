@@ -42,10 +42,10 @@ public class LogL<T extends Algebra<T,U> & Exponential<U>,U>
 	private final Log<T,U> lowerProc;
 	private final U tmp;
 	
-	public LogL(T Algebra, Procedure<U> ancestor) {
+	public LogL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Log<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Log<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

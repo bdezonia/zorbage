@@ -49,11 +49,11 @@ public class Correlate {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T Algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
 	{
-		U tmpA = Algebra.construct();
-		U tmpB = Algebra.construct();
-		U tmpC = Algebra.construct();
+		U tmpA = algebra.construct();
+		U tmpB = algebra.construct();
+		U tmpC = algebra.construct();
 		long aSize = a.size();
 		long bSize = b.size();
 		long cSize = c.size();
@@ -64,7 +64,7 @@ public class Correlate {
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
 			b.get(i, tmpB);
-			Algebra.multiply().call(tmpA, tmpB, tmpC);
+			algebra.multiply().call(tmpA, tmpB, tmpC);
 			c.set(i, tmpC);
 		}
 	}

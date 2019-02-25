@@ -44,19 +44,19 @@ public class LeftRotate {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T Algebra, long delta, IndexedDataSource<?,U> a)
+		void compute(T algebra, long delta, IndexedDataSource<?,U> a)
 	{
 		long aSize = a.size();
 		if (aSize == 0) return;
 		if (delta < 0) {
-			RightRotate.compute(Algebra, Math.abs(delta), a);
+			RightRotate.compute(algebra, Math.abs(delta), a);
 			return;
 		}
 		delta = delta % aSize;
 		if (delta == 0) return; // nothing to do
 		
-		U tmp1 = Algebra.construct();
-		U tmp2 = Algebra.construct();
+		U tmp1 = algebra.construct();
+		U tmp2 = algebra.construct();
 
 		long n = aSize;
 		

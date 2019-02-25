@@ -121,10 +121,10 @@ public class ParallelTransform4 {
 	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
 		implements Runnable
 	{
-		private final T AlgebraU;
-		private final V AlgebraW;
-		private final X AlgebraY;
-		private final Z AlgebraA;
+		private final T algebraU;
+		private final V algebraW;
+		private final X algebraY;
+		private final Z algebraA;
 		private final IndexedDataSource<?,U> list1;
 		private final IndexedDataSource<?,W> list2;
 		private final IndexedDataSource<?,Y> list3;
@@ -141,10 +141,10 @@ public class ParallelTransform4 {
 		private final long dStride;
 		
 		Computer(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d) {
-			AlgebraU = algU;
-			AlgebraW = algW;
-			AlgebraY = algY;
-			AlgebraA = algA;
+			algebraU = algU;
+			algebraW = algW;
+			algebraY = algY;
+			algebraA = algA;
 			list1 = a;
 			list2 = b;
 			list3 = c;
@@ -162,8 +162,7 @@ public class ParallelTransform4 {
 		}
 		
 		public void run() {
-			Transform4.compute(AlgebraU, AlgebraW, AlgebraY, AlgebraA, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, list1, list2, list3, list4);
+			Transform4.compute(algebraU, algebraW, algebraY, algebraA, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, list1, list2, list3, list4);
 		}
 	}
 }
-

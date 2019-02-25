@@ -38,14 +38,14 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class LessThan<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Condition<Tuple2<U,U>>
 {
-	private T Algebra;
+	private T algebra;
 	
-	public LessThan(T Algebra) {
-		this.Algebra = Algebra;
+	public LessThan(T algebra) {
+		this.algebra = algebra;
 	}
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return Algebra.isLess().call(value.a(), value.b());
+		return algebra.isLess().call(value.a(), value.b());
 	}
 }

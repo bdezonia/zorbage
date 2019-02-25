@@ -44,12 +44,12 @@ public class Max {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T Algebra, U a, U b, U result)
+		void compute(T algebra, U a, U b, U result)
 	{
-		if (Algebra.isGreater().call(a, b))
-			Algebra.assign().call(a, result);
+		if (algebra.isGreater().call(a, b))
+			algebra.assign().call(a, result);
 		else
-			Algebra.assign().call(b, result);
+			algebra.assign().call(b, result);
 	}
 
 }

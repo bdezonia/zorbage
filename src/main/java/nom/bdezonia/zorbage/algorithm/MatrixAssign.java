@@ -45,11 +45,11 @@ public class MatrixAssign {
 	 * @param to
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T Algebra, MatrixMember<U> from, MatrixMember<U> to)
+		void compute(T algebra, MatrixMember<U> from, MatrixMember<U> to)
 	{
 		if (from == to) return;
 		to.alloc(from.rows(), from.cols());
-		U tmp = Algebra.construct();
+		U tmp = algebra.construct();
 		for (long row = 0; row < from.rows(); row++) {
 			for (long col = 0; col < from.cols(); col++) {
 				from.v(row, col, tmp);

@@ -38,10 +38,10 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 public class Max<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Max(T Algebra) {
-		this.Algebra = Algebra;
+	public Max(T algebra) {
+		this.algebra = algebra;
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -49,13 +49,13 @@ public class Max<T extends Algebra<T,U> & Ordered<U>, U>
 	public void call(U result, U... inputs) {
 		if (inputs.length == 0)
 			throw new IllegalArgumentException("max undefined for empty list");
-		U max = Algebra.construct();
-		Algebra.assign().call(inputs[0],max);
+		U max = algebra.construct();
+		algebra.assign().call(inputs[0],max);
 		for (int i = 1; i < inputs.length; i++) {
-			if (Algebra.isGreater().call(inputs[i], max)) {
-				Algebra.assign().call(inputs[i], max);
+			if (algebra.isGreater().call(inputs[i], max)) {
+				algebra.assign().call(inputs[i], max);
 			}
 		}
-		Algebra.assign().call(max, result);
+		algebra.assign().call(max, result);
 	}
 }

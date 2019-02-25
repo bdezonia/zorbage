@@ -42,10 +42,10 @@ public class AtanL<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 	private final Atan<T,U> lowerProc;
 	private final U tmp;
 	
-	public AtanL(T Algebra, Procedure<U> ancestor) {
+	public AtanL(T algebra, Procedure<U> ancestor) {
 		this.ancestor = ancestor;
-		this.lowerProc = new Atan<T,U>(Algebra);
-		this.tmp = Algebra.construct();
+		this.lowerProc = new Atan<T,U>(algebra);
+		this.tmp = algebra.construct();
 	}
 
 	@Override

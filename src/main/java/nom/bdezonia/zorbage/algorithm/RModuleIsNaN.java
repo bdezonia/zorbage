@@ -46,12 +46,12 @@ public class RModuleIsNaN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & NaN<U>,U>
-		boolean compute(T Algebra, RModuleMember<U> a)
+		boolean compute(T algebra, RModuleMember<U> a)
 	{
-		U value = Algebra.construct();
+		U value = algebra.construct();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, value);
-			if (Algebra.isNaN().call(value))
+			if (algebra.isNaN().call(value))
 				return true;
 		}
 		return false;

@@ -40,28 +40,28 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
 public class Average<T extends Algebra<T,U> & Unity<U> & Addition<U> & Invertible<U>,U>
 	implements Procedure<U>
 {
-	private final T Algebra;
+	private final T algebra;
 	
-	public Average(T Algebra) {
-		this.Algebra = Algebra;
+	public Average(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
 		if (inputs.length == 0) {
-			Algebra.zero().call(result);
+			algebra.zero().call(result);
 		}
 		else {
-			U count = Algebra.construct();
-			U sum = Algebra.construct();
-			U one = Algebra.construct();
-			Algebra.unity().call(one);
+			U count = algebra.construct();
+			U sum = algebra.construct();
+			U one = algebra.construct();
+			algebra.unity().call(one);
 			for (int i = 0; i < inputs.length; i++) {
-				Algebra.add().call(count, one, count);
-				Algebra.add().call(sum, inputs[i], sum);
+				algebra.add().call(count, one, count);
+				algebra.add().call(sum, inputs[i], sum);
 			}
-			Algebra.divide().call(sum, count, result);
+			algebra.divide().call(sum, count, result);
 		}
 	}
 

@@ -40,8 +40,8 @@ public class RandL<T extends Algebra<T,U> & Random<U>,U>
 {
 	private final Rand<T,U> lowerProc;
 	
-	public RandL(T Algebra) {
-		this.lowerProc = new Rand<T,U>(Algebra);
+	public RandL(T algebra) {
+		this.lowerProc = new Rand<T,U>(algebra);
 	}
 	
 	@Override

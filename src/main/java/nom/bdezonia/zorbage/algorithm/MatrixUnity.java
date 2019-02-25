@@ -45,11 +45,11 @@ public class MatrixUnity {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U> & Unity<U>, U>
-		void compute(T Algebra, MatrixMember<U> a)
+		void compute(T algebra, MatrixMember<U> a)
 	{
-		U zero = Algebra.construct();
-		U one = Algebra.construct();
-		Algebra.unity().call(one);
+		U zero = algebra.construct();
+		U one = algebra.construct();
+		algebra.unity().call(one);
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
 				if (r == c)
