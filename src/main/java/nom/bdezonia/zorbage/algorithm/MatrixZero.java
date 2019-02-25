@@ -40,7 +40,7 @@ public class MatrixZero {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>

@@ -43,7 +43,7 @@ public class Scale {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 */

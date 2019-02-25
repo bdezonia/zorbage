@@ -41,7 +41,7 @@ public class MatrixNegate {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 */

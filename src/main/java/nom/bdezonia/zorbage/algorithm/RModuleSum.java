@@ -41,7 +41,7 @@ public class RModuleSum {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param rmod
 	 * @param result
 	 */

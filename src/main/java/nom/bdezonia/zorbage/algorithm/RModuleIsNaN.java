@@ -41,7 +41,7 @@ public class RModuleIsNaN {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @return
 	 */

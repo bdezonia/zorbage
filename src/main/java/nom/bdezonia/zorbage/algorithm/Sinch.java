@@ -40,7 +40,7 @@ public class Sinch {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param x
 	 * @param result
 	 */

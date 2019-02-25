@@ -38,7 +38,7 @@ public class Reverse {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
@@ -49,7 +49,7 @@ public class Reverse {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param start
 	 * @param count
 	 * @param a

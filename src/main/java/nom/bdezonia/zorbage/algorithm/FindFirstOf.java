@@ -40,7 +40,7 @@ public class FindFirstOf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param elements
 	 * @param a
 	 * @return
@@ -53,7 +53,7 @@ public class FindFirstOf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param elements
 	 * @param start
 	 * @param count
@@ -82,7 +82,7 @@ public class FindFirstOf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param elements
 	 * @param a
@@ -96,7 +96,7 @@ public class FindFirstOf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param elements
 	 * @param start

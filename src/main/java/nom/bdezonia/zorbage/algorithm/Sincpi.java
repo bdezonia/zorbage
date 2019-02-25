@@ -42,7 +42,7 @@ public class Sincpi {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param x
 	 * @param result
 	 */

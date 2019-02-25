@@ -41,7 +41,7 @@ public class MatrixAddition {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param c

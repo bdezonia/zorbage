@@ -40,7 +40,7 @@ public class MatrixIsZero {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @return
 	 */

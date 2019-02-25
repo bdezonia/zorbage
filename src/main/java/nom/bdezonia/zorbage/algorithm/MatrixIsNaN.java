@@ -41,7 +41,7 @@ public class MatrixIsNaN {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @return
 	 */

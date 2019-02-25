@@ -44,7 +44,7 @@ public class MatrixMultiply {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param c

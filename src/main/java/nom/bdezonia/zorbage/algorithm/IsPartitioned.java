@@ -39,7 +39,7 @@ public class IsPartitioned {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param a
 	 * @return
@@ -52,7 +52,7 @@ public class IsPartitioned {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param start
 	 * @param count

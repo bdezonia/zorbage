@@ -42,7 +42,7 @@ public class SwapRanges {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 */
@@ -54,7 +54,7 @@ public class SwapRanges {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param aStart

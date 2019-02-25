@@ -42,7 +42,7 @@ public class Sinchpi {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param x
 	 * @param result
 	 */

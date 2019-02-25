@@ -38,7 +38,7 @@ public class ReverseCopy {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
@@ -49,7 +49,7 @@ public class ReverseCopy {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param aStart
 	 * @param bStart
 	 * @param count

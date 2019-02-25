@@ -38,7 +38,7 @@ public class Copy {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 */
@@ -50,7 +50,7 @@ public class Copy {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param aStart
 	 * @param bStart
 	 * @param count

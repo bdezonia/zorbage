@@ -42,7 +42,7 @@ public class Replace {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param storage
 	 * @param target
 	 * @param replacement
@@ -55,7 +55,7 @@ public class Replace {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param storage
 	 * @param target
 	 * @param replacement

@@ -42,7 +42,7 @@ public class MatrixTranspose {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 */

@@ -38,7 +38,7 @@ public class RotateCopy {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param delta
 	 * @param a
 	 */

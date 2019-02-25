@@ -40,7 +40,7 @@ public class MatrixAssign {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param from
 	 * @param to
 	 */

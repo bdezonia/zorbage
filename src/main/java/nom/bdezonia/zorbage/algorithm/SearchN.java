@@ -39,7 +39,7 @@ public class SearchN {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param n
 	 * @param value
 	 * @param a
@@ -53,7 +53,7 @@ public class SearchN {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param n
 	 * @param value
 	 * @param start
@@ -79,7 +79,7 @@ public class SearchN {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param n
 	 * @param cond
 	 * @param a
@@ -93,7 +93,7 @@ public class SearchN {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param n
 	 * @param cond
 	 * @param start

@@ -38,7 +38,7 @@ public class FindEnd {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param values
 	 * @param a
 	 * @return
@@ -51,7 +51,7 @@ public class FindEnd {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param values
 	 * @param start
 	 * @param count

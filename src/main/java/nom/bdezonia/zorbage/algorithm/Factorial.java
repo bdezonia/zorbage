@@ -43,7 +43,7 @@ public class Factorial {
 	/**
 	 * Factorial.compute()
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param result
 	 */

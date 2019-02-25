@@ -41,7 +41,7 @@ public class RModuleIsInfinite {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @return
 	 */

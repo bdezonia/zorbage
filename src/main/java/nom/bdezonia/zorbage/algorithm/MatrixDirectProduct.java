@@ -41,7 +41,7 @@ public class MatrixDirectProduct {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param in1
 	 * @param in2
 	 * @param out

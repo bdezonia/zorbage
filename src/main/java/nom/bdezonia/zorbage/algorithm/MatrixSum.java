@@ -41,7 +41,7 @@ public class MatrixSum {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param rmod
 	 * @param result
 	 */

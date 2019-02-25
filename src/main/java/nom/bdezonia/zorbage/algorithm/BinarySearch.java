@@ -46,7 +46,7 @@ public class BinarySearch {
 	 * Return the index within the list where the value is found. Return
 	 * -1 if the element is not found.
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param data
 	 * @param start
 	 * @param count

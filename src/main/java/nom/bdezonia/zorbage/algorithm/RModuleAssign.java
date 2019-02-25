@@ -42,7 +42,7 @@ public class RModuleAssign {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param from
 	 * @param to
 	 */

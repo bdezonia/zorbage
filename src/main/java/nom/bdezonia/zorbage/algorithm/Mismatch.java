@@ -40,7 +40,7 @@ public class Mismatch {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @return
@@ -53,7 +53,7 @@ public class Mismatch {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param aStart
 	 * @param bStart
 	 * @param count
@@ -84,7 +84,7 @@ public class Mismatch {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param a
 	 * @param b
@@ -98,7 +98,7 @@ public class Mismatch {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param aStart
 	 * @param bStart

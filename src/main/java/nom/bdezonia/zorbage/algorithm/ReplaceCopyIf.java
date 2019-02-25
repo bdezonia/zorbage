@@ -39,7 +39,7 @@ public class ReplaceCopyIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param new_value
 	 * @param a
@@ -53,7 +53,7 @@ public class ReplaceCopyIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param new_value
 	 * @param aStart

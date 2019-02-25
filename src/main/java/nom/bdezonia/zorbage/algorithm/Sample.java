@@ -40,7 +40,7 @@ public class Sample {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param n
 	 * @param a
 	 * @param b
@@ -53,7 +53,7 @@ public class Sample {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param n
 	 * @param aStart
 	 * @param bStart

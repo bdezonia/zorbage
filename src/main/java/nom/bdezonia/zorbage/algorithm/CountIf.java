@@ -43,7 +43,7 @@ public class CountIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param addAlgebra
 	 * @param a
 	 * @param condition
@@ -57,7 +57,7 @@ public class CountIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param addAlgebra
 	 * @param a
 	 * @param start

@@ -42,7 +42,7 @@ public class PowerAny {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param power
 	 * @param a
 	 * @param b

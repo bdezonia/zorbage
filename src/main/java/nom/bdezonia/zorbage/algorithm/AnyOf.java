@@ -41,7 +41,7 @@ public class AnyOf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param condition
 	 * @return
@@ -54,7 +54,7 @@ public class AnyOf {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param condition
 	 * @param start

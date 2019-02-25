@@ -38,7 +38,7 @@ public class Max {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param result

@@ -40,7 +40,7 @@ public class Equal {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @return
@@ -56,7 +56,7 @@ public class Equal {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param aStart

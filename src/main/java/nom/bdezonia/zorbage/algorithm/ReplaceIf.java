@@ -43,7 +43,7 @@ public class ReplaceIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param replacement
 	 * @param storage
@@ -56,7 +56,7 @@ public class ReplaceIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param replacement
 	 * @param start

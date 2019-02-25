@@ -35,7 +35,7 @@ public class Generate {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param proc
 	 * @param storage
 	 */
@@ -47,7 +47,7 @@ public class Generate {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param proc
 	 * @param storage
 	 * @param inputs
@@ -61,7 +61,7 @@ public class Generate {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param proc
 	 * @param start
 	 * @param count
@@ -81,7 +81,7 @@ public class Generate {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param proc
 	 * @param start
 	 * @param count

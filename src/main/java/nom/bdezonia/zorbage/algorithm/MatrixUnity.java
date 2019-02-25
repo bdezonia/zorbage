@@ -41,7 +41,7 @@ public class MatrixUnity {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U> & Unity<U>, U>

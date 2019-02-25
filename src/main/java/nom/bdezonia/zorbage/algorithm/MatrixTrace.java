@@ -42,7 +42,7 @@ public class MatrixTrace {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param matrix
 	 * @param result
 	 */

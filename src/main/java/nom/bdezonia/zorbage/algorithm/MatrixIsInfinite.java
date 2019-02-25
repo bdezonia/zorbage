@@ -41,7 +41,7 @@ public class MatrixIsInfinite {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @return
 	 */

@@ -41,7 +41,7 @@ public class ExponentialCalculation {
 	 * Create a numeric value from an exponential description. Can create nonreal values
 	 * depending upon inputs.
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param fraction
 	 * @param base
 	 * @param power

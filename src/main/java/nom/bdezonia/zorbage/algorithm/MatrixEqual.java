@@ -40,7 +40,7 @@ public class MatrixEqual {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @return

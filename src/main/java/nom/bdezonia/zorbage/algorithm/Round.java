@@ -53,7 +53,7 @@ public class Round {
 	/**
 	 * Round.compute()
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param mode
 	 * @param delta
 	 * @param a

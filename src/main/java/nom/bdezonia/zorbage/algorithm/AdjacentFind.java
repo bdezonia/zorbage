@@ -40,7 +40,7 @@ public class AdjacentFind {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param value
 	 * @return
@@ -53,7 +53,7 @@ public class AdjacentFind {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param value
 	 * @param start

@@ -40,7 +40,7 @@ public class Sinc {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param x
 	 * @param result
 	 */

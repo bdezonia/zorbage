@@ -43,7 +43,7 @@ public class Correlate {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param c

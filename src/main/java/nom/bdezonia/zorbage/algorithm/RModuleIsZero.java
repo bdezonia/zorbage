@@ -40,7 +40,7 @@ public class RModuleIsZero {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @return
 	 */

@@ -39,7 +39,7 @@ public class RightRotate {
 	/**
 	 * Do a right rotation of a set of values.
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param delta
 	 * @param a
 	 */

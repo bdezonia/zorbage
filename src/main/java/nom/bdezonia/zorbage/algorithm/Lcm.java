@@ -48,7 +48,7 @@ public class Lcm {
 	/**
 	 * Sets the result to the least common multiple of a and b. Result is always nonnegative.
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param result

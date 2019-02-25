@@ -51,7 +51,7 @@ public class KMeans {
 	 *        Pass in the number of clusters you want to divide the point set into.
 	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
 	 *        list.
-	 * @param Algebra The PointAlgebra to be used to manipulate Points.
+	 * @param algebra The PointAlgebra to be used to manipulate Points.
 	 * @param numClusters The number of clusters to divide the list of Points into.
 	 * @param points The list of Points to analyze.
 	 * @param clusterIndices The list tracking which Point is in which cluster.

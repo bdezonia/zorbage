@@ -46,7 +46,7 @@ public class Step<T extends Algebra<T,U> & Ordered<U> & Unity<U>, U>
 	/**
 	 * Heaviside step function. 
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param h0 The value to return if the input is 0. Common values
 	 *   are 0, 1/2, and 1.
 	 */

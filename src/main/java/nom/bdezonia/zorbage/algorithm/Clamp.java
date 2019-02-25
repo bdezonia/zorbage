@@ -38,7 +38,7 @@ public class Clamp {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param min
 	 * @param max
 	 * @param value

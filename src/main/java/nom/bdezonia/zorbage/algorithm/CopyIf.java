@@ -39,7 +39,7 @@ public class CopyIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param a
 	 * @param b
@@ -52,7 +52,7 @@ public class CopyIf {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param cond
 	 * @param aStart
 	 * @param bStart

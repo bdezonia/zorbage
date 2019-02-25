@@ -47,7 +47,7 @@ public class Gcd {
 	/**
 	 * Sets the result to the greatest common divisor of a and b. Result is always nonnegative.
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 * @param result

@@ -41,7 +41,7 @@ public class MatrixConjugate {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param a
 	 * @param b
 	 */

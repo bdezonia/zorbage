@@ -38,7 +38,7 @@ public class ReplaceCopy {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param old_value
 	 * @param new_value
 	 * @param a
@@ -52,7 +52,7 @@ public class ReplaceCopy {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param old_value
 	 * @param new_value
 	 * @param aStart

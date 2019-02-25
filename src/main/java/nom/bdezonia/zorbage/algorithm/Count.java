@@ -43,7 +43,7 @@ public class Count {
 
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param addAlgebra
 	 * @param a
 	 * @param value
@@ -57,7 +57,7 @@ public class Count {
 	
 	/**
 	 * 
-	 * @param Algebra
+	 * @param algebra
 	 * @param addAlgebra
 	 * @param a
 	 * @param start
