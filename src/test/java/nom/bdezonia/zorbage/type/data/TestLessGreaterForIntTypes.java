@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.type.data.int11.SignedInt11Member;
 import nom.bdezonia.zorbage.type.data.int11.UnsignedInt11Member;
 import nom.bdezonia.zorbage.type.data.int12.SignedInt12Member;
 import nom.bdezonia.zorbage.type.data.int12.UnsignedInt12Member;
+import nom.bdezonia.zorbage.type.data.int128.SignedInt128Member;
 import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
 import nom.bdezonia.zorbage.type.data.int13.SignedInt13Member;
 import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Member;
@@ -1069,16 +1070,13 @@ public class TestLessGreaterForIntTypes {
 
 	@Test
 	public void int128() {
-		/* 
-		 *  TODO - uncomment when signed int 128 class is in place
-		 * 
-		SignedInt128Member a = new SignedInt128Member(new BigInteger("minus max"));
-		SignedInt128Member b = new SignedInt128Member(new BigInteger("minus max").add(BigInteger.ONE));
+		SignedInt128Member a = new SignedInt128Member(new BigInteger("80000000000000000000000000000000",16));
+		SignedInt128Member b = new SignedInt128Member(new BigInteger("80000000000000000000000000000001",16));
 		SignedInt128Member c = new SignedInt128Member(BigInteger.valueOf(-1));
 		SignedInt128Member d = new SignedInt128Member(BigInteger.ZERO);
 		SignedInt128Member e = new SignedInt128Member(BigInteger.ONE);
-		SignedInt128Member f = new SignedInt128Member(new BigInteger("plus max").subtract(BigInteger.ONE));
-		SignedInt128Member g = new SignedInt128Member(new BigInteger("plus max"));
+		SignedInt128Member f = new SignedInt128Member(new BigInteger("7ffffffffffffffffffffffffffffffe",16));
+		SignedInt128Member g = new SignedInt128Member(new BigInteger("7fffffffffffffffffffffffffffffff",16));
 		
 		assertTrue(G.INT128.isLess().call(a, b));
 		assertFalse(G.INT128.isGreater().call(a, b));
@@ -1097,7 +1095,6 @@ public class TestLessGreaterForIntTypes {
 		
 		assertTrue(G.INT128.isLess().call(f, g));
 		assertFalse(G.INT128.isGreater().call(f, g));
-		*/
 	}
 
 	@Test
