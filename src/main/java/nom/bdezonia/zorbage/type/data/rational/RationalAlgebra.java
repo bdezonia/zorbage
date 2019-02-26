@@ -321,18 +321,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Integer call(RationalMember a, RationalMember b) {
-			int sig_a = signum().call(a);
-			int sig_b = signum().call(b);
-			if (sig_a < sig_b)
-				return -1;
-			if (sig_a > sig_b)
-				return 1;
-			// sig_a == sig_b
-			if (sig_a == 0)
-				return 0;
-			if (a.n.multiply(b.d).compareTo(b.n.multiply(a.d)) < 0)
-				return -1;
-			return 1;
+			return a.n.multiply(b.d).compareTo(b.n.multiply(a.d));
 		}
 	};
 
