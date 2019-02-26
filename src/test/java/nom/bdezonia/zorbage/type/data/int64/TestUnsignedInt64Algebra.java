@@ -152,6 +152,12 @@ public class TestUnsignedInt64Algebra {
 		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0xffffffffffffffffL)));
 		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffeL)));
 		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffdL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0x7fffffffffffffffL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0x7ffffffffffffffeL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0x7ffffffffffffffdL)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0x8000000000000000L)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0x8000000000000001L)));
+		numsg.add(new UnsignedInt64Member(BigInteger.valueOf(0x8000000000000002L)));
 		numsg.add(new UnsignedInt64Member(BigInteger.ZERO));
 		numsg.add(new UnsignedInt64Member(BigInteger.ONE));
 		numsg.add(new UnsignedInt64Member(BigInteger.TEN));
@@ -176,6 +182,12 @@ public class TestUnsignedInt64Algebra {
 		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0xffffffffffffffffL)));
 		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffeL)));
 		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0xfffffffffffffffdL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0x7fffffffffffffffL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0x7ffffffffffffffeL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0x7ffffffffffffffdL)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0x8000000000000000L)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0x8000000000000001L)));
+		numsh.add(new UnsignedInt64Member(BigInteger.valueOf(0x8000000000000002L)));
 		numsh.add(new UnsignedInt64Member(BigInteger.ZERO));
 		numsh.add(new UnsignedInt64Member(BigInteger.ONE));
 		numsh.add(new UnsignedInt64Member(BigInteger.TEN));

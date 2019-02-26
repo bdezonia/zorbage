@@ -30,6 +30,7 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.DivMod;
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -313,9 +314,8 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d) {
-			// TODO ideally I could just do some quick math op but the following doesn't work
-			//d.v = a.v / b.v;
-			d.setV(a.v().divide(b.v())); // expensive/slow but correct
+			UnsignedInt64Member m = G.UINT64.construct();
+			DivMod.compute(G.UINT64, a, b, d, m);
 		}
 	};
 	
@@ -329,9 +329,8 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member m) {
-			// TODO ideally I could just do some quick math op but the following doesn't work
-			// m.v = a.v % b.v;
-			m.setV(a.v().remainder(b.v())); // expensive/slow but correct
+			UnsignedInt64Member d = G.UINT64.construct();
+			DivMod.compute(G.UINT64, a, b, d, m);
 		}
 	};
 	
@@ -345,8 +344,7 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member d, UnsignedInt64Member m) {
-			div().call(a, b, d);
-			mod().call(a, b, m);
+			DivMod.compute(G.UINT64, a, b, d, m);
 		}
 	};
 	
