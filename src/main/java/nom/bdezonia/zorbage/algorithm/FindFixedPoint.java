@@ -79,16 +79,16 @@ public class FindFixedPoint<T extends Algebra<T,U>, U>
 	
 	private long iterate(U guess, U tmp, long iters, U result)
 	{
-		if (iters == 0)
-			return -1;
-		proc.call(guess, tmp);
-		if (closeEnough.call(guess, tmp)) {
-			alg.assign().call(guess, result);
-			return iters;
+		for (long i = 0; i < iters; i++) {
+			proc.call(guess, tmp);
+			if (closeEnough.call(guess, tmp)) {
+				alg.assign().call(guess, result);
+				return i;
+			}
+			else {
+				alg.assign().call(tmp, guess);
+			}			
 		}
-		else {
-			alg.assign().call(tmp, guess);
-			return iterate(guess, tmp, iters-1, result);
-		}			
+		return -1;
 	}
 }
