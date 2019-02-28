@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -38,30 +37,26 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
- * @author Barry Dezonia
+ * @author Barry DeZonia
  *
  */
-public class TestNewtonsMethod {
+public class TestDerivative {
 
 	@Test
 	public void test() {
-		Float64Member delta = G.DBL.construct("0.0001");
-		Float64Member guess = G.DBL.construct("-1");
+		Float64Member delta = G.DBL.construct("0.00001");
+		Float64Member point = G.DBL.construct("4");
 		Float64Member result = G.DBL.construct();
-		NewtonsMethod<Float64Algebra,Float64Member> method = new NewtonsMethod<Float64Algebra,Float64Member>(G.DBL, eqn, delta, 10);
-		if (method.call(guess, result))
-			assertEquals(-1.324717, result.v(), 0.00001);
-		else
-			fail();
+		Derivative<Float64Algebra,Float64Member> deriv = new Derivative<Float64Algebra, Float64Member>(G.DBL, eqn, delta);
+		deriv.call(point, result);
+		assertEquals(8, result.v(), 0.00001);
 	}
 	
-	private Procedure2<Float64Member, Float64Member> eqn = new Procedure2<Float64Member, Float64Member>() {
+	private Procedure2<Float64Member,Float64Member> eqn = new Procedure2<Float64Member, Float64Member>() {
 		
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			double v = a.v();
-			v = v*v*v - v + 1;
-			b.setV(v);
+			b.setV(a.v() * a.v());
 		}
 	};
 }
