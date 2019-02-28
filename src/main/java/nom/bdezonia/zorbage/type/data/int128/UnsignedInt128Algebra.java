@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.Multiply;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -216,17 +217,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-			UnsignedInt128Member bTmp = new UnsignedInt128Member(b);
-			UnsignedInt128Member tmp = new UnsignedInt128Member();
-			UnsignedInt128Member part = new UnsignedInt128Member(a);
-			while (isNotEqual().call(bTmp,ZERO)) {
-				if ((bTmp.lo & 1) != 0) {
-					add().call(tmp, part, tmp);
-				}
-				shiftLeftOneBit(part);
-				shiftRightOneBit(bTmp);
-			}
-			assign().call(tmp,c);
+			Multiply.compute(G.UINT128, a, b, c);
 		}
 	};
 
