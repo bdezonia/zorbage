@@ -47,6 +47,15 @@ import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
 
+// A note about how this was constructed: This class originally defined hi,
+// lo, and masks in terms of bytes. There are only 64K such combinations. These
+// numbers were then run through all the methods defined below and compared to
+// java integer results exhaustively. Once all the kinks were worked out the
+// bytes and masks were replaced by longs. We can now be confident that the
+// code works for the larger range of values. Now we only sample the state
+// space and try various combinations. But at its heart it relied on full
+// testing.
+
 /**
  * 
  * @author Barry DeZonia
