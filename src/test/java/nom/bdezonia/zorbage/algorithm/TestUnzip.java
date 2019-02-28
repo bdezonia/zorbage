@@ -31,11 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -131,80 +127,4 @@ public class TestUnzip {
 		assertEquals(11, value.b().v(), 0);
 	}
 	
-	private class TupleAlgebra implements Algebra<TupleAlgebra, Tuple2<SignedInt64Member,Float32Member>> {
-
-		@Override
-		public Tuple2<SignedInt64Member, Float32Member> construct() {
-			return new Tuple2<SignedInt64Member,Float32Member>(G.INT64.construct(),G.FLT.construct());
-		}
-
-		@Override
-		public Tuple2<SignedInt64Member, Float32Member> construct(Tuple2<SignedInt64Member, Float32Member> other) {
-			return new Tuple2<SignedInt64Member,Float32Member>(other.a(),other.b());
-		}
-
-		@Override
-		public Tuple2<SignedInt64Member, Float32Member> construct(String str) {
-			// TODO: do something sensible
-			return construct();
-		}
-
-		private final Function2<Boolean, Tuple2<SignedInt64Member, Float32Member>, Tuple2<SignedInt64Member, Float32Member>> EQ =
-				new Function2<Boolean, Tuple2<SignedInt64Member,Float32Member>, Tuple2<SignedInt64Member,Float32Member>>()
-		{
-			@Override
-			public Boolean call(Tuple2<SignedInt64Member, Float32Member> a, Tuple2<SignedInt64Member, Float32Member> b) {
-				return a.a() == b.a() && a.b() == b.b();
-			}
-		};
-
-		@Override
-		public Function2<Boolean, Tuple2<SignedInt64Member, Float32Member>, Tuple2<SignedInt64Member, Float32Member>> isEqual() {
-			return EQ;
-		}
-
-		private final Function2<Boolean, Tuple2<SignedInt64Member, Float32Member>, Tuple2<SignedInt64Member, Float32Member>> NEQ =
-				new Function2<Boolean, Tuple2<SignedInt64Member,Float32Member>, Tuple2<SignedInt64Member,Float32Member>>()
-		{
-			@Override
-			public Boolean call(Tuple2<SignedInt64Member, Float32Member> a, Tuple2<SignedInt64Member, Float32Member> b) {
-				return !isEqual().call(a, b);
-			}
-		};
-
-		@Override
-		public Function2<Boolean, Tuple2<SignedInt64Member, Float32Member>, Tuple2<SignedInt64Member, Float32Member>> isNotEqual() {
-			return NEQ;
-		}
-
-		private final Procedure2<Tuple2<SignedInt64Member, Float32Member>, Tuple2<SignedInt64Member, Float32Member>> ASSIGN =
-				new Procedure2<Tuple2<SignedInt64Member,Float32Member>, Tuple2<SignedInt64Member,Float32Member>>()
-		{
-			@Override
-			public void call(Tuple2<SignedInt64Member, Float32Member> a, Tuple2<SignedInt64Member, Float32Member> b) {
-				b.a().setV(a.a().v());
-				b.b().setV(a.b().v());
-			}
-		};
-
-		@Override
-		public Procedure2<Tuple2<SignedInt64Member, Float32Member>, Tuple2<SignedInt64Member, Float32Member>> assign() {
-			return ASSIGN;
-		}
-
-		private final Function1<Boolean, Tuple2<SignedInt64Member, Float32Member>> ISZERO =
-				new Function1<Boolean, Tuple2<SignedInt64Member,Float32Member>>()
-		{
-			@Override
-			public Boolean call(Tuple2<SignedInt64Member, Float32Member> a) {
-				return a.a().v() == 0 && a.b().v() == 0;
-			}
-		};
-
-		@Override
-		public Function1<Boolean, Tuple2<SignedInt64Member, Float32Member>> isZero() {
-			return ISZERO;
-		}
-		
-	}
 }
