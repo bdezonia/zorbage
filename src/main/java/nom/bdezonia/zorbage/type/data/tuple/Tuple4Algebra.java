@@ -66,7 +66,12 @@ public class Tuple4Algebra<A extends Algebra<A,B>,B,
 
 	@Override
 	public Tuple4<B,D,F,H> construct(Tuple4<B,D,F,H> other) {
-		return new Tuple4<B,D,F,H>(other.a(), other.b(), other.c(), other.d());
+		Tuple4<B,D,F,H> result = construct();
+		alg1.assign().call(other.a(), result.a());
+		alg2.assign().call(other.b(), result.b());
+		alg3.assign().call(other.c(), result.c());
+		alg4.assign().call(other.d(), result.d());
+		return result;
 	}
 
 	@Override

@@ -70,7 +70,13 @@ public class Tuple5Algebra<A extends Algebra<A,B>,B,
 
 	@Override
 	public Tuple5<B,D,F,H,J> construct(Tuple5<B,D,F,H,J> other) {
-		return new Tuple5<B,D,F,H,J>(other.a(), other.b(), other.c(), other.d(), other.e());
+		Tuple5<B,D,F,H,J> result = construct();
+		alg1.assign().call(other.a(), result.a());
+		alg2.assign().call(other.b(), result.b());
+		alg3.assign().call(other.c(), result.c());
+		alg4.assign().call(other.d(), result.d());
+		alg5.assign().call(other.e(), result.e());
+		return result;
 	}
 
 	@Override
