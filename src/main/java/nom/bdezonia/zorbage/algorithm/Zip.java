@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.tuple.Tuple1;
 import nom.bdezonia.zorbage.tuple.Tuple10;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.tuple.Tuple3;
@@ -45,6 +46,28 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  */
 public class Zip {
 
+	/**
+	 * 
+	 * @param alg1
+	 * @param unzip1
+	 * @param zipped
+	 */
+	public static <A extends Algebra<A,B>, B>
+		void one(A alg1,
+			IndexedDataSource<?,B> unzip1,
+			IndexedDataSource<?,Tuple1<B>> zipped)
+	{
+		Tuple1<B> tuple = new Tuple1<B>(null);
+		tuple.setA(alg1.construct());
+		long zippedSize = zipped.size();
+		if (unzip1.size() != zippedSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+		for (long i = 0; i < zippedSize; i++) {
+			unzip1.get(i, tuple.a());
+			zipped.set(i, tuple);
+		}
+	}
+		
 	/**
 	 * 
 	 * @param alg1
