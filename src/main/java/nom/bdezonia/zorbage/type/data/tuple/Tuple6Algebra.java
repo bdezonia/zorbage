@@ -75,12 +75,7 @@ public class Tuple6Algebra<A extends Algebra<A,B>,B,
 	@Override
 	public Tuple6<B,D,F,H,J,L> construct(Tuple6<B,D,F,H,J,L> other) {
 		Tuple6<B,D,F,H,J,L> result = construct();
-		alg1.assign().call(other.a(), result.a());
-		alg2.assign().call(other.b(), result.b());
-		alg3.assign().call(other.c(), result.c());
-		alg4.assign().call(other.d(), result.d());
-		alg5.assign().call(other.e(), result.e());
-		alg6.assign().call(other.f(), result.f());
+		assign().call(other, result);
 		return result;
 	}
 

@@ -54,7 +54,7 @@ public class Tuple1Algebra<A extends Algebra<A,B>,B>
 	@Override
 	public Tuple1<B> construct(Tuple1<B> other) {
 		Tuple1<B> result = construct();
-		alg1.assign().call(other.a(), result.a());
+		assign().call(other, result);
 		return result;
 	}
 
