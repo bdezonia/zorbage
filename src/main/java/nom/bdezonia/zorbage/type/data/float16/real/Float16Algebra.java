@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
@@ -60,6 +61,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -85,7 +87,9 @@ public class Float16Algebra
     Rounding<Float16Member,Float16Member>,
     Random<Float16Member>,
     RealUnreal<Float16Member,Float16Member>,
-    ModularDivision<Float16Member>
+    ModularDivision<Float16Member>,
+	Conjugate<Float16Member>,
+	Scale<Float16Member,Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
@@ -1287,5 +1291,15 @@ public class Float16Algebra
 	@Override
 	public Function1<Boolean, Float16Member> isZero() {
 		return ISZERO;
+	}
+
+	@Override
+	public Procedure3<Float16Member, Float16Member, Float16Member> scale() {
+		return MUL;
+	}
+
+	@Override
+	public Procedure2<Float16Member, Float16Member> conjugate() {
+		return ASSIGN;
 	}
 }

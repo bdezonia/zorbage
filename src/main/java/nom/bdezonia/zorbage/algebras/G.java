@@ -29,6 +29,8 @@ package nom.bdezonia.zorbage.algebras;
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Algebra;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Matrix;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Vector;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
@@ -100,6 +102,10 @@ public class G {
 	public static final BooleanAlgebra BOOL = new BooleanAlgebra();
 	
 	public static final Float16Algebra HLF = new Float16Algebra();
+	public static final Float16Vector HLF_VEC = new Float16Vector();
+	public static final Float16Matrix HLF_MAT = new Float16Matrix();
+	// TODO: HLF_TEN
+	
 	// TODO and num, vec, mat, ten for real, complex, quat, oct
 	
 	public static final Float32Algebra FLT = new Float32Algebra();

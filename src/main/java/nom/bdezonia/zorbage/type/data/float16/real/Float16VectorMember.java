@@ -26,149 +26,208 @@
  */
 package nom.bdezonia.zorbage.type.data.float16.real;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.RModuleReshape;
+import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
-import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-
-// https://en.wikipedia.org/wiki/Half-precision_floating-point_format
-
-// TODO write conversion tests
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.Storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class Float16Member
+public final class Float16VectorMember
 	implements
-		NumberMember<Float16Member>,
-		ShortCoder,
-		Allocatable<Float16Member>, Duplicatable<Float16Member>,
-		Settable<Float16Member>, Gettable<Float16Member>,
-		UniversalRepresentation, PrimitiveConversion
+		RModuleMember<Float16Member>,
+		Gettable<Float16VectorMember>,
+		Settable<Float16VectorMember>,
+		PrimitiveConversion, UniversalRepresentation
 {
-	private short v;
+	private static final Float16Member ZERO = new Float16Member(0); 
+
+	private IndexedDataSource<?,Float16Member> storage;
+	private StorageConstruction s;
 	
-	public Float16Member() {
-		v = Float16Util.convertFloatToHFloat(0);
+	public Float16VectorMember() {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, 0, new Float16Member());
 	}
 	
-	public Float16Member(float value) {
-		v = Float16Util.convertFloatToHFloat(value);
+	public Float16VectorMember(double[] vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, vals.length, new Float16Member());
+		Float16Member value = new Float16Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(vals[i]);
+			storage.set(i,  value);
+		}
 	}
 	
-	public Float16Member(Float16Member value) {
-		v = value.v;
+	public Float16VectorMember(Float16VectorMember other) {
+		set(other);
 	}
 	
-	public Float16Member(String value) {
+	public Float16VectorMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
-		v = Float16Util.convertFloatToHFloat(val.r().floatValue());
+		BigList<OctonionRepresentation> data = rep.firstVectorValues();
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, data.size(), new Float16Member());
+		Float16Member tmp = new Float16Member();
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
+			OctonionRepresentation val = data.get(i);
+			tmp.setV(val.r().doubleValue());
+			storage.set(i, tmp);
+		}
 	}
-	
-	public float v() { return Float16Util.convertHFloatToFloat(v); }
-	
-	public void setV(double val) { v = Float16Util.convertFloatToHFloat((float)val); }
-	
-	@Override
-	public void set(Float16Member other) {
-		v = other.v;
-	}
-	
-	@Override
-	public void get(Float16Member other) {
-		other.v = v;
+
+	public Float16VectorMember(StorageConstruction s, long d1) {
+		this.s = s;
+		alloc(d1);
 	}
 
 	@Override
-	public void v(Float16Member value) {
-		get(value);
+	public StorageConstruction storageType() {
+		return s;
+	}
+	
+	@Override
+	public void v(long i, Float16Member v) {
+		if (i < storage.size()) {
+			storage.get(i, v);
+		}
+		else {
+			G.HLF.zero().call(v);
+		}
 	}
 
 	@Override
-	public void setV(Float16Member value) {
-		set(value);
+	public void setV(long i, Float16Member v) {
+		storage.set(i, v);
 	}
-
+	
+	
 	@Override
-	public String toString() {
-		return String.valueOf(v());
+	public void set(Float16VectorMember other) {
+		if (this == other) return;
+		storage = other.storage.duplicate();
+		s = other.s;
 	}
 	
 	@Override
-	public int shortCount() {
-		return 1;
-	}
-	
-	@Override
-	public void fromShortArray(short[] arr, int index) {
-		v = arr[index];
-	}
-	
-	@Override
-	public void toShortArray(short[] arr, int index) {
-		arr[index] = v;
-	}
-	
-	@Override
-	public void fromShortFile(RandomAccessFile raf) throws IOException {
-		v = raf.readShort();
-	}
-	
-	@Override
-	public void toShortFile(RandomAccessFile raf) throws IOException {
-		raf.writeShort(v);
-	}
-	
-	@Override
-	public Float16Member allocate() {
-		return new Float16Member();
-	}
-	
-	@Override
-	public Float16Member duplicate() {
-		return new Float16Member(this);
+	public void get(Float16VectorMember other) {
+		if (this == other) return;
+		other.storage = storage.duplicate();
+		other.s = s;
 	}
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(v())));
+		Float16Member value = new Float16Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		for (long i = 0; i < length(); i++) {
+			storage.get(i, value);
+			BigDecimal r = BigDecimal.valueOf(value.v());
+			OctonionRepresentation o = new OctonionRepresentation(r);
+			values.set(i, o);
+		}
+		rep.setRModule(length(), values);
 	}
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		setV(rep.getValue().r().doubleValue());
+		Float16Member value = new Float16Member();
+		BigList<OctonionRepresentation> rmod = rep.getRModule();
+		long rmodSize = rmod.size();
+		init(rmodSize);
+		for (long i = 0; i < rmodSize; i++) {
+			OctonionRepresentation o = rmod.get(i);
+			value.setV(o.r().doubleValue());
+			storage.set(i,value);
+		}
+	}
+
+	@Override
+	public long length() { return storage.size(); }
+	
+	@Override
+	public String toString() {
+		Float16Member tmp = new Float16Member();
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
+			if (i != 0)
+				builder.append(',');
+			v(i, tmp);
+			builder.append(tmp.toString());
+		}
+		builder.append(']');
+		return builder.toString();
+	}
+
+	public boolean alloc(long size) {
+		if (storage == null || storage.size() != size) {
+			storage = Storage.allocate(s, size, new Float16Member());
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void init(long size) {
+		if (!alloc(size)) {
+			for (long i = 0; i < size; i++) {
+				storage.set(i, ZERO);
+			}
+		}
 	}
 
 	@Override
 	public int numDimensions() {
-		return 0;
+		return 1;
 	}
 
+	@Override
+	public void reshape(long len) {
+		RModuleReshape.compute(G.HLF_VEC, G.HLF, len, this);
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return storage.size();
+		return 1;
+	}
+	
+	private static ThreadLocal<Float16Member> tmpFloat =
+			new ThreadLocal<Float16Member>()
+	{
+		protected Float16Member initialValue() {
+			return new Float16Member();
+		};
+		
+	};
+	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
 		return PrimitiveRepresentation.DOUBLE;
-	}
-
-	@Override
-	public long dimension(int i) {
-		return 0;
 	}
 
 	@Override
@@ -178,42 +237,66 @@ public final class Float16Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setV(v);
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV(v);
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV(v);
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setV(v);
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(v);
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(v);
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(v.doubleValue());
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v.doubleValue());
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setV(v.doubleValue());
+		long i = index.get(0);
+		Float16Member tmp = tmpFloat.get();
+		tmp.setV(v.doubleValue());
+		setV(i, tmp);
 	}
 
 	@Override
@@ -224,7 +307,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -236,7 +325,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -248,7 +340,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -260,7 +358,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -272,7 +373,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -284,7 +391,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -296,7 +406,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -308,7 +424,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -320,7 +439,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -332,7 +457,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -344,7 +472,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -356,7 +490,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -368,7 +505,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -380,7 +523,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v.doubleValue());
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v.doubleValue());
+			setV(i, tmp);
 		}
 	}
 
@@ -392,7 +538,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -404,7 +556,10 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v.doubleValue());
+			long i = index.get(0);
+			Float16Member tmp = tmpFloat.get();
+			tmp.setV(v.doubleValue());
+			setV(i, tmp);
 		}
 	}
 
@@ -413,7 +568,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (byte) v();
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (byte) tmp.v();
+		}
 		return 0;
 	}
 
@@ -422,7 +581,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (short) v();
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (short) tmp.v();
+		}
 		return 0;
 	}
 
@@ -431,7 +594,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (int) v();
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (int) tmp.v();
+		}
 		return 0;
 	}
 
@@ -440,7 +607,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (long) v();
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (long) tmp.v();
+		}
 		return 0;
 	}
 
@@ -449,7 +620,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v();
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (float) tmp.v();
+		}
 		return 0;
 	}
 
@@ -458,7 +633,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v();
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return tmp.v();
+		}
 		return 0;
 	}
 
@@ -467,7 +646,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigInteger.valueOf((long) v());
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return BigInteger.valueOf((long) tmp.v());
+		}
 		return BigInteger.ZERO;
 	}
 
@@ -476,7 +659,11 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return new BigDecimal(v());
+		if (component == 0) {
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return BigDecimal.valueOf(tmp.v());
+		}
 		return BigDecimal.ZERO;
 	}
 
@@ -488,7 +675,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -498,7 +691,9 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (byte) v();
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (byte) tmp.v();
 		}
 	}
 
@@ -510,7 +705,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -520,7 +721,9 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (short) v();
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (short) tmp.v();
 		}
 	}
 
@@ -532,7 +735,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -542,7 +751,9 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (int) v();
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (int) tmp.v();
 		}
 	}
 
@@ -554,7 +765,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -564,7 +781,9 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return (long) v();
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (long) tmp.v();
 		}
 	}
 
@@ -576,7 +795,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -586,7 +811,9 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return v();
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return (float) tmp.v();
 		}
 	}
 
@@ -598,7 +825,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -608,7 +841,9 @@ public final class Float16Member
 			return 0;
 		}
 		else {
-			return v();
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return tmp.v();
 		}
 	}
 
@@ -620,7 +855,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -630,7 +871,9 @@ public final class Float16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigInteger.valueOf((long) v());
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return BigInteger.valueOf((long) tmp.v());
 		}
 	}
 
@@ -642,7 +885,13 @@ public final class Float16Member
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -652,13 +901,16 @@ public final class Float16Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(v());
+			Float16Member tmp = tmpFloat.get();
+			v(index.get(0), tmp);
+			return BigDecimal.valueOf(tmp.v());
 		}
 	}
 
 	@Override
 	public void primitiveInit() {
-		setV(0);
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
+			storage.set(i, ZERO);
 	}
-	
 }
