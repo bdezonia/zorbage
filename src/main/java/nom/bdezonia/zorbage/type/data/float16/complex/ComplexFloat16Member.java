@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64.real;
+package nom.bdezonia.zorbage.type.data.float16.complex;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -37,109 +37,119 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Util;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
-import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class Float64Member
+public final class ComplexFloat16Member
 	implements
-		NumberMember<Float64Member>,
-		DoubleCoder,
-		Allocatable<Float64Member>, Duplicatable<Float64Member>,
-		Settable<Float64Member>, Gettable<Float64Member>,
-		UniversalRepresentation, PrimitiveConversion
+		ShortCoder,
+		Allocatable<ComplexFloat16Member>, Duplicatable<ComplexFloat16Member>,
+		Settable<ComplexFloat16Member>, Gettable<ComplexFloat16Member>,
+		NumberMember<ComplexFloat16Member>, PrimitiveConversion,
+		UniversalRepresentation
 {
-	private double v;
+	private short r, i;
 	
-	public Float64Member() {
-		v = 0;
+	public ComplexFloat16Member() {
+		setR(0);
+		setI(0);
 	}
 	
-	public Float64Member(double value) {
-		v = value;
+	public ComplexFloat16Member(double rvalue, double ivalue) {
+		setR(rvalue);
+		setI(ivalue);
 	}
 	
-	public Float64Member(Float64Member value) {
+	public ComplexFloat16Member(ComplexFloat16Member value) {
 		set(value);
 	}
 
-	public Float64Member(String value) {
+	public ComplexFloat16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		v = val.r().doubleValue();
+		setR(val.r().doubleValue());
+		setI(val.i().doubleValue());
 	}
 
-	public double v() { return v; }
-
-	public void setV(double val) { v = val; }
-
-	@Override
-	public void set(Float64Member other) {
-		v = other.v;
-	}
-
-	@Override
-	public void get(Float64Member other) {
-		other.v = v;
-	}
+	public double r() { return Float16Util.convertHFloatToFloat(r); }
 	
-	@Override
+	public double i() { return Float16Util.convertHFloatToFloat(i); }
+	
+    public void setR(double val) { r = Float16Util.convertFloatToHFloat((float)val); }
+    
+    public void setI(double val) { i = Float16Util.convertFloatToHFloat((float)val); }	
+
+    @Override
+    public void get(ComplexFloat16Member other) {
+    	other.r = r;
+    	other.i = i;
+    }
+
+    @Override
+    public void set(ComplexFloat16Member other) {
+    	r = other.r;
+    	i = other.i;
+    }
+    
+    @Override
 	public String toString() {
-		return String.valueOf(v);
+    	StringBuilder builder = new StringBuilder();
+    	builder.append('{');
+    	builder.append(Float16Util.convertHFloatToFloat(r));
+    	builder.append(',');
+    	builder.append(Float16Util.convertHFloatToFloat(i));
+    	builder.append('}');
+    	return builder.toString();
+    }
+
+	@Override
+	public int shortCount() {
+		return 2;
 	}
 
 	@Override
-	public int doubleCount() {
-		return 1;
+	public void fromShortArray(short[] arr, int index) {
+		r = arr[index];
+		i = arr[index+1];
 	}
 
 	@Override
-	public void fromDoubleArray(double[] arr, int index) {
-		v = arr[index];
+	public void toShortArray(short[] arr, int index) {
+		arr[index] = r;
+		arr[index+1] = i;
 	}
 
 	@Override
-	public void toDoubleArray(double[] arr, int index) {
-		arr[index] = v;
+	public void fromShortFile(RandomAccessFile raf) throws IOException {
+		r = raf.readShort();
+		i = raf.readShort();
 	}
 
 	@Override
-	public void fromDoubleFile(RandomAccessFile raf) throws IOException {
-		v = raf.readDouble();
+	public void toShortFile(RandomAccessFile raf) throws IOException {
+		raf.writeShort(r);
+		raf.writeShort(i);
 	}
 
 	@Override
-	public void toDoubleFile(RandomAccessFile raf) throws IOException {
-		raf.writeDouble(v);
+	public ComplexFloat16Member allocate() {
+		return new ComplexFloat16Member();
 	}
 
 	@Override
-	public Float64Member allocate() {
-		return new Float64Member();
-	}
-
-	@Override
-	public Float64Member duplicate() {
-		return new Float64Member(this);
-	}
-
-	@Override
-	public void toRep(TensorOctonionRepresentation rep) {
-		rep.setValue(new OctonionRepresentation(BigDecimal.valueOf(v())));
-	}
-
-	@Override
-	public void fromRep(TensorOctonionRepresentation rep) {
-		v = rep.getValue().r().doubleValue();
+	public ComplexFloat16Member duplicate() {
+		return new ComplexFloat16Member(this);
 	}
 
 	@Override
@@ -148,13 +158,30 @@ public final class Float64Member
 	}
 
 	@Override
-	public void v(Float64Member value) {
+	public void v(ComplexFloat16Member value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(Float64Member value) {
+	public void setV(ComplexFloat16Member value) {
 		set(value);
+	}
+
+	@Override
+	public void toRep(TensorOctonionRepresentation rep) {
+		rep.setValue(
+			new OctonionRepresentation(
+				BigDecimal.valueOf(r()),
+				BigDecimal.valueOf(i())
+			)
+		);
+	}
+
+	@Override
+	public void fromRep(TensorOctonionRepresentation rep) {
+		OctonionRepresentation v = rep.getValue();
+		setR(v.r().doubleValue());
+		setI(v.i().doubleValue());
 	}
 
 	@Override
@@ -169,47 +196,71 @@ public final class Float64Member
 
 	@Override
 	public int componentCount() {
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setV(v);
+		if (component == 0)
+			this.setR(v);
+		else
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV(v);
+		if (component == 0)
+			this.setR(v);
+		else
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV(v);
+		if (component == 0)
+			this.setR(v);
+		else
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setV(v);
+		if (component == 0)
+			this.setR(v);
+		else
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(v);
+		if (component == 0)
+			this.setR(v);
+		else
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(v);
+		if (component == 0)
+			this.setR(v);
+		else
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(v.doubleValue());
+		if (component == 0)
+			this.setR(v.doubleValue());
+		else
+			this.setI(v.doubleValue());
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setV(v.doubleValue());
+		if (component == 0)
+			this.setR(v.doubleValue());
+		else
+			this.setI(v.doubleValue());
 	}
 
 	@Override
@@ -217,7 +268,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -232,7 +283,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			if (component == 0)
+				this.setR(v);
+			else
+				this.setI(v);
 		}
 	}
 
@@ -241,7 +295,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -256,7 +310,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			if (component == 0)
+				this.setR(v);
+			else
+				this.setI(v);
 		}
 	}
 
@@ -265,7 +322,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -280,7 +337,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			if (component == 0)
+				this.setR(v);
+			else
+				this.setI(v);
 		}
 	}
 
@@ -289,7 +349,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -304,7 +364,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			if (component == 0)
+				this.setR(v);
+			else
+				this.setI(v);
 		}
 	}
 
@@ -313,7 +376,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -328,7 +391,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			if (component == 0)
+				this.setR(v);
+			else
+				this.setI(v);
 		}
 	}
 
@@ -337,7 +403,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -352,7 +418,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			if (component == 0)
+				this.setR(v);
+			else
+				this.setI(v);
 		}
 	}
 
@@ -361,7 +430,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -376,7 +445,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v.doubleValue());
+			if (component == 0)
+				this.setR(v.doubleValue());
+			else
+				this.setI(v.doubleValue());
 		}
 	}
 
@@ -385,7 +457,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -400,7 +472,10 @@ public final class Float64Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v.doubleValue());
+			if (component == 0)
+				this.setR(v.doubleValue());
+			else
+				this.setI(v.doubleValue());
 		}
 	}
 
@@ -409,7 +484,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (byte) v();
+		if (component == 0) return (byte) r();
+		if (component == 1) return (byte) i();
 		return 0;
 	}
 
@@ -418,7 +494,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (short) v();
+		if (component == 0) return (short) r();
+		if (component == 1) return (short) i();
 		return 0;
 	}
 
@@ -427,7 +504,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (int) v();
+		if (component == 0) return (int) r();
+		if (component == 1) return (int) i();
 		return 0;
 	}
 
@@ -436,7 +514,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (long) v();
+		if (component == 0) return (long) r();
+		if (component == 1) return (long) i();
 		return 0;
 	}
 
@@ -445,7 +524,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (float) v();
+		if (component == 0) return (float) r();
+		if (component == 1) return (float) i();
 		return 0;
 	}
 
@@ -454,7 +534,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v();
+		if (component == 0) return r();
+		if (component == 1) return i();
 		return 0;
 	}
 
@@ -463,7 +544,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(v).toBigInteger();
+		if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
+		if (component == 1) return BigDecimal.valueOf(i()).toBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -472,7 +554,8 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(v());
+		if (component == 0) return BigDecimal.valueOf(r());
+		if (component == 1) return BigDecimal.valueOf(i());
 		return BigDecimal.ZERO;
 	}
 
@@ -481,7 +564,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -494,7 +577,8 @@ public final class Float64Member
 			return 0;
 		}
 		else {
-			return (byte) v();
+			if (component == 0) return (byte) r();
+			else return (byte) i();
 		}
 	}
 
@@ -503,7 +587,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -516,7 +600,8 @@ public final class Float64Member
 			return 0;
 		}
 		else {
-			return (short) v();
+			if (component == 0) return (short) r();
+			else return (short) i();
 		}
 	}
 
@@ -525,7 +610,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -538,7 +623,8 @@ public final class Float64Member
 			return 0;
 		}
 		else {
-			return (int) v();
+			if (component == 0) return (int) r();
+			else return (int) i();
 		}
 	}
 
@@ -547,7 +633,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -560,7 +646,8 @@ public final class Float64Member
 			return 0;
 		}
 		else {
-			return (long) v();
+			if (component == 0) return (long) r();
+			else return (long) i();
 		}
 	}
 
@@ -569,7 +656,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -582,7 +669,8 @@ public final class Float64Member
 			return 0;
 		}
 		else {
-			return (float) v();
+			if (component == 0) return (float) r();
+			else return (float) i();
 		}
 	}
 
@@ -591,7 +679,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -604,7 +692,8 @@ public final class Float64Member
 			return 0;
 		}
 		else {
-			return v();
+			if (component == 0) return r();
+			else return i();
 		}
 	}
 
@@ -613,7 +702,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -626,7 +715,8 @@ public final class Float64Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(v()).toBigInteger();
+			if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
+			else return BigDecimal.valueOf(i()).toBigInteger();
 		}
 	}
 
@@ -635,7 +725,7 @@ public final class Float64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		boolean oob = component > 0;
+		boolean oob = component > 1;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (index.get(i) != 0) {
@@ -648,12 +738,14 @@ public final class Float64Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(v());
+			if (component == 0) return BigDecimal.valueOf(r());
+			else return BigDecimal.valueOf(i());
 		}
 	}
 
 	@Override
 	public void primitiveInit() {
-		v = 0;
+		r = Float16Util.convertFloatToHFloat(0);
+		i = Float16Util.convertFloatToHFloat(0);
 	}
 }

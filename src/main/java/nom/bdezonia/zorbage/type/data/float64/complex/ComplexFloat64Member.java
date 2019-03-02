@@ -543,8 +543,8 @@ public final class ComplexFloat64Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigInteger.valueOf((long) r());
-		if (component == 1) return BigInteger.valueOf((long) i());
+		if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
+		if (component == 1) return BigDecimal.valueOf(i()).toBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -714,8 +714,8 @@ public final class ComplexFloat64Member
 			return BigInteger.ZERO;
 		}
 		else {
-			if (component == 0) return BigInteger.valueOf((long) r());
-			else return BigInteger.valueOf((long) i());
+			if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
+			else return BigDecimal.valueOf(i()).toBigInteger();
 		}
 	}
 

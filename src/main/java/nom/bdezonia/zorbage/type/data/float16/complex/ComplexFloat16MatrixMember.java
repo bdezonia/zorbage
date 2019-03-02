@@ -24,17 +24,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.float64.complex;
+package nom.bdezonia.zorbage.type.data.float16.complex;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.RModuleReshape;
+import nom.bdezonia.zorbage.algorithm.MatrixReshape;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -51,46 +51,56 @@ import nom.bdezonia.zorbage.type.storage.Storage;
  * @author Barry DeZonia
  *
  */
-public final class ComplexFloat64VectorMember
+public final class ComplexFloat16MatrixMember
 	implements
-		RModuleMember<ComplexFloat64Member>,
-		Gettable<ComplexFloat64VectorMember>,
-		Settable<ComplexFloat64VectorMember>,
+		MatrixMember<ComplexFloat16Member>,
+		Gettable<ComplexFloat16MatrixMember>,
+		Settable<ComplexFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation
 {
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
-
-	private IndexedDataSource<?,ComplexFloat64Member> storage;
+	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
+	
+	private IndexedDataSource<?,ComplexFloat16Member> storage;
+	private long rows;
+	private long cols;
 	private StorageConstruction s;
 	
-	public ComplexFloat64VectorMember() {
+	public ComplexFloat16MatrixMember() {
+		rows = -1;
+		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new ComplexFloat64Member());
+		init(0,0);
 	}
 	
-	public ComplexFloat64VectorMember(double[] vals) {
-		final int count = vals.length / 2;
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new ComplexFloat64Member());
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 2*i;
-			value.setR(vals[index]);
-			value.setI(vals[index+1]);
-			storage.set(i,  value);
-		}
-	}
-	
-	public ComplexFloat64VectorMember(ComplexFloat64VectorMember other) {
+	public ComplexFloat16MatrixMember(ComplexFloat16MatrixMember other) {
 		set(other);
 	}
 	
-	public ComplexFloat64VectorMember(String value) {
-		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		BigList<OctonionRepresentation> data = rep.firstVectorValues();
+	public ComplexFloat16MatrixMember(int r, int c, double[] vals) {
+		if (vals.length != r*c*2)
+			throw new IllegalArgumentException("input values do not match declared shape");
+		rows = -1;
+		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new ComplexFloat64Member());
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		init(r,c);
+		ComplexFloat16Member tmp = new ComplexFloat16Member();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(vals[2*i]);
+			tmp.setI(vals[2*i+1]);
+			storage.set(i, tmp);
+		}
+	}
+
+	public ComplexFloat16MatrixMember(String s) {
+		TensorStringRepresentation rep = new TensorStringRepresentation(s);
+		BigList<OctonionRepresentation> data = rep.firstMatrixValues();
+		long[] dimensions = rep.dimensions();
+		rows = -1;
+		cols = -1;
+		this.s = StorageConstruction.MEM_ARRAY;
+		init(dimensions[1],dimensions[0]);
+		ComplexFloat16Member tmp = new ComplexFloat16Member();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
@@ -99,68 +109,100 @@ public final class ComplexFloat64VectorMember
 			storage.set(i, tmp);
 		}
 	}
-
-	public ComplexFloat64VectorMember(StorageConstruction s, long d1) {
+	
+	public ComplexFloat16MatrixMember(StorageConstruction s, long d1, long d2) {
+		rows = -1;
+		cols = -1;
 		this.s = s;
-		alloc(d1);
+		init(d2, d1);
 	}
-
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;
 	}
 	
 	@Override
-	public void v(long i, ComplexFloat64Member v) {
-		if (i < storage.size()) {
-			storage.get(i, v);
-		}
-		else {
-			G.CDBL.zero().call(v);
-		}
-	}
+	public long rows() { return rows; }
 
 	@Override
-	public void setV(long i, ComplexFloat64Member v) {
-		storage.set(i, v);
-	}
+	public long cols() { return cols; }
 
 	@Override
-	public void set(ComplexFloat64VectorMember other) {
-		if (this == other) return;
-		storage = other.storage.duplicate();
-		s = other.s;
+	public boolean alloc(long r, long c) {
+		if (rows != r || cols != c) {
+			rows = r;
+			cols = c;
+		}
+		if (storage == null || storage.size() != r*c) {
+			storage = Storage.allocate(s, r*c, new ComplexFloat16Member());
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
-	public void get(ComplexFloat64VectorMember other) {
-		if (this == other) return;
-		other.storage = storage.duplicate();
-		other.s = s;
+	public void init(long r, long c) {
+		if (!alloc(r,c)) {
+			long storageSize = r*c;
+			for (long i = 0; i < storageSize; i++)
+				storage.set(i, ZERO);
+		}
+	}
+	
+	@Override
+	public void v(long r, long c, ComplexFloat16Member value) {
+		long index = r * cols + c;
+		storage.get(index, value);
+	}
+	
+	@Override
+	public void setV(long r, long c, ComplexFloat16Member value) {
+		long index = r * cols + c;
+		storage.set(index, value);
 	}
 
 	@Override
+	public void set(ComplexFloat16MatrixMember other) {
+		if (this == other) return;
+		rows = other.rows;
+		cols = other.cols;
+		s = other.s;
+		storage = other.storage.duplicate();
+	}
+	
+	@Override
+	public void get(ComplexFloat16MatrixMember other) {
+		if (this == other) return;
+		other.rows = rows;
+		other.cols = cols;
+		other.s = s;
+		other.storage = storage.duplicate();
+	}
+	
+	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
-		for (long i = 0; i < length(); i++) {
+		long storageSize = storage.size();
+		ComplexFloat16Member value = new ComplexFloat16Member();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
-			BigDecimal real = BigDecimal.valueOf(value.r());
-			BigDecimal imag = BigDecimal.valueOf(value.i());
-			OctonionRepresentation o = new OctonionRepresentation(real,imag);
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			OctonionRepresentation o = new OctonionRepresentation(re,im);
 			values.set(i, o);
 		}
-		rep.setRModule(length(), values);
+		rep.setMatrix(rows, cols, values);
 	}
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		BigList<OctonionRepresentation> rmod = rep.getRModule();
-		long rmodSize = rmod.size();
-		init(rmodSize);
-		for (long i = 0; i < rmodSize; i++) {
-			OctonionRepresentation o = rmod.get(i);
+		ComplexFloat16Member value = new ComplexFloat16Member();
+		BigList<OctonionRepresentation> mat = rep.getMatrix();
+		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
+		long matSize = mat.size();
+		for (long i = 0; i < matSize; i++) {
+			OctonionRepresentation o = mat.get(i);
 			value.setR(o.r().doubleValue());
 			value.setI(o.i().doubleValue());
 			storage.set(i,value);
@@ -168,64 +210,48 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
-	public long length() { return storage.size(); }
-	
-	@Override
 	public String toString() {
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		ComplexFloat16Member tmp = new ComplexFloat16Member();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
-		long storageSize = storage.size();
-		for (long i = 0; i < storageSize; i++) {
-			if (i != 0)
-				builder.append(',');
-			v(i, tmp);
-			builder.append(tmp.toString());
+		for (long r = 0; r < rows; r++) {
+			builder.append('[');
+			for (long c = 0; c < cols; c++) {
+				if (c != 0)
+					builder.append(',');
+				v(r, c, tmp);
+				builder.append(tmp.toString());
+			}
+			builder.append(']');
 		}
 		builder.append(']');
 		return builder.toString();
 	}
-	
-	public boolean alloc(long size) {
-		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new ComplexFloat64Member());
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public void init(long size) {
-		if (!alloc(size)) {
-			for (long i = 0; i < size; i++) {
-				storage.set(i, ZERO);
-			}
-		}
-	}
 
 	@Override
 	public int numDimensions() {
-		return 1;
+		return 2;
 	}
 
 	@Override
-	public void reshape(long len) {
-		RModuleReshape.compute(G.CDBL_VEC, G.CDBL, len, this);
+	public void reshape(long rows, long cols) {
+		MatrixReshape.compute(G.CHLF_MAT, G.CHLF, rows, cols, this);
 	}
 
 	@Override
 	public long dimension(int d) {
 		if (d < 0)
 			throw new IllegalArgumentException("can't query negative dimension");
-		if (d == 0) return storage.size();
+		if (d == 0) return cols;
+		if (d == 1) return rows;
 		return 1;
 	}
 	
-	private static ThreadLocal<ComplexFloat64Member> tmpComp =
-			new ThreadLocal<ComplexFloat64Member>()
+	private static ThreadLocal<ComplexFloat16Member> tmpComp =
+			new ThreadLocal<ComplexFloat16Member>()
 	{
-		protected ComplexFloat64Member initialValue() {
-			return new ComplexFloat64Member();
+		protected ComplexFloat16Member initialValue() {
+			return new ComplexFloat16Member();
 		};
 		
 	};
@@ -242,98 +268,106 @@ public final class ComplexFloat64VectorMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
 			tmp.setI(v);
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
 			tmp.setI(v);
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
 			tmp.setI(v);
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
 			tmp.setI(v);
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
 			tmp.setI(v);
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
 			tmp.setI(v);
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v.doubleValue());
 		else
 			tmp.setI(v.doubleValue());
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		long i = index.get(0);
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(i, tmp);
+		long c = index.get(0);
+		long r = index.get(1);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(r, c, tmp);
 		if (component == 0)
 			tmp.setR(v.doubleValue());
 		else
 			tmp.setI(v.doubleValue());
-		setV(i, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -345,7 +379,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -362,14 +402,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
 				tmp.setI(v);
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -382,7 +423,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -399,14 +446,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
 				tmp.setI(v);
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -419,7 +467,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -436,14 +490,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
 				tmp.setI(v);
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -456,7 +511,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -473,14 +534,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
 				tmp.setI(v);
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -493,7 +555,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -510,14 +578,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
 				tmp.setI(v);
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -530,7 +599,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -547,14 +622,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
 				tmp.setI(v);
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -567,7 +643,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -584,14 +666,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v.doubleValue());
 			else
 				tmp.setI(v.doubleValue());
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -604,7 +687,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -621,14 +710,15 @@ public final class ComplexFloat64VectorMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			long i = index.get(0);
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(i, tmp);
+			long c = index.get(0);
+			long r = index.get(1);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(r, c, tmp);
 			if (component == 0)
 				tmp.setR(v.doubleValue());
 			else
 				tmp.setI(v.doubleValue());
-			setV(i, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -638,8 +728,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return (byte) tmp.r();
 		return (byte) tmp.i();
 	}
@@ -650,8 +740,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return (short) tmp.r();
 		return (short) tmp.i();
 	}
@@ -662,8 +752,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return (int) tmp.r();
 		return (int) tmp.i();
 	}
@@ -674,8 +764,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return (long) tmp.r();
 		return (long) tmp.i();
 	}
@@ -686,8 +776,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return (float) tmp.r();
 		return (float) tmp.i();
 	}
@@ -698,8 +788,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return 0;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return tmp.r();
 		return tmp.i();
 	}
@@ -710,8 +800,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return BigInteger.ZERO;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return BigDecimal.valueOf(tmp.r()).toBigInteger();
 		return BigDecimal.valueOf(tmp.i()).toBigInteger();
 	}
@@ -722,8 +812,8 @@ public final class ComplexFloat64VectorMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		if (component > 1) return BigDecimal.ZERO;
-		ComplexFloat64Member tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		ComplexFloat16Member tmp = tmpComp.get();
+		v(index.get(1), index.get(0), tmp);
 		if (component == 0) return BigDecimal.valueOf(tmp.r());
 		return BigDecimal.valueOf(tmp.i());
 	}
@@ -737,7 +827,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -752,8 +848,8 @@ public final class ComplexFloat64VectorMember
 			return 0;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return (byte) tmp.r();
 			return (byte) tmp.i();
 		}
@@ -768,7 +864,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -783,8 +885,8 @@ public final class ComplexFloat64VectorMember
 			return 0;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return (short) tmp.r();
 			return (short) tmp.i();
 		}
@@ -799,7 +901,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -814,8 +922,8 @@ public final class ComplexFloat64VectorMember
 			return 0;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return (int) tmp.r();
 			return (int) tmp.i();
 		}
@@ -830,7 +938,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -845,8 +959,8 @@ public final class ComplexFloat64VectorMember
 			return 0;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return (long) tmp.r();
 			return (long) tmp.i();
 		}
@@ -861,7 +975,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -876,8 +996,8 @@ public final class ComplexFloat64VectorMember
 			return 0;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return (float) tmp.r();
 			return (float) tmp.i();
 		}
@@ -892,7 +1012,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -907,8 +1033,8 @@ public final class ComplexFloat64VectorMember
 			return 0;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return tmp.r();
 			return tmp.i();
 		}
@@ -923,7 +1049,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -938,8 +1070,8 @@ public final class ComplexFloat64VectorMember
 			return BigInteger.ZERO;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return BigDecimal.valueOf(tmp.r()).toBigInteger();
 			return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		}
@@ -954,7 +1086,13 @@ public final class ComplexFloat64VectorMember
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
 				if (i == 0) {
-					if (index.get(0) >= storage.size()) {
+					if (index.get(0) >= cols) {
+						oob = true;
+						break;
+					}
+				}
+				else if (i == 1) {
+					if (index.get(1) >= rows) {
 						oob = true;
 						break;
 					}
@@ -969,8 +1107,8 @@ public final class ComplexFloat64VectorMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			ComplexFloat64Member tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			ComplexFloat16Member tmp = tmpComp.get();
+			v(index.get(1), index.get(0), tmp);
 			if (component == 0) return BigDecimal.valueOf(tmp.r());
 			return BigDecimal.valueOf(tmp.i());
 		}
@@ -978,7 +1116,8 @@ public final class ComplexFloat64VectorMember
 
 	@Override
 	public void primitiveInit() {
-		for (long i = 0; i < storage.size(); i++)
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
 	}
 }

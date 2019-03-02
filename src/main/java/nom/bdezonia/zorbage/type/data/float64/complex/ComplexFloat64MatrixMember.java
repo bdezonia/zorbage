@@ -802,8 +802,8 @@ public final class ComplexFloat64MatrixMember
 		if (component > 1) return BigInteger.ZERO;
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index.get(1), index.get(0), tmp);
-		if (component == 0) return BigInteger.valueOf((long) tmp.r());
-		return BigInteger.valueOf((long) tmp.i());
+		if (component == 0) return BigDecimal.valueOf(tmp.r()).toBigInteger();
+		return BigDecimal.valueOf(tmp.i()).toBigInteger();
 	}
 
 	@Override
@@ -1072,8 +1072,8 @@ public final class ComplexFloat64MatrixMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index.get(1), index.get(0), tmp);
-			if (component == 0) return BigInteger.valueOf((long) tmp.r());
-			return BigInteger.valueOf((long) tmp.i());
+			if (component == 0) return BigDecimal.valueOf(tmp.r()).toBigInteger();
+			return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		}
 	}
 
