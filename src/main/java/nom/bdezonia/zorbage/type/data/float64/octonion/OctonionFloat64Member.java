@@ -1268,32 +1268,32 @@ public final class OctonionFloat64Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return BigInteger.valueOf((long) r());
+					return BigDecimal.valueOf(r()).toBigInteger();
 				else // component == 1
-					return BigInteger.valueOf((long) i());
+					return BigDecimal.valueOf(i()).toBigInteger();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return BigInteger.valueOf((long) j());
+					return BigDecimal.valueOf(j()).toBigInteger();
 				else // component == 3
-					return BigInteger.valueOf((long) k());
+					return BigDecimal.valueOf(k()).toBigInteger();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return BigInteger.valueOf((long) l());
+					return BigDecimal.valueOf(l()).toBigInteger();
 				else // component == 5
-					return BigInteger.valueOf((long) i0());
+					return BigDecimal.valueOf(i0()).toBigInteger();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return BigInteger.valueOf((long) j0());
+					return BigDecimal.valueOf(j0()).toBigInteger();
 				else // component == 7
-					return BigInteger.valueOf((long) k0());
+					return BigDecimal.valueOf(k0()).toBigInteger();
 			}
 		}
 	}
@@ -1677,32 +1677,32 @@ public final class OctonionFloat64Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return BigInteger.valueOf((long) r());
+						return BigDecimal.valueOf(r()).toBigInteger();
 					else // component == 1
-						return BigInteger.valueOf((long) i());
+						return BigDecimal.valueOf(i()).toBigInteger();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return BigInteger.valueOf((long) j());
+						return BigDecimal.valueOf(j()).toBigInteger();
 					else // component == 3
-						return BigInteger.valueOf((long) k());
+						return BigDecimal.valueOf(k()).toBigInteger();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return BigInteger.valueOf((long) l());
+						return BigDecimal.valueOf(l()).toBigInteger();
 					else // component == 5
-						return BigInteger.valueOf((long) i0());
+						return BigDecimal.valueOf(i0()).toBigInteger();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return BigInteger.valueOf((long) j0());
+						return BigDecimal.valueOf(j0()).toBigInteger();
 					else // component == 7
-						return BigInteger.valueOf((long) k0());
+						return BigDecimal.valueOf(k0()).toBigInteger();
 				}
 			}
 		}

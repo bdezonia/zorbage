@@ -806,16 +806,16 @@ public final class QuaternionFloat64Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return BigInteger.valueOf((long) r());
+				return BigDecimal.valueOf(r()).toBigInteger();
 			else // component == 1
-				return BigInteger.valueOf((long) i());
+				return BigDecimal.valueOf(i()).toBigInteger();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return BigInteger.valueOf((long) j());
+				return BigDecimal.valueOf(j()).toBigInteger();
 			else // component == 3
-				return BigInteger.valueOf((long) k());
+				return BigDecimal.valueOf(k()).toBigInteger();
 		}
 	}
 
@@ -1071,16 +1071,16 @@ public final class QuaternionFloat64Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return BigInteger.valueOf((long) r());
+					return BigDecimal.valueOf(r()).toBigInteger();
 				else // component == 1
-					return BigInteger.valueOf((long) i());
+					return BigDecimal.valueOf(i()).toBigInteger();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return BigInteger.valueOf((long) j());
+					return BigDecimal.valueOf(j()).toBigInteger();
 				else // component == 3
-					return BigInteger.valueOf((long) k());
+					return BigDecimal.valueOf(k()).toBigInteger();
 			}
 		}
 	}

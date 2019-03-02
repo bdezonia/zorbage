@@ -1458,32 +1458,32 @@ public final class OctonionFloat64MatrixMember
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return BigInteger.valueOf((long) tmp.r());
+					return BigDecimal.valueOf(tmp.r()).toBigInteger();
 				else // component == 1
-					return BigInteger.valueOf((long) tmp.i());
+					return BigDecimal.valueOf(tmp.i()).toBigInteger();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return BigInteger.valueOf((long) tmp.j());
+					return BigDecimal.valueOf(tmp.j()).toBigInteger();
 				else // component == 3
-					return BigInteger.valueOf((long) tmp.k());
+					return BigDecimal.valueOf(tmp.k()).toBigInteger();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return BigInteger.valueOf((long) tmp.l());
+					return BigDecimal.valueOf(tmp.l()).toBigInteger();
 				else // component == 5
-					return BigInteger.valueOf((long) tmp.i0());
+					return BigDecimal.valueOf(tmp.i0()).toBigInteger();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return BigInteger.valueOf((long) tmp.j0());
+					return BigDecimal.valueOf(tmp.j0()).toBigInteger();
 				else // component == 7
-					return BigInteger.valueOf((long) tmp.k0());
+					return BigDecimal.valueOf(tmp.k0()).toBigInteger();
 			}
 		}
 	}
@@ -1968,32 +1968,32 @@ public final class OctonionFloat64MatrixMember
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return BigInteger.valueOf((long)tmp.r());
+						return BigDecimal.valueOf(tmp.r()).toBigInteger();
 					else // component == 1
-						return BigInteger.valueOf((long)tmp.i());
+						return BigDecimal.valueOf(tmp.i()).toBigInteger();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return BigInteger.valueOf((long)tmp.j());
+						return BigDecimal.valueOf(tmp.j()).toBigInteger();
 					else // component == 3
-						return BigInteger.valueOf((long)tmp.k());
+						return BigDecimal.valueOf(tmp.k()).toBigInteger();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return BigInteger.valueOf((long)tmp.l());
+						return BigDecimal.valueOf(tmp.l()).toBigInteger();
 					else // component == 5
-						return BigInteger.valueOf((long)tmp.i0());
+						return BigDecimal.valueOf(tmp.i0()).toBigInteger();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return BigInteger.valueOf((long)tmp.j0());
+						return BigDecimal.valueOf(tmp.j0()).toBigInteger();
 					else // component == 7
-						return BigInteger.valueOf((long)tmp.k0());
+						return BigDecimal.valueOf(tmp.k0()).toBigInteger();
 				}
 			}
 		}
