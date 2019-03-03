@@ -40,6 +40,9 @@ import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16RModul
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Matrix;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Vector;
+import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Algebra;
+import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Matrix;
+import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Vector;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Matrix;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Vector;
@@ -138,6 +141,11 @@ public class G {
 	public static final Float32Vector FLT_VEC = new Float32Vector();
 	public static final Float32Matrix FLT_MAT = new Float32Matrix();
 	// TODO: OFLT_TEN
+	
+	public static final ComplexFloat32Algebra CFLT = new ComplexFloat32Algebra();
+	public static final ComplexFloat32Vector CFLT_VEC = new ComplexFloat32Vector();
+	public static final ComplexFloat32Matrix CFLT_MAT = new ComplexFloat32Matrix();
+	// TODO: CFLT_TEN
 	
 	public static final Float64Algebra DBL = new Float64Algebra();
 	public static final Float64Vector DBL_VEC = new Float64Vector();

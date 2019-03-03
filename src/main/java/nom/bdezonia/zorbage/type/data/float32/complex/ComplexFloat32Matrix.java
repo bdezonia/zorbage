@@ -1,0 +1,716 @@
+/*
+ * Zorbage: an algebraic data hierarchy for use in numeric processing.
+ *
+ * Copyright (C) 2016-2019 Barry DeZonia
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package nom.bdezonia.zorbage.type.data.float32.complex;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.MatrixAddition;
+import nom.bdezonia.zorbage.algorithm.MatrixAssign;
+import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
+import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
+import nom.bdezonia.zorbage.algorithm.MatrixEqual;
+import nom.bdezonia.zorbage.algorithm.MatrixInfinite;
+import nom.bdezonia.zorbage.algorithm.MatrixInvert;
+import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
+import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
+import nom.bdezonia.zorbage.algorithm.MatrixIsZero;
+import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.MatrixNaN;
+import nom.bdezonia.zorbage.algorithm.MatrixNegate;
+import nom.bdezonia.zorbage.algorithm.MatrixPower;
+import nom.bdezonia.zorbage.algorithm.MatrixRound;
+import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
+import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
+import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
+import nom.bdezonia.zorbage.algorithm.MatrixUnity;
+import nom.bdezonia.zorbage.algorithm.MatrixZero;
+import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
+import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
+import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.DirectProduct;
+import nom.bdezonia.zorbage.type.algebra.Exponential;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
+public class ComplexFloat32Matrix
+	implements
+		RingWithUnity<ComplexFloat32Matrix, ComplexFloat32MatrixMember>,
+		MatrixRing<ComplexFloat32Matrix, ComplexFloat32MatrixMember, ComplexFloat32Algebra, ComplexFloat32Member>,
+		Constructible2dLong<ComplexFloat32MatrixMember>,
+		Rounding<Float32Member, ComplexFloat32MatrixMember>,
+		Norm<ComplexFloat32MatrixMember,Float32Member>,
+		DirectProduct<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>,
+		Exponential<ComplexFloat32MatrixMember>,
+		Trigonometric<ComplexFloat32MatrixMember>,
+		Hyperbolic<ComplexFloat32MatrixMember>
+{
+	public ComplexFloat32Matrix() { }
+
+	private final Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> MUL =
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			MatrixMultiply.compute(G.CFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> multiply() {
+		return MUL;
+	}
+
+	private final Procedure3<java.lang.Integer,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> POWER =
+			new Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		
+		@Override
+		public void call(Integer power, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			MatrixPower.compute(power, G.CFLT, G.CFLT_VEC, G.CFLT_MAT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure3<java.lang.Integer,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> power() {
+		return POWER;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> ZER =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			MatrixZero.compute(G.CFLT, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> zero() {
+		return ZER;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> NEG =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			MatrixNegate.compute(G.CFLT, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> negate() {
+		return NEG;
+	}
+
+	private final Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> ADD =
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			MatrixAddition.compute(G.CFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> add() {
+		return ADD;
+	}
+
+	private final Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> SUB =
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			MatrixSubtraction.compute(G.CFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> subtract() {
+		return SUB;
+	}
+
+	private final Function2<Boolean,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> EQ =
+			new Function2<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			return MatrixEqual.compute(G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Function2<Boolean,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> isEqual() {
+		return EQ;
+	}
+
+	private final Function2<Boolean,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> NEQ =
+			new Function2<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			return !isEqual().call(a, b);
+		}
+	};
+
+	@Override
+	public Function2<Boolean,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> isNotEqual() {
+		return NEQ;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> ASSIGN =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember from, ComplexFloat32MatrixMember to) {
+			MatrixAssign.compute(G.CFLT, from, to);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> assign() {
+		return ASSIGN;
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct() {
+		return new ComplexFloat32MatrixMember();
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct(ComplexFloat32MatrixMember other) {
+		return new ComplexFloat32MatrixMember(other);
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct(String s) {
+		return new ComplexFloat32MatrixMember(s);
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new ComplexFloat32MatrixMember(s, d1, d2);
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,Float32Member> NORM =
+			new Procedure2<ComplexFloat32MatrixMember, Float32Member>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, Float32Member b) {
+			MatrixSpectralNorm.compute(G.CFLT_MAT, G.FLT, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,Float32Member> norm() {
+		return NORM;
+	}
+
+	private final Procedure4<Round.Mode,Float32Member,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> ROUND =
+			new Procedure4<Round.Mode, Float32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Mode mode, Float32Member delta, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			MatrixRound.compute(G.CFLT, mode, delta, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure4<Round.Mode,Float32Member,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> round() {
+		return ROUND;
+	}
+
+	private final Function1<Boolean,ComplexFloat32MatrixMember> ISNAN =
+			new Function1<Boolean,ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32MatrixMember a) {
+			return MatrixIsNaN.compute(G.CFLT, a);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,ComplexFloat32MatrixMember> isNaN() {
+		return ISNAN;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> NAN =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			MatrixNaN.compute(G.CFLT, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> nan() {
+		return NAN;
+	}
+	
+	private final Function1<Boolean,ComplexFloat32MatrixMember> ISINF =
+			new Function1<Boolean,ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32MatrixMember a) {
+			return MatrixIsInfinite.compute(G.CFLT, a);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean,ComplexFloat32MatrixMember> isInfinite() {
+		return ISINF;
+	}
+	
+	private final Procedure1<ComplexFloat32MatrixMember> INF =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			MatrixInfinite.compute(G.CFLT, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> infinite() {
+		return INF;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> CONJ =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			MatrixConjugate.compute(G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> conjugate() {
+		return CONJ;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> TRANSP =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			MatrixTranspose.compute(G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> transpose() {
+		return TRANSP;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> CONJTRANSP =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			ComplexFloat32MatrixMember tmp = new ComplexFloat32MatrixMember();
+			conjugate().call(a, tmp);
+			transpose().call(tmp, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> conjugateTranspose() {
+		return CONJTRANSP;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32Member> DET =
+			new Procedure2<ComplexFloat32MatrixMember,ComplexFloat32Member>()
+	{				
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32Member b) {
+			MatrixDeterminant.compute(G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32Member> det() {
+		return DET;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> UNITY =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			MatrixUnity.compute(G.CFLT, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> unity() {
+		return UNITY;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> INV =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			MatrixInvert.compute(G.CFLT, G.CFLT_VEC, G.CFLT_MAT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> invert() {
+		return INV;
+	}
+
+	private final Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> DIVIDE =
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			// invert and multiply
+			ComplexFloat32MatrixMember invB = construct(b.storageType(), b.rows(), b.cols());
+			invert().call(b, invB);
+			multiply().call(a, invB, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> divide() {
+		return DIVIDE;
+	}
+
+	private final Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> DP =
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember in1, ComplexFloat32MatrixMember in2, ComplexFloat32MatrixMember out) {
+			MatrixDirectProduct.compute(G.CFLT, in1, in2, out);
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> directProduct()
+	{
+		return DP;
+	}
+
+
+	private final Procedure3<ComplexFloat32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SCALE =
+			new Procedure3<ComplexFloat32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32Member a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			MatrixScale.compute(G.CFLT, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> scale() {
+		return SCALE;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINH =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			TaylorEstimateSinh.compute(18, G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sinh() {
+		return SINH;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> COSH =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			TaylorEstimateCosh.compute(18, G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> cosh() {
+		return COSH;
+	}
+
+	private final Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINHANDCOSH = 
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember s, ComplexFloat32MatrixMember c) {
+			sinh().call(a, s);
+			cosh().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sinhAndCosh() {
+		return SINHANDCOSH;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> TANH =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			ComplexFloat32MatrixMember s = G.CFLT_MAT.construct();
+			ComplexFloat32MatrixMember c = G.CFLT_MAT.construct();
+			sinhAndCosh().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> tanh() {
+		return TANH;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINCH =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			if (isZero().call(a)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat32MatrixMember sinha = G.CFLT_MAT.construct();
+			sinh().call(a, sinha);
+			divide().call(sinha, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sinch() {
+		return SINCH;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINCHPI =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			if (isZero().call(a)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat32Member pi = G.CFLT.construct();
+			G.CFLT.PI().call(pi);
+			ComplexFloat32MatrixMember sinha = G.CFLT_MAT.construct();
+			sinh().call(a, sinha);
+			scale().call(pi, sinha, sinha);
+			ComplexFloat32MatrixMember pi_a = G.CFLT_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sinha, pi_a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sinchpi() {
+		return SINCHPI;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SIN =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			TaylorEstimateSin.compute(18, G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sin() {
+		return SIN;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> COS =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			TaylorEstimateCos.compute(18, G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> cos() {
+		return COS;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> TAN =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			ComplexFloat32MatrixMember s = G.CFLT_MAT.construct();
+			ComplexFloat32MatrixMember c = G.CFLT_MAT.construct();
+			sinAndCos().call(a, s, c);
+			divide().call(s, c, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> tan() {
+		return TAN;
+	}
+
+	private final Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINANDCOS =
+			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember s, ComplexFloat32MatrixMember c) {
+			sin().call(a, s);
+			cos().call(a, c);
+		}
+	};
+
+	@Override
+	public Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sinAndCos() {
+		return SINANDCOS;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINC =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			if (isZero().call(a)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat32MatrixMember sina = G.CFLT_MAT.construct();
+			sin().call(a, sina);
+			divide().call(sina, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sinc() {
+		return SINC;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SINCPI =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			if (isZero().call(a)) {
+				b.alloc(a.rows(), a.cols());
+				unity().call(b);
+				return;
+			}
+			ComplexFloat32Member pi = G.CFLT.construct();
+			G.CFLT.PI().call(pi);
+			ComplexFloat32MatrixMember sina = G.CFLT_MAT.construct();
+			sin().call(a, sina);
+			scale().call(pi, sina, sina);
+			ComplexFloat32MatrixMember pi_a = G.CFLT_MAT.construct();
+			scale().call(pi, a, pi_a);
+			divide().call(sina, pi_a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> sincpi() {
+		return SINCPI;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> EXP =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			TaylorEstimateExp.compute(35, G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> exp() {
+		return EXP;
+	}
+
+	private final Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> LOG =
+			new Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			TaylorEstimateLog.compute(8, G.CFLT_MAT, G.CFLT, a, b);
+		}
+	};
+
+	@Override
+	public Procedure2<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> log() {
+		return LOG;
+	}
+
+	private final Function1<Boolean, ComplexFloat32MatrixMember> ISZERO =
+			new Function1<Boolean, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32MatrixMember a) {
+			return MatrixIsZero.compute(G.CFLT, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat32MatrixMember> isZero() {
+		return ISZERO;
+	}
+}
