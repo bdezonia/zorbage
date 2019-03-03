@@ -31,6 +31,9 @@ import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Matrix;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Vector;
+import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16Algebra;
+import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16Matrix;
+import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16RModule;
 import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16Matrix;
 import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16RModule;
@@ -123,6 +126,11 @@ public class G {
 	public static final QuaternionFloat16RModule QHLF_RMOD = new QuaternionFloat16RModule();
 	public static final QuaternionFloat16Matrix QHLF_MAT = new QuaternionFloat16Matrix();
 	// TODO: QHLF_TEN
+	
+	public static final OctonionFloat16Algebra OHLF = new OctonionFloat16Algebra();
+	public static final OctonionFloat16RModule OHLF_RMOD = new OctonionFloat16RModule();
+	public static final OctonionFloat16Matrix OHLF_MAT = new OctonionFloat16Matrix();
+	// TODO: OHLF_TEN
 	
 	public static final Float32Algebra FLT = new Float32Algebra();
 	// TODO and num, vec, mat, ten for real, complex, quat, oct
