@@ -1190,32 +1190,32 @@ public final class OctonionFloat32Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return (float) r();
+					return r();
 				else // component == 1
-					return (float) i();
+					return i();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return (float) j();
+					return j();
 				else // component == 3
-					return (float) k();
+					return k();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return (float) l();
+					return l();
 				else // component == 5
-					return (float) i0();
+					return i0();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return (float) j0();
+					return j0();
 				else // component == 7
-					return (float) k0();
+					return k0();
 			}
 		}
 	}
@@ -1571,32 +1571,32 @@ public final class OctonionFloat32Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return (float) r();
+						return r();
 					else // component == 1
-						return (float) i();
+						return i();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return (float) j();
+						return j();
 					else // component == 3
-						return (float) k();
+						return k();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return (float) l();
+						return l();
 					else // component == 5
-						return (float) i0();
+						return i0();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return (float) j0();
+						return j0();
 					else // component == 7
-						return (float) k0();
+						return k0();
 				}
 			}
 		}
