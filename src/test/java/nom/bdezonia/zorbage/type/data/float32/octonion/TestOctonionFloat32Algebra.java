@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
  */
 public class TestOctonionFloat32Algebra {
 
-	private static final double TOL = 0.0000000001;
+	private static final double TOL = 0.0001;
 	
 	@Test
 	public void testConjugate() {
@@ -71,7 +71,7 @@ public class TestOctonionFloat32Algebra {
 	@Test
 	public void mathematicalMethods() {
 		
-		double tol = 0.00000000001;
+		double tol = 0.0001;
 		
 		OctonionFloat32Member a = G.OFLT.construct();
 		OctonionFloat32Member b = G.OFLT.construct();
@@ -173,8 +173,8 @@ public class TestOctonionFloat32Algebra {
 		assertEquals(6, a.k(), 0);
 		assertEquals(7, a.l(), 0);
 		assertEquals(-9, a.i0(), 0);
-		assertEquals(0.1, a.j0(), 0);
-		assertEquals(-0.3, a.k0(), 0);
+		assertEquals(0.1, a.j0(), tol);
+		assertEquals(-0.3, a.k0(), tol);
 		
 		// G.OFLT.construct(other);
 		b = G.OFLT.construct(a);
@@ -184,8 +184,8 @@ public class TestOctonionFloat32Algebra {
 		assertEquals(6, b.k(), 0);
 		assertEquals(7, b.l(), 0);
 		assertEquals(-9, b.i0(), 0);
-		assertEquals(0.1, b.j0(), 0);
-		assertEquals(-0.3, b.k0(), 0);
+		assertEquals(0.1, b.j0(), tol);
+		assertEquals(-0.3, b.k0(), tol);
 		
 		// G.OFLT.cos();
 		a.setR((float)Math.PI/2);
@@ -197,7 +197,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.cos().call(a, b);
-		assertEquals(FastMath.cos(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.cos(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -216,7 +216,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.cosh().call(a, b);
-		assertEquals(FastMath.cosh(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.cosh(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -254,7 +254,7 @@ public class TestOctonionFloat32Algebra {
 		
 		// G.OFLT.E();
 		G.OFLT.E().call(a);
-		assertEquals(FastMath.E, a.r(), 0);
+		assertEquals(FastMath.E, a.r(), tol);
 		assertEquals(0, a.i(), 0);
 		assertEquals(0, a.j(), 0);
 		assertEquals(0, a.k(), 0);
@@ -273,7 +273,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.exp().call(a,b);
-		assertEquals(FastMath.exp(2), b.r(), 0);
+		assertEquals(FastMath.exp(2), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -347,7 +347,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.log().call(a, b);
-		assertEquals(Math.log(4), b.r(), 0);
+		assertEquals(Math.log(4), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -426,11 +426,11 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(7);
 		a.setK0(8);
 		G.OFLT.norm().call(a, t);
-		assertEquals(Math.sqrt(1*1 + 2*2 + 3*3 + 4*4 + 5*5 + 6*6 + 7*7 + 8*8), t.v(), 0);
+		assertEquals(Math.sqrt(1*1 + 2*2 + 3*3 + 4*4 + 5*5 + 6*6 + 7*7 + 8*8), t.v(), tol);
 		
 		// G.OFLT.PI();
 		G.OFLT.PI().call(a);
-		assertEquals(Math.PI, a.r(), 0);
+		assertEquals(Math.PI, a.r(), tol);
 		assertEquals(0, a.i(), 0);
 		assertEquals(0, a.j(), 0);
 		assertEquals(0, a.k(), 0);
@@ -457,7 +457,7 @@ public class TestOctonionFloat32Algebra {
 		b.setJ0(0);
 		b.setK0(0);
 		G.OFLT.pow().call(a, b, c);
-		assertEquals(7*7*7*7, c.r(), tol);
+		assertEquals(7*7*7*7, c.r(), 0.0005);
 		assertEquals(0, c.i(), tol);
 		assertEquals(0, c.j(), tol);
 		assertEquals(0, c.k(), tol);
@@ -476,7 +476,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.power().call(4, a, b);
-		assertEquals(7*7*7*7, b.r(), 0);
+		assertEquals(7*7*7*7, b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -557,7 +557,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.sin().call(a, b);
-		assertEquals(FastMath.sin(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.sin(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -586,7 +586,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.sinh().call(a, b);
-		assertEquals(FastMath.sinh(Math.PI/2), b.r(), 0);
+		assertEquals(FastMath.sinh(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -653,7 +653,7 @@ public class TestOctonionFloat32Algebra {
 		a.setJ0(0);
 		a.setK0(0);
 		G.OFLT.tan().call(a, b);
-		assertEquals(FastMath.tan(Math.PI/4), b.r(), 0);
+		assertEquals(FastMath.tan(Math.PI/4), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);
 		assertEquals(0, b.k(), 0);
@@ -673,13 +673,13 @@ public class TestOctonionFloat32Algebra {
 		a.setK0(0);
 		G.OFLT.tanh().call(a, b);
 		assertEquals(FastMath.tanh(Math.PI/4), b.r(), tol);
-		assertEquals(0, b.i(), tol);
-		assertEquals(0, b.j(), tol);
-		assertEquals(0, b.k(), tol);
-		assertEquals(0, b.l(), tol);
-		assertEquals(0, b.i0(), tol);
-		assertEquals(0, b.j0(), tol);
-		assertEquals(0, b.k0(), tol);
+		assertEquals(0, b.i(), 0);
+		assertEquals(0, b.j(), 0);
+		assertEquals(0, b.k(), 0);
+		assertEquals(0, b.l(), 0);
+		assertEquals(0, b.i0(), 0);
+		assertEquals(0, b.j0(), 0);
+		assertEquals(0, b.k0(), 0);
 		
 		// G.OFLT.unity();
 		a.setR(1);
