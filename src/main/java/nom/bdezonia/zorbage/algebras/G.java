@@ -43,6 +43,9 @@ import nom.bdezonia.zorbage.type.data.float16.real.Float16Vector;
 import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Matrix;
 import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Vector;
+import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Algebra;
+import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Matrix;
+import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32RModule;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Matrix;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Vector;
@@ -146,6 +149,11 @@ public class G {
 	public static final ComplexFloat32Vector CFLT_VEC = new ComplexFloat32Vector();
 	public static final ComplexFloat32Matrix CFLT_MAT = new ComplexFloat32Matrix();
 	// TODO: CFLT_TEN
+	
+	public static final QuaternionFloat32Algebra QFLT = new QuaternionFloat32Algebra();
+	public static final QuaternionFloat32RModule QFLT_RMOD = new QuaternionFloat32RModule();
+	public static final QuaternionFloat32Matrix QFLT_MAT = new QuaternionFloat32Matrix();
+	// TODO: QFLT_TEN
 	
 	public static final Float64Algebra DBL = new Float64Algebra();
 	public static final Float64Vector DBL_VEC = new Float64Vector();
