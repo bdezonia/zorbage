@@ -62,14 +62,16 @@ public final class Float16Member
 		Settable<Float16Member>, Gettable<Float16Member>,
 		UniversalRepresentation, PrimitiveConversion
 {
+	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
+	
 	private short v;
 	
 	public Float16Member() {
-		v = Float16Util.convertFloatToHFloat(0);
+		v = ZERO;
 	}
 	
 	public Float16Member(float value) {
-		v = Float16Util.convertFloatToHFloat(value);
+		setV(value);
 	}
 	
 	public Float16Member(Float16Member value) {
@@ -79,7 +81,7 @@ public final class Float16Member
 	public Float16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		v = Float16Util.convertFloatToHFloat(val.r().floatValue());
+		setV(val.r().floatValue());
 	}
 	
 	public float v() { return Float16Util.convertHFloatToFloat(v); }
@@ -658,7 +660,7 @@ public final class Float16Member
 
 	@Override
 	public void primitiveInit() {
-		setV(0);
+		v = ZERO;
 	}
 	
 }

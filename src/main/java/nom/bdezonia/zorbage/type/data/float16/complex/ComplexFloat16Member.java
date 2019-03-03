@@ -59,6 +59,8 @@ public final class ComplexFloat16Member
 		NumberMember<ComplexFloat16Member>, PrimitiveConversion,
 		UniversalRepresentation
 {
+	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
+	
 	private short r, i;
 	
 	public ComplexFloat16Member() {
@@ -106,9 +108,9 @@ public final class ComplexFloat16Member
 	public String toString() {
     	StringBuilder builder = new StringBuilder();
     	builder.append('{');
-    	builder.append(Float16Util.convertHFloatToFloat(r));
+    	builder.append(r());
     	builder.append(',');
-    	builder.append(Float16Util.convertHFloatToFloat(i));
+    	builder.append(i());
     	builder.append('}');
     	return builder.toString();
     }
@@ -745,7 +747,6 @@ public final class ComplexFloat16Member
 
 	@Override
 	public void primitiveInit() {
-		r = Float16Util.convertFloatToHFloat(0);
-		i = Float16Util.convertFloatToHFloat(0);
+		r = i = ZERO;
 	}
 }
