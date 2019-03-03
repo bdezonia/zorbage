@@ -156,21 +156,21 @@ public final class OctonionFloat32Member
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append('{');
-		builder.append(r);
+		builder.append(r());
 		builder.append(',');
-		builder.append(i);
+		builder.append(i());
 		builder.append(',');
-		builder.append(j);
+		builder.append(j());
 		builder.append(',');
-		builder.append(k);
+		builder.append(k());
 		builder.append(',');
-		builder.append(l);
+		builder.append(l());
 		builder.append(',');
-		builder.append(i0);
+		builder.append(i0());
 		builder.append(',');
-		builder.append(j0);
+		builder.append(j0());
 		builder.append(',');
-		builder.append(k0);
+		builder.append(k0());
 		builder.append('}');
 		return builder.toString();
 	}

@@ -104,9 +104,9 @@ public final class ComplexFloat64Member
 	public String toString() {
     	StringBuilder builder = new StringBuilder();
     	builder.append('{');
-    	builder.append(r);
+    	builder.append(r());
     	builder.append(',');
-    	builder.append(i);
+    	builder.append(i());
     	builder.append('}');
     	return builder.toString();
     }

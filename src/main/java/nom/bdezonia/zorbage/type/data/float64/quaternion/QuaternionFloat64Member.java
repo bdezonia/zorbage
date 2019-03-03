@@ -123,13 +123,13 @@ public final class QuaternionFloat64Member
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append('{');
-		builder.append(r);
+		builder.append(r());
 		builder.append(',');
-		builder.append(i);
+		builder.append(i());
 		builder.append(',');
-		builder.append(j);
+		builder.append(j());
 		builder.append(',');
-		builder.append(k);
+		builder.append(k());
 		builder.append('}');
 		return builder.toString();
 	}
