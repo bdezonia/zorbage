@@ -284,7 +284,7 @@ public final class OctonionFloat32Member
 
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override

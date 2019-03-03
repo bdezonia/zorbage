@@ -258,7 +258,7 @@ public final class ComplexFloat32MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override

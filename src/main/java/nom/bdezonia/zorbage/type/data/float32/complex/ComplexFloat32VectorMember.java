@@ -232,7 +232,7 @@ public final class ComplexFloat32VectorMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
