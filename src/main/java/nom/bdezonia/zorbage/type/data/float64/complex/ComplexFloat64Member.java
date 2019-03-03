@@ -61,13 +61,12 @@ public final class ComplexFloat64Member
 	private double r, i;
 	
 	public ComplexFloat64Member() {
-		r = 0;
-		i = 0;
+		primitiveInit();
 	}
 	
 	public ComplexFloat64Member(double rvalue, double ivalue) {
-		r = rvalue;
-		i = ivalue;
+		setR(rvalue);
+		setI(ivalue);
 	}
 	
 	public ComplexFloat64Member(ComplexFloat64Member value) {
@@ -77,8 +76,8 @@ public final class ComplexFloat64Member
 	public ComplexFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		r = val.r().doubleValue();
-		i = val.i().doubleValue();
+		setR(val.r().doubleValue());
+		setI(val.i().doubleValue());
 	}
 
 	public double r() { return r; }

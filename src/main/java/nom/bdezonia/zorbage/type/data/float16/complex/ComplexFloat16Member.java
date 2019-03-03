@@ -64,8 +64,7 @@ public final class ComplexFloat16Member
 	private short r, i;
 	
 	public ComplexFloat16Member() {
-		setR(0);
-		setI(0);
+		primitiveInit();
 	}
 	
 	public ComplexFloat16Member(double rvalue, double ivalue) {

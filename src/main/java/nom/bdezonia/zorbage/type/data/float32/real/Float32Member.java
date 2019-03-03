@@ -61,11 +61,11 @@ public final class Float32Member
 	private float v;
 	
 	public Float32Member() {
-		v = 0;
+		primitiveInit();
 	}
 	
 	public Float32Member(float value) {
-		v = value;
+		setV(value);
 	}
 	
 	public Float32Member(Float32Member value) {
@@ -75,7 +75,7 @@ public final class Float32Member
 	public Float32Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		v = val.r().floatValue();
+		setV(val.r().floatValue());
 	}
 
 	public float v() { return v; }
@@ -139,7 +139,7 @@ public final class Float32Member
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		v = rep.getValue().r().floatValue();
+		setV(rep.getValue().r().floatValue());
 	}
 
 	@Override

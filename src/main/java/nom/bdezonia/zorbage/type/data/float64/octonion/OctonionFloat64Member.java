@@ -63,18 +63,18 @@ public final class OctonionFloat64Member
 	private double r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat64Member() {
-		r = i = j = k = l = i0 = j0 = k0 = 0;
+		primitiveInit();
 	}
 	
 	public OctonionFloat64Member(double r, double i, double j, double k, double l, double i0, double j0, double k0) {
-		this.r = r;
-		this.i = i;
-		this.j = j;
-		this.k = k;
-		this.l = l;
-		this.i0 = i0;
-		this.j0 = j0;
-		this.k0 = k0;
+		setR(r);
+		setI(i);
+		setJ(j);
+		setK(k);
+		setL(l);
+		setI0(i0);
+		setJ0(j0);
+		setK0(k0);
 	}
 	
 	public OctonionFloat64Member(OctonionFloat64Member value) {
@@ -84,14 +84,14 @@ public final class OctonionFloat64Member
 	public OctonionFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		r = val.r().doubleValue();
-		i = val.i().doubleValue();
-		j = val.j().doubleValue();
-		k = val.k().doubleValue();
-		l = val.l().doubleValue();
-		i0 = val.i0().doubleValue();
-		j0 = val.j0().doubleValue();
-		k0 = val.k0().doubleValue();
+		setR(val.r().doubleValue());
+		setI(val.i().doubleValue());
+		setJ(val.j().doubleValue());
+		setK(val.k().doubleValue());
+		setL(val.l().doubleValue());
+		setI0(val.i0().doubleValue());
+		setJ0(val.j0().doubleValue());
+		setK0(val.k0().doubleValue());
 	}
 
 	public double r() { return r; }
@@ -141,7 +141,7 @@ public final class OctonionFloat64Member
 
 	@Override
 	public void get(OctonionFloat64Member other) {
-		if (this == other) return;
+		//if (this == other) return;
 		other.r = r;
 		other.i = i;
 		other.j = j;

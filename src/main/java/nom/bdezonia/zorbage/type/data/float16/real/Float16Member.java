@@ -67,7 +67,7 @@ public final class Float16Member
 	private short v;
 	
 	public Float16Member() {
-		v = ZERO;
+		primitiveInit();
 	}
 	
 	public Float16Member(float value) {
@@ -81,7 +81,7 @@ public final class Float16Member
 	public Float16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		setV(val.r().floatValue());
+		setV(val.r().doubleValue());
 	}
 	
 	public float v() { return Float16Util.convertHFloatToFloat(v); }

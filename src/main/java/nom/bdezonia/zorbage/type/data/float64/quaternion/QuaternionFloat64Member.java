@@ -62,14 +62,14 @@ public final class QuaternionFloat64Member
 	private double r, i, j, k;
 	
 	public QuaternionFloat64Member() {
-		r = i = j = k = 0;
+		primitiveInit();
 	}
 	
 	public QuaternionFloat64Member(double r, double i, double j, double k) {
-		this.r = r;
-		this.i = i;
-		this.j = j;
-		this.k = k;
+		setR(r);
+		setI(i);
+		setJ(j);
+		setK(k);
 	}
 	
 	public QuaternionFloat64Member(QuaternionFloat64Member value) {
@@ -79,10 +79,10 @@ public final class QuaternionFloat64Member
 	public QuaternionFloat64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		r = val.r().doubleValue();
-		i = val.i().doubleValue();
-		j = val.j().doubleValue();
-		k = val.k().doubleValue();
+		setR(val.r().doubleValue());
+		setI(val.i().doubleValue());
+		setJ(val.j().doubleValue());
+		setK(val.k().doubleValue());
 	}
 
 	public double r() { return r; }
@@ -112,7 +112,7 @@ public final class QuaternionFloat64Member
 
 	@Override
 	public void get(QuaternionFloat64Member other) {
-		if (this == other) return;
+		//if (this == other) return;
 		other.r = r;
 		other.i = i;
 		other.j = j;

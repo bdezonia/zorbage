@@ -61,11 +61,11 @@ public final class Float64Member
 	private double v;
 	
 	public Float64Member() {
-		v = 0;
+		primitiveInit();
 	}
 	
 	public Float64Member(double value) {
-		v = value;
+		setV(value);
 	}
 	
 	public Float64Member(Float64Member value) {
@@ -75,7 +75,7 @@ public final class Float64Member
 	public Float64Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		v = val.r().doubleValue();
+		setV(val.r().doubleValue());
 	}
 
 	public double v() { return v; }
@@ -139,7 +139,7 @@ public final class Float64Member
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		v = rep.getValue().r().doubleValue();
+		setV(rep.getValue().r().doubleValue());
 	}
 
 	@Override
