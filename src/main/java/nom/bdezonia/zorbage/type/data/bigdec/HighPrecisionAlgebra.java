@@ -95,7 +95,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public Boolean call(HighPrecisionMember a, HighPrecisionMember b) {
-			return !isEqual().call(a, b);
+			return compare().call(a, b) != 0;
 		}
 	};
 		
