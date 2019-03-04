@@ -40,7 +40,8 @@ public class ConcatenatedDataSource<T extends Algebra<T,U>,U>
 {
 	private final IndexedDataSource<?,U> first;
 	private final IndexedDataSource<?,U> second;
-
+	private final long sz;
+	
 	/**
 	 * 
 	 * @param a
@@ -51,6 +52,7 @@ public class ConcatenatedDataSource<T extends Algebra<T,U>,U>
 			throw new IllegalArgumentException("the two input lists are too long to add together");
 		this.first = a;
 		this.second = b;
+		this.sz = a.size() + b.size();
 	}
 	
 	@Override
@@ -83,7 +85,7 @@ public class ConcatenatedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long size() {
-		return first.size() + second.size();
+		return sz;
 	}
 
 }

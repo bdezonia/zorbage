@@ -41,6 +41,7 @@ public class ZeroPaddedDataSource<T extends Algebra<T,U>,U>
 	final private T algebra;
 	final private IndexedDataSource<?,U> storage;
 	final private U zero;
+	final private long sz;
 	
 	/**
 	 * 
@@ -51,6 +52,7 @@ public class ZeroPaddedDataSource<T extends Algebra<T,U>,U>
 		this.algebra = algebra;
 		this.storage = storage;
 		this.zero = algebra.construct();
+		this.sz = storage.size();
 	}
 
 	@Override
@@ -82,6 +84,6 @@ public class ZeroPaddedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long size() {
-		return storage.size();
+		return sz;
 	}
 }

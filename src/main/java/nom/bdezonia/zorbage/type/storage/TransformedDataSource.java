@@ -42,6 +42,7 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 	private final Algebra<?,U> uAlg;
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
+	private final long sz;
 	
 	/**
 	 * 
@@ -55,6 +56,7 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 		this.uCollection = uCollection;
 		this.uToW = uToW;
 		this.wToU = wToU;
+		this.sz = uCollection.size();
 	}
 
 	/**
@@ -91,7 +93,7 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 	 */
 	@Override
 	public long size() {
-		return uCollection.size();
+		return sz;
 	}
 	
 	private final ThreadLocal<U> tmpU = new ThreadLocal<U>() {

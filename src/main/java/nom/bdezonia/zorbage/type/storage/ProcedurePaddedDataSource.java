@@ -42,7 +42,8 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	final private T algebra;
 	final private IndexedDataSource<?,U> storage;
 	final private Procedure2<Long,U> proc;
-	final private U zero;
+	final private long sz;
+	final private ThreadLocal<U> tmp;
 
 	/**
 	 * 
@@ -54,7 +55,13 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 		this.algebra = algebra;
 		this.storage = storage;
 		this.proc = proc;
-		this.zero = algebra.construct();
+		this.sz = storage.size();
+		this.tmp = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return algebra.construct();
+			}
+		};
 	}
 
 	@Override
@@ -66,8 +73,10 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public void set(long index, U value) {
 		if (index < 0 || index >= storage.size()) {
-			if (algebra.isNotEqual().call(zero, value))
-				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
+			U t = tmp.get();
+			proc.call(index, t);
+			if (algebra.isNotEqual().call(t, value))
+				throw new IllegalArgumentException("Out of bounds value does not match out of bounds procedure");
 		}
 		else {
 			storage.set(index, value);
@@ -86,6 +95,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long size() {
-		return storage.size();
+		return sz;
 	}
+
 }
