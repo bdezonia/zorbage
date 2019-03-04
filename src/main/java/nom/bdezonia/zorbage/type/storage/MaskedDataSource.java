@@ -44,6 +44,7 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 	private final long listSize;
 	private final long maskSize;
 	private final long trueCount;
+	private final ThreadLocal<BooleanMember> bTmp;
 	
 	/**
 	 * 
@@ -61,14 +62,20 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 			this.maskSize = mSz;
 		if (maskSize == 0)
 			throw new IllegalArgumentException("mask must not be of length 0");
-		BooleanMember b = G.BOOL.construct();
+		this.bTmp = new ThreadLocal<BooleanMember>() {
+			@Override
+			protected BooleanMember initialValue() {
+				return G.BOOL.construct();
+			}
+		};
+		BooleanMember b = bTmp.get();
 		long count = 0;
 		for (long i = 0; i < maskSize; i++) {
 			mask.get(i, b);
 			if (b.v())
 				count++;
 		}
-		trueCount = count;
+		this.trueCount = count;
 	}
 	
 	@Override
@@ -101,7 +108,7 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long size() {
-		BooleanMember b = G.BOOL.construct();
+		BooleanMember b = bTmp.get();
 		long numFullReps = listSize / maskSize;
 		long sz = numFullReps * trueCount;
 		long partialMaskSize = listSize % maskSize;
@@ -114,7 +121,7 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 	}
 
 	private long findPosition(long index) {
-		BooleanMember b = G.BOOL.construct();
+		BooleanMember b = bTmp.get();
 		long numFullReps = index / trueCount;
 		long pos = numFullReps * maskSize;
 		long found = 0;
