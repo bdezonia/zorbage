@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algebras;
 
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Algebra;
@@ -118,6 +119,8 @@ public class G {
 	// TODO: BIGDEC
 	
 	public static final UnboundedIntAlgebra BIGINT = new UnboundedIntAlgebra();
+	
+	public static final HighPrecisionAlgebra BIGDEC = new HighPrecisionAlgebra();
 	
 	public static final RationalAlgebra RAT = new RationalAlgebra();
 	
