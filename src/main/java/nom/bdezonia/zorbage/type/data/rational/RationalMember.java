@@ -104,10 +104,11 @@ public class RationalMember
 	}
 	
 	public void setV(BigInteger n, BigInteger d) {
-		int comparison = d.compareTo(BigInteger.ZERO);
-		if (comparison == 0)
+		int signum = d.signum();
+		if (signum == 0)
 			throw new IllegalArgumentException("divide by zero");
-		if (comparison < 0) {
+		if (signum < 0) {
+			// denominator is negative. normalize so that sign stored in numerator.
 			n = n.negate();
 			d = d.negate();
 		}
