@@ -104,17 +104,21 @@ public class RationalMember
 	}
 	
 	public void setV(BigInteger n, BigInteger d) {
-		if (d.equals(BigInteger.ZERO))
+		int comparison = d.compareTo(BigInteger.ZERO);
+		if (comparison == 0)
 			throw new IllegalArgumentException("divide by zero");
-		if (d.compareTo(BigInteger.ZERO) < 0) {
+		if (comparison < 0) {
 			n = n.negate();
 			d = d.negate();
 		}
-		if (n.equals(BigInteger.ZERO))
+		if (n.equals(BigInteger.ZERO)) {
 			d = BigInteger.ONE;
-		BigInteger gcd = n.gcd(d);
-		this.n = n.divide(gcd);
-		this.d = d.divide(gcd);
+		}
+		else {
+			BigInteger gcd = n.gcd(d);
+			this.n = n.divide(gcd);
+			this.d = d.divide(gcd);
+		}
 	}
 	
 	@Override
