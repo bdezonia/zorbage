@@ -63,8 +63,7 @@ public class RationalMember
 	BigInteger n, d;
 	
 	public RationalMember() {
-		this.n = BigInteger.ZERO;
-		this.d = BigInteger.ONE;
+		primitiveInit();
 	}
 
 	public RationalMember(RationalMember other) {
@@ -90,7 +89,11 @@ public class RationalMember
 	public BigDecimal v() {
 		return new BigDecimal(n).divide(new BigDecimal(d), MC);
 	}
-
+	
+	public BigInteger n() { return n; }
+	
+	public BigInteger d() { return d; }
+	
 	public void setV(BigDecimal v) {
 		setV(v.multiply(SHIFTBD, MC).toBigInteger(), SHIFT);
 	}
@@ -100,7 +103,7 @@ public class RationalMember
 		this.d = BigInteger.ONE;
 	}
 	
-	protected void setV(BigInteger n, BigInteger d) {
+	public void setV(BigInteger n, BigInteger d) {
 		if (d.equals(BigInteger.ZERO))
 			throw new IllegalArgumentException("divide by zero");
 		if (d.compareTo(BigInteger.ZERO) < 0) {

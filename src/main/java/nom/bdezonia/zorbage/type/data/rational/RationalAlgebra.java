@@ -335,7 +335,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Integer call(RationalMember a) {
-			return a.n.compareTo(BigInteger.ZERO);
+			return a.n.signum();
 		}
 	};
 
