@@ -115,7 +115,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a) {
-			return a.n.equals(BigInteger.ZERO);
+			return a.n.signum() == 0;
 		}
 	};
 

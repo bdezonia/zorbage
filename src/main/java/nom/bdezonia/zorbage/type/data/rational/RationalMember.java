@@ -112,7 +112,7 @@ public class RationalMember
 			n = n.negate();
 			d = d.negate();
 		}
-		if (n.equals(BigInteger.ZERO)) {
+		if (n.signum() == 0) {
 			d = BigInteger.ONE;
 		}
 		else {
