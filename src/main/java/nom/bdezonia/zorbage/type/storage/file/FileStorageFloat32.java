@@ -67,8 +67,8 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setLocals(U type) {
-		this.type = type.allocate();
+	protected void setLocals(U t) {
+		this.type = t.allocate();
 		this.tmpA = new ThreadLocal<float[]>() {
 			@Override
 			protected float[] initialValue() {

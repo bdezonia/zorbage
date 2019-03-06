@@ -67,8 +67,8 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setLocals(U type) {
-		this.type = type.allocate();
+	protected void setLocals(U t) {
+		this.type = t.allocate();
 		this.tmpA = new ThreadLocal<int[]>() {
 			@Override
 			protected int[] initialValue() {

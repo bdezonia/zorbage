@@ -67,8 +67,8 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setLocals(U type) {
-		this.type = type.allocate();
+	protected void setLocals(U t) {
+		this.type = t.allocate();
 		this.tmpA = new ThreadLocal<short[]>() {
 			@Override
 			protected short[] initialValue() {

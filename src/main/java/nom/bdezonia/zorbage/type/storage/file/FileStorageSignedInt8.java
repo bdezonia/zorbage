@@ -67,8 +67,8 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setLocals(U type) {
-		this.type = type.allocate();
+	protected void setLocals(U t) {
+		this.type = t.allocate();
 		this.tmpA = new ThreadLocal<byte[]>() {
 			@Override
 			protected byte[] initialValue() {

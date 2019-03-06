@@ -51,8 +51,8 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	 * @param storage
 	 * @param proc
 	 */
-	public ProcedurePaddedDataSource(T algebra, IndexedDataSource<?,U> storage, Procedure2<Long,U> proc) {
-		this.algebra = algebra;
+	public ProcedurePaddedDataSource(T alg, IndexedDataSource<?,U> storage, Procedure2<Long,U> proc) {
+		this.algebra = alg;
 		this.storage = storage;
 		this.proc = proc;
 		this.sz = storage.size();

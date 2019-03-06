@@ -67,8 +67,8 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void setLocals(U type) {
-		this.type = type.allocate();
+	protected void setLocals(U t) {
+		this.type = t.allocate();
 		this.tmpA = new ThreadLocal<boolean[]>() {
 			@Override
 			protected boolean[] initialValue() {

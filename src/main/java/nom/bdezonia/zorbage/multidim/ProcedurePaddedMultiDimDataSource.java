@@ -60,7 +60,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		this.tmp = new ThreadLocal<U>() {
 			@Override
 			protected U initialValue() {
-				return alg.construct();
+				return algebra.construct();
 			}
 		};
 	}
