@@ -70,7 +70,7 @@ public class TrimmedDataSource<T extends Algebra<T,U>, U>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= size())
 			throw new IllegalArgumentException("out of bounds index exception");
-		list.set(index+first, value);
+		list.set(first+index, value);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class TrimmedDataSource<T extends Algebra<T,U>, U>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= size())
 			throw new IllegalArgumentException("out of bounds index exception");
-		list.get(index+first, value);
+		list.get(first+index, value);
 	}
 
 	@Override
