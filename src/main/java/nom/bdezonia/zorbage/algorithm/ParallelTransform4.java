@@ -76,10 +76,10 @@ public class ParallelTransform4 {
 		for (int i = 0; i < numProcs; i++) {
 			long thLast;
 			if (i != numProcs-1) {
-				thLast = thOffset + slice;
+				thLast = thOffset + slice - 1;
 			}
 			else {
-				thLast = a.size();
+				thLast = a.size() - 1;
 			}
 			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thLast);
 			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thLast);
