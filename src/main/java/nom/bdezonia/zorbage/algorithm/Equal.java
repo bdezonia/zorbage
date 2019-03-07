@@ -48,30 +48,11 @@ public class Equal {
 	public static <T extends Algebra<T,U>, U>
 		boolean compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		long aSize = a.size();
-		long bSize = b.size();
-		if (aSize != bSize) return false;
-		return compute(algebra, 0, 0, aSize, a, b);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param a
-	 * @param b
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		boolean compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmp1);
+			b.get(i, tmp2);
 			if (algebra.isNotEqual().call(tmp1, tmp2))
 				return false;
 		}

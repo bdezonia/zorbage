@@ -49,31 +49,11 @@ public class DataConvert {
 	 * 
 	 * @param fromAlgebra
 	 * @param toAlgebra
-	 * @param from
-	 * @param to
-	 */
-	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V extends Algebra<V,W>, W extends PrimitiveConversion>
-		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<U> from, IndexedDataSource<W> to)
-	{
-		long fromSize = from.size();
-		long toSize = to.size();
-		if (fromSize > toSize)
-			throw new IllegalArgumentException("mismatched list sizes");
-		compute(fromAlgebra, toAlgebra, 0, 0, fromSize, from, to);
-	}
-
-	/**
-	 * 
-	 * @param fromAlgebra
-	 * @param toAlgebra
-	 * @param fromStart
-	 * @param toStart
-	 * @param count
 	 * @param fromList
 	 * @param toList
 	 */
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
-		void compute(T fromAlgebra, V toAlgebra, long fromStart, long toStart, long count, IndexedDataSource<U> fromList, IndexedDataSource<W> toList)
+		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<U> fromList, IndexedDataSource<W> toList)
 	{
 		U from = fromAlgebra.construct();
 		W to = toAlgebra.construct();
@@ -81,10 +61,10 @@ public class DataConvert {
 		IntegerIndex tmp1 = new IntegerIndex(numD);
 		IntegerIndex tmp2 = new IntegerIndex(numD);
 		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (long i = 0; i < count; i++) {
-			fromList.get(fromStart+i, from);
+		for (long i = 0; i < fromList.size(); i++) {
+			fromList.get(i, from);
 			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from, to);
-			toList.set(toStart+i, to);
+			toList.set(i, to);
 		}
 	}
 

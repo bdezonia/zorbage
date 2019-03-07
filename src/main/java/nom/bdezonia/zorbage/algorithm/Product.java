@@ -47,30 +47,12 @@ public class Product {
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		compute(alg, 0, storage.size(), storage, result);
-	}
-
-	/**
-	 * 
-	 * @param alg
-	 * @param start
-	 * @param count
-	 * @param storage
-	 * @param result
-	 */
-	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U result)
-	{
-		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Product method");
-		if (count < 0) throw new IllegalArgumentException("count must be >= 0 in Product method");
-		if (start + count > storage.size()) throw new IllegalArgumentException("start+count must be <= storage length in Product method");
-	
 		U value = alg.construct();
 		U prod = alg.construct();
-		if (count > 0) {
+		if (storage.size() > 0) {
 			alg.unity().call(prod);
-			for (long i = 0; i < count; i++) {
-				storage.get(start+i, value);
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
 				alg.multiply().call(prod, value, prod);
 			}
 		}

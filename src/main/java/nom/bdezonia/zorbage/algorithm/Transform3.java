@@ -42,38 +42,15 @@ public class Transform3 {
 	/**
 	 * 
 	 * @param algU
-	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
-	 * @param a
-	 * @param b
-	 */
-	public static final <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
-	{
-		compute(algU, algU, algU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
-	}
-	
-	/**
-	 * 
-	 * @param algU
 	 * @param algW
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
 	 * @param a
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T algU, V algW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b)
+		void compute(T algU, V algW, Procedure3<U,W,W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b)
 	{
-		compute(algU, algW, algW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
+		compute(algU, algW, algW, proc, a, b, b);
 	}
 
 	/**
@@ -82,31 +59,21 @@ public class Transform3 {
 	 * @param algW
 	 * @param algY
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param cStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
-	 * @param cStride
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
+		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
 	{
 		U valueU = algU.construct();
 		W valueW = algW.construct();
 		Y valueY = algY.construct();
-		for (long i = aStart, j = bStart, k = cStart, m = 0; m < count; m++) {
+		for (long i = 0; i < a.size(); i++) {
 			a.get(i, valueU);
-			b.get(j, valueW);
+			b.get(i, valueW);
 			proc.call(valueU, valueW, valueY);
-			c.set(k, valueY);
-			i += aStride;
-			j += bStride;
-			k += cStride;
+			c.set(i, valueY);
 		}
 	}
 

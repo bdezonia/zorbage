@@ -48,30 +48,13 @@ public class ReplaceCopyIf {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, Condition<U> cond, U new_value, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		compute(algebra, cond, new_value, 0, 0, a.size(), a, b);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param cond
-	 * @param new_value
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, Condition<U> cond, U new_value, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmp);
 			if (cond.isTrue(tmp))
-				b.set(bStart+i, new_value);
+				b.set(i, new_value);
 			else
-				b.set(bStart+i, tmp);
+				b.set(i, tmp);
 		}
 	}
 }

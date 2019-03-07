@@ -52,35 +52,20 @@ public class Search {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
-		return compute(algebra,elements,0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param elements
-	 * @param start
-	 * @param count
-	 * @param a
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, IndexedDataSource<U> elements, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmpA = algebra.construct();
 		U element = algebra.construct();
 		final long max = elements.size();
-		for (long i = 0; i < count - max; i++) {
+		for (long i = 0; i < a.size() - max; i++) {
 			for (long j = 0; j < max; j++) {
-				a.get(start+i+j, tmpA);
+				a.get(i+j, tmpA);
 				elements.get(j, element);
 				if (algebra.isNotEqual().call(tmpA, element))
 					break;
 				if (j == max-1)
-					return start+i;
+					return i;
 			}
 		}
-		return start+count;
+		return a.size();
 	}	
 
 	/**
@@ -94,36 +79,20 @@ public class Search {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
-		return compute(algebra, cond, elements, 0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param cond
-	 * @param elements
-	 * @param start
-	 * @param count
-	 * @param a
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> elements, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmpA = algebra.construct();
 		U element = algebra.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, element);
 		final long max = elements.size();
-		for (long i = 0; i < count - max; i++) {
+		for (long i = 0; i < a.size() - max; i++) {
 			for (long j = 0; j < max; j++) {
-				a.get(start+i+j, tmpA);
+				a.get(i+j, tmpA);
 				elements.get(j, element);
 				if (!cond.isTrue(tuple))
 					break;
 				if (j == max-1)
-					return start+i;
+					return i;
 			}
 		}
-		return start+count;
+		return a.size();
 	}	
 }

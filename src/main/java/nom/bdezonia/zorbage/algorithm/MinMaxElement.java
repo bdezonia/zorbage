@@ -49,30 +49,15 @@ public class MinMaxElement {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U min, U max)
 	{
-		compute(alg, 0, storage.size(), storage, min, max);
-	}
-
-	/**
-	 * 
-	 * @param alg
-	 * @param start
-	 * @param count
-	 * @param storage
-	 * @param min
-	 * @param max
-	 */
-	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U min, U max)
-	{
-		if (count <= 0)
+		if (storage.size() <= 0)
 			throw new IllegalArgumentException("minmax undefined for empty list");
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();
-		storage.get(start, min);
+		storage.get(0, min);
 		alg.assign().call(min, max);
 		long i = 1;
-		if ((count & 1) == 0) {
-			storage.get(start+1, tmp1);
+		if ((storage.size() & 1) == 0) {
+			storage.get(1, tmp1);
 			if (alg.isGreater().call(tmp1, max)) {
 				alg.assign().call(tmp1, max);
 			}
@@ -81,9 +66,9 @@ public class MinMaxElement {
 			}
 			i++;
 		}
-		while (i < count) {
-			storage.get(start+i, tmp1);
-			storage.get(start+i+1, tmp2);
+		while (i < storage.size()) {
+			storage.get(i, tmp1);
+			storage.get(i+1, tmp2);
 			if (alg.isGreater().call(tmp1, tmp2)) {
 				if (alg.isGreater().call(tmp1, max)) {
 					alg.assign().call(tmp1, max);

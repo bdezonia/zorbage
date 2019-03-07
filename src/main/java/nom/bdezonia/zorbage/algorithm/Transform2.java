@@ -41,61 +41,21 @@ public class Transform2 {
 
 	/**
 	 * 
-	 * @param alg
-	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
-	 * @param a
-	 * @param b
-	 */
-	public static final <T extends Algebra<T,U>,U>
-		void compute(T alg, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
-		compute(alg, alg, proc, aStart, bStart, count, aStride, bStride, a, b);
-	}
-
-	/**
-	 * 
-	 * @param alg
-	 * @param proc
-	 * @param start
-	 * @param count
-	 * @param stride
-	 * @param a
-	 */
-	public static final <T extends Algebra<T,U>,U>
-		void compute(T alg, Procedure2<U,U> proc, long start, long count, long stride, IndexedDataSource<U> a)
-	{
-		compute(alg, alg, proc, start, start, count, stride, stride, a, a);
-	}
-
-	/**
-	 * 
 	 * @param algU
 	 * @param algW
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
 	 * @param a
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>,U,V extends Algebra<V,W>,W>
-		void compute(T algU, V algW, Procedure2<U,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b)
+		void compute(T algU, V algW, Procedure2<U,W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b)
 	{
 		U valueU = algU.construct();
 		W valueW = algW.construct();
-		for (long i = aStart, j = bStart, c = 0; c < count; c++) {
+		for (long i = 0; i < a.size(); i++) {
 			a.get(i, valueU);
 			proc.call(valueU, valueW);
-			b.set(j, valueW);
-			i += aStride;
-			j += bStride;
+			b.set(i, valueW);
 		}
 	}
 

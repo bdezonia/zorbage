@@ -46,26 +46,11 @@ public class FindEnd {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, IndexedDataSource<U> values, IndexedDataSource<U> a)
 	{
-		return compute(algebra, values, 0, a.size(), a);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param values
-	 * @param start
-	 * @param count
-	 * @param a
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, IndexedDataSource<U> values, long start, long count, IndexedDataSource<U> a)
-	{
 		long sz = values.size();
-		if (sz == 0 || count < sz) return start + count;
+		if (sz == 0 || a.size() < sz) return a.size();
 		U tmpA = algebra.construct();
 		U tmpV = algebra.construct();
-		for (long i = start+count-sz; i >= 0; i--) {
+		for (long i = a.size()-sz; i >= 0; i--) {
 			for (int j = 0; j < sz; j++) {
 				a.get(i+j, tmpA);
 				values.get(j, tmpV);
@@ -75,6 +60,6 @@ public class FindEnd {
 					return i;
 			}
 		}
-		return start + count;
+		return a.size();
 	}
 }

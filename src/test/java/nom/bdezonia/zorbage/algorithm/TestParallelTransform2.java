@@ -80,7 +80,7 @@ public class TestParallelTransform2 {
 		Generate.compute(algebra, algebra.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		ParallelTransform2.compute(algebra, algebra, algebra.sin(), 0, 0, a.size(), 1, 1, a, a);
+		ParallelTransform2.compute(algebra, algebra, algebra.sin(), a, a);
 		
 		assertTrue(true);
 	}

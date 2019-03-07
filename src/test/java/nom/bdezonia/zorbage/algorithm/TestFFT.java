@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.type.storage.TrimmedDataSource;
 
 /**
  * 
@@ -63,8 +64,10 @@ public class TestFFT {
 				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start1,inc1);
 		Ramp<SignedInt32Algebra, SignedInt32Member> ramp2 =
 				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start2,inc2);
-		Fill.compute(G.INT32, ramp1, 0, 3, poly1);
-		Fill.compute(G.INT32, ramp2, 0, 3, poly2);
+		TrimmedDataSource<SignedInt32Algebra,SignedInt32Member> tr1 = new TrimmedDataSource<>(poly1, 0, 2);
+		TrimmedDataSource<SignedInt32Algebra,SignedInt32Member> tr2 = new TrimmedDataSource<>(poly2, 0, 2);
+		Fill.compute(G.INT32, ramp1, tr1);
+		Fill.compute(G.INT32, ramp2, tr2);
 		long n = FFT.enclosingPowerOf2(poly1.size());
 		IndexedDataSource<ComplexFloat64Member> data1 =
 				Storage.allocate(n, cdbl);

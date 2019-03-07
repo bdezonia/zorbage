@@ -48,30 +48,14 @@ public class Sample {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, int n, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		compute(algebra, n, 0, 0, a.size(), a, b);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param n
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, int n, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
-		if (n > count)
+		if (n > a.size())
 			throw new IllegalArgumentException("n too large");
 		U tmp = algebra.construct();
 		Random rng = new Random(System.currentTimeMillis());
-		for (long i = 0; i < count; i++) {
+		for (long i = 0; i < a.size(); i++) {
 			int j = rng.nextInt(n);
-			a.get(aStart+j, tmp);
-			b.set(bStart+i, tmp);
+			a.get(j, tmp);
+			b.set(i, tmp);
 		}
 	}
 }

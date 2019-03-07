@@ -46,28 +46,15 @@ public class Shuffle {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, IndexedDataSource<U> a)
 	{
-		compute(algebra, 0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param start
-	 * @param count
-	 * @param a
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
 		Random rng = new Random(System.currentTimeMillis());
-		for (long i = 0; i < count-1; i++) {
-			long index = (long)(Math.round((count-1-i)*rng.nextDouble()));
-			a.get(start+i, tmp1);
-			a.get(start+i+index, tmp2);
-			a.set(start+i, tmp2);
-			a.set(start+i+index, tmp1);
+		for (long i = 0; i < a.size()-1; i++) {
+			long index = (long)(Math.round((a.size()-1-i)*rng.nextDouble()));
+			a.get(i, tmp1);
+			a.get(i+index, tmp2);
+			a.set(i, tmp2);
+			a.set(i+index, tmp1);
 		}
 	}
 }

@@ -44,15 +44,17 @@ public class Fill {
 	/**
 	 * 
 	 * @param algebra
-	 * @param value
 	 * @param storage
+	 * @param value
 	 */
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, U value, IndexedDataSource<U> storage)
 	{
-		compute(algebra, value, 0, storage.size(), storage);
+		for (long i = 0; i < storage.size(); i++) {
+			storage.set(i, value);
+		}
 	}
-
+	
 	/**
 	 * 
 	 * @param algebra
@@ -62,40 +64,10 @@ public class Fill {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
-		compute(algebra, proc, 0, storage.size(), storage);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param storage
-	 * @param value
-	 * @param start
-	 * @param count
-	 */
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, U value, long start, long count, IndexedDataSource<U> storage)
-	{
-		for (long i = 0; i < count; i++) {
-			storage.set(start+i, value);
-		}
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param storage
-	 * @param proc
-	 * @param start
-	 * @param count
-	 */
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Procedure1<U> proc, long start, long count, IndexedDataSource<U> storage)
-	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < count; i++) {
+		for (long i = 0; i < storage.size(); i++) {
 			proc.call(tmp);
-			storage.set(start+i, tmp);
+			storage.set(i, tmp);
 		}
 	}
 

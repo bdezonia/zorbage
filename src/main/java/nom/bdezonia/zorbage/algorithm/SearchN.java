@@ -48,33 +48,17 @@ public class SearchN {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, long n, U value, IndexedDataSource<U> a)
 	{
-		return compute(algebra, n, value, 0, a.size(), a);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param n
-	 * @param value
-	 * @param start
-	 * @param count
-	 * @param a
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, U value, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmpA = algebra.construct();
-		for (long i = 0; i < count-n; i++) {
+		for (long i = 0; i < a.size()-n; i++) {
 			for (long j = 0; j < n; j++) {
-				a.get(start+i+j, tmpA);
+				a.get(i+j, tmpA);
 				if (algebra.isNotEqual().call(tmpA, value))
 					break;
 				if (j == n-1)
-					return start+i;
+					return i;
 			}
 		}
-		return start+count;
+		return a.size();
 	}
 
 	/**
@@ -88,32 +72,16 @@ public class SearchN {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, long n, Condition<U> cond, IndexedDataSource<U> a)
 	{
-		return compute(algebra, n, cond, 0, a.size(), a);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param n
-	 * @param cond
-	 * @param start
-	 * @param count
-	 * @param a
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, Condition<U> cond, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmpA = algebra.construct();
-		for (long i = 0; i < count-n; i++) {
+		for (long i = 0; i < a.size()-n; i++) {
 			for (long j = 0; j < n; j++) {
-				a.get(start+i+j, tmpA);
+				a.get(i+j, tmpA);
 				if (!cond.isTrue(tmpA))
 					break;
 				if (j == n-1)
-					return start+i;
+					return i;
 			}
 		}
-		return start+count;
+		return a.size();
 	}
 }

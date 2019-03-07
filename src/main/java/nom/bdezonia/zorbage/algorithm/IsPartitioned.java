@@ -47,35 +47,20 @@ public class IsPartitioned {
 	public static <T extends Algebra<T,U>, U>
 		boolean compute(T algebra, Condition<U> cond, IndexedDataSource<U> a)
 	{
-		return compute(algebra, cond, 0, a.size(), a);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param cond
-	 * @param start
-	 * @param count
-	 * @param a
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		boolean compute(T algebra, Condition<U> cond, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmp = algebra.construct();
 		long i = 0;
 		boolean first = false;
-		if (count > 0) {
-			a.get(start+i, tmp);
+		if (a.size() > 0) {
+			a.get(i, tmp);
 			first = cond.isTrue(tmp);
 		}
-		while (i < count) {
-			a.get(start+i, tmp);
+		while (i < a.size()) {
+			a.get(i, tmp);
 			if (cond.isTrue(tmp) != first) break;
 			i++;
 		}
-		while (i < count) {
-			a.get(start+i, tmp);
+		while (i < a.size()) {
+			a.get(i, tmp);
 			i++;
 			if (cond.isTrue(tmp) == first) return false;
 		}

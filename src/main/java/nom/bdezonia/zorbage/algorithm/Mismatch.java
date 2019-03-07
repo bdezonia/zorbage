@@ -46,40 +46,19 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
-		return compute(algebra, 0, 0, a.size(), a, b);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		long compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();
-		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmpA);
-			b.get(bStart+i, tmpB);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmpA);
+			b.get(i, tmpB);
 			if (algebra.isNotEqual().call(tmpA, tmpB)) {
-				retVal.setA(aStart+i);
-				retVal.setB(bStart+i);
-				return retVal;
+				return i;
 			}
 				
 		}
-		retVal.setA(aStart+count);
-		retVal.setB(bStart+count);
-		return retVal;
+		return a.size();
 	}
 	
 	/**
@@ -91,44 +70,20 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
-		return compute(algebra, cond, 0, 0, a.size(), a, b);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param cond
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();
-		Tuple2<Long,Long> retVal = new Tuple2<Long, Long>(0L, 0L);
 		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, tmpB);
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmpA);
-			b.get(bStart+i, tmpB);
-			//tuple.setA(tmpA);
-			//tuple.setB(tmpB);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmpA);
+			b.get(i, tmpB);
 			if (!cond.isTrue(tuple)) {
-				retVal.setA(aStart+i);
-				retVal.setB(bStart+i);
-				return retVal;
+				return i;
 			}
 				
 		}
-		retVal.setA(aStart+count);
-		retVal.setB(bStart+count);
-		return retVal;
+		return a.size();
 	}
 	
 }

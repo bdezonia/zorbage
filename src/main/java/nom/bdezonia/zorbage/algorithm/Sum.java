@@ -62,27 +62,9 @@ public class Sum {
 	public static <T extends Algebra<T,U> & Addition<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		compute(alg, 0, storage.size(), storage, result);
+		sum(alg, 0, storage.size(), storage, result);
 	}
 	
-	/**
-	 * 
-	 * @param alg
-	 * @param start
-	 * @param count
-	 * @param storage
-	 * @param result
-	 */
-	public static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U result)
-	{
-		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Sum method");
-		if (count < 0) throw new IllegalArgumentException("count must be >= 0 in Sum method");
-		if (start + count > storage.size()) throw new IllegalArgumentException("start+count must be <= storage length in Sum method");
-
-		sum(alg, start, count, storage, result);
-	}
-
 	// Note: for now will just recursively sum to eliminate some roundoff errors. This is not
 	// great for summing a virtual storage structure. Maybe need a StraightlineSum algo for
 	// summing virtual structures. Maybe all sum oriented algos could switch on a boolean or

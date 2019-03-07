@@ -49,28 +49,13 @@ public class SwapRanges {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		compute(algebra, 0, 0, a.size(), a, b);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param a
-	 * @param b
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 */
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp1);
-			b.get(bStart+i, tmp2);
-			a.set(aStart+i, tmp2);
-			b.set(bStart+i, tmp1);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmp1);
+			b.get(i, tmp2);
+			a.set(i, tmp2);
+			b.set(i, tmp1);
 		}
 	}
 

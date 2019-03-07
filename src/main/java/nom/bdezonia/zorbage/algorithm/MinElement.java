@@ -48,26 +48,12 @@ public class MinElement {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U min)
 	{
-		compute(alg, 0, storage.size(), storage, min);
-	}
-
-	/**
-	 * 
-	 * @param alg
-	 * @param start
-	 * @param count
-	 * @param storage
-	 * @param min
-	 */
-	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U min)
-	{
-		if (count <= 0)
+		if (storage.size() <= 0)
 			throw new IllegalArgumentException("min undefined for empty list");
 		U tmp = alg.construct();
-		storage.get(start, min);
-		for (long i = 1; i < count; i++) {
-			storage.get(start+i, tmp);
+		storage.get(0, min);
+		for (long i = 1; i < storage.size(); i++) {
+			storage.get(i, tmp);
 			if (alg.isLess().call(tmp, min)) {
 				alg.assign().call(tmp, min);
 			}

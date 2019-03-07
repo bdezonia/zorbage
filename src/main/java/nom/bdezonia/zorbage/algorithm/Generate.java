@@ -42,7 +42,11 @@ public class Generate {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
-		compute(algebra, proc, 0, storage.size(), 1, storage);
+		U value = algebra.construct();
+		for (long i = 0; i < storage.size(); i++) {
+			proc.call(value);
+			storage.set(i, value);
+		}
 	}
 
 	/**
@@ -56,48 +60,10 @@ public class Generate {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure<U> proc, IndexedDataSource<U> storage, U... inputs)
 	{
-		compute(algebra, proc, 0, storage.size(), 1, storage, inputs);
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param proc
-	 * @param start
-	 * @param count
-	 * @param stride
-	 * @param storage
-	 */
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Procedure1<U> proc, long start, long count, long stride, IndexedDataSource<U> storage)
-	{
 		U value = algebra.construct();
-		for (long i = start, c = 0; c < count; c++) {
-			proc.call(value);
-			storage.set(i, value);
-			i += stride;
-		}
-	}
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param proc
-	 * @param start
-	 * @param count
-	 * @param stride
-	 * @param storage
-	 * @param inputs
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Procedure<U> proc, long start, long count, long stride, IndexedDataSource<U> storage, U... inputs)
-	{
-		U value = algebra.construct();
-		for (long i = start, c = 0; c < count; c++) {
+		for (long i = 0; i < storage.size(); i++) {
 			proc.call(value, inputs);
 			storage.set(i, value);
-			i += stride;
 		}
 	}
 

@@ -56,16 +56,5 @@ public class TestCopy {
 			list2.get(i, value2);
 			assertEquals(value1.v(), value2.v());
 		}
-		IndexedDataSource<SignedInt8Member> list3 = ArrayStorage.allocateBytes(
-				new byte[] {0,0,0,0,0,0,0,0});
-		Copy.compute(G.INT8, 1, 0, 4, list1, list3);
-		list3.get(0, value1);
-		assertEquals(1, value1.v());
-		list3.get(1, value1);
-		assertEquals(2, value1.v());
-		list3.get(2, value1);
-		assertEquals(3, value1.v());
-		list3.get(3, value1);
-		assertEquals(0, value1.v());
 	}
 }

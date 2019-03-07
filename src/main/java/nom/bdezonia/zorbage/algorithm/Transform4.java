@@ -43,24 +43,15 @@ public class Transform4 {
 	 * 
 	 * @param algM
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param cStart
-	 * @param dStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
-	 * @param cStride
-	 * @param dStride
 	 * @param a
 	 * @param b
 	 * @param c
 	 * @param d
 	 */
 	public static final <L extends Algebra<L,M>, M>
-		void compute(L algM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<M> a, IndexedDataSource<M> b, IndexedDataSource<M> c, IndexedDataSource<M> d)
+		void compute(L algM, Procedure4<M,M,M,M> proc, IndexedDataSource<M> a, IndexedDataSource<M> b, IndexedDataSource<M> c, IndexedDataSource<M> d)
 	{
-		compute(algM, algM, algM, algM, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
+		compute(algM, algM, algM, algM, proc, a, b, c, d);
 	}
 	
 	/**
@@ -69,21 +60,14 @@ public class Transform4 {
 	 * @param algO
 	 * @param algQ
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param cStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
-	 * @param cStride
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
 	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q>
-		void compute(L algM, N algO, P algQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c)
+		void compute(L algM, N algO, P algQ, Procedure4<M,O,Q,Q> proc, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c)
 	{
-		compute(algM, algO, algQ, algQ, proc, aStart, bStart, cStart, cStart, count, aStride, bStride, cStride, cStride, a, b, c, c);
+		compute(algM, algO, algQ, algQ, proc, a, b, c, c);
 	}
 
 	/**
@@ -93,37 +77,24 @@ public class Transform4 {
 	 * @param algQ
 	 * @param algS
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param cStart
-	 * @param dStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
-	 * @param cStride
-	 * @param dStride
 	 * @param a
 	 * @param b
 	 * @param c
 	 * @param d
 	 */
 	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q, R extends Algebra<R,S>, S>
-		void compute(L algM, N algO, P algQ, R algS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c, IndexedDataSource<S> d)
+		void compute(L algM, N algO, P algQ, R algS, Procedure4<M,O,Q,S> proc, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c, IndexedDataSource<S> d)
 	{
 		M valueM = algM.construct();
 		O valueO = algO.construct();
 		Q valueQ = algQ.construct();
 		S valueS = algS.construct();
-		for (long i = aStart, j = bStart, k = cStart, l = dStart, m = 0; m < count; m++) {
+		for (long i = 0; i < a.size(); i++) {
 			a.get(i, valueM);
-			b.get(j, valueO);
-			c.get(k, valueQ);
+			b.get(i, valueO);
+			c.get(i, valueQ);
 			proc.call(valueM, valueO, valueQ, valueS);
-			d.set(l, valueS);
-			i += aStride;
-			j += bStride;
-			k += cStride;
-			l += dStride;
+			d.set(i, valueS);
 		}
 	}
 

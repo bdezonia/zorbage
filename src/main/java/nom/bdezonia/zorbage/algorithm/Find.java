@@ -48,28 +48,13 @@ public class Find {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, U value, IndexedDataSource<U> a)
 	{
-		return compute(algebra, value, 0, a.size(), a);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param a
-	 * @param value
-	 * @param start
-	 * @param count
-	 * @return
-	 */
-	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, U value, long start, long count, IndexedDataSource<U> a)
-	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(start+i, tmp);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmp);
 			if (algebra.isEqual().call(tmp, value))
-				return start + i;
+				return i;
 		}
-		return start + count;
+		return a.size();
 	}
 	
 }

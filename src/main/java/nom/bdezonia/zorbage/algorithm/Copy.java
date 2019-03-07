@@ -45,25 +45,10 @@ public class Copy {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		compute(algebra, 0, 0, a.size(), a, b);
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < count; i++) {
-			a.get(aStart+i, tmp);
-			b.set(bStart+i, tmp);
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, tmp);
+			b.set(i, tmp);
 		}
 	}
 }

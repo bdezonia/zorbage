@@ -51,54 +51,54 @@ public class TestBinarySearch {
 		Float64Member v = G.DBL.construct();
 
 		v.setV(1);
-		assertEquals(0, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(0, BinarySearch.compute(G.DBL, v, vals));
 
 		v.setV(7);
-		assertEquals(1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(1, BinarySearch.compute(G.DBL, v, vals));
 
 		v.setV(14);
-		assertEquals(2, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(2, BinarySearch.compute(G.DBL, v, vals));
 
 		v.setV(25);
-		assertEquals(3, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(3, BinarySearch.compute(G.DBL, v, vals));
 
 		v.setV(39);
-		assertEquals(4, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(4, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(0);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(2);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(6);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(8);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(13);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(15);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(24);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(26);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(38);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(40);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(-100000);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 		
 		v.setV(100000);
-		assertEquals(-1, BinarySearch.compute(G.DBL, v, 0, vals.size(), vals));
+		assertEquals(-1, BinarySearch.compute(G.DBL, v, vals));
 	}
 }

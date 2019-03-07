@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.TrimmedDataSource;
 
 /**
  * 
@@ -41,18 +42,13 @@ public class ParallelTransform2 {
 	 * 
 	 * @param algU
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		compute(algU, algU, proc, aStart, bStart, count, aStride, bStride, a, b);	
+		compute(algU, algU, proc, a, b);	
 	}
 	
 	/**
@@ -60,33 +56,32 @@ public class ParallelTransform2 {
 	 * @param algU
 	 * @param algW
 	 * @param proc
-	 * @param aStart
-	 * @param bStart
-	 * @param count
-	 * @param aStride
-	 * @param bStride
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b)
+		void compute(T algU, V algW, Procedure2<U, W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b)
 	{
-		final int numProcs = Runtime.getRuntime().availableProcessors();
+		int numProcs = Runtime.getRuntime().availableProcessors();
+		if (a.size() < numProcs) {
+			numProcs = (int) a.size();
+		}
 		final Thread[] threads = new Thread[numProcs];
-		long thAStart = aStart;
-		long thBStart = bStart;
-		long thCount;
+		long thOffset = 0;
+		long slice = a.size() / numProcs;
 		for (int i = 0; i < numProcs; i++) {
-			if (i == numProcs-1) {
-				thCount = (count / numProcs) + (count % numProcs);
+			long thLast;
+			if (i != numProcs-1) {
+				thLast = thOffset + slice;
 			}
 			else {
-				thCount = count / numProcs;
+				thLast = a.size();
 			}
-			Runnable r = new Computer<T,U,V,W>(algU, algW, proc, thAStart, thBStart, thCount, aStride, bStride, a, b);
+			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thLast);
+			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thLast);
+			Runnable r = new Computer<T,U,V,W>(algU, algW, proc, aTrimmed, bTrimmed);
 			threads[i] = new Thread(r);
-			thAStart += (aStride * thCount);
-			thBStart += (bStride * thCount);
+			thOffset += slice;
 		}
 		for (int i = 0; i < numProcs; i++) {
 			threads[i].start();
@@ -107,28 +102,18 @@ public class ParallelTransform2 {
 		private final V algebraW;
 		private final IndexedDataSource<U> list1;
 		private final IndexedDataSource<W> list2;
-		private final Procedure2<U, W> proc;
-		private final long aStart;
-		private final long bStart;
-		private final long count;
-		private final long aStride;
-		private final long bStride;
+		private final Procedure2<U,W> proc;
 		
-		Computer(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b) {
+		Computer(T algU, V algW, Procedure2<U, W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b) {
 			algebraU = algU;
 			algebraW = algW;
 			list1 = a;
 			list2 = b;
 			this.proc = proc;
-			this.aStart = aStart;
-			this.bStart = bStart;
-			this.count = count;
-			this.aStride = aStride;
-			this.bStride = bStride;
 		}
 		
 		public void run() {
-			Transform2.compute(algebraU, algebraW, proc, aStart, bStart, count, aStride, bStride, list1, list2);
+			Transform2.compute(algebraU, algebraW, proc, list1, list2);
 		}
 	}
 }
