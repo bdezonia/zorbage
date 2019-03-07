@@ -113,7 +113,7 @@ public class RationalMember
 			d = d.negate();
 		}
 		if (n.signum() == 0) {
-			d = BigInteger.ONE;
+			primitiveInit();
 		}
 		else {
 			BigInteger gcd = n.gcd(d);
