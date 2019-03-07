@@ -48,9 +48,12 @@ public class Equal {
 	public static <T extends Algebra<T,U>, U>
 		boolean compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
+		long size = a.size();
+		if (b.size() != size)
+			return false;
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		for (long i = 0; i < size; i++) {
 			a.get(i, tmp1);
 			b.get(i, tmp2);
 			if (algebra.isNotEqual().call(tmp1, tmp2))
