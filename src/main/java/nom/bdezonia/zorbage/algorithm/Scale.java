@@ -48,7 +48,7 @@ public class Scale {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T algebra, U factor, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, U factor, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();

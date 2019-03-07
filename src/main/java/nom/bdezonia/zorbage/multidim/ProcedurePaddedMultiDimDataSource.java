@@ -65,7 +65,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		};
 	}
 
-	public IndexedDataSource<?,U> rawData() {
+	public IndexedDataSource<U> rawData() {
 		return md.rawData();
 	}
 
@@ -91,7 +91,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		md.setAxis(i, func);
 	}
 	
-	public IndexedDataSource<?,U> piped(int dim, long[] coord) {
+	public IndexedDataSource<U> piped(int dim, long[] coord) {
 		return md.piped(dim, coord);
 	}
 	

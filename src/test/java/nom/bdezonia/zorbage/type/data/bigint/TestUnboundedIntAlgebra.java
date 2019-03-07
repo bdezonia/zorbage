@@ -59,7 +59,7 @@ public class TestUnboundedIntAlgebra {
 	
 	@Test
 	public void minmax() {
-		IndexedDataSource<?, UnboundedIntMember> list =
+		IndexedDataSource<UnboundedIntMember> list =
 				new ArrayStorageGeneric<UnboundedIntAlgebra,UnboundedIntMember>(5000, G.BIGINT);
 		UnboundedIntMember a = G.BIGINT.construct("1234567890");
 		UnboundedIntMember b = G.BIGINT.construct("55");

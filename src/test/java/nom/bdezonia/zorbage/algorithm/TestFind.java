@@ -45,7 +45,7 @@ public class TestFind {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<?,SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
 				new byte[] {1,7,0,3,9,2,2,2,5});
 		SignedInt8Member value = G.INT8.construct();
 		value.setV((byte)-1);
@@ -71,7 +71,7 @@ public class TestFind {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<?,SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
 				new byte[] {1,7,0,3,9,2,2,2,5});
 		SignedInt8Member value = G.INT8.construct();
 		value.setV((byte)2);

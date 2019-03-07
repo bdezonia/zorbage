@@ -60,7 +60,7 @@ public final class Float64VectorMember
 {
 	private static final Float64Member ZERO = new Float64Member(0); 
 
-	private IndexedDataSource<?,Float64Member> storage;
+	private IndexedDataSource<Float64Member> storage;
 	private StorageConstruction s;
 	
 	public Float64VectorMember() {

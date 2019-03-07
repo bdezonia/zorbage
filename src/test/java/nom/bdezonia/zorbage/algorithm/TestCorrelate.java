@@ -44,7 +44,7 @@ public class TestCorrelate {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?, SignedInt32Member> list = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(
 				new int[] {1,2,3,4,5});
 		Correlate.compute(G.INT32, list, list, list);
 		SignedInt32Member value = G.INT32.construct();

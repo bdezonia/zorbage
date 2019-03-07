@@ -60,7 +60,7 @@ public final class OctonionFloat16RModuleMember
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(); 
 
-	private IndexedDataSource<?,OctonionFloat16Member> storage;
+	private IndexedDataSource<OctonionFloat16Member> storage;
 	private StorageConstruction s;
 	
 	public OctonionFloat16RModuleMember() {

@@ -60,7 +60,7 @@ public final class QuaternionFloat16RModuleMember
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(); 
 
-	private IndexedDataSource<?,QuaternionFloat16Member> storage;
+	private IndexedDataSource<QuaternionFloat16Member> storage;
 	private StorageConstruction s;
 	
 	public QuaternionFloat16RModuleMember() {

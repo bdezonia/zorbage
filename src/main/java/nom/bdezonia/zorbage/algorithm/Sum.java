@@ -60,7 +60,7 @@ public class Sum {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		compute(alg, 0, storage.size(), storage, result);
 	}
@@ -74,7 +74,7 @@ public class Sum {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U result)
 	{
 		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Sum method");
 		if (count < 0) throw new IllegalArgumentException("count must be >= 0 in Sum method");
@@ -92,7 +92,7 @@ public class Sum {
 	// structure.
 	
 	private static <T extends Algebra<T,U> & Addition<U>, U>
-		void sum(T alg, long start, long count, IndexedDataSource<?,U> storage, U result)
+		void sum(T alg, long start, long count, IndexedDataSource<U> storage, U result)
 	{
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();

@@ -44,7 +44,7 @@ public class TestSumCount {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt32Member> storage = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> storage = ArrayStorage.allocateInts(
 				new int[] {6,3,99});
 		SignedInt32Member value = G.INT32.construct();
 		SignedInt32Member count = G.INT32.construct();

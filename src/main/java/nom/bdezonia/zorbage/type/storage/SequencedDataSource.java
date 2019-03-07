@@ -26,17 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class SequencedDataSource<T extends Algebra<?,U>,U>
-	implements IndexedDataSource<SequencedDataSource<T,U>, U>
+public class SequencedDataSource<U>
+	implements IndexedDataSource<U>
 {
-	private final IndexedDataSource<?,U> data;
+	private final IndexedDataSource<U> data;
 	private final long start;
 	private final long stride;
 	private final long count;
@@ -48,7 +46,7 @@ public class SequencedDataSource<T extends Algebra<?,U>,U>
 	 * @param stride
 	 * @param count
 	 */
-	public SequencedDataSource(IndexedDataSource<?,U> data,long start, long stride, long count) {
+	public SequencedDataSource(IndexedDataSource<U> data,long start, long stride, long count) {
 		this.data = data;
 		this.start = start;
 		this.stride = stride;
@@ -71,7 +69,7 @@ public class SequencedDataSource<T extends Algebra<?,U>,U>
 	}
 	
 	@Override
-	public SequencedDataSource<T, U> duplicate() {
+	public SequencedDataSource<U> duplicate() {
 		// shallow copy
 		return new SequencedDataSource<>(data, start, stride, count);
 	}

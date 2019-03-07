@@ -48,7 +48,7 @@ public class SumCount {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U sum, U count)
+		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
 	{
 		Sum.compute(alg, storage, sum);
 

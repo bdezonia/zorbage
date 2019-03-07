@@ -35,8 +35,8 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
  * @param <T>
  * @param <U>
  */
-public interface IndexedDataSource<T extends IndexedDataSource<T,U>, U>
-	extends Duplicatable<T>
+public interface IndexedDataSource<U>
+	extends Duplicatable<IndexedDataSource<U>>
 {
 	void set(long index, U value);
 	void get(long index, U value);

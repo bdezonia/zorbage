@@ -47,7 +47,7 @@ public class Average {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Unity<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U sum = alg.construct();
 		U count = alg.construct();

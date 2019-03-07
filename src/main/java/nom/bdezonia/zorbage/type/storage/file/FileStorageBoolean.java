@@ -134,14 +134,13 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void duplicateBuffer(IndexedDataSource<?,U> other) {
-		@SuppressWarnings("unchecked")
+	protected void duplicateBuffer(IndexedDataSource<U> other) {
 		ArrayStorageBoolean<U> otherBuffer = (ArrayStorageBoolean<U>) other;
 		buffer = otherBuffer.duplicate();
 	}
 
 	@Override
-	protected IndexedDataSource<?,U> buffer() {
+	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
 }

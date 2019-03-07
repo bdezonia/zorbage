@@ -47,7 +47,7 @@ public class UInt1ToBool {
 	 * @param bools
 	 */
 	public static
-		void compute(IndexedDataSource<?,UnsignedInt1Member> ints, IndexedDataSource<?,BooleanMember> bools)
+		void compute(IndexedDataSource<UnsignedInt1Member> ints, IndexedDataSource<BooleanMember> bools)
 	{
 		long boolsSize = bools.size();
 		long intsSize = ints.size();

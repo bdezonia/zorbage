@@ -35,9 +35,9 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  */
 public class TrimmedDataSource<T extends Algebra<T,U>, U>
 	implements
-		IndexedDataSource<TrimmedDataSource<T,U>,U>
+		IndexedDataSource<U>
 {
-	private final IndexedDataSource<?,U> list;
+	private final IndexedDataSource<U> list;
 	private final long first;
 	private final long last;
 	
@@ -47,7 +47,7 @@ public class TrimmedDataSource<T extends Algebra<T,U>, U>
 	 * @param first
 	 * @param last
 	 */
-	public TrimmedDataSource(IndexedDataSource<?,U> list, long first, long last) {
+	public TrimmedDataSource(IndexedDataSource<U> list, long first, long last) {
 		long listSize = list.size();
 		if (first < 0 || last < 0 || first > last || 
 				first >= listSize || last >= listSize ||

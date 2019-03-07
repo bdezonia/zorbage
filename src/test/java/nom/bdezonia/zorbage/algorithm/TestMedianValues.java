@@ -47,14 +47,14 @@ public class TestMedianValues {
 		SignedInt32Member result1 = G.INT32.construct();
 		SignedInt32Member result2 = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list1 = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list1 = ArrayStorage.allocateInts(
 				new int[] {1,77,1000,44,19,6});
 		MedianValues.compute(G.INT32, list1, result1, result2);
 		assertTrue(result1.v() != result2.v());
 		assertTrue(result1.v() == 19 || result1.v() == 44);
 		assertTrue(result2.v() == 19 || result2.v() == 44);
 
-		IndexedDataSource<?,SignedInt32Member> list2 = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list2 = ArrayStorage.allocateInts(
 				new int[] {77,1000,44,19,6});
 		MedianValues.compute(G.INT32, list2, result1, result2);
 		assertTrue(result1.v() == result2.v());

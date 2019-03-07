@@ -60,7 +60,7 @@ public final class Float16MatrixMember
 {
 	private static final Float16Member ZERO = new Float16Member(0);
 
-	private IndexedDataSource<?,Float16Member> storage;
+	private IndexedDataSource<Float16Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

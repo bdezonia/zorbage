@@ -43,7 +43,7 @@ public class CopyBackward {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		compute(algebra,0,b.size()-1,a.size(),a,b);
 	}
@@ -58,7 +58,7 @@ public class CopyBackward {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, long aStart, long bLast, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, long aStart, long bLast, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		if (a == b)
 			throw new IllegalArgumentException("in place reversal not done yet");

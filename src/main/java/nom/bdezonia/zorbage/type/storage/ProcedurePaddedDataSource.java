@@ -37,10 +37,10 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @param <U>
  */
 public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<ProcedurePaddedDataSource<T,U>, U>
+	implements IndexedDataSource<U>
 {
 	final private T algebra;
-	final private IndexedDataSource<?,U> storage;
+	final private IndexedDataSource<U> storage;
 	final private Procedure2<Long,U> proc;
 	final private long sz;
 	final private ThreadLocal<U> tmp;
@@ -51,7 +51,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	 * @param storage
 	 * @param proc
 	 */
-	public ProcedurePaddedDataSource(T alg, IndexedDataSource<?,U> storage, Procedure2<Long,U> proc) {
+	public ProcedurePaddedDataSource(T alg, IndexedDataSource<U> storage, Procedure2<Long,U> proc) {
 		this.algebra = alg;
 		this.storage = storage;
 		this.proc = proc;
@@ -65,7 +65,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	}
 
 	@Override
-	public ProcedurePaddedDataSource<T, U> duplicate() {
+	public ProcedurePaddedDataSource<T,U> duplicate() {
 		// shallow copy
 		return new ProcedurePaddedDataSource<T,U>(algebra, storage, proc);
 	}

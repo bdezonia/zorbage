@@ -60,7 +60,7 @@ public final class ComplexFloat64VectorMember
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
-	private IndexedDataSource<?,ComplexFloat64Member> storage;
+	private IndexedDataSource<ComplexFloat64Member> storage;
 	private StorageConstruction s;
 	
 	public ComplexFloat64VectorMember() {

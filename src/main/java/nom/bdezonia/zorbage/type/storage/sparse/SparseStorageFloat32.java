@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
  *
  */
 public class SparseStorageFloat32<U extends FloatCoder>
-	implements IndexedDataSource<SparseStorageFloat32<U>, U>, Allocatable<SparseStorageFloat32<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageFloat32<U>>
 {
 	private final RedBlackTree<float[]> data;
 	private final long numElements;

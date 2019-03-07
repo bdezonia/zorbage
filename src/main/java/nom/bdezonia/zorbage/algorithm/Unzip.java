@@ -54,8 +54,8 @@ public class Unzip {
 	 */
 	public static <A extends Algebra<A,B>, B>
 		void one(A alg1,
-			IndexedDataSource<?,Tuple1<B>> zipped,
-			IndexedDataSource<?,B> unzip1)
+			IndexedDataSource<Tuple1<B>> zipped,
+			IndexedDataSource<B> unzip1)
 	{
 		Tuple1<B> tuple = new Tuple1<B>(null);
 		tuple.setA(alg1.construct());
@@ -79,9 +79,9 @@ public class Unzip {
 	public static <A extends Algebra<A,B>, B,
 					C extends Algebra<C,D>, D>
 		void two(A alg1, C alg2,
-					IndexedDataSource<?,Tuple2<B,D>> zipped,
-					IndexedDataSource<?,B> unzip1,
-					IndexedDataSource<?,D> unzip2)
+					IndexedDataSource<Tuple2<B,D>> zipped,
+					IndexedDataSource<B> unzip1,
+					IndexedDataSource<D> unzip2)
 	{
 		Tuple2<B,D> tuple = new Tuple2<B,D>(null, null);
 		tuple.setA(alg1.construct());
@@ -110,10 +110,10 @@ public class Unzip {
 					C extends Algebra<C,D>, D,
 					E extends Algebra<E,F>, F>
 		void three(A alg1, C alg2, E alg3,
-					IndexedDataSource<?,Tuple3<B,D,F>> zipped,
-					IndexedDataSource<?,B> unzip1,
-					IndexedDataSource<?,D> unzip2,
-					IndexedDataSource<?,F> unzip3)
+					IndexedDataSource<Tuple3<B,D,F>> zipped,
+					IndexedDataSource<B> unzip1,
+					IndexedDataSource<D> unzip2,
+					IndexedDataSource<F> unzip3)
 	{
 		Tuple3<B,D,F> tuple = new Tuple3<B,D,F>(null, null, null);
 		tuple.setA(alg1.construct());
@@ -149,11 +149,11 @@ public class Unzip {
 					E extends Algebra<E,F>, F,
 					G extends Algebra<G,H>, H>
 		void four(A alg1, C alg2, E alg3, G alg4,
-					IndexedDataSource<?,Tuple4<B,D,F,H>> zipped,
-					IndexedDataSource<?,B> unzip1,
-					IndexedDataSource<?,D> unzip2,
-					IndexedDataSource<?,F> unzip3,
-					IndexedDataSource<?,H> unzip4)
+					IndexedDataSource<Tuple4<B,D,F,H>> zipped,
+					IndexedDataSource<B> unzip1,
+					IndexedDataSource<D> unzip2,
+					IndexedDataSource<F> unzip3,
+					IndexedDataSource<H> unzip4)
 	{
 		Tuple4<B,D,F,H> tuple = new Tuple4<B,D,F,H>(null, null, null, null);
 		tuple.setA(alg1.construct());
@@ -195,12 +195,12 @@ public class Unzip {
 					G extends Algebra<G,H>, H,
 					I extends Algebra<I,J>, J>
 		void five(A alg1, C alg2, E alg3, G alg4, I alg5,
-					IndexedDataSource<?,Tuple5<B,D,F,H,J>> zipped,
-					IndexedDataSource<?,B> unzip1,
-					IndexedDataSource<?,D> unzip2,
-					IndexedDataSource<?,F> unzip3,
-					IndexedDataSource<?,H> unzip4,
-					IndexedDataSource<?,J> unzip5)
+					IndexedDataSource<Tuple5<B,D,F,H,J>> zipped,
+					IndexedDataSource<B> unzip1,
+					IndexedDataSource<D> unzip2,
+					IndexedDataSource<F> unzip3,
+					IndexedDataSource<H> unzip4,
+					IndexedDataSource<J> unzip5)
 	{
 		Tuple5<B,D,F,H,J> tuple = new Tuple5<B,D,F,H,J>(null, null, null, null, null);
 		tuple.setA(alg1.construct());
@@ -248,13 +248,13 @@ public class Unzip {
 		I extends Algebra<I,J>, J,
 		K extends Algebra<K,L>, L>
 	void six(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6,
-		IndexedDataSource<?,Tuple6<B,D,F,H,J,L>> zipped,
-		IndexedDataSource<?,B> unzip1,
-		IndexedDataSource<?,D> unzip2,
-		IndexedDataSource<?,F> unzip3,
-		IndexedDataSource<?,H> unzip4,
-		IndexedDataSource<?,J> unzip5,
-		IndexedDataSource<?,L> unzip6)
+		IndexedDataSource<Tuple6<B,D,F,H,J,L>> zipped,
+		IndexedDataSource<B> unzip1,
+		IndexedDataSource<D> unzip2,
+		IndexedDataSource<F> unzip3,
+		IndexedDataSource<H> unzip4,
+		IndexedDataSource<J> unzip5,
+		IndexedDataSource<L> unzip6)
 	{
 		Tuple6<B,D,F,H,J,L> tuple = new Tuple6<B,D,F,H,J,L>(null, null, null, null, null, null);
 		tuple.setA(alg1.construct());
@@ -308,14 +308,14 @@ public class Unzip {
 		K extends Algebra<K,L>, L,
 		M extends Algebra<M,N>, N>
 	void seven(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7,
-		IndexedDataSource<?,Tuple7<B,D,F,H,J,L,N>> zipped,
-		IndexedDataSource<?,B> unzip1,
-		IndexedDataSource<?,D> unzip2,
-		IndexedDataSource<?,F> unzip3,
-		IndexedDataSource<?,H> unzip4,
-		IndexedDataSource<?,J> unzip5,
-		IndexedDataSource<?,L> unzip6,
-		IndexedDataSource<?,N> unzip7)
+		IndexedDataSource<Tuple7<B,D,F,H,J,L,N>> zipped,
+		IndexedDataSource<B> unzip1,
+		IndexedDataSource<D> unzip2,
+		IndexedDataSource<F> unzip3,
+		IndexedDataSource<H> unzip4,
+		IndexedDataSource<J> unzip5,
+		IndexedDataSource<L> unzip6,
+		IndexedDataSource<N> unzip7)
 	{
 		Tuple7<B,D,F,H,J,L,N> tuple = new Tuple7<B,D,F,H,J,L,N>(null, null, null, null, null, null, null);
 		tuple.setA(alg1.construct());
@@ -375,15 +375,15 @@ public class Unzip {
 		M extends Algebra<M,N>, N,
 		O extends Algebra<O,P>, P>
 	void eight(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8,
-		IndexedDataSource<?,Tuple8<B,D,F,H,J,L,N,P>> zipped,
-		IndexedDataSource<?,B> unzip1,
-		IndexedDataSource<?,D> unzip2,
-		IndexedDataSource<?,F> unzip3,
-		IndexedDataSource<?,H> unzip4,
-		IndexedDataSource<?,J> unzip5,
-		IndexedDataSource<?,L> unzip6,
-		IndexedDataSource<?,N> unzip7,
-		IndexedDataSource<?,P> unzip8)
+		IndexedDataSource<Tuple8<B,D,F,H,J,L,N,P>> zipped,
+		IndexedDataSource<B> unzip1,
+		IndexedDataSource<D> unzip2,
+		IndexedDataSource<F> unzip3,
+		IndexedDataSource<H> unzip4,
+		IndexedDataSource<J> unzip5,
+		IndexedDataSource<L> unzip6,
+		IndexedDataSource<N> unzip7,
+		IndexedDataSource<P> unzip8)
 	{
 		Tuple8<B,D,F,H,J,L,N,P> tuple = new Tuple8<B,D,F,H,J,L,N,P>(null,null, null, null, null, null, null, null);
 		tuple.setA(alg1.construct());
@@ -449,16 +449,16 @@ public class Unzip {
 		O extends Algebra<O,P>, P,
 		Q extends Algebra<Q,R>, R>
 	void nine(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9,
-		IndexedDataSource<?,Tuple9<B,D,F,H,J,L,N,P,R>> zipped,
-		IndexedDataSource<?,B> unzip1,
-		IndexedDataSource<?,D> unzip2,
-		IndexedDataSource<?,F> unzip3,
-		IndexedDataSource<?,H> unzip4,
-		IndexedDataSource<?,J> unzip5,
-		IndexedDataSource<?,L> unzip6,
-		IndexedDataSource<?,N> unzip7,
-		IndexedDataSource<?,P> unzip8,
-		IndexedDataSource<?,R> unzip9)
+		IndexedDataSource<Tuple9<B,D,F,H,J,L,N,P,R>> zipped,
+		IndexedDataSource<B> unzip1,
+		IndexedDataSource<D> unzip2,
+		IndexedDataSource<F> unzip3,
+		IndexedDataSource<H> unzip4,
+		IndexedDataSource<J> unzip5,
+		IndexedDataSource<L> unzip6,
+		IndexedDataSource<N> unzip7,
+		IndexedDataSource<P> unzip8,
+		IndexedDataSource<R> unzip9)
 	{
 		Tuple9<B,D,F,H,J,L,N,P,R> tuple = new Tuple9<B,D,F,H,J,L,N,P,R>(null,null,null, null, null, null, null, null, null);
 		tuple.setA(alg1.construct());
@@ -530,17 +530,17 @@ public class Unzip {
 		Q extends Algebra<Q,R>, R,
 		S extends Algebra<S,T>, T>
 	void ten(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9, S alg10,
-		IndexedDataSource<?,Tuple10<B,D,F,H,J,L,N,P,R,T>> zipped,
-		IndexedDataSource<?,B> unzip1,
-		IndexedDataSource<?,D> unzip2,
-		IndexedDataSource<?,F> unzip3,
-		IndexedDataSource<?,H> unzip4,
-		IndexedDataSource<?,J> unzip5,
-		IndexedDataSource<?,L> unzip6,
-		IndexedDataSource<?,N> unzip7,
-		IndexedDataSource<?,P> unzip8,
-		IndexedDataSource<?,R> unzip9,
-		IndexedDataSource<?,T> unzip10)
+		IndexedDataSource<Tuple10<B,D,F,H,J,L,N,P,R,T>> zipped,
+		IndexedDataSource<B> unzip1,
+		IndexedDataSource<D> unzip2,
+		IndexedDataSource<F> unzip3,
+		IndexedDataSource<H> unzip4,
+		IndexedDataSource<J> unzip5,
+		IndexedDataSource<L> unzip6,
+		IndexedDataSource<N> unzip7,
+		IndexedDataSource<P> unzip8,
+		IndexedDataSource<R> unzip9,
+		IndexedDataSource<T> unzip10)
 	{
 		Tuple10<B,D,F,H,J,L,N,P,R,T> tuple = new Tuple10<B,D,F,H,J,L,N,P,R,T>(null,null,null,null, null, null, null, null, null, null);
 		tuple.setA(alg1.construct());

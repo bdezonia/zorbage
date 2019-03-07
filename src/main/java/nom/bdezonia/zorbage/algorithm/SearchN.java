@@ -46,7 +46,7 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, U value, IndexedDataSource<?,U> a)
+		long compute(T algebra, long n, U value, IndexedDataSource<U> a)
 	{
 		return compute(algebra, n, value, 0, a.size(), a);
 	}
@@ -62,7 +62,7 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, U value, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T algebra, long n, U value, long start, long count, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		for (long i = 0; i < count-n; i++) {
@@ -86,7 +86,7 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, Condition<U> cond, IndexedDataSource<?,U> a)
+		long compute(T algebra, long n, Condition<U> cond, IndexedDataSource<U> a)
 	{
 		return compute(algebra, n, cond, 0, a.size(), a);
 	}
@@ -102,7 +102,7 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, Condition<U> cond, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T algebra, long n, Condition<U> cond, long start, long count, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		for (long i = 0; i < count-n; i++) {

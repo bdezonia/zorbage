@@ -60,7 +60,7 @@ public final class Float16VectorMember
 {
 	private static final Float16Member ZERO = new Float16Member(0); 
 
-	private IndexedDataSource<?,Float16Member> storage;
+	private IndexedDataSource<Float16Member> storage;
 	private StorageConstruction s;
 	
 	public Float16VectorMember() {

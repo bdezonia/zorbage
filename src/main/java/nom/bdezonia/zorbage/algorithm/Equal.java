@@ -46,7 +46,7 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		boolean compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -65,7 +65,7 @@ public class Equal {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		boolean compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();

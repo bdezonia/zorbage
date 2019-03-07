@@ -50,7 +50,7 @@ public class TestIsPartitioned {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?, SignedInt8Member> a = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> a = ArrayStorage.allocateBytes(
 				new byte[] {1,2,3,4,5,6,7,8});
 		
 		Condition<SignedInt8Member> cond1 = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));

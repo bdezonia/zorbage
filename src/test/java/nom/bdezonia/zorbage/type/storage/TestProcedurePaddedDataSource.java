@@ -46,8 +46,8 @@ public class TestProcedurePaddedDataSource {
 	public void test() {
 
 		SignedInt64Member value = G.INT64.construct();
-		IndexedDataSource<?,SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3});
-		IndexedDataSource<?,SignedInt64Member> pad = new ProcedurePaddedDataSource<>(G.INT64, longs, func);
+		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3});
+		IndexedDataSource<SignedInt64Member> pad = new ProcedurePaddedDataSource<>(G.INT64, longs, func);
 		
 		pad.get(0, value);
 		assertEquals(1, value.v());

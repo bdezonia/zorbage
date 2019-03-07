@@ -47,7 +47,7 @@ public class TestTransform3 {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<?, Float64Member> data = Storage.allocate(1000, G.DBL.construct());
+		IndexedDataSource<Float64Member> data = Storage.allocate(1000, G.DBL.construct());
 		Ramp<Float64Algebra, Float64Member> ramp =
 				new Ramp<Float64Algebra, Float64Member>(G.DBL, new Float64Member(), new Float64Member(0.1));
 		Generate.compute(G.DBL, ramp, data);

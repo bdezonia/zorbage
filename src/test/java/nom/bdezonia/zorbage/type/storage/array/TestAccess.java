@@ -53,7 +53,7 @@ public class TestAccess {
 	private void doit() {
 		OctonionFloat64Member tmp = new OctonionFloat64Member();
 		long a = System.currentTimeMillis();
-		IndexedDataSource<?,OctonionFloat64Member> storage =
+		IndexedDataSource<OctonionFloat64Member> storage =
 				ArrayStorage.allocate(500000, tmp);
 		for (long i = 0; i < storage.size(); i++) {
 			tmp.setR(i);

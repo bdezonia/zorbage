@@ -50,7 +50,7 @@ public class TestSignedInt1 {
 		return 0;
 	}
 	
-	private void testStorageMethods(IndexedDataSource<?, SignedInt1Member> data) {
+	private void testStorageMethods(IndexedDataSource<SignedInt1Member> data) {
 		
 		SignedInt1Member in = new SignedInt1Member();
 		SignedInt1Member out = new SignedInt1Member();

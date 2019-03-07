@@ -52,7 +52,7 @@ public class Transform3 {
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T algU, Procedure3<U,U,U> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
 	{
 		compute(algU, algU, algU, proc, aStart, bStart, cStart, count, aStride, bStride, cStride, a, b, c);
 	}
@@ -71,7 +71,7 @@ public class Transform3 {
 	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T algU, V algW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
+		void compute(T algU, V algW, Procedure3<U,W,W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b)
 	{
 		compute(algU, algW, algW, proc, aStart, bStart, bStart, count, aStride, bStride, bStride, a, b, b);
 	}
@@ -94,7 +94,7 @@ public class Transform3 {
 	 * @param c
 	 */
 	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c)
+		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
 	{
 		U valueU = algU.construct();
 		W valueW = algW.construct();
@@ -118,7 +118,7 @@ public class Transform3 {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Procedure3<U,U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T alg, Procedure3<U,U,U> proc, IndexedDataSource<U> a)
 	{
 		U value1 = alg.construct();
 		U value2 = alg.construct();

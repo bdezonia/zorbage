@@ -44,7 +44,7 @@ public class TestSort {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt32Member> storage = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> storage = ArrayStorage.allocateInts(
 				new int[] {6,3,99,-1,66,-50,0,0,3});
 		SignedInt32Member value = G.INT32.construct();
 		

@@ -51,7 +51,7 @@ public class TestUnsignedInt128 {
 	@Test
 	public void testStorageMethods() {
 
-		IndexedDataSource<?, UnsignedInt128Member> data =
+		IndexedDataSource<UnsignedInt128Member> data =
 				ArrayStorage.allocate(6000, new UnsignedInt128Member());
 		UnsignedInt128Member in = new UnsignedInt128Member();
 		UnsignedInt128Member out = new UnsignedInt128Member();

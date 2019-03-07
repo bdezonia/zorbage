@@ -45,7 +45,7 @@ public class TestBinarySearch {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?, Float64Member> vals = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(
 				new double[] {1,7,14,25,39});
 		
 		Float64Member v = G.DBL.construct();

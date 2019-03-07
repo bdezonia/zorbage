@@ -47,7 +47,7 @@ public class FindIfNot {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Condition<U> condition, IndexedDataSource<?,U> a)
+		long compute(T algebra, Condition<U> condition, IndexedDataSource<U> a)
 	{
 		return compute(algebra, condition, 0, a.size(), a);
 	}
@@ -62,7 +62,7 @@ public class FindIfNot {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a)
+		long compute(T algebra, Condition<U> condition, long start, long count, IndexedDataSource<U> a)
 	{
 		U value = algebra.construct();
 		for (long i = 0; i < count; i++) {

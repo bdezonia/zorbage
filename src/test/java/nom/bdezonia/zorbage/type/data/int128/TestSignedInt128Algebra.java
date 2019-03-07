@@ -54,7 +54,7 @@ public class TestSignedInt128Algebra {
 	@Test
 	public void testStorageMethods() {
 
-		IndexedDataSource<?, SignedInt128Member> data =
+		IndexedDataSource<SignedInt128Member> data =
 				ArrayStorage.allocate(6000, new SignedInt128Member());
 		SignedInt128Member in = new SignedInt128Member();
 		SignedInt128Member out = new SignedInt128Member();

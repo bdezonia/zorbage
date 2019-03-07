@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
  *
  */
 public class ArrayStorageSignedInt32<U extends IntCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt32<U>,U>, Allocatable<ArrayStorageSignedInt32<U>>
+	implements IndexedDataSource<U>, Allocatable<ArrayStorageSignedInt32<U>>
 {
 
 	private final U type;

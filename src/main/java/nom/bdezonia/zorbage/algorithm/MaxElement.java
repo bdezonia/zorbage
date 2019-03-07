@@ -46,7 +46,7 @@ public class MaxElement {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U max)
+		void compute(T alg, IndexedDataSource<U> storage, U max)
 	{
 		compute(alg, 0, storage.size(), storage, max);
 	}
@@ -60,7 +60,7 @@ public class MaxElement {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U max)
+		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U max)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("max undefined for empty list");

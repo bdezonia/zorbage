@@ -45,13 +45,13 @@ public class Sort {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U> ,U>
-		void compute(T alg, IndexedDataSource<?,U> storage)
+		void compute(T alg, IndexedDataSource<U> storage)
 	{
 		qsort(alg, storage, 0, storage.size() -1);
 	}
 	
 	private static <T extends Algebra<T,U> & Ordered<U> ,U>
-		void qsort(T alg, IndexedDataSource<?,U> storage, long left, long right)
+		void qsort(T alg, IndexedDataSource<U> storage, long left, long right)
 	{
 		if (left < right) {
 			long pivotPoint = partition(alg, storage,left,right);
@@ -62,7 +62,7 @@ public class Sort {
 
 
 	private static <T extends Algebra<T,U> & Ordered<U> ,U>
-		long partition(T alg, IndexedDataSource<?,U> storage, long left, long right)
+		long partition(T alg, IndexedDataSource<U> storage, long left, long right)
 	{
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();

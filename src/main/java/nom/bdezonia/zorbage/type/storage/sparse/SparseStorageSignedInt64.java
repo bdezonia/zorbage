@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  *
  */
 public class SparseStorageSignedInt64<U extends LongCoder>
-	implements IndexedDataSource<SparseStorageSignedInt64<U>, U>, Allocatable<SparseStorageSignedInt64<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageSignedInt64<U>>
 {
 	private final RedBlackTree<long[]> data;
 	private final long numElements;

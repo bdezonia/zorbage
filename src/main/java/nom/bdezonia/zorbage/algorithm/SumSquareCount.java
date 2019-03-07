@@ -54,7 +54,7 @@ public class SumSquareCount {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Ordered<U> & Invertible<U>,U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U avg, U sumSqDevs, U count)
+		void compute(T alg, IndexedDataSource<U> storage, U avg, U sumSqDevs, U count)
 	{
 		/* original: impl 1: naive but quick
 		

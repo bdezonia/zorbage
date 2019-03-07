@@ -44,7 +44,7 @@ public class TestMedian {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,Float64Member> storage =
+		IndexedDataSource<Float64Member> storage =
 				ArrayStorage.allocateDoubles(new double[]{0,1,2,3,4,5,6,7,8,9});
 		Float64Member result = new Float64Member();
 		Median.compute(G.DBL, storage, result);

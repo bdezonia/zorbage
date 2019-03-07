@@ -56,7 +56,7 @@ public class ParallelTransform4 {
 	 * @param d
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure4<U,U,U,U> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c, IndexedDataSource<?,U> d)
+		void compute(T algU, Procedure4<U,U,U,U> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c, IndexedDataSource<U> d)
 	{
 		compute(algU, algU, algU, algU, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
 	}
@@ -83,7 +83,7 @@ public class ParallelTransform4 {
 	 * @param d
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
-		void compute(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d)
+		void compute(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c, IndexedDataSource<A> d)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -125,10 +125,10 @@ public class ParallelTransform4 {
 		private final V algebraW;
 		private final X algebraY;
 		private final Z algebraA;
-		private final IndexedDataSource<?,U> list1;
-		private final IndexedDataSource<?,W> list2;
-		private final IndexedDataSource<?,Y> list3;
-		private final IndexedDataSource<?,A> list4;
+		private final IndexedDataSource<U> list1;
+		private final IndexedDataSource<W> list2;
+		private final IndexedDataSource<Y> list3;
+		private final IndexedDataSource<A> list4;
 		private final Procedure4<U, W, Y, A> proc;
 		private final long aStart;
 		private final long bStart;
@@ -140,7 +140,7 @@ public class ParallelTransform4 {
 		private final long cStride;
 		private final long dStride;
 		
-		Computer(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b, IndexedDataSource<?,Y> c, IndexedDataSource<?,A> d) {
+		Computer(T algU, V algW, X algY, Z algA, Procedure4<U, W, Y, A> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c, IndexedDataSource<A> d) {
 			algebraU = algU;
 			algebraW = algW;
 			algebraY = algY;

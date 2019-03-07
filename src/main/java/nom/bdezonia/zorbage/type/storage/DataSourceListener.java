@@ -35,5 +35,5 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  */
 public interface DataSourceListener<T extends Algebra<T,U>,U> {
 
-	void notify(T alegbra, IndexedDataSource<?,U> source, long index);
+	void notify(T alegbra, IndexedDataSource<U> source, long index);
 }

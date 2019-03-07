@@ -48,7 +48,7 @@ public class TestConjugate {
 		
 		ComplexFloat64Member tmp = G.CDBL.construct();
 		
-		IndexedDataSource<?,ComplexFloat64Member> list = ArrayStorage.allocate(10, tmp);
+		IndexedDataSource<ComplexFloat64Member> list = ArrayStorage.allocate(10, tmp);
 		
 		Procedure1<ComplexFloat64Member> proc = new Procedure1<ComplexFloat64Member>()
 		{

@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @param <U>
  */
 public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<ArrayStorageGeneric<T,U>,U>, Allocatable<ArrayStorageGeneric<T,U>>
+	implements IndexedDataSource<U>, Allocatable<ArrayStorageGeneric<T,U>>
 {
 
 	private final T alg;

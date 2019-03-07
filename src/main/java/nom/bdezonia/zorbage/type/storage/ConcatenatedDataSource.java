@@ -28,18 +28,16 @@ package nom.bdezonia.zorbage.type.storage;
 
 import java.math.BigInteger;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConcatenatedDataSource<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<ConcatenatedDataSource<T,U>,U>
+public class ConcatenatedDataSource<U>
+	implements IndexedDataSource<U>
 {
-	private final IndexedDataSource<?,U> first;
-	private final IndexedDataSource<?,U> second;
+	private final IndexedDataSource<U> first;
+	private final IndexedDataSource<U> second;
 	private final long sz;
 	
 	/**
@@ -47,7 +45,7 @@ public class ConcatenatedDataSource<T extends Algebra<T,U>,U>
 	 * @param a
 	 * @param b
 	 */
-	public ConcatenatedDataSource(IndexedDataSource<?,U> a, IndexedDataSource<?,U> b) {
+	public ConcatenatedDataSource(IndexedDataSource<U> a, IndexedDataSource<U> b) {
 		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
 			throw new IllegalArgumentException("the two input lists are too long to add together");
 		this.first = a;
@@ -56,7 +54,7 @@ public class ConcatenatedDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	@Override
-	public ConcatenatedDataSource<T,U> duplicate() {
+	public ConcatenatedDataSource<U> duplicate() {
 		// shallow copy
 		return new ConcatenatedDataSource<>(first, second);
 	}

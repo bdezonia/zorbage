@@ -44,7 +44,7 @@ public class ForEach {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a)
 	{
 		compute(algU, proc, 0, a.size(), a);
 	}
@@ -58,7 +58,7 @@ public class ForEach {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<?,U> a)
+		void compute(T algU, Procedure2<U,U> proc, long start, long count, IndexedDataSource<U> a)
 	{
 		Transform2.compute(algU, proc, start, start, count, 1, 1, a, a);
 	}

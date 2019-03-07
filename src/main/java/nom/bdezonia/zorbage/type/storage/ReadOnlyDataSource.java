@@ -32,11 +32,11 @@ package nom.bdezonia.zorbage.type.storage;
  *
  */
 public class ReadOnlyDataSource<U>
-	implements IndexedDataSource<ReadOnlyDataSource<U>, U>
+	implements IndexedDataSource<U>
 {
-	private final IndexedDataSource<?,U> source;
+	private final IndexedDataSource<U> source;
 	
-	public ReadOnlyDataSource(IndexedDataSource<?,U> src) {
+	public ReadOnlyDataSource(IndexedDataSource<U> src) {
 		this.source = src;
 	}
 	

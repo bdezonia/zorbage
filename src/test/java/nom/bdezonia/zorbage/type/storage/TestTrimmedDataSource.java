@@ -45,8 +45,8 @@ public class TestTrimmedDataSource {
 	public void test() {
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4,5,6,7,8});
-		IndexedDataSource<?,SignedInt32Member> trimmed;
+		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4,5,6,7,8});
+		IndexedDataSource<SignedInt32Member> trimmed;
 		
 		trimmed = new TrimmedDataSource<>(ints, 0, 0);
 		assertEquals(1, trimmed.size());

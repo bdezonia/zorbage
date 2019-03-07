@@ -48,7 +48,7 @@ public class TestCount {
 		
 		SignedInt32Member value = G.INT32.construct("14");
 		SignedInt64Member sum = G.INT64.construct();
-		IndexedDataSource<?,SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {14,1,2,3,14,5,6,14,8,9,10,14});
 		Count.compute(G.INT32, G.INT64, value, a, sum);
 		assertEquals(4, sum.v());

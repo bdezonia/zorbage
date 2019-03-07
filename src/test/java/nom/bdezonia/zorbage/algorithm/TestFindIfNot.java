@@ -47,7 +47,7 @@ public class TestFindIfNot {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
 				new byte[] {0,0,0,0,0,0,70,0,0,0});
 		Condition<SignedInt8Member> condition = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member());
 		assertEquals(6, FindIfNot.compute(G.INT8, condition, list));

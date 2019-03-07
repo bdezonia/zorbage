@@ -46,7 +46,7 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned
 {
 	private List<Function1<BigDecimal,Long>> axes;
-	private IndexedDataSource<?,U> data;
+	private IndexedDataSource<U> data;
 	private long[] dims;
 	
 	/**
@@ -54,7 +54,7 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	 * @param dims
 	 * @param data
 	 */
-	public MultiDimDataSource(long[] dims, IndexedDataSource<?,U> data) {
+	public MultiDimDataSource(long[] dims, IndexedDataSource<U> data) {
 		if (dims.length == 0)
 			throw new IllegalArgumentException("multidim data source must have 1 or more dimensions");
 		if (LongUtils.numElements(dims) != data.size())
@@ -66,7 +66,7 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 			this.axes.add(new IdentityAxis());
 	}
 	
-	public IndexedDataSource<?,U> rawData() {
+	public IndexedDataSource<U> rawData() {
 		return data;
 	}
 
@@ -94,8 +94,8 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 		this.axes.set(i, func);
 	}
 	
-	public IndexedDataSource<?,U> piped(int dim, long[] coord) {
-		return new PipedDataSource<>(this, dim, coord);
+	public IndexedDataSource<U> piped(int dim, long[] coord) {
+		return new PipedDataSource<U>(this, dim, coord);
 	}
 	
 	public void set(long[] index, U v) {

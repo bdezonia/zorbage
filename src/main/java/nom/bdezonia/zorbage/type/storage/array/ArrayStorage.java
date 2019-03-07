@@ -58,35 +58,35 @@ public class ArrayStorage {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<?,U> allocate(long size, U type) {
+	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(long size, U type) {
 
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageFloat64(size, (DoubleCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageFloat64(size, (DoubleCoder)type);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageFloat32(size, (FloatCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageFloat32(size, (FloatCoder)type);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt64(size, (LongCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageSignedInt64(size, (LongCoder)type);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt32(size, (IntCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageSignedInt32(size, (IntCoder)type);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt16(size, (ShortCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageSignedInt16(size, (ShortCoder)type);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageBoolean(size, (BooleanCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageBoolean(size, (BooleanCoder)type);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageSignedInt8(size, (ByteCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageSignedInt8(size, (ByteCoder)type);
 		}
 		
 		// Best if last: since bit types are slow
 		if (type instanceof BitCoder) {
-			return (IndexedDataSource<?,U>) new ArrayStorageBit(size, (BitCoder)type);
+			return (IndexedDataSource<U>) new ArrayStorageBit(size, (BitCoder)type);
 		}
 
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
@@ -97,9 +97,9 @@ public class ArrayStorage {
 	 * @param bytes
 	 * @return
 	 */
-	public static IndexedDataSource<?,SignedInt8Member> allocateBytes(byte[] bytes) {
+	public static IndexedDataSource<SignedInt8Member> allocateBytes(byte[] bytes) {
 		SignedInt8Member type = new SignedInt8Member();
-		IndexedDataSource<?,SignedInt8Member> store =
+		IndexedDataSource<SignedInt8Member> store =
 				new ArrayStorageSignedInt8<SignedInt8Member>(bytes.length, type);
 		for (int i = 0; i < bytes.length; i++) {
 			type.setV(bytes[i]);
@@ -113,9 +113,9 @@ public class ArrayStorage {
 	 * @param shorts
 	 * @return
 	 */
-	public static IndexedDataSource<?,SignedInt16Member> allocateShorts(short[] shorts) {
+	public static IndexedDataSource<SignedInt16Member> allocateShorts(short[] shorts) {
 		SignedInt16Member type = new SignedInt16Member();
-		IndexedDataSource<?,SignedInt16Member> store =
+		IndexedDataSource<SignedInt16Member> store =
 				new ArrayStorageSignedInt16<SignedInt16Member>(shorts.length, type);
 		for (int i = 0; i < shorts.length; i++) {
 			type.setV(shorts[i]);
@@ -129,9 +129,9 @@ public class ArrayStorage {
 	 * @param ints
 	 * @return
 	 */
-	public static IndexedDataSource<?,SignedInt32Member> allocateInts(int[] ints) {
+	public static IndexedDataSource<SignedInt32Member> allocateInts(int[] ints) {
 		SignedInt32Member type = new SignedInt32Member();
-		IndexedDataSource<?,SignedInt32Member> store =
+		IndexedDataSource<SignedInt32Member> store =
 				new ArrayStorageSignedInt32<SignedInt32Member>(ints.length, type);
 		for (int i = 0; i < ints.length; i++) {
 			type.setV(ints[i]);
@@ -145,9 +145,9 @@ public class ArrayStorage {
 	 * @param longs
 	 * @return
 	 */
-	public static IndexedDataSource<?,SignedInt64Member> allocateLongs(long[] longs) {
+	public static IndexedDataSource<SignedInt64Member> allocateLongs(long[] longs) {
 		SignedInt64Member type = new SignedInt64Member();
-		IndexedDataSource<?,SignedInt64Member> store =
+		IndexedDataSource<SignedInt64Member> store =
 				new ArrayStorageSignedInt64<SignedInt64Member>(longs.length, type);
 		for (int i = 0; i < longs.length; i++) {
 			type.setV(longs[i]);
@@ -161,9 +161,9 @@ public class ArrayStorage {
 	 * @param floats
 	 * @return
 	 */
-	public static IndexedDataSource<?,Float32Member> allocateFloats(float[] floats) {
+	public static IndexedDataSource<Float32Member> allocateFloats(float[] floats) {
 		Float32Member type = new Float32Member();
-		IndexedDataSource<?,Float32Member> store =
+		IndexedDataSource<Float32Member> store =
 				new ArrayStorageFloat32<Float32Member>(floats.length, type);
 		for (int i = 0; i < floats.length; i++) {
 			type.setV(floats[i]);
@@ -177,9 +177,9 @@ public class ArrayStorage {
 	 * @param doubles
 	 * @return
 	 */
-	public static IndexedDataSource<?,Float64Member> allocateDoubles(double[] doubles) {
+	public static IndexedDataSource<Float64Member> allocateDoubles(double[] doubles) {
 		Float64Member type = new Float64Member();
-		IndexedDataSource<?,Float64Member> store =
+		IndexedDataSource<Float64Member> store =
 				new ArrayStorageFloat64<Float64Member>(doubles.length, type);
 		for (int i = 0; i < doubles.length; i++) {
 			type.setV(doubles[i]);
@@ -193,9 +193,9 @@ public class ArrayStorage {
 	 * @param booleans
 	 * @return
 	 */
-	public static IndexedDataSource<?,BooleanMember> allocateBooleans(boolean[] booleans) {
+	public static IndexedDataSource<BooleanMember> allocateBooleans(boolean[] booleans) {
 		BooleanMember type = new BooleanMember();
-		IndexedDataSource<?,BooleanMember> store =
+		IndexedDataSource<BooleanMember> store =
 				new ArrayStorageBoolean<BooleanMember>(booleans.length, type);
 		for (int i = 0; i < booleans.length; i++) {
 			type.setV(booleans[i]);

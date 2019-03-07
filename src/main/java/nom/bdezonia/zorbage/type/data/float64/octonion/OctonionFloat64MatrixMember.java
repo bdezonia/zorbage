@@ -60,7 +60,7 @@ public final class OctonionFloat64MatrixMember
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
-	private IndexedDataSource<?,OctonionFloat64Member> storage;
+	private IndexedDataSource<OctonionFloat64Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

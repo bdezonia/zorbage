@@ -73,7 +73,7 @@ public class TestParallelTransform2 {
 		void test(T algebra)
 	{
 		// generic allocation
-		IndexedDataSource<?,U> a = ArrayStorage.allocate(100, algebra.construct());
+		IndexedDataSource<U> a = ArrayStorage.allocate(100, algebra.construct());
 		
 		// set values of storage to random doubles between 0 and 1
 		// TODO: some day convert this to a parallel xform call that handles Procedure1's

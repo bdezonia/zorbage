@@ -69,7 +69,7 @@ public final class Float64TensorProductMember
 
 	private int rank;
 	private long dimCount;
-	private IndexedDataSource<?,Float64Member> storage;
+	private IndexedDataSource<Float64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private StorageConstruction s;

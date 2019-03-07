@@ -46,7 +46,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		return compute(algebra, 0, 0, a.size(), a, b);
 	}
@@ -62,7 +62,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();
@@ -91,7 +91,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		return compute(algebra, cond, 0, 0, a.size(), a, b);
 	}
@@ -108,7 +108,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<?, U> a, IndexedDataSource<?,U> b)
+		Tuple2<Long,Long> compute(T algebra, Condition<Tuple2<U,U>> cond, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();

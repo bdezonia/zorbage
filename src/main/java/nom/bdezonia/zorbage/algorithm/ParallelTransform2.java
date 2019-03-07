@@ -50,7 +50,7 @@ public class ParallelTransform2 {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algU, Procedure2<U,U> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		compute(algU, algU, proc, aStart, bStart, count, aStride, bStride, a, b);	
 	}
@@ -69,7 +69,7 @@ public class ParallelTransform2 {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b)
+		void compute(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b)
 	{
 		final int numProcs = Runtime.getRuntime().availableProcessors();
 		final Thread[] threads = new Thread[numProcs];
@@ -105,8 +105,8 @@ public class ParallelTransform2 {
 	{
 		private final T algebraU;
 		private final V algebraW;
-		private final IndexedDataSource<?,U> list1;
-		private final IndexedDataSource<?,W> list2;
+		private final IndexedDataSource<U> list1;
+		private final IndexedDataSource<W> list2;
 		private final Procedure2<U, W> proc;
 		private final long aStart;
 		private final long bStart;
@@ -114,7 +114,7 @@ public class ParallelTransform2 {
 		private final long aStride;
 		private final long bStride;
 		
-		Computer(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<?,U> a, IndexedDataSource<?,W> b) {
+		Computer(T algU, V algW, Procedure2<U, W> proc, long aStart, long bStart, long count, long aStride, long bStride, IndexedDataSource<U> a, IndexedDataSource<W> b) {
 			algebraU = algU;
 			algebraW = algW;
 			list1 = a;

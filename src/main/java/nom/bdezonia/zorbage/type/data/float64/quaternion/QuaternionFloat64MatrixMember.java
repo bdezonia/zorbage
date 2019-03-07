@@ -60,7 +60,7 @@ public final class QuaternionFloat64MatrixMember
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
-	private IndexedDataSource<?,QuaternionFloat64Member> storage;
+	private IndexedDataSource<QuaternionFloat64Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

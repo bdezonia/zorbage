@@ -43,7 +43,7 @@ public class RotateCopy {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, long delta, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, long delta, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		if (a == b)
 			throw new IllegalArgumentException("RotateCopy does not work in place");

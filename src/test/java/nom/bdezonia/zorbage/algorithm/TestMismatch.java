@@ -49,9 +49,9 @@ public class TestMismatch {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<?,SignedInt64Member> a = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> a = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,7,4,3,2});
-		IndexedDataSource<?,SignedInt64Member> b = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> b = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,7,5,1,1});
 		Tuple2<Long,Long> result = Mismatch.compute(G.INT64, a, b);
 		assertEquals(4, (long) result.a());
@@ -61,9 +61,9 @@ public class TestMismatch {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<?,SignedInt64Member> a = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> a = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,7,4,3,2});
-		IndexedDataSource<?,SignedInt64Member> b = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> b = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,7,5,1,1});
 		Condition<Tuple2<SignedInt64Member,SignedInt64Member>> cond = new LessThanEqual<SignedInt64Algebra, SignedInt64Member>(G.INT64);
 		Tuple2<Long,Long> result = Mismatch.compute(G.INT64, cond, a, b);

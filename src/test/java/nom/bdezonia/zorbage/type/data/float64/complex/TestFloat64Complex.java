@@ -381,9 +381,9 @@ public class TestFloat64Complex {
 		for (int i = 0; i < times.length; i++) {
 			long a = System.currentTimeMillis();
 			final int size = 500;
-			IndexedDataSource<?,SignedInt32Member> inputData = makeIntData(size);
+			IndexedDataSource<SignedInt32Member> inputData = makeIntData(size);
 			fillIntData(inputData);
-			IndexedDataSource<?,ComplexFloat64Member> outputComplexData = makeComplexData(size);
+			IndexedDataSource<ComplexFloat64Member> outputComplexData = makeComplexData(size);
 			dft(inputData, outputComplexData);
 			// TODO: apply inverse and test resulting values
 			long b = System.currentTimeMillis();
@@ -400,15 +400,15 @@ public class TestFloat64Complex {
 	}
 	
 	
-	private IndexedDataSource<?,SignedInt32Member> makeIntData(int size) {
+	private IndexedDataSource<SignedInt32Member> makeIntData(int size) {
 		return new ArrayStorageSignedInt32<SignedInt32Member>(size, new SignedInt32Member());
 	}
 	
-	private IndexedDataSource<?,ComplexFloat64Member> makeComplexData(int size) {
+	private IndexedDataSource<ComplexFloat64Member> makeComplexData(int size) {
 		return new ArrayStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
 	}
 	
-	private void fillIntData(IndexedDataSource<?,SignedInt32Member> input) {
+	private void fillIntData(IndexedDataSource<SignedInt32Member> input) {
 		// an example of straight index access to low level data
 		SignedInt32Member value = new SignedInt32Member();
 		int count = 0;
@@ -422,7 +422,7 @@ public class TestFloat64Complex {
 	
 	// note this could be further optimized by doing some multiplication in reals rather than complexes
 	
-	private void dft(IndexedDataSource<?,SignedInt32Member> input, IndexedDataSource<?,ComplexFloat64Member> output) {
+	private void dft(IndexedDataSource<SignedInt32Member> input, IndexedDataSource<ComplexFloat64Member> output) {
 		ComplexFloat64Member FofU = new ComplexFloat64Member();
 		ComplexFloat64Member fOfX = new ComplexFloat64Member();
 		ComplexFloat64Member sum = new ComplexFloat64Member();

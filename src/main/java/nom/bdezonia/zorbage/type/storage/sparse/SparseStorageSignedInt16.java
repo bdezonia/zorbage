@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  *
  */
 public class SparseStorageSignedInt16<U extends ShortCoder>
-	implements IndexedDataSource<SparseStorageSignedInt16<U>, U>, Allocatable<SparseStorageSignedInt16<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageSignedInt16<U>>
 {
 	private final RedBlackTree<short[]> data;
 	private final long numElements;

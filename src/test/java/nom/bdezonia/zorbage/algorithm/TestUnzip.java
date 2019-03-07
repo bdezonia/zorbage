@@ -83,8 +83,8 @@ public class TestUnzip {
 		value.a().setV(10);
 		value.b().setV(11);
 		store.set(9, value);
-		IndexedDataSource<?, SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[10]);
-		IndexedDataSource<?, Float32Member> floats = ArrayStorage.allocateFloats(new float[10]);
+		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[10]);
+		IndexedDataSource<Float32Member> floats = ArrayStorage.allocateFloats(new float[10]);
 		Unzip.two(G.INT64, G.FLT, store, longs, floats);
 		SignedInt64Member lValue = G.INT64.construct();
 		Float32Member fValue = G.FLT.construct();

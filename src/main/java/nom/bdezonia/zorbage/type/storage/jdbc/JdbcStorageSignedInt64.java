@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  */
 public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<JdbcStorageSignedInt64<U>, U>, Allocatable<JdbcStorageSignedInt64<U>>
+	implements IndexedDataSource<U>, Allocatable<JdbcStorageSignedInt64<U>>
 {
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html

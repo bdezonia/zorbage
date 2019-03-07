@@ -51,7 +51,7 @@ public class TestFill {
 		
 		long size = 10000;
 		SignedInt32Member type = new SignedInt32Member();
-		IndexedDataSource<?, SignedInt32Member> data = Storage.allocate(size, type);
+		IndexedDataSource<SignedInt32Member> data = Storage.allocate(size, type);
 		assertEquals(size, data.size());
 		Ramp<SignedInt32Algebra, SignedInt32Member> ramp1 = new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(-25), new SignedInt32Member(3));
 		Fill.compute(G.INT32, ramp1, data);
@@ -73,7 +73,7 @@ public class TestFill {
 
 		Float64Member type = new Float64Member();
 		
-		IndexedDataSource<?, Float64Member> data = Storage.allocate(1000, type);
+		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
 		
 		Fill.compute(G.DBL, new Float64Member(17.4), data);
 		data.get(999, type);

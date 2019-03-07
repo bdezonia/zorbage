@@ -50,7 +50,7 @@ public class CountIf {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T algebra, V addAlgebra, Condition<U> condition, IndexedDataSource<?,U> a, W sum)
+		void compute(T algebra, V addAlgebra, Condition<U> condition, IndexedDataSource<U> a, W sum)
 	{
 		compute(algebra, addAlgebra, condition, 0, a.size(), a, sum);
 	}
@@ -66,7 +66,7 @@ public class CountIf {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T algebra, V addAlgebra, Condition<U> condition, long start, long count, IndexedDataSource<?,U> a, W sum)
+		void compute(T algebra, V addAlgebra, Condition<U> condition, long start, long count, IndexedDataSource<U> a, W sum)
 	{
 		U tmp = algebra.construct();
 		W tmpSum = addAlgebra.construct();

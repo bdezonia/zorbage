@@ -56,7 +56,7 @@ public class TestSignedInt6 {
 		return v;
 	}
 	
-	private void testStorageMethods(IndexedDataSource<?, SignedInt6Member> data) {
+	private void testStorageMethods(IndexedDataSource<SignedInt6Member> data) {
 		
 		SignedInt6Member in = new SignedInt6Member();
 		SignedInt6Member out = new SignedInt6Member();

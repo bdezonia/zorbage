@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
  *
  */
 public class ConditionalDataSource<T extends Algebra<T,U>, U>
-	implements IndexedDataSource<ConditionalDataSource<T,U>, U>
+	implements IndexedDataSource<U>
 {
 	private static final ThreadLocal<SignedInt64Member> tmp64 =
 		new ThreadLocal<SignedInt64Member>() {
@@ -47,9 +47,9 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 			}
 		};
 	private final T algebra;
-	private final IndexedDataSource<?,U> source;
+	private final IndexedDataSource<U> source;
 	private final Function1<Boolean,U> condition;
-	private final IndexedDataSource<?,SignedInt64Member> indexList;
+	private final IndexedDataSource<SignedInt64Member> indexList;
 	private final long sz;
 
 	/**
@@ -58,7 +58,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 	 * @param source
 	 * @param condition
 	 */
-	public ConditionalDataSource(T algebra, IndexedDataSource<?,U> source, Function1<Boolean,U> condition) {
+	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Function1<Boolean,U> condition) {
 		this.algebra = algebra;
 		this.source = source;
 		this.condition = condition;

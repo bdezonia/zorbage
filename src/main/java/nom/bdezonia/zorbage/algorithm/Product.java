@@ -45,7 +45,7 @@ public class Product {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		compute(alg, 0, storage.size(), storage, result);
 	}
@@ -59,7 +59,7 @@ public class Product {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U result)
 	{
 		if (start < 0) throw new IllegalArgumentException("start index must be >= 0 in Product method");
 		if (count < 0) throw new IllegalArgumentException("count must be >= 0 in Product method");

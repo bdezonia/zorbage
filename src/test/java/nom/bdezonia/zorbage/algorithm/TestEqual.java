@@ -45,13 +45,13 @@ public class TestEqual {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?,SignedInt16Member> a3 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a3 = ArrayStorage.allocateShorts(
 				new short[] {1,2,3});
-		IndexedDataSource<?,SignedInt16Member> a4 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a4 = ArrayStorage.allocateShorts(
 				new short[] {1,2,3,4});
-		IndexedDataSource<?,SignedInt16Member> a5 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a5 = ArrayStorage.allocateShorts(
 				new short[] {1,2,3,4,5});
-		IndexedDataSource<?,SignedInt16Member> b4 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> b4 = ArrayStorage.allocateShorts(
 				new short[] {1,2,3,4});
 		assertEquals(false, Equal.compute(G.INT16, a3, a4));
 		assertEquals(false, Equal.compute(G.INT16, a3, a5));

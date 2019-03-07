@@ -45,9 +45,9 @@ public class TestScale {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?,SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {-5,-3,-1,0,2,4,6});
-		IndexedDataSource<?,SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
 				new int[7]);
 		SignedInt32Member value = G.INT32.construct();
 		

@@ -39,7 +39,7 @@ public class TestForEach {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
 				new byte[] {0,1,2,3,0,-1,-2,-3});
 		ForEach.compute(G.INT8, G.INT8.negate(), list);
 		SignedInt8Member value = G.INT8.construct();

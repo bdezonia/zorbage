@@ -44,9 +44,9 @@ public class TestReplaceCopy {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,2,1,4,2,6,1,7,1});
-		IndexedDataSource<?,Float64Member> b = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(
 				new double[9]);
 		Float64Member value = G.DBL.construct();
 		

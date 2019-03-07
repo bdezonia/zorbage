@@ -47,8 +47,8 @@ public class TestMaskedDataSource {
 	@Test
 	public void zero() {
 
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {});
 		try {
@@ -64,9 +64,9 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
-		IndexedDataSource<?,SignedInt32Member> result;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> result;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false});
 		result = new MaskedDataSource<>(list, mask);
@@ -92,9 +92,9 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
-		IndexedDataSource<?,SignedInt32Member> result;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> result;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false});
 		result = new MaskedDataSource<>(list, mask);
@@ -138,9 +138,9 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
-		IndexedDataSource<?,SignedInt32Member> result;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> result;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false});
 		result = new MaskedDataSource<>(list, mask);
@@ -220,9 +220,9 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
-		IndexedDataSource<?,SignedInt32Member> result;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> result;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
@@ -374,9 +374,9 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
-		IndexedDataSource<?,SignedInt32Member> result;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> result;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
@@ -672,9 +672,9 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<?,BooleanMember> mask;
-		IndexedDataSource<?,SignedInt32Member> result;
+		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<BooleanMember> mask;
+		IndexedDataSource<SignedInt32Member> result;
 		
 		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);

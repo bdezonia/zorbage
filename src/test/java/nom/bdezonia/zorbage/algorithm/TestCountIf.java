@@ -50,7 +50,7 @@ public class TestCountIf {
 		
 		double[] numbers = new double[] {0, 10, 20, 30, 40, 50};
 		
-		IndexedDataSource<?,Float64Member> data = ArrayStorage.allocateDoubles(numbers);
+		IndexedDataSource<Float64Member> data = ArrayStorage.allocateDoubles(numbers);
 		
 		UnsignedInt32Member sum = G.UINT32.construct();
 		

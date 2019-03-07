@@ -58,7 +58,7 @@ public class Transform4 {
 	 * @param d
 	 */
 	public static final <L extends Algebra<L,M>, M>
-		void compute(L algM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,M> b, IndexedDataSource<?,M> c, IndexedDataSource<?,M> d)
+		void compute(L algM, Procedure4<M,M,M,M> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<M> a, IndexedDataSource<M> b, IndexedDataSource<M> c, IndexedDataSource<M> d)
 	{
 		compute(algM, algM, algM, algM, proc, aStart, bStart, cStart, dStart, count, aStride, bStride, cStride, dStride, a, b, c, d);
 	}
@@ -81,7 +81,7 @@ public class Transform4 {
 	 * @param c
 	 */
 	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q>
-		void compute(L algM, N algO, P algQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c)
+		void compute(L algM, N algO, P algQ, Procedure4<M,O,Q,Q> proc, long aStart, long bStart, long cStart, long count, long aStride, long bStride, long cStride, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c)
 	{
 		compute(algM, algO, algQ, algQ, proc, aStart, bStart, cStart, cStart, count, aStride, bStride, cStride, cStride, a, b, c, c);
 	}
@@ -108,7 +108,7 @@ public class Transform4 {
 	 * @param d
 	 */
 	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q, R extends Algebra<R,S>, S>
-		void compute(L algM, N algO, P algQ, R algS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<?,M> a, IndexedDataSource<?,O> b, IndexedDataSource<?,Q> c, IndexedDataSource<?,S> d)
+		void compute(L algM, N algO, P algQ, R algS, Procedure4<M,O,Q,S> proc, long aStart, long bStart, long cStart, long dStart, long count, long aStride, long bStride, long cStride, long dStride, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c, IndexedDataSource<S> d)
 	{
 		M valueM = algM.construct();
 		O valueO = algO.construct();
@@ -135,7 +135,7 @@ public class Transform4 {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Procedure4<U,U,U,U> proc, IndexedDataSource<?,U> a)
+		void compute(T alg, Procedure4<U,U,U,U> proc, IndexedDataSource<U> a)
 	{
 		U value1 = alg.construct();
 		U value2 = alg.construct();

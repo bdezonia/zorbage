@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt16;
  */
 public class TestUnsignedInt11 {
 	
-	private void testStorageMethods(IndexedDataSource<?, UnsignedInt11Member> data) {
+	private void testStorageMethods(IndexedDataSource<UnsignedInt11Member> data) {
 		
 		UnsignedInt11Member in = new UnsignedInt11Member();
 		UnsignedInt11Member out = new UnsignedInt11Member();

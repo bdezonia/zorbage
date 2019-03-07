@@ -49,7 +49,7 @@ public class MedianI {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & ModularDivision<U> & Ordered<U> & Unity<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U numer = alg.construct();
 		U denom = alg.construct();

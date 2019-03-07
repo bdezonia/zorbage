@@ -134,14 +134,13 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void duplicateBuffer(IndexedDataSource<?,U> other) {
-		@SuppressWarnings("unchecked")
+	protected void duplicateBuffer(IndexedDataSource<U> other) {
 		ArrayStorageFloat64<U> otherBuffer = (ArrayStorageFloat64<U>) other;
 		buffer = otherBuffer.duplicate();
 	}
 
 	@Override
-	protected IndexedDataSource<?,U> buffer() {
+	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
 }

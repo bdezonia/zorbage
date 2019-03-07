@@ -44,7 +44,7 @@ public class TestMinElement {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,Float64Member> storage =
+		IndexedDataSource<Float64Member> storage =
 				ArrayStorage.allocateDoubles(new double[]{0,1,2,3,4,5,6,7,8,9});
 		Float64Member min = new Float64Member(-1234);
 		MinElement.compute(G.DBL, storage, min);

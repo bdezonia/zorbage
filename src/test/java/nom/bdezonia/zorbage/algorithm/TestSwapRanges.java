@@ -45,9 +45,9 @@ public class TestSwapRanges {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?,SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,3,4});
-		IndexedDataSource<?,SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
 				new int[] {5,6,7,8});
 		SignedInt32Member value = G.INT32.construct();
 		SwapRanges.compute(G.INT32, a, b);

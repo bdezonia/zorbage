@@ -47,9 +47,9 @@ public class MedianValues {
 	 * @param result2
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result1, U result2)
+		void compute(T alg, IndexedDataSource<U> storage, U result1, U result2)
 	{
-		IndexedDataSource<?,U> localStorage = storage.duplicate();
+		IndexedDataSource<U> localStorage = storage.duplicate();
 		Sort.compute(alg, localStorage);
 		long localStorageSize = localStorage.size();
 		if (localStorageSize == 0) {

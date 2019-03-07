@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
  *
  */
 public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt16<U>,U>, Allocatable<ArrayStorageSignedInt16<U>>
+	implements IndexedDataSource<U>, Allocatable<ArrayStorageSignedInt16<U>>
 {
 
 	private final U type;

@@ -44,7 +44,7 @@ public class TestAdjacentFind {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,BooleanMember> storage =
+		IndexedDataSource<BooleanMember> storage =
 				ArrayStorage.allocateBooleans(
 						new boolean[]{false,true,true,false,true,false,false,true,true});
 		

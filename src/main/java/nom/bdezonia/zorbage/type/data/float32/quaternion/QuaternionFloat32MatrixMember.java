@@ -60,7 +60,7 @@ public final class QuaternionFloat32MatrixMember
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member();
 
-	private IndexedDataSource<?,QuaternionFloat32Member> storage;
+	private IndexedDataSource<QuaternionFloat32Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

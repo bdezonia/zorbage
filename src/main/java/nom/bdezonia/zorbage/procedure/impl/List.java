@@ -36,9 +36,9 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  */
 public class List<U> implements Procedure2<Long,U>
 {
-	private final IndexedDataSource<?, U> list;
+	private final IndexedDataSource<U> list;
 	
-	public List(IndexedDataSource<?, U> list) {
+	public List(IndexedDataSource<U> list) {
 		this.list = list;
 	}
 	

@@ -51,9 +51,9 @@ public class TestFFT {
 	public void testPolyMult() {
 		SignedInt32Member int32 = new SignedInt32Member();
 		ComplexFloat64Member cdbl = new ComplexFloat64Member();
-		IndexedDataSource<?,SignedInt32Member> poly1 =
+		IndexedDataSource<SignedInt32Member> poly1 =
 				Storage.allocate(7, int32);
-		IndexedDataSource<?,SignedInt32Member> poly2 =
+		IndexedDataSource<SignedInt32Member> poly2 =
 				Storage.allocate(7, int32);
 		SignedInt32Member start1 = new SignedInt32Member(3);
 		SignedInt32Member start2 = new SignedInt32Member(-5);
@@ -66,9 +66,9 @@ public class TestFFT {
 		Fill.compute(G.INT32, ramp1, 0, 3, poly1);
 		Fill.compute(G.INT32, ramp2, 0, 3, poly2);
 		long n = FFT.enclosingPowerOf2(poly1.size());
-		IndexedDataSource<?,ComplexFloat64Member> data1 =
+		IndexedDataSource<ComplexFloat64Member> data1 =
 				Storage.allocate(n, cdbl);
-		IndexedDataSource<?,ComplexFloat64Member> data2 =
+		IndexedDataSource<ComplexFloat64Member> data2 =
 				Storage.allocate(n, cdbl);
 		DataConvert.compute(G.INT32, G.CDBL, poly1, data1);
 		DataConvert.compute(G.INT32, G.CDBL, poly2, data2);
@@ -76,7 +76,7 @@ public class TestFFT {
 		FFT.compute(G.CDBL, data2, data2);
 		Correlate.compute(G.CDBL, data1, data2, data1);
 		InvFFT.compute(data1, data1);
-		IndexedDataSource<?,SignedInt32Member> result =
+		IndexedDataSource<SignedInt32Member> result =
 				Storage.allocate(n, int32);
 		DataConvert.compute(G.CDBL, G.INT32, data1, result);
 		result.get(0, int32);

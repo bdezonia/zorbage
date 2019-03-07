@@ -46,7 +46,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
+		long compute(T algebra, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
 		return compute(algebra, elements, 0, a.size(), a);
 	}
@@ -61,7 +61,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
+		long compute(T algebra, IndexedDataSource<U> elements, long start, long count, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		U element = algebra.construct();
@@ -89,7 +89,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, IndexedDataSource<?, U> a)
+		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
 		return compute(algebra, cond, elements, 0, a.size(), a);
 	}
@@ -105,7 +105,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<?, U> elements, long start, long count, IndexedDataSource<?, U> a)
+		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> elements, long start, long count, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		U element = algebra.construct();

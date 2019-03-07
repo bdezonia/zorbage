@@ -46,7 +46,7 @@ public class TestTransform4 {
 	@Test
 	public void test() {
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<?,Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,2,3,4,5});
 		Procedure4<Float64Member,Float64Member,Float64Member,Float64Member> proc =
 				new Procedure4<Float64Member, Float64Member, Float64Member, Float64Member>()

@@ -60,7 +60,7 @@ public final class Float32MatrixMember
 {
 	private static final Float32Member ZERO = new Float32Member(0);
 
-	private IndexedDataSource<?,Float32Member> storage;
+	private IndexedDataSource<Float32Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

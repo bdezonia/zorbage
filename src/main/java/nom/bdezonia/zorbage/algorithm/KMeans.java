@@ -57,7 +57,7 @@ public class KMeans {
 	 * @param clusterIndices The list tracking which Point is in which cluster.
 	 */
 	public static
-		void compute(PointAlgebra Algebra, int numClusters, IndexedDataSource<?,Point> points, IndexedDataSource<?,SignedInt32Member> clusterIndices)
+		void compute(PointAlgebra Algebra, int numClusters, IndexedDataSource<Point> points, IndexedDataSource<SignedInt32Member> clusterIndices)
 	{
 		if (numClusters < 1)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");

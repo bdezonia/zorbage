@@ -48,7 +48,7 @@ public class TestReplaceIf {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?,Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,2,1,4,2,6,1,7,1});
 
 		Condition<Float64Member> cond =

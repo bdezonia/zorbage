@@ -43,28 +43,28 @@ import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 public class SparseStorage {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U> IndexedDataSource<?,U> allocate(long size, U type) {
+	public static <U> IndexedDataSource<U> allocate(long size, U type) {
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageFloat64(size, (DoubleCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageFloat64(size, (DoubleCoder)type);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageFloat32(size, (FloatCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageFloat32(size, (FloatCoder)type);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageSignedInt64(size, (LongCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageSignedInt64(size, (LongCoder)type);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageSignedInt32(size, (IntCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageSignedInt32(size, (IntCoder)type);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageSignedInt16(size, (ShortCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageSignedInt16(size, (ShortCoder)type);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageBoolean(size, (BooleanCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageBoolean(size, (BooleanCoder)type);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<?,U>) new SparseStorageSignedInt8(size, (ByteCoder)type);
+			return (IndexedDataSource<U>) new SparseStorageSignedInt8(size, (ByteCoder)type);
 		}
 		
 		// TODO: add bitCoder when it is done.

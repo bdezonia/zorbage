@@ -47,13 +47,13 @@ public class TestFindMedianFraction {
 		SignedInt8Member numer = G.INT8.construct();
 		SignedInt8Member denom = G.INT8.construct();
 
-		IndexedDataSource<?,SignedInt8Member> list1 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list1 = ArrayStorage.allocateBytes(
 				new byte[] {1,2,3});
 		FindMedianFraction.compute(G.INT8, list1, numer, denom);
 		assertEquals(2, numer.v());
 		assertEquals(1, denom.v());
 
-		IndexedDataSource<?,SignedInt8Member> list2 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list2 = ArrayStorage.allocateBytes(
 				new byte[] {1,2,3,4});
 		FindMedianFraction.compute(G.INT8, list2, numer, denom);
 		assertEquals(5, numer.v());

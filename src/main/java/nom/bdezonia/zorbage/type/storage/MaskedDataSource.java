@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.storage;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 
 /**
@@ -35,12 +34,12 @@ import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
  * @author Barry DeZonia
  *
  */
-public class MaskedDataSource<T extends Algebra<T,U>,U>
+public class MaskedDataSource<U>
 	implements
-		IndexedDataSource<MaskedDataSource<T,U>,U>
+		IndexedDataSource<U>
 {
-	private final IndexedDataSource<?,U> list;
-	private final IndexedDataSource<?,BooleanMember> mask;
+	private final IndexedDataSource<U> list;
+	private final IndexedDataSource<BooleanMember> mask;
 	private final long listSize;
 	private final long maskSize;
 	private final long trueCount;
@@ -51,7 +50,7 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 	 * @param list
 	 * @param mask
 	 */
-	public MaskedDataSource(IndexedDataSource<?,U> list, IndexedDataSource<?,BooleanMember> mask) {
+	public MaskedDataSource(IndexedDataSource<U> list, IndexedDataSource<BooleanMember> mask) {
 		this.list = list;
 		this.mask = mask;
 		this.listSize = list.size();
@@ -79,7 +78,7 @@ public class MaskedDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	@Override
-	public MaskedDataSource<T,U> duplicate() {
+	public MaskedDataSource<U> duplicate() {
 		// shallow copy
 		return new MaskedDataSource<>(list, mask);
 	}

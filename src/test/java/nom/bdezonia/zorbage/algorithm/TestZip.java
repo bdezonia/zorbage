@@ -52,8 +52,8 @@ public class TestZip {
 	public void test() {
 		Tuple2Algebra<SignedInt64Algebra,SignedInt64Member,Float32Algebra,Float32Member> alg = new Tuple2Algebra<>(G.INT64, G.FLT);
 		ArrayStorageGeneric<Tuple2Algebra<SignedInt64Algebra,SignedInt64Member,Float32Algebra,Float32Member>, Tuple2<SignedInt64Member,Float32Member>> store = new ArrayStorageGeneric<Tuple2Algebra<SignedInt64Algebra,SignedInt64Member,Float32Algebra,Float32Member>, Tuple2<SignedInt64Member,Float32Member>>(10, alg);
-		IndexedDataSource<?, SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3,4,5,6,7,8,9,10});
-		IndexedDataSource<?, Float32Member> floats = ArrayStorage.allocateFloats(new float[] {20,19,18,17,16,15,14,13,12,11});
+		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3,4,5,6,7,8,9,10});
+		IndexedDataSource<Float32Member> floats = ArrayStorage.allocateFloats(new float[] {20,19,18,17,16,15,14,13,12,11});
 		Zip.two(G.INT64, G.FLT, longs, floats, store);
 		Tuple2<SignedInt64Member, Float32Member> value = alg.construct();
 		store.get(0, value);

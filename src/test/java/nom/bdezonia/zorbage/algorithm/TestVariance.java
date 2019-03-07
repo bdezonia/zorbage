@@ -45,7 +45,7 @@ public class TestVariance {
 	@Test
 	public void test() {
 
-		IndexedDataSource<?,Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,-7,4,9,-13});
 		Float64Member result = G.DBL.construct();
 		Variance.compute(G.DBL, a, result);

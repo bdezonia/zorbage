@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  * @param <U>
  */
 public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageBoolean<U>, U>, Allocatable<ArrayStorageBoolean<U>>
+	implements IndexedDataSource<U>, Allocatable<ArrayStorageBoolean<U>>
 {
 	private final U type;
 	private final boolean[] data;

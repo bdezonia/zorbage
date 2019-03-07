@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
 
@@ -38,13 +37,13 @@ import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
  * Pronounced as "pie" "ped".
  * 
  */
-public class PipedDataSource <T extends Algebra<T,U>,U> implements IndexedDataSource<PipedDataSource<T,U>,U> {
+public class PipedDataSource<U> implements IndexedDataSource<U> {
 
-	private MultiDimDataSource<T,U> d;
+	private MultiDimDataSource<?,U> d;
 	private int dim;
 	private long[] parentDims;
 	private long[] coords;
-	private IndexedDataSource<?,U> data;
+	private IndexedDataSource<U> data;
 	
 	/**
 	 * 
@@ -52,7 +51,7 @@ public class PipedDataSource <T extends Algebra<T,U>,U> implements IndexedDataSo
 	 * @param dim
 	 * @param coords
 	 */
-	public PipedDataSource(MultiDimDataSource<T,U> d, int dim, long[] coords) {
+	public PipedDataSource(MultiDimDataSource<?,U> d, int dim, long[] coords) {
 		this.d = d;
 		this.dim = dim;
 		this.coords = coords;
@@ -74,9 +73,9 @@ public class PipedDataSource <T extends Algebra<T,U>,U> implements IndexedDataSo
 	}
 	
 	@Override
-	public PipedDataSource<T,U> duplicate() {
+	public PipedDataSource<U> duplicate() {
 		// shallow copy
-		return new PipedDataSource<T,U>(d,dim,coords);
+		return new PipedDataSource<U>(d,dim,coords);
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class PipedDataSource <T extends Algebra<T,U>,U> implements IndexedDataSo
 		return data.size();
 	}
 
-	private IndexedDataSource<?,U> findSubset() {
+	private IndexedDataSource<U> findSubset() {
 		long[] start = coords.clone();
 		long[] stop = coords.clone();
 		start[dim] = 0;

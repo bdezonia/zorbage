@@ -45,9 +45,9 @@ public class TestConcatenatedDataSource {
 	public void test() {
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<?,SignedInt32Member> a = ArrayStorage.allocateInts(new int[] {1,2,3});
-		IndexedDataSource<?,SignedInt32Member> b = ArrayStorage.allocateInts(new int[] {4,5,6,7,8});
-		IndexedDataSource<?,SignedInt32Member> c = new ConcatenatedDataSource<>(a,b);
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(new int[] {1,2,3});
+		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(new int[] {4,5,6,7,8});
+		IndexedDataSource<SignedInt32Member> c = new ConcatenatedDataSource<>(a,b);
 
 		assertEquals(a.size()+b.size(),c.size());
 		

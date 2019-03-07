@@ -46,7 +46,7 @@ public class Sample {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, int n, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, int n, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		compute(algebra, n, 0, 0, a.size(), a, b);
 	}
@@ -62,7 +62,7 @@ public class Sample {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, int n, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, int n, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		if (n > count)
 			throw new IllegalArgumentException("n too large");

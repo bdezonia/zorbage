@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
  *
  */
 public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
-	implements IndexedDataSource<ArrayStorageSignedInt64<U>,U>, Allocatable<ArrayStorageSignedInt64<U>>
+	implements IndexedDataSource<U>, Allocatable<ArrayStorageSignedInt64<U>>
 {
 
 	private final U type;

@@ -47,7 +47,7 @@ public class MinMaxElement {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U min, U max)
+		void compute(T alg, IndexedDataSource<U> storage, U min, U max)
 	{
 		compute(alg, 0, storage.size(), storage, min, max);
 	}
@@ -62,7 +62,7 @@ public class MinMaxElement {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U min, U max)
+		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U min, U max)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("minmax undefined for empty list");

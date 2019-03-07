@@ -45,7 +45,7 @@ public class TestProduct {
 	@Test
 	public void test() {
 	
-		IndexedDataSource<?,SignedInt64Member> storage = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> storage = ArrayStorage.allocateLongs(
 				new long[] {2,7,3,5});
 		SignedInt64Member result = G.INT64.construct();
 		Product.compute(G.INT64, storage, result);

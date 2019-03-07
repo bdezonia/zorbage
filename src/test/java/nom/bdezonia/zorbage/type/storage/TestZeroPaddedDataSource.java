@@ -44,8 +44,8 @@ public class TestZeroPaddedDataSource {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
-		IndexedDataSource<?,SignedInt32Member> padded = new ZeroPaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
+		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
+		IndexedDataSource<SignedInt32Member> padded = new ZeroPaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
 		SignedInt32Member value = G.INT32.construct();
 		
 		assertEquals(ints.size(), padded.size());

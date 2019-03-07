@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  *
  */
 public class SparseStorageFloat64<U extends DoubleCoder>
-	implements IndexedDataSource<SparseStorageFloat64<U>, U>, Allocatable<SparseStorageFloat64<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageFloat64<U>>
 {
 	private final RedBlackTree<double[]> data;
 	private final long numElements;

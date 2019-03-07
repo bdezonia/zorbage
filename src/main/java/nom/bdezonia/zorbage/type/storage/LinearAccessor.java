@@ -35,11 +35,11 @@ package nom.bdezonia.zorbage.type.storage;
 public class LinearAccessor<U> {
 	
 	private final U value;
-	private final IndexedDataSource<?,U> storage;
+	private final IndexedDataSource<U> storage;
 	private long pos;
 	private final long size;
 
-	public LinearAccessor(U value, IndexedDataSource<?,U> storage) {
+	public LinearAccessor(U value, IndexedDataSource<U> storage) {
 		this.value = value;
 		this.storage = storage;
 		this.size = storage.size();

@@ -60,7 +60,7 @@ public final class ComplexFloat32MatrixMember
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
 	
-	private IndexedDataSource<?,ComplexFloat32Member> storage;
+	private IndexedDataSource<ComplexFloat32Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

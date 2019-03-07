@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  *
  */
 public class SparseStorageBoolean<U extends BooleanCoder>
-	implements IndexedDataSource<SparseStorageBoolean<U>, U>, Allocatable<SparseStorageBoolean<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageBoolean<U>>
 {
 	private final RedBlackTree<boolean[]> data;
 	private final long numElements;

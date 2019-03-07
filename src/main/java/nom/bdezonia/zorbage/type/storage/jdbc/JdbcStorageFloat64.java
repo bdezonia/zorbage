@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  */
 public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<JdbcStorageFloat64<U>, U>, Allocatable<JdbcStorageFloat64<U>>
+	implements IndexedDataSource<U>, Allocatable<JdbcStorageFloat64<U>>
 {
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html

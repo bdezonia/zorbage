@@ -57,9 +57,9 @@ public class TestKMeans {
 		
 		int numClusters = 3;
 		
-		IndexedDataSource<?, Point> points = ArrayStorage.allocate(NUMELEMS, point);
+		IndexedDataSource<Point> points = ArrayStorage.allocate(NUMELEMS, point);
 
-		IndexedDataSource<?, SignedInt32Member> clusterIndices = ArrayStorage.allocate(NUMELEMS, num);
+		IndexedDataSource<SignedInt32Member> clusterIndices = ArrayStorage.allocate(NUMELEMS, num);
 
 		for (int i = 0; i < NUMELEMS; i++) {
 			points.get(i, point);

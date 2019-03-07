@@ -36,11 +36,11 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class WriteNotifyingDataSource<S extends IndexedDataSource<S,U>, T extends Algebra<T,U>, U>
-	implements IndexedDataSource<WriteNotifyingDataSource<S,T,U>,U>
+public class WriteNotifyingDataSource<T extends Algebra<T,U>, U>
+	implements IndexedDataSource<U>
 {
 	private final T algebra;
-	private final IndexedDataSource<?,U> source;
+	private final IndexedDataSource<U> source;
 	private final List<DataSourceListener<T,U>> listeners;
 	
 	/**
@@ -48,7 +48,7 @@ public class WriteNotifyingDataSource<S extends IndexedDataSource<S,U>, T extend
 	 * @param alg
 	 * @param src
 	 */
-	public WriteNotifyingDataSource(T alg, IndexedDataSource<?,U> src) {
+	public WriteNotifyingDataSource(T alg, IndexedDataSource<U> src) {
 		this.algebra = alg;
 		this.source = src;
 		this.listeners = new ArrayList<DataSourceListener<T,U>>();
@@ -67,8 +67,8 @@ public class WriteNotifyingDataSource<S extends IndexedDataSource<S,U>, T extend
 	}
 	
 	@Override
-	public WriteNotifyingDataSource<S,T,U> duplicate() {
-		return new WriteNotifyingDataSource<S,T,U>(algebra, source);
+	public WriteNotifyingDataSource<T,U> duplicate() {
+		return new WriteNotifyingDataSource<T,U>(algebra, source);
 	}
 
 	@Override

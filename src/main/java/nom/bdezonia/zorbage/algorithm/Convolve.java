@@ -49,7 +49,7 @@ public class Convolve {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T algebra, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b, IndexedDataSource<?,U> c)
+		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
 	{
 		U tmpA1 = algebra.construct();
 		U tmpA2 = algebra.construct();

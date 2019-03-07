@@ -49,7 +49,7 @@ public class TestRightRotate {
 
 		short[] numbers = new short[] {0, 10, 20, 30, 40, 50};
 		
-		IndexedDataSource<?,SignedInt16Member> data = ArrayStorage.allocateShorts(numbers);
+		IndexedDataSource<SignedInt16Member> data = ArrayStorage.allocateShorts(numbers);
 		
 		RightRotate.compute(G.INT16, 3, data);
 		

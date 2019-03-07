@@ -44,7 +44,7 @@ public class TestMinMaxElement {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt64Member> storage =
+		IndexedDataSource<SignedInt64Member> storage =
 				ArrayStorage.allocateLongs(new long[]{-16,20,7,-55,0,1,5,74,44,13});
 		SignedInt64Member min = G.INT64.construct();
 		SignedInt64Member max = G.INT64.construct();

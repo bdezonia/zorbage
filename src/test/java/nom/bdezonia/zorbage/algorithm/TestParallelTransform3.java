@@ -46,7 +46,7 @@ public class TestParallelTransform3 {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?,SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,3,4,5});
 		SignedInt32Member value = G.INT32.construct();
 		Procedure3<SignedInt32Member,SignedInt32Member,SignedInt32Member> proc =

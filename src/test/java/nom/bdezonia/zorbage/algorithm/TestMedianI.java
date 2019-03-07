@@ -44,10 +44,10 @@ public class TestMedianI {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt32Member> list1 =
+		IndexedDataSource<SignedInt32Member> list1 =
 				ArrayStorage.allocateInts(new int[]{4,2,1,3});
 		
-		IndexedDataSource<?,SignedInt32Member> list2 =
+		IndexedDataSource<SignedInt32Member> list2 =
 				ArrayStorage.allocateInts(new int[]{4,2,1,3,5});
 
 		SignedInt32Member result = new SignedInt32Member();

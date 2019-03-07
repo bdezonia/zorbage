@@ -46,7 +46,7 @@ public class MinElement {
 	 * @param min
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U min)
+		void compute(T alg, IndexedDataSource<U> storage, U min)
 	{
 		compute(alg, 0, storage.size(), storage, min);
 	}
@@ -60,7 +60,7 @@ public class MinElement {
 	 * @param min
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		void compute(T alg, long start, long count, IndexedDataSource<?,U> storage, U min)
+		void compute(T alg, long start, long count, IndexedDataSource<U> storage, U min)
 	{
 		if (count <= 0)
 			throw new IllegalArgumentException("min undefined for empty list");

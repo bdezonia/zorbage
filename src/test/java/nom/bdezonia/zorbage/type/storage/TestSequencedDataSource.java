@@ -47,11 +47,11 @@ public class TestSequencedDataSource {
 	public void test() {
 		SignedInt32Member value = G.INT32.construct();
 		int[] tmp = new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		IndexedDataSource<?,SignedInt32Member> ints = ArrayStorage.allocateInts(tmp);
+		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(tmp);
 
 		// test one extreme boundary condition of seq
 		
-		SequencedDataSource<?,SignedInt32Member> seq = new SequencedDataSource<>(ints, 0, 1, ints.size());
+		SequencedDataSource<SignedInt32Member> seq = new SequencedDataSource<>(ints, 0, 1, ints.size());
 		assertEquals(ints.size(), seq.size());
 		for (int i = 0; i < ints.size(); i++) {
 			seq.get(i, value);

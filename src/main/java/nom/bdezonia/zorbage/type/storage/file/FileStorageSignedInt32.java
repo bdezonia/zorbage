@@ -134,14 +134,13 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 
 	@Override
-	protected void duplicateBuffer(IndexedDataSource<?,U> other) {
-		@SuppressWarnings("unchecked")
+	protected void duplicateBuffer(IndexedDataSource<U> other) {
 		ArrayStorageSignedInt32<U> otherBuffer = (ArrayStorageSignedInt32<U>) other;
 		buffer = otherBuffer.duplicate();
 	}
 
 	@Override
-	protected IndexedDataSource<?,U> buffer() {
+	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
 }

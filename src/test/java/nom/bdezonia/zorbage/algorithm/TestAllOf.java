@@ -49,7 +49,7 @@ public class TestAllOf {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt8Member> storage =
+		IndexedDataSource<SignedInt8Member> storage =
 				ArrayStorage.allocateBytes(new byte[]{0,1,2,3,4,5,6,7,8,9});
 		
 		Condition<SignedInt8Member> lessZero =

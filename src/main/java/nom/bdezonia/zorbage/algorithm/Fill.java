@@ -48,7 +48,7 @@ public class Fill {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, U value, IndexedDataSource<?,U> storage)
+		void compute(T algebra, U value, IndexedDataSource<U> storage)
 	{
 		compute(algebra, value, 0, storage.size(), storage);
 	}
@@ -60,7 +60,7 @@ public class Fill {
 	 * @param proc
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<?,U> storage)
+		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
 		compute(algebra, proc, 0, storage.size(), storage);
 	}
@@ -74,7 +74,7 @@ public class Fill {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, U value, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T algebra, U value, long start, long count, IndexedDataSource<U> storage)
 	{
 		for (long i = 0; i < count; i++) {
 			storage.set(start+i, value);
@@ -90,7 +90,7 @@ public class Fill {
 	 * @param count
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Procedure1<U> proc, long start, long count, IndexedDataSource<?,U> storage)
+		void compute(T algebra, Procedure1<U> proc, long start, long count, IndexedDataSource<U> storage)
 	{
 		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {

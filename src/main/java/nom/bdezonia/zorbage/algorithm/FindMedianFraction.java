@@ -47,7 +47,7 @@ public class FindMedianFraction {
 	 * @param denom
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Ordered<U> & Unity<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U numer, U denom)
+		void compute(T alg, IndexedDataSource<U> storage, U numer, U denom)
 	{
 		U result1 = alg.construct();
 		U result2 = alg.construct();

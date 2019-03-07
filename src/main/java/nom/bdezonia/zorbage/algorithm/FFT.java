@@ -49,7 +49,7 @@ public class FFT {
 	 * @param b
 	 */
 	public static
-		void compute(ComplexFloat64Algebra Algebra, IndexedDataSource<?,ComplexFloat64Member> a, IndexedDataSource<?,ComplexFloat64Member> b)
+		void compute(ComplexFloat64Algebra Algebra, IndexedDataSource<ComplexFloat64Member> a, IndexedDataSource<ComplexFloat64Member> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();

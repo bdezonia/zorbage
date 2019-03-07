@@ -47,9 +47,9 @@ public class TestCopyIf {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?, SignedInt16Member> a = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a = ArrayStorage.allocateShorts(
 				new short[] {1,2,3,4,5,6,7,8,9});
-		IndexedDataSource<?, SignedInt16Member> b = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> b = ArrayStorage.allocateShorts(
 				new short[] {0,0,0,0,0,0,0,0,0});
 		Condition<SignedInt16Member> cond = new GreaterThanConstant<SignedInt16Algebra,SignedInt16Member>(G.INT16, new SignedInt16Member(4));
 		CopyIf.compute(G.INT16, cond, a, b);

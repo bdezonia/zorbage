@@ -44,7 +44,7 @@ public class RightRotate {
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, long delta, IndexedDataSource<?,U> a)
+		void compute(T algebra, long delta, IndexedDataSource<U> a)
 	{
 		long aSize = a.size();
 		if (aSize == 0) return;

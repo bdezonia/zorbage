@@ -60,7 +60,7 @@ public final class Float64MatrixMember
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
-	private IndexedDataSource<?,Float64Member> storage;
+	private IndexedDataSource<Float64Member> storage;
 	private long rows;
 	private long cols;
 	private StorageConstruction s;

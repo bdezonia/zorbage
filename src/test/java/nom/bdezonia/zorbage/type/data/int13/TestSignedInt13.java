@@ -53,7 +53,7 @@ public class TestSignedInt13 {
 		return v;
 	}
 	
-	private void testStorageMethods(IndexedDataSource<?, SignedInt13Member> data) {
+	private void testStorageMethods(IndexedDataSource<SignedInt13Member> data) {
 		
 		SignedInt13Member in = new SignedInt13Member();
 		SignedInt13Member out = new SignedInt13Member();

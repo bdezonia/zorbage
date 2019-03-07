@@ -45,7 +45,7 @@ public class ReplaceCopy {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, U old_value, U new_value, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, U old_value, U new_value, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		compute(algebra, old_value, new_value, 0, 0, a.size(), a, b);
 	}
@@ -62,7 +62,7 @@ public class ReplaceCopy {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, U old_value, U new_value, long aStart, long bStart, long count, IndexedDataSource<?,U> a, IndexedDataSource<?,U> b)
+		void compute(T algebra, U old_value, U new_value, long aStart, long bStart, long count, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmp = algebra.construct();
 		for (long i = 0; i < count; i++) {

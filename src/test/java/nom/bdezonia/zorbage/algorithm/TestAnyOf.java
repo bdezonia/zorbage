@@ -48,7 +48,7 @@ public class TestAnyOf {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<?,BooleanMember> storage;
+		IndexedDataSource<BooleanMember> storage;
 		
 		Condition<BooleanMember> condition = new EqualConstant<BooleanAlgebra,BooleanMember>(G.BOOL, new BooleanMember(false));
 

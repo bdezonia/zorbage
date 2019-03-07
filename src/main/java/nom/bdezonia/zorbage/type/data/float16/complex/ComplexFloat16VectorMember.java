@@ -60,7 +60,7 @@ public final class ComplexFloat16VectorMember
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0); 
 
-	private IndexedDataSource<?,ComplexFloat16Member> storage;
+	private IndexedDataSource<ComplexFloat16Member> storage;
 	private StorageConstruction s;
 	
 	public ComplexFloat16VectorMember() {

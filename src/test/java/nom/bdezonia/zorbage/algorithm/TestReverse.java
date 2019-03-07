@@ -45,7 +45,7 @@ public class TestReverse {
 	@Test
 	public void test() {
 
-		IndexedDataSource<?,Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,4,5,2,2,6,9,3,17});
 		Float64Member value = G.DBL.construct();
 		

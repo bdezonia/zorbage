@@ -47,8 +47,8 @@ public class TestArrayStorageBit {
 		final long size = 1000;
 		BooleanMember bool = new BooleanMember();
 		SignedInt8Member byt = new SignedInt8Member();
-		IndexedDataSource<?, BooleanMember> bools = new ArrayStorageBit<BooleanMember>(size, bool);
-		IndexedDataSource<?, SignedInt8Member> bytes = new ArrayStorageSignedInt8<SignedInt8Member>(size, byt);
+		IndexedDataSource<BooleanMember> bools = new ArrayStorageBit<BooleanMember>(size, bool);
+		IndexedDataSource<SignedInt8Member> bytes = new ArrayStorageSignedInt8<SignedInt8Member>(size, byt);
 		long a = System.currentTimeMillis();
 		bool.setV(true);
 		for (long i = 0; i < iterations; i++) {

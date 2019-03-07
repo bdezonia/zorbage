@@ -50,7 +50,7 @@ public class Variance {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		long storageSize = storage.size();
 		if (storageSize == 0 || storageSize == 1) {

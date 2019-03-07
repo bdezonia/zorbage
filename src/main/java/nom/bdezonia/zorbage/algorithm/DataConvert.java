@@ -53,7 +53,7 @@ public class DataConvert {
 	 * @param to
 	 */
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V extends Algebra<V,W>, W extends PrimitiveConversion>
-		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<?,U> from, IndexedDataSource<?,W> to)
+		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<U> from, IndexedDataSource<W> to)
 	{
 		long fromSize = from.size();
 		long toSize = to.size();
@@ -73,7 +73,7 @@ public class DataConvert {
 	 * @param toList
 	 */
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
-		void compute(T fromAlgebra, V toAlgebra, long fromStart, long toStart, long count, IndexedDataSource<?,U> fromList, IndexedDataSource<?,W> toList)
+		void compute(T fromAlgebra, V toAlgebra, long fromStart, long toStart, long count, IndexedDataSource<U> fromList, IndexedDataSource<W> toList)
 	{
 		U from = fromAlgebra.construct();
 		W to = toAlgebra.construct();

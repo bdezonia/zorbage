@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
  *
  */
 public class SparseStorageSignedInt32<U extends IntCoder>
-	implements IndexedDataSource<SparseStorageSignedInt32<U>, U>, Allocatable<SparseStorageSignedInt32<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageSignedInt32<U>>
 {
 	private final RedBlackTree<int[]> data;
 	private final long numElements;

@@ -54,7 +54,7 @@ public class BinarySearch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		long compute(T algebra, U value, long start, long count, IndexedDataSource<?,U> data)
+		long compute(T algebra, U value, long start, long count, IndexedDataSource<U> data)
 	{
 		U tmp = algebra.construct();
 		long lo = 0;

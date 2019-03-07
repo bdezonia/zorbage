@@ -44,9 +44,9 @@ public class TestCopyBackward {
 
 	@Test
 	public void test() {
-		IndexedDataSource<?,SignedInt64Member> list = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> list = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,4,5,6,7,8});
-		IndexedDataSource<?,SignedInt64Member> list2 = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> list2 = ArrayStorage.allocateLongs(
 				new long[] {0,0,0,0,0,0,0,0});
 		CopyBackward.compute(G.INT64,list,list2);
 		SignedInt64Member value = G.INT64.construct();

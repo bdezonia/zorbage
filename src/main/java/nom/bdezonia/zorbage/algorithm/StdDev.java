@@ -50,7 +50,7 @@ public class StdDev {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<?,U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		Variance.compute(alg, storage, result);
 		alg.sqrt().call(result, result);

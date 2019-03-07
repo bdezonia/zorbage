@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  *
  */
 public abstract class AbstractFileStorage<U extends Allocatable<U>>
-	implements IndexedDataSource<AbstractFileStorage<U>, U>
+	implements IndexedDataSource<U>
 {
 	protected abstract void setLocals(U type);
 	protected abstract void allocateBuffer(long numElements, U type);
@@ -54,8 +54,8 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	protected abstract void readFromRafIntoBuffer(RandomAccessFile raf, long i) throws IOException;
 	protected abstract void setBufferValue(long idx, U value);
 	protected abstract void getBufferValue(long idx, U value);
-	protected abstract IndexedDataSource<?,U> buffer();
-	protected abstract void duplicateBuffer(IndexedDataSource<?,U> buffer);
+	protected abstract IndexedDataSource<U> buffer();
+	protected abstract void duplicateBuffer(IndexedDataSource<U> buffer);
 	
 	private long numElements;
 	private File file;

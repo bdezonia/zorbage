@@ -52,7 +52,7 @@ public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Or
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		IndexedDataSource<?, U> storage = Storage.allocate(inputs.length, result);
+		IndexedDataSource<U> storage = Storage.allocate(inputs.length, result);
 		for (int i = 0; i < inputs.length; i++) {
 			storage.set(i, inputs[i]);
 		}
