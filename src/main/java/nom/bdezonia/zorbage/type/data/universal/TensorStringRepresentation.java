@@ -50,8 +50,8 @@ public class TensorStringRepresentation {
 		elements = new BigList<OctonionRepresentation>();
 		gatherOctonions(chars);
 		if (elements.size() != LongUtils.numElements(dimensions)) {
-			//System.out.println("Parsed "+elements.size()+" values");
-			//System.out.println("Dims "+Arrays.toString(dimensions));
+			System.out.println("Parsed "+elements.size()+" values");
+			System.out.println("Dims "+Arrays.toString(dimensions));
 			throw new IllegalArgumentException("numbers parsed does not match dimensions of input tensor");
 		}
 	}

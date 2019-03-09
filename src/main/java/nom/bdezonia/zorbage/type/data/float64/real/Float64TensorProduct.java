@@ -76,7 +76,8 @@ public class Float64TensorProduct
 		ConstructibleNdLong<Float64TensorProductMember>,
 		Norm<Float64TensorProductMember,Float64Member>,
 		Scale<Float64TensorProductMember,Float64Member>,
-		Rounding<Float64Member,Float64TensorProductMember>, Infinite<Float64TensorProductMember>,
+		Rounding<Float64Member,Float64TensorProductMember>,
+		Infinite<Float64TensorProductMember>,
 		NaN<Float64TensorProductMember>
 {
 	@Override
