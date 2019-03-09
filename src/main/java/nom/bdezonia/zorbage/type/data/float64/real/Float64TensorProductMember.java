@@ -761,7 +761,7 @@ public final class Float64TensorProductMember
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
 			v(index, tmp);
-			return BigInteger.valueOf((long) tmp.v());
+			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 		return BigInteger.ZERO;
 	}
@@ -859,7 +859,7 @@ public final class Float64TensorProductMember
 		else {
 			Float64Member tmp = tmpFloat.get();
 			v(index, tmp);
-			return BigInteger.valueOf((long) tmp.v());
+			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 	}
 
