@@ -47,14 +47,14 @@ public class TestParallelTransform4 {
 	public void test() {
 		
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
-				new int[] {1,2,3,4,5});
+				new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,15,15,16,17,18,19,21});
 		SignedInt32Member value = G.INT32.construct();
 		Procedure4<SignedInt32Member,SignedInt32Member,SignedInt32Member,SignedInt32Member> proc =
 				new Procedure4<SignedInt32Member,SignedInt32Member, SignedInt32Member, SignedInt32Member>()
 		{
 			@Override
 			public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c, SignedInt32Member d) {
-				d.setV(9);
+				d.setV(99);
 			}
 		};
 		
@@ -62,7 +62,7 @@ public class TestParallelTransform4 {
 		
 		for (int i = 0; i < a.size(); i++) {
 			a.get(i, value);
-			assertEquals(9, value.v());
+			assertEquals(99, value.v());
 		}
 	}
 }

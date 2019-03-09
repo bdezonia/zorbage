@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -41,24 +42,23 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestParallelTransform3 {
+public class TestParallelTransform1 {
 
 	@Test
 	public void test() {
 		
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
-				new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,15,15,16,17});
+				new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,15,15,16,17,18});
 		SignedInt32Member value = G.INT32.construct();
-		Procedure3<SignedInt32Member,SignedInt32Member,SignedInt32Member> proc =
-				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
+		Procedure1<SignedInt32Member> proc = new Procedure1<SignedInt32Member>()
 		{
 			@Override
-			public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-				c.setV(99);
+			public void call(SignedInt32Member a) {
+				a.setV(99);
 			}
 		};
 		
-		ParallelTransform3.compute(G.INT32, proc, a, a, a);
+		ParallelTransform1.compute(G.INT32, proc, a);
 		
 		for (int i = 0; i < a.size(); i++) {
 			a.get(i, value);
