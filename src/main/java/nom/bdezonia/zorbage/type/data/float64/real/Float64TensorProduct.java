@@ -442,6 +442,8 @@ public class Float64TensorProduct
 	
 	// https://en.wikipedia.org/wiki/Tensor_contraction
 
+	// TODO
+	
 	private final Procedure4<java.lang.Integer,java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> CONTRACT =
 			new Procedure4<Integer, Integer, Float64TensorProductMember, Float64TensorProductMember>()
 	{
@@ -472,6 +474,8 @@ public class Float64TensorProduct
 		
 	// http://mathworld.wolfram.com/CovariantDerivative.html
 
+	// TODO
+	
 	private final Procedure1<java.lang.Integer> SEMI =
 			new Procedure1<Integer>()
 	{
@@ -487,6 +491,8 @@ public class Float64TensorProduct
 	}
 	
 	// http://mathworld.wolfram.com/CommaDerivative.html
+	
+	// TODO
 	
 	private final Procedure1<java.lang.Integer> COMMA =
 			new Procedure1<Integer>()
@@ -513,13 +519,41 @@ public class Float64TensorProduct
 		return true;
 	}
 
+	// TODO - make much more efficient by copying style of MatrixMultiply
+	
 	private final Procedure3<java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> POWER =
 			new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
 		public void call(Integer power, Float64TensorProductMember a, Float64TensorProductMember b) {
-			throw new IllegalArgumentException("TODO");
-			// copy style from MatrixMultiply algorithm
+			if (power < 0) {
+				throw new IllegalArgumentException("negative powers not supported");
+			}
+			else if (power == 0) {
+				if (isZero().call(a)) {
+					throw new IllegalArgumentException("0^0 is not a number");
+				}
+				assign().call(a, b);
+				unity().call(b);
+			}
+			else if (power == 1) {
+				assign().call(a, b);
+			}
+			else {
+				Float64TensorProductMember tmp1 = new Float64TensorProductMember();
+				Float64TensorProductMember tmp2 = new Float64TensorProductMember();
+				multiply().call(a,a,tmp1);
+				for (int i = 2; i < power; i += 2) {
+					multiply().call(tmp1, a, tmp2);
+					multiply().call(tmp2, a, tmp1);
+				}
+				// an odd power
+				if (power > 2 && (power&1)==1) {
+					assign().call(tmp1, tmp2);
+					multiply().call(tmp2, a, tmp1);
+				}
+				assign().call(tmp1, b);
+			}
 		}
 	};
 	
