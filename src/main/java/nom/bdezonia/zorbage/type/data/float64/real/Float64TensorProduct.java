@@ -543,7 +543,7 @@ public class Float64TensorProduct
 				Float64TensorProductMember tmp1 = new Float64TensorProductMember();
 				Float64TensorProductMember tmp2 = new Float64TensorProductMember();
 				multiply().call(a,a,tmp1);
-				for (int i = 2; i < power; i += 2) {
+				for (int i = 2; i < (power/2)*2; i += 2) {
 					multiply().call(tmp1, a, tmp2);
 					multiply().call(tmp2, a, tmp1);
 				}
