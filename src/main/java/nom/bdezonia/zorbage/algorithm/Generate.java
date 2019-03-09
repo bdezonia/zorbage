@@ -42,11 +42,7 @@ public class Generate {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
-		U value = algebra.construct();
-		for (long i = 0; i < storage.size(); i++) {
-			proc.call(value);
-			storage.set(i, value);
-		}
+		Transform1.compute(algebra, proc, storage);
 	}
 
 	/**
