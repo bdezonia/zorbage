@@ -57,18 +57,25 @@ public class TestFloat64Tensor {
 			else
 				assertEquals(0, value.v(), 0);
 		}
+
+		Float64Member scale = new Float64Member(14);
 		
-		value.setV(2);
-		a.setV(0, value);
-		a.setV(13, value);
-		a.setV(26, value);
+		G.DBL_TEN.scale().call(scale, a, a);
 		
+		for (int i = 0; i < 27; i++) {
+			a.v(i, value);
+			if (i == 0 || i == 13 || i == 26) // 1st, halfway, last
+				assertEquals(14, value.v(), 0);
+			else
+				assertEquals(0, value.v(), 0);
+		}
+
 		G.DBL_TEN.power().call(3, a, a);
 
 		for (int i = 0; i < 27; i++) {
 			a.v(i, value);
 			if (i == 0 || i == 13 || i == 26) // 1st, halfway, last
-				assertEquals(8, value.v(), 0);
+				assertEquals(14*14*14, value.v(), 0);
 			else
 				assertEquals(0, value.v(), 0);
 		}
