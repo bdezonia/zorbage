@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -41,28 +40,16 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestGenerate {
+public class TestTransform1 {
 
-	// Basic usage: passing a Proc that takes no params: tested by TestTransform1
-	
-	// Advanced usage: passing a Proc that takes params
-	
 	@Test
 	public void test() {
 		Float64Member tmp = G.DBL.construct();
 		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(30, tmp);
-		Generate.compute(G.DBL, proc, storage, new Float64Member[] {new Float64Member(7), new Float64Member(77)});
+		Transform1.compute(G.DBL, G.DBL.E(), storage);
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);
-			assertEquals(84, tmp.v(), 0);
+			assertEquals(Math.E, tmp.v(), 0);
 		}
 	}
-	
-	private Procedure<Float64Member> proc = new Procedure<Float64Member>() {
-		@Override
-		public void call(Float64Member result, Float64Member... inputs) {
-			assertEquals(2, inputs.length);
-			G.DBL.add().call(inputs[0], inputs[1], result);
-		}
-	};
 }
