@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.condition.Condition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 
@@ -48,7 +48,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		};
 	private final T algebra;
 	private final IndexedDataSource<U> source;
-	private final Function1<Boolean,U> condition;
+	private final Condition<U> condition;
 	private final IndexedDataSource<SignedInt64Member> indexList;
 	private final long sz;
 
@@ -58,7 +58,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 	 * @param source
 	 * @param condition
 	 */
-	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Function1<Boolean,U> condition) {
+	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Condition<U> condition) {
 		this.algebra = algebra;
 		this.source = source;
 		this.condition = condition;
@@ -66,7 +66,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		long count = 0;
 		for (long i = 0; i < source.size(); i++) {
 			source.get(i, tmp);
-			if (condition.call(tmp)) {
+			if (condition.isTrue(tmp)) {
 				count++;
 			}
 		}
@@ -76,7 +76,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		count = 0;
 		for (long i = 0; i < source.size(); i++) {
 			source.get(i, tmp);
-			if (condition.call(tmp)) {
+			if (condition.isTrue(tmp)) {
 				val.setV(i);
 				indexList.set(count, val);
 				count++;
@@ -95,7 +95,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		if (index < 0 || index >= sz)
 			throw new IllegalArgumentException("index out of bounds for conditional data source");
 		// the size of the list is an invariant!
-		if (!condition.call(value))
+		if (!condition.isTrue(value))
 			throw new IllegalArgumentException("inserted values must conform to the condition");
 		SignedInt64Member tmp = tmp64.get();
 		indexList.get(index, tmp);
