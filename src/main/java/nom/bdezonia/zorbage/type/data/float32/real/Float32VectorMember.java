@@ -649,7 +649,7 @@ public final class Float32VectorMember
 		if (component == 0) {
 			Float32Member tmp = tmpFloat.get();
 			v(index.get(0), tmp);
-			return BigInteger.valueOf((long) tmp.v());
+			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 		return BigInteger.ZERO;
 	}
@@ -873,7 +873,7 @@ public final class Float32VectorMember
 		else {
 			Float32Member tmp = tmpFloat.get();
 			v(index.get(0), tmp);
-			return BigInteger.valueOf((long) tmp.v());
+			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 	}
 

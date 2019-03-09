@@ -739,7 +739,7 @@ public final class Float32MatrixMember
 		if (component == 0) {
 			Float32Member tmp = tmpFloat.get();
 			v(index.get(1), index.get(0), tmp);
-			return BigInteger.valueOf((long) tmp.v());
+			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 		return BigInteger.ZERO;
 	}
@@ -1005,7 +1005,7 @@ public final class Float32MatrixMember
 		else {
 			Float32Member tmp = tmpFloat.get();
 			v(index.get(1), index.get(0), tmp);
-			return BigInteger.valueOf((long) tmp.v());
+			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 	}
 

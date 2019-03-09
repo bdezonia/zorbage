@@ -167,12 +167,12 @@ public final class UnboundedIntMember
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		this.v = BigInteger.valueOf((long)v);
+		this.v = BigDecimal.valueOf(v).toBigInteger();
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		this.v = BigInteger.valueOf((long)v);
+		this.v = BigDecimal.valueOf(v).toBigInteger();
 	}
 
 	@Override
@@ -301,7 +301,7 @@ public final class UnboundedIntMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			this.v = BigInteger.valueOf((long)v);
+			this.v = BigDecimal.valueOf(v).toBigInteger();
 		}
 	}
 
@@ -325,7 +325,7 @@ public final class UnboundedIntMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			this.v = BigInteger.valueOf((long)v);
+			this.v = BigDecimal.valueOf(v).toBigInteger();
 		}
 	}
 

@@ -463,7 +463,7 @@ public final class Float32Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigInteger.valueOf((long)v);
+		if (component == 0) return BigDecimal.valueOf(v).toBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -626,7 +626,7 @@ public final class Float32Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigInteger.valueOf((long)v());
+			return BigDecimal.valueOf(v()).toBigInteger();
 		}
 	}
 
