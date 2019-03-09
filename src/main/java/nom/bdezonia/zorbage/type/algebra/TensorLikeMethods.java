@@ -26,21 +26,22 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
-// TODO: this class is for a tensor like product that uses a Ring (quats and octs)
-// rather than a Field (reals and comlexes). I don't yet know the right name for
-// it. Must research.
+import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param T the tensor like space
- * @param U the tensor like member
- * @param V the scalar space
- * @param W the scalar member
  */
-public interface TensorLikeProduct<T extends TensorLikeProduct<T,U,V,W>, U, V extends Ring<V,W>, W>
-  extends
-    RModule<T,U,V,W>, Multiplication<U>, Unity<U>, TensorLikeMethods<U,W>
-{
+public interface TensorLikeMethods<U,W> {
+	
+	Procedure4<java.lang.Integer, java.lang.Integer,U,U> contract();
+	Procedure3<W,U,U> addToElements();
+	Procedure3<U,U,U> multiplyElements();
+	Procedure3<U,U,U> divideElements();
+	Procedure1<java.lang.Integer> semicolonDerivative();
+	Procedure1<java.lang.Integer> commaDerivative();
+
 }
