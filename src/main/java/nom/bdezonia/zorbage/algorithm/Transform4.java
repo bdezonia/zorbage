@@ -42,37 +42,6 @@ public class Transform4 {
 	/**
 	 * 
 	 * @param algM
-	 * @param proc
-	 * @param a
-	 * @param b
-	 * @param c
-	 * @param d
-	 */
-	public static final <L extends Algebra<L,M>, M>
-		void compute(L algM, Procedure4<M,M,M,M> proc, IndexedDataSource<M> a, IndexedDataSource<M> b, IndexedDataSource<M> c, IndexedDataSource<M> d)
-	{
-		compute(algM, algM, algM, algM, proc, a, b, c, d);
-	}
-	
-	/**
-	 * 
-	 * @param algM
-	 * @param algO
-	 * @param algQ
-	 * @param proc
-	 * @param a
-	 * @param b
-	 * @param c
-	 */
-	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q>
-		void compute(L algM, N algO, P algQ, Procedure4<M,O,Q,Q> proc, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c)
-	{
-		compute(algM, algO, algQ, algQ, proc, a, b, c, c);
-	}
-
-	/**
-	 * 
-	 * @param algM
 	 * @param algO
 	 * @param algQ
 	 * @param algS

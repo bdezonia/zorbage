@@ -75,13 +75,19 @@ public class TestParallelTransform2 {
 		// generic allocation
 		IndexedDataSource<U> a = ArrayStorage.allocate(100, algebra.construct());
 		
-		// set values of storage to random doubles between 0 and 1
-		// TODO: some day convert this to a parallel xform call that handles Procedure1's
-		Generate.compute(algebra, algebra.random(), a);
+		// set values of storage to random values whose componens are in [0,1)
+		ParallelTransform1.compute(algebra, algebra.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
 		ParallelTransform2.compute(algebra, algebra, algebra.sin(), a, a);
-		
-		assertTrue(true);
+
+		U zero = algebra.construct();
+		U value = algebra.construct();
+		for (long i = 0; i < a.size(); i++) {
+			a.get(i, value);
+			// NOTE: be aware is is possible but unlikely that this test could fail for
+			// comp, quat, and oct.
+			assertTrue(algebra.isNotEqual().call(zero, value));
+		}
 	}
 }
