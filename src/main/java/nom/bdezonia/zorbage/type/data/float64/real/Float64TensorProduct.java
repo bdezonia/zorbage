@@ -518,31 +518,8 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Integer power, Float64TensorProductMember a, Float64TensorProductMember b) {
-			if (power < 0) {
-				// TODO: is this right?
-				throw new IllegalArgumentException("negative powers not supported");
-			}
-			else if (power == 0) {
-				if (isZero().call(a)) {
-					throw new IllegalArgumentException("0^0 is not a number");
-				}
-				assign().call(a, b);
-				unity().call(b);
-			}
-			else if (power == 1) {
-				assign().call(a, b);
-			}
-			else {
-				// TODO: this method has a lot of memory overhead. Try to fix.
-				Float64TensorProductMember tmp1 = new Float64TensorProductMember();
-				Float64TensorProductMember tmp2 = new Float64TensorProductMember();
-				multiply().call(a,a,tmp1);
-				for (int i = 2; i < power; i++) {
-					multiply().call(tmp1, a, tmp2);
-					assign().call(tmp2, tmp1);
-				}
-				assign().call(tmp1, b);
-			}
+			throw new IllegalArgumentException("TODO");
+			// copy style from MatrixMultiply algorithm
 		}
 	};
 	
@@ -599,7 +576,11 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a) {
-			throw new IllegalArgumentException("TODO");
+			Float64Member value = G.DBL.construct();
+			G.DBL.nan().call(value);
+			for (long i = 0; i < a.numElems(); i++) {
+				a.setV(i, value);
+			}
 		}
 	};
 	
@@ -633,7 +614,11 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a) {
-			throw new IllegalArgumentException("TODO");
+			Float64Member value = G.DBL.construct();
+			G.DBL.infinite().call(value);
+			for (long i = 0; i < a.numElems(); i++) {
+				a.setV(i, value);
+			}
 		}
 	};
 			
@@ -676,7 +661,8 @@ public class Float64TensorProduct
 			Float64Member value = G.DBL.construct();
 			for (long i = 0; i < a.numElems(); i++) {
 				a.v(i, value);
-				if (!G.DBL.isZero().call(value)) return false;
+				if (!G.DBL.isZero().call(value))
+					return false;
 			}
 			return true;
 		}
