@@ -56,7 +56,9 @@ public class TestDerivative {
 		
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV(a.v() * a.v());
+			double v = a.v();
+			v = v*v;
+			b.setV(v);
 		}
 	};
 }
