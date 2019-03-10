@@ -188,10 +188,10 @@ public class Float64TensorProduct
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b) {
 			Float64Member tmp = new Float64Member();
-			assign().call(a,b);
-			long numElems = b.numElems();
+			shapeResult(a, b);
+			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
-				b.v(i, tmp);
+				a.v(i, tmp);
 				G.DBL.negate().call(tmp, tmp);
 				b.setV(i, tmp);
 			}
@@ -272,14 +272,15 @@ public class Float64TensorProduct
 			// conjugate of self. We need to transform a comp, quat, oct into a real.
 			Float64Member max = new Float64Member();
 			Float64Member value = new Float64Member();
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
 				G.DBL.norm().call(value, value);
 				if (G.DBL.isGreater().call(value, max))
 					G.DBL.assign().call(value, max);
 			}
 			Float64Member sum = new Float64Member();
-			for (long i = 0; i < a.numElems(); i++) {
+			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
 				G.DBL.divide().call(value, max, value);
 				G.DBL.multiply().call(value, value, value); // See TODO above
@@ -307,9 +308,10 @@ public class Float64TensorProduct
 		@Override
 		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
 			Float64Member tmp = new Float64Member();
-			assign().call(a,b);
-			for (long i = 0; i < b.numElems(); i++) {
-				b.v(i, tmp);
+			shapeResult(a, b);
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
+				a.v(i, tmp);
 				G.DBL.multiply().call(scalar, tmp, tmp);
 				b.setV(i, tmp);
 			}
@@ -327,9 +329,10 @@ public class Float64TensorProduct
 		@Override
 		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
 			Float64Member tmp = new Float64Member();
-			assign().call(a,b);
-			for (long i = 0; i < b.numElems(); i++) {
-				b.v(i, tmp);
+			shapeResult(a, b);
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
+				a.v(i, tmp);
 				G.DBL.add().call(scalar, tmp, tmp);
 				b.setV(i, tmp);
 			}
@@ -401,6 +404,8 @@ public class Float64TensorProduct
 		return DIVIDEEL;
 	}
 
+	// TODO citation needed. I wrote this long ago and no longer can tell if it makes sense.
+	
 	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> MUL =
 			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
@@ -424,9 +429,11 @@ public class Float64TensorProduct
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
 			long k = 0;
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElemsA = a.numElems();
+			long numElemsB = b.numElems();
+			for (long i = 0; i < numElemsA; i++) {
 				a.v(i, aTmp);
-				for (long j = 0; j < b.numElems(); j++) {
+				for (long j = 0; j < numElemsB; j++) {
 					b.v(j, bTmp);
 					G.DBL.multiply().call(aTmp, bTmp, cTmp);
 					c.setV(k, cTmp);
@@ -520,7 +527,7 @@ public class Float64TensorProduct
 		return true;
 	}
 
-	// TODO - make much more efficient by copying style of MatrixMultiply
+	// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 	
 	private final Procedure3<java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> POWER =
 			new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
@@ -528,14 +535,15 @@ public class Float64TensorProduct
 		@Override
 		public void call(Integer power, Float64TensorProductMember a, Float64TensorProductMember b) {
 			if (power < 0) {
+				// TODO: is this a valid limitation?
 				throw new IllegalArgumentException("negative powers not supported");
 			}
 			else if (power == 0) {
 				if (isZero().call(a)) {
 					throw new IllegalArgumentException("0^0 is not a number");
 				}
-				assign().call(a, b);
-				unity().call(b);
+				shapeResult(a, b); // set the shape of result
+				unity().call(b); // and make it have value 1
 			}
 			else if (power == 1) {
 				assign().call(a, b);
@@ -592,7 +600,8 @@ public class Float64TensorProduct
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
 				if (G.DBL.isNaN().call(value))
 					return true;
@@ -613,7 +622,8 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
 			G.DBL.nan().call(value);
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.setV(i, value);
 			}
 		}
@@ -630,7 +640,8 @@ public class Float64TensorProduct
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
 				if (G.DBL.isInfinite().call(value))
 					return true;
@@ -651,7 +662,8 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
 			G.DBL.infinite().call(value);
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.setV(i, value);
 			}
 		}
@@ -675,7 +687,8 @@ public class Float64TensorProduct
 				b.alloc(newDims);
 			}
 			Float64Member tmp = G.DBL.construct();
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.v(i, tmp);
 				G.DBL.round().call(mode, delta, tmp, tmp);
 				b.setV(i, tmp);
@@ -694,7 +707,8 @@ public class Float64TensorProduct
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < a.numElems(); i++) {
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
 				if (!G.DBL.isZero().call(value))
 					return false;
@@ -708,4 +722,12 @@ public class Float64TensorProduct
 		return ISZERO;
 	}
 
+	private void shapeResult(Float64TensorProductMember from, Float64TensorProductMember to) {
+		if (from == to) return;
+		long[] dims = new long[from.numDimensions()];
+		for (int i = 0; i < dims.length; i++) {
+			dims[i] = from.dimension(i);
+		}
+		to.alloc(dims);
+	}
 }
