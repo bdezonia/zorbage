@@ -27,9 +27,13 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
+import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.ModularDivision;
+import nom.bdezonia.zorbage.type.algebra.BitOperations;
+import nom.bdezonia.zorbage.type.algebra.EvenOdd;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
+
+// Stepanov and Rose: Stein gcd algorithm
 
 /**
  * Greatest Common Divisor algorithm
@@ -52,25 +56,56 @@ public class Gcd {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & AbsoluteValue<U> & ModularDivision<U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & AbsoluteValue<U> & BitOperations<U> & Addition<U> & Ordered<U> & EvenOdd<U>, U>
 		void compute(T algebra, U a, U b, U result)
 	{
-		U aTmp = algebra.construct(a);
-		U bTmp = algebra.construct(b);
+		U mTmp = algebra.construct(a);
+		U nTmp = algebra.construct(b);
 		U t = algebra.construct();
-		U zero = algebra.construct();
-		algebra.abs().call(aTmp, aTmp);
-		algebra.abs().call(bTmp, bTmp);
-		if (algebra.isLess().call(aTmp, bTmp)) {
-			algebra.assign().call(aTmp, t);
-			algebra.assign().call(bTmp, aTmp);
-			algebra.assign().call(t, bTmp);
+		
+		algebra.abs().call(mTmp, mTmp);
+		algebra.abs().call(nTmp, nTmp);
+		
+		if (algebra.isZero().call(mTmp)) {
+			algebra.assign().call(nTmp, result);
+			return;
 		}
-		while (algebra.isNotEqual().call(bTmp, zero)) {
-			algebra.assign().call(bTmp, t);
-			algebra.mod().call(aTmp, bTmp, bTmp);
-			algebra.assign().call(t, aTmp);
+		
+		if (algebra.isZero().call(nTmp)) {
+			algebra.assign().call(mTmp, result);
+			return;
 		}
-		algebra.assign().call(aTmp, result);
+		
+		// m > 0 && n > 0
+		
+		int d_m = 0;
+		while (algebra.isEven().call(mTmp)) {
+			algebra.bitShiftRight().call(1, mTmp, mTmp);
+			d_m++;
+		}
+		
+		int d_n = 0;
+		while (algebra.isEven().call(nTmp)) {
+			algebra.bitShiftRight().call(1, nTmp, nTmp);
+			d_n++;
+		}
+
+		// odd m && odd n
+		
+		while (algebra.isNotEqual().call(mTmp, nTmp)) {
+			if (algebra.isGreater().call(nTmp, mTmp)) {
+				algebra.assign().call(nTmp, t);
+				algebra.assign().call(mTmp, nTmp);
+				algebra.assign().call(t, mTmp);				
+			}
+			algebra.subtract().call(mTmp, nTmp, mTmp);
+			do {
+				algebra.bitShiftRight().call(1, mTmp, mTmp);
+			} while (algebra.isEven().call(mTmp));
+		}
+		
+		// m == n
+		
+		algebra.bitShiftLeft().call(Math.min(d_m, d_n), mTmp, result);
 	}
 }

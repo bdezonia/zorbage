@@ -27,7 +27,10 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
+import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.BitOperations;
+import nom.bdezonia.zorbage.type.algebra.EvenOdd;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -53,7 +56,8 @@ public class Lcm {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & AbsoluteValue<U> & ModularDivision<U> & Multiplication<U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> &  AbsoluteValue<U> & BitOperations<U> & Addition<U> &
+			Ordered<U> & EvenOdd<U> & Multiplication<U> & ModularDivision<U>, U>
 		void compute(T algebra, U a, U b, U result)
 	{
 		U gcd = algebra.construct();
