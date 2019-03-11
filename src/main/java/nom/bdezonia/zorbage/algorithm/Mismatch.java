@@ -50,7 +50,8 @@ public class Mismatch {
 	{
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
 			b.get(i, tmpB);
 			if (algebra.isNotEqual().call(tmpA, tmpB)) {
@@ -58,7 +59,7 @@ public class Mismatch {
 			}
 				
 		}
-		return a.size();
+		return aSize;
 	}
 	
 	/**
@@ -75,7 +76,8 @@ public class Mismatch {
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();
 		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, tmpB);
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
 			b.get(i, tmpB);
 			if (!cond.isTrue(tuple)) {
@@ -83,7 +85,7 @@ public class Mismatch {
 			}
 				
 		}
-		return a.size();
+		return aSize;
 	}
 	
 }

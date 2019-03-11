@@ -49,14 +49,15 @@ public class MinMaxElement {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U min, U max)
 	{
-		if (storage.size() <= 0)
+		long size = storage.size();
+		if (size <= 0)
 			throw new IllegalArgumentException("minmax undefined for empty list");
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();
 		storage.get(0, min);
 		alg.assign().call(min, max);
 		long i = 1;
-		if ((storage.size() & 1) == 0) {
+		if ((size & 1) == 0) {
 			storage.get(1, tmp1);
 			if (alg.isGreater().call(tmp1, max)) {
 				alg.assign().call(tmp1, max);
@@ -66,7 +67,7 @@ public class MinMaxElement {
 			}
 			i++;
 		}
-		while (i < storage.size()) {
+		while (i < size) {
 			storage.get(i, tmp1);
 			storage.get(i+1, tmp2);
 			if (alg.isGreater().call(tmp1, tmp2)) {

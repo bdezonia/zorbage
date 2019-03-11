@@ -50,11 +50,12 @@ public class FindIf {
 		long compute(T algebra, Condition<U> condition, IndexedDataSource<U> a)
 	{
 		U value = algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, value);
 			if (condition.isTrue(value))
 				return i;
 		}
-		return a.size();
+		return aSize;
 	}
 }

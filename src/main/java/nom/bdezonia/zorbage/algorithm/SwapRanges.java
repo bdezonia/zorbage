@@ -51,7 +51,8 @@ public class SwapRanges {
 	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmp1);
 			b.get(i, tmp2);
 			a.set(i, tmp2);

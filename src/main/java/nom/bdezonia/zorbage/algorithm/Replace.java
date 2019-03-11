@@ -51,7 +51,8 @@ public class Replace {
 		void compute(T algebra, U target, U replacement, IndexedDataSource<U> storage)
 	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < storage.size(); i++) {
+		long size = storage.size();
+		for (long i = 0; i < size; i++) {
 			storage.get(i, tmp);
 			if (algebra.isEqual().call(tmp, target))
 				storage.set(i, replacement);

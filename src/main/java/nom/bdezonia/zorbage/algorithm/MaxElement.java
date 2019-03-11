@@ -48,11 +48,12 @@ public class MaxElement {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U max)
 	{
-		if (storage.size() <= 0)
+		long size = storage.size();
+		if (size <= 0)
 			throw new IllegalArgumentException("max undefined for empty list");
 		U tmp = alg.construct();
 		storage.get(0, max);
-		for (long i = 1; i < storage.size(); i++) {
+		for (long i = 1; i < size; i++) {
 			storage.get(i, tmp);
 			if (alg.isGreater().call(tmp, max)) {
 				alg.assign().call(tmp, max);

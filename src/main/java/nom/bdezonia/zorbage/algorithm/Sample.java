@@ -48,11 +48,12 @@ public class Sample {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, int n, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		if (n > a.size())
+		long aSize = a.size();
+		if (n > aSize)
 			throw new IllegalArgumentException("n too large");
 		U tmp = algebra.construct();
 		Random rng = new Random(System.currentTimeMillis());
-		for (long i = 0; i < a.size(); i++) {
+		for (long i = 0; i < aSize; i++) {
 			int j = rng.nextInt(n);
 			a.get(j, tmp);
 			b.set(i, tmp);

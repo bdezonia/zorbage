@@ -49,7 +49,8 @@ public class SearchN {
 		long compute(T algebra, long n, U value, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
-		for (long i = 0; i < a.size()-n; i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize-n; i++) {
 			for (long j = 0; j < n; j++) {
 				a.get(i+j, tmpA);
 				if (algebra.isNotEqual().call(tmpA, value))
@@ -58,7 +59,7 @@ public class SearchN {
 					return i;
 			}
 		}
-		return a.size();
+		return aSize;
 	}
 
 	/**
@@ -73,7 +74,8 @@ public class SearchN {
 		long compute(T algebra, long n, Condition<U> cond, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
-		for (long i = 0; i < a.size()-n; i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize-n; i++) {
 			for (long j = 0; j < n; j++) {
 				a.get(i+j, tmpA);
 				if (!cond.isTrue(tmpA))
@@ -82,6 +84,6 @@ public class SearchN {
 					return i;
 			}
 		}
-		return a.size();
+		return aSize;
 	}
 }

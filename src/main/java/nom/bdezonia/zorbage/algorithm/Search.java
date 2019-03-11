@@ -55,7 +55,8 @@ public class Search {
 		U tmpA = algebra.construct();
 		U element = algebra.construct();
 		final long max = elements.size();
-		for (long i = 0; i < a.size() - max; i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize - max; i++) {
 			for (long j = 0; j < max; j++) {
 				a.get(i+j, tmpA);
 				elements.get(j, element);
@@ -65,7 +66,7 @@ public class Search {
 					return i;
 			}
 		}
-		return a.size();
+		return aSize;
 	}	
 
 	/**
@@ -83,7 +84,8 @@ public class Search {
 		U element = algebra.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, element);
 		final long max = elements.size();
-		for (long i = 0; i < a.size() - max; i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize - max; i++) {
 			for (long j = 0; j < max; j++) {
 				a.get(i+j, tmpA);
 				elements.get(j, element);
@@ -93,6 +95,6 @@ public class Search {
 					return i;
 			}
 		}
-		return a.size();
+		return aSize;
 	}	
 }

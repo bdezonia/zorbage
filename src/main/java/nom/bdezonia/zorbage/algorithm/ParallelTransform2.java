@@ -62,20 +62,21 @@ public class ParallelTransform2 {
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
 		void compute(T algU, V algW, Procedure2<U, W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b)
 	{
+		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
-		if (a.size() < numProcs) {
-			numProcs = (int) a.size();
+		if (aSize < numProcs) {
+			numProcs = (int) aSize;
 		}
 		final Thread[] threads = new Thread[numProcs];
 		long thOffset = 0;
-		long slice = a.size() / numProcs;
+		long slice = aSize / numProcs;
 		for (int i = 0; i < numProcs; i++) {
 			long thLast;
 			if (i != numProcs-1) {
 				thLast = thOffset + slice - 1;
 			}
 			else {
-				thLast = a.size() - 1;
+				thLast = aSize - 1;
 			}
 			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thLast);
 			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thLast);

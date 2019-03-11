@@ -49,8 +49,9 @@ public class Shuffle {
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
 		Random rng = new Random(System.currentTimeMillis());
-		for (long i = 0; i < a.size()-1; i++) {
-			long index = (long)(Math.round((a.size()-1-i)*rng.nextDouble()));
+		long aSize = a.size();
+		for (long i = 0; i < aSize-1; i++) {
+			long index = (long)(Math.round((aSize-1-i)*rng.nextDouble()));
 			a.get(i, tmp1);
 			a.get(i+index, tmp2);
 			a.set(i, tmp2);

@@ -55,7 +55,8 @@ public class Transform3 {
 		U valueU = algU.construct();
 		W valueW = algW.construct();
 		Y valueY = algY.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueU);
 			b.get(i, valueW);
 			proc.call(valueU, valueW, valueY);

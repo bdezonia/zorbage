@@ -52,7 +52,8 @@ public class ReplaceIf {
 		void compute(T algebra, Condition<U> cond, U replacement, IndexedDataSource<U> storage)
 	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < storage.size(); i++) {
+		long size = storage.size();
+		for (long i = 0; i < size; i++) {
 			storage.get(i, tmp);
 			if (cond.isTrue(tmp))
 				storage.set(i, replacement);

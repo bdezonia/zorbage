@@ -48,9 +48,11 @@ public class CopyBackward {
 		if (a == b)
 			throw new IllegalArgumentException("in place reversal not done yet");
 		U tmp = algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		long bSize = b.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmp);
-			b.set(b.size()-1-i, tmp);
+			b.set(bSize-1-i, tmp);
 		}
 	}
 }

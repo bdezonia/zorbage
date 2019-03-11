@@ -59,7 +59,8 @@ public class SumCount {
 		U tmp = alg.construct();
 		U one = alg.construct();
 		alg.unity().call(one);
-		for (long i = 0; i < storage.size(); i++) {
+		long size = storage.size();
+		for (long i = 0; i < size; i++) {
 			alg.add().call(tmp, one, tmp);
 		}
 		alg.assign().call(tmp, count);

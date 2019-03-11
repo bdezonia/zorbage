@@ -56,7 +56,8 @@ public class CountIf {
 		W tmpSum = addAlgebra.construct();
 		W one = addAlgebra.construct();
 		addAlgebra.unity().call(one);
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmp);
 			if (condition.isTrue(tmp))
 				addAlgebra.add().call(tmpSum, one, tmpSum);

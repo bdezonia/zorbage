@@ -46,7 +46,8 @@ public class Copy {
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmp = algebra.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmp);
 			b.set(i, tmp);
 		}

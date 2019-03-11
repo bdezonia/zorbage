@@ -48,18 +48,19 @@ public class IsPartitioned {
 		boolean compute(T algebra, Condition<U> cond, IndexedDataSource<U> a)
 	{
 		U tmp = algebra.construct();
+		long aSize = a.size();
 		long i = 0;
 		boolean first = false;
-		if (a.size() > 0) {
+		if (aSize > 0) {
 			a.get(i, tmp);
 			first = cond.isTrue(tmp);
 		}
-		while (i < a.size()) {
+		while (i < aSize) {
 			a.get(i, tmp);
 			if (cond.isTrue(tmp) != first) break;
 			i++;
 		}
-		while (i < a.size()) {
+		while (i < aSize) {
 			a.get(i, tmp);
 			i++;
 			if (cond.isTrue(tmp) == first) return false;

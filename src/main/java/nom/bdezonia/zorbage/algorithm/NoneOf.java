@@ -50,8 +50,9 @@ public class NoneOf {
 		boolean compute(T algebra, Condition<U> condition, IndexedDataSource<U> a)
 	{
 		U value = algebra.construct();
-		if (a.size() == 0) return false;
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		if (aSize == 0) return false;
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, value);
 			if (condition.isTrue(value))
 				return false;

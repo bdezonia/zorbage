@@ -51,7 +51,8 @@ public class Transform1 {
 		void compute(T algU, Procedure1<U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U value1 = algU.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, value1);
 			proc.call(value1);
 			b.set(i, value1);

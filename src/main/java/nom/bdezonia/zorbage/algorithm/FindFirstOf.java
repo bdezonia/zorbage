@@ -51,7 +51,8 @@ public class FindFirstOf {
 		U tmpA = algebra.construct();
 		U element = algebra.construct();
 		long elementsSize = elements.size();
-		for (long i = 0; i < a.size()-elementsSize; i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize-elementsSize; i++) {
 			a.get(i, tmpA);
 			for (long j = 0; j < elementsSize; j++) {
 				elements.get(j, element);
@@ -62,7 +63,7 @@ public class FindFirstOf {
 				a.get(i+j+1, tmpA);
 			}
 		}
-		return a.size();
+		return aSize;
 	}
 
 	/**
@@ -80,7 +81,8 @@ public class FindFirstOf {
 		U element = algebra.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA,element);
 		long elementsSize = elements.size();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmpA);
 			tuple.setA(tmpA);
 			for (long j = 0; j < elementsSize; j++) {
@@ -90,6 +92,6 @@ public class FindFirstOf {
 					return i;
 			}
 		}
-		return a.size();
+		return aSize;
 	}
 }

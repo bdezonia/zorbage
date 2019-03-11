@@ -46,11 +46,12 @@ public class Reverse {
 	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
-		for (long i = 0; i < a.size()/2; i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize/2; i++) {
 			a.get(i, tmp1);
-			a.get(a.size()-1-i, tmp2);
+			a.get(aSize-1-i, tmp2);
 			a.set(i, tmp2);
-			a.set(a.size()-1-i, tmp1);
+			a.set(aSize-1-i, tmp1);
 		}
 	}
 }

@@ -58,7 +58,8 @@ public class Transform4 {
 		O valueO = algO.construct();
 		Q valueQ = algQ.construct();
 		S valueS = algS.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueM);
 			b.get(i, valueO);
 			c.get(i, valueQ);

@@ -61,7 +61,8 @@ public class DataConvert {
 		IntegerIndex tmp1 = new IntegerIndex(numD);
 		IntegerIndex tmp2 = new IntegerIndex(numD);
 		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (long i = 0; i < fromList.size(); i++) {
+		long fromSize = fromList.size();
+		for (long i = 0; i < fromSize; i++) {
 			fromList.get(i, from);
 			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from, to);
 			toList.set(i, to);

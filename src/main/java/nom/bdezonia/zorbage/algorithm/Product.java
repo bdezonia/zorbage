@@ -49,9 +49,10 @@ public class Product {
 	{
 		U value = alg.construct();
 		U prod = alg.construct();
-		if (storage.size() > 0) {
+		long size = storage.size();
+		if (size > 0) {
 			alg.unity().call(prod);
-			for (long i = 0; i < storage.size(); i++) {
+			for (long i = 0; i < size; i++) {
 				storage.get(i, value);
 				alg.multiply().call(prod, value, prod);
 			}

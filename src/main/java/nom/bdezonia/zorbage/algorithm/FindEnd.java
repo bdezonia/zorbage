@@ -47,10 +47,11 @@ public class FindEnd {
 		long compute(T algebra, IndexedDataSource<U> values, IndexedDataSource<U> a)
 	{
 		long sz = values.size();
-		if (sz == 0 || a.size() < sz) return a.size();
+		long aSize = a.size();
+		if (sz == 0 || aSize < sz) return aSize;
 		U tmpA = algebra.construct();
 		U tmpV = algebra.construct();
-		for (long i = a.size()-sz; i >= 0; i--) {
+		for (long i = aSize-sz; i >= 0; i--) {
 			for (int j = 0; j < sz; j++) {
 				a.get(i+j, tmpA);
 				values.get(j, tmpV);
@@ -60,6 +61,6 @@ public class FindEnd {
 					return i;
 			}
 		}
-		return a.size();
+		return aSize;
 	}
 }

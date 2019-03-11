@@ -52,7 +52,8 @@ public class Transform2 {
 	{
 		U valueU = algU.construct();
 		W valueW = algW.construct();
-		for (long i = 0; i < a.size(); i++) {
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueU);
 			proc.call(valueU, valueW);
 			b.set(i, valueW);

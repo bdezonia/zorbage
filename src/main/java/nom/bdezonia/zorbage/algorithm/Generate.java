@@ -57,7 +57,8 @@ public class Generate {
 		void compute(T algebra, Procedure<U> proc, IndexedDataSource<U> storage, U... inputs)
 	{
 		U value = algebra.construct();
-		for (long i = 0; i < storage.size(); i++) {
+		long size = storage.size();
+		for (long i = 0; i < size; i++) {
 			proc.call(value, inputs);
 			storage.set(i, value);
 		}
