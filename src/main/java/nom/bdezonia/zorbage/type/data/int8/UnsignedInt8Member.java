@@ -164,7 +164,7 @@ public final class UnsignedInt8Member
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.INT;
+		return PrimitiveRepresentation.SHORT;
 	}
 
 	@Override
