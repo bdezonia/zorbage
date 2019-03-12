@@ -63,13 +63,13 @@ public class Lcm {
 		U gcd = algebra.construct();
 		U a1 = algebra.construct();
 		U b1 = algebra.construct();
+		U tmp = algebra.construct();
 		Gcd.compute(algebra, a, b, gcd);
 		algebra.div().call(a, gcd, a1);
 		algebra.div().call(b, gcd, b1);
-		algebra.abs().call(a1, a1);
-		algebra.abs().call(b1, b1);
-		algebra.multiply().call(a1, b1, result);
-		algebra.multiply().call(result, gcd, result);
+		algebra.multiply().call(a1, b1, tmp);
+		algebra.abs().call(tmp, tmp);
+		algebra.multiply().call(tmp, gcd, result);
 	}
 
 }
