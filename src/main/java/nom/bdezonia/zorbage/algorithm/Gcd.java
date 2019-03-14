@@ -30,8 +30,11 @@ import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.EvenOdd;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 // Stepanov and Rose: Stein gcd algorithm
 
@@ -56,12 +59,54 @@ public class Gcd {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & AbsoluteValue<U> & BitOperations<U> & Addition<U> & Ordered<U> & EvenOdd<U>, U>
+	public static <T extends Algebra<T,U> & AbsoluteValue<U> & BitOperations<U> &
+						Addition<U> & Ordered<U> & EvenOdd<U> & Bounded<U> & Unity<U> &
+						ModularDivision<U>, U>
 		void compute(T algebra, U a, U b, U result)
 	{
+		U t = algebra.construct(); // starts at zero
 		U mTmp = algebra.construct(a);
 		U nTmp = algebra.construct(b);
-		U t = algebra.construct();
+		U min = algebra.construct();
+		U max = algebra.construct();
+		
+		algebra.minBound().call(min);
+		algebra.maxBound().call(max);
+
+		if (algebra.isLess().call(min, t) && algebra.isGreater().call(max, t)) {
+			// looks like a signed type
+			// see if either argument is -minint
+			if (algebra.isEqual().call(min, mTmp) || algebra.isEqual().call(min, nTmp)) {
+				U x = algebra.construct();
+				U d = algebra.construct();
+				U m = algebra.construct();
+				algebra.unity().call(x);
+				algebra.bitShiftLeft().call(1, x, x);
+				// x == 2
+				int successes = 0;
+				while (algebra.isGreater().call(x,t)) {
+					if (algebra.isLess().call(mTmp, nTmp)) {
+						algebra.divMod().call(nTmp, x, d, m);
+						if (algebra.isEqual().call(m, t))
+							successes++;
+						else
+							break;
+					}
+					else {  // mTmp >= nTmp
+						algebra.divMod().call(mTmp, x, d, m);
+						if (algebra.isEqual().call(m, t))
+							successes++;
+						else
+							break;
+					}
+					algebra.bitShiftLeft().call(1, x, x);
+				}
+				algebra.unity().call(t);
+				algebra.bitShiftLeft().call(successes, t, t);
+				algebra.assign().call(t, result);
+				return;
+			}
+		}
 		
 		algebra.abs().call(mTmp, mTmp);
 		algebra.abs().call(nTmp, nTmp);

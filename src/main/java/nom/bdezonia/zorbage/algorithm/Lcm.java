@@ -30,10 +30,12 @@ import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.EvenOdd;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * Least Common Multiple algorithm
@@ -56,8 +58,9 @@ public class Lcm {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> &  AbsoluteValue<U> & BitOperations<U> & Addition<U> &
-			Ordered<U> & EvenOdd<U> & Multiplication<U> & ModularDivision<U>, U>
+	public static <T extends Algebra<T,U> &  AbsoluteValue<U> & BitOperations<U> &
+			Addition<U> & Ordered<U> & EvenOdd<U> & Multiplication<U> & ModularDivision<U> &
+			Unity<U> & Bounded<U>, U>
 		void compute(T algebra, U a, U b, U result)
 	{
 		U gcd = algebra.construct();
@@ -65,10 +68,12 @@ public class Lcm {
 		U b1 = algebra.construct();
 		U tmp = algebra.construct();
 		Gcd.compute(algebra, a, b, gcd);
+		// try to avoid overflow by factoring out gcd before multiply
 		algebra.div().call(a, gcd, a1);
 		algebra.div().call(b, gcd, b1);
 		algebra.multiply().call(a1, b1, tmp);
 		algebra.abs().call(tmp, tmp);
+		// now factor gcd back in
 		algebra.multiply().call(tmp, gcd, result);
 	}
 

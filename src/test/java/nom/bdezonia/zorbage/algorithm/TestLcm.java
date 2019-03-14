@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
 
 /**
@@ -50,5 +51,14 @@ public class TestLcm {
 		UnsignedInt32Member result = G.UINT32.construct();
 		Lcm.compute(G.UINT32, a, b, result);
 		assertEquals(2160054,result.v());
+	}
+	
+	@Test
+	public void test2() {
+		SignedInt16Member a = G.INT16.construct("-32768");
+		SignedInt16Member b = G.INT16.construct("4");
+		SignedInt16Member result = G.INT16.construct();
+		Lcm.compute(G.INT16, a, b, result);
+		assertEquals(-32768,result.v());
 	}
 }
