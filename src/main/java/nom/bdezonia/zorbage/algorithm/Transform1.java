@@ -58,17 +58,4 @@ public class Transform1 {
 			b.set(i, value1);
 		}
 	}
-
-	/**
-	 * In place initialization of one whole list by a Procedure1.
-	 * 
-	 * @param alg
-	 * @param proc
-	 * @param a
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Procedure1<U> proc, IndexedDataSource<U> a)
-	{
-		Transform1.compute(alg, proc, a, a);
-	}
 }

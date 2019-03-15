@@ -26,27 +26,61 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ForEach {
+public class TestInplaceTransform2 {
 
-	/**
-	 * 
-	 * @param algU
-	 * @param proc
-	 * @param a
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a)
+	@Test
+	public void testFloats()
 	{
-		InplaceTransform2.compute(algU, proc, a);
+		test(G.DBL);
 	}
 
+	@Test
+	public void testComplexes() {
+		test(G.CDBL);
+	}
+	
+	@Test
+	public void testQuats() {
+		test(G.QDBL);
+	}
+	
+	@Test
+	public void testOcts() {
+		test(G.ODBL);
+	}
+
+	// an algorithm that applies Sin() op to a list of any type that
+	// supports sin()
+	
+	private <T extends Algebra<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
+		void test(T algebra)
+	{
+		// generic allocation
+		IndexedDataSource<U> a = ArrayStorage.allocate(100, algebra.construct());
+		
+		// set values of storage to random doubles between 0 and 1
+		Generate.compute(algebra, algebra.random(), a);
+		
+		// transform each input[i] value to be the sin(input[i])
+		InplaceTransform2.compute(algebra, algebra.sin(), a);
+		
+		assertTrue(true);
+	}
 }

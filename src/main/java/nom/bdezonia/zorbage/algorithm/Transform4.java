@@ -68,23 +68,4 @@ public class Transform4 {
 		}
 	}
 
-	/**
-	 * In place transformation of one whole list by a Procedure4.
-	 * 
-	 * @param alg
-	 * @param proc
-	 * @param a
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Procedure4<U,U,U,U> proc, IndexedDataSource<U> a)
-	{
-		U value1 = alg.construct();
-		U value2 = alg.construct();
-		long aSize = a.size();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, value1);
-			proc.call(value1, value1, value1, value2);
-			a.set(i, value2);
-		}
-	}
 }

@@ -26,15 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
@@ -43,44 +40,16 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestTransform2 {
+public class TestInplaceTransform1 {
 
 	@Test
-	public void testFloats()
-	{
-		test(G.DBL);
-	}
-
-	@Test
-	public void testComplexes() {
-		test(G.CDBL);
-	}
-	
-	@Test
-	public void testQuats() {
-		test(G.QDBL);
-	}
-	
-	@Test
-	public void testOcts() {
-		test(G.ODBL);
-	}
-
-	// an algorithm that applies Sin() op to a list of any type that
-	// supports sin()
-	
-	private <T extends Algebra<T,U> & Trigonometric<U> & Random<U>, U extends Allocatable<U>>
-		void test(T algebra)
-	{
-		// generic allocation
-		IndexedDataSource<U> a = ArrayStorage.allocate(100, algebra.construct());
-		
-		// set values of storage to random doubles between 0 and 1
-		Generate.compute(algebra, algebra.random(), a);
-		
-		// transform each input[i] value to be the sin(input[i])
-		Transform2.compute(algebra, algebra.sin(), a);
-		
-		assertTrue(true);
+	public void test() {
+		Float64Member tmp = G.DBL.construct();
+		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(30, tmp);
+		InplaceTransform1.compute(G.DBL, G.DBL.E(), storage);
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, tmp);
+			assertEquals(Math.E, tmp.v(), 0);
+		}
 	}
 }

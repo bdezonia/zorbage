@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -35,18 +35,26 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ForEach {
+public class InplaceTransform3 {
+
 
 	/**
+	 * In place transformation of one whole list by a Procedure3.
 	 * 
-	 * @param algU
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a)
+		void compute(T alg, Procedure3<U,U,U> proc, IndexedDataSource<U> a)
 	{
-		InplaceTransform2.compute(algU, proc, a);
+		U value1 = alg.construct();
+		U value2 = alg.construct();
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
+			a.get(i, value1);
+			proc.call(value1, value1, value2);
+			a.set(i, value2);
+		}
 	}
-
 }

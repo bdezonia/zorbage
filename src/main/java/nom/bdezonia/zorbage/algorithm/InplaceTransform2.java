@@ -26,30 +26,34 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestTransform1 {
+public class InplaceTransform2 {
 
-	@Test
-	public void test() {
-		Float64Member tmp = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(30, tmp);
-		Transform1.compute(G.DBL, G.DBL.E(), storage);
-		for (int i = 0; i < storage.size(); i++) {
-			storage.get(i, tmp);
-			assertEquals(Math.E, tmp.v(), 0);
+	/**
+	 * In place transformation of one whole list by a Procedure2.
+	 * 
+	 * @param alg
+	 * @param proc
+	 * @param a
+	 */
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, Procedure2<U,U> proc, IndexedDataSource<U> a)
+	{
+		U value1 = alg.construct();
+		U value2 = alg.construct();
+		long aSize = a.size();
+		for (long i = 0; i < aSize; i++) {
+			a.get(i, value1);
+			proc.call(value1, value2);
+			a.set(i, value2);
 		}
 	}
 }

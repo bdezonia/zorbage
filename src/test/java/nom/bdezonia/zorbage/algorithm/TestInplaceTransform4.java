@@ -26,27 +26,47 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ForEach {
+public class TestInplaceTransform4 {
 
-	/**
-	 * 
-	 * @param algU
-	 * @param proc
-	 * @param a
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a)
-	{
-		InplaceTransform2.compute(algU, proc, a);
+	@Test
+	public void test() {
+		Float64Member value = G.DBL.construct();
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
+				new double[] {1,2,3,4,5});
+		Procedure4<Float64Member,Float64Member,Float64Member,Float64Member> proc =
+				new Procedure4<Float64Member, Float64Member, Float64Member, Float64Member>()
+		{
+			@Override
+			public void call(Float64Member a, Float64Member b, Float64Member c, Float64Member d) {
+				double val = a.v() + 2*b.v() + 3*c.v();
+				d.setV(val);
+			}
+		};
+		InplaceTransform4.compute(G.DBL, proc, a);
+		a.get(0, value);
+		assertEquals(6, value.v(), 0);
+		a.get(1, value);
+		assertEquals(12, value.v(), 0);
+		a.get(2, value);
+		assertEquals(18, value.v(), 0);
+		a.get(3, value);
+		assertEquals(24, value.v(), 0);
+		a.get(4, value);
+		assertEquals(30, value.v(), 0);
 	}
-
 }
