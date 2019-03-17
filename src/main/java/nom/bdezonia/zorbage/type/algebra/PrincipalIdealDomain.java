@@ -35,5 +35,7 @@ public interface PrincipalIdealDomain<T extends PrincipalIdealDomain<T,U>,U>
 	extends UniqueFactorizationDomain<T,U>
 {
 	// TODO: should some of EuclideanRing percolate down to this level?
+	
+	// Every ideal in a PID is a principal ideal
 
 }

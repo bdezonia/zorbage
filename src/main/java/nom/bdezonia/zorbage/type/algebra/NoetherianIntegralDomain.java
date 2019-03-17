@@ -35,4 +35,6 @@ public interface NoetherianIntegralDomain<T extends NoetherianIntegralDomain<T,U
 	extends IntegralDomain<T,U>
 {
 
+	// Every ideal in a NID is an ideal with a finite basis
+	
 }
