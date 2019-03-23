@@ -65,12 +65,7 @@ public class Fill {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
-		U tmp = algebra.construct();
-		long size = storage.size();
-		for (long i = 0; i < size; i++) {
-			proc.call(tmp);
-			storage.set(i, tmp);
-		}
+		InplaceTransform1.compute(algebra, proc, storage);
 	}
 
 }
