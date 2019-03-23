@@ -34,7 +34,6 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 
 /**
  * 
@@ -48,7 +47,7 @@ public class TestRationalAlgebra {
 		RationalMember a = G.RAT.construct();
 		RationalMember b = G.RAT.construct("0.8");
 		RationalMember c = G.RAT.construct(b);
-		UnboundedIntMember s = G.BIGINT.construct();
+		RationalMember s = G.RAT.construct();
 		
 		assertTrue(G.RAT.isZero().call(a));
 		assertTrue(!G.RAT.isZero().call(b));

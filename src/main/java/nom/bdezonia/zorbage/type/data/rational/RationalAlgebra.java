@@ -40,7 +40,6 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Scale;
-import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 
 /**
  * 
@@ -50,7 +49,7 @@ import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 public class RationalAlgebra
 	implements
 		OrderedField<RationalAlgebra,RationalMember>,
-		Scale<RationalMember,UnboundedIntMember>,
+		Scale<RationalMember,RationalMember>,
 		Norm<RationalMember,RationalMember>
 {
 	@Override
@@ -392,18 +391,9 @@ public class RationalAlgebra
 		return ABS;
 	}
 
-	private Procedure3<UnboundedIntMember, RationalMember, RationalMember> SCALE =
-			new Procedure3<UnboundedIntMember, RationalMember, RationalMember>()
-	{
-		@Override
-		public void call(UnboundedIntMember a, RationalMember b, RationalMember c) {
-			c.setV(b.n.multiply(a.v()), b.d);
-		}
-	};
-
 	@Override
-	public Procedure3<UnboundedIntMember, RationalMember, RationalMember> scale() {
-		return SCALE;
+	public Procedure3<RationalMember, RationalMember, RationalMember> scale() {
+		return MUL;
 	}
 
 }
