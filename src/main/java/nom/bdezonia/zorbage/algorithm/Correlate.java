@@ -51,21 +51,6 @@ public class Correlate {
 	public static <T extends Algebra<T,U> & Multiplication<U>,U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
 	{
-		U tmpA = algebra.construct();
-		U tmpB = algebra.construct();
-		U tmpC = algebra.construct();
-		long aSize = a.size();
-		long bSize = b.size();
-		long cSize = c.size();
-		if (aSize != bSize)
-			throw new IllegalArgumentException("mismatched inputs");
-		if (aSize != cSize)
-			throw new IllegalArgumentException("mismatched input/output");
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, tmpA);
-			b.get(i, tmpB);
-			algebra.multiply().call(tmpA, tmpB, tmpC);
-			c.set(i, tmpC);
-		}
+		Transform3.compute(algebra, algebra, algebra, algebra.multiply(), a, b, c);
 	}
 }
