@@ -13,3 +13,69 @@ Support for:
   6) algebraic/group-theoretic algorithms
   7) procedural, object oriented, and functional coding styles
 
+What can I do with Zorbage?
+
+  Use many different data types
+
+  1-bit integers (signed and unsigned)
+  2-bit integers (signed and unsigned)
+  3-bit integers (signed and unsigned)
+  4-bit integers (signed and unsigned)
+  5-bit integers (signed and unsigned)
+  6-bit integers (signed and unsigned)
+  7-bit integers (signed and unsigned)
+  8-bit integers (signed and unsigned)
+  9-bit integers (signed and unsigned)
+  10-bit integers (signed and unsigned)
+  11-bit integers (signed and unsigned)
+  12-bit integers (signed and unsigned)
+  13-bit integers (signed and unsigned)
+  14-bit integers (signed and unsigned)
+  15-bit integers (signed and unsigned)
+  16-bit integers (signed and unsigned)
+  32-bit integers (signed and unsigned)
+  64-bit integers (signed and unsigned)
+  128-bit integers (signed and unsigned)
+  Unbounded integers
+
+  16-bit floats
+  32-bit floats
+  64-bit floats
+  Unbounded floats
+  
+  Unbounded rational numbers
+  
+  Booleans
+  
+  A conversion api exists for moving between any two types accurately
+    and efficiently.
+  
+  There are types that are compound: complex numbers, quaternions, and
+    octonions based on any of the floating types.
+    
+  Types can be stored in arrays, files, sparse structures, and JDBC
+    database tables.
+    
+  You can allocate and use huge (length Long.MAX_VAUE) data structures.
+    
+  Array storage can be in native types (for speed of access) or for many
+    integer types they can be bit encoded (to save space).
+  
+  Use and write generic algorithms that work with all the types
+    transparently. For instance Zorbage has one Sort algorithm that
+    can sort a list made of any of the above defined types while doing
+    no data conversions.
+  
+  Use and write algorithms that work with reals, vectors, matrices, and
+    tensors.
+  
+  Use a number of predefined STL like algorithms plus predefined vector
+    and matrix algorithms.
+  
+  Use parallel algorithms for quickly processing data.
+  
+  Define multidimensional data layouts with flexible out of bounds
+    data handling procedures.
+    
+  Define complex data sampling algorithms from prebuilt sampling components.
+  
