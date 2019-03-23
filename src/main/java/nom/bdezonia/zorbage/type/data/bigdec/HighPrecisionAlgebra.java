@@ -383,7 +383,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a) {
-			BigDecimal pi = new BigDecimal(PI_STR.substring(0, CONTEXT.getPrecision()));
+			BigDecimal pi = new BigDecimal(PI_STR.substring(0, CONTEXT.getPrecision()+2));
 			a.setV(pi);
 		}
 	};
@@ -398,7 +398,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a) {
-			BigDecimal e = new BigDecimal(E_STR.substring(0, CONTEXT.getPrecision()));
+			BigDecimal e = new BigDecimal(E_STR.substring(0, CONTEXT.getPrecision()+2));
 			a.setV(e);
 		}
 	};
