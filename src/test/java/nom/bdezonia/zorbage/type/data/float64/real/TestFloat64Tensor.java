@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -79,6 +80,36 @@ public class TestFloat64Tensor {
 			else
 				assertEquals(0, value.v(), 0);
 		}
-		
+
+		Float64TensorProductMember x = new Float64TensorProductMember(
+				new long[] {3,2,2},
+				new double[]{1,2,3,
+								4,5,6,
+								7,8,9,
+								10,11,12});
+		Float64TensorProductMember y = new Float64TensorProductMember(
+				new long[] {2,3,2},
+				new double[]{13,14,
+								15,16,
+								17,18,
+								19,20,
+								21,22,
+								23,24
+								});
+		Float64TensorProductMember z = new Float64TensorProductMember();
+
+		G.DBL_TEN.multiply().call(x, y, z);
+
+		// from example at 
+		//   https://www.tensorflow.org/api_docs/python/tf/linalg/matmul
+		// which assumes multiply is a generalized mat mul. my code might not do this.
+		//assertEquals(94, value.v(), 0);
+		//assertEquals(100, value.v(), 0);
+		//assertEquals(229, value.v(), 0);
+		//assertEquals(244, value.v(), 0);
+		//assertEquals(508, value.v(), 0);
+		//assertEquals(532, value.v(), 0);
+		//assertEquals(697, value.v(), 0);
+		//assertEquals(732, value.v(), 0);
 	}
 }
