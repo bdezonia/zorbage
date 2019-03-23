@@ -24,9 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
-import nom.bdezonia.zorbage.tuple.Tuple2;
+// TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
+
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
@@ -34,17 +35,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Equal<T extends Algebra<T,U>,U>
-	implements Condition<Tuple2<U,U>>
+public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Infinite<U>,U>
+	implements Predicate<U>
 {
-	private T algebra;
+	private final T algebra;
 	
-	public Equal(T algebra) {
+	public Infinite(T algebra) {
 		this.algebra = algebra;
 	}
-
+	
 	@Override
-	public boolean isTrue(Tuple2<U,U> value) {
-		return algebra.isEqual().call(value.a(), value.b());
+	public boolean isTrue(U value) {
+		return algebra.isInfinite().call(value);
 	}
 }

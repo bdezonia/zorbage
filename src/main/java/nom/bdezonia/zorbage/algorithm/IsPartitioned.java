@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -45,7 +45,7 @@ public class IsPartitioned {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T algebra, Condition<U> cond, IndexedDataSource<U> a)
+		boolean compute(T algebra, Predicate<U> cond, IndexedDataSource<U> a)
 	{
 		U tmp = algebra.construct();
 		long aSize = a.size();

@@ -24,27 +24,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
-
+package nom.bdezonia.zorbage.predicate;
 /**
  * 
  * @author Barry DeZonia
  *
  * @param <T>
  */
-public class NotCondition<T> implements Condition<T> {
+public class NorPredicate<T> implements Predicate<T> {
 
-	private final Condition<T> a;
+	private final Predicate<T> a;
+	private final Predicate<T> b;
 	
-	public NotCondition(Condition<T> a) {
+	public NorPredicate(Predicate<T> a, Predicate<T> b) {
 		this.a = a;
+		this.b = b;
 	}
 	
 	@Override
 	public boolean isTrue(T value) {
-		return !a.isTrue(value);
+		return !(a.isTrue(value) || b.isTrue(value));
 	}
-	
-	
 
 }

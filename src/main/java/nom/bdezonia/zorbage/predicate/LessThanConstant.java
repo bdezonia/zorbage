@@ -24,9 +24,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
-import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
@@ -35,17 +34,20 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class GreaterThan<T extends Algebra<T,U> & Ordered<U>, U>
-	implements Condition<Tuple2<U,U>>
+public class LessThanConstant<T extends Algebra<T,U> & Ordered<U>,U>
+	implements Predicate<U>
 {
-	private T algebra;
+	private final T algebra;
+	private final U constant;
 	
-	public GreaterThan(T algebra) {
+	public LessThanConstant(T algebra, U value) {
 		this.algebra = algebra;
+		this.constant = algebra.construct();
+		algebra.assign().call(value, constant);
 	}
 
 	@Override
-	public boolean isTrue(Tuple2<U,U> value) {
-		return algebra.isGreater().call(value.a(), value.b());
+	public boolean isTrue(U value) {
+		return algebra.isLess().call(value, constant);
 	}
 }

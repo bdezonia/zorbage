@@ -24,9 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
-import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
@@ -34,17 +34,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class BooleanCondition<T extends Algebra<T,U>,U>
-	implements Condition<U>
+public class Equal<T extends Algebra<T,U>,U>
+	implements Predicate<Tuple2<U,U>>
 {
-	private final Function1<Boolean, U> testFunc;
+	private T algebra;
 	
-	public BooleanCondition(Function1<Boolean, U> testFunc) {
-		this.testFunc = testFunc;
+	public Equal(T algebra) {
+		this.algebra = algebra;
 	}
-	
+
 	@Override
-	public boolean isTrue(U value) {
-		return testFunc.call(value);
+	public boolean isTrue(Tuple2<U,U> value) {
+		return algebra.isEqual().call(value.a(), value.b());
 	}
 }

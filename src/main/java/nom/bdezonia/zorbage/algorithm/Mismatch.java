@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -71,7 +71,7 @@ public class Mismatch {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Condition<Tuple2<U,U>> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		long compute(T algebra, Predicate<Tuple2<U,U>> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpA = algebra.construct();
 		U tmpB = algebra.construct();

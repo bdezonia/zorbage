@@ -24,26 +24,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
+
+import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
-public class OrCondition<T> implements Condition<T> {
-
-	private final Condition<T> a;
-	private final Condition<T> b;
+public class NotEqual<T extends Algebra<T,U>,U>
+	implements Predicate<Tuple2<U,U>>
+{
+	private T algebra;
 	
-	public OrCondition(Condition<T> a, Condition<T> b) {
-		this.a = a;
-		this.b = b;
+	public NotEqual(T algebra) {
+		this.algebra = algebra;
 	}
-	
+
 	@Override
-	public boolean isTrue(T value) {
-		return a.isTrue(value) || b.isTrue(value);
+	public boolean isTrue(Tuple2<U,U> value) {
+		return algebra.isNotEqual().call(value.a(), value.b());
 	}
-
 }

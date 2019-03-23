@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
@@ -35,17 +35,17 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class GreaterThanEqual<T extends Algebra<T,U> & Ordered<U>, U>
-	implements Condition<Tuple2<U,U>>
+public class GreaterThan<T extends Algebra<T,U> & Ordered<U>, U>
+	implements Predicate<Tuple2<U,U>>
 {
 	private T algebra;
 	
-	public GreaterThanEqual(T algebra) {
+	public GreaterThan(T algebra) {
 		this.algebra = algebra;
 	}
 
 	@Override
 	public boolean isTrue(Tuple2<U,U> value) {
-		return algebra.isGreaterEqual().call(value.a(), value.b());
+		return algebra.isGreater().call(value.a(), value.b());
 	}
 }

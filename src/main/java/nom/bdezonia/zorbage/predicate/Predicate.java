@@ -24,27 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
-public class AndCondition<T> implements Condition<T> {
-
-	private final Condition<T> a;
-	private final Condition<T> b;
-	
-	public AndCondition(Condition<T> a, Condition<T> b) {
-		this.a = a;
-		this.b = b;
-	}
-	
-	@Override
-	public boolean isTrue(T value) {
-		return a.isTrue(value) && b.isTrue(value);
-	}
-
+public interface Predicate<T> {
+	boolean isTrue(T value);
 }

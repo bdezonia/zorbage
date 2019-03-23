@@ -31,10 +31,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.condition.GreaterThanConstant;
-import nom.bdezonia.zorbage.condition.GreaterThanEqualConstant;
-import nom.bdezonia.zorbage.condition.LessThanConstant;
+import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
+import nom.bdezonia.zorbage.predicate.GreaterThanEqualConstant;
+import nom.bdezonia.zorbage.predicate.LessThanConstant;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -52,15 +52,15 @@ public class TestAllOf {
 		IndexedDataSource<SignedInt8Member> storage =
 				ArrayStorage.allocateBytes(new byte[]{0,1,2,3,4,5,6,7,8,9});
 		
-		Condition<SignedInt8Member> lessZero =
+		Predicate<SignedInt8Member> lessZero =
 				new LessThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, G.INT8.construct());
 		assertEquals(false, AllOf.compute(G.INT8, lessZero, storage));
 		
-		Condition<SignedInt8Member> greaterEqualZero =
+		Predicate<SignedInt8Member> greaterEqualZero =
 				new GreaterThanEqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, G.INT8.construct());
 		assertEquals(true, AllOf.compute(G.INT8, greaterEqualZero, storage));
 		
-		Condition<SignedInt8Member> greaterZero =
+		Predicate<SignedInt8Member> greaterZero =
 				new GreaterThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, G.INT8.construct());
 		assertEquals(false, AllOf.compute(G.INT8, greaterZero, storage));
 	}

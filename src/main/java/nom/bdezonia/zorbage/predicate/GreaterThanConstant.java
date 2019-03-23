@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  *
  */
 public class GreaterThanConstant<T extends Algebra<T,U> & Ordered<U>,U>
-	implements Condition<U>
+	implements Predicate<U>
 {
 	private final T algebra;
 	private final U constant;

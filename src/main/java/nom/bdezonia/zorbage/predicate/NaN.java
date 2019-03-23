@@ -24,29 +24,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
+
+//TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
+
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
-public class XorCondition<T> implements Condition<T> {
-
-	private final Condition<T> a;
-	private final Condition<T> b;
+public class NaN<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.NaN<U>,U>
+	implements Predicate<U>
+{
+	private final T algebra;
 	
-	public XorCondition(Condition<T> a, Condition<T> b) {
-		this.a = a;
-		this.b = b;
+	public NaN(T algebra) {
+		this.algebra = algebra;
 	}
 	
 	@Override
-	public boolean isTrue(T value) {
-		boolean aResult = a.isTrue(value);
-		boolean bResult = b.isTrue(value);
-		return (aResult && !bResult) || (!aResult && bResult);
+	public boolean isTrue(U value) {
+		return algebra.isNaN().call(value);
 	}
-
 }

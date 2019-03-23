@@ -24,22 +24,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NotEqualConstant<T extends Algebra<T,U>,U>
-	implements Condition<U>
+public class LessThanEqualConstant<T extends Algebra<T,U> & Ordered<U>,U>
+	implements Predicate<U>
 {
 	private final T algebra;
 	private final U constant;
 	
-	public NotEqualConstant(T algebra, U value) {
+	public LessThanEqualConstant(T algebra, U value) {
 		this.algebra = algebra;
 		this.constant = algebra.construct();
 		algebra.assign().call(value, constant);
@@ -47,6 +48,6 @@ public class NotEqualConstant<T extends Algebra<T,U>,U>
 
 	@Override
 	public boolean isTrue(U value) {
-		return algebra.isNotEqual().call(value, constant);
+		return algebra.isLessEqual().call(value, constant);
 	}
 }

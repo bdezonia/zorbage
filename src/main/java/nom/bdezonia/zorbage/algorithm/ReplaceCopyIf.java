@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -46,7 +46,7 @@ public class ReplaceCopyIf {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, Condition<U> cond, U new_value, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T algebra, Predicate<U> cond, U new_value, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmp = algebra.construct();
 		long aSize = a.size();

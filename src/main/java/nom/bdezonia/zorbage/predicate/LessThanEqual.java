@@ -24,28 +24,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
+
+import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
-public class XnorCondition<T> implements Condition<T> {
-
-	private final Condition<T> a;
-	private final Condition<T> b;
+public class LessThanEqual<T extends Algebra<T,U> & Ordered<U>, U>
+	implements Predicate<Tuple2<U,U>>
+{
+	private T algebra;
 	
-	public XnorCondition(Condition<T> a, Condition<T> b) {
-		this.a = a;
-		this.b = b;
+	public LessThanEqual(T algebra) {
+		this.algebra = algebra;
 	}
-	
+
 	@Override
-	public boolean isTrue(T value) {
-		boolean aResult = a.isTrue(value);
-		boolean bResult = b.isTrue(value);
-		return (aResult && bResult) || (!aResult && !bResult);
+	public boolean isTrue(Tuple2<U,U> value) {
+		return algebra.isLessEqual().call(value.a(), value.b());
 	}
-
 }

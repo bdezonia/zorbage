@@ -24,10 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
-// TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
-
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
@@ -35,17 +34,17 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Infinite<U>,U>
-	implements Condition<U>
+public class BooleanPredicate<T extends Algebra<T,U>,U>
+	implements Predicate<U>
 {
-	private final T algebra;
+	private final Function1<Boolean, U> testFunc;
 	
-	public Infinite(T algebra) {
-		this.algebra = algebra;
+	public BooleanPredicate(Function1<Boolean, U> testFunc) {
+		this.testFunc = testFunc;
 	}
 	
 	@Override
 	public boolean isTrue(U value) {
-		return algebra.isInfinite().call(value);
+		return testFunc.call(value);
 	}
 }

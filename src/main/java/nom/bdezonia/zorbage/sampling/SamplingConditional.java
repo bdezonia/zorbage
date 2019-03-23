@@ -26,14 +26,14 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 
 /**
  * {@link SamplingConditional} is a {@link Sampling} that includes the points of another
- * Sampling that match a specified {@link Condition}.
+ * Sampling that match a specified {@link Predicate}.
  * 
  * @author Barry DeZonia
  *
@@ -41,11 +41,11 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 public class SamplingConditional<T extends Allocatable<T> & Settable<T> & DimensionCount>
 	implements Sampling<T>
 {
-	private final Condition<T> condition;
+	private final Predicate<T> condition;
 	private final Sampling<T> sampling;
 	private final T example;
 	
-	public SamplingConditional(Condition<T> condition, Sampling<T> sampling, T example) {
+	public SamplingConditional(Predicate<T> condition, Sampling<T> sampling, T example) {
 		this.condition = condition;
 		this.sampling = sampling;
 		this.example = example.allocate();

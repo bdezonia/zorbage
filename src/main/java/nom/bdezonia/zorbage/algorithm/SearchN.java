@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -71,7 +71,7 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, Condition<U> cond, IndexedDataSource<U> a)
+		long compute(T algebra, long n, Predicate<U> cond, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		long aSize = a.size();

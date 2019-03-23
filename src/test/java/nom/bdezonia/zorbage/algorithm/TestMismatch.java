@@ -31,8 +31,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.condition.LessThanEqual;
+import nom.bdezonia.zorbage.predicate.LessThanEqual;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Algebra;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
@@ -64,7 +64,7 @@ public class TestMismatch {
 				new long[] {1,2,3,7,4,3,2});
 		IndexedDataSource<SignedInt64Member> b = ArrayStorage.allocateLongs(
 				new long[] {1,2,3,7,5,1,1});
-		Condition<Tuple2<SignedInt64Member,SignedInt64Member>> cond = new LessThanEqual<SignedInt64Algebra, SignedInt64Member>(G.INT64);
+		Predicate<Tuple2<SignedInt64Member,SignedInt64Member>> cond = new LessThanEqual<SignedInt64Algebra, SignedInt64Member>(G.INT64);
 		long result = Mismatch.compute(G.INT64, cond, a, b);
 		assertEquals(5, result);
 	}

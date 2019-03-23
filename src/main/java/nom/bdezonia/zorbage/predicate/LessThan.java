@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  *
  */
 public class LessThan<T extends Algebra<T,U> & Ordered<U>, U>
-	implements Condition<Tuple2<U,U>>
+	implements Predicate<Tuple2<U,U>>
 {
 	private T algebra;
 	

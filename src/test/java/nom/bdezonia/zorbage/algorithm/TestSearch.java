@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -79,7 +79,7 @@ public class TestSearch {
 		assertEquals(3,x);
 	}
 	
-	private class Cond implements Condition<Tuple2<Float64Member,Float64Member>> {
+	private class Cond implements Predicate<Tuple2<Float64Member,Float64Member>> {
 
 		@Override
 		public boolean isTrue(Tuple2<Float64Member, Float64Member> value) {

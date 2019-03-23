@@ -24,30 +24,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
-
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
+package nom.bdezonia.zorbage.predicate;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
  */
-public class GreaterThanEqualConstant<T extends Algebra<T,U> & Ordered<U>,U>
-	implements Condition<U>
-{
-	private final T algebra;
-	private final U constant;
-	
-	public GreaterThanEqualConstant(T algebra, U value) {
-		this.algebra = algebra;
-		this.constant = algebra.construct();
-		algebra.assign().call(value, constant);
-	}
+public class NotPredicate<T> implements Predicate<T> {
 
-	@Override
-	public boolean isTrue(U value) {
-		return algebra.isGreaterEqual().call(value, constant);
+	private final Predicate<T> a;
+	
+	public NotPredicate(Predicate<T> a) {
+		this.a = a;
 	}
+	
+	@Override
+	public boolean isTrue(T value) {
+		return !a.isTrue(value);
+	}
+	
+	
+
 }

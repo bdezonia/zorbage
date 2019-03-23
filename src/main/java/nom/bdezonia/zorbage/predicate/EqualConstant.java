@@ -24,27 +24,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
+package nom.bdezonia.zorbage.predicate;
+
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
-public class NandCondition<T> implements Condition<T> {
-
-	private final Condition<T> a;
-	private final Condition<T> b;
+public class EqualConstant<T extends Algebra<T,U>,U>
+	implements Predicate<U>
+{
+	private final T algebra;
+	private final U constant;
 	
-	public NandCondition(Condition<T> a, Condition<T> b) {
-		this.a = a;
-		this.b = b;
+	public EqualConstant(T algebra, U value) {
+		this.algebra = algebra;
+		this.constant = algebra.construct();
+		algebra.assign().call(value, constant);
 	}
-	
+
 	@Override
-	public boolean isTrue(T value) {
-		return !(a.isTrue(value) && b.isTrue(value));
+	public boolean isTrue(U value) {
+		return algebra.isEqual().call(value, constant);
 	}
-
 }

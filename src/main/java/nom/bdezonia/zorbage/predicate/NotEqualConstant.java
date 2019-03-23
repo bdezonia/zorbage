@@ -24,9 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.condition;
-
-//TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
+package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
@@ -35,17 +33,20 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class NaN<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.NaN<U>,U>
-	implements Condition<U>
+public class NotEqualConstant<T extends Algebra<T,U>,U>
+	implements Predicate<U>
 {
 	private final T algebra;
+	private final U constant;
 	
-	public NaN(T algebra) {
+	public NotEqualConstant(T algebra, U value) {
 		this.algebra = algebra;
+		this.constant = algebra.construct();
+		algebra.assign().call(value, constant);
 	}
-	
+
 	@Override
 	public boolean isTrue(U value) {
-		return algebra.isNaN().call(value);
+		return algebra.isNotEqual().call(value, constant);
 	}
 }

@@ -31,8 +31,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.condition.Condition;
-import nom.bdezonia.zorbage.condition.EqualConstant;
+import nom.bdezonia.zorbage.predicate.EqualConstant;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -49,10 +49,10 @@ public class TestSearchN {
 	public void test1() {
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,6});
-		Condition<SignedInt32Member> cond1 =
+		Predicate<SignedInt32Member> cond1 =
 				new EqualConstant<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(7));
 		assertEquals(16, SearchN.compute(G.INT32, 4, cond1, a));
-		Condition<SignedInt32Member> cond2 =
+		Predicate<SignedInt32Member> cond2 =
 				new EqualConstant<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(4));
 		assertEquals(6, SearchN.compute(G.INT32, 4, cond2, a));
 	}

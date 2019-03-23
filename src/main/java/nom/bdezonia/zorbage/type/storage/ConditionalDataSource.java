@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.type.storage;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.condition.Condition;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 
@@ -48,7 +48,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		};
 	private final T algebra;
 	private final IndexedDataSource<U> source;
-	private final Condition<U> condition;
+	private final Predicate<U> condition;
 	private final IndexedDataSource<SignedInt64Member> indexList;
 	private final long sz;
 
@@ -58,7 +58,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 	 * @param source
 	 * @param condition
 	 */
-	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Condition<U> condition) {
+	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Predicate<U> condition) {
 		this.algebra = algebra;
 		this.source = source;
 		this.condition = condition;
