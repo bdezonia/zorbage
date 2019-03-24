@@ -49,8 +49,8 @@ public class FixedTransform2 {
 	 * @param a
 	 * @param b
 	 */
-	public static <A extends Algebra<A,B>, B, C extends Algebra<C,D>, D, E extends Algebra<E,F>, F>
-		void compute(A algB, C algD, E algF, B fixedValue, Procedure3<B,D,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
+	public static <B, C extends Algebra<C,D>, D, E extends Algebra<E,F>, F>
+		void compute(C algD, E algF, B fixedValue, Procedure3<B,D,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
