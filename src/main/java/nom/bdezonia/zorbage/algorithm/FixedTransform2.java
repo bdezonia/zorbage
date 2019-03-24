@@ -50,7 +50,7 @@ public class FixedTransform2 {
 	 * @param b
 	 */
 	public static <A extends Algebra<A,B>, B, C extends Algebra<C,D>, D, E extends Algebra<E,F>, F>
-		void compute(A algB, C algD, E algF, B value, Procedure3<B,D,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
+		void compute(A algB, C algD, E algF, B fixedValue, Procedure3<B,D,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -60,7 +60,7 @@ public class FixedTransform2 {
 		F tmp2 = algF.construct();
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmp1);
-			proc.call(value, tmp1, tmp2);
+			proc.call(fixedValue, tmp1, tmp2);
 			b.set(i, tmp2);
 		}
 	}
