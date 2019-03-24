@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
@@ -49,15 +50,6 @@ public class ScaleByHighPrec {
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec<U>, U>
 		void compute(T algebra, HighPrecisionMember scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		long aSize = a.size();
-		long bSize = b.size();
-		if (aSize != bSize)
-			throw new IllegalArgumentException("mismatched list sizes");
-		U value = algebra.construct();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, value);
-			algebra.scaleByHighPrec().call(scale, value, value);
-			b.set(i, value);
-		}
+		FixedTransform2.compute(G.BIGDEC, algebra, algebra, scale, algebra.scaleByHighPrec(), a, b);
 	}
 }

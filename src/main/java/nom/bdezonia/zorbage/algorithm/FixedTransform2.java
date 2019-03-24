@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -35,21 +35,33 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Scale {
+public class FixedTransform2 {
 
-	// do not instantiate
-	
-	private Scale() {}
+	private FixedTransform2() {}
 	
 	/**
 	 * 
-	 * @param algebra
+	 * @param algB
+	 * @param algD
+	 * @param algF
+	 * @param value
+	 * @param proc
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T algebra, U factor, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	public static <A extends Algebra<A,B>, B, C extends Algebra<C,D>, D, E extends Algebra<E,F>, F>
+		void compute(A algB, C algD, E algF, B value, Procedure3<B,D,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
 	{
-		FixedTransform2.compute(algebra, algebra, algebra, factor, algebra.multiply(), a, b);
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != bSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+		D tmp1 = algD.construct();
+		F tmp2 = algF.construct();
+		for (long i = 0; i < aSize; i++) {
+			a.get(i, tmp1);
+			proc.call(value, tmp1, tmp2);
+			b.set(i, tmp2);
+		}
 	}
 }
