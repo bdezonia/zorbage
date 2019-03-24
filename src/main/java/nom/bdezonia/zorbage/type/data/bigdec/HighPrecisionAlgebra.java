@@ -44,6 +44,9 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -57,7 +60,9 @@ public class HighPrecisionAlgebra
     Constants<HighPrecisionMember>,
     RealUnreal<HighPrecisionMember,HighPrecisionMember>,
     Conjugate<HighPrecisionMember>,
-    Scale<HighPrecisionMember,HighPrecisionMember>
+    Scale<HighPrecisionMember,HighPrecisionMember>,
+    ScaleByHighPrec<HighPrecisionMember>,
+    ScaleByRational<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(35, RoundingMode.HALF_EVEN);
 	
@@ -485,6 +490,28 @@ public class HighPrecisionAlgebra
 
 	@Override
 	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> scale() {
+		return MUL;
+	}
+
+	private final Procedure3<RationalMember, HighPrecisionMember, HighPrecisionMember> SBR =
+			new Procedure3<RationalMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(RationalMember a, HighPrecisionMember b, HighPrecisionMember c) {
+			BigDecimal tmp = b.v();
+			tmp = tmp.multiply(new BigDecimal(a.n()),CONTEXT);
+			tmp = tmp.divide(new BigDecimal(a.d()),CONTEXT);
+			c.setV(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, HighPrecisionMember, HighPrecisionMember> scaleByRational() {
+		return SBR;
+	}
+
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> scaleByHighPrec() {
 		return MUL;
 	}
 

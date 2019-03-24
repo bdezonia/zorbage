@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int10;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -42,6 +44,8 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -659,6 +663,39 @@ public class UnsignedInt10Algebra
 	@Override
 	public Procedure3<UnsignedInt10Member, UnsignedInt10Member, UnsignedInt10Member> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnsignedInt10Member, UnsignedInt10Member> SBHP =
+			new Procedure3<HighPrecisionMember, UnsignedInt10Member, UnsignedInt10Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt10Member b, UnsignedInt10Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt10Member, UnsignedInt10Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, UnsignedInt10Member, UnsignedInt10Member> SBR =
+			new Procedure3<RationalMember, UnsignedInt10Member, UnsignedInt10Member>()
+	{
+		@Override
+		public void call(RationalMember a, UnsignedInt10Member b, UnsignedInt10Member c) {
+			BigInteger tmp = BigInteger.valueOf(b.v());
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, UnsignedInt10Member, UnsignedInt10Member> scaleByRational() {
+		return SBR;
 	}
 
 }

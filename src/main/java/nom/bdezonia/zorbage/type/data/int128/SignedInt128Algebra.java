@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int128;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -46,6 +48,8 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 // A note about how this was constructed: This class originally defined hi,
 // lo, and masks in terms of bytes. There are only 64K such combinations. These
@@ -834,6 +838,39 @@ public class SignedInt128Algebra
 	@Override
 	public Procedure3<SignedInt128Member, SignedInt128Member, SignedInt128Member> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member> SBHP =
+			new Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt128Member b, SignedInt128Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, SignedInt128Member, SignedInt128Member> SBR =
+			new Procedure3<RationalMember, SignedInt128Member, SignedInt128Member>()
+	{
+		@Override
+		public void call(RationalMember a, SignedInt128Member b, SignedInt128Member c) {
+			BigInteger tmp = b.v();
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, SignedInt128Member, SignedInt128Member> scaleByRational() {
+		return SBR;
 	}
 
 }

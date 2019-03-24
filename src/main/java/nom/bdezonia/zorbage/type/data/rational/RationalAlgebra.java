@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.rational;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -40,6 +41,9 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 
 /**
  * 
@@ -50,7 +54,9 @@ public class RationalAlgebra
 	implements
 		OrderedField<RationalAlgebra,RationalMember>,
 		Scale<RationalMember,RationalMember>,
-		Norm<RationalMember,RationalMember>
+		Norm<RationalMember,RationalMember>,
+		ScaleByHighPrec<RationalMember>,
+		ScaleByRational<RationalMember>
 {
 	@Override
 	public RationalMember construct() {
@@ -393,6 +399,27 @@ public class RationalAlgebra
 
 	@Override
 	public Procedure3<RationalMember, RationalMember, RationalMember> scale() {
+		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, RationalMember, RationalMember> SBHP =
+			new Procedure3<HighPrecisionMember, RationalMember, RationalMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, RationalMember b, RationalMember c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.n()));
+			c.setV(tmp.toBigInteger(), b.d());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, RationalMember, RationalMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	@Override
+	public Procedure3<RationalMember, RationalMember, RationalMember> scaleByRational() {
 		return MUL;
 	}
 

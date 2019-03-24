@@ -27,8 +27,6 @@
 package nom.bdezonia.zorbage.procedure.impl.parse;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.procedure.impl.ConstantL;
-import nom.bdezonia.zorbage.procedure.impl.SinL;
 import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;

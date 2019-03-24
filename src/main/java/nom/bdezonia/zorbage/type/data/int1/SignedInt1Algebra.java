@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int1;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
@@ -42,6 +44,10 @@ import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Ring;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -58,7 +64,9 @@ public class SignedInt1Algebra
 		Bounded<SignedInt1Member>,
 		AbsoluteValue<SignedInt1Member>,
 		BitOperations<SignedInt1Member>,
-		Random<SignedInt1Member>
+		Random<SignedInt1Member>,
+		ScaleByHighPrec<SignedInt1Member>,
+		ScaleByRational<SignedInt1Member>
 {
 
 	@Override
@@ -624,4 +632,38 @@ public class SignedInt1Algebra
 	public Procedure3<SignedInt1Member, SignedInt1Member, SignedInt1Member> scale() {
 		return MUL;
 	}
+	
+	private final Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member> SBHP =
+			new Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt1Member b, SignedInt1Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, SignedInt1Member, SignedInt1Member> SBR =
+			new Procedure3<RationalMember, SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(RationalMember a, SignedInt1Member b, SignedInt1Member c) {
+			BigInteger tmp = BigInteger.valueOf(b.v());
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, SignedInt1Member, SignedInt1Member> scaleByRational() {
+		return SBR;
+	}
+
 }

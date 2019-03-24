@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int64;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -44,7 +46,9 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -693,6 +697,39 @@ public class SignedInt64Algebra
 	@Override
 	public Procedure3<SignedInt64Member, SignedInt64Member, SignedInt64Member> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, SignedInt64Member, SignedInt64Member> SBHP =
+			new Procedure3<HighPrecisionMember, SignedInt64Member, SignedInt64Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt64Member b, SignedInt64Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.longValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt64Member, SignedInt64Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, SignedInt64Member, SignedInt64Member> SBR =
+			new Procedure3<RationalMember, SignedInt64Member, SignedInt64Member>()
+	{
+		@Override
+		public void call(RationalMember a, SignedInt64Member b, SignedInt64Member c) {
+			BigInteger tmp = BigInteger.valueOf(b.v());
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp.longValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, SignedInt64Member, SignedInt64Member> scaleByRational() {
+		return SBR;
 	}
 
 }

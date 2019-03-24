@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.bigint;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -39,6 +40,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -787,6 +790,39 @@ public class UnboundedIntAlgebra
 	@Override
 	public Procedure3<UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnboundedIntMember, UnboundedIntMember> SBHP =
+			new Procedure3<HighPrecisionMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnboundedIntMember, UnboundedIntMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, UnboundedIntMember, UnboundedIntMember> SBR =
+			new Procedure3<RationalMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(RationalMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			BigInteger tmp = b.v();
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, UnboundedIntMember, UnboundedIntMember> scaleByRational() {
+		return SBR;
 	}
 
 }

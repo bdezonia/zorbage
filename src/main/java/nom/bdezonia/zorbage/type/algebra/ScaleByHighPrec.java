@@ -26,20 +26,16 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Integer<T extends Integer<T,U>,U>
-  extends
-    OrderedIntegralDomain<T,U>,
-    EuclideanDomain<T,U>,
-    BitOperations<U>,
-    PredSucc<U>,
-    Power<U>,
-    Scale<U,U>,
-    ScaleByHighPrec<U>,
-    ScaleByRational<U>
-{
+public interface ScaleByHighPrec<U> {
+
+	Procedure3<HighPrecisionMember,U,U> scaleByHighPrec();
+
 }

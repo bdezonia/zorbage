@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.int8;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -44,7 +46,9 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -654,5 +658,37 @@ public class UnsignedInt8Algebra
 		return MUL;
 	}
 
+	private final Procedure3<HighPrecisionMember, UnsignedInt8Member, UnsignedInt8Member> SBHP =
+			new Procedure3<HighPrecisionMember, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt8Member, UnsignedInt8Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, UnsignedInt8Member, UnsignedInt8Member> SBR =
+			new Procedure3<RationalMember, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(RationalMember a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			BigInteger tmp = BigInteger.valueOf(b.v());
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, UnsignedInt8Member, UnsignedInt8Member> scaleByRational() {
+		return SBR;
+	}
 
 }

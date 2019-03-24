@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.int64;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,7 +47,9 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Member;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -677,5 +680,37 @@ public class UnsignedInt64Algebra
 		return MUL;
 	}
 
+	private final Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member> SBHP =
+			new Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, UnsignedInt64Member, UnsignedInt64Member> SBR =
+			new Procedure3<RationalMember, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(RationalMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
+			BigInteger tmp = b.v();
+			tmp = tmp.multiply(a.n());
+			tmp = tmp.divide(a.d());
+			c.setV(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, UnsignedInt64Member, UnsignedInt64Member> scaleByRational() {
+		return SBR;
+	}
 
 }
