@@ -517,13 +517,20 @@ public class Float64TensorProduct
 	}
 	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
-		int numDims = a.numDimensions();
-		if (numDims != b.numDimensions())
-			return false;
-		for (int i = 0; i < numDims; i++) {
-			if (a.dimension(i) != b.dimension(i))
+		int i = 0;
+		int j = 0;
+		while (i < a.numDimensions() && j < b.numDimensions()) {
+			while (i < a.numDimensions() && a.dimension(i) == 1) i++;
+			while (j < b.numDimensions() && b.dimension(i) == 1) j++;
+			if (i < a.numDimensions() && j < b.numDimensions() && a.dimension(i) != b.dimension(j))
 				return false;
+			else {
+				i++;
+				j++;
+			}
 		}
+		if (i != a.numDimensions() || j != b.numDimensions())
+			return false;
 		return true;
 	}
 
