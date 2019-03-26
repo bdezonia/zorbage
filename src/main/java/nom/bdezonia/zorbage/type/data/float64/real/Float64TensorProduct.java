@@ -349,7 +349,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
 			long[] newDims = new long[a.numDimensions()];
 			for (int i = 0; i < newDims.length; i++) {
@@ -379,7 +379,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
 			long[] newDims = new long[a.numDimensions()];
 			for (int i = 0; i < newDims.length; i++) {
@@ -639,6 +639,8 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
+			if (ISNAN.call(a))
+				return false;
 			Float64Member value = G.DBL.construct();
 			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
