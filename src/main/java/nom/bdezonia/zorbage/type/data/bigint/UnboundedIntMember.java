@@ -31,11 +31,13 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -52,7 +54,7 @@ public final class UnboundedIntMember
 		Allocatable<UnboundedIntMember>, Duplicatable<UnboundedIntMember>,
 		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
 		UniversalRepresentation, NumberMember<UnboundedIntMember>,
-		PrimitiveConversion
+		PrimitiveConversion, HighPrecRepresentation
 {
 	private BigInteger v;
 	
@@ -628,6 +630,11 @@ public final class UnboundedIntMember
 	@Override
 	public void primitiveInit() {
 		v = BigInteger.ZERO;
+	}
+
+	@Override
+	public void toHighPrec(HighPrecisionMember result) {
+		result.setV(new BigDecimal(v));
 	}
 
 }

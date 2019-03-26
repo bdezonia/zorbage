@@ -33,10 +33,12 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -57,7 +59,7 @@ public final class UnsignedInt3Member
 		Allocatable<UnsignedInt3Member>, Duplicatable<UnsignedInt3Member>,
 		Settable<UnsignedInt3Member>, Gettable<UnsignedInt3Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt3Member>,
-		PrimitiveConversion
+		PrimitiveConversion, HighPrecRepresentation
 {
 	byte v;
 
@@ -702,5 +704,10 @@ public final class UnsignedInt3Member
 	@Override
 	public void primitiveInit() {
 		v = 0;
+	}
+
+	@Override
+	public void toHighPrec(HighPrecisionMember result) {
+		result.setV(BigDecimal.valueOf(v()));
 	}
 }

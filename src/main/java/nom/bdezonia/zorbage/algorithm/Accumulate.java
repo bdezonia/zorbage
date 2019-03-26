@@ -26,7 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -34,23 +37,22 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Copy {
+public class Accumulate {
 
-	/**
-	 * 
-	 * @param algebra
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	private Accumulate() {}
+	
+	public static <T extends Algebra<T,U>, U extends HighPrecRepresentation>
+		void compute(T alg, IndexedDataSource<U> src, HighPrecisionMember sum)
 	{
-		if (a == b) return;
-		U tmp = algebra.construct();
-		long aSize = a.size();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, tmp);
-			b.set(i, tmp);
+		HighPrecisionMember tmpSum = G.BIGDEC.construct();
+		HighPrecisionMember tmp = G.BIGDEC.construct();
+		U value = alg.construct();
+		long size = src.size();
+		for (long i = 0; i < size; i++) {
+			src.get(i, value);
+			value.toHighPrec(tmp);
+			G.BIGDEC.add().call(tmpSum, tmp, tmpSum);
 		}
+		G.BIGDEC.assign().call(tmpSum, sum);
 	}
 }

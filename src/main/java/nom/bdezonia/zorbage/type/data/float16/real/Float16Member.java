@@ -33,11 +33,13 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -60,7 +62,8 @@ public final class Float16Member
 		ShortCoder,
 		Allocatable<Float16Member>, Duplicatable<Float16Member>,
 		Settable<Float16Member>, Gettable<Float16Member>,
-		UniversalRepresentation, PrimitiveConversion
+		UniversalRepresentation, PrimitiveConversion,
+		HighPrecRepresentation
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -661,6 +664,11 @@ public final class Float16Member
 	@Override
 	public void primitiveInit() {
 		v = ZERO;
+	}
+
+	@Override
+	public void toHighPrec(HighPrecisionMember result) {
+		result.setV(BigDecimal.valueOf(v()));
 	}
 	
 }
