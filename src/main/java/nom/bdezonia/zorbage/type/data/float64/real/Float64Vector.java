@@ -382,8 +382,6 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a) {
-			if (RModuleIsNaN.compute(G.DBL, a))
-				return false;
 			return RModuleIsInfinite.compute(G.DBL, a);
 		}
 	};

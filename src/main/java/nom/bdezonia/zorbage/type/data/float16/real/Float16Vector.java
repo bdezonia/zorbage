@@ -382,8 +382,6 @@ public class Float16Vector
 	{
 		@Override
 		public Boolean call(Float16VectorMember a) {
-			if (RModuleIsNaN.compute(G.HLF, a))
-				return false;
 			return RModuleIsInfinite.compute(G.HLF, a);
 		}
 	};

@@ -405,8 +405,6 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public Boolean call(QuaternionFloat16RModuleMember a) {
-			if (RModuleIsNaN.compute(G.QHLF, a))
-				return false;
 			return RModuleIsInfinite.compute(G.QHLF, a);
 		}
 	};

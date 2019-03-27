@@ -309,8 +309,6 @@ public class QuaternionFloat16Matrix
 	{
 		@Override
 		public Boolean call(QuaternionFloat16MatrixMember a) {
-			if (MatrixIsNaN.compute(G.QHLF, a))
-				return false;
 			return MatrixIsInfinite.compute(G.QHLF, a);
 		}
 	};

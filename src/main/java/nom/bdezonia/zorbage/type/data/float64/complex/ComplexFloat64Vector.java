@@ -394,8 +394,6 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat64VectorMember a) {
-			if (RModuleIsNaN.compute(G.CDBL, a))
-				return false;
 			return RModuleIsInfinite.compute(G.CDBL, a);
 		}
 	};

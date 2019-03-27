@@ -302,8 +302,6 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat16MatrixMember a) {
-			if (MatrixIsNaN.compute(G.CHLF, a))
-				return false;
 			return MatrixIsInfinite.compute(G.CHLF, a);
 		}
 	};

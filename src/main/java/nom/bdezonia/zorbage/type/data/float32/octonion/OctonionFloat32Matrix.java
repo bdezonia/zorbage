@@ -301,8 +301,6 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public Boolean call(OctonionFloat32MatrixMember a) {
-			if (MatrixIsNaN.compute(G.OFLT, a))
-				return false;
 			return MatrixIsInfinite.compute(G.OFLT, a);
 		}
 	};

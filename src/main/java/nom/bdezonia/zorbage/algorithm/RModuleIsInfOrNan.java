@@ -36,19 +36,39 @@ import nom.bdezonia.zorbage.type.algebra.RModuleMember;
  * @author Barry DeZonia
  *
  */
-public class RModuleIsNaN {
+public class RModuleIsInfOrNan {
 
-	private RModuleIsNaN() { }
-	
+	private RModuleIsInfOrNan() {}
+
 	/**
 	 * 
 	 * @param algebra
+	 * @param type
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Infinite<U> & NaN<U>,U>
-		boolean compute(T algebra, RModuleMember<U> a)
+		boolean compute(T algebra, InfOrNanSelector type, RModuleMember<U> a)
 	{
-		return RModuleIsInfOrNan.compute(algebra, InfOrNanSelector.NAN, a);
+		// the 1st nan found makes the rmod = nan. so return right away.
+		// to determine inf even if we find 1 or more must check every element
+		// in case one is nan.
+		
+		boolean infFound = false;
+		U value = algebra.construct();
+		for (long i = 0; i < a.length(); i++) {
+			a.v(i, value);
+			if (algebra.isNaN().call(value)) {
+				if (type == InfOrNanSelector.NAN)
+					return true;
+				else // type = INF
+					return false;
+			}
+			else if (type == InfOrNanSelector.INF && algebra.isInfinite().call(value))
+				infFound = true;
+		}
+		if (infFound && type == InfOrNanSelector.INF)
+			return true;
+		return false;
 	}
 }

@@ -28,27 +28,49 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.NaN;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RModuleIsNaN {
+public class MatrixIsInfOrNan {
 
-	private RModuleIsNaN() { }
-	
+	private MatrixIsInfOrNan() {}
+
 	/**
 	 * 
 	 * @param algebra
+	 * @param type
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Infinite<U> & NaN<U>,U>
-		boolean compute(T algebra, RModuleMember<U> a)
+		boolean compute(T algebra, InfOrNanSelector type, MatrixMember<U> a)
 	{
-		return RModuleIsInfOrNan.compute(algebra, InfOrNanSelector.NAN, a);
+		// the 1st nan found makes the matrix = nan. so return right away.
+		// to determine inf even if we find 1 or more must check every element
+		// in case one is nan.
+		
+		boolean infFound = false;
+		U value = algebra.construct();
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
+				a.v(r, c, value);
+				if (algebra.isNaN().call(value)) {
+					if (type == InfOrNanSelector.NAN)
+						return true;
+					else // type = INF
+						return false;
+				}
+				else if (type == InfOrNanSelector.INF && algebra.isInfinite().call(value))
+					infFound = true;
+			}
+		}
+		if (infFound && type == InfOrNanSelector.INF)
+			return true;
+		return false;
 	}
 }

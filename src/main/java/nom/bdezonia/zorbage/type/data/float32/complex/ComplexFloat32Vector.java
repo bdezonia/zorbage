@@ -394,8 +394,6 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat32VectorMember a) {
-			if (RModuleIsNaN.compute(G.CFLT, a))
-				return false;
 			return RModuleIsInfinite.compute(G.CFLT, a);
 		}
 	};

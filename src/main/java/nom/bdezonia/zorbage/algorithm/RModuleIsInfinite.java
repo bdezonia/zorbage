@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -45,16 +46,10 @@ public class RModuleIsInfinite {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Infinite<U>,U>
+	public static <T extends Algebra<T,U> & Infinite<U> & NaN<U>,U>
 		boolean compute(T algebra, RModuleMember<U> a)
 	{
-		U value = algebra.construct();
-		for (long i = 0; i < a.length(); i++) {
-			a.v(i, value);
-			if (algebra.isInfinite().call(value))
-				return true;
-		}
-		return false;
+		return RModuleIsInfOrNan.compute(algebra, InfOrNanSelector.INF, a);
 	}
 
 }

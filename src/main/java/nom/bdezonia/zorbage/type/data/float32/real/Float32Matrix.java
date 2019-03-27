@@ -299,8 +299,6 @@ public class Float32Matrix
 	{
 		@Override
 		public Boolean call(Float32MatrixMember a) {
-			if (MatrixIsNaN.compute(G.FLT, a))
-				return false;
 			return MatrixIsInfinite.compute(G.FLT, a);
 		}
 	};
