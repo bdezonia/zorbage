@@ -299,6 +299,8 @@ public class Float64Matrix
 	{
 		@Override
 		public Boolean call(Float64MatrixMember a) {
+			if (MatrixIsNaN.compute(G.DBL, a))
+				return false;
 			return MatrixIsInfinite.compute(G.DBL, a);
 		}
 	};

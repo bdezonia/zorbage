@@ -299,6 +299,8 @@ public class Float16Matrix
 	{
 		@Override
 		public Boolean call(Float16MatrixMember a) {
+			if (MatrixIsNaN.compute(G.HLF, a))
+				return false;
 			return MatrixIsInfinite.compute(G.HLF, a);
 		}
 	};

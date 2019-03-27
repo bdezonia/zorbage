@@ -405,6 +405,8 @@ public class QuaternionFloat64RModule
 	{
 		@Override
 		public Boolean call(QuaternionFloat64RModuleMember a) {
+			if (RModuleIsNaN.compute(G.QDBL, a))
+				return false;
 			return RModuleIsInfinite.compute(G.QDBL, a);
 		}
 	};

@@ -302,6 +302,8 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat32MatrixMember a) {
+			if (MatrixIsNaN.compute(G.CFLT, a))
+				return false;
 			return MatrixIsInfinite.compute(G.CFLT, a);
 		}
 	};

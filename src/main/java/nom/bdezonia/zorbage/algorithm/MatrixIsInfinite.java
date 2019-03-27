@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
@@ -46,11 +45,9 @@ public class MatrixIsInfinite {
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Infinite<U> & NaN<U>,U>
+	public static <T extends Algebra<T,U> & Infinite<U>,U>
 		boolean compute(T algebra, MatrixMember<U> a)
 	{
-		if (MatrixIsNaN.compute(algebra, a))
-			return false;
 		U value = algebra.construct();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {

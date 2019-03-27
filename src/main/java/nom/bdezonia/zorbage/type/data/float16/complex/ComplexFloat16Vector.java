@@ -394,6 +394,8 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat16VectorMember a) {
+			if (RModuleIsNaN.compute(G.CHLF, a))
+				return false;
 			return RModuleIsInfinite.compute(G.CHLF, a);
 		}
 	};

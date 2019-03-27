@@ -382,6 +382,8 @@ public class Float32Vector
 	{
 		@Override
 		public Boolean call(Float32VectorMember a) {
+			if (RModuleIsNaN.compute(G.FLT, a))
+				return false;
 			return RModuleIsInfinite.compute(G.FLT, a);
 		}
 	};

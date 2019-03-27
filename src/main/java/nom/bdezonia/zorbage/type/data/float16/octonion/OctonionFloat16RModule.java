@@ -399,6 +399,8 @@ public class OctonionFloat16RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat16RModuleMember a) {
+			if (RModuleIsNaN.compute(G.OHLF, a))
+				return false;
 			return RModuleIsInfinite.compute(G.OHLF, a);
 		}
 	};
