@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.RawData;
 import nom.bdezonia.zorbage.type.storage.Storage;
 
 /**
@@ -56,7 +57,8 @@ public final class ComplexFloat32MatrixMember
 		MatrixMember<ComplexFloat32Member>,
 		Gettable<ComplexFloat32MatrixMember>,
 		Settable<ComplexFloat32MatrixMember>,
-		PrimitiveConversion, UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation,
+		RawData<ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
 	
@@ -1119,5 +1121,10 @@ public final class ComplexFloat32MatrixMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++)
 			storage.set(i, ZERO);
+	}
+
+	@Override
+	public IndexedDataSource<ComplexFloat32Member> rawData() {
+		return storage;
 	}
 }

@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.RawData;
 
 /**
  * 
@@ -40,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  *
  */
 public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
-	implements Dimensioned
+	implements Dimensioned, RawData<U>
 {
 	private final T algebra;
 	private final MultiDimDataSource<?,U> md;
@@ -65,6 +66,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		};
 	}
 
+	@Override
 	public IndexedDataSource<U> rawData() {
 		return md.rawData();
 	}

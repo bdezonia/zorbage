@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.RawData;
 
 /**
  * 
@@ -43,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  *
  */
 public class MultiDimDataSource<T extends Algebra<T,U>,U>
-	implements Dimensioned
+	implements Dimensioned, RawData<U>
 {
 	private List<Function1<BigDecimal,Long>> axes;
 	private IndexedDataSource<U> data;
@@ -66,6 +67,7 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 			this.axes.add(new IdentityAxis());
 	}
 	
+	@Override
 	public IndexedDataSource<U> rawData() {
 		return data;
 	}
