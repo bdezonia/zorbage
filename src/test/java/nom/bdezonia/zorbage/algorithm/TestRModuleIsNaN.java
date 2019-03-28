@@ -46,12 +46,12 @@ public class TestRModuleIsNaN {
 	public void test() {
 		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
 		Float64Member value = G.DBL.construct();
-		assertFalse(RModuleIsNaN.compute(G.DBL, a));
+		assertFalse(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.NAN, a.rawData()));
 		value.setV(Double.NaN);
 		a.setV(2, value);
-		assertTrue(RModuleIsNaN.compute(G.DBL, a));
+		assertTrue(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.NAN, a.rawData()));
 		value.setV(0);
 		a.setV(2, value);
-		assertFalse(RModuleIsNaN.compute(G.DBL, a));
+		assertFalse(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.NAN, a.rawData()));
 	}
 }

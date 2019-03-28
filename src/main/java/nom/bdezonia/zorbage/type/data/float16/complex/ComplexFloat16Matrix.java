@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float16.complex;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.InfOrNanSelector;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -35,8 +36,6 @@ import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
-import nom.bdezonia.zorbage.algorithm.MatrixIsInfinite;
-import nom.bdezonia.zorbage.algorithm.MatrixIsNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixIsZero;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNaN;
@@ -51,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.SequenceIsInfOrNan;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -274,7 +274,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat16MatrixMember a) {
-			return MatrixIsNaN.compute(G.CHLF, a);
+			return SequenceIsInfOrNan.compute(G.CHLF, InfOrNanSelector.NAN, a.rawData());
 		}
 	};
 	
@@ -302,7 +302,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat16MatrixMember a) {
-			return MatrixIsInfinite.compute(G.CHLF, a);
+			return SequenceIsInfOrNan.compute(G.CHLF, InfOrNanSelector.INF, a.rawData());
 		}
 	};
 	
