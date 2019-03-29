@@ -66,7 +66,7 @@ What can I do with Zorbage?
     can sort a list made of any of the above defined types while doing
     no data conversions.
   
-  Use and write algorithms that work with reals, vectors, matrices, and
+  Use and write algorithms that work with numbers, vectors, matrices, and
     tensors.
   
   Use a number of predefined STL like algorithms plus predefined vector
