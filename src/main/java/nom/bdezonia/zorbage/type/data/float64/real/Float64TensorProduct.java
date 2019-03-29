@@ -27,9 +27,9 @@
 package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.InfOrNanSelector;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
-import nom.bdezonia.zorbage.algorithm.SequenceIsInfOrNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
+import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -624,7 +624,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
-			return SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.NAN, a.rawData());
+			return SequenceIsNan.compute(G.DBL, a.rawData());
 		}
 	};
 
@@ -657,7 +657,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
-			return SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.INF, a.rawData());
+			return SequenceIsInf.compute(G.DBL, a.rawData());
 		}
 	};
 

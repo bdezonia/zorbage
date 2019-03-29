@@ -46,15 +46,15 @@ public class TestRModuleIsInfinite {
 	public void test() {
 		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
 		Float64Member value = G.DBL.construct();
-		assertFalse(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.INF, a.rawData()));
+		assertFalse(SequenceIsInf.compute(G.DBL, a.rawData()));
 		value.setV(Double.POSITIVE_INFINITY);
 		a.setV(2, value);
-		assertTrue(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.INF, a.rawData()));
+		assertTrue(SequenceIsInf.compute(G.DBL, a.rawData()));
 		value.setV(Double.NEGATIVE_INFINITY);
 		a.setV(2, value);
-		assertTrue(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.INF, a.rawData()));
+		assertTrue(SequenceIsInf.compute(G.DBL, a.rawData()));
 		value.setV(0);
 		a.setV(2, value);
-		assertFalse(SequenceIsInfOrNan.compute(G.DBL, InfOrNanSelector.INF, a.rawData()));
+		assertFalse(SequenceIsInf.compute(G.DBL, a.rawData()));
 	}
 }

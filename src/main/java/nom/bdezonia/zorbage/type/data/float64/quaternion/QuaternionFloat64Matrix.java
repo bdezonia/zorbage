@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.data.float64.quaternion;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.InfOrNanSelector;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -49,7 +48,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
-import nom.bdezonia.zorbage.algorithm.SequenceIsInfOrNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -57,6 +56,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -281,7 +281,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public Boolean call(QuaternionFloat64MatrixMember a) {
-			return SequenceIsInfOrNan.compute(G.QDBL, InfOrNanSelector.NAN, a.rawData());
+			return SequenceIsNan.compute(G.QDBL, a.rawData());
 		}
 	};
 	
@@ -309,7 +309,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public Boolean call(QuaternionFloat64MatrixMember a) {
-			return SequenceIsInfOrNan.compute(G.QDBL, InfOrNanSelector.INF, a.rawData());
+			return SequenceIsInf.compute(G.QDBL, a.rawData());
 		}
 	};
 	

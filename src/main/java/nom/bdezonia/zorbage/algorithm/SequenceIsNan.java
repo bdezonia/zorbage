@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
@@ -36,40 +35,28 @@ import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SequenceIsInfOrNan {
+public class SequenceIsNan {
 
-	private SequenceIsInfOrNan() {}
+	private SequenceIsNan() {}
 
 	/**
 	 * 
 	 * @param algebra
-	 * @param type
 	 * @param a
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Infinite<U> & NaN<U>,U>
-		boolean compute(T algebra, InfOrNanSelector type, IndexedDataSource<U> a)
+	public static <T extends Algebra<T,U> & NaN<U>,U>
+		boolean compute(T algebra, IndexedDataSource<U> a)
 	{
 		// the 1st nan found makes the seq = nan. so return right away.
-		// to determine inf even if we find 1 or more must check every element
-		// in case one is nan.
-		
-		boolean infFound = false;
 		U value = algebra.construct();
 		long size = a.size();
 		for (long i = 0; i < size; i++) {
 			a.get(i, value);
 			if (algebra.isNaN().call(value)) {
-				if (type == InfOrNanSelector.NAN)
-					return true;
-				else // type = INF
-					return false;
+				return true;
 			}
-			else if (type == InfOrNanSelector.INF && algebra.isInfinite().call(value))
-				infFound = true;
 		}
-		if (infFound && type == InfOrNanSelector.INF)
-			return true;
 		return false;
 	}
 }

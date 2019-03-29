@@ -26,26 +26,44 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
+import nom.bdezonia.zorbage.type.algebra.NaN;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestRModuleNaN {
+public class SequenceIsInf {
 
-	@Test
-	public void test() {
-		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
-		assertFalse(SequenceIsNan.compute(G.DBL, a.rawData()));
-		RModuleNaN.compute(G.DBL, a);
-		assertTrue(SequenceIsNan.compute(G.DBL, a.rawData()));
+	private SequenceIsInf() {}
+
+	/**
+	 * 
+	 * @param algebra
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Algebra<T,U> & Infinite<U> & NaN<U>,U>
+		boolean compute(T algebra, IndexedDataSource<U> a)
+	{
+		// the 1st nan found makes the seq = nan. so return right away.
+		// to determine inf even if we find 1 or more must check every element
+		// in case one is nan.
+		
+		boolean infFound = false;
+		U value = algebra.construct();
+		long size = a.size();
+		for (long i = 0; i < size; i++) {
+			a.get(i, value);
+			if (algebra.isNaN().call(value)) {
+				return false;
+			}
+			else if (!infFound && algebra.isInfinite().call(value))
+				infFound = true;
+		}
+		return infFound;
 	}
 }

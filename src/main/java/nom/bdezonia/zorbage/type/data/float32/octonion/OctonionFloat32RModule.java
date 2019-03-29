@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.type.data.float32.octonion;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
-import nom.bdezonia.zorbage.algorithm.InfOrNanSelector;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -43,8 +42,9 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
-import nom.bdezonia.zorbage.algorithm.SequenceIsInfOrNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -371,7 +371,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat32RModuleMember a) {
-			return SequenceIsInfOrNan.compute(G.OFLT, InfOrNanSelector.NAN, a.rawData());
+			return SequenceIsNan.compute(G.OFLT, a.rawData());
 		}
 	};
 
@@ -399,7 +399,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat32RModuleMember a) {
-			return SequenceIsInfOrNan.compute(G.OFLT, InfOrNanSelector.INF, a.rawData());
+			return SequenceIsInf.compute(G.OFLT, a.rawData());
 		}
 	};
 

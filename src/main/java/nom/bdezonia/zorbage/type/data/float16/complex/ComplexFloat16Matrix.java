@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.data.float16.complex;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.InfOrNanSelector;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -50,7 +49,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
-import nom.bdezonia.zorbage.algorithm.SequenceIsInfOrNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
+import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -274,7 +274,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat16MatrixMember a) {
-			return SequenceIsInfOrNan.compute(G.CHLF, InfOrNanSelector.NAN, a.rawData());
+			return SequenceIsNan.compute(G.CHLF, a.rawData());
 		}
 	};
 	
@@ -302,7 +302,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public Boolean call(ComplexFloat16MatrixMember a) {
-			return SequenceIsInfOrNan.compute(G.CHLF, InfOrNanSelector.INF, a.rawData());
+			return SequenceIsInf.compute(G.CHLF, a.rawData());
 		}
 	};
 	
