@@ -57,7 +57,11 @@ What can I do with Zorbage?
     database tables.
     
   You can allocate and use huge (length Long.MAX_VAUE) data structures.
-    
+  
+  Data access is standardized as if everything is an array. Arrays can
+    be concatenated, trimmed, subsampled, masked, padded, readonly, as
+    well as other abstractions.
+      
   Array storage can be in native types (for speed of access) or for many
     integer types they can be bit encoded (to save space).
   
