@@ -17,35 +17,37 @@ What can I do with Zorbage?
 
   Use many different data types
 
-  1-bit integers (signed and unsigned)
-  2-bit integers (signed and unsigned)
-  3-bit integers (signed and unsigned)
-  4-bit integers (signed and unsigned)
-  5-bit integers (signed and unsigned)
-  6-bit integers (signed and unsigned)
-  7-bit integers (signed and unsigned)
-  8-bit integers (signed and unsigned)
-  9-bit integers (signed and unsigned)
-  10-bit integers (signed and unsigned)
-  11-bit integers (signed and unsigned)
-  12-bit integers (signed and unsigned)
-  13-bit integers (signed and unsigned)
-  14-bit integers (signed and unsigned)
-  15-bit integers (signed and unsigned)
-  16-bit integers (signed and unsigned)
-  32-bit integers (signed and unsigned)
-  64-bit integers (signed and unsigned)
-  128-bit integers (signed and unsigned)
-  Unbounded integers
+    1-bit integers (signed and unsigned)
+    2-bit integers (signed and unsigned)
+    3-bit integers (signed and unsigned)
+    4-bit integers (signed and unsigned)
+    5-bit integers (signed and unsigned)
+    6-bit integers (signed and unsigned)
+    7-bit integers (signed and unsigned)
+    8-bit integers (signed and unsigned)
+    9-bit integers (signed and unsigned)
+    10-bit integers (signed and unsigned)
+    11-bit integers (signed and unsigned)
+    12-bit integers (signed and unsigned)
+    13-bit integers (signed and unsigned)
+    14-bit integers (signed and unsigned)
+    15-bit integers (signed and unsigned)
+    16-bit integers (signed and unsigned)
+    32-bit integers (signed and unsigned)
+    64-bit integers (signed and unsigned)
+    128-bit integers (signed and unsigned)
+    Unbounded integers
 
-  16-bit floats
-  32-bit floats
-  64-bit floats
-  Unbounded floats
+    16-bit floats
+    32-bit floats
+    64-bit floats
+    Unbounded floats
   
-  Unbounded rational numbers
+    Unbounded rational numbers
   
-  Booleans
+    Booleans
+    
+    n-dimensional Points
   
   A conversion api exists for moving between any two types accurately
     and efficiently.
@@ -73,7 +75,7 @@ What can I do with Zorbage?
   You can use existing or write your own algorithms that work with numbers,
     vectors, matrices, and tensors.
   
-  You can use a number of predefined STL like algorithms plus predefined
+  You can use a number of predefined STL-like algorithms plus predefined
     vector and matrix algorithms.
   
   You can use existing parallel algorithms for quickly processing data.
