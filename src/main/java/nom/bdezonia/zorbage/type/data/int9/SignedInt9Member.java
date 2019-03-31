@@ -96,7 +96,7 @@ public final class SignedInt9Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (short) (val % 512);
 		if (v < -256)
 			v += 512;

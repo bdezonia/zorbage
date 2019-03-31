@@ -96,7 +96,7 @@ public final class SignedInt3Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (byte) (val % 8);
 		if (v < -4)
 			v += 8;

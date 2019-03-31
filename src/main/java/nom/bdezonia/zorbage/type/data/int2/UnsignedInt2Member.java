@@ -96,7 +96,7 @@ public final class UnsignedInt2Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 
 		v = (byte) (val & 0x03);
 		

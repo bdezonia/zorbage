@@ -96,7 +96,7 @@ public final class UnsignedInt15Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (short) (val & 32767);
 	}
 	

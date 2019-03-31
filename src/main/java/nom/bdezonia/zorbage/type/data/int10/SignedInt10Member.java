@@ -96,7 +96,7 @@ public final class SignedInt10Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (short) (val % 1024);
 		if (v < -512)
 			v += 1024;

@@ -96,7 +96,7 @@ public final class UnsignedInt12Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		// TODO: this code makes all math ops test code pass
 		
 		v = (short) (val & 0xfff);

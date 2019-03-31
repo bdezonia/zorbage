@@ -96,7 +96,7 @@ public final class SignedInt11Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (short) (val % 2048);
 		if (v < -1024)
 			v += 2048;

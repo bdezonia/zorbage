@@ -96,7 +96,7 @@ public final class SignedInt2Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (byte) (val % 4);
 		if (v < -2)
 			v += 4;

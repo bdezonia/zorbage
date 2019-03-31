@@ -96,7 +96,7 @@ public final class UnsignedInt4Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 
 		v = (byte) (val & 0xf);
 		

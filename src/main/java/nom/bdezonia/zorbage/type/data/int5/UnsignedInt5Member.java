@@ -96,7 +96,7 @@ public final class UnsignedInt5Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 
 		v = (byte) (val & 31);
 

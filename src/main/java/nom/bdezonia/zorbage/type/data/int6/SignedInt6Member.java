@@ -96,7 +96,7 @@ public final class SignedInt6Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (byte) (val % 64);
 		if (v < -32)
 			v += 64;

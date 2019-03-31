@@ -96,7 +96,7 @@ public final class SignedInt5Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (byte) (val % 32);
 		if (v < -16)
 			v += 32;

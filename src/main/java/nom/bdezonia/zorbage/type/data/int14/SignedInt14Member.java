@@ -96,7 +96,7 @@ public final class SignedInt14Member
 		set(value);
 	}
 
-	void setV(int val) {
+	public void setV(int val) {
 		v = (short) (val % 16384);
 		if (v < -8192)
 			v += 16384;
