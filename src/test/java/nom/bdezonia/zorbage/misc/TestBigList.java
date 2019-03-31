@@ -56,8 +56,10 @@ public class TestBigList {
 		for (int i = 0; i < 44; i++) {
 			b.add(zero);
 		}
+		assertEquals(45, b.size());
 		
 		G.UINT10.succ().call(value, value);
+		tmp.set(zero);
 		b.set(44, value);
 		tmp.set(b.get(44));
 		assertEquals(value.v(), tmp.v());
