@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.point;
 
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
@@ -55,6 +56,8 @@ public class PointAlgebra
 		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>
 {
 
+	private static final MathContext CONTEXT = new MathContext(18);
+	
 	@Override
 	public Point construct() {
 		return new Point();
@@ -249,7 +252,7 @@ public class PointAlgebra
 			for (int i = 0; i < tmp.numDimensions(); i++) {
 				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
 				t = t.multiply(new BigDecimal(a.n()));
-				t = t.divide(new BigDecimal(a.d()));
+				t = t.divide(new BigDecimal(a.d()), CONTEXT);
 				tmp.setComponent(i, t.doubleValue());
 			}
 			c.set(tmp);
