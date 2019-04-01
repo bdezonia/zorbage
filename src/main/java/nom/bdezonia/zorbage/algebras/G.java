@@ -104,6 +104,7 @@ import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Algebra;
+import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.data.rational.RationalAlgebra;
 
 /**
@@ -123,6 +124,8 @@ public class G {
 	public static final RationalAlgebra RAT = new RationalAlgebra();
 	
 	public static final BooleanAlgebra BOOL = new BooleanAlgebra();
+	
+	public static final PointAlgebra POINT = new PointAlgebra();
 	
 	public static final Float16Algebra HLF = new Float16Algebra();
 	public static final Float16Vector HLF_VEC = new Float16Vector();
