@@ -248,7 +248,7 @@ public class PointAlgebra
 	{
 		@Override
 		public void call(RationalMember a, Point b, Point c) {
-			Point tmp = b.allocate();
+			Point tmp = b.duplicate();
 			for (int i = 0; i < tmp.numDimensions(); i++) {
 				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
 				t = t.multiply(new BigDecimal(a.n()));
@@ -269,7 +269,7 @@ public class PointAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, Point b, Point c) {
-			Point tmp = b.allocate();
+			Point tmp = b.duplicate();
 			for (int i = 0; i < tmp.numDimensions(); i++) {
 				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
 				t = t.multiply(a.v());
