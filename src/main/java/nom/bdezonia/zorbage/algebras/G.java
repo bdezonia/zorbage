@@ -116,8 +116,6 @@ public class G {
 	
 	private G() {}
 	
-	// TODO: BIGDEC
-	
 	public static final UnboundedIntAlgebra BIGINT = new UnboundedIntAlgebra();
 	
 	public static final HighPrecisionAlgebra BIGDEC = new HighPrecisionAlgebra();
