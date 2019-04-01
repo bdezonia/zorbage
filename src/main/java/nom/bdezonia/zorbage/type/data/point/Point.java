@@ -53,7 +53,7 @@ public class Point
 	private double[] vector;
 	
 	public Point(int dimension) {
-		vector = new double[dimension];
+		this.vector = new double[dimension];
 	}
 	
 	public Point() {
@@ -69,8 +69,8 @@ public class Point
 		Float64VectorMember vec = new Float64VectorMember(str);
 		if (vec.length() > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("string has too many components to fit in a Point");
-		vector = new double[(int)vec.length()];
-		for (int i = 0; i < vector.length; i++) {
+		this.vector = new double[(int)vec.length()];
+		for (int i = 0; i < this.vector.length; i++) {
 			vec.v(i, val);
 			setComponent(i, val.v());
 		}
@@ -78,15 +78,15 @@ public class Point
 
 	@Override
 	public int numDimensions() {
-		return vector.length;
+		return this.vector.length;
 	}
 
 	public double component(int i) {
-		return vector[i];
+		return this.vector[i];
 	}
 	
 	public void setComponent(int i, double value) {
-		vector[i] = value;
+		this.vector[i] = value;
 	}
 	
 	@Override
@@ -122,7 +122,7 @@ public class Point
 			arr[index+i] = bytes[i];
 		}
 		buff = ByteBuffer.allocate(8);
-		for (int k = 0; k < vector.length; k++) {
+		for (int k = 0; k < this.vector.length; k++) {
 			bytes = buff.putDouble(this.vector[k]).array();
 			for (int i = 0; i < 8; i++) {
 				arr[index+4+(k*8)+i] = bytes[i];
@@ -158,7 +158,7 @@ public class Point
 			raf.writeByte(bytes[i]);
 		}
 		buff = ByteBuffer.allocate(8);
-		for (int k = 0; k < vector.length; k++) {
+		for (int k = 0; k < this.vector.length; k++) {
 			bytes = buff.putDouble(this.vector[k]).array();
 			for (int i = 0; i < 8; i++) {
 				raf.writeByte(bytes[i]);
@@ -213,18 +213,24 @@ public class Point
 	@Override
 	public void get(Point other) {
 		if (this == other) return;
-		other.vector = new double[numDimensions()];
-		for (int i = 0; i < vector.length; i++) {
-			other.vector[i] = vector[i];
+		if (other.vector.length != this.vector.length)
+			other.vector = this.vector.clone();
+		else {
+			for (int i = 0; i < this.vector.length; i++) {
+				other.vector[i] = this.vector[i];
+			}
 		}
 	}
 
 	@Override
 	public void set(Point other) {
 		if (this == other) return;
-		vector = new double[other.numDimensions()];
-		for (int i = 0; i < vector.length; i++) {
-			vector[i] = other.vector[i];
+		if (this.vector.length != other.vector.length)
+			this.vector = other.vector.clone();
+		else {
+			for (int i = 0; i < other.vector.length; i++) {
+				this.vector[i] = other.vector[i];
+			}
 		}
 	}
 
