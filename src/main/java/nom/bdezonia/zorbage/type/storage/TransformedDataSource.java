@@ -43,6 +43,12 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
 	private final long sz;
+	private final ThreadLocal<U> tmpU = new ThreadLocal<U>() {
+		@Override
+		protected U initialValue() {
+			return uAlg.construct();
+		}
+	};
 	
 	/**
 	 * 
@@ -59,18 +65,12 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 		this.sz = uCollection.size();
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public TransformedDataSource<T,U,V,W> duplicate() {
 		// shallow copy
 		return new TransformedDataSource<T,U,V,W>(uAlg, uCollection, uToW, wToU);
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public void set(long index, W value) {
 		U tmp = tmpU.get();
@@ -78,9 +78,6 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 		uCollection.set(index, tmp);
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public void get(long index, W value) {
 		U tmp = tmpU.get();
@@ -88,18 +85,8 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 		uToW.call(tmp, value);
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public long size() {
 		return sz;
 	}
-	
-	private final ThreadLocal<U> tmpU = new ThreadLocal<U>() {
-		@Override
-		protected U initialValue() {
-			return uAlg.construct();
-		}
-	};
 }
