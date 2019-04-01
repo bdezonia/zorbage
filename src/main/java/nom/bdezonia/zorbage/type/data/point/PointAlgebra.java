@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.point;
 
 
+import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
@@ -38,7 +39,11 @@ import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -47,7 +52,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  */
 public class PointAlgebra
 	implements Algebra<PointAlgebra,Point>, Addition<Point>, Scale<Point, Float64Member>,
-		Random<Point>
+		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>
 {
 
 	@Override
@@ -233,6 +238,47 @@ public class PointAlgebra
 	@Override
 	public Procedure1<Point> random() {
 		return RAND;
+	}
+
+	private final Procedure3<RationalMember, Point, Point> SBR =
+			new Procedure3<RationalMember, Point, Point>()
+	{
+		@Override
+		public void call(RationalMember a, Point b, Point c) {
+			Point tmp = b.allocate();
+			for (int i = 0; i < tmp.numDimensions(); i++) {
+				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
+				t = t.multiply(new BigDecimal(a.n()));
+				t = t.divide(new BigDecimal(a.d()));
+				tmp.setComponent(i, t.doubleValue());
+			}
+			c.set(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, Point, Point> scaleByRational() {
+		return SBR;
+	}
+
+	private final Procedure3<HighPrecisionMember, Point, Point> SBH =
+			new Procedure3<HighPrecisionMember, Point, Point>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, Point b, Point c) {
+			Point tmp = b.allocate();
+			for (int i = 0; i < tmp.numDimensions(); i++) {
+				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
+				t = t.multiply(a.v());
+				tmp.setComponent(i, t.doubleValue());
+			}
+			c.set(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, Point, Point> scaleByHighPrec() {
+		return SBH;
 	}
 	
 }
