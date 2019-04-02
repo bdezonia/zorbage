@@ -39,6 +39,7 @@ public class ConcatenatedDataSource<U>
 	private final IndexedDataSource<U> first;
 	private final IndexedDataSource<U> second;
 	private final long sz;
+	private final long firstSz;
 	
 	/**
 	 * 
@@ -50,7 +51,8 @@ public class ConcatenatedDataSource<U>
 			throw new IllegalArgumentException("the two input lists are too long to add together");
 		this.first = a;
 		this.second = b;
-		this.sz = a.size() + b.size();
+		this.firstSz = a.size();
+		this.sz = firstSz + b.size();
 	}
 	
 	@Override
@@ -63,22 +65,20 @@ public class ConcatenatedDataSource<U>
 	public void set(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		long firstSize = first.size();
-		if (index < firstSize)
+		if (index < firstSz)
 			first.set(index, value);
 		else
-			second.set(index-firstSize, value);
+			second.set(index-firstSz, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		long firstSize = first.size();
-		if (index < firstSize)
+		if (index < firstSz)
 			first.get(index, value);
 		else
-			second.get(index-firstSize, value);
+			second.get(index-firstSz, value);
 	}
 
 	@Override
