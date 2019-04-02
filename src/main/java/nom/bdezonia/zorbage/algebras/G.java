@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algebras;
 
+import java.math.BigDecimal;
+
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
@@ -116,6 +118,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalAlgebra;
 public class G {
 	
 	private G() {}
+
+	public static final BigDecimal ONE_HALF = BigDecimal.valueOf(0.5);
 	
 	public static final UnboundedIntAlgebra BIGINT = new UnboundedIntAlgebra();
 	

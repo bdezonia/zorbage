@@ -695,6 +695,11 @@ public class SignedInt16Algebra
 		public void call(HighPrecisionMember a, SignedInt16Member b, SignedInt16Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else if (signum > 0)
+				tmp = tmp.add(G.ONE_HALF);
 			c.setV(tmp.intValue());
 		}
 	};

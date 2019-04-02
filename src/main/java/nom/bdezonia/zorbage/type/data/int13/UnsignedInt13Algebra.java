@@ -672,6 +672,11 @@ public class UnsignedInt13Algebra
 		public void call(HighPrecisionMember a, UnsignedInt13Member b, UnsignedInt13Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else if (signum > 0)
+				tmp = tmp.add(G.ONE_HALF);
 			c.setV(tmp.intValue());
 		}
 	};

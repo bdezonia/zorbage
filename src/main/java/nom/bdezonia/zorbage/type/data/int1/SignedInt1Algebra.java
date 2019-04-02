@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -640,6 +641,11 @@ public class SignedInt1Algebra
 		public void call(HighPrecisionMember a, SignedInt1Member b, SignedInt1Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else if (signum > 0)
+				tmp = tmp.add(G.ONE_HALF);
 			c.setV(tmp.intValue());
 		}
 	};
