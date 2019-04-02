@@ -43,7 +43,13 @@ public class MaskedDataSource<U>
 	private final long listSize;
 	private final long maskSize;
 	private final long trueCount;
-	private final ThreadLocal<BooleanMember> bTmp;
+	private static final ThreadLocal<BooleanMember> bTmp =
+			new ThreadLocal<BooleanMember>() {
+				@Override
+				protected BooleanMember initialValue() {
+					return G.BOOL.construct();
+				}
+			};
 	
 	/**
 	 * 
@@ -61,12 +67,6 @@ public class MaskedDataSource<U>
 			this.maskSize = mSz;
 		if (maskSize == 0)
 			throw new IllegalArgumentException("mask must not be of length 0");
-		this.bTmp = new ThreadLocal<BooleanMember>() {
-			@Override
-			protected BooleanMember initialValue() {
-				return G.BOOL.construct();
-			}
-		};
 		BooleanMember b = bTmp.get();
 		long count = 0;
 		for (long i = 0; i < maskSize; i++) {
