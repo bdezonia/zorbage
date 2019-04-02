@@ -64,7 +64,8 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		this.condition = condition;
 		U tmp = algebra.construct();
 		long count = 0;
-		for (long i = 0; i < source.size(); i++) {
+		long srcSize = source.size();
+		for (long i = 0; i < srcSize; i++) {
 			source.get(i, tmp);
 			if (condition.isTrue(tmp)) {
 				count++;
@@ -74,7 +75,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		SignedInt64Member val = tmp64.get();
 		this.indexList = Storage.allocate(sz, val);
 		count = 0;
-		for (long i = 0; i < source.size(); i++) {
+		for (long i = 0; i < srcSize; i++) {
 			source.get(i, tmp);
 			if (condition.isTrue(tmp)) {
 				val.setV(i);
