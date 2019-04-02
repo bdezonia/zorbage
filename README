@@ -80,10 +80,11 @@ What can I do with Zorbage?
   
   You can use existing parallel algorithms for quickly processing data.
   
-  Define multidimensional data layouts with flexible out of bounds
-    data handling procedures.
+  Define multidimensional data sets with flexible out of bounds data
+    handling procedures.
     
   Define complex data sampling algorithms from prebuilt sampling components.
   
-  Use typesafe first class Function and Procedure objects
+  Use typesafe first class Function and Procedure objects. Pass them as
+    arguments to code that can transform your data quickly and generically.
   
