@@ -696,7 +696,7 @@ public class SignedInt32Algebra
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
-			else if (signum > 0)
+			else
 				tmp = tmp.add(G.ONE_HALF);
 			c.setV(tmp.intValue());
 		}
