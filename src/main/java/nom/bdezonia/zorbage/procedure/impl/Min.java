@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
@@ -36,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  *
  */
 public class Min<T extends Algebra<T,U> & Ordered<U>, U>
-	implements Procedure<U>
+	implements Procedure3<U,U,U>
 {
 	private final T algebra;
 	
@@ -44,18 +45,8 @@ public class Min<T extends Algebra<T,U> & Ordered<U>, U>
 		this.algebra = algebra;
 	}
 		
-	@SuppressWarnings("unchecked")
 	@Override
-	public void call(U result, U... inputs) {
-		if (inputs.length == 0)
-			throw new IllegalArgumentException("min undefined for empty list");
-		U min = algebra.construct();
-		algebra.assign().call(inputs[0],min);
-		for (int i = 1; i < inputs.length; i++) {
-			if (algebra.isLess().call(inputs[i], min)) {
-				algebra.assign().call(inputs[i], min);
-			}
-		}
-		algebra.assign().call(min, result);
+	public void call(U a, U b, U c) {
+		algebra.min().call(a,b,c);
 	}
 }

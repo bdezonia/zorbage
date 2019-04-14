@@ -26,8 +26,10 @@
  */
 package nom.bdezonia.zorbage.procedure.impl;
 
-import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
@@ -35,17 +37,29 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  * @author Barry DeZonia
  *
  */
-public class Max<T extends Algebra<T,U> & Ordered<U>, U>
-	implements Procedure3<U,U,U>
+public class MaxL<T extends Algebra<T,U> & Ordered<U>, U>
+	implements Procedure<U>
 {
-	private final T algebra;
+	private final Procedure<U> ancestor1;
+	private final Procedure<U> ancestor2;
+	private final Max<T,U> lowerProc;
+	private final U tmp1;
+	private final U tmp2;
 	
-	public Max(T algebra) {
-		this.algebra = algebra;
+	public MaxL(T algebra, Procedure<U> ancestor1, Procedure<U> ancestor2) {
+		this.ancestor1 = ancestor1;
+		this.ancestor2 = ancestor2;
+		this.lowerProc = new Max<T,U>(algebra);
+		tmp1 = algebra.construct();
+		tmp2 = algebra.construct();
 	}
-		
+
 	@Override
-	public void call(U a, U b, U c) {
-		algebra.max().call(a,b,c);
+	@SuppressWarnings("unchecked")
+	public void call(U result, U... inputs) {
+		ancestor1.call(tmp1, inputs);
+		ancestor2.call(tmp2, inputs);
+		lowerProc.call(tmp1, tmp2, result);
 	}
+
 }

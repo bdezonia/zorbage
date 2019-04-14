@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.procedure.impl.VariableConstantL;
 import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Bounded;
 
 /**
  * 
@@ -86,7 +87,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			return tuple;
 		}
 	}
+	
 	private class Token {}
+	
+	// i0, i1, i99, etc.
 	
 	private class Index extends Token {
 		int number() { return -1; } // TODO
@@ -103,21 +107,59 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		String stringValue() { return name; }
 	}
 	
+	// (
+	
 	private class OpenParen extends Token {}
+	
+	// )
 	
 	private class CloseParen extends Token {}
 	
+	// +
+	
 	private class Plus extends Token {}
+	
+	// -
 	
 	private class Minus extends Token {}
 	
+	// *
+	
 	private class Times extends Token {}
+	
+	// /
 	
 	private class Divide extends Token {}
 	
+	// %
+	
+	private class Mod extends Token {}
+
+	// ^
+	
 	private class Power extends Token {}
 	
-	//private class Comma extends Token {}
+	// max
+	
+	private class Max extends Token {}
+	
+	// min
+	
+	private class Min extends Token {}
+	
+	// tmax
+	
+	private class TypeMax extends Token {}
+	
+	// tmin
+	
+	private class TypeMin extends Token {}
+	
+	// ,
+	
+	private class Comma extends Token {}
+	
+	// nums, vectors, matrices, tensors all made of octonions or less
 	
 	private class Numeric extends Token {
 		private String value;
@@ -128,8 +170,8 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		
 		String stringValue() { return value; }
 	}
-
-	private class Mod extends Token {}
+	
+	// TODO: lex E and PI as constant values
 
 	private class Lexer {
 		
@@ -301,6 +343,43 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			status.tokenNumber++;
 			return status;
 		}
+		else if (match(Min.class, tokens, pos) ||
+					match(Max.class, tokens, pos))
+		{
+			if (!match(OpenParen.class, tokens, pos+1))
+				return syntaxError(pos+1, tokens, "Expected a '('.");
+			ParseStatus status1 = equation(algebra, tokens, pos+2);
+			if (status1.errMsg != null) return status1;
+			if (!match(Comma.class, tokens, status1.tokenNumber))
+				return syntaxError(status1.tokenNumber, tokens, "Expected a ','.");
+			ParseStatus status2 = equation(algebra, tokens, status1.tokenNumber+1);
+			if (status2.errMsg != null) return status2;
+			if (!match(CloseParen.class, tokens, status2.tokenNumber))
+				return syntaxError(status2.tokenNumber, tokens, "Expected a ')'.");
+			ParseStatus status = new ParseStatus();
+			status.tokenNumber = status2.tokenNumber+1;
+			if (match(Min.class, tokens, pos))
+				status.function = new nom.bdezonia.zorbage.procedure.impl.MinL(algebra, status1.function, status2.function);
+			else
+				status.function = new nom.bdezonia.zorbage.procedure.impl.MaxL(algebra, status1.function, status2.function);
+			return status;
+		}
+		else if (match(TypeMin.class, tokens, pos) ||
+				match(TypeMax.class, tokens, pos))
+		{
+			ParseStatus status = new ParseStatus();
+			status.tokenNumber = pos+1;
+			U value = algebra.construct();
+			Bounded<U> a = (Bounded<U>) algebra;
+			if (match(TypeMin.class, tokens, pos)) {
+				a.minBound().call(value);
+			}
+			else { // TypeMax
+				a.maxBound().call(value);
+			}
+			status.function = new ConstantL(algebra, value);
+			return status;
+		}
 		else
 			return num(algebra, tokens, pos);
 	}
@@ -317,7 +396,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			status.tokenNumber = pos + 1;
 			status.function = new ConstantL(algebra, value);
 			return status;
-		} catch (Exception e ) {
+		} catch (Exception e) {
 			return syntaxError(pos, tokens, "Expected something numeric.");
 		}
 	}
