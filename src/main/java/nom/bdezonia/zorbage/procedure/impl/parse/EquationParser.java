@@ -64,6 +64,13 @@ import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Exponential;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
+import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -442,50 +449,65 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	}
 
 	private Procedure<U> createFunction(T algebra, String funcName, Procedure<U> ancestor1) {
-		if (funcName.equals("acos"))
-			return new AcosL(algebra,ancestor1);
-		if (funcName.equals("acosh"))
-			return new AcoshL(algebra,ancestor1);
-		if (funcName.equals("asin"))
-			return new AsinL(algebra,ancestor1);
-		if (funcName.equals("asinh"))
-			return new AsinhL(algebra,ancestor1);
-		if (funcName.equals("atan"))
-			return new AtanL(algebra,ancestor1);
-		if (funcName.equals("atanh"))
-			return new AtanhL(algebra,ancestor1);
-		if (funcName.equals("cbrt"))
-			return new CbrtL(algebra,ancestor1);
-		if (funcName.equals("cos"))
-			return new CosL(algebra,ancestor1);
-		if (funcName.equals("cosh"))
-			return new CoshL(algebra,ancestor1);
-		if (funcName.equals("exp"))
-			return new ExpL(algebra,ancestor1);
-		if (funcName.equals("log"))
-			return new LogL(algebra,ancestor1);
-		if (funcName.equals("rand"))
-			return new RandL(algebra);
-		if (funcName.equals("sin"))
-			return new SinL(algebra,ancestor1);
-		if (funcName.equals("sinh"))
-			return new SinhL(algebra,ancestor1);
-		if (funcName.equals("sinc"))
-			return new SincL(algebra,ancestor1);
-		if (funcName.equals("sinch"))
-			return new SinchL(algebra,ancestor1);
-		if (funcName.equals("sincpi"))
-			return new SincpiL(algebra,ancestor1);
-		if (funcName.equals("sinchpi"))
-			return new SinchpiL(algebra,ancestor1);
-		if (funcName.equals("sqrt"))
-			return new SqrtL(algebra,ancestor1);
-		if (funcName.equals("tan"))
-			return new TanL(algebra,ancestor1);
-		if (funcName.equals("tanh"))
-			return new TanhL(algebra,ancestor1);
+		if (algebra instanceof InverseTrigonometric<?>) {
+			if (funcName.equals("acos"))
+				return new AcosL(algebra,ancestor1);
+			if (funcName.equals("asin"))
+				return new AsinL(algebra,ancestor1);
+			if (funcName.equals("atan"))
+				return new AtanL(algebra,ancestor1);
+		}
+		if (algebra instanceof InverseHyperbolic<?>) {
+			if (funcName.equals("acosh"))
+				return new AcoshL(algebra,ancestor1);
+			if (funcName.equals("asinh"))
+				return new AsinhL(algebra,ancestor1);
+			if (funcName.equals("atanh"))
+				return new AtanhL(algebra,ancestor1);
+		}
+		if (algebra instanceof Roots<?>) {
+			if (funcName.equals("cbrt"))
+				return new CbrtL(algebra,ancestor1);
+			if (funcName.equals("sqrt"))
+				return new SqrtL(algebra,ancestor1);
+		}
+		if (algebra instanceof Trigonometric<?>) {
+			if (funcName.equals("cos"))
+				return new CosL(algebra,ancestor1);
+			if (funcName.equals("sin"))
+				return new SinL(algebra,ancestor1);
+			if (funcName.equals("tan"))
+				return new TanL(algebra,ancestor1);
+			if (funcName.equals("sinc"))
+				return new SincL(algebra,ancestor1);
+			if (funcName.equals("sincpi"))
+				return new SincpiL(algebra,ancestor1);
+		}
+		if (algebra instanceof Hyperbolic<?>) {
+			if (funcName.equals("cosh"))
+				return new CoshL(algebra,ancestor1);
+			if (funcName.equals("sinh"))
+				return new SinhL(algebra,ancestor1);
+			if (funcName.equals("tanh"))
+				return new TanhL(algebra,ancestor1);
+			if (funcName.equals("sinch"))
+				return new SinchL(algebra,ancestor1);
+			if (funcName.equals("sinchpi"))
+				return new SinchpiL(algebra,ancestor1);
+		}
+		if (algebra instanceof Exponential<?>) {
+			if (funcName.equals("exp"))
+				return new ExpL(algebra,ancestor1);
+			if (funcName.equals("log"))
+				return new LogL(algebra,ancestor1);
+		}
+		if (algebra instanceof Random<?>) {
+			if (funcName.equals("rand"))
+				return new RandL(algebra);
+		}
 		if (funcName.equals("zero"))
 			return new ZeroL(algebra);
-		throw new IllegalArgumentException("unsupported function type : "+funcName);
+		
+		throw new IllegalArgumentException("unsupported function type : "+funcName+" for given algebra");
 	}
 }
