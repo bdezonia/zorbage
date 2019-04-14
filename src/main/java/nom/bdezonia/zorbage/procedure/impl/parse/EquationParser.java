@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.procedure.impl.parse;
 
-import java.util.Map;
-
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.impl.AcosL;
@@ -44,12 +42,13 @@ import nom.bdezonia.zorbage.procedure.impl.CoshL;
 import nom.bdezonia.zorbage.procedure.impl.DivideL;
 import nom.bdezonia.zorbage.procedure.impl.ExpL;
 import nom.bdezonia.zorbage.procedure.impl.LogL;
+import nom.bdezonia.zorbage.procedure.impl.MaxL;
+import nom.bdezonia.zorbage.procedure.impl.MinL;
 import nom.bdezonia.zorbage.procedure.impl.ModL;
 import nom.bdezonia.zorbage.procedure.impl.MultiplyL;
 import nom.bdezonia.zorbage.procedure.impl.NegateL;
 import nom.bdezonia.zorbage.procedure.impl.PowL;
 import nom.bdezonia.zorbage.procedure.impl.RandL;
-import nom.bdezonia.zorbage.procedure.impl.Sin;
 import nom.bdezonia.zorbage.procedure.impl.SinL;
 import nom.bdezonia.zorbage.procedure.impl.SincL;
 import nom.bdezonia.zorbage.procedure.impl.SinchL;
@@ -73,6 +72,8 @@ import nom.bdezonia.zorbage.type.algebra.Bounded;
  */
 public class EquationParser<T extends Algebra<T,U>,U> {
 
+	public EquationParser() {}
+
 	public Tuple2<String,Procedure<U>> parse(T algebra, String string) {
 		
 		Tuple2<String,BigList<Token>> lexResult = new Lexer().lex(algebra, string);
@@ -88,23 +89,46 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 	}
 	
-	private class Token {}
+	private class Token {
+
+		String text;
+		int start;
+		
+		void setText(String text) {
+			this.text = text;
+		}
+		
+		String getText() {
+			return text;
+		}
+		
+		void setStart(int start) {
+			this.start = start;
+		}
+		
+		int getStart() {
+			return start;
+		}
+	}
 	
 	// i0, i1, i99, etc.
 	
 	private class Index extends Token {
-		int number() { return -1; } // TODO
+		
+		int number() {
+			 // TODO
+			return -1;
+		}
 	}
+	
+	// sin, cos, log, etc
 	
 	private class FunctionName extends Token {
 		
-		private final String name;
-		
 		FunctionName(String name) {
-			this.name = name;
+			setText(name);
 		}
 		
-		String stringValue() { return name; }
 	}
 	
 	// (
@@ -162,20 +186,21 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	// nums, vectors, matrices, tensors all made of octonions or less
 	
 	private class Numeric extends Token {
-		private String value;
 		
 		Numeric(String value) {
-			this.value = value;
+			setText(value);
 		}
 		
-		String stringValue() { return value; }
 	}
 	
 	// TODO: lex E and PI as constant values
+	// Just a thought: making E and PI for matrices is hard because we do not have a
+	// shape for the matrix. Take a 2x2 and try to add PI. But PI is 0x0. Nuts.
 
 	private class Lexer {
 		
 		Tuple2<String,BigList<Token>> lex(T alg, String str) {
+			
 			Tuple2<String,BigList<Token>> result = new Tuple2<String, BigList<Token>>(null, null);
 			result.setA(null);
 			result.setB(new BigList<Token>());
@@ -184,7 +209,9 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	}
 	
 	private class Parser {
+		
 		Tuple2<String,Procedure<U>> parse(T algebra, BigList<Token> tokens) {
+		
 			ParseStatus result = equation(algebra, tokens, 0);
 			Tuple2<String,Procedure<U>> retVal = new Tuple2<String, Procedure<U>>(null, null);
 			if (result.errMsg != null) {
@@ -198,19 +225,30 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	}
 	
 	private class ParseStatus {
+		
 		String errMsg;
 		long tokenNumber;
 		Procedure<U> function;
 	}
 	
-	public EquationParser() {}
-
 	private boolean match(Class<?> tokClass, BigList<Token> tokens, long pos) {
-		return false;
+		if (pos >= tokens.size())
+			return false;
+		return tokens.get(pos).getClass() == tokClass;
 	}
 	
-	private ParseStatus syntaxError(long pos, BigList<Token> tokens, String errMsg) {
-		return null;
+	private ParseStatus syntaxError(long tokenNumber, BigList<Token> tokens, String errMsg) {
+		ParseStatus status = new ParseStatus();
+		status.tokenNumber = tokenNumber;
+		if (tokenNumber < tokens.size()) {
+			Token token = tokens.get(tokenNumber);
+			status.errMsg = "Syntax error with token ("+token.getText()+") near column "+token.getStart()+": "+errMsg;
+		}
+		else {
+			Token token = tokens.get(tokenNumber-1);
+			status.errMsg = "Unexpected end of input after token ("+token.getText()+") near column "+token.getStart()+": context - "+errMsg;
+		}
+		return status;
 	}
 	
 	/*
@@ -330,7 +368,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						status.tokenNumber,
 						tokens,
 						"Function call definition expected a ')'");
-			status.function = createFunction(algebra, funcCall.stringValue(), status.function);
+			status.function = createFunction(algebra, funcCall.getText(), status.function);
 			status.tokenNumber++;
 			return status;
 		}
@@ -359,11 +397,12 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = status2.tokenNumber+1;
 			if (match(Min.class, tokens, pos))
-				status.function = new nom.bdezonia.zorbage.procedure.impl.MinL(algebra, status1.function, status2.function);
+				status.function = new MinL(algebra, status1.function, status2.function);
 			else
-				status.function = new nom.bdezonia.zorbage.procedure.impl.MaxL(algebra, status1.function, status2.function);
+				status.function = new MaxL(algebra, status1.function, status2.function);
 			return status;
 		}
+		// TODO: relocate this as a lexing issue: generate a constant?
 		else if (match(TypeMin.class, tokens, pos) ||
 				match(TypeMax.class, tokens, pos))
 		{
@@ -390,8 +429,9 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	private ParseStatus num(T algebra, BigList<Token> tokens, long pos) {
 		U value;
 		try {
+			// TODO: replace much of this code in lexer instead as a constant
 			Numeric tok = (Numeric) tokens.get(pos);
-			value = algebra.construct(tok.stringValue());
+			value = algebra.construct(tok.getText());
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = pos + 1;
 			status.function = new ConstantL(algebra, value);
