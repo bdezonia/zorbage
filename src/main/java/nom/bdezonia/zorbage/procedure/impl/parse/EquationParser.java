@@ -140,6 +140,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	private class FunctionName extends Token {
 		
 		FunctionName(int start, String name) {
+			setStart(start);
 			setText(name);
 		}
 		
@@ -241,26 +242,6 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		Min(int start) {
 			setStart(start);
 		}
-	}
-	
-	// tmax
-	
-	private class TypeMax extends Token {
-	
-		TypeMax(int start) {
-			setStart(start);
-		}
-
-	}
-	
-	// tmin
-	
-	private class TypeMin extends Token {
-		
-		TypeMin(int start) {
-			setStart(start);
-		}
-
 	}
 	
 	// ,
@@ -648,19 +629,29 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 		else if (match(FunctionName.class, tokens, pos)) {
 			FunctionName funcCall = (FunctionName) tokens.get(pos);
-			if (!match(OpenParen.class, tokens, pos+1))
-				return syntaxError(pos+1, tokens,
-							"Function call definition expected a '('");
-			ParseStatus status = equation(algebra, tokens, pos+2);
-			if (status.errMsg != null) return status;
-			if (!match(CloseParen.class, tokens, status.tokenNumber))
-				return syntaxError(
-						status.tokenNumber,
-						tokens,
-						"Function call definition expected a ')'");
-			status.function = createFunction(algebra, funcCall.getText(), status.function);
-			status.tokenNumber++;
-			return status;
+			// 0 arg functions
+			if (funcCall.getText() == "rand") {
+				ParseStatus status = new ParseStatus();
+				status.function = createFunction(algebra, funcCall.getText(), null);
+				status.tokenNumber = pos + 1;
+				return status;
+			}
+			else {
+				// 1 arg functions
+				if (!match(OpenParen.class, tokens, pos+1))
+					return syntaxError(pos+1, tokens,
+								"Function call definition expected a '('");
+				ParseStatus status = equation(algebra, tokens, pos+2);
+				if (status.errMsg != null) return status;
+				if (!match(CloseParen.class, tokens, status.tokenNumber))
+					return syntaxError(
+							status.tokenNumber,
+							tokens,
+							"Function call definition expected a ')'");
+				status.function = createFunction(algebra, funcCall.getText(), status.function);
+				status.tokenNumber++;
+				return status;
+			}
 		}
 		else if (match(OpenParen.class, tokens, pos)) {
 			ParseStatus status = equation(algebra, tokens, pos+1);
@@ -674,6 +665,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		else if (match(Min.class, tokens, pos) ||
 					match(Max.class, tokens, pos))
 		{
+			// 2 arg functions
 			if (!match(OpenParen.class, tokens, pos+1))
 				return syntaxError(pos+1, tokens, "Expected a '('.");
 			ParseStatus status1 = equation(algebra, tokens, pos+2);
