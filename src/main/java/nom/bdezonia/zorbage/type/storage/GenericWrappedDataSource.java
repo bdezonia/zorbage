@@ -24,36 +24,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl;
+package nom.bdezonia.zorbage.type.storage;
 
-import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.GenericWrappedDataSource;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MedianInputs<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
-	implements Procedure<U>
-{
-	private final T algebra;
+public class GenericWrappedDataSource<K extends Algebra<K,L>,L> implements IndexedDataSource<L> {
+
+	private K algebra;
+	private L[] data;
 	
-	public MedianInputs(T algebra) {
+	public GenericWrappedDataSource(K algebra, L[] data) {
 		this.algebra = algebra;
+		this.data = data;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public void call(U result, U... inputs) {
-		IndexedDataSource<U> wrapper = new GenericWrappedDataSource<T,U>(algebra, inputs);
-		nom.bdezonia.zorbage.algorithm.Median.compute(algebra, wrapper, result);
+	public IndexedDataSource<L> duplicate() {
+		L[] out = data.clone();
+		for (int i = 0; i < out.length; i++) {
+			out[i] = algebra.construct();
+			algebra.assign().call(data[i], out[i]);
+		}
+		return new GenericWrappedDataSource<K,L>(algebra, out);
 	}
 
+	@Override
+	public void set(long index, L value) {
+		if (index < 0 || index >= data.length)
+			throw new IllegalArgumentException("index oob");
+		algebra.assign().call(value, data[(int) index]);
+	}
+
+	@Override
+	public void get(long index, L value) {
+		if (index < 0 || index >= data.length)
+			throw new IllegalArgumentException("index oob");
+		algebra.assign().call(data[(int) index], value);
+	}
+
+	@Override
+	public long size() {
+		return data.length;
+	}
+	
 }
