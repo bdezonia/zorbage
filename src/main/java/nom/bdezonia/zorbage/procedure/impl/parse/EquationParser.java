@@ -239,6 +239,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	// min
 	
 	private class Min extends Token {
+	
 		Min(int start) {
 			setStart(start);
 		}
@@ -267,9 +268,8 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		
 	}
 	
-	// TODO: lex E and PI as constant values
-	// Just a thought: making E and PI for matrices is hard because we do not have a
-	// shape for the matrix. Take a 2x2 and try to add PI. But PI is 0x0. Nuts.
+	// NOTE Just a thought: making E and PI for matrices is hard because we do not
+	// have a shape for the matrix. Take a 2x2 and try to add PI. But PI is 0x0. Nuts.
 
 	private class Lexer {
 		
@@ -347,39 +347,17 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 				}
 				else {
-					if (nextFew(str, i, "tmin")) {
-						U value = alg.construct();
-						Bounded<U> a = (Bounded<U>) alg;
-						a.minBound().call(value);
-						toks.add(new Numeric(i, value));
-						i += 3;
+					if (nextFew(str, i, "sinchpi")) {
+						toks.add(new FunctionName(i, "sinchpi"));
+						i += 6;
 					}
-					else if (nextFew(str, i, "tmax")) {
-						U value = alg.construct();
-						Bounded<U> a = (Bounded<U>) alg;
-						a.maxBound().call(value);
-						toks.add(new Numeric(i, value));
-						i += 3;
+					else if (nextFew(str, i, "sincpi")) {
+						toks.add(new FunctionName(i, "sincpi"));
+						i += 5;
 					}
-					else if (nextFew(str, i, "min")) {
-						toks.add(new Min(i));
-						i += 2;
-					}
-					else if (nextFew(str, i, "max")) {
-						toks.add(new Max(i));
-						i += 2;
-					}
-					else if (nextFew(str, i, "acos")) {
-						toks.add(new FunctionName(i, "acos"));
-						i += 3;
-					}
-					else if (nextFew(str, i, "asin")) {
-						toks.add(new FunctionName(i, "asin"));
-						i += 3;
-					}
-					else if (nextFew(str, i, "atan")) {
-						toks.add(new FunctionName(i, "atan"));
-						i += 3;
+					else if (nextFew(str, i, "sinch")) {
+						toks.add(new FunctionName(i, "sinch"));
+						i += 4;
 					}
 					else if (nextFew(str, i, "acosh")) {
 						toks.add(new FunctionName(i, "acosh"));
@@ -393,17 +371,31 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						toks.add(new FunctionName(i, "atanh"));
 						i += 4;
 					}
-					else if (nextFew(str, i, "cos")) {
-						toks.add(new FunctionName(i, "cos"));
-						i += 2;
+					else if (nextFew(str, i, "tmin")) {
+						U value = alg.construct();
+						Bounded<U> a = (Bounded<U>) alg;
+						a.minBound().call(value);
+						toks.add(new Numeric(i, value));
+						i += 3;
 					}
-					else if (nextFew(str, i, "sin")) {
-						toks.add(new FunctionName(i, "sin"));
-						i += 2;
+					else if (nextFew(str, i, "tmax")) {
+						U value = alg.construct();
+						Bounded<U> a = (Bounded<U>) alg;
+						a.maxBound().call(value);
+						toks.add(new Numeric(i, value));
+						i += 3;
 					}
-					else if (nextFew(str, i, "tan")) {
-						toks.add(new FunctionName(i, "tan"));
-						i += 2;
+					else if (nextFew(str, i, "acos")) {
+						toks.add(new FunctionName(i, "acos"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "asin")) {
+						toks.add(new FunctionName(i, "asin"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "atan")) {
+						toks.add(new FunctionName(i, "atan"));
+						i += 3;
 					}
 					else if (nextFew(str, i, "cosh")) {
 						toks.add(new FunctionName(i, "cosh"));
@@ -425,14 +417,6 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						toks.add(new FunctionName(i, "sqrt"));
 						i += 3;
 					}
-					else if (nextFew(str, i, "exp")) {
-						toks.add(new FunctionName(i, "exp"));
-						i += 2;
-					}
-					else if (nextFew(str, i, "log")) {
-						toks.add(new FunctionName(i, "log"));
-						i += 2;
-					}
 					else if (nextFew(str, i, "rand")) {
 						toks.add(new FunctionName(i, "rand"));
 						i += 3;
@@ -441,22 +425,38 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						toks.add(new FunctionName(i, "sinc"));
 						i += 3;
 					}
-					else if (nextFew(str, i, "sinch")) {
-						toks.add(new FunctionName(i, "sinch"));
-						i += 4;
-					}
-					else if (nextFew(str, i, "sincpi")) {
-						toks.add(new FunctionName(i, "sincpi"));
-						i += 5;
-					}
-					else if (nextFew(str, i, "sinchpi")) {
-						toks.add(new FunctionName(i, "sinchpi"));
-						i += 6;
-					}
 					else if (nextFew(str, i, "zero")) {
 						U value = alg.construct();
 						toks.add(new Numeric(i, value));
 						i += 3;
+					}
+					else if (nextFew(str, i, "min")) {
+						toks.add(new Min(i));
+						i += 2;
+					}
+					else if (nextFew(str, i, "max")) {
+						toks.add(new Max(i));
+						i += 2;
+					}
+					else if (nextFew(str, i, "cos")) {
+						toks.add(new FunctionName(i, "cos"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "sin")) {
+						toks.add(new FunctionName(i, "sin"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "tan")) {
+						toks.add(new FunctionName(i, "tan"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "exp")) {
+						toks.add(new FunctionName(i, "exp"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "log")) {
+						toks.add(new FunctionName(i, "log"));
+						i += 2;
 					}
 					else {
 						result.setA("Lex err near position "+i+": unknown function name or other bad syntax");
