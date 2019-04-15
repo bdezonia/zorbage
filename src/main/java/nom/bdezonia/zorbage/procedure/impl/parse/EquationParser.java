@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
+import nom.bdezonia.zorbage.type.algebra.Constants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
@@ -118,13 +119,19 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 	}
 	
-	// i0, i1, i99, etc.
+	// $0, $1, $99, etc.
 	
 	private class Index extends Token {
+
+		private int number;
 		
-		int number() {
-			 // TODO
-			return -1;
+		Index(int start, int number) {
+			setStart(start);
+			this.number = number;
+		}
+		
+		int getNumber() {
+			return number;
 		}
 	}
 	
@@ -132,7 +139,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	
 	private class FunctionName extends Token {
 		
-		FunctionName(String name) {
+		FunctionName(int start, String name) {
 			setText(name);
 		}
 		
@@ -140,62 +147,141 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	
 	// (
 	
-	private class OpenParen extends Token {}
+	private class OpenParen extends Token {
+		
+		OpenParen(int start) {
+			setStart(start);
+		}
+	
+	}
 	
 	// )
 	
-	private class CloseParen extends Token {}
+	private class CloseParen extends Token {
+
+		CloseParen(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// +
 	
-	private class Plus extends Token {}
+	private class Plus extends Token {
+		
+		Plus(int start) {
+			setStart(start);
+		}
+		
+	}
 	
 	// -
 	
-	private class Minus extends Token {}
+	private class Minus extends Token {
+
+		Minus(int start) {
+			setStart(start);
+		}
+	
+	}
 	
 	// *
 	
-	private class Times extends Token {}
+	private class Times extends Token {
+	
+		Times(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// /
 	
-	private class Divide extends Token {}
+	private class Divide extends Token {
+	
+		Divide(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// %
 	
-	private class Mod extends Token {}
+	private class Mod extends Token {
+	
+		Mod(int start) {
+			setStart(start);
+		}
+
+	}
 
 	// ^
 	
-	private class Power extends Token {}
+	private class Power extends Token {
+		
+		Power(int start) {
+			setStart(start);
+		}
+	
+	}
 	
 	// max
 	
-	private class Max extends Token {}
+	private class Max extends Token {
+
+		Max(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// min
 	
-	private class Min extends Token {}
+	private class Min extends Token {
+		Min(int start) {
+			setStart(start);
+		}
+	}
 	
 	// tmax
 	
-	private class TypeMax extends Token {}
+	private class TypeMax extends Token {
+	
+		TypeMax(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// tmin
 	
-	private class TypeMin extends Token {}
+	private class TypeMin extends Token {
+		
+		TypeMin(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// ,
 	
-	private class Comma extends Token {}
+	private class Comma extends Token {
+		
+		Comma(int start) {
+			setStart(start);
+		}
+
+	}
 	
 	// nums, vectors, matrices, tensors all made of octonions or less
 	
 	private class Numeric extends Token {
+
+		private U value;
 		
-		Numeric(String value) {
-			setText(value);
+		Numeric(int start, U value) {
+			setStart(start);
+			this.value = value;
 		}
 		
 	}
@@ -209,9 +295,206 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		Tuple2<String,BigList<Token>> lex(T alg, String str) {
 			
 			Tuple2<String,BigList<Token>> result = new Tuple2<String, BigList<Token>>(null, null);
+			BigList<Token> toks = new BigList<Token>();
 			result.setA(null);
-			result.setB(new BigList<Token>());
+			result.setB(toks);
+			int i = 0;
+			while (i < str.length()) {
+				char ch = str.charAt(i);
+				if (Character.isWhitespace(ch))
+					;
+				else if (ch == '(')
+					toks.add(new OpenParen(i));
+				else if (ch == ')')
+					toks.add(new CloseParen(i));
+				else if (ch == '+')
+					toks.add(new Plus(i));
+				else if (ch == '-')
+					 // TODO: lookahead and decide if this is part of a number or a minus sign
+					toks.add(new Minus(i));
+				else if (ch == '*')
+					toks.add(new Times(i));
+				else if (ch == '/')
+					toks.add(new Divide(i));
+				else if (ch == '%')
+					toks.add(new Mod(i));
+				else if (ch == '^')
+					toks.add(new Power(i));
+				else if (ch == ',')
+					toks.add(new Comma(i));
+				else if (ch == '$') {
+					int num = 0;
+					int p = i+1;
+					while (p < str.length() && Character.isDigit(str.charAt(p))) {
+						num = num * 10;
+						num += (str.charAt(p) - '0');
+						p++;
+					}
+					if (p == i+1) {
+						result.setA("Lex err near position "+p+": $ sign should be followed by one or more digits");
+						return result;
+					}
+					toks.add(new Index(i, num));
+					i = p - 1;
+				}
+				else if (ch == '[') {
+					
+				}
+				else if (ch == '{') {
+					
+				}
+				else if (Character.isDigit(ch) || ch == '.') {
+					
+				}
+				else if (ch == 'E') {
+					U value = alg.construct();
+					Constants<U> a = (Constants<U>) alg;
+					a.E().call(value);
+					toks.add(new Numeric(i, value));
+				}
+				else if (ch == 'P') {
+					if (nextFew(str, i, "PI")) {
+						U value = alg.construct();
+						Constants<U> a = (Constants<U>) alg;
+						a.PI().call(value);
+						toks.add(new Numeric(i, value));
+						i += 1;
+					}
+					else {
+						result.setA("Lex err near position "+i+": P char should be followed by I");
+						return result;
+					}
+				}
+				else {
+					if (nextFew(str, i, "tmin")) {
+						U value = alg.construct();
+						Bounded<U> a = (Bounded<U>) alg;
+						a.minBound().call(value);
+						toks.add(new Numeric(i, value));
+						i += 3;
+					}
+					else if (nextFew(str, i, "tmax")) {
+						U value = alg.construct();
+						Bounded<U> a = (Bounded<U>) alg;
+						a.maxBound().call(value);
+						toks.add(new Numeric(i, value));
+						i += 3;
+					}
+					else if (nextFew(str, i, "min")) {
+						toks.add(new Min(i));
+						i += 2;
+					}
+					else if (nextFew(str, i, "max")) {
+						toks.add(new Max(i));
+						i += 2;
+					}
+					else if (nextFew(str, i, "acos")) {
+						toks.add(new FunctionName(i, "acos"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "asin")) {
+						toks.add(new FunctionName(i, "asin"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "atan")) {
+						toks.add(new FunctionName(i, "atan"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "acosh")) {
+						toks.add(new FunctionName(i, "acosh"));
+						i += 4;
+					}
+					else if (nextFew(str, i, "asinh")) {
+						toks.add(new FunctionName(i, "asinh"));
+						i += 4;
+					}
+					else if (nextFew(str, i, "atanh")) {
+						toks.add(new FunctionName(i, "atanh"));
+						i += 4;
+					}
+					else if (nextFew(str, i, "cos")) {
+						toks.add(new FunctionName(i, "cos"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "sin")) {
+						toks.add(new FunctionName(i, "sin"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "tan")) {
+						toks.add(new FunctionName(i, "tan"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "cosh")) {
+						toks.add(new FunctionName(i, "cosh"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "sinh")) {
+						toks.add(new FunctionName(i, "sinh"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "tanh")) {
+						toks.add(new FunctionName(i, "tanh"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "cbrt")) {
+						toks.add(new FunctionName(i, "cbrt"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "sqrt")) {
+						toks.add(new FunctionName(i, "sqrt"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "exp")) {
+						toks.add(new FunctionName(i, "exp"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "log")) {
+						toks.add(new FunctionName(i, "log"));
+						i += 2;
+					}
+					else if (nextFew(str, i, "rand")) {
+						toks.add(new FunctionName(i, "rand"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "sinc")) {
+						toks.add(new FunctionName(i, "sinc"));
+						i += 3;
+					}
+					else if (nextFew(str, i, "sinch")) {
+						toks.add(new FunctionName(i, "sinch"));
+						i += 4;
+					}
+					else if (nextFew(str, i, "sincpi")) {
+						toks.add(new FunctionName(i, "sincpi"));
+						i += 5;
+					}
+					else if (nextFew(str, i, "sinchpi")) {
+						toks.add(new FunctionName(i, "sinchpi"));
+						i += 6;
+					}
+					else if (nextFew(str, i, "zero")) {
+						U value = alg.construct();
+						toks.add(new Numeric(i, value));
+						i += 3;
+					}
+					else {
+						result.setA("Lex err near position "+i+": unknown function name or other bad syntax");
+						return result;
+					}
+				}
+				i++;
+			}
 			return result;
+		}
+		
+		private boolean nextFew(String str, int pos, String funcName) {
+			if (pos + funcName.length() > str.length())
+				return false;
+			for (int i = 0; i < funcName.length(); i++) {
+				if (str.charAt(pos+i) != funcName.charAt(i))
+					return false;
+			}
+			return true;
 		}
 	}
 	
@@ -357,7 +640,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	private ParseStatus atom(T algebra, BigList<Token> tokens, long pos) {
 		if (match(Index.class, tokens, pos)) {
 			Index idx = (Index) tokens.get(pos);
-			int index = idx.number();
+			int index = idx.getNumber();
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = pos + 1;
 			status.function = new VariableConstantL(algebra, index);
@@ -409,23 +692,6 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				status.function = new MaxL(algebra, status1.function, status2.function);
 			return status;
 		}
-		// TODO: relocate this as a lexing issue: generate a constant?
-		else if (match(TypeMin.class, tokens, pos) ||
-				match(TypeMax.class, tokens, pos))
-		{
-			ParseStatus status = new ParseStatus();
-			status.tokenNumber = pos+1;
-			U value = algebra.construct();
-			Bounded<U> a = (Bounded<U>) algebra;
-			if (match(TypeMin.class, tokens, pos)) {
-				a.minBound().call(value);
-			}
-			else { // TypeMax
-				a.maxBound().call(value);
-			}
-			status.function = new ConstantL(algebra, value);
-			return status;
-		}
 		else
 			return num(algebra, tokens, pos);
 	}
@@ -434,14 +700,12 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	num = number | vector | matrix | tensor of octonions
 	*/
 	private ParseStatus num(T algebra, BigList<Token> tokens, long pos) {
-		U value;
 		try {
 			// TODO: replace much of this code in lexer instead as a constant
 			Numeric tok = (Numeric) tokens.get(pos);
-			value = algebra.construct(tok.getText());
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = pos + 1;
-			status.function = new ConstantL(algebra, value);
+			status.function = new ConstantL(algebra, tok.value);
 			return status;
 		} catch (Exception e) {
 			return syntaxError(pos, tokens, "Expected something numeric.");
@@ -505,9 +769,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			if (funcName.equals("rand"))
 				return new RandL(algebra);
 		}
-		if (funcName.equals("zero"))
-			return new ZeroL(algebra);
 		
-		throw new IllegalArgumentException("unsupported function type : "+funcName+" for given algebra");
+		throw new IllegalArgumentException("Unsupported function type : "+funcName+" for given algebra");
 	}
 }
