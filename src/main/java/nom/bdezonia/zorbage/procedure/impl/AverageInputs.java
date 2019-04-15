@@ -27,36 +27,42 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.Storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Median<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
+public class AverageInputs<T extends Algebra<T,U> & Unity<U> & Addition<U> & Invertible<U>,U>
 	implements Procedure<U>
 {
 	private final T algebra;
 	
-	public Median(T algebra) {
+	public AverageInputs(T algebra) {
 		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		IndexedDataSource<U> storage = Storage.allocate(inputs.length, result);
-		for (int i = 0; i < inputs.length; i++) {
-			storage.set(i, inputs[i]);
+		if (inputs.length == 0) {
+			algebra.zero().call(result);
 		}
-		nom.bdezonia.zorbage.algorithm.Median.compute(algebra, storage, result);
+		else {
+			U count = algebra.construct();
+			U sum = algebra.construct();
+			U one = algebra.construct();
+			algebra.unity().call(one);
+			for (int i = 0; i < inputs.length; i++) {
+				algebra.add().call(count, one, count);
+				algebra.add().call(sum, inputs[i], sum);
+			}
+			algebra.divide().call(sum, count, result);
+		}
 	}
 
 }

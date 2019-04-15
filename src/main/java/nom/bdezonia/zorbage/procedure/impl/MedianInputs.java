@@ -27,35 +27,36 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.Storage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Product<T extends Algebra<T,U> & Multiplication<U> & Unity<U>,U>
+public class MedianInputs<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
 	implements Procedure<U>
 {
 	private final T algebra;
 	
-	public Product(T algebra) {
+	public MedianInputs(T algebra) {
 		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		U prod = algebra.construct();
-		if (inputs.length != 0) {
-			algebra.unity().call(prod);
-		}
+		IndexedDataSource<U> storage = Storage.allocate(inputs.length, result);
 		for (int i = 0; i < inputs.length; i++) {
-			algebra.multiply().call(prod, inputs[i], prod);
+			storage.set(i, inputs[i]);
 		}
-		algebra.assign().call(prod, result);
+		nom.bdezonia.zorbage.algorithm.Median.compute(algebra, storage, result);
 	}
 
 }

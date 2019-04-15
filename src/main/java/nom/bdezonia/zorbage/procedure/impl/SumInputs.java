@@ -35,12 +35,12 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Sum<T extends Algebra<T,U> & Addition<U>,U>
+public class SumInputs<T extends Algebra<T,U> & Addition<U>,U>
 	implements Procedure<U>
 {
 	private final T algebra;
 	
-	public Sum(T algebra) {
+	public SumInputs(T algebra) {
 		this.algebra = algebra;
 	}
 	

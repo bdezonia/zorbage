@@ -27,42 +27,36 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Average<T extends Algebra<T,U> & Unity<U> & Addition<U> & Invertible<U>,U>
+public class MaxInputs<T extends Algebra<T,U> & Ordered<U>,U>
 	implements Procedure<U>
 {
 	private final T algebra;
 	
-	public Average(T algebra) {
+	public MaxInputs(T algebra) {
 		this.algebra = algebra;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		if (inputs.length == 0) {
-			algebra.zero().call(result);
-		}
-		else {
-			U count = algebra.construct();
-			U sum = algebra.construct();
-			U one = algebra.construct();
-			algebra.unity().call(one);
-			for (int i = 0; i < inputs.length; i++) {
-				algebra.add().call(count, one, count);
-				algebra.add().call(sum, inputs[i], sum);
+		if (inputs.length == 0)
+			throw new IllegalArgumentException("no inputs given");
+		U max = algebra.construct();
+		algebra.assign().call(inputs[0], max);
+		for (int i = 1; i < inputs.length; i++) {
+			if (algebra.isGreater().call(inputs[i], max)) {
+				algebra.assign().call(inputs[i], max);
 			}
-			algebra.divide().call(sum, count, result);
 		}
+		algebra.assign().call(max, result);
 	}
 
 }
