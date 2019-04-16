@@ -290,9 +290,6 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					toks.add(new CloseParen(i));
 				else if (ch == '+')
 					toks.add(new Plus(i));
-				else if (ch == '-')
-					 // TODO: lookahead and decide if this is part of a number or a minus sign
-					toks.add(new Minus(i));
 				else if (ch == '*')
 					toks.add(new Times(i));
 				else if (ch == '/')
@@ -318,14 +315,92 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					toks.add(new Index(i, num));
 					i = p - 1;
 				}
+				// vector or a matrix or tensor
 				else if (ch == '[') {
-					
+					StringBuilder sb = new StringBuilder();
+					int level = 1;
+					int p = i+1;
+					sb.append(ch);
+					while (level > 0) {
+						if (p >= str.length()) {
+							result.setA("Lex err near position "+p+": unterminated multidim numeric type");
+							return result;
+						}
+						ch = str.charAt(p);
+						if (ch == '[') level++;
+						if (ch == ']') level--;
+						sb.append(ch);
+						p++;
+						if (level == 0)
+							break;
+					}
+					U value = alg.construct(sb.toString());
+					toks.add(new Numeric(i, value));
+					i = p - 1;
 				}
+				// a complex or quaterniom or octonion
 				else if (ch == '{') {
-					
+					StringBuilder sb = new StringBuilder();
+					int p = i+1;
+					sb.append(ch);
+					while (ch != '}') {
+						if (p >= str.length()) {
+							result.setA("Lex err near position "+p+": unterminated multidim numeric type");
+							return result;
+						}
+						ch = str.charAt(p);
+						sb.append(ch);
+						p++;
+					}
+					U value = alg.construct(sb.toString());
+					toks.add(new Numeric(i, value));
+					i = p - 1;
 				}
-				else if (Character.isDigit(ch) || ch == '.') {
-					
+				// a number or a minus sign
+				else if (ch == '-' || Character.isDigit(ch) || ch == '.') {
+					if (ch == '-') {
+						if (i+1 >= str.length()) {
+							toks.add(new Minus(i));
+						}
+						ch = str.charAt(i+1);
+						if (Character.isDigit(ch) || ch == '.') {
+							StringBuilder sb = new StringBuilder();
+							sb.append('-');
+							sb.append(ch);
+							int p = i+2;
+							while (p < str.length()) {
+								ch = str.charAt(p);
+								if (Character.isDigit(ch) || ch == '.' || ch == 'e' || ch == '-') {
+									sb.append(ch);
+								}
+								else
+									break;
+								p++;
+							}
+							U value = alg.construct(sb.toString());
+							toks.add(new Numeric(i, value));
+							i = p - 1;
+						}
+						else
+							toks.add(new Minus(i));
+					}
+					else {
+						StringBuilder sb = new StringBuilder();
+						sb.append(ch);
+						int p = i+1;
+						while (p < str.length()) {
+							ch = str.charAt(p);
+							if (Character.isDigit(ch) || ch == '.' || ch == 'e' || ch == '-') {
+								sb.append(ch);
+							}
+							else
+								break;
+							p++;
+						}
+						U value = alg.construct(sb.toString());
+						toks.add(new Numeric(i, value));
+						i = p - 1;
+					}
 				}
 				else if (ch == 'E') {
 					U value = alg.construct();
