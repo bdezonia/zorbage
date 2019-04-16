@@ -390,12 +390,14 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						int p = i+1;
 						while (p < str.length()) {
 							ch = str.charAt(p);
+							p++;
 							if (Character.isDigit(ch) || ch == '.' || ch == 'e' || ch == '-') {
 								sb.append(ch);
 							}
-							else
+							else {
+								p--;
 								break;
-							p++;
+							}
 						}
 						U value = alg.construct(sb.toString());
 						toks.add(new Numeric(i, value));
@@ -768,7 +770,6 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	*/
 	private ParseStatus num(T algebra, BigList<Token> tokens, long pos) {
 		try {
-			// TODO: replace much of this code in lexer instead as a constant
 			Numeric tok = (Numeric) tokens.get(pos);
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = pos + 1;

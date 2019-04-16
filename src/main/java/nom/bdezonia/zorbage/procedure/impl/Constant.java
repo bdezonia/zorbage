@@ -42,6 +42,7 @@ public class Constant<T extends Algebra<T,U>,U>
 	
 	public Constant(T algebra, U c) {
 		this.algebra = algebra;
+		this.c = algebra.construct();
 		algebra.assign().call(c, this.c);
 	}
 	

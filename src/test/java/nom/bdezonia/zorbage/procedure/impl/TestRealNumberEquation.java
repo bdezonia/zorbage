@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.procedure.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -49,7 +51,9 @@ public class TestRealNumberEquation {
 				new EquationParser<Float64Algebra,Float64Member>();
 		Tuple2<String, Procedure<Float64Member>> result =
 				parser.parse(G.DBL, "4.7315");
-		System.out.println("real parse result message   " + result.a());
-		System.out.println("real parse result procedure " + result.b());
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(4.7315, tmp.v(), 0.00000000000001);
 	}
 }
