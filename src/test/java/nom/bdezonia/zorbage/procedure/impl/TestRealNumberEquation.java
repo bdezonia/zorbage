@@ -95,4 +95,17 @@ public class TestRealNumberEquation {
 		result.b().call(tmp);
 		assertEquals(Math.sqrt(2)/2, tmp.v(), 0.00000000000001);
 	}
+
+	@Test
+	public void test5() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "$0+$1");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp,G.DBL.construct("7"),G.DBL.construct("9"));
+		assertEquals(16, tmp.v(), 0.00000000000001);
+	}
 }
