@@ -38,7 +38,7 @@ public class Constant<T extends Algebra<T,U>,U>
 	implements Procedure1<U>
 {
 	private final T algebra;
-	private U c;
+	private final U c;
 	
 	public Constant(T algebra, U c) {
 		this.algebra = algebra;
