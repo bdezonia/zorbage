@@ -56,4 +56,30 @@ public class TestRealNumberEquation {
 		result.b().call(tmp);
 		assertEquals(4.7315, tmp.v(), 0.00000000000001);
 	}
+
+	@Test
+	public void test2() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "1.4 + 2.6");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(4, tmp.v(), 0.00000000000001);
+	}
+
+	@Test
+	public void test3() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "1.4 - 2.6");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(-1.2, tmp.v(), 0.00000000000001);
+	}
 }
