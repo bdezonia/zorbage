@@ -82,4 +82,17 @@ public class TestRealNumberEquation {
 		result.b().call(tmp);
 		assertEquals(-1.2, tmp.v(), 0.00000000000001);
 	}
+
+	@Test
+	public void test4() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "sin(PI/4)");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(Math.sqrt(2)/2, tmp.v(), 0.00000000000001);
+	}
 }
