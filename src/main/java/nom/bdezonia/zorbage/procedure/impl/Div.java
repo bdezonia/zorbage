@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.IntegralDivision;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
 
 /**
  * 
