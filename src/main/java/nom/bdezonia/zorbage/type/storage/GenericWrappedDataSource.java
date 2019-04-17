@@ -33,35 +33,30 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class GenericWrappedDataSource<K extends Algebra<K,L>,L> implements IndexedDataSource<L> {
+public class GenericWrappedDataSource<T extends Algebra<T,U>,U> implements IndexedDataSource<U> {
 
-	private K algebra;
-	private L[] data;
+	private final T algebra;
+	private final U[] data;
 	
-	public GenericWrappedDataSource(K algebra, L[] data) {
+	public GenericWrappedDataSource(T algebra, U[] data) {
 		this.algebra = algebra;
 		this.data = data;
 	}
 	
 	@Override
-	public IndexedDataSource<L> duplicate() {
-		L[] out = data.clone();
-		for (int i = 0; i < out.length; i++) {
-			out[i] = algebra.construct();
-			algebra.assign().call(data[i], out[i]);
-		}
-		return new GenericWrappedDataSource<K,L>(algebra, out);
+	public IndexedDataSource<U> duplicate() {
+		return new GenericWrappedDataSource<T,U>(algebra, data);
 	}
 
 	@Override
-	public void set(long index, L value) {
+	public void set(long index, U value) {
 		if (index < 0 || index >= data.length)
 			throw new IllegalArgumentException("index oob");
 		algebra.assign().call(value, data[(int) index]);
 	}
 
 	@Override
-	public void get(long index, L value) {
+	public void get(long index, U value) {
 		if (index < 0 || index >= data.length)
 			throw new IllegalArgumentException("index oob");
 		algebra.assign().call(data[(int) index], value);
