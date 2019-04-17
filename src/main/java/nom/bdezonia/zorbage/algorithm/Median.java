@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
@@ -48,7 +49,7 @@ public class Median {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Ordered<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Ordered<U> & Unity<U>, U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U numer = alg.construct();
