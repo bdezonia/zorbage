@@ -92,7 +92,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		else {
 			Tuple2<String,Procedure<U>> tuple = new Tuple2<String,Procedure<U>>(null, null);
 			tuple.setA(lexResult.a());
-			tuple.setB(new ZeroL(algebra));
+			tuple.setB(new ZeroL<T,U>(algebra));
 			return tuple;
 		}
 	}
@@ -284,22 +284,30 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				char ch = str.charAt(i);
 				if (Character.isWhitespace(ch))
 					;
+				// a open parenthesis
 				else if (ch == '(')
 					toks.add(new OpenParen(i));
+				// a close parenthesis
 				else if (ch == ')')
 					toks.add(new CloseParen(i));
 				else if (ch == '+')
 					toks.add(new Plus(i));
+				// a multiply operator
 				else if (ch == '*')
 					toks.add(new Times(i));
+				// a div/ide operator
 				else if (ch == '/')
 					toks.add(new Divide(i));
+				// a mod operator
 				else if (ch == '%')
 					toks.add(new Mod(i));
+				// a exponentiation operator
 				else if (ch == '^')
 					toks.add(new Power(i));
+				// a comma
 				else if (ch == ',')
 					toks.add(new Comma(i));
+				// an index variable reference
 				else if (ch == '$') {
 					int num = 0;
 					int p = i+1;
@@ -406,6 +414,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				}
 				else if (ch == 'E') {
 					U value = alg.construct();
+					if (!(alg instanceof Constants<?>)) {
+						result.setA("Lex err near position "+i+": E not defined for given algebra");
+						return result;
+					}
+					@SuppressWarnings("unchecked")
 					Constants<U> a = (Constants<U>) alg;
 					a.E().call(value);
 					toks.add(new Numeric(i, value));
@@ -413,6 +426,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else if (ch == 'P') {
 					if (nextFew(str, i, "PI")) {
 						U value = alg.construct();
+						if (!(alg instanceof Constants<?>)) {
+							result.setA("Lex err near position "+i+": PI not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
 						Constants<U> a = (Constants<U>) alg;
 						a.PI().call(value);
 						toks.add(new Numeric(i, value));
@@ -423,6 +441,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						return result;
 					}
 				}
+				// treat everything else as a function call
 				else {
 					if (nextFew(str, i, "sinchpi")) {
 						toks.add(new FunctionName(i, "sinchpi"));
@@ -450,6 +469,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else if (nextFew(str, i, "tmin")) {
 						U value = alg.construct();
+						if (!(alg instanceof Bounded<?>)) {
+							result.setA("Lex err near position "+i+": tmin not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
 						Bounded<U> a = (Bounded<U>) alg;
 						a.minBound().call(value);
 						toks.add(new Numeric(i, value));
@@ -457,6 +481,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else if (nextFew(str, i, "tmax")) {
 						U value = alg.construct();
+						if (!(alg instanceof Bounded<?>)) {
+							result.setA("Lex err near position "+i+": tmax not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
 						Bounded<U> a = (Bounded<U>) alg;
 						a.maxBound().call(value);
 						toks.add(new Numeric(i, value));
@@ -605,6 +634,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	 term “+” equation |
 	 term “-” equation
 	*/
+	@SuppressWarnings({"unchecked","rawtypes"})
 	public ParseStatus equation(T algebra, BigList<Token> tokens, long pos) {
 		ParseStatus status1 = term(algebra, tokens, pos);
 		if (status1.errMsg != null) return status1;
@@ -629,6 +659,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	 factor “\” term |
 	 factor “%” term
 	*/
+	@SuppressWarnings({"unchecked","rawtypes"})
 	private ParseStatus term(T algebra, BigList<Token> tokens, long pos) {
 		ParseStatus status1 = factor(algebra, tokens, pos);
 		if (status1.errMsg != null) return status1;
@@ -656,6 +687,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	 signedAtom |
 	 signedAtom “^” factor
 	*/
+	@SuppressWarnings({"unchecked","rawtypes"})
 	private ParseStatus factor(T algebra, BigList<Token> tokens, long pos) {
 		ParseStatus status1 = signedAtom(algebra, tokens, pos);
 		if (status1.errMsg != null) return status1;
@@ -674,6 +706,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	  "+" atom |
 	  "-" atom
 	*/
+	@SuppressWarnings({"unchecked","rawtypes"})
 	private ParseStatus signedAtom(T algebra, BigList<Token> tokens, long pos) {
 		if (match(Plus.class, tokens, pos)) {
 			return atom(algebra, tokens, pos+1);
@@ -695,6 +728,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	 num |
 	 “(“ equation “)” 
 	*/
+	@SuppressWarnings({"unchecked","rawtypes"})
 	private ParseStatus atom(T algebra, BigList<Token> tokens, long pos) {
 		if (match(Index.class, tokens, pos)) {
 			Index idx = (Index) tokens.get(pos);
@@ -768,6 +802,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	/*
 	num = number | vector | matrix | tensor of octonions
 	*/
+	@SuppressWarnings({"unchecked","rawtypes"})
 	private ParseStatus num(T algebra, BigList<Token> tokens, long pos) {
 		try {
 			Numeric tok = (Numeric) tokens.get(pos);
@@ -780,6 +815,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 	}
 
+	@SuppressWarnings({"unchecked","rawtypes"})
 	private Procedure<U> createFunction(T algebra, String funcName, Procedure<U> ancestor1) {
 		if (algebra instanceof InverseTrigonometric<?>) {
 			if (funcName.equals("acos"))
