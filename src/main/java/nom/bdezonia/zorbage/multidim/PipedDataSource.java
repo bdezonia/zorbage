@@ -39,11 +39,11 @@ import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
  */
 public class PipedDataSource<U> implements IndexedDataSource<U> {
 
-	private MultiDimDataSource<?,U> d;
-	private int dim;
-	private long[] parentDims;
-	private long[] coords;
-	private IndexedDataSource<U> data;
+	private final MultiDimDataSource<?,U> d;
+	private final int dim;
+	private final long[] parentDims;
+	private final long[] coords;
+	private final IndexedDataSource<U> data;
 	
 	/**
 	 * 

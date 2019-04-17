@@ -46,9 +46,9 @@ import nom.bdezonia.zorbage.type.storage.RawData;
 public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned, RawData<U>
 {
-	private List<Function1<BigDecimal,Long>> axes;
-	private IndexedDataSource<U> data;
-	private long[] dims;
+	private final List<Function1<BigDecimal,Long>> axes;
+	private final IndexedDataSource<U> data;
+	private final long[] dims;
 	
 	/**
 	 * 
