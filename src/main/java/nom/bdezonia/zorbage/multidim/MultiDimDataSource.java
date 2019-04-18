@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +34,7 @@ import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.RawData;
 
@@ -46,7 +46,7 @@ import nom.bdezonia.zorbage.type.storage.RawData;
 public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned, RawData<U>
 {
-	private final List<Function1<BigDecimal,Long>> axes;
+	private final List<Function1<HighPrecisionMember,Long>> axes;
 	private final IndexedDataSource<U> data;
 	private final long[] dims;
 	
@@ -62,7 +62,7 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
 		this.dims = dims;
 		this.data = data;
-		this.axes = new ArrayList<Function1<BigDecimal,Long>>();
+		this.axes = new ArrayList<Function1<HighPrecisionMember,Long>>();
 		for (int i = 0; i < dims.length; i++)
 			this.axes.add(new IdentityAxis());
 	}
@@ -88,11 +88,11 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 		return data.size();
 	}
 
-	public Function1<BigDecimal,Long> getAxis(int i) {
+	public Function1<HighPrecisionMember,Long> getAxis(int i) {
 		return this.axes.get(i);
 	}
 	
-	public void setAxis(int i, Function1<BigDecimal,Long> func) {
+	public void setAxis(int i, Function1<HighPrecisionMember,Long> func) {
 		this.axes.set(i, func);
 	}
 	

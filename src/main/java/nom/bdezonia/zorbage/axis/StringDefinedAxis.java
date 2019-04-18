@@ -28,7 +28,13 @@ package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.procedure.impl.ZeroL;
+import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
+import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 
 /**
@@ -36,11 +42,23 @@ import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class IdentityAxis implements Function1<HighPrecisionMember, Long> {
-
+public class StringDefinedAxis implements Function1<HighPrecisionMember, Long>
+{
+	private final Procedure<HighPrecisionMember> def;
+	
+	public StringDefinedAxis(String eqn) {
+		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.BIGDEC, eqn);
+		if (parseResult.a() == null)
+			def = parseResult.b();
+		else
+			def = new ZeroL<HighPrecisionAlgebra,HighPrecisionMember>(G.BIGDEC);
+	}
+	
 	@Override
-	public HighPrecisionMember call(Long in) {
-		return new HighPrecisionMember(BigDecimal.valueOf(in));
+	public HighPrecisionMember call(Long b) {
+		HighPrecisionMember t = new HighPrecisionMember(BigDecimal.valueOf(b));
+		def.call(t, t);
+		return t;
 	}
 
 }

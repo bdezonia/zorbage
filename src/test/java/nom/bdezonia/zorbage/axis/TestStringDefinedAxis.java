@@ -26,9 +26,12 @@
  */
 package nom.bdezonia.zorbage.axis;
 
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.function.Function1;
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 
 /**
@@ -36,11 +39,22 @@ import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class IdentityAxis implements Function1<HighPrecisionMember, Long> {
+public class TestStringDefinedAxis {
 
-	@Override
-	public HighPrecisionMember call(Long in) {
-		return new HighPrecisionMember(BigDecimal.valueOf(in));
+	@Test
+	public void test() {
+		
+		StringDefinedAxis axis = new StringDefinedAxis("4 * $0 + 13");
+		
+		HighPrecisionMember result;
+		
+		result = axis.call(0L);
+		assertTrue(BigDecimal.valueOf(13).equals(result.v()));
+		
+		result = axis.call(1L);
+		assertTrue(BigDecimal.valueOf(17).equals(result.v()));
+		
+		result = axis.call(2L);
+		assertTrue(BigDecimal.valueOf(21).equals(result.v()));
 	}
-
 }

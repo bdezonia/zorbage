@@ -26,12 +26,11 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
-import java.math.BigDecimal;
-
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.RawData;
 
@@ -85,11 +84,11 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		return md.numElements();
 	}
 
-	public Function1<BigDecimal,Long> getAxis(int i) {
+	public Function1<HighPrecisionMember,Long> getAxis(int i) {
 		return md.getAxis(i);
 	}
 	
-	public void setAxis(int i, Function1<BigDecimal,Long> func) {
+	public void setAxis(int i, Function1<HighPrecisionMember,Long> func) {
 		md.setAxis(i, func);
 	}
 	
