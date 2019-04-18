@@ -85,6 +85,7 @@ What can I do with Zorbage?
     
   Define complex data sampling algorithms from prebuilt sampling components.
   
-  Use typesafe first class Function and Procedure objects. Pass them as
+  Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
   
+  Parse and use equations made from any of the types
