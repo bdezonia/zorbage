@@ -395,16 +395,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 								break;
 							}
 						}
-						else if (ch == '+') {
-							if (sb.toString().indexOf('e') > -1 && sb.toString().indexOf('+') == -1)
-								sb.append(ch);
-							else {
-								p--;
-								break;
-							}
-						}
-						else if (ch == '-') {
-							if (sb.toString().indexOf('e') > -1 && sb.toString().indexOf('-') == -1)
+						else if (ch == '+' || ch == '-') {
+							int epos = sb.toString().indexOf('e');
+							String tmp = sb.toString();
+							if (epos > -1 && tmp.charAt(tmp.length()-1) == 'e')
 								sb.append(ch);
 							else {
 								p--;
