@@ -46,7 +46,9 @@ import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
+import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
+import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
@@ -71,7 +73,9 @@ public class HighPrecisionAlgebra
     Trigonometric<HighPrecisionMember>,
     Hyperbolic<HighPrecisionMember>,
     InverseTrigonometric<HighPrecisionMember>,
-    InverseHyperbolic<HighPrecisionMember>
+    InverseHyperbolic<HighPrecisionMember>,
+    Roots<HighPrecisionMember>,
+    Power<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(35, RoundingMode.HALF_EVEN);
 	
@@ -637,14 +641,14 @@ public class HighPrecisionAlgebra
 	}
 
 	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> SINHANDCOSH =
-			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>() {
-				
-				@Override
-				public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-					sinh().call(a, b);
-					cosh().call(a, c);
-				}
-			};
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+			sinh().call(a, b);
+			cosh().call(a, c);
+		}
+	};
 
 	@Override
 	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> sinhAndCosh() {
@@ -708,14 +712,14 @@ public class HighPrecisionAlgebra
 	}
 
 	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> SINANDCOS =
-			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>() {
-				
-				@Override
-				public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-					sin().call(a, b);
-					cos().call(a, c);
-				}
-			};
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+			sin().call(a, b);
+			cos().call(a, c);
+		}
+	};
 
 	@Override
 	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> sinAndCos() {
@@ -792,6 +796,48 @@ public class HighPrecisionAlgebra
 	@Override
 	public Procedure2<HighPrecisionMember, HighPrecisionMember> sincpi() {
 		return SINCPI;
+	}
+
+	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> POW =
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+			c.setV(BigDecimalMath.pow(a.v(), b.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> pow() {
+		return POW;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SQRT =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.sqrt(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sqrt() {
+		return SQRT;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> CBRT =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.root(a.v(), BigDecimal.valueOf(3), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> cbrt() {
+		return CBRT;
 	}
 
 }
