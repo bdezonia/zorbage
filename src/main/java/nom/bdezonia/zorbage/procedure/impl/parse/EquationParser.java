@@ -290,8 +290,12 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				// a close parenthesis
 				else if (ch == ')')
 					toks.add(new CloseParen(i));
+				// an addition operator
 				else if (ch == '+')
 					toks.add(new Plus(i));
+				// a subtraction operator
+				else if (ch == '-')
+					toks.add(new Minus(i));
 				// a multiply operator
 				else if (ch == '*')
 					toks.add(new Times(i));
@@ -364,53 +368,57 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					toks.add(new Numeric(i, value));
 					i = p - 1;
 				}
-				// a number or a minus sign
-				else if (ch == '-' || Character.isDigit(ch) || ch == '.') {
-					if (ch == '-') {
-						if (i+1 >= str.length()) {
-							toks.add(new Minus(i));
-						}
-						ch = str.charAt(i+1);
-						if (Character.isDigit(ch) || ch == '.') {
-							StringBuilder sb = new StringBuilder();
-							sb.append('-');
+				// a number
+				else if (Character.isDigit(ch) || ch == '.') {
+					StringBuilder sb = new StringBuilder();
+					sb.append(ch);
+					int p = i+1;
+					while (p < str.length()) {
+						ch = str.charAt(p);
+						p++;
+						if (Character.isDigit(ch)) {
 							sb.append(ch);
-							int p = i+2;
-							while (p < str.length()) {
-								ch = str.charAt(p);
-								if (Character.isDigit(ch) || ch == '.' || ch == 'e' || ch == '-') {
-									sb.append(ch);
-								}
-								else
-									break;
-								p++;
-							}
-							U value = alg.construct(sb.toString());
-							toks.add(new Numeric(i, value));
-							i = p - 1;
 						}
-						else
-							toks.add(new Minus(i));
-					}
-					else {
-						StringBuilder sb = new StringBuilder();
-						sb.append(ch);
-						int p = i+1;
-						while (p < str.length()) {
-							ch = str.charAt(p);
-							p++;
-							if (Character.isDigit(ch) || ch == '.' || ch == 'e' || ch == '-') {
+						else if (ch == '.') {
+							if (sb.toString().indexOf('.') == -1)
 								sb.append(ch);
-							}
 							else {
 								p--;
 								break;
 							}
 						}
-						U value = alg.construct(sb.toString());
-						toks.add(new Numeric(i, value));
-						i = p - 1;
+						else if (ch == 'e') {
+							if (sb.toString().indexOf('e') == -1)
+								sb.append(ch);
+							else {
+								p--;
+								break;
+							}
+						}
+						else if (ch == '+') {
+							if (sb.toString().indexOf('e') > -1 && sb.toString().indexOf('+') == -1)
+								sb.append(ch);
+							else {
+								p--;
+								break;
+							}
+						}
+						else if (ch == '-') {
+							if (sb.toString().indexOf('e') > -1 && sb.toString().indexOf('-') == -1)
+								sb.append(ch);
+							else {
+								p--;
+								break;
+							}
+						}
+						else {
+							p--;
+							break;
+						}
 					}
+					U value = alg.construct(sb.toString());
+					toks.add(new Numeric(i, value));
+					i = p - 1;
 				}
 				else if (ch == 'E') {
 					U value = alg.construct();

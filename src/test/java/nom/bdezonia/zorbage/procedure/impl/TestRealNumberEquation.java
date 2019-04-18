@@ -76,7 +76,7 @@ public class TestRealNumberEquation {
 		EquationParser<Float64Algebra,Float64Member> parser =
 				new EquationParser<Float64Algebra,Float64Member>();
 		Tuple2<String, Procedure<Float64Member>> result =
-				parser.parse(G.DBL, "1.4 - 2.6");
+				parser.parse(G.DBL, "1.4-2.6");
 		assertEquals(null, result.a());
 		Float64Member tmp = G.DBL.construct();
 		result.b().call(tmp);
