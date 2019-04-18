@@ -121,4 +121,43 @@ public class TestRealNumberEquation {
 		result.b().call(tmp);
 		assertEquals(120-1.1, tmp.v(), 0.00000000000001);
 	}
+
+	@Test
+	public void test7() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "1--4");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(5, tmp.v(), 0.00000000000001);
+	}
+
+	@Test
+	public void test8() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "1-+4");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(-3, tmp.v(), 0.00000000000001);
+	}
+
+	@Test
+	public void test9() {
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+				new EquationParser<Float64Algebra,Float64Member>();
+		Tuple2<String, Procedure<Float64Member>> result =
+				parser.parse(G.DBL, "5-+1.4e-03");
+		assertEquals(null, result.a());
+		Float64Member tmp = G.DBL.construct();
+		result.b().call(tmp);
+		assertEquals(5-0.0014, tmp.v(), 0.00000000000001);
+	}
 }
