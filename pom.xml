@@ -71,6 +71,11 @@
       <artifactId>jafama</artifactId>
       <version>2.3.1</version>
     </dependency>
+    <dependency>
+      <groupId>ch.obermuhlner</groupId>
+      <artifactId>big-math</artifactId>
+      <version>2.1.0</version>
+    </dependency>
   </dependencies>
 
   <build>

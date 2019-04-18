@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
@@ -40,12 +41,16 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
+import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
@@ -62,7 +67,11 @@ public class HighPrecisionAlgebra
     Conjugate<HighPrecisionMember>,
     Scale<HighPrecisionMember,HighPrecisionMember>,
     ScaleByHighPrec<HighPrecisionMember>,
-    ScaleByRational<HighPrecisionMember>
+    ScaleByRational<HighPrecisionMember>,
+    Trigonometric<HighPrecisionMember>,
+    Hyperbolic<HighPrecisionMember>,
+    InverseTrigonometric<HighPrecisionMember>,
+    InverseHyperbolic<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(35, RoundingMode.HALF_EVEN);
 	
@@ -513,6 +522,276 @@ public class HighPrecisionAlgebra
 	@Override
 	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> scaleByHighPrec() {
 		return MUL;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ASINH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.asinh(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> asinh() {
+		return ASINH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ACOSH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.acosh(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> acosh() {
+		return ACOSH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ATANH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.atanh(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> atanh() {
+		return ATANH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ASIN =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.asin(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> asin() {
+		return ASIN;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ACOS =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.acos(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> acos() {
+		return ACOS;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ATAN =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.atan(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> atan() {
+		return ATAN;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SINH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.sinh(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sinh() {
+		return SINH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> COSH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.cosh(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> cosh() {
+		return COSH;
+	}
+
+	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> SINHANDCOSH =
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>() {
+				
+				@Override
+				public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+					sinh().call(a, b);
+					cosh().call(a, c);
+				}
+			};
+
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> sinhAndCosh() {
+		return SINHANDCOSH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> TANH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.tanh(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> tanh() {
+		return TANH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SIN =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.sin(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sin() {
+		return SIN;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> COS =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.cos(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> cos() {
+		return COS;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> TAN =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.tan(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> tan() {
+		return TAN;
+	}
+
+	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> SINANDCOS =
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>() {
+				
+				@Override
+				public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+					sin().call(a, b);
+					cos().call(a, c);
+				}
+			};
+
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> sinAndCos() {
+		return SINANDCOS;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SINCH =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			if (a.v().signum() == 0)
+				b.setV(BigDecimal.ONE);
+			else
+				b.setV(BigDecimalMath.sinh(a.v(), CONTEXT).divide(a.v()));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sinch() {
+		return SINCH;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SINCHPI =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			if (a.v().signum() == 0)
+				b.setV(BigDecimal.ONE);
+			else {
+				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT));
+				b.setV(BigDecimalMath.sinh(term, CONTEXT).divide(term));
+			}
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sinchpi() {
+		return SINCHPI;
+	}
+	
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SINC =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			if (a.v().signum() == 0)
+				b.setV(BigDecimal.ONE);
+			else
+				b.setV(BigDecimalMath.sin(a.v(), CONTEXT).divide(a.v()));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sinc() {
+		return SINC;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SINCPI =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			if (a.v().signum() == 0)
+				b.setV(BigDecimal.ONE);
+			else {
+				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT));
+				b.setV(BigDecimalMath.sin(term, CONTEXT).divide(term));
+			}
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> sincpi() {
+		return SINCPI;
 	}
 
 }
