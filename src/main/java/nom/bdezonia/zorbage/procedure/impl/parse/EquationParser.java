@@ -99,8 +99,8 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	
 	private class Token {
 
-		String text;
-		int start;
+		private String text;
+		private int start;
 		
 		void setText(String text) {
 			this.text = text;
