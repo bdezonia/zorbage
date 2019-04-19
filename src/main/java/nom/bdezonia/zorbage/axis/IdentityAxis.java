@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 
 /**
@@ -36,11 +36,11 @@ import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class IdentityAxis implements Function1<HighPrecisionMember, Long> {
+public class IdentityAxis implements Procedure2<Long,HighPrecisionMember> {
 
 	@Override
-	public HighPrecisionMember call(Long in) {
-		return new HighPrecisionMember(BigDecimal.valueOf(in));
+	public void call(Long in, HighPrecisionMember out) {
+		out.setV(BigDecimal.valueOf(in));
 	}
 
 }

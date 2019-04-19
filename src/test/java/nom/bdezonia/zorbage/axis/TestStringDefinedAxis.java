@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
 
 /**
@@ -46,15 +47,15 @@ public class TestStringDefinedAxis {
 		
 		StringDefinedAxis axis = new StringDefinedAxis("4 * $0 + 13");
 		
-		HighPrecisionMember result;
+		HighPrecisionMember result = G.BIGDEC.construct();
 		
-		result = axis.call(0L);
+		axis.call(0L, result);
 		assertTrue(BigDecimal.valueOf(13).equals(result.v()));
 		
-		result = axis.call(1L);
+		axis.call(1L, result);
 		assertTrue(BigDecimal.valueOf(17).equals(result.v()));
 		
-		result = axis.call(2L);
+		axis.call(2L, result);
 		assertTrue(BigDecimal.valueOf(21).equals(result.v()));
 	}
 }

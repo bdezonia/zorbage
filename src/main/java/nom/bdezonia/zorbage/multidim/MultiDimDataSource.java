@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.axis.IdentityAxis;
-import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.misc.LongUtils;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
@@ -46,7 +46,7 @@ import nom.bdezonia.zorbage.type.storage.RawData;
 public class MultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned, RawData<U>
 {
-	private final List<Function1<HighPrecisionMember,Long>> axes;
+	private final List<Procedure2<Long,HighPrecisionMember>> axes;
 	private final IndexedDataSource<U> data;
 	private final long[] dims;
 	
@@ -62,7 +62,7 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
 		this.dims = dims;
 		this.data = data;
-		this.axes = new ArrayList<Function1<HighPrecisionMember,Long>>();
+		this.axes = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
 		for (int i = 0; i < dims.length; i++)
 			this.axes.add(new IdentityAxis());
 	}
@@ -88,12 +88,12 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 		return data.size();
 	}
 
-	public Function1<HighPrecisionMember,Long> getAxis(int i) {
+	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
 		return this.axes.get(i);
 	}
 	
-	public void setAxis(int i, Function1<HighPrecisionMember,Long> func) {
-		this.axes.set(i, func);
+	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
+		this.axes.set(i, proc);
 	}
 	
 	public IndexedDataSource<U> piped(int dim, long[] coord) {

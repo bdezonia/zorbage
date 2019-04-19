@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
-import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
@@ -84,11 +83,11 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		return md.numElements();
 	}
 
-	public Function1<HighPrecisionMember,Long> getAxis(int i) {
+	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
 		return md.getAxis(i);
 	}
 	
-	public void setAxis(int i, Function1<HighPrecisionMember,Long> func) {
+	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> func) {
 		md.setAxis(i, func);
 	}
 	
