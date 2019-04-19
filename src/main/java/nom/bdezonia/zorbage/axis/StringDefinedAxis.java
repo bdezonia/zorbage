@@ -44,20 +44,25 @@ import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
  */
 public class StringDefinedAxis implements Procedure2<Long,HighPrecisionMember>
 {
-	private final Procedure<HighPrecisionMember> def;
+	private final Procedure<HighPrecisionMember> parsedAxisProc;
 	
 	public StringDefinedAxis(String eqn) {
 		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.BIGDEC, eqn);
 		if (parseResult.a() == null)
-			def = parseResult.b();
+			parsedAxisProc = parseResult.b();
 		else
-			def = new ZeroL<HighPrecisionAlgebra,HighPrecisionMember>(G.BIGDEC);
+			parsedAxisProc = new ZeroL<HighPrecisionAlgebra,HighPrecisionMember>(G.BIGDEC);
 	}
 	
 	@Override
 	public void call(Long in, HighPrecisionMember out) {
+		
+		// set input value for axis transformation
 		out.setV(BigDecimal.valueOf(in));
-		def.call(out, out);
+		
+		// left side out set to axis transformation of right side out
+		parsedAxisProc.call(out, out);
+
 	}
 
 }
