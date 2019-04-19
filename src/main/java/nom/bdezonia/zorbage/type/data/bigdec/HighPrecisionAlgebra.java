@@ -78,6 +78,7 @@ public class HighPrecisionAlgebra
     Power<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(35, RoundingMode.HALF_EVEN);
+	private static final BigDecimal THREE = BigDecimal.valueOf(3);
 	
 	public static void setPrecision(int decimalPlaces) {
 		if (decimalPlaces < 1)
@@ -831,7 +832,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b) {
-			b.setV(BigDecimalMath.root(a.v(), BigDecimal.valueOf(3), CONTEXT));
+			b.setV(BigDecimalMath.root(a.v(), THREE, CONTEXT));
 		}
 	};
 
