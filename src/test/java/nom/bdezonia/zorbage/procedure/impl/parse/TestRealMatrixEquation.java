@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl;
+package nom.bdezonia.zorbage.procedure.impl.parse;
 
 import static org.junit.Assert.assertEquals;
 
