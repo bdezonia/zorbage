@@ -160,4 +160,19 @@ public class TestRealNumberEquation {
 		result.b().call(tmp);
 		assertEquals(5-0.0014, tmp.v(), 0.00000000000001);
 	}
+
+	/* TODO BROKEN
+	@Test
+	public void test10() {
+		
+		EquationParser<SignedInt16Algebra,SignedInt16Member> parser =
+				new EquationParser<SignedInt16Algebra,SignedInt16Member>();
+		Tuple2<String, Procedure<SignedInt16Member>> result =
+				parser.parse(G.INT16, "-32768");
+		assertEquals(null, result.a());
+		SignedInt16Member tmp = G.INT16.construct();
+		result.b().call(tmp);
+		assertEquals(-32768, tmp.v());
+	}
+	*/
 }
