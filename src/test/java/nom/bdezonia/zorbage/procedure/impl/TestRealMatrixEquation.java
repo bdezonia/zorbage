@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.procedure.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -34,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -49,7 +52,27 @@ public class TestRealMatrixEquation {
 				new EquationParser<Float64Matrix,Float64MatrixMember>();
 		Tuple2<String, Procedure<Float64MatrixMember>> result =
 				parser.parse(G.DBL_MAT, "[[1,2],[3,4]]");
-		System.out.println("matrix parse result message   " + result.a());
-		System.out.println("matrix parse result procedure " + result.b());
+		assertEquals(null, result.a());
+		
+		Float64MatrixMember mat = G.DBL_MAT.construct();
+		result.b().call(mat);
+		
+		assertEquals(2, mat.numDimensions());
+		assertEquals(2, mat.dimension(0));
+		assertEquals(2, mat.dimension(1));
+
+		Float64Member tmp = G.DBL.construct();
+		
+		mat.v(0, 0, tmp);
+		assertEquals(1, tmp.v(), 0);
+		
+		mat.v(0, 1, tmp);
+		assertEquals(2, tmp.v(), 0);
+		
+		mat.v(1, 0, tmp);
+		assertEquals(3, tmp.v(), 0);
+		
+		mat.v(1, 1, tmp);
+		assertEquals(4, tmp.v(), 0);
 	}
 }
