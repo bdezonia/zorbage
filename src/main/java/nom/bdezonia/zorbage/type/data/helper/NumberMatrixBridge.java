@@ -38,13 +38,13 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class NumberMatrixBridge<U> implements MatrixMember<U> {
 
-	private final Algebra<?,U> Algebra;
+	private final Algebra<?,U> algebra;
 	private final U zero;
 	private NumberMember<U> num;
 	
-	public NumberMatrixBridge(Algebra<?,U> Algebra, NumberMember<U> num) {
-		this.Algebra = Algebra;
-		this.zero = Algebra.construct();
+	public NumberMatrixBridge(Algebra<?,U> algebra, NumberMember<U> num) {
+		this.algebra = algebra;
+		this.zero = algebra.construct();
 		this.num = num;
 	}
 	
@@ -98,14 +98,14 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 		if (r == 0 && c == 0)
 			num.v(value);
 		else
-			Algebra.assign().call(zero, value);
+			algebra.assign().call(zero, value);
 	}
 
 	@Override
 	public void setV(long r, long c, U value) {
 		if (r == 0 && c == 0)
 			num.setV(value);
-		else if (Algebra.isNotEqual().call(zero, value))
+		else if (algebra.isNotEqual().call(zero, value))
 			throw new IllegalArgumentException("out of bounds nonzero write");
 	}
 

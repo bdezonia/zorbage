@@ -41,8 +41,8 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	private final MatrixMember<U> mat;
 	private long startRow, countRows, startCol, countCols;
 	
-	public SubMatrixBridge(Algebra<?,U> Algebra, MatrixMember<U> mat) {
-		this.zero = Algebra.construct();
+	public SubMatrixBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
+		this.zero = algebra.construct();
 		this.mat = mat;
 		this.startRow = 0;
 		this.startCol = 0;

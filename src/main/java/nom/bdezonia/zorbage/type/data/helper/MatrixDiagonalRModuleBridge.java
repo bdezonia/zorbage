@@ -45,8 +45,8 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 	private Origin origin;
 	private long diagNumber;
 	
-	public MatrixDiagonalRModuleBridge(Algebra<?,U> Algebra, MatrixMember<U> mat) {
-		this.zero = Algebra.construct();
+	public MatrixDiagonalRModuleBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
+		this.zero = algebra.construct();
 		this.mat = mat;
 		this.origin = Origin.UpperLeft;
 		this.diagNumber = 0;

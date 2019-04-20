@@ -42,8 +42,8 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 	private final MatrixMember<U> mat;
 	private long row;
 	
-	public MatrixRowRModuleBridge(Algebra<?,U> Algebra, MatrixMember<U> mat) {
-		this.zero = Algebra.construct();
+	public MatrixRowRModuleBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
+		this.zero = algebra.construct();
 		this.mat = mat;
 		this.row = 0;
 	}

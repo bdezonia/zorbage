@@ -49,7 +49,7 @@ public class TestKMeans {
 		
 		int NUMELEMS = 100;
 		
-		PointAlgebra Algebra = new PointAlgebra();
+		PointAlgebra algebra = new PointAlgebra();
 
 		Point point = new Point(2); // we will work in 2 dimensions
 		
@@ -63,10 +63,10 @@ public class TestKMeans {
 
 		for (int i = 0; i < NUMELEMS; i++) {
 			points.get(i, point);
-			Algebra.random().call(point);
+			algebra.random().call(point);
 		}
 		
-		KMeans.compute(Algebra, numClusters, points, clusterIndices);
+		KMeans.compute(algebra, numClusters, points, clusterIndices);
 		
 		assertTrue(true);
 	}

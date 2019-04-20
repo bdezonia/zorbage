@@ -49,7 +49,7 @@ public class FFT {
 	 * @param b
 	 */
 	public static
-		void compute(ComplexFloat64Algebra Algebra, IndexedDataSource<ComplexFloat64Member> a, IndexedDataSource<ComplexFloat64Member> b)
+		void compute(ComplexFloat64Algebra algebra, IndexedDataSource<ComplexFloat64Member> a, IndexedDataSource<ComplexFloat64Member> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -58,8 +58,8 @@ public class FFT {
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
-		ComplexFloat64Member tmp1 = Algebra.construct();
-		ComplexFloat64Member tmp2 = Algebra.construct();
+		ComplexFloat64Member tmp1 = algebra.construct();
+		ComplexFloat64Member tmp2 = algebra.construct();
 
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
@@ -77,8 +77,8 @@ public class FFT {
 			}
 		}
 
-		ComplexFloat64Member w = Algebra.construct();
-		ComplexFloat64Member tao = Algebra.construct();
+		ComplexFloat64Member w = algebra.construct();
+		ComplexFloat64Member tao = algebra.construct();
 
 		// butterfly updates
 		for (long L = 2; L <= aSize; L = L+L) {
@@ -88,11 +88,11 @@ public class FFT {
 				w.setI(FastMath.sin(kth));
 				for (long j = 0; j < aSize/L; j++) {
 					b.get(j*L + k + L/2, tmp1);
-					Algebra.multiply().call(w, tmp1, tao);
+					algebra.multiply().call(w, tmp1, tao);
 					b.get(j*L + k, tmp2);
-					Algebra.subtract().call(tmp2, tao, tmp1);
+					algebra.subtract().call(tmp2, tao, tmp1);
 					b.set(j*L + k + L/2, tmp1);
-					Algebra.add().call(tmp2, tao, tmp1);
+					algebra.add().call(tmp2, tao, tmp1);
 					b.set(j*L + k, tmp1);
 				}
 			}

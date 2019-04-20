@@ -40,18 +40,18 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class SubTensorBridge<U> implements TensorMember<U> {
 
-	private final Algebra<?,U> Algebra;
+	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private IntegerIndex index;
 	private int[] rangingDims;
 	private long dim;
 
-	public SubTensorBridge(Algebra<?,U> Algebra, TensorMember<U> tensor) {
+	public SubTensorBridge(Algebra<?,U> algebra, TensorMember<U> tensor) {
 		if (tensor.numDimensions() < 2)
 			throw new IllegalArgumentException("subtensor can only be constructed on tensor with 2 or more dimensions");
-		this.Algebra = Algebra;
-		this.zero = Algebra.construct();
+		this.algebra = algebra;
+		this.zero = algebra.construct();
 		this.tensor = tensor;
 		this.index = new IntegerIndex(tensor.numDimensions());
 		this.rangingDims = new int[tensor.numDimensions()];
@@ -155,7 +155,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			index.set(rangingDims[i], index.get(i));
 		}
 		if (oob())
-			Algebra.assign().call(zero, value);
+			algebra.assign().call(zero, value);
 		else
 			tensor.v(index, value);
 	}
@@ -168,7 +168,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			index.set(rangingDims[i], index.get(i));
 		}
 		if (oob()) {
-			if (Algebra.isNotEqual().call(zero, value))
+			if (algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else

@@ -41,8 +41,8 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 	private final RModuleMember<U> rmod;
 	private long startElem, countElems;
 	
-	public SubRModuleBridge(Algebra<?,U> Algebra, RModuleMember<U> rmod) {
-		this.zero = Algebra.construct();
+	public SubRModuleBridge(Algebra<?,U> algebra, RModuleMember<U> rmod) {
+		this.zero = algebra.construct();
 		this.rmod = rmod;
 		this.startElem = 0;
 		this.countElems = rmod.length();

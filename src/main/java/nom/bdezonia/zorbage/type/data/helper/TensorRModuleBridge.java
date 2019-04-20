@@ -39,15 +39,15 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class TensorRModuleBridge<U> implements RModuleMember<U> {
 
-	private final Algebra<?,U> Algebra;
+	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private final IntegerIndex fixedDims;
 	private int rangingDim;
 
-	public TensorRModuleBridge(Algebra<?,U> Algebra, TensorMember<U> tensor) {
-		this.Algebra = Algebra;
-		this.zero = Algebra.construct();
+	public TensorRModuleBridge(Algebra<?,U> algebra, TensorMember<U> tensor) {
+		this.algebra = algebra;
+		this.zero = algebra.construct();
 		this.tensor = tensor;
 		this.fixedDims = new IntegerIndex(tensor.numDimensions());
 		this.rangingDim = 0;
@@ -108,7 +108,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void v(long i, U value) {
 		if (i < 0 || i >= length())
-			Algebra.assign().call(zero, value);
+			algebra.assign().call(zero, value);
 		else {
 			fixedDims.set(rangingDim, i);
 			tensor.v(fixedDims, value);
@@ -118,7 +118,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void setV(long i, U value) {
 		if (i < 0 || i >= length()) {
-			if (Algebra.isNotEqual().call(zero, value))
+			if (algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else {

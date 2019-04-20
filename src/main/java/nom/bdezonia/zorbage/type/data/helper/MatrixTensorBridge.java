@@ -40,15 +40,15 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class MatrixTensorBridge<U> implements TensorMember<U> {
 
-	private final Algebra<?,U> Algebra;
+	private final Algebra<?,U> algebra;
 	private final U zero;
 	private MatrixMember<U> mat;
 	private long startRow, startCol, size;
 	
-	public MatrixTensorBridge(Algebra<?,U> Algebra, MatrixMember<U> mat) {
+	public MatrixTensorBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
 		this.mat = mat;
-		this.Algebra = Algebra;
-		this.zero = Algebra.construct();
+		this.algebra = algebra;
+		this.zero = algebra.construct();
 		this.startRow = 0;
 		this.startCol = 0;
 		this.size = Math.min(mat.rows(), mat.cols());
@@ -114,7 +114,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	public void v(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				Algebra.assign().call(zero, value);
+				algebra.assign().call(zero, value);
 				return;
 			}
 		}
@@ -127,7 +127,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	public void setV(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
-				if (Algebra.isNotEqual().call(zero, value))
+				if (algebra.isNotEqual().call(zero, value))
 					throw new IllegalArgumentException("out of bounds nonzero write");
 			}
 		}

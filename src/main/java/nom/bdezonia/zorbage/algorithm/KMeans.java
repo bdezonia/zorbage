@@ -57,7 +57,7 @@ public class KMeans {
 	 * @param clusterIndices The list tracking which Point is in which cluster.
 	 */
 	public static
-		void compute(PointAlgebra Algebra, int numClusters, IndexedDataSource<Point> points, IndexedDataSource<SignedInt32Member> clusterIndices)
+		void compute(PointAlgebra algebra, int numClusters, IndexedDataSource<Point> points, IndexedDataSource<SignedInt32Member> clusterIndices)
 	{
 		if (numClusters < 1)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");
@@ -73,7 +73,7 @@ public class KMeans {
 		
 		int MAX_ITERS = 1000;
 		
-		Point point = Algebra.construct();
+		Point point = algebra.construct();
 		SignedInt32Member clusterNum = G.INT32.construct();
 		Float64Member scale = G.DBL.construct();
 		Float64Member dist = G.DBL.construct();
@@ -99,20 +99,20 @@ public class KMeans {
 			
 			// calc centroids of clusters
 			for (int i = 0; i < numClusters; i++) {
-				Algebra.zero().call(centers.get(i));
+				algebra.zero().call(centers.get(i));
 			}
 			for (long i = 0; i < pointsSize; i++) {
 				points.get(i, point);
 				clusterIndices.get(i, clusterNum);
 				Point ctrSum = centers.get(clusterNum.v());
-				Algebra.add().call(ctrSum, point, ctrSum);
+				algebra.add().call(ctrSum, point, ctrSum);
 				counts.set(clusterNum.v(), (counts.get(clusterNum.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
 				long count = counts.get(i);
 				scale.setV(1.0/count);
-				Algebra.scale().call(scale, ctrSum, ctrSum);
+				algebra.scale().call(scale, ctrSum, ctrSum);
 			}
 			
 			// for each point

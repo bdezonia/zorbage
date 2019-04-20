@@ -39,12 +39,12 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
 	private final U zero;
-	private final Algebra<?,U> Algebra;
+	private final Algebra<?,U> algebra;
 	private NumberMember<U> num;
 	
-	public NumberRModuleBridge(Algebra<?,U> Algebra, NumberMember<U> num) {
-		this.zero = Algebra.construct();
-		this.Algebra = Algebra;
+	public NumberRModuleBridge(Algebra<?,U> algebra, NumberMember<U> num) {
+		this.zero = algebra.construct();
+		this.algebra = algebra;
 		this.num = num;
 	}
 	
@@ -93,14 +93,14 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 		if (i == 0)
 			num.v(value);
 		else
-			Algebra.assign().call(zero, value);
+			algebra.assign().call(zero, value);
 	}
 
 	@Override
 	public void setV(long i, U value) {
 		if (i == 0)
 			num.setV(value);
-		else if (Algebra.isNotEqual().call(zero, value))
+		else if (algebra.isNotEqual().call(zero, value))
 			throw new IllegalArgumentException("out of bounds nonzero write");
 
 	}
