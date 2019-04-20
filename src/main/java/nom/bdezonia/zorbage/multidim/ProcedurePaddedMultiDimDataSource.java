@@ -87,8 +87,8 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		return md.getAxis(i);
 	}
 	
-	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> func) {
-		md.setAxis(i, func);
+	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
+		md.setAxis(i, proc);
 	}
 	
 	public IndexedDataSource<U> piped(int dim, long[] coord) {
