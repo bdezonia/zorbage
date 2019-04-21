@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -51,54 +52,82 @@ public class TestProcedurePaddedMultiDimDataSource {
 				new ProcedurePaddedMultiDimDataSource<>(G.INT32, md, proc);
 		SignedInt32Member value = G.INT32.construct();
 		
+		IntegerIndex idx = new IntegerIndex(2);
+		
 		// inbounds
 		
-		pad.get(new long[] {0,0}, value);
+		idx.set(0,0);
+		idx.set(1,0);
+		pad.get(idx, value);
 		assertEquals(1,value.v());
 		
-		pad.get(new long[] {1,0}, value);
+		idx.set(0,1);
+		idx.set(1,0);
+		pad.get(idx, value);
 		assertEquals(2,value.v());
 		
-		pad.get(new long[] {0,1}, value);
+		idx.set(0,0);
+		idx.set(1,1);
+		pad.get(idx, value);
 		assertEquals(3,value.v());
 		
-		pad.get(new long[] {1,1}, value);
+		idx.set(0,1);
+		idx.set(1,1);
+		pad.get(idx, value);
 		assertEquals(4,value.v());
 		
 		// out of bounds
 		
-		pad.get(new long[] {-1,0}, value);
+		idx.set(0,-1);
+		idx.set(1,0);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {2,0}, value);
+		idx.set(0,2);
+		idx.set(1,0);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {-1,1}, value);
+		idx.set(0,-1);
+		idx.set(1,1);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {2,1}, value);
+		idx.set(0,2);
+		idx.set(1,1);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {0,-1}, value);
+		idx.set(0,0);
+		idx.set(1,-1);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {0,2}, value);
+		idx.set(0,0);
+		idx.set(1,2);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {1,-1}, value);
+		idx.set(0,1);
+		idx.set(1,-1);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {1,2}, value);
+		idx.set(0,1);
+		idx.set(1,2);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
-		pad.get(new long[] {1000000,-500000}, value);
+		idx.set(0,1000000);
+		idx.set(1,-500000);
+		pad.get(idx, value);
 		assertEquals(1000,value.v());
 	}
 	
-	private final Procedure2<long[],SignedInt32Member> proc = new Procedure2<long[], SignedInt32Member>()
+	private final Procedure2<IntegerIndex,SignedInt32Member> proc = new Procedure2<IntegerIndex, SignedInt32Member>()
 	{
 		@Override
-		public void call(long[] a, SignedInt32Member b) {
+		public void call(IntegerIndex a, SignedInt32Member b) {
 			b.setV(1000);
 		}
 	};

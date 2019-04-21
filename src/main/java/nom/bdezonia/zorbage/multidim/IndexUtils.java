@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+
 /**
  * 
  * @author Barry DeZonia
@@ -39,18 +41,18 @@ public class IndexUtils {
 	 * @param idx
 	 * @return
 	 */
-	public static long indexToLong(long[] dims, long[] idx) {
+	public static long indexToLong(long[] dims, IntegerIndex idx) {
 		/*
 		 * dims = [4,5,6]
 		 * idx = [1,2,3]
 		 * long = 3*5*4 + 2*4 + 1;
 		 */
 		
-		if (idx.length == 0) return 0;
+		if (idx.numDimensions() == 0) return 0;
 		long index = 0;
 		long mult = 1;
-		for (int i = 0; i < idx.length; i++) {
-			index += mult * idx[i];
+		for (int i = 0; i < idx.numDimensions(); i++) {
+			index += mult * idx.get(i);
 			mult *= dims[i];
 		}
 		return index;

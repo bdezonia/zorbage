@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.SequencedDataSource;
 
@@ -42,7 +43,7 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 	private final MultiDimDataSource<?,U> d;
 	private final int dim;
 	private final long[] parentDims;
-	private final long[] coords;
+	private final IntegerIndex coords;
 	private final IndexedDataSource<U> data;
 	
 	/**
@@ -51,19 +52,22 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 	 * @param dim
 	 * @param coords
 	 */
-	public PipedDataSource(MultiDimDataSource<?,U> d, int dim, long[] coords) {
-		this.d = d;
-		this.dim = dim;
-		this.coords = coords;
-		if (coords.length != d.numDimensions())
+	public PipedDataSource(MultiDimDataSource<?,U> d, int dim, IntegerIndex coords) {
+		if (coords.numDimensions() != d.numDimensions())
 			throw new IllegalArgumentException("coordinate does not match dimensionality of multidim data");
-		if (dim < 0 || dim >= coords.length)
+		if (dim < 0 || dim >= coords.numDimensions())
 			throw new IllegalArgumentException("ranging dim is not within dimensionality of multidim data");
-		for (int i = 0; i < coords.length; i++) {
+		for (int i = 0; i < coords.numDimensions(); i++) {
 			if (i != dim) {
-				if (coords[i] < 0 || coords[i] >= d.dimension(i))
+				if (coords.get(i) < 0 || coords.get(i) >= d.dimension(i))
 					throw new IllegalArgumentException("coordinate is outside bounds of multidim data");
 			}
+		}
+		this.d = d;
+		this.dim = dim;
+		this.coords = new IntegerIndex(coords.numDimensions());
+		for (int i = 0; i < coords.numDimensions(); i++) {
+			this.coords.set(i, coords.get(i));
 		}
 		this.parentDims = new long[d.numDimensions()];
 		for (int i = 0; i < d.numDimensions(); i++) {
@@ -94,10 +98,14 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 	}
 
 	private IndexedDataSource<U> findSubset() {
-		long[] start = coords.clone();
-		long[] stop = coords.clone();
-		start[dim] = 0;
-		stop[dim] = d.dimension(dim)-1;
+		IntegerIndex start = new IntegerIndex(coords.numDimensions());
+		IntegerIndex stop = new IntegerIndex(coords.numDimensions());
+		for (int i = 0; i < coords.numDimensions(); i++) {
+			start.set(i, coords.get(i));
+			stop.set(i, coords.get(i));
+		}
+		start.set(dim, 0);
+		stop.set(dim, d.dimension(dim)-1);
 		long count = d.dimension(dim);
 		long offset = IndexUtils.indexToLong(parentDims,start);
 		long stride;

@@ -32,6 +32,7 @@ import java.util.List;
 import nom.bdezonia.zorbage.axis.IdentityAxis;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
@@ -96,37 +97,37 @@ public class MultiDimDataSource<T extends Algebra<T,U>,U>
 		this.axes.set(i, proc);
 	}
 	
-	public IndexedDataSource<U> piped(int dim, long[] coord) {
+	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
 		return new PipedDataSource<U>(this, dim, coord);
 	}
 	
-	public void set(long[] index, U v) {
+	public void set(IntegerIndex index, U v) {
 		long idx = IndexUtils.indexToLong(dims, index);
 		data.set(idx, v);
 	}
 	
-	public void setSafe(long[] index, U v) {
+	public void setSafe(IntegerIndex index, U v) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		set(index, v);
 	}
 	
-	public void get(long[] index, U v) {
+	public void get(IntegerIndex index, U v) {
 		long idx = IndexUtils.indexToLong(dims, index);
 		data.get(idx, v);
 	}
 	
-	public void getSafe(long[] index, U v) {
+	public void getSafe(IntegerIndex index, U v) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		get(index, v);
 	}
 	
-	public boolean oob(long[] index) {
-		if (index.length != numDimensions())
+	public boolean oob(IntegerIndex index) {
+		if (index.numDimensions() != numDimensions())
 			throw new IllegalArgumentException("index dimensionality not the same as multidim dimensions");
-		for (int i = 0; i < index.length; i++) {
-			if (index[i] < 0 || index[i] >= dimension(i))
+		for (int i = 0; i < index.numDimensions(); i++) {
+			if (index.get(i) < 0 || index.get(i) >= dimension(i))
 				return true;
 		}
 		return false;

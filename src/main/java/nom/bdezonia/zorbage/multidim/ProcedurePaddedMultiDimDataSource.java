@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.multidim;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
@@ -43,7 +44,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 {
 	private final T algebra;
 	private final MultiDimDataSource<?,U> md;
-	private final Procedure2<long[],U> proc;
+	private final Procedure2<IntegerIndex,U> proc;
 	private final ThreadLocal<U> tmp;
 	
 	/**
@@ -52,7 +53,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	 * @param md
 	 * @param proc
 	 */
-	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<?,U> md, Procedure2<long[],U> proc) {
+	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<?,U> md, Procedure2<IntegerIndex,U> proc) {
 		this.algebra = alg;
 		this.md = md;
 		this.proc = proc;
@@ -91,11 +92,11 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		md.setAxis(i, proc);
 	}
 	
-	public IndexedDataSource<U> piped(int dim, long[] coord) {
+	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
 		return md.piped(dim, coord);
 	}
 	
-	public void set(long[] index, U v) {
+	public void set(IntegerIndex index, U v) {
 		if (md.oob(index)) {
 			U t = tmp.get();
 			proc.call(index,t);
@@ -107,7 +108,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		}
 	}
 	
-	public void get(long[] index, U v) {
+	public void get(IntegerIndex index, U v) {
 		if (md.oob(index)) {
 			proc.call(index, v);
 		}
