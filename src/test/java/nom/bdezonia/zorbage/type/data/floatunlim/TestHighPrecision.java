@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.bigdec;
+package nom.bdezonia.zorbage.type.data.floatunlim;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -34,6 +34,8 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionMember;
 
 /**
  * 

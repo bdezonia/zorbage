@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.bigint;
+package nom.bdezonia.zorbage.type.data.intunlim;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
-import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**

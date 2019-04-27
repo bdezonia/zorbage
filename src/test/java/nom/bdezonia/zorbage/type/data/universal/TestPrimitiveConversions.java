@@ -34,7 +34,6 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
@@ -42,6 +41,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProductMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
 
 /**
  * 

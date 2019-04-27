@@ -28,8 +28,6 @@ package nom.bdezonia.zorbage.algebras;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.type.data.bigdec.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.bigint.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Matrix;
@@ -68,6 +66,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
+import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.int1.SignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int10.SignedInt10Algebra;
@@ -106,6 +105,7 @@ import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Algebra;
+import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.data.rational.RationalAlgebra;
 

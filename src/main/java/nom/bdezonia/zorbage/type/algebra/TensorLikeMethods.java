@@ -44,4 +44,7 @@ public interface TensorLikeMethods<U,W> {
 	Procedure1<java.lang.Integer> semicolonDerivative();
 	Procedure1<java.lang.Integer> commaDerivative();
 
+	// TODO
+	// ProcX innerProduct();
+	// ProcX outerProduct();
 }
