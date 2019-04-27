@@ -31,7 +31,6 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionAlgebra;
@@ -48,10 +47,7 @@ public class StringDefinedAxis implements Procedure2<Long,HighPrecisionMember>
 	
 	public StringDefinedAxis(String eqn) {
 		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.FLOAT_UNLIM, eqn);
-		if (parseResult.a() == null)
-			parsedAxisProc = parseResult.b();
-		else
-			parsedAxisProc = new ZeroL<HighPrecisionAlgebra,HighPrecisionMember>(G.FLOAT_UNLIM);
+		parsedAxisProc = parseResult.b();
 	}
 	
 	@Override

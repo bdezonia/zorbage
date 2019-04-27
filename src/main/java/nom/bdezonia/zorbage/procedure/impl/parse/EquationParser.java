@@ -595,9 +595,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			Tuple2<String,Procedure<U>> retVal = new Tuple2<String, Procedure<U>>(null, null);
 			if (result.errMsg != null) {
 				retVal.setA(result.errMsg);
+				retVal.setB(new ZeroL<T,U>(algebra));
 			}
 			else {
-				retVal.setB(result.function);
+				retVal.setA(null);
+				retVal.setB(result.procedure);
 			}
 			return retVal;
 		}
@@ -607,7 +609,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		
 		String errMsg;
 		long tokenNumber;
-		Procedure<U> function;
+		Procedure<U> procedure;
 	}
 	
 	private boolean match(Class<?> tokClass, BigList<Token> tokens, long pos) {
@@ -644,12 +646,12 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (match(Plus.class, tokens, status1.tokenNumber)) {
 			status2 = equation(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
-			status2.function = new AddL(algebra, status1.function, status2.function);
+			status2.procedure = new AddL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Minus.class, tokens, status1.tokenNumber)) {
 			status2 = equation(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
-			status2.function = new SubtractL(algebra, status1.function, status2.function);
+			status2.procedure = new SubtractL(algebra, status1.procedure, status2.procedure);
 		}
 		return status2;
 	}
@@ -669,17 +671,17 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (match(Times.class, tokens, status1.tokenNumber)) {
 			status2 = term(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
-			status2.function = new MultiplyL(algebra, status1.function, status2.function);
+			status2.procedure = new MultiplyL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Divide.class, tokens, status1.tokenNumber)) {
 			status2 = term(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
-			status2.function = new DivideL(algebra, status1.function, status2.function);
+			status2.procedure = new DivideL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Mod.class, tokens, status1.tokenNumber)) {
 			status2 = term(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
-			status2.function = new ModL(algebra, status1.function, status2.function);
+			status2.procedure = new ModL(algebra, status1.procedure, status2.procedure);
 		}
 		return status2;
 	}
@@ -697,7 +699,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (match(Power.class, tokens, status1.tokenNumber)) {
 			status2 = factor(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
-			status2.function = new PowL(algebra, status1.function, status2.function);
+			status2.procedure = new PowL(algebra, status1.procedure, status2.procedure);
 		}
 		return status2;
 	}
@@ -716,7 +718,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		else if (match(Minus.class, tokens, pos)) {
 			ParseStatus status = atom(algebra, tokens, pos+1);
 			if (status.errMsg != null) return status;
-			status.function = new NegateL(algebra, status.function);
+			status.procedure = new NegateL(algebra, status.procedure);
 			return status;
 		}
 		else
@@ -737,7 +739,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			int index = idx.getNumber();
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = pos + 1;
-			status.function = new VariableConstantL(algebra, index);
+			status.procedure = new VariableConstantL(algebra, index);
 			return status;
 		}
 		else if (match(FunctionName.class, tokens, pos)) {
@@ -745,7 +747,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			// 0 arg functions
 			if (funcCall.getText() == "rand") {
 				ParseStatus status = new ParseStatus();
-				status.function = createFunction(algebra, funcCall.getText(), null);
+				status.procedure = createFunction(algebra, funcCall.getText(), null);
 				status.tokenNumber = pos + 1;
 				return status;
 			}
@@ -761,7 +763,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 							status.tokenNumber,
 							tokens,
 							"Function call definition expected a ')'");
-				status.function = createFunction(algebra, funcCall.getText(), status.function);
+				status.procedure = createFunction(algebra, funcCall.getText(), status.procedure);
 				status.tokenNumber++;
 				return status;
 			}
@@ -792,9 +794,9 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = status2.tokenNumber+1;
 			if (match(Min.class, tokens, pos))
-				status.function = new MinL(algebra, status1.function, status2.function);
+				status.procedure = new MinL(algebra, status1.procedure, status2.procedure);
 			else
-				status.function = new MaxL(algebra, status1.function, status2.function);
+				status.procedure = new MaxL(algebra, status1.procedure, status2.procedure);
 			return status;
 		}
 		else
@@ -810,7 +812,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			Numeric tok = (Numeric) tokens.get(pos);
 			ParseStatus status = new ParseStatus();
 			status.tokenNumber = pos + 1;
-			status.function = new ConstantL(algebra, tok.value);
+			status.procedure = new ConstantL(algebra, tok.value);
 			return status;
 		} catch (Exception e) {
 			return syntaxError(pos, tokens, "Expected something numeric.");
