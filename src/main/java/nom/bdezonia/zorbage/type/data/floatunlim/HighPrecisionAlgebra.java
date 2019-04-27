@@ -432,7 +432,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-			Min.compute(G.BIGDEC, a, b, c);
+			Min.compute(G.FLOAT_UNLIM, a, b, c);
 		}
 	};
 	
@@ -446,7 +446,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-			Max.compute(G.BIGDEC, a, b, c);
+			Max.compute(G.FLOAT_UNLIM, a, b, c);
 		}
 	};
 	

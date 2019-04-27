@@ -121,9 +121,9 @@ public class G {
 
 	public static final BigDecimal ONE_HALF = BigDecimal.valueOf(0.5);
 	
-	public static final UnboundedIntAlgebra BIGINT = new UnboundedIntAlgebra();
+	public static final UnboundedIntAlgebra INT_UNLIM = new UnboundedIntAlgebra();
 	
-	public static final HighPrecisionAlgebra BIGDEC = new HighPrecisionAlgebra();
+	public static final HighPrecisionAlgebra FLOAT_UNLIM = new HighPrecisionAlgebra();
 	
 	public static final RationalAlgebra RAT = new RationalAlgebra();
 	

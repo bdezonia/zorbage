@@ -117,39 +117,39 @@ public class TestFactorial {
 	
 	@Test
 	public void unboundInts() {
-		UnboundedIntMember a = G.BIGINT.construct();
-		UnboundedIntMember b = G.BIGINT.construct();
+		UnboundedIntMember a = G.INT_UNLIM.construct();
+		UnboundedIntMember b = G.INT_UNLIM.construct();
 		
 		a.setV(BigInteger.valueOf(-1));
 		try {
-			Factorial.compute(G.BIGINT, a, b);
+			Factorial.compute(G.INT_UNLIM, a, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
 		a.setV(BigInteger.valueOf(0));
-		Factorial.compute(G.BIGINT, a, b);
+		Factorial.compute(G.INT_UNLIM, a, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
 		
 		a.setV(BigInteger.valueOf(1));
-		Factorial.compute(G.BIGINT, a, b);
+		Factorial.compute(G.INT_UNLIM, a, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
 
 		a.setV(BigInteger.valueOf(2));
-		Factorial.compute(G.BIGINT, a, b);
+		Factorial.compute(G.INT_UNLIM, a, b);
 		assertEquals(BigInteger.valueOf(2), b.v());
 
 		a.setV(BigInteger.valueOf(3));
-		Factorial.compute(G.BIGINT, a, b);
+		Factorial.compute(G.INT_UNLIM, a, b);
 		assertEquals(BigInteger.valueOf(6), b.v());
 
 		a.setV(BigInteger.valueOf(6));
-		Factorial.compute(G.BIGINT, a, b);
+		Factorial.compute(G.INT_UNLIM, a, b);
 		assertEquals(BigInteger.valueOf(720), b.v());
 
 		a.setV(BigInteger.valueOf(45));
-		Factorial.compute(G.BIGINT, a, b);
+		Factorial.compute(G.INT_UNLIM, a, b);
 		assertEquals(new BigInteger("119622220865480194561963161495657715064383733760000000000"), b.v());
 	}
 	

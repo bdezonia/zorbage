@@ -559,7 +559,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-			Min.compute(G.BIGINT, a, b, c);
+			Min.compute(G.INT_UNLIM, a, b, c);
 		}
 	};
 	
@@ -573,7 +573,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-			Max.compute(G.BIGINT, a, b, c);
+			Max.compute(G.INT_UNLIM, a, b, c);
 		}
 	};
 	

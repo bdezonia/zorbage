@@ -47,11 +47,11 @@ public class StringDefinedAxis implements Procedure2<Long,HighPrecisionMember>
 	private final Procedure<HighPrecisionMember> parsedAxisProc;
 	
 	public StringDefinedAxis(String eqn) {
-		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.BIGDEC, eqn);
+		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.FLOAT_UNLIM, eqn);
 		if (parseResult.a() == null)
 			parsedAxisProc = parseResult.b();
 		else
-			parsedAxisProc = new ZeroL<HighPrecisionAlgebra,HighPrecisionMember>(G.BIGDEC);
+			parsedAxisProc = new ZeroL<HighPrecisionAlgebra,HighPrecisionMember>(G.FLOAT_UNLIM);
 	}
 	
 	@Override

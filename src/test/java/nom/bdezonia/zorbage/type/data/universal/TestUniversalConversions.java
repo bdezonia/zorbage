@@ -50,7 +50,7 @@ public class TestUniversalConversions {
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
 		BigInteger i = BigInteger.valueOf(Integer.MAX_VALUE).add(BigInteger.valueOf(Integer.MAX_VALUE));
 		UnsignedInt32Member a = G.UINT32.construct(i.toString());
-		UnboundedIntMember b = G.BIGINT.construct();
+		UnboundedIntMember b = G.INT_UNLIM.construct();
 		UniversalConverter.convert(rep, a, b);
 		assertEquals(i, b.v());
 	}

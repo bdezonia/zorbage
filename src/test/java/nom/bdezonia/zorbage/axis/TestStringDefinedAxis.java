@@ -47,7 +47,7 @@ public class TestStringDefinedAxis {
 		
 		StringDefinedAxis axis = new StringDefinedAxis("4 * $0 + 13");
 		
-		HighPrecisionMember result = G.BIGDEC.construct();
+		HighPrecisionMember result = G.FLOAT_UNLIM.construct();
 		
 		axis.call(0L, result);
 		assertTrue(BigDecimal.valueOf(13).equals(result.v()));

@@ -44,15 +44,15 @@ public class Accumulate {
 	public static <T extends Algebra<T,U>, U extends HighPrecRepresentation>
 		void compute(T alg, IndexedDataSource<U> src, HighPrecisionMember sum)
 	{
-		HighPrecisionMember tmpSum = G.BIGDEC.construct();
-		HighPrecisionMember tmp = G.BIGDEC.construct();
+		HighPrecisionMember tmpSum = G.FLOAT_UNLIM.construct();
+		HighPrecisionMember tmp = G.FLOAT_UNLIM.construct();
 		U value = alg.construct();
 		long size = src.size();
 		for (long i = 0; i < size; i++) {
 			src.get(i, value);
 			value.toHighPrec(tmp);
-			G.BIGDEC.add().call(tmpSum, tmp, tmpSum);
+			G.FLOAT_UNLIM.add().call(tmpSum, tmp, tmpSum);
 		}
-		G.BIGDEC.assign().call(tmpSum, sum);
+		G.FLOAT_UNLIM.assign().call(tmpSum, sum);
 	}
 }
