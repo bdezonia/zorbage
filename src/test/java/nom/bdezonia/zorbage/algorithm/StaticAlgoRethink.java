@@ -79,5 +79,13 @@ public class StaticAlgoRethink {
 		// true. A static algorithm could be passed a norm procedure as well. But note that
 		// all the norm algorithms that exist when this note was entered are static algos and
 		// can't be passed.
+		
+		// Later edit: I worked a while on replacing all static code with class based code.
+		// Frankly it was ugly and thus likely wrong. If someone writes an algorithm that takes
+		// a Procedure as a parameter there is nothing stopping someone from wrapping a static
+		// algorithm in a Procedure as a way of passing it. This one off solution is likely
+		// fine. Just because it would in theory be nice to pass algorithms around it does not
+		// mean the need arises often enough that ALL algorithms must not be static. The static
+		// algorithms have their own elegance. I will abandon the ALL Procedures idea.
 	}
 }
