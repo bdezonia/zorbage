@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
-import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 
 /**
  * 

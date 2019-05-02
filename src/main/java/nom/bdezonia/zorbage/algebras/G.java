@@ -66,7 +66,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
-import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.int1.SignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int10.SignedInt10Algebra;

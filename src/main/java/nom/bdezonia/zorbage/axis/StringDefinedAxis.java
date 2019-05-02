@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 
 /**
  * 

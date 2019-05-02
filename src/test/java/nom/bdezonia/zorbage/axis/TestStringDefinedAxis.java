@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 
 /**
  * 

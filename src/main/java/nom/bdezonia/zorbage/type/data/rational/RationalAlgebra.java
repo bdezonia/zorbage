@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
-import nom.bdezonia.zorbage.type.data.floatunlim.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 
 /**
  * 
