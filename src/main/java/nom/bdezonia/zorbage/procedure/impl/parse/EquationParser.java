@@ -279,6 +279,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	
 	// NOTE Just a thought: making E and PI for matrices is hard because we do not
 	// have a shape for the matrix. Take a 2x2 and try to add PI. But PI is 0x0. Nuts.
+	// The rand function has the same problem.
 
 	private class Lexer {
 		
