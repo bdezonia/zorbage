@@ -639,7 +639,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	 term “-” equation
 	*/
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public ParseStatus equation(T algebra, BigList<Token> tokens, long pos) {
+	private ParseStatus equation(T algebra, BigList<Token> tokens, long pos) {
 		ParseStatus status1 = term(algebra, tokens, pos);
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
