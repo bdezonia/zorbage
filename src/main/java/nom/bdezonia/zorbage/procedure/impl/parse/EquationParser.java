@@ -80,8 +80,17 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
  */
 public class EquationParser<T extends Algebra<T,U>,U> {
 
+	/**
+	 * 
+	 */
 	public EquationParser() {}
 
+	/**
+	 * 
+	 * @param algebra
+	 * @param string
+	 * @return
+	 */
 	public Tuple2<String,Procedure<U>> parse(T algebra, String string) {
 		
 		Tuple2<String,BigList<Token>> lexResult = new Lexer().lex(algebra, string);
