@@ -88,4 +88,10 @@ What can I do with Zorbage?
   Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
   
-  Parse and use equations made from any of the types
+  Use parsers to create Procedures from strings. These Procedures represent
+    equations that when fed values will compute a return value (the result
+    of applying the inputs to the equation). Equations can return numbers,
+    vectors, matrices, or tensors. The subcomponents of these can be reals,
+    complexes, quaternions, or octonions. Equations can be built out of
+    constants, input variable references, E, PI, and typical functions like
+    sin(), atan(), exp(), log(), etc.
