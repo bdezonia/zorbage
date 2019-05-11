@@ -621,7 +621,7 @@ public class TestFloat32Algebra {
 		// G.FLT.succ();
 		a.setV(4);
 		G.FLT.pred().call(a, b);
-		assertEquals(Math.nextDown(a.v()), b.v(), 0);
+		assertEquals(Math.nextAfter(a.v(), Double.NEGATIVE_INFINITY), b.v(), 0);
 		G.FLT.succ().call(a, b);
 		assertEquals(Math.nextUp(a.v()), b.v(), 0);
 
