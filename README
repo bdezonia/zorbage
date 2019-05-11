@@ -95,3 +95,11 @@ What can I do with Zorbage?
     complexes, quaternions, or octonions. Equations can be built out of
     constants, input variable references, E, PI, and typical functions like
     sin(), atan(), exp(), log(), etc.
+
+Programming note
+
+  Zorbage has not yet been compiled or tested with Java 9
+  Zorbage has been compiled and tested with Java 8
+  Zorbage has been compiled with Java 7
+  Zorbage has not yet been compiled or tested with Java 6
+  
