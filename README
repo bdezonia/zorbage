@@ -98,6 +98,7 @@ What can I do with Zorbage?
 
 Programming note
 
+  Zorbage has not yet been compiled or tested with Java 10
   Zorbage has not yet been compiled or tested with Java 9
   Zorbage has been compiled and tested with Java 8
   Zorbage has been compiled with Java 7
