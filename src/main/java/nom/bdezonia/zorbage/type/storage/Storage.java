@@ -39,6 +39,12 @@ import nom.bdezonia.zorbage.type.storage.sparse.SparseStorage;
  */
 public class Storage {
 
+	/**
+	 * 
+	 * @param numElements
+	 * @param type
+	 * @return
+	 */
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
 		allocate(long numElements, U type)
 	{
@@ -46,14 +52,31 @@ public class Storage {
 
 			return ArrayStorage.allocate(numElements, type);
 
-		} catch (OutOfMemoryError e) {
+		}
+		// not enough mem avail
+		catch (OutOfMemoryError e) {
+
+			return FileStorage.allocate(numElements, type);
+
+		}
+		// probably numElements bigger than will fit in an array
+		catch (IllegalArgumentException e) {
 
 			return FileStorage.allocate(numElements, type);
 
 		}
 	}
 	
-	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(StorageConstruction strategy, long numElements, U type) {
+	/**
+	 * 
+	 * @param strategy
+	 * @param numElements
+	 * @param type
+	 * @return
+	 */
+	public static <U extends Allocatable<U>> IndexedDataSource<U>
+		allocate(StorageConstruction strategy, long numElements, U type)
+	{
 		if (strategy == StorageConstruction.MEM_ARRAY)
 			return ArrayStorage.allocate(numElements, type);
 		else if (strategy == StorageConstruction.MEM_SPARSE)
