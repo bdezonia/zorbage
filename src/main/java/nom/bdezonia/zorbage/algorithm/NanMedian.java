@@ -76,10 +76,7 @@ public class NanMedian {
 					valueCount++;
 				}
 			}
-			U numer = alg.construct();
-			U denom = alg.construct();
-			FindMedianFraction.compute(alg, filteredValues, numer, denom);
-			alg.divide().call(numer, denom, result);
+			Median.compute(alg, filteredValues, result);
 		}
 	}
 }
