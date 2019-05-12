@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -56,26 +55,10 @@ public class NanVariance {
 								& Invertible<U> & Ordered<U> & NaN<U>, U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		U value = alg.construct();
-		long valueCount = 0;
-		long sz = storage.size();
-		for (long i = 0; i < sz; i++) {
-			storage.get(i, value);
-			if (!alg.isNaN().call(value))
-				valueCount++;
-		}
-		if (valueCount == 0)
+		IndexedDataSource<U> filteredValues = NonNanValues.compute(alg, storage);
+		if (filteredValues.size() == 0)
 			alg.nan().call(result);
 		else {
-			IndexedDataSource<U> filteredValues = Storage.allocate(valueCount, result);
-			valueCount = 0;
-			for (long i = 0; i < sz; i++) {
-				storage.get(i, value);
-				if (!alg.isNaN().call(value)) {
-					filteredValues.set(valueCount, value);
-					valueCount++;
-				}
-			}
 			Variance.compute(alg, filteredValues, result);
 		}
 	}
