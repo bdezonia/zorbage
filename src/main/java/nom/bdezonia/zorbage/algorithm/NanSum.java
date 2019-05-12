@@ -50,15 +50,20 @@ public class NanSum {
 	public static <T extends Algebra<T,U> & Addition<U> & NaN<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U sum)
 	{
+		boolean foundSome = false;
 		U tmpSum = alg.construct();
 		U value = alg.construct();
 		long size = storage.size();
 		for (long i = 0; i < size; i++) {
 			storage.get(i, value);
 			if (!alg.isNaN().call(value)) {
+				foundSome = true;
 				alg.add().call(tmpSum, value, tmpSum);
 			}
 		}
-		alg.assign().call(tmpSum, sum);
+		if (foundSome)
+			alg.assign().call(tmpSum, sum);
+		else
+			alg.nan().call(sum);
 	}
 }

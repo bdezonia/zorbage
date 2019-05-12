@@ -26,53 +26,45 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.NaN;
-import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NanSumCount {
+public class NanMaxElement {
 
-	private NanSumCount() {}
-	
+	private NanMaxElement() {}
+
 	/**
 	 * 
 	 * @param alg
 	 * @param storage
-	 * @param sum
-	 * @param count
+	 * @param max
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & NaN<U>, U>
-		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
+	public static <T extends Algebra<T,U> & Ordered<U> & NaN<U>, U>
+		void compute(T alg, IndexedDataSource<U> storage, U max)
 	{
 		boolean foundSome = false;
-		U tmpSum = alg.construct();
-		U tmpCnt = alg.construct();
-		U value = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
 		long size = storage.size();
+		U tmp = alg.construct();
 		for (long i = 0; i < size; i++) {
-			storage.get(i, value);
-			if (!alg.isNaN().call(value)) {
+			storage.get(i, tmp);
+			if (!alg.isNaN().call(tmp)) {
+				if (!foundSome) {
+					alg.assign().call(tmp, max);
+				}
 				foundSome = true;
-				alg.add().call(tmpSum, value, tmpSum);
-				alg.add().call(tmpCnt, one, tmpCnt);
+				if (alg.isGreater().call(tmp, max)) {
+					alg.assign().call(tmp, max);
+				}
 			}
 		}
-		if (foundSome) {
-			alg.assign().call(tmpSum, sum);
-			alg.assign().call(tmpCnt, count);
-		}
-		else {
-			alg.nan().call(sum);
-			alg.zero().call(count);
-		}
+		if (!foundSome)
+			alg.nan().call(max);
 	}
 }

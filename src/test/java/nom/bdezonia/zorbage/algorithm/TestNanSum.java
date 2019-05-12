@@ -26,53 +26,34 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NaN;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NanSumCount {
+public class TestNanSum {
 
-	private NanSumCount() {}
-	
-	/**
-	 * 
-	 * @param alg
-	 * @param storage
-	 * @param sum
-	 * @param count
-	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & NaN<U>, U>
-		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
-	{
-		boolean foundSome = false;
-		U tmpSum = alg.construct();
-		U tmpCnt = alg.construct();
-		U value = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
-		long size = storage.size();
-		for (long i = 0; i < size; i++) {
-			storage.get(i, value);
-			if (!alg.isNaN().call(value)) {
-				foundSome = true;
-				alg.add().call(tmpSum, value, tmpSum);
-				alg.add().call(tmpCnt, one, tmpCnt);
-			}
-		}
-		if (foundSome) {
-			alg.assign().call(tmpSum, sum);
-			alg.assign().call(tmpCnt, count);
-		}
-		else {
-			alg.nan().call(sum);
-			alg.zero().call(count);
-		}
+	@Test
+	public void test() {
+		
+		IndexedDataSource<Float64Member> nums = null;
+		Float64Member result = G.DBL.construct();
+
+		nums = ArrayStorage.allocateDoubles(new double[] {1,2,4});
+		NanSum.compute(G.DBL, nums, result);
+		assertEquals(7.0, result.v(), 0);
+
+		nums = ArrayStorage.allocateDoubles(new double[] {Double.NaN,1,Double.NaN,2,Double.NaN,4,Double.NaN});
+		NanSum.compute(G.DBL, nums, result);
+		assertEquals(7.0, result.v(), 0);
 	}
 }
