@@ -24,78 +24,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<U>
-{
-	final private T algebra;
-	final private IndexedDataSource<U> storage;
-	final private Procedure2<Long,U> proc;
-	final private long sz;
-	final private ThreadLocal<U> tmp;
+public class GenericWrappedDataSource<T extends Algebra<T,U>,U> implements IndexedDataSource<U> {
 
-	/**
-	 * 
-	 * @param algebra
-	 * @param storage
-	 * @param proc
-	 */
-	public ProcedurePaddedDataSource(T alg, IndexedDataSource<U> storage, Procedure2<Long,U> proc) {
-		this.algebra = alg;
-		this.storage = storage;
-		this.proc = proc;
-		this.sz = storage.size();
-		this.tmp = new ThreadLocal<U>() {
-			@Override
-			protected U initialValue() {
-				return algebra.construct();
-			}
-		};
+	private final T algebra;
+	private final U[] data;
+	
+	public GenericWrappedDataSource(T algebra, U[] data) {
+		this.algebra = algebra;
+		this.data = data;
 	}
-
+	
 	@Override
-	public ProcedurePaddedDataSource<T,U> duplicate() {
-		// shallow copy
-		return new ProcedurePaddedDataSource<T,U>(algebra, storage, proc);
+	public IndexedDataSource<U> duplicate() {
+		return new GenericWrappedDataSource<T,U>(algebra, data);
 	}
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= storage.size()) {
-			U t = tmp.get();
-			proc.call(index, t);
-			if (algebra.isNotEqual().call(t, value))
-				throw new IllegalArgumentException("Out of bounds value does not match out of bounds procedure");
-		}
-		else {
-			storage.set(index, value);
-		}
+		if (index < 0 || index >= data.length)
+			throw new IllegalArgumentException("index oob");
+		algebra.assign().call(value, data[(int) index]);
 	}
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= storage.size()) {
-			proc.call(index, value);
-		}
-		else {
-			storage.get(index, value);
-		}
+		if (index < 0 || index >= data.length)
+			throw new IllegalArgumentException("index oob");
+		algebra.assign().call(data[(int) index], value);
 	}
 
 	@Override
 	public long size() {
-		return sz;
+		return data.length;
 	}
-
+	
 }

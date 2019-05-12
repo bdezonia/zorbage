@@ -24,40 +24,66 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
+
+import java.math.BigInteger;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ReadOnlyDataSource<U>
+public class ConcatenatedDataSource<U>
 	implements IndexedDataSource<U>
 {
-	private final IndexedDataSource<U> source;
+	private final IndexedDataSource<U> first;
+	private final IndexedDataSource<U> second;
+	private final long sz;
+	private final long firstSz;
 	
-	public ReadOnlyDataSource(IndexedDataSource<U> src) {
-		this.source = src;
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 */
+	public ConcatenatedDataSource(IndexedDataSource<U> a, IndexedDataSource<U> b) {
+		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+			throw new IllegalArgumentException("the two input lists are too long to add together");
+		this.first = a;
+		this.second = b;
+		this.firstSz = a.size();
+		this.sz = firstSz + b.size();
 	}
 	
 	@Override
-	public ReadOnlyDataSource<U> duplicate() {
-		return new ReadOnlyDataSource<U>(source);
+	public ConcatenatedDataSource<U> duplicate() {
+		// shallow copy
+		return new ConcatenatedDataSource<>(first, second);
 	}
 
 	@Override
 	public void set(long index, U value) {
-		throw new IllegalArgumentException("cannot write to read only data source");
+		if (index < 0)
+			throw new IllegalArgumentException("negative index exception");
+		if (index < firstSz)
+			first.set(index, value);
+		else
+			second.set(index-firstSz, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
-		source.get(index, value);
+		if (index < 0)
+			throw new IllegalArgumentException("negative index exception");
+		if (index < firstSz)
+			first.get(index, value);
+		else
+			second.get(index-firstSz, value);
 	}
 
 	@Override
 	public long size() {
-		return source.size();
+		return sz;
 	}
 
 }

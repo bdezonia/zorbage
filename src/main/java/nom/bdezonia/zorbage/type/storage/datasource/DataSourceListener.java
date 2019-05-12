@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
@@ -32,58 +32,8 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public class ZeroPaddedDataSource<T extends Algebra<T,U>,U>
-	implements IndexedDataSource<U>
-{
-	final private T algebra;
-	final private IndexedDataSource<U> storage;
-	final private U zero;
-	final private long sz;
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param storage
-	 */
-	public ZeroPaddedDataSource(T algebra, IndexedDataSource<U> storage) {
-		this.algebra = algebra;
-		this.storage = storage;
-		this.zero = algebra.construct();
-		this.sz = storage.size();
-	}
+public interface DataSourceListener<T extends Algebra<T,U>,U> {
 
-	@Override
-	public ZeroPaddedDataSource<T,U> duplicate() {
-		// shallow copy
-		return new ZeroPaddedDataSource<T,U>(algebra, storage);
-	}
-
-	@Override
-	public void set(long index, U value) {
-		if (index < 0 || index >= storage.size()) {
-			if (!algebra.isZero().call(value))
-				throw new IllegalArgumentException("Cannot set out of bounds value as nonzero");
-		}
-		else {
-			storage.set(index, value);
-		}
-	}
-
-	@Override
-	public void get(long index, U value) {
-		if (index < 0 || index >= storage.size()) {
-			algebra.assign().call(zero, value);
-		}
-		else {
-			storage.get(index, value);
-		}
-	}
-
-	@Override
-	public long size() {
-		return sz;
-	}
+	void notify(T alegbra, IndexedDataSource<U> source, long index);
 }

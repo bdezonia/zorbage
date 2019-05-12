@@ -38,8 +38,8 @@ import nom.bdezonia.zorbage.algorithm.MinMaxElement;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
 import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageGeneric;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

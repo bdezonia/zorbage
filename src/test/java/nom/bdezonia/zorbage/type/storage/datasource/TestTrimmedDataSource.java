@@ -24,87 +24,75 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.TrimmedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestSequencedDataSource {
+public class TestTrimmedDataSource {
 
 	@Test
 	public void test() {
 		SignedInt32Member value = G.INT32.construct();
-		int[] tmp = new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(tmp);
-
-		// test one extreme boundary condition of seq
 		
-		SequencedDataSource<SignedInt32Member> seq = new SequencedDataSource<>(ints, 0, 1, ints.size());
-		assertEquals(ints.size(), seq.size());
-		for (int i = 0; i < ints.size(); i++) {
-			seq.get(i, value);
-			assertEquals(tmp[i],value.v());
-		}
+		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4,5,6,7,8});
+		IndexedDataSource<SignedInt32Member> trimmed;
 		
-		// test another extreme boundary condition of seq
+		trimmed = new TrimmedDataSource<>(ints, 0, 0);
+		assertEquals(1, trimmed.size());
+		trimmed.get(0,  value);
+		assertEquals(1, value.v());
 		
-		seq = new SequencedDataSource<>(ints, 5, 1, 0);
-		assertEquals(0, seq.size());
+		trimmed = new TrimmedDataSource<>(ints, 7, 7);
+		assertEquals(1, trimmed.size());
+		trimmed.get(0,  value);
+		assertEquals(8, value.v());
 		
-		// test frontish to backish with gaps
-		
-		seq = new SequencedDataSource<>(ints, 3, 2, 5);
-		assertEquals(5, seq.size());
-		seq.get(0, value);
+		trimmed = new TrimmedDataSource<>(ints, 0, 4);
+		assertEquals(5, trimmed.size());
+		trimmed.get(0,  value);
+		assertEquals(1, value.v());
+		trimmed.get(1,  value);
+		assertEquals(2, value.v());
+		trimmed.get(2,  value);
 		assertEquals(3, value.v());
-		seq.get(1, value);
+		trimmed.get(3,  value);
+		assertEquals(4, value.v());
+		trimmed.get(4,  value);
 		assertEquals(5, value.v());
-		seq.get(2, value);
-		assertEquals(7, value.v());
-		seq.get(3, value);
-		assertEquals(9, value.v());
-		seq.get(4, value);
-		assertEquals(11, value.v());
-
-		try {
-			seq = new SequencedDataSource<>(ints, 3, 2, 8);
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-
-		// test backish to frontish with gaps
 		
-		seq = new SequencedDataSource<>(ints, 12, -3, 5);
-		assertEquals(5, seq.size());
-		seq.get(0, value);
-		assertEquals(12, value.v());
-		seq.get(1, value);
-		assertEquals(9, value.v());
-		seq.get(2, value);
-		assertEquals(6, value.v());
-		seq.get(3, value);
+		trimmed = new TrimmedDataSource<>(ints, 2, 6);
+		assertEquals(5, trimmed.size());
+		trimmed.get(0,  value);
 		assertEquals(3, value.v());
-		seq.get(4, value);
-		assertEquals(0, value.v());
+		trimmed.get(1,  value);
+		assertEquals(4, value.v());
+		trimmed.get(2,  value);
+		assertEquals(5, value.v());
+		trimmed.get(3,  value);
+		assertEquals(6, value.v());
+		trimmed.get(4,  value);
+		assertEquals(7, value.v());
 		
-		try {
-			seq = new SequencedDataSource<>(ints, 12, -3, 6);
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
+		trimmed = new TrimmedDataSource<>(ints, 4, 6);
+		assertEquals(3, trimmed.size());
+		trimmed.get(0,  value);
+		assertEquals(5, value.v());
+		trimmed.get(1,  value);
+		assertEquals(6, value.v());
+		trimmed.get(2,  value);
+		assertEquals(7, value.v());
 	}
 }

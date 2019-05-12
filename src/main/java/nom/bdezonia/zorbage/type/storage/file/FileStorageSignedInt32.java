@@ -30,9 +30,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt32;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

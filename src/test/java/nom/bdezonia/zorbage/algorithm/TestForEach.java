@@ -32,8 +32,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 public class TestForEach {
 	

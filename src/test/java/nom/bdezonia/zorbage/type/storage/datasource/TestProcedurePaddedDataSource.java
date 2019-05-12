@@ -24,73 +24,63 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.ProcedurePaddedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestTrimmedDataSource {
+public class TestProcedurePaddedDataSource {
 
 	@Test
 	public void test() {
-		SignedInt32Member value = G.INT32.construct();
+
+		SignedInt64Member value = G.INT64.construct();
+		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3});
+		IndexedDataSource<SignedInt64Member> pad = new ProcedurePaddedDataSource<>(G.INT64, longs, func);
 		
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4,5,6,7,8});
-		IndexedDataSource<SignedInt32Member> trimmed;
-		
-		trimmed = new TrimmedDataSource<>(ints, 0, 0);
-		assertEquals(1, trimmed.size());
-		trimmed.get(0,  value);
+		pad.get(0, value);
 		assertEquals(1, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 7, 7);
-		assertEquals(1, trimmed.size());
-		trimmed.get(0,  value);
-		assertEquals(8, value.v());
-		
-		trimmed = new TrimmedDataSource<>(ints, 0, 4);
-		assertEquals(5, trimmed.size());
-		trimmed.get(0,  value);
-		assertEquals(1, value.v());
-		trimmed.get(1,  value);
+		pad.get(1, value);
 		assertEquals(2, value.v());
-		trimmed.get(2,  value);
-		assertEquals(3, value.v());
-		trimmed.get(3,  value);
-		assertEquals(4, value.v());
-		trimmed.get(4,  value);
-		assertEquals(5, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 2, 6);
-		assertEquals(5, trimmed.size());
-		trimmed.get(0,  value);
+		pad.get(2, value);
 		assertEquals(3, value.v());
-		trimmed.get(1,  value);
-		assertEquals(4, value.v());
-		trimmed.get(2,  value);
-		assertEquals(5, value.v());
-		trimmed.get(3,  value);
-		assertEquals(6, value.v());
-		trimmed.get(4,  value);
-		assertEquals(7, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 4, 6);
-		assertEquals(3, trimmed.size());
-		trimmed.get(0,  value);
-		assertEquals(5, value.v());
-		trimmed.get(1,  value);
-		assertEquals(6, value.v());
-		trimmed.get(2,  value);
-		assertEquals(7, value.v());
+		pad.get(-1, value);
+		assertEquals(-1, value.v());
+		
+		pad.get(3, value);
+		assertEquals(3, value.v());
+		
+		pad.get(4, value);
+		assertEquals(4, value.v());
+		
+		pad.get(1000, value);
+		assertEquals(1000, value.v());
+		
+		pad.get(-1000, value);
+		assertEquals(-1000, value.v());
 	}
+	
+	private Procedure2<Long,SignedInt64Member> func = new Procedure2<Long, SignedInt64Member>()
+	{
+		@Override
+		public void call(Long a, SignedInt64Member b) {
+			b.setV(a);
+		}
+	};
 }

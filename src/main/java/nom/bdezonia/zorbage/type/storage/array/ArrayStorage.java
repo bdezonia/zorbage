@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
@@ -43,6 +42,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

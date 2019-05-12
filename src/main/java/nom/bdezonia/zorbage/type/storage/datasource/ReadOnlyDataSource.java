@@ -24,21 +24,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
-
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
  */
-public interface IndexedDataSource<U>
-	extends Duplicatable<IndexedDataSource<U>>
+public class ReadOnlyDataSource<U>
+	implements IndexedDataSource<U>
 {
-	void set(long index, U value);
-	void get(long index, U value);
-	long size();
+	private final IndexedDataSource<U> source;
+	
+	public ReadOnlyDataSource(IndexedDataSource<U> src) {
+		this.source = src;
+	}
+	
+	@Override
+	public ReadOnlyDataSource<U> duplicate() {
+		return new ReadOnlyDataSource<U>(source);
+	}
+
+	@Override
+	public void set(long index, U value) {
+		throw new IllegalArgumentException("cannot write to read only data source");
+	}
+
+	@Override
+	public void get(long index, U value) {
+		source.get(index, value);
+	}
+
+	@Override
+	public long size() {
+		return source.size();
+	}
+
 }

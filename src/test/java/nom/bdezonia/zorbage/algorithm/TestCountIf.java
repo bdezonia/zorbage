@@ -35,8 +35,8 @@ import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

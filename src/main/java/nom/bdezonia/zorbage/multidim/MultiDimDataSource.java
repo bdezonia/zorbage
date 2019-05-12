@@ -36,8 +36,8 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.RawData;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 

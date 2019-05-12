@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+
 /**
  * 
  * @author Barry DeZonia

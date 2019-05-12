@@ -30,8 +30,8 @@ import java.util.Arrays;
 import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 // NOTE: this class can't be thread friendly. One thread can insert a value
 // while another thread is searching structure. Doing so would cause probs

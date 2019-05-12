@@ -24,47 +24,72 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
-
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class GenericWrappedDataSource<T extends Algebra<T,U>,U> implements IndexedDataSource<U> {
+public class SequencedDataSource<U>
+	implements IndexedDataSource<U>
+{
+	private final IndexedDataSource<U> data;
+	private final long start;
+	private final long stride;
+	private final long count;
 
-	private final T algebra;
-	private final U[] data;
-	
-	public GenericWrappedDataSource(T algebra, U[] data) {
-		this.algebra = algebra;
+	/**
+	 * 
+	 * @param data
+	 * @param start
+	 * @param stride
+	 * @param count
+	 */
+	public SequencedDataSource(IndexedDataSource<U> data,long start, long stride, long count) {
 		this.data = data;
+		this.start = start;
+		this.stride = stride;
+		this.count = count;
+		if (count < 0)
+			throw new IllegalArgumentException("count must be >= 1");
+		if (start < 0 || start >= data.size())
+			throw new IllegalArgumentException("start is outside the bounds of the dataset");
+		if (stride == 0)
+			throw new IllegalArgumentException("stride must be nonzero");
+		if (stride > 0) {
+			if ((start + stride*(count-1)) >= data.size())
+				throw new IllegalArgumentException("the specified sequence reaches beyond the end of the dataset");
+		}
+		else {
+			// stride < 0
+			if ((start + stride*(count-1)) < 0)
+				throw new IllegalArgumentException("the specified sequence reaches beyond the beginning of the dataset");
+		}
 	}
 	
 	@Override
-	public IndexedDataSource<U> duplicate() {
-		return new GenericWrappedDataSource<T,U>(algebra, data);
+	public SequencedDataSource<U> duplicate() {
+		// shallow copy
+		return new SequencedDataSource<>(data, start, stride, count);
 	}
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= data.length)
-			throw new IllegalArgumentException("index oob");
-		algebra.assign().call(value, data[(int) index]);
+		if (index < 0 || index >= count)
+			throw new IllegalArgumentException("index out of bounds");
+		data.set(start + stride*index, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= data.length)
-			throw new IllegalArgumentException("index oob");
-		algebra.assign().call(data[(int) index], value);
+		if (index < 0 || index >= count)
+			throw new IllegalArgumentException("index out of bounds");
+		data.get(start + stride*index, value);
 	}
 
 	@Override
 	public long size() {
-		return data.length;
+		return count;
 	}
-	
 }

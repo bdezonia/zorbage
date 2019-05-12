@@ -33,9 +33,9 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBit;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt16;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

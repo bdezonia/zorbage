@@ -24,48 +24,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <T>
+ * @param <U>
  */
-public class TestConcatenatedDataSource {
-
-	@Test
-	public void test() {
-		SignedInt32Member value = G.INT32.construct();
-		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(new int[] {1,2,3});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(new int[] {4,5,6,7,8});
-		IndexedDataSource<SignedInt32Member> c = new ConcatenatedDataSource<>(a,b);
-
-		assertEquals(a.size()+b.size(),c.size());
-		
-		c.get(0, value);
-		assertEquals(1, value.v());
-		c.get(1, value);
-		assertEquals(2, value.v());
-		c.get(2, value);
-		assertEquals(3, value.v());
-		c.get(3, value);
-		assertEquals(4, value.v());
-		c.get(4, value);
-		assertEquals(5, value.v());
-		c.get(5, value);
-		assertEquals(6, value.v());
-		c.get(6, value);
-		assertEquals(7, value.v());
-		c.get(7, value);
-		assertEquals(8, value.v());
-	}
+public interface IndexedDataSource<U>
+	extends Duplicatable<IndexedDataSource<U>>
+{
+	void set(long index, U value);
+	void get(long index, U value);
+	long size();
 }

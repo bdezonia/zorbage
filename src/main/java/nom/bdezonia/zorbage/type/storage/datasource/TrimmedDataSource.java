@@ -24,66 +24,67 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
-import java.math.BigInteger;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConcatenatedDataSource<U>
-	implements IndexedDataSource<U>
+public class TrimmedDataSource<T extends Algebra<T,U>, U>
+	implements
+		IndexedDataSource<U>
 {
-	private final IndexedDataSource<U> first;
-	private final IndexedDataSource<U> second;
-	private final long sz;
-	private final long firstSz;
+	private final IndexedDataSource<U> list;
+	private final long first;
+	private final long last;
 	
 	/**
 	 * 
-	 * @param a
-	 * @param b
+	 * @param list
+	 * @param first
+	 * @param last
 	 */
-	public ConcatenatedDataSource(IndexedDataSource<U> a, IndexedDataSource<U> b) {
-		if (BigInteger.valueOf(a.size()).add(BigInteger.valueOf(b.size())).compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
-			throw new IllegalArgumentException("the two input lists are too long to add together");
-		this.first = a;
-		this.second = b;
-		this.firstSz = a.size();
-		this.sz = firstSz + b.size();
+	public TrimmedDataSource(IndexedDataSource<U> list, long first, long last) {
+		long listSize = list.size();
+		if (first < 0 || last < 0 || first > last || 
+				first >= listSize || last >= listSize ||
+				(last - first) >= listSize)
+			throw new IllegalArgumentException("poor definition of first/last/list size");
+		this.list = list;
+		this.first = first;
+		this.last = last;
 	}
 	
 	@Override
-	public ConcatenatedDataSource<U> duplicate() {
+	public TrimmedDataSource<T,U> duplicate() {
 		// shallow copy
-		return new ConcatenatedDataSource<>(first, second);
+		return new TrimmedDataSource<>(list, first, last);
 	}
 
 	@Override
 	public void set(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		if (index < firstSz)
-			first.set(index, value);
-		else
-			second.set(index-firstSz, value);
+		if (index >= size())
+			throw new IllegalArgumentException("out of bounds index exception");
+		list.set(first+index, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		if (index < firstSz)
-			first.get(index, value);
-		else
-			second.get(index-firstSz, value);
+		if (index >= size())
+			throw new IllegalArgumentException("out of bounds index exception");
+		list.get(first+index, value);
 	}
 
 	@Override
 	public long size() {
-		return sz;
+		return last - first + 1;
 	}
 
 }

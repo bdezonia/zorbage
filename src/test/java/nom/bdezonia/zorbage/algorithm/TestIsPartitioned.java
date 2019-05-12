@@ -38,8 +38,8 @@ import nom.bdezonia.zorbage.predicate.LessThanConstant;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

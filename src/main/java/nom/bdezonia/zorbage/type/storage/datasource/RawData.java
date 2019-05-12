@@ -24,61 +24,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
-
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
 /**
  * 
- * @author Barry DeZonia
+ * @author bdz
  *
  */
-public class TestProcedurePaddedDataSource {
+public interface RawData<U> {
 
-	@Test
-	public void test() {
-
-		SignedInt64Member value = G.INT64.construct();
-		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3});
-		IndexedDataSource<SignedInt64Member> pad = new ProcedurePaddedDataSource<>(G.INT64, longs, func);
-		
-		pad.get(0, value);
-		assertEquals(1, value.v());
-		
-		pad.get(1, value);
-		assertEquals(2, value.v());
-		
-		pad.get(2, value);
-		assertEquals(3, value.v());
-		
-		pad.get(-1, value);
-		assertEquals(-1, value.v());
-		
-		pad.get(3, value);
-		assertEquals(3, value.v());
-		
-		pad.get(4, value);
-		assertEquals(4, value.v());
-		
-		pad.get(1000, value);
-		assertEquals(1000, value.v());
-		
-		pad.get(-1000, value);
-		assertEquals(-1000, value.v());
-	}
+	IndexedDataSource<U> rawData();
 	
-	private Procedure2<Long,SignedInt64Member> func = new Procedure2<Long, SignedInt64Member>()
-	{
-		@Override
-		public void call(Long a, SignedInt64Member b) {
-			b.setV(a);
-		}
-	};
 }

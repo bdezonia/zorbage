@@ -24,67 +24,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.ZeroPaddedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TrimmedDataSource<T extends Algebra<T,U>, U>
-	implements
-		IndexedDataSource<U>
-{
-	private final IndexedDataSource<U> list;
-	private final long first;
-	private final long last;
-	
-	/**
-	 * 
-	 * @param list
-	 * @param first
-	 * @param last
-	 */
-	public TrimmedDataSource(IndexedDataSource<U> list, long first, long last) {
-		long listSize = list.size();
-		if (first < 0 || last < 0 || first > last || 
-				first >= listSize || last >= listSize ||
-				(last - first) >= listSize)
-			throw new IllegalArgumentException("poor definition of first/last/list size");
-		this.list = list;
-		this.first = first;
-		this.last = last;
-	}
-	
-	@Override
-	public TrimmedDataSource<T,U> duplicate() {
-		// shallow copy
-		return new TrimmedDataSource<>(list, first, last);
-	}
+public class TestZeroPaddedDataSource {
 
-	@Override
-	public void set(long index, U value) {
-		if (index < 0)
-			throw new IllegalArgumentException("negative index exception");
-		if (index >= size())
-			throw new IllegalArgumentException("out of bounds index exception");
-		list.set(first+index, value);
-	}
+	@Test
+	public void test() {
+		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
+		IndexedDataSource<SignedInt32Member> padded = new ZeroPaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
+		SignedInt32Member value = G.INT32.construct();
+		
+		assertEquals(ints.size(), padded.size());
+		
+		padded.get(0, value);
+		assertEquals(1, value.v());
+		padded.get(1, value);
+		assertEquals(2, value.v());
+		padded.get(2, value);
+		assertEquals(3, value.v());
+		padded.get(3, value);
+		assertEquals(4, value.v());
 
-	@Override
-	public void get(long index, U value) {
-		if (index < 0)
-			throw new IllegalArgumentException("negative index exception");
-		if (index >= size())
-			throw new IllegalArgumentException("out of bounds index exception");
-		list.get(first+index, value);
+		padded.get(4, value);
+		assertEquals(0, value.v());
+		
+		padded.get(-1, value);
+		assertEquals(0, value.v());
 	}
-
-	@Override
-	public long size() {
-		return last - first + 1;
-	}
-
 }

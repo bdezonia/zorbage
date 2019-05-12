@@ -36,7 +36,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 

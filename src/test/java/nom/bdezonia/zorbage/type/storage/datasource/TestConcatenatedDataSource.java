@@ -24,69 +24,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.storage;
+package nom.bdezonia.zorbage.type.storage.datasource;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.storage.datasource.ConcatenatedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-	implements
-		IndexedDataSource<W>
-{
-	private final IndexedDataSource<U> uCollection;
-	private final Algebra<?,U> uAlg;
-	private final Procedure2<W,U> wToU;
-	private final Procedure2<U,W> uToW;
-	private final long sz;
-	private final ThreadLocal<U> tmpU = new ThreadLocal<U>() {
-		@Override
-		protected U initialValue() {
-			return uAlg.construct();
-		}
-	};
-	
-	/**
-	 * 
-	 * @param uCollection
-	 * @param uAlg
-	 * @param uToW
-	 * @param wToU
-	 */
-	public TransformedDataSource(Algebra<?,U> uAlg, IndexedDataSource<U> uCollection, Procedure2<U,W> uToW, Procedure2<W,U> wToU) {
-		this.uAlg = uAlg;
-		this.uCollection = uCollection;
-		this.uToW = uToW;
-		this.wToU = wToU;
-		this.sz = uCollection.size();
-	}
+public class TestConcatenatedDataSource {
 
-	@Override
-	public TransformedDataSource<T,U,V,W> duplicate() {
-		// shallow copy
-		return new TransformedDataSource<T,U,V,W>(uAlg, uCollection, uToW, wToU);
-	}
+	@Test
+	public void test() {
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(new int[] {1,2,3});
+		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(new int[] {4,5,6,7,8});
+		IndexedDataSource<SignedInt32Member> c = new ConcatenatedDataSource<>(a,b);
 
-	@Override
-	public void set(long index, W value) {
-		U tmp = tmpU.get();
-		wToU.call(value, tmp);
-		uCollection.set(index, tmp);
-	}
-
-	@Override
-	public void get(long index, W value) {
-		U tmp = tmpU.get();
-		uCollection.get(index, tmp);
-		uToW.call(tmp, value);
-	}
-
-	@Override
-	public long size() {
-		return sz;
+		assertEquals(a.size()+b.size(),c.size());
+		
+		c.get(0, value);
+		assertEquals(1, value.v());
+		c.get(1, value);
+		assertEquals(2, value.v());
+		c.get(2, value);
+		assertEquals(3, value.v());
+		c.get(3, value);
+		assertEquals(4, value.v());
+		c.get(4, value);
+		assertEquals(5, value.v());
+		c.get(5, value);
+		assertEquals(6, value.v());
+		c.get(6, value);
+		assertEquals(7, value.v());
+		c.get(7, value);
+		assertEquals(8, value.v());
 	}
 }
