@@ -30,8 +30,12 @@ import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -39,33 +43,41 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Variance {
+public class NanStdDev {
 
-	private Variance() {}
+	private NanStdDev() {}
 	
 	/**
 	 * 
-	 * @param alg
 	 * @param storage
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> &
-								Invertible<U> & Ordered<U>, U>
+								Invertible<U> & Roots<U> & Ordered<U> & NaN<U>,
+					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		long storageSize = storage.size();
-		if (storageSize == 0 || storageSize == 1) {
-			alg.zero().call(result);
-			return;
+		U value = alg.construct();
+		long valueCount = 0;
+		long sz = storage.size();
+		for (long i = 0; i < sz; i++) {
+			storage.get(i, value);
+			if (!alg.isNaN().call(value))
+				valueCount++;
 		}
-		U avg = alg.construct();
-		U sum = alg.construct();
-		U count = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
-		Mean.compute(alg, storage, avg);
-		SumSquareCount.compute(alg, storage, avg, sum, count);
-		alg.subtract().call(count, one, count);
-		alg.divide().call(sum, count, result);
+		if (valueCount == 0)
+			alg.nan().call(result);
+		else {
+			IndexedDataSource<U> filteredValues = Storage.allocate(valueCount, result);
+			valueCount = 0;
+			for (long i = 0; i < sz; i++) {
+				storage.get(i, value);
+				if (!alg.isNaN().call(value)) {
+					filteredValues.set(valueCount, value);
+					valueCount++;
+				}
+			}
+			StdDev.compute(alg, filteredValues, result);
+		}
 	}
 }
