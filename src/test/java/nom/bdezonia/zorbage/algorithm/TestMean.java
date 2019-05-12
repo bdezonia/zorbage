@@ -40,14 +40,14 @@ import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
  * @author Barry DeZonia
  *
  */
-public class TestAvg {
+public class TestMean {
 
 	@Test
 	public void test() {
 		IndexedDataSource<Float64Member> storage =
 				ArrayStorage.allocateDoubles(new double[]{0,1,2,3,4,5,6,7,8,9});
 		Float64Member result = new Float64Member();
-		Average.compute(G.DBL, storage, result);
+		Mean.compute(G.DBL, storage, result);
 		assertEquals(4.5, result.v(), 0);
 	}
 }

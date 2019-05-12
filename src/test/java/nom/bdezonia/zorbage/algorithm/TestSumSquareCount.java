@@ -91,7 +91,7 @@ public class TestSumSquareCount {
 		Float64Member sumSqDevs = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
 		Float64Member avg = G.DBL.construct();
-		Average.compute(G.DBL, data, avg);
+		Mean.compute(G.DBL, data, avg);
 		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
 		double expSumSq = 0;
 		for (int i = 0; i < nums.length; i++) {

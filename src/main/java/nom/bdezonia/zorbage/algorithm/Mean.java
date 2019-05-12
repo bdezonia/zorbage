@@ -37,9 +37,9 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Average {
+public class Mean {
 
-	private Average() {}
+	private Mean() {}
 
 	/**
 	 * @param alg

@@ -145,7 +145,7 @@ public class SumSquareCount {
 		U sumYsq = alg.construct();
 		U min = alg.construct();
 		U max = alg.construct();
-		Average.compute(alg, storage, a);
+		Mean.compute(alg, storage, a);
 		
 		alg.add().call(cnt, one, cnt);
 		storage.get(0, val);
