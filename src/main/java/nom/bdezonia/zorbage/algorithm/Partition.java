@@ -26,13 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.predicate.Predicate;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -40,23 +35,45 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestNanMinMaxElement {
+public class Partition {
 
-	@Test
-	public void test() {
-		Float64Member min = G.DBL.construct();
-		Float64Member max = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = null;
-		
-		storage = ArrayStorage.allocateDoubles(new double[]{-16,20,7,-55,0,1,5,74,44,13});
-		NanMinMaxElement.compute(G.DBL, storage, min, max);
-		assertEquals(-55, min.v(), 0);
-		assertEquals(74, max.v(), 0);
-		
-		storage = ArrayStorage.allocateDoubles(new double[]{Double.NaN,-16,20,7,Double.NaN,-55,0,1,Double.NaN,5,74,44,13,Double.NaN});
-		NanMinMaxElement.compute(G.DBL, storage, min, max);
-		assertEquals(-55, min.v(), 0);
-		assertEquals(74, max.v(), 0);
+	private Partition() { }
+	
+	/**
+	 * Note: not a stable partition
+	 * 
+	 * @param alg
+	 * @param cond
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	{
+		U tmp1 = alg.construct();
+		U tmp2 = alg.construct();
+		if (a != b)
+			Copy.compute(alg, a, b);
+		long first = 0;
+		long last = b.size();
+		while (first < last) {
+			b.get(first, tmp1);
+			while (cond.isTrue(tmp1)) {
+				first++;
+				if (first==last) return;
+				b.get(first, tmp1);
+			}
+			do {
+				last--;
+				if (first==last) return;
+				b.get(last, tmp1);
+			} while (!cond.isTrue(tmp1));
+			// swap first and last
+			b.get(first, tmp1);
+			b.get(last, tmp2);
+			b.set(first, tmp2);
+			b.set(last, tmp1);
+			first++;
+		}
 	}
-
 }
