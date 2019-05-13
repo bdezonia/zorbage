@@ -40,7 +40,13 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class NonNanValues {
 
 	private NonNanValues() { }
-		
+
+	/**
+	 * 
+	 * @param alg
+	 * @param storage
+	 * @return
+	 */
 	public static <T extends Algebra<T,U> & NaN<U>,
 					U extends Allocatable<U>>
 		IndexedDataSource<U> compute(T alg, IndexedDataSource<U> storage)

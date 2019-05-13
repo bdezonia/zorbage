@@ -40,7 +40,13 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class Accumulate {
 
 	private Accumulate() {}
-	
+
+	/**
+	 * 
+	 * @param alg
+	 * @param src
+	 * @param sum
+	 */
 	public static <T extends Algebra<T,U>, U extends HighPrecRepresentation>
 		void compute(T alg, IndexedDataSource<U> src, HighPrecisionMember sum)
 	{
