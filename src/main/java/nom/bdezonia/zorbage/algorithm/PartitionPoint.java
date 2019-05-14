@@ -35,19 +35,34 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class StablePartition {
+public class PartitionPoint {
 
 	/**
 	 * 
 	 * @param alg
 	 * @param cond
-	 * @param a
-	 * @param b
+	 * @param storage
+	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		long compute(T alg, Predicate<U> cond, IndexedDataSource<U> storage)
 	{
-		throw new IllegalArgumentException("not written yet");
+		U value = alg.construct();
+		long n = storage.size();
+		long first = 0;
+		while (n>0)
+		{
+			long it = first;
+			long step = n/2;
+			it += step;
+			storage.get(it, value);
+			if (cond.isTrue(value)){
+				first = it+ 1;
+				n -= step+1;
+			}
+			else
+				n = step;
+		}
+		return first;
 	}
-	
 }

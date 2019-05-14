@@ -26,8 +26,16 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.predicate.Predicate;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -35,19 +43,21 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class StablePartition {
+public class TestPartitionPoint {
 
-	/**
-	 * 
-	 * @param alg
-	 * @param cond
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
-		throw new IllegalArgumentException("not written yet");
+	@Test
+	public void test() {
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+				new double[] {1,7,9,3,4,1,2,7,0,5,3,8});
+		Predicate<Float64Member> cond = new Predicate<Float64Member>() {
+			@Override
+			public boolean isTrue(Float64Member value) {
+				return value.v() < 4;
+			}
+		};
+		assertFalse(IsPartitioned.compute(G.DBL, cond, nums));
+		Partition.compute(G.DBL, cond, nums, nums);
+		assertTrue(IsPartitioned.compute(G.DBL, cond, nums));
+		assertEquals(6, PartitionPoint.compute(G.DBL, cond, nums));
 	}
-	
 }
