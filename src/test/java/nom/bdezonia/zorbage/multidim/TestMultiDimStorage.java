@@ -44,7 +44,7 @@ public class TestMultiDimStorage {
 	@Test
 	public void test() {
 		MultiDimDataSource<SignedInt3Algebra, SignedInt3Member> data =
-				MultiDimStorage.allocate(new long[] {25, 45,10}, G.INT3.construct());
+				MultiDimStorage.allocate(new long[] {25,45,10}, G.INT3.construct());
 		assertEquals(3, data.numDimensions());
 		assertEquals(25, data.dimension(0));
 		assertEquals(45, data.dimension(1));

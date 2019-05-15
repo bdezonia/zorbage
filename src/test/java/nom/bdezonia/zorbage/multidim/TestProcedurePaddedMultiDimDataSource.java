@@ -78,46 +78,55 @@ public class TestProcedurePaddedMultiDimDataSource {
 		
 		// out of bounds
 		
+		value.setV(0);
 		idx.set(0,-1);
 		idx.set(1,0);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,2);
 		idx.set(1,0);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,-1);
 		idx.set(1,1);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,2);
 		idx.set(1,1);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,0);
 		idx.set(1,-1);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,0);
 		idx.set(1,2);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,1);
 		idx.set(1,-1);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,1);
 		idx.set(1,2);
 		pad.get(idx, value);
 		assertEquals(1000,value.v());
 		
+		value.setV(0);
 		idx.set(0,1000000);
 		idx.set(1,-500000);
 		pad.get(idx, value);
