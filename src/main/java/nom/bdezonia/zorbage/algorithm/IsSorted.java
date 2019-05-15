@@ -53,17 +53,15 @@ public class IsSorted {
 		
 		if (sz < 2) return true;
 		
-		long i = 0;
+		long i = 1;
 		
 		storage.get(0, value1);
-		storage.get(1, value2);
 
-		while (i < sz-1) {
+		while (i < sz) {
+			storage.get(i, value2);
 			if (alg.isGreater().call(value1, value2))
 				return false;
 			alg.assign().call(value2, value1);
-			if (i+2 < sz)
-				storage.get(i+2, value2);
 			i++;
 		}
 		
