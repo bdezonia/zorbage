@@ -48,5 +48,6 @@ public class TestMultiDimStorage {
 		assertEquals(25, data.dimension(0));
 		assertEquals(45, data.dimension(1));
 		assertEquals(10, data.dimension(2));
+		assertEquals(25*45*10, data.rawData().size());
 	}
 }
