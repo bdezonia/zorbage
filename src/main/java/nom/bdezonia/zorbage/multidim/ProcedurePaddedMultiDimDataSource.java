@@ -43,7 +43,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	implements Dimensioned, RawData<U>
 {
 	private final T algebra;
-	private final MultiDimDataSource<?,U> md;
+	private final MultiDimDataSource<U> md;
 	private final Procedure2<IntegerIndex,U> proc;
 	private final ThreadLocal<U> tmp;
 	
@@ -53,7 +53,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	 * @param md
 	 * @param proc
 	 */
-	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<?,U> md, Procedure2<IntegerIndex,U> proc) {
+	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<U> md, Procedure2<IntegerIndex,U> proc) {
 		this.algebra = alg;
 		this.md = md;
 		this.proc = proc;

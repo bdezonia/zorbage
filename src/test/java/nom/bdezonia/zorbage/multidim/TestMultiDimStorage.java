@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int3.SignedInt3Algebra;
 import nom.bdezonia.zorbage.type.data.int3.SignedInt3Member;
 
 /**
@@ -43,7 +42,7 @@ public class TestMultiDimStorage {
 
 	@Test
 	public void test() {
-		MultiDimDataSource<SignedInt3Algebra, SignedInt3Member> data =
+		MultiDimDataSource<SignedInt3Member> data =
 				MultiDimStorage.allocate(new long[] {25,45,10}, G.INT3.construct());
 		assertEquals(3, data.numDimensions());
 		assertEquals(25, data.dimension(0));

@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.SequencedDataSource;
  */
 public class PipedDataSource<U> implements IndexedDataSource<U> {
 
-	private final MultiDimDataSource<?,U> d;
+	private final MultiDimDataSource<U> d;
 	private final int dim;
 	private final long[] parentDims;
 	private final IntegerIndex coords;
@@ -52,7 +52,7 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 	 * @param dim
 	 * @param coords
 	 */
-	public PipedDataSource(MultiDimDataSource<?,U> d, int dim, IntegerIndex coords) {
+	public PipedDataSource(MultiDimDataSource<U> d, int dim, IntegerIndex coords) {
 		if (coords.numDimensions() != d.numDimensions())
 			throw new IllegalArgumentException("coordinate does not match dimensionality of multidim data");
 		if (dim < 0 || dim >= coords.numDimensions())

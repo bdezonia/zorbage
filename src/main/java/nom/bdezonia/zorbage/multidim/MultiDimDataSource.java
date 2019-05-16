@@ -33,7 +33,6 @@ import nom.bdezonia.zorbage.axis.IdentityAxis;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -44,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public class MultiDimDataSource<T extends Algebra<T,U>,U>
+public class MultiDimDataSource<U>
 	implements Dimensioned, RawData<U>
 {
 	private final List<Procedure2<Long,HighPrecisionMember>> axes;

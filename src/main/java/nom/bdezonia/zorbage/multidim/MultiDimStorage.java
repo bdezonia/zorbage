@@ -47,11 +47,11 @@ public class MultiDimStorage {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		MultiDimDataSource<T,U> allocate(long[] dims, U type)
+		MultiDimDataSource<U> allocate(long[] dims, U type)
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(numElements, type);
-		return new MultiDimDataSource<T,U>(dims, data);
+		return new MultiDimDataSource<U>(dims, data);
 	}
 
 	/**
@@ -62,10 +62,10 @@ public class MultiDimStorage {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		MultiDimDataSource<T,U> allocate(StorageConstruction strategy, long[] dims, U type)
+		MultiDimDataSource<U> allocate(StorageConstruction strategy, long[] dims, U type)
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(strategy, numElements, type);
-		return new MultiDimDataSource<T,U>(dims, data);
+		return new MultiDimDataSource<U>(dims, data);
 	}
 }
