@@ -56,7 +56,7 @@ public class TestPartitionPoint {
 			}
 		};
 		assertFalse(IsPartitioned.compute(G.DBL, cond, nums));
-		Partition.compute(G.DBL, cond, nums, nums);
+		Partition.compute(G.DBL, cond, nums);
 		assertTrue(IsPartitioned.compute(G.DBL, cond, nums));
 		assertEquals(6, PartitionPoint.compute(G.DBL, cond, nums));
 	}

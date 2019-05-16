@@ -42,10 +42,9 @@ public class StablePartition {
 	 * @param alg
 	 * @param cond
 	 * @param a
-	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a)
 	{
 		throw new IllegalArgumentException("not written yet");
 	}

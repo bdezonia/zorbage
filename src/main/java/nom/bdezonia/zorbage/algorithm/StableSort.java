@@ -40,10 +40,9 @@ public class StableSort {
 	 * 
 	 * @param alg
 	 * @param a
-	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T alg, IndexedDataSource<U> a)
 	{
 		throw new IllegalArgumentException("not written yet");
 	}

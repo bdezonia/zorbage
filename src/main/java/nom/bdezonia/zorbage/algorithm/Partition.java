@@ -45,34 +45,31 @@ public class Partition {
 	 * @param alg
 	 * @param cond
 	 * @param a
-	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a)
 	{
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();
-		if (a != b)
-			Copy.compute(alg, a, b);
 		long first = 0;
-		long last = b.size();
+		long last = a.size();
 		while (first < last) {
-			b.get(first, tmp1);
+			a.get(first, tmp1);
 			while (cond.isTrue(tmp1)) {
 				first++;
 				if (first==last) return;
-				b.get(first, tmp1);
+				a.get(first, tmp1);
 			}
 			do {
 				last--;
 				if (first==last) return;
-				b.get(last, tmp1);
+				a.get(last, tmp1);
 			} while (!cond.isTrue(tmp1));
 			// swap first and last
-			b.get(first, tmp1);
-			b.get(last, tmp2);
-			b.set(first, tmp2);
-			b.set(last, tmp1);
+			a.get(first, tmp1);
+			a.get(last, tmp2);
+			a.set(first, tmp2);
+			a.set(last, tmp1);
 			first++;
 		}
 	}
