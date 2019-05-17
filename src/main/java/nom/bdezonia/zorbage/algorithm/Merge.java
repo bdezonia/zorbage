@@ -69,11 +69,13 @@ public class Merge {
 				
 				if (ai >= aSize) {
 					alg.assign().call(tmpB, tmp);
-					b.get(++bi, tmpB);
+					if (bi < bSize-1)
+						b.get(++bi, tmpB);
 				}
 				else if (bi >= bSize) {
 					alg.assign().call(tmpA, tmp);
-					a.get(++ai, tmpA);
+					if (ai < aSize-1)
+						a.get(++ai, tmpA);
 				}
 				else {
 					if (alg.isLessEqual().call(tmpA, tmpB)) {
@@ -86,7 +88,7 @@ public class Merge {
 						alg.assign().call(tmpB, tmp);
 						bi++;
 						if (bi < bSize)
-							a.get(bi, tmpB);
+							b.get(bi, tmpB);
 					}
 				}
 				
