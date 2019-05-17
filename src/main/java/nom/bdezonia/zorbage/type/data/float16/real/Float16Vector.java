@@ -141,7 +141,7 @@ public class Float16Vector
 	{
 		@Override
 		public Boolean call(Float16VectorMember a, Float16VectorMember b) {
-			return RModuleIsEqual.compute(G.HLF, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.HLF, a, b);
 		}
 	};
 

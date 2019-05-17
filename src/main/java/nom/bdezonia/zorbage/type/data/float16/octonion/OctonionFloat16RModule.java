@@ -143,7 +143,7 @@ public class OctonionFloat16RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
-			return RModuleIsEqual.compute(G.OHLF, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.OHLF, a, b);
 		}
 	};
 

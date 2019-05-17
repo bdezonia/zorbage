@@ -143,7 +143,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
-			return RModuleIsEqual.compute(G.CHLF, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.CHLF, a, b);
 		}
 	};
 

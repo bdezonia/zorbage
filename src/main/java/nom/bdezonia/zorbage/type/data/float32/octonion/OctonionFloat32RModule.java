@@ -143,7 +143,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
-			return RModuleIsEqual.compute(G.OFLT, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.OFLT, a, b);
 		}
 	};
 

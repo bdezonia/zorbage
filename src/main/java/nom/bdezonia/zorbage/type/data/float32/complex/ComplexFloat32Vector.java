@@ -143,7 +143,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
-			return RModuleIsEqual.compute(G.CFLT, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.CFLT, a, b);
 		}
 	};
 

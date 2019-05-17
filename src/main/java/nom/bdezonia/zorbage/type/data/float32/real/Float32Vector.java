@@ -141,7 +141,7 @@ public class Float32Vector
 	{
 		@Override
 		public Boolean call(Float32VectorMember a, Float32VectorMember b) {
-			return RModuleIsEqual.compute(G.FLT, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.FLT, a, b);
 		}
 	};
 

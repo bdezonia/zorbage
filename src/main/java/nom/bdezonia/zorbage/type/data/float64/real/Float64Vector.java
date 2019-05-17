@@ -141,7 +141,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a, Float64VectorMember b) {
-			return RModuleIsEqual.compute(G.DBL, a, b);
+			return (Boolean) RModuleIsEqual.compute(G.DBL, a, b);
 		}
 	};
 
