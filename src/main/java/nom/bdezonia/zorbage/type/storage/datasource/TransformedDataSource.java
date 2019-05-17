@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
+public class TransformedDataSource<U,W>
 	implements
 		IndexedDataSource<W>
 {
@@ -66,9 +66,9 @@ public class TransformedDataSource<T extends Algebra<T,U>, U, V extends Algebra<
 	}
 
 	@Override
-	public TransformedDataSource<T,U,V,W> duplicate() {
+	public TransformedDataSource<U,W> duplicate() {
 		// shallow copy
-		return new TransformedDataSource<T,U,V,W>(uAlg, uCollection, uToW, wToU);
+		return new TransformedDataSource<U,W>(uAlg, uCollection, uToW, wToU);
 	}
 
 	@Override

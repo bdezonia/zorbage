@@ -48,7 +48,7 @@ public class TestTransformedDataSource {
 	@Test
 	public void test1() {
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
+		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			wrappedData.get(i, value);
@@ -65,7 +65,7 @@ public class TestTransformedDataSource {
 	@Test
 	public void test2() {
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dbl, half);
+		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dbl, half);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			doubles.get(i, value);
@@ -86,7 +86,7 @@ public class TestTransformedDataSource {
 	@Test
 	public void test3() {
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource<?,Float64Member,?,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
+		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
 		IndexedDataSource<Float64Member> dupe = wrappedData.duplicate();
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
@@ -98,7 +98,7 @@ public class TestTransformedDataSource {
 	@Test
 	public void test4() {
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		TransformedDataSource<?,Float64Member,?,SignedInt32Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dblToInt, intToDbl);
+		TransformedDataSource<Float64Member,SignedInt32Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dblToInt, intToDbl);
 		SignedInt32Member value = G.INT32.construct();
 		for (long i = 0; i < doubles.size(); i++) {
 			wrappedData.get(i, value);
