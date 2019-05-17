@@ -96,7 +96,10 @@ What can I do with Zorbage?
     constants, input variable references, E, PI, and typical functions like
     sin(), atan(), exp(), log(), etc.
 
-Programming note
+Programming notes
 
-  Zorbage has been compiled and tested with Java 8
-  Zorbage has been compiled with Java 7
+  Java 8 info
+    Zorbage has been compiled and tested using Eclipse and using Maven with OpenJDK
+
+  Java 7 info
+    Zorbage has been compiled using Eclipse with Oracle Java
