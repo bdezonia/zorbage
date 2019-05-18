@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Merge {
 
+	private Merge() { }
+	
 	/**
 	 * Merge two sorted lists into a third sorted list
 	 * 
@@ -53,46 +55,35 @@ public class Merge {
 		long cSize = c.size();
 		if (aSize+bSize != cSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-		if (aSize == 0)
-			Copy.compute(alg, b, c);
-		else if (bSize == 0)
-			Copy.compute(alg, a, c);
-		else {
-			long ai = 0;
-			long bi = 0;
-			U tmpA = alg.construct();
-			U tmpB = alg.construct();
-			U tmp = alg.construct();
+		long ai = 0;
+		long bi = 0;
+		long ci = 0;
+		U tmpA = alg.construct();
+		U tmpB = alg.construct();
+		while (true) {
+			if (ai >= aSize) {
+				for (long i = bi; i < bSize; i++) {
+					b.get(i, tmpB);
+					c.set(ci++, tmpB);
+				}
+				return;
+			}
+			if (bi >= bSize) {
+				for (long i = ai; i < aSize; i++) {
+					a.get(i, tmpA);
+					c.set(ci++, tmpA);
+				}
+				return;
+			}
 			a.get(ai, tmpA);
 			b.get(bi, tmpB);
-			for (long i = 0; i < cSize; i++) {
-				
-				if (ai >= aSize) {
-					alg.assign().call(tmpB, tmp);
-					if (bi < bSize-1)
-						b.get(++bi, tmpB);
-				}
-				else if (bi >= bSize) {
-					alg.assign().call(tmpA, tmp);
-					if (ai < aSize-1)
-						a.get(++ai, tmpA);
-				}
-				else {
-					if (alg.isLessEqual().call(tmpA, tmpB)) {
-						alg.assign().call(tmpA, tmp);
-						ai++;
-						if (ai < aSize)
-							a.get(ai, tmpA);
-					}
-					else {
-						alg.assign().call(tmpB, tmp);
-						bi++;
-						if (bi < bSize)
-							b.get(bi, tmpB);
-					}
-				}
-				
-				c.set(i, tmp);
+			if (alg.isLess().call(tmpA, tmpB)) {
+				ai++;
+				c.set(ci++, tmpA);
+			}
+			else {
+				bi++;
+				c.set(ci++, tmpB);
 			}
 		}
 	}
