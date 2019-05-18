@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -717,14 +718,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64TensorProductMember a) {
-			Float64Member value = G.DBL.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				if (!G.DBL.isZero().call(value))
-					return false;
-			}
-			return true;
+			return SequenceIsZero.compute(G.DBL, a.rawData());
 		}
 	};
 
