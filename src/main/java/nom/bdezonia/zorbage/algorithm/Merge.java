@@ -60,6 +60,8 @@ public class Merge {
 		long ci = 0;
 		U tmpA = alg.construct();
 		U tmpB = alg.construct();
+		boolean mustLoadA = true;
+		boolean mustLoadB = true;
 		while (true) {
 			if (ai >= aSize) {
 				for (long i = bi; i < bSize; i++) {
@@ -75,15 +77,23 @@ public class Merge {
 				}
 				return;
 			}
-			a.get(ai, tmpA);
-			b.get(bi, tmpB);
-			if (alg.isLess().call(tmpA, tmpB)) {
-				ai++;
-				c.set(ci++, tmpA);
+			if (mustLoadA) {
+				a.get(ai, tmpA);
+				mustLoadA = false;
 			}
-			else {
+			if (mustLoadB) {
+				b.get(bi, tmpB);
+				mustLoadB = false;
+			}
+			if (alg.isLess().call(tmpB, tmpA)) {
 				bi++;
 				c.set(ci++, tmpB);
+				mustLoadB = true;
+			}
+			else {
+				ai++;
+				c.set(ci++, tmpA);
+				mustLoadA = true;
 			}
 		}
 	}
