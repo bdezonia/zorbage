@@ -26,40 +26,35 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RModuleIsEqual {
+public class TestRModuleEqual {
 
-	private RModuleIsEqual() {
-		// do not instantiate
-	}
-	
-	/**
-	 * 
-	 * @param memberAlgebra
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static <T extends Algebra<T,V>, U extends RModuleMember<V>, V>
-		boolean compute(T memberAlgebra, U a, U b)
-	{
-		if (a.length() != b.length())
-			return false;
-		V aTmp = memberAlgebra.construct();
-		V bTmp = memberAlgebra.construct();
-		for (long i = 0; i < a.length(); i++) {
-			a.v(i, aTmp);
-			b.v(i, bTmp);
-			if (memberAlgebra.isNotEqual().call(aTmp, bTmp))
-				return false;
-		}
-		return true;
+	@Test
+	public void test() {
+		
+		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
+		Float64VectorMember b = new Float64VectorMember(new double[] {});
+		Float64VectorMember c = new Float64VectorMember(new double[] {1});
+		Float64VectorMember d = new Float64VectorMember(new double[] {1,2});
+		Float64VectorMember e = new Float64VectorMember(new double[] {1,2,3});
+		Float64VectorMember f = new Float64VectorMember(new double[] {1,2,3,4});
+		
+		assertFalse(RModuleEqual.compute(G.DBL, a, b));
+		assertFalse(RModuleEqual.compute(G.DBL, a, c));
+		assertFalse(RModuleEqual.compute(G.DBL, a, d));
+		assertTrue(RModuleEqual.compute(G.DBL, a, e));
+		assertFalse(RModuleEqual.compute(G.DBL, a, f));
 	}
 }

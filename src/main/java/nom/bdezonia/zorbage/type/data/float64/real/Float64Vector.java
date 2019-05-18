@@ -34,8 +34,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
-import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
-import nom.bdezonia.zorbage.algorithm.RModuleIsZero;
+import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
@@ -44,6 +43,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -141,7 +141,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a, Float64VectorMember b) {
-			return (Boolean) RModuleIsEqual.compute(G.DBL, a, b);
+			return (Boolean) RModuleEqual.compute(G.DBL, a, b);
 		}
 	};
 
@@ -424,7 +424,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a) {
-			return RModuleIsZero.compute(G.DBL, a);
+			return SequenceIsZero.compute(G.DBL, a.rawData());
 		}
 	};
 

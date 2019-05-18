@@ -35,14 +35,14 @@ import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
-import nom.bdezonia.zorbage.algorithm.RModuleIsEqual;
-import nom.bdezonia.zorbage.algorithm.RModuleIsZero;
+import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
+import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -143,7 +143,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
-			return (Boolean) RModuleIsEqual.compute(G.CFLT, a, b);
+			return (Boolean) RModuleEqual.compute(G.CFLT, a, b);
 		}
 	};
 
@@ -436,7 +436,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat32VectorMember a) {
-			return RModuleIsZero.compute(G.CFLT, a);
+			return SequenceIsZero.compute(G.CFLT, a.rawData());
 		}
 	};
 

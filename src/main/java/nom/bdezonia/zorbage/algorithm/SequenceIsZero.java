@@ -26,35 +26,36 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestRModuleIsEqual {
+public class SequenceIsZero {
 
-	@Test
-	public void test() {
-		
-		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
-		Float64VectorMember b = new Float64VectorMember(new double[] {});
-		Float64VectorMember c = new Float64VectorMember(new double[] {1});
-		Float64VectorMember d = new Float64VectorMember(new double[] {1,2});
-		Float64VectorMember e = new Float64VectorMember(new double[] {1,2,3});
-		Float64VectorMember f = new Float64VectorMember(new double[] {1,2,3,4});
-		
-		assertFalse(RModuleIsEqual.compute(G.DBL, a, b));
-		assertFalse(RModuleIsEqual.compute(G.DBL, a, c));
-		assertFalse(RModuleIsEqual.compute(G.DBL, a, d));
-		assertTrue(RModuleIsEqual.compute(G.DBL, a, e));
-		assertFalse(RModuleIsEqual.compute(G.DBL, a, f));
+	private SequenceIsZero() {}
+
+	/**
+	 * 
+	 * @param algebra
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Algebra<T,U>, U>
+		boolean compute(T algebra, IndexedDataSource<U> a)
+	{
+		// the 1st nonzero found makes the seq = nonzero. so return right away.
+		U value = algebra.construct();
+		long size = a.size();
+		for (long i = 0; i < size; i++) {
+			a.get(i, value);
+			if (!algebra.isZero().call(value)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

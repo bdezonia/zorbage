@@ -27,33 +27,38 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MatrixIsZero {
+public class RModuleEqual {
 
-	private MatrixIsZero() { }
+	private RModuleEqual() {
+		// do not instantiate
+	}
 	
 	/**
 	 * 
-	 * @param algebra
+	 * @param memberAlgebra
 	 * @param a
+	 * @param b
 	 * @return
 	 */
-	public static <T extends Algebra<T,U>,U>
-		boolean compute(T algebra, MatrixMember<U> a)
+	public static <T extends Algebra<T,V>, U extends RModuleMember<V>, V>
+		boolean compute(T memberAlgebra, U a, U b)
 	{
-		U value = algebra.construct();
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.v(r, c, value);
-				if (!algebra.isZero().call(value))
-					return false;
-			}
+		if (a.length() != b.length())
+			return false;
+		V aTmp = memberAlgebra.construct();
+		V bTmp = memberAlgebra.construct();
+		for (long i = 0; i < a.length(); i++) {
+			a.v(i, aTmp);
+			b.v(i, bTmp);
+			if (memberAlgebra.isNotEqual().call(aTmp, bTmp))
+				return false;
 		}
 		return true;
 	}
