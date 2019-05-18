@@ -76,7 +76,8 @@ What can I do with Zorbage?
     vectors, matrices, and tensors.
   
   You can use a number of predefined STL-like algorithms plus predefined
-    vector and matrix algorithms.
+    vector and matrix algorithms. There are approximately 200 of them in
+    total.
   
   You can use existing parallel algorithms for quickly processing data.
   
@@ -99,7 +100,10 @@ What can I do with Zorbage?
 Programming notes
 
   Java 8 info
-    Zorbage has been compiled and tested using Eclipse and using Maven with OpenJDK
+    Zorbage has been compiled and tested using Maven with OpenJDK Java on Linux
 
   Java 7 info
-    Zorbage has been compiled using Eclipse with Oracle Java
+    Zorbage has been compiled and tested using Maven with Oracle Java on MacOS
+
+  Eclipse info
+    Zorbage has also been compiled and tested within Eclipse versions Neon and Oxygen
