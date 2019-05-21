@@ -106,4 +106,5 @@ Programming notes
     Zorbage has been compiled and tested using Maven with Oracle Java on MacOS
 
   Eclipse info
-    Zorbage has also been compiled and tested within Eclipse versions Neon and Oxygen
+    Zorbage has also been compiled and tested within Eclipse versions Mars,
+      Neon, and Oxygen
