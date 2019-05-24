@@ -64,8 +64,8 @@ public class TestFFT {
 				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start1,inc1);
 		Ramp<SignedInt32Algebra, SignedInt32Member> ramp2 =
 				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start2,inc2);
-		TrimmedDataSource<SignedInt32Member> tr1 = new TrimmedDataSource<>(poly1, 0, 2);
-		TrimmedDataSource<SignedInt32Member> tr2 = new TrimmedDataSource<>(poly2, 0, 2);
+		TrimmedDataSource<SignedInt32Member> tr1 = new TrimmedDataSource<>(poly1, 0, 3);
+		TrimmedDataSource<SignedInt32Member> tr2 = new TrimmedDataSource<>(poly2, 0, 3);
 		Fill.compute(G.INT32, ramp1, tr1);
 		Fill.compute(G.INT32, ramp2, tr2);
 		long n = FFT.enclosingPowerOf2(poly1.size());

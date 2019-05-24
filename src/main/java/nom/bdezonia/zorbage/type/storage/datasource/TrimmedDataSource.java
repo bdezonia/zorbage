@@ -37,29 +37,29 @@ public class TrimmedDataSource<U>
 {
 	private final IndexedDataSource<U> list;
 	private final long first;
-	private final long last;
+	private final long count;
 	
 	/**
 	 * 
 	 * @param list
 	 * @param first
-	 * @param last
+	 * @param count
 	 */
-	public TrimmedDataSource(IndexedDataSource<U> list, long first, long last) {
+	public TrimmedDataSource(IndexedDataSource<U> list, long first, long count) {
 		long listSize = list.size();
-		if (first < 0 || last < 0 || first > last || 
-				first >= listSize || last >= listSize ||
-				(last - first) >= listSize)
-			throw new IllegalArgumentException("poor definition of first/last/list size");
+		if (first < 0 || count < 0 || 
+				first >= listSize || count >= listSize ||
+				(first + count) > listSize)
+			throw new IllegalArgumentException("poor definition of first/count/list size");
 		this.list = list;
 		this.first = first;
-		this.last = last;
+		this.count = count;
 	}
 	
 	@Override
 	public TrimmedDataSource<U> duplicate() {
 		// shallow copy
-		return new TrimmedDataSource<>(list, first, last);
+		return new TrimmedDataSource<>(list, first, count);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class TrimmedDataSource<U>
 
 	@Override
 	public long size() {
-		return last - first + 1;
+		return count;
 	}
 
 }

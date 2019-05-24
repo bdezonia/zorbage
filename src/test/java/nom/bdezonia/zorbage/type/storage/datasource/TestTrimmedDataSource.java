@@ -50,17 +50,17 @@ public class TestTrimmedDataSource {
 		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4,5,6,7,8});
 		IndexedDataSource<SignedInt32Member> trimmed;
 		
-		trimmed = new TrimmedDataSource<>(ints, 0, 0);
+		trimmed = new TrimmedDataSource<>(ints, 0, 1);
 		assertEquals(1, trimmed.size());
 		trimmed.get(0,  value);
 		assertEquals(1, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 7, 7);
+		trimmed = new TrimmedDataSource<>(ints, 7, 1);
 		assertEquals(1, trimmed.size());
 		trimmed.get(0,  value);
 		assertEquals(8, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 0, 4);
+		trimmed = new TrimmedDataSource<>(ints, 0, 5);
 		assertEquals(5, trimmed.size());
 		trimmed.get(0,  value);
 		assertEquals(1, value.v());
@@ -73,7 +73,7 @@ public class TestTrimmedDataSource {
 		trimmed.get(4,  value);
 		assertEquals(5, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 2, 6);
+		trimmed = new TrimmedDataSource<>(ints, 2, 5);
 		assertEquals(5, trimmed.size());
 		trimmed.get(0,  value);
 		assertEquals(3, value.v());
@@ -86,7 +86,7 @@ public class TestTrimmedDataSource {
 		trimmed.get(4,  value);
 		assertEquals(7, value.v());
 		
-		trimmed = new TrimmedDataSource<>(ints, 4, 6);
+		trimmed = new TrimmedDataSource<>(ints, 4, 3);
 		assertEquals(3, trimmed.size());
 		trimmed.get(0,  value);
 		assertEquals(5, value.v());

@@ -73,19 +73,20 @@ public class ParallelTransform3 {
 		long thOffset = 0;
 		long slice = aSize / numProcs;
 		for (int i = 0; i < numProcs; i++) {
-			long thLast;
+			long thSize;
 			if (i != numProcs-1) {
-				thLast = thOffset + slice - 1;
+				thSize = slice;
 			}
 			else {
-				thLast = aSize - 1;
+				thSize = aSize;
 			}
-			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thLast);
-			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thLast);
-			IndexedDataSource<Y> cTrimmed = new TrimmedDataSource<>(c, thOffset, thLast);
+			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
+			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
+			IndexedDataSource<Y> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
 			Runnable r = new Computer<T,U,V,W,X,Y>(algU, algW, algX, proc, aTrimmed, bTrimmed, cTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
+			aSize -= slice;
 		}
 		for (int i = 0; i < numProcs; i++) {
 			threads[i].start();
