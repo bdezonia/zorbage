@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
@@ -54,9 +53,7 @@ public class MedianValues {
 		// Many IndexedDataSources only shallow copy on duplicate() call. To be safe
 		// this method needs to do a deep copy because it will sort the data. So we
 		// avoid sorting original data.
-		long size = storage.size();
-		IndexedDataSource<U> localStorage = Storage.allocate(size, result1);
-		Copy.compute(alg, storage, localStorage);
+		IndexedDataSource<U> localStorage = DeepCopy.compute(alg, storage);
 		Sort.compute(alg, localStorage);
 		long localStorageSize = localStorage.size();
 		if (localStorageSize == 0) {

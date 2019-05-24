@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.ConcatenatedDataSource;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -52,10 +51,8 @@ public class SetUnion {
 	public static <T extends Algebra<T,U> & Ordered<U>, U extends Allocatable<U>>
 		IndexedDataSource<U> compute(T alg, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		U type = alg.construct();
 		IndexedDataSource<U> combined = new ConcatenatedDataSource<>(a, b);
-		IndexedDataSource<U> tmpList = Storage.allocate(combined.size(), type);
-		Copy.compute(alg, combined, tmpList);
+		IndexedDataSource<U> tmpList = DeepCopy.compute(alg, combined);
 		Sort.compute(alg, tmpList);
 		return Deduplicate.compute(alg, tmpList);
 	}
