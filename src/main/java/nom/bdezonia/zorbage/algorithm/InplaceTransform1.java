@@ -21,7 +21,7 @@ public class InplaceTransform1 {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T alg, Procedure1<U> proc, IndexedDataSource<U> a)
 	{
-		Transform1.compute(alg, proc, a, a);
+		Transform1.compute(alg, proc, a);
 	}
 
 }

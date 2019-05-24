@@ -96,7 +96,7 @@ public class ParallelTransform1 {
 		}
 		
 		public void run() {
-			Transform1.compute(algebraU, proc, list1, list1);
+			Transform1.compute(algebraU, proc, list1);
 		}
 	}
 }

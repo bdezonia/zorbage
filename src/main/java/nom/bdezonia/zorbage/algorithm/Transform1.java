@@ -45,17 +45,16 @@ public class Transform1 {
 	 * @param algU
 	 * @param proc
 	 * @param a
-	 * @param b
 	 */
 	public static final <T extends Algebra<T,U>,U>
-		void compute(T algU, Procedure1<U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T algU, Procedure1<U> proc, IndexedDataSource<U> a)
 	{
 		U value1 = algU.construct();
 		long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, value1);
 			proc.call(value1);
-			b.set(i, value1);
+			a.set(i, value1);
 		}
 	}
 }
