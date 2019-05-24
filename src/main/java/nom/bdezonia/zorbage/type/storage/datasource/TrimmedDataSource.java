@@ -26,14 +26,12 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TrimmedDataSource<T extends Algebra<T,U>, U>
+public class TrimmedDataSource<U>
 	implements
 		IndexedDataSource<U>
 {
@@ -59,7 +57,7 @@ public class TrimmedDataSource<T extends Algebra<T,U>, U>
 	}
 	
 	@Override
-	public TrimmedDataSource<T,U> duplicate() {
+	public TrimmedDataSource<U> duplicate() {
 		// shallow copy
 		return new TrimmedDataSource<>(list, first, last);
 	}
