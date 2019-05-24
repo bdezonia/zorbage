@@ -52,7 +52,8 @@ public class Transform1 {
 		U value1 = algU.construct();
 		long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
-			a.get(i, value1);
+			// unnecessary? Maybe we assume proc has no dependency on input value.
+			//a.get(i, value1);
 			proc.call(value1);
 			a.set(i, value1);
 		}
