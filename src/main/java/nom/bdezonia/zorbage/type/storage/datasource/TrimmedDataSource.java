@@ -48,7 +48,7 @@ public class TrimmedDataSource<U>
 	public TrimmedDataSource(IndexedDataSource<U> list, long first, long count) {
 		long listSize = list.size();
 		if (first < 0 || count < 0 || 
-				first >= listSize || count >= listSize ||
+				first >= listSize || count > listSize ||
 				(first + count) > listSize)
 			throw new IllegalArgumentException("poor definition of first/count/list size");
 		this.list = list;
