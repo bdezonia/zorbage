@@ -103,6 +103,8 @@ public class ComplexFloat16Algebra
 	private static final ComplexFloat16Member MINUS_ONE = new ComplexFloat16Member(-1,0);
 	private static final ComplexFloat16Member PI = new ComplexFloat16Member(Math.PI,0);
 	private static final ComplexFloat16Member E = new ComplexFloat16Member(Math.E,0);
+	private static final ComplexFloat16Member GAMMA = new ComplexFloat16Member(0.57721566490153286060,0);
+	private static final ComplexFloat16Member PHI = new ComplexFloat16Member(1.61803398874989484820,0);
 	private static final ComplexFloat16Member ONE_HALF = new ComplexFloat16Member(0.5,0);
 	private static final ComplexFloat16Member ONE_THIRD = new ComplexFloat16Member(1.0/3,0);
 	private static final ComplexFloat16Member I = new ComplexFloat16Member(0,1);
@@ -371,6 +373,36 @@ public class ComplexFloat16Algebra
 	@Override
 	public Procedure1<ComplexFloat16Member> E() {
 		return E_;
+	}
+
+
+	private final Procedure1<ComplexFloat16Member> GAMMA_ =
+			new Procedure1<ComplexFloat16Member>()
+	{
+		@Override
+		public void call(ComplexFloat16Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat16Member> GAMMA() {
+		return GAMMA_;
+	}
+
+
+	private final Procedure1<ComplexFloat16Member> PHI_ =
+			new Procedure1<ComplexFloat16Member>()
+	{
+		@Override
+		public void call(ComplexFloat16Member a) {
+			assign().call(PHI, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat16Member> PHI() {
+		return PHI_;
 	}
 
 	private final Procedure2<ComplexFloat16Member,ComplexFloat16Member> ASIN =

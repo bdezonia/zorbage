@@ -435,8 +435,34 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					a.E().call(value);
 					toks.add(new Numeric(i, value));
 				}
+				else if (ch == 'G') {
+					if (nextFew(str, i, "GAMMA")) {
+						U value = alg.construct();
+						if (!(alg instanceof Constants<?>)) {
+							result.setA("Lex err near position "+i+": GAMMA not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						Constants<U> a = (Constants<U>) alg;
+						a.GAMMA().call(value);
+						toks.add(new Numeric(i, value));
+						i += 4;
+					}
+				}
 				else if (ch == 'P') {
-					if (nextFew(str, i, "PI")) {
+					if (nextFew(str, i, "PHI")) {
+						U value = alg.construct();
+						if (!(alg instanceof Constants<?>)) {
+							result.setA("Lex err near position "+i+": PHI not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						Constants<U> a = (Constants<U>) alg;
+						a.PHI().call(value);
+						toks.add(new Numeric(i, value));
+						i += 2;
+					}
+					else if (nextFew(str, i, "PI")) {
 						U value = alg.construct();
 						if (!(alg instanceof Constants<?>)) {
 							result.setA("Lex err near position "+i+": PI not defined for given algebra");

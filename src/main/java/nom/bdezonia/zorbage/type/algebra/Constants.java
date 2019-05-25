@@ -36,4 +36,6 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 public interface Constants<T> {
 	Procedure1<T> PI();
 	Procedure1<T> E();
+	Procedure1<T> PHI();
+	Procedure1<T> GAMMA();
 }

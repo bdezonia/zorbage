@@ -103,6 +103,8 @@ public class ComplexFloat32Algebra
 	private static final ComplexFloat32Member MINUS_ONE = new ComplexFloat32Member(-1,0);
 	private static final ComplexFloat32Member PI = new ComplexFloat32Member((float)Math.PI,0);
 	private static final ComplexFloat32Member E = new ComplexFloat32Member((float)Math.E,0);
+	private static final ComplexFloat32Member GAMMA = new ComplexFloat32Member((float)0.57721566490153286060,0);
+	private static final ComplexFloat32Member PHI = new ComplexFloat32Member((float)1.61803398874989484820,0);
 	private static final ComplexFloat32Member ONE_HALF = new ComplexFloat32Member(0.5f,0);
 	private static final ComplexFloat32Member ONE_THIRD = new ComplexFloat32Member(1.0f/3,0);
 	private static final ComplexFloat32Member I = new ComplexFloat32Member(0,1);
@@ -371,6 +373,34 @@ public class ComplexFloat32Algebra
 	@Override
 	public Procedure1<ComplexFloat32Member> E() {
 		return E_;
+	}
+
+	private final Procedure1<ComplexFloat32Member> GAMMA_ =
+			new Procedure1<ComplexFloat32Member>()
+	{
+		@Override
+		public void call(ComplexFloat32Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32Member> GAMMA() {
+		return GAMMA_;
+	}
+
+	private final Procedure1<ComplexFloat32Member> PHI_ =
+			new Procedure1<ComplexFloat32Member>()
+	{
+		@Override
+		public void call(ComplexFloat32Member a) {
+			assign().call(PHI, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32Member> PHI() {
+		return PHI_;
 	}
 
 	private final Procedure2<ComplexFloat32Member,ComplexFloat32Member> ASIN =

@@ -89,6 +89,8 @@ public class QuaternionFloat32Algebra
 	private static final QuaternionFloat32Member TWO = new QuaternionFloat32Member(2,0,0,0);
 	private static final QuaternionFloat32Member E = new QuaternionFloat32Member((float)Math.E,0,0,0);
 	private static final QuaternionFloat32Member PI = new QuaternionFloat32Member((float)Math.PI,0,0,0);
+	private static final QuaternionFloat32Member GAMMA = new QuaternionFloat32Member((float)0.57721566490153286060,0,0,0);
+	private static final QuaternionFloat32Member PHI = new QuaternionFloat32Member((float)1.61803398874989484820,0,0,0);
 	
 	public QuaternionFloat32Algebra() { }
 	
@@ -367,6 +369,34 @@ public class QuaternionFloat32Algebra
 	@Override
 	public Procedure1<QuaternionFloat32Member> E() {
 		return E_;
+	}
+
+	private final Procedure1<QuaternionFloat32Member> GAMMA_ =
+			new Procedure1<QuaternionFloat32Member>()
+	{
+		@Override
+		public void call(QuaternionFloat32Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat32Member> GAMMA() {
+		return GAMMA_;
+	}
+
+	private final Procedure1<QuaternionFloat32Member> PHI_ =
+			new Procedure1<QuaternionFloat32Member>()
+	{
+		@Override
+		public void call(QuaternionFloat32Member a) {
+			assign().call(PHI, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat32Member> PHI() {
+		return PHI_;
 	}
 
 	private Procedure4<Round.Mode,Float32Member,QuaternionFloat32Member,QuaternionFloat32Member> ROUND =

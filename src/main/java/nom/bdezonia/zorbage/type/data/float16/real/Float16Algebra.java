@@ -93,6 +93,8 @@ public class Float16Algebra
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
+	private static final Float16Member GAMMA = new Float16Member((float)0.57721566490153286060);
+	private static final Float16Member PHI = new Float16Member((float)1.61803398874989484820);
 
 	public Float16Algebra() { }
 	
@@ -458,6 +460,34 @@ public class Float16Algebra
 		return _E;
 	}
 	
+	private final Procedure1<Float16Member> _GAMMA =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> GAMMA() {
+		return _GAMMA;
+	}
+
+	private final Procedure1<Float16Member> _PHI =
+			new Procedure1<Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a) {
+			assign().call(PHI, a);
+		}
+	};
+
+	@Override
+	public Procedure1<Float16Member> PHI() {
+		return _PHI;
+	}
+
 	private final Procedure2<Float16Member,Float16Member> EXP =
 			new Procedure2<Float16Member, Float16Member>()
 	{

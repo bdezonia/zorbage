@@ -97,6 +97,8 @@ public class Float64Algebra
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
+	private static final Float64Member GAMMA = new Float64Member(0.57721566490153286060);
+	private static final Float64Member PHI = new Float64Member(1.61803398874989484820);
 	
 	public Float64Algebra() { }
 	
@@ -459,6 +461,34 @@ public class Float64Algebra
 		return E_;
 	}
 	
+	private final Procedure1<Float64Member> GAMMA_ =
+			new Procedure1<Float64Member>()
+	{
+		@Override
+		public void call(Float64Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<Float64Member> GAMMA() {
+		return GAMMA_;
+	}
+
+	private final Procedure1<Float64Member> PHI_ =
+			new Procedure1<Float64Member>()
+	{
+		@Override
+		public void call(Float64Member a) {
+			assign().call(PHI, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<Float64Member> PHI() {
+		return PHI_;
+	}
+
 	private final Procedure2<Float64Member,Float64Member> EXP =
 			new Procedure2<Float64Member, Float64Member>()
 	{

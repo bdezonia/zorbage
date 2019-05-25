@@ -92,6 +92,8 @@ public class OctonionFloat32Algebra
 	private static final OctonionFloat32Member TWO = new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member E = new OctonionFloat32Member((float)Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member PI = new OctonionFloat32Member((float)Math.PI, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat32Member GAMMA = new OctonionFloat32Member((float)0.57721566490153286060,0,0,0,0,0,0,0);
+	private static final OctonionFloat32Member PHI = new OctonionFloat32Member((float)1.61803398874989484820,0,0,0,0,0,0,0);
 
 	public OctonionFloat32Algebra() { }
 	
@@ -661,6 +663,34 @@ public class OctonionFloat32Algebra
 		return E_;
 	}
 	
+	private final Procedure1<OctonionFloat32Member> GAMMA_ =
+			new Procedure1<OctonionFloat32Member>()
+	{
+		@Override
+		public void call(OctonionFloat32Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat32Member> GAMMA() {
+		return GAMMA_;
+	}
+
+	private final Procedure1<OctonionFloat32Member> PHI_ =
+			new Procedure1<OctonionFloat32Member>()
+	{
+		@Override
+		public void call(OctonionFloat32Member a) {
+			assign().call(PHI, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat32Member> PHI() {
+		return PHI_;
+	}
+
 	private final Procedure1<OctonionFloat32Member> RAND =
 			new Procedure1<OctonionFloat32Member>()
 	{

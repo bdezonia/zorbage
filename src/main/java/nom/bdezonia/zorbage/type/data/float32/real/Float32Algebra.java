@@ -97,6 +97,8 @@ public class Float32Algebra
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);
+	private static final Float32Member GAMMA = new Float32Member((float)0.57721566490153286060);
+	private static final Float32Member PHI = new Float32Member((float)1.61803398874989484820);
 	
 	public Float32Algebra() { }
 	
@@ -459,6 +461,34 @@ public class Float32Algebra
 		return E_;
 	}
 	
+	private final Procedure1<Float32Member> GAMMA_ =
+			new Procedure1<Float32Member>()
+	{
+		@Override
+		public void call(Float32Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<Float32Member> GAMMA() {
+		return GAMMA_;
+	}
+
+	private final Procedure1<Float32Member> PHI_ =
+			new Procedure1<Float32Member>()
+	{
+		@Override
+		public void call(Float32Member a) {
+			assign().call(PHI, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<Float32Member> PHI() {
+		return PHI_;
+	}
+
 	private final Procedure2<Float32Member,Float32Member> EXP =
 			new Procedure2<Float32Member, Float32Member>()
 	{

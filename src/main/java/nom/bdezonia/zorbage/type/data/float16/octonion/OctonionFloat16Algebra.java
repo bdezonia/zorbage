@@ -92,6 +92,8 @@ public class OctonionFloat16Algebra
 	private static final OctonionFloat16Member TWO = new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member E = new OctonionFloat16Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member PI = new OctonionFloat16Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat16Member GAMMA = new OctonionFloat16Member(0.57721566490153286060,0,0,0,0,0,0,0);
+	private static final OctonionFloat16Member PHI = new OctonionFloat16Member(1.61803398874989484820,0,0,0,0,0,0,0);
 
 	public OctonionFloat16Algebra() { }
 	
@@ -661,6 +663,34 @@ public class OctonionFloat16Algebra
 		return E_;
 	}
 	
+	private final Procedure1<OctonionFloat16Member> GAMMA_ =
+			new Procedure1<OctonionFloat16Member>()
+	{
+		@Override
+		public void call(OctonionFloat16Member a) {
+			assign().call(GAMMA, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat16Member> GAMMA() {
+		return GAMMA_;
+	}
+
+	private final Procedure1<OctonionFloat16Member> PHI_ =
+			new Procedure1<OctonionFloat16Member>()
+	{
+		@Override
+		public void call(OctonionFloat16Member a) {
+			assign().call(PHI, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat16Member> PHI() {
+		return PHI_;
+	}
+
 	private final Procedure1<OctonionFloat16Member> RAND =
 			new Procedure1<OctonionFloat16Member>()
 	{
