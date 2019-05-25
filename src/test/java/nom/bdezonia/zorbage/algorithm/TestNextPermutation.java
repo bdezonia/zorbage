@@ -123,4 +123,254 @@ public class TestNextPermutation {
 		nums.get(2, value);
 		assertEquals(3, value.v());
 	}
+	
+	@Test
+	public void test3() {
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		IndexedDataSource<SignedInt32Member> nums;
+		
+		nums = ArrayStorage.allocateInts(new int[] {1,2,3,4});
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(1, value.v());
+		nums.get(1, value);
+		assertEquals(2, value.v());
+		nums.get(2, value);
+		assertEquals(4, value.v());
+		nums.get(3, value);
+		assertEquals(3, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(1, value.v());
+		nums.get(1, value);
+		assertEquals(3, value.v());
+		nums.get(2, value);
+		assertEquals(2, value.v());
+		nums.get(3, value);
+		assertEquals(4, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(1, value.v());
+		nums.get(1, value);
+		assertEquals(3, value.v());
+		nums.get(2, value);
+		assertEquals(4, value.v());
+		nums.get(3, value);
+		assertEquals(2, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(1, value.v());
+		nums.get(1, value);
+		assertEquals(4, value.v());
+		nums.get(2, value);
+		assertEquals(2, value.v());
+		nums.get(3, value);
+		assertEquals(3, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(1, value.v());
+		nums.get(1, value);
+		assertEquals(4, value.v());
+		nums.get(2, value);
+		assertEquals(3, value.v());
+		nums.get(3, value);
+		assertEquals(2, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(2, value.v());
+		nums.get(1, value);
+		assertEquals(1, value.v());
+		nums.get(2, value);
+		assertEquals(3, value.v());
+		nums.get(3, value);
+		assertEquals(4, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(2, value.v());
+		nums.get(1, value);
+		assertEquals(1, value.v());
+		nums.get(2, value);
+		assertEquals(4, value.v());
+		nums.get(3, value);
+		assertEquals(3, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(2, value.v());
+		nums.get(1, value);
+		assertEquals(3, value.v());
+		nums.get(2, value);
+		assertEquals(1, value.v());
+		nums.get(3, value);
+		assertEquals(4, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(2, value.v());
+		nums.get(1, value);
+		assertEquals(3, value.v());
+		nums.get(2, value);
+		assertEquals(4, value.v());
+		nums.get(3, value);
+		assertEquals(1, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(2, value.v());
+		nums.get(1, value);
+		assertEquals(4, value.v());
+		nums.get(2, value);
+		assertEquals(1, value.v());
+		nums.get(3, value);
+		assertEquals(3, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(2, value.v());
+		nums.get(1, value);
+		assertEquals(4, value.v());
+		nums.get(2, value);
+		assertEquals(3, value.v());
+		nums.get(3, value);
+		assertEquals(1, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(3, value.v());
+		nums.get(1, value);
+		assertEquals(1, value.v());
+		nums.get(2, value);
+		assertEquals(2, value.v());
+		nums.get(3, value);
+		assertEquals(4, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(3, value.v());
+		nums.get(1, value);
+		assertEquals(1, value.v());
+		nums.get(2, value);
+		assertEquals(4, value.v());
+		nums.get(3, value);
+		assertEquals(2, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(3, value.v());
+		nums.get(1, value);
+		assertEquals(2, value.v());
+		nums.get(2, value);
+		assertEquals(1, value.v());
+		nums.get(3, value);
+		assertEquals(4, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(3, value.v());
+		nums.get(1, value);
+		assertEquals(2, value.v());
+		nums.get(2, value);
+		assertEquals(4, value.v());
+		nums.get(3, value);
+		assertEquals(1, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(3, value.v());
+		nums.get(1, value);
+		assertEquals(4, value.v());
+		nums.get(2, value);
+		assertEquals(1, value.v());
+		nums.get(3, value);
+		assertEquals(2, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(3, value.v());
+		nums.get(1, value);
+		assertEquals(4, value.v());
+		nums.get(2, value);
+		assertEquals(2, value.v());
+		nums.get(3, value);
+		assertEquals(1, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(4, value.v());
+		nums.get(1, value);
+		assertEquals(1, value.v());
+		nums.get(2, value);
+		assertEquals(2, value.v());
+		nums.get(3, value);
+		assertEquals(3, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(4, value.v());
+		nums.get(1, value);
+		assertEquals(1, value.v());
+		nums.get(2, value);
+		assertEquals(3, value.v());
+		nums.get(3, value);
+		assertEquals(2, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(4, value.v());
+		nums.get(1, value);
+		assertEquals(2, value.v());
+		nums.get(2, value);
+		assertEquals(1, value.v());
+		nums.get(3, value);
+		assertEquals(3, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(4, value.v());
+		nums.get(1, value);
+		assertEquals(2, value.v());
+		nums.get(2, value);
+		assertEquals(3, value.v());
+		nums.get(3, value);
+		assertEquals(1, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(4, value.v());
+		nums.get(1, value);
+		assertEquals(3, value.v());
+		nums.get(2, value);
+		assertEquals(1, value.v());
+		nums.get(3, value);
+		assertEquals(2, value.v());
+		
+		assertTrue(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(4, value.v());
+		nums.get(1, value);
+		assertEquals(3, value.v());
+		nums.get(2, value);
+		assertEquals(2, value.v());
+		nums.get(3, value);
+		assertEquals(1, value.v());
+		
+		assertFalse(NextPermutation.compute(G.INT32, nums));
+		nums.get(0, value);
+		assertEquals(1, value.v());
+		nums.get(1, value);
+		assertEquals(2, value.v());
+		nums.get(2, value);
+		assertEquals(3, value.v());
+		nums.get(3, value);
+		assertEquals(4, value.v());
+	}
 }
