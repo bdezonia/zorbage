@@ -448,6 +448,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						toks.add(new Numeric(i, value));
 						i += 4;
 					}
+					else {
+						result.setA("Lex err near position "+i+": G char should be followed by AMMA");
+						return result;
+					}
 				}
 				else if (ch == 'P') {
 					if (nextFew(str, i, "PHI")) {
