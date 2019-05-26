@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
@@ -67,7 +67,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class QuaternionFloat64Algebra
   implements
     SkewField<QuaternionFloat64Algebra,QuaternionFloat64Member>,
-    Constants<QuaternionFloat64Member>,
+    RealConstants<QuaternionFloat64Member>,
     Norm<QuaternionFloat64Member, Float64Member>,
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,

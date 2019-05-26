@@ -54,7 +54,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Field;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
@@ -81,7 +81,7 @@ public class ComplexFloat64Algebra
   implements
     Field<ComplexFloat64Algebra, ComplexFloat64Member>,
     Norm<ComplexFloat64Member, Float64Member>,
-    Constants<ComplexFloat64Member>,
+    RealConstants<ComplexFloat64Member>,
     Exponential<ComplexFloat64Member>,
     Trigonometric<ComplexFloat64Member>,
     InverseTrigonometric<ComplexFloat64Member>,

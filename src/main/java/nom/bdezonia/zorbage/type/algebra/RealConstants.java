@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface Constants<T> {
+public interface RealConstants<T> {
 	Procedure1<T> PI();
 	Procedure1<T> E();
 	Procedure1<T> PHI();

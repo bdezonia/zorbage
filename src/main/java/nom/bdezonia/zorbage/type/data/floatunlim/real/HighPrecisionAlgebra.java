@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
@@ -64,7 +64,7 @@ public class HighPrecisionAlgebra
   implements
     OrderedField<HighPrecisionAlgebra,HighPrecisionMember>,
     Norm<HighPrecisionMember,HighPrecisionMember>,
-    Constants<HighPrecisionMember>,
+    RealConstants<HighPrecisionMember>,
     RealUnreal<HighPrecisionMember,HighPrecisionMember>,
     Conjugate<HighPrecisionMember>,
     Scale<HighPrecisionMember,HighPrecisionMember>,

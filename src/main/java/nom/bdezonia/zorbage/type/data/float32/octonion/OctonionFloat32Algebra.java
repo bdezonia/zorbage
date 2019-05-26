@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
@@ -75,7 +75,7 @@ public class OctonionFloat32Algebra
     Infinite<OctonionFloat32Member>,
     NaN<OctonionFloat32Member>,
     Rounding<Float32Member,OctonionFloat32Member>,
-    Constants<OctonionFloat32Member>,
+    RealConstants<OctonionFloat32Member>,
     Random<OctonionFloat32Member>,
     Exponential<OctonionFloat32Member>,
     Trigonometric<OctonionFloat32Member>,

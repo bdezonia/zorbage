@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
@@ -46,7 +46,7 @@ public class Sincpi {
 	 * @param x
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Trigonometric<U> & Constants<U>,U>
+	public static <T extends Algebra<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Trigonometric<U> & RealConstants<U>,U>
 		void compute(T algebra, U x, U result)
 	{
 		if (algebra.isZero().call(x)) {

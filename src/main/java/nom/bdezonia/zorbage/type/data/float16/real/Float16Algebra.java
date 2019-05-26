@@ -46,7 +46,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.Constants;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
@@ -74,7 +74,7 @@ public class Float16Algebra
     OrderedField<Float16Algebra,Float16Member>,
     Bounded<Float16Member>,
     Norm<Float16Member,Float16Member>,
-    Constants<Float16Member>,
+    RealConstants<Float16Member>,
     Exponential<Float16Member>,
     Trigonometric<Float16Member>,
     InverseTrigonometric<Float16Member>,
