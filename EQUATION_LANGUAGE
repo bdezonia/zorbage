@@ -1,0 +1,183 @@
+The EquationParser class can create Procedures from text string equations.
+Information about the supported language follows.
+
+Supported operators:
+
+  +  (addition)
+  -  (subtraction)
+  *  (multiplication)
+  /  (division)
+  %  (mod)
+  ^  (power)
+
+Accessing input variables:
+
+  $<int>
+  
+    Parsed equations are instances of Procedure<U>. Their call signature looks
+    like:
+    
+      void call(U result, U... inputs)
+      
+    Using $2 in an equation string directs the parser to substitute inputs[2]
+    into the calculation at the spot the $2 is defined.
+  
+Defining numbers:
+
+  Numbers are integers and decimals. They can start with an optional sign (+
+  or -). Then a string of digits. An optional decimal fraction starting with
+  a period (.). A number can also add an exponent value on the end.
+  
+  Some examples:
+  
+    1
+    +505
+    -4132
+    2.2
+    5.7e-3 (= 0.0057)
+    4.5e+5 (= 450000)
+    
+Defining complex / quaternion / octonion values:
+
+  Numbers with more then one component are captured between { } brackets
+  using commas.
+  
+  For example:
+  
+    {1,2} = 1 + 2i
+    {1,2,3,4} = 1 + 2i + 3j + 4k
+    {1,2,3,4,5,6,7,8} = 1 + 2i + 3j + 4k + 5l + 6i0 + 7j0 + 8k0
+    
+    The individual components can be any valid decimal number as defined
+    above.
+
+Defining vectors / matrices / tensors:
+
+  Higher dimensional numerics are specified by placing values between [ ]
+  markers separated by commas.
+  
+  A 3 component vector of integers: [1,2,3]
+  
+  A 2x2 matrix of complex values: [[{1,2},{3,4}][{5,6},{7,8}]]
+
+Grouping terms as desired:
+
+  You can use parentheses in an equation to order the operations as you
+  desire.
+  
+  3.0 * ($0 + $1)
+    
+    Multiply the sum of input[0] and input[1] by 3.0.
+    
+Supported constants:
+
+  E
+  PI
+  GAMMA
+  PHI
+
+Supported function calls:
+
+  acos(a)
+
+  acosh(a)
+
+  asin(a)
+
+  asinh(a)
+
+  atan(a)
+
+  atanh(a)
+
+  cbrt(a)
+
+  cos(a)
+
+  cosh(a)
+
+  exp(a)
+
+  log(a)
+
+  max(a,b)
+
+    Returns the greater of it's two arguments
+    
+  min(a,b)
+
+    Returns the lesser of it's two arguments
+
+  rand
+  
+    Returns a random value in the range of the backing type of the equation.
+    For instance if the backing type is 64 bit floats then it will return
+    a number between 0.0 and 1.0 (including 0.0 but excluding 1.0). If the
+    backing type is signed 4 bit integers then the random value will be
+    in the range -8 to 7 inclusive.
+
+  sin(a)
+
+  sinc(a)
+
+    Returns the value sin(x) / x
+    
+  sinch(a)
+
+    Returns the value sinh(x) / x
+
+  sinchpi(a)
+
+    Returns the value sinh(x * PI) / (x * PI)
+
+  sincpi(a)
+
+    Returns the value sin(x * PI) / (x * PI)
+
+  sinh(a)
+
+  sqrt(a)
+
+  tan(a)
+
+  tanh(a)
+
+  tmax
+  
+    Returns a constant whose value is equal to the maximum for the type that
+    backs the equation. For instance if the algebra passed to the equation
+    parser was for unsigned 8 bit numbers then tmax would equal 255.
+
+  tmin
+  
+    Returns a constant whose value is equal to the minimum for the type that
+    backs the equation. For instance if the algebra passed to the equation
+    parser was for signed 16 bit numbers then tmin would equal -32768.
+
+  zero
+
+ 
+ Some examples
+ 
+   4 * $0 + 7
+   
+     Scale input[0] by 4 and add 7
+     
+   {1,2}^{3,4}
+   
+     Raise complex number 1+2i to the 3+4i power
+     
+   tmin + 0.42 * tmax
+   
+     Produce a number at the 42nd percentile of a range
+     
+   (2 * sin($0)) + (3 * cos($1))
+   
+     Add two times the sine of input[0] with three times the cosine of
+     input[1]. The inputs can be numbers or matrices.
+     
+   exp( [[1,2],[3,4]] )
+   
+     Take the exponential of the specified 2x2 matrix. The result is a
+     matrix too.
+ 
