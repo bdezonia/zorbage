@@ -58,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Field;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
@@ -82,6 +83,7 @@ public class ComplexFloat32Algebra
     Field<ComplexFloat32Algebra, ComplexFloat32Member>,
     Norm<ComplexFloat32Member, Float32Member>,
     RealConstants<ComplexFloat32Member>,
+    ImaginaryConstants<ComplexFloat32Member>,
     Exponential<ComplexFloat32Member>,
     Trigonometric<ComplexFloat32Member>,
     InverseTrigonometric<ComplexFloat32Member>,
@@ -401,6 +403,20 @@ public class ComplexFloat32Algebra
 	@Override
 	public Procedure1<ComplexFloat32Member> PHI() {
 		return PHI_;
+	}
+
+	private final Procedure1<ComplexFloat32Member> I_ =
+			new Procedure1<ComplexFloat32Member>()
+	{
+		@Override
+		public void call(ComplexFloat32Member a) {
+			assign().call(I, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32Member> I() {
+		return I_;
 	}
 
 	private final Procedure2<ComplexFloat32Member,ComplexFloat32Member> ASIN =

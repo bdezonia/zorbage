@@ -46,10 +46,13 @@ import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.OctonionConstants;
 import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
@@ -76,6 +79,9 @@ public class OctonionFloat64Algebra
     NaN<OctonionFloat64Member>,
     Rounding<Float64Member,OctonionFloat64Member>,
     RealConstants<OctonionFloat64Member>,
+    ImaginaryConstants<OctonionFloat64Member>,
+    QuaternionConstants<OctonionFloat64Member>,
+    OctonionConstants<OctonionFloat64Member>,
     Random<OctonionFloat64Member>,
     Exponential<OctonionFloat64Member>,
     Trigonometric<OctonionFloat64Member>,
@@ -94,6 +100,13 @@ public class OctonionFloat64Algebra
 	private static final OctonionFloat64Member PI = new OctonionFloat64Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member GAMMA = new OctonionFloat64Member(0.57721566490153286060,0,0,0,0,0,0,0);
 	private static final OctonionFloat64Member PHI = new OctonionFloat64Member(1.61803398874989484820,0,0,0,0,0,0,0);
+	private static final OctonionFloat64Member I = new OctonionFloat64Member(0, 1, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member J = new OctonionFloat64Member(0, 0, 1, 0, 0, 0, 0, 0);
+	private static final OctonionFloat64Member K = new OctonionFloat64Member(0, 0, 0, 1, 0, 0, 0, 0);
+	private static final OctonionFloat64Member L = new OctonionFloat64Member(0, 0, 0, 0, 1, 0, 0, 0);
+	private static final OctonionFloat64Member I0 = new OctonionFloat64Member(0, 0, 0, 0, 0, 1, 0, 0);
+	private static final OctonionFloat64Member J0 = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 1, 0);
+	private static final OctonionFloat64Member K0 = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 1);
 
 	public OctonionFloat64Algebra() { }
 	
@@ -689,6 +702,104 @@ public class OctonionFloat64Algebra
 	@Override
 	public Procedure1<OctonionFloat64Member> PHI() {
 		return PHI_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> I_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(I, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> I() {
+		return I_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> J_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(J, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> J() {
+		return J_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> K_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(K, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> K() {
+		return K_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> L_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(L, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> L() {
+		return L_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> I0_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(I0, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> I0() {
+		return I0_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> J0_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(J0, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> J0() {
+		return J0_;
+	}
+
+	private final Procedure1<OctonionFloat64Member> K0_ =
+			new Procedure1<OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a) {
+			assign().call(K0, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<OctonionFloat64Member> K0() {
+		return K0_;
 	}
 
 	private final Procedure1<OctonionFloat64Member> RAND =

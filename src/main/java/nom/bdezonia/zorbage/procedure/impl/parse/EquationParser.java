@@ -67,8 +67,11 @@ import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.OctonionConstants;
+import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -434,6 +437,92 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					RealConstants<U> a = (RealConstants<U>) alg;
 					a.E().call(value);
 					toks.add(new Numeric(i, value));
+				}
+				else if (ch == 'L') {
+					U value = alg.construct();
+					if (!(alg instanceof OctonionConstants<?>)) {
+						result.setA("Lex err near position "+i+": L not defined for given algebra");
+						return result;
+					}
+					@SuppressWarnings("unchecked")
+					OctonionConstants<U> a = (OctonionConstants<U>) alg;
+					a.L().call(value);
+					toks.add(new Numeric(i, value));
+				}
+				else if (ch == 'I') {
+					if (nextFew(str, i, "I0")) {
+						U value = alg.construct();
+						if (!(alg instanceof OctonionConstants<?>)) {
+							result.setA("Lex err near position "+i+": I0 not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						OctonionConstants<U> a = (OctonionConstants<U>) alg;
+						a.I0().call(value);
+						toks.add(new Numeric(i, value));
+						i += 1;
+					}
+					else {
+						U value = alg.construct();
+						if (!(alg instanceof ImaginaryConstants<?>)) {
+							result.setA("Lex err near position "+i+": I not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						ImaginaryConstants<U> a = (ImaginaryConstants<U>) alg;
+						a.I().call(value);
+						toks.add(new Numeric(i, value));
+					}
+				}
+				else if (ch == 'J') {
+					if (nextFew(str, i, "J0")) {
+						U value = alg.construct();
+						if (!(alg instanceof OctonionConstants<?>)) {
+							result.setA("Lex err near position "+i+": J0 not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						OctonionConstants<U> a = (OctonionConstants<U>) alg;
+						a.J0().call(value);
+						toks.add(new Numeric(i, value));
+						i += 1;
+					}
+					else {
+						U value = alg.construct();
+						if (!(alg instanceof QuaternionConstants<?>)) {
+							result.setA("Lex err near position "+i+": J not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						QuaternionConstants<U> a = (QuaternionConstants<U>) alg;
+						a.J().call(value);
+						toks.add(new Numeric(i, value));
+					}
+				}
+				else if (ch == 'K') {
+					if (nextFew(str, i, "K0")) {
+						U value = alg.construct();
+						if (!(alg instanceof OctonionConstants<?>)) {
+							result.setA("Lex err near position "+i+": K0 not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						OctonionConstants<U> a = (OctonionConstants<U>) alg;
+						a.K0().call(value);
+						toks.add(new Numeric(i, value));
+						i += 1;
+					}
+					else {
+						U value = alg.construct();
+						if (!(alg instanceof QuaternionConstants<?>)) {
+							result.setA("Lex err near position "+i+": K not defined for given algebra");
+							return result;
+						}
+						@SuppressWarnings("unchecked")
+						QuaternionConstants<U> a = (QuaternionConstants<U>) alg;
+						a.K().call(value);
+						toks.add(new Numeric(i, value));
+					}
 				}
 				else if (ch == 'G') {
 					if (nextFew(str, i, "GAMMA")) {

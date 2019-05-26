@@ -46,10 +46,12 @@ import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
+import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
@@ -68,6 +70,8 @@ public class QuaternionFloat64Algebra
   implements
     SkewField<QuaternionFloat64Algebra,QuaternionFloat64Member>,
     RealConstants<QuaternionFloat64Member>,
+    ImaginaryConstants<QuaternionFloat64Member>,
+    QuaternionConstants<QuaternionFloat64Member>,
     Norm<QuaternionFloat64Member, Float64Member>,
     Conjugate<QuaternionFloat64Member>,
     Infinite<QuaternionFloat64Member>,
@@ -91,6 +95,9 @@ public class QuaternionFloat64Algebra
 	private static final QuaternionFloat64Member PI = new QuaternionFloat64Member(Math.PI,0,0,0);
 	private static final QuaternionFloat64Member GAMMA = new QuaternionFloat64Member(0.57721566490153286060,0,0,0);
 	private static final QuaternionFloat64Member PHI = new QuaternionFloat64Member(1.61803398874989484820,0,0,0);
+	private static final QuaternionFloat64Member I = new QuaternionFloat64Member(0,1,0,0);
+	private static final QuaternionFloat64Member J = new QuaternionFloat64Member(0,0,1,0);
+	private static final QuaternionFloat64Member K = new QuaternionFloat64Member(0,0,0,1);
 	
 	public QuaternionFloat64Algebra() { }
 	
@@ -397,6 +404,48 @@ public class QuaternionFloat64Algebra
 	@Override
 	public Procedure1<QuaternionFloat64Member> PHI() {
 		return PHI_;
+	}
+
+	private final Procedure1<QuaternionFloat64Member> I_ =
+			new Procedure1<QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(QuaternionFloat64Member a) {
+			assign().call(I, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat64Member> I() {
+		return I_;
+	}
+
+	private final Procedure1<QuaternionFloat64Member> J_ =
+			new Procedure1<QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(QuaternionFloat64Member a) {
+			assign().call(J, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat64Member> J() {
+		return J_;
+	}
+
+	private final Procedure1<QuaternionFloat64Member> K_ =
+			new Procedure1<QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(QuaternionFloat64Member a) {
+			assign().call(K, a);
+		}
+	};
+	
+	@Override
+	public Procedure1<QuaternionFloat64Member> K() {
+		return K_;
 	}
 
 	private Procedure4<Round.Mode,Float64Member,QuaternionFloat64Member,QuaternionFloat64Member> ROUND =

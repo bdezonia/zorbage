@@ -58,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Field;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
@@ -82,6 +83,7 @@ public class ComplexFloat16Algebra
     Field<ComplexFloat16Algebra, ComplexFloat16Member>,
     Norm<ComplexFloat16Member, Float16Member>,
     RealConstants<ComplexFloat16Member>,
+    ImaginaryConstants<ComplexFloat16Member>,
     Exponential<ComplexFloat16Member>,
     Trigonometric<ComplexFloat16Member>,
     InverseTrigonometric<ComplexFloat16Member>,
@@ -390,7 +392,6 @@ public class ComplexFloat16Algebra
 		return GAMMA_;
 	}
 
-
 	private final Procedure1<ComplexFloat16Member> PHI_ =
 			new Procedure1<ComplexFloat16Member>()
 	{
@@ -403,6 +404,20 @@ public class ComplexFloat16Algebra
 	@Override
 	public Procedure1<ComplexFloat16Member> PHI() {
 		return PHI_;
+	}
+
+	private final Procedure1<ComplexFloat16Member> I_ =
+			new Procedure1<ComplexFloat16Member>()
+	{
+		@Override
+		public void call(ComplexFloat16Member a) {
+			assign().call(I, a);
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat16Member> I() {
+		return I_;
 	}
 
 	private final Procedure2<ComplexFloat16Member,ComplexFloat16Member> ASIN =

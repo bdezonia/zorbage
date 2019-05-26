@@ -75,6 +75,13 @@ Supported constants:
   PI
   GAMMA
   PHI
+  I
+  J
+  K
+  L
+  I0
+  J0
+  K0
 
 Supported function calls:
 
