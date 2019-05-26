@@ -62,6 +62,7 @@ import nom.bdezonia.zorbage.procedure.impl.TanhL;
 import nom.bdezonia.zorbage.procedure.impl.VariableConstantL;
 import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
@@ -70,7 +71,11 @@ import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
 import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.OctonionConstants;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -773,12 +778,20 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Plus.class, tokens, status1.tokenNumber)) {
-			status2 = equation(algebra, tokens, status1.tokenNumber+1);
+			if (!(algebra instanceof Addition<?>)) {
+				status2.errMsg = "Parse error near '+' token: addition not defined for given algebra";
+			}
+			else
+				status2 = equation(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
 			status2.procedure = new AddL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Minus.class, tokens, status1.tokenNumber)) {
-			status2 = equation(algebra, tokens, status1.tokenNumber+1);
+			if (!(algebra instanceof Addition<?>)) {
+				status2.errMsg = "Parse error near '-' token: addition not defined for given algebra";
+			}
+			else
+				status2 = equation(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
 			status2.procedure = new SubtractL(algebra, status1.procedure, status2.procedure);
 		}
@@ -798,17 +811,29 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Times.class, tokens, status1.tokenNumber)) {
-			status2 = term(algebra, tokens, status1.tokenNumber+1);
+			if (!(algebra instanceof Multiplication<?>)) {
+				status2.errMsg = "Parse error near '*' token: multiplication not defined for given algebra";
+			}
+			else
+				status2 = term(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
 			status2.procedure = new MultiplyL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Divide.class, tokens, status1.tokenNumber)) {
-			status2 = term(algebra, tokens, status1.tokenNumber+1);
+			if (!(algebra instanceof Invertible<?>)) {
+				status2.errMsg = "Parse error near '/' token: division not defined for given algebra";
+			}
+			else
+				status2 = term(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
 			status2.procedure = new DivideL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Mod.class, tokens, status1.tokenNumber)) {
-			status2 = term(algebra, tokens, status1.tokenNumber+1);
+			if (!(algebra instanceof ModularDivision<?>)) {
+				status2.errMsg = "Parse error near '%' token: modular division not defined for given algebra";
+			}
+			else
+				status2 = term(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
 			status2.procedure = new ModL(algebra, status1.procedure, status2.procedure);
 		}
@@ -826,7 +851,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Power.class, tokens, status1.tokenNumber)) {
-			status2 = factor(algebra, tokens, status1.tokenNumber+1);
+			if (!(algebra instanceof nom.bdezonia.zorbage.type.algebra.Power<?>)) {
+				status2.errMsg = "Parse error near '^' token: exponentiation not defined for given algebra";
+			}
+			else
+				status2 = factor(algebra, tokens, status1.tokenNumber+1);
 			if (status2.errMsg != null) return status2;
 			status2.procedure = new PowL(algebra, status1.procedure, status2.procedure);
 		}
@@ -876,7 +905,11 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			// 0 arg functions
 			if (funcCall.getText() == "rand") {
 				ParseStatus status = new ParseStatus();
-				status.procedure = createFunction(algebra, funcCall.getText(), null);
+				if (!(algebra instanceof Random<?>)) {
+					status.errMsg = "Parse error near 'rand' token: randomize not defined for given algebra";
+				}
+				else
+					status.procedure = createFunction(algebra, funcCall.getText(), null);
 				status.tokenNumber = pos + 1;
 				return status;
 			}
@@ -909,6 +942,9 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		else if (match(Min.class, tokens, pos) ||
 					match(Max.class, tokens, pos))
 		{
+			if (!(algebra instanceof Ordered<?>)) {
+				return syntaxError(pos, tokens, "'min' or 'max' token: ordering is not defined for given algebra");
+			}
 			// 2 arg functions
 			if (!match(OpenParen.class, tokens, pos+1))
 				return syntaxError(pos+1, tokens, "Expected a '('.");
