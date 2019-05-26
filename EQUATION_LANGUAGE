@@ -176,8 +176,11 @@ Supported function calls:
      Add two times the sine of input[0] with three times the cosine of
      input[1]. The inputs can be numbers or matrices.
      
-   exp( [[1,2],[3,4]] )
+   exp( [[1,2][3,4]] )
    
      Take the exponential of the specified 2x2 matrix. The result is a
      matrix too.
  
+   PI + rand
+   
+     Return a random number between PI and PI+1.0
