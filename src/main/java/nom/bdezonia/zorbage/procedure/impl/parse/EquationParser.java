@@ -788,7 +788,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 		else if (match(Minus.class, tokens, status1.tokenNumber)) {
 			if (!(algebra instanceof Addition<?>)) {
-				status2.errMsg = "Parse error near '-' token: addition not defined for given algebra";
+				status2.errMsg = "Parse error near '-' token: subtraction not defined for given algebra";
 			}
 			else
 				status2 = equation(algebra, tokens, status1.tokenNumber+1);
