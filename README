@@ -15,6 +15,9 @@ Support for:
 
 What can I do with Zorbage?
 
+  Define multidimensional data sets with flexible out of bounds data
+    handling procedures.
+    
   Use many different data types
 
     1-bit integers (signed and unsigned)
@@ -81,9 +84,6 @@ What can I do with Zorbage?
   
   You can use existing parallel algorithms for quickly processing data.
   
-  Define multidimensional data sets with flexible out of bounds data
-    handling procedures.
-    
   Define complex data sampling algorithms from prebuilt sampling components.
   
   Use type safe first class Function and Procedure objects. Pass them as
@@ -94,8 +94,8 @@ What can I do with Zorbage?
     of applying the inputs to the equation). Equations can return numbers,
     vectors, matrices, or tensors. The subcomponents of these can be reals,
     complexes, quaternions, or octonions. Equations can be built out of
-    constants, input variable references, E, PI, and typical functions like
-    sin(), atan(), exp(), log(), etc.
+    numbers, input variable references, constants (like E, PI, etc.) and
+    typical functions like sin(), atan(), exp(), log(), etc.
 
 Programming notes
 
