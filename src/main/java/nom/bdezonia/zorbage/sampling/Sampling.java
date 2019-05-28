@@ -31,7 +31,7 @@ import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 
 /**
  * {@link Sampling} defines the base class for samplings of all types. It
- * is defines a set membership method and an iterator method.
+ * defines a set membership method and an iterator method.
  * 
  * @author Barry DeZonia
  *
