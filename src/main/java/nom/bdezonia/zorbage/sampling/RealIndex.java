@@ -112,7 +112,7 @@ public class RealIndex
 	@Override
 	public void setMin() {
 		for (int i = 0; i < index.length; i++)
-			index[i] = Double.MIN_VALUE;
+			index[i] = -Double.MAX_VALUE;
 	}
 
 	@Override
