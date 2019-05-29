@@ -51,7 +51,7 @@ public class MatrixReshape {
 	{
 		if (rows == mat.rows() && cols == mat.cols()) return;
 		U orig = matAlgebra.construct(mat);
-		mat.alloc(rows, cols);
+		mat.init(rows, cols);
 		W value = numberAlgebra.construct();
 		long minRows = Math.min(rows, orig.rows());
 		long minCols = Math.min(cols, orig.cols());
