@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
@@ -77,8 +78,6 @@ public class QuaternionFloat16RModule
 	Rounding<Float16Member,QuaternionFloat16RModuleMember>, Infinite<QuaternionFloat16RModuleMember>,
 	NaN<QuaternionFloat16RModuleMember>
 {
-	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member();
-	
 	public QuaternionFloat16RModule() { }
 	
 	private final Procedure1<QuaternionFloat16RModuleMember> ZER = 
@@ -86,8 +85,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16RModuleMember a) {
-			for (long i = 0; i < a.length(); i++)
-				a.setV(i, ZERO);
+			RModuleZero.compute(G.QHLF, a);
 		}
 	};
 	

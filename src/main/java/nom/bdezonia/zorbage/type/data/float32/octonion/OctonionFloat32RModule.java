@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
@@ -77,8 +78,6 @@ public class OctonionFloat32RModule
 	Rounding<Float32Member,OctonionFloat32RModuleMember>, Infinite<OctonionFloat32RModuleMember>,
 	NaN<OctonionFloat32RModuleMember>
 {
-	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member();
-	
 	public OctonionFloat32RModule() { }
 	
 	private final Procedure1<OctonionFloat32RModuleMember> ZER =
@@ -86,8 +85,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32RModuleMember a) {
-			for (long i = 0; i < a.length(); i++)
-				a.setV(i, ZERO);
+			RModuleZero.compute(G.OFLT, a);
 		}
 	};
 	

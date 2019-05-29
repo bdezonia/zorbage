@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
@@ -77,8 +78,6 @@ public class ComplexFloat32Vector
     Rounding<Float32Member,ComplexFloat32VectorMember>, Infinite<ComplexFloat32VectorMember>,
     NaN<ComplexFloat32VectorMember>
 {
-	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
-	
 	public ComplexFloat32Vector() { }
 	
 	private final Procedure1<ComplexFloat32VectorMember> ZER =
@@ -86,8 +85,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32VectorMember a) {
-			for (int i = 0; i < a.length(); i++)
-				a.setV(i, ZERO);
+			RModuleZero.compute(G.CFLT, a);
 		}
 	};
 	
