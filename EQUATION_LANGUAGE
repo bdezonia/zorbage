@@ -25,8 +25,9 @@ Accessing input variables:
 Defining numbers:
 
   Numbers are integers and decimals. They can start with an optional sign (+
-  or -). Then a string of digits. An optional decimal fraction starting with
-  a period (.). A number can also add an exponent value on the end.
+  or -) and are then followed by a string of digits. They can be then be
+  followed with an optional decimal fraction starting with a period (.).
+  Finally a number can also have an exponent value on the end.
   
   Some examples:
   
@@ -36,6 +37,7 @@ Defining numbers:
     2.2
     5.7e-3 (= 0.0057)
     4.5e+5 (= 450000)
+    -12e2  (= -1200)
     
 Defining complex / quaternion / octonion values:
 
@@ -86,26 +88,48 @@ Supported constants:
 Supported function calls:
 
   acos(a)
+  
+    Compute the angle whose cosine is a
 
   acosh(a)
+  
+    Compute the angle whose hyperbolic cosine is a
 
   asin(a)
+  
+    Compute the angle whose sine is a
 
   asinh(a)
+  
+    Compute the angle whose hyperbolic sine is a
 
   atan(a)
+  
+    Compute the angle whose tangent is a
 
   atanh(a)
+  
+    Compute the angle whose hyperbolic tangent is a
 
   cbrt(a)
+  
+    Compute the cube root of a
 
   cos(a)
+  
+    Compute the cosine of a
 
   cosh(a)
+  
+    Compute the hyperbolic cosine of a
 
   exp(a)
+  
+    Compute E raise to the power a
 
   log(a)
+  
+    Compute the log of a
 
   max(a,b)
 
@@ -124,6 +148,8 @@ Supported function calls:
     in the range -8 to 7 inclusive.
 
   sin(a)
+  
+    Compute the sine of a
 
   sinc(a)
 
@@ -142,12 +168,20 @@ Supported function calls:
     Returns the value sin(x * PI) / (x * PI)
 
   sinh(a)
+  
+    Compute the hyperbolic sine of a
 
   sqrt(a)
+  
+    Compute the square root of a
 
   tan(a)
+  
+    Compute the tangent of a
 
   tanh(a)
+  
+    Compute the hyperbolic tangent of a
 
   tmax
   
@@ -160,9 +194,6 @@ Supported function calls:
     Returns a constant whose value is equal to the minimum for the type that
     backs the equation. For instance if the algebra passed to the equation
     parser was for signed 16 bit numbers then tmin would equal -32768.
-
-  zero
-
  
  Some examples
  
