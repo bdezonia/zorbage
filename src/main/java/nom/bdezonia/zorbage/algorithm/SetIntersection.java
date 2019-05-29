@@ -74,6 +74,6 @@ public class SetIntersection {
 		for (long i = count; i < aSize; i++)
 			tmpList.set(i, value);
 		Sort.compute(alg, tmpList);
-		return Deduplicate.compute(alg, tmpList);
+		return Unique.compute(alg, tmpList);
 	}
 }

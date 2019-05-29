@@ -36,10 +36,10 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Deduplicate {
+public class Unique {
 
 	/**
-	 * Deduplicate: the input must be a sorted list. The result is a sorted list
+	 * Unique: the input must be a sorted list. The result is a sorted list
 	 * with all duplicate values removed.
 	 * 
 	 * @param alg
