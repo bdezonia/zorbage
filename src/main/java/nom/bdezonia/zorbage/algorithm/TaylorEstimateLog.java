@@ -59,10 +59,17 @@ public class TaylorEstimateLog {
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
 
+		// first formulation: not converging
+		
+		// ln(x) = (x-1)/1 - (x-1)^2/2 + (x-1)^3/3 + ...
+		
+		// second formulation: also not converging
+		
 		// ln(x) = 2 * [(x-1)/(x+1) + (1/3)(x-1)^3/(x+1)^3) + (1/5)(x-1)^5/(x+1)^5) + ...]
 		// x > 0
 		
-		// TODO: this second formulation is not converging either
+		// TODO: Matrix logs are complicated algorithms. Investigate further and implement
+		// something to replace this code. This code might work in limited circumstances.
 		
 		W xMinusI = matAlgebra.construct();
 		W xPlusI = matAlgebra.construct();
