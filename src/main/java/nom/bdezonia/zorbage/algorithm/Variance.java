@@ -65,12 +65,7 @@ public class Variance {
 		alg.unity().call(one);
 		Mean.compute(alg, storage, avg);
 		SumSquareCount.compute(alg, storage, avg, sum, count);
-		if (alg.isZero().equals(count)) {
-			alg.zero().call(result);
-		}
-		else {
-			alg.subtract().call(count, one, count);
-			alg.divide().call(sum, count, result);
-		}
+		alg.subtract().call(count, one, count);
+		alg.divide().call(sum, count, result);
 	}
 }
