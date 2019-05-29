@@ -46,10 +46,7 @@ public class Max {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T algebra, U a, U b, U result)
 	{
-		if (algebra.isGreater().call(a, b))
-			algebra.assign().call(a, result);
-		else
-			algebra.assign().call(b, result);
+		algebra.max().call(a, b, result);
 	}
 
 }

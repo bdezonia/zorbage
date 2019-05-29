@@ -46,10 +46,7 @@ public class Min {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T algebra, U a, U b, U result)
 	{
-		if (algebra.isLess().call(a, b))
-			algebra.assign().call(a, result);
-		else
-			algebra.assign().call(b, result);
+		algebra.min().call(a, b, result);
 	}
 
 }
