@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -46,6 +47,25 @@ public class IsSorted {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		boolean compute(T alg, IndexedDataSource<U> storage)
 	{
+		return checkSort(alg, alg.isLess(), storage);
+	}
+	
+	/**
+	 * 
+	 * @param alg
+	 * @param isLeftOf
+	 * @param storage
+	 * @return
+	 */
+	public static <T extends Algebra<T,U>, U>
+		boolean compute(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage)
+	{
+		return checkSort(alg, isLeftOf, storage);
+	}
+
+	private static <T extends Algebra<T,U>, U>
+		boolean checkSort(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage)
+	{
 		U value1 = alg.construct();
 		U value2 = alg.construct();
 
@@ -59,7 +79,9 @@ public class IsSorted {
 
 		while (i < sz) {
 			storage.get(i, value2);
-			if (alg.isGreater().call(value1, value2))
+			// if is greater
+			if (!isLeftOf.call(value1, value2) &&
+					(isLeftOf.call(value1, value2) != isLeftOf.call(value2, value1)))
 				return false;
 			alg.assign().call(value2, value1);
 			i++;

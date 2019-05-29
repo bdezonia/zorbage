@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -47,22 +48,28 @@ public class Sort {
 	public static <T extends Algebra<T,U> & Ordered<U> ,U>
 		void compute(T alg, IndexedDataSource<U> storage)
 	{
-		qsort(alg, storage, 0, storage.size()-1);
+		qsort(alg, alg.isLess(), storage, 0, storage.size()-1);
 	}
 	
-	private static <T extends Algebra<T,U> & Ordered<U> ,U>
-		void qsort(T alg, IndexedDataSource<U> storage, long left, long right)
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage)
+	{
+		qsort(alg, isLeftOf, storage, 0L, storage.size()-1);
+	}
+
+	private static <T extends Algebra<T,U>, U>
+		void qsort(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
 	{
 		if (left < right) {
-			long pivotPoint = partition(alg, storage, left, right);
-			qsort(alg, storage, left, pivotPoint-1);
-			qsort(alg, storage, pivotPoint+1, right);
+			long pivotPoint = partition(alg, isLeftOf, storage, left, right);
+			qsort(alg, isLeftOf, storage, left, pivotPoint-1);
+			qsort(alg, isLeftOf, storage, pivotPoint+1, right);
 		}
 	}
 
 
-	private static <T extends Algebra<T,U> & Ordered<U> ,U>
-		long partition(T alg, IndexedDataSource<U> storage, long left, long right)
+	private static <T extends Algebra<T,U> ,U>
+		long partition(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
 	{
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();
@@ -79,13 +86,16 @@ public class Sort {
 			while (true) {
 				if (leftmark > rightmark) break;
 				storage.get(leftmark, tmp1);
-				if (alg.isGreater().call(tmp1, pivotValue)) break;
+				boolean isRightOf =
+						!isLeftOf.call(tmp1, pivotValue) &&
+						(isLeftOf.call(tmp1, pivotValue) != isLeftOf.call(pivotValue, tmp1));
+				if (isRightOf) break;
 				leftmark++;
 			}
 	
 			while (true) {
 				storage.get(rightmark, tmp1);
-				if (alg.isLess().call(tmp1, pivotValue)) break;
+				if (isLeftOf.call(tmp1, pivotValue)) break;
 				if (rightmark < leftmark) break;
 				rightmark--;
 			}

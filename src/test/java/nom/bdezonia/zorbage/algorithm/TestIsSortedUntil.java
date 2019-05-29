@@ -49,5 +49,7 @@ public class TestIsSortedUntil {
 		assertEquals(10,IsSortedUntil.compute(G.DBL, nums));
 		Sort.compute(G.DBL, nums);
 		assertEquals(12,IsSortedUntil.compute(G.DBL, nums));
+		Sort.compute(G.DBL, G.DBL.isGreater(), nums);
+		assertEquals(12,IsSortedUntil.compute(G.DBL, G.DBL.isGreater(), nums));
 	}
 }

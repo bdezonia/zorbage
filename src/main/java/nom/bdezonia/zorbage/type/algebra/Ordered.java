@@ -45,4 +45,3 @@ public interface Ordered<U> {
 	Procedure3<U,U,U> min();
 	Procedure3<U,U,U> max();
 }
-

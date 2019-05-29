@@ -87,5 +87,25 @@ public class TestSort {
 		assertEquals(66, value.v());
 		storage.get(8, value);
 		assertEquals(99, value.v());
+
+		Sort.compute(G.INT32, G.INT32.isGreater(), storage);
+		storage.get(8, value);
+		assertEquals(-50, value.v());
+		storage.get(7, value);
+		assertEquals(-1, value.v());
+		storage.get(6, value);
+		assertEquals(0, value.v());
+		storage.get(5, value);
+		assertEquals(0, value.v());
+		storage.get(4, value);
+		assertEquals(3, value.v());
+		storage.get(3, value);
+		assertEquals(3, value.v());
+		storage.get(2, value);
+		assertEquals(6, value.v());
+		storage.get(1, value);
+		assertEquals(66, value.v());
+		storage.get(0, value);
+		assertEquals(99, value.v());
 	}
 }
