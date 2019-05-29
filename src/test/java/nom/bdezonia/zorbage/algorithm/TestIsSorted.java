@@ -50,5 +50,8 @@ public class TestIsSorted {
 		assertFalse(IsSorted.compute(G.DBL, nums));
 		Sort.compute(G.DBL, nums);
 		assertTrue(IsSorted.compute(G.DBL, nums));
+		Sort.compute(G.DBL, G.DBL.isGreater(), nums);
+		assertFalse(IsSorted.compute(G.DBL, nums));
+		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), nums));
 	}
 }
