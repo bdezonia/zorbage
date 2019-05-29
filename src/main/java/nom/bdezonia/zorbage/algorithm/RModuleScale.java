@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Ring;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -47,16 +48,10 @@ public class RModuleScale {
 	 * @param a
 	 * @param b
 	 */
-	public static <U extends RModuleMember<W>, V extends Ring<V,W>, W>
+	public static <U extends RModuleMember<W> & RawData<W>, V extends Ring<V,W>, W>
 		void compute(V memberAlgebra, W scalar, U a, U b)
 	{
-		W tmp = memberAlgebra.construct();
-		final long length = a.length();
-		b.alloc(length);
-		for (long i = 0; i < length; i++) {
-			a.v(i, tmp);
-			memberAlgebra.multiply().call(scalar, tmp, tmp);
-			b.setV(i, tmp);
-		}
+		b.alloc(a.length());
+		Scale.compute(memberAlgebra, scalar, a.rawData(), b.rawData());
 	}
 }

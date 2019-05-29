@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -46,17 +47,12 @@ public class MatrixScale {
 	 * @param matrixIn
 	 * @param matrixOut
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U>,U,V extends MatrixMember<U>>
+	public static <T extends Algebra<T,U> & Multiplication<U>,
+					U,
+					V extends MatrixMember<U> & RawData<U>>
 		void compute(T numAlgebra, U scale, V matrixIn, V matrixOut)
 	{
 		matrixOut.alloc(matrixIn.rows(), matrixIn.cols());
-		U val = numAlgebra.construct();
-		for (long i = 0; i < matrixIn.rows(); i++) {
-			for (long j = 0; j < matrixIn.cols(); j++) {
-				matrixIn.v(i, j, val);
-				numAlgebra.multiply().call(scale, val, val);
-				matrixOut.setV(i, j, val);
-			}
-		}
+		Scale.compute(numAlgebra, scale, matrixIn.rawData(), matrixOut.rawData());
 	}
 }

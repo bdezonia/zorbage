@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -46,15 +46,8 @@ public class MatrixSum {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T algebra, MatrixMember<U> mat, U result)
+		void compute(T algebra, RawData<U> matrix, U result)
 	{
-		U value = algebra.construct();
-		algebra.zero().call(result);
-		for (long r = 0; r < mat.rows(); r++) {
-			for (long c = 0; c < mat.cols(); c++) {
-				mat.v(r, c, value);
-				algebra.add().call(result, value, result);
-			}
-		}
+		Sum.compute(algebra, matrix.rawData(), result);
 	}
 }

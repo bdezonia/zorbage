@@ -46,11 +46,6 @@ public class MatrixZero {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, MatrixMember<U> a)
 	{
-		U zero = algebra.construct();
-		for (long row = 0; row < a.rows(); row++) {
-			for (long col = 0; col < a.cols(); col++) {
-				a.setV(row, col, zero);
-			}
-		}
+		a.init(a.rows(), a.cols());
 	}
 }

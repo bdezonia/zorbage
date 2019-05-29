@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.data.helper.MatrixDiagonalRModuleBridge;
 
 /**
  * 
@@ -49,7 +48,13 @@ public class MatrixTrace {
 	public static <T extends Algebra<T,U> & Addition<U>,U>
 		void compute(T algebra, MatrixMember<U> matrix, U result)
 	{
-		MatrixDiagonalRModuleBridge<U> diag = new MatrixDiagonalRModuleBridge<U>(algebra, matrix);
-		RModuleSum.compute(algebra, diag, result);
+		U sum = algebra.construct();
+		U tmp = algebra.construct();
+		long minD = Math.min(matrix.rows(), matrix.cols());
+		for (long i = 0; i < minD; i++) {
+			matrix.v(i, i, tmp);
+			algebra.add().call(sum, tmp, sum);
+		}
+		algebra.assign().call(sum, result);
 	}
 }

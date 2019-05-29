@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -46,14 +46,8 @@ public class RModuleSum {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>,U>
-		void compute(T algebra, RModuleMember<U> rmod, U result)
+		void compute(T algebra, RawData<U> rmod, U result)
 	{
-		U value = algebra.construct();
-		U sum = algebra.construct();
-		for (long i = 0; i < rmod.length(); i++) {
-			rmod.v(i, value);
-			algebra.add().call(sum, value, sum);
-		}
-		algebra.assign().call(sum, result);
+		Sum.compute(algebra, rmod.rawData(), result);
 	}
 }
