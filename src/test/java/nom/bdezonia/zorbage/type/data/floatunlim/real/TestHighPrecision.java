@@ -54,7 +54,7 @@ public class TestHighPrecision {
 			assertTrue(true);
 		}
 		try {
-			HighPrecisionAlgebra.setPrecision(2001);
+			HighPrecisionAlgebra.setPrecision(4000);
 			fail();
 		} catch (Exception e) {
 			assertTrue(true);
@@ -70,7 +70,7 @@ public class TestHighPrecision {
 		G.FLOAT_UNLIM.PI().call(a);
 		assertTrue(BigDecimal.valueOf(3.1415926535).equals(a.v()));
 		// test that the max limit code will actually run
-		HighPrecisionAlgebra.setPrecision(2000);
+		HighPrecisionAlgebra.setPrecision(3999);
 		G.FLOAT_UNLIM.E().call(a);
 		G.FLOAT_UNLIM.PI().call(a);
 		assertTrue(true);
