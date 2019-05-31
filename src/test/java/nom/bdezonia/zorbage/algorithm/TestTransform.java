@@ -33,6 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -164,5 +165,43 @@ public class TestTransform {
 		assertEquals(1, tmp.v());
 		c.get(1, tmp);
 		assertEquals(0, tmp.v());
+	}
+	
+	@Test
+	public void test3() {
+		
+		SignedInt32Member tmp = G.INT32.construct();
+		
+		IndexedDataSource<SignedInt32Member> a,b,c;
+
+		a = ArrayStorage.allocateInts(new int[] {0, 1, 2, 3});
+		b = ArrayStorage.allocateInts(new int[] {-3, -1, 1, 3});
+		c = ArrayStorage.allocateInts(new int[4]);
+
+		Transform3.compute(G.INT32, G.INT32, G.INT32, G.INT32.add(), a, b, c);
+
+		c.get(0, tmp);
+		assertEquals(-3, tmp.v());
+		c.get(1, tmp);
+		assertEquals(0, tmp.v());
+		c.get(2, tmp);
+		assertEquals(3, tmp.v());
+		c.get(3, tmp);
+		assertEquals(6, tmp.v());
+		
+		a = ArrayStorage.allocateInts(new int[] {0, 1, 2, 3});
+		b = ArrayStorage.allocateInts(new int[] {-3, -1, 1, 3});
+		c = ArrayStorage.allocateInts(new int[4]);
+
+		Transform3.compute(G.INT32, G.INT32, G.INT32, G.INT32.multiply(), a, b, c);
+
+		c.get(0, tmp);
+		assertEquals(0, tmp.v());
+		c.get(1, tmp);
+		assertEquals(-1, tmp.v());
+		c.get(2, tmp);
+		assertEquals(2, tmp.v());
+		c.get(3, tmp);
+		assertEquals(9, tmp.v());
 	}
 }
