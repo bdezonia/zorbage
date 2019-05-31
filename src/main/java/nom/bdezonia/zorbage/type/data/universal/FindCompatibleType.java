@@ -36,19 +36,19 @@ public class FindCompatibleType {
 	public static PrimitiveRepresentation find(PrimitiveConversion a, PrimitiveConversion b)
 	{
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
-				(a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE)) {
+				(b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE)) {
 			if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
-					(a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
+					(b.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
 				return PrimitiveRepresentation.BIGDECIMAL;
 			return PrimitiveRepresentation.DOUBLE;
 		}
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.FLOAT) ||
-				(a.preferredRepresentation() == PrimitiveRepresentation.FLOAT)) {
+				(b.preferredRepresentation() == PrimitiveRepresentation.FLOAT)) {
 			if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
-					(a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
+					(b.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
 				return PrimitiveRepresentation.BIGDECIMAL;
             if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
-                    (a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE))
+                    (b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE))
                 return PrimitiveRepresentation.DOUBLE;
 			return PrimitiveRepresentation.FLOAT;
 		}
