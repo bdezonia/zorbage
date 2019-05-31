@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 
 /**
@@ -40,11 +39,9 @@ public class RModuleZero {
 	
 	/**
 	 * 
-	 * @param algebra
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, RModuleMember<U> a)
+	public static void compute(RModuleMember<?> a)
 	{
 		a.init(a.length());
 	}

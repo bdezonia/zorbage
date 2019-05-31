@@ -85,7 +85,7 @@ public class QuaternionFloat64RModule
 	{
 		@Override
 		public void call(QuaternionFloat64RModuleMember a) {
-			RModuleZero.compute(G.QDBL, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

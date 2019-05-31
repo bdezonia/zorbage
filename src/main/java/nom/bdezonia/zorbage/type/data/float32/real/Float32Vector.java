@@ -83,7 +83,7 @@ public class Float32Vector
 	{
 		@Override
 		public void call(Float32VectorMember a) {
-			RModuleZero.compute(G.FLT, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

@@ -125,7 +125,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a) {
-			MatrixZero.compute(G.DBL, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

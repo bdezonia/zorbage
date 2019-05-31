@@ -128,7 +128,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			MatrixZero.compute(G.CDBL, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

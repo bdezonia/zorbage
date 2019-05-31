@@ -85,7 +85,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a) {
-			RModuleZero.compute(G.CDBL, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

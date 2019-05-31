@@ -85,7 +85,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32VectorMember a) {
-			RModuleZero.compute(G.CFLT, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

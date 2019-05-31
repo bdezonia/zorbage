@@ -83,7 +83,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a) {
-			RModuleZero.compute(G.HLF, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

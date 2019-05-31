@@ -128,7 +128,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a) {
-			MatrixZero.compute(G.CHLF, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

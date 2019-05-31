@@ -125,7 +125,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a) {
-			MatrixZero.compute(G.HLF, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

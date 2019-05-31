@@ -85,7 +85,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a) {
-			RModuleZero.compute(G.CHLF, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

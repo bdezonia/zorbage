@@ -85,7 +85,7 @@ public class OctonionFloat16RModule
 	{
 		@Override
 		public void call(OctonionFloat16RModuleMember a) {
-			RModuleZero.compute(G.OHLF, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

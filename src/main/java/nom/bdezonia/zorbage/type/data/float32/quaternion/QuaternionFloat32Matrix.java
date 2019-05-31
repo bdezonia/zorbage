@@ -131,7 +131,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			MatrixZero.compute(G.QFLT, a);
+			MatrixZero.compute(a);
 		}
 	};
 

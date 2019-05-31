@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 
 /**
@@ -40,11 +39,9 @@ public class MatrixZero {
 	
 	/**
 	 * 
-	 * @param algebra
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, MatrixMember<U> a)
+	public static void compute(MatrixMember<?> a)
 	{
 		a.init(a.rows(), a.cols());
 	}

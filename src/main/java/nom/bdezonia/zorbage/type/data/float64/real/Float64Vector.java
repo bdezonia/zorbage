@@ -83,7 +83,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a) {
-			RModuleZero.compute(G.DBL, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

@@ -125,7 +125,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			MatrixZero.compute(G.FLT, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

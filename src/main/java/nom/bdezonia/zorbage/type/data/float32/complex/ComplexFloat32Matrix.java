@@ -128,7 +128,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a) {
-			MatrixZero.compute(G.CFLT, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

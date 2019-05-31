@@ -85,7 +85,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(QuaternionFloat32RModuleMember a) {
-			RModuleZero.compute(G.QFLT, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

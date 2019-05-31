@@ -85,7 +85,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32RModuleMember a) {
-			RModuleZero.compute(G.OFLT, a);
+			RModuleZero.compute(a);
 		}
 	};
 	

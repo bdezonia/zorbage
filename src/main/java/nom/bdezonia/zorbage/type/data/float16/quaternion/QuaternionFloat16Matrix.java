@@ -131,7 +131,7 @@ public class QuaternionFloat16Matrix
 	{
 		@Override
 		public void call(QuaternionFloat16MatrixMember a) {
-			MatrixZero.compute(G.QHLF, a);
+			MatrixZero.compute(a);
 		}
 	};
 

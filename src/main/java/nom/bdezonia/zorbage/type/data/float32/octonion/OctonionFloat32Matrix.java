@@ -127,7 +127,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a) {
-			MatrixZero.compute(G.OFLT, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

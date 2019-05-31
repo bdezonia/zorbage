@@ -127,7 +127,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16MatrixMember a) {
-			MatrixZero.compute(G.OHLF, a);
+			MatrixZero.compute(a);
 		}
 	};
 	

@@ -131,7 +131,7 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a) {
-			MatrixZero.compute(G.QDBL, a);
+			MatrixZero.compute(a);
 		}
 	};
 
