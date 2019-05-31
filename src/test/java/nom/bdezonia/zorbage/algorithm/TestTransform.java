@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
@@ -203,5 +204,28 @@ public class TestTransform {
 		assertEquals(2, tmp.v());
 		c.get(3, tmp);
 		assertEquals(9, tmp.v());
+	}
+	
+	@Test
+	public void test4() {
+		
+		Float64Member tmp = G.DBL.construct();
+		
+		IndexedDataSource<Float64Member> a,b,c;
+
+		a = ArrayStorage.allocateDoubles(new double[] {1, 2, 3, 5});
+		b = ArrayStorage.allocateDoubles(new double[] {7, 6, 5, 4});
+		c = ArrayStorage.allocateDoubles(new double[4]);
+
+		Transform3.compute(G.DBL, G.DBL, G.DBL, G.DBL.pow(), a, b, c);
+
+		c.get(0, tmp);
+		assertEquals(1, tmp.v(), 0.0000001);
+		c.get(1, tmp);
+		assertEquals(64, tmp.v(), 0.0000001);
+		c.get(2, tmp);
+		assertEquals(243, tmp.v(), 0.0000001);
+		c.get(3, tmp);
+		assertEquals(625, tmp.v(), 0.0000001);
 	}
 }
