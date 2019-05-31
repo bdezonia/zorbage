@@ -47,9 +47,9 @@ public class FindCompatibleType {
 			if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
 					(b.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
 				return PrimitiveRepresentation.BIGDECIMAL;
-            if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
-                    (b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE))
-                return PrimitiveRepresentation.DOUBLE;
+			if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
+				(b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE))
+				return PrimitiveRepresentation.DOUBLE;
 			return PrimitiveRepresentation.FLOAT;
 		}
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
