@@ -41,9 +41,12 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class TestFindCompatibleType {
 
 	@Test
-	public void test() {
+	public <T extends Algebra<T,U>, U> void test() {
 		
-		Algebra<?,?> x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
+		T x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.CDBL);
+		
+		U tmp = x.construct();
+		assertTrue(x.isZero().call(tmp));
 	}
 }
