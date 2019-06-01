@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestTransform {
+public class TestTransform3 {
 
 	@Test
 	public void test1() {
@@ -81,16 +81,6 @@ public class TestTransform {
 		assertEquals(true, tmp.v());
 		c.get(3, tmp);
 		assertEquals(true, tmp.v());
-		
-		a = ArrayStorage.allocateBooleans(new boolean[] {false, true});
-		c = ArrayStorage.allocateBooleans(new boolean[2]);
-
-		Transform2.compute(G.BOOL, G.BOOL, G.BOOL.logicalNot(), a, c);
-		
-		c.get(0, tmp);
-		assertEquals(true, tmp.v());
-		c.get(1, tmp);
-		assertEquals(false, tmp.v());
 	}
 
 	@Test
@@ -151,21 +141,6 @@ public class TestTransform {
 		assertEquals(1, tmp.v());
 		c.get(3, tmp);
 		assertEquals(1, tmp.v());
-		
-		a = ArrayStorage.allocate(2, tmp);
-		c = ArrayStorage.allocate(2, tmp);
-
-		tmp.setV(0);
-		a.set(0, tmp);
-		tmp.setV(1);
-		a.set(1, tmp);
-
-		Transform2.compute(G.UINT1, G.UINT1, G.UINT1.logicalNot(), a, c);
-		
-		c.get(0, tmp);
-		assertEquals(1, tmp.v());
-		c.get(1, tmp);
-		assertEquals(0, tmp.v());
 	}
 	
 	@Test
