@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.universal;
 
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+
 /**
  * 
  * @author Barry DeZonia
@@ -33,7 +36,13 @@ package nom.bdezonia.zorbage.type.data.universal;
  */
 public class FindCompatibleType {
 
-	public static PrimitiveRepresentation find(PrimitiveConversion a, PrimitiveConversion b)
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static PrimitiveRepresentation bestRep(PrimitiveConversion a, PrimitiveConversion b)
 	{
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE)) {
@@ -71,5 +80,73 @@ public class FindCompatibleType {
 				(b.preferredRepresentation() == PrimitiveRepresentation.BYTE))
 			return PrimitiveRepresentation.BYTE;
 		throw new IllegalArgumentException("unknown representations "+a.preferredRepresentation()+" "+b.preferredRepresentation());
+	}
+
+	/**
+	 * 
+	 * @param components
+	 * @param rep
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Algebra<T,U>, U>
+		T bestAlgebra(int components, PrimitiveRepresentation rep)
+	{
+		if (components <= 0)
+			throw new IllegalArgumentException("must specify 1 or more components");
+		
+		if (components > 8)
+			throw new IllegalArgumentException("must specify 8 or fewer components");
+		
+		switch (rep) {
+		case BIGDECIMAL:
+			if (components == 1)
+				return (T) G.FLOAT_UNLIM;
+			break;
+		case BIGINTEGER:
+			if (components == 1)
+				return (T) G.INT_UNLIM;
+			break;
+		case DOUBLE:
+			if (components == 1)
+				return (T) G.DBL;
+			else if (components <= 2)
+				return (T) G.CDBL;
+			else if (components <= 4)
+				return (T) G.QDBL;
+			else if (components <= 8)
+				return (T) G.ODBL;
+			break;
+		case FLOAT:
+			if (components == 1)
+				return (T) G.FLT;
+			else if (components <= 2)
+				return (T) G.CFLT;
+			else if (components <= 4)
+				return (T) G.QFLT;
+			else if (components <= 8)
+				return (T) G.OFLT;
+			break;
+		case LONG:
+			if (components == 1)
+				return (T) G.INT64;
+			break;
+		case INT:
+			if (components == 1)
+				return (T) G.INT32;
+			break;
+		case SHORT:
+			if (components == 1)
+				return (T) G.INT16;
+			break;
+		case BYTE:
+			if (components == 1)
+				return (T) G.INT8;
+			break;
+		default:
+			throw new IllegalArgumentException("unknown primitive rep "+rep);
+		}
+		
+		throw new IllegalArgumentException("can't find appropriate type");
 	}
 }
