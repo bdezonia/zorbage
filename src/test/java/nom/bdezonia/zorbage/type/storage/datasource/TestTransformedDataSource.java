@@ -31,8 +31,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -107,6 +110,51 @@ public class TestTransformedDataSource {
 		// Do this just to test warning free compilation of duplicate() with mixed types
 		IndexedDataSource<SignedInt32Member> tmp = wrappedData.duplicate();
 		assertEquals(doubles.size(), tmp.size());
+	}
+	
+	@Test
+	public void test5() {
+		HighPrecisionMember result = G.FLOAT_UNLIM.construct();
+		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		ToHighPrec<Float64Member> toHighPrec = new ToHighPrec<Float64Member>();
+		ToDouble toDouble = new ToDouble();
+		TransformedDataSource<Float64Member, HighPrecisionMember> hps =
+				new TransformedDataSource<>(G.DBL, doubles, toHighPrec, toDouble);
+		Sum.compute(G.FLOAT_UNLIM, hps, result);
+		assertEquals(45, result.v().intValue());
+	}
+	
+	private class ToHighPrec<U extends HighPrecRepresentation> implements Procedure2<U, HighPrecisionMember> {
+
+		private ThreadLocal<HighPrecisionMember> tmp =
+				new ThreadLocal<HighPrecisionMember>()
+		{
+			@Override
+			protected HighPrecisionMember initialValue() {
+				return G.FLOAT_UNLIM.construct();
+			}
+		};
+		
+		public ToHighPrec() { }
+		
+		@Override
+		public void call(U a, HighPrecisionMember b) {
+			HighPrecisionMember t = tmp.get();
+			a.toHighPrec(t);
+			b.set(t);
+		}
+		
+	}
+	
+	private class ToDouble implements Procedure2<HighPrecisionMember,Float64Member> {
+
+		public ToDouble() { }
+		
+		@Override
+		public void call(HighPrecisionMember a, Float64Member b) {
+			b.setV(a.v().doubleValue());
+		}
+		
 	}
 	
 	private Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
