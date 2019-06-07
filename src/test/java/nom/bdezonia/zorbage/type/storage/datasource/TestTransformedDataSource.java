@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -117,42 +119,17 @@ public class TestTransformedDataSource {
 		HighPrecisionMember result = G.FLOAT_UNLIM.construct();
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		ToHighPrec<Float64Member> toHighPrec = new ToHighPrec<Float64Member>();
-		ToDouble toDouble = new ToDouble();
 		TransformedDataSource<Float64Member, HighPrecisionMember> hps =
-				new TransformedDataSource<>(G.DBL, doubles, toHighPrec, toDouble);
+				new TransformedDataSource<>(G.DBL, doubles, toHighPrec, null);
 		Sum.compute(G.FLOAT_UNLIM, hps, result);
-		assertEquals(45, result.v().intValue());
+		assertEquals(BigDecimal.valueOf(45.0), result.v());
 	}
 	
 	private class ToHighPrec<U extends HighPrecRepresentation> implements Procedure2<U, HighPrecisionMember> {
 
-		private ThreadLocal<HighPrecisionMember> tmp =
-				new ThreadLocal<HighPrecisionMember>()
-		{
-			@Override
-			protected HighPrecisionMember initialValue() {
-				return G.FLOAT_UNLIM.construct();
-			}
-		};
-		
-		public ToHighPrec() { }
-		
 		@Override
 		public void call(U a, HighPrecisionMember b) {
-			HighPrecisionMember t = tmp.get();
-			a.toHighPrec(t);
-			b.set(t);
-		}
-		
-	}
-	
-	private class ToDouble implements Procedure2<HighPrecisionMember,Float64Member> {
-
-		public ToDouble() { }
-		
-		@Override
-		public void call(HighPrecisionMember a, Float64Member b) {
-			b.setV(a.v().doubleValue());
+			a.toHighPrec(b);
 		}
 		
 	}
