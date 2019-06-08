@@ -634,4 +634,9 @@ public final class HighPrecisionMember
 	public void toHighPrec(HighPrecisionMember result) {
 		result.setV(v());
 	}
+
+	@Override
+	public void fromHighPrec(HighPrecisionMember input) {
+		setV(input.v());
+	}
 }

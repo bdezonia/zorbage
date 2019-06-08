@@ -674,4 +674,9 @@ public final class UnsignedInt64Member
 	public void toHighPrec(HighPrecisionMember result) {
 		result.setV(new BigDecimal(v()));
 	}
+
+	@Override
+	public void fromHighPrec(HighPrecisionMember input) {
+		setV(input.v().toBigInteger());
+	}
 }

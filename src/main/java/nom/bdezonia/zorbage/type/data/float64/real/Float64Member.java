@@ -665,4 +665,8 @@ public final class Float64Member
 		result.setV(BigDecimal.valueOf(v()));
 	}
 
+	@Override
+	public void fromHighPrec(HighPrecisionMember input) {
+		setV(input.v().doubleValue());
+	}
 }

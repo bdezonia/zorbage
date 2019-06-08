@@ -35,6 +35,6 @@ import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
  */
 public interface HighPrecRepresentation {
 
-	void toHighPrec(HighPrecisionMember result);
-	
+	void toHighPrec(HighPrecisionMember output);
+	void fromHighPrec(HighPrecisionMember input);
 }

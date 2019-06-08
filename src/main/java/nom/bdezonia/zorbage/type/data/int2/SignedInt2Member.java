@@ -676,4 +676,9 @@ public final class SignedInt2Member
 	public void toHighPrec(HighPrecisionMember result) {
 		result.setV(BigDecimal.valueOf(v()));
 	}
+
+	@Override
+	public void fromHighPrec(HighPrecisionMember input) {
+		setV(input.v().intValue());
+	}
 }

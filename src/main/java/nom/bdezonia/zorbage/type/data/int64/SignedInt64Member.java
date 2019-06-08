@@ -663,4 +663,9 @@ public final class SignedInt64Member
 	public void toHighPrec(HighPrecisionMember result) {
 		result.setV(BigDecimal.valueOf(v()));
 	}
+
+	@Override
+	public void fromHighPrec(HighPrecisionMember input) {
+		setV(input.v().longValue());
+	}
 }

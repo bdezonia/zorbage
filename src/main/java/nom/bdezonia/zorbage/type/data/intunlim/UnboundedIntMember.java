@@ -637,4 +637,8 @@ public final class UnboundedIntMember
 		result.setV(new BigDecimal(v()));
 	}
 
+	@Override
+	public void fromHighPrec(HighPrecisionMember input) {
+		setV(input.v().toBigInteger());
+	}
 }
