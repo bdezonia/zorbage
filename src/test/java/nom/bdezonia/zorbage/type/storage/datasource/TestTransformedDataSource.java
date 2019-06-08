@@ -35,7 +35,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
+import nom.bdezonia.zorbage.procedure.impl.ToHighPrec;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
@@ -123,15 +123,6 @@ public class TestTransformedDataSource {
 				new TransformedDataSource<>(G.DBL, doubles, toHighPrec, null);
 		Sum.compute(G.FLOAT_UNLIM, hps, result);
 		assertEquals(BigDecimal.valueOf(45.0), result.v());
-	}
-	
-	private class ToHighPrec<U extends HighPrecRepresentation> implements Procedure2<U, HighPrecisionMember> {
-
-		@Override
-		public void call(U a, HighPrecisionMember b) {
-			a.toHighPrec(b);
-		}
-		
 	}
 	
 	private Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
