@@ -35,11 +35,11 @@ import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class ToHighPrec<U extends HighPrecRepresentation>
-	implements Procedure2<U, HighPrecisionMember>
+public class FromHighPrec<U extends HighPrecRepresentation>
+	implements Procedure2<HighPrecisionMember,U>
 {
 	@Override
-	public void call(U a, HighPrecisionMember b) {
-		a.toHighPrec(b);
+	public void call(HighPrecisionMember a, U b) {
+		b.fromHighPrec(a);
 	}
 }
