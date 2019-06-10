@@ -61,9 +61,9 @@ public class Fibonacci {
 			algebra.unity().call(result);
 		}
 		else {
-	        U prev2 = algebra.construct();
-	        U prev1 = algebra.construct();
-	        algebra.unity().call(prev1);
+			U prev2 = algebra.construct();
+			U prev1 = algebra.construct();
+			algebra.unity().call(prev1);
 			U tmp = algebra.construct();
 			for (int i = 2; i <= n; i++) {
 				algebra.add().call(prev2, prev1, tmp);
