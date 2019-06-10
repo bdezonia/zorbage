@@ -27,9 +27,12 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.ModularDivision;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
@@ -59,7 +62,7 @@ public class Round {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends RingWithUnity<T,U> & ModularDivision<U> & Ordered<U> & AbsoluteValue<U>,U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & ModularDivision<U> & Ordered<U> & AbsoluteValue<U>,U>
 		void compute(T algebra, Mode mode, U delta, U a, U b)
 	{
 		// For symmetry provide a NONE option. This simplifies algorithms
