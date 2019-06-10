@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.data.int11.SignedInt11Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
 
@@ -49,28 +49,28 @@ public class TestFactorial {
 
 	@Test
 	public void ints() {
-		SignedInt32Member b = G.INT32.construct();
+		SignedInt11Member b = G.INT11.construct();
 		
 		try {
-			Factorial.compute(G.INT32, -1, b);
+			Factorial.compute(G.INT11, -1, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
-		Factorial.compute(G.INT32, 0, b);
+		Factorial.compute(G.INT11, 0, b);
 		assertEquals(1, b.v());
 		
-		Factorial.compute(G.INT32, 1, b);
+		Factorial.compute(G.INT11, 1, b);
 		assertEquals(1, b.v());
 
-		Factorial.compute(G.INT32, 2, b);
+		Factorial.compute(G.INT11, 2, b);
 		assertEquals(2, b.v());
 
-		Factorial.compute(G.INT32, 3, b);
+		Factorial.compute(G.INT11, 3, b);
 		assertEquals(6, b.v());
 
-		Factorial.compute(G.INT32, 6, b);
+		Factorial.compute(G.INT11, 6, b);
 		assertEquals(720, b.v());
 	}
 	
