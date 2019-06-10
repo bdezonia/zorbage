@@ -53,7 +53,7 @@ public class Factorial {
 		void compute(T algebra, int n, U result)
 	{
 		if (n < 0)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("factorial not defined for negative input");
 		if (n == 0 || n == 1) {
 			algebra.unity().call(result);
 		}
