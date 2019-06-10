@@ -54,16 +54,16 @@ public class Fibonacci {
 	{
 		if (n < 0)
 			throw new IllegalArgumentException("Cannot get fibonacci value of negative input");
-		U prev2 = algebra.construct();
-		U prev1 = algebra.construct();
-		algebra.unity().call(prev1);
 		if (n == 0) {
 			algebra.zero().call(result);
 		}
 		else if (n == 1) {
-			algebra.assign().call(prev1, result);
+			algebra.unity().call(result);
 		}
 		else {
+	        U prev2 = algebra.construct();
+	        U prev1 = algebra.construct();
+	        algebra.unity().call(prev1);
 			U tmp = algebra.construct();
 			for (int i = 2; i <= n; i++) {
 				algebra.add().call(prev2, prev1, tmp);
