@@ -49,151 +49,112 @@ public class TestFactorial {
 
 	@Test
 	public void ints() {
-		SignedInt32Member a = G.INT32.construct();
 		SignedInt32Member b = G.INT32.construct();
 		
-		a.setV(-1);
 		try {
-			Factorial.compute(G.INT32, a, b);
+			Factorial.compute(G.INT32, -1, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
-		a.setV(0);
-		Factorial.compute(G.INT32, a, b);
+		Factorial.compute(G.INT32, 0, b);
 		assertEquals(1, b.v());
 		
-		a.setV(1);
-		Factorial.compute(G.INT32, a, b);
+		Factorial.compute(G.INT32, 1, b);
 		assertEquals(1, b.v());
 
-		a.setV(2);
-		Factorial.compute(G.INT32, a, b);
+		Factorial.compute(G.INT32, 2, b);
 		assertEquals(2, b.v());
 
-		a.setV(3);
-		Factorial.compute(G.INT32, a, b);
+		Factorial.compute(G.INT32, 3, b);
 		assertEquals(6, b.v());
 
-		a.setV(6);
-		Factorial.compute(G.INT32, a, b);
+		Factorial.compute(G.INT32, 6, b);
 		assertEquals(720, b.v());
 	}
 	
 	@Test
 	public void longs() {
-		SignedInt64Member a = G.INT64.construct();
 		SignedInt64Member b = G.INT64.construct();
 		
-		a.setV(-1);
 		try {
-			Factorial.compute(G.INT64, a, b);
+			Factorial.compute(G.INT64, -1, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
-		a.setV(0);
-		Factorial.compute(G.INT64, a, b);
+		Factorial.compute(G.INT64, 0, b);
 		assertEquals(1, b.v());
 		
-		a.setV(1);
-		Factorial.compute(G.INT64, a, b);
+		Factorial.compute(G.INT64, 1, b);
 		assertEquals(1, b.v());
 
-		a.setV(2);
-		Factorial.compute(G.INT64, a, b);
+		Factorial.compute(G.INT64, 2, b);
 		assertEquals(2, b.v());
 
-		a.setV(3);
-		Factorial.compute(G.INT64, a, b);
+		Factorial.compute(G.INT64, 3, b);
 		assertEquals(6, b.v());
 
-		a.setV(6);
-		Factorial.compute(G.INT64, a, b);
+		Factorial.compute(G.INT64, 6, b);
 		assertEquals(720, b.v());
 	}
 	
 	@Test
 	public void unboundInts() {
-		UnboundedIntMember a = G.INT_UNLIM.construct();
 		UnboundedIntMember b = G.INT_UNLIM.construct();
 		
-		a.setV(BigInteger.valueOf(-1));
 		try {
-			Factorial.compute(G.INT_UNLIM, a, b);
+			Factorial.compute(G.INT_UNLIM, -1, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
-		a.setV(BigInteger.valueOf(0));
-		Factorial.compute(G.INT_UNLIM, a, b);
+		Factorial.compute(G.INT_UNLIM, 0, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
 		
-		a.setV(BigInteger.valueOf(1));
-		Factorial.compute(G.INT_UNLIM, a, b);
+		Factorial.compute(G.INT_UNLIM, 1, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
 
-		a.setV(BigInteger.valueOf(2));
-		Factorial.compute(G.INT_UNLIM, a, b);
+		Factorial.compute(G.INT_UNLIM, 2, b);
 		assertEquals(BigInteger.valueOf(2), b.v());
 
-		a.setV(BigInteger.valueOf(3));
-		Factorial.compute(G.INT_UNLIM, a, b);
+		Factorial.compute(G.INT_UNLIM, 3, b);
 		assertEquals(BigInteger.valueOf(6), b.v());
 
-		a.setV(BigInteger.valueOf(6));
-		Factorial.compute(G.INT_UNLIM, a, b);
+		Factorial.compute(G.INT_UNLIM, 6, b);
 		assertEquals(BigInteger.valueOf(720), b.v());
 
-		a.setV(BigInteger.valueOf(45));
-		Factorial.compute(G.INT_UNLIM, a, b);
+		Factorial.compute(G.INT_UNLIM, 45, b);
 		assertEquals(new BigInteger("119622220865480194561963161495657715064383733760000000000"), b.v());
 	}
 	
 	@Test
 	public void doubles() {
-		Float64Member a = G.DBL.construct();
 		Float64Member b = G.DBL.construct();
 		
-		a.setV(-1);
 		try {
-			Factorial.compute(G.DBL, a, b);
+			Factorial.compute(G.DBL, -1, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
-		a.setV(0);
-		Factorial.compute(G.DBL, a, b);
+		Factorial.compute(G.DBL, 0, b);
 		assertEquals(1, b.v(), 0);
 		
-		a.setV(1);
-		Factorial.compute(G.DBL, a, b);
+		Factorial.compute(G.DBL, 1, b);
 		assertEquals(1, b.v(), 0);
 
-		a.setV(2);
-		Factorial.compute(G.DBL, a, b);
+		Factorial.compute(G.DBL, 2, b);
 		assertEquals(2, b.v(), 0);
 
-		a.setV(3);
-		Factorial.compute(G.DBL, a, b);
+		Factorial.compute(G.DBL, 3, b);
 		assertEquals(6, b.v(), 0);
 
-		a.setV(6);
-		Factorial.compute(G.DBL, a, b);
+		Factorial.compute(G.DBL, 6, b);
 		assertEquals(720, b.v(), 0);
-		
-		// TODO: this is a little weird. consider what is best behavior.
-		// Trunc 4.5 to 4.0 and calc from there? Or leave as is? Or disallow
-		// for reals? That seems too harsh. Could make the gamma function
-		// and tell users to prefer that algorithm for reals but allow it
-		// here.
-		
-		a.setV(4.5);
-		Factorial.compute(G.DBL, a, b);
-		assertEquals(59.0625, b.v(), 0);
 	}
 }

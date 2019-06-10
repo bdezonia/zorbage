@@ -26,8 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
@@ -44,26 +47,29 @@ public class Factorial {
 	 * Factorial.compute()
 	 * 
 	 * @param algebra
-	 * @param a
+	 * @param n
 	 * @param result
 	 */
-	public static <T extends RingWithUnity<T,U> & Ordered<U>, U>
-		void compute(T algebra, U a, U result)
+	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Ordered<U>, U>
+		void compute(T algebra, int n, U result)
 	{
-		U tmp = algebra.construct();
-		if (algebra.isLess().call(a, tmp))
-			throw new IllegalArgumentException("Cannot take factorial of negative input");
-		algebra.unity().call(tmp);
-		if (algebra.isLessEqual().call(a, tmp))
-			algebra.assign().call(tmp, result);
+		if (n < 0)
+			throw new IllegalArgumentException();
+		if (n == 0 || n == 1) {
+			algebra.unity().call(result);
+		}
 		else {
-			U product = algebra.construct(tmp);
-			U multiplier = algebra.construct(a);
-			while (algebra.isGreater().call(multiplier, tmp)) {
-				algebra.multiply().call(product, multiplier, product);
-				algebra.subtract().call(multiplier, tmp, multiplier);
+			U tmp = algebra.construct();
+			U factor = algebra.construct();
+			U one = algebra.construct();
+			algebra.unity().call(one);
+			algebra.assign().call(one, tmp);
+			algebra.assign().call(one, factor);
+			for (int i = 2; i <= n; i++) {
+				algebra.add().call(factor, one, factor);
+				algebra.multiply().call(tmp, factor, tmp);
 			}
-			algebra.assign().call(product, result);
+			algebra.assign().call(tmp, result);
 		}
 	}
 }
