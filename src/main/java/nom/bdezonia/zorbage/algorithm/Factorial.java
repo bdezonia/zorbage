@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
@@ -50,7 +49,7 @@ public class Factorial {
 	 * @param n
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U>, U>
 		void compute(T algebra, int n, U result)
 	{
 		if (n < 0)
