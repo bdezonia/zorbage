@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.math.BigDecimal;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
@@ -60,8 +61,10 @@ public class InvFFT {
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
+		HighPrecisionMember tmp = new HighPrecisionMember(BigDecimal.valueOf(aSize));
+		G.FLOAT_UNLIM.invert().call(tmp, tmp);
 		U one_over_n = algebra.construct();
-		one_over_n.setR(new HighPrecisionMember(BigDecimal.ONE.divide(BigDecimal.valueOf(aSize))));
+		one_over_n.setR(tmp);
 		Conjugate.compute(algebra, a, b);
 		FFT.compute(algebra, b, b); // TODO: does this work in place?
 		Conjugate.compute(algebra, b, b);
