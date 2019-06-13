@@ -26,9 +26,14 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import java.math.BigDecimal;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetComplex;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -48,8 +53,8 @@ public class FFT {
 	 * @param a
 	 * @param b
 	 */
-	public static
-		void compute(ComplexFloat64Algebra algebra, IndexedDataSource<ComplexFloat64Member> a, IndexedDataSource<ComplexFloat64Member> b)
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U extends SetComplex<HighPrecisionMember>>
+		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -58,8 +63,8 @@ public class FFT {
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
-		ComplexFloat64Member tmp1 = algebra.construct();
-		ComplexFloat64Member tmp2 = algebra.construct();
+		U tmp1 = algebra.construct();
+		U tmp2 = algebra.construct();
 
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
@@ -77,15 +82,23 @@ public class FFT {
 			}
 		}
 
-		ComplexFloat64Member w = algebra.construct();
-		ComplexFloat64Member tao = algebra.construct();
+		U w = algebra.construct();
+		U tao = algebra.construct();
 
 		// butterfly updates
+		HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
+		G.FLOAT_UNLIM.PI().call(pi);
+		HighPrecisionMember tmp = G.FLOAT_UNLIM.construct();
+		HighPrecisionMember cos = G.FLOAT_UNLIM.construct();
+		HighPrecisionMember sin = G.FLOAT_UNLIM.construct();
 		for (long L = 2; L <= aSize; L = L+L) {
 			for (long k = 0; k < L/2; k++) {
-				double kth = -2 * k * Math.PI / L;
-				w.setR(FastMath.cos(kth));
-				w.setI(FastMath.sin(kth));
+				BigDecimal kth = BigDecimal.valueOf(-2 * k).multiply(pi.v()).divide(BigDecimal.valueOf(L));
+				tmp.setV(kth);
+				G.FLOAT_UNLIM.cos().call(tmp, cos);
+				G.FLOAT_UNLIM.sin().call(tmp, sin);
+				w.setR(cos);
+				w.setI(sin);
 				for (long j = 0; j < aSize/L; j++) {
 					b.get(j*L + k + L/2, tmp1);
 					algebra.multiply().call(w, tmp1, tao);
