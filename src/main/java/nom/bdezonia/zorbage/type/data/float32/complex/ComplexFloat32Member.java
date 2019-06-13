@@ -34,9 +34,11 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetComplex;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -56,7 +58,7 @@ public final class ComplexFloat32Member
 		Allocatable<ComplexFloat32Member>, Duplicatable<ComplexFloat32Member>,
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
-		UniversalRepresentation
+		UniversalRepresentation, SetComplex<HighPrecisionMember>
 {
 	private float r, i;
 	
@@ -744,5 +746,15 @@ public final class ComplexFloat32Member
 	@Override
 	public void primitiveInit() {
 		r = i = 0;
+	}
+
+	@Override
+	public void setR(HighPrecisionMember val) {
+		setR(val.v().floatValue());
+	}
+
+	@Override
+	public void setI(HighPrecisionMember val) {
+		setI(val.v().floatValue());
 	}
 }

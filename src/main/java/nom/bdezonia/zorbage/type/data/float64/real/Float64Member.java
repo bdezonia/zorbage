@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -59,7 +60,7 @@ public final class Float64Member
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
 		Settable<Float64Member>, Gettable<Float64Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation
+		HighPrecRepresentation, SetReal<HighPrecisionMember>
 {
 	private double v;
 	
@@ -668,5 +669,10 @@ public final class Float64Member
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().doubleValue());
+	}
+
+	@Override
+	public void setR(HighPrecisionMember val) {
+		setV(val.v().doubleValue());
 	}
 }

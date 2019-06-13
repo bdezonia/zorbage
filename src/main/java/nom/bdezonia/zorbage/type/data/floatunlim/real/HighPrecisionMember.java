@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -54,7 +55,7 @@ public final class HighPrecisionMember
 		Allocatable<HighPrecisionMember>, Duplicatable<HighPrecisionMember>,
 		Settable<HighPrecisionMember>, Gettable<HighPrecisionMember>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation
+		HighPrecRepresentation, SetReal<HighPrecisionMember>
 {
 	private BigDecimal v;
 	
@@ -638,5 +639,10 @@ public final class HighPrecisionMember
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v());
+	}
+
+	@Override
+	public void setR(HighPrecisionMember val) {
+		fromHighPrec(val);
 	}
 }

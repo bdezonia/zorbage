@@ -34,10 +34,12 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Util;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -58,7 +60,7 @@ public final class OctonionFloat16Member
 		Allocatable<OctonionFloat16Member>, Duplicatable<OctonionFloat16Member>,
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
-		UniversalRepresentation
+		UniversalRepresentation, SetOctonion<HighPrecisionMember>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1768,4 +1770,43 @@ public final class OctonionFloat16Member
 		r = i = j = k = l = i0 = j0 = k0 = ZERO;
 	}
 
+	@Override
+	public void setR(HighPrecisionMember val) {
+		setR(val.v().doubleValue());
+	}
+
+	@Override
+	public void setI(HighPrecisionMember val) {
+		setI(val.v().doubleValue());
+	}
+
+	@Override
+	public void setJ(HighPrecisionMember val) {
+		setJ(val.v().doubleValue());
+	}
+
+	@Override
+	public void setK(HighPrecisionMember val) {
+		setK(val.v().doubleValue());
+	}
+
+	@Override
+	public void setL(HighPrecisionMember val) {
+		setL(val.v().doubleValue());
+	}
+
+	@Override
+	public void setI0(HighPrecisionMember val) {
+		setI0(val.v().doubleValue());
+	}
+
+	@Override
+	public void setJ0(HighPrecisionMember val) {
+		setJ0(val.v().doubleValue());
+	}
+
+	@Override
+	public void setK0(HighPrecisionMember val) {
+		setK0(val.v().doubleValue());
+	}
 }

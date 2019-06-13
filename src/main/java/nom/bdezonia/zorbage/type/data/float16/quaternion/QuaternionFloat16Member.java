@@ -34,10 +34,12 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Util;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -57,7 +59,7 @@ public final class QuaternionFloat16Member
 		ShortCoder,
 		Allocatable<QuaternionFloat16Member>, Duplicatable<QuaternionFloat16Member>,
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
-		PrimitiveConversion, UniversalRepresentation
+		PrimitiveConversion, UniversalRepresentation, SetQuaternion<HighPrecisionMember>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1125,5 +1127,25 @@ public final class QuaternionFloat16Member
 	@Override
 	public void primitiveInit() {
 		r = i = j = k = ZERO;
+	}
+
+	@Override
+	public void setR(HighPrecisionMember val) {
+		setR(val.v().doubleValue());
+	}
+
+	@Override
+	public void setI(HighPrecisionMember val) {
+		setI(val.v().doubleValue());
+	}
+
+	@Override
+	public void setJ(HighPrecisionMember val) {
+		setJ(val.v().doubleValue());
+	}
+
+	@Override
+	public void setK(HighPrecisionMember val) {
+		setK(val.v().doubleValue());
 	}
 }

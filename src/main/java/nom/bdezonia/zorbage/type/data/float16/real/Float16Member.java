@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -63,7 +64,7 @@ public final class Float16Member
 		Allocatable<Float16Member>, Duplicatable<Float16Member>,
 		Settable<Float16Member>, Gettable<Float16Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation
+		HighPrecRepresentation, SetReal<HighPrecisionMember>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -675,5 +676,9 @@ public final class Float16Member
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().doubleValue());
 	}
-	
+
+	@Override
+	public void setR(HighPrecisionMember val) {
+		setV(val.v().doubleValue());
+	}
 }
