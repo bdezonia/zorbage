@@ -26,8 +26,13 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import java.math.BigDecimal;
+
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetComplex;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -46,8 +51,8 @@ public class InvFFT {
 	 * @param a
 	 * @param b
 	 */
-	public static
-		void compute(IndexedDataSource<ComplexFloat64Member> a,IndexedDataSource<ComplexFloat64Member> b)
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & nom.bdezonia.zorbage.type.algebra.Conjugate<U>, U extends SetComplex<HighPrecisionMember>>
+		void compute(T algebra, IndexedDataSource<U> a,IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -55,11 +60,11 @@ public class InvFFT {
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
-		ComplexFloat64Member one_over_n =
-			new ComplexFloat64Member(1.0/aSize,0);
-		Conjugate.compute(G.CDBL, a, b);
-		FFT.compute(G.CDBL, b, b); // TODO: does this work in place?
-		Conjugate.compute(G.CDBL, b, b);
-		Scale.compute(G.CDBL, one_over_n, b, b);
+		U one_over_n = algebra.construct();
+		one_over_n.setR(new HighPrecisionMember(BigDecimal.ONE.divide(BigDecimal.valueOf(aSize))));
+		Conjugate.compute(algebra, a, b);
+		FFT.compute(algebra, b, b); // TODO: does this work in place?
+		Conjugate.compute(algebra, b, b);
+		Scale.compute(algebra, one_over_n, b, b);
 	}
 }
