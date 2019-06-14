@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -59,7 +60,8 @@ public final class SignedInt13Member
 		Allocatable<SignedInt13Member>, Duplicatable<SignedInt13Member>,
 		Settable<SignedInt13Member>, Gettable<SignedInt13Member>,
 		UniversalRepresentation, NumberMember<SignedInt13Member>,
-		PrimitiveConversion, HighPrecRepresentation
+		PrimitiveConversion, HighPrecRepresentation,
+		SetReal<Integer>
 {
 	short v;
 
@@ -886,5 +888,10 @@ public final class SignedInt13Member
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().intValue());
+	}
+
+	@Override
+	public void setR(Integer val) {
+		setV(val);
 	}
 }

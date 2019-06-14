@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -59,7 +60,8 @@ public final class SignedInt9Member
 		Allocatable<SignedInt9Member>, Duplicatable<SignedInt9Member>,
 		Settable<SignedInt9Member>, Gettable<SignedInt9Member>,
 		UniversalRepresentation, NumberMember<SignedInt9Member>,
-		PrimitiveConversion, HighPrecRepresentation
+		PrimitiveConversion, HighPrecRepresentation,
+		SetReal<Integer>
 {
 	short v;
 
@@ -818,5 +820,10 @@ public final class SignedInt9Member
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().intValue());
+	}
+
+	@Override
+	public void setR(Integer val) {
+		setV(val);
 	}
 }

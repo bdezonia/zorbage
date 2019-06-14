@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -59,7 +60,8 @@ public final class UnsignedInt10Member
 		Allocatable<UnsignedInt10Member>, Duplicatable<UnsignedInt10Member>,
 		Settable<UnsignedInt10Member>, Gettable<UnsignedInt10Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt10Member>,
-		PrimitiveConversion, HighPrecRepresentation
+		PrimitiveConversion, HighPrecRepresentation,
+		SetReal<Integer>
 {
 	short v;
 
@@ -831,5 +833,10 @@ public final class UnsignedInt10Member
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().intValue());
+	}
+
+	@Override
+	public void setR(Integer val) {
+		setV(val);
 	}
 }

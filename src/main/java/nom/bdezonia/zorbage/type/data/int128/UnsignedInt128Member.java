@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -58,7 +59,8 @@ public final class UnsignedInt128Member
 		Allocatable<UnsignedInt128Member>, Duplicatable<UnsignedInt128Member>,
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt128Member>,
-		PrimitiveConversion, HighPrecRepresentation
+		PrimitiveConversion, HighPrecRepresentation,
+		SetReal<BigInteger>
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);
@@ -704,5 +706,10 @@ public final class UnsignedInt128Member
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().toBigInteger());
+	}
+
+	@Override
+	public void setR(BigInteger val) {
+		setV(val);
 	}
 }

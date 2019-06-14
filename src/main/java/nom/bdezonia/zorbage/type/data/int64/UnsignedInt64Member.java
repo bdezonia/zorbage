@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.SetReal;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
@@ -58,7 +59,8 @@ public final class UnsignedInt64Member
 		Allocatable<UnsignedInt64Member>, Duplicatable<UnsignedInt64Member>,
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt64Member>,
-		PrimitiveConversion, HighPrecRepresentation
+		PrimitiveConversion, HighPrecRepresentation,
+		SetReal<BigInteger>
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -678,5 +680,10 @@ public final class UnsignedInt64Member
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
 		setV(input.v().toBigInteger());
+	}
+
+	@Override
+	public void setR(BigInteger val) {
+		setV(val);
 	}
 }
