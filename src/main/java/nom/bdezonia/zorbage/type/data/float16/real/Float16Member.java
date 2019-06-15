@@ -681,6 +681,6 @@ public final class Float16Member
 
 	@Override
 	public void setR(Float16Member val) {
-		v = val.encV();
+		set(val);
 	}
 }
