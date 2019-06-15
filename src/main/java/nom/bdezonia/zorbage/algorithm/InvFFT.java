@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
@@ -66,7 +69,7 @@ public class InvFFT {
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
-		U one_over_n = cmplxAlg.construct(""+(1.0 / aSize));
+		U one_over_n = cmplxAlg.construct("" + (BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))));
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, a, b);
 		FFT.compute(cmplxAlg, realAlg, b, b); // TODO: does this work in place?
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, b, b);
