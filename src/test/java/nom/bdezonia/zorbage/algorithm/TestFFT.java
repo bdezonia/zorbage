@@ -75,10 +75,10 @@ public class TestFFT {
 				Storage.allocate(n, cdbl);
 		DataConvert.compute(G.INT32, G.CDBL, poly1, data1);
 		DataConvert.compute(G.INT32, G.CDBL, poly2, data2);
-		FFT.compute(G.CDBL, data1, data1);
-		FFT.compute(G.CDBL, data2, data2);
+		FFT.compute(G.CDBL, G.DBL, data1, data1);
+		FFT.compute(G.CDBL, G.DBL, data2, data2);
 		Correlate.compute(G.CDBL, data1, data2, data1);
-		InvFFT.compute(G.CDBL, data1, data1);
+		InvFFT.compute(G.CDBL, G.DBL, data1, data1);
 		IndexedDataSource<SignedInt32Member> result =
 				Storage.allocate(n, int32);
 		DataConvert.compute(G.CDBL, G.INT32, data1, result);

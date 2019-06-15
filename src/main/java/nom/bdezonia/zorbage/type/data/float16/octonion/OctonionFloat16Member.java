@@ -38,8 +38,8 @@ import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Util;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -60,7 +60,7 @@ public final class OctonionFloat16Member
 		Allocatable<OctonionFloat16Member>, Duplicatable<OctonionFloat16Member>,
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<HighPrecisionMember>
+		UniversalRepresentation, SetOctonion<Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1771,42 +1771,42 @@ public final class OctonionFloat16Member
 	}
 
 	@Override
-	public void setR(HighPrecisionMember val) {
-		setR(val.v().doubleValue());
+	public void setR(Float16Member val) {
+		setR(val.v());
 	}
 
 	@Override
-	public void setI(HighPrecisionMember val) {
-		setI(val.v().doubleValue());
+	public void setI(Float16Member val) {
+		setI(val.v());
 	}
 
 	@Override
-	public void setJ(HighPrecisionMember val) {
-		setJ(val.v().doubleValue());
+	public void setJ(Float16Member val) {
+		setJ(val.v());
 	}
 
 	@Override
-	public void setK(HighPrecisionMember val) {
-		setK(val.v().doubleValue());
+	public void setK(Float16Member val) {
+		setK(val.v());
 	}
 
 	@Override
-	public void setL(HighPrecisionMember val) {
-		setL(val.v().doubleValue());
+	public void setL(Float16Member val) {
+		setL(val.v());
 	}
 
 	@Override
-	public void setI0(HighPrecisionMember val) {
-		setI0(val.v().doubleValue());
+	public void setI0(Float16Member val) {
+		setI0(val.v());
 	}
 
 	@Override
-	public void setJ0(HighPrecisionMember val) {
-		setJ0(val.v().doubleValue());
+	public void setJ0(Float16Member val) {
+		setJ0(val.v());
 	}
 
 	@Override
-	public void setK0(HighPrecisionMember val) {
-		setK0(val.v().doubleValue());
+	public void setK0(Float16Member val) {
+		setK0(val.v());
 	}
 }

@@ -60,7 +60,7 @@ public final class Float32Member
 		Allocatable<Float32Member>, Duplicatable<Float32Member>,
 		Settable<Float32Member>, Gettable<Float32Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<HighPrecisionMember>
+		HighPrecRepresentation, SetReal<Float32Member>
 {
 	private float v;
 	
@@ -672,7 +672,7 @@ public final class Float32Member
 	}
 
 	@Override
-	public void setR(HighPrecisionMember val) {
-		setV(val.v().floatValue());
+	public void setR(Float32Member val) {
+		setV(val.v());
 	}
 }

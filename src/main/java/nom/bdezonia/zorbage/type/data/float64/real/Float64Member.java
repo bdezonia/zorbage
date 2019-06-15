@@ -60,7 +60,7 @@ public final class Float64Member
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
 		Settable<Float64Member>, Gettable<Float64Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<HighPrecisionMember>
+		HighPrecRepresentation, SetReal<Float64Member>
 {
 	private double v;
 	
@@ -672,7 +672,7 @@ public final class Float64Member
 	}
 
 	@Override
-	public void setR(HighPrecisionMember val) {
-		setV(val.v().doubleValue());
+	public void setR(Float64Member val) {
+		setV(val.v());
 	}
 }

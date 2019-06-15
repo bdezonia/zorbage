@@ -64,7 +64,7 @@ public final class Float16Member
 		Allocatable<Float16Member>, Duplicatable<Float16Member>,
 		Settable<Float16Member>, Gettable<Float16Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<HighPrecisionMember>
+		HighPrecRepresentation, SetReal<Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -678,7 +678,7 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setR(HighPrecisionMember val) {
-		setV(val.v().doubleValue());
+	public void setR(Float16Member val) {
+		setV(val.v());
 	}
 }

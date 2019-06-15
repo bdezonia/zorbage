@@ -26,14 +26,13 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.math.BigDecimal;
-
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -49,12 +48,17 @@ public class FFT {
 
 	/**
 	 * 
-	 * @param algebra
+	 * @param cmplxAlg
+	 * @param realAlg
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U extends SetComplex<HighPrecisionMember>>
-		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,
+						U extends SetComplex<W>,
+						V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W>
+							& Multiplication<W> & Addition<W> & Invertible<W>,
+						W>
+		void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -63,8 +67,8 @@ public class FFT {
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
-		U tmp1 = algebra.construct();
-		U tmp2 = algebra.construct();
+		U tmp1 = cmplxAlg.construct();
+		U tmp2 = cmplxAlg.construct();
 
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
@@ -82,33 +86,41 @@ public class FFT {
 			}
 		}
 
-		U w = algebra.construct();
-		U tao = algebra.construct();
+		U w = cmplxAlg.construct();
+		U tao = cmplxAlg.construct();
 
 		// butterfly updates
-		HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
-		G.FLOAT_UNLIM.PI().call(pi);
-		HighPrecisionMember tmp = G.FLOAT_UNLIM.construct();
-		HighPrecisionMember cos = G.FLOAT_UNLIM.construct();
-		HighPrecisionMember sin = G.FLOAT_UNLIM.construct();
-		for (long L = 2; L <= aSize; L = L+L) {
-			for (long k = 0; k < L/2; k++) {
-				BigDecimal kth = BigDecimal.valueOf(-2 * k).multiply(pi.v()).divide(BigDecimal.valueOf(L));
-				tmp.setV(kth);
-				G.FLOAT_UNLIM.cos().call(tmp, cos);
-				G.FLOAT_UNLIM.sin().call(tmp, sin);
+		W pi = realAlg.construct();
+		realAlg.PI().call(pi);
+		W cos = realAlg.construct();
+		W sin = realAlg.construct();
+		W two = realAlg.construct("2");
+		W one = realAlg.construct("1");
+		W L = realAlg.construct(two);
+		for (long l = 2; l <= aSize; l = l+l) {
+			W K = realAlg.construct();
+			W kth = realAlg.construct();
+			for (long k = 0; k < l/2; k++) {
+				realAlg.negate().call(two, kth);
+				realAlg.multiply().call(kth, K, kth);
+				realAlg.multiply().call(kth, pi, kth);
+				realAlg.divide().call(kth, L, kth);
+				realAlg.cos().call(kth, cos);
+				realAlg.sin().call(kth, sin);
 				w.setR(cos);
 				w.setI(sin);
-				for (long j = 0; j < aSize/L; j++) {
-					b.get(j*L + k + L/2, tmp1);
-					algebra.multiply().call(w, tmp1, tao);
-					b.get(j*L + k, tmp2);
-					algebra.subtract().call(tmp2, tao, tmp1);
-					b.set(j*L + k + L/2, tmp1);
-					algebra.add().call(tmp2, tao, tmp1);
-					b.set(j*L + k, tmp1);
+				for (long j = 0; j < aSize/l; j++) {
+					b.get(j*l + k + l/2, tmp1);
+					cmplxAlg.multiply().call(w, tmp1, tao);
+					b.get(j*l + k, tmp2);
+					cmplxAlg.subtract().call(tmp2, tao, tmp1);
+					b.set(j*l + k + l/2, tmp1);
+					cmplxAlg.add().call(tmp2, tao, tmp1);
+					b.set(j*l + k, tmp1);
 				}
+				realAlg.add().call(K, one, K);
 			}
+			realAlg.add().call(L,L,L);
 		}
 	}
 	

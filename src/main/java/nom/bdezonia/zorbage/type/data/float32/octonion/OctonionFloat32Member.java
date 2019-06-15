@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -59,7 +59,7 @@ public final class OctonionFloat32Member
 		Allocatable<OctonionFloat32Member>, Duplicatable<OctonionFloat32Member>,
 		Settable<OctonionFloat32Member>, Gettable<OctonionFloat32Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<HighPrecisionMember>
+		UniversalRepresentation, SetOctonion<Float32Member>
 {
 
 	private float r, i, j, k, l, i0, j0, k0;
@@ -1769,42 +1769,42 @@ public final class OctonionFloat32Member
 	}
 
 	@Override
-	public void setR(HighPrecisionMember val) {
-		setR(val.v().floatValue());
+	public void setR(Float32Member val) {
+		setR(val.v());
 	}
 
 	@Override
-	public void setI(HighPrecisionMember val) {
-		setI(val.v().floatValue());
+	public void setI(Float32Member val) {
+		setI(val.v());
 	}
 
 	@Override
-	public void setJ(HighPrecisionMember val) {
-		setJ(val.v().floatValue());
+	public void setJ(Float32Member val) {
+		setJ(val.v());
 	}
 
 	@Override
-	public void setK(HighPrecisionMember val) {
-		setK(val.v().floatValue());
+	public void setK(Float32Member val) {
+		setK(val.v());
 	}
 
 	@Override
-	public void setL(HighPrecisionMember val) {
-		setL(val.v().floatValue());
+	public void setL(Float32Member val) {
+		setL(val.v());
 	}
 
 	@Override
-	public void setI0(HighPrecisionMember val) {
-		setI0(val.v().floatValue());
+	public void setI0(Float32Member val) {
+		setI0(val.v());
 	}
 
 	@Override
-	public void setJ0(HighPrecisionMember val) {
-		setJ0(val.v().floatValue());
+	public void setJ0(Float32Member val) {
+		setJ0(val.v());
 	}
 
 	@Override
-	public void setK0(HighPrecisionMember val) {
-		setK0(val.v().floatValue());
+	public void setK0(Float32Member val) {
+		setK0(val.v());
 	}
 }

@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.SetComplex;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -58,7 +58,7 @@ public final class ComplexFloat64Member
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<HighPrecisionMember>
+		UniversalRepresentation, SetComplex<Float64Member>
 {
 	private double r, i;
 	
@@ -749,12 +749,12 @@ public final class ComplexFloat64Member
 	}
 
 	@Override
-	public void setR(HighPrecisionMember val) {
-		setR(val.v().doubleValue());
+	public void setR(Float64Member val) {
+		setR(val.v());
 	}
 
 	@Override
-	public void setI(HighPrecisionMember val) {
-		setI(val.v().doubleValue());
+	public void setI(Float64Member val) {
+		setI(val.v());
 	}
 }

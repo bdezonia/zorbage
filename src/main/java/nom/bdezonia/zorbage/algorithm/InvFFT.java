@@ -26,14 +26,14 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.math.BigDecimal;
-
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Conjugate;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -52,8 +52,13 @@ public class InvFFT {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & nom.bdezonia.zorbage.type.algebra.Conjugate<U>, U extends SetComplex<HighPrecisionMember>>
-		void compute(T algebra, IndexedDataSource<U> a,IndexedDataSource<U> b)
+	public static
+		<T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>,
+		U extends SetComplex<W>,
+		V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W>
+			& Multiplication<W> & Addition<W> & Invertible<W>,
+		W>
+	void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a,IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -61,13 +66,10 @@ public class InvFFT {
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
-		HighPrecisionMember tmp = new HighPrecisionMember(BigDecimal.valueOf(aSize));
-		G.FLOAT_UNLIM.invert().call(tmp, tmp);
-		U one_over_n = algebra.construct();
-		one_over_n.setR(tmp);
-		Conjugate.compute(algebra, a, b);
-		FFT.compute(algebra, b, b); // TODO: does this work in place?
-		Conjugate.compute(algebra, b, b);
-		Scale.compute(algebra, one_over_n, b, b);
+		U one_over_n = cmplxAlg.construct(""+(1.0 / aSize));
+		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, a, b);
+		FFT.compute(cmplxAlg, realAlg, b, b); // TODO: does this work in place?
+		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, b, b);
+		Scale.compute(cmplxAlg, one_over_n, b, b);
 	}
 }
