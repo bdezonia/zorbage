@@ -1772,41 +1772,41 @@ public final class OctonionFloat16Member
 
 	@Override
 	public void setR(Float16Member val) {
-		setR(val.v());
+		r = val.encV();
 	}
 
 	@Override
 	public void setI(Float16Member val) {
-		setI(val.v());
+		i = val.encV();
 	}
 
 	@Override
 	public void setJ(Float16Member val) {
-		setJ(val.v());
+		j = val.encV();
 	}
 
 	@Override
 	public void setK(Float16Member val) {
-		setK(val.v());
+		k = val.encV();
 	}
 
 	@Override
 	public void setL(Float16Member val) {
-		setL(val.v());
+		l = val.encV();
 	}
 
 	@Override
 	public void setI0(Float16Member val) {
-		setI0(val.v());
+		i0 = val.encV();
 	}
 
 	@Override
 	public void setJ0(Float16Member val) {
-		setJ0(val.v());
+		j0 = val.encV();
 	}
 
 	@Override
 	public void setK0(Float16Member val) {
-		setK0(val.v());
+		k0 = val.encV();
 	}
 }

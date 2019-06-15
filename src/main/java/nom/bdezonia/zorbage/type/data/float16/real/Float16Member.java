@@ -92,6 +92,8 @@ public final class Float16Member
 	
 	public void setV(double val) { v = Float16Util.convertFloatToHFloat((float)val); }
 	
+	public short encV() { return v; }
+	
 	@Override
 	public void set(Float16Member other) {
 		v = other.v;
@@ -679,6 +681,6 @@ public final class Float16Member
 
 	@Override
 	public void setR(Float16Member val) {
-		setV(val.v());
+		v = val.encV();
 	}
 }

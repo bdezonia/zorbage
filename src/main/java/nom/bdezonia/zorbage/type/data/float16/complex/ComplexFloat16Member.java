@@ -753,11 +753,11 @@ public final class ComplexFloat16Member
 
 	@Override
 	public void setR(Float16Member val) {
-		setR(val.v());
+		r = val.encV();
 	}
 
 	@Override
 	public void setI(Float16Member val) {
-		setI(val.v());
+		i = val.encV();
 	}
 }

@@ -1131,21 +1131,21 @@ public final class QuaternionFloat16Member
 
 	@Override
 	public void setR(Float16Member val) {
-		setR(val.v());
+		r = val.encV();
 	}
 
 	@Override
 	public void setI(Float16Member val) {
-		setI(val.v());
+		i = val.encV();
 	}
 
 	@Override
 	public void setJ(Float16Member val) {
-		setJ(val.v());
+		j = val.encV();
 	}
 
 	@Override
 	public void setK(Float16Member val) {
-		setK(val.v());
+		k = val.encV();
 	}
 }
