@@ -883,5 +883,4 @@ public class HighPrecisionAlgebra
 	public Procedure2<HighPrecisionMember, HighPrecisionMember> cbrt() {
 		return CBRT;
 	}
-
 }
