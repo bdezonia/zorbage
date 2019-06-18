@@ -43,7 +43,7 @@ public class TestFindCompatibleType {
 	@Test
 	public <T extends Algebra<T,U>, U> void test() {
 		
-		T x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
+		Algebra<T,U> x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.CDBL);
 		
 		U tmp = x.construct();

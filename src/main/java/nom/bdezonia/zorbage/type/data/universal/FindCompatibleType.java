@@ -90,7 +90,7 @@ public class FindCompatibleType {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>, U>
-		T bestAlgebra(int components, PrimitiveRepresentation rep)
+		Algebra<T,U> bestAlgebra(int components, PrimitiveRepresentation rep)
 	{
 		if (components <= 0)
 			throw new IllegalArgumentException("must specify 1 or more components");
