@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -55,7 +56,8 @@ public final class HighPrecisionMember
 		Allocatable<HighPrecisionMember>, Duplicatable<HighPrecisionMember>,
 		Settable<HighPrecisionMember>, Gettable<HighPrecisionMember>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<HighPrecisionMember>
+		HighPrecRepresentation, SetReal<HighPrecisionMember>,
+		BigDecimalCoder
 {
 	private BigDecimal v;
 	
@@ -644,5 +646,20 @@ public final class HighPrecisionMember
 	@Override
 	public void setR(HighPrecisionMember val) {
 		fromHighPrec(val);
+	}
+
+	@Override
+	public int bigDecimalCount() {
+		return 1;
+	}
+
+	@Override
+	public void fromBigDecimalArray(BigDecimal[] arr, int index) {
+		v = arr[index];
+	}
+
+	@Override
+	public void toBigDecimalArray(BigDecimal[] arr, int index) {
+		arr[index] = v;
 	}
 }

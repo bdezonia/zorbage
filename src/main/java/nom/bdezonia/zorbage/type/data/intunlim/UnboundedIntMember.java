@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -56,7 +57,8 @@ public final class UnboundedIntMember
 		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
 		UniversalRepresentation, NumberMember<UnboundedIntMember>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>
+		SetReal<BigInteger>,
+		BigIntegerCoder
 {
 	private BigInteger v;
 	
@@ -647,5 +649,20 @@ public final class UnboundedIntMember
 	@Override
 	public void setR(BigInteger val) {
 		setV(val);
+	}
+
+	@Override
+	public int bigIntegerCount() {
+		return 1;
+	}
+
+	@Override
+	public void fromBigIntegerArray(BigInteger[] arr, int index) {
+		v = arr[index];
+	}
+
+	@Override
+	public void toBigIntegerArray(BigInteger[] arr, int index) {
+		arr[index] = v;
 	}
 }

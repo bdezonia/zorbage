@@ -26,14 +26,21 @@
  */
 package nom.bdezonia.zorbage.type.storage.array;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.storage.coder.BigDecimalCoder;
+import nom.bdezonia.zorbage.type.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
@@ -77,6 +84,12 @@ public class ArrayStorage {
 		}
 		if (type instanceof BooleanCoder) {
 			return (IndexedDataSource<U>) new ArrayStorageBoolean(size, (BooleanCoder)type);
+		}
+		if (type instanceof BigIntegerCoder) {
+			return (IndexedDataSource<U>) new ArrayStorageBigInteger(size, (BigIntegerCoder)type);
+		}
+		if (type instanceof BigDecimalCoder) {
+			return (IndexedDataSource<U>) new ArrayStorageBigDecimal(size, (BigDecimalCoder)type);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
@@ -199,6 +212,38 @@ public class ArrayStorage {
 				new ArrayStorageBoolean<BooleanMember>(booleans.length, type);
 		for (int i = 0; i < booleans.length; i++) {
 			type.setV(booleans[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	/**
+	 * 
+	 * @param bigints
+	 * @return
+	 */
+	public static IndexedDataSource<UnboundedIntMember> allocateBigIntegers(BigInteger[] bigints) {
+		UnboundedIntMember type = new UnboundedIntMember();
+		IndexedDataSource<UnboundedIntMember> store =
+				new ArrayStorageBigInteger<UnboundedIntMember>(bigints.length, type);
+		for (int i = 0; i < bigints.length; i++) {
+			type.setV(bigints[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
+	
+	/**
+	 * 
+	 * @param bigdecs
+	 * @return
+	 */
+	public static IndexedDataSource<HighPrecisionMember> allocateBigDecimals(BigDecimal[] bigdecs) {
+		HighPrecisionMember type = new HighPrecisionMember();
+		IndexedDataSource<HighPrecisionMember> store =
+				new ArrayStorageBigDecimal<HighPrecisionMember>(bigdecs.length, type);
+		for (int i = 0; i < bigdecs.length; i++) {
+			type.setV(bigdecs[i]);
 			store.set(i, type);
 		}
 		return store;
