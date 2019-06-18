@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
@@ -56,7 +55,7 @@ public class MatrixPower {
 	 */
 	public static
 	<BASETYPE, // the base type like Float64Member or Octonion etc.
-	BASETYPE_ALGEBRA extends RingWithUnity<BASETYPE_ALGEBRA,BASETYPE> & Invertible<BASETYPE> & NaN<BASETYPE>,
+	BASETYPE_ALGEBRA extends RingWithUnity<BASETYPE_ALGEBRA,BASETYPE> & Invertible<BASETYPE>,
 	RMODULE_MEMBER extends RModuleMember<BASETYPE>,
 	RMODULE_ALGEBRA extends RModule<RMODULE_ALGEBRA,RMODULE_MEMBER,BASETYPE_ALGEBRA,BASETYPE> & Constructible1dLong<RMODULE_MEMBER>,
 	MATRIX_MEMBER extends MatrixMember<BASETYPE>,
@@ -73,7 +72,7 @@ public class MatrixPower {
 		else if (power == 0) {
 			b.alloc(a.rows(), a.cols());
 			if (matAlgebra.isZero().call(a)) {
-				MatrixNaN.compute(numAlgebra, b);
+				throw new IllegalArgumentException("0^0 is not a number");
 			}
 			else {
 				MatrixUnity.compute(numAlgebra, b);
