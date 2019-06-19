@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.sparse;
 
+import nom.bdezonia.zorbage.type.storage.coder.BigDecimalCoder;
+import nom.bdezonia.zorbage.type.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
@@ -61,6 +63,12 @@ public class SparseStorage {
 		}
 		if (type instanceof BooleanCoder) {
 			return (IndexedDataSource<U>) new SparseStorageBoolean(size, (BooleanCoder)type);
+		}
+		if (type instanceof BigIntegerCoder) {
+			return (IndexedDataSource<U>) new SparseStorageBigInteger(size, (BigIntegerCoder)type);
+		}
+		if (type instanceof BigDecimalCoder) {
+			return (IndexedDataSource<U>) new SparseStorageBigDecimal(size, (BigDecimalCoder)type);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
