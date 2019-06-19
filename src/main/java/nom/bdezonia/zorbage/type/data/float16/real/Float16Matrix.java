@@ -67,6 +67,7 @@ import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -88,7 +89,8 @@ public class Float16Matrix
 		DirectProduct<Float16MatrixMember, Float16MatrixMember>,
 		Exponential<Float16MatrixMember>,
 		Trigonometric<Float16MatrixMember>,
-		Hyperbolic<Float16MatrixMember>
+		Hyperbolic<Float16MatrixMember>,
+		RealConstants<Float16MatrixMember>
 {
 	public Float16Matrix() { }
 
@@ -696,5 +698,101 @@ public class Float16Matrix
 	@Override
 	public Function1<Boolean, Float16MatrixMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<Float16MatrixMember> PI =
+			new Procedure1<Float16MatrixMember>()
+	{
+		@Override
+		public void call(Float16MatrixMember a) {
+			Float16Member zero = G.HLF.construct();
+			Float16Member pi = G.HLF.construct();
+			G.HLF.PI().call(pi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, pi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float16MatrixMember> PI() {
+		return PI;
+	}
+
+	private final Procedure1<Float16MatrixMember> E =
+			new Procedure1<Float16MatrixMember>()
+	{
+		@Override
+		public void call(Float16MatrixMember a) {
+			Float16Member zero = G.HLF.construct();
+			Float16Member e = G.HLF.construct();
+			G.HLF.E().call(e);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, e);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float16MatrixMember> E() {
+		return E;
+	}
+
+	private final Procedure1<Float16MatrixMember> PHI =
+			new Procedure1<Float16MatrixMember>()
+	{
+		@Override
+		public void call(Float16MatrixMember a) {
+			Float16Member zero = G.HLF.construct();
+			Float16Member phi = G.HLF.construct();
+			G.HLF.PHI().call(phi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, phi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float16MatrixMember> PHI() {
+		return PHI;
+	}
+
+	private final Procedure1<Float16MatrixMember> GAMMA =
+			new Procedure1<Float16MatrixMember>()
+	{
+		@Override
+		public void call(Float16MatrixMember a) {
+			Float16Member zero = G.HLF.construct();
+			Float16Member gamma = G.HLF.construct();
+			G.HLF.GAMMA().call(gamma);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, gamma);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float16MatrixMember> GAMMA() {
+		return GAMMA;
 	}
 }

@@ -68,6 +68,7 @@ import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -90,7 +91,8 @@ public class OctonionFloat32Matrix
 		DirectProduct<OctonionFloat32MatrixMember,OctonionFloat32MatrixMember>,
 		Exponential<OctonionFloat32MatrixMember>,
 		Trigonometric<OctonionFloat32MatrixMember>,
-		Hyperbolic<OctonionFloat32MatrixMember>
+		Hyperbolic<OctonionFloat32MatrixMember>,
+		RealConstants<OctonionFloat32MatrixMember>
 {
 	public OctonionFloat32Matrix() { }
 
@@ -712,5 +714,101 @@ public class OctonionFloat32Matrix
 	@Override
 	public Function1<Boolean, OctonionFloat32MatrixMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<OctonionFloat32MatrixMember> PI =
+			new Procedure1<OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat32MatrixMember a) {
+			OctonionFloat32Member zero = G.OFLT.construct();
+			OctonionFloat32Member pi = G.OFLT.construct();
+			G.OFLT.PI().call(pi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, pi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<OctonionFloat32MatrixMember> PI() {
+		return PI;
+	}
+
+	private final Procedure1<OctonionFloat32MatrixMember> E =
+			new Procedure1<OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat32MatrixMember a) {
+			OctonionFloat32Member zero = G.OFLT.construct();
+			OctonionFloat32Member e = G.OFLT.construct();
+			G.OFLT.E().call(e);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, e);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<OctonionFloat32MatrixMember> E() {
+		return E;
+	}
+
+	private final Procedure1<OctonionFloat32MatrixMember> PHI =
+			new Procedure1<OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat32MatrixMember a) {
+			OctonionFloat32Member zero = G.OFLT.construct();
+			OctonionFloat32Member phi = G.OFLT.construct();
+			G.OFLT.PHI().call(phi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, phi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<OctonionFloat32MatrixMember> PHI() {
+		return PHI;
+	}
+
+	private final Procedure1<OctonionFloat32MatrixMember> GAMMA =
+			new Procedure1<OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat32MatrixMember a) {
+			OctonionFloat32Member zero = G.OFLT.construct();
+			OctonionFloat32Member gamma = G.OFLT.construct();
+			G.OFLT.GAMMA().call(gamma);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, gamma);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<OctonionFloat32MatrixMember> GAMMA() {
+		return GAMMA;
 	}
 }

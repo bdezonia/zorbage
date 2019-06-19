@@ -68,6 +68,7 @@ import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -90,7 +91,8 @@ public class QuaternionFloat16Matrix
 		DirectProduct<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>,
 		Exponential<QuaternionFloat16MatrixMember>,
 		Trigonometric<QuaternionFloat16MatrixMember>,
-		Hyperbolic<QuaternionFloat16MatrixMember>
+		Hyperbolic<QuaternionFloat16MatrixMember>,
+		RealConstants<QuaternionFloat16MatrixMember>
 {
 	public QuaternionFloat16Matrix() { }
 
@@ -726,5 +728,101 @@ public class QuaternionFloat16Matrix
 	@Override
 	public Function1<Boolean, QuaternionFloat16MatrixMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<QuaternionFloat16MatrixMember> PI =
+			new Procedure1<QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16MatrixMember a) {
+			QuaternionFloat16Member zero = G.QHLF.construct();
+			QuaternionFloat16Member pi = G.QHLF.construct();
+			G.QHLF.PI().call(pi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, pi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<QuaternionFloat16MatrixMember> PI() {
+		return PI;
+	}
+
+	private final Procedure1<QuaternionFloat16MatrixMember> E =
+			new Procedure1<QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16MatrixMember a) {
+			QuaternionFloat16Member zero = G.QHLF.construct();
+			QuaternionFloat16Member e = G.QHLF.construct();
+			G.QHLF.E().call(e);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, e);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<QuaternionFloat16MatrixMember> E() {
+		return E;
+	}
+
+	private final Procedure1<QuaternionFloat16MatrixMember> PHI =
+			new Procedure1<QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16MatrixMember a) {
+			QuaternionFloat16Member zero = G.QHLF.construct();
+			QuaternionFloat16Member phi = G.QHLF.construct();
+			G.QHLF.PHI().call(phi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, phi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<QuaternionFloat16MatrixMember> PHI() {
+		return PHI;
+	}
+
+	private final Procedure1<QuaternionFloat16MatrixMember> GAMMA =
+			new Procedure1<QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16MatrixMember a) {
+			QuaternionFloat16Member zero = G.QHLF.construct();
+			QuaternionFloat16Member gamma = G.QHLF.construct();
+			G.QHLF.GAMMA().call(gamma);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, gamma);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<QuaternionFloat16MatrixMember> GAMMA() {
+		return GAMMA;
 	}
 }

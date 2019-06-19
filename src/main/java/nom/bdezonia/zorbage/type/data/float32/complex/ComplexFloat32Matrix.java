@@ -68,6 +68,7 @@ import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -90,7 +91,8 @@ public class ComplexFloat32Matrix
 		DirectProduct<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>,
 		Exponential<ComplexFloat32MatrixMember>,
 		Trigonometric<ComplexFloat32MatrixMember>,
-		Hyperbolic<ComplexFloat32MatrixMember>
+		Hyperbolic<ComplexFloat32MatrixMember>,
+		RealConstants<ComplexFloat32MatrixMember>
 {
 	public ComplexFloat32Matrix() { }
 
@@ -712,5 +714,101 @@ public class ComplexFloat32Matrix
 	@Override
 	public Function1<Boolean, ComplexFloat32MatrixMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> PI =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			ComplexFloat32Member zero = G.CFLT.construct();
+			ComplexFloat32Member pi = G.CFLT.construct();
+			G.CFLT.PI().call(pi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, pi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> PI() {
+		return PI;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> E =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			ComplexFloat32Member zero = G.CFLT.construct();
+			ComplexFloat32Member e = G.CFLT.construct();
+			G.CFLT.E().call(e);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, e);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> E() {
+		return E;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> PHI =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			ComplexFloat32Member zero = G.CFLT.construct();
+			ComplexFloat32Member phi = G.CFLT.construct();
+			G.CFLT.PHI().call(phi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, phi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> PHI() {
+		return PHI;
+	}
+
+	private final Procedure1<ComplexFloat32MatrixMember> GAMMA =
+			new Procedure1<ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(ComplexFloat32MatrixMember a) {
+			ComplexFloat32Member zero = G.CFLT.construct();
+			ComplexFloat32Member gamma = G.CFLT.construct();
+			G.CFLT.GAMMA().call(gamma);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, gamma);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<ComplexFloat32MatrixMember> GAMMA() {
+		return GAMMA;
 	}
 }

@@ -59,6 +59,7 @@ import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
@@ -78,7 +79,8 @@ public class HighPrecisionMatrix
 		DirectProduct<HighPrecisionMatrixMember, HighPrecisionMatrixMember>,
 		Exponential<HighPrecisionMatrixMember>,
 		Trigonometric<HighPrecisionMatrixMember>,
-		Hyperbolic<HighPrecisionMatrixMember>
+		Hyperbolic<HighPrecisionMatrixMember>,
+		RealConstants<HighPrecisionMatrixMember>
 {
 	public HighPrecisionMatrix() { }
 
@@ -678,5 +680,101 @@ public class HighPrecisionMatrix
 	@Override
 	public Function1<Boolean, HighPrecisionMatrixMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<HighPrecisionMatrixMember> PI =
+			new Procedure1<HighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMatrixMember a) {
+			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
+			HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
+			G.FLOAT_UNLIM.PI().call(pi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, pi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<HighPrecisionMatrixMember> PI() {
+		return PI;
+	}
+
+	private final Procedure1<HighPrecisionMatrixMember> E =
+			new Procedure1<HighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMatrixMember a) {
+			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
+			HighPrecisionMember e = G.FLOAT_UNLIM.construct();
+			G.FLOAT_UNLIM.E().call(e);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, e);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<HighPrecisionMatrixMember> E() {
+		return E;
+	}
+
+	private final Procedure1<HighPrecisionMatrixMember> PHI =
+			new Procedure1<HighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMatrixMember a) {
+			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
+			HighPrecisionMember phi = G.FLOAT_UNLIM.construct();
+			G.FLOAT_UNLIM.PHI().call(phi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, phi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<HighPrecisionMatrixMember> PHI() {
+		return PHI;
+	}
+
+	private final Procedure1<HighPrecisionMatrixMember> GAMMA =
+			new Procedure1<HighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMatrixMember a) {
+			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
+			HighPrecisionMember gamma = G.FLOAT_UNLIM.construct();
+			G.FLOAT_UNLIM.GAMMA().call(gamma);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, gamma);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<HighPrecisionMatrixMember> GAMMA() {
+		return GAMMA;
 	}
 }

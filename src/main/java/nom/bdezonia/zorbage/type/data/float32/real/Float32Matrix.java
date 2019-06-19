@@ -67,6 +67,7 @@ import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -88,7 +89,8 @@ public class Float32Matrix
 		DirectProduct<Float32MatrixMember, Float32MatrixMember>,
 		Exponential<Float32MatrixMember>,
 		Trigonometric<Float32MatrixMember>,
-		Hyperbolic<Float32MatrixMember>
+		Hyperbolic<Float32MatrixMember>,
+		RealConstants<Float32MatrixMember>
 {
 	public Float32Matrix() { }
 
@@ -696,5 +698,101 @@ public class Float32Matrix
 	@Override
 	public Function1<Boolean, Float32MatrixMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<Float32MatrixMember> PI =
+			new Procedure1<Float32MatrixMember>()
+	{
+		@Override
+		public void call(Float32MatrixMember a) {
+			Float32Member zero = G.FLT.construct();
+			Float32Member pi = G.FLT.construct();
+			G.FLT.PI().call(pi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, pi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float32MatrixMember> PI() {
+		return PI;
+	}
+
+	private final Procedure1<Float32MatrixMember> E =
+			new Procedure1<Float32MatrixMember>()
+	{
+		@Override
+		public void call(Float32MatrixMember a) {
+			Float32Member zero = G.FLT.construct();
+			Float32Member e = G.FLT.construct();
+			G.FLT.E().call(e);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, e);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float32MatrixMember> E() {
+		return E;
+	}
+
+	private final Procedure1<Float32MatrixMember> PHI =
+			new Procedure1<Float32MatrixMember>()
+	{
+		@Override
+		public void call(Float32MatrixMember a) {
+			Float32Member zero = G.FLT.construct();
+			Float32Member phi = G.FLT.construct();
+			G.FLT.PHI().call(phi);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, phi);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float32MatrixMember> PHI() {
+		return PHI;
+	}
+
+	private final Procedure1<Float32MatrixMember> GAMMA =
+			new Procedure1<Float32MatrixMember>()
+	{
+		@Override
+		public void call(Float32MatrixMember a) {
+			Float32Member zero = G.FLT.construct();
+			Float32Member gamma = G.FLT.construct();
+			G.FLT.GAMMA().call(gamma);
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					if (r == c)
+						a.setV(r, c, gamma);
+					else
+						a.setV(r, c, zero);
+				}
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Float32MatrixMember> GAMMA() {
+		return GAMMA;
 	}
 }
