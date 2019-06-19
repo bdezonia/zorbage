@@ -49,6 +49,10 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
@@ -525,14 +529,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat32MatrixMember sinha = G.CFLT_MAT.construct();
-			sinh().call(a, sinha);
-			divide().call(sinha, a, b);
+			Sinch.compute(G.CFLT_MAT, a, b);
 		}
 	};
 
@@ -546,19 +543,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat32Member pi = G.CFLT.construct();
-			G.CFLT.PI().call(pi);
-			ComplexFloat32MatrixMember sinha = G.CFLT_MAT.construct();
-			sinh().call(a, sinha);
-			scale().call(pi, sinha, sinha);
-			ComplexFloat32MatrixMember pi_a = G.CFLT_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sinha, pi_a, b);
+			Sinchpi.compute(G.CFLT_MAT, a, b);
 		}
 	};
 
@@ -632,14 +617,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat32MatrixMember sina = G.CFLT_MAT.construct();
-			sin().call(a, sina);
-			divide().call(sina, a, b);
+			Sinc.compute(G.CFLT_MAT, a, b);
 		}
 	};
 
@@ -653,19 +631,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat32Member pi = G.CFLT.construct();
-			G.CFLT.PI().call(pi);
-			ComplexFloat32MatrixMember sina = G.CFLT_MAT.construct();
-			sin().call(a, sina);
-			scale().call(pi, sina, sina);
-			ComplexFloat32MatrixMember pi_a = G.CFLT_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sina, pi_a, b);
+			Sincpi.compute(G.CFLT_MAT, a, b);
 		}
 	};
 

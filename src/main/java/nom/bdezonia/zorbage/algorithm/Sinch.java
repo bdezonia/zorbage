@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
@@ -44,9 +45,11 @@ public class Sinch {
 	 * @param x
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Invertible<U> & Unity<U> & Hyperbolic<U>,U>
+	public static <T extends Algebra<T,U> & Invertible<U> & Unity<U> & Hyperbolic<U>,
+					U extends Settable<U>>
 		void compute(T algebra, U x, U result)
 	{
+		result.set(x);
 		if (algebra.isZero().call(x)) {
 			algebra.unity().call(result);
 		}

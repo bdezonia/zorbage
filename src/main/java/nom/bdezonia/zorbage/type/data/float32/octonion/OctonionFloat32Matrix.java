@@ -49,6 +49,10 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -525,14 +529,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			OctonionFloat32MatrixMember sinha = G.OFLT_MAT.construct();
-			sinh().call(a, sinha);
-			divide().call(sinha, a, b);
+			Sinch.compute(G.OFLT_MAT, a, b);
 		}
 	};
 
@@ -546,19 +543,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			OctonionFloat32Member pi = G.OFLT.construct();
-			G.OFLT.PI().call(pi);
-			OctonionFloat32MatrixMember sinha = G.OFLT_MAT.construct();
-			sinh().call(a, sinha);
-			scale().call(pi, sinha, sinha);
-			OctonionFloat32MatrixMember pi_a = G.OFLT_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sinha, pi_a, b);
+			Sinchpi.compute(G.OFLT_MAT, a, b);
 		}
 	};
 
@@ -632,14 +617,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			OctonionFloat32MatrixMember sina = G.OFLT_MAT.construct();
-			sin().call(a, sina);
-			divide().call(sina, a, b);
+			Sinc.compute(G.OFLT_MAT, a, b);
 		}
 	};
 
@@ -653,19 +631,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			OctonionFloat32Member pi = G.OFLT.construct();
-			G.OFLT.PI().call(pi);
-			OctonionFloat32MatrixMember sina = G.OFLT_MAT.construct();
-			sin().call(a, sina);
-			scale().call(pi, sina, sina);
-			OctonionFloat32MatrixMember pi_a = G.OFLT_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sina, pi_a, b);
+			Sincpi.compute(G.OFLT_MAT, a, b);
 		}
 	};
 

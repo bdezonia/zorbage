@@ -51,6 +51,10 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -525,14 +529,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat16MatrixMember sinha = G.CHLF_MAT.construct();
-			sinh().call(a, sinha);
-			divide().call(sinha, a, b);
+			Sinch.compute(G.CHLF_MAT, a, b);
 		}
 	};
 
@@ -546,19 +543,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat16Member pi = G.CHLF.construct();
-			G.CHLF.PI().call(pi);
-			ComplexFloat16MatrixMember sinha = G.CHLF_MAT.construct();
-			sinh().call(a, sinha);
-			scale().call(pi, sinha, sinha);
-			ComplexFloat16MatrixMember pi_a = G.CHLF_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sinha, pi_a, b);
+			Sinchpi.compute(G.CHLF_MAT, a, b);
 		}
 	};
 
@@ -632,14 +617,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat16MatrixMember sina = G.CHLF_MAT.construct();
-			sin().call(a, sina);
-			divide().call(sina, a, b);
+			Sinc.compute(G.CHLF_MAT, a, b);
 		}
 	};
 
@@ -653,19 +631,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			ComplexFloat16Member pi = G.CHLF.construct();
-			G.CHLF.PI().call(pi);
-			ComplexFloat16MatrixMember sina = G.CHLF_MAT.construct();
-			sin().call(a, sina);
-			scale().call(pi, sina, sina);
-			ComplexFloat16MatrixMember pi_a = G.CHLF_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sina, pi_a, b);
+			Sincpi.compute(G.CHLF_MAT, a, b);
 		}
 	};
 

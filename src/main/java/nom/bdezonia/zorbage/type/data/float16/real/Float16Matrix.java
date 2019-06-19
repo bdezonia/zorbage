@@ -48,6 +48,10 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -509,14 +513,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a, Float16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			Float16MatrixMember sinha = G.HLF_MAT.construct();
-			sinh().call(a, sinha);
-			divide().call(sinha, a, b);
+			Sinch.compute(G.HLF_MAT, a, b);
 		}
 	};
 
@@ -530,19 +527,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a, Float16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			Float16Member pi = G.HLF.construct();
-			G.HLF.PI().call(pi);
-			Float16MatrixMember sinha = G.HLF_MAT.construct();
-			sinh().call(a, sinha);
-			scale().call(pi, sinha, sinha);
-			Float16MatrixMember pi_a = G.HLF_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sinha, pi_a, b);
+			Sinchpi.compute(G.HLF_MAT, a, b);
 		}
 	};
 
@@ -616,14 +601,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a, Float16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			Float16MatrixMember sina = G.HLF_MAT.construct();
-			sin().call(a, sina);
-			divide().call(sina, a, b);
+			Sinc.compute(G.HLF_MAT, a, b);
 		}
 	};
 
@@ -637,19 +615,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a, Float16MatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			Float16Member pi = G.HLF.construct();
-			G.HLF.PI().call(pi);
-			Float16MatrixMember sina = G.HLF_MAT.construct();
-			sin().call(a, sina);
-			scale().call(pi, sina, sina);
-			Float16MatrixMember pi_a = G.HLF_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sina, pi_a, b);
+			Sincpi.compute(G.HLF_MAT, a, b);
 		}
 	};
 

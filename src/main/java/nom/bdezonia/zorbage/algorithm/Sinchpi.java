@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
+import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
@@ -46,9 +47,11 @@ public class Sinchpi {
 	 * @param x
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Hyperbolic<U> & RealConstants<U>,U>
+	public static <T extends Algebra<T,U> & Multiplication<U> & Invertible<U> & Unity<U> & Hyperbolic<U> & RealConstants<U>,
+					U extends Settable<U>>
 		void compute(T algebra, U x, U result)
 	{
+		result.set(x);
 		if (algebra.isZero().call(x)) {
 			algebra.unity().call(result);
 		}
