@@ -55,8 +55,8 @@ public class TestTaylorEstimateLog {
 	public void test1() {
 		Float64Member x = new Float64Member(0.135);
 		Float64Member result = G.DBL.construct();
-		TaylorEstimateLog.compute(8, G.DBL, G.DBL, x, result);
-		assertEquals(Math.log(0.135), result.v(), 0.005);
+		TaylorEstimateLog.compute(25, G.DBL, G.DBL, x, result);
+		assertEquals(Math.log(0.135), result.v(), 0.0000001);
 	}
 	
 	@Test
