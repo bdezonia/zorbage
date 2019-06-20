@@ -47,16 +47,8 @@ public class MatrixUnity {
 	public static <T extends Algebra<T,U> & Unity<U>, U>
 		void compute(T algebra, MatrixMember<U> a)
 	{
-		U zero = algebra.construct();
 		U one = algebra.construct();
 		algebra.unity().call(one);
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				if (r == c)
-					a.setV(r, c, one);
-				else
-					a.setV(r, c, zero);
-			}
-		}
+		MatrixConstantDiagonal.compute(algebra, one, a);
 	}
 }
