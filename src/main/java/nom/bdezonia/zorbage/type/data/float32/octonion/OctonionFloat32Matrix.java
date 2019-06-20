@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
@@ -687,17 +688,9 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a) {
-			OctonionFloat32Member zero = G.OFLT.construct();
 			OctonionFloat32Member pi = G.OFLT.construct();
 			G.OFLT.PI().call(pi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, pi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.OFLT, pi, a);
 		}
 	};
 
@@ -711,17 +704,9 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a) {
-			OctonionFloat32Member zero = G.OFLT.construct();
 			OctonionFloat32Member e = G.OFLT.construct();
 			G.OFLT.E().call(e);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, e);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.OFLT, e, a);
 		}
 	};
 
@@ -735,17 +720,9 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a) {
-			OctonionFloat32Member zero = G.OFLT.construct();
 			OctonionFloat32Member phi = G.OFLT.construct();
 			G.OFLT.PHI().call(phi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, phi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.OFLT, phi, a);
 		}
 	};
 
@@ -759,17 +736,9 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a) {
-			OctonionFloat32Member zero = G.OFLT.construct();
 			OctonionFloat32Member gamma = G.OFLT.construct();
 			G.OFLT.GAMMA().call(gamma);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, gamma);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.OFLT, gamma, a);
 		}
 	};
 

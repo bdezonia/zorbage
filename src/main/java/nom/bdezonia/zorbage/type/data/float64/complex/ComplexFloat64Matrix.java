@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
@@ -687,17 +688,9 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			ComplexFloat64Member zero = G.CDBL.construct();
 			ComplexFloat64Member pi = G.CDBL.construct();
 			G.CDBL.PI().call(pi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, pi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.CDBL, pi, a);
 		}
 	};
 
@@ -711,17 +704,9 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			ComplexFloat64Member zero = G.CDBL.construct();
 			ComplexFloat64Member e = G.CDBL.construct();
 			G.CDBL.E().call(e);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, e);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.CDBL, e, a);
 		}
 	};
 
@@ -735,17 +720,9 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			ComplexFloat64Member zero = G.CDBL.construct();
 			ComplexFloat64Member phi = G.CDBL.construct();
 			G.CDBL.PHI().call(phi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, phi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.CDBL, phi, a);
 		}
 	};
 
@@ -759,17 +736,9 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			ComplexFloat64Member zero = G.CDBL.construct();
 			ComplexFloat64Member gamma = G.CDBL.construct();
 			G.CDBL.GAMMA().call(gamma);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, gamma);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.CDBL, gamma, a);
 		}
 	};
 

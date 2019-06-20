@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float32.real;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
+import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
@@ -671,17 +672,9 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			Float32Member zero = G.FLT.construct();
 			Float32Member pi = G.FLT.construct();
 			G.FLT.PI().call(pi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, pi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLT, pi, a);
 		}
 	};
 
@@ -695,17 +688,9 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			Float32Member zero = G.FLT.construct();
 			Float32Member e = G.FLT.construct();
 			G.FLT.E().call(e);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, e);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLT, e, a);
 		}
 	};
 
@@ -719,17 +704,9 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			Float32Member zero = G.FLT.construct();
 			Float32Member phi = G.FLT.construct();
 			G.FLT.PHI().call(phi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, phi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLT, phi, a);
 		}
 	};
 
@@ -743,17 +720,9 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			Float32Member zero = G.FLT.construct();
 			Float32Member gamma = G.FLT.construct();
 			G.FLT.GAMMA().call(gamma);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, gamma);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLT, gamma, a);
 		}
 	};
 

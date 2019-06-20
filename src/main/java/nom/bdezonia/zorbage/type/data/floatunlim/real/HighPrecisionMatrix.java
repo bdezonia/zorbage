@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.floatunlim.real;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
+import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
@@ -687,17 +688,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
 			HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
 			G.FLOAT_UNLIM.PI().call(pi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, pi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, pi, a);
 		}
 	};
 
@@ -711,17 +704,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
 			HighPrecisionMember e = G.FLOAT_UNLIM.construct();
 			G.FLOAT_UNLIM.E().call(e);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, e);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, e, a);
 		}
 	};
 
@@ -735,17 +720,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
 			HighPrecisionMember phi = G.FLOAT_UNLIM.construct();
 			G.FLOAT_UNLIM.PHI().call(phi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, phi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, phi, a);
 		}
 	};
 
@@ -759,17 +736,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember zero = G.FLOAT_UNLIM.construct();
 			HighPrecisionMember gamma = G.FLOAT_UNLIM.construct();
 			G.FLOAT_UNLIM.GAMMA().call(gamma);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, gamma);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, gamma, a);
 		}
 	};
 

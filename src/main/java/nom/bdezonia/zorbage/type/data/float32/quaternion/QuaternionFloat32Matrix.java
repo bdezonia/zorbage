@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
@@ -701,17 +702,9 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			QuaternionFloat32Member zero = G.QFLT.construct();
 			QuaternionFloat32Member pi = G.QFLT.construct();
 			G.QFLT.PI().call(pi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, pi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.QFLT, pi, a);
 		}
 	};
 
@@ -725,17 +718,9 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			QuaternionFloat32Member zero = G.QFLT.construct();
 			QuaternionFloat32Member e = G.QFLT.construct();
 			G.QFLT.E().call(e);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, e);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.QFLT, e, a);
 		}
 	};
 
@@ -749,17 +734,9 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			QuaternionFloat32Member zero = G.QFLT.construct();
 			QuaternionFloat32Member phi = G.QFLT.construct();
 			G.QFLT.PHI().call(phi);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, phi);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.QFLT, phi, a);
 		}
 	};
 
@@ -773,17 +750,9 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			QuaternionFloat32Member zero = G.QFLT.construct();
 			QuaternionFloat32Member gamma = G.QFLT.construct();
 			G.QFLT.GAMMA().call(gamma);
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					if (r == c)
-						a.setV(r, c, gamma);
-					else
-						a.setV(r, c, zero);
-				}
-			}
+			MatrixConstantDiagonal.compute(G.QFLT, gamma, a);
 		}
 	};
 
