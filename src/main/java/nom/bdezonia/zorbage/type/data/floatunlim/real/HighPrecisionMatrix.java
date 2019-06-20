@@ -44,6 +44,10 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCos;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateCosh;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
@@ -492,14 +496,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			HighPrecisionMatrixMember sinha = G.FLOAT_UNLIM_MAT.construct();
-			sinh().call(a, sinha);
-			divide().call(sinha, a, b);
+			Sinch.compute(G.FLOAT_UNLIM_MAT, a, b);
 		}
 	};
 
@@ -513,19 +510,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
-			G.FLOAT_UNLIM.PI().call(pi);
-			HighPrecisionMatrixMember sinha = G.FLOAT_UNLIM_MAT.construct();
-			sinh().call(a, sinha);
-			scale().call(pi, sinha, sinha);
-			HighPrecisionMatrixMember pi_a = G.FLOAT_UNLIM_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sinha, pi_a, b);
+			Sinchpi.compute(G.FLOAT_UNLIM_MAT, a, b);
 		}
 	};
 
@@ -599,14 +584,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			HighPrecisionMatrixMember sina = G.FLOAT_UNLIM_MAT.construct();
-			sin().call(a, sina);
-			divide().call(sina, a, b);
+			Sinc.compute(G.FLOAT_UNLIM_MAT, a, b);
 		}
 	};
 
@@ -620,19 +598,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			if (isZero().call(a)) {
-				b.alloc(a.rows(), a.cols());
-				unity().call(b);
-				return;
-			}
-			HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
-			G.FLOAT_UNLIM.PI().call(pi);
-			HighPrecisionMatrixMember sina = G.FLOAT_UNLIM_MAT.construct();
-			sin().call(a, sina);
-			scale().call(pi, sina, sina);
-			HighPrecisionMatrixMember pi_a = G.FLOAT_UNLIM_MAT.construct();
-			scale().call(pi, a, pi_a);
-			divide().call(sina, pi_a, b);
+			Sincpi.compute(G.FLOAT_UNLIM_MAT, a, b);
 		}
 	};
 
