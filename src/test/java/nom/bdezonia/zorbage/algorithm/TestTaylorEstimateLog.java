@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -55,7 +56,7 @@ public class TestTaylorEstimateLog {
 		Float64Member x = new Float64Member(0.135);
 		Float64Member result = G.DBL.construct();
 		TaylorEstimateLog.compute(8, G.DBL, G.DBL, x, result);
-		assertTrue(true);
+		assertEquals(Math.log(0.135), result.v(), 0.005);
 	}
 	
 	@Test
