@@ -47,7 +47,7 @@ import nom.bdezonia.zorbage.type.algebra.Ring;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**

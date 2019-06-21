@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.floatunlim.real;
+package nom.bdezonia.zorbage.type.data.highprec.real;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -475,7 +475,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-			Min.compute(G.FLOAT_UNLIM, a, b, c);
+			Min.compute(G.HP, a, b, c);
 		}
 	};
 	
@@ -489,7 +489,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-			Max.compute(G.FLOAT_UNLIM, a, b, c);
+			Max.compute(G.HP, a, b, c);
 		}
 	};
 	

@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algebras;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Matrix;
@@ -67,8 +66,9 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionVector;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMatrix;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionVector;
 import nom.bdezonia.zorbage.type.data.int1.SignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int10.SignedInt10Algebra;
@@ -191,9 +191,9 @@ public class G {
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
 	//TODO public static final OctonionFloat64TensorProduct ODBL_TEN = new OctonionFloat64TensorProduct();
 
-	public static final HighPrecisionAlgebra FLOAT_UNLIM = new HighPrecisionAlgebra();
-	public static final HighPrecisionVector FLOAT_UNLIM_VEC = new HighPrecisionVector();
-	public static final HighPrecisionMatrix FLOAT_UNLIM_MAT = new HighPrecisionMatrix();
+	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
+	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
+	public static final HighPrecisionMatrix HP_MAT = new HighPrecisionMatrix();
 		
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();

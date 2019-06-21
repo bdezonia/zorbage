@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.floatunlim.real;
+package nom.bdezonia.zorbage.type.data.highprec.real;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -232,7 +232,7 @@ public final class HighPrecisionMatrixMember
 
 	@Override
 	public void reshape(long rows, long cols) {
-		MatrixReshape.compute(G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, rows, cols, this);
+		MatrixReshape.compute(G.HP_MAT, G.HP, rows, cols, this);
 	}
 
 	@Override

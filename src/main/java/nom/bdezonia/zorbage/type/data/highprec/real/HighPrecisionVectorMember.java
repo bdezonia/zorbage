@@ -24,123 +24,212 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.floatunlim.real;
+package nom.bdezonia.zorbage.type.data.highprec.real;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.RModuleReshape;
+import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
-import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
-import nom.bdezonia.zorbage.type.algebra.NumberMember;
-import nom.bdezonia.zorbage.type.algebra.SetReal;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
-import nom.bdezonia.zorbage.type.storage.coder.BigDecimalCoder;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
+import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class HighPrecisionMember
+public final class HighPrecisionVectorMember
 	implements
-		NumberMember<HighPrecisionMember>,
-		Allocatable<HighPrecisionMember>, Duplicatable<HighPrecisionMember>,
-		Settable<HighPrecisionMember>, Gettable<HighPrecisionMember>,
-		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<HighPrecisionMember>,
-		BigDecimalCoder
+		RModuleMember<HighPrecisionMember>,
+		Gettable<HighPrecisionVectorMember>,
+		Settable<HighPrecisionVectorMember>,
+		PrimitiveConversion, UniversalRepresentation,
+		RawData<HighPrecisionMember>
 {
-	private BigDecimal v;
-	
-	public HighPrecisionMember() {
-		primitiveInit();
-	}
-	
-	public HighPrecisionMember(BigDecimal value) {
-		setV(value);
-	}
-	
-	public HighPrecisionMember(HighPrecisionMember value) {
-		set(value);
-	}
+	private static final HighPrecisionMember ZERO = new HighPrecisionMember(); 
 
-	public HighPrecisionMember(String value) {
+	private IndexedDataSource<HighPrecisionMember> storage;
+	private StorageConstruction s;
+	
+	public HighPrecisionVectorMember() {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, 0, new HighPrecisionMember());
+	}
+	
+	public HighPrecisionVectorMember(BigDecimal[] vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, vals.length, new HighPrecisionMember());
+		HighPrecisionMember value = new HighPrecisionMember();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(vals[i]);
+			storage.set(i,  value);
+		}
+	}
+	
+	public HighPrecisionVectorMember(HighPrecisionVectorMember other) {
+		set(other);
+	}
+	
+	public HighPrecisionVectorMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
-		OctonionRepresentation val = rep.firstValue();
-		setV(val.r());
+		BigList<OctonionRepresentation> data = rep.firstVectorValues();
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, data.size(), new HighPrecisionMember());
+		HighPrecisionMember tmp = new HighPrecisionMember();
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
+			OctonionRepresentation val = data.get(i);
+			tmp.setV(val.r());
+			storage.set(i, tmp);
+		}
 	}
 
-	public BigDecimal v() { return v; }
-
-	public void setV(BigDecimal val) { v = val; }
-
-	@Override
-	public void set(HighPrecisionMember other) {
-		v = other.v;
+	public HighPrecisionVectorMember(StorageConstruction s, long d1) {
+		this.s = s;
+		alloc(d1);
 	}
 
 	@Override
-	public void get(HighPrecisionMember other) {
-		other.v = v;
+	public StorageConstruction storageType() {
+		return s;
 	}
 	
 	@Override
-	public String toString() {
-		return v.toString();
+	public void v(long i, HighPrecisionMember v) {
+		if (i < storage.size()) {
+			storage.get(i, v);
+		}
+		else {
+			G.HP.zero().call(v);
+		}
 	}
 
 	@Override
-	public HighPrecisionMember allocate() {
-		return new HighPrecisionMember();
+	public void setV(long i, HighPrecisionMember v) {
+		storage.set(i, v);
 	}
-
+	
+	
 	@Override
-	public HighPrecisionMember duplicate() {
-		return new HighPrecisionMember(this);
+	public void set(HighPrecisionVectorMember other) {
+		if (this == other) return;
+		storage = other.storage.duplicate();
+		s = other.s;
+	}
+	
+	@Override
+	public void get(HighPrecisionVectorMember other) {
+		if (this == other) return;
+		other.storage = storage.duplicate();
+		other.s = s;
 	}
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		rep.setValue(new OctonionRepresentation(v()));
+		HighPrecisionMember value = new HighPrecisionMember();
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		for (long i = 0; i < length(); i++) {
+			storage.get(i, value);
+			BigDecimal r = value.v();
+			OctonionRepresentation o = new OctonionRepresentation(r);
+			values.set(i, o);
+		}
+		rep.setRModule(length(), values);
 	}
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		setV(rep.getValue().r());
+		HighPrecisionMember value = new HighPrecisionMember();
+		BigList<OctonionRepresentation> rmod = rep.getRModule();
+		long rmodSize = rmod.size();
+		init(rmodSize);
+		for (long i = 0; i < rmodSize; i++) {
+			OctonionRepresentation o = rmod.get(i);
+			value.setV(o.r());
+			storage.set(i,value);
+		}
+	}
+
+	@Override
+	public long length() { return storage.size(); }
+	
+	@Override
+	public String toString() {
+		HighPrecisionMember tmp = new HighPrecisionMember();
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++) {
+			if (i != 0)
+				builder.append(',');
+			v(i, tmp);
+			builder.append(tmp.toString());
+		}
+		builder.append(']');
+		return builder.toString();
+	}
+
+	public boolean alloc(long size) {
+		if (storage == null || storage.size() != size) {
+			storage = Storage.allocate(s, size, new HighPrecisionMember());
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void init(long size) {
+		if (!alloc(size)) {
+			for (long i = 0; i < size; i++) {
+				storage.set(i, ZERO);
+			}
+		}
 	}
 
 	@Override
 	public int numDimensions() {
-		return 0;
+		return 1;
 	}
 
 	@Override
-	public void v(HighPrecisionMember value) {
-		get(value);
+	public void reshape(long len) {
+		RModuleReshape.compute(G.HP_VEC, G.HP, len, this);
 	}
 
 	@Override
-	public void setV(HighPrecisionMember value) {
-		set(value);
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("can't query negative dimension");
+		if (d == 0) return storage.size();
+		return 1;
 	}
-
+	
+	private static ThreadLocal<HighPrecisionMember> tmpHP =
+			new ThreadLocal<HighPrecisionMember>()
+	{
+		protected HighPrecisionMember initialValue() {
+			return new HighPrecisionMember();
+		};
+		
+	};
+	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.BIGDECIMAL;
-	}
-
-	@Override
-	public long dimension(int i) {
-		return 0;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -150,42 +239,66 @@ public final class HighPrecisionMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setV(BigDecimal.valueOf(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(BigDecimal.valueOf(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV(BigDecimal.valueOf(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(BigDecimal.valueOf(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV(BigDecimal.valueOf(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(BigDecimal.valueOf(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setV(BigDecimal.valueOf(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(BigDecimal.valueOf(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(BigDecimal.valueOf(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(BigDecimal.valueOf(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(BigDecimal.valueOf(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(BigDecimal.valueOf(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(new BigDecimal(v));
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(new BigDecimal(v));
+		setV(i, tmp);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setV(v);
+		long i = index.get(0);
+		HighPrecisionMember tmp = tmpHP.get();
+		tmp.setV(v);
+		setV(i, tmp);
 	}
 
 	@Override
@@ -196,7 +309,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -208,7 +327,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(BigDecimal.valueOf(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -220,7 +342,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -232,7 +360,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(BigDecimal.valueOf(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -244,7 +375,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -256,7 +393,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(BigDecimal.valueOf(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -268,7 +408,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -280,7 +426,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(BigDecimal.valueOf(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -292,7 +441,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -304,7 +459,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(BigDecimal.valueOf(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -316,7 +474,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -328,7 +492,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(BigDecimal.valueOf(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -340,7 +507,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -352,7 +525,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(new BigDecimal(v));
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(new BigDecimal(v));
+			setV(i, tmp);
 		}
 	}
 
@@ -364,7 +540,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -376,7 +558,10 @@ public final class HighPrecisionMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			long i = index.get(0);
+			HighPrecisionMember tmp = tmpHP.get();
+			tmp.setV(v);
+			setV(i, tmp);
 		}
 	}
 
@@ -385,7 +570,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().byteValue();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().byteValue();
+		}
 		return 0;
 	}
 
@@ -394,7 +583,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().shortValue();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().shortValue();
+		}
 		return 0;
 	}
 
@@ -403,7 +596,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().intValue();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().intValue();
+		}
 		return 0;
 	}
 
@@ -412,7 +609,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().longValue();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().longValue();
+		}
 		return 0;
 	}
 
@@ -421,7 +622,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().floatValue();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().floatValue();
+		}
 		return 0;
 	}
 
@@ -430,7 +635,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().doubleValue();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().doubleValue();
+		}
 		return 0;
 	}
 
@@ -439,7 +648,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().toBigInteger();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().toBigInteger();
+		}
 		return BigInteger.ZERO;
 	}
 
@@ -448,7 +661,11 @@ public final class HighPrecisionMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v();
+		if (component == 0) {
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v();
+		}
 		return BigDecimal.ZERO;
 	}
 
@@ -460,7 +677,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -470,7 +693,9 @@ public final class HighPrecisionMember
 			return 0;
 		}
 		else {
-			return v().byteValue();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().byteValue();
 		}
 	}
 
@@ -482,7 +707,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -492,7 +723,9 @@ public final class HighPrecisionMember
 			return 0;
 		}
 		else {
-			return v().shortValue();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().shortValue();
 		}
 	}
 
@@ -504,7 +737,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -514,7 +753,9 @@ public final class HighPrecisionMember
 			return 0;
 		}
 		else {
-			return v().intValue();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().intValue();
 		}
 	}
 
@@ -526,7 +767,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -536,7 +783,9 @@ public final class HighPrecisionMember
 			return 0;
 		}
 		else {
-			return v().longValue();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().longValue();
 		}
 	}
 
@@ -548,7 +797,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -558,7 +813,9 @@ public final class HighPrecisionMember
 			return 0;
 		}
 		else {
-			return v().floatValue();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().floatValue();
 		}
 	}
 
@@ -570,7 +827,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -580,7 +843,9 @@ public final class HighPrecisionMember
 			return 0;
 		}
 		else {
-			return v().doubleValue();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().doubleValue();
 		}
 	}
 
@@ -592,7 +857,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -602,7 +873,9 @@ public final class HighPrecisionMember
 			return BigInteger.ZERO;
 		}
 		else {
-			return v().toBigInteger();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v().toBigInteger();
 		}
 	}
 
@@ -614,7 +887,13 @@ public final class HighPrecisionMember
 		boolean oob = component > 0;
 		if (!oob) {
 			for (int i = 0; i < numDimensions(); i++) {
-				if (index.get(i) != 0) {
+				if (i == 0) {
+					if (index.get(0) >= storage.size()) {
+						oob = true;
+						break;
+					}
+				}
+				else if (index.get(i) != 0) {
 					oob = true;
 					break;
 				}
@@ -624,42 +903,21 @@ public final class HighPrecisionMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			return v();
+			HighPrecisionMember tmp = tmpHP.get();
+			v(index.get(0), tmp);
+			return tmp.v();
 		}
 	}
 
 	@Override
 	public void primitiveInit() {
-		v = BigDecimal.ZERO;
+		long storageSize = storage.size();
+		for (long i = 0; i < storageSize; i++)
+			storage.set(i, ZERO);
 	}
 
 	@Override
-	public void toHighPrec(HighPrecisionMember result) {
-		result.setV(v());
-	}
-
-	@Override
-	public void fromHighPrec(HighPrecisionMember input) {
-		setV(input.v());
-	}
-
-	@Override
-	public void setR(HighPrecisionMember val) {
-		fromHighPrec(val);
-	}
-
-	@Override
-	public int bigDecimalCount() {
-		return 1;
-	}
-
-	@Override
-	public void fromBigDecimalArray(BigDecimal[] arr, int index) {
-		v = arr[index];
-	}
-
-	@Override
-	public void toBigDecimalArray(BigDecimal[] arr, int index) {
-		arr[index] = v;
+	public IndexedDataSource<HighPrecisionMember> rawData() {
+		return storage;
 	}
 }

@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;

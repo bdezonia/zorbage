@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.floatunlim.real;
+package nom.bdezonia.zorbage.type.data.highprec.real;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -94,7 +94,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b, HighPrecisionMatrixMember c) {
-			MatrixMultiply.compute(G.FLOAT_UNLIM, a, b, c);
+			MatrixMultiply.compute(G.HP, a, b, c);
 		}
 	};
 	
@@ -108,7 +108,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(Integer power, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			MatrixPower.compute(power, G.FLOAT_UNLIM, G.FLOAT_UNLIM_VEC, G.FLOAT_UNLIM_MAT, a, b);
+			MatrixPower.compute(power, G.HP, G.HP_VEC, G.HP_MAT, a, b);
 		}
 	};
 	
@@ -136,7 +136,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			MatrixNegate.compute(G.FLOAT_UNLIM, a, b);
+			MatrixNegate.compute(G.HP, a, b);
 		}
 	};
 	
@@ -150,7 +150,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b, HighPrecisionMatrixMember c) {
-			MatrixAddition.compute(G.FLOAT_UNLIM, a, b, c);
+			MatrixAddition.compute(G.HP, a, b, c);
 		}
 	};
 	
@@ -164,7 +164,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b, HighPrecisionMatrixMember c) {
-			MatrixSubtraction.compute(G.FLOAT_UNLIM, a, b, c);
+			MatrixSubtraction.compute(G.HP, a, b, c);
 		}
 	};
 	
@@ -178,7 +178,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public Boolean call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			return MatrixEqual.compute(G.FLOAT_UNLIM, a, b);
+			return MatrixEqual.compute(G.HP, a, b);
 		}
 	};
 	
@@ -206,7 +206,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember from, HighPrecisionMatrixMember to) {
-			MatrixAssign.compute(G.FLOAT_UNLIM, from, to);
+			MatrixAssign.compute(G.HP, from, to);
 		}
 	};
 	
@@ -240,7 +240,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMember b) {
-			MatrixSpectralNorm.compute(G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			MatrixSpectralNorm.compute(G.HP_MAT, G.HP, a, b);
 		}
 	};
 	
@@ -255,7 +255,7 @@ public class HighPrecisionMatrix
 		@Override
 		public Boolean call(HighPrecisionMatrixMember a) {
 			// TODO
-			// return SequenceIsNan.compute(G.FLOAT_UNLIM, a.rawData());
+			// return SequenceIsNan.compute(G.HP, a.rawData());
 			return false;
 		}
 	};
@@ -271,7 +271,7 @@ public class HighPrecisionMatrix
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
 			// TODO
-			//MatrixNaN.compute(G.FLOAT_UNLIM, a);
+			//MatrixNaN.compute(G.HP, a);
 		}
 	};
 
@@ -286,7 +286,7 @@ public class HighPrecisionMatrix
 		@Override
 		public Boolean call(HighPrecisionMatrixMember a) {
 			// TODO
-			//return SequenceIsInf.compute(G.FLOAT_UNLIM, a.rawData());
+			//return SequenceIsInf.compute(G.HP, a.rawData());
 			return false;
 		}
 	};
@@ -302,7 +302,7 @@ public class HighPrecisionMatrix
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
 			// TODO
-			//MatrixInfinite.compute(G.FLOAT_UNLIM, a);
+			//MatrixInfinite.compute(G.HP, a);
 		}
 	};
 	
@@ -321,7 +321,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			MatrixTranspose.compute(G.FLOAT_UNLIM, a, b);
+			MatrixTranspose.compute(G.HP, a, b);
 		}
 	};
 	
@@ -349,7 +349,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMember b) {
-			MatrixDeterminant.compute(G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			MatrixDeterminant.compute(G.HP_MAT, G.HP, a, b);
 		}
 	};
 	
@@ -363,7 +363,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			MatrixUnity.compute(G.FLOAT_UNLIM, a);
+			MatrixUnity.compute(G.HP, a);
 		}
 	};
 	
@@ -377,7 +377,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			MatrixInvert.compute(G.FLOAT_UNLIM, G.FLOAT_UNLIM_VEC, G.FLOAT_UNLIM_MAT, a, b);
+			MatrixInvert.compute(G.HP, G.HP_VEC, G.HP_MAT, a, b);
 		}
 	};
 	
@@ -408,7 +408,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember in1, HighPrecisionMatrixMember in2, HighPrecisionMatrixMember out) {
-			MatrixDirectProduct.compute(G.FLOAT_UNLIM, in1, in2, out);
+			MatrixDirectProduct.compute(G.HP, in1, in2, out);
 		}
 	};
 	
@@ -422,7 +422,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMatrixMember b, HighPrecisionMatrixMember c) {
-			MatrixScale.compute(G.FLOAT_UNLIM, a, b, c);
+			MatrixScale.compute(G.HP, a, b, c);
 		}
 	};
 
@@ -436,7 +436,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			TaylorEstimateSinh.compute(18, G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			TaylorEstimateSinh.compute(18, G.HP_MAT, G.HP, a, b);
 		}
 	};
 
@@ -450,7 +450,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			TaylorEstimateCosh.compute(18, G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			TaylorEstimateCosh.compute(18, G.HP_MAT, G.HP, a, b);
 		}
 	};
 
@@ -479,8 +479,8 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			HighPrecisionMatrixMember s = G.FLOAT_UNLIM_MAT.construct();
-			HighPrecisionMatrixMember c = G.FLOAT_UNLIM_MAT.construct();
+			HighPrecisionMatrixMember s = G.HP_MAT.construct();
+			HighPrecisionMatrixMember c = G.HP_MAT.construct();
 			sinhAndCosh().call(a, s, c);
 			divide().call(s, c, b);
 		}
@@ -496,7 +496,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			Sinch.compute(G.FLOAT_UNLIM_MAT, a, b);
+			Sinch.compute(G.HP_MAT, a, b);
 		}
 	};
 
@@ -510,7 +510,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			Sinchpi.compute(G.FLOAT_UNLIM_MAT, a, b);
+			Sinchpi.compute(G.HP_MAT, a, b);
 		}
 	};
 
@@ -524,7 +524,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			TaylorEstimateSin.compute(18, G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			TaylorEstimateSin.compute(18, G.HP_MAT, G.HP, a, b);
 		}
 	};
 
@@ -538,7 +538,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			TaylorEstimateCos.compute(18, G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			TaylorEstimateCos.compute(18, G.HP_MAT, G.HP, a, b);
 		}
 	};
 
@@ -552,8 +552,8 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			HighPrecisionMatrixMember s = G.FLOAT_UNLIM_MAT.construct();
-			HighPrecisionMatrixMember c = G.FLOAT_UNLIM_MAT.construct();
+			HighPrecisionMatrixMember s = G.HP_MAT.construct();
+			HighPrecisionMatrixMember c = G.HP_MAT.construct();
 			sinAndCos().call(a, s, c);
 			divide().call(s, c, b);
 		}
@@ -584,7 +584,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			Sinc.compute(G.FLOAT_UNLIM_MAT, a, b);
+			Sinc.compute(G.HP_MAT, a, b);
 		}
 	};
 
@@ -598,7 +598,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			Sincpi.compute(G.FLOAT_UNLIM_MAT, a, b);
+			Sincpi.compute(G.HP_MAT, a, b);
 		}
 	};
 
@@ -612,7 +612,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			TaylorEstimateExp.compute(35, G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			TaylorEstimateExp.compute(35, G.HP_MAT, G.HP, a, b);
 		}
 	};
 
@@ -626,7 +626,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			TaylorEstimateLog.compute(8, G.FLOAT_UNLIM_MAT, G.FLOAT_UNLIM, a, b);
+			TaylorEstimateLog.compute(8, G.HP_MAT, G.HP, a, b);
 		}
 	};
 
@@ -640,7 +640,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public Boolean call(HighPrecisionMatrixMember a) {
-			return SequenceIsZero.compute(G.FLOAT_UNLIM, a.rawData());
+			return SequenceIsZero.compute(G.HP, a.rawData());
 		}	
 	};
 
@@ -654,9 +654,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember pi = G.FLOAT_UNLIM.construct();
-			G.FLOAT_UNLIM.PI().call(pi);
-			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, pi, a);
+			HighPrecisionMember pi = G.HP.construct();
+			G.HP.PI().call(pi);
+			MatrixConstantDiagonal.compute(G.HP, pi, a);
 		}
 	};
 
@@ -670,9 +670,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember e = G.FLOAT_UNLIM.construct();
-			G.FLOAT_UNLIM.E().call(e);
-			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, e, a);
+			HighPrecisionMember e = G.HP.construct();
+			G.HP.E().call(e);
+			MatrixConstantDiagonal.compute(G.HP, e, a);
 		}
 	};
 
@@ -686,9 +686,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember phi = G.FLOAT_UNLIM.construct();
-			G.FLOAT_UNLIM.PHI().call(phi);
-			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, phi, a);
+			HighPrecisionMember phi = G.HP.construct();
+			G.HP.PHI().call(phi);
+			MatrixConstantDiagonal.compute(G.HP, phi, a);
 		}
 	};
 
@@ -702,9 +702,9 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMatrixMember a) {
-			HighPrecisionMember gamma = G.FLOAT_UNLIM.construct();
-			G.FLOAT_UNLIM.GAMMA().call(gamma);
-			MatrixConstantDiagonal.compute(G.FLOAT_UNLIM, gamma, a);
+			HighPrecisionMember gamma = G.HP.construct();
+			G.HP.GAMMA().call(gamma);
+			MatrixConstantDiagonal.compute(G.HP, gamma, a);
 		}
 	};
 

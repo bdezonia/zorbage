@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class StringDefinedAxis implements Procedure2<Long,HighPrecisionMember>
 	private final Procedure<HighPrecisionMember> parsedAxisProc;
 	
 	public StringDefinedAxis(String eqn) {
-		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.FLOAT_UNLIM, eqn);
+		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.HP, eqn);
 		parsedAxisProc = parseResult.b();
 	}
 	

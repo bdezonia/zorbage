@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.floatunlim.real;
+package nom.bdezonia.zorbage.type.data.highprec.real;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -34,8 +34,8 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.floatunlim.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class TestHighPrecision {
 
 	@Test
 	public void test() {
-		HighPrecisionMember a = G.FLOAT_UNLIM.construct();
+		HighPrecisionMember a = G.HP.construct();
 		try {
 			HighPrecisionAlgebra.setPrecision(0);
 			fail();
@@ -60,19 +60,19 @@ public class TestHighPrecision {
 			assertTrue(true);
 		}
 		HighPrecisionAlgebra.setPrecision(1);
-		G.FLOAT_UNLIM.E().call(a);
+		G.HP.E().call(a);
 		assertTrue(BigDecimal.valueOf(2.7).equals(a.v()));
-		G.FLOAT_UNLIM.PI().call(a);
+		G.HP.PI().call(a);
 		assertTrue(BigDecimal.valueOf(3.1).equals(a.v()));
 		HighPrecisionAlgebra.setPrecision(10);
-		G.FLOAT_UNLIM.E().call(a);
+		G.HP.E().call(a);
 		assertTrue(BigDecimal.valueOf(2.7182818284).equals(a.v()));
-		G.FLOAT_UNLIM.PI().call(a);
+		G.HP.PI().call(a);
 		assertTrue(BigDecimal.valueOf(3.1415926535).equals(a.v()));
 		// test that the max limit code will actually run
 		HighPrecisionAlgebra.setPrecision(3999);
-		G.FLOAT_UNLIM.E().call(a);
-		G.FLOAT_UNLIM.PI().call(a);
+		G.HP.E().call(a);
+		G.HP.PI().call(a);
 		assertTrue(true);
 	}
 }

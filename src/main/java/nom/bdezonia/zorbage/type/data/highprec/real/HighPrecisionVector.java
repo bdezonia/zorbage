@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.floatunlim.real;
+package nom.bdezonia.zorbage.type.data.highprec.real;
 
 import java.math.BigDecimal;
 
@@ -92,7 +92,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			RModuleNegate.compute(G.FLOAT_UNLIM, a, b);
+			RModuleNegate.compute(G.HP, a, b);
 		}
 	};
 	
@@ -106,7 +106,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
-			RModuleAdd.compute(G.FLOAT_UNLIM, a, b, c);
+			RModuleAdd.compute(G.HP, a, b, c);
 		}
 	};
 
@@ -120,7 +120,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
-			RModuleSubtract.compute(G.FLOAT_UNLIM, a, b, c);
+			RModuleSubtract.compute(G.HP, a, b, c);
 		}
 	};
 
@@ -134,7 +134,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public Boolean call(HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			return (Boolean) RModuleEqual.compute(G.FLOAT_UNLIM, a, b);
+			return (Boolean) RModuleEqual.compute(G.HP, a, b);
 		}
 	};
 
@@ -182,7 +182,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember from, HighPrecisionVectorMember to) {
-			RModuleAssign.compute(G.FLOAT_UNLIM, from, to);
+			RModuleAssign.compute(G.HP, from, to);
 		}
 	};
 	
@@ -200,10 +200,10 @@ public class HighPrecisionVector
 			HighPrecisionMember norm2 = new HighPrecisionMember();
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, tmp);
-				G.FLOAT_UNLIM.multiply().call(tmp, tmp, tmp);
-				G.FLOAT_UNLIM.add().call(norm2, tmp, norm2);
+				G.HP.multiply().call(tmp, tmp, tmp);
+				G.HP.add().call(norm2, tmp, norm2);
 			}
-			G.FLOAT_UNLIM.sqrt().call(norm2, tmp);
+			G.HP.sqrt().call(norm2, tmp);
 			b.setV(tmp);
 		}
 	};
@@ -218,7 +218,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			RModuleScale.compute(G.FLOAT_UNLIM, scalar, a, b);
+			RModuleScale.compute(G.HP, scalar, a, b);
 		}
 	};
 	
@@ -232,7 +232,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
-			CrossProduct.compute(G.FLOAT_UNLIM_VEC, G.FLOAT_UNLIM, a, b, c);
+			CrossProduct.compute(G.HP_VEC, G.HP, a, b, c);
 		}
 	};
 	
@@ -246,7 +246,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionMember c) {
-			DotProduct.compute(G.FLOAT_UNLIM, a, b, c);
+			DotProduct.compute(G.HP, a, b, c);
 		}
 	};
 	
@@ -260,7 +260,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionMember c) {
-			PerpDotProduct.compute(G.FLOAT_UNLIM_VEC, G.FLOAT_UNLIM, a, b, c);
+			PerpDotProduct.compute(G.HP_VEC, G.HP, a, b, c);
 		}
 	};
 	
@@ -335,7 +335,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember in1, HighPrecisionVectorMember in2, HighPrecisionMatrixMember out) {
-			RModuleDirectProduct.compute(G.FLOAT_UNLIM, in1, in2, out);
+			RModuleDirectProduct.compute(G.HP, in1, in2, out);
 		}
 	};
 	
@@ -350,7 +350,7 @@ public class HighPrecisionVector
 		@Override
 		public Boolean call(HighPrecisionVectorMember a) {
 			// TODO enable me when HighPrec supports NaN's
-			// return SequenceIsNan.compute(G.FLOAT_UNLIM, a.rawData());
+			// return SequenceIsNan.compute(G.HP, a.rawData());
 			return false;
 		}
 	};
@@ -366,7 +366,7 @@ public class HighPrecisionVector
 		@Override
 		public void call(HighPrecisionVectorMember a) {
 			// TODO enable me when HighPrec supports NaN's
-			//RModuleNaN.compute(G.FLOAT_UNLIM, a);
+			//RModuleNaN.compute(G.HP, a);
 		}
 	};
 	
@@ -381,7 +381,7 @@ public class HighPrecisionVector
 		@Override
 		public Boolean call(HighPrecisionVectorMember a) {
 			// TODO enable me when HighPrec supports Inf's
-			//return SequenceIsInf.compute(G.FLOAT_UNLIM, a.rawData());
+			//return SequenceIsInf.compute(G.HP, a.rawData());
 			return false;
 		}
 	};
@@ -397,7 +397,7 @@ public class HighPrecisionVector
 		@Override
 		public void call(HighPrecisionVectorMember a) {
 			// TODO enable me when HighPrec supports Inf's
-			//RModuleInfinite.compute(G.FLOAT_UNLIM, a);
+			//RModuleInfinite.compute(G.HP, a);
 		}
 	};
 
@@ -411,7 +411,7 @@ public class HighPrecisionVector
 	{
 		@Override	
 		public Boolean call(HighPrecisionVectorMember a) {
-			return SequenceIsZero.compute(G.FLOAT_UNLIM, a.rawData());
+			return SequenceIsZero.compute(G.HP, a.rawData());
 		}
 	};
 

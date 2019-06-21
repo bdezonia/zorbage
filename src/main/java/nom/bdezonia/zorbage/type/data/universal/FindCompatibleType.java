@@ -101,7 +101,7 @@ public class FindCompatibleType {
 		switch (rep) {
 		case BIGDECIMAL:
 			if (components == 1)
-				return (T) G.FLOAT_UNLIM;
+				return (T) G.HP;
 			break;
 		case BIGINTEGER:
 			if (components == 1)
