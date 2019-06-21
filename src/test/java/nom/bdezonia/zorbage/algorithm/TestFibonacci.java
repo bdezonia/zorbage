@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Member;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 
 /**
  * 
@@ -86,9 +86,9 @@ public class TestFibonacci {
 	@Test
 	public void test2() {
 		
-		UnboundedIntMember tmp = G.INT_UNLIM.construct();
+		UnboundedIntMember tmp = G.UNBOUND.construct();
 		
-		Fibonacci.compute(G.INT_UNLIM, 99, tmp);
-		assertTrue(G.INT_UNLIM.isEqual().call(new UnboundedIntMember("218922995834555169026"), tmp));
+		Fibonacci.compute(G.UNBOUND, 99, tmp);
+		assertTrue(G.UNBOUND.isEqual().call(new UnboundedIntMember("218922995834555169026"), tmp));
 	}
 }

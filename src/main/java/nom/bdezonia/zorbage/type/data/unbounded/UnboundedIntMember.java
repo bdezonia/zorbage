@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.intunlim;
+package nom.bdezonia.zorbage.type.data.unbounded;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

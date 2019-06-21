@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.type.storage.coder.BitCoder;

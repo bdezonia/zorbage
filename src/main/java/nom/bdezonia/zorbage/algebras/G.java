@@ -107,9 +107,9 @@ import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Algebra;
 import nom.bdezonia.zorbage.type.data.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Algebra;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.data.rational.RationalAlgebra;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntAlgebra;
 
 /**
  * G is the container for the global set of defined Algebras.
@@ -123,7 +123,7 @@ public class G {
 
 	public static final BigDecimal ONE_HALF = BigDecimal.valueOf(0.5);
 	
-	public static final UnboundedIntAlgebra INT_UNLIM = new UnboundedIntAlgebra();
+	public static final UnboundedIntAlgebra UNBOUND = new UnboundedIntAlgebra();
 	
 	public static final RationalAlgebra RAT = new RationalAlgebra();
 	
@@ -194,6 +194,7 @@ public class G {
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
 	public static final HighPrecisionMatrix HP_MAT = new HighPrecisionMatrix();
+	//TODO public static final HighPrecisionTensorProduct HPL_TEN = new HighPrecisionTensorProduct();
 		
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();

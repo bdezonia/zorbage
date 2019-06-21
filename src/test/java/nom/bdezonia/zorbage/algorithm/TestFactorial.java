@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int11.SignedInt11Member;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 
 /**
  * 
@@ -103,31 +103,31 @@ public class TestFactorial {
 	
 	@Test
 	public void unboundInts() {
-		UnboundedIntMember b = G.INT_UNLIM.construct();
+		UnboundedIntMember b = G.UNBOUND.construct();
 		
 		try {
-			Factorial.compute(G.INT_UNLIM, -1, b);
+			Factorial.compute(G.UNBOUND, -1, b);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		
-		Factorial.compute(G.INT_UNLIM, 0, b);
+		Factorial.compute(G.UNBOUND, 0, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
 		
-		Factorial.compute(G.INT_UNLIM, 1, b);
+		Factorial.compute(G.UNBOUND, 1, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
 
-		Factorial.compute(G.INT_UNLIM, 2, b);
+		Factorial.compute(G.UNBOUND, 2, b);
 		assertEquals(BigInteger.valueOf(2), b.v());
 
-		Factorial.compute(G.INT_UNLIM, 3, b);
+		Factorial.compute(G.UNBOUND, 3, b);
 		assertEquals(BigInteger.valueOf(6), b.v());
 
-		Factorial.compute(G.INT_UNLIM, 6, b);
+		Factorial.compute(G.UNBOUND, 6, b);
 		assertEquals(BigInteger.valueOf(720), b.v());
 
-		Factorial.compute(G.INT_UNLIM, 45, b);
+		Factorial.compute(G.UNBOUND, 45, b);
 		assertEquals(new BigInteger("119622220865480194561963161495657715064383733760000000000"), b.v());
 	}
 	

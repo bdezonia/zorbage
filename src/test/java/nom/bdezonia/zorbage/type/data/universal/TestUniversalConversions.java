@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class TestUniversalConversions {
 		TensorOctonionRepresentation rep = new TensorOctonionRepresentation();
 		BigInteger i = BigInteger.valueOf(Integer.MAX_VALUE).add(BigInteger.valueOf(Integer.MAX_VALUE));
 		UnsignedInt32Member a = G.UINT32.construct(i.toString());
-		UnboundedIntMember b = G.INT_UNLIM.construct();
+		UnboundedIntMember b = G.UNBOUND.construct();
 		UniversalConverter.convert(rep, a, b);
 		assertEquals(i, b.v());
 	}

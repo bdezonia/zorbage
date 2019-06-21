@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.intunlim;
+package nom.bdezonia.zorbage.type.data.unbounded;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -559,7 +559,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-			Min.compute(G.INT_UNLIM, a, b, c);
+			Min.compute(G.UNBOUND, a, b, c);
 		}
 	};
 	
@@ -573,7 +573,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public void call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
-			Max.compute(G.INT_UNLIM, a, b, c);
+			Max.compute(G.UNBOUND, a, b, c);
 		}
 	};
 	

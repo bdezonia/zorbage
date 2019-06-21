@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.intunlim;
+package nom.bdezonia.zorbage.type.data.unbounded;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -36,8 +36,8 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MinMaxElement;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntAlgebra;
-import nom.bdezonia.zorbage.type.data.intunlim.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntAlgebra;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageGeneric;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -54,7 +54,7 @@ public class TestUnboundedIntAlgebra {
 		UnboundedIntMember b = new UnboundedIntMember(44);
 		UnboundedIntMember product = new UnboundedIntMember();
 
-		G.INT_UNLIM.multiply().call(a,b,product);
+		G.UNBOUND.multiply().call(a,b,product);
 		
 		assertTrue(new BigInteger("405828369621610135508").equals(product.v()));
 	}
@@ -62,30 +62,30 @@ public class TestUnboundedIntAlgebra {
 	@Test
 	public void minmax() {
 		IndexedDataSource<UnboundedIntMember> list =
-				new ArrayStorageGeneric<UnboundedIntAlgebra,UnboundedIntMember>(5000, G.INT_UNLIM);
-		UnboundedIntMember a = G.INT_UNLIM.construct("1234567890");
-		UnboundedIntMember b = G.INT_UNLIM.construct("55");
+				new ArrayStorageGeneric<UnboundedIntAlgebra,UnboundedIntMember>(5000, G.UNBOUND);
+		UnboundedIntMember a = G.UNBOUND.construct("1234567890");
+		UnboundedIntMember b = G.UNBOUND.construct("55");
 		for (long i = 0, j = list.size()-1; i < list.size()/2; i++,j--) {
 			list.set(i, a);
 			list.set(j, b);
-			G.INT_UNLIM.pred().call(a, a);
-			G.INT_UNLIM.succ().call(b, b);
+			G.UNBOUND.pred().call(a, a);
+			G.UNBOUND.succ().call(b, b);
 		}
-		Shuffle.compute(G.INT_UNLIM, list);
-		UnboundedIntMember min = G.INT_UNLIM.construct();
-		UnboundedIntMember max = G.INT_UNLIM.construct();
-		MinMaxElement.compute(G.INT_UNLIM, list, min, max);
+		Shuffle.compute(G.UNBOUND, list);
+		UnboundedIntMember min = G.UNBOUND.construct();
+		UnboundedIntMember max = G.UNBOUND.construct();
+		MinMaxElement.compute(G.UNBOUND, list, min, max);
 		assertEquals(BigInteger.valueOf(55), min.v());
 		assertEquals(BigInteger.valueOf(1234567890), max.v());
 	}
 	
 	@Test
 	public void bigpower() {
-		UnboundedIntMember a = G.INT_UNLIM.construct("3");
-		UnboundedIntMember b = G.INT_UNLIM.construct("100");
-		UnboundedIntMember c = G.INT_UNLIM.construct();
+		UnboundedIntMember a = G.UNBOUND.construct("3");
+		UnboundedIntMember b = G.UNBOUND.construct("100");
+		UnboundedIntMember c = G.UNBOUND.construct();
 		
-		G.INT_UNLIM.pow().call(a, b, c);
+		G.UNBOUND.pow().call(a, b, c);
 		
 		assertEquals(new BigInteger("515377520732011331036461129765621272702107522001"), c.v());
 	}
@@ -93,22 +93,22 @@ public class TestUnboundedIntAlgebra {
 	@Test
 	public void mathematicalMethods() {
 		
-		UnboundedIntMember a = G.INT_UNLIM.construct();
-		UnboundedIntMember b = G.INT_UNLIM.construct();
-		UnboundedIntMember c = G.INT_UNLIM.construct();
+		UnboundedIntMember a = G.UNBOUND.construct();
+		UnboundedIntMember b = G.UNBOUND.construct();
+		UnboundedIntMember c = G.UNBOUND.construct();
 		
 		// abs
 		
 		a.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.abs().call(a, b);
+		G.UNBOUND.abs().call(a, b);
 		assertEquals(BigInteger.ONE, b.v());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.abs().call(a, b);
+		G.UNBOUND.abs().call(a, b);
 		assertEquals(BigInteger.ZERO, b.v());
 		
 		a.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.abs().call(a, b);
+		G.UNBOUND.abs().call(a, b);
 		assertEquals(BigInteger.ONE, b.v());
 
 		// add
@@ -117,7 +117,7 @@ public class TestUnboundedIntAlgebra {
 			a.setV(BigInteger.valueOf(i));
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
-				G.INT_UNLIM.add().call(a, b, c);
+				G.UNBOUND.add().call(a, b, c);
 				assertEquals(i+j, c.v().intValue());
 			}
 		}
@@ -128,8 +128,8 @@ public class TestUnboundedIntAlgebra {
 			a.setV(BigInteger.valueOf(i));
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
-				G.INT_UNLIM.andNot().call(a, b, c);
-				G.INT_UNLIM.bitAndNot().call(a, b, b);
+				G.UNBOUND.andNot().call(a, b, c);
+				G.UNBOUND.bitAndNot().call(a, b, b);
 				assertEquals(b.v(), c.v());
 			}
 		}
@@ -138,290 +138,290 @@ public class TestUnboundedIntAlgebra {
 		
 		a.setV(BigInteger.valueOf(-43));
 		b.setV(BigInteger.valueOf(1000));
-		G.INT_UNLIM.assign().call(a, b);
+		G.UNBOUND.assign().call(a, b);
 		assertEquals(BigInteger.valueOf(-43), b.v());
 		
 		// bitAnd
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).and(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).and(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).and(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).and(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).and(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).and(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).and(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).and(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitAnd().call(a, b, c);
+		G.UNBOUND.bitAnd().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).and(BigInteger.valueOf(1)), c.v());
 		
 		// bitAndNot
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).andNot(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).andNot(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).andNot(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).andNot(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).andNot(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).andNot(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).andNot(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).andNot(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitAndNot().call(a, b, c);
+		G.UNBOUND.bitAndNot().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).andNot(BigInteger.valueOf(1)), c.v());
 		
 		// bitCount
 
 		for (int i = -65536; i <= 65536; i++) {
 			a.setV(BigInteger.valueOf(i));
-			assertEquals((int) BigInteger.valueOf(i).bitCount(), (int) G.INT_UNLIM.bitCount().call(a));
+			assertEquals((int) BigInteger.valueOf(i).bitCount(), (int) G.UNBOUND.bitCount().call(a));
 		}
 		
 		// bitLength
 
 		for (int i = -65536; i <= 65536; i++) {
 			a.setV(BigInteger.valueOf(i));
-			assertEquals((int) BigInteger.valueOf(i).bitLength(), (int) G.INT_UNLIM.bitLength().call(a));
+			assertEquals((int) BigInteger.valueOf(i).bitLength(), (int) G.UNBOUND.bitLength().call(a));
 		}
 		
 		// bitNot
 		
 		a.setV(BigInteger.valueOf(-255));
-		G.INT_UNLIM.bitNot().call(a, b);
+		G.UNBOUND.bitNot().call(a, b);
 		assertEquals(BigInteger.valueOf(-255).not(),b.v());
 		
 		a.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitNot().call(a, b);
+		G.UNBOUND.bitNot().call(a, b);
 		assertEquals(BigInteger.valueOf(-1).not(),b.v());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitNot().call(a, b);
+		G.UNBOUND.bitNot().call(a, b);
 		assertEquals(BigInteger.valueOf(0).not(),b.v());
 		
 		a.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitNot().call(a, b);
+		G.UNBOUND.bitNot().call(a, b);
 		assertEquals(BigInteger.valueOf(1).not(),b.v());
 		
 		a.setV(BigInteger.valueOf(255));
-		G.INT_UNLIM.bitNot().call(a, b);
+		G.UNBOUND.bitNot().call(a, b);
 		assertEquals(BigInteger.valueOf(255).not(),b.v());
 		
 		// bitOr
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).or(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).or(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).or(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).or(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).or(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).or(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).or(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).or(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitOr().call(a, b, c);
+		G.UNBOUND.bitOr().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).or(BigInteger.valueOf(1)), c.v());
 		
 		// bitShiftLeft
 		
 		a.setV(BigInteger.valueOf(-10));
-		G.INT_UNLIM.bitShiftLeft().call(-1,a,b);
+		G.UNBOUND.bitShiftLeft().call(-1,a,b);
 		assertEquals(BigInteger.valueOf(-5), b.v());
 		
 		a.setV(BigInteger.valueOf(-10));
-		G.INT_UNLIM.bitShiftLeft().call(0,a,b);
+		G.UNBOUND.bitShiftLeft().call(0,a,b);
 		assertEquals(BigInteger.valueOf(-10), b.v());
 		
 		a.setV(BigInteger.valueOf(-10));
-		G.INT_UNLIM.bitShiftLeft().call(1,a,b);
+		G.UNBOUND.bitShiftLeft().call(1,a,b);
 		assertEquals(BigInteger.valueOf(-20), b.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.bitShiftLeft().call(-1,a,b);
+		G.UNBOUND.bitShiftLeft().call(-1,a,b);
 		assertEquals(BigInteger.valueOf(5), b.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.bitShiftLeft().call(0,a,b);
+		G.UNBOUND.bitShiftLeft().call(0,a,b);
 		assertEquals(BigInteger.valueOf(10), b.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.bitShiftLeft().call(1,a,b);
+		G.UNBOUND.bitShiftLeft().call(1,a,b);
 		assertEquals(BigInteger.valueOf(20), b.v());
 
 		// bitShiftRight
 		
 		a.setV(BigInteger.valueOf(-10));
-		G.INT_UNLIM.bitShiftRight().call(-1,a,b);
+		G.UNBOUND.bitShiftRight().call(-1,a,b);
 		assertEquals(BigInteger.valueOf(-20), b.v());
 		
 		a.setV(BigInteger.valueOf(-10));
-		G.INT_UNLIM.bitShiftRight().call(0,a,b);
+		G.UNBOUND.bitShiftRight().call(0,a,b);
 		assertEquals(BigInteger.valueOf(-10), b.v());
 		
 		a.setV(BigInteger.valueOf(-10));
-		G.INT_UNLIM.bitShiftRight().call(1,a,b);
+		G.UNBOUND.bitShiftRight().call(1,a,b);
 		assertEquals(BigInteger.valueOf(-5), b.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.bitShiftRight().call(-1,a,b);
+		G.UNBOUND.bitShiftRight().call(-1,a,b);
 		assertEquals(BigInteger.valueOf(20), b.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.bitShiftRight().call(0,a,b);
+		G.UNBOUND.bitShiftRight().call(0,a,b);
 		assertEquals(BigInteger.valueOf(10), b.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.bitShiftRight().call(1,a,b);
+		G.UNBOUND.bitShiftRight().call(1,a,b);
 		assertEquals(BigInteger.valueOf(5), b.v());
 
 		// bitXor
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).xor(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).xor(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(-1).xor(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).xor(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).xor(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(0).xor(BigInteger.valueOf(1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(-1));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).xor(BigInteger.valueOf(-1)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).xor(BigInteger.valueOf(0)), c.v());
 		
 		a.setV(BigInteger.valueOf(1));
 		b.setV(BigInteger.valueOf(1));
-		G.INT_UNLIM.bitXor().call(a, b, c);
+		G.UNBOUND.bitXor().call(a, b, c);
 		assertEquals(BigInteger.valueOf(1).xor(BigInteger.valueOf(1)), c.v());
 		
 		// clearBit
 		
 		a.setV(BigInteger.ONE);
 		b.setV(BigInteger.TEN);
-		G.INT_UNLIM.clearBit().call(0, a, b);
+		G.UNBOUND.clearBit().call(0, a, b);
 		assertEquals(BigInteger.ZERO, b.v());
 		
 		// compare
@@ -429,15 +429,15 @@ public class TestUnboundedIntAlgebra {
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(0,(int)G.INT_UNLIM.compare().call(a, a));
-		assertEquals(-1,(int)G.INT_UNLIM.compare().call(a, b));
-		assertEquals(-1,(int)G.INT_UNLIM.compare().call(a, c));
-		assertEquals(1,(int)G.INT_UNLIM.compare().call(b, a));
-		assertEquals(0,(int)G.INT_UNLIM.compare().call(b, b));
-		assertEquals(-1,(int)G.INT_UNLIM.compare().call(b, c));
-		assertEquals(1,(int)G.INT_UNLIM.compare().call(c, a));
-		assertEquals(1,(int)G.INT_UNLIM.compare().call(c, b));
-		assertEquals(0,(int)G.INT_UNLIM.compare().call(c, c));
+		assertEquals(0,(int)G.UNBOUND.compare().call(a, a));
+		assertEquals(-1,(int)G.UNBOUND.compare().call(a, b));
+		assertEquals(-1,(int)G.UNBOUND.compare().call(a, c));
+		assertEquals(1,(int)G.UNBOUND.compare().call(b, a));
+		assertEquals(0,(int)G.UNBOUND.compare().call(b, b));
+		assertEquals(-1,(int)G.UNBOUND.compare().call(b, c));
+		assertEquals(1,(int)G.UNBOUND.compare().call(c, a));
+		assertEquals(1,(int)G.UNBOUND.compare().call(c, b));
+		assertEquals(0,(int)G.UNBOUND.compare().call(c, c));
 		
 		// div
 		
@@ -446,7 +446,7 @@ public class TestUnboundedIntAlgebra {
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
 				if (j != 0) {
-					G.INT_UNLIM.div().call(a, b, c);
+					G.UNBOUND.div().call(a, b, c);
 					assertEquals(BigInteger.valueOf(i/j), c.v());
 				}
 			}
@@ -459,7 +459,7 @@ public class TestUnboundedIntAlgebra {
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
 				if (j != 0) {
-					G.INT_UNLIM.divMod().call(a, b, b, c);
+					G.UNBOUND.divMod().call(a, b, b, c);
 					assertEquals(BigInteger.valueOf(i/j), b.v());
 					assertEquals(BigInteger.valueOf(i%j), c.v());
 				}
@@ -469,15 +469,15 @@ public class TestUnboundedIntAlgebra {
 		// flipBit
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.flipBit().call(0, a, b);
+		G.UNBOUND.flipBit().call(0, a, b);
 		assertEquals(BigInteger.valueOf(1), b.v());
-		G.INT_UNLIM.flipBit().call(0, b, c);
+		G.UNBOUND.flipBit().call(0, b, c);
 		assertEquals(BigInteger.valueOf(0), c.v());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.flipBit().call(3, a, b);
+		G.UNBOUND.flipBit().call(3, a, b);
 		assertEquals(BigInteger.valueOf(8), b.v());
-		G.INT_UNLIM.flipBit().call(3, b, c);
+		G.UNBOUND.flipBit().call(3, b, c);
 		assertEquals(BigInteger.valueOf(0), c.v());
 		
 		// gcd: tested as an algorithm elsewhere
@@ -485,123 +485,123 @@ public class TestUnboundedIntAlgebra {
 		// getLowestBitSet
 
 		a.setV(BigInteger.valueOf(0));
-		assertEquals(-1, (int) G.INT_UNLIM.getLowestSetBit().call(a));
+		assertEquals(-1, (int) G.UNBOUND.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(1));
-		assertEquals(0, (int) G.INT_UNLIM.getLowestSetBit().call(a));
+		assertEquals(0, (int) G.UNBOUND.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(2));
-		assertEquals(1, (int) G.INT_UNLIM.getLowestSetBit().call(a));
+		assertEquals(1, (int) G.UNBOUND.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(4));
-		assertEquals(2, (int) G.INT_UNLIM.getLowestSetBit().call(a));
+		assertEquals(2, (int) G.UNBOUND.getLowestSetBit().call(a));
 
 		a.setV(BigInteger.valueOf(8));
-		assertEquals(3, (int) G.INT_UNLIM.getLowestSetBit().call(a));
+		assertEquals(3, (int) G.UNBOUND.getLowestSetBit().call(a));
 		
 		// isEqual
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(true, G.INT_UNLIM.isEqual().call(a, a));
-		assertEquals(false, G.INT_UNLIM.isEqual().call(a, b));
-		assertEquals(false, G.INT_UNLIM.isEqual().call(a, c));
-		assertEquals(false, G.INT_UNLIM.isEqual().call(b, a));
-		assertEquals(true, G.INT_UNLIM.isEqual().call(b, b));
-		assertEquals(false, G.INT_UNLIM.isEqual().call(b, c));
-		assertEquals(false, G.INT_UNLIM.isEqual().call(c, a));
-		assertEquals(false, G.INT_UNLIM.isEqual().call(c, b));
-		assertEquals(true, G.INT_UNLIM.isEqual().call(c, c));
+		assertEquals(true, G.UNBOUND.isEqual().call(a, a));
+		assertEquals(false, G.UNBOUND.isEqual().call(a, b));
+		assertEquals(false, G.UNBOUND.isEqual().call(a, c));
+		assertEquals(false, G.UNBOUND.isEqual().call(b, a));
+		assertEquals(true, G.UNBOUND.isEqual().call(b, b));
+		assertEquals(false, G.UNBOUND.isEqual().call(b, c));
+		assertEquals(false, G.UNBOUND.isEqual().call(c, a));
+		assertEquals(false, G.UNBOUND.isEqual().call(c, b));
+		assertEquals(true, G.UNBOUND.isEqual().call(c, c));
 
 		// isNotEqual
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(false, G.INT_UNLIM.isNotEqual().call(a, a));
-		assertEquals(true, G.INT_UNLIM.isNotEqual().call(a, b));
-		assertEquals(true, G.INT_UNLIM.isNotEqual().call(a, c));
-		assertEquals(true, G.INT_UNLIM.isNotEqual().call(b, a));
-		assertEquals(false, G.INT_UNLIM.isNotEqual().call(b, b));
-		assertEquals(true, G.INT_UNLIM.isNotEqual().call(b, c));
-		assertEquals(true, G.INT_UNLIM.isNotEqual().call(c, a));
-		assertEquals(true, G.INT_UNLIM.isNotEqual().call(c, b));
-		assertEquals(false, G.INT_UNLIM.isNotEqual().call(c, c));
+		assertEquals(false, G.UNBOUND.isNotEqual().call(a, a));
+		assertEquals(true, G.UNBOUND.isNotEqual().call(a, b));
+		assertEquals(true, G.UNBOUND.isNotEqual().call(a, c));
+		assertEquals(true, G.UNBOUND.isNotEqual().call(b, a));
+		assertEquals(false, G.UNBOUND.isNotEqual().call(b, b));
+		assertEquals(true, G.UNBOUND.isNotEqual().call(b, c));
+		assertEquals(true, G.UNBOUND.isNotEqual().call(c, a));
+		assertEquals(true, G.UNBOUND.isNotEqual().call(c, b));
+		assertEquals(false, G.UNBOUND.isNotEqual().call(c, c));
 
 		// isLess
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(false, G.INT_UNLIM.isLess().call(a, a));
-		assertEquals(true, G.INT_UNLIM.isLess().call(a, b));
-		assertEquals(true, G.INT_UNLIM.isLess().call(a, c));
-		assertEquals(false, G.INT_UNLIM.isLess().call(b, a));
-		assertEquals(false, G.INT_UNLIM.isLess().call(b, b));
-		assertEquals(true, G.INT_UNLIM.isLess().call(b, c));
-		assertEquals(false, G.INT_UNLIM.isLess().call(c, a));
-		assertEquals(false, G.INT_UNLIM.isLess().call(c, b));
-		assertEquals(false, G.INT_UNLIM.isLess().call(c, c));
+		assertEquals(false, G.UNBOUND.isLess().call(a, a));
+		assertEquals(true, G.UNBOUND.isLess().call(a, b));
+		assertEquals(true, G.UNBOUND.isLess().call(a, c));
+		assertEquals(false, G.UNBOUND.isLess().call(b, a));
+		assertEquals(false, G.UNBOUND.isLess().call(b, b));
+		assertEquals(true, G.UNBOUND.isLess().call(b, c));
+		assertEquals(false, G.UNBOUND.isLess().call(c, a));
+		assertEquals(false, G.UNBOUND.isLess().call(c, b));
+		assertEquals(false, G.UNBOUND.isLess().call(c, c));
 
 		// isLessEqual
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(true, G.INT_UNLIM.isLessEqual().call(a, a));
-		assertEquals(true, G.INT_UNLIM.isLessEqual().call(a, b));
-		assertEquals(true, G.INT_UNLIM.isLessEqual().call(a, c));
-		assertEquals(false, G.INT_UNLIM.isLessEqual().call(b, a));
-		assertEquals(true, G.INT_UNLIM.isLessEqual().call(b, b));
-		assertEquals(true, G.INT_UNLIM.isLessEqual().call(b, c));
-		assertEquals(false, G.INT_UNLIM.isLessEqual().call(c, a));
-		assertEquals(false, G.INT_UNLIM.isLessEqual().call(c, b));
-		assertEquals(true, G.INT_UNLIM.isLessEqual().call(c, c));
+		assertEquals(true, G.UNBOUND.isLessEqual().call(a, a));
+		assertEquals(true, G.UNBOUND.isLessEqual().call(a, b));
+		assertEquals(true, G.UNBOUND.isLessEqual().call(a, c));
+		assertEquals(false, G.UNBOUND.isLessEqual().call(b, a));
+		assertEquals(true, G.UNBOUND.isLessEqual().call(b, b));
+		assertEquals(true, G.UNBOUND.isLessEqual().call(b, c));
+		assertEquals(false, G.UNBOUND.isLessEqual().call(c, a));
+		assertEquals(false, G.UNBOUND.isLessEqual().call(c, b));
+		assertEquals(true, G.UNBOUND.isLessEqual().call(c, c));
 
 		// isGreater
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(false, G.INT_UNLIM.isGreater().call(a, a));
-		assertEquals(false, G.INT_UNLIM.isGreater().call(a, b));
-		assertEquals(false, G.INT_UNLIM.isGreater().call(a, c));
-		assertEquals(true, G.INT_UNLIM.isGreater().call(b, a));
-		assertEquals(false, G.INT_UNLIM.isGreater().call(b, b));
-		assertEquals(false, G.INT_UNLIM.isGreater().call(b, c));
-		assertEquals(true, G.INT_UNLIM.isGreater().call(c, a));
-		assertEquals(true, G.INT_UNLIM.isGreater().call(c, b));
-		assertEquals(false, G.INT_UNLIM.isGreater().call(c, c));
+		assertEquals(false, G.UNBOUND.isGreater().call(a, a));
+		assertEquals(false, G.UNBOUND.isGreater().call(a, b));
+		assertEquals(false, G.UNBOUND.isGreater().call(a, c));
+		assertEquals(true, G.UNBOUND.isGreater().call(b, a));
+		assertEquals(false, G.UNBOUND.isGreater().call(b, b));
+		assertEquals(false, G.UNBOUND.isGreater().call(b, c));
+		assertEquals(true, G.UNBOUND.isGreater().call(c, a));
+		assertEquals(true, G.UNBOUND.isGreater().call(c, b));
+		assertEquals(false, G.UNBOUND.isGreater().call(c, c));
 
 		// isGreaterEqual
 		
 		a.setV(BigInteger.valueOf(-1));
 		b.setV(BigInteger.valueOf(0));
 		c.setV(BigInteger.valueOf(1));
-		assertEquals(true, G.INT_UNLIM.isGreaterEqual().call(a, a));
-		assertEquals(false, G.INT_UNLIM.isGreaterEqual().call(a, b));
-		assertEquals(false, G.INT_UNLIM.isGreaterEqual().call(a, c));
-		assertEquals(true, G.INT_UNLIM.isGreaterEqual().call(b, a));
-		assertEquals(true, G.INT_UNLIM.isGreaterEqual().call(b, b));
-		assertEquals(false, G.INT_UNLIM.isGreaterEqual().call(b, c));
-		assertEquals(true, G.INT_UNLIM.isGreaterEqual().call(c, a));
-		assertEquals(true, G.INT_UNLIM.isGreaterEqual().call(c, b));
-		assertEquals(true, G.INT_UNLIM.isGreaterEqual().call(c, c));
+		assertEquals(true, G.UNBOUND.isGreaterEqual().call(a, a));
+		assertEquals(false, G.UNBOUND.isGreaterEqual().call(a, b));
+		assertEquals(false, G.UNBOUND.isGreaterEqual().call(a, c));
+		assertEquals(true, G.UNBOUND.isGreaterEqual().call(b, a));
+		assertEquals(true, G.UNBOUND.isGreaterEqual().call(b, b));
+		assertEquals(false, G.UNBOUND.isGreaterEqual().call(b, c));
+		assertEquals(true, G.UNBOUND.isGreaterEqual().call(c, a));
+		assertEquals(true, G.UNBOUND.isGreaterEqual().call(c, b));
+		assertEquals(true, G.UNBOUND.isGreaterEqual().call(c, c));
 
 		// isEven
 		
 		a.setV(BigInteger.valueOf(2));
 		b.setV(BigInteger.valueOf(1));
-		assertEquals(true, G.INT_UNLIM.isEven().call(a));
-		assertEquals(false, G.INT_UNLIM.isEven().call(b));
+		assertEquals(true, G.UNBOUND.isEven().call(a));
+		assertEquals(false, G.UNBOUND.isEven().call(b));
 		
 		// isOdd
 		
 		a.setV(BigInteger.valueOf(2));
 		b.setV(BigInteger.valueOf(1));
-		assertEquals(false, G.INT_UNLIM.isOdd().call(a));
-		assertEquals(true, G.INT_UNLIM.isOdd().call(b));
+		assertEquals(false, G.UNBOUND.isOdd().call(a));
+		assertEquals(true, G.UNBOUND.isOdd().call(b));
 		
 		// isProbablePrime
 		
@@ -609,16 +609,16 @@ public class TestUnboundedIntAlgebra {
 		for (int i = -1024; i <= 1024; i++) {
 			BigInteger v = BigInteger.valueOf(i);
 			a.setV(v);
-			assertEquals(v.isProbablePrime(certainty), G.INT_UNLIM.isProbablePrime().call(certainty, a));
+			assertEquals(v.isProbablePrime(certainty), G.UNBOUND.isProbablePrime().call(certainty, a));
 		}
 		
 		// isZero
 
 		a.setV(BigInteger.ZERO);
-		assertEquals(true, G.INT_UNLIM.isZero().call(a));
+		assertEquals(true, G.UNBOUND.isZero().call(a));
 
 		a.setV(BigInteger.ONE);
-		assertEquals(false, G.INT_UNLIM.isZero().call(a));
+		assertEquals(false, G.UNBOUND.isZero().call(a));
 		
 		// lcm: tested as an algorithm elsewhere
 		
@@ -626,24 +626,24 @@ public class TestUnboundedIntAlgebra {
 
 		a.setV(BigInteger.ONE);
 		a.setV(BigInteger.ZERO);
-		G.INT_UNLIM.max().call(a, b, c);
+		G.UNBOUND.max().call(a, b, c);
 		assertEquals(BigInteger.ONE, c.v());
 		
 		a.setV(BigInteger.ONE);
 		a.setV(BigInteger.TEN);
-		G.INT_UNLIM.max().call(a, b, c);
+		G.UNBOUND.max().call(a, b, c);
 		assertEquals(BigInteger.TEN, c.v());
 		
 		// min
 
 		a.setV(BigInteger.ONE);
 		a.setV(BigInteger.ZERO);
-		G.INT_UNLIM.min().call(a, b, c);
+		G.UNBOUND.min().call(a, b, c);
 		assertEquals(BigInteger.ZERO, c.v());
 		
 		a.setV(BigInteger.ONE);
 		a.setV(BigInteger.TEN);
-		G.INT_UNLIM.min().call(a, b, c);
+		G.UNBOUND.min().call(a, b, c);
 		assertEquals(BigInteger.ONE, c.v());
 		
 		// mod
@@ -653,7 +653,7 @@ public class TestUnboundedIntAlgebra {
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
 				if (j != 0) {
-					G.INT_UNLIM.mod().call(a, b, c);
+					G.UNBOUND.mod().call(a, b, c);
 					assertEquals(i%j, c.v().intValue());
 				}
 			}
@@ -663,7 +663,7 @@ public class TestUnboundedIntAlgebra {
 		
 		a.setV(BigInteger.valueOf(20));
 		b.setV(BigInteger.valueOf(7));
-		G.INT_UNLIM.modInverse().call(a, b, c);
+		G.UNBOUND.modInverse().call(a, b, c);
 		assertEquals(a.v().modInverse(b.v()), c.v());
 
 		// modPow
@@ -671,7 +671,7 @@ public class TestUnboundedIntAlgebra {
 		a.setV(BigInteger.valueOf(20));
 		b.setV(BigInteger.valueOf(7));
 		c.setV(BigInteger.valueOf(3));
-		G.INT_UNLIM.modPow().call(a, b, c, c);
+		G.UNBOUND.modPow().call(a, b, c, c);
 		assertEquals((20*20*20*20*20*20*20)%3, c.v().intValue());
 
 		// multiply
@@ -680,7 +680,7 @@ public class TestUnboundedIntAlgebra {
 			a.setV(BigInteger.valueOf(i));
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
-				G.INT_UNLIM.multiply().call(a, b, c);
+				G.UNBOUND.multiply().call(a, b, c);
 				assertEquals(i*j, c.v().intValue());
 			}
 		}
@@ -688,37 +688,37 @@ public class TestUnboundedIntAlgebra {
 		// negate
 		
 		a.setV(BigInteger.valueOf(-4));
-		G.INT_UNLIM.negate().call(a, b);
+		G.UNBOUND.negate().call(a, b);
 		assertEquals(4, b.v().intValue());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.negate().call(a, b);
+		G.UNBOUND.negate().call(a, b);
 		assertEquals(0, b.v().intValue());
 		
 		a.setV(BigInteger.valueOf(4));
-		G.INT_UNLIM.negate().call(a, b);
+		G.UNBOUND.negate().call(a, b);
 		assertEquals(-4, b.v().intValue());
 		
 		// nextProbablePrime
 		
 		for (int i = 0; i <= 1024; i++) {
 			a.setV(BigInteger.valueOf(i));
-			G.INT_UNLIM.nextProbablePrime().call(a, b);
+			G.UNBOUND.nextProbablePrime().call(a, b);
 			assertEquals(a.v().nextProbablePrime(), b.v());
 		}
 		
 		// norm
 	
 		a.setV(BigInteger.valueOf(-55));
-		G.INT_UNLIM.norm().call(a, b);
+		G.UNBOUND.norm().call(a, b);
 		assertEquals(55, b.v().intValue());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.norm().call(a, b);
+		G.UNBOUND.norm().call(a, b);
 		assertEquals(0, b.v().intValue());
 		
 		a.setV(BigInteger.valueOf(55));
-		G.INT_UNLIM.norm().call(a, b);
+		G.UNBOUND.norm().call(a, b);
 		assertEquals(55, b.v().intValue());
 		
 		// pow
@@ -728,7 +728,7 @@ public class TestUnboundedIntAlgebra {
 			for (int j = 0; j <= 10; j++) {
 				b.setV(BigInteger.valueOf(j));
 				if (i == 0 && j == 0) continue;
-				G.INT_UNLIM.pow().call(a, b, c);
+				G.UNBOUND.pow().call(a, b, c);
 				assertEquals(a.v().pow(j), c.v());
 			}
 		}
@@ -739,7 +739,7 @@ public class TestUnboundedIntAlgebra {
 			a.setV(BigInteger.valueOf(i));
 			for (int j = 0; j <= 10; j++) {
 				if (i == 0 && j == 0) continue;
-				G.INT_UNLIM.power().call(j, a, b);
+				G.UNBOUND.power().call(j, a, b);
 				assertEquals(a.v().pow(j), b.v());
 			}
 		}
@@ -747,48 +747,48 @@ public class TestUnboundedIntAlgebra {
 		// pred
 		
 		a.setV(BigInteger.valueOf(-4));
-		G.INT_UNLIM.pred().call(a, a);
+		G.UNBOUND.pred().call(a, a);
 		assertEquals(BigInteger.valueOf(-5), a.v());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.pred().call(a, a);
+		G.UNBOUND.pred().call(a, a);
 		assertEquals(BigInteger.valueOf(-1), a.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.pred().call(a, a);
+		G.UNBOUND.pred().call(a, a);
 		assertEquals(BigInteger.valueOf(9), a.v());
 		
 		// setBit
 		
 		a.setV(BigInteger.ZERO);
-		G.INT_UNLIM.setBit().call(0, a, b);
+		G.UNBOUND.setBit().call(0, a, b);
 		assertEquals(1, b.v().intValue());
 		
-		G.INT_UNLIM.setBit().call(1, a, b);
+		G.UNBOUND.setBit().call(1, a, b);
 		assertEquals(2, b.v().intValue());
 
-		G.INT_UNLIM.setBit().call(2, a, b);
+		G.UNBOUND.setBit().call(2, a, b);
 		assertEquals(4, b.v().intValue());
 		
-		G.INT_UNLIM.setBit().call(3, a, b);
+		G.UNBOUND.setBit().call(3, a, b);
 		assertEquals(8, b.v().intValue());
 
 		// signum
 		
 		a.setV(BigInteger.valueOf(-5));
-		assertEquals(-1,(int)G.INT_UNLIM.signum().call(a));
+		assertEquals(-1,(int)G.UNBOUND.signum().call(a));
 		
 		a.setV(BigInteger.valueOf(-1));
-		assertEquals(-1,(int)G.INT_UNLIM.signum().call(a));
+		assertEquals(-1,(int)G.UNBOUND.signum().call(a));
 		
 		a.setV(BigInteger.valueOf(0));
-		assertEquals(0,(int)G.INT_UNLIM.signum().call(a));
+		assertEquals(0,(int)G.UNBOUND.signum().call(a));
 		
 		a.setV(BigInteger.valueOf(1));
-		assertEquals(1,(int)G.INT_UNLIM.signum().call(a));
+		assertEquals(1,(int)G.UNBOUND.signum().call(a));
 		
 		a.setV(BigInteger.valueOf(5));
-		assertEquals(1,(int)G.INT_UNLIM.signum().call(a));
+		assertEquals(1,(int)G.UNBOUND.signum().call(a));
 		
 		// subtract
 		
@@ -796,7 +796,7 @@ public class TestUnboundedIntAlgebra {
 			a.setV(BigInteger.valueOf(i));
 			for (int j = -50; j <= 50; j++) {
 				b.setV(BigInteger.valueOf(j));
-				G.INT_UNLIM.subtract().call(a, b, c);
+				G.UNBOUND.subtract().call(a, b, c);
 				assertEquals(i-j, c.v().intValue());
 			}
 		}
@@ -804,39 +804,39 @@ public class TestUnboundedIntAlgebra {
 		// succ
 		
 		a.setV(BigInteger.valueOf(-4));
-		G.INT_UNLIM.succ().call(a, a);
+		G.UNBOUND.succ().call(a, a);
 		assertEquals(BigInteger.valueOf(-3), a.v());
 		
 		a.setV(BigInteger.valueOf(0));
-		G.INT_UNLIM.succ().call(a, a);
+		G.UNBOUND.succ().call(a, a);
 		assertEquals(BigInteger.valueOf(1), a.v());
 		
 		a.setV(BigInteger.valueOf(10));
-		G.INT_UNLIM.succ().call(a, a);
+		G.UNBOUND.succ().call(a, a);
 		assertEquals(BigInteger.valueOf(11), a.v());
 		
 		// testBit
 
 		a.setV(BigInteger.valueOf(13));
-		assertEquals(true, G.INT_UNLIM.testBit().call(0, a));
-		assertEquals(false, G.INT_UNLIM.testBit().call(1, a));
-		assertEquals(true, G.INT_UNLIM.testBit().call(2, a));
-		assertEquals(true, G.INT_UNLIM.testBit().call(3, a));
-		assertEquals(false, G.INT_UNLIM.testBit().call(4, a));
-		assertEquals(false, G.INT_UNLIM.testBit().call(5, a));
+		assertEquals(true, G.UNBOUND.testBit().call(0, a));
+		assertEquals(false, G.UNBOUND.testBit().call(1, a));
+		assertEquals(true, G.UNBOUND.testBit().call(2, a));
+		assertEquals(true, G.UNBOUND.testBit().call(3, a));
+		assertEquals(false, G.UNBOUND.testBit().call(4, a));
+		assertEquals(false, G.UNBOUND.testBit().call(5, a));
 		
 		// unity
 		
 		a.setV(BigInteger.valueOf(199));
 		assertEquals(false, a.v().equals(BigInteger.ONE));
-		G.INT_UNLIM.unity().call(a);
+		G.UNBOUND.unity().call(a);
 		assertEquals(true, a.v().equals(BigInteger.ONE));
 
 		// zero
 		
 		a.setV(BigInteger.valueOf(199));
 		assertEquals(false, a.v().equals(BigInteger.ZERO));
-		G.INT_UNLIM.zero().call(a);
+		G.UNBOUND.zero().call(a);
 		assertEquals(true, a.v().equals(BigInteger.ZERO));
 	}
 }

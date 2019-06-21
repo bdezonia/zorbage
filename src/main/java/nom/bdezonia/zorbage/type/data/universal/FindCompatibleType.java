@@ -105,7 +105,7 @@ public class FindCompatibleType {
 			break;
 		case BIGINTEGER:
 			if (components == 1)
-				return (T) G.INT_UNLIM;
+				return (T) G.UNBOUND;
 			break;
 		case DOUBLE:
 			if (components == 1)
