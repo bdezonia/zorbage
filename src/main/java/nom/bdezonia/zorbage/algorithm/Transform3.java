@@ -42,6 +42,20 @@ public class Transform3 {
 	/**
 	 * 
 	 * @param algU
+	 * @param proc
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
+	public static final <T extends Algebra<T,U>, U>
+		void compute(T algU, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
+	{
+		compute(algU, algU, algU, proc, a, b, c);
+	}
+	
+	/**
+	 * 
+	 * @param algU
 	 * @param algW
 	 * @param algY
 	 * @param proc
