@@ -41,6 +41,20 @@ public class FixedTransform2 {
 	
 	/**
 	 * 
+	 * @param algU
+	 * @param fixedValue
+	 * @param proc
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Algebra<T,U>, U>
+		void compute(T algU, U fixedValue, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	{
+		compute(algU, algU, fixedValue, proc, a, b);
+	}
+	
+	/**
+	 * 
 	 * @param algB
 	 * @param algD
 	 * @param algF
