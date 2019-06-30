@@ -72,11 +72,11 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= storage.size()) {
+		if (index < 0 || index >= sz) {
 			U t = tmp.get();
 			proc.call(index, t);
 			if (algebra.isNotEqual().call(t, value))
-				throw new IllegalArgumentException("Out of bounds value does not match out of bounds procedure");
+				throw new IllegalArgumentException("Out of bounds value does not match out of bounds procedure constraint");
 		}
 		else {
 			storage.set(index, value);
