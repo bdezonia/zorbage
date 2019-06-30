@@ -75,7 +75,7 @@ public class WriteNotifyingDataSource<T extends Algebra<T,U>, U>
 	public void set(long index, U value) {
 		source.set(index, value);
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).notify(algebra, this, index);
+			listeners.get(i).notify(algebra, source, index);
 		}
 	}
 
