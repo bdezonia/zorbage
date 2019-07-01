@@ -66,6 +66,9 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
+import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionMatrix;
+import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionVector;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionVector;
@@ -195,6 +198,11 @@ public class G {
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
 	public static final HighPrecisionMatrix HP_MAT = new HighPrecisionMatrix();
 	//TODO public static final HighPrecisionTensorProduct HPL_TEN = new HighPrecisionTensorProduct();
+
+	public static final ComplexHighPrecisionAlgebra CHP = new ComplexHighPrecisionAlgebra();
+	public static final ComplexHighPrecisionVector CHP_VEC = new ComplexHighPrecisionVector();
+	public static final ComplexHighPrecisionMatrix CHP_MAT = new ComplexHighPrecisionMatrix();
+	//TODO public static final ComplexHighPrecisionTensorProduct CHPL_TEN = new ComplexHighPrecisionTensorProduct();
 		
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();

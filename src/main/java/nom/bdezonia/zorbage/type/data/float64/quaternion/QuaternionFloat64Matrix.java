@@ -71,7 +71,9 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
@@ -97,7 +99,9 @@ public class QuaternionFloat64Matrix
 		Exponential<QuaternionFloat64MatrixMember>,
 		Trigonometric<QuaternionFloat64MatrixMember>,
 		Hyperbolic<QuaternionFloat64MatrixMember>,
-		RealConstants<QuaternionFloat64MatrixMember>
+		RealConstants<QuaternionFloat64MatrixMember>,
+		Infinite<QuaternionFloat64MatrixMember>,
+		NaN<QuaternionFloat64MatrixMember>
 {
 	public QuaternionFloat64Matrix() { }
 

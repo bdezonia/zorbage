@@ -71,7 +71,9 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
+import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.MatrixRing;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
@@ -97,7 +99,9 @@ public class ComplexFloat32Matrix
 		Exponential<ComplexFloat32MatrixMember>,
 		Trigonometric<ComplexFloat32MatrixMember>,
 		Hyperbolic<ComplexFloat32MatrixMember>,
-		RealConstants<ComplexFloat32MatrixMember>
+		RealConstants<ComplexFloat32MatrixMember>,
+		Infinite<ComplexFloat32MatrixMember>,
+		NaN<ComplexFloat32MatrixMember>
 {
 	public ComplexFloat32Matrix() { }
 

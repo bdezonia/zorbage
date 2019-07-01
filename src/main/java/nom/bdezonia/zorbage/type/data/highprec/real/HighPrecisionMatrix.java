@@ -249,68 +249,6 @@ public class HighPrecisionMatrix
 		return NORM;
 	}
 
-	private final Function1<Boolean,HighPrecisionMatrixMember> ISNAN =
-			new Function1<Boolean, HighPrecisionMatrixMember>()
-	{
-		@Override
-		public Boolean call(HighPrecisionMatrixMember a) {
-			// TODO
-			// return SequenceIsNan.compute(G.HP, a.rawData());
-			return false;
-		}
-	};
-	
-	@Override
-	public Function1<Boolean,HighPrecisionMatrixMember> isNaN() {
-		return ISNAN;
-	}
-
-	private final Procedure1<HighPrecisionMatrixMember> NAN =
-			new Procedure1<HighPrecisionMatrixMember>()
-	{
-		@Override
-		public void call(HighPrecisionMatrixMember a) {
-			// TODO
-			//MatrixNaN.compute(G.HP, a);
-		}
-	};
-
-	@Override
-	public Procedure1<HighPrecisionMatrixMember> nan() {
-		return NAN;
-	}
-	
-	private final Function1<Boolean,HighPrecisionMatrixMember> ISINF =
-			new Function1<Boolean, HighPrecisionMatrixMember>()
-	{
-		@Override
-		public Boolean call(HighPrecisionMatrixMember a) {
-			// TODO
-			//return SequenceIsInf.compute(G.HP, a.rawData());
-			return false;
-		}
-	};
-	
-	@Override
-	public Function1<Boolean,HighPrecisionMatrixMember> isInfinite() {
-		return ISINF;
-	}
-
-	private final Procedure1<HighPrecisionMatrixMember> INF =
-			new Procedure1<HighPrecisionMatrixMember>()
-	{
-		@Override
-		public void call(HighPrecisionMatrixMember a) {
-			// TODO
-			//MatrixInfinite.compute(G.HP, a);
-		}
-	};
-	
-	@Override
-	public Procedure1<HighPrecisionMatrixMember> infinite() {
-		return INF;
-	}
-
 	@Override
 	public Procedure2<HighPrecisionMatrixMember,HighPrecisionMatrixMember> conjugate() {
 		return ASSIGN;
