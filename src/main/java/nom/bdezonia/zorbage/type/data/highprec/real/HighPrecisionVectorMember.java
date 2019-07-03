@@ -229,7 +229,7 @@ public final class HighPrecisionVectorMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.FLOAT;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override

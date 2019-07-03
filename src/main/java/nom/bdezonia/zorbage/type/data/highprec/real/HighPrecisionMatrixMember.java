@@ -255,7 +255,7 @@ public final class HighPrecisionMatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.FLOAT;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override
