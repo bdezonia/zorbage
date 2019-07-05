@@ -75,7 +75,12 @@ public class WriteNotifyingDataSource<T extends Algebra<T,U>, U>
 	public void set(long index, U value) {
 		source.set(index, value);
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).notify(algebra, source, index);
+			// NOTE
+			// I am passing "this" as the source list to the listeners. Imagine you have one
+			// listener listening to two different WriteNotifiers. If I passed "source" the
+			// listener would not know which list changed. If I pass "this" the listener
+			// can compare object ids to its known WriteNotifiers to know who changed.
+			listeners.get(i).notify(algebra, this, index);
 		}
 	}
 
