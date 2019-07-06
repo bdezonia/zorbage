@@ -43,7 +43,7 @@ public class SplatOctonion {
 	 * @param tuple
 	 */
 	public static <U extends GetOctonion<W>, W>
-		void zip(U value, Tuple8<W,W,W,W,W,W,W,W> tuple)
+		void toTuple(U value, Tuple8<W,W,W,W,W,W,W,W> tuple)
 	{
 		value.getR(tuple.a());
 		value.getI(tuple.b());
@@ -61,7 +61,7 @@ public class SplatOctonion {
 	 * @param value
 	 */
 	public static <U extends SetOctonion<W>, W>
-		void unzip(Tuple8<W,W,W,W,W,W,W,W> tuple, U value)
+		void toValue(Tuple8<W,W,W,W,W,W,W,W> tuple, U value)
 	{
 		value.setR(tuple.a());
 		value.setI(tuple.b());

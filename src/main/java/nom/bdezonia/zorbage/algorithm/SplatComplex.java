@@ -43,7 +43,7 @@ public class SplatComplex {
 	 * @param tuple
 	 */
 	public static <U extends GetComplex<W>, W>
-		void zip(U value, Tuple2<W,W> tuple)
+		void toTuple(U value, Tuple2<W,W> tuple)
 	{
 		value.getR(tuple.a());
 		value.getI(tuple.b());
@@ -55,7 +55,7 @@ public class SplatComplex {
 	 * @param value
 	 */
 	public static <U extends SetComplex<W>, W>
-		void unzip(Tuple2<W,W> tuple, U value)
+		void toValue(Tuple2<W,W> tuple, U value)
 	{
 		value.setR(tuple.a());
 		value.setI(tuple.b());

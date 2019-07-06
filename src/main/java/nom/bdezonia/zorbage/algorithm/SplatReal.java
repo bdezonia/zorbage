@@ -43,7 +43,7 @@ public class SplatReal {
 	 * @param tuple
 	 */
 	public static <U extends GetReal<W>, W>
-		void zip(U value, Tuple1<W> tuple)
+		void toTuple(U value, Tuple1<W> tuple)
 	{
 		value.getR(tuple.a());
 	}
@@ -54,7 +54,7 @@ public class SplatReal {
 	 * @param value
 	 */
 	public static <U extends SetReal<W>, W>
-		void unzip(Tuple1<W> tuple, U value)
+		void toValue(Tuple1<W> tuple, U value)
 	{
 		value.setR(tuple.a());
 	}

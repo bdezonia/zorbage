@@ -43,7 +43,7 @@ public class SplatQuaternion {
 	 * @param tuple
 	 */
 	public static <U extends GetQuaternion<W>, W>
-		void zip(U value, Tuple4<W,W,W,W> tuple)
+		void toTuple(U value, Tuple4<W,W,W,W> tuple)
 	{
 		value.getR(tuple.a());
 		value.getI(tuple.b());
@@ -57,7 +57,7 @@ public class SplatQuaternion {
 	 * @param value
 	 */
 	public static <U extends SetQuaternion<W>, W>
-		void unzip(Tuple4<W,W,W,W> tuple, U value)
+		void toValue(Tuple4<W,W,W,W> tuple, U value)
 	{
 		value.setR(tuple.a());
 		value.setI(tuple.b());
