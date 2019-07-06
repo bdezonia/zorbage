@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
@@ -56,7 +57,8 @@ public final class QuaternionHighPrecisionMember
 		BigDecimalCoder,
 		Allocatable<QuaternionHighPrecisionMember>, Duplicatable<QuaternionHighPrecisionMember>,
 		Settable<QuaternionHighPrecisionMember>, Gettable<QuaternionHighPrecisionMember>,
-		PrimitiveConversion, UniversalRepresentation, SetQuaternion<HighPrecisionMember>
+		PrimitiveConversion, UniversalRepresentation,
+		SetQuaternion<HighPrecisionMember>, GetQuaternion<HighPrecisionMember>
 {
 	private BigDecimal r, i, j, k;
 	
@@ -1126,5 +1128,25 @@ public final class QuaternionHighPrecisionMember
 	@Override
 	public void setK(HighPrecisionMember val) {
 		setK(val.v());
+	}
+
+	@Override
+	public void getR(HighPrecisionMember v) {
+		v.setV(r);
+	}
+
+	@Override
+	public void getI(HighPrecisionMember v) {
+		v.setV(i);
+	}
+
+	@Override
+	public void getJ(HighPrecisionMember v) {
+		v.setV(j);
+	}
+
+	@Override
+	public void getK(HighPrecisionMember v) {
+		v.setV(k);
 	}
 }

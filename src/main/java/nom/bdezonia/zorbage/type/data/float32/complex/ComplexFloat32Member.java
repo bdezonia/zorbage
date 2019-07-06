@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetComplex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
@@ -58,7 +59,7 @@ public final class ComplexFloat32Member
 		Allocatable<ComplexFloat32Member>, Duplicatable<ComplexFloat32Member>,
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float32Member>
+		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>
 {
 	private float r, i;
 	
@@ -756,5 +757,15 @@ public final class ComplexFloat32Member
 	@Override
 	public void setI(Float32Member val) {
 		setI(val.v());
+	}
+
+	@Override
+	public void getR(Float32Member v) {
+		v.setV(r);
+	}
+
+	@Override
+	public void getI(Float32Member v) {
+		v.setV(i);
 	}
 }

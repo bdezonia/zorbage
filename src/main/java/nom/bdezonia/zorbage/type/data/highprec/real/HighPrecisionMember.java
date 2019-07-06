@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -56,7 +57,7 @@ public final class HighPrecisionMember
 		Allocatable<HighPrecisionMember>, Duplicatable<HighPrecisionMember>,
 		Settable<HighPrecisionMember>, Gettable<HighPrecisionMember>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<HighPrecisionMember>,
+		HighPrecRepresentation, SetReal<HighPrecisionMember>, GetReal<HighPrecisionMember>,
 		BigDecimalCoder
 {
 	private BigDecimal v;
@@ -645,7 +646,7 @@ public final class HighPrecisionMember
 
 	@Override
 	public void setR(HighPrecisionMember val) {
-		fromHighPrec(val);
+		set(val);
 	}
 
 	@Override
@@ -661,5 +662,10 @@ public final class HighPrecisionMember
 	@Override
 	public void toBigDecimalArray(BigDecimal[] arr, int index) {
 		arr[index] = v;
+	}
+
+	@Override
+	public void getR(HighPrecisionMember val) {
+		get(val);
 	}
 }

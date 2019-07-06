@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
@@ -58,7 +59,8 @@ public final class QuaternionFloat32Member
 		FloatCoder,
 		Allocatable<QuaternionFloat32Member>, Duplicatable<QuaternionFloat32Member>,
 		Settable<QuaternionFloat32Member>, Gettable<QuaternionFloat32Member>,
-		PrimitiveConversion, UniversalRepresentation, SetQuaternion<Float32Member>
+		PrimitiveConversion, UniversalRepresentation,
+		SetQuaternion<Float32Member>, GetQuaternion<Float32Member>
 {
 
 	private float r, i, j, k;
@@ -1145,5 +1147,25 @@ public final class QuaternionFloat32Member
 	@Override
 	public void setK(Float32Member val) {
 		setK(val.v());
+	}
+
+	@Override
+	public void getR(Float32Member v) {
+		v.setV(r);
+	}
+
+	@Override
+	public void getI(Float32Member v) {
+		v.setV(i);
+	}
+
+	@Override
+	public void getJ(Float32Member v) {
+		v.setV(j);
+	}
+
+	@Override
+	public void getK(Float32Member v) {
+		v.setV(k);
 	}
 }

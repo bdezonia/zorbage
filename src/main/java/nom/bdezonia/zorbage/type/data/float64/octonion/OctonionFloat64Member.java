@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetOctonion;
@@ -59,7 +60,7 @@ public final class OctonionFloat64Member
 		Allocatable<OctonionFloat64Member>, Duplicatable<OctonionFloat64Member>,
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<Float64Member>
+		UniversalRepresentation, SetOctonion<Float64Member>, GetOctonion<Float64Member>
 {
 
 	private double r, i, j, k, l, i0, j0, k0;
@@ -1806,5 +1807,45 @@ public final class OctonionFloat64Member
 	@Override
 	public void setK0(Float64Member val) {
 		setK0(val.v());
+	}
+
+	@Override
+	public void getR(Float64Member v) {
+		v.setV(r);
+	}
+
+	@Override
+	public void getI(Float64Member v) {
+		v.setV(i);
+	}
+
+	@Override
+	public void getJ(Float64Member v) {
+		v.setV(j);
+	}
+
+	@Override
+	public void getK(Float64Member v) {
+		v.setV(k);
+	}
+
+	@Override
+	public void getL(Float64Member v) {
+		v.setV(l);
+	}
+
+	@Override
+	public void getI0(Float64Member v) {
+		v.setV(i0);
+	}
+
+	@Override
+	public void getJ0(Float64Member v) {
+		v.setV(j0);
+	}
+
+	@Override
+	public void getK0(Float64Member v) {
+		v.setV(k0);
 	}
 }

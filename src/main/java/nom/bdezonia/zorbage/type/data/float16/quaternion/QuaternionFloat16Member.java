@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
@@ -59,7 +60,8 @@ public final class QuaternionFloat16Member
 		ShortCoder,
 		Allocatable<QuaternionFloat16Member>, Duplicatable<QuaternionFloat16Member>,
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
-		PrimitiveConversion, UniversalRepresentation, SetQuaternion<Float16Member>
+		PrimitiveConversion, UniversalRepresentation,
+		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1147,5 +1149,25 @@ public final class QuaternionFloat16Member
 	@Override
 	public void setK(Float16Member val) {
 		k = val.encV();
+	}
+
+	@Override
+	public void getR(Float16Member v) {
+		v.setEncV(r);
+	}
+
+	@Override
+	public void getI(Float16Member v) {
+		v.setEncV(i);
+	}
+
+	@Override
+	public void getJ(Float16Member v) {
+		v.setEncV(j);
+	}
+
+	@Override
+	public void getK(Float16Member v) {
+		v.setEncV(k);
 	}
 }

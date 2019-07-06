@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetComplex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
@@ -56,7 +57,7 @@ public final class ComplexHighPrecisionMember
 		Allocatable<ComplexHighPrecisionMember>, Duplicatable<ComplexHighPrecisionMember>,
 		Settable<ComplexHighPrecisionMember>, Gettable<ComplexHighPrecisionMember>,
 		NumberMember<ComplexHighPrecisionMember>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<HighPrecisionMember>
+		UniversalRepresentation, SetComplex<HighPrecisionMember>, GetComplex<HighPrecisionMember>
 {
 	private BigDecimal r, i;
 	
@@ -742,5 +743,15 @@ public final class ComplexHighPrecisionMember
 	@Override
 	public void setI(HighPrecisionMember val) {
 		setI(val.v());
+	}
+
+	@Override
+	public void getR(HighPrecisionMember v) {
+		v.setV(r);
+	}
+
+	@Override
+	public void getI(HighPrecisionMember v) {
+		v.setV(i);
 	}
 }

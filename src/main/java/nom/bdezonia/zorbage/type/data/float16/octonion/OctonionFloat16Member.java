@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetOctonion;
@@ -60,7 +61,7 @@ public final class OctonionFloat16Member
 		Allocatable<OctonionFloat16Member>, Duplicatable<OctonionFloat16Member>,
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<Float16Member>
+		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1808,5 +1809,45 @@ public final class OctonionFloat16Member
 	@Override
 	public void setK0(Float16Member val) {
 		k0 = val.encV();
+	}
+
+	@Override
+	public void getR(Float16Member v) {
+		v.setEncV(r);
+	}
+
+	@Override
+	public void getI(Float16Member v) {
+		v.setEncV(i);
+	}
+
+	@Override
+	public void getJ(Float16Member v) {
+		v.setEncV(j);
+	}
+
+	@Override
+	public void getK(Float16Member v) {
+		v.setEncV(k);
+	}
+
+	@Override
+	public void getL(Float16Member v) {
+		v.setEncV(l);
+	}
+
+	@Override
+	public void getI0(Float16Member v) {
+		v.setEncV(i0);
+	}
+
+	@Override
+	public void getJ0(Float16Member v) {
+		v.setEncV(j0);
+	}
+
+	@Override
+	public void getK0(Float16Member v) {
+		v.setEncV(k0);
 	}
 }

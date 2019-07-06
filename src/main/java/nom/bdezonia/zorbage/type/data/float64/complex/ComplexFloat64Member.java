@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetComplex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
@@ -58,7 +59,7 @@ public final class ComplexFloat64Member
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float64Member>
+		UniversalRepresentation, SetComplex<Float64Member>, GetComplex<Float64Member>
 {
 	private double r, i;
 	
@@ -756,5 +757,15 @@ public final class ComplexFloat64Member
 	@Override
 	public void setI(Float64Member val) {
 		setI(val.v());
+	}
+
+	@Override
+	public void getR(Float64Member v) {
+		v.setV(r);
+	}
+
+	@Override
+	public void getI(Float64Member v) {
+		v.setV(i);
 	}
 }

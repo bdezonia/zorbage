@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetComplex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
@@ -59,7 +60,7 @@ public final class ComplexFloat16Member
 		Allocatable<ComplexFloat16Member>, Duplicatable<ComplexFloat16Member>,
 		Settable<ComplexFloat16Member>, Gettable<ComplexFloat16Member>,
 		NumberMember<ComplexFloat16Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float16Member>
+		UniversalRepresentation, SetComplex<Float16Member>, GetComplex<Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -759,5 +760,15 @@ public final class ComplexFloat16Member
 	@Override
 	public void setI(Float16Member val) {
 		i = val.encV();
+	}
+
+	@Override
+	public void getR(Float16Member v) {
+		v.setEncV(r);
+	}
+
+	@Override
+	public void getI(Float16Member v) {
+		v.setEncV(i);
 	}
 }

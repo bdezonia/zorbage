@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -64,7 +65,7 @@ public final class Float16Member
 		Allocatable<Float16Member>, Duplicatable<Float16Member>,
 		Settable<Float16Member>, Gettable<Float16Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<Float16Member>
+		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -93,6 +94,8 @@ public final class Float16Member
 	public void setV(double val) { v = Float16Util.convertFloatToHFloat((float)val); }
 	
 	public short encV() { return v; }
+	
+	public void setEncV(short v) { this.v = v; }
 	
 	@Override
 	public void set(Float16Member other) {
@@ -682,5 +685,10 @@ public final class Float16Member
 	@Override
 	public void setR(Float16Member val) {
 		set(val);
+	}
+
+	@Override
+	public void getR(Float16Member val) {
+		val.set(this);
 	}
 }
