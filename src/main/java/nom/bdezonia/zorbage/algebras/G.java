@@ -69,6 +69,9 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionVector;
+import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionMatrix;
+import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionRModule;
 import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionRModule;
@@ -212,10 +215,10 @@ public class G {
 	public static final QuaternionHighPrecisionMatrix QHP_MAT = new QuaternionHighPrecisionMatrix();
 	//TODO public static final QuaternionHighPrecisionTensorProduct QHPL_TEN = new QuaternionHighPrecisionTensorProduct();
 		
-	//public static final OctonionHighPrecisionAlgebra OHP = new OctonionHighPrecisionAlgebra();
-	//public static final OctonionHighPrecisionVector OHP_VEC = new OctonionHighPrecisionVector();
-	//public static final OctonionHighPrecisionMatrix OHP_MAT = new OctonionHighPrecisionMatrix();
-	//TODO public static final ComplexHighPrecisionTensorProduct OHPL_TEN = new OctonionHighPrecisionTensorProduct();
+	public static final OctonionHighPrecisionAlgebra OHP = new OctonionHighPrecisionAlgebra();
+	public static final OctonionHighPrecisionRModule OHP_RMOD = new OctonionHighPrecisionRModule();
+	public static final OctonionHighPrecisionMatrix OHP_MAT = new OctonionHighPrecisionMatrix();
+	//TODO public static final OctonionHighPrecisionTensorProduct OHPL_TEN = new OctonionHighPrecisionTensorProduct();
 		
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();
