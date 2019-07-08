@@ -674,11 +674,11 @@ public final class Float64Member
 
 	@Override
 	public void setR(Float64Member val) {
-		setV(val.v());
+		set(val);
 	}
 
 	@Override
 	public void getR(Float64Member val) {
-		val.setV(v);
+		get(val);
 	}
 }

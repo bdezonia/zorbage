@@ -674,11 +674,11 @@ public final class Float32Member
 
 	@Override
 	public void setR(Float32Member val) {
-		setV(val.v());
+		set(val);
 	}
 
 	@Override
 	public void getR(Float32Member val) {
-		val.setV(v);
+		get(val);
 	}
 }
