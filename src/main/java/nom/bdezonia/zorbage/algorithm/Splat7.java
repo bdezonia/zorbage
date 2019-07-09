@@ -26,29 +26,41 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.tuple.Tuple4;
-import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
-import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.accessor.AccessorA;
+import nom.bdezonia.zorbage.accessor.AccessorB;
+import nom.bdezonia.zorbage.accessor.AccessorC;
+import nom.bdezonia.zorbage.accessor.AccessorD;
+import nom.bdezonia.zorbage.accessor.AccessorE;
+import nom.bdezonia.zorbage.accessor.AccessorF;
+import nom.bdezonia.zorbage.accessor.AccessorG;
+import nom.bdezonia.zorbage.type.algebra.GetOctonion;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class SplatQuaternion {
+public class Splat7 {
 
 	/**
 	 * 
 	 * @param value
 	 * @param tuple
 	 */
-	public static <U extends GetQuaternion<W>, W>
-		void toTuple(U value, Tuple4<W,W,W,W> tuple)
+	public static <U extends GetOctonion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W> &
+								AccessorE<W> & AccessorF<W> & AccessorG<W>,
+					W>
+		void toTuple(U value, V tuple)
 	{
 		value.getR(tuple.a());
 		value.getI(tuple.b());
 		value.getJ(tuple.c());
 		value.getK(tuple.d());
+		value.getL(tuple.e());
+		value.getI0(tuple.f());
+		value.getJ0(tuple.g());
 	}
 
 	/**
@@ -56,12 +68,18 @@ public class SplatQuaternion {
 	 * @param tuple
 	 * @param value
 	 */
-	public static <U extends SetQuaternion<W>, W>
-		void toValue(Tuple4<W,W,W,W> tuple, U value)
+	public static <U extends SetOctonion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W> &
+								AccessorE<W> & AccessorF<W> & AccessorG<W>,
+					W>
+		void toValue(V tuple, U value)
 	{
 		value.setR(tuple.a());
 		value.setI(tuple.b());
 		value.setJ(tuple.c());
 		value.setK(tuple.d());
+		value.setL(tuple.e());
+		value.setI0(tuple.f());
+		value.setJ0(tuple.g());
 	}
 }

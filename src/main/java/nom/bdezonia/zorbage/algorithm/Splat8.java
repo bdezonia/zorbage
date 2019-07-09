@@ -26,7 +26,14 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.tuple.Tuple8;
+import nom.bdezonia.zorbage.accessor.AccessorA;
+import nom.bdezonia.zorbage.accessor.AccessorB;
+import nom.bdezonia.zorbage.accessor.AccessorC;
+import nom.bdezonia.zorbage.accessor.AccessorD;
+import nom.bdezonia.zorbage.accessor.AccessorE;
+import nom.bdezonia.zorbage.accessor.AccessorF;
+import nom.bdezonia.zorbage.accessor.AccessorG;
+import nom.bdezonia.zorbage.accessor.AccessorH;
 import nom.bdezonia.zorbage.type.algebra.GetOctonion;
 import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 
@@ -35,15 +42,18 @@ import nom.bdezonia.zorbage.type.algebra.SetOctonion;
  * @author Barry DeZonia
  *
  */
-public class SplatOctonion {
+public class Splat8 {
 
 	/**
 	 * 
 	 * @param value
 	 * @param tuple
 	 */
-	public static <U extends GetOctonion<W>, W>
-		void toTuple(U value, Tuple8<W,W,W,W,W,W,W,W> tuple)
+	public static <U extends GetOctonion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W> &
+								AccessorE<W> & AccessorF<W> & AccessorG<W> & AccessorH<W>,
+					W>
+		void toTuple(U value, V tuple)
 	{
 		value.getR(tuple.a());
 		value.getI(tuple.b());
@@ -60,8 +70,11 @@ public class SplatOctonion {
 	 * @param tuple
 	 * @param value
 	 */
-	public static <U extends SetOctonion<W>, W>
-		void toValue(Tuple8<W,W,W,W,W,W,W,W> tuple, U value)
+	public static <U extends SetOctonion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W> &
+								AccessorE<W> & AccessorF<W> & AccessorG<W> & AccessorH<W>,
+					W>
+		void toValue(V tuple, U value)
 	{
 		value.setR(tuple.a());
 		value.setI(tuple.b());

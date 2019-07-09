@@ -26,38 +26,54 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.accessor.AccessorA;
+import nom.bdezonia.zorbage.accessor.AccessorB;
+import nom.bdezonia.zorbage.accessor.AccessorC;
+import nom.bdezonia.zorbage.accessor.AccessorD;
+import nom.bdezonia.zorbage.accessor.AccessorE;
+import nom.bdezonia.zorbage.type.algebra.GetOctonion;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestSplatComplex {
+public class Splat5 {
 
-	@Test
-	public void test1() {
-		ComplexFloat32Member value = G.CFLT.construct("{1.2,2.4}");
-		Tuple2<Float32Member,Float32Member> tuple = new Tuple2<>(G.FLT.construct(),G.FLT.construct());
-		SplatComplex.toTuple(value, tuple);
-		assertEquals(1.2f, tuple.a().v(), 0);
-		assertEquals(2.4f, tuple.b().v(), 0);
+	/**
+	 * 
+	 * @param value
+	 * @param tuple
+	 */
+	public static <U extends GetOctonion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W> &
+								AccessorE<W>,
+					W>
+		void toTuple(U value, V tuple)
+	{
+		value.getR(tuple.a());
+		value.getI(tuple.b());
+		value.getJ(tuple.c());
+		value.getK(tuple.d());
+		value.getL(tuple.e());
 	}
 
-	@Test
-	public void test2() {
-		Tuple2<Float32Member,Float32Member> tuple = new Tuple2<>(G.FLT.construct("1.2"),G.FLT.construct("2.4"));
-		ComplexFloat32Member value = G.CFLT.construct();
-		SplatComplex.toValue(tuple, value);
-		assertEquals(1.2f, value.r(), 0);
-		assertEquals(2.4f, value.i(), 0);
+	/**
+	 * 
+	 * @param tuple
+	 * @param value
+	 */
+	public static <U extends SetOctonion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W> &
+								AccessorE<W>,
+					W>
+		void toValue(V tuple, U value)
+	{
+		value.setR(tuple.a());
+		value.setI(tuple.b());
+		value.setJ(tuple.c());
+		value.setK(tuple.d());
+		value.setL(tuple.e());
 	}
-
 }

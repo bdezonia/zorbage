@@ -26,26 +26,34 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.tuple.Tuple1;
-import nom.bdezonia.zorbage.type.algebra.GetReal;
-import nom.bdezonia.zorbage.type.algebra.SetReal;
+import nom.bdezonia.zorbage.accessor.AccessorA;
+import nom.bdezonia.zorbage.accessor.AccessorB;
+import nom.bdezonia.zorbage.accessor.AccessorC;
+import nom.bdezonia.zorbage.accessor.AccessorD;
+import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class SplatReal {
+public class Splat4 {
 
 	/**
 	 * 
 	 * @param value
 	 * @param tuple
 	 */
-	public static <U extends GetReal<W>, W>
-		void toTuple(U value, Tuple1<W> tuple)
+	public static <U extends GetQuaternion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W>,
+					W>
+		void toTuple(U value, V tuple)
 	{
 		value.getR(tuple.a());
+		value.getI(tuple.b());
+		value.getJ(tuple.c());
+		value.getK(tuple.d());
 	}
 
 	/**
@@ -53,9 +61,14 @@ public class SplatReal {
 	 * @param tuple
 	 * @param value
 	 */
-	public static <U extends SetReal<W>, W>
-		void toValue(Tuple1<W> tuple, U value)
+	public static <U extends SetQuaternion<W>,
+					V extends AccessorA<W> & AccessorB<W> & AccessorC<W> & AccessorD<W>,
+					W>
+		void toValue(V tuple, U value)
 	{
 		value.setR(tuple.a());
+		value.setI(tuple.b());
+		value.setJ(tuple.c());
+		value.setK(tuple.d());
 	}
 }

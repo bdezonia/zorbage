@@ -31,8 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.tuple.Tuple4;
-import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Member;
+import nom.bdezonia.zorbage.tuple.Tuple1;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 
 /**
@@ -40,30 +39,22 @@ import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
  * @author Barry DeZonia
  *
  */
-public class TestSplatQuaternion {
+public class TestSplat1 {
 
 	@Test
 	public void test1() {
-		QuaternionFloat32Member value = G.QFLT.construct("{1,2,3,4}");
-		Tuple4<Float32Member,Float32Member,Float32Member,Float32Member> tuple =
-				new Tuple4<>(G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct());
-		SplatQuaternion.toTuple(value, tuple);
-		assertEquals(1, tuple.a().v(), 0);
-		assertEquals(2, tuple.b().v(), 0);
-		assertEquals(3, tuple.c().v(), 0);
-		assertEquals(4, tuple.d().v(), 0);
+		Float32Member value = G.FLT.construct("1.5");
+		Tuple1<Float32Member> tuple = new Tuple1<>(G.FLT.construct());
+		Splat1.toTuple(value, tuple);
+		assertEquals(1.5f, tuple.a().v(), 0);
 	}
 
 	@Test
 	public void test2() {
-		Tuple4<Float32Member,Float32Member,Float32Member,Float32Member> tuple =
-				new Tuple4<>(G.FLT.construct("1"),G.FLT.construct("2"),G.FLT.construct("3"),G.FLT.construct("4"));
-		QuaternionFloat32Member value = G.QFLT.construct();
-		SplatQuaternion.toValue(tuple, value);
-		assertEquals(1, value.r(), 0);
-		assertEquals(2, value.i(), 0);
-		assertEquals(3, value.j(), 0);
-		assertEquals(4, value.k(), 0);
+		Tuple1<Float32Member> tuple = new Tuple1<>(G.FLT.construct("4.2"));
+		Float32Member value = G.FLT.construct();
+		Splat1.toValue(tuple, value);
+		assertEquals(4.2f, value.v(), 0);
 	}
 
 }

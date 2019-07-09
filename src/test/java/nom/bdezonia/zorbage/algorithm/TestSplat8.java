@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
  * @author Barry DeZonia
  *
  */
-public class TestSplatOctonion {
+public class TestSplat8 {
 
 	@Test
 	public void test1() {
@@ -48,7 +48,7 @@ public class TestSplatOctonion {
 		Tuple8<Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member>
 			tuple =
 				new Tuple8<>(G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct());
-		SplatOctonion.toTuple(value, tuple);
+		Splat8.toTuple(value, tuple);
 		assertEquals(1, tuple.a().v(), 0);
 		assertEquals(2, tuple.b().v(), 0);
 		assertEquals(3, tuple.c().v(), 0);
@@ -65,7 +65,7 @@ public class TestSplatOctonion {
 			tuple =
 				new Tuple8<>(G.FLT.construct("1"),G.FLT.construct("2"),G.FLT.construct("3"),G.FLT.construct("4"),G.FLT.construct("5"),G.FLT.construct("6"),G.FLT.construct("7"),G.FLT.construct("8"));
 		OctonionFloat32Member value = G.OFLT.construct();
-		SplatOctonion.toValue(tuple, value);
+		Splat8.toValue(tuple, value);
 		assertEquals(1, value.r(), 0);
 		assertEquals(2, value.i(), 0);
 		assertEquals(3, value.j(), 0);
