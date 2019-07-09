@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.tuple.Tuple10;
 import nom.bdezonia.zorbage.tuple.Tuple8;
 import nom.bdezonia.zorbage.type.data.float32.octonion.OctonionFloat32Member;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
@@ -74,6 +75,48 @@ public class TestSplat8 {
 		assertEquals(6, value.i0(), 0);
 		assertEquals(7, value.j0(), 0);
 		assertEquals(8, value.k0(), 0);
+	}
+
+	@Test
+	public void test3() {
+		Tuple10<Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,
+			Float32Member,Float32Member,Float32Member,Float32Member,Float32Member>
+			tuple = new Tuple10<>(G.FLT.construct("1"), G.FLT.construct("2"),
+					G.FLT.construct("3"), G.FLT.construct("4"), G.FLT.construct("5"),
+					G.FLT.construct("6"), G.FLT.construct("7"), G.FLT.construct("8"),
+					G.FLT.construct("9"), G.FLT.construct("10"));
+			OctonionFloat32Member value = G.OFLT.construct();
+			Splat8.toValue(tuple, value);
+			assertEquals(1, value.r(), 0);
+			assertEquals(2, value.i(), 0);
+			assertEquals(3, value.j(), 0);
+			assertEquals(4, value.k(), 0);
+			assertEquals(5, value.l(), 0);
+			assertEquals(6, value.i0(), 0);
+			assertEquals(7, value.j0(), 0);
+			assertEquals(8, value.k0(), 0);
+	}
+
+	@Test
+	public void test4() {
+		OctonionFloat32Member value = G.OFLT.construct("{14,15,16,17,18,19,20,21}");
+		Tuple10<Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,
+			Float32Member,Float32Member,Float32Member,Float32Member,Float32Member>
+			tuple = new Tuple10<>(G.FLT.construct("1"), G.FLT.construct("2"),
+					G.FLT.construct("3"), G.FLT.construct("4"), G.FLT.construct("5"),
+					G.FLT.construct("6"), G.FLT.construct("7"), G.FLT.construct("8"),
+					G.FLT.construct("9"), G.FLT.construct("10"));
+			Splat8.toTuple(value, tuple);
+			assertEquals(14, tuple.a().v(), 0);
+			assertEquals(15, tuple.b().v(), 0);
+			assertEquals(16, tuple.c().v(), 0);
+			assertEquals(17, tuple.d().v(), 0);
+			assertEquals(18, tuple.e().v(), 0);
+			assertEquals(19, tuple.f().v(), 0);
+			assertEquals(20, tuple.g().v(), 0);
+			assertEquals(21, tuple.h().v(), 0);
+			assertEquals(9, tuple.i().v(), 0);
+			assertEquals(10, tuple.j().v(), 0);
 	}
 
 }
