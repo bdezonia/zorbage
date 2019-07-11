@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -60,7 +61,7 @@ public final class SignedInt8Member
 		Settable<SignedInt8Member>, Gettable<SignedInt8Member>,
 		UniversalRepresentation, NumberMember<SignedInt8Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>
+		SetReal<Integer>, GetReal<SignedInt8Member>
 {
 
 	byte v;
@@ -673,5 +674,10 @@ public final class SignedInt8Member
 	@Override
 	public void setR(Integer val) {
 		setV(val);
+	}
+
+	@Override
+	public void getR(SignedInt8Member val) {
+		get(val);
 	}
 }

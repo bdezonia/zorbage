@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -41,6 +42,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -60,7 +62,7 @@ public final class UnsignedInt32Member
 		Settable<UnsignedInt32Member>, Gettable<UnsignedInt32Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt32Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Long>
+		SetReal<Long>, GetReal<SignedInt64Member>
 {
 
 	int v;
@@ -678,5 +680,10 @@ public final class UnsignedInt32Member
 	@Override
 	public void setR(Long val) {
 		setV(val);
+	}
+
+	@Override
+	public void getR(SignedInt64Member val) {
+		val.setV(v());
 	}
 }

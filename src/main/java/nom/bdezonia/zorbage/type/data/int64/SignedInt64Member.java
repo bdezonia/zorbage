@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -60,7 +61,7 @@ public final class SignedInt64Member
 		Settable<SignedInt64Member>, Gettable<SignedInt64Member>,
 		UniversalRepresentation, NumberMember<SignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Long>
+		SetReal<Long>, GetReal<SignedInt64Member>
 {
 
 	long v;
@@ -674,5 +675,10 @@ public final class SignedInt64Member
 	@Override
 	public void setR(Long val) {
 		setV(val);
+	}
+
+	@Override
+	public void getR(SignedInt64Member val) {
+		get(val);
 	}
 }

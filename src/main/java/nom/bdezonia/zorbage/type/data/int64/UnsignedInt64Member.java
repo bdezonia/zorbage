@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -41,6 +42,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -60,7 +62,7 @@ public final class UnsignedInt64Member
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>
+		SetReal<BigInteger>, GetReal<UnboundedIntMember>
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -685,5 +687,10 @@ public final class UnsignedInt64Member
 	@Override
 	public void setR(BigInteger val) {
 		setV(val);
+	}
+
+	@Override
+	public void getR(UnboundedIntMember val) {
+		val.setV(v());
 	}
 }
