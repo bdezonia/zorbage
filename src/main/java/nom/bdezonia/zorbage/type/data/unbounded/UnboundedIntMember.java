@@ -669,6 +669,6 @@ public final class UnboundedIntMember
 
 	@Override
 	public void getR(UnboundedIntMember val) {
-		val.setV(v);
+	    get(val);
 	}
 }
