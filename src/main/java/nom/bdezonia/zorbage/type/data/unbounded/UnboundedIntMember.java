@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -57,7 +58,7 @@ public final class UnboundedIntMember
 		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
 		UniversalRepresentation, NumberMember<UnboundedIntMember>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>,
+		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		BigIntegerCoder
 {
 	private BigInteger v;
@@ -664,5 +665,10 @@ public final class UnboundedIntMember
 	@Override
 	public void toBigIntegerArray(BigInteger[] arr, int index) {
 		arr[index] = v;
+	}
+
+	@Override
+	public void getR(UnboundedIntMember val) {
+		val.setV(v);
 	}
 }
