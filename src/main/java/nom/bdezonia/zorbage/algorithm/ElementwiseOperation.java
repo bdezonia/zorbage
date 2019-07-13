@@ -26,13 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -40,23 +35,22 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestCorrelate {
+public class ElementwiseOperation {
 
-	@Test
-	public void test() {
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(
-				new int[] {1,2,3,4,5});
-		Correlate.compute(G.INT32, list, list, list);
-		SignedInt32Member value = G.INT32.construct();
-		list.get(0, value);
-		assertEquals(1,value.v());
-		list.get(1, value);
-		assertEquals(4,value.v());
-		list.get(2, value);
-		assertEquals(9,value.v());
-		list.get(3, value);
-		assertEquals(16,value.v());
-		list.get(4, value);
-		assertEquals(25,value.v());
+	// do not instantiate
+	
+	private ElementwiseOperation() {}
+
+	/**
+	 * 
+	 * @param algebra
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
+	public static <T extends Algebra<T,U>,U>
+		void compute(T algebra, Procedure3<U,U,U> op, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
+	{
+		Transform3.compute(algebra, op, a, b, c);
 	}
 }

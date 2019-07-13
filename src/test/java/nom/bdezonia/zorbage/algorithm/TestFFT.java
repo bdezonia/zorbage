@@ -77,7 +77,7 @@ public class TestFFT {
 		DataConvert.compute(G.INT32, G.CDBL, poly2, data2);
 		FFT.compute(G.CDBL, G.DBL, data1, data1);
 		FFT.compute(G.CDBL, G.DBL, data2, data2);
-		Correlate.compute(G.CDBL, data1, data2, data1);
+		ElementwiseOperation.compute(G.CDBL, G.CDBL.multiply(), data1, data2, data1);
 		InvFFT.compute(G.CDBL, G.DBL, data1, data1);
 		IndexedDataSource<SignedInt32Member> result =
 				Storage.allocate(n, int32);
