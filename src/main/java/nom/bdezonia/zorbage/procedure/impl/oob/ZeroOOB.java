@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.procedure.impl.oob;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
