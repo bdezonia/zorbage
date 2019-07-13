@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -35,50 +36,38 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Convolve {
-
-	// do not instantiate
-	
-	private Convolve() {}
+public class Correlate1D {
 
 	/**
 	 * 
-	 * @param algebra
+	 * @param alg
+	 * @param filter
 	 * @param a
 	 * @param b
-	 * @param c
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U>,U>
-		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
+		void compute(T alg, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		U tmpA1 = algebra.construct();
-		U tmpA2 = algebra.construct();
-		U tmpB1 = algebra.construct();
-		U tmpB2 = algebra.construct();
-		U tmpC1 = algebra.construct();
-		U tmpC2 = algebra.construct();
-
-		long aSize = a.size();
-		long bSize = b.size();
-		long cSize = c.size();
-		if (aSize != bSize)
-			throw new IllegalArgumentException("mismatched inputs");
-		if (aSize != cSize)
-			throw new IllegalArgumentException("mismatched input/output");
+		if (a == b)
+			throw new IllegalArgumentException("source and dest lists must be different");
 		
-		for (long i = 0, j = aSize-1; i <= j; i++,j--) {
-			// Note:
-			// The order of these operations is designed so that
-			// c can possibly be a or b or some other list and the
-			// convolution will not break.
-			a.get(i, tmpA1);
-			b.get(j, tmpB1);
-			algebra.multiply().call(tmpA1, tmpB1, tmpC1);
-			a.get(j, tmpA2);
-			b.get(i, tmpB2);
-			algebra.multiply().call(tmpA2, tmpB2, tmpC2);
-			c.set(i, tmpC1);
-			c.set(j, tmpC2);
+		if (filter.size() % 2 != 1)
+			throw new IllegalArgumentException("filter length should be odd");
+		
+		U tmp = alg.construct();
+		U f = alg.construct();
+		U sum = alg.construct();
+		long n = filter.size() / 2;
+		for (long x = 0; x < a.size(); x++) {
+			alg.zero().call(sum);
+			for (long i = -n; i <= n; i++) {
+				long idx = x + i;
+				a.get(idx, tmp);
+				filter.get(i + n, f);
+				alg.multiply().call(tmp, f, tmp);
+				alg.add().call(sum, tmp, sum);
+			}
+			b.set(x, sum);
 		}
 	}
 }
