@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.procedure.impl.oob;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -35,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class CyclicOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
+public class CyclicOOB<U> implements Procedure2<Long,U> {
 
 	private final IndexedDataSource<U> a;
 	private final long length;

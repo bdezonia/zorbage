@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.procedure.impl.oob;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -35,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class MirrorOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
+public class MirrorOOB<U> implements Procedure2<Long,U> {
 
 	private final IndexedDataSource<U> a;
 	private final long length;
@@ -51,8 +50,8 @@ public class MirrorOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> 
 
 	@Override
 	public void call(Long i, U value) {
-		long idx = i / length;
 		if (i < 0) {
+			long idx = ((-i) - 1) / length;
 			long offset = ((-i) - 1) % length;
 			if (idx % 2 == 0) {
 				a.get(offset, value);
@@ -62,6 +61,7 @@ public class MirrorOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> 
 			}
 		}
 		else if (i >= length) {
+			long idx = i / length;
 			long offset = i % length;
 			if (idx % 2 == 0) {
 				a.get(offset, value);
