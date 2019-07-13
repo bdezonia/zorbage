@@ -48,7 +48,7 @@ public class TestZeroPaddedDataSource {
 	@Test
 	public void test() {
 		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
-		Procedure2<Long, SignedInt32Member> oobProc = new ZeroOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
+		Procedure2<Long, SignedInt32Member> oobProc = new ZeroOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints.size());
 		IndexedDataSource<SignedInt32Member> padded = new ProcedurePaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints, oobProc);
 		SignedInt32Member value = G.INT32.construct();
 		

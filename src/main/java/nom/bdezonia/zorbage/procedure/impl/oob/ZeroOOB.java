@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.procedure.impl.oob;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -46,9 +45,9 @@ public class ZeroOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 	 * @param alg
 	 * @param a
 	 */
-	public ZeroOOB(T alg, IndexedDataSource<U> a) {
+	public ZeroOOB(T alg, long length) {
 		this.alg = alg;
-		this.length = a.size();
+		this.length = length;
 		this.zero = alg.construct();
 	}
 
