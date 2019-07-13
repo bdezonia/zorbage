@@ -37,9 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
  */
 public class NanOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<Long,U> {
 
-	private final T alg;
-	private final long length;
-	private final U nan;
+	private ConstantOOB<T,U> oobProc;
 
 	/**
 	 * 
@@ -47,18 +45,14 @@ public class NanOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<Lo
 	 * @param a
 	 */
 	public NanOOB(T alg, long length) {
-		this.alg = alg;
-		this.length = length;
-		this.nan = alg.construct();
+		U nan = alg.construct();
 		alg.nan().call(nan);
+		oobProc = new ConstantOOB<T,U>(alg, length, nan);
 	}
 
 	@Override
 	public void call(Long i, U value) {
-		if (i < 0 || i >= length)
-			alg.assign().call(nan, value);
-		else
-			throw new IllegalArgumentException("OOB method called with in bounds index");
+		oobProc.call(i, value);
 	}
 
 }

@@ -28,30 +28,36 @@ package nom.bdezonia.zorbage.procedure.impl.oob;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ZeroOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
+public class ConstantOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 
-	private ConstantOOB<T,U> oobProc;
+	private final T alg;
+	private final long length;
+	private final U c;
 
 	/**
 	 * 
 	 * @param alg
 	 * @param a
 	 */
-	public ZeroOOB(T alg, long length) {
-		U zero = alg.construct();
-		oobProc = new ConstantOOB<T,U>(alg, length, zero);
+	public ConstantOOB(T alg, long length, U c) {
+		this.alg = alg;
+		this.length = length;
+		this.c = alg.construct();
+		this.alg.assign().call(c, this.c);
 	}
 
 	@Override
 	public void call(Long i, U value) {
-		oobProc.call(i, value);
+		if (i < 0 || i >= length)
+			alg.assign().call(c, value);
+		else
+			throw new IllegalArgumentException("OOB method called with in bounds index");
 	}
 
 }
