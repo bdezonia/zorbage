@@ -126,33 +126,33 @@ public class TestConvolve1D {
 		Float64Member value = G.DBL.construct();
 		
 		results.get(0, value);
-		assertEquals(14, value.v(), 0.00001);
+		assertEquals(14, value.v(), 0);
 		
 		results.get(1, value);
-		assertEquals(25, value.v(), 0.00001);
+		assertEquals(25, value.v(), 0);
 
 		results.get(2, value);
-		assertEquals(19, value.v(), 0.00001);
+		assertEquals(19, value.v(), 0);
 
 		results.get(3, value);
-		assertEquals(19, value.v(), 0.00001);
+		assertEquals(19, value.v(), 0);
 
 		results.get(4, value);
-		assertEquals(27, value.v(), 0.00001);
+		assertEquals(27, value.v(), 0);
 
 		results.get(5, value);
-		assertEquals(35, value.v(), 0.00001);
+		assertEquals(35, value.v(), 0);
 
 		results.get(6, value);
-		assertEquals(29, value.v(), 0.00001);
+		assertEquals(29, value.v(), 0);
 
 		results.get(7, value);
-		assertEquals(31, value.v(), 0.00001);
+		assertEquals(31, value.v(), 0);
 
 		results.get(8, value);
-		assertEquals(27, value.v(), 0.00001);
+		assertEquals(27, value.v(), 0);
 
 		results.get(9, value);
-		assertEquals(21, value.v(), 0.00001);
+		assertEquals(21, value.v(), 0);
 	}
 }
