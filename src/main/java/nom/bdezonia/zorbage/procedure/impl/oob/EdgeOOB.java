@@ -38,8 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class EdgeOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 
 	private final T alg;
-	private final U left;
-	private final U right;
+	private final U leftEdgeVal;
+	private final U rightEdgeVal;
 	private final long length;
 
 	/**
@@ -52,18 +52,18 @@ public class EdgeOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 			throw new IllegalArgumentException("list size must be positive");
 		this.alg = alg;
 		this.length = a.size();
-		this.left = alg.construct();
-		this.right = alg.construct();
-		a.get(0, left);
-		a.get(a.size()-1, right);
+		this.leftEdgeVal = alg.construct();
+		this.rightEdgeVal = alg.construct();
+		a.get(0, leftEdgeVal);
+		a.get(a.size()-1, rightEdgeVal);
 	}
 
 	@Override
 	public void call(Long i, U value) {
 		if (i < 0)
-			alg.assign().call(left, value);
+			alg.assign().call(leftEdgeVal, value);
 		else if (i >= length)
-			alg.assign().call(right, value);
+			alg.assign().call(rightEdgeVal, value);
 		else
 			throw new IllegalArgumentException("OOB method called with in bounds index");
 	}

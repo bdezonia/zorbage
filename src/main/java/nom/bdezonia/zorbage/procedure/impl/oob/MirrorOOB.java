@@ -50,28 +50,25 @@ public class MirrorOOB<U> implements Procedure2<Long,U> {
 
 	@Override
 	public void call(Long i, U value) {
+		long idx;
+		long offset;
 		if (i < 0) {
-			long idx = ((-i) - 1) / length;
-			long offset = ((-i) - 1) % length;
-			if (idx % 2 == 0) {
-				a.get(offset, value);
-			}
-			else {
-				a.get(length - 1 - offset, value);
-			}
+			idx = ((-i) - 1) / length;
+			offset = ((-i) - 1) % length;
 		}
 		else if (i >= length) {
-			long idx = i / length;
-			long offset = i % length;
-			if (idx % 2 == 0) {
-				a.get(offset, value);
-			}
-			else {
-				a.get(length - 1 - offset, value);
-			}
+			idx = i / length;
+			offset = i % length;
 		}
 		else
 			throw new IllegalArgumentException("OOB method called with in bounds index");
+
+		if (idx % 2 == 0) {
+			a.get(offset, value);
+		}
+		else {
+			a.get(length - 1 - offset, value);
+		}
 	}
 
 }

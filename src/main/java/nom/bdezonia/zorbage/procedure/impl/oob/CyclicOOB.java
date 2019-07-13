@@ -50,16 +50,16 @@ public class CyclicOOB<U> implements Procedure2<Long,U> {
 
 	@Override
 	public void call(Long i, U value) {
+		long idx;
 		if (i < 0) {
-			long idx = length - 1 - (((-i) - 1) % length);
-			a.get(idx, value);
+			idx = length - 1 - (((-i) - 1) % length);
 		}
 		else if (i >= length) {
-			long idx = i % length;
-			a.get(idx, value);
+			idx = i % length;
 		}
 		else
 			throw new IllegalArgumentException("OOB method called with in bounds index");
+		a.get(idx, value);
 	}
 
 }
