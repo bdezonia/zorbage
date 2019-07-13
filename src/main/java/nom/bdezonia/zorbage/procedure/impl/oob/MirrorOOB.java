@@ -58,7 +58,7 @@ public class MirrorOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> 
 				a.get(offset, value);
 			}
 			else {
-				a.get(length - offset - 1, value);
+				a.get(length - 1 - offset, value);
 			}
 		}
 		else if (i >= length) {
@@ -67,7 +67,7 @@ public class MirrorOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> 
 				a.get(offset, value);
 			}
 			else {
-				a.get(length - offset - 1, value);
+				a.get(length - 1 - offset, value);
 			}
 		}
 		else
