@@ -31,11 +31,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.impl.oob.ZeroOOB;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.datasource.ZeroPaddedDataSource;
 
 /**
  * 
@@ -47,7 +48,8 @@ public class TestZeroPaddedDataSource {
 	@Test
 	public void test() {
 		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
-		IndexedDataSource<SignedInt32Member> padded = new ZeroPaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
+		Procedure2<Long, SignedInt32Member> oobProc = new ZeroOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints);
+		IndexedDataSource<SignedInt32Member> padded = new ProcedurePaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints, oobProc);
 		SignedInt32Member value = G.INT32.construct();
 		
 		assertEquals(ints.size(), padded.size());
