@@ -61,6 +61,8 @@ public class GaussianFilter1D {
 	{
 		if (radius < 0)
 			throw new IllegalArgumentException("radius must be >= 0");
+		if (alg.signum().call(sigma) < 0)
+			throw new IllegalArgumentException("sigma must be >= 0");
 		U mu = alg.construct();
 		U val = alg.construct();
 		IndexedDataSource<U> result = Storage.allocate(radius*2+1, val);
