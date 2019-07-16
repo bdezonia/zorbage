@@ -51,25 +51,40 @@ public class ConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
 	{
+		int numD = a.numDimensions();
+		
 		if (a == b)
 			throw new IllegalArgumentException("source and dest datasets must be different");
 		
-		if (filter.numDimensions() != a.numDimensions())
+		if (b.numDimensions() != numD)
+			throw new IllegalArgumentException("source and dest have different number of dimensions!");
+		
+		if (filter.numDimensions() != numD)
 			throw new IllegalArgumentException("filter and source have different number of dimensions!");
 		
 		if (filter.numElements() % 2 != 1)
 			throw new IllegalArgumentException("filter dimensions should all be odd");
 
+		IntegerIndex dataMin = new IntegerIndex(numD);
+		IntegerIndex dataMax = new IntegerIndex(numD);
+		IntegerIndex filterMin = new IntegerIndex(numD);
+		IntegerIndex filterMax = new IntegerIndex(numD);
+		IntegerIndex dataPoint = new IntegerIndex(numD);
+		IntegerIndex filterPoint = new IntegerIndex(numD);
+		IntegerIndex pt = new IntegerIndex(numD);
+
+		for (int i = 0; i < numD; i++) {
+			if (a.dimension(i) != b.dimension(i))
+				throw new IllegalArgumentException("source and dest dimensions do not match");
+			dataMin.set(i, 0);
+			dataMax.set(i, a.dimension(i)-1);
+			filterMin.set(i, 0);
+			filterMax.set(i, filter.dimension(i)-1);
+		}
+		
 		U tmp = alg.construct();
 		U f = alg.construct();
 		U sum = alg.construct();
-		IntegerIndex dataMin = new IntegerIndex(a.numDimensions());
-		IntegerIndex dataMax = new IntegerIndex(a.numDimensions());
-		IntegerIndex filterMin = new IntegerIndex(a.numDimensions());
-		IntegerIndex filterMax = new IntegerIndex(a.numDimensions());
-		IntegerIndex dataPoint = new IntegerIndex(a.numDimensions());
-		IntegerIndex filterPoint = new IntegerIndex(a.numDimensions());
-		IntegerIndex pt = new IntegerIndex(a.numDimensions());
 		SamplingCartesianIntegerGrid dataBounds =
 				new SamplingCartesianIntegerGrid(dataMin, dataMax);
 		SamplingCartesianIntegerGrid filterBounds =
@@ -82,8 +97,7 @@ public class ConvolveND {
 			while (filterPoints.hasNext()) {
 				filterPoints.next(filterPoint);
 				for (int i = 0; i < filter.numDimensions(); i++) {
-					// TODO: my next line is maybe needed to be pivoted around center of filter
-					pt.set(i, dataPoint.get(i) - filterPoint.get(i) - filter.dimension(i));
+					pt.set(i, dataPoint.get(i) - (filterPoint.get(i) - filter.dimension(i)/2));
 				}
 				a.get(pt, tmp);
 				filter.get(filterPoint, f);
