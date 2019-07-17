@@ -35,19 +35,16 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class EdgeNdOOB<U> implements Procedure2<IntegerIndex,U> {
+public class CyclicNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
 	private final MultiDimDataSource<U> ds;
 	private final ThreadLocal<IntegerIndex> coord;
 
 	/**
 	 * 
-	 * @param alg
 	 * @param ds
 	 */
-	public EdgeNdOOB(MultiDimDataSource<U> ds) {
-		if (ds.numElements() < 1)
-			throw new IllegalArgumentException("datset size must be positive");
+	public CyclicNdOOB(MultiDimDataSource<U> ds) {
 		this.ds = ds;
 		this.coord = new ThreadLocal<IntegerIndex>() {
 			@Override
@@ -59,22 +56,18 @@ public class EdgeNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
 	@Override
 	public void call(IntegerIndex index, U value) {
-		if (index.numDimensions() != ds.numDimensions())
-			throw new IllegalArgumentException("index does not have same num dims as dataset");
 		IntegerIndex tmp = coord.get();
 		boolean oob = false;
 		for (int i = 0; i < ds.numDimensions(); i++) {
 			long val = index.get(i);
 			if (val < 0) {
-				tmp.set(i, 0);
+				long idx = ds.dimension(i) - 1 - (((-val) - 1) % ds.dimension(i));
+				tmp.set(i, idx);
 				oob = true;
 			}
 			else if (val >= ds.dimension(i)) {
-				tmp.set(i, ds.dimension(i) - 1);
+				tmp.set(i, val % ds.dimension(i));
 				oob = true;
-			}
-			else {
-				tmp.set(i, val);
 			}
 		}
 		if (oob)
