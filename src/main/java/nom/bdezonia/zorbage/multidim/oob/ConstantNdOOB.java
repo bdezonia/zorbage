@@ -57,6 +57,8 @@ public class ConstantNdOOB<T extends Algebra<T,U>, U> implements Procedure2<Inte
 
 	@Override
 	public void call(IntegerIndex index, U value) {
+		if (index.numDimensions() != ds.numDimensions())
+			throw new IllegalArgumentException("index does not have same num dims as dataset");
 		if (ds.oob(index))
 			alg.assign().call(c, value);
 		else
