@@ -24,73 +24,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MirrorNdOOB<U> implements Procedure2<IntegerIndex,U> {
+public class ZeroNdOOB<T extends Algebra<T,U>, U> implements Procedure2<IntegerIndex,U> {
 
-	private final MultiDimDataSource<U> ds;
-	private final ThreadLocal<IntegerIndex> coord;
-	
+	private ConstantNdOOB<T,U> oobProc;
+
 	/**
 	 * 
-	 * @param d
+	 * @param alg
+	 * @param ds
 	 */
-	public MirrorNdOOB(MultiDimDataSource<U> d) {
-		this.ds = d;
-		this.coord = new ThreadLocal<IntegerIndex>() {
-			@Override
-			protected IntegerIndex initialValue() {
-				return new IntegerIndex(ds.numDimensions());
-			}
-		};
+	public ZeroNdOOB(T alg, MultiDimDataSource<U> ds) {
+		U zero = alg.construct();
+		oobProc = new ConstantNdOOB<T,U>(alg, ds, zero);
 	}
 
 	@Override
 	public void call(IntegerIndex index, U value) {
-		if (index.numDimensions() != ds.numDimensions())
-			throw new IllegalArgumentException("index does not have same num dims as dataset");
-		long idx;
-		long offset;
-		IntegerIndex tmp = coord.get();
-		boolean oob = false;
-		for (int i = 0; i < ds.numDimensions(); i++) {
-			long val = index.get(i);
-			if (val < 0) {
-				idx = ((-val) - 1) / ds.dimension(i);
-				offset = ((-val) - 1) % ds.dimension(i);
-				if (idx % 2 == 0)
-					tmp.set(i, offset);
-				else
-					tmp.set(i, ds.dimension(i) - 1 - offset);
-				oob = true;
-			}
-			else if (val >= ds.dimension(i)) {
-				idx = val / ds.dimension(i);
-				offset = val % ds.dimension(i);
-				if (idx % 2 == 0)
-					tmp.set(i, offset);
-				else
-					tmp.set(i, ds.dimension(i) - 1 - offset);
-				oob = true;
-			}
-			else {
-				tmp.set(i, val);
-			}
-		}
-		if (oob) {
-			ds.get(tmp, value);
-		}
-		else
-			throw new IllegalArgumentException("OOB method called with in bounds index");
+		oobProc.call(index, value);
 	}
 
 }

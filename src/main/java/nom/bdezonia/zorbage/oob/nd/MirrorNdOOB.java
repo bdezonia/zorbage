@@ -24,51 +24,73 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
+import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MirrorOOB<U> implements Procedure2<Long,U> {
+public class MirrorNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
-	private final IndexedDataSource<U> a;
-	private final long length;
-
+	private final MultiDimDataSource<U> ds;
+	private final ThreadLocal<IntegerIndex> coord;
+	
 	/**
 	 * 
-	 * @param a
+	 * @param d
 	 */
-	public MirrorOOB(IndexedDataSource<U> a) {
-		this.a = a;
-		this.length = a.size();
+	public MirrorNdOOB(MultiDimDataSource<U> d) {
+		this.ds = d;
+		this.coord = new ThreadLocal<IntegerIndex>() {
+			@Override
+			protected IntegerIndex initialValue() {
+				return new IntegerIndex(ds.numDimensions());
+			}
+		};
 	}
 
 	@Override
-	public void call(Long i, U value) {
+	public void call(IntegerIndex index, U value) {
+		if (index.numDimensions() != ds.numDimensions())
+			throw new IllegalArgumentException("index does not have same num dims as dataset");
 		long idx;
 		long offset;
-		if (i < 0) {
-			idx = ((-i) - 1) / length;
-			offset = ((-i) - 1) % length;
+		IntegerIndex tmp = coord.get();
+		boolean oob = false;
+		for (int i = 0; i < ds.numDimensions(); i++) {
+			long val = index.get(i);
+			if (val < 0) {
+				idx = ((-val) - 1) / ds.dimension(i);
+				offset = ((-val) - 1) % ds.dimension(i);
+				if (idx % 2 == 0)
+					tmp.set(i, offset);
+				else
+					tmp.set(i, ds.dimension(i) - 1 - offset);
+				oob = true;
+			}
+			else if (val >= ds.dimension(i)) {
+				idx = val / ds.dimension(i);
+				offset = val % ds.dimension(i);
+				if (idx % 2 == 0)
+					tmp.set(i, offset);
+				else
+					tmp.set(i, ds.dimension(i) - 1 - offset);
+				oob = true;
+			}
+			else {
+				tmp.set(i, val);
+			}
 		}
-		else if (i >= length) {
-			idx = i / length;
-			offset = i % length;
+		if (oob) {
+			ds.get(tmp, value);
 		}
 		else
 			throw new IllegalArgumentException("OOB method called with in bounds index");
-
-		if (idx % 2 == 0) {
-			a.get(offset, value);
-		}
-		else {
-			a.get(length - 1 - offset, value);
-		}
 	}
 
 }

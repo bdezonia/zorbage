@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.oob.nd.MirrorNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
@@ -43,14 +44,14 @@ import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
  * @author Barry DeZonia
  *
  */
-public class TestEdgeNdOOB {
+public class TestMirrorNdOOB {
 
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
 		MultiDimDataSource<SignedInt32Member> ds = MultiDimStorage.allocate(new long[] {3,3}, value);
-		EdgeNdOOB<SignedInt32Member> oobProc =
-				new EdgeNdOOB<SignedInt32Member>(ds);
+		MirrorNdOOB<SignedInt32Member> oobProc =
+				new MirrorNdOOB<SignedInt32Member>(ds);
 		ProcedurePaddedMultiDimDataSource<SignedInt32Algebra, SignedInt32Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
 		IntegerIndex index = new IntegerIndex(2);
@@ -118,12 +119,12 @@ public class TestEdgeNdOOB {
 		index.set(0, 5);
 		index.set(1, 0);
 		padded.get(index, value);
-		assertEquals(3, value.v());
+		assertEquals(1, value.v());
 
 		index.set(0, 0);
 		index.set(1, 5);
 		padded.get(index, value);
-		assertEquals(7, value.v());
+		assertEquals(1, value.v());
 
 		index.set(0, 0);
 		index.set(1, 0);

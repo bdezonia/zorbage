@@ -24,42 +24,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
+import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class CyclicOOB<U> implements Procedure2<Long,U> {
+public class NanNdOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<IntegerIndex,U> {
 
-	private final IndexedDataSource<U> a;
-	private final long length;
+	private ConstantNdOOB<T,U> oobProc;
 
 	/**
 	 * 
-	 * @param a
+	 * @param alg
+	 * @param ds
 	 */
-	public CyclicOOB(IndexedDataSource<U> a) {
-		this.a = a;
-		this.length = a.size();
+	public NanNdOOB(T alg, MultiDimDataSource<U> ds) {
+		U nan = alg.construct();
+		alg.nan().call(nan);
+		oobProc = new ConstantNdOOB<T,U>(alg, ds, nan);
 	}
 
 	@Override
-	public void call(Long i, U value) {
-		long idx;
-		if (i < 0) {
-			idx = length - 1 - (((-i) - 1) % length);
-		}
-		else if (i >= length) {
-			idx = i % length;
-		}
-		else
-			throw new IllegalArgumentException("OOB method called with in bounds index");
-		a.get(idx, value);
+	public void call(IntegerIndex index, U value) {
+		oobProc.call(index, value);
 	}
 
 }

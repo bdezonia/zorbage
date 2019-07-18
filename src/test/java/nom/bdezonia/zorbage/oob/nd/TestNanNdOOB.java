@@ -24,110 +24,65 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.oob.nd.NanNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
- * 
+ *
  * @author Barry DeZonia
  *
  */
-public class TestMirrorNdOOB {
+public class TestNanNdOOB {
 
 	@Test
 	public void test1() {
-		SignedInt32Member value = G.INT32.construct();
-		MultiDimDataSource<SignedInt32Member> ds = MultiDimStorage.allocate(new long[] {3,3}, value);
-		MirrorNdOOB<SignedInt32Member> oobProc =
-				new MirrorNdOOB<SignedInt32Member>(ds);
-		ProcedurePaddedMultiDimDataSource<SignedInt32Algebra, SignedInt32Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
+		Float64Member value = G.DBL.construct();
+		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {5,5}, value);
+		NanNdOOB<Float64Algebra, Float64Member> oobProc =
+				new NanNdOOB<Float64Algebra, Float64Member>(G.DBL, ds);
+		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded =
+				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, oobProc);
+		value.setV(6);
+		Fill.compute(G.DBL, value, ds.rawData());
 		IntegerIndex index = new IntegerIndex(2);
 
-		value.setV(1);
-		index.set(0, 0);
-		index.set(1, 0);
-		ds.set(index, value);
-
-		value.setV(2);
-		index.set(0, 1);
-		index.set(1, 0);
-		ds.set(index, value);
-
-		value.setV(3);
-		index.set(0, 2);
-		index.set(1, 0);
-		ds.set(index, value);
-
-		value.setV(4);
-		index.set(0, 0);
-		index.set(1, 1);
-		ds.set(index, value);
-
-		value.setV(5);
-		index.set(0, 1);
-		index.set(1, 1);
-		ds.set(index, value);
-
-		value.setV(6);
-		index.set(0, 2);
-		index.set(1, 1);
-		ds.set(index, value);
-
-		value.setV(7);
-		index.set(0, 0);
-		index.set(1, 2);
-		ds.set(index, value);
-
-		value.setV(8);
-		index.set(0, 1);
-		index.set(1, 2);
-		ds.set(index, value);
-
-		value.setV(9);
-		index.set(0, 2);
-		index.set(1, 2);
-		ds.set(index, value);
-
-		index.set(0, -1);
-		index.set(1, -1);
-		padded.get(index, value);
-		assertEquals(1, value.v());
-
 		index.set(0, -1);
 		index.set(1, 0);
 		padded.get(index, value);
-		assertEquals(1, value.v());
+		assertTrue(G.DBL.isNaN().call(value));
 
 		index.set(0, 0);
 		index.set(1, -1);
 		padded.get(index, value);
-		assertEquals(1, value.v());
+		assertTrue(G.DBL.isNaN().call(value));
 
 		index.set(0, 5);
 		index.set(1, 0);
 		padded.get(index, value);
-		assertEquals(1, value.v());
+		assertTrue(G.DBL.isNaN().call(value));
 
 		index.set(0, 0);
 		index.set(1, 5);
 		padded.get(index, value);
-		assertEquals(1, value.v());
+		assertTrue(G.DBL.isNaN().call(value));
 
 		index.set(0, 0);
 		index.set(1, 0);
 		padded.get(index, value);
-		assertEquals(1, value.v());
+		assertEquals(6, value.v(), 0);
 	}
 }

@@ -24,11 +24,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
@@ -36,33 +34,23 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class ConstantNdOOB<T extends Algebra<T,U>, U> implements Procedure2<IntegerIndex,U> {
+public class ZeroOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 
-	private final T alg;
-	private final MultiDimDataSource<U> ds;
-	private final U c;
+	private ConstantOOB<T,U> oobProc;
 
 	/**
 	 * 
 	 * @param alg
-	 * @param ds
-	 * @param c
+	 * @param a
 	 */
-	public ConstantNdOOB(T alg, MultiDimDataSource<U> ds, U c) {
-		this.alg = alg;
-		this.ds = ds;
-		this.c = alg.construct();
-		this.alg.assign().call(c, this.c);
+	public ZeroOOB(T alg, long length) {
+		U zero = alg.construct();
+		oobProc = new ConstantOOB<T,U>(alg, length, zero);
 	}
 
 	@Override
-	public void call(IntegerIndex index, U value) {
-		if (index.numDimensions() != ds.numDimensions())
-			throw new IllegalArgumentException("index does not have same num dims as dataset");
-		if (ds.oob(index))
-			alg.assign().call(c, value);
-		else
-			throw new IllegalArgumentException("OOB method called with in bounds index");
+	public void call(Long i, U value) {
+		oobProc.call(i, value);
 	}
 
 }

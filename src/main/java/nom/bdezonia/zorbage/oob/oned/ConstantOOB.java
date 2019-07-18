@@ -24,59 +24,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class CyclicNdOOB<U> implements Procedure2<IntegerIndex,U> {
+public class ConstantOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 
-	private final MultiDimDataSource<U> ds;
-	private final ThreadLocal<IntegerIndex> coord;
+	private final T alg;
+	private final long length;
+	private final U c;
 
 	/**
 	 * 
-	 * @param ds
+	 * @param alg
+	 * @param a
 	 */
-	public CyclicNdOOB(MultiDimDataSource<U> d) {
-		this.ds = d;
-		this.coord = new ThreadLocal<IntegerIndex>() {
-			@Override
-			protected IntegerIndex initialValue() {
-				return new IntegerIndex(ds.numDimensions());
-			}
-		};
+	public ConstantOOB(T alg, long length, U c) {
+		this.alg = alg;
+		this.length = length;
+		this.c = alg.construct();
+		this.alg.assign().call(c, this.c);
 	}
 
 	@Override
-	public void call(IntegerIndex index, U value) {
-		if (index.numDimensions() != ds.numDimensions())
-			throw new IllegalArgumentException("index does not have same num dims as dataset");
-		IntegerIndex tmp = coord.get();
-		boolean oob = false;
-		for (int i = 0; i < ds.numDimensions(); i++) {
-			long val = index.get(i);
-			if (val < 0) {
-				long idx = ds.dimension(i) - 1 - (((-val) - 1) % ds.dimension(i));
-				tmp.set(i, idx);
-				oob = true;
-			}
-			else if (val >= ds.dimension(i)) {
-				tmp.set(i, val % ds.dimension(i));
-				oob = true;
-			}
-			else {
-				tmp.set(i, val);
-			}
-		}
-		if (oob)
-			ds.get(tmp, value);
+	public void call(Long i, U value) {
+		if (i < 0 || i >= length)
+			alg.assign().call(c, value);
 		else
 			throw new IllegalArgumentException("OOB method called with in bounds index");
 	}

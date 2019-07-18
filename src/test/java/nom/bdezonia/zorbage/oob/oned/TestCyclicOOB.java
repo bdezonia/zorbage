@@ -24,14 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.oob.oned.CyclicOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -44,14 +44,14 @@ import nom.bdezonia.zorbage.type.storage.datasource.ProcedurePaddedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestNanOOB {
+public class TestCyclicOOB {
 
 	@Test
 	public void test1() {
 		
 		Float64Member val = G.DBL.construct();
 		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(new double[] {1,2,3});
-		Procedure2<Long, Float64Member> oobProc = new NanOOB<Float64Algebra,Float64Member>(G.DBL, vals.size());
+		Procedure2<Long, Float64Member> oobProc = new CyclicOOB<Float64Member>(vals);
 		ProcedurePaddedDataSource<Float64Algebra,Float64Member> pd = new ProcedurePaddedDataSource<Float64Algebra, Float64Member>(G.DBL, vals, oobProc);
 		
 		pd.get(0, val);
@@ -64,57 +64,57 @@ public class TestNanOOB {
 		assertEquals(3, val.v(), 0);
 		
 		pd.get(-1, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(-2, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(2, val.v(), 0);
 		
 		pd.get(-3, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(-4, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(-5, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(2, val.v(), 0);
 		
 		pd.get(-6, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(-7, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(-8, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(2, val.v(), 0);
 		
 		pd.get(-9, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(3, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(4, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(2, val.v(), 0);
 		
 		pd.get(5, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(6, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(7, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(2, val.v(), 0);
 		
 		pd.get(8, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(9, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(10, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(2, val.v(), 0);
 		
 		pd.get(11, val);
-		assertTrue(Double.isNaN(val.v()));
+		assertEquals(3, val.v(), 0);
 	}
 }

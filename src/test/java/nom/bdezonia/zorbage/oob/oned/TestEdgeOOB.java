@@ -24,13 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.oob.oned.EdgeOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;

@@ -24,13 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.oob.oned.MirrorOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -43,14 +44,14 @@ import nom.bdezonia.zorbage.type.storage.datasource.ProcedurePaddedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestCyclicOOB {
+public class TestMirrorOOB {
 
 	@Test
 	public void test1() {
 		
 		Float64Member val = G.DBL.construct();
 		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(new double[] {1,2,3});
-		Procedure2<Long, Float64Member> oobProc = new CyclicOOB<Float64Member>(vals);
+		Procedure2<Long, Float64Member> oobProc = new MirrorOOB<Float64Member>(vals);
 		ProcedurePaddedDataSource<Float64Algebra,Float64Member> pd = new ProcedurePaddedDataSource<Float64Algebra, Float64Member>(G.DBL, vals, oobProc);
 		
 		pd.get(0, val);
@@ -63,13 +64,13 @@ public class TestCyclicOOB {
 		assertEquals(3, val.v(), 0);
 		
 		pd.get(-1, val);
-		assertEquals(3, val.v(), 0);
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(-2, val);
 		assertEquals(2, val.v(), 0);
 		
 		pd.get(-3, val);
-		assertEquals(1, val.v(), 0);
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(-4, val);
 		assertEquals(3, val.v(), 0);
@@ -81,22 +82,22 @@ public class TestCyclicOOB {
 		assertEquals(1, val.v(), 0);
 		
 		pd.get(-7, val);
-		assertEquals(3, val.v(), 0);
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(-8, val);
 		assertEquals(2, val.v(), 0);
 		
 		pd.get(-9, val);
-		assertEquals(1, val.v(), 0);
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(3, val);
-		assertEquals(1, val.v(), 0);
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(4, val);
 		assertEquals(2, val.v(), 0);
 		
 		pd.get(5, val);
-		assertEquals(3, val.v(), 0);
+		assertEquals(1, val.v(), 0);
 		
 		pd.get(6, val);
 		assertEquals(1, val.v(), 0);
@@ -108,12 +109,12 @@ public class TestCyclicOOB {
 		assertEquals(3, val.v(), 0);
 		
 		pd.get(9, val);
-		assertEquals(1, val.v(), 0);
+		assertEquals(3, val.v(), 0);
 		
 		pd.get(10, val);
 		assertEquals(2, val.v(), 0);
 		
 		pd.get(11, val);
-		assertEquals(3, val.v(), 0);
+		assertEquals(1, val.v(), 0);
 	}
 }

@@ -24,40 +24,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.NaN;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ConstantOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
+public class NanOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<Long,U> {
 
-	private final T alg;
-	private final long length;
-	private final U c;
+	private ConstantOOB<T,U> oobProc;
 
 	/**
 	 * 
 	 * @param alg
 	 * @param a
 	 */
-	public ConstantOOB(T alg, long length, U c) {
-		this.alg = alg;
-		this.length = length;
-		this.c = alg.construct();
-		this.alg.assign().call(c, this.c);
+	public NanOOB(T alg, long length) {
+		U nan = alg.construct();
+		alg.nan().call(nan);
+		oobProc = new ConstantOOB<T,U>(alg, length, nan);
 	}
 
 	@Override
 	public void call(Long i, U value) {
-		if (i < 0 || i >= length)
-			alg.assign().call(c, value);
-		else
-			throw new IllegalArgumentException("OOB method called with in bounds index");
+		oobProc.call(i, value);
 	}
 
 }

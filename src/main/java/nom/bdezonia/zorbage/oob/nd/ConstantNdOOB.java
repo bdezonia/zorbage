@@ -24,63 +24,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
- *
+ * 
  * @author Barry DeZonia
  *
  */
-public class TestZeroNdOOB {
+public class ConstantNdOOB<T extends Algebra<T,U>, U> implements Procedure2<IntegerIndex,U> {
 
-	@Test
-	public void test1() {
-		SignedInt32Member value = G.INT32.construct();
-		MultiDimDataSource<SignedInt32Member> ds = MultiDimStorage.allocate(new long[] {5,5}, value);
-		ZeroNdOOB<SignedInt32Algebra, SignedInt32Member> oobProc =
-				new ZeroNdOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ds);
-		ProcedurePaddedMultiDimDataSource<SignedInt32Algebra, SignedInt32Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
-		value.setV(6);
-		Fill.compute(G.INT32, value, ds.rawData());
-		IntegerIndex index = new IntegerIndex(2);
+	private final T alg;
+	private final MultiDimDataSource<U> ds;
+	private final U c;
 
-		index.set(0, -1);
-		index.set(1, 0);
-		padded.get(index, value);
-		assertEquals(0, value.v());
-
-		index.set(0, 0);
-		index.set(1, -1);
-		padded.get(index, value);
-		assertEquals(0, value.v());
-
-		index.set(0, 5);
-		index.set(1, 0);
-		padded.get(index, value);
-		assertEquals(0, value.v());
-
-		index.set(0, 0);
-		index.set(1, 5);
-		padded.get(index, value);
-		assertEquals(0, value.v());
-
-		index.set(0, 0);
-		index.set(1, 0);
-		padded.get(index, value);
-		assertEquals(6, value.v());
+	/**
+	 * 
+	 * @param alg
+	 * @param ds
+	 * @param c
+	 */
+	public ConstantNdOOB(T alg, MultiDimDataSource<U> ds, U c) {
+		this.alg = alg;
+		this.ds = ds;
+		this.c = alg.construct();
+		this.alg.assign().call(c, this.c);
 	}
+
+	@Override
+	public void call(IntegerIndex index, U value) {
+		if (index.numDimensions() != ds.numDimensions())
+			throw new IllegalArgumentException("index does not have same num dims as dataset");
+		if (ds.oob(index))
+			alg.assign().call(c, value);
+		else
+			throw new IllegalArgumentException("OOB method called with in bounds index");
+	}
+
 }

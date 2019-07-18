@@ -24,35 +24,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim.oob;
+package nom.bdezonia.zorbage.oob.oned;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ZeroNdOOB<T extends Algebra<T,U>, U> implements Procedure2<IntegerIndex,U> {
+public class MirrorOOB<U> implements Procedure2<Long,U> {
 
-	private ConstantNdOOB<T,U> oobProc;
+	private final IndexedDataSource<U> a;
+	private final long length;
 
 	/**
 	 * 
-	 * @param alg
-	 * @param ds
+	 * @param a
 	 */
-	public ZeroNdOOB(T alg, MultiDimDataSource<U> ds) {
-		U zero = alg.construct();
-		oobProc = new ConstantNdOOB<T,U>(alg, ds, zero);
+	public MirrorOOB(IndexedDataSource<U> a) {
+		this.a = a;
+		this.length = a.size();
 	}
 
 	@Override
-	public void call(IntegerIndex index, U value) {
-		oobProc.call(index, value);
+	public void call(Long i, U value) {
+		long idx;
+		long offset;
+		if (i < 0) {
+			idx = ((-i) - 1) / length;
+			offset = ((-i) - 1) % length;
+		}
+		else if (i >= length) {
+			idx = i / length;
+			offset = i % length;
+		}
+		else
+			throw new IllegalArgumentException("OOB method called with in bounds index");
+
+		if (idx % 2 == 0) {
+			a.get(offset, value);
+		}
+		else {
+			a.get(length - 1 - offset, value);
+		}
 	}
 
 }

@@ -24,35 +24,61 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.procedure.impl.oob;
+package nom.bdezonia.zorbage.oob.nd;
 
+import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NaN;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NanOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<Long,U> {
+public class CyclicNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
-	private ConstantOOB<T,U> oobProc;
+	private final MultiDimDataSource<U> ds;
+	private final ThreadLocal<IntegerIndex> coord;
 
 	/**
 	 * 
-	 * @param alg
-	 * @param a
+	 * @param ds
 	 */
-	public NanOOB(T alg, long length) {
-		U nan = alg.construct();
-		alg.nan().call(nan);
-		oobProc = new ConstantOOB<T,U>(alg, length, nan);
+	public CyclicNdOOB(MultiDimDataSource<U> d) {
+		this.ds = d;
+		this.coord = new ThreadLocal<IntegerIndex>() {
+			@Override
+			protected IntegerIndex initialValue() {
+				return new IntegerIndex(ds.numDimensions());
+			}
+		};
 	}
 
 	@Override
-	public void call(Long i, U value) {
-		oobProc.call(i, value);
+	public void call(IntegerIndex index, U value) {
+		if (index.numDimensions() != ds.numDimensions())
+			throw new IllegalArgumentException("index does not have same num dims as dataset");
+		IntegerIndex tmp = coord.get();
+		boolean oob = false;
+		for (int i = 0; i < ds.numDimensions(); i++) {
+			long val = index.get(i);
+			if (val < 0) {
+				long idx = ds.dimension(i) - 1 - (((-val) - 1) % ds.dimension(i));
+				tmp.set(i, idx);
+				oob = true;
+			}
+			else if (val >= ds.dimension(i)) {
+				tmp.set(i, val % ds.dimension(i));
+				oob = true;
+			}
+			else {
+				tmp.set(i, val);
+			}
+		}
+		if (oob)
+			ds.get(tmp, value);
+		else
+			throw new IllegalArgumentException("OOB method called with in bounds index");
 	}
 
 }
