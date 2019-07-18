@@ -45,10 +45,10 @@ public class EdgeNdOOB<U> implements Procedure2<IntegerIndex,U> {
 	 * @param alg
 	 * @param ds
 	 */
-	public EdgeNdOOB(MultiDimDataSource<U> ds) {
-		if (ds.numElements() < 1)
+	public EdgeNdOOB(MultiDimDataSource<U> d) {
+		if (d.numElements() < 1)
 			throw new IllegalArgumentException("datset size must be positive");
-		this.ds = ds;
+		this.ds = d;
 		this.coord = new ThreadLocal<IntegerIndex>() {
 			@Override
 			protected IntegerIndex initialValue() {

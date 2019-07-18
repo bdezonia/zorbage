@@ -44,8 +44,8 @@ public class CyclicNdOOB<U> implements Procedure2<IntegerIndex,U> {
 	 * 
 	 * @param ds
 	 */
-	public CyclicNdOOB(MultiDimDataSource<U> ds) {
-		this.ds = ds;
+	public CyclicNdOOB(MultiDimDataSource<U> d) {
+		this.ds = d;
 		this.coord = new ThreadLocal<IntegerIndex>() {
 			@Override
 			protected IntegerIndex initialValue() {
