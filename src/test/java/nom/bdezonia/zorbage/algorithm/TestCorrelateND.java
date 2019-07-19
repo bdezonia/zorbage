@@ -294,8 +294,6 @@ public class TestCorrelateND {
 
 		CorrelateND.compute(G.INT64, filter, padded, out);
 
-		// TODO are these kernel rows applied in the correct order?
-		
 		idx.set(0, 0);
 		idx.set(1, 0);
 		out.get(idx, value);
