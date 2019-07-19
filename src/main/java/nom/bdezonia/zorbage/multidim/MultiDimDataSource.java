@@ -26,11 +26,6 @@
  */
 package nom.bdezonia.zorbage.multidim;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import nom.bdezonia.zorbage.axis.IdentityAxis;
-import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
@@ -43,92 +38,24 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public class MultiDimDataSource<U>
-	implements Dimensioned, RawData<U>
+public interface MultiDimDataSource<U>
+	extends Dimensioned, RawData<U>
 {
-	private final List<Procedure2<Long,HighPrecisionMember>> axes;
-	private final IndexedDataSource<U> data;
-	private final long[] dims;
-	
-	/**
-	 * 
-	 * @param dims
-	 * @param data
-	 */
-	public MultiDimDataSource(long[] dims, IndexedDataSource<U> data) {
-		if (dims.length == 0)
-			throw new IllegalArgumentException("multidim data source must have 1 or more dimensions");
-		if (LongUtils.numElements(dims) != data.size())
-			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
-		this.dims = dims;
-		this.data = data;
-		this.axes = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
-		for (int i = 0; i < dims.length; i++)
-			this.axes.add(new IdentityAxis());
-	}
-	
-	@Override
-	public IndexedDataSource<U> rawData() {
-		return data;
-	}
+	long numElements();
 
-	@Override
-	public int numDimensions() {
-		return dims.length;
-	}
-
-	@Override
-	public long dimension(int d) {
-		if (d < 0) throw new IllegalArgumentException("negative index exception");
-		if (d < dims.length) return dims[d];
-		return 1;
-	}
+	Procedure2<Long,HighPrecisionMember> getAxis(int i);
 	
-	public long numElements() {
-		return data.size();
-	}
-
-	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
-		return this.axes.get(i);
-	}
+	void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc);
 	
-	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
-		this.axes.set(i, proc);
-	}
+	IndexedDataSource<U> piped(int dim, IntegerIndex coord);
 	
-	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
-		return new PipedDataSource<U>(this, dim, coord);
-	}
+	void set(IntegerIndex index, U v);
 	
-	public void set(IntegerIndex index, U v) {
-		long idx = IndexUtils.indexToLong(dims, index);
-		data.set(idx, v);
-	}
+	void setSafe(IntegerIndex index, U v);
 	
-	public void setSafe(IntegerIndex index, U v) {
-		if (oob(index))
-			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
-		set(index, v);
-	}
+	void get(IntegerIndex index, U v);
 	
-	public void get(IntegerIndex index, U v) {
-		long idx = IndexUtils.indexToLong(dims, index);
-		data.get(idx, v);
-	}
+	void getSafe(IntegerIndex index, U v);
 	
-	public void getSafe(IntegerIndex index, U v) {
-		if (oob(index))
-			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
-		get(index, v);
-	}
-	
-	public boolean oob(IntegerIndex index) {
-		if (index.numDimensions() != numDimensions())
-			throw new IllegalArgumentException("index dimensionality not the same as multidim dimensions");
-		for (int i = 0; i < index.numDimensions(); i++) {
-			if (index.get(i) < 0 || index.get(i) >= dimension(i))
-				return true;
-		}
-		return false;
-	}
+	boolean oob(IntegerIndex index);
 }

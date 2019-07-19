@@ -52,7 +52,7 @@ public class TestPipedDataSource {
 		idx.set(1,1);
 		idx.set(2,1);
 		IndexedDataSource<SignedInt32Member> data = ArrayStorage.allocateInts(new int[24]);
-		MultiDimDataSource<SignedInt32Member> md = new MultiDimDataSource<>(dims, data);
+		MultiDimDataSource<SignedInt32Member> md = new NdData<>(dims, data);
 		IndexedDataSource<SignedInt32Member> p = md.piped(1, idx);
 		assertEquals(3, p.size());
 		for (long i = 0; i < p.size(); i++) {

@@ -47,7 +47,7 @@ public class TestProcedurePaddedMultiDimDataSource {
 	@Test
 	public void test() {
 		IndexedDataSource<SignedInt32Member> data = ArrayStorage.allocateInts(new int[] {1,2,3,4});
-		MultiDimDataSource<SignedInt32Member> md = new MultiDimDataSource<>(new long[] {2,2}, data);
+		MultiDimDataSource<SignedInt32Member> md = new NdData<>(new long[] {2,2}, data);
 		ProcedurePaddedMultiDimDataSource<?,SignedInt32Member> pad =
 				new ProcedurePaddedMultiDimDataSource<>(G.INT32, md, proc);
 		SignedInt32Member value = G.INT32.construct();

@@ -51,7 +51,7 @@ public class MultiDimStorage {
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(numElements, type);
-		return new MultiDimDataSource<U>(dims, data);
+		return new NdData<U>(dims, data);
 	}
 
 	/**
@@ -66,6 +66,6 @@ public class MultiDimStorage {
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(strategy, numElements, type);
-		return new MultiDimDataSource<U>(dims, data);
+		return new NdData<U>(dims, data);
 	}
 }
