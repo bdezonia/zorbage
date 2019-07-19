@@ -127,8 +127,7 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public boolean oob(IntegerIndex index) {
-		// TODO Auto-generated method stub
-		return false;
+		return md.oob(index);
 	}
 	
 }
