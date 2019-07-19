@@ -57,7 +57,7 @@ public class TestConstantNdOOB {
 				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
 		value.setV(6);
 		Fill.compute(G.INT32, value, ds.rawData());
-		IntegerIndex index = new IntegerIndex(2);
+		IntegerIndex index = new IntegerIndex(ds.numDimensions());
 
 		index.set(0, -1);
 		index.set(1, 0);

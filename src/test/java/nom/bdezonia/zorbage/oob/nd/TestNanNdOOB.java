@@ -58,7 +58,7 @@ public class TestNanNdOOB {
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, oobProc);
 		value.setV(6);
 		Fill.compute(G.DBL, value, ds.rawData());
-		IntegerIndex index = new IntegerIndex(2);
+		IntegerIndex index = new IntegerIndex(ds.numDimensions());
 
 		index.set(0, -1);
 		index.set(1, 0);

@@ -54,7 +54,7 @@ public class TestMirrorNdOOB {
 				new MirrorNdOOB<SignedInt32Member>(ds);
 		ProcedurePaddedMultiDimDataSource<SignedInt32Algebra, SignedInt32Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
-		IntegerIndex index = new IntegerIndex(2);
+		IntegerIndex index = new IntegerIndex(ds.numDimensions());
 
 		value.setV(1);
 		index.set(0, 0);
