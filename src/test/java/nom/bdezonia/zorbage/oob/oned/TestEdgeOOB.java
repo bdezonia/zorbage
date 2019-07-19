@@ -51,7 +51,7 @@ public class TestEdgeOOB {
 		
 		Float64Member val = G.DBL.construct();
 		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(new double[] {1,2,3});
-		Procedure2<Long, Float64Member> oobProc = new EdgeOOB<Float64Algebra,Float64Member>(vals);
+		Procedure2<Long, Float64Member> oobProc = new EdgeOOB<Float64Member>(vals);
 		ProcedurePaddedDataSource<Float64Algebra,Float64Member> pd = new ProcedurePaddedDataSource<Float64Algebra, Float64Member>(G.DBL, vals, oobProc);
 		
 		pd.get(0, val);
