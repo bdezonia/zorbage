@@ -34,8 +34,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.SequencedDataSource;
  * 
  * @author Barry DeZonia
  *
- * A {@link DataSource} that is a one dimensional column within a {@link MultiDimDataSource}.
- * Pronounced as "pie" "ped".
+ * A {@link IndexedDataSource} that is a one dimensional column within a
+ * {@link MultiDimDataSource}. Pronounced as "pie" "ped".
  * 
  */
 public class PipedDataSource<U> implements IndexedDataSource<U> {
