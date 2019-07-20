@@ -78,22 +78,27 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		return md.dimension(d);
 	}
 	
+	@Override
 	public long numElements() {
 		return md.numElements();
 	}
 
+	@Override
 	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
 		return md.getAxis(i);
 	}
 	
+	@Override
 	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
 		md.setAxis(i, proc);
 	}
 	
+	@Override
 	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
 		return md.piped(dim, coord);
 	}
 	
+	@Override
 	public void set(IntegerIndex index, U v) {
 		if (md.oob(index)) {
 			U t = tmp.get();

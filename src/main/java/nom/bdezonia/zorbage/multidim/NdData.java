@@ -82,44 +82,53 @@ public class NdData<U>
 		return 1;
 	}
 	
+	@Override
 	public long numElements() {
 		return data.size();
 	}
 
+	@Override
 	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
 		return this.axes.get(i);
 	}
 	
+	@Override
 	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
 		this.axes.set(i, proc);
 	}
 	
+	@Override
 	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
 		return new PipedDataSource<U>(this, dim, coord);
 	}
 	
+	@Override
 	public void set(IntegerIndex index, U v) {
 		long idx = IndexUtils.indexToLong(dims, index);
 		data.set(idx, v);
 	}
 	
+	@Override
 	public void setSafe(IntegerIndex index, U v) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		set(index, v);
 	}
 	
+	@Override
 	public void get(IntegerIndex index, U v) {
 		long idx = IndexUtils.indexToLong(dims, index);
 		data.get(idx, v);
 	}
 	
+	@Override
 	public void getSafe(IntegerIndex index, U v) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		get(index, v);
 	}
 	
+	@Override
 	public boolean oob(IntegerIndex index) {
 		if (index.numDimensions() != numDimensions())
 			throw new IllegalArgumentException("index dimensionality not the same as multidim dimensions");
