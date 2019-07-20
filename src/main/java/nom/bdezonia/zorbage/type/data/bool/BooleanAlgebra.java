@@ -44,10 +44,6 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 
-// TODO - do I need a BitType that is stored within an int? Or just use BooleanMember?
-
-// I want BooleanMembers to be saveable as true/false and as 1/0 depending upon the Container type
-
 /**
  * 
  * @author Barry DeZonia
