@@ -167,13 +167,11 @@ public class TestParallelCorrelateND {
 		value.setV(9);
 		filter.set(idx, value);
 
-		
 		int numTrials = 20;
 
-		
 		long t1 = System.currentTimeMillis();
 		for (int i = 0; i < numTrials; i++) {
-			ConvolveND.compute(G.DBL, filter, padded, b1);
+			CorrelateND.compute(G.DBL, filter, padded, b1);
 		}
 		long t2 = System.currentTimeMillis();
 		for (int i = 0; i < numTrials; i++) {
