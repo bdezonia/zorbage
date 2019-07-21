@@ -105,7 +105,7 @@ public class ParallelCorrelateND {
 			maxPt.set(index, end);
 			Computer<T,U> computer = new Computer<T,U>(alg, numD, filter, a, b, minPt, maxPt);
 			threads[i] = new Thread(computer);
-			start = end;
+			start = end + 1;
 		}
 
 		for (int i = 0; i < threads.length; i++) {
