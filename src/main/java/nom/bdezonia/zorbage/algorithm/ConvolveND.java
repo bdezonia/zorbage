@@ -92,6 +92,7 @@ public class ConvolveND {
 		SamplingIterator<IntegerIndex> dataPoints = dataBounds.iterator();
 		while (dataPoints.hasNext()) {
 			dataPoints.next(dataPoint);
+			// TODO: make iterators support reset()? It would speed this up quite a bit.
 			SamplingIterator<IntegerIndex> filterPoints = filterBounds.iterator();
 			alg.zero().call(sum);
 			while (filterPoints.hasNext()) {
