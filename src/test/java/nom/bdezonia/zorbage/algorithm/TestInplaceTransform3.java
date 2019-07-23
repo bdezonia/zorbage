@@ -31,8 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.impl.Ramp;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -46,11 +44,12 @@ public class TestInplaceTransform3 {
 	
 	@Test
 	public void test1() {
-		
+		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> data = Storage.allocate(1000, G.DBL.construct());
-		Ramp<Float64Algebra, Float64Member> ramp =
-				new Ramp<Float64Algebra, Float64Member>(G.DBL, new Float64Member(), new Float64Member(0.1));
-		Generate.compute(G.DBL, ramp, data);
+		for (long i = 0; i < data.size(); i++) {
+			value.setV(i);
+			data.set(i, value);
+		}
 		// multiply list1 by list2 and store in list2: with 1 list == squared values in place
 		InplaceTransform3.compute(G.DBL, G.DBL.multiply(), data);
 		double tol = 0.0000000000001;

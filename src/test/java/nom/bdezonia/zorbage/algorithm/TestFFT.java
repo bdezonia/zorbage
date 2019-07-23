@@ -33,9 +33,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.impl.Ramp;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -56,18 +54,22 @@ public class TestFFT {
 				Storage.allocate(7, int32);
 		IndexedDataSource<SignedInt32Member> poly2 =
 				Storage.allocate(7, int32);
-		SignedInt32Member start1 = new SignedInt32Member(3);
-		SignedInt32Member start2 = new SignedInt32Member(-5);
-		SignedInt32Member inc1 = new SignedInt32Member(-1);
-		SignedInt32Member inc2 = new SignedInt32Member(1);
-		Ramp<SignedInt32Algebra, SignedInt32Member> ramp1 =
-				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start1,inc1);
-		Ramp<SignedInt32Algebra, SignedInt32Member> ramp2 =
-				new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32,start2,inc2);
+		int start1 = 3;
+		int start2 = -5;
+		int inc1 = -1;
+		int inc2 = 1;
 		TrimmedDataSource<SignedInt32Member> tr1 = new TrimmedDataSource<>(poly1, 0, 3);
 		TrimmedDataSource<SignedInt32Member> tr2 = new TrimmedDataSource<>(poly2, 0, 3);
-		Fill.compute(G.INT32, ramp1, tr1);
-		Fill.compute(G.INT32, ramp2, tr2);
+		for (long i = 0; i < tr1.size(); i++) {
+			int32.setV(start1);
+			tr1.set(i, int32);
+			start1 += inc1;
+		}
+		for (long i = 0; i < tr2.size(); i++) {
+			int32.setV(start2);
+			tr2.set(i, int32);
+			start2 += inc2;
+		}
 		long n = FFT.enclosingPowerOf2(poly1.size());
 		IndexedDataSource<ComplexFloat64Member> data1 =
 				Storage.allocate(n, cdbl);

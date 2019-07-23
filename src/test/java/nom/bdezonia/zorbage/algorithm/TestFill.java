@@ -32,10 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.impl.Ramp;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -47,25 +44,14 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class TestFill {
 
 	@Test
-	public void test() {
+	public void test1() {
+		Float64Member type = new Float64Member();
 		
-		long size = 10000;
-		SignedInt32Member type = new SignedInt32Member();
-		IndexedDataSource<SignedInt32Member> data = Storage.allocate(size, type);
-		assertEquals(size, data.size());
-		Ramp<SignedInt32Algebra, SignedInt32Member> ramp1 = new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(-25), new SignedInt32Member(3));
-		Fill.compute(G.INT32, ramp1, data);
-		for (long i = 0; i < size; i++) {
-			data.get(i, type);
-			assertEquals(-25+3*i, type.v());
-		}
-		Ramp<SignedInt32Algebra, SignedInt32Member> ramp2 = new Ramp<SignedInt32Algebra, SignedInt32Member>(G.INT32, new SignedInt32Member(300), new SignedInt32Member(-6));
-		Fill.compute(G.INT32, ramp2, data);
-		for (long i = 0; i < size; i++) {
-			data.get(i, type);
-			assertEquals(300-6*i, type.v());
-		}
-
+		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
+		
+		Fill.compute(G.DBL, new Float64Member(17.4), data);
+		data.get(999, type);
+		assertEquals(17.4, type.v(), 0);
 	}
 	
 	@Test
@@ -74,10 +60,6 @@ public class TestFill {
 		Float64Member type = new Float64Member();
 		
 		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
-		
-		Fill.compute(G.DBL, new Float64Member(17.4), data);
-		data.get(999, type);
-		assertEquals(17.4, type.v(), 0);
 		
 		Fill.compute(G.DBL, G.DBL.zero(), data);
 		data.get(999, type);

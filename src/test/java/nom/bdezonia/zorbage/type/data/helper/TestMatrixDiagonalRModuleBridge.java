@@ -31,8 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.impl.Ramp;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.helper.MatrixDiagonalRModuleBridge.Origin;
@@ -47,11 +45,10 @@ public class TestMatrixDiagonalRModuleBridge {
 	@Test
 	public void testDiags() {
 		Float64MatrixMember matrix = new Float64MatrixMember(5,5,new double[25]);
-		Ramp<Float64Algebra,Float64Member> ramp = new Ramp<Float64Algebra,Float64Member>(G.DBL, new Float64Member(), new Float64Member(1));
 		Float64Member value = new Float64Member();
 		for (long r = 0; r < matrix.rows(); r++) {
 			for (long c = 0; c < matrix.cols(); c++) {
-				ramp.call(value);
+				value.setV(matrix.rows() * r + c);
 				matrix.setV(r, c, value);
 			}			
 		}
