@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.impl.Constant;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -50,10 +51,8 @@ public class Fill {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, U value, IndexedDataSource<U> storage)
 	{
-		long size = storage.size();
-		for (long i = 0; i < size; i++) {
-			storage.set(i, value);
-		}
+		Constant<T,U> proc = new Constant<T,U>(algebra, value);
+		compute(algebra, proc, storage);
 	}
 	
 	/**
@@ -65,7 +64,7 @@ public class Fill {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
-		InplaceTransform1.compute(algebra, proc, storage);
+		ParallelTransform1.compute(algebra, proc, storage);
 	}
 
 }
