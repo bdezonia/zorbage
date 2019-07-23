@@ -27,23 +27,10 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 public class Generate {
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param proc
-	 * @param storage
-	 */
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
-	{
-		ParallelTransform1.compute(algebra, proc, storage);
-	}
 
 	/**
 	 * 

@@ -76,7 +76,7 @@ public class TestInplaceTransform2 {
 		IndexedDataSource<U> a = ArrayStorage.allocate(100, algebra.construct());
 		
 		// set values of storage to random doubles between 0 and 1
-		Generate.compute(algebra, algebra.random(), a);
+		InplaceTransform1.compute(algebra, algebra.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
 		InplaceTransform2.compute(algebra, algebra.sin(), a);
