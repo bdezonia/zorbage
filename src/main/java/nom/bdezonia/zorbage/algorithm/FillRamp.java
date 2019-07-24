@@ -42,22 +42,33 @@ public class FillRamp {
 	 * 
 	 * @param alg
 	 * @param startVal
-	 * @param add
+	 * @param incBy
 	 * @param data
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
-		void compute(T alg, U startVal, boolean add, IndexedDataSource<U> data)
+	public static <T extends Algebra<T,U> & Addition<U>, U>
+		void compute(T alg, U startVal, U incBy, IndexedDataSource<U> data)
 	{
+		if (alg.isZero().call(incBy))
+			throw new IllegalArgumentException("FillRamp expects nonzero increment");
 		U tmp = alg.construct(startVal);
-		U one = alg.construct();
-		alg.unity().call(one);
 		long sz = data.size();
 		for (long i = 0; i < sz; i++) {
 			data.set(i, tmp);
-			if (add)
-				alg.add().call(tmp, one, tmp);
-			else
-				alg.subtract().call(tmp, one, tmp);
+			alg.add().call(tmp, incBy, tmp);
 		}
+	}
+
+	/**
+	 * 
+	 * @param alg
+	 * @param data
+	 */
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
+		void compute(T alg, IndexedDataSource<U> data)
+	{
+		U zero = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
+		compute(alg, zero, one, data);
 	}
 }

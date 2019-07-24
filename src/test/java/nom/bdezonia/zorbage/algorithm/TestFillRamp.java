@@ -50,7 +50,9 @@ public class TestFillRamp {
 		SignedInt32Member tmp = G.INT32.construct();
 		SignedInt32Member startVal = G.INT32.construct();
 		startVal.setV(-13);
-		FillRamp.compute(G.INT32, startVal, true, ints);
+		SignedInt32Member incBy = G.INT32.construct();
+		incBy.setV(1);
+		FillRamp.compute(G.INT32, startVal, incBy, ints);
 
 		ints.get(0, tmp);
 		assertEquals(-13, tmp.v());
@@ -73,7 +75,9 @@ public class TestFillRamp {
 		SignedInt32Member tmp = G.INT32.construct();
 		SignedInt32Member startVal = G.INT32.construct();
 		startVal.setV(45);
-		FillRamp.compute(G.INT32, startVal, false, ints);
+		SignedInt32Member incBy = G.INT32.construct();
+		incBy.setV(-1);
+		FillRamp.compute(G.INT32, startVal, incBy, ints);
 
 		ints.get(0, tmp);
 		assertEquals(45, tmp.v());
