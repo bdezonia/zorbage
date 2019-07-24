@@ -45,6 +45,7 @@ public class Generate {
 	 * @param a
 	 * @param inputs
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure<U> proc, IndexedDataSource<U> a, U...inputs)
 	{
