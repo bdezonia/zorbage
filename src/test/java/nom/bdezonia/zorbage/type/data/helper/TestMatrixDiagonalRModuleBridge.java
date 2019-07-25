@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.FillRamp;
+import nom.bdezonia.zorbage.algorithm.RampFill;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.helper.MatrixDiagonalRModuleBridge.Origin;
@@ -47,7 +47,7 @@ public class TestMatrixDiagonalRModuleBridge {
 	public void testDiags() {
 		Float64MatrixMember matrix = new Float64MatrixMember(5,5,new double[25]);
 		Float64Member value = new Float64Member();
-		FillRamp.compute(G.DBL, matrix.rawData());
+		RampFill.compute(G.DBL, matrix.rawData());
 		MatrixDiagonalRModuleBridge<Float64Member> diag = new MatrixDiagonalRModuleBridge<Float64Member>(G.DBL,matrix);
 		assertEquals(5, diag.length());
 		for (long i = 0; i < diag.length(); i++) {

@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestFillRamp {
+public class TestRampFill {
 
 	@Test
 	public void test1() {
@@ -52,7 +52,7 @@ public class TestFillRamp {
 		startVal.setV(-13);
 		SignedInt32Member incBy = G.INT32.construct();
 		incBy.setV(1);
-		FillRamp.compute(G.INT32, startVal, incBy, ints);
+		RampFill.compute(G.INT32, startVal, incBy, ints);
 
 		ints.get(0, tmp);
 		assertEquals(-13, tmp.v());
@@ -77,7 +77,7 @@ public class TestFillRamp {
 		startVal.setV(45);
 		SignedInt32Member incBy = G.INT32.construct();
 		incBy.setV(-1);
-		FillRamp.compute(G.INT32, startVal, incBy, ints);
+		RampFill.compute(G.INT32, startVal, incBy, ints);
 
 		ints.get(0, tmp);
 		assertEquals(45, tmp.v());

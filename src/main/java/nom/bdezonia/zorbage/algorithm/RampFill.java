@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class FillRamp {
+public class RampFill {
 
 	/**
 	 * 
