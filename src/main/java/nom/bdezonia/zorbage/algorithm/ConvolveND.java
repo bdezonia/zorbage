@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algorithm.corrconv.CorrConvND;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
-import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
@@ -51,61 +51,17 @@ public class ConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
 	{
-		int numD = a.numDimensions();
-		
-		if (a == b)
-			throw new IllegalArgumentException("source and dest datasets must be different");
-		
-		if (b.numDimensions() != numD)
-			throw new IllegalArgumentException("source and dest have different number of dimensions!");
-		
-		if (filter.numDimensions() != numD)
-			throw new IllegalArgumentException("filter and source have different number of dimensions!");
-		
-		if (filter.numElements() % 2 != 1)
-			throw new IllegalArgumentException("filter dimensions should all be odd");
+		CorrConvND.compute(alg, new Indexer<U>(), filter, a, b);
+	}
+	
+	private static class Indexer<U> implements Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
 
-		IntegerIndex dataMin = new IntegerIndex(numD);
-		IntegerIndex dataMax = new IntegerIndex(numD);
-		IntegerIndex filterMin = new IntegerIndex(numD);
-		IntegerIndex filterMax = new IntegerIndex(numD);
-		IntegerIndex dataPoint = new IntegerIndex(numD);
-		IntegerIndex filterPoint = new IntegerIndex(numD);
-		IntegerIndex pt = new IntegerIndex(numD);
-
-		for (int i = 0; i < numD; i++) {
-			if (a.dimension(i) != b.dimension(i))
-				throw new IllegalArgumentException("source and dest dimensions do not match");
-			dataMin.set(i, 0);
-			dataMax.set(i, a.dimension(i)-1);
-			filterMin.set(i, 0);
-			filterMax.set(i, filter.dimension(i)-1);
-		}
-		
-		U tmp = alg.construct();
-		U f = alg.construct();
-		U sum = alg.construct();
-		SamplingCartesianIntegerGrid dataBounds =
-				new SamplingCartesianIntegerGrid(dataMin, dataMax);
-		SamplingCartesianIntegerGrid filterBounds =
-				new SamplingCartesianIntegerGrid(filterMin, filterMax);
-		SamplingIterator<IntegerIndex> dataPoints = dataBounds.iterator();
-		while (dataPoints.hasNext()) {
-			dataPoints.next(dataPoint);
-			// TODO: make iterators support reset()? It would speed this up quite a bit.
-			SamplingIterator<IntegerIndex> filterPoints = filterBounds.iterator();
-			alg.zero().call(sum);
-			while (filterPoints.hasNext()) {
-				filterPoints.next(filterPoint);
-				for (int i = 0; i < filter.numDimensions(); i++) {
-					pt.set(i, dataPoint.get(i) - (filterPoint.get(i) - filter.dimension(i)/2));
-				}
-				a.get(pt, tmp);
-				filter.get(filterPoint, f);
-				alg.multiply().call(tmp, f, tmp);
-				alg.add().call(sum, tmp, sum);
+		@Override
+		public void call(MultiDimDataSource<U> filter, IntegerIndex a, IntegerIndex b, IntegerIndex c) {
+			for (int i = 0; i < b.numDimensions(); i++) {
+				c.set(i, a.get(i) - (b.get(i) - filter.dimension(i)/2));
 			}
-			b.set(dataPoint, sum);
 		}
+		
 	}
 }

@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algorithm.corrconv.CorrConv1D;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
@@ -48,26 +50,15 @@ public class Convolve1D {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		if (a == b)
-			throw new IllegalArgumentException("source and dest lists must be different");
-		
-		if (filter.size() % 2 != 1)
-			throw new IllegalArgumentException("filter length should be odd");
-		
-		U tmp = alg.construct();
-		U f = alg.construct();
-		U sum = alg.construct();
-		long n = filter.size() / 2;
-		for (long x = 0; x < a.size(); x++) {
-			alg.zero().call(sum);
-			for (long i = -n; i <= n; i++) {
-				long idx = x - i;
-				a.get(idx, tmp);
-				filter.get(i + n, f);
-				alg.multiply().call(tmp, f, tmp);
-				alg.add().call(sum, tmp, sum);
-			}
-			b.set(x, sum);
+		CorrConv1D.compute(alg, new Indexer(), filter, a, b);
+	}
+	
+	private static class Indexer implements Function2<Long, Long, Long> {
+
+		@Override
+		public Long call(Long x, Long i) {
+			return x - i;
 		}
+		
 	}
 }

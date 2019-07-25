@@ -24,45 +24,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.corrconv;
 
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.procedure.Procedure4;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ParallelConvolveND {
+public class CorrConv1D {
 
 	/**
 	 * 
 	 * @param alg
+	 * @param indexer
 	 * @param filter
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
-		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
+		void compute(T alg, Function2<Long,Long,Long> indexer, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, new Indexer<U>(), filter, a, b);
-	}
-	
-	
-	private static class Indexer<U> implements Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
-
-		@Override
-		public void call(MultiDimDataSource<U> filter, IntegerIndex a, IntegerIndex b, IntegerIndex c) {
-			for (int i = 0; i < b.numDimensions(); i++) {
-				c.set(i, a.get(i) - (b.get(i) - filter.dimension(i)/2));
-			}
-		}
+		if (a == b)
+			throw new IllegalArgumentException("source and dest lists must be different");
 		
+		if (filter.size() % 2 != 1)
+			throw new IllegalArgumentException("filter length should be odd");
+		
+		U tmp = alg.construct();
+		U f = alg.construct();
+		U sum = alg.construct();
+		long n = filter.size() / 2;
+		for (long x = 0; x < a.size(); x++) {
+			alg.zero().call(sum);
+			for (long i = -n; i <= n; i++) {
+				long idx = indexer.call(x, i);
+				a.get(idx, tmp);
+				filter.get(i + n, f);
+				alg.multiply().call(tmp, f, tmp);
+				alg.add().call(sum, tmp, sum);
+			}
+			b.set(x, sum);
+		}
 	}
 }
