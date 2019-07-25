@@ -44,12 +44,8 @@ public class TestInplaceTransform3 {
 	
 	@Test
 	public void test1() {
-		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> data = Storage.allocate(1000, G.DBL.construct());
-		for (long i = 0; i < data.size(); i++) {
-			value.setV(i);
-			data.set(i, value);
-		}
+		FillRamp.compute(G.DBL, new Float64Member(), new Float64Member(0.1), data);
 		// multiply list1 by list2 and store in list2: with 1 list == squared values in place
 		InplaceTransform3.compute(G.DBL, G.DBL.multiply(), data);
 		double tol = 0.0000000000001;
