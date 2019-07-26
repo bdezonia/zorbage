@@ -50,7 +50,7 @@ public class ParallelCorrelateND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, new CorrelationIndexerND<U>(), filter, a, b);
+		ParallelCorrConvND.compute(alg, Runtime.getRuntime().availableProcessors(), new CorrelationIndexerND<U>(), filter, a, b);
 	}
 	
 }

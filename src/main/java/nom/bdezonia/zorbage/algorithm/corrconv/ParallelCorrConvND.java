@@ -45,12 +45,14 @@ public class ParallelCorrConvND {
 	/**
 	 * 
 	 * @param alg
+	 * @param maxPieces
+	 * @param indexer
 	 * @param filter
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
-		void compute(T alg, Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
+		void compute(T alg, int maxPieces, Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
 	{
 		int numD = a.numDimensions();
 		
@@ -78,7 +80,7 @@ public class ParallelCorrConvND {
 		if (maxDim <= 0)
 			throw new IllegalArgumentException("invalid data dimensions");
 		
-		long pieces = Runtime.getRuntime().availableProcessors();
+		long pieces = maxPieces;
 		
 		if (pieces > maxDim)
 			pieces = maxDim; // 1 thread per piped

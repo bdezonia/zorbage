@@ -50,7 +50,7 @@ public class ParallelConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, new ConvolutionIndexerND<U>(), filter, a, b);
+		ParallelCorrConvND.compute(alg, Runtime.getRuntime().availableProcessors(), new ConvolutionIndexerND<U>(), filter, a, b);
 	}
 	
 }
