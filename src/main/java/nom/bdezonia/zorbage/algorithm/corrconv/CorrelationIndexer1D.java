@@ -24,33 +24,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.corrconv;
 
-import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.function.Function2;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ParallelCorrelateND {
+public class CorrelationIndexer1D implements Function2<Long, Long, Long> {
 
-	/**
-	 * 
-	 * @param alg
-	 * @param filter
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
-		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
-	{
-		ParallelCorrConvND.compute(alg, new CorrelationIndexerND<U>(), filter, a, b);
+	@Override
+	public Long call(Long x, Long i) {
+		return x + i;
 	}
-	
+
 }

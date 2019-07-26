@@ -24,33 +24,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.corrconv;
 
-import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ParallelCorrelateND {
+public class ConvolutionIndexerND<U> implements Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
 
-	/**
-	 * 
-	 * @param alg
-	 * @param filter
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
-		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
-	{
-		ParallelCorrConvND.compute(alg, new CorrelationIndexerND<U>(), filter, a, b);
+	@Override
+	public void call(MultiDimDataSource<U> filter, IntegerIndex dataPoint, IntegerIndex filterPoint, IntegerIndex pt) {
+		for (int i = 0; i < filterPoint.numDimensions(); i++) {
+			pt.set(i, dataPoint.get(i) - (filterPoint.get(i) - filter.dimension(i)/2));
+		}
 	}
-	
+
 }

@@ -26,10 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algorithm.corrconv.ConvolutionIndexerND;
 import nom.bdezonia.zorbage.algorithm.corrconv.CorrConvND;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.procedure.Procedure4;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
@@ -51,17 +50,7 @@ public class ConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
 	{
-		CorrConvND.compute(alg, new Indexer<U>(), filter, a, b);
+		CorrConvND.compute(alg, new ConvolutionIndexerND<U>(), filter, a, b);
 	}
 	
-	private static class Indexer<U> implements Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
-
-		@Override
-		public void call(MultiDimDataSource<U> filter, IntegerIndex dataPoint, IntegerIndex filterPoint, IntegerIndex pt) {
-			for (int i = 0; i < filterPoint.numDimensions(); i++) {
-				pt.set(i, dataPoint.get(i) - (filterPoint.get(i) - filter.dimension(i)/2));
-			}
-		}
-		
-	}
 }
