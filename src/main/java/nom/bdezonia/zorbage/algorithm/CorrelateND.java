@@ -57,9 +57,9 @@ public class CorrelateND {
 	private static class Indexer<U> implements Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
 
 		@Override
-		public void call(MultiDimDataSource<U> filter, IntegerIndex a, IntegerIndex b, IntegerIndex c) {
-			for (int i = 0; i < b.numDimensions(); i++) {
-				c.set(i, a.get(i) + (b.get(i) - filter.dimension(i)/2));
+		public void call(MultiDimDataSource<U> filter, IntegerIndex dataPoint, IntegerIndex filterPoint, IntegerIndex pt) {
+			for (int i = 0; i < filterPoint.numDimensions(); i++) {
+				pt.set(i, dataPoint.get(i) + (filterPoint.get(i) - filter.dimension(i)/2));
 			}
 		}
 		
