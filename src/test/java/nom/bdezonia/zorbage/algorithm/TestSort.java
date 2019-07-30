@@ -116,27 +116,30 @@ public class TestSort {
 	@Test
 	public void test2() {
 		
-		Float64Member value = G.DBL.construct();
-		
-		IndexedDataSource<Float64Member> nums = Storage.allocate(1000, value);
-		
-		Fill.compute(G.DBL, G.DBL.random(), nums);
-		
-		Procedure2<Float64Member, Float64Member> proc =
-				new Procedure2<Float64Member, Float64Member>()
-		{
-			@Override
-			public void call(Float64Member a, Float64Member b) {
-				b.setV(a.v() - 0.5);
-			}
-		};
-		
-		InplaceTransform2.compute(G.DBL, proc, nums);
-		
-		Sort.compute(G.DBL, nums);
-		assertTrue(IsSorted.compute(G.DBL, nums));
-		
-		Sort.compute(G.DBL, G.DBL.isGreater(), nums);
-		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), nums));
+		for (int i = 0; i < 25; i++) {
+			
+			Float64Member value = G.DBL.construct();
+			
+			IndexedDataSource<Float64Member> nums = Storage.allocate(1000+i, value);
+			
+			Fill.compute(G.DBL, G.DBL.random(), nums);
+			
+			Procedure2<Float64Member, Float64Member> proc =
+					new Procedure2<Float64Member, Float64Member>()
+			{
+				@Override
+				public void call(Float64Member a, Float64Member b) {
+					b.setV(a.v() - 0.5);
+				}
+			};
+			
+			InplaceTransform2.compute(G.DBL, proc, nums);
+			
+			Sort.compute(G.DBL, nums);
+			assertTrue(IsSorted.compute(G.DBL, nums));
+			
+			Sort.compute(G.DBL, G.DBL.isGreater(), nums);
+			assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), nums));
+		}
 	}
 }
