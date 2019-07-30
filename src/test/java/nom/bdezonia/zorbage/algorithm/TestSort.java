@@ -27,11 +27,15 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -43,7 +47,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class TestSort {
 
 	@Test
-	public void test() {
+	public void test1() {
 		IndexedDataSource<SignedInt32Member> storage = ArrayStorage.allocateInts(
 				new int[] {6,3,99,-1,66,-50,0,0,3});
 		SignedInt32Member value = G.INT32.construct();
@@ -107,5 +111,23 @@ public class TestSort {
 		assertEquals(66, value.v());
 		storage.get(0, value);
 		assertEquals(99, value.v());
+	}
+	
+	@Test
+	public void test2() {
+		Float64Member value = G.DBL.construct();
+		IndexedDataSource<Float64Member> nums = Storage.allocate(1000, value);
+		Fill.compute(G.DBL, G.DBL.random(), nums);
+		Procedure2<Float64Member, Float64Member> proc =
+				new Procedure2<Float64Member, Float64Member>()
+		{
+			@Override
+			public void call(Float64Member a, Float64Member b) {
+				b.setV(a.v() - 0.5);
+			}
+		};
+		InplaceTransform2.compute(G.DBL, proc, nums);
+		Sort.compute(G.DBL, nums);
+		assertTrue(IsSorted.compute(G.DBL, nums));
 	}
 }

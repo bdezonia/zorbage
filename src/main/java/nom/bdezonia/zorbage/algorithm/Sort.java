@@ -61,9 +61,15 @@ public class Sort {
 		void qsort(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
 	{
 		if (left < right) {
-			long pivotPoint = partition(alg, isLeftOf, storage, left, right);
-			qsort(alg, isLeftOf, storage, left, pivotPoint-1);
-			qsort(alg, isLeftOf, storage, pivotPoint+1, right);
+			// small list?
+			if (right - left < 10) {
+				insertionSort(alg, isLeftOf, storage, left, right);
+			}
+			else {
+				long pivotPoint = partition(alg, isLeftOf, storage, left, right);
+				qsort(alg, isLeftOf, storage, left, pivotPoint-1);
+				qsort(alg, isLeftOf, storage, pivotPoint+1, right);
+			}
 		}
 	}
 
@@ -115,5 +121,27 @@ public class Sort {
 		storage.set(rightmark, tmp1);
 
 		return rightmark;
+	}
+	
+	private static <T extends Algebra<T,U>, U>
+		void insertionSort(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
+	{
+		U key = alg.construct();
+		U tmp = alg.construct();
+		U t2 = alg.construct();
+		long n = right - left + 1;
+		for (long i = 1; i < n; i++) {
+			storage.get(left+i, key);
+			long j = i-1; 
+			storage.get(left+j, tmp);
+			while (j >= 0 && isLeftOf.call(key, tmp)) {
+				storage.get(left+j, t2);
+				storage.set(left+j+1, t2);
+				j = j - 1;
+				if (j >= 0)
+					storage.get(left+j, tmp);
+			}
+			storage.set(left+j+1, key);
+		}
 	}
 }
