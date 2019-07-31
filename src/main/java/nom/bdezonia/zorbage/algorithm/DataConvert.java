@@ -59,21 +59,19 @@ public class DataConvert {
 		if (fromSize > toSize)
 			throw new IllegalArgumentException("mismatched list sizes");
 		int maxPieces = Runtime.getRuntime().availableProcessors();
-		if (maxPieces > fromList.size())
-			maxPieces = (int) fromList.size();
+		if (maxPieces > fromSize)
+			maxPieces = 1;
 		long start = 0;
-		long count = fromList.size() / maxPieces;
-		long counted = 0;
+		long count = fromSize / maxPieces;
 		Thread[] threads = new Thread[maxPieces];
 		for (int i = 0; i < maxPieces; i++) {
 			if (i == maxPieces - 1) {
-				count = fromList.size() - counted;
+				count = fromSize - start;
 			}
 			Computer<T,U,V,W> computer =
 					new Computer<>(fromAlgebra, toAlgebra, start, count, fromList, toList);
 			threads[i] = new Thread(computer);
 			start += count;
-			counted += count;
 		}
 		
 		for (int i = 0; i < threads.length; i++) {
