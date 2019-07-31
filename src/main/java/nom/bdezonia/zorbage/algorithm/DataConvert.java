@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.util.List;
-
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -88,29 +86,6 @@ public class DataConvert {
 			}
 		} catch (InterruptedException e) {
 			throw new IllegalArgumentException("ouch");
-		}
-	}
-
-	/**
-	 * 
-	 * @param from
-	 * @param to
-	 */
-	public static <U extends PrimitiveConversion, W extends PrimitiveConversion>
-		void compute(List<U> from, List<W> to)
-	{
-		long fromSize = from.size();
-		long toSize = to.size();
-		if (fromSize == 0 || toSize == 0)
-			throw new IllegalArgumentException("cannot work with empty lists");
-		if (fromSize > toSize)
-			throw new IllegalArgumentException("mismatched list sizes");
-		int numD = Math.max(from.get(0).numDimensions(), to.get(0).numDimensions());
-		IntegerIndex tmp1 = new IntegerIndex(numD);
-		IntegerIndex tmp2 = new IntegerIndex(numD);
-		IntegerIndex tmp3 = new IntegerIndex(numD);
-		for (int i = 0; i < fromSize; i++) {
-			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from.get(i), to.get(i));
 		}
 	}
 
