@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class Multiply {
 	
+	private Multiply() { }
+	
 	// TODO: BitOperations dependency should be avoided. Need a HalfDouble interface
 	// that can be depended upon instead and easily implemented for all integer like
 	// types.

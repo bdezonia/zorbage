@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.algebra.MatrixMember;
  */
 public class MatrixConstantDiagonal {
 
+	private MatrixConstantDiagonal() { }
+	
 	/**
 	 * 
 	 * @param alg

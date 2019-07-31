@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Product {
 
+	private Product() { }
+	
 	/**
 	 * 
 	 * @param alg

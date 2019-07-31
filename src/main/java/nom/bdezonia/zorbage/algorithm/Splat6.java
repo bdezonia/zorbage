@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.type.algebra.SetOctonion;
  */
 public class Splat6 {
 
+	private Splat6() { }
+	
 	/**
 	 * 
 	 * @param value

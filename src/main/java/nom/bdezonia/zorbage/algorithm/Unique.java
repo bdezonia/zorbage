@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Unique {
 
+	private Unique() { }
+	
 	/**
 	 * Unique: the input must be a sorted list. The result is a sorted list
 	 * with all duplicate values removed.

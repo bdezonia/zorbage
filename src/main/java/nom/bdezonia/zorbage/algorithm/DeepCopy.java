@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class DeepCopy {
 
+	private DeepCopy() { }
+	
 	/**
 	 * 
 	 * @param alg

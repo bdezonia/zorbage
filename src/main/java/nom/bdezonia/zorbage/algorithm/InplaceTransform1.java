@@ -11,6 +11,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class InplaceTransform1 {
 
+	private InplaceTransform1() { }
+	
 	/**
 	 * In place initialization of one whole list by a Procedure1.
 	 * 

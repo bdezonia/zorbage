@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class SetIntersection {
 
+	private SetIntersection() { }
+	
 	/**
 	 * SetIntersection : calculate the set intersection of two possibly unsorted lists.
 	 * The result has no duplicates and is sorted.

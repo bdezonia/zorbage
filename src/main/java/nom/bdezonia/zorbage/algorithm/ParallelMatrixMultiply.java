@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.algebra.Multiplication;
  */
 public class ParallelMatrixMultiply {
 
+	private ParallelMatrixMultiply() { }
+	
 	/**
 	 * 
 	 * @param algebra

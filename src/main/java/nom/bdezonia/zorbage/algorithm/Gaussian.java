@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class Gaussian {
 
+	private Gaussian() { }
+	
 	/**
 	 * 
 	 * @param alg

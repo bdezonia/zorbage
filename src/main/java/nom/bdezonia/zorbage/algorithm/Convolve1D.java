@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Convolve1D {
 
+	private Convolve1D() { }
+	
 	/**
 	 * 
 	 * @param alg

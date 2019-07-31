@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.TrimmedDataSource;
  */
 public class NextPermutation {
 
+	private NextPermutation() { }
+	
 	/**
 	 * 
 	 * @param alg

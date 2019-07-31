@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class StableSort {
 
+	private StableSort() { }
+	
 	/**
 	 * 
 	 * @param alg

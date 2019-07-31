@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.TrimmedDataSource;
  */
 public class ParallelTransform2 {
 
+	private ParallelTransform2() { }
+	
 	/**
 	 * 
 	 * @param algU

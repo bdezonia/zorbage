@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  */
 public class Max {
 	
+	private Max() { }
+	
 	/**
 	 * 
 	 * @param algebra

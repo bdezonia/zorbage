@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Correlate1D {
 
+	private Correlate1D() { }
+	
 	/**
 	 * 
 	 * @param alg

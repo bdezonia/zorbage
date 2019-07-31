@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class SetUnion {
 
+	private SetUnion() { }
+	
 	/**
 	 * SetUnion : calculate the set union of two possibly unsorted lists.
 	 * The resulting data source has no duplicates and is sorted.

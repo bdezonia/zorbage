@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class GaussianFilter1D {
 
+	private GaussianFilter1D() { }
+	
 	/**
 	 * 
 	 * @param alg

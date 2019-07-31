@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class Sinch {
 
+	private Sinch() { }
+	
 	/**
 	 * 
 	 * @param algebra

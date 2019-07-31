@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class InplaceTransform2 {
 
+	private InplaceTransform2() { }
+	
 	/**
 	 * In place transformation of one whole list by a Procedure2.
 	 * 

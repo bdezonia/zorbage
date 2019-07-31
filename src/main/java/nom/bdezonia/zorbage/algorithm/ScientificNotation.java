@@ -43,6 +43,8 @@ public class ScientificNotation {
 
 	private static final MathContext context = new MathContext(100, RoundingMode.HALF_EVEN);
 
+	private ScientificNotation() { }
+	
 	/**
 	 * Create a numeric value from an scientific notation description.
 	 * Works in BigDecimals for up to 100 decimal places of accuracy.

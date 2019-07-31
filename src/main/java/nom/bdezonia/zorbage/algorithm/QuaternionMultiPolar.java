@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  */
 public class QuaternionMultiPolar {
 
+	private QuaternionMultiPolar() { }
+	
 	/**
 	 * 
 	 * @param rho1

@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class SetDifference {
 
+	private SetDifference() { }
+	
 	/**
 	 * SetDifference : calculate the set difference of two possibly unsorted lists.
 	 * The result has no duplicates and is sorted.

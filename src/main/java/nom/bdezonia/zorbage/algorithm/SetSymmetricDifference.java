@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class SetSymmetricDifference {
 
+	private SetSymmetricDifference() { }
+	
 	/**
 	 * SetSymmetricDifference : calculate the set symmetric difference of two possibly
 	 * unsorted lists. The result has no duplicates and is sorted.

@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class CopyBackward {
 
+	private CopyBackward() { }
+	
 	/**
 	 * 
 	 * @param algebra

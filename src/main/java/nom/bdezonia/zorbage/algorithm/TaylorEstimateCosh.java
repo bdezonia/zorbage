@@ -40,9 +40,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class TaylorEstimateCosh {
 
-	private TaylorEstimateCosh() {
-		
-	}
+	private TaylorEstimateCosh() { }
 
 	/**
 	 * 

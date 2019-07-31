@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.algebra.SetReal;
  */
 public class Splat1 {
 
+	private Splat1() { }
+	
 	/**
 	 * 
 	 * @param value

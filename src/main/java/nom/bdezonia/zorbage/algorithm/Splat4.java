@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
  */
 public class Splat4 {
 
+	private Splat4() { }
+	
 	/**
 	 * 
 	 * @param value

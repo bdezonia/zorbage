@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class LexicographicalCompare {
 
+	private LexicographicalCompare() { }
+	
 	/**
 	 * LexicographicalCompare compares two lists treating them as tuples of values.
 	 * The comparison returns true if the 1st "tuple" is less than the 2nd "tuple".

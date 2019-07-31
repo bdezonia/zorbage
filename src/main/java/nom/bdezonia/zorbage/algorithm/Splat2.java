@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.algebra.SetComplex;
  */
 public class Splat2 {
 
+	private Splat2() { }
+	
 	/**
 	 * 
 	 * @param value

@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class KMeans {
 
+	private KMeans() { }
+	
 	/**
 	 * KMeans.compute()
 	 * Usage: Pass in a list of points (all of the same dimension > 0) that span any region.

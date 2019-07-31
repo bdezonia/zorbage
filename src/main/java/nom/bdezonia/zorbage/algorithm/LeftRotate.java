@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class LeftRotate {
 
+	private LeftRotate() { }
+	
 	/**
 	 * Do a left rotation of a set of values.
 	 * 

@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class ReplaceCopyIf {
 
+	private ReplaceCopyIf() { }
+	
 	/**
 	 * 
 	 * @param algebra

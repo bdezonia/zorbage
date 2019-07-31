@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
  */
 public class OctonionFromComplex {
 
+	private OctonionFromComplex() { }
+	
 	/**
 	 * 
 	 * @param c1

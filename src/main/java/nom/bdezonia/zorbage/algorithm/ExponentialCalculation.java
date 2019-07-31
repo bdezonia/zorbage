@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.algebra.Power;
  */
 public class ExponentialCalculation {
 
+	private ExponentialCalculation() { }
+	
 	/**
 	 * Create a numeric value from an exponential description. Can create nonreal values
 	 * depending upon inputs.

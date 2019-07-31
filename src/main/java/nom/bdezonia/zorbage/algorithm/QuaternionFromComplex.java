@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member
  */
 public class QuaternionFromComplex {
 
+	private QuaternionFromComplex() { }
+	
 	/**
 	 * 
 	 * @param c1

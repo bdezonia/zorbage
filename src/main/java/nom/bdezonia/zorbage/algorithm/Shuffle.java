@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Shuffle {
 
+	private Shuffle() { }
+	
 	/**
 	 * 
 	 * @param algebra

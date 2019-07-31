@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Zip {
 
+	private Zip() { }
+	
 	/**
 	 * 
 	 * @param alg1

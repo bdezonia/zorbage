@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class RampFill {
 
+	private RampFill() { }
+	
 	/**
 	 * 
 	 * @param alg

@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class LowerBound {
 
+	private LowerBound() { }
+	
 	/**
 	 * 
 	 * @param alg

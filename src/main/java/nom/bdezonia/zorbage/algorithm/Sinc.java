@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  */
 public class Sinc {
 
+	private Sinc() { }
+	
 	/**
 	 * 
 	 * @param algebra

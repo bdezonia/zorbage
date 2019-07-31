@@ -38,7 +38,9 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class FindFirstOf {
 
-	/**
+	private FindFirstOf() { }
+		
+	/** 
 	 * 
 	 * @param algebra
 	 * @param elements

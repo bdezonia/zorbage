@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class SplatRational {
 
+	private SplatRational() { }
+	
 	/**
 	 * 
 	 * @param value
