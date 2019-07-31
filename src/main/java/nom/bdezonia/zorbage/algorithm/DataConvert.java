@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.TrimmedDataSource;
 
 /**
  * 
@@ -55,17 +56,38 @@ public class DataConvert {
 	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
 		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<U> fromList, IndexedDataSource<W> toList)
 	{
-		U from = fromAlgebra.construct();
-		W to = toAlgebra.construct();
-		int numD = Math.max(from.numDimensions(), to.numDimensions());
-		IntegerIndex tmp1 = new IntegerIndex(numD);
-		IntegerIndex tmp2 = new IntegerIndex(numD);
-		IntegerIndex tmp3 = new IntegerIndex(numD);
 		long fromSize = fromList.size();
-		for (long i = 0; i < fromSize; i++) {
-			fromList.get(i, from);
-			PrimitiveConverter.convert(tmp1, tmp2, tmp3, from, to);
-			toList.set(i, to);
+		long toSize = toList.size();
+		if (fromSize > toSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+		int maxPieces = Runtime.getRuntime().availableProcessors();
+		if (maxPieces > fromList.size())
+			maxPieces = (int) fromList.size();
+		long start = 0;
+		long count = fromList.size() / maxPieces;
+		long counted = 0;
+		Thread[] threads = new Thread[maxPieces];
+		for (int i = 0; i < maxPieces; i++) {
+			if (i == maxPieces - 1) {
+				count = fromList.size() - counted;
+			}
+			Computer<T,U,V,W> computer =
+					new Computer<>(fromAlgebra, toAlgebra, start, count, fromList, toList);
+			threads[i] = new Thread(computer);
+			start += count;
+			counted += count;
+		}
+		
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].start();
+		}
+		
+		try {
+			for (int i = 0; i < threads.length; i++) {
+				threads[i].join();
+			}
+		} catch (InterruptedException e) {
+			throw new IllegalArgumentException("ouch");
 		}
 	}
 
@@ -92,4 +114,36 @@ public class DataConvert {
 		}
 	}
 
+	private static class Computer<T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
+		implements Runnable
+	{
+		private final T algU;
+		private final V algW;
+		private final IndexedDataSource<U> src;
+		private final IndexedDataSource<W> dst;
+		
+		public Computer(T algU, V algW, long start, long count, IndexedDataSource<U> src, IndexedDataSource<W> dst) {
+			this.algU = algU;
+			this.algW = algW;
+			this.src = new TrimmedDataSource<>(src, start, count);
+			this.dst = new TrimmedDataSource<>(dst, start, count);
+		}
+		
+		@Override
+		public void run() {
+			U from = algU.construct();
+			W to = algW.construct();
+			int numD = Math.max(from.numDimensions(), to.numDimensions());
+			IntegerIndex tmp1 = new IntegerIndex(numD);
+			IntegerIndex tmp2 = new IntegerIndex(numD);
+			IntegerIndex tmp3 = new IntegerIndex(numD);
+			long fromSize = src.size();
+			for (long i = 0; i < fromSize; i++) {
+				src.get(i, from);
+				PrimitiveConverter.convert(tmp1, tmp2, tmp3, from, to);
+				dst.set(i, to);
+			}
+		}
+		
+	}
 }
