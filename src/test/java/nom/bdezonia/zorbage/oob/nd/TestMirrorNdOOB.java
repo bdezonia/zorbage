@@ -56,6 +56,8 @@ public class TestMirrorNdOOB {
 				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
 		IntegerIndex index = new IntegerIndex(ds.numDimensions());
 
+		// set the original 3 x 3 values
+		
 		value.setV(1);
 		index.set(0, 0);
 		index.set(1, 0);
@@ -101,34 +103,488 @@ public class TestMirrorNdOOB {
 		index.set(1, 2);
 		ds.set(index, value);
 
-		index.set(0, -1);
-		index.set(1, -1);
+		// now test row 1 extending left and right as needed
+		
+		index.set(0, 0);
+		index.set(1, 0);
 		padded.get(index, value);
 		assertEquals(1, value.v());
+
+		index.set(0, 1);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(0, 2);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(3, value.v());
 
 		index.set(0, -1);
 		index.set(1, 0);
 		padded.get(index, value);
 		assertEquals(1, value.v());
 
-		index.set(0, 0);
-		index.set(1, -1);
+		index.set(0, -2);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(0, -3);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(0, -4);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(0, -5);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(0, -6);
+		index.set(1, 0);
 		padded.get(index, value);
 		assertEquals(1, value.v());
+
+		index.set(0, 3);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(0, 4);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(2, value.v());
 
 		index.set(0, 5);
 		index.set(1, 0);
 		padded.get(index, value);
 		assertEquals(1, value.v());
 
-		index.set(0, 0);
-		index.set(1, 5);
-		padded.get(index, value);
-		assertEquals(1, value.v());
-
-		index.set(0, 0);
+		index.set(0, 6);
 		index.set(1, 0);
 		padded.get(index, value);
 		assertEquals(1, value.v());
+
+		index.set(0, 7);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(0, 8);
+		index.set(1, 0);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		// now test row 2 extending left and right as needed
+		
+		index.set(0, 0);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(0, 1);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(0, 2);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(0, -1);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(0, -2);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(0, -3);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(0, -4);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(0, -5);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(0, -6);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(0, 3);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(0, 4);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(0, 5);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(0, 6);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(0, 7);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(0, 8);
+		index.set(1, 1);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		// now test row 3 extending left and right as needed
+		
+		index.set(0, 0);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(0, 1);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(0, 2);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(0, -1);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(0, -2);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(0, -3);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(0, -4);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(0, -5);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(0, -6);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(0, 3);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(0, 4);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(0, 5);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(0, 6);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(0, 7);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(0, 8);
+		index.set(1, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+		
+		// now test col 1 extending up and down as needed
+		
+		index.set(1, 0);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(1, value.v());
+
+		index.set(1, 1);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(1, 2);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(1, -1);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(1, value.v());
+
+		index.set(1, -2);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(1, -3);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(1, -4);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(1, -5);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(1, -6);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(1, value.v());
+
+		index.set(1, 3);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(1, 4);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(1, 5);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(1, value.v());
+
+		index.set(1, 6);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(1, value.v());
+
+		index.set(1, 7);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(4, value.v());
+
+		index.set(1, 8);
+		index.set(0, 0);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+		
+		// now test col 2 extending up and down as needed
+		
+		index.set(1, 0);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(1, 1);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(1, 2);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(1, -1);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(1, -2);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(1, -3);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(1, -4);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(1, -5);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(1, -6);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(1, 3);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+
+		index.set(1, 4);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(1, 5);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(1, 6);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(2, value.v());
+
+		index.set(1, 7);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(5, value.v());
+
+		index.set(1, 8);
+		index.set(0, 1);
+		padded.get(index, value);
+		assertEquals(8, value.v());
+		
+		// now test col 3 extending up and down as needed
+
+		index.set(1, 0);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(1, 1);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(1, 2);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(1, -1);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(1, -2);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(1, -3);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(1, -4);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(1, -5);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(1, -6);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(1, 3);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+
+		index.set(1, 4);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(1, 5);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(1, 6);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(1, 7);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(6, value.v());
+
+		index.set(1, 8);
+		index.set(0, 2);
+		padded.get(index, value);
+		assertEquals(9, value.v());
+		
+		// now test the corner cases
+
+		index.set(1, -1);
+		index.set(0, -1);
+		padded.get(index, value);
+		assertEquals(1, value.v());
+
+		index.set(1, -1);
+		index.set(0, 3);
+		padded.get(index, value);
+		assertEquals(3, value.v());
+
+		index.set(1, 3);
+		index.set(0, -1);
+		padded.get(index, value);
+		assertEquals(7, value.v());
+
+		index.set(1, 3);
+		index.set(0, 3);
+		padded.get(index, value);
+		assertEquals(9, value.v());
 	}
 }
