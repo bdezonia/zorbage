@@ -54,7 +54,7 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 	public void set(long index, U value) {
 		if (index < 0 || index >= Integer.MAX_VALUE)
 			throw new IllegalArgumentException("index oob for ListDataSource");
-		U tmp = algebra.construct();
+		U tmp = list.get((int) index);
 		algebra.assign().call(value, tmp);
 		list.set((int) index, tmp);
 	}
