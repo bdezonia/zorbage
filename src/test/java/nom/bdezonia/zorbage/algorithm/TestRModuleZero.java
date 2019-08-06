@@ -46,6 +46,7 @@ public class TestRModuleZero {
 		Float64Member value = G.DBL.construct();
 		Float64VectorMember vec = new Float64VectorMember(new double[] {1,2,3,4});
 		RModuleZero.compute(vec);
+		assertEquals(4, vec.length());
 		for (long i = 0; i < vec.length(); i++) {
 			vec.v(i, value);
 			assertEquals(0, value.v(), 0);
