@@ -46,6 +46,11 @@ public class StableSort {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T alg, IndexedDataSource<U> a)
 	{
+		// TODO
+		// Quicksort can be a stable sort if it is written using a stable partition.
+		// So I should be able to copy Sort code here but call StablePartition. Maybe
+		// make Sort call Partition. Reuse InsertionSort code in both places.
+		
 		throw new IllegalArgumentException("not written yet");
 	}
 	
