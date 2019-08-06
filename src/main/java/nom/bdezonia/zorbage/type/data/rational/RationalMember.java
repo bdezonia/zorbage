@@ -81,6 +81,10 @@ public class RationalMember
 		setV(integer.v());
 	}
 
+	public RationalMember(UnboundedIntMember n, UnboundedIntMember d) {
+		setV(n.v(), d.v());
+	}
+
 	@Override
 	public void v(RationalMember value) {
 		value.set(this);
