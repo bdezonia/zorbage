@@ -28,12 +28,13 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.data.rational.RationalMember;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -43,7 +44,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestScaleByRational {
+public class TestScaleByHighPrec {
 
 	@Test
 	public void test1() {
@@ -51,35 +52,33 @@ public class TestScaleByRational {
 		IndexedDataSource<SignedInt8Member> bytes1 = ArrayStorage.allocateBytes(
 				new byte[] {-128, -64, -36, -15, -2, -1, 0, 1, 2, 11, 27, 84, 100});
 		IndexedDataSource<SignedInt8Member> bytes2 = Storage.allocate(bytes1.size(), value);
-		UnboundedIntMember n = new UnboundedIntMember(9);
-		UnboundedIntMember d = new UnboundedIntMember(8);
-		RationalMember scale = new RationalMember(n, d);
-		ScaleByRational.compute(G.INT8, scale, bytes1, bytes2);
+		HighPrecisionMember scale = new HighPrecisionMember(BigDecimal.valueOf(1.3));
+		ScaleByHighPrec.compute(G.INT8, scale, bytes1, bytes2);
 		bytes2.get(0, value);
-		assertEquals((byte)(9*(-128) / 8), value.v());
+		assertEquals((byte)(1.3*(-128)-0.5), value.v());
 		bytes2.get(1, value);
-		assertEquals((byte)(9*(-64) / 8), value.v());
+		assertEquals((byte)(1.3*(-64)-0.5), value.v());
 		bytes2.get(2, value);
-		assertEquals((byte)(9*(-36) / 8), value.v());
+		assertEquals((byte)(1.3*(-36)-0.5), value.v());
 		bytes2.get(3, value);
-		assertEquals((byte)(9*(-15) / 8), value.v());
+		assertEquals((byte)(1.3*(-15)-0.5), value.v());
 		bytes2.get(4, value);
-		assertEquals((byte)(9*(-2) / 8), value.v());
+		assertEquals((byte)(1.3*(-2)-0.5), value.v());
 		bytes2.get(5, value);
-		assertEquals((byte)(9*(-1) / 8), value.v());
+		assertEquals((byte)(1.3*(-1)-0.5), value.v());
 		bytes2.get(6, value);
-		assertEquals((byte)(9*(0) / 8), value.v());
+		assertEquals((byte)(1.3*(0)), value.v());
 		bytes2.get(7, value);
-		assertEquals((byte)(9*(1) / 8), value.v());
+		assertEquals((byte)(1.3*(1)+0.5), value.v());
 		bytes2.get(8, value);
-		assertEquals((byte)(9*(2) / 8), value.v());
+		assertEquals((byte)(1.3*(2)+0.5), value.v());
 		bytes2.get(9, value);
-		assertEquals((byte)(9*(11) / 8), value.v());
+		assertEquals((byte)(1.3*(11)+0.5), value.v());
 		bytes2.get(10, value);
-		assertEquals((byte)(9*(27) / 8), value.v());
+		assertEquals((byte)(1.3*(27)+0.5), value.v());
 		bytes2.get(11, value);
-		assertEquals((byte)(9*(84) / 8), value.v());
+		assertEquals((byte)(1.3*(84)+0.5), value.v());
 		bytes2.get(12, value);
-		assertEquals((byte)(9*(100) / 8), value.v());
+		assertEquals((byte)(1.3*(100)+0.5), value.v());
 	}
 }
