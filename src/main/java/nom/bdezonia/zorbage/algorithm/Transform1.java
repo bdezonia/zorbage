@@ -40,7 +40,7 @@ public class Transform1 {
 	private Transform1() { }
 
 	/**
-	 * Initialization of a 2nd list by application of a Procedure1 to the values of a 1st list.
+	 * Initialization of a list by repeated computation of a Procedure1.
 	 * 
 	 * @param algU
 	 * @param proc
@@ -52,8 +52,6 @@ public class Transform1 {
 		U value1 = algU.construct();
 		long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
-			// unnecessary? Maybe we assume proc has no dependency on input value.
-			//a.get(i, value1);
 			proc.call(value1);
 			a.set(i, value1);
 		}
