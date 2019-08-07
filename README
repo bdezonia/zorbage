@@ -1,4 +1,4 @@
-Zorbage: an algebraic data hierarchy for use in numeric processing
+Zorbage: algebraic data types and algorithms for use in numeric processing
 
 Goals:
   1) provide the framework for reusable numeric algorithms
