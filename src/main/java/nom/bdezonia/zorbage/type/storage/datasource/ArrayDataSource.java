@@ -33,19 +33,19 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class GenericWrappedDataSource<T extends Algebra<T,U>,U> implements IndexedDataSource<U> {
+public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSource<U> {
 
 	private final T algebra;
 	private final U[] data;
 	
-	public GenericWrappedDataSource(T algebra, U[] data) {
+	public ArrayDataSource(T algebra, U[] data) {
 		this.algebra = algebra;
 		this.data = data;
 	}
 	
 	@Override
 	public IndexedDataSource<U> duplicate() {
-		return new GenericWrappedDataSource<T,U>(algebra, data);
+		return new ArrayDataSource<T,U>(algebra, data);
 	}
 
 	@Override

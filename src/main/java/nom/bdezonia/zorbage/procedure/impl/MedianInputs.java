@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.datasource.GenericWrappedDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.ArrayDataSource;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -52,7 +52,7 @@ public class MedianInputs<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		IndexedDataSource<U> wrapper = new GenericWrappedDataSource<T,U>(algebra, inputs);
+		IndexedDataSource<U> wrapper = new ArrayDataSource<T,U>(algebra, inputs);
 		nom.bdezonia.zorbage.algorithm.Median.compute(algebra, wrapper, result);
 	}
 
