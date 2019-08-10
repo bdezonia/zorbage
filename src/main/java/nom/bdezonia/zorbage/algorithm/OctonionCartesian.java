@@ -26,8 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 
 /**
  * 
@@ -50,8 +49,9 @@ public class OctonionCartesian {
 	 * @param k0
 	 * @param out
 	 */
-	public static void compute(double r, double i, double j, double k, double l, double i0, double j0, double k0, OctonionFloat64Member out) {
-
+	public static <U>
+		void compute(U r, U i, U j, U k, U l, U i0, U j0, U k0, SetOctonion<U> out)
+	{
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);
@@ -60,24 +60,6 @@ public class OctonionCartesian {
 		out.setI0(i0);
 		out.setJ0(j0);
 		out.setK0(k0);
-
 	}
 	
-	/**
-	 * 
-	 * @param r
-	 * @param i
-	 * @param j
-	 * @param k
-	 * @param l
-	 * @param i0
-	 * @param j0
-	 * @param k0
-	 * @param out
-	 */
-	public static void compute(Float64Member r, Float64Member i, Float64Member j, Float64Member k, Float64Member l, Float64Member i0, Float64Member j0, Float64Member k0, OctonionFloat64Member out) {
-		
-		compute(r.v(), i.v(), j.v(), k.v(), l.v(), i0.v(), j0.v(), k0.v(), out);
-	
-	}
 }

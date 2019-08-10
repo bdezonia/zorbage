@@ -26,8 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 
 /**
  * 
@@ -44,17 +45,26 @@ public class OctonionFromQuaternion {
 	 * @param q2
 	 * @param out
 	 */
-	public static void compute(QuaternionFloat64Member q1, QuaternionFloat64Member q2, OctonionFloat64Member out) {
-
-		out.setR(q1.r());
-		out.setI(q1.i());
-		out.setJ(q1.j());
-		out.setK(q1.k());
-		out.setL(q2.r());
-		out.setI0(q2.i());
-		out.setJ0(q2.j());
-		out.setK0(q2.k());
-
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, GetQuaternion<U> q1, GetQuaternion<U> q2, SetOctonion<U> out)
+	{
+		U tmp = alg.construct();
+		q1.getR(tmp);
+		out.setR(tmp);
+		q1.getI(tmp);
+		out.setI(tmp);
+		q1.getJ(tmp);
+		out.setJ(tmp);
+		q1.getK(tmp);
+		out.setK(tmp);
+		q2.getR(tmp);
+		out.setL(tmp);
+		q2.getI(tmp);
+		out.setI0(tmp);
+		q2.getJ(tmp);
+		out.setJ0(tmp);
+		q2.getK(tmp);
+		out.setK0(tmp);
 	}
 	
 }

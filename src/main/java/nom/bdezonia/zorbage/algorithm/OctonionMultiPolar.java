@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -51,25 +52,40 @@ public class OctonionMultiPolar {
 	 * @param theta4
 	 * @param out
 	 */
-	public static void compute(double rho1, double theta1, double rho2, double theta2, double rho3, double theta3, double rho4, double theta4, OctonionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U rho1, U theta1, U rho2, U theta2, U rho3, U theta3, U rho4, U theta4, SetOctonion<U> out)
+	{
+		U tmpTh1C = alg.construct();
+		U tmpTh1S = alg.construct();
+		U tmpTh2C = alg.construct();
+		U tmpTh2S = alg.construct();
+		U tmpTh3C = alg.construct();
+		U tmpTh3S = alg.construct();
+		U tmpTh4C = alg.construct();
+		U tmpTh4S = alg.construct();
+
+		alg.sinAndCos().call(theta1, tmpTh1S, tmpTh1C);
+		alg.sinAndCos().call(theta2, tmpTh2S, tmpTh2C);
+		alg.sinAndCos().call(theta3, tmpTh3S, tmpTh3C);
+		alg.sinAndCos().call(theta4, tmpTh4S, tmpTh4C);
+
+		U r = alg.construct();
+		U i = alg.construct();
+		U j = alg.construct();
+		U k = alg.construct();
+		U l = alg.construct();
+		U i0 = alg.construct();
+		U j0 = alg.construct();
+		U k0 = alg.construct();
 		
-		double tmpTh1C = FastMath.cos(theta1);
-		double tmpTh1S = FastMath.sin(theta1);
-		double tmpTh2C = FastMath.cos(theta2);
-		double tmpTh2S = FastMath.sin(theta2);
-		double tmpTh3C = FastMath.cos(theta3);
-		double tmpTh3S = FastMath.sin(theta3);
-		double tmpTh4C = FastMath.cos(theta4);
-		double tmpTh4S = FastMath.sin(theta4);
-		
-		double r = rho1 * tmpTh1C;
-		double i = rho1 * tmpTh1S;
-		double j = rho2 * tmpTh2C;
-		double k = rho2 * tmpTh2S;
-		double l = rho3 * tmpTh3C;
-		double i0 = rho3 * tmpTh3S;
-		double j0 = rho4 * tmpTh4C;
-		double k0 = rho4 * tmpTh4S;
+		alg.multiply().call(rho1, tmpTh1C, r);
+		alg.multiply().call(rho1, tmpTh1S, i);
+		alg.multiply().call(rho2, tmpTh2C, j);
+		alg.multiply().call(rho2, tmpTh2S, k);
+		alg.multiply().call(rho3, tmpTh3C, l);
+		alg.multiply().call(rho3, tmpTh3S, i0);
+		alg.multiply().call(rho4, tmpTh4C, j0);
+		alg.multiply().call(rho4, tmpTh4S, k0);
 		
 		out.setR(r);
 		out.setI(i);
@@ -79,24 +95,6 @@ public class OctonionMultiPolar {
 		out.setI0(i0);
 		out.setJ0(j0);
 		out.setK0(k0);
-	}
-
-	/**
-	 * 
-	 * @param rho1
-	 * @param theta1
-	 * @param rho2
-	 * @param theta2
-	 * @param rho3
-	 * @param theta3
-	 * @param rho4
-	 * @param theta4
-	 * @param out
-	 */
-	public static void compute(Float64Member rho1, Float64Member theta1, Float64Member rho2, Float64Member theta2, Float64Member rho3, Float64Member theta3, Float64Member rho4, Float64Member theta4, OctonionFloat64Member out) {
-		
-		compute(rho1.v(), theta1.v(), rho2.v(), theta2.v(), rho3.v(), theta3.v(), rho4.v(), theta4.v(), out);
-	
 	}
 
 }

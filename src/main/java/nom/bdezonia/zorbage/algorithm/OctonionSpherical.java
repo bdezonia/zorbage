@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -51,40 +52,85 @@ public class OctonionSpherical {
 	 * @param phi6
 	 * @param out
 	 */
-	public static void compute(double rho, double theta, double phi1, double phi2, double phi3, double phi4, double phi5, double phi6, OctonionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U rho, U theta, U phi1, U phi2, U phi3, U phi4, U phi5, U phi6, SetOctonion<U> out)
+	{
+		U tmpThC = alg.construct();
+		U tmpThS = alg.construct();
+		U tmpPhi1C = alg.construct();
+		U tmpPhi1S = alg.construct();
+		U tmpPhi2C = alg.construct();
+		U tmpPhi2S = alg.construct();
+		U tmpPhi3C = alg.construct();
+		U tmpPhi3S = alg.construct();
+		U tmpPhi4C = alg.construct();
+		U tmpPhi4S = alg.construct();
+		U tmpPhi5C = alg.construct();
+		U tmpPhi5S = alg.construct();
+		U tmpPhi6C = alg.construct();
+		U tmpPhi6S = alg.construct();
 		
-		double tmpThC = FastMath.cos(theta);
-		double tmpThS = FastMath.sin(theta);
-		double tmpPhi1C = FastMath.cos(phi1);
-		double tmpPhi1S = FastMath.sin(phi1);
-		double tmpPhi2C = FastMath.cos(phi2);
-		double tmpPhi2S = FastMath.sin(phi2);
-		double tmpPhi3C = FastMath.cos(phi3);
-		double tmpPhi3S = FastMath.sin(phi3);
-		double tmpPhi4C = FastMath.cos(phi4);
-		double tmpPhi4S = FastMath.sin(phi4);
-		double tmpPhi5C = FastMath.cos(phi5);
-		double tmpPhi5S = FastMath.sin(phi5);
-		double tmpPhi6C = FastMath.cos(phi6);
-		double tmpPhi6S = FastMath.sin(phi6);
+		alg.sinAndCos().call(theta, tmpThS, tmpThC);
+		alg.sinAndCos().call(phi1, tmpPhi1S, tmpPhi1C);
+		alg.sinAndCos().call(phi2, tmpPhi2S, tmpPhi2C);
+		alg.sinAndCos().call(phi3, tmpPhi3S, tmpPhi3C);
+		alg.sinAndCos().call(phi4, tmpPhi4S, tmpPhi4C);
+		alg.sinAndCos().call(phi5, tmpPhi5S, tmpPhi5C);
+		alg.sinAndCos().call(phi6, tmpPhi6S, tmpPhi6C);
+
+		U r = alg.construct();
+		U i = alg.construct();
+		U j = alg.construct();
+		U k = alg.construct();
+		U l = alg.construct();
+		U i0 = alg.construct();
+		U j0 = alg.construct();
+		U k0 = alg.construct();
 		
-		double k0 = tmpPhi6S;
-		double j0 = tmpPhi5S * tmpPhi6C;
-		double i0 = tmpPhi4S * tmpPhi5C * tmpPhi6C;
-		double l = tmpPhi3S * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-		double k = tmpPhi2S * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-		double j = tmpPhi1S * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-		double i = tmpThS * tmpPhi1C * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
-		double r = tmpThC * tmpPhi1C * tmpPhi2C * tmpPhi3C * tmpPhi4C * tmpPhi5C * tmpPhi6C;
+		alg.assign().call(tmpPhi6S, k0);
 		
-		r *= rho;
-		i *= rho;
-		j *= rho;
-		k *= rho;
-		l *= rho;
-		i0 *= rho;
-		j0 *= rho;
-		k0 *= rho;
+		alg.multiply().call(tmpPhi5S, tmpPhi6C, j0);
+
+		alg.multiply().call(tmpPhi4S, tmpPhi5C, i0);
+		alg.multiply().call(i0, tmpPhi6C, i0);
+
+		alg.multiply().call(tmpPhi3S, tmpPhi4C, l);
+		alg.multiply().call(l, tmpPhi5C, l);
+		alg.multiply().call(l, tmpPhi6C, l);
+
+		alg.multiply().call(tmpPhi2S, tmpPhi3C, k);
+		alg.multiply().call(k, tmpPhi4C, k);
+		alg.multiply().call(k, tmpPhi5C, k);
+		alg.multiply().call(k, tmpPhi6C, k);
+
+		alg.multiply().call(tmpPhi1S, tmpPhi2C, j);
+		alg.multiply().call(j, tmpPhi3C, j);
+		alg.multiply().call(j, tmpPhi4C, j);
+		alg.multiply().call(j, tmpPhi5C, j);
+		alg.multiply().call(j, tmpPhi6C, j);
+
+		alg.multiply().call(tmpThS, tmpPhi1C, i);
+		alg.multiply().call(i, tmpPhi2C, i);
+		alg.multiply().call(i, tmpPhi3C, i);
+		alg.multiply().call(i, tmpPhi4C, i);
+		alg.multiply().call(i, tmpPhi5C, i);
+		alg.multiply().call(i, tmpPhi6C, i);
+		
+		alg.multiply().call(tmpThC, tmpPhi1C, r);
+		alg.multiply().call(r, tmpPhi2C, r);
+		alg.multiply().call(r, tmpPhi3C, r);
+		alg.multiply().call(r, tmpPhi4C, r);
+		alg.multiply().call(r, tmpPhi5C, r);
+		alg.multiply().call(r, tmpPhi6C, r);
+		
+		alg.multiply().call(r, rho, r);
+		alg.multiply().call(i, rho, i);
+		alg.multiply().call(j, rho, j);
+		alg.multiply().call(k, rho, k);
+		alg.multiply().call(l, rho, l);
+		alg.multiply().call(i0, rho, i0);
+		alg.multiply().call(j0, rho, j0);
+		alg.multiply().call(k0, rho, k0);
 		
 		out.setR(r);
 		out.setI(i);
@@ -94,24 +140,6 @@ public class OctonionSpherical {
 		out.setI0(i0);
 		out.setJ0(j0);
 		out.setK0(k0);
-	}
-
-	/**
-	 * 
-	 * @param rho
-	 * @param theta
-	 * @param phi1
-	 * @param phi2
-	 * @param phi3
-	 * @param phi4
-	 * @param phi5
-	 * @param phi6
-	 * @param out
-	 */
-	public static void compute(Float64Member rho, Float64Member theta, Float64Member phi1, Float64Member phi2, Float64Member phi3, Float64Member phi4, Float64Member phi5, Float64Member phi6, OctonionFloat64Member out) {
-		
-		compute(rho.v(), theta.v(), phi1.v(), phi2.v(), phi3.v(), phi4.v(), phi5.v(), phi6.v(), out);
-	
 	}
 
 }

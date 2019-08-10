@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -51,13 +52,19 @@ public class OctonionCylindrical {
 	 * @param k0
 	 * @param out
 	 */
-	public static void compute(double rad, double angle, double j, double k, double l, double i0, double j0, double k0, OctonionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U rad, U angle, U j, U k, U l, U i0, U j0, U k0, SetOctonion<U> out)
+	{
+		U tmpAngC = alg.construct();
+		U tmpAngS = alg.construct();
 		
-		double tmpAngC = FastMath.cos(angle);
-		double tmpAngS = FastMath.sin(angle);
+		alg.sinAndCos().call(angle, tmpAngS, tmpAngC);
 
-		double r = rad * tmpAngC;
-		double i = rad * tmpAngS;
+		U r = alg.construct();
+		U i = alg.construct();
+		
+		alg.multiply().call(rad, tmpAngC, r);
+		alg.multiply().call(rad, tmpAngS, i);
         
 		out.setR(r);
 		out.setI(i);
@@ -67,24 +74,6 @@ public class OctonionCylindrical {
 		out.setI0(i0);
 		out.setJ0(j0);
 		out.setK0(k0);
-	}
-
-	/**
-	 * 
-	 * @param rad
-	 * @param angle
-	 * @param j
-	 * @param k
-	 * @param l
-	 * @param i0
-	 * @param j0
-	 * @param k0
-	 * @param out
-	 */
-	public static void compute(Float64Member rad, Float64Member angle, Float64Member j, Float64Member k, Float64Member l, Float64Member i0, Float64Member j0, Float64Member k0, OctonionFloat64Member out) {
-		
-		compute(rad.v(), angle.v(), j.v(), k.v(), l.v(), i0.v(), j0.v(), k0.v(), out);
-	
 	}
 
 }

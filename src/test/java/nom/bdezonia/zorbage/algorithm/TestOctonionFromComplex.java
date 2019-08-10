@@ -49,7 +49,7 @@ public class TestOctonionFromComplex {
 		ComplexFloat64Member c3 = G.CDBL.construct("{7,3}");
 		ComplexFloat64Member c4 = G.CDBL.construct("{6,5}");
 		OctonionFloat64Member out = G.ODBL.construct();
-		OctonionFromComplex.compute(c1, c2, c3, c4, out);
+		OctonionFromComplex.compute(G.DBL, c1, c2, c3, c4, out);
 		assertEquals(1, out.r(), 0);
 		assertEquals(4, out.i(), 0);
 		assertEquals(9, out.j(), 0);

@@ -26,8 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.GetComplex;
+import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 
 /**
  * 
@@ -46,16 +47,26 @@ public class OctonionFromComplex {
 	 * @param c4
 	 * @param out
 	 */
-	public static void compute(ComplexFloat64Member c1, ComplexFloat64Member c2, ComplexFloat64Member c3, ComplexFloat64Member c4, OctonionFloat64Member out) {
-
-		out.setR(c1.r());
-		out.setI(c1.i());
-		out.setJ(c2.r());
-		out.setK(c2.i());
-		out.setL(c3.r());
-		out.setI0(c3.i());
-		out.setJ0(c4.r());
-		out.setK0(c4.i());
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, GetComplex<U> c1, GetComplex<U> c2, GetComplex<U> c3, GetComplex<U> c4, SetOctonion<U> out)
+	{
+		U tmp = alg.construct();
+		c1.getR(tmp);
+		out.setR(tmp);
+		c1.getI(tmp);
+		out.setI(tmp);
+		c2.getR(tmp);
+		out.setJ(tmp);
+		c2.getI(tmp);
+		out.setK(tmp);
+		c3.getR(tmp);
+		out.setL(tmp);
+		c3.getI(tmp);
+		out.setI0(tmp);
+		c4.getR(tmp);
+		out.setJ0(tmp);
+		c4.getI(tmp);
+		out.setK0(tmp);
 
 	}
 	
