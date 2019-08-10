@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetComplex;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -44,19 +45,17 @@ public class ComplexPolar {
 	 * @param r
 	 * @param theta
 	 */
-	public static void compute(double r, double theta, ComplexFloat64Member out)
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T algebra, U r, U theta, SetComplex<U> out)
 	{
-		out.setR(r * FastMath.cos(theta));
-		out.setI(r * FastMath.sin(theta));
+		U tmp = algebra.construct();
+		U sinTheta = algebra.construct();
+		U cosTheta = algebra.construct();
+		algebra.sinAndCos().call(theta, sinTheta, cosTheta);
+		algebra.multiply().call(r, cosTheta, tmp);
+		out.setR(tmp);
+		algebra.multiply().call(r, sinTheta, tmp);
+		out.setI(tmp);
 	}
 
-	/**
-	 * 
-	 * @param r
-	 * @param theta
-	 */
-	public static void compute(Float64Member r, Float64Member theta, ComplexFloat64Member out)
-	{
-		compute(r.v(), theta.v(), out);
-	}
 }

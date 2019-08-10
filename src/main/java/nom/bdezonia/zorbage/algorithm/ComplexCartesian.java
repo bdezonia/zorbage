@@ -26,8 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.SetComplex;
 
 /**
  * 
@@ -43,19 +42,11 @@ public class ComplexCartesian {
 	 * @param real
 	 * @param imag
 	 */
-	public static void compute(double real, double imag, ComplexFloat64Member out)
+	public static <U>
+		void compute(U real, U imag, SetComplex<U> out)
 	{
 		out.setR(real);
 		out.setI(imag);
 	}
 
-	/**
-	 * 
-	 * @param real
-	 * @param imag
-	 */
-	public static void compute(Float64Member real, Float64Member imag, ComplexFloat64Member out)
-	{
-		compute(real.v(), imag.v(), out);
-	}
 }
