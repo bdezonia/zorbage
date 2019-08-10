@@ -26,8 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
 
 /**
  * 
@@ -46,26 +45,13 @@ public class QuaternionCartesian {
 	 * @param k
 	 * @param out
 	 */
-	public static void compute(double r, double i, double j, double k, QuaternionFloat64Member out) {
-
+	public static <U>
+		void compute(U r, U i, U j, U k, SetQuaternion<U> out)
+	{
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);
 		out.setK(k);
-
 	}
 	
-	/**
-	 * 
-	 * @param r
-	 * @param i
-	 * @param j
-	 * @param k
-	 * @param out
-	 */
-	public static void compute(Float64Member r, Float64Member i, Float64Member j, Float64Member k, QuaternionFloat64Member out) {
-		
-		compute(r.v(), i.v(), j.v(), k.v(), out);
-	
-	}
 }

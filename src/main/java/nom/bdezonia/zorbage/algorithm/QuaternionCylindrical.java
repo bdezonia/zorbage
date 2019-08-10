@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -47,32 +48,24 @@ public class QuaternionCylindrical {
 	 * @param k
 	 * @param out
 	 */
-	public static void compute(double rad, double angle, double j, double k, QuaternionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U rad, U angle, U j, U k, SetQuaternion<U> out) {
 		
-		double tmpAngC = FastMath.cos(angle);
-		double tmpAngS = FastMath.sin(angle);
+		U tmpAngC = alg.construct();
+		U tmpAngS = alg.construct();
+		
+		alg.sinAndCos().call(angle, tmpAngS, tmpAngC);
 
-		double r = rad * tmpAngC;
-		double i = rad * tmpAngS;
+		U r = alg.construct();
+		U i = alg.construct();
 		
+		alg.multiply().call(rad, tmpAngC, r);
+		alg.multiply().call(rad, tmpAngS, i);
+
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);
 		out.setK(k);
-	}
-
-	/**
-	 * 
-	 * @param rad
-	 * @param angle
-	 * @param j
-	 * @param k
-	 * @param out
-	 */
-	public static void compute(Float64Member rad, Float64Member angle, Float64Member j, Float64Member k, QuaternionFloat64Member out) {
-		
-		compute(rad.v(), angle.v(), j.v(), k.v(), out);
-	
 	}
 
 }

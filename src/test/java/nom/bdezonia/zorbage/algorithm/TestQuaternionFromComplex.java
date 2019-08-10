@@ -47,7 +47,7 @@ public class TestQuaternionFromComplex {
 		ComplexFloat64Member c1 = G.CDBL.construct("{1,4}");
 		ComplexFloat64Member c2 = G.CDBL.construct("{7,3}");
 		QuaternionFloat64Member out = G.QDBL.construct();
-		QuaternionFromComplex.compute(c1, c2, out);
+		QuaternionFromComplex.compute(G.DBL, c1, c2, out);
 		assertEquals(1, out.r(), 0);
 		assertEquals(4, out.i(), 0);
 		assertEquals(7, out.j(), 0);

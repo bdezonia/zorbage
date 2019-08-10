@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -47,35 +48,34 @@ public class QuaternionCylindroSpherical {
 	 * @param latitude
 	 * @param out
 	 */
-	public static void compute(double r, double rad, double longitude, double latitude, QuaternionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U r, U rad, U longitude, U latitude, SetQuaternion<U> out)
+	{
+		U tmpLngC = alg.construct();
+		U tmpLngS = alg.construct();
+		U tmpLatC = alg.construct();
+		U tmpLatS = alg.construct();
 		
-		double tmpLngC = FastMath.cos(longitude);
-		double tmpLngS = FastMath.sin(longitude);
-		double tmpLatC = FastMath.cos(latitude);
-		double tmpLatS = FastMath.sin(latitude);
+		alg.sinAndCos().call(longitude, tmpLngS, tmpLngC);
+		alg.sinAndCos().call(latitude, tmpLatS, tmpLatC);
+
+		U i = alg.construct();
+		U j = alg.construct();
+		U k = alg.construct();
+
+		alg.multiply().call(rad, tmpLngC, i);
+		alg.multiply().call(i, tmpLatC, i);
 		
-		double i = rad * tmpLngC * tmpLatC;
-		double j = rad * tmpLngS * tmpLatC;
-		double k = rad * tmpLatS;
+
+		alg.multiply().call(rad, tmpLngS, j);
+		alg.multiply().call(j, tmpLatC, j);
+		
+		alg.multiply().call(rad, tmpLatS, k);
 		
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);
 		out.setK(k);
-	}
-
-	/**
-	 * 
-	 * @param r
-	 * @param rad
-	 * @param longitude
-	 * @param latitude
-	 * @param out
-	 */
-	public static void compute(Float64Member r, Float64Member rad, Float64Member longitude, Float64Member latitude, QuaternionFloat64Member out) {
-		
-		compute(r.v(), rad.v(), longitude.v(), latitude.v(), out);
-	
 	}
 
 }

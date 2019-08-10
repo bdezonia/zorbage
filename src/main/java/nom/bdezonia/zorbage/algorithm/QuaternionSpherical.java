@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -47,43 +48,44 @@ public class QuaternionSpherical {
 	 * @param phi2
 	 * @param out
 	 */
-	public static void compute(double rho, double theta, double phi1, double phi2, QuaternionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U rho, U theta, U phi1, U phi2, SetQuaternion<U> out)
+	{
+		U tmpThC = alg.construct();
+		U tmpThS = alg.construct();
+		U tmpPhi1C = alg.construct();
+		U tmpPhi1S = alg.construct();
+		U tmpPhi2C = alg.construct();
+		U tmpPhi2S = alg.construct();
 		
-		double tmpThC = FastMath.cos(theta);
-		double tmpThS = FastMath.sin(theta);
-		double tmpPhi1C = FastMath.cos(phi1);
-		double tmpPhi1S = FastMath.sin(phi1);
-		double tmpPhi2C = FastMath.cos(phi2);
-		double tmpPhi2S = FastMath.sin(phi2);
+		alg.sinAndCos().call(theta, tmpThS, tmpThC);
+		alg.sinAndCos().call(phi1, tmpPhi1S, tmpPhi1C);
+		alg.sinAndCos().call(phi2, tmpPhi2S, tmpPhi2C);
+
+		U r = alg.construct();
+		U i = alg.construct();
+		U j = alg.construct();
+		U k = alg.construct();
 		
-		double r = tmpThC * tmpPhi1C * tmpPhi2C;
-		double i = tmpThS * tmpPhi1C * tmpPhi2C;
-		double j = tmpPhi1S * tmpPhi2C;
-		double k = tmpPhi2S;
+		alg.multiply().call(tmpThC, tmpPhi1C, r);
+		alg.multiply().call(r, tmpPhi2C, r);
+
+		alg.multiply().call(tmpThS, tmpPhi1C, i);
+		alg.multiply().call(i, tmpPhi2C, i);
+
+		alg.multiply().call(tmpPhi1S, tmpPhi2C, j);
 		
-		r *= rho;
-		i *= rho;
-		j *= rho;
-		k *= rho;
+		alg.assign().call(tmpPhi2S, k);
+
+		alg.multiply().call(r, rho, r);
+		alg.multiply().call(i, rho, i);
+		alg.multiply().call(j, rho, j);
+		alg.multiply().call(k, rho, k);
 		
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);
 		out.setK(k);
-	}
-
-	/**
-	 * 
-	 * @param rho
-	 * @param theta
-	 * @param phi1
-	 * @param phi2
-	 * @param out
-	 */
-	public static void compute(Float64Member rho, Float64Member theta, Float64Member phi1, Float64Member phi2, QuaternionFloat64Member out) {
-		
-		compute(rho.v(), theta.v(), phi1.v(), phi2.v(), out);
-	
 	}
 
 }

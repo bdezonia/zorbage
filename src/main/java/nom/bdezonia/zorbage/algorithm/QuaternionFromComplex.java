@@ -26,8 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.GetComplex;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
 
 /**
  * 
@@ -44,13 +45,18 @@ public class QuaternionFromComplex {
 	 * @param c2
 	 * @param out
 	 */
-	public static void compute(ComplexFloat64Member c1, ComplexFloat64Member c2, QuaternionFloat64Member out) {
-
-		out.setR(c1.r());
-		out.setI(c1.i());
-		out.setJ(c2.r());
-		out.setK(c2.i());
-
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, GetComplex<U> c1, GetComplex<U> c2, SetQuaternion<U> out)
+	{
+		U tmp = alg.construct();
+		c1.getR(tmp);
+		out.setR(tmp);
+		c1.getI(tmp);
+		out.setI(tmp);
+		c2.getR(tmp);
+		out.setJ(tmp);
+		c2.getI(tmp);
+		out.setK(tmp);
 	}
 	
 }

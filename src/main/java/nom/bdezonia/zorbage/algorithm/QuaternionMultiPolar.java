@@ -26,9 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import net.jafama.FastMath;
-import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
  * 
@@ -47,36 +48,33 @@ public class QuaternionMultiPolar {
 	 * @param theta2
 	 * @param out
 	 */
-	public static void compute(double rho1, double theta1, double rho2, double theta2, QuaternionFloat64Member out) {
+	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
+		void compute(T alg, U rho1, U theta1, U rho2, U theta2, SetQuaternion<U> out)
+	{
+		U tmpTh1C = alg.construct();
+		U tmpTh1S = alg.construct();
 		
-		double tmpTh1C = FastMath.cos(theta1);
-		double tmpTh1S = FastMath.sin(theta1);
-		double tmpTh2C = FastMath.cos(theta2);
-		double tmpTh2S = FastMath.sin(theta2);
+		alg.sinAndCos().call(theta1, tmpTh1S, tmpTh1C);
 		
-		double r = rho1 * tmpTh1C;
-		double i = rho1 * tmpTh1S;
-		double j = rho2 * tmpTh2C;
-		double k = rho2 * tmpTh2S;
+		U tmpTh2C = alg.construct();
+		U tmpTh2S = alg.construct();
+		
+		alg.sinAndCos().call(theta2, tmpTh2S, tmpTh2C);
+
+		U r = alg.construct();
+		U i = alg.construct();
+		U j = alg.construct();
+		U k = alg.construct();
+
+		alg.multiply().call(rho1, tmpTh1C, r);
+		alg.multiply().call(rho1, tmpTh1S, i);
+		alg.multiply().call(rho2, tmpTh2C, j);
+		alg.multiply().call(rho2, tmpTh2S, k);
 		
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);
 		out.setK(k);
-	}
-
-	/**
-	 * 
-	 * @param rho1
-	 * @param theta1
-	 * @param rho2
-	 * @param theta2
-	 * @param out
-	 */
-	public static void compute(Float64Member rho1, Float64Member theta1, Float64Member rho2, Float64Member theta2, QuaternionFloat64Member out) {
-		
-		compute(rho1.v(), theta1.v(), rho2.v(), theta2.v(), out);
-	
 	}
 
 }
