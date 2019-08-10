@@ -44,10 +44,10 @@ public class TestOctonionFromQuaternion {
 	@Test
 	public void test1() {
 		
-		QuaternionFloat64Member c1 = G.QDBL.construct("{1,4,9,2}");
-		QuaternionFloat64Member c2 = G.QDBL.construct("{7,3,6,5}");
+		QuaternionFloat64Member q1 = G.QDBL.construct("{1,4,9,2}");
+		QuaternionFloat64Member q2 = G.QDBL.construct("{7,3,6,5}");
 		OctonionFloat64Member out = G.ODBL.construct();
-		OctonionFromQuaternion.compute(G.DBL, c1, c2, out);
+		OctonionFromQuaternion.compute(G.DBL, q1, q2, out);
 		assertEquals(1, out.r(), 0);
 		assertEquals(4, out.i(), 0);
 		assertEquals(9, out.j(), 0);
