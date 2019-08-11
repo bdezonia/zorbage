@@ -829,8 +829,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else
 					status2.procedure = new DivL(algebra, status1.procedure, status2.procedure);
 			}
-			else
+			else {
 				status2.errMsg = "Parse error near '/' token: division not defined for given algebra";
+				return status2;
+			}
 		}
 		else if (match(Mod.class, tokens, status1.tokenNumber)) {
 			if (!(algebra instanceof ModularDivision<?>)) {
