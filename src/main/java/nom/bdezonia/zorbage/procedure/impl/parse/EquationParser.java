@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.procedure.impl.CbrtL;
 import nom.bdezonia.zorbage.procedure.impl.ConstantL;
 import nom.bdezonia.zorbage.procedure.impl.CosL;
 import nom.bdezonia.zorbage.procedure.impl.CoshL;
+import nom.bdezonia.zorbage.procedure.impl.DivL;
 import nom.bdezonia.zorbage.procedure.impl.DivideL;
 import nom.bdezonia.zorbage.procedure.impl.ExpL;
 import nom.bdezonia.zorbage.procedure.impl.LogL;
@@ -820,13 +821,16 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			status2.procedure = new MultiplyL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Divide.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof Invertible<?>)) {
-				status2.errMsg = "Parse error near '/' token: division not defined for given algebra";
+			if ((algebra instanceof Invertible<?>) || (algebra instanceof ModularDivision<?>)) {
+				status2 = term(algebra, tokens, status1.tokenNumber+1);
+				if (status2.errMsg != null) return status2;
+				if (algebra instanceof Invertible<?>)
+					status2.procedure = new DivideL(algebra, status1.procedure, status2.procedure);
+				else
+					status2.procedure = new DivL(algebra, status1.procedure, status2.procedure);
 			}
 			else
-				status2 = term(algebra, tokens, status1.tokenNumber+1);
-			if (status2.errMsg != null) return status2;
-			status2.procedure = new DivideL(algebra, status1.procedure, status2.procedure);
+				status2.errMsg = "Parse error near '/' token: division not defined for given algebra";
 		}
 		else if (match(Mod.class, tokens, status1.tokenNumber)) {
 			if (!(algebra instanceof ModularDivision<?>)) {

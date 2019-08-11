@@ -205,9 +205,9 @@ Supported function calls:
    
      Raise complex number 1+2i to the 3+4i power
      
-   tmin + 0.42 * tmax
+   (tmin + tmax) / 2
    
-     Produce a number at the 42nd percentile of a range
+     Produce a number at the midpt of a range. 0 for signed numbers. max/2 for unsigned numbers.
      
    (2 * sin($0)) + (3 * cos($1))
    
