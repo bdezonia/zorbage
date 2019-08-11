@@ -222,3 +222,7 @@ Supported function calls:
    PI + rand
    
      Return a random number between PI and PI+1.0
+
+ Note that these examples are implemented here:
+
+   https://github.com/bdezonia/zorbage/blob/master/src/test/java/nom/bdezonia/zorbage/procedure/impl/parse/TestParseLanguageExamples.java
