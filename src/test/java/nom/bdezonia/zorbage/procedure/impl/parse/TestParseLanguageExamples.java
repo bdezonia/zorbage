@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.procedure.impl.parse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -218,16 +219,27 @@ public class TestParseLanguageExamples {
 		Tuple2<String,Procedure<Float64Member>> result = parser.parse(G.DBL, "PI + rand");
 		assertNull(result.a());
 
-		result.b().call(value);
-		
 		Float64Member pi = G.DBL.construct();
 		G.DBL.PI().call(pi);
 		Float64Member one = G.DBL.construct();
 		G.DBL.unity().call(one);
 		Float64Member pi_plus_one = G.DBL.construct();
 		G.DBL.add().call(pi, one, pi_plus_one);
+
+		int numWhereRandWasZero = 0;
+				
+		int numIters = 100;
+		for (int i = 0; i < numIters; i++) {
+
+			result.b().call(value);
+			
+			assertTrue(G.DBL.isGreaterEqual().call(value, pi));
+			assertTrue(G.DBL.isLessEqual().call(value, pi_plus_one));
+			
+			if (G.DBL.isEqual().call(value, pi)) numWhereRandWasZero++;
+		}
 		
-		assertTrue(G.DBL.isGreaterEqual().call(value, pi));
-		assertTrue(G.DBL.isLessEqual().call(value, pi_plus_one));
+		if (numWhereRandWasZero == numIters)
+			fail("random values are not deviating from zero");
 	}
 }
