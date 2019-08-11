@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -71,15 +72,22 @@ public class TestArrayDataSource {
 		
 		try {
 			ds.get(-1, value);
+			fail();
 		} catch (Exception e) {
 			assertTrue(true);
 		}
 
 		try {
 			ds.get(5, value);
+			fail();
 		} catch (Exception e) {
 			assertTrue(true);
 		}
 
+		value.setV(99);
+		
+		ds.set(4, value);
+		
+		assertEquals(99, a[4].v(), 0);
 	}
 }
