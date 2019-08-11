@@ -76,12 +76,15 @@ public class TestWriteNotifyingDataSource {
 		public void notify(SignedInt32Algebra alegbra, IndexedDataSource<SignedInt32Member> source, long index) {
 			source.get(index, tmp);
 			if (tmp.v() == 1) {
+				if (seenOne) throw new IllegalArgumentException();
 				seenOne = true;
 			}
 			else if (tmp.v() == 2) {
+				if (seenTwo) throw new IllegalArgumentException();
 				seenTwo = true;
 			}
 			else if (tmp.v() == 3) {
+				if (seenThree) throw new IllegalArgumentException();
 				seenThree = true;
 			}
 			else
