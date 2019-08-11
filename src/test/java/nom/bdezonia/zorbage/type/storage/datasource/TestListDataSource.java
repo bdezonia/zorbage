@@ -76,14 +76,14 @@ public class TestListDataSource {
 		try {
 			ds.get(-1, value);
 			fail();
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
 		try {
 			ds.get(5, value);
 			fail();
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 

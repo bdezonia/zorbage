@@ -63,7 +63,7 @@ public class TestReadOnlyDataSource {
 		try {
 			ds.set(0, value1);
 			fail();
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 	}

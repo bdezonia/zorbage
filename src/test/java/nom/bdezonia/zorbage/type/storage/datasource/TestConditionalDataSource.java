@@ -93,7 +93,7 @@ public class TestConditionalDataSource {
 		try {
 			odds.set(3, value);
 			fail();
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		evens.set(0, value);
@@ -105,7 +105,7 @@ public class TestConditionalDataSource {
 		try {
 			evens.set(3, value);
 			fail();
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		odds.set(3, value);
