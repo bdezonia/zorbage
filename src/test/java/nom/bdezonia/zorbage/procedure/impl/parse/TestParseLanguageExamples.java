@@ -236,9 +236,11 @@ public class TestParseLanguageExamples {
 			assertTrue(G.DBL.isGreaterEqual().call(value, pi));
 			assertTrue(G.DBL.isLess().call(value, pi_plus_one));
 			
-			if (G.DBL.isEqual().call(value, pi) || G.DBL.isEqual().call(value, pi_plus_one))
+			if (G.DBL.isEqual().call(value, pi))
 				extremalValueCount++;
 		}
+		
+		// do a sanity check that the rand method is not just returning zeroes
 		
 		if (extremalValueCount > numIters/10)
 			fail("computed sequence does not seem random");
