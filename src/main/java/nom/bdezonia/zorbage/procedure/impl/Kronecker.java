@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.Unity;
  *
  */
 public class Kronecker<T extends Algebra<T,U> & Unity<U>,U>
-	implements Procedure3<Long,Long,U>
+	implements Procedure3<long[],long[],U>
 {
 	private final T algebra;
 	private final U zero;
@@ -50,11 +50,19 @@ public class Kronecker<T extends Algebra<T,U> & Unity<U>,U>
 	}
 	
 	@Override
-	public void call(Long a, Long b, U c) {
-		if (a == b)
-			algebra.assign().call(one, c);
-		else
+	public void call(long[] a, long[] b, U c) {
+		if (a.length != b.length)
+			throw new IllegalArgumentException("index length mismatch");
+		if (a.length == 0) {
 			algebra.assign().call(zero, c);
+		}
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != b[i]) {
+				algebra.assign().call(zero, c);
+				return;
+			}
+		}
+		algebra.assign().call(one, c);
 	}
 
 }
