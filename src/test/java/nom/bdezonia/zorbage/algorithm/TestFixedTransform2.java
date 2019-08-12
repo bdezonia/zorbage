@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class TestFixedTransform2 {
 
+	// This test shows an example of multiplying a constant against list a into list b
+	
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
@@ -51,7 +53,7 @@ public class TestFixedTransform2 {
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,3,4});
 		IndexedDataSource<SignedInt32Member> b = Storage.allocate(a.size(), value);
-		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> combine =
+		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
 				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
 		{
 			@Override
@@ -60,7 +62,7 @@ public class TestFixedTransform2 {
 			}
 		};
 
-		FixedTransform2.compute(G.INT32, seven, combine, a, b);
+		FixedTransform2.compute(G.INT32, seven, operation, a, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);
@@ -71,5 +73,36 @@ public class TestFixedTransform2 {
 		assertEquals(21, value.v());
 		b.get(3, value);
 		assertEquals(28, value.v());
+	}
+
+	// This test shows an example of adding a constant to list a into list b
+	
+	@Test
+	public void test2() {
+		SignedInt32Member value = G.INT32.construct();
+		SignedInt32Member seven = G.INT32.construct("14");
+		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+				new int[] {1,2,3,4});
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(a.size(), value);
+		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
+				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
+		{
+			@Override
+			public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
+				c.setV(a.v() + b.v());
+			}
+		};
+
+		FixedTransform2.compute(G.INT32, seven, operation, a, b);
+		
+		assertEquals(4, b.size());
+		b.get(0, value);
+		assertEquals(15, value.v());
+		b.get(1, value);
+		assertEquals(16, value.v());
+		b.get(2, value);
+		assertEquals(17, value.v());
+		b.get(3, value);
+		assertEquals(18, value.v());
 	}
 }
