@@ -226,7 +226,7 @@ public class TestParseLanguageExamples {
 		Float64Member pi_plus_one = G.DBL.construct();
 		G.DBL.add().call(pi, one, pi_plus_one);
 
-		int numWhereRandWasZero = 0;
+		int extremalValueCount = 0;
 				
 		int numIters = 100;
 		for (int i = 0; i < numIters; i++) {
@@ -234,12 +234,13 @@ public class TestParseLanguageExamples {
 			result.b().call(value);
 			
 			assertTrue(G.DBL.isGreaterEqual().call(value, pi));
-			assertTrue(G.DBL.isLessEqual().call(value, pi_plus_one));
+			assertTrue(G.DBL.isLess().call(value, pi_plus_one));
 			
-			if (G.DBL.isEqual().call(value, pi)) numWhereRandWasZero++;
+			if (G.DBL.isEqual().call(value, pi) || G.DBL.isEqual().call(value, pi_plus_one))
+				extremalValueCount++;
 		}
 		
-		if (numWhereRandWasZero == numIters)
-			fail("random values are not deviating from zero");
+		if (extremalValueCount > numIters/10)
+			fail("computed sequence does not seem random");
 	}
 }
