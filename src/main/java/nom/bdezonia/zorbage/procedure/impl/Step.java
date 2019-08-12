@@ -55,10 +55,10 @@ public class Step<T extends Algebra<T,U> & Ordered<U> & Unity<U>, U>
 		this.algebra = algebra;
 		this.zero = algebra.construct();
 		this.h0 = algebra.construct();
-		algebra.assign().call(h0, this.h0);
 		this.one = algebra.construct();
-		algebra.unity().call(one);
-		if (algebra.isLess().call(h0, zero) || algebra.isGreater().call(h0, one))
+		algebra.unity().call(this.one);
+		algebra.assign().call(h0, this.h0);
+		if (algebra.isLess().call(h0, this.zero) || algebra.isGreater().call(h0, this.one))
 			throw new IllegalArgumentException("step: h0 out of sensible range");
 	}
 	
