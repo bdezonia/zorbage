@@ -55,6 +55,7 @@ public class Kronecker<T extends Algebra<T,U> & Unity<U>,U>
 			throw new IllegalArgumentException("index length mismatch");
 		if (a.length == 0) {
 			algebra.assign().call(zero, c);
+			return;
 		}
 		for (int i = 0; i < a.length; i++) {
 			if (a[i] != b[i]) {
