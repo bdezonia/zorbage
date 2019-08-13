@@ -43,11 +43,11 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 	private final RealIndex minPt;
 	private final RealIndex maxPt;
 	private final IntegerIndex dimCounts;
-	
+
 	// TODO: calc me from grid cell size
-	
+
 	private final double TOL = 0.000001;
-	
+
 	public SamplingCartesianRealGrid(double[] point1, double[] point2, long[] counts) {
 		if ((point1.length != point2.length) || (point1.length != counts.length))
 			throw new IllegalArgumentException("mismatched dimensions of input points");
@@ -72,7 +72,10 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 		for (int i = 0; i < numD; i++) {
 			minPt.set(i, Math.min(point1.get(i), point2.get(i)));
 			maxPt.set(i, Math.max(point1.get(i), point2.get(i)));
-			dimCounts.set(i, Math.abs(counts.get(i)));
+			long count = counts.get(i);
+			if (count < 2)
+				throw new IllegalArgumentException("counts all must be >= 2");
+			dimCounts.set(i, count);
 		}
 	}
 
@@ -80,15 +83,18 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 	public int numDimensions() {
 		return numD;
 	}
-	
-	// TODO - write tests
-	
+
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != numD)
 			throw new IllegalArgumentException("contains() expects input point to have same dimension as sampling");
 		for (int i = 0; i < numD; i++) {
-			if (!RealUtils.near((samplePoint.get(i) - minPt.get(i)) % ((maxPt.get(i)-minPt.get(i)) / dimCounts.get(i)), 0, TOL))
+			double val = samplePoint.get(i);
+			if (val < minPt.get(i)-TOL)
+				return false;
+			if (val > maxPt.get(i)+TOL)
+				return false;
+			if (!RealUtils.near(val % ((maxPt.get(i)-minPt.get(i)) / (dimCounts.get(i)-1)), 0, TOL))
 				return false;
 		}
 		return true;
@@ -98,16 +104,16 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 	public SamplingIterator<RealIndex> iterator() {
 		return new Iterator();
 	}
-	
+
 	private class Iterator implements SamplingIterator<RealIndex> {
 
 		private final IntegerIndex index;
-		
+
 		private Iterator() {
 			index = new IntegerIndex(numD);
 			index.set(0, index.get(0) - 1);
 		}
-		
+
 		@Override
 		public boolean hasNext() {
 			for (int i = 0; i < numD; i++) {
@@ -123,11 +129,12 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 			if (value.numDimensions() != numD)
 				throw new IllegalArgumentException("mismatched dimensions of output point");
 			for (int i = 0; i < numD; i++) {
-				if (index.get(i) < dimCounts.get(i)) {
+				if (index.get(i) < dimCounts.get(i)-1) {
 					index.set(i, index.get(i) + 1);
 					for (int j = 0; j < numD; j++) {
-						// TODO: does this visit every edge?
-						value.set(j, (maxPt.get(j) - minPt.get(j)) * index.get(j) / dimCounts.get(j));
+						double val = minPt.get(j);
+						val += (maxPt.get(j) - minPt.get(j)) / (dimCounts.get(j) - 1) * index.get(j);
+						value.set(j, val);
 					}
 					return;
 				}
@@ -136,7 +143,7 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 			}
 			throw new IllegalArgumentException("next() called on sampling that does not hasNext()");
 		}
-		
+
 	}
 
 }
