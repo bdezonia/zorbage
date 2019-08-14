@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.misc.RealUtils;
  */
 public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 
-	private final double r, dr, theta, dtheta;
+	private final double dr, dtheta;
 	private final int rCount, thetaCount;
 	
 	// TODO: calc me from grid cell size
@@ -48,12 +48,10 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 	private final double TOL = 0.000001;
 	
 	public SamplingPolarRealGrid(
-			double r, double dr, int rCount,
-			double theta, double dtheta, int thetaCount)
+			double dr, int rCount,
+			double dtheta, int thetaCount)
 	{
-		this.r = r;
 		this.dr = dr;
-		this.theta = theta;
 		this.dtheta = dtheta;
 		this.rCount = rCount;
 		this.thetaCount = thetaCount;
@@ -66,35 +64,38 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 		return 2;
 	}
 
-	// TODO - write tests
-	
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != 2)
 			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
 		double x = samplePoint.get(0);
 		double y = samplePoint.get(1);
-		double r1 = this.r;
-		double r2 = this.r + dr*rCount;
 		double r = RealUtils.distance2d(0, 0, x, y);
-		if (r < Math.min(r1, r2) - TOL) return false;
-		if (r > Math.max(r1, r2) + TOL) return false;
-		if (!RealUtils.near((r - this.r) % dr, 0, TOL)) return false;
-		double theta = FastMath.atan2(y, x);
-		double theta1 = this.theta;
-		double theta2 = this.theta + dtheta * thetaCount;
-		while (theta < 0) theta += Math.PI * 2;
-		while (theta1 < 0) theta1 += Math.PI * 2;
-		while (theta2 < 0) theta2 += Math.PI * 2;
-		if (theta1 < theta2) {
-			if (theta > theta2 + TOL) return false;
-			if (theta < theta1 - TOL) return false;
-			if (!RealUtils.near((theta - theta1) % dtheta, 0, TOL)) return false;
+		if (r < -TOL)
+		{
+			return false;
 		}
-		else { // theta1 > theta2 since thetaCount >= 1
-			if (theta > theta1 + TOL) return false;
-			if (theta < theta2 - TOL) return false;
-			if (!RealUtils.near((theta - theta2) % dtheta, 0, TOL)) return false;
+		if (r > dr*rCount + TOL)
+		{
+			return false;
+		}
+		if (!RealUtils.near(r % dr, 0, TOL))
+		{
+			return false;
+		}
+		double theta = Math.atan2(y, x);
+		while (theta < 0) theta += Math.PI * 2;
+		if (theta > dtheta*thetaCount + TOL)
+		{
+			return false;
+		}
+		if (theta < -TOL)
+		{
+			return false;
+		}
+		if (!RealUtils.near(theta % dtheta, 0, TOL))
+		{
+			return false;
 		}
 		return true;
 	}
@@ -132,8 +133,8 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 				if (ttheta >= thetaCount)
 					throw new IllegalArgumentException("next() called when do not hasNext()");
 			}
-			final double radius = r + tr*dr;
-			final double angle = theta + ttheta*dtheta;
+			final double radius = tr*dr;
+			final double angle = ttheta*dtheta;
 			value.set(0, FastMath.cos(angle) * radius);  // xcoord
 			value.set(1, FastMath.sin(angle) * radius);  // ycoord
 		}
