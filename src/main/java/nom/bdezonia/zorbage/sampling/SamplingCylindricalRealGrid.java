@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.misc.RealUtils;
  */
 public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 
-	private final double r, dr, theta, dtheta, z, dz;
+	private final double dr, dtheta, dz;
 	private final int rCount, thetaCount, zCount;
 	
 	// TODO: calc me from grid cell size
@@ -48,15 +48,12 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 	private final double TOL = 0.000001;
 	
 	public SamplingCylindricalRealGrid(
-			double r, double dr, int rCount,
-			double theta, double dtheta, int thetaCount,
-			double z, double dz, int zCount)
+			double dr, int rCount,
+			double dtheta, int thetaCount,
+			double dz, int zCount)
 	{
-		this.r = r;
 		this.dr = dr;
-		this.theta = theta;
 		this.dtheta = dtheta;
-		this.z = z;
 		this.dz = dz;
 		this.rCount = rCount;
 		this.thetaCount = thetaCount;
@@ -70,8 +67,6 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 		return 3;
 	}
 
-	// TODO - write tests
-	
 	@Override
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != 3)
@@ -79,32 +74,44 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 		double x = samplePoint.get(0);
 		double y = samplePoint.get(1);
 		double z = samplePoint.get(2);
-		double z1 = this.z;
-		double z2 = this.z + dz*zCount;
-		if (z < Math.min(z1, z2) - TOL) return false;
-		if (z > Math.max(z1, z2) + TOL) return false;
-		if (!RealUtils.near((z - this.z) % dz, 0, TOL)) return false;
-		double r1 = this.r;
-		double r2 = this.r + dr*rCount;
-		double r = RealUtils.distance3d(0, 0, 0, x, y, z);
-		if (r < Math.min(r1, r2) - TOL) return false;
-		if (r > Math.max(r1, r2) + TOL) return false;
-		if (!RealUtils.near((r - this.r) % dr, 0, TOL)) return false;
-		double theta = Math.atan2(y, x);
-		double theta1 = this.theta;
-		double theta2 = this.theta + dtheta * thetaCount;
-		while (theta < 0) theta += Math.PI * 2;
-		while (theta1 < 0) theta1 += Math.PI * 2;
-		while (theta2 < 0) theta2 += Math.PI * 2;
-		if (theta1 < theta2) {
-			if (theta > theta2 + TOL) return false;
-			if (theta < theta1 - TOL) return false;
-			if (!RealUtils.near((theta - theta1) % dtheta, 0, TOL)) return false;
+		if (z < -TOL)
+		{
+			return false;
 		}
-		else { // theta1 > theta2 since thetaCount >= 1
-			if (theta > theta1 + TOL) return false;
-			if (theta < theta2 - TOL) return false;
-			if (!RealUtils.near((theta - theta2) % dtheta, 0, TOL)) return false;
+		if (z > (dz*zCount) + TOL)
+		{
+			return false;
+		}
+		if (!RealUtils.near(z % dz, 0, TOL))
+		{
+			return false;
+		}
+		double r = RealUtils.distance2d(0, 0, x, y);
+		if (r < -TOL)
+		{
+			return false;
+		}
+		if (r > dr*rCount + TOL)
+		{
+			return false;
+		}
+		if (!RealUtils.near(r % dr, 0, TOL))
+		{
+			return false;
+		}
+		double theta = Math.atan2(y, x);
+		while (theta < 0) theta += Math.PI * 2;
+		if (theta > dtheta*thetaCount + TOL)
+		{
+			return false;
+		}
+		if (theta < -TOL)
+		{
+			return false;
+		}
+		if (!RealUtils.near(theta % dtheta, 0, TOL))
+		{
+			return false;
 		}
 		return true;
 	}
@@ -131,7 +138,7 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 			return !(tr == rCount-1 && ttheta == thetaCount-1 && tz == zCount-1);
 		}
 
-		// TODO will the origin be counted multiple times?
+		// TODO will the origin be counted multiple times? Especially if radius == 0.
 		
 		@Override
 		public void next(RealIndex value) {
@@ -148,9 +155,9 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 						throw new IllegalArgumentException("next() called when do not hasNext()");
 				}
 			}
-			final double radius = r + tr*dr;
-			final double angle = theta + ttheta*dtheta;
-			final double height = z + tz*dz;
+			final double radius = tr*dr;
+			final double angle = ttheta*dtheta;
+			final double height = tz*dz;
 			value.set(0, FastMath.cos(angle) * radius);  // xcoord
 			value.set(1, FastMath.sin(angle) * radius);  // ycoord
 			value.set(2, height);  // zcoord
