@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.misc.RealUtils;
-
 /**
  * 
  * {@link SamplingCartesianRealGrid } is an n-dimensional {@link Sampling} that spans a user
@@ -39,10 +37,7 @@ import nom.bdezonia.zorbage.misc.RealUtils;
  */
 public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 
-	private final int numD;
-	private final RealIndex minPt;
-	private final RealIndex maxPt;
-	private final IntegerIndex dimCounts;
+	private final SamplingGeneral<RealIndex> sampling;
 
 	// TODO: calc me from grid cell size
 
@@ -51,99 +46,101 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 	public SamplingCartesianRealGrid(double[] point1, double[] point2, long[] counts) {
 		if ((point1.length != point2.length) || (point1.length != counts.length))
 			throw new IllegalArgumentException("mismatched dimensions of input points");
-		numD = point1.length;
-		minPt = new RealIndex(numD);
-		maxPt = new RealIndex(numD);
-		dimCounts = new IntegerIndex(numD);
+		int numD = point1.length;
+		sampling = new SamplingGeneral<>(numD);
+		RealIndex minPt = new RealIndex(numD);
+		RealIndex maxPt = new RealIndex(numD);
+		IntegerIndex dimCounts = new IntegerIndex(numD);
 		for (int i = 0; i < numD; i++) {
 			minPt.set(i, Math.min(point1[i], point2[i]));
 			maxPt.set(i, Math.max(point1[i], point2[i]));
 			dimCounts.set(i, Math.abs(counts[i]));
 		}
+		IntegerIndex index = dimCounts.allocate();
+		index.set(0, index.get(0) - 1);
+		RealIndex pt = minPt.allocate();
+		while (hasNext(index, dimCounts)) {
+			next(index, dimCounts, minPt, maxPt, pt);
+			sampling.add(pt);
+		}
 	}
 
 	public SamplingCartesianRealGrid(RealIndex point1, RealIndex point2, IntegerIndex counts) {
-		if ((point1.numDimensions() != point2.numDimensions()) || (point1.numDimensions() != counts.numDimensions()))
+		if ((point1.numDimensions() != point2.numDimensions()) ||
+				(point1.numDimensions() != counts.numDimensions()))
 			throw new IllegalArgumentException("mismatched dimensions of input points");
-		numD = point1.numDimensions();
-		minPt = point1.allocate();
-		maxPt = point1.allocate();
-		dimCounts = counts.allocate();
+		int numD = point1.numDimensions();
+		sampling = new SamplingGeneral<>(numD);
+		RealIndex minPt = new RealIndex(numD);
+		RealIndex maxPt = new RealIndex(numD);
+		IntegerIndex dimCounts = new IntegerIndex(numD);
 		for (int i = 0; i < numD; i++) {
 			minPt.set(i, Math.min(point1.get(i), point2.get(i)));
 			maxPt.set(i, Math.max(point1.get(i), point2.get(i)));
-			long count = counts.get(i);
-			if (count < 2)
-				throw new IllegalArgumentException("counts all must be >= 2");
-			dimCounts.set(i, count);
+			dimCounts.set(i, Math.abs(counts.get(i)));
+		}
+		IntegerIndex index = dimCounts.allocate();
+		index.set(0, index.get(0) - 1);
+		RealIndex pt = minPt.allocate();
+		while (hasNext(index, dimCounts)) {
+			next(index, dimCounts, minPt, maxPt, pt);
+			sampling.add(pt);
 		}
 	}
 
 	@Override
 	public int numDimensions() {
-		return numD;
+		return sampling.numDimensions();
 	}
 
 	@Override
 	public boolean contains(RealIndex samplePoint) {
-		if (samplePoint.numDimensions() != numD)
-			throw new IllegalArgumentException("contains() expects input point to have same dimension as sampling");
-		for (int i = 0; i < numD; i++) {
-			double val = samplePoint.get(i);
-			if (val < minPt.get(i)-TOL)
-				return false;
-			if (val > maxPt.get(i)+TOL)
-				return false;
-			if (!RealUtils.near(val % ((maxPt.get(i)-minPt.get(i)) / (dimCounts.get(i)-1)), 0, TOL))
-				return false;
+		if (samplePoint.numDimensions() != sampling.numDimensions())
+			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
+		RealIndex tmp = new RealIndex(sampling.numDimensions());
+		SamplingIterator<RealIndex> iter = sampling.iterator();
+		while (iter.hasNext()) {
+			iter.next(tmp);
+			double dist = 0;
+			for (int i = 0; i < tmp.numDimensions(); i++) {
+				double delta = samplePoint.get(i) - tmp.get(i);
+				dist += (delta * delta);
+			}
+			dist = Math.sqrt(dist);
+			if (dist < TOL)
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
 	public SamplingIterator<RealIndex> iterator() {
-		return new Iterator();
+		return sampling.iterator();
 	}
 
-	private class Iterator implements SamplingIterator<RealIndex> {
-
-		private final IntegerIndex index;
-
-		private Iterator() {
-			index = new IntegerIndex(numD);
-			index.set(0, index.get(0) - 1);
+	private boolean hasNext(IntegerIndex index, IntegerIndex dimCounts) {
+		for (int i = 0; i < index.numDimensions(); i++) {
+			if (index.get(i) >= dimCounts.get(i)-1)
+				continue;
+			return true;
 		}
+		return false;
+	}
 
-		@Override
-		public boolean hasNext() {
-			for (int i = 0; i < numD; i++) {
-				if (index.get(i) >= dimCounts.get(i)-1)
-					continue;
-				return true;
-			}
-			return false;
-		}
-
-		@Override
-		public void next(RealIndex value) {
-			if (value.numDimensions() != numD)
-				throw new IllegalArgumentException("mismatched dimensions of output point");
-			for (int i = 0; i < numD; i++) {
-				if (index.get(i) < dimCounts.get(i)-1) {
-					index.set(i, index.get(i) + 1);
-					for (int j = 0; j < numD; j++) {
-						double val = minPt.get(j);
-						val += (maxPt.get(j) - minPt.get(j)) / (dimCounts.get(j) - 1) * index.get(j);
-						value.set(j, val);
-					}
-					return;
+	private void next(IntegerIndex index, IntegerIndex dimCounts, RealIndex minPt, RealIndex maxPt, RealIndex value) {
+		for (int i = 0; i < index.numDimensions(); i++) {
+			if (index.get(i) < dimCounts.get(i)-1) {
+				index.set(i, index.get(i) + 1);
+				for (int j = 0; j < index.numDimensions(); j++) {
+					double val = minPt.get(j);
+					val += (maxPt.get(j) - minPt.get(j)) / (dimCounts.get(j) - 1) * index.get(j);
+					value.set(j, val);
 				}
-				else
-					index.set(i, 0);
+				return;
 			}
-			throw new IllegalArgumentException("next() called on sampling that does not hasNext()");
+			else
+				index.set(i, 0);
 		}
-
+		throw new IllegalArgumentException("next() called on sampling that does not hasNext()");
 	}
-
 }

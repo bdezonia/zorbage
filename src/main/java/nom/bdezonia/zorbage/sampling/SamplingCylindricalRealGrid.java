@@ -40,8 +40,7 @@ import nom.bdezonia.zorbage.misc.RealUtils;
  */
 public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 
-	private final double dr, dtheta, dz;
-	private final int rCount, thetaCount, zCount;
+	private final SamplingGeneral<RealIndex> sampling;
 	
 	// TODO: calc me from grid cell size
 	
@@ -52,14 +51,23 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 			double dtheta, int thetaCount,
 			double dz, int zCount)
 	{
-		this.dr = dr;
-		this.dtheta = dtheta;
-		this.dz = dz;
-		this.rCount = rCount;
-		this.thetaCount = thetaCount;
-		this.zCount = zCount;
 		if (rCount < 1 || thetaCount < 1 || zCount < 1)
 			throw new IllegalArgumentException("counts must be >= 1 in cylindrical grid");
+		sampling = new SamplingGeneral<>(2);
+		RealIndex value = new RealIndex(sampling.numDimensions());
+		for (int z = 0; z < zCount; z++) {
+			double zed = z * dz;
+			for (int th = 0; th < thetaCount; th++) {
+				double angle = th * dtheta;
+				for (int r = 0; r < rCount; r++) {
+					double radius = r * dr;
+					value.set(0, FastMath.cos(angle) * radius);  // xcoord
+					value.set(1, FastMath.sin(angle) * radius);  // ycoord
+					value.set(2, zed);  // zcoord
+					sampling.add(value);
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -71,98 +79,20 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 	public boolean contains(RealIndex samplePoint) {
 		if (samplePoint.numDimensions() != 3)
 			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
-		double x = samplePoint.get(0);
-		double y = samplePoint.get(1);
-		double z = samplePoint.get(2);
-		if (z < -TOL)
-		{
-			return false;
+		RealIndex tmp = new RealIndex(sampling.numDimensions());
+		SamplingIterator<RealIndex> iter = sampling.iterator();
+		while (iter.hasNext()) {
+			iter.next(tmp);
+			if (RealUtils.distance3d(
+					samplePoint.get(0), samplePoint.get(1), samplePoint.get(2),
+					tmp.get(0), tmp.get(1), tmp.get(2)) < TOL)
+				return true;
 		}
-		if (z > (dz*zCount) + TOL)
-		{
-			return false;
-		}
-		if (!RealUtils.near(z % dz, 0, TOL))
-		{
-			return false;
-		}
-		double r = RealUtils.distance2d(0, 0, x, y);
-		if (r < -TOL)
-		{
-			return false;
-		}
-		if (r > dr*rCount + TOL)
-		{
-			return false;
-		}
-		if (!RealUtils.near(r % dr, 0, TOL))
-		{
-			return false;
-		}
-		double theta = Math.atan2(y, x);
-		while (theta < 0) theta += Math.PI * 2;
-		if (theta > dtheta*thetaCount + TOL)
-		{
-			return false;
-		}
-		if (theta < -TOL)
-		{
-			return false;
-		}
-		if (!RealUtils.near(theta % dtheta, 0, TOL))
-		{
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 	@Override
 	public SamplingIterator<RealIndex> iterator() {
-		return new Iterator();
+		return sampling.iterator();
 	}
-	
-	private class Iterator implements SamplingIterator<RealIndex> {
-
-		private int tr;
-		private int ttheta;
-		private int tz;
-		
-		private Iterator() {
-			tr = -1;
-			ttheta = 0;
-			tz = 0;
-		}
-		
-		@Override
-		public boolean hasNext() {
-			return !(tr == rCount-1 && ttheta == thetaCount-1 && tz == zCount-1);
-		}
-
-		// TODO will the origin be counted multiple times? Especially if radius == 0.
-		
-		@Override
-		public void next(RealIndex value) {
-			if (value.numDimensions() != 3)
-				throw new IllegalArgumentException("value does not have correct dimensions");
-			tr++;
-			if (tr >= rCount) {
-				tr = 0;
-				ttheta++;
-				if (ttheta >= thetaCount) {
-					ttheta = 0;
-					tz++;
-					if (tz >= zCount)
-						throw new IllegalArgumentException("next() called when do not hasNext()");
-				}
-			}
-			final double radius = tr*dr;
-			final double angle = ttheta*dtheta;
-			final double height = tz*dz;
-			value.set(0, FastMath.cos(angle) * radius);  // xcoord
-			value.set(1, FastMath.sin(angle) * radius);  // ycoord
-			value.set(2, height);  // zcoord
-		}
-		
-	}
-
 }

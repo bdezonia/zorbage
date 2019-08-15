@@ -72,6 +72,8 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 
 	@Override
 	public boolean contains(RealIndex samplePoint) {
+		if (samplePoint.numDimensions() != 2)
+			throw new IllegalArgumentException("contains() sample point does not match dimensionality");
 		RealIndex tmp = new RealIndex(sampling.numDimensions());
 		SamplingIterator<RealIndex> iter = sampling.iterator();
 		while (iter.hasNext()) {
