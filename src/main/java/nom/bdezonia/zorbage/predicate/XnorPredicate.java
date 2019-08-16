@@ -25,11 +25,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 package nom.bdezonia.zorbage.predicate;
+
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
 public class XnorPredicate<T> implements Predicate<T> {
 

@@ -26,24 +26,50 @@
  */
 package nom.bdezonia.zorbage.predicate;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
+import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class BooleanPredicate<U>
-	implements Predicate<U>
-{
-	private final Function1<Boolean, U> testFunc;
-	
-	public BooleanPredicate(Function1<Boolean, U> testFunc) {
-		this.testFunc = testFunc;
+public class TestBooleanPredicate {
+
+	@Test
+	public void test() {
+		
+		Function1<Boolean, SignedInt32Member> testFunc =
+				new Function1<Boolean, SignedInt32Member>()
+		{
+			@Override
+			public Boolean call(SignedInt32Member b) {
+				return b.v() == 7;
+			}
+		};
+
+		BooleanPredicate<SignedInt32Member> pred =
+				new BooleanPredicate<>(testFunc);
+		
+		SignedInt32Member value = G.INT32.construct();
+		
+		value.setV(5);
+		assertEquals(5==7, pred.isTrue(value));
+		
+		value.setV(6);
+		assertEquals(6==7, pred.isTrue(value));
+		
+		value.setV(7);
+		assertEquals(7==7, pred.isTrue(value));
+		
+		value.setV(8);
+		assertEquals(8==7, pred.isTrue(value));
 	}
-	
-	@Override
-	public boolean isTrue(U value) {
-		return testFunc.call(value);
-	}
+
 }
