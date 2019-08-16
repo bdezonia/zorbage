@@ -30,7 +30,6 @@ package nom.bdezonia.zorbage.predicate;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
 public class NandPredicate<T> implements Predicate<T> {
 

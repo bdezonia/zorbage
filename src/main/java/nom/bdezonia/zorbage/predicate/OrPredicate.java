@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.predicate;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
  */
 public class OrPredicate<T> implements Predicate<T> {
 
