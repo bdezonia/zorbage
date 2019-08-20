@@ -164,7 +164,12 @@ public class BooleanAlgebra
 	{
 		@Override
 		public Boolean call(BooleanMember a, BooleanMember b) {
-			return !a.v();
+			if (a.v()) {
+				return b.v();
+			}
+			else {
+				return true;
+			}
 		}
 	};
 			
@@ -193,7 +198,12 @@ public class BooleanAlgebra
 	{
 		@Override
 		public Boolean call(BooleanMember a, BooleanMember b) {
-			return a.v();
+			if (a.v()) {
+				return true;
+			}
+			else {
+				return !b.v();
+			}
 		}
 	};
 			
