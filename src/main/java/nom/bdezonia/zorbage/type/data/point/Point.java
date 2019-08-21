@@ -225,7 +225,7 @@ public class Point
 	@Override
 	public void set(Point other) {
 		if (this == other) return;
-		if (this.vector.length != other.vector.length)
+		if (this.vector == null || this.vector.length != other.vector.length)
 			this.vector = other.vector.clone();
 		else {
 			for (int i = 0; i < other.vector.length; i++) {
