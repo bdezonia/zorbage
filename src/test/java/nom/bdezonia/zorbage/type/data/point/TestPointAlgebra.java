@@ -117,6 +117,7 @@ public class TestPointAlgebra {
 		
 		G.POINT.zero().call(p3);
 		G.POINT.scaleByRational().call(new RationalMember(new UnboundedIntMember(14),new UnboundedIntMember(10)), p, p3);;
+		assertEquals(3, p3.numDimensions());
 		assertEquals(1.4*p.component(0), p3.component(0), 0);
 		assertEquals(1.4*p.component(1), p3.component(1), 0);
 		assertEquals(1.4*p.component(2), p3.component(2), 0);
