@@ -38,7 +38,6 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
@@ -54,9 +53,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class PointAlgebra
 	implements Algebra<PointAlgebra,Point>, Addition<Point>, Scale<Point, Float64Member>,
-		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>, Ordered<Point>
+		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>
 {
-
 	private static final MathContext CONTEXT = new MathContext(18);
 	
 	@Override
@@ -283,141 +281,6 @@ public class PointAlgebra
 	@Override
 	public Procedure3<HighPrecisionMember, Point, Point> scaleByHighPrec() {
 		return SBH;
-	}
-
-	private final Function2<Boolean, Point, Point> LESS =
-			new Function2<Boolean, Point, Point>()
-	{
-		@Override
-		public Boolean call(Point a, Point b) {
-			return compare().call(a, b) < 0;
-		}
-	};
-
-	@Override
-	public Function2<Boolean, Point, Point> isLess() {
-		return LESS;
-	}
-
-	private final Function2<Boolean, Point, Point> LESSEQ =
-			new Function2<Boolean, Point, Point>()
-	{
-		@Override
-		public Boolean call(Point a, Point b) {
-			return compare().call(a, b) <= 0;
-		}
-	};
-
-	@Override
-	public Function2<Boolean, Point, Point> isLessEqual() {
-		return LESSEQ;
-	}
-
-	private final Function2<Boolean, Point, Point> GREAT =
-			new Function2<Boolean, Point, Point>()
-	{
-		@Override
-		public Boolean call(Point a, Point b) {
-			return compare().call(a, b) > 0;
-		}
-	};
-
-	@Override
-	public Function2<Boolean, Point, Point> isGreater() {
-		return GREAT;
-	}
-
-	private final Function2<Boolean, Point, Point> GREATEQ =
-			new Function2<Boolean, Point, Point>()
-	{
-		@Override
-		public Boolean call(Point a, Point b) {
-			return compare().call(a, b) >= 0;
-		}
-	};
-
-	@Override
-	public Function2<Boolean, Point, Point> isGreaterEqual() {
-		return GREATEQ;
-	}
-
-	private final Function2<Integer, Point, Point> CMP =
-			new Function2<Integer, Point, Point>()
-	{
-		@Override
-		public Integer call(Point a, Point b) {
-			if (a.numDimensions() != b.numDimensions())
-				throw new IllegalArgumentException("mismatched point dimensionalities");
-			for (int i = 0; i < a.numDimensions(); i++) {
-				double aval = a.component(i);
-				double bval = b.component(i);
-				if (aval < bval)
-					return -1;
-				if (aval > bval)
-					return 1;
-			}
-			return 0;
-		}
-	};
-
-	@Override
-	public Function2<Integer, Point, Point> compare() {
-		return CMP;
-	}
-
-	private final Function1<Integer, Point> SIG =
-			new Function1<Integer, Point>()
-	{
-		@Override
-		public Integer call(Point a) {
-			for (int i = 0; i < a.numDimensions(); i++) {
-				double aval = a.component(i);
-				if (aval < 0)
-					return -1;
-				if (aval > 0)
-					return 1;
-			}
-			return 0;
-		}
-	};
-
-	@Override
-	public Function1<Integer, Point> signum() {
-		return SIG;
-	}
-
-	private final Procedure3<Point, Point, Point> MIN =
-			new Procedure3<Point, Point, Point>()
-	{
-		@Override
-		public void call(Point a, Point b, Point c) {
-			if (isLess().call(a, b))
-				assign().call(a, c);
-			else
-				assign().call(b, c);
-		}
-	};
-
-	@Override
-	public Procedure3<Point, Point, Point> min() {
-		return MIN;
-	}
-
-	private final Procedure3<Point, Point, Point> MAX =
-			new Procedure3<Point, Point, Point>()
-	{
-		@Override
-		public void call(Point a, Point b, Point c) {
-			if (isGreater().call(a, b))
-				assign().call(a, c);
-			else
-				assign().call(b, c);
-		}
-	};
-
-	@Override
-	public Procedure3<Point, Point, Point> max() {
-		return MAX;
 	}
 	
 }
