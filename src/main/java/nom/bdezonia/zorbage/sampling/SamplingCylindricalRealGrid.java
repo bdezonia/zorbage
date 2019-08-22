@@ -53,7 +53,7 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 	{
 		if (rCount < 1 || thetaCount < 1 || zCount < 1)
 			throw new IllegalArgumentException("counts must be >= 1 in cylindrical grid");
-		sampling = new SamplingGeneral<>(2);
+		sampling = new SamplingGeneral<>(3);
 		RealIndex value = new RealIndex(sampling.numDimensions());
 		for (int z = 0; z < zCount; z++) {
 			double zed = z * dz;
