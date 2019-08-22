@@ -28,12 +28,13 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigInteger;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -51,8 +52,8 @@ public class TestScaleByRational {
 		IndexedDataSource<SignedInt8Member> bytes1 = ArrayStorage.allocateBytes(
 				new byte[] {-128, -64, -36, -15, -2, -1, 0, 1, 2, 11, 27, 84, 100});
 		IndexedDataSource<SignedInt8Member> bytes2 = Storage.allocate(bytes1.size(), value);
-		UnboundedIntMember n = new UnboundedIntMember(9);
-		UnboundedIntMember d = new UnboundedIntMember(8);
+		BigInteger n = BigInteger.valueOf(9);
+		BigInteger d = BigInteger.valueOf(8);
 		RationalMember scale = new RationalMember(n, d);
 		ScaleByRational.compute(G.INT8, scale, bytes1, bytes2);
 		bytes2.get(0, value);

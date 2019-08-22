@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -77,12 +76,12 @@ public class RationalMember
 		setV(val.r());
 	}
 
-	public RationalMember(UnboundedIntMember integer) {
-		setV(integer.v());
+	public RationalMember(BigInteger integer) {
+		setV(integer);
 	}
 
-	public RationalMember(UnboundedIntMember n, UnboundedIntMember d) {
-		setV(n.v(), d.v());
+	public RationalMember(BigInteger n, BigInteger d) {
+		setV(n, d);
 	}
 
 	@Override

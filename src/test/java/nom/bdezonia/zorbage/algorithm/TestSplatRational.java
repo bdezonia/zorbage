@@ -34,7 +34,6 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 
 /**
  * 
@@ -45,7 +44,7 @@ public class TestSplatRational {
 
 	@Test
 	public void test1() {
-		RationalMember value = new RationalMember(new UnboundedIntMember(14));
+		RationalMember value = new RationalMember(BigInteger.valueOf(14));
 		Tuple2<BigInteger,BigInteger> tuple = new Tuple2<BigInteger,BigInteger>(null,null);
 		SplatRational.toTuple(value, tuple);
 		assertEquals(BigInteger.valueOf(14), tuple.a());
