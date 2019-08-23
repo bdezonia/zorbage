@@ -109,3 +109,13 @@ Programming notes
   Eclipse info
     Zorbage has also been compiled and tested within Eclipse versions Mars,
       Neon, and Oxygen
+
+How to include zorbage in your Maven project
+
+  Add the following dependency to your project's pom.xml:
+  
+  <dependency>
+    <groupId>io.github.bdezonia</groupId>
+    <artifactId>zorbage</artifactId>
+    <version>0.2.6</version>
+  </dependency>
