@@ -40,19 +40,27 @@ public class AcosL<T extends Algebra<T,U> & InverseTrigonometric<U>,U>
 {
 	private final Procedure<U> ancestor;
 	private final Acos<T,U> lowerProc;
-	private final U tmp;
+	private final T algebra;
+	private final ThreadLocal<U> tmp;
 	
-	public AcosL(T algebra, Procedure<U> ancestor) {
+	public AcosL(T alg, Procedure<U> ancestor) {
+		this.algebra = alg;
 		this.ancestor = ancestor;
 		this.lowerProc = new Acos<T,U>(algebra);
-		this.tmp = algebra.construct();
+		this.tmp = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return algebra.construct();
+			}
+		};
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
-		ancestor.call(tmp, inputs);
-		lowerProc.call(tmp, result);
+		U u = tmp.get();
+		ancestor.call(u, inputs);
+		lowerProc.call(u, result);
 	}
 	
 }

@@ -41,23 +41,37 @@ public class AddL<T extends Algebra<T,U> & Addition<U>, U>
 	private final Procedure<U> ancestor1;
 	private final Procedure<U> ancestor2;
 	private final Add<T,U> lowerProc;
-	private final U tmp1;
-	private final U tmp2;
+	private final T algebra;
+	private final ThreadLocal<U> tmp1;
+	private final ThreadLocal<U> tmp2;
 	
-	public AddL(T algebra, Procedure<U> ancestor1, Procedure<U> ancestor2) {
+	public AddL(T alg, Procedure<U> ancestor1, Procedure<U> ancestor2) {
+		this.algebra = alg;
 		this.ancestor1 = ancestor1;
 		this.ancestor2 = ancestor2;
 		this.lowerProc = new Add<T,U>(algebra);
-		tmp1 = algebra.construct();
-		tmp2 = algebra.construct();
+		this.tmp1 = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return algebra.construct();
+			}
+		};
+		this.tmp2 = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return algebra.construct();
+			}
+		};
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
-		ancestor1.call(tmp1, inputs);
-		ancestor2.call(tmp2, inputs);
-		lowerProc.call(tmp1, tmp2, result);
+		U u1 = tmp1.get();
+		U u2 = tmp2.get();
+		ancestor1.call(u1, inputs);
+		ancestor2.call(u2, inputs);
+		lowerProc.call(u1, u2, result);
 	}
 
 }

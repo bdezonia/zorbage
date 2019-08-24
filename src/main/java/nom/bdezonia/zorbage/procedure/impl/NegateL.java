@@ -40,19 +40,27 @@ public class NegateL<T extends Algebra<T,U> & Addition<U>, U>
 {
 	private final Procedure<U> ancestor1;
 	private final Negate<T,U> lowerProc;
-	private final U tmp1;
+	private final T algebra;
+	private final ThreadLocal<U> tmp;
 	
-	public NegateL(T algebra, Procedure<U> ancestor1) {
+	public NegateL(T alg, Procedure<U> ancestor1) {
+		this.algebra = alg;
 		this.ancestor1 = ancestor1;
 		this.lowerProc = new Negate<T,U>(algebra);
-		tmp1 = algebra.construct();
+		this.tmp = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return algebra.construct();
+			}
+		};
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
-		ancestor1.call(tmp1, inputs);
-		lowerProc.call(tmp1, result);
+		U u = tmp.get();
+		ancestor1.call(u, inputs);
+		lowerProc.call(u, result);
 	}
 
 }

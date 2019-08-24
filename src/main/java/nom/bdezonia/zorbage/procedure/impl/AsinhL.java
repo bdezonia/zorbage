@@ -40,19 +40,27 @@ public class AsinhL<T extends Algebra<T,U> & InverseHyperbolic<U>,U>
 {
 	private final Procedure<U> ancestor;
 	private final Asinh<T,U> lowerProc;
-	private final U tmp;
+	private final T algebra;
+	private final ThreadLocal<U> tmp;
 	
-	public AsinhL(T algebra, Procedure<U> ancestor) {
+	public AsinhL(T alg, Procedure<U> ancestor) {
+		this.algebra = alg;
 		this.ancestor = ancestor;
 		this.lowerProc = new Asinh<T,U>(algebra);
-		this.tmp = algebra.construct();
+		this.tmp = new ThreadLocal<U>() {
+			@Override
+			protected U initialValue() {
+				return algebra.construct();
+			}
+		};
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void call(U result, U... inputs) {
-		ancestor.call(tmp, inputs);
-		lowerProc.call(tmp, result);
+		U u = tmp.get();
+		ancestor.call(u, inputs);
+		lowerProc.call(u, result);
 	}
 	
 }
