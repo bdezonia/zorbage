@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.Sort;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 
@@ -87,6 +88,26 @@ public class TestReversedDataSource {
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void test2() {
+		
+		// Theoretical question: to reverse a list can I sort a reversed list?
+
+		SignedInt32Member value = G.INT32.construct();
+
+		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+				new int[] {1,2,3,4,5,6,7});
+		
+		ReversedDataSource<SignedInt32Member> revNums = new ReversedDataSource<>(nums);
+		
+		Sort.compute(G.INT32, revNums);
+		
+		for (long i = 0; i < nums.size(); i++) {
+			nums.get(i, value);
+			assertEquals(nums.size()-i, value.v());
 		}
 	}
 }
