@@ -140,28 +140,28 @@ public class ArgbMember
 
 	@Override
 	public void v(ArgbMember value) {
-		value.a = a;
-		value.r = r;
-		value.g = g;
-		value.b = b;
+		get(value);
 	}
 
 	@Override
 	public void setV(ArgbMember value) {
-		a = value.a;
-		r = value.r;
-		g = value.g;
-		b = value.b;
+		set(value);
 	}
 
 	@Override
 	public void get(ArgbMember other) {
-		other.setV(this);
+		other.a = a;
+		other.r = r;
+		other.g = g;
+		other.b = b;
 	}
 
 	@Override
 	public void set(ArgbMember other) {
-		this.setV(other);
+		a = other.a;
+		r = other.r;
+		g = other.g;
+		b = other.b;
 	}
 
 	@Override

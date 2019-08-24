@@ -127,26 +127,26 @@ public class RgbMember
 
 	@Override
 	public void v(RgbMember value) {
-		value.r = r;
-		value.g = g;
-		value.b = b;
+		get(value);
 	}
 
 	@Override
 	public void setV(RgbMember value) {
-		r = value.r;
-		g = value.g;
-		b = value.b;
+		set(value);
 	}
 
 	@Override
 	public void get(RgbMember other) {
-		other.setV(this);
+		other.r = r;
+		other.g = g;
+		other.b = b;
 	}
 
 	@Override
 	public void set(RgbMember other) {
-		this.setV(other);
+		r = other.r;
+		g = other.g;
+		b = other.b;
 	}
 
 	@Override
