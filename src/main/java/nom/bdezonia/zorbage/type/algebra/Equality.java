@@ -41,6 +41,8 @@ public interface Equality<U>
 	Function2<Boolean,U,U> isEqual();
 	Function2<Boolean,U,U> isNotEqual();
 	Procedure2<U,U> assign();
+	// TODO: do these next two methods belong in their own Zero interface that algebras
+	// must implement? Are there real life algebras that don't have a zero/ground element?
 	Procedure1<U> zero(); // setZero()
 	Function1<Boolean,U> isZero();
 }
