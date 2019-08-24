@@ -29,6 +29,11 @@ package nom.bdezonia.zorbage.type.data.argb;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import nom.bdezonia.zorbage.type.algebra.Gettable;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
@@ -37,8 +42,10 @@ import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
  * @author Barry DeZonia
  *
  */
-public class ArgbMember implements ByteCoder {
-
+public class ArgbMember
+	implements ByteCoder, Allocatable<ArgbMember>, Duplicatable<ArgbMember>,
+		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>
+{
 	private byte a, r, g, b;
 	
 	public ArgbMember() {
@@ -118,5 +125,54 @@ public class ArgbMember implements ByteCoder {
 		raf.writeByte(r);
 		raf.writeByte(g);
 		raf.writeByte(b);
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0) throw new IllegalArgumentException("negative index");
+		return 1;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 0;
+	}
+
+	@Override
+	public void v(ArgbMember value) {
+		value.a = a;
+		value.r = r;
+		value.g = g;
+		value.b = b;
+	}
+
+	@Override
+	public void setV(ArgbMember value) {
+		a = value.a;
+		r = value.r;
+		g = value.g;
+		b = value.b;
+	}
+
+	@Override
+	public void get(ArgbMember other) {
+		other.setV(this);
+	}
+
+	@Override
+	public void set(ArgbMember other) {
+		this.setV(other);
+	}
+
+	@Override
+	public ArgbMember duplicate() {
+		ArgbMember val = allocate();
+		get(val);
+		return val;
+	}
+
+	@Override
+	public ArgbMember allocate() {
+		return new ArgbMember();
 	}
 }
