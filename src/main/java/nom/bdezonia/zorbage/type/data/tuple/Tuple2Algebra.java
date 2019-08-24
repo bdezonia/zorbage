@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.data.tuple;
 
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
@@ -42,10 +43,14 @@ public class Tuple2Algebra<A extends Algebra<A,B>,B,C extends Algebra<C,D>,D>
 {
 	private final A alg1;
 	private final C alg2;
+	private final B z1;
+	private final D z2;
 	
 	public Tuple2Algebra(A alg1, C alg2) {
 		this.alg1 = alg1;
 		this.alg2 = alg2;
+		this.z1 = alg1.construct();
+		this.z2 = alg2.construct();
 	}
 	
 	@Override
@@ -62,8 +67,7 @@ public class Tuple2Algebra<A extends Algebra<A,B>,B,C extends Algebra<C,D>,D>
 
 	@Override
 	public Tuple2<B, D> construct(String str) {
-		// TODO: do something sensible
-		return construct();
+		throw new IllegalArgumentException("to be implemented");
 	}
 
 	private final Function2<Boolean, Tuple2<B,D>, Tuple2<B,D>> EQ =
@@ -121,6 +125,21 @@ public class Tuple2Algebra<A extends Algebra<A,B>,B,C extends Algebra<C,D>,D>
 	@Override
 	public Function1<Boolean, Tuple2<B,D>> isZero() {
 		return ISZERO;
+	}
+
+	private final Procedure1<Tuple2<B, D>> ZERO =
+			new Procedure1<Tuple2<B,D>>()
+	{
+		@Override
+		public void call(Tuple2<B, D> a) {
+			alg1.assign().call(z1, a.a());
+			alg2.assign().call(z2, a.b());
+		}
+	};
+	
+	@Override
+	public Procedure1<Tuple2<B, D>> zero() {
+		return ZERO;
 	}
 	
 }

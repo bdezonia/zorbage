@@ -168,4 +168,21 @@ public class ArgbAlgebra
 		return MINB;
 	}
 
+	private final Procedure1<ArgbMember> ZERO =
+			new Procedure1<ArgbMember>()
+	{
+		@Override
+		public void call(ArgbMember a) {
+			// purposely avoid alpha channel
+			a.setR(0);
+			a.setG(0);
+			a.setB(0);
+		}
+	};
+
+	@Override
+	public Procedure1<ArgbMember> zero() {
+		return ZERO;
+	}
+
 }

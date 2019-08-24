@@ -165,4 +165,20 @@ public class RgbAlgebra
 		return MINB;
 	}
 
+	private final Procedure1<RgbMember> ZERO =
+			new Procedure1<RgbMember>()
+	{
+		@Override
+		public void call(RgbMember a) {
+			a.setR(0);
+			a.setG(0);
+			a.setB(0);
+		}
+	};
+
+	@Override
+	public Procedure1<RgbMember> zero() {
+		return ZERO;
+	}
+
 }

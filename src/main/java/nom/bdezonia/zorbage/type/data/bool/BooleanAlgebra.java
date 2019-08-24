@@ -399,4 +399,18 @@ public class BooleanAlgebra
 		return ISZERO;
 	}
 
+	private final Procedure1<BooleanMember> ZERO =
+			new Procedure1<BooleanMember>()
+	{
+		@Override
+		public void call(BooleanMember a) {
+			a.setV(false);
+		}
+	};
+
+	@Override
+	public Procedure1<BooleanMember> zero() {
+		return ZERO;
+	}
+
 }

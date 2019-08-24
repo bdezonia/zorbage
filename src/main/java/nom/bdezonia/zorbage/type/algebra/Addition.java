@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
-import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 
@@ -37,7 +36,6 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  */
 public interface Addition<U>
 {
-	Procedure1<U> zero();           // setZero()
 	Procedure2<U,U> negate();       // additive inverse
 	Procedure3<U,U,U> add();
 	Procedure3<U,U,U> subtract();

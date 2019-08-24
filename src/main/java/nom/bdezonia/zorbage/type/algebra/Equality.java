@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.algebra;
 
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
@@ -40,5 +41,6 @@ public interface Equality<U>
 	Function2<Boolean,U,U> isEqual();
 	Function2<Boolean,U,U> isNotEqual();
 	Procedure2<U,U> assign();
+	Procedure1<U> zero(); // setZero()
 	Function1<Boolean,U> isZero();
 }
