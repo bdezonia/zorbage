@@ -94,7 +94,7 @@ public class TestReversedDataSource {
 	@Test
 	public void test2() {
 		
-		// Theoretical question: to reverse a list can I sort a reversed list?
+		// Theoretical question: to reverse sort a list can I forw sort a reversed list?
 
 		SignedInt32Member value = G.INT32.construct();
 
