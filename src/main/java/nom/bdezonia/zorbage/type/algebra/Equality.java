@@ -41,8 +41,16 @@ public interface Equality<U>
 	Function2<Boolean,U,U> isEqual();
 	Function2<Boolean,U,U> isNotEqual();
 	Procedure2<U,U> assign();
-	// TODO: do these next two methods belong in their own Zero interface that algebras
-	// must implement? Are there real life algebras that don't have a zero/ground element?
+
 	Procedure1<U> zero(); // setZero()
 	Function1<Boolean,U> isZero();
+
+	// TODO: do these prev two methods belong in their own Zero interface that algebras
+	// must implement? Are there real life algebras that don't have a zero/ground element?
+	// Answer: the natural numbers have no zero. And no subtraction. But do have add. The
+	// algebra hierarchy as is has some small holes. negate() should only apply to algebras
+	// that have zero and subtraction and maybe a sense of negative values (so unsigned
+	// algebras would not implement negate. Right now they handle it but do nothing. Either
+	// approach might be fine.). Another hole: Addition interface includes subtraction when
+	// I've just demonstrated maybe they should not.
 }
