@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
 /**
@@ -51,27 +50,27 @@ public class ArgbMember
 	public ArgbMember() {
 	}
 	
-	public ArgbMember(UnsignedInt8Member a, UnsignedInt8Member r, UnsignedInt8Member g, UnsignedInt8Member b) {
+	public ArgbMember(int a, int r, int g, int b) {
 		setA(a);
 		setR(r);
 		setG(g);
 		setB(b);
 	}
 	
-	public void setA(UnsignedInt8Member a) {
-		this.a = (byte) a.v();
+	public void setA(int a) {
+		this.a = (byte) (a & 0xff);
 	}
 	
-	public void setR(UnsignedInt8Member r) {
-		this.r = (byte) r.v();
+	public void setR(int r) {
+		this.r = (byte) (r & 0xff);
 	}
 	
-	public void setG(UnsignedInt8Member g) {
-		this.g = (byte) g.v();
+	public void setG(int g) {
+		this.g = (byte) (g & 0xff);
 	}
 	
-	public void setB(UnsignedInt8Member b) {
-		this.b = (byte) b.v();
+	public void setB(int b) {
+		this.b = (byte) (b & 0xff);
 	}
 	
 	public int a() {
