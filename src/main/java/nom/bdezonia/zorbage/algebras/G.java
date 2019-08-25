@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algebras;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.type.data.argb.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Matrix;
@@ -119,6 +118,7 @@ import nom.bdezonia.zorbage.type.data.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.data.int9.UnsignedInt9Algebra;
 import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.data.rational.RationalAlgebra;
+import nom.bdezonia.zorbage.type.data.rgb.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.data.rgb.RgbAlgebra;
 import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntAlgebra;
 

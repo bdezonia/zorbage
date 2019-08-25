@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Random;
@@ -181,4 +182,24 @@ public class RgbAlgebra
 		return ZERO;
 	}
 
+	private int blendColor(double t, int c1, int c2) {
+		return (int) Math.sqrt(((1 - t) * c1*c1) + (t * c2*c2));
+	}
+	
+	private final Procedure4<Double, RgbMember, RgbMember, RgbMember> BLEND =
+			new Procedure4<Double, RgbMember, RgbMember, RgbMember>()
+	{
+		@Override
+		public void call(Double t, RgbMember a, RgbMember b, RgbMember c) {
+			if (t < 0 || t > 1)
+				throw new IllegalArgumentException("blending must be between 0 and 1");
+			c.setR(blendColor(t, a.r(), b.r()));
+			c.setG(blendColor(t, a.g(), b.g()));
+			c.setB(blendColor(t, a.b(), b.b()));
+		}
+	};
+
+	public Procedure4<Double, RgbMember, RgbMember, RgbMember> blend() {
+		return BLEND;
+	}
 }

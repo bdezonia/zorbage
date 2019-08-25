@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.data.argb;
+package nom.bdezonia.zorbage.type.data.rgb;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Random;
@@ -185,4 +186,29 @@ public class ArgbAlgebra
 		return ZERO;
 	}
 
+	private int blendColor(double t, int c1, int c2) {
+		return (int) Math.sqrt(((1 - t) * c1*c1) + (t * c2*c2));
+	}
+	
+	private int blendAlpha(double t, int a1, int a2) {
+		return (int) ((1-t)*a1 + t*a2);
+	}
+	
+	private final Procedure4<Double, ArgbMember, ArgbMember, ArgbMember> BLEND =
+			new Procedure4<Double, ArgbMember, ArgbMember, ArgbMember>()
+	{
+		@Override
+		public void call(Double t, ArgbMember a, ArgbMember b, ArgbMember c) {
+			if (t < 0 || t > 1)
+				throw new IllegalArgumentException("blending must be between 0 and 1");
+			c.setA(blendAlpha(t, a.a(), b.a()));
+			c.setR(blendColor(t, a.r(), b.r()));
+			c.setG(blendColor(t, a.g(), b.g()));
+			c.setB(blendColor(t, a.b(), b.b()));
+		}
+	};
+
+	public Procedure4<Double, ArgbMember, ArgbMember, ArgbMember> blend() {
+		return BLEND;
+	}
 }
