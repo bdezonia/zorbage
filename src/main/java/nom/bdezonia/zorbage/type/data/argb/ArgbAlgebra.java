@@ -139,7 +139,7 @@ public class ArgbAlgebra
 	{
 		@Override
 		public void call(ArgbMember a) {
-			a.setA(0);
+			a.setA(255);
 			a.setR(255);
 			a.setG(255);
 			a.setB(255);
@@ -173,7 +173,7 @@ public class ArgbAlgebra
 	{
 		@Override
 		public void call(ArgbMember a) {
-			// purposely avoid alpha channel
+			a.setA(0);
 			a.setR(0);
 			a.setG(0);
 			a.setB(0);

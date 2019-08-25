@@ -52,19 +52,19 @@ public class TestArgbAlgebra {
 		assertEquals(0, b.r());
 		assertEquals(0, b.g());
 		assertEquals(0, b.b());
-		a.setR(99);
+		a.setA(99);
 		a.setR(100);
 		a.setG(75);
 		a.setB(50);
 		b = G.ARGB.construct(a);
-		assertEquals(0, b.a());
+		assertEquals(99, b.a());
 		assertEquals(100, b.r());
 		assertEquals(75, b.g());
 		assertEquals(50, b.b());
 
 		ArgbMember c = G.ARGB.construct();
 		G.ARGB.assign().call(b, c);
-		assertEquals(0, c.a());
+		assertEquals(99, c.a());
 		assertEquals(100, c.r());
 		assertEquals(75, c.g());
 		assertEquals(50, c.b());
@@ -81,13 +81,10 @@ public class TestArgbAlgebra {
 
 		assertFalse(G.ARGB.isZero().call(a));
 		G.ARGB.zero().call(a);
-		// TODO: is this problematic?
-		assertFalse(G.ARGB.isZero().call(a));
-		a.setA(0);
 		assertTrue(G.ARGB.isZero().call(a));
 		
 		G.ARGB.maxBound().call(a);
-		assertEquals(0, a.a());
+		assertEquals(255, a.a());
 		assertEquals(255, a.r());
 		assertEquals(255, a.g());
 		assertEquals(255, a.b());
