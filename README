@@ -51,9 +51,10 @@ What can I do with Zorbage?
     Booleans
     
     n-dimensional Points
+    
+    ARGB and RGB tuples
   
-  A conversion api exists for moving between any two types accurately
-    and efficiently.
+  A conversion api exists for moving between types accurately and efficiently.
   
   There are types that are compound: complex numbers, quaternions, and
     octonions based on any of the floating types.
@@ -63,17 +64,17 @@ What can I do with Zorbage?
     
   You can allocate and use huge (length Long.MAX_VAUE) data structures.
   
-  Data access is standardized as if everything is an array. Arrays can
-    be concatenated, trimmed, subsampled, masked, padded, readonly, as
-    well as other abstractions.
+  Data access is standardized as if everything is an array. Arrays can be
+    concatenated, trimmed, subsampled, masked, padded, readonly, as well as
+    other abstractions.
       
   Array storage can be in native types (for speed of access) or for many
     integer types they can be bit encoded (to save space).
   
-  You can use existing or write your own generic algorithms that work
-    with all the types transparently. For instance Zorbage has one Sort
-    algorithm that can sort a list made of any of the above defined types
-    while doing no data conversions.
+  You can use existing or write your own generic algorithms that work with
+    all the types transparently. For instance Zorbage has one Sort algorithm
+    that can sort a list made of any of the above defined types while doing
+    no data conversions.
   
   You can use existing or write your own algorithms that work with numbers,
     vectors, matrices, and tensors.
@@ -90,13 +91,13 @@ What can I do with Zorbage?
     arguments to code that can transform your data quickly and generically.
   
   Use parsers to create Procedures from strings. These Procedures represent
-    equations that when fed values will compute a return value (the result
-    of applying the inputs to the equation). Equations can return numbers,
-    vectors, matrices, or tensors. The subcomponents of these can be reals,
-    complexes, quaternions, or octonions. Equations can be built out of
-    numbers, input variable references, constants (like E, PI, etc.) and
-    typical functions like sin(), atan(), exp(), log(), etc. For more info
-    see: https://github.com/bdezonia/zorbage/blob/master/EQUATION_LANGUAGE
+    equations that when fed values will compute a return value (the result of
+    applying the inputs to the equation). Equations can return numbers, vectors,
+    matrices, or tensors. The subcomponents of these can be reals, complexes,
+    quaternions, or octonions. Equations can be built out of numbers, input
+    variable references, constants (like E, PI, etc.) and typical functions
+    like sin(), atan(), exp(), log(), etc. For more info see:
+    https://github.com/bdezonia/zorbage/blob/master/EQUATION_LANGUAGE
 
 Programming notes
 
