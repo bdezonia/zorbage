@@ -186,8 +186,14 @@ public class ArgbAlgebra
 		return ZERO;
 	}
 
+	// blend gamma corrected values
+	
 	private int blendColor(double t, int c1, int c2) {
-		return (int) Math.sqrt(((1 - t) * c1*c1) + (t * c2*c2));
+		double value = 0;
+		value += (1 - t) * Math.pow(c1, 2.2);
+		value += (t) * Math.pow(c2, 2.2);
+		value = Math.pow(value, (1.0/2.2));
+		return (int) Math.round(value);
 	}
 	
 	private int blendAlpha(double t, int a1, int a2) {
