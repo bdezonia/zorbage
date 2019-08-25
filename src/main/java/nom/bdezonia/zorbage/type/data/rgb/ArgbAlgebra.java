@@ -191,8 +191,6 @@ public class ArgbAlgebra
 	{
 		@Override
 		public void call(Double t, ArgbMember a, ArgbMember b, ArgbMember c) {
-			if (t < 0 || t > 1)
-				throw new IllegalArgumentException("blending must be between 0 and 1");
 			c.setA(RgbUtils.blendAlpha(t, a.a(), b.a()));
 			c.setR(RgbUtils.blendColor(t, a.r(), b.r()));
 			c.setG(RgbUtils.blendColor(t, a.g(), b.g()));

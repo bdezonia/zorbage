@@ -42,6 +42,9 @@ public class RgbUtils {
 	 */
 	public static int blendColor(double t, int c1, int c2) {
 
+		if (t < 0 || t > 1)
+			throw new IllegalArgumentException("blending factor must be between 0 and 1 inclusive");
+
 		// blend gamma corrected values
 		
 		double value = 0;
@@ -59,6 +62,10 @@ public class RgbUtils {
 	 * @return
 	 */
 	public static int blendAlpha(double t, int a1, int a2) {
+
+		if (t < 0 || t > 1)
+			throw new IllegalArgumentException("blending factor must be between 0 and 1 inclusive");
+
 		return (int) ((1-t)*a1 + t*a2);
 	}
 	
