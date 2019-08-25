@@ -186,20 +186,6 @@ public class ArgbAlgebra
 		return ZERO;
 	}
 
-	// blend gamma corrected values
-	
-	private int blendColor(double t, int c1, int c2) {
-		double value = 0;
-		value += (1 - t) * Math.pow(c1, 2.2);
-		value += (t) * Math.pow(c2, 2.2);
-		value = Math.pow(value, (1.0/2.2));
-		return (int) Math.round(value);
-	}
-	
-	private int blendAlpha(double t, int a1, int a2) {
-		return (int) ((1-t)*a1 + t*a2);
-	}
-	
 	private final Procedure4<Double, ArgbMember, ArgbMember, ArgbMember> BLEND =
 			new Procedure4<Double, ArgbMember, ArgbMember, ArgbMember>()
 	{
@@ -207,10 +193,10 @@ public class ArgbAlgebra
 		public void call(Double t, ArgbMember a, ArgbMember b, ArgbMember c) {
 			if (t < 0 || t > 1)
 				throw new IllegalArgumentException("blending must be between 0 and 1");
-			c.setA(blendAlpha(t, a.a(), b.a()));
-			c.setR(blendColor(t, a.r(), b.r()));
-			c.setG(blendColor(t, a.g(), b.g()));
-			c.setB(blendColor(t, a.b(), b.b()));
+			c.setA(RgbUtils.blendAlpha(t, a.a(), b.a()));
+			c.setR(RgbUtils.blendColor(t, a.r(), b.r()));
+			c.setG(RgbUtils.blendColor(t, a.g(), b.g()));
+			c.setB(RgbUtils.blendColor(t, a.b(), b.b()));
 		}
 	};
 
