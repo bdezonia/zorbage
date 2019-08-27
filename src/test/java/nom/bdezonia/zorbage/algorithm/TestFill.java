@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -101,5 +102,31 @@ public class TestFill {
 		assertTrue(Double.isInfinite(type.v()));
 		assertTrue(type.v() < 0);
 
+	}
+	
+	@Test
+	public void test3() {
+		
+		// file matrices with values
+		
+		Float64MatrixMember mat = new Float64MatrixMember(3, 3, new double[] {1,2,3,4,5,6,7,8,9});
+		Float64Member value = G.DBL.construct();
+		
+		// like Matlab's zeroes
+		
+		Fill.compute(G.DBL, value, mat.rawData());
+		for (long i = 0; i < mat.rawData().size(); i++) {
+			mat.rawData().get(i, value);
+			assertEquals(0, value.v(), 0);
+		}
+		
+		// like Matlab's ones
+		
+		G.DBL.unity().call(value);
+		Fill.compute(G.DBL, value, mat.rawData());
+		for (long i = 0; i < mat.rawData().size(); i++) {
+			mat.rawData().get(i, value);
+			assertEquals(1, value.v(), 0);
+		}
 	}
 }
