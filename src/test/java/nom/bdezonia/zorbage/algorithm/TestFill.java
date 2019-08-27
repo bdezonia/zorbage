@@ -32,7 +32,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;

@@ -44,14 +44,15 @@ public class TestOnes {
 	@Test
 	public void test() {
 		
-		// file matrices with values
+		// fill matrix with values
 		
 		Float64MatrixMember mat = new Float64MatrixMember(3, 3, new double[] {1,2,3,4,5,6,7,8,9});
-		Float64Member value = G.DBL.construct();
 		
 		// like Matlab's ones
 		
 		Ones.compute(G.DBL, mat);
+
+		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < mat.rawData().size(); i++) {
 			mat.rawData().get(i, value);
 			assertEquals(1, value.v(), 0);
