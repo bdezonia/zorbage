@@ -43,6 +43,22 @@ public class Eye {
 	 * 
 	 * @param alg
 	 * @param s
+	 * @param sqSz
+	 * @return
+	*/
+	public static <L extends Algebra<L,M> &
+					Constructible2dLong<M> &
+					Unity<M>,
+					M extends MatrixMember<?>>
+		M compute(L matAlg, StorageConstruction s, long sqSz)
+	{
+		return compute(matAlg, s, sqSz, sqSz);
+	}
+
+	/**
+	 * 
+	 * @param alg
+	 * @param s
 	 * @param rows
 	 * @param cols
 	 * @return
