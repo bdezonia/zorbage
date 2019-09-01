@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -47,22 +46,12 @@ public class TestConjugate {
 	public void test() {
 		
 		ComplexFloat64Member tmp = G.CDBL.construct();
+		ComplexFloat64Member start = G.CDBL.construct("{0,0}");
+		ComplexFloat64Member incBy = G.CDBL.construct("{1,1}");
 		
 		IndexedDataSource<ComplexFloat64Member> list = ArrayStorage.allocate(10, tmp);
 		
-		Procedure1<ComplexFloat64Member> proc = new Procedure1<ComplexFloat64Member>()
-		{
-			private int i = 0;
-			
-			@Override
-			public void call(ComplexFloat64Member a) {
-				a.setR(i);
-				a.setI(i);
-				i++;
-			}
-		};
-		
-		Fill.compute(G.CDBL, proc, list);
+		RampFill.compute(G.CDBL, start, incBy, list);
 
 		Conjugate.compute(G.CDBL, list, list);
 		
