@@ -40,17 +40,31 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  */
 public class Zeroes {
 
+	private Zeroes() { }
+	
 	/**
 	 * 
 	 * @param algebra
-	 * @param tensor
+	 * @param data
 	 */
-	public static <A extends TensorMember<U> & RawData<U>,
+	public static <T extends Algebra<T,U>, U>
+		void compute(T algebra, IndexedDataSource<U> data)
+	{
+		U zero = algebra.construct();
+		Fill.compute(algebra, zero, data);
+	}
+
+	/**
+	 * 
+	 * @param algebra
+	 * @param rmod
+	 */
+	public static <A extends RModuleMember<U> & RawData<U>,
 					T extends Algebra<T,U>,
 					U>
-		void compute(T algebra, A tensor)
+		void compute(T algebra, A rmod)
 	{
-		compute(algebra, tensor.rawData());
+		compute(algebra, rmod.rawData());
 	}
 	
 	/**
@@ -69,25 +83,14 @@ public class Zeroes {
 	/**
 	 * 
 	 * @param algebra
-	 * @param rmod
+	 * @param tensor
 	 */
-	public static <A extends RModuleMember<U> & RawData<U>,
+	public static <A extends TensorMember<U> & RawData<U>,
 					T extends Algebra<T,U>,
 					U>
-		void compute(T algebra, A rmod)
+		void compute(T algebra, A tensor)
 	{
-		compute(algebra, rmod.rawData());
+		compute(algebra, tensor.rawData());
 	}
 	
-	/**
-	 * 
-	 * @param algebra
-	 * @param data
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, IndexedDataSource<U> data)
-	{
-		U zero = algebra.construct();
-		Fill.compute(algebra, zero, data);
-	}
 }

@@ -40,31 +40,20 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  *
  */
 public class Ones {
-
-	/**
-	 * 
-	 * @param algebra
-	 * @param tensor
-	 */
-	public static <A extends TensorMember<U> & RawData<U>,
-					T extends Algebra<T,U> & Unity<U>,
-					U>
-		void compute(T algebra, A tensor)
-	{
-		compute(algebra, tensor.rawData());
-	}
+	
+	private Ones() { }
 	
 	/**
 	 * 
 	 * @param algebra
-	 * @param matrix
+	 * @param data
 	 */
-	public static <A extends MatrixMember<U> & RawData<U>,
-					T extends Algebra<T,U> & Unity<U>,
-					U>
-		void compute(T algebra, A matrix)
+	public static <T extends Algebra<T,U> & Unity<U>, U>
+		void compute(T algebra, IndexedDataSource<U> data)
 	{
-		compute(algebra, matrix.rawData());
+		U one = algebra.construct();
+		algebra.unity().call(one);
+		Fill.compute(algebra, one, data);
 	}
 	
 	/**
@@ -79,17 +68,31 @@ public class Ones {
 	{
 		compute(algebra, rmod.rawData());
 	}
-	
+
 	/**
 	 * 
 	 * @param algebra
-	 * @param data
+	 * @param matrix
 	 */
-	public static <T extends Algebra<T,U> & Unity<U>, U>
-		void compute(T algebra, IndexedDataSource<U> data)
+	public static <A extends MatrixMember<U> & RawData<U>,
+					T extends Algebra<T,U> & Unity<U>,
+					U>
+		void compute(T algebra, A matrix)
 	{
-		U one = algebra.construct();
-		algebra.unity().call(one);
-		Fill.compute(algebra, one, data);
+		compute(algebra, matrix.rawData());
 	}
+
+	/**
+	 * 
+	 * @param algebra
+	 * @param tensor
+	 */
+	public static <A extends TensorMember<U> & RawData<U>,
+					T extends Algebra<T,U> & Unity<U>,
+					U>
+		void compute(T algebra, A tensor)
+	{
+		compute(algebra, tensor.rawData());
+	}
+	
 }
