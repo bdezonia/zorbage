@@ -27,9 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
@@ -57,40 +54,14 @@ public class Zeroes {
 	/**
 	 * 
 	 * @param algebra
-	 * @param rmod
+	 * @param numeric
 	 */
-	public static <A extends RModuleMember<U> & RawData<U>,
+	public static <A extends RawData<U>,
 					T extends Algebra<T,U>,
 					U>
-		void compute(T algebra, A rmod)
+		void compute(T algebra, A numeric)
 	{
-		compute(algebra, rmod.rawData());
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param matrix
-	 */
-	public static <A extends MatrixMember<U> & RawData<U>,
-					T extends Algebra<T,U>,
-					U>
-		void compute(T algebra, A matrix)
-	{
-		compute(algebra, matrix.rawData());
-	}
-	
-	/**
-	 * 
-	 * @param algebra
-	 * @param tensor
-	 */
-	public static <A extends TensorMember<U> & RawData<U>,
-					T extends Algebra<T,U>,
-					U>
-		void compute(T algebra, A tensor)
-	{
-		compute(algebra, tensor.rawData());
+		compute(algebra, numeric.rawData());
 	}
 	
 }
