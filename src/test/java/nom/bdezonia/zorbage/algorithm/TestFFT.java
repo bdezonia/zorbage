@@ -286,4 +286,11 @@ public class TestFFT {
 		assertEquals(0, value.r(), tol);
 		assertEquals(9, value.i(), tol);
 	}
+	
+	public void additionalTest() {
+		// Note that I used apache commons-math3-3.6.1's standard FFT transform algorithm
+		// and generated transform data matching test3 above and compared generated values.
+		// The results for each of the 16 terms (32 components total) matched to 14 decimal
+		// places.
+	}
 }
