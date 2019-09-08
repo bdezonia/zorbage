@@ -71,7 +71,7 @@ public class InvFFT {
 			throw new IllegalArgumentException("output size does not match input size");
 		U one_over_n = cmplxAlg.construct("" + (BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))));
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, a, b);
-		FFT.compute(cmplxAlg, realAlg, b, b); // TODO: does this work in place?
+		FFT.compute(cmplxAlg, realAlg, b, b);
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, b, b);
 		Scale.compute(cmplxAlg, one_over_n, b, b);
 	}
