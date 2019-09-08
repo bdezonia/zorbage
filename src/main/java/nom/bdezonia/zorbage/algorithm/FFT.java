@@ -76,7 +76,7 @@ public class FFT {
 			long j = Long.reverse(k) >>> shift;
 			a.get(j, tmp1);
 			a.get(k, tmp2);
-			if (j > k) {
+			if (j < k) { // I used < instead of > and got better results. Reference algorithm differs.
 				b.set(k, tmp1);
 				b.set(j, tmp2);
 			}
@@ -94,8 +94,8 @@ public class FFT {
 		realAlg.PI().call(pi);
 		W cos = realAlg.construct();
 		W sin = realAlg.construct();
-		W two = realAlg.construct("2");
 		W one = realAlg.construct("1");
+		W two = realAlg.construct("2");
 		W L = realAlg.construct(two);
 		for (long l = 2; l <= aSize; l = l+l) {
 			W K = realAlg.construct();

@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -69,10 +70,10 @@ public class TestFFT {
 				Storage.allocate(n, cdbl);
 		DataConvert.compute(G.INT32, G.CDBL, poly1, data1);
 		DataConvert.compute(G.INT32, G.CDBL, poly2, data2);
-		FFT.compute(G.CDBL, G.DBL, data1, data1);
-		FFT.compute(G.CDBL, G.DBL, data2, data2);
+		FFT.compute(G.CDBL, G.DBL, data1, data1); // testing in place algo
+		FFT.compute(G.CDBL, G.DBL, data2, data2); // testing in place algo
 		ElementwiseOperation.compute(G.CDBL, G.CDBL.multiply(), data1, data2, data1);
-		InvFFT.compute(G.CDBL, G.DBL, data1, data1);
+		InvFFT.compute(G.CDBL, G.DBL, data1, data1); // testing in place algo
 		IndexedDataSource<SignedInt32Member> result =
 				Storage.allocate(n, int32);
 		DataConvert.compute(G.CDBL, G.INT32, data1, result);
@@ -139,5 +140,149 @@ public class TestFFT {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+	}
+	
+	@Test
+	public void test3() {
+		ComplexFloat64Member value = G.CDBL.construct();
+		IndexedDataSource<ComplexFloat64Member> a = Storage.allocate(16, value);
+		value.setR(1);
+		value.setI(2);
+		a.set(0, value);
+		value.setR(-1);
+		value.setI(3);
+		a.set(1, value);
+		value.setR(4);
+		value.setI(-2);
+		a.set(2, value);
+		value.setR(-7);
+		value.setI(-3);
+		a.set(3, value);
+		value.setR(2);
+		value.setI(4);
+		a.set(4, value);
+		value.setR(1);
+		value.setI(-8);
+		a.set(5, value);
+		value.setR(-4);
+		value.setI(8);
+		a.set(6, value);
+		value.setR(0);
+		value.setI(0);
+		a.set(7, value);
+		value.setR(15);
+		value.setI(1);
+		a.set(8, value);
+		value.setR(9);
+		value.setI(-6);
+		a.set(9, value);
+		value.setR(10);
+		value.setI(0);
+		a.set(10, value);
+		value.setR(18);
+		value.setI(23);
+		a.set(11, value);
+		value.setR(-5);
+		value.setI(11);
+		a.set(12, value);
+		value.setR(6);
+		value.setI(6);
+		a.set(13, value);
+		value.setR(4);
+		value.setI(0);
+		a.set(14, value);
+		value.setR(0);
+		value.setI(9);
+		a.set(15, value);
+		
+		IndexedDataSource<ComplexFloat64Member> b = Storage.allocate(a.size(), value);
+		
+		FFT.compute(G.CDBL, G.DBL, a, b); // testing NOT in place algo
+		
+		b.get(0, value);
+		assertFalse(Math.abs(value.r() - 1) < 0.000000001 && Math.abs(value.i() - 2) < 0.000000001);
+		b.get(1, value);
+		assertFalse(Math.abs(value.r() - -1) < 0.000000001 && Math.abs(value.i() - 3) < 0.000000001);
+		b.get(2, value);
+		assertFalse(Math.abs(value.r() - 4) < 0.000000001 && Math.abs(value.i() - -2) < 0.000000001);
+		b.get(3, value);
+		assertFalse(Math.abs(value.r() - -7) < 0.000000001 && Math.abs(value.i() - -3) < 0.000000001);
+		b.get(4, value);
+		assertFalse(Math.abs(value.r() - 2) < 0.000000001 && Math.abs(value.i() - 4) < 0.000000001);
+		b.get(5, value);
+		assertFalse(Math.abs(value.r() - 1) < 0.000000001 && Math.abs(value.i() - -8) < 0.000000001);
+		b.get(6, value);
+		assertFalse(Math.abs(value.r() - -4) < 0.000000001 && Math.abs(value.i() - 8) < 0.000000001);
+		b.get(7, value);
+		assertFalse(Math.abs(value.r() - 0) < 0.000000001 && Math.abs(value.i() - 0) < 0.000000001);
+		b.get(8, value);
+		assertFalse(Math.abs(value.r() - 15) < 0.000000001 && Math.abs(value.i() - 1) < 0.000000001);
+		b.get(9, value);
+		assertFalse(Math.abs(value.r() - 9) < 0.000000001 && Math.abs(value.i() - -6) < 0.000000001);
+		b.get(10, value);
+		assertFalse(Math.abs(value.r() - 10) < 0.000000001 && Math.abs(value.i() - 0) < 0.000000001);
+		b.get(11, value);
+		assertFalse(Math.abs(value.r() - 18) < 0.000000001 && Math.abs(value.i() - 23) < 0.000000001);
+		b.get(12, value);
+		assertFalse(Math.abs(value.r() - -5) < 0.000000001 && Math.abs(value.i() - 11) < 0.000000001);
+		b.get(13, value);
+		assertFalse(Math.abs(value.r() - 6) < 0.000000001 && Math.abs(value.i() - 6) < 0.000000001);
+		b.get(14, value);
+		assertFalse(Math.abs(value.r() - 4) < 0.000000001 && Math.abs(value.i() - 0) < 0.000000001);
+		b.get(15, value);
+		assertFalse(Math.abs(value.r() - 0) < 0.000000001 && Math.abs(value.i() - 9) < 0.000000001);
+
+		IndexedDataSource<ComplexFloat64Member> c = Storage.allocate(b.size(), value);
+		
+		InvFFT.compute(G.CDBL, G.DBL, b, c); // testing NOT in place algo
+		
+		c.get(0, value);
+		assertEquals(1, value.r(), 0.0001);
+		assertEquals(2, value.i(), 0.0001);
+		c.get(1, value);
+		assertEquals(-1, value.r(), 0.0001);
+		assertEquals(3, value.i(), 0.0001);
+		c.get(2, value);
+		assertEquals(4, value.r(), 0.0001);
+		assertEquals(-2, value.i(), 0.0001);
+		c.get(3, value);
+		assertEquals(-7, value.r(), 0.0001);
+		assertEquals(-3, value.i(), 0.0001);
+		c.get(4, value);
+		assertEquals(2, value.r(), 0.0001);
+		assertEquals(4, value.i(), 0.0001);
+		c.get(5, value);
+		assertEquals(1, value.r(), 0.0001);
+		assertEquals(-8, value.i(), 0.0001);
+		c.get(6, value);
+		assertEquals(-4, value.r(), 0.0001);
+		assertEquals(8, value.i(), 0.0001);
+		c.get(7, value);
+		assertEquals(0, value.r(), 0.0001);
+		assertEquals(0, value.i(), 0.0001);
+		c.get(8, value);
+		assertEquals(15, value.r(), 0.0001);
+		assertEquals(1, value.i(), 0.0001);
+		c.get(9, value);
+		assertEquals(9, value.r(), 0.0001);
+		assertEquals(-6, value.i(), 0.0001);
+		c.get(10, value);
+		assertEquals(10, value.r(), 0.0001);
+		assertEquals(0, value.i(), 0.0001);
+		c.get(11, value);
+		assertEquals(18, value.r(), 0.0001);
+		assertEquals(23, value.i(), 0.0001);
+		c.get(12, value);
+		assertEquals(-5, value.r(), 0.0001);
+		assertEquals(11, value.i(), 0.0001);
+		c.get(13, value);
+		assertEquals(6, value.r(), 0.0001);
+		assertEquals(6, value.i(), 0.0001);
+		c.get(14, value);
+		assertEquals(4, value.r(), 0.0001);
+		assertEquals(0, value.i(), 0.0001);
+		c.get(15, value);
+		assertEquals(0, value.r(), 0.0001);
+		assertEquals(9, value.i(), 0.0001);
 	}
 }
