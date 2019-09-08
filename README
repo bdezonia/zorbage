@@ -118,5 +118,5 @@ How to include zorbage in your Maven project
   <dependency>
     <groupId>io.github.bdezonia</groupId>
     <artifactId>zorbage</artifactId>
-    <version>0.2.6</version>
+    <version>0.2.7</version>
   </dependency>
