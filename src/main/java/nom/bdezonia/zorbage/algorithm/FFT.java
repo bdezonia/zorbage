@@ -47,11 +47,15 @@ public class FFT {
 	private FFT() {}
 
 	/**
+	 * Do a fast fourier transform taking data from source a and putting results in
+	 * destination b. a and b can be the same list: in place transformation works.
+	 * a and b are lists of complex numbers. Their length must match and be a power
+	 * of 2.
 	 * 
 	 * @param cmplxAlg
 	 * @param realAlg
-	 * @param a
-	 * @param b
+	 * @param a Source list of data
+	 * @param b Destination list of data
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,
 						U extends SetComplex<W>,
