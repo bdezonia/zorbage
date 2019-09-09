@@ -54,9 +54,84 @@ public class NumberWithin {
 		U diff = algebra.construct();
 		if (algebra.isLess().call(tol, zero))
 			throw new IllegalArgumentException("tolerance must be >= 0");
-		algebra.subtract().call(a, b, diff);
-		if (algebra.isLess().call(diff, zero))
-			algebra.negate().call(diff, diff);  // if diff was -minint this will exception
-		return algebra.isLessEqual().call(diff, tol);
+		int sigA = algebra.signum().call(a);
+		int sigB = algebra.signum().call(b);
+		if (sigA < 0) {
+			if (sigB < 0) {
+				if (algebra.isGreater().call(a, b))
+					algebra.subtract().call(b, a, diff);
+				else
+					algebra.subtract().call(a, b, diff);
+				if (algebra.isLess().call(diff, zero))
+					algebra.negate().call(diff, diff);
+				if (algebra.isGreater().call(diff, tol))
+					return false;
+				return true;
+			}
+			else if (sigB > 0) {
+
+				if (algebra.isGreater().call(b, tol))
+					return false;
+				algebra.negate().call(tol, tol);
+				if (algebra.isLess().call(a, tol))
+					return false;
+				// if here then they are within 2 tol of each other
+				algebra.add().call(b, tol, diff);
+				if (algebra.isGreater().call(diff, a))
+					return false;
+				return true;	
+			}
+			else { // sigB == 0
+				algebra.negate().call(tol, tol);
+				if (algebra.isLess().call(a, tol))
+					return false;
+				return true;
+			}
+		}
+		else if (sigA > 0) {
+			if (sigB < 0) {
+				if (algebra.isGreater().call(a, tol))
+					return false;
+				algebra.negate().call(tol, tol);
+				if (algebra.isLess().call(b, tol))
+					return false;
+				// if here then they are within 2 tol of each other
+				algebra.add().call(a, tol, diff);
+				if (algebra.isGreater().call(diff, b))
+					return false;
+				return true;	
+			}
+			else if (sigB > 0) {
+				if (algebra.isLess().call(a, b))
+					algebra.subtract().call(b, a, diff);
+				else
+					algebra.subtract().call(a, b, diff);
+				if (algebra.isGreater().call(diff, tol))
+					return false;
+				return true;
+			}
+			else { // sigB == 0
+				if (algebra.isGreater().call(a, tol))
+					return false;
+				return true;
+			}
+		}
+		else { // sigA == 0
+			if (sigB < 0) {
+				algebra.negate().call(tol, tol);
+				if (algebra.isLess().call(b, tol))
+					return false;
+				return true;
+			}
+			else if (sigB > 0) {
+				if (algebra.isGreater().call(b, tol))
+					return false;
+				return true;
+			}
+			else { // sigB == 0
+				// they both equal 0: they are within any nonnegative tolerance
+				return true;
+			}
+		}
 	}
 }
