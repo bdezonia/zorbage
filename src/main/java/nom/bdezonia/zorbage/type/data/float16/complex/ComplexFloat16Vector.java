@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -58,6 +59,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -76,7 +78,8 @@ public class ComplexFloat16Vector
     Products<ComplexFloat16VectorMember, ComplexFloat16Member, ComplexFloat16MatrixMember>,
     DirectProduct<ComplexFloat16VectorMember, ComplexFloat16MatrixMember>,
     Rounding<Float16Member,ComplexFloat16VectorMember>, Infinite<ComplexFloat16VectorMember>,
-    NaN<ComplexFloat16VectorMember>
+    NaN<ComplexFloat16VectorMember>,
+    Tolerance<ComplexFloat16VectorMember,Float16Member>
 {
 	public ComplexFloat16Vector() { }
 	
@@ -441,5 +444,29 @@ public class ComplexFloat16Vector
 	@Override
 	public Function1<Boolean, ComplexFloat16VectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member> WITHIN =
+			new Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, Float16Member d) {
+			ComplexFloat16Member elemA = G.CHLF.construct();
+			ComplexFloat16Member elemB = G.CHLF.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.CHLF.within().call(elemA, elemB, d))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member> within() {
+		return WITHIN;
 	}
 }

@@ -41,6 +41,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -49,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -69,6 +71,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
@@ -97,7 +100,8 @@ public class ComplexFloat16Algebra
     Conjugate<ComplexFloat16Member>,
     Random<ComplexFloat16Member>,
     RealUnreal<ComplexFloat16Member,Float16Member>,
-    Scale<ComplexFloat16Member,ComplexFloat16Member>
+    Scale<ComplexFloat16Member,ComplexFloat16Member>,
+    Tolerance<ComplexFloat16Member, Float16Member>
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
@@ -1321,6 +1325,21 @@ public class ComplexFloat16Algebra
 	@Override
 	public Procedure3<ComplexFloat16Member, ComplexFloat16Member, ComplexFloat16Member> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, ComplexFloat16Member, ComplexFloat16Member, Float16Member> WITHIN =
+			new Function3<Boolean, ComplexFloat16Member, ComplexFloat16Member, Float16Member>()
+	{
+		
+		@Override
+		public Boolean call(ComplexFloat16Member a, ComplexFloat16Member b, Float16Member c) {
+			return ComplexNumberWithin.compute(G.HLF, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexFloat16Member, ComplexFloat16Member, Float16Member> within() {
+		return WITHIN;
 	}
 
 }

@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -78,6 +79,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -101,7 +103,8 @@ public class ComplexFloat16Matrix
 		Hyperbolic<ComplexFloat16MatrixMember>,
 		RealConstants<ComplexFloat16MatrixMember>,
 		Infinite<ComplexFloat16MatrixMember>,
-		NaN<ComplexFloat16MatrixMember>
+		NaN<ComplexFloat16MatrixMember>,
+		Tolerance<ComplexFloat16MatrixMember,Float16Member>
 {
 	public ComplexFloat16Matrix() { }
 
@@ -749,5 +752,31 @@ public class ComplexFloat16Matrix
 	@Override
 	public Procedure1<ComplexFloat16MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member> WITHIN =
+			new Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b, Float16Member d) {
+			ComplexFloat16Member elemA = G.CHLF.construct();
+			ComplexFloat16Member elemB = G.CHLF.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.CHLF.within().call(elemA, elemB, d))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member> within() {
+		return WITHIN;
 	}
 }
