@@ -88,11 +88,11 @@ public class TestNumberWithin {
 		Float64Member elemA = G.DBL.construct();
 		Float64Member elemB = G.DBL.construct();
 		Float64Member elemTol = G.DBL.construct();
-		for (int a = -8; a < 8; a++) {
+		for (double a = -8; a < 8; a += 0.25) {
 			elemA.setV(a);
-			for (int b = -8; b < 8; b++) {
+			for (double b = -8; b < 8; b += 0.25) {
 				elemB.setV(b);
-				for (int tol = 0; tol < 8; tol++) {
+				for (double tol = 0; tol < 8; tol += 0.25) {
 					elemTol.setV(tol);
 					boolean algo = NumberWithin.compute(G.DBL, elemA, elemB, elemTol);
 					boolean test = Math.abs(a-b) <= tol;
@@ -108,11 +108,11 @@ public class TestNumberWithin {
 		Float64Member elemA = G.DBL.construct();
 		Float64Member elemB = G.DBL.construct();
 		Float64Member elemTol = G.DBL.construct();
-		for (int a = 0; a < 16; a++) {
+		for (double a = 0; a < 16; a += 0.25) {
 			elemA.setV(a);
-			for (int b = 0; b < 16; b++) {
+			for (double b = 0; b < 16; b += 0.25) {
 				elemB.setV(b);
-				for (int tol = 0; tol < 16; tol++) {
+				for (double tol = 0; tol < 16; tol += 0.25) {
 					elemTol.setV(tol);
 					boolean algo = NumberWithin.compute(G.DBL, elemA, elemB, elemTol);
 					boolean test = Math.abs(a-b) <= tol;
