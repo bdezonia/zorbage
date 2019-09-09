@@ -450,7 +450,7 @@ public class ComplexFloat16Vector
 			new Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member>()
 	{
 		@Override
-		public Boolean call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, Float16Member d) {
+		public Boolean call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, Float16Member tol) {
 			ComplexFloat16Member elemA = G.CHLF.construct();
 			ComplexFloat16Member elemB = G.CHLF.construct();
 			if (a.length() != b.length())
@@ -458,7 +458,7 @@ public class ComplexFloat16Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.CHLF.within().call(elemA, elemB, d))
+				if (!G.CHLF.within().call(elemA, elemB, tol))
 					return false;
 			}
 			return true;

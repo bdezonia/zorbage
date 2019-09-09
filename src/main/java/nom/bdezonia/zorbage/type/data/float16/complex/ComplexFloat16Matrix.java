@@ -758,7 +758,7 @@ public class ComplexFloat16Matrix
 			new Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member>()
 	{
 		@Override
-		public Boolean call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b, Float16Member d) {
+		public Boolean call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b, Float16Member tol) {
 			ComplexFloat16Member elemA = G.CHLF.construct();
 			ComplexFloat16Member elemB = G.CHLF.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -767,7 +767,7 @@ public class ComplexFloat16Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.CHLF.within().call(elemA, elemB, d))
+					if (!G.CHLF.within().call(elemA, elemB, tol))
 						return false;
 				}
 			}
