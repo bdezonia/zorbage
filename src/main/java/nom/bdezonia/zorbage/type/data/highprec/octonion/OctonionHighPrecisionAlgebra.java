@@ -30,12 +30,14 @@ import java.math.BigDecimal;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.OctonionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -50,6 +52,7 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -79,7 +82,8 @@ public class OctonionHighPrecisionAlgebra
     Power<OctonionHighPrecisionMember>,
     Roots<OctonionHighPrecisionMember>,
     RealUnreal<OctonionHighPrecisionMember,HighPrecisionMember>,
-    Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>
+    Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>,
+    Tolerance<OctonionHighPrecisionMember,HighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -1202,6 +1206,21 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember, HighPrecisionMember>()
+	{
+		
+		@Override
+		public Boolean call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b, HighPrecisionMember c) {
+			return OctonionNumberWithin.compute(G.HP, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember, HighPrecisionMember> within() {
+		return WITHIN;
 	}
 
 }

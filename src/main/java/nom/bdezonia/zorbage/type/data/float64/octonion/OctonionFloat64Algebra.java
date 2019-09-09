@@ -30,6 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.OctonionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -38,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -57,6 +59,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -89,7 +92,8 @@ public class OctonionFloat64Algebra
     Power<OctonionFloat64Member>,
     Roots<OctonionFloat64Member>,
     RealUnreal<OctonionFloat64Member,Float64Member>,
-    Scale<OctonionFloat64Member, OctonionFloat64Member>
+    Scale<OctonionFloat64Member, OctonionFloat64Member>,
+    Tolerance<OctonionFloat64Member,Float64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1296,6 +1300,21 @@ public class OctonionFloat64Algebra
 	@Override
 	public Procedure3<OctonionFloat64Member, OctonionFloat64Member, OctonionFloat64Member> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, OctonionFloat64Member, OctonionFloat64Member, Float64Member> WITHIN =
+			new Function3<Boolean, OctonionFloat64Member, OctonionFloat64Member, Float64Member>()
+	{
+		
+		@Override
+		public Boolean call(OctonionFloat64Member a, OctonionFloat64Member b, Float64Member c) {
+			return OctonionNumberWithin.compute(G.DBL, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, OctonionFloat64Member, OctonionFloat64Member, Float64Member> within() {
+		return WITHIN;
 	}
 
 }

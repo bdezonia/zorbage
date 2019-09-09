@@ -30,12 +30,14 @@ import java.math.BigDecimal;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -49,6 +51,7 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -74,7 +77,8 @@ public class QuaternionHighPrecisionAlgebra
     Power<QuaternionHighPrecisionMember>,
     Roots<QuaternionHighPrecisionMember>,
     RealUnreal<QuaternionHighPrecisionMember,HighPrecisionMember>,
-    Scale<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember>
+    Scale<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember>,
+    Tolerance<QuaternionHighPrecisionMember,HighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
@@ -865,5 +869,21 @@ public class QuaternionHighPrecisionAlgebra
 	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scale() {
 		return MUL;
 	}
+
+	private final Function3<Boolean, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, HighPrecisionMember>()
+	{
+		
+		@Override
+		public Boolean call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b, HighPrecisionMember c) {
+			return QuaternionNumberWithin.compute(G.HP, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, HighPrecisionMember> within() {
+		return WITHIN;
+	}
+
 
 }

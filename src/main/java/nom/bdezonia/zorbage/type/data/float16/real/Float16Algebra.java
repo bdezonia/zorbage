@@ -32,6 +32,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -40,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -62,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -89,7 +92,8 @@ public class Float16Algebra
     RealUnreal<Float16Member,Float16Member>,
     ModularDivision<Float16Member>,
 	Conjugate<Float16Member>,
-	Scale<Float16Member,Float16Member>
+	Scale<Float16Member,Float16Member>,
+	Tolerance<Float16Member,Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
@@ -1331,5 +1335,20 @@ public class Float16Algebra
 	@Override
 	public Procedure2<Float16Member, Float16Member> conjugate() {
 		return ASSIGN;
+	}
+
+	private final Function3<Boolean, Float16Member, Float16Member, Float16Member> WITHIN =
+			new Function3<Boolean, Float16Member, Float16Member, Float16Member>()
+	{
+		
+		@Override
+		public Boolean call(Float16Member a, Float16Member b, Float16Member c) {
+			return NumberWithin.compute(G.HLF, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float16Member, Float16Member, Float16Member> within() {
+		return WITHIN;
 	}
 }

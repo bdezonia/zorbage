@@ -30,6 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -38,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -56,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
@@ -84,7 +87,8 @@ public class QuaternionFloat16Algebra
     Power<QuaternionFloat16Member>,
     Roots<QuaternionFloat16Member>,
     RealUnreal<QuaternionFloat16Member,Float16Member>,
-    Scale<QuaternionFloat16Member,QuaternionFloat16Member>
+    Scale<QuaternionFloat16Member,QuaternionFloat16Member>,
+    Tolerance<QuaternionFloat16Member,Float16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
 	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member(1.0/3,0,0,0);
@@ -957,6 +961,21 @@ public class QuaternionFloat16Algebra
 	@Override
 	public Procedure3<QuaternionFloat16Member, QuaternionFloat16Member, QuaternionFloat16Member> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, QuaternionFloat16Member, QuaternionFloat16Member, Float16Member> WITHIN =
+			new Function3<Boolean, QuaternionFloat16Member, QuaternionFloat16Member, Float16Member>()
+	{
+		
+		@Override
+		public Boolean call(QuaternionFloat16Member a, QuaternionFloat16Member b, Float16Member c) {
+			return QuaternionNumberWithin.compute(G.HLF, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, QuaternionFloat16Member, QuaternionFloat16Member, Float16Member> within() {
+		return WITHIN;
 	}
 
 }

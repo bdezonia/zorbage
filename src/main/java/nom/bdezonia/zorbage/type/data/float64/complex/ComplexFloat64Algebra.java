@@ -41,6 +41,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -49,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -69,6 +71,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -97,7 +100,8 @@ public class ComplexFloat64Algebra
     Conjugate<ComplexFloat64Member>,
     Random<ComplexFloat64Member>,
     RealUnreal<ComplexFloat64Member,Float64Member>,
-    Scale<ComplexFloat64Member,ComplexFloat64Member>
+    Scale<ComplexFloat64Member,ComplexFloat64Member>,
+    Tolerance<ComplexFloat64Member,Float64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
@@ -1320,6 +1324,21 @@ public class ComplexFloat64Algebra
 	@Override
 	public Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, ComplexFloat64Member, ComplexFloat64Member, Float64Member> WITHIN =
+			new Function3<Boolean, ComplexFloat64Member, ComplexFloat64Member, Float64Member>()
+	{
+		
+		@Override
+		public Boolean call(ComplexFloat64Member a, ComplexFloat64Member b, Float64Member c) {
+			return ComplexNumberWithin.compute(G.DBL, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexFloat64Member, ComplexFloat64Member, Float64Member> within() {
+		return WITHIN;
 	}
 
 }

@@ -32,6 +32,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -40,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -64,6 +66,7 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -93,7 +96,8 @@ public class Float64Algebra
     MiscFloat<Float64Member>,
     ModularDivision<Float64Member>,
     Conjugate<Float64Member>,
-    Scale<Float64Member,Float64Member>
+    Scale<Float64Member,Float64Member>,
+    Tolerance<Float64Member,Float64Member>
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
@@ -1465,6 +1469,21 @@ public class Float64Algebra
 	@Override
 	public Procedure3<Float64Member, Float64Member, Float64Member> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, Float64Member, Float64Member, Float64Member> WITHIN =
+			new Function3<Boolean, Float64Member, Float64Member, Float64Member>()
+	{
+		
+		@Override
+		public Boolean call(Float64Member a, Float64Member b, Float64Member c) {
+			return NumberWithin.compute(G.DBL, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float64Member, Float64Member, Float64Member> within() {
+		return WITHIN;
 	}
 
 }

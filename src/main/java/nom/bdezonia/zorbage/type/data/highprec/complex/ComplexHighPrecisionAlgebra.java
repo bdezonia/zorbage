@@ -41,12 +41,14 @@ import java.math.BigDecimal;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -62,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
@@ -87,7 +90,8 @@ public class ComplexHighPrecisionAlgebra
     Power<ComplexHighPrecisionMember>,
     Conjugate<ComplexHighPrecisionMember>,
     RealUnreal<ComplexHighPrecisionMember,HighPrecisionMember>,
-    Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>
+    Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>,
+    Tolerance<ComplexHighPrecisionMember,HighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
@@ -1257,5 +1261,20 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, ComplexHighPrecisionMember, ComplexHighPrecisionMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, ComplexHighPrecisionMember, ComplexHighPrecisionMember, HighPrecisionMember>()
+	{
+		
+		@Override
+		public Boolean call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, HighPrecisionMember c) {
+			return ComplexNumberWithin.compute(G.HP, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexHighPrecisionMember, ComplexHighPrecisionMember, HighPrecisionMember> within() {
+		return WITHIN;
 	}
 }

@@ -34,8 +34,10 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -52,6 +54,7 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -75,7 +78,8 @@ public class HighPrecisionAlgebra
     InverseTrigonometric<HighPrecisionMember>,
     InverseHyperbolic<HighPrecisionMember>,
     Roots<HighPrecisionMember>,
-    Power<HighPrecisionMember>
+    Power<HighPrecisionMember>,
+    Tolerance<HighPrecisionMember,HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(35, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
@@ -887,4 +891,20 @@ public class HighPrecisionAlgebra
 	public Procedure2<HighPrecisionMember, HighPrecisionMember> cbrt() {
 		return CBRT;
 	}
+
+	private final Function3<Boolean, HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		
+		@Override
+		public Boolean call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+			return NumberWithin.compute(G.HP, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> within() {
+		return WITHIN;
+	}
+
 }

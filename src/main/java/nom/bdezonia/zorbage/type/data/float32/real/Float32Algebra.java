@@ -32,6 +32,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
@@ -40,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -64,6 +66,7 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 
 /**
@@ -93,7 +96,8 @@ public class Float32Algebra
     MiscFloat<Float32Member>,
     ModularDivision<Float32Member>,
     Conjugate<Float32Member>,
-    Scale<Float32Member,Float32Member>
+    Scale<Float32Member,Float32Member>,
+    Tolerance<Float32Member,Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);
@@ -1430,6 +1434,21 @@ public class Float32Algebra
 	@Override
 	public Procedure3<Float32Member, Float32Member, Float32Member> scale() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, Float32Member, Float32Member, Float32Member> WITHIN =
+			new Function3<Boolean, Float32Member, Float32Member, Float32Member>()
+	{
+		
+		@Override
+		public Boolean call(Float32Member a, Float32Member b, Float32Member c) {
+			return NumberWithin.compute(G.FLT, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float32Member, Float32Member, Float32Member> within() {
+		return WITHIN;
 	}
 
 }
