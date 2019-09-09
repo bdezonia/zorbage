@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  */
 public class NumberWithin {
 
-	private NumberWithin() { };
+	private NumberWithin() { }
 	
 	/**
 	 * 

@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.type.algebra.Ordered;
  */
 public class QuaternionNumberWithin {
 
+	private QuaternionNumberWithin() { }
+	
 	/**
 	 * 
 	 * @param composAlg
