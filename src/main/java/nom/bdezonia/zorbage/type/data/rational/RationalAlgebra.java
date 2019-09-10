@@ -32,9 +32,11 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerAny;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -43,6 +45,7 @@ import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
@@ -56,7 +59,8 @@ public class RationalAlgebra
 		Scale<RationalMember,RationalMember>,
 		Norm<RationalMember,RationalMember>,
 		ScaleByHighPrec<RationalMember>,
-		ScaleByRational<RationalMember>
+		ScaleByRational<RationalMember>,
+		Tolerance<RationalMember,RationalMember>
 {
 	@Override
 	public RationalMember construct() {
@@ -421,6 +425,21 @@ public class RationalAlgebra
 	@Override
 	public Procedure3<RationalMember, RationalMember, RationalMember> scaleByRational() {
 		return MUL;
+	}
+
+	private final Function3<Boolean, RationalMember, RationalMember, RationalMember> WITHIN =
+			new Function3<Boolean, RationalMember, RationalMember, RationalMember>()
+	{
+		
+		@Override
+		public Boolean call(RationalMember a, RationalMember b, RationalMember c) {
+			return NumberWithin.compute(G.RAT, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, RationalMember, RationalMember, RationalMember> within() {
+		return WITHIN;
 	}
 
 }
