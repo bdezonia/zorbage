@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -78,6 +79,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -101,7 +103,8 @@ public class OctonionFloat16Matrix
 		Hyperbolic<OctonionFloat16MatrixMember>,
 		RealConstants<OctonionFloat16MatrixMember>,
 		Infinite<OctonionFloat16MatrixMember>,
-		NaN<OctonionFloat16MatrixMember>
+		NaN<OctonionFloat16MatrixMember>,
+		Tolerance<OctonionFloat16MatrixMember,Float16Member>
 {
 	public OctonionFloat16Matrix() { }
 
@@ -749,5 +752,31 @@ public class OctonionFloat16Matrix
 	@Override
 	public Procedure1<OctonionFloat16MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember, Float16Member> WITHIN =
+			new Function3<Boolean, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember, Float16Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b, Float16Member tol) {
+			OctonionFloat16Member elemA = G.OHLF.construct();
+			OctonionFloat16Member elemB = G.OHLF.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.OHLF.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember, Float16Member> within() {
+		return WITHIN;
 	}
 }

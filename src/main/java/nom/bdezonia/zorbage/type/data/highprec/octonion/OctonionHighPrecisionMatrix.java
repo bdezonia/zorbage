@@ -57,6 +57,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -67,6 +68,7 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -87,7 +89,8 @@ public class OctonionHighPrecisionMatrix
 		Exponential<OctonionHighPrecisionMatrixMember>,
 		Trigonometric<OctonionHighPrecisionMatrixMember>,
 		Hyperbolic<OctonionHighPrecisionMatrixMember>,
-		RealConstants<OctonionHighPrecisionMatrixMember>
+		RealConstants<OctonionHighPrecisionMatrixMember>,
+		Tolerance<OctonionHighPrecisionMatrixMember,HighPrecisionMember>
 {
 	public OctonionHighPrecisionMatrix() { }
 
@@ -665,5 +668,31 @@ public class OctonionHighPrecisionMatrix
 	@Override
 	public Procedure1<OctonionHighPrecisionMatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, HighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b, HighPrecisionMember tol) {
+			OctonionHighPrecisionMember elemA = G.OHP.construct();
+			OctonionHighPrecisionMember elemB = G.OHP.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.OHP.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, HighPrecisionMember> within() {
+		return WITHIN;
 	}
 }

@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -78,6 +79,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -101,7 +103,8 @@ public class QuaternionFloat64Matrix
 		Hyperbolic<QuaternionFloat64MatrixMember>,
 		RealConstants<QuaternionFloat64MatrixMember>,
 		Infinite<QuaternionFloat64MatrixMember>,
-		NaN<QuaternionFloat64MatrixMember>
+		NaN<QuaternionFloat64MatrixMember>,
+		Tolerance<QuaternionFloat64MatrixMember,Float64Member>
 {
 	public QuaternionFloat64Matrix() { }
 
@@ -763,5 +766,31 @@ public class QuaternionFloat64Matrix
 	@Override
 	public Procedure1<QuaternionFloat64MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, Float64Member> WITHIN =
+			new Function3<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, Float64Member>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, Float64Member tol) {
+			QuaternionFloat64Member elemA = G.QDBL.construct();
+			QuaternionFloat64Member elemB = G.QDBL.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.QDBL.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, Float64Member> within() {
+		return WITHIN;
 	}
 }

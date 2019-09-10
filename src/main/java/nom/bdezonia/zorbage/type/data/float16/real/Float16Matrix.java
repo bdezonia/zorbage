@@ -63,6 +63,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -77,6 +78,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -99,7 +101,8 @@ public class Float16Matrix
 		Hyperbolic<Float16MatrixMember>,
 		RealConstants<Float16MatrixMember>,
 		Infinite<Float16MatrixMember>,
-		NaN<Float16MatrixMember>
+		NaN<Float16MatrixMember>,
+		Tolerance<Float16MatrixMember,Float16Member>
 {
 	public Float16Matrix() { }
 
@@ -733,5 +736,31 @@ public class Float16Matrix
 	@Override
 	public Procedure1<Float16MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, Float16MatrixMember, Float16MatrixMember, Float16Member> WITHIN =
+			new Function3<Boolean, Float16MatrixMember, Float16MatrixMember, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16MatrixMember a, Float16MatrixMember b, Float16Member tol) {
+			Float16Member elemA = G.HLF.construct();
+			Float16Member elemB = G.HLF.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.HLF.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float16MatrixMember, Float16MatrixMember, Float16Member> within() {
+		return WITHIN;
 	}
 }

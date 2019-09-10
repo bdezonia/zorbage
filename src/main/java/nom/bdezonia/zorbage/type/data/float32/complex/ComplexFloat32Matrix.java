@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -78,6 +79,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -101,7 +103,8 @@ public class ComplexFloat32Matrix
 		Hyperbolic<ComplexFloat32MatrixMember>,
 		RealConstants<ComplexFloat32MatrixMember>,
 		Infinite<ComplexFloat32MatrixMember>,
-		NaN<ComplexFloat32MatrixMember>
+		NaN<ComplexFloat32MatrixMember>,
+		Tolerance<ComplexFloat32MatrixMember,Float32Member>
 {
 	public ComplexFloat32Matrix() { }
 
@@ -749,5 +752,31 @@ public class ComplexFloat32Matrix
 	@Override
 	public Procedure1<ComplexFloat32MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, Float32Member> WITHIN =
+			new Function3<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, Float32Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, Float32Member tol) {
+			ComplexFloat32Member elemA = G.CFLT.construct();
+			ComplexFloat32Member elemB = G.CFLT.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.CFLT.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, Float32Member> within() {
+		return WITHIN;
 	}
 }

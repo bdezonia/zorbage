@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -78,6 +79,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -101,7 +103,8 @@ public class OctonionFloat32Matrix
 		Hyperbolic<OctonionFloat32MatrixMember>,
 		RealConstants<OctonionFloat32MatrixMember>,
 		Infinite<OctonionFloat32MatrixMember>,
-		NaN<OctonionFloat32MatrixMember>
+		NaN<OctonionFloat32MatrixMember>,
+		Tolerance<OctonionFloat32MatrixMember,Float32Member>
 {
 	public OctonionFloat32Matrix() { }
 
@@ -749,5 +752,31 @@ public class OctonionFloat32Matrix
 	@Override
 	public Procedure1<OctonionFloat32MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember, Float32Member> WITHIN =
+			new Function3<Boolean, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember, Float32Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b, Float32Member tol) {
+			OctonionFloat32Member elemA = G.OFLT.construct();
+			OctonionFloat32Member elemB = G.OFLT.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.OFLT.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember, Float32Member> within() {
+		return WITHIN;
 	}
 }

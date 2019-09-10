@@ -57,6 +57,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -67,6 +68,7 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -87,7 +89,8 @@ public class QuaternionHighPrecisionMatrix
 		Exponential<QuaternionHighPrecisionMatrixMember>,
 		Trigonometric<QuaternionHighPrecisionMatrixMember>,
 		Hyperbolic<QuaternionHighPrecisionMatrixMember>,
-		RealConstants<QuaternionHighPrecisionMatrixMember>
+		RealConstants<QuaternionHighPrecisionMatrixMember>,
+		Tolerance<QuaternionHighPrecisionMatrixMember,HighPrecisionMember>
 {
 	public QuaternionHighPrecisionMatrix() { }
 
@@ -677,5 +680,31 @@ public class QuaternionHighPrecisionMatrix
 	@Override
 	public Procedure1<QuaternionHighPrecisionMatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private final Function3<Boolean, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, HighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b, HighPrecisionMember tol) {
+			QuaternionHighPrecisionMember elemA = G.QHP.construct();
+			QuaternionHighPrecisionMember elemB = G.QHP.construct();
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				return false;
+			for (long r = 0; r < a.rows(); r++) {
+				for (long c = 0; c < a.cols(); c++) {
+					a.v(r, c, elemA);
+					b.v(r, c, elemB);
+					if (!G.QHP.within().call(elemA, elemB, tol))
+						return false;
+				}
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, HighPrecisionMember> within() {
+		return WITHIN;
 	}
 }
