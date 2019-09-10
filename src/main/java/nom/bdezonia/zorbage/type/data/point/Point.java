@@ -31,9 +31,11 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.type.algebra.DimensionCount;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
@@ -48,7 +50,7 @@ import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
  */
 public class Point
 	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>, DimensionCount,
-		Allocatable<Point>, Duplicatable<Point>
+		Allocatable<Point>, Duplicatable<Point>, Tolerance<Point,Float64Member>
 {
 	private double[] vector;
 	
@@ -246,5 +248,26 @@ public class Point
 			p.setComponent(i, this.vector[i]);
 		}
 		return p;
+	}
+
+	private final Function3<Boolean, Point, Point, Float64Member> WITHIN =
+			new Function3<Boolean, Point, Point, Float64Member>()
+	{
+		
+		@Override
+		public Boolean call(Point a, Point b, Float64Member tol) {
+			if (a.vector.length != b.vector.length)
+				throw new IllegalArgumentException("input points do not have the same dimension");
+			for (int i = 0; i < a.vector.length; i++) {
+				if (Math.abs(a.vector[i] - b.vector[i]) > tol.v())
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Point, Point, Float64Member> within() {
+		return WITHIN;
 	}
 }
