@@ -32,14 +32,17 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Integer;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -51,7 +54,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 public class UnboundedIntAlgebra
   implements
     Integer<UnboundedIntAlgebra, UnboundedIntMember>,
-    BitOperations<UnboundedIntMember>
+    BitOperations<UnboundedIntMember>,
+    Tolerance<UnboundedIntMember,UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
@@ -825,4 +829,18 @@ public class UnboundedIntAlgebra
 		return SBR;
 	}
 
+	private final Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> WITHIN =
+			new Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		
+		@Override
+		public Boolean call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			return NumberWithin.compute(G.UNBOUND, a, b, c);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> within() {
+		return WITHIN;
+	}
 }
