@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -58,6 +59,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -76,7 +78,8 @@ public class ComplexFloat32Vector
     Products<ComplexFloat32VectorMember, ComplexFloat32Member, ComplexFloat32MatrixMember>,
     DirectProduct<ComplexFloat32VectorMember, ComplexFloat32MatrixMember>,
     Rounding<Float32Member,ComplexFloat32VectorMember>, Infinite<ComplexFloat32VectorMember>,
-    NaN<ComplexFloat32VectorMember>
+    NaN<ComplexFloat32VectorMember>,
+    Tolerance<ComplexFloat32VectorMember,Float32Member>
 {
 	public ComplexFloat32Vector() { }
 	
@@ -441,5 +444,29 @@ public class ComplexFloat32Vector
 	@Override
 	public Function1<Boolean, ComplexFloat32VectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, ComplexFloat32VectorMember, ComplexFloat32VectorMember, Float32Member> WITHIN =
+			new Function3<Boolean, ComplexFloat32VectorMember, ComplexFloat32VectorMember, Float32Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b, Float32Member tol) {
+			ComplexFloat32Member elemA = G.CFLT.construct();
+			ComplexFloat32Member elemB = G.CFLT.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.CFLT.within().call(elemA, elemB, tol))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, ComplexFloat32VectorMember, ComplexFloat32VectorMember, Float32Member> within() {
+		return WITHIN;
 	}
 }

@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -52,6 +53,7 @@ import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -69,7 +71,8 @@ public class HighPrecisionVector
 	Products<HighPrecisionVectorMember, HighPrecisionMember, HighPrecisionMatrixMember>,
 	DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,
 	Infinite<HighPrecisionVectorMember>,
-	NaN<HighPrecisionVectorMember>
+	NaN<HighPrecisionVectorMember>,
+	Tolerance<HighPrecisionVectorMember,HighPrecisionMember>
 {
 	public HighPrecisionVector() { }
 	
@@ -418,5 +421,29 @@ public class HighPrecisionVector
 	@Override
 	public Function1<Boolean, HighPrecisionVectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionMember tol) {
+			HighPrecisionMember elemA = G.HP.construct();
+			HighPrecisionMember elemB = G.HP.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.HP.within().call(elemA, elemB, tol))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionMember> within() {
+		return WITHIN;
 	}
 }

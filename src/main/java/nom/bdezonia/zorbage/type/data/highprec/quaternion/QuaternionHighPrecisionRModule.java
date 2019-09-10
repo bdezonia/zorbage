@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -53,6 +54,7 @@ import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
@@ -69,7 +71,8 @@ public class QuaternionHighPrecisionRModule
     Constructible1dLong<QuaternionHighPrecisionRModuleMember>,
     Norm<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>,
     Products<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember>,
-    DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>
+    DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>,
+    Tolerance<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>
 {
 	public QuaternionHighPrecisionRModule() { }
 	
@@ -380,6 +383,30 @@ public class QuaternionHighPrecisionRModule
 	@Override
 	public Function1<Boolean, QuaternionHighPrecisionRModuleMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, HighPrecisionMember> WITHIN =
+			new Function3<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, HighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, HighPrecisionMember tol) {
+			QuaternionHighPrecisionMember elemA = G.QHP.construct();
+			QuaternionHighPrecisionMember elemB = G.QHP.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.QHP.within().call(elemA, elemB, tol))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, HighPrecisionMember> within() {
+		return WITHIN;
 	}
 
 }

@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -57,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -74,7 +76,8 @@ public class Float64Vector
 	Products<Float64VectorMember, Float64Member, Float64MatrixMember>,
 	DirectProduct<Float64VectorMember, Float64MatrixMember>,
 	Rounding<Float64Member,Float64VectorMember>, Infinite<Float64VectorMember>,
-	NaN<Float64VectorMember>
+	NaN<Float64VectorMember>,
+	Tolerance<Float64VectorMember,Float64Member>
 {
 	public Float64Vector() { }
 	
@@ -429,5 +432,29 @@ public class Float64Vector
 	@Override
 	public Function1<Boolean, Float64VectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, Float64VectorMember, Float64VectorMember, Float64Member> WITHIN =
+			new Function3<Boolean, Float64VectorMember, Float64VectorMember, Float64Member>()
+	{
+		@Override
+		public Boolean call(Float64VectorMember a, Float64VectorMember b, Float64Member tol) {
+			Float64Member elemA = G.DBL.construct();
+			Float64Member elemB = G.DBL.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.DBL.within().call(elemA, elemB, tol))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float64VectorMember, Float64VectorMember, Float64Member> within() {
+		return WITHIN;
 	}
 }

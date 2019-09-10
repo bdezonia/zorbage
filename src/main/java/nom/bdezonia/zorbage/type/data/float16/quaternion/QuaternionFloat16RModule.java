@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -59,6 +60,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
@@ -76,7 +78,8 @@ public class QuaternionFloat16RModule
     Products<QuaternionFloat16RModuleMember,QuaternionFloat16Member, QuaternionFloat16MatrixMember>,
     DirectProduct<QuaternionFloat16RModuleMember, QuaternionFloat16MatrixMember>,
 	Rounding<Float16Member,QuaternionFloat16RModuleMember>, Infinite<QuaternionFloat16RModuleMember>,
-	NaN<QuaternionFloat16RModuleMember>
+	NaN<QuaternionFloat16RModuleMember>,
+	Tolerance<QuaternionFloat16RModuleMember,Float16Member>
 {
 	public QuaternionFloat16RModule() { }
 	
@@ -452,6 +455,30 @@ public class QuaternionFloat16RModule
 	@Override
 	public Function1<Boolean, QuaternionFloat16RModuleMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember, Float16Member> WITHIN =
+			new Function3<Boolean, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember, Float16Member>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b, Float16Member tol) {
+			QuaternionFloat16Member elemA = G.QHLF.construct();
+			QuaternionFloat16Member elemB = G.QHLF.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.QHLF.within().call(elemA, elemB, tol))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember, Float16Member> within() {
+		return WITHIN;
 	}
 
 }

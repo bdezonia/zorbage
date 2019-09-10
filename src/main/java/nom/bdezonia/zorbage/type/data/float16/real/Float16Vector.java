@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -57,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
@@ -74,7 +76,8 @@ public class Float16Vector
 	Products<Float16VectorMember, Float16Member, Float16MatrixMember>,
 	DirectProduct<Float16VectorMember, Float16MatrixMember>,
 	Rounding<Float16Member,Float16VectorMember>, Infinite<Float16VectorMember>,
-	NaN<Float16VectorMember>
+	NaN<Float16VectorMember>,
+	Tolerance<Float16VectorMember,Float16Member>
 {
 	public Float16Vector() { }
 	
@@ -429,5 +432,29 @@ public class Float16Vector
 	@Override
 	public Function1<Boolean, Float16VectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private final Function3<Boolean, Float16VectorMember, Float16VectorMember, Float16Member> WITHIN =
+			new Function3<Boolean, Float16VectorMember, Float16VectorMember, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16VectorMember a, Float16VectorMember b, Float16Member tol) {
+			Float16Member elemA = G.HLF.construct();
+			Float16Member elemB = G.HLF.construct();
+			if (a.length() != b.length())
+				return false;
+			for (long i = 0; i < a.length(); i++) {
+				a.v(i, elemA);
+				b.v(i, elemB);
+				if (!G.HLF.within().call(elemA, elemB, tol))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float16VectorMember, Float16VectorMember, Float16Member> within() {
+		return WITHIN;
 	}
 }
