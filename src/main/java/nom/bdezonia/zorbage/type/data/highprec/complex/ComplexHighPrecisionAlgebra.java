@@ -1268,8 +1268,8 @@ public class ComplexHighPrecisionAlgebra
 	{
 		
 		@Override
-		public Boolean call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, HighPrecisionMember c) {
-			return ComplexNumberWithin.compute(G.HP, a, b, c);
+		public Boolean call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, HighPrecisionMember tol) {
+			return ComplexNumberWithin.compute(G.HP, a, b, tol);
 		}
 	};
 

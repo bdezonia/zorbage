@@ -875,8 +875,8 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		
 		@Override
-		public Boolean call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b, HighPrecisionMember c) {
-			return QuaternionNumberWithin.compute(G.HP, a, b, c);
+		public Boolean call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b, HighPrecisionMember tol) {
+			return QuaternionNumberWithin.compute(G.HP, a, b, tol);
 		}
 	};
 

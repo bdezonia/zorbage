@@ -1307,8 +1307,8 @@ public class OctonionFloat32Algebra
 	{
 		
 		@Override
-		public Boolean call(OctonionFloat32Member a, OctonionFloat32Member b, Float32Member c) {
-			return OctonionNumberWithin.compute(G.FLT, a, b, c);
+		public Boolean call(OctonionFloat32Member a, OctonionFloat32Member b, Float32Member tol) {
+			return OctonionNumberWithin.compute(G.FLT, a, b, tol);
 		}
 	};
 

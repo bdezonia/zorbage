@@ -1476,8 +1476,8 @@ public class Float64Algebra
 	{
 		
 		@Override
-		public Boolean call(Float64Member a, Float64Member b, Float64Member c) {
-			return NumberWithin.compute(G.DBL, a, b, c);
+		public Boolean call(Float64Member a, Float64Member b, Float64Member tol) {
+			return NumberWithin.compute(G.DBL, a, b, tol);
 		}
 	};
 

@@ -968,8 +968,8 @@ public class QuaternionFloat32Algebra
 	{
 		
 		@Override
-		public Boolean call(QuaternionFloat32Member a, QuaternionFloat32Member b, Float32Member c) {
-			return QuaternionNumberWithin.compute(G.FLT, a, b, c);
+		public Boolean call(QuaternionFloat32Member a, QuaternionFloat32Member b, Float32Member tol) {
+			return QuaternionNumberWithin.compute(G.FLT, a, b, tol);
 		}
 	};
 

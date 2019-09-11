@@ -968,8 +968,8 @@ public class QuaternionFloat64Algebra
 	{
 		
 		@Override
-		public Boolean call(QuaternionFloat64Member a, QuaternionFloat64Member b, Float64Member c) {
-			return QuaternionNumberWithin.compute(G.DBL, a, b, c);
+		public Boolean call(QuaternionFloat64Member a, QuaternionFloat64Member b, Float64Member tol) {
+			return QuaternionNumberWithin.compute(G.DBL, a, b, tol);
 		}
 	};
 

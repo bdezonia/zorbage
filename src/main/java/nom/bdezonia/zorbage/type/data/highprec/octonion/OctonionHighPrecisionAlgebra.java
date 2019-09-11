@@ -1213,8 +1213,8 @@ public class OctonionHighPrecisionAlgebra
 	{
 		
 		@Override
-		public Boolean call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b, HighPrecisionMember c) {
-			return OctonionNumberWithin.compute(G.HP, a, b, c);
+		public Boolean call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b, HighPrecisionMember tol) {
+			return OctonionNumberWithin.compute(G.HP, a, b, tol);
 		}
 	};
 

@@ -1331,8 +1331,8 @@ public class ComplexFloat32Algebra
 	{
 		
 		@Override
-		public Boolean call(ComplexFloat32Member a, ComplexFloat32Member b, Float32Member c) {
-			return ComplexNumberWithin.compute(G.FLT, a, b, c);
+		public Boolean call(ComplexFloat32Member a, ComplexFloat32Member b, Float32Member tol) {
+			return ComplexNumberWithin.compute(G.FLT, a, b, tol);
 		}
 	};
 

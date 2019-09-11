@@ -1342,8 +1342,8 @@ public class Float16Algebra
 	{
 		
 		@Override
-		public Boolean call(Float16Member a, Float16Member b, Float16Member c) {
-			return NumberWithin.compute(G.HLF, a, b, c);
+		public Boolean call(Float16Member a, Float16Member b, Float16Member tol) {
+			return NumberWithin.compute(G.HLF, a, b, tol);
 		}
 	};
 

@@ -1307,8 +1307,8 @@ public class OctonionFloat16Algebra
 	{
 		
 		@Override
-		public Boolean call(OctonionFloat16Member a, OctonionFloat16Member b, Float16Member c) {
-			return OctonionNumberWithin.compute(G.HLF, a, b, c);
+		public Boolean call(OctonionFloat16Member a, OctonionFloat16Member b, Float16Member tol) {
+			return OctonionNumberWithin.compute(G.HLF, a, b, tol);
 		}
 	};
 

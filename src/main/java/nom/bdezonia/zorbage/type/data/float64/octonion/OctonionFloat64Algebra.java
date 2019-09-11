@@ -1307,8 +1307,8 @@ public class OctonionFloat64Algebra
 	{
 		
 		@Override
-		public Boolean call(OctonionFloat64Member a, OctonionFloat64Member b, Float64Member c) {
-			return OctonionNumberWithin.compute(G.DBL, a, b, c);
+		public Boolean call(OctonionFloat64Member a, OctonionFloat64Member b, Float64Member tol) {
+			return OctonionNumberWithin.compute(G.DBL, a, b, tol);
 		}
 	};
 

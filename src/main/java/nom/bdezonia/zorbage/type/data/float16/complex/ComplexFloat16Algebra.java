@@ -1332,8 +1332,8 @@ public class ComplexFloat16Algebra
 	{
 		
 		@Override
-		public Boolean call(ComplexFloat16Member a, ComplexFloat16Member b, Float16Member c) {
-			return ComplexNumberWithin.compute(G.HLF, a, b, c);
+		public Boolean call(ComplexFloat16Member a, ComplexFloat16Member b, Float16Member tol) {
+			return ComplexNumberWithin.compute(G.HLF, a, b, tol);
 		}
 	};
 

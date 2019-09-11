@@ -1331,8 +1331,8 @@ public class ComplexFloat64Algebra
 	{
 		
 		@Override
-		public Boolean call(ComplexFloat64Member a, ComplexFloat64Member b, Float64Member c) {
-			return ComplexNumberWithin.compute(G.DBL, a, b, c);
+		public Boolean call(ComplexFloat64Member a, ComplexFloat64Member b, Float64Member tol) {
+			return ComplexNumberWithin.compute(G.DBL, a, b, tol);
 		}
 	};
 

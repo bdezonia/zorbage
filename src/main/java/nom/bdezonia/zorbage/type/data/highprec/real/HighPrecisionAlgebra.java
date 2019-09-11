@@ -897,8 +897,8 @@ public class HighPrecisionAlgebra
 	{
 		
 		@Override
-		public Boolean call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-			return NumberWithin.compute(G.HP, a, b, c);
+		public Boolean call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember tol) {
+			return NumberWithin.compute(G.HP, a, b, tol);
 		}
 	};
 
