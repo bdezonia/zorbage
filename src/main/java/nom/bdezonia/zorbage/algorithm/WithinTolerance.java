@@ -38,16 +38,40 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 public class WithinTolerance<T extends Algebra<T,U> & Tolerance<U,W>, U, V extends Algebra<V,W>, W>
 	implements Function2<Boolean,U,U>
 {
-	private final T algebra;
+	private final T uAlgebra;
+	private final V tolAlgebra;
 	private final W tolerance;
 	
-	public WithinTolerance(T algebra, V alg, W tolerance) {
-		this.algebra = algebra;
-		this.tolerance = alg.construct(tolerance);
+	/**
+	 * 
+	 * @param uAlgebra
+	 * @param tolAlgebra
+	 * @param tolerance
+	 */
+	public WithinTolerance(T uAlgebra, V tolAlgebra, W tolerance) {
+		this.uAlgebra = uAlgebra;
+		this.tolAlgebra = tolAlgebra;
+		this.tolerance = tolAlgebra.construct(tolerance);
+	}
+
+	/**
+	 * 
+	 * @param tol
+	 */
+	public void setTolerance(W tol) {
+		tolAlgebra.assign().call(tol, tolerance);
+	}
+	
+	/**
+	 * 
+	 * @param tol
+	 */
+	public void getTolerance(W tol) {
+		tolAlgebra.assign().call(tolerance, tol);
 	}
 	
 	@Override
 	public Boolean call(U a, U b) {
-		return algebra.within().call(a, b, tolerance);
+		return uAlgebra.within().call(a, b, tolerance);
 	}
 }
