@@ -35,15 +35,15 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
  * @author Barry DeZonia
  *
  */
-public class WithinTolerance<T extends Algebra<T,U> & Tolerance<U,V>, U, V>
+public class WithinTolerance<T extends Algebra<T,U> & Tolerance<U,W>, U, V extends Algebra<V,W>, W>
 	implements Function2<Boolean,U,U>
 {
 	private final T algebra;
-	private final V tolerance;
+	private final W tolerance;
 	
-	public WithinTolerance(T algebra, V tolerance) {
+	public WithinTolerance(T algebra, V alg, W tolerance) {
 		this.algebra = algebra;
-		this.tolerance = tolerance;
+		this.tolerance = alg.construct(tolerance);
 	}
 	
 	@Override
