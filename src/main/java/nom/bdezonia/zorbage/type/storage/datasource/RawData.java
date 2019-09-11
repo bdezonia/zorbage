@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 /**
  * 
- * @author bdz
+ * @author Barry DeZonia
  *
  */
 public interface RawData<U> {
