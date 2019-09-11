@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-
 /**
  * A typical use for this class is to take a source, wrap it with an out of
  * bounds procedure, and pass that wrapped source to this constructor with
@@ -38,23 +36,20 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class FixedSizeDataSource<T extends Algebra<T,U>, U>
+public class FixedSizeDataSource<U>
 	implements IndexedDataSource<U>
 {
-	private final T algebra;
 	private final long size;
 	private final IndexedDataSource<U> src;
 	
 	/**
 	 * 
-	 * @param algebra
 	 * @param size
 	 * @param src
 	 */
-	public FixedSizeDataSource(T algebra, long size, IndexedDataSource<U> src) {
+	public FixedSizeDataSource(long size, IndexedDataSource<U> src) {
 		if (size < 0)
 			throw new IllegalArgumentException("negative size not allowed");
-		this.algebra = algebra;
 		this.size = size;
 		this.src = src;
 	}
@@ -62,7 +57,7 @@ public class FixedSizeDataSource<T extends Algebra<T,U>, U>
 	@Override
 	public IndexedDataSource<U> duplicate() {
 		// shallow copy
-		return new FixedSizeDataSource<T,U>(algebra, size, src);
+		return new FixedSizeDataSource<U>(size, src);
 	}
 
 	@Override
