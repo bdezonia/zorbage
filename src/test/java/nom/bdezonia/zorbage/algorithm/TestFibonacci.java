@@ -88,7 +88,7 @@ public class TestFibonacci {
 		
 		UnboundedIntMember tmp = G.UNBOUND.construct();
 		
-		Fibonacci.compute(G.UNBOUND, 99, tmp);
-		assertTrue(G.UNBOUND.isEqual().call(new UnboundedIntMember("218922995834555169026"), tmp));
+		Fibonacci.compute(G.UNBOUND, 599, tmp);
+		assertTrue(G.UNBOUND.isEqual().call(new UnboundedIntMember("68251391096100309964978446045087420307025606859722438323487946038808981838031799984351367205238184363410615527949660089420401"), tmp));
 	}
 }
