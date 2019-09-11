@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -60,7 +63,8 @@ public class UnsignedInt32Algebra
     Integer<UnsignedInt32Algebra, UnsignedInt32Member>,
     Bounded<UnsignedInt32Member>,
     BitOperations<UnsignedInt32Member>,
-    Random<UnsignedInt32Member>
+    Random<UnsignedInt32Member>,
+    Tolerance<UnsignedInt32Member,UnsignedInt32Member>
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();
@@ -705,6 +709,21 @@ public class UnsignedInt32Algebra
 	@Override
 	public Procedure3<RationalMember, UnsignedInt32Member, UnsignedInt32Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, UnsignedInt32Member, UnsignedInt32Member, UnsignedInt32Member> WITHIN =
+			new Function3<Boolean, UnsignedInt32Member, UnsignedInt32Member, UnsignedInt32Member>()
+	{
+		
+		@Override
+		public Boolean call(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member tol) {
+			return NumberWithin.compute(G.UINT32, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, UnsignedInt32Member, UnsignedInt32Member, UnsignedInt32Member> within() {
+		return WITHIN;
 	}
 
 }

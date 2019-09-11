@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -59,7 +62,8 @@ public class SignedInt32Algebra
     Integer<SignedInt32Algebra, SignedInt32Member>,
     Bounded<SignedInt32Member>,
     BitOperations<SignedInt32Member>,
-    Random<SignedInt32Member>
+    Random<SignedInt32Member>,
+    Tolerance<SignedInt32Member,SignedInt32Member>
 {
 
 	public SignedInt32Algebra() { }
@@ -722,6 +726,21 @@ public class SignedInt32Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt32Member, SignedInt32Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, SignedInt32Member, SignedInt32Member, SignedInt32Member> WITHIN =
+			new Function3<Boolean, SignedInt32Member, SignedInt32Member, SignedInt32Member>()
+	{
+		
+		@Override
+		public Boolean call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member tol) {
+			return NumberWithin.compute(G.INT32, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, SignedInt32Member, SignedInt32Member, SignedInt32Member> within() {
+		return WITHIN;
 	}
 
 }

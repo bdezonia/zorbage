@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -60,7 +63,8 @@ public class SignedInt8Algebra
     Integer<SignedInt8Algebra, SignedInt8Member>,
     Bounded<SignedInt8Member>,
     BitOperations<SignedInt8Member>,
-    Random<SignedInt8Member>
+    Random<SignedInt8Member>,
+    Tolerance<SignedInt8Member,SignedInt8Member>
 {
 
 	public SignedInt8Algebra() { }
@@ -723,6 +727,21 @@ public class SignedInt8Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt8Member, SignedInt8Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, SignedInt8Member, SignedInt8Member, SignedInt8Member> WITHIN =
+			new Function3<Boolean, SignedInt8Member, SignedInt8Member, SignedInt8Member>()
+	{
+		
+		@Override
+		public Boolean call(SignedInt8Member a, SignedInt8Member b, SignedInt8Member tol) {
+			return NumberWithin.compute(G.INT8, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, SignedInt8Member, SignedInt8Member, SignedInt8Member> within() {
+		return WITHIN;
 	}
 
 }

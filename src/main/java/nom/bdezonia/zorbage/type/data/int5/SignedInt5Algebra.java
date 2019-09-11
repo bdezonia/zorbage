@@ -33,9 +33,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -44,6 +46,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -57,7 +60,8 @@ public class SignedInt5Algebra
 		Integer<SignedInt5Algebra, SignedInt5Member>,
 		Bounded<SignedInt5Member>,
 		BitOperations<SignedInt5Member>,
-		Random<SignedInt5Member>
+		Random<SignedInt5Member>,
+		Tolerance<SignedInt5Member,SignedInt5Member>
 {
 
 	@Override
@@ -746,6 +750,21 @@ public class SignedInt5Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt5Member, SignedInt5Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, SignedInt5Member, SignedInt5Member, SignedInt5Member> WITHIN =
+			new Function3<Boolean, SignedInt5Member, SignedInt5Member, SignedInt5Member>()
+	{
+		
+		@Override
+		public Boolean call(SignedInt5Member a, SignedInt5Member b, SignedInt5Member tol) {
+			return NumberWithin.compute(G.INT5, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, SignedInt5Member, SignedInt5Member, SignedInt5Member> within() {
+		return WITHIN;
 	}
 
 }

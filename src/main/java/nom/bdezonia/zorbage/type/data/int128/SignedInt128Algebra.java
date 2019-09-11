@@ -37,9 +37,11 @@ import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.Multiply;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -48,6 +50,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -70,7 +73,8 @@ public class SignedInt128Algebra
 		Integer<SignedInt128Algebra, SignedInt128Member>,
 		Bounded<SignedInt128Member>,
 		BitOperations<SignedInt128Member>,
-		Random<SignedInt128Member>
+		Random<SignedInt128Member>,
+		Tolerance<SignedInt128Member,SignedInt128Member>
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
@@ -876,6 +880,21 @@ public class SignedInt128Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt128Member, SignedInt128Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, SignedInt128Member, SignedInt128Member, SignedInt128Member> WITHIN =
+			new Function3<Boolean, SignedInt128Member, SignedInt128Member, SignedInt128Member>()
+	{
+		
+		@Override
+		public Boolean call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member tol) {
+			return NumberWithin.compute(G.INT128, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, SignedInt128Member, SignedInt128Member, SignedInt128Member> within() {
+		return WITHIN;
 	}
 
 }

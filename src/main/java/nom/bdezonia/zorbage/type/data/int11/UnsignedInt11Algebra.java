@@ -33,9 +33,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -44,6 +46,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -57,7 +60,8 @@ public class UnsignedInt11Algebra
 		Integer<UnsignedInt11Algebra, UnsignedInt11Member>,
 		Bounded<UnsignedInt11Member>,
 		BitOperations<UnsignedInt11Member>,
-		Random<UnsignedInt11Member>
+		Random<UnsignedInt11Member>,
+		Tolerance<UnsignedInt11Member,UnsignedInt11Member>
 {
 
 	@Override
@@ -701,6 +705,21 @@ public class UnsignedInt11Algebra
 	@Override
 	public Procedure3<RationalMember, UnsignedInt11Member, UnsignedInt11Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, UnsignedInt11Member, UnsignedInt11Member, UnsignedInt11Member> WITHIN =
+			new Function3<Boolean, UnsignedInt11Member, UnsignedInt11Member, UnsignedInt11Member>()
+	{
+		
+		@Override
+		public Boolean call(UnsignedInt11Member a, UnsignedInt11Member b, UnsignedInt11Member tol) {
+			return NumberWithin.compute(G.UINT11, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, UnsignedInt11Member, UnsignedInt11Member, UnsignedInt11Member> within() {
+		return WITHIN;
 	}
 
 }

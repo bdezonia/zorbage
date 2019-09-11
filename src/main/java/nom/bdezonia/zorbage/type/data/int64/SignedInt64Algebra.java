@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -60,7 +63,8 @@ public class SignedInt64Algebra
     Integer<SignedInt64Algebra, SignedInt64Member>,
     Bounded<SignedInt64Member>,
     BitOperations<SignedInt64Member>,
-    Random<SignedInt64Member>
+    Random<SignedInt64Member>,
+    Tolerance<SignedInt64Member,SignedInt64Member>
 {
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);
@@ -735,6 +739,21 @@ public class SignedInt64Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt64Member, SignedInt64Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, SignedInt64Member, SignedInt64Member, SignedInt64Member> WITHIN =
+			new Function3<Boolean, SignedInt64Member, SignedInt64Member, SignedInt64Member>()
+	{
+		
+		@Override
+		public Boolean call(SignedInt64Member a, SignedInt64Member b, SignedInt64Member tol) {
+			return NumberWithin.compute(G.INT64, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, SignedInt64Member, SignedInt64Member, SignedInt64Member> within() {
+		return WITHIN;
 	}
 
 }

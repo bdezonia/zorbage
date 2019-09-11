@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -60,7 +63,8 @@ public class UnsignedInt16Algebra
     Integer<UnsignedInt16Algebra, UnsignedInt16Member>,
     Bounded<UnsignedInt16Member>,
     BitOperations<UnsignedInt16Member>,
-    Random<UnsignedInt16Member>
+    Random<UnsignedInt16Member>,
+    Tolerance<UnsignedInt16Member,UnsignedInt16Member>
 {
 	
 	public UnsignedInt16Algebra() { }
@@ -695,6 +699,21 @@ public class UnsignedInt16Algebra
 	@Override
 	public Procedure3<RationalMember, UnsignedInt16Member, UnsignedInt16Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member> WITHIN =
+			new Function3<Boolean, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		
+		@Override
+		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member tol) {
+			return NumberWithin.compute(G.UINT16, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member> within() {
+		return WITHIN;
 	}
 
 }

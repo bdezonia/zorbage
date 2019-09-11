@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -60,7 +63,8 @@ public class SignedInt16Algebra
     Integer<SignedInt16Algebra, SignedInt16Member>,
     Bounded<SignedInt16Member>,
     BitOperations<SignedInt16Member>,
-    Random<SignedInt16Member>
+    Random<SignedInt16Member>,
+    Tolerance<SignedInt16Member,SignedInt16Member>
 {
 
 	public SignedInt16Algebra() { }
@@ -724,6 +728,21 @@ public class SignedInt16Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt16Member, SignedInt16Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, SignedInt16Member, SignedInt16Member, SignedInt16Member> WITHIN =
+			new Function3<Boolean, SignedInt16Member, SignedInt16Member, SignedInt16Member>()
+	{
+		
+		@Override
+		public Boolean call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member tol) {
+			return NumberWithin.compute(G.INT16, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, SignedInt16Member, SignedInt16Member, SignedInt16Member> within() {
+		return WITHIN;
 	}
 
 }

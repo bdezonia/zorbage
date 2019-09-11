@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -46,6 +48,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -60,7 +63,8 @@ public class UnsignedInt8Algebra
     Integer<UnsignedInt8Algebra, UnsignedInt8Member>,
     Bounded<UnsignedInt8Member>,
     BitOperations<UnsignedInt8Member>,
-    Random<UnsignedInt8Member>
+    Random<UnsignedInt8Member>,
+    Tolerance<UnsignedInt8Member,UnsignedInt8Member>
 {
 
 	public UnsignedInt8Algebra() { }
@@ -694,6 +698,21 @@ public class UnsignedInt8Algebra
 	@Override
 	public Procedure3<RationalMember, UnsignedInt8Member, UnsignedInt8Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member> WITHIN =
+			new Function3<Boolean, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		
+		@Override
+		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member tol) {
+			return NumberWithin.compute(G.UINT8, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member> within() {
+		return WITHIN;
 	}
 
 }

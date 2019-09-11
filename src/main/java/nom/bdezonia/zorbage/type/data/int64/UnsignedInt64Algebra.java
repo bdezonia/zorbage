@@ -36,9 +36,11 @@ import nom.bdezonia.zorbage.algorithm.Gcd;
 import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -47,6 +49,7 @@ import nom.bdezonia.zorbage.type.algebra.BitOperations;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
 import nom.bdezonia.zorbage.type.algebra.Integer;
 import nom.bdezonia.zorbage.type.algebra.Random;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Member;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -61,7 +64,8 @@ public class UnsignedInt64Algebra
     Integer<UnsignedInt64Algebra, UnsignedInt64Member>,
     Bounded<UnsignedInt64Member>,
     BitOperations<UnsignedInt64Member>,
-    Random<UnsignedInt64Member>
+    Random<UnsignedInt64Member>,
+    Tolerance<UnsignedInt64Member,UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);
@@ -716,6 +720,21 @@ public class UnsignedInt64Algebra
 	@Override
 	public Procedure3<RationalMember, UnsignedInt64Member, UnsignedInt64Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member> WITHIN =
+			new Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		
+		@Override
+		public Boolean call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member tol) {
+			return NumberWithin.compute(G.UINT64, a, b, tol);
+		}
+	};
+
+	@Override
+	public Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member> within() {
+		return WITHIN;
 	}
 
 }
