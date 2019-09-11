@@ -27,12 +27,16 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Algebra;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -44,7 +48,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class TestFindFixedPoint {
 
 	@Test
-	public void test() {
+	public void test1() {
 		Float64Member firstGuess = G.DBL.construct("1");
 		Float64Member result = G.DBL.construct();
 		
@@ -63,4 +67,20 @@ public class TestFindFixedPoint {
 			return Math.abs(a.v()-b.v()) < 0.00001;
 		}
 	};
+	
+	@Test
+	public void test2() {
+		Function2<Boolean,OctonionFloat64Member,OctonionFloat64Member> closeEnough =
+				new WithinTolerance<OctonionFloat64Algebra, OctonionFloat64Member, Float64Algebra, Float64Member>(
+						G.ODBL, G.DBL, new Float64Member(0.00001));
+		FindFixedPoint<OctonionFloat64Algebra, OctonionFloat64Member> ffp =
+				new FindFixedPoint<>(G.ODBL, G.ODBL.sin(), closeEnough, 10000);
+		OctonionFloat64Member firstGuess = new OctonionFloat64Member(0.5,0.3,0.3,0.4,0.5,0.6,0.7,0.8);
+		OctonionFloat64Member result = G.ODBL.construct();
+		long iters = ffp.call(firstGuess, result);
+		assertTrue(iters > 0);
+		assertFalse(G.ODBL.isNaN().call(result));
+		assertFalse(G.ODBL.isInfinite().call(result));
+		System.out.println(result);
+	}
 }
