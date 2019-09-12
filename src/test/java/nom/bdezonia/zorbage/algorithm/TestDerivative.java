@@ -27,11 +27,14 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Algebra;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
@@ -43,7 +46,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class TestDerivative {
 
 	@Test
-	public void test() {
+	public void test1() {
 		Float64Member delta = G.DBL.construct("0.00001");
 		Float64Member point = G.DBL.construct("4");
 		Float64Member result = G.DBL.construct();
@@ -61,4 +64,16 @@ public class TestDerivative {
 			b.setV(v);
 		}
 	};
+
+	@Test
+	public void test2() {
+		OctonionFloat64Member delta = G.ODBL.construct("{0.00001,0.00001,0.00001,0.00001,0.00001,0.00001,0.00001,0.00001}");
+		OctonionFloat64Member point = G.ODBL.construct("{0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8}");
+		OctonionFloat64Member result = G.ODBL.construct();
+		Derivative<OctonionFloat64Algebra,OctonionFloat64Member> deriv = new Derivative<OctonionFloat64Algebra, OctonionFloat64Member>(G.ODBL,G.ODBL.sin(), delta);
+		deriv.call(point, result);
+		assertFalse(G.ODBL.isInfinite().call(result));
+		assertFalse(G.ODBL.isNaN().call(result));
+		System.out.println(result);
+	}
 }
