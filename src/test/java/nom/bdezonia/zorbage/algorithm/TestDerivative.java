@@ -74,6 +74,7 @@ public class TestDerivative {
 		deriv.call(point, result);
 		assertFalse(G.ODBL.isInfinite().call(result));
 		assertFalse(G.ODBL.isNaN().call(result));
+		assertFalse(G.ODBL.isZero().call(result));
 		System.out.println(result);
 	}
 }

@@ -81,6 +81,7 @@ public class TestFindFixedPoint {
 		assertTrue(iters > 0);
 		assertFalse(G.ODBL.isNaN().call(result));
 		assertFalse(G.ODBL.isInfinite().call(result));
+		assertFalse(G.ODBL.isZero().call(result));
 		System.out.println(result);
 	}
 }
