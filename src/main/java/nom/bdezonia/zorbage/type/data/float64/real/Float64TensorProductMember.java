@@ -30,6 +30,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -38,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -65,7 +68,8 @@ public final class Float64TensorProductMember
 		Gettable<Float64TensorProductMember>,
 		Settable<Float64TensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float64Member>
+		RawData<Float64Member>,
+		Tolerance<Float64Member, Float64TensorProductMember>
 {
 	private static final Float64Member ZERO = new Float64Member();
 
@@ -887,5 +891,31 @@ public final class Float64TensorProductMember
 	@Override
 	public IndexedDataSource<Float64Member> rawData() {
 		return storage;
+	}
+
+	private final Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember> WITHIN =
+			new Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public Boolean call(Float64Member tol, Float64TensorProductMember a, Float64TensorProductMember b) {
+			if (!Arrays.equals(a.dims, b.dims))
+				return false;
+			Float64Member elemA = G.DBL.construct();
+			Float64Member elemB = G.DBL.construct();
+			IndexedDataSource<Float64Member> lista = a.rawData();
+			IndexedDataSource<Float64Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.DBL.within().call(tol, elemA, elemB))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember> within() {
+		return WITHIN;
 	}
 }
