@@ -54,7 +54,7 @@ public class TestNumberWithin {
 				elemB.setV(b);
 				for (int tol = 0; tol < 8; tol++) {
 					elemTol.setV(tol);
-					boolean algo = NumberWithin.compute(G.INT4, elemA, elemB, elemTol);
+					boolean algo = NumberWithin.compute(G.INT4, elemTol, elemA, elemB);
 					boolean test = Math.abs(a-b) <= tol;
 					assertEquals(test, algo);
 				}
@@ -74,7 +74,7 @@ public class TestNumberWithin {
 				elemB.setV(b);
 				for (int tol = 0; tol < 16; tol++) {
 					elemTol.setV(tol);
-					boolean algo = NumberWithin.compute(G.UINT4, elemA, elemB, elemTol);
+					boolean algo = NumberWithin.compute(G.UINT4, elemTol, elemA, elemB);
 					boolean test = Math.abs(a-b) <= tol;
 					assertEquals(test, algo);
 				}
@@ -94,7 +94,7 @@ public class TestNumberWithin {
 				elemB.setV(b);
 				for (double tol = 0; tol < 8; tol += 0.25) {
 					elemTol.setV(tol);
-					boolean algo = NumberWithin.compute(G.DBL, elemA, elemB, elemTol);
+					boolean algo = NumberWithin.compute(G.DBL, elemTol, elemA, elemB);
 					boolean test = Math.abs(a-b) <= tol;
 					assertEquals(test, algo);
 				}
@@ -114,7 +114,7 @@ public class TestNumberWithin {
 				elemB.setV(b);
 				for (double tol = 0; tol < 16; tol += 0.25) {
 					elemTol.setV(tol);
-					boolean algo = NumberWithin.compute(G.DBL, elemA, elemB, elemTol);
+					boolean algo = NumberWithin.compute(G.DBL, elemTol, elemA, elemB);
 					boolean test = Math.abs(a-b) <= tol;
 					assertEquals(test, algo);
 				}
