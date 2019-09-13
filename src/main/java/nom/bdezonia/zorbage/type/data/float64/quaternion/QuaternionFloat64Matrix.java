@@ -84,6 +84,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -773,17 +774,17 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public Boolean call(Float64Member tol, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64Member elemA = G.QDBL.construct();
-			QuaternionFloat64Member elemB = G.QDBL.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.QDBL.within().call(tol, elemA, elemB))
-						return false;
-				}
+			QuaternionFloat64Member elemA = G.QDBL.construct();
+			QuaternionFloat64Member elemB = G.QDBL.construct();
+			IndexedDataSource<QuaternionFloat64Member> lista = a.rawData();
+			IndexedDataSource<QuaternionFloat64Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.QDBL.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

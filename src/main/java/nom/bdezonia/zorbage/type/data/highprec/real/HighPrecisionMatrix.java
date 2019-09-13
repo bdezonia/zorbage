@@ -71,6 +71,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -659,17 +660,17 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
-			HighPrecisionMember elemA = G.HP.construct();
-			HighPrecisionMember elemB = G.HP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.HP.within().call(tol, elemA, elemB))
-						return false;
-				}
+			HighPrecisionMember elemA = G.HP.construct();
+			HighPrecisionMember elemB = G.HP.construct();
+			IndexedDataSource<HighPrecisionMember> lista = a.rawData();
+			IndexedDataSource<HighPrecisionMember> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.HP.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

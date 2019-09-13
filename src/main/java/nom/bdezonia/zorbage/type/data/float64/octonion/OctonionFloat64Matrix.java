@@ -84,6 +84,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -759,17 +760,17 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public Boolean call(Float64Member tol, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			OctonionFloat64Member elemA = G.ODBL.construct();
-			OctonionFloat64Member elemB = G.ODBL.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.ODBL.within().call(tol, elemA, elemB))
-						return false;
-				}
+			OctonionFloat64Member elemA = G.ODBL.construct();
+			OctonionFloat64Member elemB = G.ODBL.construct();
+			IndexedDataSource<OctonionFloat64Member> lista = a.rawData();
+			IndexedDataSource<OctonionFloat64Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.ODBL.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

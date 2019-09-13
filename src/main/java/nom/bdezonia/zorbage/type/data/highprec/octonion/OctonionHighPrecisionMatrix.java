@@ -73,6 +73,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -675,17 +676,17 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
-			OctonionHighPrecisionMember elemA = G.OHP.construct();
-			OctonionHighPrecisionMember elemB = G.OHP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.OHP.within().call(tol, elemA, elemB))
-						return false;
-				}
+			OctonionHighPrecisionMember elemA = G.OHP.construct();
+			OctonionHighPrecisionMember elemB = G.OHP.construct();
+			IndexedDataSource<OctonionHighPrecisionMember> lista = a.rawData();
+			IndexedDataSource<OctonionHighPrecisionMember> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.OHP.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

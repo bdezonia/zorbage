@@ -62,6 +62,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -439,13 +440,15 @@ public class Float16Vector
 	{
 		@Override
 		public Boolean call(Float16Member tol, Float16VectorMember a, Float16VectorMember b) {
-			Float16Member elemA = G.HLF.construct();
-			Float16Member elemB = G.HLF.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			Float16Member elemA = G.HLF.construct();
+			Float16Member elemB = G.HLF.construct();
+			IndexedDataSource<Float16Member> lista = a.rawData();
+			IndexedDataSource<Float16Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.HLF.within().call(tol, elemA, elemB))
 					return false;
 			}

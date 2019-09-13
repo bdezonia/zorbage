@@ -84,6 +84,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -759,17 +760,17 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public Boolean call(Float32Member tol, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			ComplexFloat32Member elemA = G.CFLT.construct();
-			ComplexFloat32Member elemB = G.CFLT.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.CFLT.within().call(tol, elemA, elemB))
-						return false;
-				}
+			ComplexFloat32Member elemA = G.CFLT.construct();
+			ComplexFloat32Member elemB = G.CFLT.construct();
+			IndexedDataSource<ComplexFloat32Member> lista = a.rawData();
+			IndexedDataSource<ComplexFloat32Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.CFLT.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

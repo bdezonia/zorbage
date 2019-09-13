@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -451,13 +452,15 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public Boolean call(Float64Member tol, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-			ComplexFloat64Member elemA = G.CDBL.construct();
-			ComplexFloat64Member elemB = G.CDBL.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			ComplexFloat64Member elemA = G.CDBL.construct();
+			ComplexFloat64Member elemB = G.CDBL.construct();
+			IndexedDataSource<ComplexFloat64Member> lista = a.rawData();
+			IndexedDataSource<ComplexFloat64Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.CDBL.within().call(tol, elemA, elemB))
 					return false;
 			}

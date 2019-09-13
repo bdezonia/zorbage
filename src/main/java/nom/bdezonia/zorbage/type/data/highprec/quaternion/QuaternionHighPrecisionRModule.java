@@ -59,6 +59,7 @@ import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -390,13 +391,15 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
-			QuaternionHighPrecisionMember elemA = G.QHP.construct();
-			QuaternionHighPrecisionMember elemB = G.QHP.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			QuaternionHighPrecisionMember elemA = G.QHP.construct();
+			QuaternionHighPrecisionMember elemB = G.QHP.construct();
+			IndexedDataSource<QuaternionHighPrecisionMember> lista = a.rawData();
+			IndexedDataSource<QuaternionHighPrecisionMember> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.QHP.within().call(tol, elemA, elemB))
 					return false;
 			}

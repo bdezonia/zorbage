@@ -57,6 +57,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -428,13 +429,15 @@ public class HighPrecisionVector
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			HighPrecisionMember elemA = G.HP.construct();
-			HighPrecisionMember elemB = G.HP.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			HighPrecisionMember elemA = G.HP.construct();
+			HighPrecisionMember elemB = G.HP.construct();
+			IndexedDataSource<HighPrecisionMember> lista = a.rawData();
+			IndexedDataSource<HighPrecisionMember> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.HP.within().call(tol, elemA, elemB))
 					return false;
 			}

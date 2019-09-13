@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -462,13 +463,15 @@ public class QuaternionFloat64RModule
 	{
 		@Override
 		public Boolean call(Float64Member tol, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
-			QuaternionFloat64Member elemA = G.QDBL.construct();
-			QuaternionFloat64Member elemB = G.QDBL.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			QuaternionFloat64Member elemA = G.QDBL.construct();
+			QuaternionFloat64Member elemB = G.QDBL.construct();
+			IndexedDataSource<QuaternionFloat64Member> lista = a.rawData();
+			IndexedDataSource<QuaternionFloat64Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.QDBL.within().call(tol, elemA, elemB))
 					return false;
 			}

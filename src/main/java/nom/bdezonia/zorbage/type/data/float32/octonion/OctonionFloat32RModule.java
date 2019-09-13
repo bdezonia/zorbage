@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -456,13 +457,15 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public Boolean call(Float32Member tol, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
-			OctonionFloat32Member elemA = G.OFLT.construct();
-			OctonionFloat32Member elemB = G.OFLT.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			OctonionFloat32Member elemA = G.OFLT.construct();
+			OctonionFloat32Member elemB = G.OFLT.construct();
+			IndexedDataSource<OctonionFloat32Member> lista = a.rawData();
+			IndexedDataSource<OctonionFloat32Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.OFLT.within().call(tol, elemA, elemB))
 					return false;
 			}

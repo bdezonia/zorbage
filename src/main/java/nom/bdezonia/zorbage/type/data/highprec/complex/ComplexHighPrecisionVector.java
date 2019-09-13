@@ -59,6 +59,7 @@ import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -380,13 +381,15 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
-			ComplexHighPrecisionMember elemA = G.CHP.construct();
-			ComplexHighPrecisionMember elemB = G.CHP.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			ComplexHighPrecisionMember elemA = G.CHP.construct();
+			ComplexHighPrecisionMember elemB = G.CHP.construct();
+			IndexedDataSource<ComplexHighPrecisionMember> lista = a.rawData();
+			IndexedDataSource<ComplexHighPrecisionMember> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.CHP.within().call(tol, elemA, elemB))
 					return false;
 			}

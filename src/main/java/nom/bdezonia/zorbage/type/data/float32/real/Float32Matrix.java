@@ -82,6 +82,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -743,17 +744,17 @@ public class Float32Matrix
 	{
 		@Override
 		public Boolean call(Float32Member tol, Float32MatrixMember a, Float32MatrixMember b) {
-			Float32Member elemA = G.FLT.construct();
-			Float32Member elemB = G.FLT.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.FLT.within().call(tol, elemA, elemB))
-						return false;
-				}
+			Float32Member elemA = G.FLT.construct();
+			Float32Member elemB = G.FLT.construct();
+			IndexedDataSource<Float32Member> lista = a.rawData();
+			IndexedDataSource<Float32Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.FLT.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

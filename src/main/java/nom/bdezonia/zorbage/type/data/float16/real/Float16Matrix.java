@@ -82,6 +82,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -743,17 +744,17 @@ public class Float16Matrix
 	{
 		@Override
 		public Boolean call(Float16Member tol, Float16MatrixMember a, Float16MatrixMember b) {
-			Float16Member elemA = G.HLF.construct();
-			Float16Member elemB = G.HLF.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.HLF.within().call(tol, elemA, elemB))
-						return false;
-				}
+			Float16Member elemA = G.HLF.construct();
+			Float16Member elemB = G.HLF.construct();
+			IndexedDataSource<Float16Member> lista = a.rawData();
+			IndexedDataSource<Float16Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.HLF.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

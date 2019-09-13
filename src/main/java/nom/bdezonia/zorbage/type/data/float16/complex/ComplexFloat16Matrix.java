@@ -84,6 +84,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -759,17 +760,17 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public Boolean call(Float16Member tol, ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
-			ComplexFloat16Member elemA = G.CHLF.construct();
-			ComplexFloat16Member elemB = G.CHLF.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.CHLF.within().call(tol, elemA, elemB))
-						return false;
-				}
+			ComplexFloat16Member elemA = G.CHLF.construct();
+			ComplexFloat16Member elemB = G.CHLF.construct();
+			IndexedDataSource<ComplexFloat16Member> lista = a.rawData();
+			IndexedDataSource<ComplexFloat16Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.CHLF.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

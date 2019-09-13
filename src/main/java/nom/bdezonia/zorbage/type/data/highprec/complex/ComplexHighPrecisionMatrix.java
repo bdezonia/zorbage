@@ -73,6 +73,7 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -675,17 +676,17 @@ public class ComplexHighPrecisionMatrix
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b) {
-			ComplexHighPrecisionMember elemA = G.CHP.construct();
-			ComplexHighPrecisionMember elemB = G.CHP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			for (long r = 0; r < a.rows(); r++) {
-				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, elemA);
-					b.v(r, c, elemB);
-					if (!G.CHP.within().call(tol, elemA, elemB))
-						return false;
-				}
+			ComplexHighPrecisionMember elemA = G.CHP.construct();
+			ComplexHighPrecisionMember elemB = G.CHP.construct();
+			IndexedDataSource<ComplexHighPrecisionMember> lista = a.rawData();
+			IndexedDataSource<ComplexHighPrecisionMember> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
+				if (!G.CHP.within().call(tol, elemA, elemB))
+					return false;
 			}
 			return true;
 		}

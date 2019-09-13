@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -451,13 +452,15 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public Boolean call(Float16Member tol, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
-			ComplexFloat16Member elemA = G.CHLF.construct();
-			ComplexFloat16Member elemB = G.CHLF.construct();
 			if (a.length() != b.length())
 				return false;
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, elemA);
-				b.v(i, elemB);
+			ComplexFloat16Member elemA = G.CHLF.construct();
+			ComplexFloat16Member elemB = G.CHLF.construct();
+			IndexedDataSource<ComplexFloat16Member> lista = a.rawData();
+			IndexedDataSource<ComplexFloat16Member> listb = b.rawData();
+			for (long i = 0; i < lista.size(); i++) {
+				lista.get(i, elemA);
+				listb.get(i, elemB);
 				if (!G.CHLF.within().call(tol, elemA, elemB))
 					return false;
 			}
