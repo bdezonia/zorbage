@@ -90,7 +90,7 @@ public class ComplexHighPrecisionMatrix
 		Trigonometric<ComplexHighPrecisionMatrixMember>,
 		Hyperbolic<ComplexHighPrecisionMatrixMember>,
 		RealConstants<ComplexHighPrecisionMatrixMember>,
-		Tolerance<ComplexHighPrecisionMatrixMember,HighPrecisionMember>
+		Tolerance<HighPrecisionMember,ComplexHighPrecisionMatrixMember>
 {
 	public ComplexHighPrecisionMatrix() { }
 
@@ -670,11 +670,11 @@ public class ComplexHighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
 	{
 		@Override
-		public Boolean call(ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b) {
 			ComplexHighPrecisionMember elemA = G.CHP.construct();
 			ComplexHighPrecisionMember elemB = G.CHP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -683,7 +683,7 @@ public class ComplexHighPrecisionMatrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.CHP.within().call(elemA, elemB, tol))
+					if (!G.CHP.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -692,7 +692,7 @@ public class ComplexHighPrecisionMatrix
 	};
 
 	@Override
-	public Function3<Boolean, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> within() {
 		return WITHIN;
 	}
 }

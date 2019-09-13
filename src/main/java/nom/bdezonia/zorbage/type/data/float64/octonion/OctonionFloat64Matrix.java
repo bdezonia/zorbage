@@ -104,7 +104,7 @@ public class OctonionFloat64Matrix
 		RealConstants<OctonionFloat64MatrixMember>,
 		Infinite<OctonionFloat64MatrixMember>,
 		NaN<OctonionFloat64MatrixMember>,
-		Tolerance<OctonionFloat64MatrixMember,Float64Member>
+		Tolerance<Float64Member,OctonionFloat64MatrixMember>
 {
 	public OctonionFloat64Matrix() { }
 
@@ -754,11 +754,11 @@ public class OctonionFloat64Matrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, Float64Member> WITHIN =
-			new Function3<Boolean, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, Float64Member>()
+	private final Function3<Boolean, Float64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> WITHIN =
+			new Function3<Boolean, Float64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
 	{
 		@Override
-		public Boolean call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, Float64Member tol) {
+		public Boolean call(Float64Member tol, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
 			OctonionFloat64Member elemA = G.ODBL.construct();
 			OctonionFloat64Member elemB = G.ODBL.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -767,7 +767,7 @@ public class OctonionFloat64Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.ODBL.within().call(elemA, elemB, tol))
+					if (!G.ODBL.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -776,7 +776,7 @@ public class OctonionFloat64Matrix
 	};
 
 	@Override
-	public Function3<Boolean, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, Float64Member> within() {
+	public Function3<Boolean, Float64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> within() {
 		return WITHIN;
 	}
 }

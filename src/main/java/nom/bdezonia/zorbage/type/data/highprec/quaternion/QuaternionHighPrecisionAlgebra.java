@@ -78,7 +78,7 @@ public class QuaternionHighPrecisionAlgebra
     Roots<QuaternionHighPrecisionMember>,
     RealUnreal<QuaternionHighPrecisionMember,HighPrecisionMember>,
     Scale<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember>,
-    Tolerance<QuaternionHighPrecisionMember,HighPrecisionMember>
+    Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
@@ -870,18 +870,18 @@ public class QuaternionHighPrecisionAlgebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
 	{
 		
 		@Override
-		public Boolean call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b, HighPrecisionMember tol) {
-			return QuaternionNumberWithin.compute(G.HP, a, b, tol);
+		public Boolean call(HighPrecisionMember tol, QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
+			return QuaternionNumberWithin.compute(G.HP, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> within() {
 		return WITHIN;
 	}
 

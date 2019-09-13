@@ -102,7 +102,7 @@ public class Float16Matrix
 		RealConstants<Float16MatrixMember>,
 		Infinite<Float16MatrixMember>,
 		NaN<Float16MatrixMember>,
-		Tolerance<Float16MatrixMember,Float16Member>
+		Tolerance<Float16Member,Float16MatrixMember>
 {
 	public Float16Matrix() { }
 
@@ -738,11 +738,11 @@ public class Float16Matrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, Float16MatrixMember, Float16MatrixMember, Float16Member> WITHIN =
-			new Function3<Boolean, Float16MatrixMember, Float16MatrixMember, Float16Member>()
+	private final Function3<Boolean, Float16Member, Float16MatrixMember, Float16MatrixMember> WITHIN =
+			new Function3<Boolean, Float16Member, Float16MatrixMember, Float16MatrixMember>()
 	{
 		@Override
-		public Boolean call(Float16MatrixMember a, Float16MatrixMember b, Float16Member tol) {
+		public Boolean call(Float16Member tol, Float16MatrixMember a, Float16MatrixMember b) {
 			Float16Member elemA = G.HLF.construct();
 			Float16Member elemB = G.HLF.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -751,7 +751,7 @@ public class Float16Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.HLF.within().call(elemA, elemB, tol))
+					if (!G.HLF.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -760,7 +760,7 @@ public class Float16Matrix
 	};
 
 	@Override
-	public Function3<Boolean, Float16MatrixMember, Float16MatrixMember, Float16Member> within() {
+	public Function3<Boolean, Float16Member, Float16MatrixMember, Float16MatrixMember> within() {
 		return WITHIN;
 	}
 }

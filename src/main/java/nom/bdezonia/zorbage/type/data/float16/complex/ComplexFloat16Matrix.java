@@ -104,7 +104,7 @@ public class ComplexFloat16Matrix
 		RealConstants<ComplexFloat16MatrixMember>,
 		Infinite<ComplexFloat16MatrixMember>,
 		NaN<ComplexFloat16MatrixMember>,
-		Tolerance<ComplexFloat16MatrixMember,Float16Member>
+		Tolerance<Float16Member,ComplexFloat16MatrixMember>
 {
 	public ComplexFloat16Matrix() { }
 
@@ -754,11 +754,11 @@ public class ComplexFloat16Matrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member> WITHIN =
-			new Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member>()
+	private final Function3<Boolean, Float16Member, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember> WITHIN =
+			new Function3<Boolean, Float16Member, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b, Float16Member tol) {
+		public Boolean call(Float16Member tol, ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
 			ComplexFloat16Member elemA = G.CHLF.construct();
 			ComplexFloat16Member elemB = G.CHLF.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -767,7 +767,7 @@ public class ComplexFloat16Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.CHLF.within().call(elemA, elemB, tol))
+					if (!G.CHLF.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -776,7 +776,7 @@ public class ComplexFloat16Matrix
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember, Float16Member> within() {
+	public Function3<Boolean, Float16Member, ComplexFloat16MatrixMember, ComplexFloat16MatrixMember> within() {
 		return WITHIN;
 	}
 }

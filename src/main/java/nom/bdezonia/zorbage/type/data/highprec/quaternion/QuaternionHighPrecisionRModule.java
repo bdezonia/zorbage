@@ -72,7 +72,7 @@ public class QuaternionHighPrecisionRModule
     Norm<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>,
     Products<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember>,
     DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>,
-    Tolerance<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>
+    Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>
 {
 	public QuaternionHighPrecisionRModule() { }
 	
@@ -385,11 +385,11 @@ public class QuaternionHighPrecisionRModule
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
 	{
 		@Override
-		public Boolean call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
 			QuaternionHighPrecisionMember elemA = G.QHP.construct();
 			QuaternionHighPrecisionMember elemB = G.QHP.construct();
 			if (a.length() != b.length())
@@ -397,7 +397,7 @@ public class QuaternionHighPrecisionRModule
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.QHP.within().call(elemA, elemB, tol))
+				if (!G.QHP.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -405,7 +405,7 @@ public class QuaternionHighPrecisionRModule
 	};
 
 	@Override
-	public Function3<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> within() {
 		return WITHIN;
 	}
 

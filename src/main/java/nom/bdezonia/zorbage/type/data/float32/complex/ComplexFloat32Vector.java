@@ -79,7 +79,7 @@ public class ComplexFloat32Vector
     DirectProduct<ComplexFloat32VectorMember, ComplexFloat32MatrixMember>,
     Rounding<Float32Member,ComplexFloat32VectorMember>, Infinite<ComplexFloat32VectorMember>,
     NaN<ComplexFloat32VectorMember>,
-    Tolerance<ComplexFloat32VectorMember,Float32Member>
+    Tolerance<Float32Member,ComplexFloat32VectorMember>
 {
 	public ComplexFloat32Vector() { }
 	
@@ -446,11 +446,11 @@ public class ComplexFloat32Vector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, ComplexFloat32VectorMember, ComplexFloat32VectorMember, Float32Member> WITHIN =
-			new Function3<Boolean, ComplexFloat32VectorMember, ComplexFloat32VectorMember, Float32Member>()
+	private final Function3<Boolean, Float32Member, ComplexFloat32VectorMember, ComplexFloat32VectorMember> WITHIN =
+			new Function3<Boolean, Float32Member, ComplexFloat32VectorMember, ComplexFloat32VectorMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b, Float32Member tol) {
+		public Boolean call(Float32Member tol, ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
 			ComplexFloat32Member elemA = G.CFLT.construct();
 			ComplexFloat32Member elemB = G.CFLT.construct();
 			if (a.length() != b.length())
@@ -458,7 +458,7 @@ public class ComplexFloat32Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.CFLT.within().call(elemA, elemB, tol))
+				if (!G.CFLT.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -466,7 +466,7 @@ public class ComplexFloat32Vector
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat32VectorMember, ComplexFloat32VectorMember, Float32Member> within() {
+	public Function3<Boolean, Float32Member, ComplexFloat32VectorMember, ComplexFloat32VectorMember> within() {
 		return WITHIN;
 	}
 }

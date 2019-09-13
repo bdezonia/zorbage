@@ -710,8 +710,8 @@ public class UnsignedInt15Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt15Member a, UnsignedInt15Member b, UnsignedInt15Member tol) {
-			return NumberWithin.compute(G.UINT15, a, b, tol);
+		public Boolean call(UnsignedInt15Member tol, UnsignedInt15Member a, UnsignedInt15Member b) {
+			return NumberWithin.compute(G.UINT15, tol, a, b);
 		}
 	};
 

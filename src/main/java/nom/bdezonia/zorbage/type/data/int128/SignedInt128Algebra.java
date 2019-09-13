@@ -887,8 +887,8 @@ public class SignedInt128Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member tol) {
-			return NumberWithin.compute(G.INT128, a, b, tol);
+		public Boolean call(SignedInt128Member tol, SignedInt128Member a, SignedInt128Member b) {
+			return NumberWithin.compute(G.INT128, tol, a, b);
 		}
 	};
 

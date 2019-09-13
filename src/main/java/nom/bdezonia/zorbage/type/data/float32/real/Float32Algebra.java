@@ -1441,8 +1441,8 @@ public class Float32Algebra
 	{
 		
 		@Override
-		public Boolean call(Float32Member a, Float32Member b, Float32Member tol) {
-			return NumberWithin.compute(G.FLT, a, b, tol);
+		public Boolean call(Float32Member tol, Float32Member a, Float32Member b) {
+			return NumberWithin.compute(G.FLT, tol, a, b);
 		}
 	};
 

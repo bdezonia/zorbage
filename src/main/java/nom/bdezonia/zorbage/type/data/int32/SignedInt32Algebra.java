@@ -733,8 +733,8 @@ public class SignedInt32Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member tol) {
-			return NumberWithin.compute(G.INT32, a, b, tol);
+		public Boolean call(SignedInt32Member tol, SignedInt32Member a, SignedInt32Member b) {
+			return NumberWithin.compute(G.INT32, tol, a, b);
 		}
 	};
 

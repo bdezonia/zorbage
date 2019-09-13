@@ -88,7 +88,7 @@ public class HighPrecisionMatrix
 		Trigonometric<HighPrecisionMatrixMember>,
 		Hyperbolic<HighPrecisionMatrixMember>,
 		RealConstants<HighPrecisionMatrixMember>,
-		Tolerance<HighPrecisionMatrixMember,HighPrecisionMember>
+		Tolerance<HighPrecisionMember,HighPrecisionMatrixMember>
 {
 	public HighPrecisionMatrix() { }
 
@@ -654,11 +654,11 @@ public class HighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, HighPrecisionMatrixMember, HighPrecisionMatrixMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, HighPrecisionMatrixMember, HighPrecisionMatrixMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember>()
 	{
 		@Override
-		public Boolean call(HighPrecisionMatrixMember a, HighPrecisionMatrixMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
 			HighPrecisionMember elemA = G.HP.construct();
 			HighPrecisionMember elemB = G.HP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -667,7 +667,7 @@ public class HighPrecisionMatrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.HP.within().call(elemA, elemB, tol))
+					if (!G.HP.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -676,7 +676,7 @@ public class HighPrecisionMatrix
 	};
 
 	@Override
-	public Function3<Boolean, HighPrecisionMatrixMember, HighPrecisionMatrixMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> within() {
 		return WITHIN;
 	}
 }

@@ -735,8 +735,8 @@ public class SignedInt16Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member tol) {
-			return NumberWithin.compute(G.INT16, a, b, tol);
+		public Boolean call(SignedInt16Member tol, SignedInt16Member a, SignedInt16Member b) {
+			return NumberWithin.compute(G.INT16, tol, a, b);
 		}
 	};
 

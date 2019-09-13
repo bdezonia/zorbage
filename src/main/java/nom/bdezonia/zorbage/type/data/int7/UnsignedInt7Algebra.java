@@ -710,8 +710,8 @@ public class UnsignedInt7Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt7Member a, UnsignedInt7Member b, UnsignedInt7Member tol) {
-			return NumberWithin.compute(G.UINT7, a, b, tol);
+		public Boolean call(UnsignedInt7Member tol, UnsignedInt7Member a, UnsignedInt7Member b) {
+			return NumberWithin.compute(G.UINT7, tol, a, b);
 		}
 	};
 

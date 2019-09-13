@@ -104,7 +104,7 @@ public class ComplexFloat32Matrix
 		RealConstants<ComplexFloat32MatrixMember>,
 		Infinite<ComplexFloat32MatrixMember>,
 		NaN<ComplexFloat32MatrixMember>,
-		Tolerance<ComplexFloat32MatrixMember,Float32Member>
+		Tolerance<Float32Member,ComplexFloat32MatrixMember>
 {
 	public ComplexFloat32Matrix() { }
 
@@ -754,11 +754,11 @@ public class ComplexFloat32Matrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, Float32Member> WITHIN =
-			new Function3<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, Float32Member>()
+	private final Function3<Boolean, Float32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> WITHIN =
+			new Function3<Boolean, Float32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, Float32Member tol) {
+		public Boolean call(Float32Member tol, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
 			ComplexFloat32Member elemA = G.CFLT.construct();
 			ComplexFloat32Member elemB = G.CFLT.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -767,7 +767,7 @@ public class ComplexFloat32Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.CFLT.within().call(elemA, elemB, tol))
+					if (!G.CFLT.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -776,7 +776,7 @@ public class ComplexFloat32Matrix
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, Float32Member> within() {
+	public Function3<Boolean, Float32Member, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> within() {
 		return WITHIN;
 	}
 }

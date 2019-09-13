@@ -706,8 +706,8 @@ public class UnsignedInt16Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt16Member a, UnsignedInt16Member b, UnsignedInt16Member tol) {
-			return NumberWithin.compute(G.UINT16, a, b, tol);
+		public Boolean call(UnsignedInt16Member tol, UnsignedInt16Member a, UnsignedInt16Member b) {
+			return NumberWithin.compute(G.UINT16, tol, a, b);
 		}
 	};
 

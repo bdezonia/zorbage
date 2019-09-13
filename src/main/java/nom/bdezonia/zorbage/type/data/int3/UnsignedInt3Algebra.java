@@ -710,8 +710,8 @@ public class UnsignedInt3Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt3Member a, UnsignedInt3Member b, UnsignedInt3Member tol) {
-			return NumberWithin.compute(G.UINT3, a, b, tol);
+		public Boolean call(UnsignedInt3Member tol, UnsignedInt3Member a, UnsignedInt3Member b) {
+			return NumberWithin.compute(G.UINT3, tol, a, b);
 		}
 	};
 

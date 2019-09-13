@@ -79,7 +79,7 @@ public class ComplexFloat64Vector
     DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>,
     Rounding<Float64Member,ComplexFloat64VectorMember>, Infinite<ComplexFloat64VectorMember>,
     NaN<ComplexFloat64VectorMember>,
-    Tolerance<ComplexFloat64VectorMember,Float64Member>
+    Tolerance<Float64Member,ComplexFloat64VectorMember>
 {
 	public ComplexFloat64Vector() { }
 	
@@ -446,11 +446,11 @@ public class ComplexFloat64Vector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, ComplexFloat64VectorMember, ComplexFloat64VectorMember, Float64Member> WITHIN =
-			new Function3<Boolean, ComplexFloat64VectorMember, ComplexFloat64VectorMember, Float64Member>()
+	private final Function3<Boolean, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> WITHIN =
+			new Function3<Boolean, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, Float64Member tol) {
+		public Boolean call(Float64Member tol, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
 			ComplexFloat64Member elemA = G.CDBL.construct();
 			ComplexFloat64Member elemB = G.CDBL.construct();
 			if (a.length() != b.length())
@@ -458,7 +458,7 @@ public class ComplexFloat64Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.CDBL.within().call(elemA, elemB, tol))
+				if (!G.CDBL.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -466,7 +466,7 @@ public class ComplexFloat64Vector
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat64VectorMember, ComplexFloat64VectorMember, Float64Member> within() {
+	public Function3<Boolean, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> within() {
 		return WITHIN;
 	}
 }

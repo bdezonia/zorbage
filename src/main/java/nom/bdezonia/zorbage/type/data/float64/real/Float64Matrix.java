@@ -102,7 +102,7 @@ public class Float64Matrix
 		RealConstants<Float64MatrixMember>,
 		Infinite<Float64MatrixMember>,
 		NaN<Float64MatrixMember>,
-		Tolerance<Float64MatrixMember,Float64Member>
+		Tolerance<Float64Member,Float64MatrixMember>
 {
 	public Float64Matrix() { }
 
@@ -738,11 +738,11 @@ public class Float64Matrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, Float64MatrixMember, Float64MatrixMember, Float64Member> WITHIN =
-			new Function3<Boolean, Float64MatrixMember, Float64MatrixMember, Float64Member>()
+	private final Function3<Boolean, Float64Member, Float64MatrixMember, Float64MatrixMember> WITHIN =
+			new Function3<Boolean, Float64Member, Float64MatrixMember, Float64MatrixMember>()
 	{
 		@Override
-		public Boolean call(Float64MatrixMember a, Float64MatrixMember b, Float64Member tol) {
+		public Boolean call(Float64Member tol, Float64MatrixMember a, Float64MatrixMember b) {
 			Float64Member elemA = G.DBL.construct();
 			Float64Member elemB = G.DBL.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -751,7 +751,7 @@ public class Float64Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.DBL.within().call(elemA, elemB, tol))
+					if (!G.DBL.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -760,7 +760,7 @@ public class Float64Matrix
 	};
 
 	@Override
-	public Function3<Boolean, Float64MatrixMember, Float64MatrixMember, Float64Member> within() {
+	public Function3<Boolean, Float64Member, Float64MatrixMember, Float64MatrixMember> within() {
 		return WITHIN;
 	}
 }

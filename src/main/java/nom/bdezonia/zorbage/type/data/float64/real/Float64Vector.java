@@ -77,7 +77,7 @@ public class Float64Vector
 	DirectProduct<Float64VectorMember, Float64MatrixMember>,
 	Rounding<Float64Member,Float64VectorMember>, Infinite<Float64VectorMember>,
 	NaN<Float64VectorMember>,
-	Tolerance<Float64VectorMember,Float64Member>
+	Tolerance<Float64Member,Float64VectorMember>
 {
 	public Float64Vector() { }
 	
@@ -434,11 +434,11 @@ public class Float64Vector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, Float64VectorMember, Float64VectorMember, Float64Member> WITHIN =
-			new Function3<Boolean, Float64VectorMember, Float64VectorMember, Float64Member>()
+	private final Function3<Boolean, Float64Member, Float64VectorMember, Float64VectorMember> WITHIN =
+			new Function3<Boolean, Float64Member, Float64VectorMember, Float64VectorMember>()
 	{
 		@Override
-		public Boolean call(Float64VectorMember a, Float64VectorMember b, Float64Member tol) {
+		public Boolean call(Float64Member tol, Float64VectorMember a, Float64VectorMember b) {
 			Float64Member elemA = G.DBL.construct();
 			Float64Member elemB = G.DBL.construct();
 			if (a.length() != b.length())
@@ -446,7 +446,7 @@ public class Float64Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.DBL.within().call(elemA, elemB, tol))
+				if (!G.DBL.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -454,7 +454,7 @@ public class Float64Vector
 	};
 
 	@Override
-	public Function3<Boolean, Float64VectorMember, Float64VectorMember, Float64Member> within() {
+	public Function3<Boolean, Float64Member, Float64VectorMember, Float64VectorMember> within() {
 		return WITHIN;
 	}
 }

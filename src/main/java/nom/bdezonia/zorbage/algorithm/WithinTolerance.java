@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
  * @author Barry DeZonia
  *
  */
-public class WithinTolerance<T extends Algebra<T,U> & Tolerance<U,W>, U, V extends Algebra<V,W>, W>
+public class WithinTolerance<T extends Algebra<T,U> & Tolerance<W,U>, U, V extends Algebra<V,W>, W>
 	implements Function2<Boolean,U,U>
 {
 	private final T uAlgebra;
@@ -72,6 +72,6 @@ public class WithinTolerance<T extends Algebra<T,U> & Tolerance<U,W>, U, V exten
 	
 	@Override
 	public Boolean call(U a, U b) {
-		return uAlgebra.within().call(a, b, tolerance);
+		return uAlgebra.within().call(tolerance, a, b);
 	}
 }

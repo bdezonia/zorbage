@@ -712,8 +712,8 @@ public class UnsignedInt9Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt9Member a, UnsignedInt9Member b, UnsignedInt9Member tol) {
-			return NumberWithin.compute(G.UINT9, a, b, tol);
+		public Boolean call(UnsignedInt9Member tol, UnsignedInt9Member a, UnsignedInt9Member b) {
+			return NumberWithin.compute(G.UINT9, tol, a, b);
 		}
 	};
 

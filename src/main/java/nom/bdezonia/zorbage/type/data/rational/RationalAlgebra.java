@@ -432,8 +432,8 @@ public class RationalAlgebra
 	{
 		
 		@Override
-		public Boolean call(RationalMember a, RationalMember b, RationalMember tol) {
-			return NumberWithin.compute(G.RAT, a, b, tol);
+		public Boolean call(RationalMember tol, RationalMember a, RationalMember b) {
+			return NumberWithin.compute(G.RAT, tol, a, b);
 		}
 	};
 

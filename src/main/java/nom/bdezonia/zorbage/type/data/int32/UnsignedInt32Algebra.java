@@ -716,8 +716,8 @@ public class UnsignedInt32Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member tol) {
-			return NumberWithin.compute(G.UINT32, a, b, tol);
+		public Boolean call(UnsignedInt32Member tol, UnsignedInt32Member a, UnsignedInt32Member b) {
+			return NumberWithin.compute(G.UINT32, tol, a, b);
 		}
 	};
 

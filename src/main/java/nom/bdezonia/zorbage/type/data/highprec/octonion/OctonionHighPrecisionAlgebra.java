@@ -83,7 +83,7 @@ public class OctonionHighPrecisionAlgebra
     Roots<OctonionHighPrecisionMember>,
     RealUnreal<OctonionHighPrecisionMember,HighPrecisionMember>,
     Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>,
-    Tolerance<OctonionHighPrecisionMember,HighPrecisionMember>
+    Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -1208,18 +1208,18 @@ public class OctonionHighPrecisionAlgebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		
 		@Override
-		public Boolean call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b, HighPrecisionMember tol) {
-			return OctonionNumberWithin.compute(G.HP, a, b, tol);
+		public Boolean call(HighPrecisionMember tol, OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
+			return OctonionNumberWithin.compute(G.HP, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> within() {
 		return WITHIN;
 	}
 

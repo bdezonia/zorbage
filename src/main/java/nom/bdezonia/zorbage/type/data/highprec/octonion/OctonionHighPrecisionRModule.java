@@ -72,7 +72,7 @@ public class OctonionHighPrecisionRModule
 	Norm<OctonionHighPrecisionRModuleMember,HighPrecisionMember>,
 	Products<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMember, OctonionHighPrecisionMatrixMember>,
 	DirectProduct<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMatrixMember>,
-	Tolerance<OctonionHighPrecisionRModuleMember,HighPrecisionMember>
+	Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>
 {
 	public OctonionHighPrecisionRModule() { }
 	
@@ -374,11 +374,11 @@ public class OctonionHighPrecisionRModule
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
 	{
 		@Override
-		public Boolean call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
 			OctonionHighPrecisionMember elemA = G.OHP.construct();
 			OctonionHighPrecisionMember elemB = G.OHP.construct();
 			if (a.length() != b.length())
@@ -386,7 +386,7 @@ public class OctonionHighPrecisionRModule
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.OHP.within().call(elemA, elemB, tol))
+				if (!G.OHP.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -394,7 +394,7 @@ public class OctonionHighPrecisionRModule
 	};
 
 	@Override
-	public Function3<Boolean, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> within() {
 		return WITHIN;
 	}
 

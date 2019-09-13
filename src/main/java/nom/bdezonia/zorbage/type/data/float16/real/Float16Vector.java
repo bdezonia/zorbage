@@ -77,7 +77,7 @@ public class Float16Vector
 	DirectProduct<Float16VectorMember, Float16MatrixMember>,
 	Rounding<Float16Member,Float16VectorMember>, Infinite<Float16VectorMember>,
 	NaN<Float16VectorMember>,
-	Tolerance<Float16VectorMember,Float16Member>
+	Tolerance<Float16Member,Float16VectorMember>
 {
 	public Float16Vector() { }
 	
@@ -434,11 +434,11 @@ public class Float16Vector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, Float16VectorMember, Float16VectorMember, Float16Member> WITHIN =
-			new Function3<Boolean, Float16VectorMember, Float16VectorMember, Float16Member>()
+	private final Function3<Boolean, Float16Member, Float16VectorMember, Float16VectorMember> WITHIN =
+			new Function3<Boolean, Float16Member, Float16VectorMember, Float16VectorMember>()
 	{
 		@Override
-		public Boolean call(Float16VectorMember a, Float16VectorMember b, Float16Member tol) {
+		public Boolean call(Float16Member tol, Float16VectorMember a, Float16VectorMember b) {
 			Float16Member elemA = G.HLF.construct();
 			Float16Member elemB = G.HLF.construct();
 			if (a.length() != b.length())
@@ -446,7 +446,7 @@ public class Float16Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.HLF.within().call(elemA, elemB, tol))
+				if (!G.HLF.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -454,7 +454,7 @@ public class Float16Vector
 	};
 
 	@Override
-	public Function3<Boolean, Float16VectorMember, Float16VectorMember, Float16Member> within() {
+	public Function3<Boolean, Float16Member, Float16VectorMember, Float16VectorMember> within() {
 		return WITHIN;
 	}
 }

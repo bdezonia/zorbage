@@ -33,16 +33,16 @@ import nom.bdezonia.zorbage.function.Function3;
  * @author Barry DeZonia
  *
  */
-public interface Tolerance<U,V> {
+public interface Tolerance<W,U> {
 
-	// Two U's are within a V tolerance of each other
-	// Imagine that a U is made up of V's. But it might be a tensor or a matrix
-	// or a vector or a number. This approach to within() is to allow the V to be
+	// Two U's are within a W tolerance of each other
+	// Imagine that a U is made up of W's. But it might be a tensor or a matrix
+	// or a vector or a number. This approach to within() is to allow the W to be
 	// applied to each component of the U (in each coordinate of those elements
-	// if needed). The V should normally by a single component number and U could
-	// be a Matrix<Quat<V>> for example. Thus it's kind of a per r/i/j/k/l/i0/j0/k0
+	// if needed). The W should normally by a single component number and U could
+	// be a Matrix<Quat<W>> for example. Thus it's kind of a per r/i/j/k/l/i0/j0/k0
 	// axis distance for every element in the containers of U.
 	
-	Function3<Boolean,U,U,V> within();
+	Function3<Boolean,W,U,U> within();
 
 }

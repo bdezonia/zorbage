@@ -712,8 +712,8 @@ public class UnsignedInt10Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt10Member a, UnsignedInt10Member b, UnsignedInt10Member tol) {
-			return NumberWithin.compute(G.UINT10, a, b, tol);
+		public Boolean call(UnsignedInt10Member tol, UnsignedInt10Member a, UnsignedInt10Member b) {
+			return NumberWithin.compute(G.UINT10, tol, a, b);
 		}
 	};
 

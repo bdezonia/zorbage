@@ -44,15 +44,15 @@ public class NumberWithin {
 	 * @param algebra
 	 * @param a
 	 * @param b
-	 * @param tol
+	 * @param tolerance
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U> & Addition<U>,U>
-		boolean compute(T algebra, U a, U b, U inputTol)
+		boolean compute(T algebra, U tolerance, U a, U b)
 	{
 		U zero = algebra.construct();
 		U diff = algebra.construct();
-		U tol = algebra.construct(inputTol);
+		U tol = algebra.construct(tolerance);
 		if (algebra.isLess().call(tol, zero))
 			throw new IllegalArgumentException("tolerance must be >= 0");
 		int sigA = algebra.signum().call(a);

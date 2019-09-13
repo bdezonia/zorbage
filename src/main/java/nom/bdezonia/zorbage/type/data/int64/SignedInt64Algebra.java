@@ -746,8 +746,8 @@ public class SignedInt64Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt64Member a, SignedInt64Member b, SignedInt64Member tol) {
-			return NumberWithin.compute(G.INT64, a, b, tol);
+		public Boolean call(SignedInt64Member tol, SignedInt64Member a, SignedInt64Member b) {
+			return NumberWithin.compute(G.INT64, tol, a, b);
 		}
 	};
 

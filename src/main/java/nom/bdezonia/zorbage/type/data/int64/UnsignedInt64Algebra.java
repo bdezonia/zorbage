@@ -727,8 +727,8 @@ public class UnsignedInt64Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member tol) {
-			return NumberWithin.compute(G.UINT64, a, b, tol);
+		public Boolean call(UnsignedInt64Member tol, UnsignedInt64Member a, UnsignedInt64Member b) {
+			return NumberWithin.compute(G.UINT64, tol, a, b);
 		}
 	};
 

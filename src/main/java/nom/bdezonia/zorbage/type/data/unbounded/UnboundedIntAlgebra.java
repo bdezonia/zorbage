@@ -834,8 +834,8 @@ public class UnboundedIntAlgebra
 	{
 		
 		@Override
-		public Boolean call(UnboundedIntMember a, UnboundedIntMember b, UnboundedIntMember tol) {
-			return NumberWithin.compute(G.UNBOUND, a, b, tol);
+		public Boolean call(UnboundedIntMember tol, UnboundedIntMember a, UnboundedIntMember b) {
+			return NumberWithin.compute(G.UNBOUND, tol, a, b);
 		}
 	};
 

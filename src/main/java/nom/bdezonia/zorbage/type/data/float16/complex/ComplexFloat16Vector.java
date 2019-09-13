@@ -79,7 +79,7 @@ public class ComplexFloat16Vector
     DirectProduct<ComplexFloat16VectorMember, ComplexFloat16MatrixMember>,
     Rounding<Float16Member,ComplexFloat16VectorMember>, Infinite<ComplexFloat16VectorMember>,
     NaN<ComplexFloat16VectorMember>,
-    Tolerance<ComplexFloat16VectorMember,Float16Member>
+    Tolerance<Float16Member,ComplexFloat16VectorMember>
 {
 	public ComplexFloat16Vector() { }
 	
@@ -446,11 +446,11 @@ public class ComplexFloat16Vector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member> WITHIN =
-			new Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member>()
+	private final Function3<Boolean, Float16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> WITHIN =
+			new Function3<Boolean, Float16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
 	{
 		@Override
-		public Boolean call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, Float16Member tol) {
+		public Boolean call(Float16Member tol, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
 			ComplexFloat16Member elemA = G.CHLF.construct();
 			ComplexFloat16Member elemB = G.CHLF.construct();
 			if (a.length() != b.length())
@@ -458,7 +458,7 @@ public class ComplexFloat16Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.CHLF.within().call(elemA, elemB, tol))
+				if (!G.CHLF.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -466,7 +466,7 @@ public class ComplexFloat16Vector
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat16VectorMember, ComplexFloat16VectorMember, Float16Member> within() {
+	public Function3<Boolean, Float16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> within() {
 		return WITHIN;
 	}
 }

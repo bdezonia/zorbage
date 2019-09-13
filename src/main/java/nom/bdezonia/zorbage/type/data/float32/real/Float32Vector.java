@@ -77,7 +77,7 @@ public class Float32Vector
 	DirectProduct<Float32VectorMember, Float32MatrixMember>,
 	Rounding<Float32Member,Float32VectorMember>, Infinite<Float32VectorMember>,
 	NaN<Float32VectorMember>,
-	Tolerance<Float32VectorMember,Float32Member>
+	Tolerance<Float32Member, Float32VectorMember>
 {
 	public Float32Vector() { }
 	
@@ -434,11 +434,11 @@ public class Float32Vector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, Float32VectorMember, Float32VectorMember, Float32Member> WITHIN =
-			new Function3<Boolean, Float32VectorMember, Float32VectorMember, Float32Member>()
+	private final Function3<Boolean, Float32Member, Float32VectorMember, Float32VectorMember> WITHIN =
+			new Function3<Boolean, Float32Member, Float32VectorMember, Float32VectorMember>()
 	{
 		@Override
-		public Boolean call(Float32VectorMember a, Float32VectorMember b, Float32Member tol) {
+		public Boolean call(Float32Member tol, Float32VectorMember a, Float32VectorMember b) {
 			Float32Member elemA = G.FLT.construct();
 			Float32Member elemB = G.FLT.construct();
 			if (a.length() != b.length())
@@ -446,7 +446,7 @@ public class Float32Vector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.FLT.within().call(elemA, elemB, tol))
+				if (!G.FLT.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -454,7 +454,7 @@ public class Float32Vector
 	};
 
 	@Override
-	public Function3<Boolean, Float32VectorMember, Float32VectorMember, Float32Member> within() {
+	public Function3<Boolean, Float32Member, Float32VectorMember, Float32VectorMember> within() {
 		return WITHIN;
 	}
 }

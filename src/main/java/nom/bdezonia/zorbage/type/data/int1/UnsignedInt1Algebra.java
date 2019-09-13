@@ -750,8 +750,8 @@ public class UnsignedInt1Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt1Member a, UnsignedInt1Member b, UnsignedInt1Member tol) {
-			return NumberWithin.compute(G.UINT1, a, b, tol);
+		public Boolean call(UnsignedInt1Member tol, UnsignedInt1Member a, UnsignedInt1Member b) {
+			return NumberWithin.compute(G.UINT1, tol, a, b);
 		}
 	};
 

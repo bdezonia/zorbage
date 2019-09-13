@@ -72,7 +72,7 @@ public class ComplexHighPrecisionVector
     Norm<ComplexHighPrecisionVectorMember,HighPrecisionMember>,
     Products<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMember, ComplexHighPrecisionMatrixMember>,
     DirectProduct<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMatrixMember>,
-    Tolerance<ComplexHighPrecisionVectorMember,HighPrecisionMember>
+    Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>
 {
 	public ComplexHighPrecisionVector() { }
 	
@@ -375,11 +375,11 @@ public class ComplexHighPrecisionVector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
 	{
 		@Override
-		public Boolean call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
 			ComplexHighPrecisionMember elemA = G.CHP.construct();
 			ComplexHighPrecisionMember elemB = G.CHP.construct();
 			if (a.length() != b.length())
@@ -387,7 +387,7 @@ public class ComplexHighPrecisionVector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.CHP.within().call(elemA, elemB, tol))
+				if (!G.CHP.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -395,7 +395,7 @@ public class ComplexHighPrecisionVector
 	};
 
 	@Override
-	public Function3<Boolean, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> within() {
 		return WITHIN;
 	}
 }

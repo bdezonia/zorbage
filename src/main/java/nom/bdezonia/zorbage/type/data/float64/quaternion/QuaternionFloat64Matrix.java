@@ -104,7 +104,7 @@ public class QuaternionFloat64Matrix
 		RealConstants<QuaternionFloat64MatrixMember>,
 		Infinite<QuaternionFloat64MatrixMember>,
 		NaN<QuaternionFloat64MatrixMember>,
-		Tolerance<QuaternionFloat64MatrixMember,Float64Member>
+		Tolerance<Float64Member,QuaternionFloat64MatrixMember>
 {
 	public QuaternionFloat64Matrix() { }
 
@@ -768,11 +768,11 @@ public class QuaternionFloat64Matrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, Float64Member> WITHIN =
-			new Function3<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, Float64Member>()
+	private final Function3<Boolean, Float64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> WITHIN =
+			new Function3<Boolean, Float64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
 	{
 		@Override
-		public Boolean call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, Float64Member tol) {
+		public Boolean call(Float64Member tol, QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
 			QuaternionFloat64Member elemA = G.QDBL.construct();
 			QuaternionFloat64Member elemB = G.QDBL.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -781,7 +781,7 @@ public class QuaternionFloat64Matrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.QDBL.within().call(elemA, elemB, tol))
+					if (!G.QDBL.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -790,7 +790,7 @@ public class QuaternionFloat64Matrix
 	};
 
 	@Override
-	public Function3<Boolean, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember, Float64Member> within() {
+	public Function3<Boolean, Float64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> within() {
 		return WITHIN;
 	}
 }

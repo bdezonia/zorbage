@@ -72,7 +72,7 @@ public class HighPrecisionVector
 	DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,
 	Infinite<HighPrecisionVectorMember>,
 	NaN<HighPrecisionVectorMember>,
-	Tolerance<HighPrecisionVectorMember,HighPrecisionMember>
+	Tolerance<HighPrecisionMember,HighPrecisionVectorMember>
 {
 	public HighPrecisionVector() { }
 	
@@ -423,11 +423,11 @@ public class HighPrecisionVector
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember>()
 	{
 		@Override
-		public Boolean call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
 			HighPrecisionMember elemA = G.HP.construct();
 			HighPrecisionMember elemB = G.HP.construct();
 			if (a.length() != b.length())
@@ -435,7 +435,7 @@ public class HighPrecisionVector
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.HP.within().call(elemA, elemB, tol))
+				if (!G.HP.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -443,7 +443,7 @@ public class HighPrecisionVector
 	};
 
 	@Override
-	public Function3<Boolean, HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember> within() {
 		return WITHIN;
 	}
 }

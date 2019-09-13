@@ -757,8 +757,8 @@ public class SignedInt9Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt9Member a, SignedInt9Member b, SignedInt9Member tol) {
-			return NumberWithin.compute(G.INT9, a, b, tol);
+		public Boolean call(SignedInt9Member tol, SignedInt9Member a, SignedInt9Member b) {
+			return NumberWithin.compute(G.INT9, tol, a, b);
 		}
 	};
 

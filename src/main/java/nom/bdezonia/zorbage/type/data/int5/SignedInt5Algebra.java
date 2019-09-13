@@ -757,8 +757,8 @@ public class SignedInt5Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt5Member a, SignedInt5Member b, SignedInt5Member tol) {
-			return NumberWithin.compute(G.INT5, a, b, tol);
+		public Boolean call(SignedInt5Member tol, SignedInt5Member a, SignedInt5Member b) {
+			return NumberWithin.compute(G.INT5, tol, a, b);
 		}
 	};
 

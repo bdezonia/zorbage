@@ -101,7 +101,7 @@ public class ComplexFloat64Algebra
     Random<ComplexFloat64Member>,
     RealUnreal<ComplexFloat64Member,Float64Member>,
     Scale<ComplexFloat64Member,ComplexFloat64Member>,
-    Tolerance<ComplexFloat64Member,Float64Member>
+    Tolerance<Float64Member,ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
@@ -1326,18 +1326,18 @@ public class ComplexFloat64Algebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, ComplexFloat64Member, ComplexFloat64Member, Float64Member> WITHIN =
-			new Function3<Boolean, ComplexFloat64Member, ComplexFloat64Member, Float64Member>()
+	private final Function3<Boolean, Float64Member, ComplexFloat64Member, ComplexFloat64Member> WITHIN =
+			new Function3<Boolean, Float64Member, ComplexFloat64Member, ComplexFloat64Member>()
 	{
 		
 		@Override
-		public Boolean call(ComplexFloat64Member a, ComplexFloat64Member b, Float64Member tol) {
-			return ComplexNumberWithin.compute(G.DBL, a, b, tol);
+		public Boolean call(Float64Member tol, ComplexFloat64Member a, ComplexFloat64Member b) {
+			return ComplexNumberWithin.compute(G.DBL, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat64Member, ComplexFloat64Member, Float64Member> within() {
+	public Function3<Boolean, Float64Member, ComplexFloat64Member, ComplexFloat64Member> within() {
 		return WITHIN;
 	}
 

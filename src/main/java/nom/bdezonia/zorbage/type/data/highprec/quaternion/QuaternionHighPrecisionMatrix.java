@@ -90,7 +90,7 @@ public class QuaternionHighPrecisionMatrix
 		Trigonometric<QuaternionHighPrecisionMatrixMember>,
 		Hyperbolic<QuaternionHighPrecisionMatrixMember>,
 		RealConstants<QuaternionHighPrecisionMatrixMember>,
-		Tolerance<QuaternionHighPrecisionMatrixMember,HighPrecisionMember>
+		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>
 {
 	public QuaternionHighPrecisionMatrix() { }
 
@@ -682,11 +682,11 @@ public class QuaternionHighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
 	{
 		@Override
-		public Boolean call(QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
 			QuaternionHighPrecisionMember elemA = G.QHP.construct();
 			QuaternionHighPrecisionMember elemB = G.QHP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -695,7 +695,7 @@ public class QuaternionHighPrecisionMatrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.QHP.within().call(elemA, elemB, tol))
+					if (!G.QHP.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -704,7 +704,7 @@ public class QuaternionHighPrecisionMatrix
 	};
 
 	@Override
-	public Function3<Boolean, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> within() {
 		return WITHIN;
 	}
 }

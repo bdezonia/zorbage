@@ -91,7 +91,7 @@ public class ComplexHighPrecisionAlgebra
     Conjugate<ComplexHighPrecisionMember>,
     RealUnreal<ComplexHighPrecisionMember,HighPrecisionMember>,
     Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>,
-    Tolerance<ComplexHighPrecisionMember,HighPrecisionMember>
+    Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
@@ -1263,18 +1263,18 @@ public class ComplexHighPrecisionAlgebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, ComplexHighPrecisionMember, ComplexHighPrecisionMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, ComplexHighPrecisionMember, ComplexHighPrecisionMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
 	{
 		
 		@Override
-		public Boolean call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, HighPrecisionMember tol) {
-			return ComplexNumberWithin.compute(G.HP, a, b, tol);
+		public Boolean call(HighPrecisionMember tol, ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
+			return ComplexNumberWithin.compute(G.HP, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, ComplexHighPrecisionMember, ComplexHighPrecisionMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> within() {
 		return WITHIN;
 	}
 }

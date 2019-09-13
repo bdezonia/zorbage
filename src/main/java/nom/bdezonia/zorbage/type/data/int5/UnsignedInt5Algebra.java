@@ -710,8 +710,8 @@ public class UnsignedInt5Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt5Member a, UnsignedInt5Member b, UnsignedInt5Member tol) {
-			return NumberWithin.compute(G.UINT5, a, b, tol);
+		public Boolean call(UnsignedInt5Member tol, UnsignedInt5Member a, UnsignedInt5Member b) {
+			return NumberWithin.compute(G.UINT5, tol, a, b);
 		}
 	};
 

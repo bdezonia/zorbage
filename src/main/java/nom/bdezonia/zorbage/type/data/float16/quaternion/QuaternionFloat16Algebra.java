@@ -88,7 +88,7 @@ public class QuaternionFloat16Algebra
     Roots<QuaternionFloat16Member>,
     RealUnreal<QuaternionFloat16Member,Float16Member>,
     Scale<QuaternionFloat16Member,QuaternionFloat16Member>,
-    Tolerance<QuaternionFloat16Member,Float16Member>
+    Tolerance<Float16Member,QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
 	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member(1.0/3,0,0,0);
@@ -963,18 +963,18 @@ public class QuaternionFloat16Algebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, QuaternionFloat16Member, QuaternionFloat16Member, Float16Member> WITHIN =
-			new Function3<Boolean, QuaternionFloat16Member, QuaternionFloat16Member, Float16Member>()
+	private final Function3<Boolean, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member> WITHIN =
+			new Function3<Boolean, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member>()
 	{
 		
 		@Override
-		public Boolean call(QuaternionFloat16Member a, QuaternionFloat16Member b, Float16Member tol) {
-			return QuaternionNumberWithin.compute(G.HLF, a, b, tol);
+		public Boolean call(Float16Member tol, QuaternionFloat16Member a, QuaternionFloat16Member b) {
+			return QuaternionNumberWithin.compute(G.HLF, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, QuaternionFloat16Member, QuaternionFloat16Member, Float16Member> within() {
+	public Function3<Boolean, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member> within() {
 		return WITHIN;
 	}
 

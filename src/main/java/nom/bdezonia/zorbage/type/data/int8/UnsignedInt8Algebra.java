@@ -705,8 +705,8 @@ public class UnsignedInt8Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member tol) {
-			return NumberWithin.compute(G.UINT8, a, b, tol);
+		public Boolean call(UnsignedInt8Member tol, UnsignedInt8Member a, UnsignedInt8Member b) {
+			return NumberWithin.compute(G.UINT8, tol, a, b);
 		}
 	};
 

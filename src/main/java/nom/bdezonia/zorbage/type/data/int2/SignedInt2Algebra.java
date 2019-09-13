@@ -757,8 +757,8 @@ public class SignedInt2Algebra
 	{
 		
 		@Override
-		public Boolean call(SignedInt2Member a, SignedInt2Member b, SignedInt2Member tol) {
-			return NumberWithin.compute(G.INT2, a, b, tol);
+		public Boolean call(SignedInt2Member tol, SignedInt2Member a, SignedInt2Member b) {
+			return NumberWithin.compute(G.INT2, tol, a, b);
 		}
 	};
 

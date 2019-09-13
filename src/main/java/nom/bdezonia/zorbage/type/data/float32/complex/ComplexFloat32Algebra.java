@@ -101,7 +101,7 @@ public class ComplexFloat32Algebra
     Random<ComplexFloat32Member>,
     RealUnreal<ComplexFloat32Member,Float32Member>,
     Scale<ComplexFloat32Member,ComplexFloat32Member>,
-    Tolerance<ComplexFloat32Member,Float32Member>
+    Tolerance<Float32Member,ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
 	private static final ComplexFloat32Member ONE = new ComplexFloat32Member(1,0);
@@ -1326,18 +1326,18 @@ public class ComplexFloat32Algebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, ComplexFloat32Member, ComplexFloat32Member, Float32Member> WITHIN =
-			new Function3<Boolean, ComplexFloat32Member, ComplexFloat32Member, Float32Member>()
+	private final Function3<Boolean, Float32Member, ComplexFloat32Member, ComplexFloat32Member> WITHIN =
+			new Function3<Boolean, Float32Member, ComplexFloat32Member, ComplexFloat32Member>()
 	{
 		
 		@Override
-		public Boolean call(ComplexFloat32Member a, ComplexFloat32Member b, Float32Member tol) {
-			return ComplexNumberWithin.compute(G.FLT, a, b, tol);
+		public Boolean call(Float32Member tol, ComplexFloat32Member a, ComplexFloat32Member b) {
+			return ComplexNumberWithin.compute(G.FLT, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, ComplexFloat32Member, ComplexFloat32Member, Float32Member> within() {
+	public Function3<Boolean, Float32Member, ComplexFloat32Member, ComplexFloat32Member> within() {
 		return WITHIN;
 	}
 

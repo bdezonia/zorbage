@@ -79,7 +79,7 @@ public class OctonionFloat64RModule
 	DirectProduct<OctonionFloat64RModuleMember, OctonionFloat64MatrixMember>,
 	Rounding<Float64Member,OctonionFloat64RModuleMember>, Infinite<OctonionFloat64RModuleMember>,
 	NaN<OctonionFloat64RModuleMember>,
-	Tolerance<OctonionFloat64RModuleMember,Float64Member>
+	Tolerance<Float64Member,OctonionFloat64RModuleMember>
 {
 	public OctonionFloat64RModule() { }
 	
@@ -451,11 +451,11 @@ public class OctonionFloat64RModule
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, Float64Member> WITHIN =
-			new Function3<Boolean, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, Float64Member>()
+	private final Function3<Boolean, Float64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> WITHIN =
+			new Function3<Boolean, Float64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
 	{
 		@Override
-		public Boolean call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, Float64Member tol) {
+		public Boolean call(Float64Member tol, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
 			OctonionFloat64Member elemA = G.ODBL.construct();
 			OctonionFloat64Member elemB = G.ODBL.construct();
 			if (a.length() != b.length())
@@ -463,7 +463,7 @@ public class OctonionFloat64RModule
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.ODBL.within().call(elemA, elemB, tol))
+				if (!G.ODBL.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -471,7 +471,7 @@ public class OctonionFloat64RModule
 	};
 
 	@Override
-	public Function3<Boolean, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember, Float64Member> within() {
+	public Function3<Boolean, Float64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> within() {
 		return WITHIN;
 	}
 

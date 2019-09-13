@@ -712,8 +712,8 @@ public class UnsignedInt4Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt4Member a, UnsignedInt4Member b, UnsignedInt4Member tol) {
-			return NumberWithin.compute(G.UINT4, a, b, tol);
+		public Boolean call(UnsignedInt4Member tol, UnsignedInt4Member a, UnsignedInt4Member b) {
+			return NumberWithin.compute(G.UINT4, tol, a, b);
 		}
 	};
 

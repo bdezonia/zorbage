@@ -90,7 +90,7 @@ public class OctonionHighPrecisionMatrix
 		Trigonometric<OctonionHighPrecisionMatrixMember>,
 		Hyperbolic<OctonionHighPrecisionMatrixMember>,
 		RealConstants<OctonionHighPrecisionMatrixMember>,
-		Tolerance<OctonionHighPrecisionMatrixMember,HighPrecisionMember>
+		Tolerance<HighPrecisionMember,OctonionHighPrecisionMatrixMember>
 {
 	public OctonionHighPrecisionMatrix() { }
 
@@ -670,11 +670,11 @@ public class OctonionHighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private final Function3<Boolean, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, HighPrecisionMember> WITHIN =
-			new Function3<Boolean, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, HighPrecisionMember>()
+	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> WITHIN =
+			new Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
 	{
 		@Override
-		public Boolean call(OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b, HighPrecisionMember tol) {
+		public Boolean call(HighPrecisionMember tol, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
 			OctonionHighPrecisionMember elemA = G.OHP.construct();
 			OctonionHighPrecisionMember elemB = G.OHP.construct();
 			if (a.rows() != b.rows() || a.cols() != b.cols())
@@ -683,7 +683,7 @@ public class OctonionHighPrecisionMatrix
 				for (long c = 0; c < a.cols(); c++) {
 					a.v(r, c, elemA);
 					b.v(r, c, elemB);
-					if (!G.OHP.within().call(elemA, elemB, tol))
+					if (!G.OHP.within().call(tol, elemA, elemB))
 						return false;
 				}
 			}
@@ -692,7 +692,7 @@ public class OctonionHighPrecisionMatrix
 	};
 
 	@Override
-	public Function3<Boolean, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, HighPrecisionMember> within() {
+	public Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> within() {
 		return WITHIN;
 	}
 }

@@ -79,7 +79,7 @@ public class QuaternionFloat16RModule
     DirectProduct<QuaternionFloat16RModuleMember, QuaternionFloat16MatrixMember>,
 	Rounding<Float16Member,QuaternionFloat16RModuleMember>, Infinite<QuaternionFloat16RModuleMember>,
 	NaN<QuaternionFloat16RModuleMember>,
-	Tolerance<QuaternionFloat16RModuleMember,Float16Member>
+	Tolerance<Float16Member,QuaternionFloat16RModuleMember>
 {
 	public QuaternionFloat16RModule() { }
 	
@@ -457,11 +457,11 @@ public class QuaternionFloat16RModule
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember, Float16Member> WITHIN =
-			new Function3<Boolean, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember, Float16Member>()
+	private final Function3<Boolean, Float16Member, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> WITHIN =
+			new Function3<Boolean, Float16Member, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember>()
 	{
 		@Override
-		public Boolean call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b, Float16Member tol) {
+		public Boolean call(Float16Member tol, QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b) {
 			QuaternionFloat16Member elemA = G.QHLF.construct();
 			QuaternionFloat16Member elemB = G.QHLF.construct();
 			if (a.length() != b.length())
@@ -469,7 +469,7 @@ public class QuaternionFloat16RModule
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.QHLF.within().call(elemA, elemB, tol))
+				if (!G.QHLF.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -477,7 +477,7 @@ public class QuaternionFloat16RModule
 	};
 
 	@Override
-	public Function3<Boolean, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember, Float16Member> within() {
+	public Function3<Boolean, Float16Member, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> within() {
 		return WITHIN;
 	}
 

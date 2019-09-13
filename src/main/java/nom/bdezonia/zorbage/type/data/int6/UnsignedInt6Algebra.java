@@ -710,8 +710,8 @@ public class UnsignedInt6Algebra
 	{
 		
 		@Override
-		public Boolean call(UnsignedInt6Member a, UnsignedInt6Member b, UnsignedInt6Member tol) {
-			return NumberWithin.compute(G.UINT6, a, b, tol);
+		public Boolean call(UnsignedInt6Member tol, UnsignedInt6Member a, UnsignedInt6Member b) {
+			return NumberWithin.compute(G.UINT6, tol, a, b);
 		}
 	};
 

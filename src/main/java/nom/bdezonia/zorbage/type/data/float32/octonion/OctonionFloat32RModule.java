@@ -79,7 +79,7 @@ public class OctonionFloat32RModule
 	DirectProduct<OctonionFloat32RModuleMember, OctonionFloat32MatrixMember>,
 	Rounding<Float32Member,OctonionFloat32RModuleMember>, Infinite<OctonionFloat32RModuleMember>,
 	NaN<OctonionFloat32RModuleMember>,
-	Tolerance<OctonionFloat32RModuleMember,Float32Member>
+	Tolerance<Float32Member,OctonionFloat32RModuleMember>
 {
 	public OctonionFloat32RModule() { }
 	
@@ -451,11 +451,11 @@ public class OctonionFloat32RModule
 		return ISZERO;
 	}
 
-	private final Function3<Boolean, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, Float32Member> WITHIN =
-			new Function3<Boolean, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, Float32Member>()
+	private final Function3<Boolean, Float32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> WITHIN =
+			new Function3<Boolean, Float32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
 	{
 		@Override
-		public Boolean call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b, Float32Member tol) {
+		public Boolean call(Float32Member tol, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
 			OctonionFloat32Member elemA = G.OFLT.construct();
 			OctonionFloat32Member elemB = G.OFLT.construct();
 			if (a.length() != b.length())
@@ -463,7 +463,7 @@ public class OctonionFloat32RModule
 			for (long i = 0; i < a.length(); i++) {
 				a.v(i, elemA);
 				b.v(i, elemB);
-				if (!G.OFLT.within().call(elemA, elemB, tol))
+				if (!G.OFLT.within().call(tol, elemA, elemB))
 					return false;
 			}
 			return true;
@@ -471,7 +471,7 @@ public class OctonionFloat32RModule
 	};
 
 	@Override
-	public Function3<Boolean, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, Float32Member> within() {
+	public Function3<Boolean, Float32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> within() {
 		return WITHIN;
 	}
 

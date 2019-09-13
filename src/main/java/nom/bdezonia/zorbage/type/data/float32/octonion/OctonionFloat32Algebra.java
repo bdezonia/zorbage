@@ -93,7 +93,7 @@ public class OctonionFloat32Algebra
     Roots<OctonionFloat32Member>,
     RealUnreal<OctonionFloat32Member,Float32Member>,
     Scale<OctonionFloat32Member, OctonionFloat32Member>,
-    Tolerance<OctonionFloat32Member,Float32Member>
+    Tolerance<Float32Member,OctonionFloat32Member>
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member ONE_THIRD = new OctonionFloat32Member(1.0f/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1302,18 +1302,18 @@ public class OctonionFloat32Algebra
 		return MUL;
 	}
 
-	private final Function3<Boolean, OctonionFloat32Member, OctonionFloat32Member, Float32Member> WITHIN =
-			new Function3<Boolean, OctonionFloat32Member, OctonionFloat32Member, Float32Member>()
+	private final Function3<Boolean, Float32Member, OctonionFloat32Member, OctonionFloat32Member> WITHIN =
+			new Function3<Boolean, Float32Member, OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		
 		@Override
-		public Boolean call(OctonionFloat32Member a, OctonionFloat32Member b, Float32Member tol) {
-			return OctonionNumberWithin.compute(G.FLT, a, b, tol);
+		public Boolean call(Float32Member tol, OctonionFloat32Member a, OctonionFloat32Member b) {
+			return OctonionNumberWithin.compute(G.FLT, tol, a, b);
 		}
 	};
 
 	@Override
-	public Function3<Boolean, OctonionFloat32Member, OctonionFloat32Member, Float32Member> within() {
+	public Function3<Boolean, Float32Member, OctonionFloat32Member, OctonionFloat32Member> within() {
 		return WITHIN;
 	}
 

@@ -52,25 +52,25 @@ public class QuaternionNumberWithin {
 	public static <U extends GetQuaternion<W>,
 					V extends Algebra<V,W> & Ordered<W> & Addition<W>,
 					W>
-		boolean compute(V singleAlg, U a, U b, W tol)
+		boolean compute(V singleAlg, W tol, U a, U b)
 	{
 		W elemA = singleAlg.construct();
 		W elemB = singleAlg.construct();
 		a.getR(elemA);
 		b.getR(elemB);
-		if (!NumberWithin.compute(singleAlg, elemA, elemB, tol))
+		if (!NumberWithin.compute(singleAlg, tol, elemA, elemB))
 			return false;
 		a.getI(elemA);
 		b.getI(elemB);
-		if (!NumberWithin.compute(singleAlg, elemA, elemB, tol))
+		if (!NumberWithin.compute(singleAlg, tol, elemA, elemB))
 			return false;
 		a.getJ(elemA);
 		b.getJ(elemB);
-		if (!NumberWithin.compute(singleAlg, elemA, elemB, tol))
+		if (!NumberWithin.compute(singleAlg, tol, elemA, elemB))
 			return false;
 		a.getK(elemA);
 		b.getK(elemB);
-		if (!NumberWithin.compute(singleAlg, elemA, elemB, tol))
+		if (!NumberWithin.compute(singleAlg, tol, elemA, elemB))
 			return false;
 		return true;
 	}
