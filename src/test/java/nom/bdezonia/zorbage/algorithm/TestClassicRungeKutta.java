@@ -45,17 +45,22 @@ public class TestClassicRungeKutta {
 
 	@Test
 	public void test1() {
-		Float64Member y0 = new Float64Member(0.25);
+		
+		double h = 0.0125;
+		int numSteps = 500;
+		double range = h * numSteps;
+		
+		Float64Member y0 = new Float64Member(3);
 		Float64Member t0 = new Float64Member(0);
-		Float64Member dy = new Float64Member(0.0125);
+		Float64Member dy = new Float64Member(h);
 		Float64Member result = G.DBL.construct();
 		
-		ClassicRungeKutta.compute(G.DBL, myProc, y0, t0, 5000, dy, result);
+		ClassicRungeKutta.compute(G.DBL, myProc, y0, t0, numSteps, dy, result);
 		
 		// true analytic solution: 12*e^t/(e^t+1)^2
-		double expected = 12 * Math.exp(62.5)/((Math.exp(62.5)+1)*(Math.exp(62.5)+1));
+		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
 	
-		assertEquals(expected, result.v(), 0.00000000000000000000000001);
+		assertEquals(expected, result.v(), 0.0001);
 	}
 
 	private static Procedure3<Float64Member,Float64Member,Float64Member> myProc =

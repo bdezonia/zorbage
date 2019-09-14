@@ -109,7 +109,7 @@ public class ClassicRungeKutta {
 			alg.add().call(y, dy, y);
 			
 			// update t
-			alg.add().call(t, one, t);
+			alg.add().call(t, dt, t);
 		}
 		
 		// assign result
