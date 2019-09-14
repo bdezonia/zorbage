@@ -45,7 +45,7 @@ public class TestClassicRungeKutta {
 
 	@Test
 	public void test1() {
-		Float64Member y0 = new Float64Member(1);
+		Float64Member y0 = new Float64Member(0.25);
 		Float64Member t0 = new Float64Member(0);
 		Float64Member dy = new Float64Member(0.0125);
 		Float64Member result = G.DBL.construct();
