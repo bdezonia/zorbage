@@ -55,10 +55,10 @@ public class TestClassicRungeKutta {
 	
 		Float64Member t0 = new Float64Member(0);
 		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t(0) = 0
-		Float64Member dy = new Float64Member(h);
+		Float64Member dt = new Float64Member(h);
 		Float64Member result = G.DBL.construct();
 		
-		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dy, result);
+		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, result);
 		
 		assertEquals(expected, result.v(), 0.0001);
 	}
@@ -75,17 +75,17 @@ public class TestClassicRungeKutta {
 
 	private static final double SLOPE = 1.25;
 	private static final int NUM_STEPS = 5;
+	private static final double DT = 0.125;
 	
 	@Test
 	public void test2() {
 		
 		Float64Member t0 = G.DBL.construct("0");
 		Float64VectorMember y0 = G.DBL_VEC.construct("[1,4,7]");
-		Float64Member dy = G.DBL.construct("1");
+		Float64Member dt = G.DBL.construct(((Double)(DT)).toString());
 		Float64VectorMember result = G.DBL_VEC.construct();
-		int numSteps = NUM_STEPS;
 
-		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, numSteps, dy, result);
+		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, NUM_STEPS, dt, result);
 
 		Float64Member value = G.DBL.construct();
 
@@ -96,30 +96,30 @@ public class TestClassicRungeKutta {
 		
 		double expected_value;
 
-		// y = C * e^(ax)
+		// y = C * e^(at)
 		// y(0) = 1
 		//   1 = C * e^(SLOPE * 0)
-		// y = 1 * e^(SLOPE * x)
+		// y = 1 * e^(SLOPE * t)
 		
-		expected_value = 1.0 * Math.exp(SLOPE * numSteps);
+		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS);
 		result.v(0, value);
 		assertEquals(expected_value, value.v(), 0.1);
 		
-		// y = C * e^(ax)
+		// y = C * e^(at)
 		// y(0) = 4
 		//   4 = C * e^(SLOPE * 0)
-		// y = 4 * e^(SLOPE * x)
+		// y = 4 * e^(SLOPE * t)
 
-		expected_value = 4.0 * Math.exp(SLOPE * numSteps);
+		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS);
 		result.v(1, value);
 		assertEquals(expected_value, value.v(), 0.1);
 		
-		// y = C * e^(ax)
+		// y = C * e^(at)
 		// y(0) = 7
 		//   7 = C * e^(SLOPE * 0)
-		// y = 7 * e^(SLOPE * x)
+		// y = 7 * e^(SLOPE * t)
 
-		expected_value = 7.0 * Math.exp(SLOPE * numSteps);
+		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS);
 		result.v(2, value);
 		assertEquals(expected_value, value.v(), 0.1);
 	}
