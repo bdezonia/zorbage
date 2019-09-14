@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -64,7 +65,6 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -457,19 +457,7 @@ public class OctonionFloat64RModule
 	{
 		@Override
 		public Boolean call(Float64Member tol, OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b) {
-			if (a.length() != b.length())
-				return false;
-			OctonionFloat64Member elemA = G.ODBL.construct();
-			OctonionFloat64Member elemB = G.ODBL.construct();
-			IndexedDataSource<OctonionFloat64Member> lista = a.rawData();
-			IndexedDataSource<OctonionFloat64Member> listb = b.rawData();
-			for (long i = 0; i < lista.size(); i++) {
-				lista.get(i, elemA);
-				listb.get(i, elemB);
-				if (!G.ODBL.within().call(tol, elemA, elemB))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.ODBL, tol, a.rawData(), b.rawData());
 		}
 	};
 

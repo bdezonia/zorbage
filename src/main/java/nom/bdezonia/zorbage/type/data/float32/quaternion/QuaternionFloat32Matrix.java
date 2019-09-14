@@ -50,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -84,7 +85,6 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -776,17 +776,7 @@ public class QuaternionFloat32Matrix
 		public Boolean call(Float32Member tol, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			QuaternionFloat32Member elemA = G.QFLT.construct();
-			QuaternionFloat32Member elemB = G.QFLT.construct();
-			IndexedDataSource<QuaternionFloat32Member> lista = a.rawData();
-			IndexedDataSource<QuaternionFloat32Member> listb = b.rawData();
-			for (long i = 0; i < lista.size(); i++) {
-				lista.get(i, elemA);
-				listb.get(i, elemB);
-				if (!G.QFLT.within().call(tol, elemA, elemB))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.QFLT, tol, a.rawData(), b.rawData());
 		}
 	};
 

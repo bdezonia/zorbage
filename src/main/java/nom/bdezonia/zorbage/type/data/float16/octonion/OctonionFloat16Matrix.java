@@ -51,6 +51,7 @@ import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -84,7 +85,6 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -762,17 +762,7 @@ public class OctonionFloat16Matrix
 		public Boolean call(Float16Member tol, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			OctonionFloat16Member elemA = G.OHLF.construct();
-			OctonionFloat16Member elemB = G.OHLF.construct();
-			IndexedDataSource<OctonionFloat16Member> lista = a.rawData();
-			IndexedDataSource<OctonionFloat16Member> listb = b.rawData();
-			for (long i = 0; i < lista.size(); i++) {
-				lista.get(i, elemA);
-				listb.get(i, elemB);
-				if (!G.OHLF.within().call(tol, elemA, elemB))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.OHLF, tol, a.rawData(), b.rawData());
 		}
 	};
 

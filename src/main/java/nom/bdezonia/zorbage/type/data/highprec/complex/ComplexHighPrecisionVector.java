@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScale;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -59,7 +60,6 @@ import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -381,19 +381,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
-			if (a.length() != b.length())
-				return false;
-			ComplexHighPrecisionMember elemA = G.CHP.construct();
-			ComplexHighPrecisionMember elemB = G.CHP.construct();
-			IndexedDataSource<ComplexHighPrecisionMember> lista = a.rawData();
-			IndexedDataSource<ComplexHighPrecisionMember> listb = b.rawData();
-			for (long i = 0; i < lista.size(); i++) {
-				lista.get(i, elemA);
-				listb.get(i, elemB);
-				if (!G.CHP.within().call(tol, elemA, elemB))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.CHP, tol, a.rawData(), b.rawData());
 		}
 	};
 

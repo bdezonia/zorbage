@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -62,7 +63,6 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -440,19 +440,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64Member tol, Float64VectorMember a, Float64VectorMember b) {
-			if (a.length() != b.length())
-				return false;
-			Float64Member elemA = G.DBL.construct();
-			Float64Member elemB = G.DBL.construct();
-			IndexedDataSource<Float64Member> lista = a.rawData();
-			IndexedDataSource<Float64Member> listb = b.rawData();
-			for (long i = 0; i < lista.size(); i++) {
-				lista.get(i, elemA);
-				listb.get(i, elemB);
-				if (!G.DBL.within().call(tol, elemA, elemB))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.DBL, tol, a.rawData(), b.rawData());
 		}
 	};
 

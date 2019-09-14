@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -73,7 +74,6 @@ import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -690,17 +690,7 @@ public class QuaternionHighPrecisionMatrix
 		public Boolean call(HighPrecisionMember tol, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
 			if (a.rows() != b.rows() || a.cols() != b.cols())
 				return false;
-			QuaternionHighPrecisionMember elemA = G.QHP.construct();
-			QuaternionHighPrecisionMember elemB = G.QHP.construct();
-			IndexedDataSource<QuaternionHighPrecisionMember> lista = a.rawData();
-			IndexedDataSource<QuaternionHighPrecisionMember> listb = b.rawData();
-			for (long i = 0; i < lista.size(); i++) {
-				lista.get(i, elemA);
-				listb.get(i, elemB);
-				if (!G.QHP.within().call(tol, elemA, elemB))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.QHP, tol, a.rawData(), b.rawData());
 		}
 	};
 

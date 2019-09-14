@@ -31,8 +31,10 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
+import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -63,6 +65,7 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 //many more
 
 import nom.bdezonia.zorbage.type.algebra.TensorProduct;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
@@ -81,7 +84,8 @@ public class Float64TensorProduct
 		Scale<Float64TensorProductMember,Float64Member>,
 		Rounding<Float64Member,Float64TensorProductMember>,
 		Infinite<Float64TensorProductMember>,
-		NaN<Float64TensorProductMember>
+		NaN<Float64TensorProductMember>,
+		Tolerance<Float64Member, Float64TensorProductMember>
 {
 	@Override
 	public Float64TensorProductMember construct() {
@@ -734,5 +738,25 @@ public class Float64TensorProduct
 			dims[i] = from.dimension(i);
 		}
 		to.alloc(dims);
+	}
+
+	private final Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember> WITHIN =
+			new Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public Boolean call(Float64Member tol, Float64TensorProductMember a, Float64TensorProductMember b) {
+			if (a.numDimensions() != b.numDimensions())
+				return false;
+			for (int i = 0; i < a.numDimensions(); i++) {
+				if (a.dimension(i) != b.dimension(i))
+					return false;
+			}
+			return SequencesSimilar.compute(G.DBL, tol, a.rawData(), b.rawData());
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember> within() {
+		return WITHIN;
 	}
 }
