@@ -49,17 +49,16 @@ public class TestClassicRungeKutta {
 		double h = 0.0125;
 		int numSteps = 500;
 		double range = h * numSteps;
-		
-		Float64Member y0 = new Float64Member(3);
-		Float64Member t0 = new Float64Member(0);
-		Float64Member dy = new Float64Member(h);
-		Float64Member result = G.DBL.construct();
-		
-		ClassicRungeKutta.compute(G.DBL, myProc, y0, t0, numSteps, dy, result);
-		
 		// true analytic solution: 12*e^t/(e^t+1)^2
 		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
 	
+		Float64Member t0 = new Float64Member(0);
+		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t(0) = 0
+		Float64Member dy = new Float64Member(h);
+		Float64Member result = G.DBL.construct();
+		
+		ClassicRungeKutta.compute(G.DBL, myProc, t0, y0, numSteps, dy, result);
+		
 		assertEquals(expected, result.v(), 0.0001);
 	}
 

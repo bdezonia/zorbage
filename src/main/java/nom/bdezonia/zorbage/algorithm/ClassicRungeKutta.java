@@ -44,20 +44,21 @@ public class ClassicRungeKutta {
 	 * 
 	 * @param alg
 	 * @param proc
+	 * @param t0
 	 * @param y0
 	 * @param numSteps
-	 * @param delta
+	 * @param dt
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void compute(T alg, Procedure3<U,U,U> proc, U y0, U t0, int numSteps, U dt, U result)
+		void compute(T alg, Procedure3<U,U,U> proc, U t0, U y0, int numSteps, U dt, U result)
 	{
 		if (numSteps <= 0)
 			throw new IllegalArgumentException("numSteps must be greater than 0");
 		if (alg.isZero().call(dt))
 			throw new IllegalArgumentException("spatial increment h must not be 0");
-		U y = alg.construct(y0);
 		U t = alg.construct(t0);
+		U y = alg.construct(y0);
 		U k1 = alg.construct();
 		U k2 = alg.construct();
 		U k3 = alg.construct();
