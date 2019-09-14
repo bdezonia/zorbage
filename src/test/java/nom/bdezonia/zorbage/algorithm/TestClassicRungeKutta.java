@@ -74,9 +74,9 @@ public class TestClassicRungeKutta {
 		}
 	};
 
-	private static final int NUM_STEPS = 100;
+	private static final int NUM_STEPS = 1000;
 	private static final double SLOPE = 1.25;
-	private static final double DT = 0.0125; // NOTE: bigger DTs introduce more error
+	private static final double DT = 0.00125; // NOTE: bigger DTs introduce more error
 	
 	@Test
 	public void test2() {
@@ -101,7 +101,7 @@ public class TestClassicRungeKutta {
 		
 		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		result.v(0, value);
-		assertEquals(expected_value, value.v(), 0.01);
+		assertEquals(expected_value, value.v(), 0.0003);
 		
 		// y = C * e^(at)
 		// y(0) = 4
@@ -110,7 +110,7 @@ public class TestClassicRungeKutta {
 
 		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		result.v(1, value);
-		assertEquals(expected_value, value.v(), 0.01);
+		assertEquals(expected_value, value.v(), 0.001);  // had to tweak this tolerance higher
 		
 		// y = C * e^(at)
 		// y(0) = 7
@@ -119,7 +119,7 @@ public class TestClassicRungeKutta {
 
 		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		result.v(2, value);
-		assertEquals(expected_value, value.v(), 0.018);  // had to tweak this tolerance higher
+		assertEquals(expected_value, value.v(), 0.0018);  // had to tweak this tolerance higher
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
