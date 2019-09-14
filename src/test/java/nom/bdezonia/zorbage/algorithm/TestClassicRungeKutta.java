@@ -47,15 +47,16 @@ public class TestClassicRungeKutta {
 	@Test
 	public void test1() {
 		
-		double h = 0.0125;
+		double deltaT = 0.0125;
 		int numSteps = 500;
-		double range = h * numSteps;
+		double range = deltaT * numSteps;
+		
 		// true analytic solution: 12*e^t/(e^t+1)^2
 		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
 	
 		Float64Member t0 = new Float64Member(0);
 		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t(0) = 0
-		Float64Member dt = new Float64Member(h);
+		Float64Member dt = new Float64Member(deltaT);
 		Float64Member result = G.DBL.construct();
 		
 		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, result);
@@ -73,9 +74,9 @@ public class TestClassicRungeKutta {
 		}
 	};
 
+	private static final int NUM_STEPS = 100;
 	private static final double SLOPE = 1.25;
-	private static final int NUM_STEPS = 5;
-	private static final double DT = 0.125;
+	private static final double DT = 0.0125; // NOTE: bigger DTs introduce more error
 	
 	@Test
 	public void test2() {
@@ -91,9 +92,6 @@ public class TestClassicRungeKutta {
 
 		assertEquals(3, result.length());
 
-		// This is how it actually is for SLOPE = 1.25 and numSteps = 5:
-		// double expected = initialValue * Math.exp(6.16085);
-		
 		double expected_value;
 
 		// y = C * e^(at)
@@ -101,27 +99,27 @@ public class TestClassicRungeKutta {
 		//   1 = C * e^(SLOPE * 0)
 		// y = 1 * e^(SLOPE * t)
 		
-		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS);
+		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		result.v(0, value);
-		assertEquals(expected_value, value.v(), 0.1);
+		assertEquals(expected_value, value.v(), 0.01);
 		
 		// y = C * e^(at)
 		// y(0) = 4
 		//   4 = C * e^(SLOPE * 0)
 		// y = 4 * e^(SLOPE * t)
 
-		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS);
+		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		result.v(1, value);
-		assertEquals(expected_value, value.v(), 0.1);
+		assertEquals(expected_value, value.v(), 0.01);
 		
 		// y = C * e^(at)
 		// y(0) = 7
 		//   7 = C * e^(SLOPE * 0)
 		// y = 7 * e^(SLOPE * t)
 
-		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS);
+		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		result.v(2, value);
-		assertEquals(expected_value, value.v(), 0.1);
+		assertEquals(expected_value, value.v(), 0.018);  // had to tweak this tolerance higher
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
