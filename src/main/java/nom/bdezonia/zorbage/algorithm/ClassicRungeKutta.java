@@ -63,7 +63,6 @@ public class ClassicRungeKutta {
 		U k3 = alg.construct();
 		U k4 = alg.construct();
 		U dy = alg.construct();
-		U one = alg.construct("1");
 		U two = alg.construct("2");
 		U six = alg.construct("6");
 		U tmp = alg.construct();
