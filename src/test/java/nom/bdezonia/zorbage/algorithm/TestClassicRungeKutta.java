@@ -33,6 +33,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 
@@ -57,18 +58,53 @@ public class TestClassicRungeKutta {
 		Float64Member dy = new Float64Member(h);
 		Float64Member result = G.DBL.construct();
 		
-		ClassicRungeKutta.compute(G.DBL, myProc, t0, y0, numSteps, dy, result);
+		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dy, result);
 		
 		assertEquals(expected, result.v(), 0.0001);
 	}
 
-	private static Procedure3<Float64Member,Float64Member,Float64Member> myProc =
+	private static Procedure3<Float64Member,Float64Member,Float64Member> realDeriv =
 			new Procedure3<Float64Member, Float64Member, Float64Member>()
 	{
 		@Override
 		public void call(Float64Member t, Float64Member y, Float64Member result) {
 			double val = y.v() * ((2/(Math.exp(t.v())+1))-1);
 			result.setV(val);
+		}
+	};
+
+	@Test
+	public void test2() {
+		
+		Float64Member t0 = G.DBL.construct("0");
+		Float64VectorMember y0 = G.DBL_VEC.construct("[1,4,7]");
+		Float64Member dy = G.DBL.construct("1");
+		Float64VectorMember result = G.DBL_VEC.construct();
+		int numSteps = 5;
+
+		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, numSteps, dy, result);
+
+		Float64Member value = G.DBL.construct();
+
+		assertEquals(3, result.length());
+		
+		result.v(0, value);
+		//assertEquals(1.0 * Math.pow(1.25, numSteps), value.v(), 0.000001);
+		
+		result.v(1, value);
+		//assertEquals(4.0 * Math.pow(1.25, numSteps), value.v(), 0.000001);
+		
+		result.v(2, value);
+		//assertEquals(7.0 * Math.pow(1.25, numSteps), value.v(), 0.000001);
+	}
+
+	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
+			new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64Member t, Float64VectorMember y, Float64VectorMember result) {
+			Float64Member scale = G.DBL.construct("1.25");
+			G.DBL_VEC.scale().call(scale, y, result);
 		}
 	};
 }

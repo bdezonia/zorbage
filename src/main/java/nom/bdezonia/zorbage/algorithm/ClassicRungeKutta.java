@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 
 /**
  * 
@@ -43,6 +45,7 @@ public class ClassicRungeKutta {
 	/**
 	 * 
 	 * @param alg
+	 * @param wAlg
 	 * @param proc
 	 * @param t0
 	 * @param y0
@@ -50,27 +53,30 @@ public class ClassicRungeKutta {
 	 * @param dt
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void compute(T alg, Procedure3<U,U,U> proc, U t0, U y0, int numSteps, U dt, U result)
+	public static <T extends Algebra<T,U> & Addition<U> & Scale<U,W>,
+					U,
+					V extends Algebra<V,W> & Addition<W> & Scale<W,W>,
+					W>
+		void compute(T alg, V wAlg, Procedure3<W,U,U> proc, W t0, U y0, int numSteps, W dt, U result)
 	{
 		if (numSteps <= 0)
 			throw new IllegalArgumentException("numSteps must be greater than 0");
-		if (alg.isZero().call(dt))
+		if (wAlg.isZero().call(dt))
 			throw new IllegalArgumentException("spatial increment h must not be 0");
-		U t = alg.construct(t0);
+		W t = wAlg.construct(t0);
 		U y = alg.construct(y0);
 		U k1 = alg.construct();
 		U k2 = alg.construct();
 		U k3 = alg.construct();
 		U k4 = alg.construct();
 		U dy = alg.construct();
-		U two = alg.construct("2");
-		U six = alg.construct("6");
+		W one_half = wAlg.construct("0.5");
+		W one_sixth = wAlg.construct(""+(BigDecimal.ONE.divide(BigDecimal.valueOf(6),new MathContext(HighPrecisionAlgebra.getPrecision()))));
 		U tmp = alg.construct();
-		U tt = alg.construct();
+		W tt = wAlg.construct();
 		U ty = alg.construct();
-		U dt_over_two = alg.construct();
-		alg.divide().call(dt, two, dt_over_two);
+		W dt_over_two = wAlg.construct();
+		wAlg.scale().call(one_half, dt, dt_over_two);
 		for (int i = 0; i < numSteps; i++) {
 		
 			// calc k1
@@ -78,26 +84,26 @@ public class ClassicRungeKutta {
 				alg.assign().call(y, tmp);
 			else
 				proc.call(t, y, tmp);
-			alg.multiply().call(dt, tmp, k1);
+			alg.scale().call(dt, tmp, k1);
 			
 			// calc k2
-			alg.add().call(t, dt_over_two, tt);
-			alg.divide().call(k1, two, ty);
+			wAlg.add().call(t, dt_over_two, tt);
+			alg.scale().call(one_half, k1, ty);
 			alg.add().call(y, ty, ty);
 			proc.call(tt, ty, tmp);
-			alg.multiply().call(dt, tmp, k2);
+			alg.scale().call(dt, tmp, k2);
 			
 			// calc k3
-			alg.divide().call(k2, two, ty);
+			alg.scale().call(one_half, k2, ty);
 			alg.add().call(y, ty, ty);
 			proc.call(tt, ty, tmp);
-			alg.multiply().call(dt, tmp, k3);
+			alg.scale().call(dt, tmp, k3);
 			
 			// calc k4
-			alg.add().call(t, dt, tt);
+			wAlg.add().call(t, dt, tt);
 			alg.add().call(y, k3, ty);
 			proc.call(tt, ty, tmp);
-			alg.multiply().call(dt, tmp, k4);
+			alg.scale().call(dt, tmp, k4);
 			
 			// update y
 			alg.add().call(k1, k2, dy);
@@ -105,11 +111,11 @@ public class ClassicRungeKutta {
 			alg.add().call(dy, k3, dy);
 			alg.add().call(dy, k3, dy);
 			alg.add().call(dy, k4, dy);
-			alg.divide().call(dy, six, dy);
+			alg.scale().call(one_sixth, dy, dy);
 			alg.add().call(y, dy, y);
 			
 			// update t
-			alg.add().call(t, dt, t);
+			wAlg.add().call(t, dt, t);
 		}
 		
 		// assign result
