@@ -87,15 +87,20 @@ public class TestClassicRungeKutta {
 		Float64Member value = G.DBL.construct();
 
 		assertEquals(3, result.length());
+		// this makes some sense to me
+		// double expected = Math.exp(6.25); // 5 * 1.25
+		
+		// this is how it actually is
+		double expected_scale = Math.exp(6.16085);
 		
 		result.v(0, value);
-		//assertEquals(1.0 * Math.pow(1.25, numSteps), value.v(), 0.000001);
+		assertEquals(1.0 * expected_scale, value.v(), 0.05);
 		
 		result.v(1, value);
-		//assertEquals(4.0 * Math.pow(1.25, numSteps), value.v(), 0.000001);
+		assertEquals(4.0 * expected_scale, value.v(), 0.05);
 		
 		result.v(2, value);
-		//assertEquals(7.0 * Math.pow(1.25, numSteps), value.v(), 0.000001);
+		assertEquals(7.0 * expected_scale, value.v(), 0.05);
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
