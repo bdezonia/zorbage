@@ -73,6 +73,9 @@ public class TestClassicRungeKutta {
 		}
 	};
 
+	private static final double SLOPE = 1.25;
+	private static final int NUM_STEPS = 5;
+	
 	@Test
 	public void test2() {
 		
@@ -80,7 +83,7 @@ public class TestClassicRungeKutta {
 		Float64VectorMember y0 = G.DBL_VEC.construct("[1,4,7]");
 		Float64Member dy = G.DBL.construct("1");
 		Float64VectorMember result = G.DBL_VEC.construct();
-		int numSteps = 5;
+		int numSteps = NUM_STEPS;
 
 		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, numSteps, dy, result);
 
@@ -88,20 +91,37 @@ public class TestClassicRungeKutta {
 
 		assertEquals(3, result.length());
 
-		// this makes some sense to me
-		// double expected = Math.exp(6.25); // 5 * 1.25
+		// This is how it actually is for SLOPE = 1.25 and numSteps = 5:
+		// double expected = initialValue * Math.exp(6.16085);
 		
-		// this is how it actually is
-		double expected_scale = Math.exp(6.16085);
+		double expected_value;
+
+		// y = C * e^(ax)
+		// y(0) = 1
+		//   1 = C * e^(SLOPE * 0)
+		// y = 1 * e^(SLOPE * x)
 		
+		expected_value = 1.0 * Math.exp(SLOPE * numSteps);
 		result.v(0, value);
-		assertEquals(1.0 * expected_scale, value.v(), 0.01);  // not exactly a linear scale
+		assertEquals(expected_value, value.v(), 0.1);
 		
+		// y = C * e^(ax)
+		// y(0) = 4
+		//   4 = C * e^(SLOPE * 0)
+		// y = 4 * e^(SLOPE * x)
+
+		expected_value = 4.0 * Math.exp(SLOPE * numSteps);
 		result.v(1, value);
-		assertEquals(4.0 * expected_scale, value.v(), 0.016);  // not exactly a linear scale
+		assertEquals(expected_value, value.v(), 0.1);
 		
+		// y = C * e^(ax)
+		// y(0) = 7
+		//   7 = C * e^(SLOPE * 0)
+		// y = 7 * e^(SLOPE * x)
+
+		expected_value = 7.0 * Math.exp(SLOPE * numSteps);
 		result.v(2, value);
-		assertEquals(7.0 * expected_scale, value.v(), 0.027);  // not exactly a linear scale
+		assertEquals(expected_value, value.v(), 0.1);
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
@@ -109,7 +129,7 @@ public class TestClassicRungeKutta {
 	{
 		@Override
 		public void call(Float64Member t, Float64VectorMember y, Float64VectorMember result) {
-			Float64Member scale = G.DBL.construct("1.25");
+			Float64Member scale = G.DBL.construct(((Double)(SLOPE)).toString());
 			G.DBL_VEC.scale().call(scale, y, result);
 		}
 	};
