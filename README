@@ -89,7 +89,9 @@ What can I do with Zorbage?
   
   Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
-  
+    Zorbage can also find derivatives and solve differential equations
+    involving arbitrary scalar and vector Procedures.
+ 
   Use parsers to create Procedures from strings. These Procedures represent
     equations that when fed values will compute a return value (the result of
     applying the inputs to the equation). Equations can return numbers, vectors,
