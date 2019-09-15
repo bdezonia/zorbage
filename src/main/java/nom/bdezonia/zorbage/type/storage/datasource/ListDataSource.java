@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
@@ -72,4 +73,20 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 		return list.size();
 	}
 
+	/**
+	 * 
+	 * @param algebra
+	 * @param numElems
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Algebra<T,U>, U>
+		ListDataSource<T, U> construct(T algebra, int numElems)
+	{
+		List<Object> array = new ArrayList<Object>();
+		for (int i = 0; i < numElems; i++) {
+			array.add(algebra.construct());
+		}
+		return new ListDataSource<T,U>(algebra, (List<U>) array); // magic
+	}
 }

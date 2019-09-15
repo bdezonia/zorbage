@@ -66,5 +66,21 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 	public long size() {
 		return data.length;
 	}
-	
+
+	/**
+	 * 
+	 * @param algebra
+	 * @param numElems
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Algebra<T,U>, U>
+		ArrayDataSource<T, U> construct(T algebra, int numElems)
+	{
+		Object[] array = new Object[numElems];
+		for (int i = 0; i < numElems; i++) {
+			array[i] = algebra.construct();
+		}
+		return new ArrayDataSource<T,U>(algebra, (U[]) array); // magic
+	}
 }

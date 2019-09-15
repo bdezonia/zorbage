@@ -33,7 +33,6 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.ArrayDataSource;
@@ -97,13 +96,8 @@ public class TestClassicRungeKutta {
 
 		Float64Member component = G.DBL.construct();
 
-		Float64VectorMember[] array = new Float64VectorMember[NUM_STEPS];
-		
-		for (int i = 0; i < array.length; i++) {
-			array[i] = G.DBL_VEC.construct();
-		}
-		
-		IndexedDataSource<Float64VectorMember> results = new ArrayDataSource<Float64Vector, Float64VectorMember>(G.DBL_VEC, array);
+		IndexedDataSource<Float64VectorMember> results = ArrayDataSource.construct(G.DBL_VEC, NUM_STEPS);
+		//IndexedDataSource<Float64VectorMember> results = ListDataSource.construct(G.DBL_VEC, NUM_STEPS);
 
 		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, NUM_STEPS, dt, results);
 
