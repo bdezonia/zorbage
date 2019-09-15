@@ -45,20 +45,20 @@ public class ClassicRungeKutta {
 
 	/**
 	 * 
-	 * @param alg
+	 * @param uAlg
 	 * @param wAlg
 	 * @param proc
 	 * @param t0
 	 * @param y0
 	 * @param numSteps
 	 * @param dt
-	 * @param result
+	 * @param results
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Scale<U,W>,
 					U,
 					V extends Algebra<V,W> & Addition<W> & Scale<W,W>,
 					W>
-		void compute(T alg, V wAlg, Procedure3<W,U,U> proc, W t0, U y0, long numSteps, W dt, IndexedDataSource<U> results)
+		void compute(T uAlg, V wAlg, Procedure3<W,U,U> proc, W t0, U y0, long numSteps, W dt, IndexedDataSource<U> results)
 	{
 		if (numSteps <= 0)
 			throw new IllegalArgumentException("numSteps must be greater than 0");
@@ -67,55 +67,55 @@ public class ClassicRungeKutta {
 		if (results.size() != numSteps)
 			throw new IllegalArgumentException("output array size does not match numSteps");
 		W t = wAlg.construct(t0);
-		U y = alg.construct(y0);
-		U k1 = alg.construct();
-		U k2 = alg.construct();
-		U k3 = alg.construct();
-		U k4 = alg.construct();
-		U dy = alg.construct();
+		U y = uAlg.construct(y0);
+		U k1 = uAlg.construct();
+		U k2 = uAlg.construct();
+		U k3 = uAlg.construct();
+		U k4 = uAlg.construct();
+		U dy = uAlg.construct();
 		W one_half = wAlg.construct("0.5");
 		W one_sixth = wAlg.construct(""+(BigDecimal.ONE.divide(BigDecimal.valueOf(6),new MathContext(HighPrecisionAlgebra.getPrecision()))));
-		U tmp = alg.construct();
+		U tmp = uAlg.construct();
 		W tt = wAlg.construct();
-		U ty = alg.construct();
+		U ty = uAlg.construct();
 		W dt_over_two = wAlg.construct();
 		wAlg.scale().call(one_half, dt, dt_over_two);
 		for (int i = 0; i < numSteps; i++) {
 		
 			// calc k1
 			if (i == 0)
-				alg.assign().call(y, tmp);
+				uAlg.assign().call(y, tmp);
 			else
 				proc.call(t, y, tmp);
-			alg.scale().call(dt, tmp, k1);
+			uAlg.scale().call(dt, tmp, k1);
 			
 			// calc k2
 			wAlg.add().call(t, dt_over_two, tt);
-			alg.scale().call(one_half, k1, ty);
-			alg.add().call(y, ty, ty);
+			uAlg.scale().call(one_half, k1, ty);
+			uAlg.add().call(y, ty, ty);
 			proc.call(tt, ty, tmp);
-			alg.scale().call(dt, tmp, k2);
+			uAlg.scale().call(dt, tmp, k2);
 			
 			// calc k3
-			alg.scale().call(one_half, k2, ty);
-			alg.add().call(y, ty, ty);
+			uAlg.scale().call(one_half, k2, ty);
+			uAlg.add().call(y, ty, ty);
 			proc.call(tt, ty, tmp);
-			alg.scale().call(dt, tmp, k3);
+			uAlg.scale().call(dt, tmp, k3);
 			
 			// calc k4
 			wAlg.add().call(t, dt, tt);
-			alg.add().call(y, k3, ty);
+			uAlg.add().call(y, k3, ty);
 			proc.call(tt, ty, tmp);
-			alg.scale().call(dt, tmp, k4);
+			uAlg.scale().call(dt, tmp, k4);
 			
 			// update y
-			alg.add().call(k1, k2, dy);
-			alg.add().call(dy, k2, dy);
-			alg.add().call(dy, k3, dy);
-			alg.add().call(dy, k3, dy);
-			alg.add().call(dy, k4, dy);
-			alg.scale().call(one_sixth, dy, dy);
-			alg.add().call(y, dy, y);
+			uAlg.add().call(k1, k2, dy);
+			uAlg.add().call(dy, k2, dy);
+			uAlg.add().call(dy, k3, dy);
+			uAlg.add().call(dy, k3, dy);
+			uAlg.add().call(dy, k4, dy);
+			uAlg.scale().call(one_sixth, dy, dy);
+			uAlg.add().call(y, dy, y);
 			
 			// update t
 			wAlg.add().call(t, dt, t);
