@@ -33,7 +33,11 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.type.storage.datasource.ArrayDataSource;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -57,11 +61,15 @@ public class TestClassicRungeKutta {
 		Float64Member t0 = new Float64Member(0);
 		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t(0) = 0
 		Float64Member dt = new Float64Member(deltaT);
-		Float64Member result = G.DBL.construct();
+		Float64Member value = G.DBL.construct();
 		
-		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, result);
+		IndexedDataSource<Float64Member> results = Storage.allocate(numSteps, value);
 		
-		assertEquals(expected, result.v(), 0.0001);
+		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, results);
+		
+		results.get(numSteps-1, value);
+		
+		assertEquals(expected, value.v(), 0.0001);
 	}
 
 	private static Procedure3<Float64Member,Float64Member,Float64Member> realDeriv =
@@ -84,13 +92,24 @@ public class TestClassicRungeKutta {
 		Float64Member t0 = G.DBL.construct("0");
 		Float64VectorMember y0 = G.DBL_VEC.construct("[1,4,7]");
 		Float64Member dt = G.DBL.construct(((Double)(DT)).toString());
-		Float64VectorMember result = G.DBL_VEC.construct();
+		
+		Float64VectorMember value = G.DBL_VEC.construct();
 
-		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, NUM_STEPS, dt, result);
+		Float64Member component = G.DBL.construct();
 
-		Float64Member value = G.DBL.construct();
+		Float64VectorMember[] array = new Float64VectorMember[NUM_STEPS];
+		
+		for (int i = 0; i < array.length; i++) {
+			array[i] = G.DBL_VEC.construct();
+		}
+		
+		IndexedDataSource<Float64VectorMember> results = new ArrayDataSource<Float64Vector, Float64VectorMember>(G.DBL_VEC, array);
 
-		assertEquals(3, result.length());
+		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, NUM_STEPS, dt, results);
+
+		results.get(NUM_STEPS-1, value);
+		
+		assertEquals(3, value.length());
 
 		double expected_value;
 
@@ -100,8 +119,8 @@ public class TestClassicRungeKutta {
 		// y = 1 * e^(SLOPE * t)
 		
 		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS * DT);
-		result.v(0, value);
-		assertEquals(expected_value, value.v(), 0.0003);
+		value.v(0, component);
+		assertEquals(expected_value, component.v(), 0.0003);
 		
 		// y = C * e^(at)
 		// y(0) = 4
@@ -109,8 +128,8 @@ public class TestClassicRungeKutta {
 		// y = 4 * e^(SLOPE * t)
 
 		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS * DT);
-		result.v(1, value);
-		assertEquals(expected_value, value.v(), 0.001);  // had to tweak this tolerance higher
+		value.v(1, component);
+		assertEquals(expected_value, component.v(), 0.001);  // had to tweak this tolerance higher
 		
 		// y = C * e^(at)
 		// y(0) = 7
@@ -118,8 +137,8 @@ public class TestClassicRungeKutta {
 		// y = 7 * e^(SLOPE * t)
 
 		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS * DT);
-		result.v(2, value);
-		assertEquals(expected_value, value.v(), 0.0018);  // had to tweak this tolerance higher
+		value.v(2, component);
+		assertEquals(expected_value, component.v(), 0.0018);  // had to tweak this tolerance higher
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =

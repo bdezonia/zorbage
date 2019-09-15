@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -57,12 +58,14 @@ public class ClassicRungeKutta {
 					U,
 					V extends Algebra<V,W> & Addition<W> & Scale<W,W>,
 					W>
-		void compute(T alg, V wAlg, Procedure3<W,U,U> proc, W t0, U y0, int numSteps, W dt, U result)
+		void compute(T alg, V wAlg, Procedure3<W,U,U> proc, W t0, U y0, long numSteps, W dt, IndexedDataSource<U> results)
 	{
 		if (numSteps <= 0)
 			throw new IllegalArgumentException("numSteps must be greater than 0");
 		if (wAlg.isZero().call(dt))
-			throw new IllegalArgumentException("spatial increment h must not be 0");
+			throw new IllegalArgumentException("time increment dt must not be 0");
+		if (results.size() != numSteps)
+			throw new IllegalArgumentException("output array size does not match numSteps");
 		W t = wAlg.construct(t0);
 		U y = alg.construct(y0);
 		U k1 = alg.construct();
@@ -116,9 +119,9 @@ public class ClassicRungeKutta {
 			
 			// update t
 			wAlg.add().call(t, dt, t);
+
+			// record result
+			results.set(i, y);
 		}
-		
-		// assign result
-		alg.assign().call(y, result);
 	}
 }
