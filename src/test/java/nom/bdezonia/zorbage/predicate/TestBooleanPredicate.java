@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 public class TestBooleanPredicate {
 
 	@Test
+	@SuppressWarnings("all")
 	public void test() {
 		
 		Function1<Boolean, SignedInt32Member> testFunc =

@@ -1018,6 +1018,7 @@ public class OctonionHighPrecisionAlgebra
 	  
 	 */
 	
+	@SuppressWarnings("unused")
 	private void multiplier(BigDecimal r, BigDecimal factor, OctonionHighPrecisionMember result) {
 		if (false) {
 		// TODO enable me when BigDecimalMath supports nan and inf

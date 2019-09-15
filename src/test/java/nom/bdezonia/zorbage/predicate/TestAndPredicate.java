@@ -38,6 +38,7 @@ import org.junit.Test;
 public class TestAndPredicate {
 
 	@Test
+	@SuppressWarnings("unused")
 	public void test() {
 		Predicate<Integer> a = new Predicate<Integer>() {
 			@Override

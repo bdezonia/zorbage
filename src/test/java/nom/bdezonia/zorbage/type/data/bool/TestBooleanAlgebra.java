@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algebras.G;
 public class TestBooleanAlgebra {
 
 	@Test
+	@SuppressWarnings("unused")
 	public void test() {
 		BooleanMember a = G.BOOL.construct();
 		assertFalse(a.v());

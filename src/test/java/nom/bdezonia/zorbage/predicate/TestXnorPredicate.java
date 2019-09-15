@@ -38,6 +38,7 @@ import org.junit.Test;
 public class TestXnorPredicate {
 
 	@Test
+	@SuppressWarnings("unused")
 	public void test() {
 		Predicate<Integer> a = new Predicate<Integer>() {
 			@Override

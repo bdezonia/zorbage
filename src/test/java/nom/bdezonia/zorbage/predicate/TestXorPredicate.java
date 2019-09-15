@@ -38,6 +38,7 @@ import org.junit.Test;
 public class TestXorPredicate {
 
 	@Test
+	@SuppressWarnings("all")
 	public void test() {
 		Predicate<Integer> a = new Predicate<Integer>() {
 			@Override
