@@ -90,7 +90,7 @@ What can I do with Zorbage?
   Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
     Zorbage can also find derivatives and solve differential equations
-    involving arbitrary scalar and vector Procedures.
+    numerically involving arbitrary scalar and vector Procedures.
  
   Use parsers to create Procedures from strings. These Procedures represent
     equations that when fed values will compute a return value (the result of
@@ -120,11 +120,11 @@ How to include zorbage in your Maven project
   <dependency>
     <groupId>io.github.bdezonia</groupId>
     <artifactId>zorbage</artifactId>
-    <version>0.2.7</version>
+    <version>0.2.8</version>
   </dependency>
   
 How to include zorbage in a different build system
 
-  See https://search.maven.org/artifact/io.github.bdezonia/zorbage/0.2.7/jar
+  See https://search.maven.org/artifact/io.github.bdezonia/zorbage/0.2.8/jar
   for instructions on how to reference zorbage in build systems such as
   Gradle or others.
