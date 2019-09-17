@@ -29,16 +29,16 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class Main extends SimpleApplication{
 
-	private static final float SIGMA = 10;
-	private static final float RHO = 28;
-	private static final float BETA = 8f/3;
-
 	@Override
 	public void simpleInitApp() {
 
 		Procedure3<Float32Member,Float32VectorMember, Float32VectorMember> lorenz =
 				new Procedure3<Float32Member, Float32VectorMember, Float32VectorMember>()
 		{
+			private final float SIGMA = 10;
+			private final float RHO = 28;
+			private final float BETA = 8f/3;
+
 			private Float32Member xc = G.FLT.construct();
 			private Float32Member yc = G.FLT.construct();
 			private Float32Member zc = G.FLT.construct();
