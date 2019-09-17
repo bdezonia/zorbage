@@ -1,3 +1,4 @@
+//
 // A zorbage example: visualizing the Lorenz system using jMonkeyEngine.
 //
 //   See https://en.wikipedia.org/wiki/Lorenz_system
@@ -27,7 +28,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Main extends SimpleApplication{
+public class Main extends SimpleApplication {
 
 	@Override
 	public void simpleInitApp() {
