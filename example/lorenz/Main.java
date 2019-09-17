@@ -39,26 +39,24 @@ public class Main extends SimpleApplication{
 		Procedure3<Float32Member,Float32VectorMember, Float32VectorMember> lorenz =
 				new Procedure3<Float32Member, Float32VectorMember, Float32VectorMember>()
 		{
+			private Float32Member xc = G.FLT.construct();
+			private Float32Member yc = G.FLT.construct();
+			private Float32Member zc = G.FLT.construct();
+			
 			@Override
 			public void call(Float32Member t, Float32VectorMember y, Float32VectorMember result) {
 				if (y.length() != 4)
 					throw new IllegalArgumentException("oops");
 				result.alloc(4);
-				Float32Member xc = G.FLT.construct();
-				Float32Member yc = G.FLT.construct();
-				Float32Member zc = G.FLT.construct();
 				y.v(0, xc);
 				y.v(1, yc);
 				y.v(2, zc);
 				Float32Member v = G.FLT.construct();
-				float val = SIGMA * (yc.v()-xc.v());
-				v.setV(val);
+				v.setV(SIGMA * (yc.v()-xc.v()));
 				result.setV(0, v);
-				val = xc.v()*(RHO-zc.v()) - yc.v();
-				v.setV(val);
+				v.setV(xc.v()*(RHO-zc.v()) - yc.v());
 				result.setV(1, v);
-				val = xc.v()*yc.v() - BETA*zc.v();
-				v.setV(val);
+				v.setV(xc.v()*yc.v() - BETA*zc.v());
 				result.setV(2, v);
 				v.setV(1);
 				result.setV(3, v);
