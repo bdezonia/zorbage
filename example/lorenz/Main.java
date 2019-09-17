@@ -101,7 +101,7 @@ public class Main extends SimpleApplication {
 		rootNode.attachChild(origin);  // make the geometry appear in the scene
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		Main app = new Main();
 		app.start();  // start the viewer
 	}
