@@ -95,7 +95,6 @@
         <configuration>
           <parallel>classes</parallel>
           <useUnlimitedThreads>true</useUnlimitedThreads>
-          <useSystemClassLoader>false</useSystemClassLoader>
         </configuration>
       </plugin>
       <plugin>
