@@ -95,6 +95,7 @@
         <configuration>
           <parallel>classes</parallel>
           <useUnlimitedThreads>true</useUnlimitedThreads>
+          <forkCount>0</forkCount>
         </configuration>
       </plugin>
       <plugin>
