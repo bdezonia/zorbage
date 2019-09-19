@@ -4,7 +4,7 @@
 //   See https://en.wikipedia.org/wiki/Lorenz_system
 //
 //   This code is in the public domain. Use however you wish.
-
+//
 package lorenz;
 
 import com.jme3.app.*;
@@ -33,7 +33,9 @@ public class Main extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 
-		Procedure3<Float32Member,Float32VectorMember, Float32VectorMember> lorenz =
+		// zorbage code
+		
+		Procedure3<Float32Member, Float32VectorMember, Float32VectorMember> lorenz =
 				new Procedure3<Float32Member, Float32VectorMember, Float32VectorMember>()
 		{
 			private final float SIGMA = 10;
@@ -86,6 +88,9 @@ public class Main extends SimpleApplication {
 			value.v(3, component);
 			ts[i] = component.v();
 		}
+		
+		// jMonkeyEngine code
+		
 		Node origin = new Node("origin");
 		Material mat = new Material(assetManager,
 				"Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
