@@ -38,6 +38,12 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 	private final T algebra;
 	private final U[] data;
 	
+	/**
+	 * Contract: the U[] must not contain null elements.
+	 * 
+	 * @param algebra
+	 * @param list
+	 */
 	public ArrayDataSource(T algebra, U[] data) {
 		this.algebra = algebra;
 		this.data = data;
@@ -45,6 +51,7 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 	
 	@Override
 	public IndexedDataSource<U> duplicate() {
+		// shallow copy
 		return new ArrayDataSource<T,U>(algebra, data);
 	}
 

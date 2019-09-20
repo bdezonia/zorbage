@@ -40,7 +40,13 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 
 	private final T algebra;
 	private final List<U> list;
-	
+
+	/**
+	 * Contract: the List<U> must not contain null elements.
+	 * 
+	 * @param algebra
+	 * @param list
+	 */
 	public ListDataSource(T algebra, List<U> list) {
 		this.algebra = algebra;
 		this.list = list;
@@ -48,6 +54,7 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 	
 	@Override
 	public ListDataSource<T,U> duplicate() {
+		// shallow copy
 		return new ListDataSource<>(algebra, list);
 	}
 
@@ -57,6 +64,7 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 			throw new IllegalArgumentException("index oob for ListDataSource");
 		U tmp = list.get((int) index);
 		algebra.assign().call(value, tmp);
+		// Note: might not need to do this. I'm being safe here.
 		list.set((int) index, tmp);
 	}
 
