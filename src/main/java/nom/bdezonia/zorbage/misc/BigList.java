@@ -49,7 +49,7 @@ public class BigList<T> {
 		if (size < 0)
 			throw new IllegalArgumentException("negative index error");
 		if (size > MAX_ITEMS)
-			throw new IllegalArgumentException("BigList can only handle "+MAX_ITEMS+" items");
+			throw new IllegalArgumentException("BigList can only handle at most "+MAX_ITEMS+" items. "+size+" items were requested.");
 		lists = new ArrayList<List<T>>();
 		while (size > 0) {
 			List<T> l;
