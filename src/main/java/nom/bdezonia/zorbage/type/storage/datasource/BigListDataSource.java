@@ -34,8 +34,9 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class BigListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSource<U> {
-
+public class BigListDataSource<T extends Algebra<T,U>,U>
+	implements IndexedDataSource<U>
+{
 	private final T algebra;
 	private final long size;
 	private final BigList<U> data;

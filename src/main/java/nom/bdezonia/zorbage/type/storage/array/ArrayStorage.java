@@ -65,8 +65,9 @@ public class ArrayStorage {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(long size, U type) {
-
+	public static <U extends Allocatable<U>>
+		IndexedDataSource<U> allocate(long size, U type)
+	{
 		if (type instanceof DoubleCoder) {
 			return (IndexedDataSource<U>) new ArrayStorageFloat64(size, (DoubleCoder)type);
 		}
