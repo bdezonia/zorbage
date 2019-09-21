@@ -96,8 +96,7 @@ public class TestJdbc {
 				assertEquals(0, value.v());
 			}
 			for (long i = 0; i < storage.size(); i++) {
-				short v = (short) i;
-				value.setV(v);
+				value.setV((short) i);
 				storage.set(i, value);
 			}
 			
