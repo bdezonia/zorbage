@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Invertible;
  * @author Barry DeZonia
  *
  */
-public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U> & Infinite<U>, U>
+public class NewtonRaphson<T extends Algebra<T,U> & Addition<U> & Invertible<U> & Infinite<U>, U>
 	implements Function2<Boolean,U,U>
 {
 	// x1 = x0 - f(x0) / f'(x0)
@@ -56,7 +56,7 @@ public class NewtonsMethod<T extends Algebra<T,U> & Addition<U> & Invertible<U> 
 	 * @param delta
 	 * @param maxIters
 	 */
-	public NewtonsMethod(T alg, Procedure2<U,U> f, U delta, long maxIters) {
+	public NewtonRaphson(T alg, Procedure2<U,U> f, U delta, long maxIters) {
 		this.alg = alg;
 		this.f = f;
 		this.fPrime = new Derivative<T,U>(alg, f, delta);

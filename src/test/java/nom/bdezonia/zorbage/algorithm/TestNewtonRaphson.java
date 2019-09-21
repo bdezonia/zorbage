@@ -41,14 +41,14 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestNewtonsMethod {
+public class TestNewtonRaphson {
 
 	@Test
 	public void test() {
 		Float64Member delta = G.DBL.construct("0.0001");
 		Float64Member guess = G.DBL.construct("-1");
 		Float64Member result = G.DBL.construct();
-		NewtonsMethod<Float64Algebra,Float64Member> method = new NewtonsMethod<Float64Algebra,Float64Member>(G.DBL, eqn, delta, 10);
+		NewtonRaphson<Float64Algebra,Float64Member> method = new NewtonRaphson<Float64Algebra,Float64Member>(G.DBL, eqn, delta, 10);
 		if (method.call(guess, result))
 			assertEquals(-1.324717, result.v(), 0.00001);
 		else
