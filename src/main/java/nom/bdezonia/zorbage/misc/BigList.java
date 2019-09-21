@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class BigList<T> {
 	
-	private long MAX_ITEMS = 1L * Integer.MAX_VALUE * Integer.MAX_VALUE;
+	public static long MAX_ITEMS = 1L * Integer.MAX_VALUE * Integer.MAX_VALUE;
 
 	private List<List<T>> lists;
 	
