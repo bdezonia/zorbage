@@ -61,7 +61,7 @@ public class NewtonRaphson<T extends Algebra<T,U> & Addition<U> & Invertible<U> 
 		this.f = f;
 		this.fPrime = new Derivative<T,U>(alg, f, delta);
 		this.maxIters = maxIters;
-		if (maxIters < 1)
+		if (maxIters <= 0)
 			throw new IllegalArgumentException("number of iterations must be > 0");
 	}
 
@@ -71,7 +71,7 @@ public class NewtonRaphson<T extends Algebra<T,U> & Addition<U> & Invertible<U> 
 	
 	public void setMaxIters(long maxIters) {
 		this.maxIters = maxIters;
-		if (maxIters < 1)
+		if (maxIters <= 0)
 			throw new IllegalArgumentException("number of iterations must be > 0");
 	}
 	
