@@ -55,7 +55,7 @@ public class FixedSizeDataSource<U>
 	}
 	
 	@Override
-	public IndexedDataSource<U> duplicate() {
+	public FixedSizeDataSource<U> duplicate() {
 		// shallow copy
 		return new FixedSizeDataSource<U>(size, src);
 	}

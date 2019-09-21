@@ -72,7 +72,7 @@ public class ArrayStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	}
 	
 	@Override
-	public IndexedDataSource<U> duplicate() {
+	public ArrayStorageBigDecimal<U> duplicate() {
 		ArrayStorageBigDecimal<U> s = new ArrayStorageBigDecimal<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];

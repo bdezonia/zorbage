@@ -72,7 +72,7 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	}
 	
 	@Override
-	public IndexedDataSource<U> duplicate() {
+	public ArrayStorageBigInteger<U> duplicate() {
 		ArrayStorageBigInteger<U> s = new ArrayStorageBigInteger<U>(size(), type);
 		for (int i = 0; i < data.length; i++)
 			s.data[i] = data[i];

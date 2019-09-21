@@ -50,7 +50,7 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 	}
 	
 	@Override
-	public IndexedDataSource<U> duplicate() {
+	public ArrayDataSource<T,U> duplicate() {
 		// shallow copy
 		return new ArrayDataSource<T,U>(algebra, data);
 	}
