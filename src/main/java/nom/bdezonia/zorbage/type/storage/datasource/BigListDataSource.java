@@ -37,6 +37,8 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class BigListDataSource<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<U>
 {
+	public static long MAX_ITEMS = BigList.MAX_ITEMS;
+	
 	private final T algebra;
 	private final long size;
 	private final BigList<U> data;
