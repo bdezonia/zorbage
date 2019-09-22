@@ -255,8 +255,9 @@ public class PointAlgebra
 		public void call(RationalMember a, Point b, Point c) {
 			if (b.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
+			BigDecimal t;
 			for (int i = 0; i < b.numDimensions(); i++) {
-				BigDecimal t = BigDecimal.valueOf(b.component(i));
+				t = BigDecimal.valueOf(b.component(i));
 				t = t.multiply(new BigDecimal(a.n()));
 				t = t.divide(new BigDecimal(a.d()), CONTEXT);
 				c.setComponent(i, t.doubleValue());
@@ -276,8 +277,9 @@ public class PointAlgebra
 		public void call(HighPrecisionMember a, Point b, Point c) {
 			if (b.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
+			BigDecimal t;
 			for (int i = 0; i < b.numDimensions(); i++) {
-				BigDecimal t = BigDecimal.valueOf(b.component(i));
+				t = BigDecimal.valueOf(b.component(i));
 				t = t.multiply(a.v());
 				c.setComponent(i, t.doubleValue());
 			}
