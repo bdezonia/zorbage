@@ -56,7 +56,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class PointAlgebra
 	implements Algebra<PointAlgebra,Point>, Addition<Point>, Scale<Point, Float64Member>,
-		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>, Tolerance<Float64Member, Point>
+		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>,
+		Tolerance<Double, Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	
@@ -291,17 +292,17 @@ public class PointAlgebra
 		return SBH;
 	}
 
-	private final Function3<Boolean, Float64Member, Point, Point> WITHIN =
-			new Function3<Boolean, Float64Member, Point, Point>()
+	private final Function3<Boolean, Double, Point, Point> WITHIN =
+			new Function3<Boolean, Double, Point, Point>()
 	{
 		@Override
-		public Boolean call(Float64Member a, Point b, Point c) {
-			if (b.numDimensions() != c.numDimensions())
+		public Boolean call(Double tol, Point a, Point b) {
+			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
-			if (a.v() < 0)
+			if (tol < 0)
 				throw new IllegalArgumentException("tolerance must be >= 0");
 			for (int i = 0; i < b.numDimensions(); i++) {
-				if (!RealUtils.near(b.component(i), c.component(i), a.v()))
+				if (!RealUtils.near(a.component(i), b.component(i), tol))
 					return false;
 			}
 			return true;
@@ -309,7 +310,7 @@ public class PointAlgebra
 	};
 
 	@Override
-	public Function3<Boolean, Float64Member, Point, Point> within() {
+	public Function3<Boolean, Double, Point, Point> within() {
 		return WITHIN;
 	}
 	
