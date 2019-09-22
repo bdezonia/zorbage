@@ -77,10 +77,13 @@ public class PointAlgebra
 	{
 		@Override
 		public Boolean call(Point a, Point b) {
-			if (a == b) return true;
-			if (a.numDimensions() != b.numDimensions()) return false;
+			if (a == b)
+				return true;
+			if (a.numDimensions() != b.numDimensions())
+				return false;
 			for (int i = 0; i < a.numDimensions(); i++) {
-				if (a.component(i) != b.component(i)) return false;
+				if (a.component(i) != b.component(i))
+					return false;
 			}
 			return true;
 		}
@@ -247,14 +250,14 @@ public class PointAlgebra
 	{
 		@Override
 		public void call(RationalMember a, Point b, Point c) {
-			Point tmp = b.duplicate();
-			for (int i = 0; i < tmp.numDimensions(); i++) {
-				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
+			if (b.numDimensions() != c.numDimensions())
+				throw new IllegalArgumentException("mismatched point dimensionality");
+			for (int i = 0; i < b.numDimensions(); i++) {
+				BigDecimal t = BigDecimal.valueOf(b.component(i));
 				t = t.multiply(new BigDecimal(a.n()));
 				t = t.divide(new BigDecimal(a.d()), CONTEXT);
-				tmp.setComponent(i, t.doubleValue());
+				c.setComponent(i, t.doubleValue());
 			}
-			c.set(tmp);
 		}
 	};
 
@@ -268,13 +271,13 @@ public class PointAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, Point b, Point c) {
-			Point tmp = b.duplicate();
-			for (int i = 0; i < tmp.numDimensions(); i++) {
-				BigDecimal t = BigDecimal.valueOf(tmp.component(i));
+			if (b.numDimensions() != c.numDimensions())
+				throw new IllegalArgumentException("mismatched point dimensionality");
+			for (int i = 0; i < b.numDimensions(); i++) {
+				BigDecimal t = BigDecimal.valueOf(b.component(i));
 				t = t.multiply(a.v());
-				tmp.setComponent(i, t.doubleValue());
+				c.setComponent(i, t.doubleValue());
 			}
-			c.set(tmp);
 		}
 	};
 
