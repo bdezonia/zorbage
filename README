@@ -80,17 +80,19 @@ What can I do with Zorbage?
     vectors, matrices, and tensors.
   
   You can use a number of predefined STL-like algorithms plus predefined
-    vector and matrix algorithms. There are approximately 200 of them in
-    total.
+    vector, matrix, and other numerical algorithms. There are approximately
+    200 of them in total.
   
-  You can use existing parallel algorithms for quickly processing data.
+  You can use Zorbage's parallel algorithms for quickly processing data.
   
   Define complex data sampling algorithms from prebuilt sampling components.
   
   Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
-    Zorbage can also find derivatives and solve differential equations
-    numerically involving arbitrary scalar and vector Procedures.
+    Zorbage can also find roots, find derivatives and solve differential
+    equations numerically involving arbitrary scalar and vector Procedures.
+    It also includes algorithms from linear algebra, signal processing,
+    statistics, set theory, and analysis.
  
   Use parsers to create Procedures from strings. These Procedures represent
     equations that when fed values will compute a return value (the result of
