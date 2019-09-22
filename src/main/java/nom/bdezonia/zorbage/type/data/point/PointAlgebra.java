@@ -33,6 +33,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.RealUtils;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -42,6 +44,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -53,7 +56,7 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class PointAlgebra
 	implements Algebra<PointAlgebra,Point>, Addition<Point>, Scale<Point, Float64Member>,
-		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>
+		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>, Tolerance<Float64Member, Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	
@@ -284,6 +287,28 @@ public class PointAlgebra
 	@Override
 	public Procedure3<HighPrecisionMember, Point, Point> scaleByHighPrec() {
 		return SBH;
+	}
+
+	private final Function3<Boolean, Float64Member, Point, Point> WITHIN =
+			new Function3<Boolean, Float64Member, Point, Point>()
+	{
+		@Override
+		public Boolean call(Float64Member a, Point b, Point c) {
+			if (b.numDimensions() != c.numDimensions())
+				throw new IllegalArgumentException("mismatched point dimensionality");
+			if (a.v() < 0)
+				throw new IllegalArgumentException("tolerance must be >= 0");
+			for (int i = 0; i < b.numDimensions(); i++) {
+				if (!RealUtils.near(b.component(i), c.component(i), a.v()))
+					return false;
+			}
+			return true;
+		}
+	};
+
+	@Override
+	public Function3<Boolean, Float64Member, Point, Point> within() {
+		return WITHIN;
 	}
 	
 }

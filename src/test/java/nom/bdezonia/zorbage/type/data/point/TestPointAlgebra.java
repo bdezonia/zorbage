@@ -123,6 +123,31 @@ public class TestPointAlgebra {
 		assertEquals(1.4*p.component(2), p3.component(2), 0);
 	
 		G.POINT.random().call(p3);
+		
+		Float64Member tol = G.DBL.construct();
+
+		// within negative tol
+		
+		tol.setV(-0.000000001);
+		try {
+			G.POINT.within().call(tol, p, p3);
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+		
+		// within 0 tol
+
+		tol.setV(0);
+		assertTrue(G.POINT.within().call(tol, p3, p3));
+		
+		// within a small positive tol
+		
+		G.POINT.assign().call(p, p3);
+		p3.setComponent(2, p.component(2)+0.0005);
+		tol.setV(0.0005);
+		assertTrue(G.POINT.within().call(tol, p, p3));
+		tol.setV(0.000499999);
+		assertFalse(G.POINT.within().call(tol, p, p3));
 	}
 
 }
