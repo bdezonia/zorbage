@@ -65,7 +65,6 @@ public class Main extends SimpleApplication {
 				result.setV(3, v);
 			}
 		};
-		Float32VectorMember value = G.FLT_VEC.construct();
 		Float32Member t0 = G.FLT.construct();
 		Float32VectorMember y0 = G.FLT_VEC.construct("[0.5,0.5,0.1,0]");
 		int numSteps = 50000;
@@ -76,16 +75,17 @@ public class Main extends SimpleApplication {
 		float[] ys = new float[numSteps];
 		float[] zs = new float[numSteps];
 		float[] ts = new float[numSteps];
+		Float32VectorMember vector = G.FLT_VEC.construct();
 		Float32Member component = G.FLT.construct();
 		for (int i = 0; i < numSteps; i++) {
-			results.get(i, value);
-			value.v(0, component);
+			results.get(i, vector);
+			vector.v(0, component);
 			xs[i] = component.v();
-			value.v(1, component);
+			vector.v(1, component);
 			ys[i] = component.v();
-			value.v(2, component);
+			vector.v(2, component);
 			zs[i] = component.v();
-			value.v(3, component);
+			vector.v(3, component);
 			ts[i] = component.v();
 		}
 		
