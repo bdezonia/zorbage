@@ -70,7 +70,7 @@ public final class ComplexFloat16VectorMember
 		storage = Storage.allocate(s, 0, new ComplexFloat16Member());
 	}
 	
-	public ComplexFloat16VectorMember(double[] vals) {
+	public ComplexFloat16VectorMember(float[] vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, count, new ComplexFloat16Member());
@@ -96,8 +96,8 @@ public final class ComplexFloat16VectorMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
-			tmp.setR(val.r().doubleValue());
-			tmp.setI(val.i().doubleValue());
+			tmp.setR(val.r().floatValue());
+			tmp.setI(val.i().floatValue());
 			storage.set(i, tmp);
 		}
 	}
@@ -163,8 +163,8 @@ public final class ComplexFloat16VectorMember
 		init(rmodSize);
 		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
-			value.setR(o.r().doubleValue());
-			value.setI(o.i().doubleValue());
+			value.setR(o.r().floatValue());
+			value.setI(o.i().floatValue());
 			storage.set(i,value);
 		}
 	}
@@ -234,7 +234,7 @@ public final class ComplexFloat16VectorMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -308,9 +308,9 @@ public final class ComplexFloat16VectorMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		v(i, tmp);
 		if (component == 0)
-			tmp.setR(v);
+			tmp.setR((float)v);
 		else
-			tmp.setI(v);
+			tmp.setI((float)v);
 		setV(i, tmp);
 	}
 
@@ -320,9 +320,9 @@ public final class ComplexFloat16VectorMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		v(i, tmp);
 		if (component == 0)
-			tmp.setR(v.doubleValue());
+			tmp.setR(v.floatValue());
 		else
-			tmp.setI(v.doubleValue());
+			tmp.setI(v.floatValue());
 		setV(i, tmp);
 	}
 
@@ -332,9 +332,9 @@ public final class ComplexFloat16VectorMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		v(i, tmp);
 		if (component == 0)
-			tmp.setR(v.doubleValue());
+			tmp.setR(v.floatValue());
 		else
-			tmp.setI(v.doubleValue());
+			tmp.setI(v.floatValue());
 		setV(i, tmp);
 	}
 
@@ -553,9 +553,9 @@ public final class ComplexFloat16VectorMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			v(i, tmp);
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR((float)v);
 			else
-				tmp.setI(v);
+				tmp.setI((float)v);
 			setV(i, tmp);
 		}
 	}
@@ -590,9 +590,9 @@ public final class ComplexFloat16VectorMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			v(i, tmp);
 			if (component == 0)
-				tmp.setR(v.doubleValue());
+				tmp.setR(v.floatValue());
 			else
-				tmp.setI(v.doubleValue());
+				tmp.setI(v.floatValue());
 			setV(i, tmp);
 		}
 	}
@@ -627,9 +627,9 @@ public final class ComplexFloat16VectorMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			v(i, tmp);
 			if (component == 0)
-				tmp.setR(v.doubleValue());
+				tmp.setR(v.floatValue());
 			else
-				tmp.setI(v.doubleValue());
+				tmp.setI(v.floatValue());
 			setV(i, tmp);
 		}
 	}

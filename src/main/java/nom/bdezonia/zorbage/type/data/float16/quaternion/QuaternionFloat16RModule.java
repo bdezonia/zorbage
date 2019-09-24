@@ -222,7 +222,7 @@ public class QuaternionFloat16RModule
 				G.QHLF.multiply().call(aTmp, tmp, tmp);
 				G.QHLF.add().call(sum, tmp, sum);
 			}
-			b.setV(Math.sqrt(sum.r()));
+			b.setV((float)Math.sqrt(sum.r()));
 		}
 	};
 	
@@ -296,7 +296,7 @@ public class QuaternionFloat16RModule
 		public void call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b,
 				QuaternionFloat16RModuleMember c, QuaternionFloat16RModuleMember d)
 		{
-			QuaternionFloat16RModuleMember b_cross_c = new QuaternionFloat16RModuleMember(new double[3*4]);
+			QuaternionFloat16RModuleMember b_cross_c = new QuaternionFloat16RModuleMember(new float[3*4]);
 			crossProduct().call(b, c, b_cross_c);
 			crossProduct().call(a, b_cross_c, d);
 		}
@@ -315,7 +315,7 @@ public class QuaternionFloat16RModule
 		public void call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b,
 				QuaternionFloat16RModuleMember c, QuaternionFloat16Member d)
 		{
-			QuaternionFloat16RModuleMember b_cross_c = new QuaternionFloat16RModuleMember(new double[3*4]);
+			QuaternionFloat16RModuleMember b_cross_c = new QuaternionFloat16RModuleMember(new float[3*4]);
 			crossProduct().call(b, c, b_cross_c);
 			dotProduct().call(a, b_cross_c, d);
 		}

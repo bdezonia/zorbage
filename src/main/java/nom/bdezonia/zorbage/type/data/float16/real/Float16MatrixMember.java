@@ -74,7 +74,7 @@ public final class Float16MatrixMember
 		init(0,0);
 	}
 	
-	public Float16MatrixMember(int r, int c, double[] vals) {
+	public Float16MatrixMember(int r, int c, float[] vals) {
 		if (vals.length != r*c*1)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
@@ -104,7 +104,7 @@ public final class Float16MatrixMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
-			tmp.setV(val.r().doubleValue());
+			tmp.setV(val.r().floatValue());
 			storage.set(i, tmp);
 		}
 	}
@@ -201,7 +201,7 @@ public final class Float16MatrixMember
 		long matSize = mat.size();
 		for (long i = 0; i < matSize; i++) {
 			OctonionRepresentation o = mat.get(i);
-			value.setV(o.r().doubleValue());
+			value.setV(o.r().floatValue());
 			storage.set(i,value);
 		}
 	}
@@ -255,7 +255,7 @@ public final class Float16MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -313,7 +313,7 @@ public final class Float16MatrixMember
 		Float16Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmp.setV(v);
+		tmp.setV((float)v);
 		setV(r,c, tmp);
 	}
 
@@ -322,7 +322,7 @@ public final class Float16MatrixMember
 		Float16Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmp.setV(v.doubleValue());
+		tmp.setV(v.floatValue());
 		setV(r,c, tmp);
 	}
 
@@ -331,7 +331,7 @@ public final class Float16MatrixMember
 		Float16Member tmp = tmpFloat.get();
 		long c = index.get(0);
 		long r = index.get(1);
-		tmp.setV(v.doubleValue());
+		tmp.setV(v.floatValue());
 		setV(r,c, tmp);
 	}
 
@@ -570,7 +570,7 @@ public final class Float16MatrixMember
 			Float16Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmp.setV(v);
+			tmp.setV((float)v);
 			setV(r,c, tmp);
 		}
 	}
@@ -610,7 +610,7 @@ public final class Float16MatrixMember
 			Float16Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmp.setV(v.doubleValue());
+			tmp.setV(v.floatValue());
 			setV(r,c, tmp);
 		}
 	}
@@ -650,7 +650,7 @@ public final class Float16MatrixMember
 			Float16Member tmp = tmpFloat.get();
 			long c = index.get(0);
 			long r = index.get(1);
-			tmp.setV(v.doubleValue());
+			tmp.setV(v.floatValue());
 			setV(r,c, tmp);
 		}
 	}

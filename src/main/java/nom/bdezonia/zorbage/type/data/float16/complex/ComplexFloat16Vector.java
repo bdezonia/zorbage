@@ -217,7 +217,7 @@ public class ComplexFloat16Vector
 				G.CHLF.multiply().call(aTmp, tmp, tmp);
 				G.CHLF.add().call(sum, tmp, sum);
 			}
-			b.setV(Math.sqrt(sum.r()));
+			b.setV((float) Math.sqrt(sum.r()));
 		}
 	};
 	
@@ -289,7 +289,7 @@ public class ComplexFloat16Vector
 		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c,
 				ComplexFloat16VectorMember d)
 		{
-			ComplexFloat16VectorMember b_cross_c = new ComplexFloat16VectorMember(new double[3*2]);
+			ComplexFloat16VectorMember b_cross_c = new ComplexFloat16VectorMember(new float[3*2]);
 			crossProduct().call(b, c, b_cross_c);
 			crossProduct().call(a, b_cross_c, d);
 		}
@@ -308,7 +308,7 @@ public class ComplexFloat16Vector
 		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c,
 				ComplexFloat16Member d)
 		{
-			ComplexFloat16VectorMember b_cross_c = new ComplexFloat16VectorMember(new double[3*2]);
+			ComplexFloat16VectorMember b_cross_c = new ComplexFloat16VectorMember(new float[3*2]);
 			crossProduct().call(b, c, b_cross_c);
 			dotProduct().call(a, b_cross_c, d);
 		}

@@ -86,12 +86,12 @@ public final class Float16Member
 	public Float16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		setV(val.r().doubleValue());
+		setV(val.r().floatValue());
 	}
 	
 	public float v() { return Float16Util.convertHFloatToFloat(v); }
 	
-	public void setV(double val) { v = Float16Util.convertFloatToHFloat((float)val); }
+	public void setV(float val) { v = Float16Util.convertFloatToHFloat(val); }
 	
 	public short encV() { return v; }
 	
@@ -164,7 +164,7 @@ public final class Float16Member
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		setV(rep.getValue().r().doubleValue());
+		setV(rep.getValue().r().floatValue());
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public final class Float16Member
 
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -214,17 +214,17 @@ public final class Float16Member
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(v);
+		setV((float)v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(v.doubleValue());
+		setV(v.floatValue());
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setV(v.doubleValue());
+		setV(v.floatValue());
 	}
 
 	@Override
@@ -367,7 +367,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setV((float)v);
 		}
 	}
 
@@ -391,7 +391,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v.doubleValue());
+			setV(v.floatValue());
 		}
 	}
 
@@ -415,7 +415,7 @@ public final class Float16Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v.doubleValue());
+			setV(v.floatValue());
 		}
 	}
 
@@ -679,7 +679,7 @@ public final class Float16Member
 
 	@Override
 	public void fromHighPrec(HighPrecisionMember input) {
-		setV(input.v().doubleValue());
+		setV(input.v().floatValue());
 	}
 
 	@Override

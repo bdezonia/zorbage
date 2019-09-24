@@ -71,7 +71,7 @@ public final class QuaternionFloat16Member
 		primitiveInit();
 	}
 	
-	public QuaternionFloat16Member(double r, double i, double j, double k) {
+	public QuaternionFloat16Member(float r, float i, float j, float k) {
 		setR(r);
 		setI(i);
 		setJ(j);
@@ -85,27 +85,27 @@ public final class QuaternionFloat16Member
 	public QuaternionFloat16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		setR(val.r().doubleValue());
-		setI(val.i().doubleValue());
-		setJ(val.j().doubleValue());
-		setK(val.k().doubleValue());
+		setR(val.r().floatValue());
+		setI(val.i().floatValue());
+		setJ(val.j().floatValue());
+		setK(val.k().floatValue());
 	}
 
-	public double r() { return Float16Util.convertHFloatToFloat(r); }
+	public float r() { return Float16Util.convertHFloatToFloat(r); }
 	
-	public double i() { return Float16Util.convertHFloatToFloat(i); }
+	public float i() { return Float16Util.convertHFloatToFloat(i); }
 	
-	public double j() { return Float16Util.convertHFloatToFloat(j); }
+	public float j() { return Float16Util.convertHFloatToFloat(j); }
 	
-	public double k() { return Float16Util.convertHFloatToFloat(k); }
+	public float k() { return Float16Util.convertHFloatToFloat(k); }
 	
-	public void setR(double val) { r = Float16Util.convertFloatToHFloat((float)val); }
+	public void setR(float val) { r = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setI(double val) { i = Float16Util.convertFloatToHFloat((float)val); }
+	public void setI(float val) { i = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setJ(double val) { j = Float16Util.convertFloatToHFloat((float)val); }
+	public void setJ(float val) { j = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setK(double val) { k = Float16Util.convertFloatToHFloat((float)val); }
+	public void setK(float val) { k = Float16Util.convertFloatToHFloat(val); }
 	
 	@Override
 	public void set(QuaternionFloat16Member other) {
@@ -217,15 +217,15 @@ public final class QuaternionFloat16Member
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionRepresentation v = rep.getValue();
-		setR(v.r().doubleValue());
-		setI(v.i().doubleValue());
-		setJ(v.j().doubleValue());
-		setK(v.k().doubleValue());
+		setR(v.r().floatValue());
+		setI(v.i().floatValue());
+		setJ(v.j().floatValue());
+		setK(v.k().floatValue());
 	}
 
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -333,16 +333,16 @@ public final class QuaternionFloat16Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				this.setR(v);
+				this.setR((float)v);
 			else // component == 1
-				this.setI(v);
+				this.setI((float)v);
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				this.setJ(v);
+				this.setJ((float)v);
 			else // component == 3
-				this.setK(v);
+				this.setK((float)v);
 		}
 	}
 
@@ -351,16 +351,16 @@ public final class QuaternionFloat16Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				this.setR(v.doubleValue());
+				this.setR(v.floatValue());
 			else // component == 1
-				this.setI(v.doubleValue());
+				this.setI(v.floatValue());
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				this.setJ(v.doubleValue());
+				this.setJ(v.floatValue());
 			else // component == 3
-				this.setK(v.doubleValue());
+				this.setK(v.floatValue());
 		}
 	}
 
@@ -369,16 +369,16 @@ public final class QuaternionFloat16Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				this.setR(v.doubleValue());
+				this.setR(v.floatValue());
 			else // component == 1
-				this.setI(v.doubleValue());
+				this.setI(v.floatValue());
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				this.setJ(v.doubleValue());
+				this.setJ(v.floatValue());
 			else // component == 3
-				this.setK(v.doubleValue());
+				this.setK(v.floatValue());
 		}
 	}
 
@@ -590,16 +590,16 @@ public final class QuaternionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					this.setR(v);
+					this.setR((float)v);
 				else // component == 1
-					this.setI(v);
+					this.setI((float)v);
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					this.setJ(v);
+					this.setJ((float)v);
 				else // component == 3
-					this.setK(v);
+					this.setK((float)v);
 			}
 		}
 	}
@@ -627,16 +627,16 @@ public final class QuaternionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					this.setR(v.doubleValue());
+					this.setR(v.floatValue());
 				else // component == 1
-					this.setI(v.doubleValue());
+					this.setI(v.floatValue());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					this.setJ(v.doubleValue());
+					this.setJ(v.floatValue());
 				else // component == 3
-					this.setK(v.doubleValue());
+					this.setK(v.floatValue());
 			}
 		}
 	}
@@ -664,16 +664,16 @@ public final class QuaternionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					this.setR(v.doubleValue());
+					this.setR(v.floatValue());
 				else // component == 1
-					this.setI(v.doubleValue());
+					this.setI(v.floatValue());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					this.setJ(v.doubleValue());
+					this.setJ(v.floatValue());
 				else // component == 3
-					this.setK(v.doubleValue());
+					this.setK(v.floatValue());
 			}
 		}
 	}

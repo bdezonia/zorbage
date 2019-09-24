@@ -91,14 +91,14 @@ public class QuaternionFloat16Algebra
     Tolerance<Float16Member,QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
-	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member(1.0/3,0,0,0);
-	private static final QuaternionFloat16Member ONE_HALF = new QuaternionFloat16Member(0.5,0,0,0);
+	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member((float)1.0/3,0,0,0);
+	private static final QuaternionFloat16Member ONE_HALF = new QuaternionFloat16Member((float)0.5,0,0,0);
 	private static final QuaternionFloat16Member ONE = new QuaternionFloat16Member(1,0,0,0);
 	private static final QuaternionFloat16Member TWO = new QuaternionFloat16Member(2,0,0,0);
-	private static final QuaternionFloat16Member E = new QuaternionFloat16Member(Math.E,0,0,0);
-	private static final QuaternionFloat16Member PI = new QuaternionFloat16Member(Math.PI,0,0,0);
-	private static final QuaternionFloat16Member GAMMA = new QuaternionFloat16Member(0.57721566490153286060,0,0,0);
-	private static final QuaternionFloat16Member PHI = new QuaternionFloat16Member(1.61803398874989484820,0,0,0);
+	private static final QuaternionFloat16Member E = new QuaternionFloat16Member((float)Math.E,0,0,0);
+	private static final QuaternionFloat16Member PI = new QuaternionFloat16Member((float)Math.PI,0,0,0);
+	private static final QuaternionFloat16Member GAMMA = new QuaternionFloat16Member((float)0.57721566490153286060,0,0,0);
+	private static final QuaternionFloat16Member PHI = new QuaternionFloat16Member((float)1.61803398874989484820,0,0,0);
 	private static final QuaternionFloat16Member I = new QuaternionFloat16Member(0,1,0,0);
 	private static final QuaternionFloat16Member J = new QuaternionFloat16Member(0,0,1,0);
 	private static final QuaternionFloat16Member K = new QuaternionFloat16Member(0,0,0,1);
@@ -129,10 +129,10 @@ public class QuaternionFloat16Algebra
 			double i = a.r()*b.i() + a.i()*b.r() + a.j()*b.k() - a.k()*b.j();
 			double j = a.r()*b.j() - a.i()*b.k() + a.j()*b.r() + a.k()*b.i();
 			double k = a.r()*b.k() + a.i()*b.j() - a.j()*b.i() + a.k()*b.r();
-			c.setR( r );
-			c.setI( i );
-			c.setJ( j );
-			c.setK( k );
+			c.setR( (float) r );
+			c.setI( (float) i );
+			c.setJ( (float) j );
+			c.setK( (float) k );
 		}
 	};
 	
@@ -283,7 +283,7 @@ public class QuaternionFloat16Algebra
 			QuaternionFloat16Member scale = new QuaternionFloat16Member();
 			Float16Member nval = new Float16Member();
 			norm().call(a, nval);
-			scale.setR( (1.0 / (nval.v() * nval.v())) );
+			scale.setR( (float) (1.0 / (nval.v() * nval.v())) );
 			conjugate().call(a, c);
 			multiply().call(scale, c, b);
 		}
@@ -344,7 +344,7 @@ public class QuaternionFloat16Algebra
 				sum += (a.i()/max) * (a.i()/max);
 				sum += (a.j()/max) * (a.j()/max);
 				sum += (a.k()/max) * (a.k()/max);
-				b.setV( max * Math.sqrt(sum) );
+				b.setV( (float) (max * Math.sqrt(sum)) );
 			}
 		}
 	};
@@ -497,10 +497,10 @@ public class QuaternionFloat16Algebra
 	{
 		@Override
 		public void call(QuaternionFloat16Member a) {
-			a.setR(Double.NaN);
-			a.setI(Double.NaN);
-			a.setJ(Double.NaN);
-			a.setK(Double.NaN);
+			a.setR(Float.NaN);
+			a.setI(Float.NaN);
+			a.setJ(Float.NaN);
+			a.setK(Float.NaN);
 		}
 	};
 
@@ -529,10 +529,10 @@ public class QuaternionFloat16Algebra
 	{
 		@Override
 		public void call(QuaternionFloat16Member a) {
-			a.setR(Double.POSITIVE_INFINITY);
-			a.setI(Double.POSITIVE_INFINITY);
-			a.setJ(Double.POSITIVE_INFINITY);
-			a.setK(Double.POSITIVE_INFINITY);
+			a.setR(Float.POSITIVE_INFINITY);
+			a.setI(Float.POSITIVE_INFINITY);
+			a.setJ(Float.POSITIVE_INFINITY);
+			a.setK(Float.POSITIVE_INFINITY);
 		}
 	};
 	
@@ -554,10 +554,10 @@ public class QuaternionFloat16Algebra
 			norm().call(tmp, z);
 			G.HLF.sinc().call(z, z2);
 			double w = z2.v();
-			b.setR(u * FastMath.cos(z.v()));
-			b.setI(u * w * a.i());
-			b.setJ(u * w * a.j());
-			b.setK(u * w * a.k());
+			b.setR((float) (u * FastMath.cos(z.v())));
+			b.setI((float) (u * w * a.i()));
+			b.setJ((float) (u * w * a.j()));
+			b.setK((float) (u * w * a.k()));
 		}
 	};
 	
@@ -582,7 +582,7 @@ public class QuaternionFloat16Algebra
 			v2.setV(a.j() * multiplier.v());
 			v3.setV(a.k() * multiplier.v());
 			G.HLF.acos().call(multiplier, term);
-			b.setR(Math.log(norm.v()));
+			b.setR((float)Math.log(norm.v()));
 			b.setI(v1.v() * term.v());
 			b.setJ(v2.v() * term.v());
 			b.setK(v3.v() * term.v());
@@ -600,10 +600,10 @@ public class QuaternionFloat16Algebra
 		@Override
 		public void call(QuaternionFloat16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setR(rng.nextDouble());
-			a.setI(rng.nextDouble());
-			a.setJ(rng.nextDouble());
-			a.setK(rng.nextDouble());
+			a.setR(rng.nextFloat());
+			a.setI(rng.nextFloat());
+			a.setJ(rng.nextFloat());
+			a.setK(rng.nextFloat());
 		}
 	};
 	
@@ -752,10 +752,10 @@ public class QuaternionFloat16Algebra
 			double sinhc_pi = z2.v();
 			double cosh = FastMath.cosh(z.v());
 			double ws = cos * sinhc_pi;
-			b.setR(sin * cosh);
-			b.setI(ws * a.i());
-			b.setJ(ws * a.j());
-			b.setK(ws * a.k());
+			b.setR((float) (sin * cosh));
+			b.setI((float) (ws * a.i()));
+			b.setJ((float) (ws * a.j()));
+			b.setK((float) (ws * a.k()));
 		}
 	};
 	
@@ -780,10 +780,10 @@ public class QuaternionFloat16Algebra
 			double sinhc_pi = z2.v();
 			double cosh = FastMath.cosh(z.v());
 			double wc = -sin * sinhc_pi;
-			b.setR(cos * cosh);
-			b.setI(wc * a.i());
-			b.setJ(wc * a.j());
-			b.setK(wc * a.k());
+			b.setR((float) (cos * cosh));
+			b.setI((float) (wc * a.i()));
+			b.setJ((float) (wc * a.j()));
+			b.setK((float) (wc * a.k()));
 		}
 	};
 	
@@ -809,14 +809,14 @@ public class QuaternionFloat16Algebra
 			double cosh = FastMath.cosh(z.v());
 			double ws = cos * sinhc_pi;
 			double wc = -sin * sinhc_pi;
-			s.setR(sin * cosh);
-			s.setI(ws * a.i());
-			s.setJ(ws * a.j());
-			s.setK(ws * a.k());
-			c.setR(cos * cosh);
-			c.setI(wc * a.i());
-			c.setJ(wc * a.j());
-			c.setK(wc * a.k());
+			s.setR((float) (sin * cosh));
+			s.setI((float) (ws * a.i()));
+			s.setJ((float) (ws * a.j()));
+			s.setK((float) (ws * a.k()));
+			c.setR((float) (cos * cosh));
+			c.setI((float) (wc * a.i()));
+			c.setJ((float) (wc * a.j()));
+			c.setK((float) (wc * a.k()));
 		}
 	};
 	

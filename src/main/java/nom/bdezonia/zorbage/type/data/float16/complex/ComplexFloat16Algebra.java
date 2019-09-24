@@ -107,18 +107,18 @@ public class ComplexFloat16Algebra
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);
 	private static final ComplexFloat16Member MINUS_ONE = new ComplexFloat16Member(-1,0);
-	private static final ComplexFloat16Member PI = new ComplexFloat16Member(Math.PI,0);
-	private static final ComplexFloat16Member E = new ComplexFloat16Member(Math.E,0);
-	private static final ComplexFloat16Member GAMMA = new ComplexFloat16Member(0.57721566490153286060,0);
-	private static final ComplexFloat16Member PHI = new ComplexFloat16Member(1.61803398874989484820,0);
-	private static final ComplexFloat16Member ONE_HALF = new ComplexFloat16Member(0.5,0);
-	private static final ComplexFloat16Member ONE_THIRD = new ComplexFloat16Member(1.0/3,0);
+	private static final ComplexFloat16Member PI = new ComplexFloat16Member((float)Math.PI,0);
+	private static final ComplexFloat16Member E = new ComplexFloat16Member((float)Math.E,0);
+	private static final ComplexFloat16Member GAMMA = new ComplexFloat16Member((float)0.57721566490153286060,0);
+	private static final ComplexFloat16Member PHI = new ComplexFloat16Member((float)1.61803398874989484820,0);
+	private static final ComplexFloat16Member ONE_HALF = new ComplexFloat16Member((float)0.5,0);
+	private static final ComplexFloat16Member ONE_THIRD = new ComplexFloat16Member((float)1.0/3,0);
 	private static final ComplexFloat16Member I = new ComplexFloat16Member(0,1);
-	private static final ComplexFloat16Member I_OVER_TWO = new ComplexFloat16Member(0,0.5);
+	private static final ComplexFloat16Member I_OVER_TWO = new ComplexFloat16Member(0,(float)0.5);
 	private static final ComplexFloat16Member TWO_I = new ComplexFloat16Member(0,2);
 	private static final ComplexFloat16Member MINUS_I = new ComplexFloat16Member(0,-1);
-	private static final ComplexFloat16Member MINUS_I_OVER_TWO = new ComplexFloat16Member(0,-0.5);
-	private static final ComplexFloat16Member NaN_ = new ComplexFloat16Member(Double.NaN,Double.NaN);
+	private static final ComplexFloat16Member MINUS_I_OVER_TWO = new ComplexFloat16Member(0,(float)-0.5);
+	private static final ComplexFloat16Member NaN_ = new ComplexFloat16Member(Float.NaN,Float.NaN);
 
 	public ComplexFloat16Algebra() { }
 	
@@ -130,8 +130,8 @@ public class ComplexFloat16Algebra
 			// for safety must use tmps
 			double r = a.r()*b.r() - a.i()*b.i();
 			double i = a.i()*b.r() + a.r()*b.i();
-			c.setR( r );
-			c.setI( i );
+			c.setR( (float) r );
+			c.setI( (float) i );
 		}
 	};
 
@@ -151,8 +151,8 @@ public class ComplexFloat16Algebra
 			}
 			double rToTheN = FastMath.pow(FastMath.hypot(a.r(), a.i()), power);
 			double nTheta = power * getArgument(a);
-			b.setR(rToTheN * FastMath.cos(nTheta));
-			b.setI(rToTheN * FastMath.sin(nTheta));
+			b.setR((float) (rToTheN * FastMath.cos(nTheta)));
+			b.setI((float) (rToTheN * FastMath.sin(nTheta)));
 		}
 	};
 
@@ -314,8 +314,8 @@ public class ComplexFloat16Algebra
 			double mod2 = b.r()*b.r() + b.i()*b.i();
 			double r = (a.r()*b.r() + a.i()*b.i()) / mod2;
 			double i = (a.i()*b.r() - a.r()*b.i()) / mod2;
-			c.setR( r );
-			c.setI( i );
+			c.setR( (float) r );
+			c.setI( (float) i );
 		}
 	};
 
@@ -344,7 +344,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a, Float16Member b) {
-			b.setV( FastMath.hypot(a.r(),a.i()) );
+			b.setV( (float) FastMath.hypot(a.r(),a.i()) );
 		}
 	};
 
@@ -987,8 +987,8 @@ public class ComplexFloat16Algebra
 		@Override
 		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
 			double constant = FastMath.exp(a.r());
-			b.setR( constant * FastMath.cos(a.i()) );
-			b.setI( constant * FastMath.sin(a.i()) );
+			b.setR( (float) (constant * FastMath.cos(a.i())) );
+			b.setI( (float) (constant * FastMath.sin(a.i())) );
 		}
 	};
 	
@@ -1021,8 +1021,8 @@ public class ComplexFloat16Algebra
 		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
 			double modulus = FastMath.hypot(a.r(), a.i());
 			double argument = getArgument(a);
-			b.setR( Math.log(modulus) );
-			b.setI( getPrincipalArgument(argument) );
+			b.setR( (float) Math.log(modulus) );
+			b.setI( (float) getPrincipalArgument(argument) );
 		}
 	};
 
@@ -1149,8 +1149,8 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a) {
-			a.setR(Double.NaN);
-			a.setI(Double.NaN);
+			a.setR(Float.NaN);
+			a.setI(Float.NaN);
 		}
 	};
 	
@@ -1179,8 +1179,8 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a) {
-			a.setR(Double.POSITIVE_INFINITY);
-			a.setI(Double.POSITIVE_INFINITY);
+			a.setR(Float.POSITIVE_INFINITY);
+			a.setI(Float.POSITIVE_INFINITY);
 		}
 	};
 	
@@ -1213,8 +1213,8 @@ public class ComplexFloat16Algebra
 		@Override
 		public void call(ComplexFloat16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setR(rng.nextDouble());
-			a.setI(rng.nextDouble());
+			a.setR(rng.nextFloat());
+			a.setI(rng.nextFloat());
 		}
 	};
 	

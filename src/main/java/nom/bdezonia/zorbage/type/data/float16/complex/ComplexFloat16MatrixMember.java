@@ -78,7 +78,7 @@ public final class ComplexFloat16MatrixMember
 		set(other);
 	}
 	
-	public ComplexFloat16MatrixMember(int r, int c, double[] vals) {
+	public ComplexFloat16MatrixMember(int r, int c, float[] vals) {
 		if (vals.length != r*c*2)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
@@ -106,8 +106,8 @@ public final class ComplexFloat16MatrixMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
-			tmp.setR(val.r().doubleValue());
-			tmp.setI(val.i().doubleValue());
+			tmp.setR(val.r().floatValue());
+			tmp.setI(val.i().floatValue());
 			storage.set(i, tmp);
 		}
 	}
@@ -205,8 +205,8 @@ public final class ComplexFloat16MatrixMember
 		long matSize = mat.size();
 		for (long i = 0; i < matSize; i++) {
 			OctonionRepresentation o = mat.get(i);
-			value.setR(o.r().doubleValue());
-			value.setI(o.i().doubleValue());
+			value.setR(o.r().floatValue());
+			value.setI(o.i().floatValue());
 			storage.set(i,value);
 		}
 	}
@@ -260,7 +260,7 @@ public final class ComplexFloat16MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -340,9 +340,9 @@ public final class ComplexFloat16MatrixMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		v(r, c, tmp);
 		if (component == 0)
-			tmp.setR(v);
+			tmp.setR((float)v);
 		else
-			tmp.setI(v);
+			tmp.setI((float)v);
 		setV(r, c, tmp);
 	}
 
@@ -353,9 +353,9 @@ public final class ComplexFloat16MatrixMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		v(r, c, tmp);
 		if (component == 0)
-			tmp.setR(v.doubleValue());
+			tmp.setR(v.floatValue());
 		else
-			tmp.setI(v.doubleValue());
+			tmp.setI(v.floatValue());
 		setV(r, c, tmp);
 	}
 
@@ -366,9 +366,9 @@ public final class ComplexFloat16MatrixMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		v(r, c, tmp);
 		if (component == 0)
-			tmp.setR(v.doubleValue());
+			tmp.setR(v.floatValue());
 		else
-			tmp.setI(v.doubleValue());
+			tmp.setI(v.floatValue());
 		setV(r, c, tmp);
 	}
 
@@ -629,9 +629,9 @@ public final class ComplexFloat16MatrixMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			v(r, c, tmp);
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR((float)v);
 			else
-				tmp.setI(v);
+				tmp.setI((float)v);
 			setV(r, c, tmp);
 		}
 	}
@@ -673,9 +673,9 @@ public final class ComplexFloat16MatrixMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			v(r, c, tmp);
 			if (component == 0)
-				tmp.setR(v.doubleValue());
+				tmp.setR(v.floatValue());
 			else
-				tmp.setI(v.doubleValue());
+				tmp.setI(v.floatValue());
 			setV(r, c, tmp);
 		}
 	}
@@ -717,9 +717,9 @@ public final class ComplexFloat16MatrixMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			v(r, c, tmp);
 			if (component == 0)
-				tmp.setR(v.doubleValue());
+				tmp.setR(v.floatValue());
 			else
-				tmp.setI(v.doubleValue());
+				tmp.setI(v.floatValue());
 			setV(r, c, tmp);
 		}
 	}

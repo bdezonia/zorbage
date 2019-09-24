@@ -71,7 +71,7 @@ public final class OctonionFloat16Member
 		primitiveInit();
 	}
 	
-	public OctonionFloat16Member(double r, double i, double j, double k, double l, double i0, double j0, double k0) {
+	public OctonionFloat16Member(float r, float i, float j, float k, float l, float i0, float j0, float k0) {
 		setR(r);
 		setI(i);
 		setJ(j);
@@ -89,47 +89,47 @@ public final class OctonionFloat16Member
 	public OctonionFloat16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		setR(val.r().doubleValue());
-		setI(val.i().doubleValue());
-		setJ(val.j().doubleValue());
-		setK(val.k().doubleValue());
-		setL(val.l().doubleValue());
-		setI0(val.i0().doubleValue());
-		setJ0(val.j0().doubleValue());
-		setK0(val.k0().doubleValue());
+		setR(val.r().floatValue());
+		setI(val.i().floatValue());
+		setJ(val.j().floatValue());
+		setK(val.k().floatValue());
+		setL(val.l().floatValue());
+		setI0(val.i0().floatValue());
+		setJ0(val.j0().floatValue());
+		setK0(val.k0().floatValue());
 	}
 
-	public double r() { return Float16Util.convertHFloatToFloat(r); }
+	public float r() { return Float16Util.convertHFloatToFloat(r); }
 	
-	public double i() { return Float16Util.convertHFloatToFloat(i); }
+	public float i() { return Float16Util.convertHFloatToFloat(i); }
 	
-	public double j() { return Float16Util.convertHFloatToFloat(j); }
+	public float j() { return Float16Util.convertHFloatToFloat(j); }
 	
-	public double k() { return Float16Util.convertHFloatToFloat(k); }
+	public float k() { return Float16Util.convertHFloatToFloat(k); }
 	
-	public double l() { return Float16Util.convertHFloatToFloat(l); }
+	public float l() { return Float16Util.convertHFloatToFloat(l); }
 	
-	public double i0() { return Float16Util.convertHFloatToFloat(i0); }
+	public float i0() { return Float16Util.convertHFloatToFloat(i0); }
 	
-	public double j0() { return Float16Util.convertHFloatToFloat(j0); }
+	public float j0() { return Float16Util.convertHFloatToFloat(j0); }
 	
-	public double k0() { return Float16Util.convertHFloatToFloat(k0); }
+	public float k0() { return Float16Util.convertHFloatToFloat(k0); }
 	
-	public void setR(double val) { r = Float16Util.convertFloatToHFloat((float)val); }
+	public void setR(float val) { r = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setI(double val) { i = Float16Util.convertFloatToHFloat((float)val); }
+	public void setI(float val) { i = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setJ(double val) { j = Float16Util.convertFloatToHFloat((float)val); }
+	public void setJ(float val) { j = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setK(double val) { k = Float16Util.convertFloatToHFloat((float)val); }
+	public void setK(float val) { k = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setL(double val) { l = Float16Util.convertFloatToHFloat((float)val); }
+	public void setL(float val) { l = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setI0(double val) { i0 = Float16Util.convertFloatToHFloat((float)val); }
+	public void setI0(float val) { i0 = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setJ0(double val) { j0 = Float16Util.convertFloatToHFloat((float)val); }
+	public void setJ0(float val) { j0 = Float16Util.convertFloatToHFloat(val); }
 	
-	public void setK0(double val) { k0 = Float16Util.convertFloatToHFloat((float)val); }
+	public void setK0(float val) { k0 = Float16Util.convertFloatToHFloat(val); }
 	
 	@Override
 	public void set(OctonionFloat16Member other) {
@@ -277,19 +277,19 @@ public final class OctonionFloat16Member
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionRepresentation v = rep.getValue();
-		setR(v.r().doubleValue());
-		setI(v.i().doubleValue());
-		setJ(v.j().doubleValue());
-		setK(v.k().doubleValue());
-		setL(v.l().doubleValue());
-		setI0(v.i0().doubleValue());
-		setJ0(v.j0().doubleValue());
-		setK0(v.k0().doubleValue());
+		setR(v.r().floatValue());
+		setI(v.i().floatValue());
+		setJ(v.j().floatValue());
+		setK(v.k().floatValue());
+		setL(v.l().floatValue());
+		setI0(v.i0().floatValue());
+		setJ0(v.j0().floatValue());
+		setK0(v.k0().floatValue());
 	}
 
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -488,32 +488,32 @@ public final class OctonionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					this.setR(v);
+					this.setR((float) v);
 				else // component == 1
-					this.setI(v);
+					this.setI((float) v);
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					this.setJ(v);
+					this.setJ((float) v);
 				else // component == 3
-					this.setK(v);
+					this.setK((float) v);
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					this.setL(v);
+					this.setL((float) v);
 				else // component == 5
-					this.setI0(v);
+					this.setI0((float) v);
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					this.setJ0(v);
+					this.setJ0((float) v);
 				else // component == 7
-					this.setK0(v);
+					this.setK0((float) v);
 			}
 		}
 	}
@@ -524,32 +524,32 @@ public final class OctonionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					this.setR(v.doubleValue());
+					this.setR(v.floatValue());
 				else // component == 1
-					this.setI(v.doubleValue());
+					this.setI(v.floatValue());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					this.setJ(v.doubleValue());
+					this.setJ(v.floatValue());
 				else // component == 3
-					this.setK(v.doubleValue());
+					this.setK(v.floatValue());
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					this.setL(v.doubleValue());
+					this.setL(v.floatValue());
 				else // component == 5
-					this.setI0(v.doubleValue());
+					this.setI0(v.floatValue());
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					this.setJ0(v.doubleValue());
+					this.setJ0(v.floatValue());
 				else // component == 7
-					this.setK0(v.doubleValue());
+					this.setK0(v.floatValue());
 			}
 		}
 	}
@@ -560,32 +560,32 @@ public final class OctonionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					this.setR(v.doubleValue());
+					this.setR(v.floatValue());
 				else // component == 1
-					this.setI(v.doubleValue());
+					this.setI(v.floatValue());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					this.setJ(v.doubleValue());
+					this.setJ(v.floatValue());
 				else // component == 3
-					this.setK(v.doubleValue());
+					this.setK(v.floatValue());
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					this.setL(v.doubleValue());
+					this.setL(v.floatValue());
 				else // component == 5
-					this.setI0(v.doubleValue());
+					this.setI0(v.floatValue());
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					this.setJ0(v.doubleValue());
+					this.setJ0(v.floatValue());
 				else // component == 7
-					this.setK0(v.doubleValue());
+					this.setK0(v.floatValue());
 			}
 		}
 	}
@@ -889,32 +889,32 @@ public final class OctonionFloat16Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						this.setR(v);
+						this.setR((float) v);
 					else // component == 1
-						this.setI(v);
+						this.setI((float) v);
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						this.setJ(v);
+						this.setJ((float) v);
 					else // component == 3
-						this.setK(v);
+						this.setK((float) v);
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						this.setL(v);
+						this.setL((float) v);
 					else // component == 5
-						this.setI0(v);
+						this.setI0((float) v);
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						this.setJ0(v);
+						this.setJ0((float) v);
 					else // component == 7
-						this.setK0(v);
+						this.setK0((float) v);
 				}
 			}
 		}
@@ -944,32 +944,32 @@ public final class OctonionFloat16Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						this.setR(v.doubleValue());
+						this.setR(v.floatValue());
 					else // component == 1
-						this.setI(v.doubleValue());
+						this.setI(v.floatValue());
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						this.setJ(v.doubleValue());
+						this.setJ(v.floatValue());
 					else // component == 3
-						this.setK(v.doubleValue());
+						this.setK(v.floatValue());
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						this.setL(v.doubleValue());
+						this.setL(v.floatValue());
 					else // component == 5
-						this.setI0(v.doubleValue());
+						this.setI0(v.floatValue());
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						this.setJ0(v.doubleValue());
+						this.setJ0(v.floatValue());
 					else // component == 7
-						this.setK0(v.doubleValue());
+						this.setK0(v.floatValue());
 				}
 			}
 		}
@@ -999,32 +999,32 @@ public final class OctonionFloat16Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						this.setR(v.doubleValue());
+						this.setR(v.floatValue());
 					else // component == 1
-						this.setI(v.doubleValue());
+						this.setI(v.floatValue());
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						this.setJ(v.doubleValue());
+						this.setJ(v.floatValue());
 					else // component == 3
-						this.setK(v.doubleValue());
+						this.setK(v.floatValue());
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						this.setL(v.doubleValue());
+						this.setL(v.floatValue());
 					else // component == 5
-						this.setI0(v.doubleValue());
+						this.setI0(v.floatValue());
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						this.setJ0(v.doubleValue());
+						this.setJ0(v.floatValue());
 					else // component == 7
-						this.setK0(v.doubleValue());
+						this.setK0(v.floatValue());
 				}
 			}
 		}

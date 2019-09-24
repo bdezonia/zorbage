@@ -74,7 +74,7 @@ public final class OctonionFloat16MatrixMember
 		init(0,0);
 	}
 	
-	public OctonionFloat16MatrixMember(int r, int c, double[] vals) {
+	public OctonionFloat16MatrixMember(int r, int c, float[] vals) {
 		if (vals.length != r*c*8)
 			throw new IllegalArgumentException("input values do not match declared shape");
 		rows = -1;
@@ -112,14 +112,14 @@ public final class OctonionFloat16MatrixMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
-			tmp.setR(val.r().doubleValue());
-			tmp.setI(val.i().doubleValue());
-			tmp.setJ(val.j().doubleValue());
-			tmp.setK(val.k().doubleValue());
-			tmp.setL(val.l().doubleValue());
-			tmp.setI0(val.i0().doubleValue());
-			tmp.setJ0(val.j0().doubleValue());
-			tmp.setK0(val.k0().doubleValue());
+			tmp.setR(val.r().floatValue());
+			tmp.setI(val.i().floatValue());
+			tmp.setJ(val.j().floatValue());
+			tmp.setK(val.k().floatValue());
+			tmp.setL(val.l().floatValue());
+			tmp.setI0(val.i0().floatValue());
+			tmp.setJ0(val.j0().floatValue());
+			tmp.setK0(val.k0().floatValue());
 			storage.set(i, tmp);
 		}
 	}
@@ -223,14 +223,14 @@ public final class OctonionFloat16MatrixMember
 		long matSize = mat.size();
 		for (long i = 0; i < matSize; i++) {
 			OctonionRepresentation o = mat.get(i);
-			value.setR(o.r().doubleValue());
-			value.setI(o.i().doubleValue());
-			value.setJ(o.j().doubleValue());
-			value.setK(o.k().doubleValue());
-			value.setL(o.l().doubleValue());
-			value.setI0(o.i0().doubleValue());
-			value.setJ0(o.j0().doubleValue());
-			value.setK0(o.k0().doubleValue());
+			value.setR(o.r().floatValue());
+			value.setI(o.i().floatValue());
+			value.setJ(o.j().floatValue());
+			value.setK(o.k().floatValue());
+			value.setL(o.l().floatValue());
+			value.setI0(o.i0().floatValue());
+			value.setJ0(o.j0().floatValue());
+			value.setK0(o.k0().floatValue());
 			storage.set(i,value);
 		}
 	}
@@ -284,7 +284,7 @@ public final class OctonionFloat16MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -507,32 +507,32 @@ public final class OctonionFloat16MatrixMember
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					tmp.setR(v);
+					tmp.setR((float) v);
 				else // component == 1
-					tmp.setI(v);
+					tmp.setI((float) v);
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					tmp.setJ(v);
+					tmp.setJ((float) v);
 				else // component == 3
-					tmp.setK(v);
+					tmp.setK((float) v);
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					tmp.setL(v);
+					tmp.setL((float) v);
 				else // component == 5
-					tmp.setI0(v);
+					tmp.setI0((float) v);
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					tmp.setJ0(v);
+					tmp.setJ0((float) v);
 				else // component == 7
-					tmp.setK0(v);
+					tmp.setK0((float) v);
 			}
 		}
 		setV(r, c, tmp);
@@ -548,32 +548,32 @@ public final class OctonionFloat16MatrixMember
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					tmp.setR(v.doubleValue());
+					tmp.setR(v.floatValue());
 				else // component == 1
-					tmp.setI(v.doubleValue());
+					tmp.setI(v.floatValue());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					tmp.setJ(v.doubleValue());
+					tmp.setJ(v.floatValue());
 				else // component == 3
-					tmp.setK(v.doubleValue());
+					tmp.setK(v.floatValue());
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					tmp.setL(v.doubleValue());
+					tmp.setL(v.floatValue());
 				else // component == 5
-					tmp.setI0(v.doubleValue());
+					tmp.setI0(v.floatValue());
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					tmp.setJ0(v.doubleValue());
+					tmp.setJ0(v.floatValue());
 				else // component == 7
-					tmp.setK0(v.doubleValue());
+					tmp.setK0(v.floatValue());
 			}
 		}
 		setV(r, c, tmp);
@@ -589,32 +589,32 @@ public final class OctonionFloat16MatrixMember
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					tmp.setR(v.doubleValue());
+					tmp.setR(v.floatValue());
 				else // component == 1
-					tmp.setI(v.doubleValue());
+					tmp.setI(v.floatValue());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					tmp.setJ(v.doubleValue());
+					tmp.setJ(v.floatValue());
 				else // component == 3
-					tmp.setK(v.doubleValue());
+					tmp.setK(v.floatValue());
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					tmp.setL(v.doubleValue());
+					tmp.setL(v.floatValue());
 				else // component == 5
-					tmp.setI0(v.doubleValue());
+					tmp.setI0(v.floatValue());
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					tmp.setJ0(v.doubleValue());
+					tmp.setJ0(v.floatValue());
 				else // component == 7
-					tmp.setK0(v.doubleValue());
+					tmp.setK0(v.floatValue());
 			}
 		}
 		setV(r, c, tmp);
@@ -1020,32 +1020,32 @@ public final class OctonionFloat16MatrixMember
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						tmp.setR(v);
+						tmp.setR((float)v);
 					else // component == 1
-						tmp.setI(v);
+						tmp.setI((float)v);
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						tmp.setJ(v);
+						tmp.setJ((float)v);
 					else // component == 3
-						tmp.setK(v);
+						tmp.setK((float)v);
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						tmp.setL(v);
+						tmp.setL((float)v);
 					else // component == 5
-						tmp.setI0(v);
+						tmp.setI0((float)v);
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						tmp.setJ0(v);
+						tmp.setJ0((float)v);
 					else // component == 7
-						tmp.setK0(v);
+						tmp.setK0((float)v);
 				}
 			}
 			setV(r, c, tmp);
@@ -1092,32 +1092,32 @@ public final class OctonionFloat16MatrixMember
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						tmp.setR(v.doubleValue());
+						tmp.setR(v.floatValue());
 					else // component == 1
-						tmp.setI(v.doubleValue());
+						tmp.setI(v.floatValue());
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						tmp.setJ(v.doubleValue());
+						tmp.setJ(v.floatValue());
 					else // component == 3
-						tmp.setK(v.doubleValue());
+						tmp.setK(v.floatValue());
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						tmp.setL(v.doubleValue());
+						tmp.setL(v.floatValue());
 					else // component == 5
-						tmp.setI0(v.doubleValue());
+						tmp.setI0(v.floatValue());
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						tmp.setJ0(v.doubleValue());
+						tmp.setJ0(v.floatValue());
 					else // component == 7
-						tmp.setK0(v.doubleValue());
+						tmp.setK0(v.floatValue());
 				}
 			}
 			setV(r, c, tmp);
@@ -1164,32 +1164,32 @@ public final class OctonionFloat16MatrixMember
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						tmp.setR(v.doubleValue());
+						tmp.setR(v.floatValue());
 					else // component == 1
-						tmp.setI(v.doubleValue());
+						tmp.setI(v.floatValue());
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						tmp.setJ(v.doubleValue());
+						tmp.setJ(v.floatValue());
 					else // component == 3
-						tmp.setK(v.doubleValue());
+						tmp.setK(v.floatValue());
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						tmp.setL(v.doubleValue());
+						tmp.setL(v.floatValue());
 					else // component == 5
-						tmp.setI0(v.doubleValue());
+						tmp.setI0(v.floatValue());
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						tmp.setJ0(v.doubleValue());
+						tmp.setJ0(v.floatValue());
 					else // component == 7
-						tmp.setK0(v.doubleValue());
+						tmp.setK0(v.floatValue());
 				}
 			}
 			setV(r, c, tmp);

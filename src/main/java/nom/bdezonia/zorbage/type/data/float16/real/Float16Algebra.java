@@ -234,7 +234,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / a.v() );
+			b.setV( 1.0f / a.v() );
 		}
 	};
 
@@ -396,10 +396,10 @@ public class Float16Algebra
 		@Override
 		public void call(Integer power, Float16Member a, Float16Member b) {
 			if (power == 0 && a.v() == 0) {
-				b.setV(Double.NaN);
+				b.setV(Float.NaN);
 			}
 			else
-				b.setV( FastMath.pow(a.v(), power) );
+				b.setV( (float) FastMath.pow(a.v(), power) );
 		}
 	};
 
@@ -497,7 +497,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.exp(a.v()) );
+			b.setV( (float) FastMath.exp(a.v()) );
 		}
 	};
 	
@@ -511,7 +511,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.expm1(a.v()) );
+			b.setV( (float) FastMath.expm1(a.v()) );
 		}
 	};
 	
@@ -524,7 +524,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.log(a.v()) );
+			b.setV( (float) Math.log(a.v()) );
 		}
 	};
 
@@ -538,7 +538,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.log1p(a.v()) );
+			b.setV( (float) Math.log1p(a.v()) );
 		}
 	};
 
@@ -551,7 +551,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.cos(a.v()) );
+			b.setV( (float) FastMath.cos(a.v()) );
 		}
 	};
 
@@ -565,7 +565,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.sin(a.v()) );
+			b.setV( (float) FastMath.sin(a.v()) );
 		}
 	};
 
@@ -594,7 +594,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.tan(a.v()) );
+			b.setV( (float) FastMath.tan(a.v()) );
 		}
 	};
 	
@@ -610,7 +610,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / FastMath.sin(a.v()) );
+			b.setV( (float) (1.0 / FastMath.sin(a.v())) );
 		}
 	};
 	
@@ -626,7 +626,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / FastMath.cos(a.v()) );
+			b.setV( (float)(1.0 / FastMath.cos(a.v())) );
 		}
 	};
 	
@@ -642,7 +642,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / FastMath.tan(a.v()) );
+			b.setV( (float) (1.0 / FastMath.tan(a.v())) );
 		}
 	};
 	
@@ -656,7 +656,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.cosh(a.v()) );
+			b.setV( (float) (FastMath.cosh(a.v())) );
 		}
 	};
 
@@ -670,7 +670,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.sinh(a.v()) );
+			b.setV( (float) (FastMath.sinh(a.v())) );
 		}
 	};
 
@@ -699,7 +699,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.tanh(a.v()) );
+			b.setV( (float) (FastMath.tanh(a.v())) );
 		}
 	};
 
@@ -715,7 +715,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / FastMath.sinh(a.v()) );
+			b.setV( (float) (1.0 / FastMath.sinh(a.v())) );
 		}
 	};
 	
@@ -731,7 +731,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / FastMath.cosh(a.v()) );
+			b.setV( (float) (1.0 / FastMath.cosh(a.v())) );
 		}
 	};
 	
@@ -747,7 +747,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( 1.0 / FastMath.tanh(a.v()) );
+			b.setV( (float) (1.0 / FastMath.tanh(a.v())) );
 		}
 	};
 
@@ -761,7 +761,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.acos(a.v()) );
+			b.setV( (float) FastMath.acos(a.v()) );
 		}
 	};
 
@@ -775,7 +775,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.asin(a.v()) );
+			b.setV( (float) FastMath.asin(a.v()) );
 		}
 	};
 
@@ -789,7 +789,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.atan(a.v()) );
+			b.setV( (float) FastMath.atan(a.v()) );
 		}
 	};
 
@@ -803,7 +803,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b, Float16Member c) {
-			c.setV( FastMath.atan2(a.v(), b.v()) );
+			c.setV( (float) FastMath.atan2(a.v(), b.v()) );
 		}
 	};
 	
@@ -873,7 +873,7 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a, Float16Member b) {
 			float x = a.v();
-			b.setV( Math.log(x + Math.sqrt(x*x - 1)) );
+			b.setV( (float) Math.log(x + Math.sqrt(x*x - 1)) );
 		}
 	};
 	
@@ -890,7 +890,7 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a, Float16Member b) {
 			float x = a.v();
-			b.setV( Math.log(x + Math.sqrt(x*x + 1)) );
+			b.setV( (float) Math.log(x + Math.sqrt(x*x + 1)) );
 		}
 	};
 	
@@ -907,7 +907,7 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a, Float16Member b) {
 			float x = a.v();
-			b.setV( 0.5 * (-Math.log(1 - x) + Math.log(1 + x)) );
+			b.setV( (float) (0.5 * (-Math.log(1 - x) + Math.log(1 + x))) );
 		}
 	};
 	
@@ -989,7 +989,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV(Double.NaN);
+			a.setV(Float.NaN);
 		}
 	};
 	
@@ -1017,7 +1017,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV(Double.POSITIVE_INFINITY);
+			a.setV(Float.POSITIVE_INFINITY);
 		}
 	};
 			
@@ -1031,7 +1031,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV(Double.NEGATIVE_INFINITY);
+			a.setV(Float.NEGATIVE_INFINITY);
 		}
 	};
 			
@@ -1044,7 +1044,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.sqrt(a.v()) );
+			b.setV( (float) Math.sqrt(a.v()) );
 		}
 	};
 	
@@ -1058,7 +1058,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( FastMath.cbrt(a.v()) );
+			b.setV( (float) FastMath.cbrt(a.v()) );
 		}
 	};
 	
@@ -1115,9 +1115,9 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a, Float16Member b, Float16Member c) {
 			if (a.v() == 0 && b.v() == 0)
-				c.setV(Double.NaN);
+				c.setV(Float.NaN);
 			else
-				c.setV( FastMath.pow(a.v(), b.v()) );
+				c.setV( (float) FastMath.pow(a.v(), b.v()) );
 		}
 	};
 
@@ -1131,7 +1131,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.log10(a.v()) );
+			b.setV( (float) Math.log10(a.v()) );
 		}
 	};
 
@@ -1144,7 +1144,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.toDegrees(a.v()) );
+			b.setV( (float) Math.toDegrees(a.v()) );
 		}
 	};
 
@@ -1157,7 +1157,7 @@ public class Float16Algebra
 	{	
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			b.setV( Math.toRadians(a.v()) );
+			b.setV( (float) Math.toRadians(a.v()) );
 		}
 	};
 
@@ -1219,7 +1219,7 @@ public class Float16Algebra
 				v = Math.floor(v);
 			else
 				v = Math.ceil(v);
-			d.setV(v);
+			d.setV((float) v);
 		}
 	};
 

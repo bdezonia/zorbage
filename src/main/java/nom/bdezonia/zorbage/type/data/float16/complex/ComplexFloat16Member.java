@@ -70,7 +70,7 @@ public final class ComplexFloat16Member
 		primitiveInit();
 	}
 	
-	public ComplexFloat16Member(double rvalue, double ivalue) {
+	public ComplexFloat16Member(float rvalue, float ivalue) {
 		setR(rvalue);
 		setI(ivalue);
 	}
@@ -82,17 +82,17 @@ public final class ComplexFloat16Member
 	public ComplexFloat16Member(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
-		setR(val.r().doubleValue());
-		setI(val.i().doubleValue());
+		setR(val.r().floatValue());
+		setI(val.i().floatValue());
 	}
 
-	public double r() { return Float16Util.convertHFloatToFloat(r); }
+	public float r() { return Float16Util.convertHFloatToFloat(r); }
 	
-	public double i() { return Float16Util.convertHFloatToFloat(i); }
+	public float i() { return Float16Util.convertHFloatToFloat(i); }
 	
-    public void setR(double val) { r = Float16Util.convertFloatToHFloat((float)val); }
+    public void setR(float val) { r = Float16Util.convertFloatToHFloat(val); }
     
-    public void setI(double val) { i = Float16Util.convertFloatToHFloat((float)val); }	
+    public void setI(float val) { i = Float16Util.convertFloatToHFloat(val); }	
 
     @Override
     public void get(ComplexFloat16Member other) {
@@ -184,13 +184,13 @@ public final class ComplexFloat16Member
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionRepresentation v = rep.getValue();
-		setR(v.r().doubleValue());
-		setI(v.i().doubleValue());
+		setR(v.r().floatValue());
+		setI(v.i().floatValue());
 	}
 
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -246,25 +246,25 @@ public final class ComplexFloat16Member
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		if (component == 0)
-			this.setR(v);
+			this.setR((float) v);
 		else
-			this.setI(v);
+			this.setI((float) v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		if (component == 0)
-			this.setR(v.doubleValue());
+			this.setR(v.floatValue());
 		else
-			this.setI(v.doubleValue());
+			this.setI(v.floatValue());
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		if (component == 0)
-			this.setR(v.doubleValue());
+			this.setR(v.floatValue());
 		else
-			this.setI(v.doubleValue());
+			this.setI(v.floatValue());
 	}
 
 	@Override
@@ -423,9 +423,9 @@ public final class ComplexFloat16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v);
+				this.setR((float) v);
 			else
-				this.setI(v);
+				this.setI((float) v);
 		}
 	}
 
@@ -450,9 +450,9 @@ public final class ComplexFloat16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v.doubleValue());
+				this.setR(v.floatValue());
 			else
-				this.setI(v.doubleValue());
+				this.setI(v.floatValue());
 		}
 	}
 
@@ -477,9 +477,9 @@ public final class ComplexFloat16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v.doubleValue());
+				this.setR(v.floatValue());
 			else
-				this.setI(v.doubleValue());
+				this.setI(v.floatValue());
 		}
 	}
 

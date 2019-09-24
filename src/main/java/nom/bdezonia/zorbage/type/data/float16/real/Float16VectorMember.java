@@ -70,7 +70,7 @@ public final class Float16VectorMember
 		storage = Storage.allocate(s, 0, new Float16Member());
 	}
 	
-	public Float16VectorMember(double[] vals) {
+	public Float16VectorMember(float[] vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, vals.length, new Float16Member());
 		Float16Member value = new Float16Member();
@@ -93,7 +93,7 @@ public final class Float16VectorMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			OctonionRepresentation val = data.get(i);
-			tmp.setV(val.r().doubleValue());
+			tmp.setV(val.r().floatValue());
 			storage.set(i, tmp);
 		}
 	}
@@ -159,7 +159,7 @@ public final class Float16VectorMember
 		init(rmodSize);
 		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
-			value.setV(o.r().doubleValue());
+			value.setV(o.r().floatValue());
 			storage.set(i,value);
 		}
 	}
@@ -229,7 +229,7 @@ public final class Float16VectorMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -281,7 +281,7 @@ public final class Float16VectorMember
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		long i = index.get(0);
 		Float16Member tmp = tmpFloat.get();
-		tmp.setV(v);
+		tmp.setV((float)v);
 		setV(i, tmp);
 	}
 
@@ -289,7 +289,7 @@ public final class Float16VectorMember
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		long i = index.get(0);
 		Float16Member tmp = tmpFloat.get();
-		tmp.setV(v.doubleValue());
+		tmp.setV(v.floatValue());
 		setV(i, tmp);
 	}
 
@@ -297,7 +297,7 @@ public final class Float16VectorMember
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		long i = index.get(0);
 		Float16Member tmp = tmpFloat.get();
-		tmp.setV(v.doubleValue());
+		tmp.setV(v.floatValue());
 		setV(i, tmp);
 	}
 
@@ -494,7 +494,7 @@ public final class Float16VectorMember
 		else {
 			long i = index.get(0);
 			Float16Member tmp = tmpFloat.get();
-			tmp.setV(v);
+			tmp.setV((float)v);
 			setV(i, tmp);
 		}
 	}
@@ -527,7 +527,7 @@ public final class Float16VectorMember
 		else {
 			long i = index.get(0);
 			Float16Member tmp = tmpFloat.get();
-			tmp.setV(v.doubleValue());
+			tmp.setV(v.floatValue());
 			setV(i, tmp);
 		}
 	}
@@ -560,7 +560,7 @@ public final class Float16VectorMember
 		else {
 			long i = index.get(0);
 			Float16Member tmp = tmpFloat.get();
-			tmp.setV(v.doubleValue());
+			tmp.setV(v.floatValue());
 			setV(i, tmp);
 		}
 	}

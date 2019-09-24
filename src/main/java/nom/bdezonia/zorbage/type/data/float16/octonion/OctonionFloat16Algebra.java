@@ -96,14 +96,14 @@ public class OctonionFloat16Algebra
     Tolerance<Float16Member,OctonionFloat16Member>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(0, 0, 0, 0, 0, 0, 0, 0);
-	private static final OctonionFloat16Member ONE_THIRD = new OctonionFloat16Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);
-	private static final OctonionFloat16Member ONE_HALF = new OctonionFloat16Member(0.5, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat16Member ONE_THIRD = new OctonionFloat16Member((float)1.0/3, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat16Member ONE_HALF = new OctonionFloat16Member((float)0.5, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member ONE = new OctonionFloat16Member(1, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member TWO = new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0);
-	private static final OctonionFloat16Member E = new OctonionFloat16Member(Math.E, 0, 0, 0, 0, 0, 0, 0);
-	private static final OctonionFloat16Member PI = new OctonionFloat16Member(Math.PI, 0, 0, 0, 0, 0, 0, 0);
-	private static final OctonionFloat16Member GAMMA = new OctonionFloat16Member(0.57721566490153286060,0,0,0,0,0,0,0);
-	private static final OctonionFloat16Member PHI = new OctonionFloat16Member(1.61803398874989484820,0,0,0,0,0,0,0);
+	private static final OctonionFloat16Member E = new OctonionFloat16Member((float)Math.E, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat16Member PI = new OctonionFloat16Member((float)Math.PI, 0, 0, 0, 0, 0, 0, 0);
+	private static final OctonionFloat16Member GAMMA = new OctonionFloat16Member((float)0.57721566490153286060,0,0,0,0,0,0,0);
+	private static final OctonionFloat16Member PHI = new OctonionFloat16Member((float)1.61803398874989484820,0,0,0,0,0,0,0);
 	private static final OctonionFloat16Member I = new OctonionFloat16Member(0,1,0,0,0,0,0,0);
 	private static final OctonionFloat16Member J = new OctonionFloat16Member(0,0,1,0,0,0,0,0);
 	private static final OctonionFloat16Member K = new OctonionFloat16Member(0,0,0,1,0,0,0,0);
@@ -443,14 +443,14 @@ public class OctonionFloat16Algebra
 		public void call(OctonionFloat16Member a, OctonionFloat16Member b) {
 			double norm2 = norm2(a);
 			conjugate().call(a, b);
-			b.setR( b.r() / norm2 );
-			b.setI( b.i() / norm2 );
-			b.setJ( b.j() / norm2 );
-			b.setK( b.k() / norm2 );
-			b.setL( b.l() / norm2 );
-			b.setI0( b.i0() / norm2 );
-			b.setJ0( b.j0() / norm2 );
-			b.setK0( b.k0() / norm2 );
+			b.setR( (float) (b.r() / norm2) );
+			b.setI( (float) (b.i() / norm2) );
+			b.setJ( (float) (b.j() / norm2) );
+			b.setK( (float) (b.k() / norm2) );
+			b.setL( (float) (b.l() / norm2) );
+			b.setI0( (float) (b.i0() / norm2) );
+			b.setJ0( (float) (b.j0() / norm2) );
+			b.setK0( (float) (b.k0() / norm2) );
 		}
 	};
 	
@@ -533,14 +533,14 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(OctonionFloat16Member a) {
-			a.setR(Double.NaN);
-			a.setI(Double.NaN);
-			a.setJ(Double.NaN);
-			a.setK(Double.NaN);
-			a.setL(Double.NaN);
-			a.setI0(Double.NaN);
-			a.setJ0(Double.NaN);
-			a.setK0(Double.NaN);
+			a.setR(Float.NaN);
+			a.setI(Float.NaN);
+			a.setJ(Float.NaN);
+			a.setK(Float.NaN);
+			a.setL(Float.NaN);
+			a.setI0(Float.NaN);
+			a.setJ0(Float.NaN);
+			a.setK0(Float.NaN);
 		}
 	};
 	
@@ -571,14 +571,14 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(OctonionFloat16Member a) {
-			a.setR(Double.POSITIVE_INFINITY);
-			a.setI(Double.POSITIVE_INFINITY);
-			a.setJ(Double.POSITIVE_INFINITY);
-			a.setK(Double.POSITIVE_INFINITY);
-			a.setL(Double.POSITIVE_INFINITY);
-			a.setI0(Double.POSITIVE_INFINITY);
-			a.setJ0(Double.POSITIVE_INFINITY);
-			a.setK0(Double.POSITIVE_INFINITY);
+			a.setR(Float.POSITIVE_INFINITY);
+			a.setI(Float.POSITIVE_INFINITY);
+			a.setJ(Float.POSITIVE_INFINITY);
+			a.setK(Float.POSITIVE_INFINITY);
+			a.setL(Float.POSITIVE_INFINITY);
+			a.setI0(Float.POSITIVE_INFINITY);
+			a.setJ0(Float.POSITIVE_INFINITY);
+			a.setK0(Float.POSITIVE_INFINITY);
 		}
 	};
 	
@@ -592,7 +592,7 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(OctonionFloat16Member a, Float16Member b) {
-			b.setV( norm(a) );
+			b.setV( (float) norm(a) );
 		}
 	};
 
@@ -812,14 +812,14 @@ public class OctonionFloat16Algebra
 		@Override
 		public void call(OctonionFloat16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setR(rng.nextDouble());
-			a.setI(rng.nextDouble());
-			a.setJ(rng.nextDouble());
-			a.setK(rng.nextDouble());
-			a.setL(rng.nextDouble());
-			a.setI0(rng.nextDouble());
-			a.setJ0(rng.nextDouble());
-			a.setK0(rng.nextDouble());
+			a.setR(rng.nextFloat());
+			a.setI(rng.nextFloat());
+			a.setJ(rng.nextFloat());
+			a.setK(rng.nextFloat());
+			a.setL(rng.nextFloat());
+			a.setI0(rng.nextFloat());
+			a.setJ0(rng.nextFloat());
+			a.setK0(rng.nextFloat());
 		}
 	};
 	
@@ -968,14 +968,14 @@ public class OctonionFloat16Algebra
 			double sinhc_pi = z2.v();
 			double cosh = FastMath.cosh(z.v());
 			double ws = cos * sinhc_pi;
-			b.setR(sin * cosh);
-			b.setI(ws * a.i());
-			b.setJ(ws * a.j());
-			b.setK(ws * a.k());
-			b.setL(ws * a.l());
-			b.setI0(ws * a.i0());
-			b.setJ0(ws * a.j0());
-			b.setK0(ws * a.k0());
+			b.setR((float) (sin * cosh));
+			b.setI((float) (ws * a.i()));
+			b.setJ((float) (ws * a.j()));
+			b.setK((float) (ws * a.k()));
+			b.setL((float) (ws * a.l()));
+			b.setI0((float) (ws * a.i0()));
+			b.setJ0((float) (ws * a.j0()));
+			b.setK0((float) (ws * a.k0()));
 		}
 	};
 	
@@ -1000,14 +1000,14 @@ public class OctonionFloat16Algebra
 			double sinhc_pi = z2.v();
 			double cosh = FastMath.cosh(z.v());
 			double wc = -sin * sinhc_pi;
-			b.setR(cos * cosh);
-			b.setI(wc * a.i());
-			b.setJ(wc * a.j());
-			b.setK(wc * a.k());
-			b.setL(wc * a.l());
-			b.setI0(wc * a.i0());
-			b.setJ0(wc * a.j0());
-			b.setK0(wc * a.k0());
+			b.setR((float) (cos * cosh));
+			b.setI((float) (wc * a.i()));
+			b.setJ((float) (wc * a.j()));
+			b.setK((float) (wc * a.k()));
+			b.setL((float) (wc * a.l()));
+			b.setI0((float) (wc * a.i0()));
+			b.setJ0((float) (wc * a.j0()));
+			b.setK0((float) (wc * a.k0()));
 		}
 	};
 	
@@ -1033,22 +1033,22 @@ public class OctonionFloat16Algebra
 			double cosh = FastMath.cosh(z.v());
 			double ws = cos * sinhc_pi;
 			double wc = -sin * sinhc_pi;
-			s.setR(sin * cosh);
-			s.setI(ws * a.i());
-			s.setJ(ws * a.j());
-			s.setK(ws * a.k());
-			s.setL(ws * a.l());
-			s.setI0(ws * a.i0());
-			s.setJ0(ws * a.j0());
-			s.setK0(ws * a.k0());
-			c.setR(cos * cosh);
-			c.setI(wc * a.i());
-			c.setJ(wc * a.j());
-			c.setK(wc * a.k());
-			c.setL(wc * a.l());
-			c.setI0(wc * a.i0());
-			c.setJ0(wc * a.j0());
-			c.setK0(wc * a.k0());
+			s.setR((float) (sin * cosh));
+			s.setI((float) (ws * a.i()));
+			s.setJ((float) (ws * a.j()));
+			s.setK((float) (ws * a.k()));
+			s.setL((float) (ws * a.l()));
+			s.setI0((float) (ws * a.i0()));
+			s.setJ0((float) (ws * a.j0()));
+			s.setK0((float) (ws * a.k0()));
+			c.setR((float) (cos * cosh));
+			c.setI((float) (wc * a.i()));
+			c.setJ((float) (wc * a.j()));
+			c.setK((float) (wc * a.k()));
+			c.setL((float) (wc * a.l()));
+			c.setI0((float) (wc * a.i0()));
+			c.setJ0((float) (wc * a.j0()));
+			c.setK0((float) (wc * a.k0()));
 		}
 	};
 	
@@ -1087,14 +1087,14 @@ public class OctonionFloat16Algebra
 			norm().call(tmp, z);
 			G.HLF.sinc().call(z, z2);
 			double w = z2.v();
-			b.setR(u * FastMath.cos(z.v()));
-			b.setI(u * w * a.i());
-			b.setJ(u * w * a.j());
-			b.setK(u * w * a.k());
-			b.setL(u * w * a.l());
-			b.setI0(u * w * a.i0());
-			b.setJ0(u * w * a.j0());
-			b.setK0(u * w * a.k0());
+			b.setR((float) (u * FastMath.cos(z.v())));
+			b.setI((float) (u * w * a.i()));
+			b.setJ((float) (u * w * a.j()));
+			b.setK((float) (u * w * a.k()));
+			b.setL((float) (u * w * a.l()));
+			b.setI0((float) (u * w * a.i0()));
+			b.setJ0((float) (u * w * a.j0()));
+			b.setK0((float) (u * w * a.k0()));
 		}
 	};
 	
@@ -1147,36 +1147,36 @@ public class OctonionFloat16Algebra
 	private void multiplier(double r, double factor, OctonionFloat16Member result) {
 		if ( Double.isNaN( factor ) || Double.isInfinite( factor ) ) {
 			if ( result.i() == 0 && result.j() == 0 && result.k() == 0 ) {
-				result.setR(r);
-				result.setI(result.i() * factor);
-				result.setJ(result.j() * factor);
-				result.setK(result.k() * factor);
-				result.setL(result.l() * factor);
-				result.setI0(result.i0() * factor);
-				result.setJ0(result.j0() * factor);
-				result.setK0(result.k0() * factor);
+				result.setR((float) (r));
+				result.setI((float) (result.i() * factor));
+				result.setJ((float) (result.j() * factor));
+				result.setK((float) (result.k() * factor));
+				result.setL((float) (result.l() * factor));
+				result.setI0((float) (result.i0() * factor));
+				result.setJ0((float) (result.j0() * factor));
+				result.setK0((float) (result.k0() * factor));
 			}
 			else {
 				double signum = Math.signum(factor);
-				result.setR(r);
-				if (result.i() == 0) result.setI(signum * result.i()); else result.setI(factor * result.i());
-				if (result.j() == 0) result.setJ(signum * result.j()); else result.setJ(factor * result.j());
-				if (result.k() == 0) result.setK(signum * result.k()); else result.setK(factor * result.k());
-				if (result.l() == 0) result.setL(signum * result.l()); else result.setL(factor * result.l());
-				if (result.i0() == 0) result.setI0(signum * result.i0()); else result.setI0(factor * result.i0());
-				if (result.j0() == 0) result.setJ0(signum * result.j0()); else result.setJ0(factor * result.j0());
-				if (result.k0() == 0) result.setK0(signum * result.k0()); else result.setK0(factor * result.k0());
+				result.setR((float) (r));
+				if (result.i() == 0) result.setI((float) (signum * result.i())); else result.setI((float) (factor * result.i()));
+				if (result.j() == 0) result.setJ((float) (signum * result.j())); else result.setJ((float) (factor * result.j()));
+				if (result.k() == 0) result.setK((float) (signum * result.k())); else result.setK((float) (factor * result.k()));
+				if (result.l() == 0) result.setL((float) (signum * result.l())); else result.setL((float) (factor * result.l()));
+				if (result.i0() == 0) result.setI0((float) (signum * result.i0())); else result.setI0((float) (factor * result.i0()));
+				if (result.j0() == 0) result.setJ0((float) (signum * result.j0())); else result.setJ0((float) (factor * result.j0()));
+				if (result.k0() == 0) result.setK0((float) (signum * result.k0())); else result.setK0((float) (factor * result.k0()));
 			}
 		}
 		else {
-			result.setR(r);
-			result.setI(result.i() * factor);
-			result.setJ(result.j() * factor);
-			result.setK(result.k() * factor);
-			result.setL(result.l() * factor);
-			result.setI0(result.i0() * factor);
-			result.setJ0(result.j0() * factor);
-			result.setK0(result.k0() * factor);
+			result.setR((float) (r));
+			result.setI((float) (result.i() * factor));
+			result.setJ((float) (result.j() * factor));
+			result.setK((float) (result.k() * factor));
+			result.setL((float) (result.l() * factor));
+			result.setI0((float) (result.i0() * factor));
+			result.setJ0((float) (result.j0() * factor));
+			result.setK0((float) (result.k0() * factor));
 		}
 	}
 

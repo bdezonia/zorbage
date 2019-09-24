@@ -222,7 +222,7 @@ public class OctonionFloat16RModule
 				G.OHLF.multiply().call(aTmp, tmp, tmp);
 				G.OHLF.add().call(sum, tmp, sum);
 			}
-			b.setV(Math.sqrt(sum.r()));
+			b.setV((float) Math.sqrt(sum.r()));
 		}
 	};
 	
@@ -294,7 +294,7 @@ public class OctonionFloat16RModule
 		public void call(OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b, OctonionFloat16RModuleMember c,
 				OctonionFloat16RModuleMember d)
 		{
-			OctonionFloat16RModuleMember b_cross_c = new OctonionFloat16RModuleMember(new double[3*8]);
+			OctonionFloat16RModuleMember b_cross_c = new OctonionFloat16RModuleMember(new float[3*8]);
 			crossProduct().call(b, c, b_cross_c);
 			crossProduct().call(a, b_cross_c, d);
 		}
@@ -313,7 +313,7 @@ public class OctonionFloat16RModule
 		public void call(OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b, OctonionFloat16RModuleMember c,
 				OctonionFloat16Member d)
 		{
-			OctonionFloat16RModuleMember b_cross_c = new OctonionFloat16RModuleMember(new double[3*8]);
+			OctonionFloat16RModuleMember b_cross_c = new OctonionFloat16RModuleMember(new float[3*8]);
 			crossProduct().call(b, c, b_cross_c);
 			dotProduct().call(a, b_cross_c, d);
 		}

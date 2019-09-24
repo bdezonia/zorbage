@@ -219,7 +219,7 @@ public class Float16Vector
 				G.HLF.add().call(norm2, tmp, norm2);
 			}
 			double norm = max.v() * Math.sqrt(norm2.v());
-			b.setV(norm);
+			b.setV((float)norm);
 		}
 	};
 	
@@ -289,7 +289,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a, Float16VectorMember b, Float16VectorMember c, Float16VectorMember d) {
-			Float16VectorMember b_cross_c = new Float16VectorMember(new double[3]);
+			Float16VectorMember b_cross_c = new Float16VectorMember(new float[3]);
 			crossProduct().call(b, c, b_cross_c);
 			crossProduct().call(a, b_cross_c, d);
 		}
@@ -306,7 +306,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a, Float16VectorMember b, Float16VectorMember c, Float16Member d) {
-			Float16VectorMember b_cross_c = new Float16VectorMember(new double[3]);
+			Float16VectorMember b_cross_c = new Float16VectorMember(new float[3]);
 			crossProduct().call(b, c, b_cross_c);
 			dotProduct().call(a, b_cross_c, d);
 		}
