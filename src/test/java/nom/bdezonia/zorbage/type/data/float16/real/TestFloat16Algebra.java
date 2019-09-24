@@ -75,7 +75,7 @@ public class TestFloat16Algebra {
 		Float16Member c2 = new Float16Member();
 		
 		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
-			angle.setV(a);
+			angle.setV((float)a);
 			G.HLF.sin().call(angle, s1);
 			G.HLF.cos().call(angle, c1);
 			G.HLF.sinAndCos().call(angle, s2, c2);
@@ -97,7 +97,7 @@ public class TestFloat16Algebra {
 		Float16Member c2 = new Float16Member();
 		
 		for (double a = -6*Math.PI; a <= 6*Math.PI; a += (Math.PI) / 720) {
-			angle.setV(a);
+			angle.setV((float)a);
 			G.HLF.sinh().call(angle, s1);
 			G.HLF.cosh().call(angle, c1);
 			G.HLF.sinhAndCosh().call(angle, s2, c2);
@@ -174,25 +174,25 @@ public class TestFloat16Algebra {
 		assertEquals(0, d.v(), 0);
 		assertEquals(44, m.v(), 0);
 
-		a.setV(0.5);
+		a.setV(0.5f);
 		b.setV(1);
 		G.HLF.divMod().call(a, b, d, m);
 		assertEquals(0, d.v(), tol);
 		assertEquals(0.5, m.v(), tol);
 		
-		a.setV(-0.5);
+		a.setV(-0.5f);
 		b.setV(1);
 		G.HLF.divMod().call(a, b, d, m);
 		assertEquals(0, d.v(), tol);
 		assertEquals(-0.5, m.v(), tol);
 		
-		a.setV(3.3);
+		a.setV(3.3f);
 		b.setV(2);
 		G.HLF.divMod().call(a, b, d, m);
 		assertEquals(1, d.v(), tol);
 		assertEquals(1.3, m.v(), tol);
 		
-		a.setV(-3.3);
+		a.setV(-3.3f);
 		b.setV(2);
 		G.HLF.divMod().call(a, b, d, m);
 		assertEquals(-1, d.v(), tol);
@@ -205,7 +205,7 @@ public class TestFloat16Algebra {
 		assertEquals(0, m.v(), 0);
 
 		a.setV(4);
-		b.setV(2.3);
+		b.setV(2.3f);
 		G.HLF.divMod().call(a, b, d, m);
 		assertEquals(1, d.v(), tol);
 		assertEquals(1.7, m.v(), tol);
@@ -270,7 +270,7 @@ public class TestFloat16Algebra {
 		Float16Member d = G.HLF.construct();
 
 		// G.CDBL.acos();
-		a.setV(Math.PI/2);
+		a.setV((float)Math.PI/2);
 		G.HLF.acos().call(a, b);
 		assertEquals(FastMath.acos(Math.PI/2), b.v(), 0);
 		
@@ -295,7 +295,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.asech();
 		
 		// G.CDBL.asin();
-		a.setV(Math.PI/2);
+		a.setV((float)Math.PI/2);
 		G.HLF.asin().call(a, b);
 		assertEquals(FastMath.asin(Math.PI/2), b.v(), 0);
 		
@@ -307,7 +307,7 @@ public class TestFloat16Algebra {
 		assertEquals(66,b.v(),0);
 		
 		// G.CDBL.atan();
-		a.setV(Math.PI/2);
+		a.setV((float)Math.PI/2);
 		G.HLF.atan().call(a, b);
 		assertEquals(FastMath.atan(Math.PI/2), b.v(), 0.0005);
 		
@@ -336,12 +336,12 @@ public class TestFloat16Algebra {
 		assertEquals(14, b.v(), 0);
 		
 		// G.CDBL.cos();
-		a.setV(Math.PI/2);
+		a.setV((float)Math.PI/2);
 		G.HLF.cos().call(a, b);
 		assertEquals(FastMath.cos(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.cosh();
-		a.setV(Math.PI/2);
+		a.setV((float)(Math.PI/2));
 		G.HLF.cosh().call(a, b);
 		assertEquals(FastMath.cosh(Math.PI/2), b.v(), tol);
 		
@@ -410,12 +410,12 @@ public class TestFloat16Algebra {
 		// tested by zero() test below
 		
 		// G.CDBL.log();
-		a.setV(Math.PI/2);
+		a.setV((float)Math.PI/2);
 		G.HLF.log().call(a, b);
 		assertEquals(Math.log(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.log1p();
-		a.setV(Math.PI/2);
+		a.setV((float)(Math.PI/2));
 		G.HLF.log1p().call(a, b);
 		assertEquals(Math.log1p(Math.PI/2), b.v(), tol);
 		
@@ -485,7 +485,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.sech();
 		
 		// G.CDBL.sin();
-		a.setV(Math.PI/2);
+		a.setV((float)(Math.PI/2));
 		G.HLF.sin().call(a, b);
 		assertEquals(FastMath.sin(Math.PI/2), b.v(), tol);
 		
@@ -500,7 +500,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.sincpi();
 		
 		// G.CDBL.sinh();
-		a.setV(Math.PI/2);
+		a.setV((float)(Math.PI/2));
 		G.HLF.sinh().call(a, b);
 		assertEquals(FastMath.sinh(Math.PI/2), b.v(), tol);
 		
@@ -518,12 +518,12 @@ public class TestFloat16Algebra {
 		assertEquals(-3, c.v(), 0);
 		
 		// G.CDBL.tan();
-		a.setV(Math.PI/4);
+		a.setV((float)(Math.PI/4));
 		G.HLF.tan().call(a, b);
 		assertEquals(FastMath.tan(Math.PI/4), b.v(), tol);
 
 		// G.CDBL.tanh();
-		a.setV(Math.PI/4);
+		a.setV((float)(Math.PI/4));
 		G.HLF.tanh().call(a, b);
 		assertEquals(FastMath.tanh(Math.PI/4), b.v(), tol);
 
@@ -619,8 +619,8 @@ public class TestFloat16Algebra {
 		assertEquals(-65504, a.v(), 0);
 		
 		// G.HLF.mod();
-		a.setV(4.2);
-		b.setV(-Math.PI);
+		a.setV(4.2f);
+		b.setV((float)-Math.PI);
 		G.HLF.mod().call(a, b, c);
 		assertEquals(a.v() % b.v(), c.v(), 0);
 		

@@ -80,13 +80,13 @@ public class TestFloat16Matrix {
 		
 		Float16MatrixMember mat =
 				new Float16MatrixMember(3, 3,
-						new double[] {1,7,4,1,2,4,8,3,3});
+						new float[] {1,7,4,1,2,4,8,3,3});
 		
 		Float16MatrixMember invMat =
-				new Float16MatrixMember(3, 3, new double[9]);
+				new Float16MatrixMember(3, 3, new float[9]);
 		
 		Float16MatrixMember ident =
-				new Float16MatrixMember(3, 3, new double[9]);
+				new Float16MatrixMember(3, 3, new float[9]);
 		
 		G.HLF_MAT.invert().call(mat, invMat);
 		
@@ -135,9 +135,9 @@ public class TestFloat16Matrix {
 	
 	@Test
 	public void testSingular() {
-		Float16MatrixMember a = new Float16MatrixMember(3, 3, new double[] {1,0,0,0,1,0,0,0,0});
-		Float16VectorMember b = new Float16VectorMember(new double[] {1,2,3});
-		Float16VectorMember x = new Float16VectorMember(new double[3]);
+		Float16MatrixMember a = new Float16MatrixMember(3, 3, new float[] {1,0,0,0,1,0,0,0,0});
+		Float16VectorMember b = new Float16VectorMember(new float[] {1,2,3});
+		Float16VectorMember x = new Float16VectorMember(new float[3]);
 		LUDecomp.compute(G.HLF, G.HLF_MAT, a);
 		LUSolve.compute(G.HLF, G.HLF_VEC, a, b, x);
 		Float16Member v = new Float16Member();

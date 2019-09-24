@@ -188,7 +188,7 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(-0.3, b.k0(), tol);
 		
 		// G.OHLF.cos();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);
@@ -207,7 +207,7 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(0, b.k0(), 0);
 		
 		// G.OHLF.cosh();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);
@@ -234,7 +234,7 @@ public class TestOctonionFloat16Algebra {
 		a.setI0(6);
 		a.setJ0(7);
 		a.setK0(8);
-		b.setR(0.5);
+		b.setR(0.5f);
 		b.setI(0);
 		b.setJ(0);
 		b.setK(0);
@@ -501,14 +501,14 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(1, t.v(), 0);
 		
 		// G.OHLF.round();
-		a.setR(1.1);
-		a.setI(-2.2);
-		a.setJ(3.3);
-		a.setK(-4.4);
-		a.setL(5.5);
-		a.setI0(-6.6);
-		a.setJ0(7.7);
-		a.setK0(-8.8);
+		a.setR(1.1f);
+		a.setI(-2.2f);
+		a.setJ(3.3f);
+		a.setK(-4.4f);
+		a.setL(5.5f);
+		a.setI0(-6.6f);
+		a.setJ0(7.7f);
+		a.setK0(-8.8f);
 		t.setV(1);
 		G.OHLF.round().call(Mode.HALF_EVEN, t, a, b);
 		assertEquals(1, b.r(), 0);
@@ -521,14 +521,14 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(-9, b.k0(), 0);
 		
 		// G.OHLF.scale();
-		a.setR(1.1);
-		a.setI(-2.2);
-		a.setJ(3.3);
-		a.setK(-4.4);
-		a.setL(5.5);
-		a.setI0(-6.6);
-		a.setJ0(7.7);
-		a.setK0(-8.8);
+		a.setR(1.1f);
+		a.setI(-2.2f);
+		a.setJ(3.3f);
+		a.setK(-4.4f);
+		a.setL(5.5f);
+		a.setI0(-6.6f);
+		a.setJ0(7.7f);
+		a.setK0(-8.8f);
 		b.setR(3);
 		b.setI(0);
 		b.setJ(0);
@@ -548,7 +548,7 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(-26.4, c.k0(), tol);
 		
 		// G.OHLF.sin();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);
@@ -577,7 +577,7 @@ public class TestOctonionFloat16Algebra {
 		// G.OHLF.sincpi();
 		
 		// G.OHLF.sinh();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);
@@ -644,7 +644,7 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(-11, c.k0(), 0);
 		
 		// G.OHLF.tan();
-		a.setR(Math.PI/4);
+		a.setR((float)Math.PI/4);
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);
@@ -663,7 +663,7 @@ public class TestOctonionFloat16Algebra {
 		assertEquals(0, b.k0(), 0);
 		
 		// G.OHLF.tanh();
-		a.setR(Math.PI/4);
+		a.setR((float)Math.PI/4);
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);

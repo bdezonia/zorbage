@@ -125,14 +125,14 @@ public class TestFloat16Complex {
 		assertEquals(7, b.i(), 0);
 		
 		// G.CHLF.cos();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		G.CHLF.cos().call(a, b);
 		assertEquals(Math.cos(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 		
 		// G.CHLF.cosh();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		G.CHLF.cosh().call(a, b);
 		assertEquals(Math.cosh(Math.PI/2), b.r(), tol);
@@ -211,14 +211,14 @@ public class TestFloat16Complex {
 		// tested by zero() test below
 		
 		// G.CHLF.log();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		G.CHLF.log().call(a, b);
 		assertEquals(Math.log(Math.PI/2), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 		
 		// G.CHLF.log1p();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		G.CHLF.log1p().call(a, b);
 		assertEquals(Math.log1p(Math.PI/2), b.r(), tol);
@@ -274,13 +274,13 @@ public class TestFloat16Complex {
 		G.CHLF.random().call(a);
 		
 		// G.CHLF.real();
-		a = new ComplexFloat16Member(0.1, 0.9);
+		a = new ComplexFloat16Member(0.1f, 0.9f);
 		G.CHLF.real().call(a, d);
 		assertEquals(0.1, d.v(), tol);
 		
 		// G.CHLF.round();
 		d = new Float16Member(1);
-		a = new ComplexFloat16Member(3.3, -4.1);
+		a = new ComplexFloat16Member(3.3f, -4.1f);
 		G.CHLF.round().call(Mode.TOWARDS_ORIGIN, d, a, b);
 		assertEquals(3, b.r(), 0);
 		assertEquals(-4, b.i(), 0);
@@ -297,7 +297,7 @@ public class TestFloat16Complex {
 		// G.CHLF.sech();
 		
 		// G.CHLF.sin();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		G.CHLF.sin().call(a, b);
 		assertEquals(Math.sin(Math.PI/2), b.r(), tol);
@@ -314,7 +314,7 @@ public class TestFloat16Complex {
 		// G.CHLF.sincpi();
 		
 		// G.CHLF.sinh();
-		a.setR(Math.PI/2);
+		a.setR((float)Math.PI/2);
 		a.setI(0);
 		G.CHLF.sinh().call(a, b);
 		assertEquals(Math.sinh(Math.PI/2), b.r(), tol);
@@ -339,33 +339,33 @@ public class TestFloat16Complex {
 		assertEquals(3, c.i(), 0);
 		
 		// G.CHLF.tan();
-		a.setR(Math.PI/4);
+		a.setR((float)Math.PI/4);
 		a.setI(0);
 		G.CHLF.tan().call(a, b);
 		assertEquals(FastMath.tan(Math.PI/4), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 
 		// G.CHLF.tanh();
-		a.setR(Math.PI/4);
+		a.setR((float)Math.PI/4);
 		a.setI(0);
 		G.CHLF.tanh().call(a, b);
 		assertEquals(Math.tanh(Math.PI/4), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 
 		// G.CHLF.unity();
-		a = new ComplexFloat16Member(0.1, 0.9);
+		a = new ComplexFloat16Member(0.1f, 0.9f);
 		G.CHLF.unity().call(a);
 		assertEquals(1, a.r(), 0);
 		assertEquals(0, a.i(), 0);
 		
 		// G.CHLF.unreal();
-		a = new ComplexFloat16Member(0.1, 0.9);
+		a = new ComplexFloat16Member(0.1f, 0.9f);
 		G.CHLF.unreal().call(a, b);
 		assertEquals(0, b.r(), 0);
 		assertEquals(0.9, b.i(), tol);
 		
 		// G.CHLF.zero();
-		a = new ComplexFloat16Member(0.1, 0.9);
+		a = new ComplexFloat16Member(0.1f, 0.9f);
 		assertFalse(G.CHLF.isZero().call(a));
 		G.CHLF.zero().call(a);
 		assertTrue(G.CHLF.isZero().call(a));
