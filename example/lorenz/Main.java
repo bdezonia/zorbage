@@ -38,26 +38,33 @@ public class Main extends SimpleApplication {
 		Procedure3<Float32Member, Float32VectorMember, Float32VectorMember> lorenz =
 				new Procedure3<Float32Member, Float32VectorMember, Float32VectorMember>()
 		{
+			// the Lorenz constants
+			
 			private final float SIGMA = 10;
 			private final float RHO = 28;
 			private final float BETA = 8f/3;
 
-			private Float32Member xc = G.FLT.construct();
-			private Float32Member yc = G.FLT.construct();
-			private Float32Member zc = G.FLT.construct();
+			// the derivative equation for y' = f(t,y)
 			
 			@Override
 			public void call(Float32Member t, Float32VectorMember y, Float32VectorMember result) {
+				
+				// Java's optimizer sees to it that these get built on the stack as primitives
+
+				Float32Member xc = G.FLT.construct();
+				Float32Member yc = G.FLT.construct();
+				Float32Member zc = G.FLT.construct();
+				Float32Member v = G.FLT.construct();
+				
 				if (y.length() != 4)
 					throw new IllegalArgumentException("oops");
 				result.alloc(4);
 				y.v(0, xc);
 				y.v(1, yc);
 				y.v(2, zc);
-				Float32Member v = G.FLT.construct();
 				v.setV(SIGMA * (yc.v()-xc.v()));
 				result.setV(0, v);
-				v.setV(xc.v()*(RHO-zc.v()) - yc.v());
+				v.setV(xc.v() * (RHO-zc.v()) - yc.v());
 				result.setV(1, v);
 				v.setV(xc.v()*yc.v() - BETA*zc.v());
 				result.setV(2, v);
@@ -65,12 +72,26 @@ public class Main extends SimpleApplication {
 				result.setV(3, v);
 			}
 		};
-		Float32Member t0 = G.FLT.construct();
+		
+		// 4d starting location (x, y, z, t)
 		Float32VectorMember y0 = G.FLT_VEC.construct("[0.5,0.5,0.1,0]");
-		int numSteps = 50000;
+		
+		// t0 = 0
+		Float32Member t0 = G.FLT.construct();
+		
+		// dt = 1/64
 		Float32Member dt = G.FLT.construct(((Double)(1.0 / 64)).toString());
+		
+		// number of intermediate 4-d points to generate
+		int numSteps = 50000;
+		
+		// the intermediate 4-d points
 		IndexedDataSource<Float32VectorMember> results = ArrayDataSource.construct(G.FLT_VEC, numSteps);
+		
+		// solve the 4-d differential equation
 		ClassicRungeKutta.compute(G.FLT_VEC, G.FLT, lorenz, t0, y0, numSteps, dt, results);
+		
+		// format output as JMonkeyEngine wants
 		float[] xs = new float[numSteps];
 		float[] ys = new float[numSteps];
 		float[] zs = new float[numSteps];
