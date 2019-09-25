@@ -47,7 +47,7 @@ public class Main extends SimpleApplication {
 			// the derivative equation for y' = f(t,y)
 			
 			@Override
-			public void call(Float32Member t, Float32VectorMember y, Float32VectorMember result) {
+			public void call(Float32Member t, Float32VectorMember y, Float32VectorMember outputVec) {
 				
 				// Java's optimizer sees to it that these get built on the stack as primitives
 
@@ -58,18 +58,18 @@ public class Main extends SimpleApplication {
 				
 				if (y.length() != 4)
 					throw new IllegalArgumentException("oops");
-				result.alloc(4);
+				outputVec.alloc(4);
 				y.v(0, xc);
 				y.v(1, yc);
 				y.v(2, zc);
 				v.setV(SIGMA * (yc.v()-xc.v()));
-				result.setV(0, v);
+				outputVec.setV(0, v);
 				v.setV(xc.v() * (RHO-zc.v()) - yc.v());
-				result.setV(1, v);
+				outputVec.setV(1, v);
 				v.setV(xc.v()*yc.v() - BETA*zc.v());
-				result.setV(2, v);
+				outputVec.setV(2, v);
 				v.setV(1);
-				result.setV(3, v);
+				outputVec.setV(3, v);
 			}
 		};
 		
@@ -86,10 +86,10 @@ public class Main extends SimpleApplication {
 		int numSteps = 50000;
 		
 		// the intermediate 4-d points
-		IndexedDataSource<Float32VectorMember> results = ArrayDataSource.construct(G.FLT_VEC, numSteps);
+		IndexedDataSource<Float32VectorMember> outputVecs = ArrayDataSource.construct(G.FLT_VEC, numSteps);
 		
 		// solve the 4-d differential equation
-		ClassicRungeKutta.compute(G.FLT_VEC, G.FLT, lorenz, t0, y0, numSteps, dt, results);
+		ClassicRungeKutta.compute(G.FLT_VEC, G.FLT, lorenz, t0, y0, numSteps, dt, outputVecs);
 		
 		// format output as JMonkeyEngine wants
 		float[] xs = new float[numSteps];
@@ -99,7 +99,7 @@ public class Main extends SimpleApplication {
 		Float32VectorMember vector = G.FLT_VEC.construct();
 		Float32Member component = G.FLT.construct();
 		for (int i = 0; i < numSteps; i++) {
-			results.get(i, vector);
+			outputVecs.get(i, vector);
 			vector.v(0, component);
 			xs[i] = component.v();
 			vector.v(1, component);
