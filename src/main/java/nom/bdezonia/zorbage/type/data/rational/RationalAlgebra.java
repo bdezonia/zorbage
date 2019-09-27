@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ModularDivision;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.OrderedField;
 import nom.bdezonia.zorbage.type.algebra.Scale;
@@ -60,6 +62,7 @@ public class RationalAlgebra
 		Norm<RationalMember,RationalMember>,
 		ScaleByHighPrec<RationalMember>,
 		ScaleByRational<RationalMember>,
+		ModularDivision<RationalMember>,
 		Tolerance<RationalMember,RationalMember>
 {
 	@Override
@@ -224,6 +227,41 @@ public class RationalAlgebra
 	@Override
 	public Procedure3<RationalMember, RationalMember, RationalMember> divide() {
 		return DIV;
+	}
+
+
+	@Override
+	public Procedure3<RationalMember, RationalMember, RationalMember> div() {
+		return DIV;
+	}
+
+	private final Procedure3<RationalMember, RationalMember, RationalMember> MOD =
+			new Procedure3<RationalMember, RationalMember, RationalMember>()
+	{
+		@Override
+		public void call(RationalMember a, RationalMember b, RationalMember c) {
+			c.setV(BigInteger.ZERO);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, RationalMember, RationalMember> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<RationalMember, RationalMember, RationalMember, RationalMember> DIVMOD =
+			new Procedure4<RationalMember, RationalMember, RationalMember, RationalMember>()
+	{
+		@Override
+		public void call(RationalMember a, RationalMember b, RationalMember d, RationalMember m) {
+			div().call(a, b, d);
+			mod().call(a, b, m);
+		}
+	};
+
+	@Override
+	public Procedure4<RationalMember, RationalMember, RationalMember, RationalMember> divMod() {
+		return DIVMOD;
 	}
 
 	private final Procedure3<Integer, RationalMember, RationalMember> POWER =
@@ -441,5 +479,4 @@ public class RationalAlgebra
 	public Function3<Boolean, RationalMember, RationalMember, RationalMember> within() {
 		return WITHIN;
 	}
-
 }
