@@ -35,6 +35,7 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
@@ -223,5 +224,93 @@ public class TestRationalAlgebra {
 		G.RAT.mod().call(c, a, b);
 		assertEquals(BigInteger.valueOf(5), b.n());
 		assertEquals(BigInteger.valueOf(56), b.d());
+	}
+	
+	// proof that rats and doubles behave the same
+	
+	@Test
+	public void testX() {
+		RationalMember a = G.RAT.construct();
+		RationalMember b = G.RAT.construct();
+		RationalMember c = G.RAT.construct();
+		Float64Member af = G.DBL.construct();
+		Float64Member bf = G.DBL.construct();
+		Float64Member cf = G.DBL.construct();
+		
+		a.setV(BigInteger.valueOf(27), BigInteger.valueOf(5));
+		af.setV(27.0/5);
+		
+		b.setV(BigInteger.valueOf(44), BigInteger.valueOf(13));
+		bf.setV(44.0/13);
+		
+		G.RAT.mod().call(a, b, c);
+		G.DBL.mod().call(af, bf, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		
+		G.RAT.mod().call(b, a, c);
+		G.DBL.mod().call(bf, af, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		a.setV(BigInteger.valueOf(-27), BigInteger.valueOf(5));
+		af.setV(-27.0/5);
+		
+		b.setV(BigInteger.valueOf(44), BigInteger.valueOf(13));
+		bf.setV(44.0/13);
+		
+		G.RAT.mod().call(a, b, c);
+		G.DBL.mod().call(af, bf, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		
+		G.RAT.mod().call(b, a, c);
+		G.DBL.mod().call(bf, af, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		a.setV(BigInteger.valueOf(27), BigInteger.valueOf(5));
+		af.setV(27.0/5);
+		
+		b.setV(BigInteger.valueOf(-44), BigInteger.valueOf(13));
+		bf.setV(-44.0/13);
+		
+		G.RAT.mod().call(a, b, c);
+		G.DBL.mod().call(af, bf, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		
+		G.RAT.mod().call(b, a, c);
+		G.DBL.mod().call(bf, af, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		a.setV(BigInteger.valueOf(-27), BigInteger.valueOf(5));
+		af.setV(-27.0/5);
+		
+		b.setV(BigInteger.valueOf(-44), BigInteger.valueOf(13));
+		bf.setV(-44.0/13);
+		
+		G.RAT.mod().call(a, b, c);
+		G.DBL.mod().call(af, bf, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
+		
+		
+		G.RAT.mod().call(b, a, c);
+		G.DBL.mod().call(bf, af, cf);
+		System.out.println("--------------------");
+		System.out.println("BIGD " + c.v());
+		System.out.println("DBL  " + cf);
 	}
 }
