@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.rational;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
@@ -200,5 +201,27 @@ public class TestRationalAlgebra {
 		G.RAT.unity().call(c);
 		assertEquals(BigInteger.ONE, c.n);
 		assertEquals(BigInteger.ONE, c.d);
+		
+		a.setV(BigInteger.ONE, BigInteger.valueOf(6));
+		b.setV(BigInteger.valueOf(2), BigInteger.valueOf(6));
+		c.setV(BigInteger.valueOf(3), BigInteger.valueOf(6));
+		assertTrue(G.RAT.within().call(a, b, c));
+		a.setV(BigInteger.ONE, BigInteger.valueOf(7));
+		assertFalse(G.RAT.within().call(a, b, c));
+		
+		G.RAT.div().call(a, c, b);
+		assertEquals(BigInteger.ZERO, b.n());
+		assertEquals(BigInteger.ONE, b.d());
+		G.RAT.mod().call(a, c, b);
+		assertEquals(BigInteger.ONE, b.n());
+		assertEquals(BigInteger.valueOf(7), b.d());
+		
+		c.setV(BigInteger.valueOf(3), BigInteger.valueOf(8));
+		G.RAT.div().call(c, a, b);
+		assertEquals(BigInteger.valueOf(2), b.n());
+		assertEquals(BigInteger.ONE, b.d());
+		G.RAT.mod().call(c, a, b);
+		assertEquals(BigInteger.valueOf(5), b.n());
+		assertEquals(BigInteger.valueOf(56), b.d());
 	}
 }

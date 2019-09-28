@@ -213,7 +213,7 @@ public class RationalAlgebra
 		return MUL;
 	}
 
-	private final Procedure3<RationalMember, RationalMember, RationalMember> DIV =
+	private final Procedure3<RationalMember, RationalMember, RationalMember> DIVIDE =
 			new Procedure3<RationalMember, RationalMember, RationalMember>()
 	{
 		@Override
@@ -226,9 +226,22 @@ public class RationalAlgebra
 
 	@Override
 	public Procedure3<RationalMember, RationalMember, RationalMember> divide() {
-		return DIV;
+		return DIVIDE;
 	}
 
+	// TODO: I've seen rationals div/mod integers. Not rationals div/mod rationals. Maybe this is wrong.
+	
+	private final Procedure3<RationalMember, RationalMember, RationalMember> DIV =
+			new Procedure3<RationalMember, RationalMember, RationalMember>()
+	{
+		@Override
+		public void call(RationalMember a, RationalMember b, RationalMember d) {
+			RationalMember tmp = G.RAT.construct();
+			divide().call(a, b, tmp);
+			BigDecimal untruncated = tmp.v();
+			d.setV(untruncated.toBigInteger());
+		}
+	};
 
 	@Override
 	public Procedure3<RationalMember, RationalMember, RationalMember> div() {
@@ -239,8 +252,13 @@ public class RationalAlgebra
 			new Procedure3<RationalMember, RationalMember, RationalMember>()
 	{
 		@Override
-		public void call(RationalMember a, RationalMember b, RationalMember c) {
-			c.setV(BigInteger.ZERO);
+		public void call(RationalMember a, RationalMember b, RationalMember m) {
+			// mod = a - (a div b) * b
+			RationalMember d = G.RAT.construct();
+			RationalMember tmp = G.RAT.construct();
+			div().call(a, b, d);
+			multiply().call(b, d, tmp);
+			subtract().call(a, tmp, m);
 		}
 	};
 	
@@ -254,8 +272,14 @@ public class RationalAlgebra
 	{
 		@Override
 		public void call(RationalMember a, RationalMember b, RationalMember d, RationalMember m) {
-			div().call(a, b, d);
-			mod().call(a, b, m);
+			RationalMember tmp = G.RAT.construct();
+			RationalMember tmpD = G.RAT.construct();
+			divide().call(a, b, tmp);
+			BigDecimal untruncated = tmp.v();
+			tmpD.setV(untruncated.toBigInteger());
+			multiply().call(b, tmpD, tmp);
+			subtract().call(a, tmp, m);
+			assign().call(tmpD, d);
 		}
 	};
 
