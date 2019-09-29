@@ -64,11 +64,14 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -91,6 +94,8 @@ public class ComplexHighPrecisionAlgebra
     Conjugate<ComplexHighPrecisionMember>,
     RealUnreal<ComplexHighPrecisionMember,HighPrecisionMember>,
     Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>,
+    ScaleByHighPrec<ComplexHighPrecisionMember>,
+    ScaleByRational<ComplexHighPrecisionMember>,
     Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
@@ -1261,6 +1266,48 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> SBHP =
+			new Procedure3<HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
+			BigDecimal tmp;
+			tmp = a.v().multiply(b.r());
+			c.setR(tmp);
+			tmp = a.v().multiply(b.i());
+			c.setI(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> SBR =
+			new Procedure3<RationalMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	{
+		@Override
+		public void call(RationalMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
+			BigDecimal n = new BigDecimal(a.n());
+			BigDecimal d = new BigDecimal(a.d());
+			BigDecimal tmp;
+			tmp = b.r();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setR(tmp);
+			tmp = b.i();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setI(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> WITHIN =

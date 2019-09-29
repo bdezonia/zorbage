@@ -149,7 +149,7 @@ public class ResampleLinear {
 			// add to sum
 			alg.add().call(outVal, tmp, outVal);
 			
-			// rest point
+			// reset point
 			inputPoint.set(i, inputPoint.get(i) - 1); // undo go "right"
 		}
 	}

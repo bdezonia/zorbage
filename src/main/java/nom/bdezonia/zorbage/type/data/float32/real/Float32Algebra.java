@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float32.real;
 
+import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
@@ -66,8 +67,13 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -97,6 +103,8 @@ public class Float32Algebra
     ModularDivision<Float32Member>,
     Conjugate<Float32Member>,
     Scale<Float32Member,Float32Member>,
+    ScaleByHighPrec<Float32Member>,
+    ScaleByRational<Float32Member>,
     Tolerance<Float32Member,Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
@@ -1434,6 +1442,42 @@ public class Float32Algebra
 	@Override
 	public Procedure3<Float32Member, Float32Member, Float32Member> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, Float32Member, Float32Member> SBHP =
+			new Procedure3<HighPrecisionMember, Float32Member, Float32Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, Float32Member b, Float32Member c) {
+			BigDecimal tmp;
+			tmp = a.v().multiply(BigDecimal.valueOf(b.v()));
+			c.setV(tmp.floatValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, Float32Member, Float32Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, Float32Member, Float32Member> SBR =
+			new Procedure3<RationalMember, Float32Member, Float32Member>()
+	{
+		@Override
+		public void call(RationalMember a, Float32Member b, Float32Member c) {
+			BigDecimal n = new BigDecimal(a.n());
+			BigDecimal d = new BigDecimal(a.d());
+			BigDecimal tmp;
+			tmp = BigDecimal.valueOf(b.v());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setV(tmp.floatValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, Float32Member, Float32Member> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float32Member, Float32Member, Float32Member> WITHIN =

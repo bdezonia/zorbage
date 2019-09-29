@@ -51,6 +51,8 @@ import nom.bdezonia.zorbage.type.algebra.OctonionConstants;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -59,6 +61,7 @@ import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 
 /**
@@ -83,6 +86,8 @@ public class OctonionHighPrecisionAlgebra
     Roots<OctonionHighPrecisionMember>,
     RealUnreal<OctonionHighPrecisionMember,HighPrecisionMember>,
     Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>,
+    ScaleByHighPrec<OctonionHighPrecisionMember>,
+    ScaleByRational<OctonionHighPrecisionMember>,
     Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
@@ -1207,6 +1212,84 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> SBHP =
+			new Procedure3<HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, OctonionHighPrecisionMember b, OctonionHighPrecisionMember c) {
+			BigDecimal tmp;
+			tmp = a.v().multiply(b.r());
+			c.setR(tmp);
+			tmp = a.v().multiply(b.i());
+			c.setI(tmp);
+			tmp = a.v().multiply(b.j());
+			c.setJ(tmp);
+			tmp = a.v().multiply(b.k());
+			c.setK(tmp);
+			tmp = a.v().multiply(b.l());
+			c.setL(tmp);
+			tmp = a.v().multiply(b.i0());
+			c.setI0(tmp);
+			tmp = a.v().multiply(b.j0());
+			c.setJ0(tmp);
+			tmp = a.v().multiply(b.k0());
+			c.setK0(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> SBR =
+			new Procedure3<RationalMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public void call(RationalMember a, OctonionHighPrecisionMember b, OctonionHighPrecisionMember c) {
+			BigDecimal n = new BigDecimal(a.n());
+			BigDecimal d = new BigDecimal(a.d());
+			BigDecimal tmp;
+			tmp = b.r();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setR(tmp);
+			tmp = b.i();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setI(tmp);
+			tmp = b.j();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setJ(tmp);
+			tmp = b.k();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setK(tmp);
+			tmp = b.l();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setL(tmp);
+			tmp = b.i0();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setI0(tmp);
+			tmp = b.j0();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setJ0(tmp);
+			tmp = b.k0();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setK0(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> WITHIN =

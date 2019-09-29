@@ -50,6 +50,8 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -57,6 +59,7 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -78,6 +81,8 @@ public class QuaternionHighPrecisionAlgebra
     Roots<QuaternionHighPrecisionMember>,
     RealUnreal<QuaternionHighPrecisionMember,HighPrecisionMember>,
     Scale<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember>,
+    ScaleByHighPrec<QuaternionHighPrecisionMember>,
+    ScaleByRational<QuaternionHighPrecisionMember>,
     Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
@@ -870,6 +875,60 @@ public class QuaternionHighPrecisionAlgebra
 		return MUL;
 	}
 
+	private final Procedure3<HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> SBHP =
+			new Procedure3<HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, QuaternionHighPrecisionMember b, QuaternionHighPrecisionMember c) {
+			BigDecimal tmp;
+			tmp = a.v().multiply(b.r());
+			c.setR(tmp);
+			tmp = a.v().multiply(b.i());
+			c.setI(tmp);
+			tmp = a.v().multiply(b.j());
+			c.setJ(tmp);
+			tmp = a.v().multiply(b.k());
+			c.setK(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> SBR =
+			new Procedure3<RationalMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
+	{
+		@Override
+		public void call(RationalMember a, QuaternionHighPrecisionMember b, QuaternionHighPrecisionMember c) {
+			BigDecimal n = new BigDecimal(a.n());
+			BigDecimal d = new BigDecimal(a.d());
+			BigDecimal tmp;
+			tmp = b.r();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setR(tmp);
+			tmp = b.i();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setI(tmp);
+			tmp = b.j();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setJ(tmp);
+			tmp = b.k();
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setK(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByRational() {
+		return SBR;
+	}
+	
 	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> WITHIN =
 			new Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
 	{

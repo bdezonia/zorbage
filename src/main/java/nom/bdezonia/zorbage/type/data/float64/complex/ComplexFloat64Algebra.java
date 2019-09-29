@@ -37,6 +37,7 @@
 
 package nom.bdezonia.zorbage.type.data.float64.complex;
 
+import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
@@ -71,10 +72,15 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -101,6 +107,8 @@ public class ComplexFloat64Algebra
     Random<ComplexFloat64Member>,
     RealUnreal<ComplexFloat64Member,Float64Member>,
     Scale<ComplexFloat64Member,ComplexFloat64Member>,
+    ScaleByHighPrec<ComplexFloat64Member>,
+    ScaleByRational<ComplexFloat64Member>,
     Tolerance<Float64Member,ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
@@ -1324,6 +1332,48 @@ public class ComplexFloat64Algebra
 	@Override
 	public Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member> scale() {
 		return MUL;
+	}
+
+	private final Procedure3<HighPrecisionMember, ComplexFloat64Member, ComplexFloat64Member> SBHP =
+			new Procedure3<HighPrecisionMember, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			BigDecimal tmp;
+			tmp = a.v().multiply(BigDecimal.valueOf(b.r()));
+			c.setR(tmp.doubleValue());
+			tmp = a.v().multiply(BigDecimal.valueOf(b.i()));
+			c.setI(tmp.doubleValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, ComplexFloat64Member, ComplexFloat64Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, ComplexFloat64Member, ComplexFloat64Member> SBR =
+			new Procedure3<RationalMember, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(RationalMember a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			BigDecimal n = new BigDecimal(a.n());
+			BigDecimal d = new BigDecimal(a.d());
+			BigDecimal tmp;
+			tmp = BigDecimal.valueOf(b.r());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setR(tmp.doubleValue());
+			tmp = BigDecimal.valueOf(b.i());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setI(tmp.doubleValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, ComplexFloat64Member, ComplexFloat64Member> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float64Member, ComplexFloat64Member, ComplexFloat64Member> WITHIN =

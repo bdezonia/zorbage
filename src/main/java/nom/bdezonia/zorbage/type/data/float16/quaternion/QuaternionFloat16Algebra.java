@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.float16.quaternion;
 
+import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.jafama.FastMath;
@@ -57,12 +58,17 @@ import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -88,6 +94,8 @@ public class QuaternionFloat16Algebra
     Roots<QuaternionFloat16Member>,
     RealUnreal<QuaternionFloat16Member,Float16Member>,
     Scale<QuaternionFloat16Member,QuaternionFloat16Member>,
+    ScaleByHighPrec<QuaternionFloat16Member>,
+    ScaleByRational<QuaternionFloat16Member>,
     Tolerance<Float16Member,QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
@@ -963,6 +971,60 @@ public class QuaternionFloat16Algebra
 		return MUL;
 	}
 
+	private final Procedure3<HighPrecisionMember, QuaternionFloat16Member, QuaternionFloat16Member> SBHP =
+			new Procedure3<HighPrecisionMember, QuaternionFloat16Member, QuaternionFloat16Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, QuaternionFloat16Member b, QuaternionFloat16Member c) {
+			BigDecimal tmp;
+			tmp = a.v().multiply(BigDecimal.valueOf(b.r()));
+			c.setR(tmp.floatValue());
+			tmp = a.v().multiply(BigDecimal.valueOf(b.i()));
+			c.setI(tmp.floatValue());
+			tmp = a.v().multiply(BigDecimal.valueOf(b.j()));
+			c.setJ(tmp.floatValue());
+			tmp = a.v().multiply(BigDecimal.valueOf(b.k()));
+			c.setK(tmp.floatValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, QuaternionFloat16Member, QuaternionFloat16Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<RationalMember, QuaternionFloat16Member, QuaternionFloat16Member> SBR =
+			new Procedure3<RationalMember, QuaternionFloat16Member, QuaternionFloat16Member>()
+	{
+		@Override
+		public void call(RationalMember a, QuaternionFloat16Member b, QuaternionFloat16Member c) {
+			BigDecimal n = new BigDecimal(a.n());
+			BigDecimal d = new BigDecimal(a.d());
+			BigDecimal tmp;
+			tmp = BigDecimal.valueOf(b.r());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setR(tmp.floatValue());
+			tmp = BigDecimal.valueOf(b.i());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setI(tmp.floatValue());
+			tmp = BigDecimal.valueOf(b.j());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setJ(tmp.floatValue());
+			tmp = BigDecimal.valueOf(b.k());
+			tmp = tmp.multiply(n);
+			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			c.setK(tmp.floatValue());
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, QuaternionFloat16Member, QuaternionFloat16Member> scaleByRational() {
+		return SBR;
+	}
+	
 	private final Function3<Boolean, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member> WITHIN =
 			new Function3<Boolean, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member>()
 	{
