@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
@@ -69,11 +71,14 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -91,6 +96,8 @@ public class QuaternionHighPrecisionMatrix
 		Trigonometric<QuaternionHighPrecisionMatrixMember>,
 		Hyperbolic<QuaternionHighPrecisionMatrixMember>,
 		RealConstants<QuaternionHighPrecisionMatrixMember>,
+		ScaleByHighPrec<QuaternionHighPrecisionMatrixMember>,
+		ScaleByRational<QuaternionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>
 {
 	public QuaternionHighPrecisionMatrix() { }
@@ -681,6 +688,34 @@ public class QuaternionHighPrecisionMatrix
 	@Override
 	public Procedure1<QuaternionHighPrecisionMatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private Procedure3<HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> SBHP =
+			new Procedure3<HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, QuaternionHighPrecisionMatrixMember b, QuaternionHighPrecisionMatrixMember c) {
+			MatrixScaleByHighPrec.compute(G.QHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> SBR =
+			new Procedure3<RationalMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(RationalMember a, QuaternionHighPrecisionMatrixMember b, QuaternionHighPrecisionMatrixMember c) {
+			MatrixScaleByRational.compute(G.QHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> WITHIN =

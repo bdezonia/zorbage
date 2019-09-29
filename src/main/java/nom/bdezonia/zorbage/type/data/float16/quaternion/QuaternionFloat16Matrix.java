@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
@@ -80,11 +82,15 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -105,6 +111,8 @@ public class QuaternionFloat16Matrix
 		RealConstants<QuaternionFloat16MatrixMember>,
 		Infinite<QuaternionFloat16MatrixMember>,
 		NaN<QuaternionFloat16MatrixMember>,
+		ScaleByHighPrec<QuaternionFloat16MatrixMember>,
+		ScaleByRational<QuaternionFloat16MatrixMember>,
 		Tolerance<Float16Member,QuaternionFloat16MatrixMember>
 {
 	public QuaternionFloat16Matrix() { }
@@ -767,6 +775,34 @@ public class QuaternionFloat16Matrix
 	@Override
 	public Procedure1<QuaternionFloat16MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private Procedure3<HighPrecisionMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> SBHP =
+			new Procedure3<HighPrecisionMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, QuaternionFloat16MatrixMember b, QuaternionFloat16MatrixMember c) {
+			MatrixScaleByHighPrec.compute(G.QHLF, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> SBR =
+			new Procedure3<RationalMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(RationalMember a, QuaternionFloat16MatrixMember b, QuaternionFloat16MatrixMember c) {
+			MatrixScaleByRational.compute(G.QHLF, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> WITHIN =

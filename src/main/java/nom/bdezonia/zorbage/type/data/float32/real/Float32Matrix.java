@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
@@ -79,10 +81,14 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -103,6 +109,8 @@ public class Float32Matrix
 		RealConstants<Float32MatrixMember>,
 		Infinite<Float32MatrixMember>,
 		NaN<Float32MatrixMember>,
+		ScaleByHighPrec<Float32MatrixMember>,
+		ScaleByRational<Float32MatrixMember>,
 		Tolerance<Float32Member,Float32MatrixMember>
 {
 	public Float32Matrix() { }
@@ -737,6 +745,34 @@ public class Float32Matrix
 	@Override
 	public Procedure1<Float32MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private Procedure3<HighPrecisionMember, Float32MatrixMember, Float32MatrixMember> SBHP =
+			new Procedure3<HighPrecisionMember, Float32MatrixMember, Float32MatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, Float32MatrixMember b, Float32MatrixMember c) {
+			MatrixScaleByHighPrec.compute(G.FLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, Float32MatrixMember, Float32MatrixMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, Float32MatrixMember, Float32MatrixMember> SBR =
+			new Procedure3<RationalMember, Float32MatrixMember, Float32MatrixMember>()
+	{
+		@Override
+		public void call(RationalMember a, Float32MatrixMember b, Float32MatrixMember c) {
+			MatrixScaleByRational.compute(G.FLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, Float32MatrixMember, Float32MatrixMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float32Member, Float32MatrixMember, Float32MatrixMember> WITHIN =

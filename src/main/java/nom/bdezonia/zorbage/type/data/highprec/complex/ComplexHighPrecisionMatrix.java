@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
@@ -69,11 +71,14 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -91,6 +96,8 @@ public class ComplexHighPrecisionMatrix
 		Trigonometric<ComplexHighPrecisionMatrixMember>,
 		Hyperbolic<ComplexHighPrecisionMatrixMember>,
 		RealConstants<ComplexHighPrecisionMatrixMember>,
+		ScaleByHighPrec<ComplexHighPrecisionMatrixMember>,
+		ScaleByRational<ComplexHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMatrixMember>
 {
 	public ComplexHighPrecisionMatrix() { }
@@ -669,6 +676,34 @@ public class ComplexHighPrecisionMatrix
 	@Override
 	public Procedure1<ComplexHighPrecisionMatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private Procedure3<HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBHP =
+			new Procedure3<HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, ComplexHighPrecisionMatrixMember b, ComplexHighPrecisionMatrixMember c) {
+			MatrixScaleByHighPrec.compute(G.CHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBR =
+			new Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(RationalMember a, ComplexHighPrecisionMatrixMember b, ComplexHighPrecisionMatrixMember c) {
+			MatrixScaleByRational.compute(G.CHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> WITHIN =

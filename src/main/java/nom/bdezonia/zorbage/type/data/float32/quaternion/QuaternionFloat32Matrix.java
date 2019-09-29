@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
@@ -80,11 +82,15 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -105,6 +111,8 @@ public class QuaternionFloat32Matrix
 		RealConstants<QuaternionFloat32MatrixMember>,
 		Infinite<QuaternionFloat32MatrixMember>,
 		NaN<QuaternionFloat32MatrixMember>,
+		ScaleByHighPrec<QuaternionFloat32MatrixMember>,
+		ScaleByRational<QuaternionFloat32MatrixMember>,
 		Tolerance<Float32Member,QuaternionFloat32MatrixMember>
 {
 	public QuaternionFloat32Matrix() { }
@@ -767,6 +775,34 @@ public class QuaternionFloat32Matrix
 	@Override
 	public Procedure1<QuaternionFloat32MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private Procedure3<HighPrecisionMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBHP =
+			new Procedure3<HighPrecisionMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, QuaternionFloat32MatrixMember b, QuaternionFloat32MatrixMember c) {
+			MatrixScaleByHighPrec.compute(G.QFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBR =
+			new Procedure3<RationalMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(RationalMember a, QuaternionFloat32MatrixMember b, QuaternionFloat32MatrixMember c) {
+			MatrixScaleByRational.compute(G.QFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float32Member, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> WITHIN =

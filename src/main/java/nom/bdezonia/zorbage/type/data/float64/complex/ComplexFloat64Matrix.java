@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
@@ -80,11 +82,15 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -105,6 +111,8 @@ public class ComplexFloat64Matrix
 		RealConstants<ComplexFloat64MatrixMember>,
 		Infinite<ComplexFloat64MatrixMember>,
 		NaN<ComplexFloat64MatrixMember>,
+		ScaleByHighPrec<ComplexFloat64MatrixMember>,
+		ScaleByRational<ComplexFloat64MatrixMember>,
 		Tolerance<Float64Member,ComplexFloat64MatrixMember>
 {
 	public ComplexFloat64Matrix() { }
@@ -753,6 +761,34 @@ public class ComplexFloat64Matrix
 	@Override
 	public Procedure1<ComplexFloat64MatrixMember> GAMMA() {
 		return GAMMA;
+	}
+
+	private Procedure3<HighPrecisionMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SBHP =
+			new Procedure3<HighPrecisionMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+			MatrixScaleByHighPrec.compute(G.CDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SBR =
+			new Procedure3<RationalMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(RationalMember a, ComplexFloat64MatrixMember b, ComplexFloat64MatrixMember c) {
+			MatrixScaleByRational.compute(G.CDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float64Member, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> WITHIN =
