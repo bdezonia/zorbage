@@ -34,25 +34,21 @@ import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ResampleLinear {
+public class ResampleNearestNeighbor {
 
-	private ResampleLinear() { }
+	private ResampleNearestNeighbor() { }
 
 	/**
-	 * Resample one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
-	 * Note: the input datasource should be padded. This algorithm can poke outside the input boundaries.
+	 * Resample one multidim dataset into another multidim dataset using the nearest neighbor.
 	 * 
 	 * @param <T>
 	 * @param <U>
@@ -61,15 +57,13 @@ public class ResampleLinear {
 	 * @param input
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>,
-					U extends Allocatable<U>>
+	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
 	{
 		int numD = input.numDimensions();
 		if (newDims.length != numD)
 			throw new IllegalArgumentException("mismatched dims in Resample");
 		U value = alg.construct();
-		U tmp = alg.construct();
 		MultiDimDataSource<U> output = MultiDimStorage.allocate(newDims, value);
 		IntegerIndex inputPoint = new IntegerIndex(numD);
 		IntegerIndex outputPoint = new IntegerIndex(numD);
@@ -85,15 +79,15 @@ public class ResampleLinear {
 		SamplingIterator<IntegerIndex> iter = sampling.iterator();
 		while (iter.hasNext()) {
 			iter.next(outputPoint);
-			computeValue(alg, input, inputDims, inputPoint, newDims, outputPoint, tmp, value);
+			computeValue(alg, input, inputDims, inputPoint, newDims, outputPoint, value);
 			output.set(outputPoint, value);
 		}
 		return output;
 	}
 	
-	private static  <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
+	private static  <T extends Algebra<T,U>, U>
 		void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
-							long[] outputDims, IntegerIndex outputPoint, U tmp, U outVal)
+							long[] outputDims, IntegerIndex outputPoint, U outVal)
 	{
 		int numD = inputDims.length;
 		
@@ -104,54 +98,18 @@ public class ResampleLinear {
 			coords[i] = BigDecimal.valueOf(outputPoint.get(i));
 			coords[i] = coords[i].divide(BigDecimal.valueOf(outputDims[i]-1),HighPrecisionAlgebra.getContext());
 			coords[i] = coords[i].multiply(BigDecimal.valueOf(inputDims[i]-1));
+			// force rounding to nearest neighbor
+			coords[i] = coords[i].add(G.ONE_HALF);
 		}
 		
 		// get the base coord
 		for (int i = 0; i < numD; i++) {
+			// truncate the biased value
 			inputPoint.set(i, coords[i].longValue());
 		}
-		
-		// must find the 2*numDim points and do a coord weighted sum
-		alg.zero().call(outVal);
-		weightedSum(alg, input, numD, coords, inputPoint, tmp, outVal);
-		
-		// now turn sum into average
-		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(1 * numD), HighPrecisionAlgebra.getContext());
-		HighPrecisionMember scale = new HighPrecisionMember(recip);
-		alg.scaleByHighPrec().call(scale, outVal, outVal);
-	}
-	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
-		void weightedSum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords,
-							IntegerIndex inputPoint, U tmp, U outVal)
-	{
-		HighPrecisionMember scale = G.HP.construct();
-		
-		for (int i = 0; i < numD; i++) {
 
-			// calc t
-			BigDecimal t = coords[i].remainder(BigDecimal.ONE);
-			
-			// calc "left" point's contribution
-			inputPoint.set(i, inputPoint.get(i) - 0); // go "left" 1 step
-			input.get(inputPoint, tmp);
-			scale.setV(BigDecimal.ONE.subtract(t));
-			alg.scaleByHighPrec().call(scale, tmp, tmp);
-			
-			// add to sum
-			alg.add().call(outVal, tmp, outVal);
-	
-			// calc "right" point's contribution
-			inputPoint.set(i, inputPoint.get(i) + 1); // undo go "left" and go "right" 1 step
-			input.get(inputPoint, tmp);
-			scale.setV(t);
-			alg.scaleByHighPrec().call(scale, tmp, tmp);
-			
-			// add to sum
-			alg.add().call(outVal, tmp, outVal);
-			
-			// reset point
-			inputPoint.set(i, inputPoint.get(i) - 1); // undo go "right"
-		}
+		// set the value
+		input.get(inputPoint, outVal);
 	}
+	
 }

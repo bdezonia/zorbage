@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestResampleLinear {
+public class TestResampleNearestNeighbor {
 
 	@Test
 	public void test1da() {
@@ -62,42 +62,42 @@ public class TestResampleLinear {
 		};
 		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
-		MultiDimDataSource<Float64Member> newDs = ResampleLinear.compute(G.DBL, new long[]{8}, padded);
+		MultiDimDataSource<Float64Member> newDs = ResampleNearestNeighbor.compute(G.DBL, new long[]{8}, padded);
 		
 		assertEquals(8, newDs.dimension(0));
 
 		IntegerIndex idx = new IntegerIndex(newDs.numDimensions());
 		idx.set(0, 0);
 		newDs.get(idx, value);
-		assertEquals(0*9.0/7.0, value.v(), tol);
+		assertEquals(0, value.v(), tol);
 		
 		idx.set(0, 1);
 		newDs.get(idx, value);
-		assertEquals(1*9.0/7.0, value.v(), tol);
+		assertEquals(1, value.v(), tol);
 		
 		idx.set(0, 2);
 		newDs.get(idx, value);
-		assertEquals(2*9.0/7.0, value.v(), tol);
+		assertEquals(3.0, value.v(), tol);
 		
 		idx.set(0, 3);
 		newDs.get(idx, value);
-		assertEquals(3*9.0/7.0, value.v(), tol);
+		assertEquals(4, value.v(), tol);
 		
 		idx.set(0, 4);
 		newDs.get(idx, value);
-		assertEquals(4*9.0/7.0, value.v(), tol);
+		assertEquals(5, value.v(), tol);
 
 		idx.set(0, 5);
 		newDs.get(idx, value);
-		assertEquals(5*9.0/7.0, value.v(), tol);
+		assertEquals(6, value.v(), tol);
 		
 		idx.set(0, 6);
 		newDs.get(idx, value);
-		assertEquals(6*9.0/7.0, value.v(), tol);
+		assertEquals(8, value.v(), tol);
 		
 		idx.set(0, 7);
 		newDs.get(idx, value);
-		assertEquals(7*9.0/7.0, value.v(), tol);
+		assertEquals(9, value.v(), tol);
 	}
 	
 	@Test
@@ -116,49 +116,49 @@ public class TestResampleLinear {
 		};
 		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
-		MultiDimDataSource<Float64Member> newDs = ResampleLinear.compute(G.DBL, new long[]{10}, padded);
+		MultiDimDataSource<Float64Member> newDs = ResampleNearestNeighbor.compute(G.DBL, new long[]{10}, padded);
 		
 		assertEquals(10, newDs.dimension(0));
 
 		IntegerIndex idx = new IntegerIndex(newDs.numDimensions());
 		idx.set(0, 0);
 		newDs.get(idx, value);
-		assertEquals(0*7.0/9, value.v(), tol);
+		assertEquals(0, value.v(), tol);
 		
 		idx.set(0, 1);
 		newDs.get(idx, value);
-		assertEquals(1*7.0/9, value.v(), tol);
+		assertEquals(1, value.v(), tol);
 		
 		idx.set(0, 2);
 		newDs.get(idx, value);
-		assertEquals(2*7.0/9, value.v(), tol);
+		assertEquals(2, value.v(), tol);
 		
 		idx.set(0, 3);
 		newDs.get(idx, value);
-		assertEquals(3*7.0/9, value.v(), tol);
+		assertEquals(2, value.v(), tol);
 		
 		idx.set(0, 4);
 		newDs.get(idx, value);
-		assertEquals(4*7.0/9, value.v(), tol);
+		assertEquals(3, value.v(), tol);
 
 		idx.set(0, 5);
 		newDs.get(idx, value);
-		assertEquals(5*7.0/9, value.v(), tol);
+		assertEquals(4, value.v(), tol);
 		
 		idx.set(0, 6);
 		newDs.get(idx, value);
-		assertEquals(6*7.0/9, value.v(), tol);
+		assertEquals(5, value.v(), tol);
 		
 		idx.set(0, 7);
 		newDs.get(idx, value);
-		assertEquals(7*7.0/9, value.v(), tol);
+		assertEquals(5, value.v(), tol);
 		
 		idx.set(0, 8);
 		newDs.get(idx, value);
-		assertEquals(8*7.0/9, value.v(), tol);
+		assertEquals(6, value.v(), tol);
 		
 		idx.set(0, 9);
 		newDs.get(idx, value);
-		assertEquals(9*7.0/9, value.v(), tol);
+		assertEquals(7, value.v(), tol);
 	}
 }
