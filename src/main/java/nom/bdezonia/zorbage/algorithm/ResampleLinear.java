@@ -97,42 +97,43 @@ public class ResampleLinear {
 		void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
 							long[] outputDims, IntegerIndex outputPoint, MathContext context, U tmp, U outVal)
 	{
-		alg.zero().call(outVal);
-		
 		int numD = inputDims.length;
 		
 		BigDecimal[] coords = new BigDecimal[numD];
+		
+		// find the in between point
+		for (int i = 0; i < numD; i++) {
+			coords[i] = BigDecimal.valueOf(outputPoint.get(i)).divide(BigDecimal.valueOf(outputDims[i]-1),context).multiply(BigDecimal.valueOf(inputDims[i]-1));
+		}
 		
 		// get the base coord
 		for (int i = 0; i < numD; i++) {
 			inputPoint.set(i, coords[i].longValue());
 		}
 		
-		// find the in between point
-		for (int i = 0; i < numD; i++) {
-			coords[i] = BigDecimal.valueOf(outputPoint.get(i)).divide(BigDecimal.valueOf(outputDims[i]-1).multiply(BigDecimal.valueOf(inputDims[i]-1)),context);
-		}
-		
 		// must find the 2*numDim points and do a coord weighted sum
+		alg.zero().call(outVal);
 		weightedSum(alg, input, numD, coords, inputPoint, tmp, outVal);
 		
 		// now turn sum into average
-		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(2 * numD), context);
+		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(1 * numD), context);
 		HighPrecisionMember scale = new HighPrecisionMember(recip);
 		alg.scaleByHighPrec().call(scale, outVal, outVal);
 	}
 	
 	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
-		void weightedSum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords, IntegerIndex inputPoint, U tmp, U outVal)
+		void weightedSum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords,
+							IntegerIndex inputPoint, U tmp, U outVal)
 	{
 		HighPrecisionMember scale = G.HP.construct();
 		
 		for (int i = 0; i < numD; i++) {
+
 			// calc t
 			BigDecimal t = coords[i].remainder(BigDecimal.ONE);
 			
 			// calc "left" point's contribution
-			inputPoint.set(i, inputPoint.get(i) - 1); // go "left" 1 step
+			inputPoint.set(i, inputPoint.get(i) - 0); // go "left" 1 step
 			input.get(inputPoint, tmp);
 			scale.setV(BigDecimal.ONE.subtract(t));
 			alg.scaleByHighPrec().call(scale, tmp, tmp);
@@ -141,7 +142,7 @@ public class ResampleLinear {
 			alg.add().call(outVal, tmp, outVal);
 	
 			// calc "right" point's contribution
-			inputPoint.set(i, inputPoint.get(i) + 2); // undo go "left" and go "right" 1 step
+			inputPoint.set(i, inputPoint.get(i) + 1); // undo go "left" and go "right" 1 step
 			input.get(inputPoint, tmp);
 			scale.setV(t);
 			alg.scaleByHighPrec().call(scale, tmp, tmp);
