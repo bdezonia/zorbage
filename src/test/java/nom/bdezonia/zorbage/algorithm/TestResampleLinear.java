@@ -71,35 +71,35 @@ public class TestResampleLinear {
 		IntegerIndex idx = new IntegerIndex(newDs.numDimensions());
 		idx.set(0, 0);
 		newDs.get(idx, value);
-		assertEquals(0, value.v(), tol);
+		assertEquals(0*9.0/7.0, value.v(), tol);
 		
 		idx.set(0, 1);
 		newDs.get(idx, value);
-		assertEquals(1.28, value.v(), tol);
+		assertEquals(1*9.0/7.0, value.v(), tol);
 		
 		idx.set(0, 2);
 		newDs.get(idx, value);
-		assertEquals(2.57, value.v(), tol);
+		assertEquals(2*9.0/7.0, value.v(), tol);
 		
 		idx.set(0, 3);
 		newDs.get(idx, value);
-		assertEquals(3.85, value.v(), tol);
+		assertEquals(3*9.0/7.0, value.v(), tol);
 		
 		idx.set(0, 4);
 		newDs.get(idx, value);
-		assertEquals(5.14, value.v(), tol);
+		assertEquals(4*9.0/7.0, value.v(), tol);
 
 		idx.set(0, 5);
 		newDs.get(idx, value);
-		assertEquals(6.42, value.v(), tol);
+		assertEquals(5*9.0/7.0, value.v(), tol);
 		
 		idx.set(0, 6);
 		newDs.get(idx, value);
-		assertEquals(7.71, value.v(), tol);
+		assertEquals(6*9.0/7.0, value.v(), tol);
 		
 		idx.set(0, 7);
 		newDs.get(idx, value);
-		assertEquals(9, value.v(), tol);
+		assertEquals(7*9.0/7.0, value.v(), tol);
 	}
 	
 	@Test
@@ -125,42 +125,42 @@ public class TestResampleLinear {
 		IntegerIndex idx = new IntegerIndex(newDs.numDimensions());
 		idx.set(0, 0);
 		newDs.get(idx, value);
-		assertEquals(0, value.v(), tol);
+		assertEquals(0*7.0/9, value.v(), tol);
 		
 		idx.set(0, 1);
 		newDs.get(idx, value);
-		assertEquals(0.77, value.v(), tol);
+		assertEquals(1*7.0/9, value.v(), tol);
 		
 		idx.set(0, 2);
 		newDs.get(idx, value);
-		assertEquals(1.55, value.v(), tol);
+		assertEquals(2*7.0/9, value.v(), tol);
 		
 		idx.set(0, 3);
 		newDs.get(idx, value);
-		assertEquals(2.33, value.v(), tol);
+		assertEquals(3*7.0/9, value.v(), tol);
 		
 		idx.set(0, 4);
 		newDs.get(idx, value);
-		assertEquals(3.11, value.v(), tol);
+		assertEquals(4*7.0/9, value.v(), tol);
 
 		idx.set(0, 5);
 		newDs.get(idx, value);
-		assertEquals(3.88, value.v(), tol);
+		assertEquals(5*7.0/9, value.v(), tol);
 		
 		idx.set(0, 6);
 		newDs.get(idx, value);
-		assertEquals(4.66, value.v(), tol);
+		assertEquals(6*7.0/9, value.v(), tol);
 		
 		idx.set(0, 7);
 		newDs.get(idx, value);
-		assertEquals(5.44, value.v(), tol);
+		assertEquals(7*7.0/9, value.v(), tol);
 		
 		idx.set(0, 8);
 		newDs.get(idx, value);
-		assertEquals(6.22, value.v(), tol);
+		assertEquals(8*7.0/9, value.v(), tol);
 		
 		idx.set(0, 9);
 		newDs.get(idx, value);
-		assertEquals(7.00, value.v(), tol);
+		assertEquals(9*7.0/9, value.v(), tol);
 	}
 }
