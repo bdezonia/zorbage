@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -55,11 +57,14 @@ import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -73,6 +78,8 @@ public class QuaternionHighPrecisionRModule
     Norm<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>,
     Products<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember>,
     DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>,
+    ScaleByHighPrec<QuaternionHighPrecisionRModuleMember>,
+    ScaleByRational<QuaternionHighPrecisionRModuleMember>,
     Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>
 {
 	public QuaternionHighPrecisionRModule() { }
@@ -384,6 +391,34 @@ public class QuaternionHighPrecisionRModule
 	@Override
 	public Function1<Boolean, QuaternionHighPrecisionRModuleMember> isZero() {
 		return ISZERO;
+	}
+
+	private Procedure3<HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBHP =
+			new Procedure3<HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			RModuleScaleByHighPrec.compute(G.QHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBR =
+			new Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(RationalMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			RModuleScaleByRational.compute(G.QHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> WITHIN =

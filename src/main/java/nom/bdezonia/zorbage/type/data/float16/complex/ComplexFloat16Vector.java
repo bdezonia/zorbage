@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
@@ -60,11 +62,15 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -80,6 +86,8 @@ public class ComplexFloat16Vector
     DirectProduct<ComplexFloat16VectorMember, ComplexFloat16MatrixMember>,
     Rounding<Float16Member,ComplexFloat16VectorMember>, Infinite<ComplexFloat16VectorMember>,
     NaN<ComplexFloat16VectorMember>,
+    ScaleByHighPrec<ComplexFloat16VectorMember>,
+    ScaleByRational<ComplexFloat16VectorMember>,
     Tolerance<Float16Member,ComplexFloat16VectorMember>
 {
 	public ComplexFloat16Vector() { }
@@ -445,6 +453,34 @@ public class ComplexFloat16Vector
 	@Override
 	public Function1<Boolean, ComplexFloat16VectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private Procedure3<HighPrecisionMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> SBHP =
+			new Procedure3<HighPrecisionMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c) {
+			RModuleScaleByHighPrec.compute(G.CHLF, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> SBR =
+			new Procedure3<RationalMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(RationalMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c) {
+			RModuleScaleByRational.compute(G.CHLF, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, Float16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> WITHIN =

@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -54,10 +56,13 @@ import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -73,6 +78,8 @@ public class HighPrecisionVector
 	DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,
 	Infinite<HighPrecisionVectorMember>,
 	NaN<HighPrecisionVectorMember>,
+	ScaleByHighPrec<HighPrecisionVectorMember>,
+	ScaleByRational<HighPrecisionVectorMember>,
 	Tolerance<HighPrecisionMember,HighPrecisionVectorMember>
 {
 	public HighPrecisionVector() { }
@@ -422,6 +429,34 @@ public class HighPrecisionVector
 	@Override
 	public Function1<Boolean, HighPrecisionVectorMember> isZero() {
 		return ISZERO;
+	}
+
+	private Procedure3<HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember> SBHP =
+			new Procedure3<HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
+			RModuleScaleByHighPrec.compute(G.HP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, HighPrecisionVectorMember, HighPrecisionVectorMember> SBR =
+			new Procedure3<RationalMember, HighPrecisionVectorMember, HighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(RationalMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
+			RModuleScaleByRational.compute(G.HP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember> WITHIN =

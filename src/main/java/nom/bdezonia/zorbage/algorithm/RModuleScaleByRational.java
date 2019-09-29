@@ -27,29 +27,34 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Scale {
+public class RModuleScaleByRational {
 
-	// do not instantiate
-	
-	private Scale() {}
+	private RModuleScaleByRational() {
+		// do not instantiate
+	}
 	
 	/**
 	 * 
-	 * @param algebra
+	 * @param memberAlgebra
+	 * @param scalar
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U>, U>
-		void compute(T algebra, U factor, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	public static <U extends RModuleMember<W> & RawData<W>,
+					V extends Algebra<V,W> & nom.bdezonia.zorbage.type.algebra.ScaleByRational<W>,
+					W>
+		void compute(V memberAlgebra, RationalMember scalar, U a, U b)
 	{
-		FixedTransform2.compute(algebra, algebra, factor, algebra.multiply(), a, b);
+		b.alloc(a.length());
+		ScaleByRational.compute(memberAlgebra, scalar, a.rawData(), b.rawData());
 	}
 }

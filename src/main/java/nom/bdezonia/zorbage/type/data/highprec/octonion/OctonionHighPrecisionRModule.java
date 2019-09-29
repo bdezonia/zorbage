@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -55,11 +57,14 @@ import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
 /**
  * 
@@ -73,6 +78,8 @@ public class OctonionHighPrecisionRModule
 	Norm<OctonionHighPrecisionRModuleMember,HighPrecisionMember>,
 	Products<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMember, OctonionHighPrecisionMatrixMember>,
 	DirectProduct<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMatrixMember>,
+	ScaleByHighPrec<OctonionHighPrecisionRModuleMember>,
+	ScaleByRational<OctonionHighPrecisionRModuleMember>,
 	Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>
 {
 	public OctonionHighPrecisionRModule() { }
@@ -373,6 +380,34 @@ public class OctonionHighPrecisionRModule
 	@Override
 	public Function1<Boolean, OctonionHighPrecisionRModuleMember> isZero() {
 		return ISZERO;
+	}
+
+	private Procedure3<HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> SBHP =
+			new Procedure3<HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			RModuleScaleByHighPrec.compute(G.OHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private Procedure3<RationalMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> SBR =
+			new Procedure3<RationalMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(RationalMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			RModuleScaleByRational.compute(G.OHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByRational() {
+		return SBR;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> WITHIN =
