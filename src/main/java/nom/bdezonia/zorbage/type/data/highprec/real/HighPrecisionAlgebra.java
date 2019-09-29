@@ -564,7 +564,7 @@ public class HighPrecisionAlgebra
 		@Override
 		public void call(RationalMember a, HighPrecisionMember b, HighPrecisionMember c) {
 			BigDecimal tmp = b.v();
-			tmp = tmp.multiply(new BigDecimal(a.n()),CONTEXT);
+			tmp = tmp.multiply(new BigDecimal(a.n()));
 			tmp = tmp.divide(new BigDecimal(a.d()),CONTEXT);
 			c.setV(tmp);
 		}
