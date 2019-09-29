@@ -68,7 +68,7 @@ public class Float16Util {
 	}
 	
 	private static short rounded(int value, int g, int s) {
-		value += (g & (s | value));
+		value += (g & (s | value)); // round to nearest
 		return (short) value;
 	}
 
