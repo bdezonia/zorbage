@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
@@ -52,14 +53,7 @@ public class TestResampleNearestNeighbor {
 		Float64Member value = G.DBL.construct();
 		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[]{10}, value);
 		RampFill.compute(G.DBL, ds.rawData());
-		Procedure2<IntegerIndex,Float64Member> proc =
-				new Procedure2<IntegerIndex, Float64Member>()
-		{
-			@Override
-			public void call(IntegerIndex a, Float64Member b) {
-				G.DBL.zero().call(b);
-			}
-		};
+		Procedure2<IntegerIndex,Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, ds);
 		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
 		MultiDimDataSource<Float64Member> newDs = ResampleNearestNeighbor.compute(G.DBL, new long[]{8}, padded);
@@ -106,14 +100,7 @@ public class TestResampleNearestNeighbor {
 		Float64Member value = G.DBL.construct();
 		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[]{8}, value);
 		RampFill.compute(G.DBL, ds.rawData());
-		Procedure2<IntegerIndex,Float64Member> proc =
-				new Procedure2<IntegerIndex, Float64Member>()
-		{
-			@Override
-			public void call(IntegerIndex a, Float64Member b) {
-				G.DBL.zero().call(b);
-			}
-		};
+		Procedure2<IntegerIndex,Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, ds);
 		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
 		MultiDimDataSource<Float64Member> newDs = ResampleNearestNeighbor.compute(G.DBL, new long[]{10}, padded);
