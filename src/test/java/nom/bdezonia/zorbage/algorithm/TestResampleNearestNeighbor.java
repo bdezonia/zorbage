@@ -49,7 +49,7 @@ public class TestResampleNearestNeighbor {
 
 	@Test
 	public void test1da() {
-		double tol = 0.1;
+		double tol = 0;
 		Float64Member value = G.DBL.construct();
 		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[]{10}, value);
 		RampFill.compute(G.DBL, ds.rawData());
@@ -96,7 +96,7 @@ public class TestResampleNearestNeighbor {
 	
 	@Test
 	public void test1db() {
-		double tol = 0.1;
+		double tol = 0;
 		Float64Member value = G.DBL.construct();
 		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[]{8}, value);
 		RampFill.compute(G.DBL, ds.rawData());
