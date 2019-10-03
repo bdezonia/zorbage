@@ -69,7 +69,6 @@ public class ResampleLinear {
 		if (newDims.length != numD)
 			throw new IllegalArgumentException("mismatched dims in Resample");
 		U value = alg.construct();
-		U tmp = alg.construct();
 		MultiDimDataSource<U> output = MultiDimStorage.allocate(newDims, value);
 		IntegerIndex inputPoint = new IntegerIndex(numD);
 		IntegerIndex outputPoint = new IntegerIndex(numD);
@@ -85,7 +84,7 @@ public class ResampleLinear {
 		SamplingIterator<IntegerIndex> iter = sampling.iterator();
 		while (iter.hasNext()) {
 			iter.next(outputPoint);
-			computeValue(alg, input, inputDims, inputPoint, newDims, outputPoint, tmp, value);
+			computeValue(alg, input, inputDims, inputPoint, newDims, outputPoint, value);
 			output.set(outputPoint, value);
 		}
 		return output;
@@ -93,7 +92,7 @@ public class ResampleLinear {
 	
 	private static  <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
 		void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
-							long[] outputDims, IntegerIndex outputPoint, U tmp, U outVal)
+							long[] outputDims, IntegerIndex outputPoint, U outVal)
 	{
 		int numD = inputDims.length;
 		
@@ -113,7 +112,7 @@ public class ResampleLinear {
 		
 		// must find the 2*numDim points and do a coord weighted sum
 		alg.zero().call(outVal);
-		weightedSum(alg, input, numD, coords, inputPoint, tmp, outVal);
+		weightedSum(alg, input, numD, coords, inputPoint, outVal);
 		
 		// now turn sum into average
 		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(1 * numD), HighPrecisionAlgebra.getContext());
@@ -123,8 +122,10 @@ public class ResampleLinear {
 	
 	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
 		void weightedSum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords,
-							IntegerIndex inputPoint, U tmp, U outVal)
+							IntegerIndex inputPoint, U outVal)
 	{
+		U tmp = alg.construct();
+		
 		HighPrecisionMember scale = G.HP.construct();
 		
 		for (int i = 0; i < numD; i++) {
