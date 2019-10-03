@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
@@ -45,6 +48,8 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.
 //they do not worry about upper and lower indices or even matching shapes. They do element by
@@ -68,6 +73,9 @@ import nom.bdezonia.zorbage.type.algebra.TensorProduct;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.data.rational.RationalMember;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 // Note that for now the implementation is only for Cartesian tensors
 
@@ -85,6 +93,8 @@ public class Float64TensorProduct
 		Rounding<Float64Member,Float64TensorProductMember>,
 		Infinite<Float64TensorProductMember>,
 		NaN<Float64TensorProductMember>,
+		ScaleByHighPrec<Float64TensorProductMember>,
+		ScaleByRational<Float64TensorProductMember>,
 		Tolerance<Float64Member, Float64TensorProductMember>
 {
 	@Override
@@ -738,6 +748,63 @@ public class Float64TensorProduct
 			dims[i] = from.dimension(i);
 		}
 		to.alloc(dims);
+	}
+
+	private final MathContext context = new MathContext(18);
+	
+	private final Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember> SBR =
+			new Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(RationalMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			long[] bDims = new long[b.numDimensions()];
+			for (int i = 0; i < bDims.length; i++) {
+				bDims[i] = b.dimension(i);
+			}
+			c.alloc(bDims);
+			IndexedDataSource<Float64Member> data = b.rawData();
+			Float64Member value = G.DBL.construct();
+			for (long i = 0; i < data.size(); i++) {
+				data.get(i, value);
+				BigDecimal val = BigDecimal.valueOf(value.v());
+				val = val.multiply(new BigDecimal(a.n()));
+				val = val.divide(new BigDecimal(a.d(), context));
+				value.setV(val.doubleValue());
+				data.set(i, value);
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember> scaleByRational() {
+		return SBR;
+	}
+
+	private final Procedure3<HighPrecisionMember, Float64TensorProductMember, Float64TensorProductMember> SBHP =
+			new Procedure3<HighPrecisionMember, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			long[] bDims = new long[b.numDimensions()];
+			for (int i = 0; i < bDims.length; i++) {
+				bDims[i] = b.dimension(i);
+			}
+			c.alloc(bDims);
+			IndexedDataSource<Float64Member> data = b.rawData();
+			Float64Member value = G.DBL.construct();
+			for (long i = 0; i < data.size(); i++) {
+				data.get(i, value);
+				BigDecimal val = BigDecimal.valueOf(value.v());
+				val = val.multiply(a.v());
+				value.setV(val.doubleValue());
+				data.set(i, value);
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, Float64TensorProductMember, Float64TensorProductMember> scaleByHighPrec() {
+		return SBHP;
 	}
 
 	private final Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember> WITHIN =
