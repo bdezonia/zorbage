@@ -97,6 +97,8 @@ public class Float64TensorProduct
 		ScaleByRational<Float64TensorProductMember>,
 		Tolerance<Float64Member, Float64TensorProductMember>
 {
+	private final MathContext context = new MathContext(18);
+	
 	@Override
 	public Float64TensorProductMember construct() {
 		return new Float64TensorProductMember();
@@ -750,8 +752,6 @@ public class Float64TensorProduct
 		to.alloc(dims);
 	}
 
-	private final MathContext context = new MathContext(18);
-	
 	private final Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember> SBR =
 			new Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
@@ -768,7 +768,7 @@ public class Float64TensorProduct
 				data.get(i, value);
 				BigDecimal val = BigDecimal.valueOf(value.v());
 				val = val.multiply(new BigDecimal(a.n()));
-				val = val.divide(new BigDecimal(a.d(), context));
+				val = val.divide(new BigDecimal(a.d()), context);
 				value.setV(val.doubleValue());
 				data.set(i, value);
 			}
