@@ -134,43 +134,46 @@ public class Main {
 		int neighs = 0;
 		IntegerIndex tmpIdx = new IntegerIndex(2);
 
-		tmpIdx.set(0, idx.get(0)-1);
-		tmpIdx.set(1, idx.get(1)-1);
+		long r = idx.get(1);
+		long c = idx.get(0);
+		
+		tmpIdx.set(0, c-1);
+		tmpIdx.set(1, r-1);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0)-1);
-		tmpIdx.set(1, idx.get(1));
+		tmpIdx.set(0, c-1);
+		tmpIdx.set(1, r);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0)-1);
-		tmpIdx.set(1, idx.get(1)+1);
+		tmpIdx.set(0, c-1);
+		tmpIdx.set(1, r+1);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0));
-		tmpIdx.set(1, idx.get(1)-1);
+		tmpIdx.set(0, c);
+		tmpIdx.set(1, r-1);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0));
-		tmpIdx.set(1, idx.get(1)+1);
+		tmpIdx.set(0, c);
+		tmpIdx.set(1, r+1);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0)+1);
-		tmpIdx.set(1, idx.get(1)-1);
+		tmpIdx.set(0, c+1);
+		tmpIdx.set(1, r-1);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0)+1);
-		tmpIdx.set(1, idx.get(1));
+		tmpIdx.set(0, c+1);
+		tmpIdx.set(1, r);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 
-		tmpIdx.set(0, idx.get(0)+1);
-		tmpIdx.set(1, idx.get(1)+1);
+		tmpIdx.set(0, c+1);
+		tmpIdx.set(1, r+1);
 		frame.get(tmpIdx, value);
 		if (value.v() == 1) neighs++;
 		
