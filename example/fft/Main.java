@@ -37,7 +37,7 @@ public class Main {
 		JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = fc.getSelectedFile();
+			file = fc.getSelectedFile();
 		}
 		BufferedImage img = null;
 		try {
