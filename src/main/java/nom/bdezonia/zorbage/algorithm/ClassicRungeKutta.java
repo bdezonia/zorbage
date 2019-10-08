@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Addition;
@@ -74,7 +73,7 @@ public class ClassicRungeKutta {
 		U k4 = uAlg.construct();
 		U dy = uAlg.construct();
 		W one_half = wAlg.construct("0.5");
-		W one_sixth = wAlg.construct(""+(BigDecimal.ONE.divide(BigDecimal.valueOf(6),new MathContext(HighPrecisionAlgebra.getPrecision()))));
+		W one_sixth = wAlg.construct(""+(BigDecimal.ONE.divide(BigDecimal.valueOf(6),HighPrecisionAlgebra.getContext())));
 		U tmp = uAlg.construct();
 		W tt = wAlg.construct();
 		U ty = uAlg.construct();
@@ -116,7 +115,7 @@ public class ClassicRungeKutta {
 			uAlg.add().call(dy, k4, dy);
 			uAlg.scale().call(one_sixth, dy, dy);
 			uAlg.add().call(y, dy, y);
-			
+
 			// update t
 			wAlg.add().call(t, dt, t);
 

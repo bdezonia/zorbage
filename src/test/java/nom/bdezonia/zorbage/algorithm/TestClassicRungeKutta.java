@@ -50,8 +50,8 @@ public class TestClassicRungeKutta {
 	@Test
 	public void test1() {
 		
-		double deltaT = 0.0125;
-		int numSteps = 500;
+		double deltaT = 1.0/256;
+		int numSteps = 1536;
 		double range = deltaT * numSteps;
 		
 		// true analytic solution: 12*e^t/(e^t+1)^2
@@ -68,7 +68,7 @@ public class TestClassicRungeKutta {
 		
 		results.get(numSteps-1, value);
 		
-		assertEquals(expected, value.v(), 0.0001);
+		assertEquals(expected, value.v(), 0.00002);
 	}
 
 	private static Procedure3<Float64Member,Float64Member,Float64Member> realDeriv =
@@ -81,14 +81,14 @@ public class TestClassicRungeKutta {
 		}
 	};
 
-	private static final int NUM_STEPS = 1000;
+	private static final int NUM_STEPS = 2000;
 	private static final double SLOPE = 1.25;
-	private static final double DT = 0.00125; // NOTE: bigger DTs introduce more error
+	private static final double DT = 1.0/1024; // NOTE: bigger DTs introduce more error
 	
 	@Test
 	public void test2() {
 		
-		Float64Member t0 = G.DBL.construct("0");
+		Float64Member t0 = G.DBL.construct(); // zero
 		Float64VectorMember y0 = G.DBL_VEC.construct("[1,4,7]");
 		Float64Member dt = G.DBL.construct(((Double)(DT)).toString());
 		
@@ -114,7 +114,7 @@ public class TestClassicRungeKutta {
 		
 		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		value.v(0, component);
-		assertEquals(expected_value, component.v(), 0.0003);
+		assertEquals(expected_value, component.v(), 0.0005);
 		
 		// y = C * e^(at)
 		// y(0) = 4
@@ -123,7 +123,7 @@ public class TestClassicRungeKutta {
 
 		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		value.v(1, component);
-		assertEquals(expected_value, component.v(), 0.001);  // had to tweak this tolerance higher
+		assertEquals(expected_value, component.v(), 0.002);  // had to tweak this tolerance higher
 		
 		// y = C * e^(at)
 		// y(0) = 7
@@ -132,7 +132,7 @@ public class TestClassicRungeKutta {
 
 		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS * DT);
 		value.v(2, component);
-		assertEquals(expected_value, component.v(), 0.0018);  // had to tweak this tolerance higher
+		assertEquals(expected_value, component.v(), 0.0033);  // had to tweak this tolerance higher
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
