@@ -52,7 +52,7 @@ public class TestClassicRungeKutta {
 		
 		double deltaT = 1.0/256;
 		int numSteps = 1536;
-		double range = deltaT * numSteps;
+		double range = deltaT * (numSteps-1);
 		
 		// true analytic solution: 12*e^t/(e^t+1)^2
 		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
@@ -68,7 +68,7 @@ public class TestClassicRungeKutta {
 		
 		results.get(numSteps-1, value);
 		
-		assertEquals(expected, value.v(), 0.00002);
+		assertEquals(expected, value.v(), 0.00000001);
 	}
 
 	private static Procedure3<Float64Member,Float64Member,Float64Member> realDeriv =
@@ -112,27 +112,27 @@ public class TestClassicRungeKutta {
 		//   1 = C * e^(SLOPE * 0)
 		// y = 1 * e^(SLOPE * t)
 		
-		expected_value = 1.0 * Math.exp(SLOPE * NUM_STEPS * DT);
+		expected_value = 1.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
 		value.v(0, component);
-		assertEquals(expected_value, component.v(), 0.0005);
+		assertEquals(expected_value, component.v(), 0.00000001);
 		
 		// y = C * e^(at)
 		// y(0) = 4
 		//   4 = C * e^(SLOPE * 0)
 		// y = 4 * e^(SLOPE * t)
 
-		expected_value = 4.0 * Math.exp(SLOPE * NUM_STEPS * DT);
+		expected_value = 4.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
 		value.v(1, component);
-		assertEquals(expected_value, component.v(), 0.002);  // had to tweak this tolerance higher
+		assertEquals(expected_value, component.v(), 0.00000001);
 		
 		// y = C * e^(at)
 		// y(0) = 7
 		//   7 = C * e^(SLOPE * 0)
 		// y = 7 * e^(SLOPE * t)
 
-		expected_value = 7.0 * Math.exp(SLOPE * NUM_STEPS * DT);
+		expected_value = 7.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
 		value.v(2, component);
-		assertEquals(expected_value, component.v(), 0.0033);  // had to tweak this tolerance higher
+		assertEquals(expected_value, component.v(), 0.00000001);
 	}
 
 	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =

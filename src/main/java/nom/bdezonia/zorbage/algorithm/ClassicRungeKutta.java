@@ -79,13 +79,11 @@ public class ClassicRungeKutta {
 		U ty = uAlg.construct();
 		W dt_over_two = wAlg.construct();
 		wAlg.scale().call(one_half, dt, dt_over_two);
-		for (int i = 0; i < numSteps; i++) {
+		results.set(0, y);
+		for (int i = 1; i < numSteps; i++) {
 		
 			// calc k1
-			if (i == 0)
-				uAlg.assign().call(y, tmp);
-			else
-				proc.call(t, y, tmp);
+			proc.call(t, y, tmp);
 			uAlg.scale().call(dt, tmp, k1);
 			
 			// calc k2
