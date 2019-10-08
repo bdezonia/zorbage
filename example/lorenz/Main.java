@@ -103,7 +103,6 @@ public class Main extends SimpleApplication {
 			ys[i] = component.v();
 			vector.v(2, component);
 			zs[i] = component.v();
-			vector.v(3, component);
 		}
 		
 		// jMonkeyEngine code
