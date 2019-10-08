@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
@@ -97,8 +94,6 @@ public class Float64TensorProduct
 		ScaleByRational<Float64TensorProductMember>,
 		Tolerance<Float64Member, Float64TensorProductMember>
 {
-	private final MathContext context = new MathContext(18);
-	
 	@Override
 	public Float64TensorProductMember construct() {
 		return new Float64TensorProductMember();
@@ -766,10 +761,7 @@ public class Float64TensorProduct
 			Float64Member value = G.DBL.construct();
 			for (long i = 0; i < data.size(); i++) {
 				data.get(i, value);
-				BigDecimal val = BigDecimal.valueOf(value.v());
-				val = val.multiply(new BigDecimal(a.n()));
-				val = val.divide(new BigDecimal(a.d()), context);
-				value.setV(val.doubleValue());
+				G.DBL.scaleByRational().call(a, value, value);
 				data.set(i, value);
 			}
 		}
@@ -794,9 +786,7 @@ public class Float64TensorProduct
 			Float64Member value = G.DBL.construct();
 			for (long i = 0; i < data.size(); i++) {
 				data.get(i, value);
-				BigDecimal val = BigDecimal.valueOf(value.v());
-				val = val.multiply(a.v());
-				value.setV(val.doubleValue());
+				G.DBL.scaleByHighPrec().call(a, value, value);
 				data.set(i, value);
 			}
 		}
