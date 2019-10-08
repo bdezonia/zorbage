@@ -320,14 +320,8 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
-			Float64Member tmp = new Float64Member();
 			shapeResult(a, b);
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.DBL.multiply().call(scalar, tmp, tmp);
-				b.setV(i, tmp);
-			}
+			nom.bdezonia.zorbage.algorithm.Scale.compute(G.DBL, scalar, a.rawData(), b.rawData());
 		}
 	};
 	
@@ -751,11 +745,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(RationalMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			long[] bDims = new long[b.numDimensions()];
-			for (int i = 0; i < bDims.length; i++) {
-				bDims[i] = b.dimension(i);
-			}
-			c.alloc(bDims);
+			shapeResult(b, c);
 			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.DBL, a, b.rawData(), c.rawData());
 		}
 	};
@@ -770,11 +760,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(HighPrecisionMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			long[] bDims = new long[b.numDimensions()];
-			for (int i = 0; i < bDims.length; i++) {
-				bDims[i] = b.dimension(i);
-			}
-			c.alloc(bDims);
+			shapeResult(b, c);
 			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.DBL, a, b.rawData(), c.rawData());
 		}
 	};
