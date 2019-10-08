@@ -72,7 +72,6 @@ import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 // Note that for now the implementation is only for Cartesian tensors
 
@@ -757,13 +756,7 @@ public class Float64TensorProduct
 				bDims[i] = b.dimension(i);
 			}
 			c.alloc(bDims);
-			IndexedDataSource<Float64Member> data = b.rawData();
-			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < data.size(); i++) {
-				data.get(i, value);
-				G.DBL.scaleByRational().call(a, value, value);
-				data.set(i, value);
-			}
+			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.DBL, a, b.rawData(), b.rawData());
 		}
 	};
 
@@ -782,13 +775,7 @@ public class Float64TensorProduct
 				bDims[i] = b.dimension(i);
 			}
 			c.alloc(bDims);
-			IndexedDataSource<Float64Member> data = b.rawData();
-			Float64Member value = G.DBL.construct();
-			for (long i = 0; i < data.size(); i++) {
-				data.get(i, value);
-				G.DBL.scaleByHighPrec().call(a, value, value);
-				data.set(i, value);
-			}
+			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.DBL, a, b.rawData(), b.rawData());
 		}
 	};
 
