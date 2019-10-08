@@ -756,7 +756,7 @@ public class Float64TensorProduct
 				bDims[i] = b.dimension(i);
 			}
 			c.alloc(bDims);
-			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.DBL, a, b.rawData(), b.rawData());
+			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.DBL, a, b.rawData(), c.rawData());
 		}
 	};
 
@@ -775,7 +775,7 @@ public class Float64TensorProduct
 				bDims[i] = b.dimension(i);
 			}
 			c.alloc(bDims);
-			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.DBL, a, b.rawData(), b.rawData());
+			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.DBL, a, b.rawData(), c.rawData());
 		}
 	};
 
