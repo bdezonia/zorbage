@@ -120,16 +120,7 @@ public class Float64TensorProduct
 		public Boolean call(Float64TensorProductMember a, Float64TensorProductMember b) {
 			if (!shapesMatch(a,b))
 				return false;
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, aTmp);
-				b.v(i, bTmp);
-				if (G.DBL.isNotEqual().call(aTmp, bTmp))
-					return false;
-			}
-			return true;
+			return SequencesSimilar.compute(G.DBL, G.DBL.construct(), a.rawData(), b.rawData());
 		}
 	};
 	
@@ -158,12 +149,8 @@ public class Float64TensorProduct
 		@Override
 		public void call(Float64TensorProductMember from, Float64TensorProductMember to) {
 			if (to == from) return;
+			shapeResult(from, to);
 			Float64Member tmp = new Float64Member();
-			long[] dims = new long[from.numDimensions()];
-			for (int i = 0; i < dims.length; i++) {
-				dims[i] = from.dimension(i);
-			}
-			to.alloc(dims);
 			long numElems = from.numElems();
 			for (long i = 0; i < numElems; i++) {
 				from.v(i, tmp);
@@ -223,11 +210,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
-			long[] newDims = new long[a.numDimensions()];
-			for (int i = 0; i < newDims.length; i++) {
-				newDims[i] = a.dimension(i);
-			}
-			c.alloc(newDims);
+			shapeResult(a,c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -253,11 +236,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			long[] newDims = new long[a.numDimensions()];
-			for (int i = 0; i < newDims.length; i++) {
-				newDims[i] = a.dimension(i);
-			}
-			c.alloc(newDims);
+			shapeResult(a, c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -358,11 +337,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
-			long[] newDims = new long[a.numDimensions()];
-			for (int i = 0; i < newDims.length; i++) {
-				newDims[i] = a.dimension(i);
-			}
-			c.alloc(newDims);
+			shapeResult(a,c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -388,11 +363,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
-			long[] newDims = new long[a.numDimensions()];
-			for (int i = 0; i < newDims.length; i++) {
-				newDims[i] = a.dimension(i);
-			}
-			c.alloc(newDims);
+			shapeResult(a,c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -696,11 +667,7 @@ public class Float64TensorProduct
 		@Override
 		public void call(Mode mode, Float64Member delta, Float64TensorProductMember a, Float64TensorProductMember b) {
 			if (a != b) {
-				long[] newDims = new long[a.numDimensions()];
-				for (int i = 0; i < newDims.length; i++) {
-					newDims[i] = a.dimension(i);
-				}
-				b.alloc(newDims);
+				shapeResult(a, b);
 			}
 			Float64Member tmp = G.DBL.construct();
 			long numElems = a.numElems();
