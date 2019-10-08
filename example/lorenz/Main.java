@@ -56,9 +56,9 @@ public class Main extends SimpleApplication {
 				Float32Member zc = G.FLT.construct();
 				Float32Member v = G.FLT.construct();
 				
-				if (y.length() != 4)
+				if (y.length() != 3)
 					throw new IllegalArgumentException("oops");
-				outputVec.alloc(4);
+				outputVec.alloc(3);
 				y.v(0, xc);
 				y.v(1, yc);
 				y.v(2, zc);
@@ -68,13 +68,11 @@ public class Main extends SimpleApplication {
 				outputVec.setV(1, v);
 				v.setV(xc.v()*yc.v() - BETA*zc.v());
 				outputVec.setV(2, v);
-				v.setV(1);
-				outputVec.setV(3, v);
 			}
 		};
 		
-		// 4d starting location (x, y, z, t)
-		Float32VectorMember y0 = G.FLT_VEC.construct("[0.5,0.5,0.1,0]");
+		// 3d starting location (x, y, z)
+		Float32VectorMember y0 = G.FLT_VEC.construct("[0.5,0.5,0.1]");
 		
 		// t0 = 0
 		Float32Member t0 = G.FLT.construct();
@@ -82,20 +80,19 @@ public class Main extends SimpleApplication {
 		// dt = 1/64
 		Float32Member dt = G.FLT.construct(((Double)(1.0 / 64)).toString());
 		
-		// number of intermediate 4-d points to generate
+		// number of intermediate 3-d points to generate
 		int numSteps = 50000;
 		
-		// the intermediate 4-d points
+		// the intermediate 3-d points
 		IndexedDataSource<Float32VectorMember> outputVecs = ArrayDataSource.construct(G.FLT_VEC, numSteps);
 		
-		// solve the 4-d differential equation
+		// solve the 3-d differential equation
 		ClassicRungeKutta.compute(G.FLT_VEC, G.FLT, lorenz, t0, y0, numSteps, dt, outputVecs);
 		
 		// format output as JMonkeyEngine wants
 		float[] xs = new float[numSteps];
 		float[] ys = new float[numSteps];
 		float[] zs = new float[numSteps];
-		float[] ts = new float[numSteps];
 		Float32VectorMember vector = G.FLT_VEC.construct();
 		Float32Member component = G.FLT.construct();
 		for (int i = 0; i < numSteps; i++) {
@@ -107,7 +104,6 @@ public class Main extends SimpleApplication {
 			vector.v(2, component);
 			zs[i] = component.v();
 			vector.v(3, component);
-			ts[i] = component.v();
 		}
 		
 		// jMonkeyEngine code
