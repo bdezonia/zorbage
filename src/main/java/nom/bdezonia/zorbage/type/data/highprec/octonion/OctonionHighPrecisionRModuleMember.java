@@ -126,8 +126,6 @@ public final class OctonionHighPrecisionRModuleMember
 	
 	@Override
 	public void v(long i, OctonionHighPrecisionMember v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 

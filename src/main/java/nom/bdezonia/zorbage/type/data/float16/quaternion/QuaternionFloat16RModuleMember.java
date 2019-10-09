@@ -118,8 +118,6 @@ public final class QuaternionFloat16RModuleMember
 	
 	@Override
 	public void v(long i, QuaternionFloat16Member v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 

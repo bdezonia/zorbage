@@ -110,8 +110,6 @@ public final class Float32VectorMember
 	
 	@Override
 	public void v(long i, Float32Member v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 

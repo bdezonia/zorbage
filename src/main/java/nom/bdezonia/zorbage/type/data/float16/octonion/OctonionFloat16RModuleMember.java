@@ -126,8 +126,6 @@ public final class OctonionFloat16RModuleMember
 	
 	@Override
 	public void v(long i, OctonionFloat16Member v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 

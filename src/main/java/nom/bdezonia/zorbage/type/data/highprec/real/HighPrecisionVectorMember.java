@@ -110,8 +110,6 @@ public final class HighPrecisionVectorMember
 	
 	@Override
 	public void v(long i, HighPrecisionMember v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 

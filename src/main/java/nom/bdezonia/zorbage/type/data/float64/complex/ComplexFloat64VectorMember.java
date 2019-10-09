@@ -114,8 +114,6 @@ public final class ComplexFloat64VectorMember
 	
 	@Override
 	public void v(long i, ComplexFloat64Member v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 

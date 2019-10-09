@@ -118,8 +118,6 @@ public final class QuaternionHighPrecisionRModuleMember
 	
 	@Override
 	public void v(long i, QuaternionHighPrecisionMember v) {
-		if (i < 0 || i >= storage.size())
-			throw new IllegalArgumentException("rmod/vector oob access");
 		storage.get(i, v);
 	}
 
