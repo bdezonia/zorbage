@@ -319,8 +319,6 @@ public final class Float64TensorProductMember
 	}
 	
 	void v(long index, Float64Member value) {
-		if (index < 0 || index >= storage.size())
-			throw new IllegalArgumentException("invald index in tensor member");
 		storage.get(index, value);
 	}
 	
@@ -331,8 +329,6 @@ public final class Float64TensorProductMember
 	}
 	
 	void setV(long index, Float64Member value) {
-		if (index < 0 || index >= storage.size())
-			throw new IllegalArgumentException("invald index in tensor member");
 		storage.set(index, value);
 	}
 	
@@ -451,18 +447,21 @@ public final class Float64TensorProductMember
 	private boolean indexOob(IntegerIndex idx, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException("negative component specified in indexOob");
-		if (component > 0) return true;
+		if (component > 0)
+			return true;
 		for (int i = 0; i < dims.length; i++) {
 			final long index = idx.get(i);
 			if (index < 0)
 				throw new IllegalArgumentException("negative index in indexOob");
-			if (index >= dims[i]) return true;
+			if (index >= dims[i])
+				return true;
 		}
 		for (int i = dims.length; i < idx.numDimensions(); i++) {
 			final long index = idx.get(i);
 			if (index < 0)
 				throw new IllegalArgumentException("negative index in indexOob");
-			if (index > 0) return true;
+			if (index > 0)
+				return true;
 		}
 		return false;
 	}
