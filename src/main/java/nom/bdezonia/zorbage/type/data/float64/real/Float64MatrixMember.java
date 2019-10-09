@@ -151,12 +151,16 @@ public final class Float64MatrixMember
 	
 	@Override
 	public void v(long r, long c, Float64Member value) {
+		if (r < 0 || c < 0 || r >= rows || c >= cols)
+			throw new IllegalArgumentException("matrix oob access");
 		long index = r * cols + c;
 		storage.get(index, value);
 	}
 	
 	@Override
 	public void setV(long r, long c, Float64Member value) {
+		if (r < 0 || c < 0 || r >= rows || c >= cols)
+			throw new IllegalArgumentException("matrix oob access");
 		long index = r * cols + c;
 		storage.set(index, value);
 	}
