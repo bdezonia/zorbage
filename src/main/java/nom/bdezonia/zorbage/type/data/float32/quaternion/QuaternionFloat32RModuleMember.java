@@ -118,12 +118,9 @@ public final class QuaternionFloat32RModuleMember
 	
 	@Override
 	public void v(long i, QuaternionFloat32Member v) {
-		if (i < storage.size()) {
-			storage.get(i, v);
-		}
-		else {
-			G.QFLT.zero().call(v);
-		}
+		if (i < 0 || i >= storage.size())
+			throw new IllegalArgumentException("rmod/vector oob access");
+		storage.get(i, v);
 	}
 
 	@Override

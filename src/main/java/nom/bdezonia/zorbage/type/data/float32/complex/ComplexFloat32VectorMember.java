@@ -114,12 +114,9 @@ public final class ComplexFloat32VectorMember
 	
 	@Override
 	public void v(long i, ComplexFloat32Member v) {
-		if (i < storage.size()) {
-			storage.get(i, v);
-		}
-		else {
-			G.CFLT.zero().call(v);
-		}
+		if (i < 0 || i >= storage.size())
+			throw new IllegalArgumentException("rmod/vector oob access");
+		storage.get(i, v);
 	}
 
 	@Override

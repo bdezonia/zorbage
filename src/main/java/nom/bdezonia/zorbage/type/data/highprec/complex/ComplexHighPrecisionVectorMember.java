@@ -114,12 +114,9 @@ public final class ComplexHighPrecisionVectorMember
 	
 	@Override
 	public void v(long i, ComplexHighPrecisionMember v) {
-		if (i < storage.size()) {
-			storage.get(i, v);
-		}
-		else {
-			G.CHP.zero().call(v);
-		}
+		if (i < 0 || i >= storage.size())
+			throw new IllegalArgumentException("rmod/vector oob access");
+		storage.get(i, v);
 	}
 
 	@Override
