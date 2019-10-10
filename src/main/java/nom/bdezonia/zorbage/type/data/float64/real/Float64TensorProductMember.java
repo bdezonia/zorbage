@@ -400,7 +400,8 @@ public final class Float64TensorProductMember
 	}
 
 	private long[] calcMultipliers() {
-		if (dims.length == 0) return new long[0];
+		if (dims.length == 0)
+			return new long[0];
 		long[] result = new long[dims.length-1];
 		long mult = 1;
 		for (int i = 0; i < result.length; i++) {
@@ -416,7 +417,8 @@ public final class Float64TensorProductMember
 	 * long = 3*5*4 + 2*4 + 1;
 	 */
 	private long indexToLong(IntegerIndex idx) {
-		if (idx.numDimensions() == 0) return 0;
+		if (idx.numDimensions() == 0)
+			throw new IllegalArgumentException("null index");
 		if ((idx.numDimensions() >= dims.length) && indexOob(idx, 0))
 			throw new IllegalArgumentException("index out of bounds");
 		long index = 0;
@@ -436,7 +438,7 @@ public final class Float64TensorProductMember
 		if (result.numDimensions() < this.dims.length)
 			throw new IllegalArgumentException("mismatched dims in tensor member");
 		for (int i = dims.length; i < result.numDimensions(); i++) {
-			result.set(i,0);
+			result.set(i, 0);
 		}
 		for (int i = dims.length-1; i >= 0; i--) {
 			result.set(i, idx / multipliers[i]);
