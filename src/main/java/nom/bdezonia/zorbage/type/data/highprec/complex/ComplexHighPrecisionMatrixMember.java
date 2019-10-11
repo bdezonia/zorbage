@@ -154,7 +154,7 @@ public final class ComplexHighPrecisionMatrixMember
 	
 	@Override
 	public void v(long r, long c, ComplexHighPrecisionMember value) {
-		if (r < 0 || c < 0 || r >= rows || c >= cols)
+		if (r < 0 || r >= rows || c < 0 || c >= cols)
 			throw new IllegalArgumentException("matrix oob access");
 		long index = r * cols + c;
 		storage.get(index, value);
@@ -162,7 +162,7 @@ public final class ComplexHighPrecisionMatrixMember
 	
 	@Override
 	public void setV(long r, long c, ComplexHighPrecisionMember value) {
-		if (r < 0 || c < 0 || r >= rows || c >= cols)
+		if (r < 0 || r >= rows || c < 0 || c >= cols)
 			throw new IllegalArgumentException("matrix oob access");
 		long index = r * cols + c;
 		storage.set(index, value);
