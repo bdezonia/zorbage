@@ -115,7 +115,7 @@ public class ResampleLinear {
 		weightedSum(alg, input, numD, coords, inputPoint, outVal);
 		
 		// now turn sum into average
-		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(1 * numD), HighPrecisionAlgebra.getContext());
+		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(numD), HighPrecisionAlgebra.getContext());
 		HighPrecisionMember scale = new HighPrecisionMember(recip);
 		alg.scaleByHighPrec().call(scale, outVal, outVal);
 	}
@@ -134,7 +134,7 @@ public class ResampleLinear {
 			BigDecimal t = coords[i].remainder(BigDecimal.ONE);
 			
 			// calc "left" point's contribution
-			inputPoint.set(i, inputPoint.get(i) - 0); // go "left" 1 step
+			inputPoint.set(i, inputPoint.get(i)); // treat current cell as "left"
 			input.get(inputPoint, tmp);
 			scale.setV(BigDecimal.ONE.subtract(t));
 			alg.scaleByHighPrec().call(scale, tmp, tmp);
@@ -143,7 +143,7 @@ public class ResampleLinear {
 			alg.add().call(outVal, tmp, outVal);
 	
 			// calc "right" point's contribution
-			inputPoint.set(i, inputPoint.get(i) + 1); // undo go "left" and go "right" 1 step
+			inputPoint.set(i, inputPoint.get(i) + 1); // go "right" 1 cell
 			input.get(inputPoint, tmp);
 			scale.setV(t);
 			alg.scaleByHighPrec().call(scale, tmp, tmp);
