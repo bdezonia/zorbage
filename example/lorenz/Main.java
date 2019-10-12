@@ -1,5 +1,5 @@
 //
-// A zorbage example: visualizing the Lorenz system using jMonkeyEngine.
+// A zorbage example: visualizing the Lorenz system using jMonkeyEngine3.
 //
 //   See https://en.wikipedia.org/wiki/Lorenz_system
 //
