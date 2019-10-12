@@ -28,16 +28,11 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigDecimal;
-
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.procedure.impl.ToHighPrec;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -112,17 +107,6 @@ public class TestTransformedDataSource {
 		// Do this just to test warning free compilation of duplicate() with mixed types
 		IndexedDataSource<SignedInt32Member> tmp = wrappedData.duplicate();
 		assertEquals(doubles.size(), tmp.size());
-	}
-	
-	@Test
-	public void test5() {
-		HighPrecisionMember result = G.HP.construct();
-		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
-		ToHighPrec<Float64Member> toHighPrec = new ToHighPrec<Float64Member>();
-		TransformedDataSource<Float64Member, HighPrecisionMember> hps =
-				new TransformedDataSource<>(G.DBL, doubles, toHighPrec, null);
-		Sum.compute(G.HP, hps, result);
-		assertEquals(BigDecimal.valueOf(45.0), result.v());
 	}
 	
 	private Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
