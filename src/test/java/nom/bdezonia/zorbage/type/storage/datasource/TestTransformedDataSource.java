@@ -47,6 +47,12 @@ public class TestTransformedDataSource {
 
 	@Test
 	public void test1() {
+		Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
+			@Override
+			public void call(Float64Member a, Float64Member b) {
+				b.set(a);
+			}
+		};
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
 		Float64Member value = G.DBL.construct();
@@ -64,6 +70,18 @@ public class TestTransformedDataSource {
 	
 	@Test
 	public void test2() {
+		Procedure2<Float64Member,Float64Member> half = new Procedure2<Float64Member, Float64Member>() {
+			@Override
+			public void call(Float64Member a, Float64Member b) {
+				b.setV(a.v() / 2.0);
+			}
+		};
+		Procedure2<Float64Member,Float64Member> dbl = new Procedure2<Float64Member, Float64Member>() {
+			@Override
+			public void call(Float64Member a, Float64Member b) {
+				b.setV(a.v() * 2.0);
+			}
+		};
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dbl, half);
 		Float64Member value = G.DBL.construct();
@@ -85,6 +103,12 @@ public class TestTransformedDataSource {
 	
 	@Test
 	public void test3() {
+		Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
+			@Override
+			public void call(Float64Member a, Float64Member b) {
+				b.set(a);
+			}
+		};
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
 		IndexedDataSource<Float64Member> dupe = wrappedData.duplicate();
@@ -97,6 +121,18 @@ public class TestTransformedDataSource {
 	
 	@Test
 	public void test4() {
+		Procedure2<SignedInt32Member,Float64Member> intToDbl = new Procedure2<SignedInt32Member, Float64Member>() {
+			@Override
+			public void call(SignedInt32Member a, Float64Member b) {
+				b.setV(a.v());
+			}
+		};
+		Procedure2<Float64Member,SignedInt32Member> dblToInt = new Procedure2<Float64Member, SignedInt32Member>() {
+			@Override
+			public void call(Float64Member a, SignedInt32Member b) {
+				b.setV((int)a.v());
+			}
+		};
 		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,SignedInt32Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dblToInt, intToDbl);
 		SignedInt32Member value = G.INT32.construct();
@@ -109,45 +145,4 @@ public class TestTransformedDataSource {
 		assertEquals(doubles.size(), tmp.size());
 	}
 	
-	private Procedure2<Float64Member,Float64Member> ident = new Procedure2<Float64Member, Float64Member>() {
-		
-		@Override
-		public void call(Float64Member a, Float64Member b) {
-			b.set(a);
-		}
-	};
-	
-	private Procedure2<Float64Member,Float64Member> half = new Procedure2<Float64Member, Float64Member>() {
-		
-		@Override
-		public void call(Float64Member a, Float64Member b) {
-			b.setV(a.v() / 2.0);
-		}
-	};
-	
-	private Procedure2<Float64Member,Float64Member> dbl = new Procedure2<Float64Member, Float64Member>() {
-		
-		@Override
-		public void call(Float64Member a, Float64Member b) {
-			b.setV(a.v() * 2.0);
-		}
-	};
-
-	private Procedure2<SignedInt32Member,Float64Member> intToDbl = new Procedure2<SignedInt32Member, Float64Member>() {
-		
-		@Override
-		public void call(SignedInt32Member a, Float64Member b) {
-			
-			b.setV(a.v());
-		}
-	};
-
-	private Procedure2<Float64Member,SignedInt32Member> dblToInt = new Procedure2<Float64Member, SignedInt32Member>() {
-		
-		@Override
-		public void call(Float64Member a, SignedInt32Member b) {
-			
-			b.setV((int)a.v());
-		}
-	};
 }
