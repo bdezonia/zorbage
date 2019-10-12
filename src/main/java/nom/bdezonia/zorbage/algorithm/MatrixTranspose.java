@@ -68,7 +68,7 @@ public class MatrixTranspose {
 			b.alloc(a.cols(), a.rows());
 			for (long r = 0; r < a.rows(); r++) {
 				for (long c = 0; c < a.cols(); c++) {
-					a.v(r,  c, value1);
+					a.v(r, c, value1);
 					b.setV(c, r, value1);
 				}
 			}

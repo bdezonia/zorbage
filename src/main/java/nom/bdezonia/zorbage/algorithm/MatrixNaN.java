@@ -47,10 +47,6 @@ public class MatrixNaN {
 	public static <T extends Algebra<T,U> & NaN<U>, U>
 		void compute(T alg, MatrixMember<U> a)
 	{
-		// comment out this possible source of bugs. empty matrices will remain that way.
-		//if (a.rows() == 0 || a.cols() == 0) {
-		//	a.alloc(1,1);
-		//}
 		U value = alg.construct();
 		alg.nan().call(value);
 		for (long r = 0; r < a.rows(); r++) {
