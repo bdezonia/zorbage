@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.FFT;
@@ -49,10 +51,12 @@ public class Main {
 		BufferedImage imgR = planes.a();
 		BufferedImage imgI = planes.b();
 		JFrame frame = new JFrame();
-		frame.getContentPane().setLayout(new FlowLayout());
-		frame.getContentPane().add(new JLabel(new ImageIcon(img)));
-		frame.getContentPane().add(new JLabel(new ImageIcon(imgR)));
-		frame.getContentPane().add(new JLabel(new ImageIcon(imgI)));
+		JPanel panel = new JPanel(new FlowLayout());
+		panel.add(new JLabel(new ImageIcon(img)));
+		panel.add(new JLabel(new ImageIcon(imgR)));
+		panel.add(new JLabel(new ImageIcon(imgI)));
+		JScrollPane scrollPane = new JScrollPane(panel);
+		frame.setContentPane(scrollPane);
 		frame.pack();
 		frame.setVisible(true);
 	}
