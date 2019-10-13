@@ -81,7 +81,7 @@ public class HighPrecisionAlgebra
     Power<HighPrecisionMember>,
     Tolerance<HighPrecisionMember,HighPrecisionMember>
 {
-	private static MathContext CONTEXT = new MathContext(35, RoundingMode.HALF_EVEN);
+	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
 	
 	public static MathContext getContext() {
