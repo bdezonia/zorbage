@@ -46,6 +46,7 @@ public class TestHighPrecision {
 
 	@Test
 	public void test() {
+		int origPrec = HighPrecisionAlgebra.getContext().getPrecision();
 		HighPrecisionMember a = G.HP.construct();
 		try {
 			HighPrecisionAlgebra.setPrecision(0);
@@ -74,5 +75,6 @@ public class TestHighPrecision {
 		G.HP.E().call(a);
 		G.HP.PI().call(a);
 		assertTrue(true);
+		HighPrecisionAlgebra.setPrecision(origPrec);
 	}
 }
