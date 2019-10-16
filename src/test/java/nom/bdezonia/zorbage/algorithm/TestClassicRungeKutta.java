@@ -49,6 +49,8 @@ public class TestClassicRungeKutta {
 	
 	// Test data derived from http://www2.hawaii.edu/~jmcfatri/math407/RungeKuttaTest.html
 
+	// test in one dimension
+	
 	@Test
 	public void test1() {
 		
@@ -70,7 +72,7 @@ public class TestClassicRungeKutta {
 		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
 	
 		Float64Member t0 = new Float64Member(0);
-		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t(0) = 0
+		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t = 0
 		Float64Member dt = new Float64Member(deltaT);
 		Float64Member value = G.DBL.construct();
 		
@@ -84,6 +86,8 @@ public class TestClassicRungeKutta {
 	}
 
 	// Test data worked out by hand
+	
+	// test in multiple dimensions
 	
 	@Test
 	public void test2() {
