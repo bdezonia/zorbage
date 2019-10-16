@@ -45,11 +45,23 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  */
 public class TestClassicRungeKutta {
 
+	private static final double TOL = 0.00000000001;
+	
 	// Test data derived from http://www2.hawaii.edu/~jmcfatri/math407/RungeKuttaTest.html
 
 	@Test
 	public void test1() {
 		
+		Procedure3<Float64Member,Float64Member,Float64Member> realDeriv =
+				new Procedure3<Float64Member, Float64Member, Float64Member>()
+		{
+			@Override
+			public void call(Float64Member t, Float64Member y, Float64Member result) {
+				double val = y.v() * ((2/(Math.exp(t.v())+1))-1);
+				result.setV(val);
+			}
+		};
+
 		double deltaT = 1.0/256;
 		int numSteps = 1536;
 		double range = deltaT * (numSteps-1);
@@ -68,26 +80,28 @@ public class TestClassicRungeKutta {
 		
 		results.get(numSteps-1, value);
 		
-		assertEquals(expected, value.v(), 0.00000001);
+		assertEquals(expected, value.v(), TOL);
 	}
 
-	private static Procedure3<Float64Member,Float64Member,Float64Member> realDeriv =
-			new Procedure3<Float64Member, Float64Member, Float64Member>()
-	{
-		@Override
-		public void call(Float64Member t, Float64Member y, Float64Member result) {
-			double val = y.v() * ((2/(Math.exp(t.v())+1))-1);
-			result.setV(val);
-		}
-	};
-
-	private static final int NUM_STEPS = 2000;
-	private static final double SLOPE = 1.25;
-	private static final double DT = 1.0/1024; // NOTE: bigger DTs introduce more error
+	// Test data worked out by hand
 	
 	@Test
 	public void test2() {
 		
+		int NUM_STEPS = 2000;
+		double SLOPE = 1.25;
+		double DT = 1.0/1024;
+		
+		Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
+				new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
+		{
+			@Override
+			public void call(Float64Member t, Float64VectorMember y, Float64VectorMember result) {
+				Float64Member scale = G.DBL.construct(((Double)(SLOPE)).toString());
+				G.DBL_VEC.scale().call(scale, y, result);
+			}
+		};
+
 		Float64Member t0 = G.DBL.construct(); // zero
 		Float64VectorMember y0 = G.DBL_VEC.construct("[1,4,7]");
 		Float64Member dt = G.DBL.construct(((Double)(DT)).toString());
@@ -114,7 +128,7 @@ public class TestClassicRungeKutta {
 		
 		expected_value = 1.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
 		value.v(0, component);
-		assertEquals(expected_value, component.v(), 0.00000001);
+		assertEquals(expected_value, component.v(), TOL);
 		
 		// y = C * e^(at)
 		// y(0) = 4
@@ -123,7 +137,7 @@ public class TestClassicRungeKutta {
 
 		expected_value = 4.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
 		value.v(1, component);
-		assertEquals(expected_value, component.v(), 0.00000001);
+		assertEquals(expected_value, component.v(), TOL);
 		
 		// y = C * e^(at)
 		// y(0) = 7
@@ -132,16 +146,7 @@ public class TestClassicRungeKutta {
 
 		expected_value = 7.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
 		value.v(2, component);
-		assertEquals(expected_value, component.v(), 0.00000001);
+		assertEquals(expected_value, component.v(), TOL);
 	}
 
-	private static Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
-			new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
-	{
-		@Override
-		public void call(Float64Member t, Float64VectorMember y, Float64VectorMember result) {
-			Float64Member scale = G.DBL.construct(((Double)(SLOPE)).toString());
-			G.DBL_VEC.scale().call(scale, y, result);
-		}
-	};
 }
