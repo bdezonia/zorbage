@@ -72,7 +72,7 @@ public class TestClassicRungeKutta {
 		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
 	
 		Float64Member t0 = new Float64Member(0);
-		Float64Member y0 = new Float64Member(3); // true analytic y(0) when t = 0
+		Float64Member y0 = new Float64Member(3); // 3 == true analytic y value when t = 0
 		Float64Member dt = new Float64Member(deltaT);
 		Float64Member value = G.DBL.construct();
 		
