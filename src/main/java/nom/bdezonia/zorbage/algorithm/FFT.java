@@ -100,31 +100,31 @@ public class FFT {
 		W sin = realAlg.construct();
 		W one = realAlg.construct("1");
 		W two = realAlg.construct("2");
-		W L = realAlg.construct(two);
-		for (long l = 2; l <= aSize; l = l+l) {
-			W K = realAlg.construct();
+		W l = realAlg.construct(two);
+		for (long el = 2; el <= aSize; el = el+el) {
+			W k = realAlg.construct();
 			W kth = realAlg.construct();
-			for (long k = 0; k < l/2; k++) {
+			for (long kay = 0; kay < el/2; kay++) {
 				realAlg.negate().call(two, kth);
-				realAlg.multiply().call(kth, K, kth);
+				realAlg.multiply().call(kth, k, kth);
 				realAlg.multiply().call(kth, pi, kth);
-				realAlg.divide().call(kth, L, kth);
+				realAlg.divide().call(kth, l, kth);
 				realAlg.cos().call(kth, cos);
 				realAlg.sin().call(kth, sin);
 				w.setR(cos);
 				w.setI(sin);
-				for (long j = 0; j < aSize/l; j++) {
-					b.get(j*l + k + l/2, tmp1);
+				for (long j = 0; j < aSize/el; j++) {
+					b.get(j*el + kay + el/2, tmp1);
 					cmplxAlg.multiply().call(w, tmp1, tao);
-					b.get(j*l + k, tmp2);
+					b.get(j*el + kay, tmp2);
 					cmplxAlg.subtract().call(tmp2, tao, tmp1);
-					b.set(j*l + k + l/2, tmp1);
+					b.set(j*el + kay + el/2, tmp1);
 					cmplxAlg.add().call(tmp2, tao, tmp1);
-					b.set(j*l + k, tmp1);
+					b.set(j*el + kay, tmp1);
 				}
-				realAlg.add().call(K, one, K);
+				realAlg.add().call(k, one, k);
 			}
-			realAlg.add().call(L,L,L);
+			realAlg.add().call(l, l, l);
 		}
 	}
 	
