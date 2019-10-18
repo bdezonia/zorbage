@@ -143,7 +143,15 @@ public class TestFFT {
 	}
 	
 	@Test
-	public void test3() {
+	public void testingNotes() {
+		// Note that I used apache commons-math3-3.6.1's standard FFT transform algorithm
+		// and generated transform data matching testKnownValues() below and compared
+		// zorbage's values to apache's. The results for each of the 16 terms (32 components
+		// total) matched to 14 decimal places.
+	}
+
+	@Test
+	public void testKnownValues() {
 		double tol = 0.00000000000001;
 		ComplexFloat64Member value = G.CDBL.construct();
 		IndexedDataSource<ComplexFloat64Member> a = Storage.allocate(16, value);
@@ -285,12 +293,5 @@ public class TestFFT {
 		c.get(15, value);
 		assertEquals(0, value.r(), tol);
 		assertEquals(9, value.i(), tol);
-	}
-	
-	public void additionalTest() {
-		// Note that I used apache commons-math3-3.6.1's standard FFT transform algorithm
-		// and generated transform data matching test3 above and compared generated values.
-		// The results for each of the 16 terms (32 components total) matched to 14 decimal
-		// places.
 	}
 }
