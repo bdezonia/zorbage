@@ -76,6 +76,22 @@ public class TestBinarySearchLeft {
 		assertEquals(-1, BinarySearchLeft.compute(G.DBL, value, nums));
 		value.setV(4);
 		assertEquals(-1, BinarySearchLeft.compute(G.DBL, value, nums));
+
+		nums = ArrayStorage.allocateDoubles(new double[] {0,1,1,2,2,2,3,3,3,3,4});
+		value.setV(-1);
+		assertEquals(-1, BinarySearchLeft.compute(G.DBL, value, nums));
+		value.setV(0);
+		assertEquals(0, BinarySearchLeft.compute(G.DBL, value, nums));
+		value.setV(1);
+		assertEquals(1, BinarySearchLeft.compute(G.DBL, value, nums));
+		value.setV(2);
+		assertEquals(3, BinarySearchLeft.compute(G.DBL, value, nums));
+		value.setV(3);
+		assertEquals(6, BinarySearchLeft.compute(G.DBL, value, nums));
+		value.setV(4);
+		assertEquals(10, BinarySearchLeft.compute(G.DBL, value, nums));
+		value.setV(5);
+		assertEquals(-1, BinarySearchLeft.compute(G.DBL, value, nums));
 	}
 
 }
