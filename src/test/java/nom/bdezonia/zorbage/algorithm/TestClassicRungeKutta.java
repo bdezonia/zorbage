@@ -64,12 +64,12 @@ public class TestClassicRungeKutta {
 			}
 		};
 
-		double deltaT = 1.0/256;
-		int numSteps = 1536;
-		double range = deltaT * (numSteps-1);
+		final double deltaT = 1.0/256;
+		final int numSteps = 1536;
+		final double range = deltaT * (numSteps-1);
 		
 		// true analytic solution: 12*e^t/(e^t+1)^2
-		double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
+		final double expected = 12 * Math.exp(range)/((Math.exp(range)+1)*(Math.exp(range)+1));
 	
 		Float64Member t0 = new Float64Member(0);
 		Float64Member y0 = new Float64Member(3); // 3 == true analytic y value when t = 0
@@ -92,9 +92,9 @@ public class TestClassicRungeKutta {
 	@Test
 	public void test2() {
 		
-		int NUM_STEPS = 2000;
-		double SLOPE = 1.25;
-		double DT = 1.0/1024;
+		final int NUM_STEPS = 2000;
+		final double SLOPE = 1.25;
+		final double DT = 1.0/1024;
 		
 		Procedure3<Float64Member,Float64VectorMember,Float64VectorMember> vectorDeriv =
 				new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
