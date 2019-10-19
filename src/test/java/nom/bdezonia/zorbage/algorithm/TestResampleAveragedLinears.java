@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestResampleLinear {
+public class TestResampleAveragedLinears {
 
 	@Test
 	public void test1da() {
@@ -62,7 +62,7 @@ public class TestResampleLinear {
 		};
 		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
-		MultiDimDataSource<Float64Member> newDs = ResampleLinear.compute(G.DBL, new long[]{8}, padded);
+		MultiDimDataSource<Float64Member> newDs = ResampleAveragedLinears.compute(G.DBL, new long[]{8}, padded);
 		
 		assertEquals(8, newDs.dimension(0));
 
@@ -116,7 +116,7 @@ public class TestResampleLinear {
 		};
 		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
-		MultiDimDataSource<Float64Member> newDs = ResampleLinear.compute(G.DBL, new long[]{10}, padded);
+		MultiDimDataSource<Float64Member> newDs = ResampleAveragedLinears.compute(G.DBL, new long[]{10}, padded);
 		
 		assertEquals(10, newDs.dimension(0));
 

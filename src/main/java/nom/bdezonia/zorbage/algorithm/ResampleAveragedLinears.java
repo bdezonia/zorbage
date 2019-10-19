@@ -46,12 +46,14 @@ import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class ResampleCubic {
+public class ResampleAveragedLinears {
+
+	private ResampleAveragedLinears() { }
 
 	/**
-	 * Cubicly resamples one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
-	 * The algorithm computes a series of cubicly combined values, 1 per 2-dimensional combination, from the four
-	 * nearest points along those two dimensions. Then that series of values is averaged.
+	 * Linearly resamples one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
+	 * The algorithm computes a series of linear combined values, 1 per dimension, from the two nearest points
+	 * along that dimension. Then that series of values is averaged.
 	 * Note: The input datasource should be padded. This algorithm can poke outside the input boundaries.
 	 * 
 	 * @param <T>
@@ -126,99 +128,33 @@ public class ResampleCubic {
 	{
 		U tmp = alg.construct();
 		
+		HighPrecisionMember scale = G.HP.construct();
+		
 		for (int i = 0; i < numD; i++) {
-				
-			// calc u
+
+			// calc t
 			BigDecimal t = coords[i].remainder(BigDecimal.ONE);
 			
-			cubicSolution(alg, input, inputPoint, coords, i, t, tmp);
+			// calc "left" point's contribution
+			inputPoint.set(i, inputPoint.get(i)); // treat current cell as "left"
+			input.get(inputPoint, tmp);
+			scale.setV(BigDecimal.ONE.subtract(t));
+			alg.scaleByHighPrec().call(scale, tmp, tmp);
+			
+			// add to sum
+			alg.add().call(outVal, tmp, outVal);
+	
+			// calc "right" point's contribution
+			inputPoint.set(i, inputPoint.get(i) + 1); // go "right" 1 cell
+			input.get(inputPoint, tmp);
+			scale.setV(t);
+			alg.scaleByHighPrec().call(scale, tmp, tmp);
 			
 			// add to sum
 			alg.add().call(outVal, tmp, outVal);
 			
+			// reset point
+			inputPoint.set(i, inputPoint.get(i) - 1); // undo go "right"
 		}
-	}
-	
-	// See https://dsp.stackexchange.com/questions/18265/bicubic-interpolation
-	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
-		void cubicSolution(T alg, MultiDimDataSource<U> input, IntegerIndex inputPoint, BigDecimal[] coords,
-							int dim, BigDecimal t, U outVal)
-	{
-		U ym1 = alg.construct();
-		U y0 = alg.construct();
-		U y1 = alg.construct();
-		U y2 = alg.construct();
-		
-		input.get(inputPoint, y0);
-		inputPoint.set(dim, inputPoint.get(dim) + 1);
-		input.get(inputPoint, y1);
-		inputPoint.set(dim, inputPoint.get(dim) + 1);
-		input.get(inputPoint, y2);
-		inputPoint.set(dim, inputPoint.get(dim) - 3);
-		input.get(inputPoint, ym1);
-		inputPoint.set(dim, inputPoint.get(dim) + 1);
-		
-		U a = alg.construct();
-		U b = alg.construct();
-		U c = alg.construct();
-		U d = alg.construct();
-
-		U tmp1 = alg.construct();
-		U tmp2 = alg.construct();
-		U tmp3 = alg.construct();
-		U tmp4 = alg.construct();
-		
-		HighPrecisionMember hp = G.HP.construct();
-		
-		// find d
-		alg.assign().call(y0, d);
-		
-		// find c
-		hp.setV(BigDecimal.valueOf(-0.5));
-		alg.scaleByHighPrec().call(hp, ym1, tmp1);
-		hp.setV(BigDecimal.valueOf(0.5));
-		alg.scaleByHighPrec().call(hp, y1, tmp2);
-		alg.add().call(tmp1, tmp2, c);
-		
-		// find b
-		alg.assign().call(ym1, tmp1);
-		hp.setV(BigDecimal.valueOf(-2.5));
-		alg.scaleByHighPrec().call(hp, y0, tmp2);
-		hp.setV(BigDecimal.valueOf(2));
-		alg.scaleByHighPrec().call(hp, y1, tmp3);
-		hp.setV(BigDecimal.valueOf(-0.5));
-		alg.scaleByHighPrec().call(hp, y2, tmp4);
-		alg.add().call(tmp1, tmp2, tmp1);
-		alg.add().call(tmp3, tmp4, tmp3);
-		alg.add().call(tmp1, tmp3, b);
-		
-		// find a
-		hp.setV(BigDecimal.valueOf(-0.5));
-		alg.scaleByHighPrec().call(hp, ym1, tmp1);
-		hp.setV(BigDecimal.valueOf(1.5));
-		alg.scaleByHighPrec().call(hp, y0, tmp2);
-		hp.setV(BigDecimal.valueOf(-1.5));
-		alg.scaleByHighPrec().call(hp, y1, tmp3);
-		hp.setV(BigDecimal.valueOf(0.5));
-		alg.scaleByHighPrec().call(hp, y2, tmp4);
-		alg.add().call(tmp1, tmp2, tmp1);
-		alg.add().call(tmp3, tmp4, tmp3);
-		alg.add().call(tmp1, tmp3, a);
-		
-		// combine: f(x) = ax^3 + bx^2 + cx + d
-		alg.assign().call(d, tmp2);
-		hp.setV(t);
-		alg.scaleByHighPrec().call(hp, c, tmp1);
-		alg.add().call(tmp2, tmp1, tmp2);
-		hp.setV(t.multiply(t));
-		alg.scaleByHighPrec().call(hp, b, tmp1);
-		alg.add().call(tmp2, tmp1, tmp2);
-		hp.setV(t.multiply(t).multiply(t));
-		alg.scaleByHighPrec().call(hp, a, tmp1);
-		alg.add().call(tmp2, tmp1, tmp2);
-		
-		// assign the output value
-		alg.assign().call(tmp2, outVal);
 	}
 }

@@ -33,7 +33,7 @@ import org.junit.Test;
  * @author Barry DeZonia
  *
  */
-public class TestResampleCubic {
+public class TestResampleAveragedCubics {
 
 	@Test
 	public void test() {
