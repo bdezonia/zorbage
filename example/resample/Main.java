@@ -23,6 +23,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.ResampleAveragedCubics;
 import nom.bdezonia.zorbage.algorithm.ResampleAveragedLinears;
 import nom.bdezonia.zorbage.algorithm.ResampleNearestNeighbor;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
@@ -54,7 +55,10 @@ public class Main {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs = toFloat32(img);
+		Tuple3<MultiDimDataSource<Float32Member>,
+				MultiDimDataSource<Float32Member>,
+				MultiDimDataSource<Float32Member>>
+			inputs = toFloat32(img);
 		BufferedImage resamplingNN = resampleNN(inputs);
 		BufferedImage resamplingLinear = resampleLinear(inputs);
 		BufferedImage resamplingCubic = resampleCubic(inputs);
@@ -70,7 +74,11 @@ public class Main {
 		frame.setVisible(true);
 	}
 
-	private static Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> toFloat32(BufferedImage in) {
+	private static Tuple3<MultiDimDataSource<Float32Member>,
+							MultiDimDataSource<Float32Member>,
+							MultiDimDataSource<Float32Member>>
+		toFloat32(BufferedImage in)
+	{
 		int rows = in.getHeight();
 		int cols = in.getWidth();
 		Float32Member value = G.FLT.construct();
@@ -97,7 +105,10 @@ public class Main {
 		return new Tuple3<>(rs,gs,bs);
 	}
 	
-	private static BufferedImage toBufferedImage(MultiDimDataSource<Float32Member> rs, MultiDimDataSource<Float32Member> gs, MultiDimDataSource<Float32Member> bs) {
+	private static BufferedImage toBufferedImage(MultiDimDataSource<Float32Member> rs,
+													MultiDimDataSource<Float32Member> gs,
+													MultiDimDataSource<Float32Member> bs)
+	{
 		int rows = (int) rs.dimension(1);
 		int cols = (int) rs.dimension(0);
 		BufferedImage img = new BufferedImage(cols, rows, BufferedImage.TYPE_INT_RGB);
@@ -126,52 +137,73 @@ public class Main {
 	
 	private static BufferedImage resampleNN(Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
 	{
-		MirrorNdOOB<Float32Member> mirror;
-		ProcedurePaddedMultiDimDataSource<Float32Algebra,Float32Member> padded;
 		MultiDimDataSource<Float32Member> r, g, b;
-		mirror = new MirrorNdOOB<>(inputs.a());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.a(), mirror);
-		r = ResampleNearestNeighbor.compute(G.FLT, DIMS, padded);
-		mirror = new MirrorNdOOB<>(inputs.b());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.b(), mirror);
-		g = ResampleNearestNeighbor.compute(G.FLT, DIMS, padded);
-		mirror = new MirrorNdOOB<>(inputs.c());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.c(), mirror);
-		b = ResampleNearestNeighbor.compute(G.FLT, DIMS, padded);
+		r = resample(RESAMPLE_NN, inputs.a());
+		g = resample(RESAMPLE_NN, inputs.b());
+		b = resample(RESAMPLE_NN, inputs.c());
 		return toBufferedImage(r,g,b);
 	}
 	
 	private static BufferedImage resampleLinear(Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
 	{
-		MirrorNdOOB<Float32Member> mirror;
-		ProcedurePaddedMultiDimDataSource<Float32Algebra,Float32Member> padded;
 		MultiDimDataSource<Float32Member> r, g, b;
-		mirror = new MirrorNdOOB<>(inputs.a());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.a(), mirror);
-		r = ResampleAveragedLinears.compute(G.FLT, DIMS, padded);
-		mirror = new MirrorNdOOB<>(inputs.b());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.b(), mirror);
-		g = ResampleAveragedLinears.compute(G.FLT, DIMS, padded);
-		mirror = new MirrorNdOOB<>(inputs.c());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.c(), mirror);
-		b = ResampleAveragedLinears.compute(G.FLT, DIMS, padded);
+		r = resample(RESAMPLE_LINEAR, inputs.a());
+		g = resample(RESAMPLE_LINEAR, inputs.b());
+		b = resample(RESAMPLE_LINEAR, inputs.c());
 		return toBufferedImage(r,g,b);
 	}
 	
 	private static BufferedImage resampleCubic(Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
 	{
-		MirrorNdOOB<Float32Member> mirror;
-		ProcedurePaddedMultiDimDataSource<Float32Algebra,Float32Member> padded;
 		MultiDimDataSource<Float32Member> r, g, b;
-		mirror = new MirrorNdOOB<Float32Member>(inputs.a());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.a(), mirror);
-		r = ResampleAveragedCubics.compute(G.FLT, DIMS, padded);
-		mirror = new MirrorNdOOB<Float32Member>(inputs.b());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.b(), mirror);
-		g = ResampleAveragedCubics.compute(G.FLT, DIMS, padded);
-		mirror = new MirrorNdOOB<Float32Member>(inputs.c());
-		padded = new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, inputs.c(), mirror);
-		b = ResampleAveragedCubics.compute(G.FLT, DIMS, padded);
+		r = resample(RESAMPLE_CUBIC, inputs.a());
+		g = resample(RESAMPLE_CUBIC, inputs.b());
+		b = resample(RESAMPLE_CUBIC, inputs.c());
 		return toBufferedImage(r,g,b);
 	}
-}
+	
+	private static MultiDimDataSource<Float32Member>
+		resample(Function3<MultiDimDataSource<Float32Member>,Float32Algebra,long[],MultiDimDataSource<Float32Member>> algo,
+					MultiDimDataSource<Float32Member> input)
+	{
+		MirrorNdOOB<Float32Member> mirror = new MirrorNdOOB<Float32Member>(input);
+		MultiDimDataSource<Float32Member> padded =
+				new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, input, mirror);
+		return algo.call(G.FLT, DIMS, padded);
+	}
+
+	private static Function3<MultiDimDataSource<Float32Member>,Float32Algebra,long[],MultiDimDataSource<Float32Member>> RESAMPLE_NN
+		= new Function3<MultiDimDataSource<Float32Member>, Float32Algebra, long[], MultiDimDataSource<Float32Member>>()
+	{
+		@Override
+		public MultiDimDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
+				MultiDimDataSource<Float32Member> data)
+		{
+			return ResampleNearestNeighbor.compute(alg, dims, data);
+		}
+	};
+	
+
+	private static Function3<MultiDimDataSource<Float32Member>,Float32Algebra,long[],MultiDimDataSource<Float32Member>> RESAMPLE_LINEAR
+		= new Function3<MultiDimDataSource<Float32Member>, Float32Algebra, long[], MultiDimDataSource<Float32Member>>()
+	{
+		@Override
+		public MultiDimDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
+				MultiDimDataSource<Float32Member> data)
+		{
+			return ResampleAveragedLinears.compute(alg, dims, data);
+		}
+	};
+	
+
+	private static Function3<MultiDimDataSource<Float32Member>,Float32Algebra,long[],MultiDimDataSource<Float32Member>> RESAMPLE_CUBIC
+		= new Function3<MultiDimDataSource<Float32Member>, Float32Algebra, long[], MultiDimDataSource<Float32Member>>()
+	{
+		@Override
+		public MultiDimDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
+				MultiDimDataSource<Float32Member> data)
+		{
+			return ResampleAveragedCubics.compute(alg, dims, data);
+		}
+	};
+ }
