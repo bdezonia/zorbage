@@ -137,28 +137,27 @@ public class Main {
 	
 	private static BufferedImage resampleNN(Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
 	{
-		MultiDimDataSource<Float32Member> r, g, b;
-		r = resample(RESAMPLE_NN, inputs.a());
-		g = resample(RESAMPLE_NN, inputs.b());
-		b = resample(RESAMPLE_NN, inputs.c());
-		return toBufferedImage(r,g,b);
+		return resampleRGB(RESAMPLE_NN, inputs);
 	}
 	
 	private static BufferedImage resampleLinear(Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
 	{
-		MultiDimDataSource<Float32Member> r, g, b;
-		r = resample(RESAMPLE_LINEAR, inputs.a());
-		g = resample(RESAMPLE_LINEAR, inputs.b());
-		b = resample(RESAMPLE_LINEAR, inputs.c());
-		return toBufferedImage(r,g,b);
+		return resampleRGB(RESAMPLE_LINEAR, inputs);
 	}
 	
 	private static BufferedImage resampleCubic(Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
 	{
+		return resampleRGB(RESAMPLE_CUBIC, inputs);
+	}
+
+	private static BufferedImage
+		resampleRGB(Function3<MultiDimDataSource<Float32Member>,Float32Algebra,long[],MultiDimDataSource<Float32Member>> algo,
+						Tuple3<MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>,MultiDimDataSource<Float32Member>> inputs)
+	{
 		MultiDimDataSource<Float32Member> r, g, b;
-		r = resample(RESAMPLE_CUBIC, inputs.a());
-		g = resample(RESAMPLE_CUBIC, inputs.b());
-		b = resample(RESAMPLE_CUBIC, inputs.c());
+		r = resample(algo, inputs.a());
+		g = resample(algo, inputs.b());
+		b = resample(algo, inputs.c());
 		return toBufferedImage(r,g,b);
 	}
 	
