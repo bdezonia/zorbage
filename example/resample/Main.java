@@ -117,7 +117,7 @@ public class Main {
 		MirrorNdOOB<Float32Member> mirror = new MirrorNdOOB<>(input);
 		ProcedurePaddedMultiDimDataSource<Float32Algebra,Float32Member> padded
 			= new ProcedurePaddedMultiDimDataSource<Float32Algebra, Float32Member>(G.FLT, input, mirror);
-		long[] dims = new long[] {200, 200};
+		long[] dims = new long[] {300, 300};
 		MultiDimDataSource<Float32Member> nn = ResampleNearestNeighbor.compute(G.FLT, dims, padded);
 		MultiDimDataSource<Float32Member> linear = ResampleAveragedLinears.compute(G.FLT, dims, padded);
 		MultiDimDataSource<Float32Member> cubic = ResampleAveragedCubics.compute(G.FLT, dims, padded);
