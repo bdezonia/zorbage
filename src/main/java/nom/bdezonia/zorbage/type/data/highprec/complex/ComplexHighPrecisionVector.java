@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -56,6 +57,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -80,6 +82,7 @@ public class ComplexHighPrecisionVector
     DirectProduct<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMatrixMember>,
     ScaleByHighPrec<ComplexHighPrecisionVectorMember>,
     ScaleByRational<ComplexHighPrecisionVectorMember>,
+    ScaleByDouble<ComplexHighPrecisionVectorMember>,
     Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>
 {
 	public ComplexHighPrecisionVector() { }
@@ -409,6 +412,20 @@ public class ComplexHighPrecisionVector
 	@Override
 	public Procedure3<RationalMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBD =
+			new Procedure3<Double, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(Double a, ComplexHighPrecisionVectorMember b, ComplexHighPrecisionVectorMember c) {
+			RModuleScaleByDouble.compute(G.CHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> WITHIN =

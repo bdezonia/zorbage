@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -71,6 +72,7 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -98,6 +100,7 @@ public class OctonionHighPrecisionMatrix
 		RealConstants<OctonionHighPrecisionMatrixMember>,
 		ScaleByHighPrec<OctonionHighPrecisionMatrixMember>,
 		ScaleByRational<OctonionHighPrecisionMatrixMember>,
+		ScaleByDouble<OctonionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionMatrixMember>
 {
 	public OctonionHighPrecisionMatrix() { }
@@ -704,6 +707,20 @@ public class OctonionHighPrecisionMatrix
 	@Override
 	public Procedure3<RationalMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBD =
+			new Procedure3<Double, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(Double a, OctonionHighPrecisionMatrixMember b, OctonionHighPrecisionMatrixMember c) {
+			MatrixScaleByDouble.compute(G.OHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> WITHIN =

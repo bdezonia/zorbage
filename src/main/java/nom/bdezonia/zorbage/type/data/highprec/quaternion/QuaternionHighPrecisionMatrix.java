@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -71,6 +72,7 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -98,6 +100,7 @@ public class QuaternionHighPrecisionMatrix
 		RealConstants<QuaternionHighPrecisionMatrixMember>,
 		ScaleByHighPrec<QuaternionHighPrecisionMatrixMember>,
 		ScaleByRational<QuaternionHighPrecisionMatrixMember>,
+		ScaleByDouble<QuaternionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>
 {
 	public QuaternionHighPrecisionMatrix() { }
@@ -716,6 +719,20 @@ public class QuaternionHighPrecisionMatrix
 	@Override
 	public Procedure3<RationalMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> SBD =
+			new Procedure3<Double, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(Double a, QuaternionHighPrecisionMatrixMember b, QuaternionHighPrecisionMatrixMember c) {
+			MatrixScaleByDouble.compute(G.QHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> WITHIN =

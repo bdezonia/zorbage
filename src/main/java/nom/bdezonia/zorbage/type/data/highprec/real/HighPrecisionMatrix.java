@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -70,6 +71,7 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -96,6 +98,7 @@ public class HighPrecisionMatrix
 		RealConstants<HighPrecisionMatrixMember>,
 		ScaleByHighPrec<HighPrecisionMatrixMember>,
 		ScaleByRational<HighPrecisionMatrixMember>,
+		ScaleByDouble<HighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,HighPrecisionMatrixMember>
 {
 	public HighPrecisionMatrix() { }
@@ -688,6 +691,20 @@ public class HighPrecisionMatrix
 	@Override
 	public Procedure3<RationalMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBD =
+			new Procedure3<Double, HighPrecisionMatrixMember, HighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(Double a, HighPrecisionMatrixMember b, HighPrecisionMatrixMember c) {
+			MatrixScaleByDouble.compute(G.HP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, HighPrecisionMatrixMember, HighPrecisionMatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> WITHIN =

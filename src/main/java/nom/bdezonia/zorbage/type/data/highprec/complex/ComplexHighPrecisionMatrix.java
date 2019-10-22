@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -71,6 +72,7 @@ import nom.bdezonia.zorbage.type.algebra.MatrixRing;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -98,6 +100,7 @@ public class ComplexHighPrecisionMatrix
 		RealConstants<ComplexHighPrecisionMatrixMember>,
 		ScaleByHighPrec<ComplexHighPrecisionMatrixMember>,
 		ScaleByRational<ComplexHighPrecisionMatrixMember>,
+		ScaleByDouble<ComplexHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMatrixMember>
 {
 	public ComplexHighPrecisionMatrix() { }
@@ -704,6 +707,20 @@ public class ComplexHighPrecisionMatrix
 	@Override
 	public Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBD =
+			new Procedure3<Double, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(Double a, ComplexHighPrecisionMatrixMember b, ComplexHighPrecisionMatrixMember c) {
+			MatrixScaleByDouble.compute(G.CHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> WITHIN =

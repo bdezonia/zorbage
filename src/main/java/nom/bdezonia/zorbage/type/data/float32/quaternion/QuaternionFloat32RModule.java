@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -63,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -88,6 +90,7 @@ public class QuaternionFloat32RModule
 	NaN<QuaternionFloat32RModuleMember>,
 	ScaleByHighPrec<QuaternionFloat32RModuleMember>,
 	ScaleByRational<QuaternionFloat32RModuleMember>,
+	ScaleByDouble<QuaternionFloat32RModuleMember>,
 	Tolerance<Float32Member,QuaternionFloat32RModuleMember>
 {
 	public QuaternionFloat32RModule() { }
@@ -492,6 +495,20 @@ public class QuaternionFloat32RModule
 	@Override
 	public Procedure3<RationalMember, QuaternionFloat32RModuleMember, QuaternionFloat32RModuleMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, QuaternionFloat32RModuleMember, QuaternionFloat32RModuleMember> SBD =
+			new Procedure3<Double, QuaternionFloat32RModuleMember, QuaternionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(Double a, QuaternionFloat32RModuleMember b, QuaternionFloat32RModuleMember c) {
+			RModuleScaleByDouble.compute(G.QFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, QuaternionFloat32RModuleMember, QuaternionFloat32RModuleMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float32Member, QuaternionFloat32RModuleMember, QuaternionFloat32RModuleMember> WITHIN =

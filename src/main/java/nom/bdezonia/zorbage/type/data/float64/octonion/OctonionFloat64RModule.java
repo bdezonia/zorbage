@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -63,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -88,6 +90,7 @@ public class OctonionFloat64RModule
 	NaN<OctonionFloat64RModuleMember>,
 	ScaleByHighPrec<OctonionFloat64RModuleMember>,
 	ScaleByRational<OctonionFloat64RModuleMember>,
+	ScaleByDouble<OctonionFloat64RModuleMember>,
 	Tolerance<Float64Member,OctonionFloat64RModuleMember>
 {
 	public OctonionFloat64RModule() { }
@@ -486,6 +489,20 @@ public class OctonionFloat64RModule
 	@Override
 	public Procedure3<RationalMember, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> SBD =
+			new Procedure3<Double, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(Double a, OctonionFloat64RModuleMember b, OctonionFloat64RModuleMember c) {
+			RModuleScaleByDouble.compute(G.ODBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float64Member, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> WITHIN =

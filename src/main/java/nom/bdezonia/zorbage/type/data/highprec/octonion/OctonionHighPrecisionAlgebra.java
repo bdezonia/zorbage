@@ -51,6 +51,7 @@ import nom.bdezonia.zorbage.type.algebra.OctonionConstants;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
@@ -88,6 +89,7 @@ public class OctonionHighPrecisionAlgebra
     Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>,
     ScaleByHighPrec<OctonionHighPrecisionMember>,
     ScaleByRational<OctonionHighPrecisionMember>,
+    ScaleByDouble<OctonionHighPrecisionMember>,
     Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
@@ -1290,6 +1292,45 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Procedure3<RationalMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, OctonionHighPrecisionMember, OctonionHighPrecisionMember> SBD =
+			new Procedure3<Double, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public void call(Double a, OctonionHighPrecisionMember b, OctonionHighPrecisionMember c) {
+			BigDecimal d = BigDecimal.valueOf(a);
+			BigDecimal tmp;
+			tmp = b.r();
+			tmp = tmp.multiply(d);
+			c.setR(tmp);
+			tmp = b.i();
+			tmp = tmp.multiply(d);
+			c.setI(tmp);
+			tmp = b.j();
+			tmp = tmp.multiply(d);
+			c.setJ(tmp);
+			tmp = b.k();
+			tmp = tmp.multiply(d);
+			c.setK(tmp);
+			tmp = b.l();
+			tmp = tmp.multiply(d);
+			c.setL(tmp);
+			tmp = b.i0();
+			tmp = tmp.multiply(d);
+			c.setI0(tmp);
+			tmp = b.j0();
+			tmp = tmp.multiply(d);
+			c.setJ0(tmp);
+			tmp = b.k0();
+			tmp = tmp.multiply(d);
+			c.setK0(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> WITHIN =

@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -62,6 +63,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -88,6 +90,7 @@ public class ComplexFloat64Vector
     NaN<ComplexFloat64VectorMember>,
     ScaleByHighPrec<ComplexFloat64VectorMember>,
     ScaleByRational<ComplexFloat64VectorMember>,
+    ScaleByDouble<ComplexFloat64VectorMember>,
     Tolerance<Float64Member,ComplexFloat64VectorMember>
 {
 	public ComplexFloat64Vector() { }
@@ -481,6 +484,20 @@ public class ComplexFloat64Vector
 	@Override
 	public Procedure3<RationalMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBD =
+			new Procedure3<Double, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(Double a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			RModuleScaleByDouble.compute(G.CDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, ComplexFloat64VectorMember, ComplexFloat64VectorMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> WITHIN =

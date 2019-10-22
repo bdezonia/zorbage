@@ -64,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -96,6 +97,7 @@ public class ComplexHighPrecisionAlgebra
     Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>,
     ScaleByHighPrec<ComplexHighPrecisionMember>,
     ScaleByRational<ComplexHighPrecisionMember>,
+    ScaleByDouble<ComplexHighPrecisionMember>,
     Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
@@ -1308,6 +1310,27 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public Procedure3<RationalMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, ComplexHighPrecisionMember, ComplexHighPrecisionMember> SBD =
+			new Procedure3<Double, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	{
+		@Override
+		public void call(Double a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
+			BigDecimal d = BigDecimal.valueOf(a);
+			BigDecimal tmp;
+			tmp = b.r();
+			tmp = tmp.multiply(d);
+			c.setR(tmp);
+			tmp = b.i();
+			tmp = tmp.multiply(d);
+			c.setI(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> WITHIN =

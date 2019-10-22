@@ -72,6 +72,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -109,6 +110,7 @@ public class ComplexFloat16Algebra
     Scale<ComplexFloat16Member,ComplexFloat16Member>,
     ScaleByHighPrec<ComplexFloat16Member>,
     ScaleByRational<ComplexFloat16Member>,
+    ScaleByDouble<ComplexFloat16Member>,
     Tolerance<Float16Member,ComplexFloat16Member>
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
@@ -1375,6 +1377,21 @@ public class ComplexFloat16Algebra
 	@Override
 	public Procedure3<RationalMember, ComplexFloat16Member, ComplexFloat16Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, ComplexFloat16Member, ComplexFloat16Member> SBD =
+			new Procedure3<Double, ComplexFloat16Member, ComplexFloat16Member>()
+	{
+		@Override
+		public void call(Double a, ComplexFloat16Member b, ComplexFloat16Member c) {
+			c.setR((float)(a * b.r()));
+			c.setI((float)(a * b.i()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, ComplexFloat16Member, ComplexFloat16Member> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float16Member, ComplexFloat16Member, ComplexFloat16Member> WITHIN =

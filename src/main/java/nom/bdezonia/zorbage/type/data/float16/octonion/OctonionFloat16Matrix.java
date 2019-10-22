@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -82,6 +83,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -113,6 +115,7 @@ public class OctonionFloat16Matrix
 		NaN<OctonionFloat16MatrixMember>,
 		ScaleByHighPrec<OctonionFloat16MatrixMember>,
 		ScaleByRational<OctonionFloat16MatrixMember>,
+		ScaleByDouble<OctonionFloat16MatrixMember>,
 		Tolerance<Float16Member,OctonionFloat16MatrixMember>
 {
 	public OctonionFloat16Matrix() { }
@@ -789,6 +792,20 @@ public class OctonionFloat16Matrix
 	@Override
 	public Procedure3<RationalMember, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember> SBD =
+			new Procedure3<Double, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(Double a, OctonionFloat16MatrixMember b, OctonionFloat16MatrixMember c) {
+			MatrixScaleByDouble.compute(G.OHLF, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float16Member, OctonionFloat16MatrixMember, OctonionFloat16MatrixMember> WITHIN =

@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -82,6 +83,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -113,6 +115,7 @@ public class OctonionFloat32Matrix
 		NaN<OctonionFloat32MatrixMember>,
 		ScaleByHighPrec<OctonionFloat32MatrixMember>,
 		ScaleByRational<OctonionFloat32MatrixMember>,
+		ScaleByDouble<OctonionFloat32MatrixMember>,
 		Tolerance<Float32Member,OctonionFloat32MatrixMember>
 {
 	public OctonionFloat32Matrix() { }
@@ -789,6 +792,20 @@ public class OctonionFloat32Matrix
 	@Override
 	public Procedure3<RationalMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBD =
+			new Procedure3<Double, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Double a, OctonionFloat32MatrixMember b, OctonionFloat32MatrixMember c) {
+			MatrixScaleByDouble.compute(G.OFLT, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float32Member, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> WITHIN =

@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -57,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -80,6 +82,7 @@ public class QuaternionHighPrecisionRModule
     DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>,
     ScaleByHighPrec<QuaternionHighPrecisionRModuleMember>,
     ScaleByRational<QuaternionHighPrecisionRModuleMember>,
+    ScaleByDouble<QuaternionHighPrecisionRModuleMember>,
     Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>
 {
 	public QuaternionHighPrecisionRModule() { }
@@ -419,6 +422,20 @@ public class QuaternionHighPrecisionRModule
 	@Override
 	public Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBD =
+			new Procedure3<Double, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(Double a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			RModuleScaleByDouble.compute(G.QHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> WITHIN =

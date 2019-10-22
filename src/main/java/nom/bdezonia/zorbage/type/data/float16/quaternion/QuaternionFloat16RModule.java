@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -63,6 +64,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -88,6 +90,7 @@ public class QuaternionFloat16RModule
 	NaN<QuaternionFloat16RModuleMember>,
 	ScaleByHighPrec<QuaternionFloat16RModuleMember>,
 	ScaleByRational<QuaternionFloat16RModuleMember>,
+	ScaleByDouble<QuaternionFloat16RModuleMember>,
 	Tolerance<Float16Member,QuaternionFloat16RModuleMember>
 {
 	public QuaternionFloat16RModule() { }
@@ -492,6 +495,20 @@ public class QuaternionFloat16RModule
 	@Override
 	public Procedure3<RationalMember, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> SBD =
+			new Procedure3<Double, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember>()
+	{
+		@Override
+		public void call(Double a, QuaternionFloat16RModuleMember b, QuaternionFloat16RModuleMember c) {
+			RModuleScaleByDouble.compute(G.QHLF, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float16Member, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> WITHIN =

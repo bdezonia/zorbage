@@ -72,6 +72,7 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -109,6 +110,7 @@ public class ComplexFloat32Algebra
     Scale<ComplexFloat32Member,ComplexFloat32Member>,
     ScaleByHighPrec<ComplexFloat32Member>,
     ScaleByRational<ComplexFloat32Member>,
+    ScaleByDouble<ComplexFloat32Member>,
     Tolerance<Float32Member,ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
@@ -1374,6 +1376,21 @@ public class ComplexFloat32Algebra
 	@Override
 	public Procedure3<RationalMember, ComplexFloat32Member, ComplexFloat32Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, ComplexFloat32Member, ComplexFloat32Member> SBD =
+			new Procedure3<Double, ComplexFloat32Member, ComplexFloat32Member>()
+	{
+		@Override
+		public void call(Double a, ComplexFloat32Member b, ComplexFloat32Member c) {
+			c.setR((float)(a * b.r()));
+			c.setI((float)(a * b.i()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, ComplexFloat32Member, ComplexFloat32Member> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float32Member, ComplexFloat32Member, ComplexFloat32Member> WITHIN =

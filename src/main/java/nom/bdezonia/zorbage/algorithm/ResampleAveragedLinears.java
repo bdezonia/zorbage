@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -36,10 +35,8 @@ import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
  * 
@@ -63,7 +60,7 @@ public class ResampleAveragedLinears {
 	 * @param input
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>,
+	public static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>,
 					U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
 	{
@@ -92,7 +89,7 @@ public class ResampleAveragedLinears {
 		return output;
 	}
 	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
+	private static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, U>
 		void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
 							long[] outputDims, IntegerIndex outputPoint, U outVal)
 	{
@@ -117,18 +114,15 @@ public class ResampleAveragedLinears {
 		sum(alg, input, numD, coords, inputPoint, outVal);
 		
 		// now turn sum into average
-		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(numD), HighPrecisionAlgebra.getContext());
-		HighPrecisionMember scale = new HighPrecisionMember(recip);
-		alg.scaleByHighPrec().call(scale, outVal, outVal);
+		double scale = 1.0 / numD;
+		alg.scaleByDouble().call(scale, outVal, outVal);
 	}
 	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
+	private static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, U>
 		void sum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords,
 							IntegerIndex inputPoint, U outVal)
 	{
 		U tmp = alg.construct();
-		
-		HighPrecisionMember scale = G.HP.construct();
 		
 		for (int i = 0; i < numD; i++) {
 
@@ -138,8 +132,8 @@ public class ResampleAveragedLinears {
 			// calc "left" point's contribution
 			inputPoint.set(i, inputPoint.get(i)); // treat current cell as "left"
 			input.get(inputPoint, tmp);
-			scale.setV(BigDecimal.ONE.subtract(t));
-			alg.scaleByHighPrec().call(scale, tmp, tmp);
+			double scale = 1.0 - t.doubleValue();
+			alg.scaleByDouble().call(scale, tmp, tmp);
 			
 			// add to sum
 			alg.add().call(outVal, tmp, outVal);
@@ -147,8 +141,8 @@ public class ResampleAveragedLinears {
 			// calc "right" point's contribution
 			inputPoint.set(i, inputPoint.get(i) + 1); // go "right" 1 cell
 			input.get(inputPoint, tmp);
-			scale.setV(t);
-			alg.scaleByHighPrec().call(scale, tmp, tmp);
+			scale = t.doubleValue();
+			alg.scaleByDouble().call(scale, tmp, tmp);
 			
 			// add to sum
 			alg.add().call(outVal, tmp, outVal);

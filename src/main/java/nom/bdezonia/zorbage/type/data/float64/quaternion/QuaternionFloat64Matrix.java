@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
 import nom.bdezonia.zorbage.algorithm.MatrixScale;
+import nom.bdezonia.zorbage.algorithm.MatrixScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.MatrixScaleByRational;
 import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
@@ -82,6 +83,7 @@ import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -113,6 +115,7 @@ public class QuaternionFloat64Matrix
 		NaN<QuaternionFloat64MatrixMember>,
 		ScaleByHighPrec<QuaternionFloat64MatrixMember>,
 		ScaleByRational<QuaternionFloat64MatrixMember>,
+		ScaleByDouble<QuaternionFloat64MatrixMember>,
 		Tolerance<Float64Member,QuaternionFloat64MatrixMember>
 {
 	public QuaternionFloat64Matrix() { }
@@ -803,6 +806,20 @@ public class QuaternionFloat64Matrix
 	@Override
 	public Procedure3<RationalMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBD =
+			new Procedure3<Double, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Double a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
+			MatrixScaleByDouble.compute(G.QDBL, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float64Member, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> WITHIN =

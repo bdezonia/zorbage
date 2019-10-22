@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -56,6 +57,7 @@ import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -80,6 +82,7 @@ public class HighPrecisionVector
 	NaN<HighPrecisionVectorMember>,
 	ScaleByHighPrec<HighPrecisionVectorMember>,
 	ScaleByRational<HighPrecisionVectorMember>,
+	ScaleByDouble<HighPrecisionVectorMember>,
 	Tolerance<HighPrecisionMember,HighPrecisionVectorMember>
 {
 	public HighPrecisionVector() { }
@@ -457,6 +460,20 @@ public class HighPrecisionVector
 	@Override
 	public Procedure3<RationalMember, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, HighPrecisionVectorMember, HighPrecisionVectorMember> SBD =
+			new Procedure3<Double, HighPrecisionVectorMember, HighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(Double a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
+			RModuleScaleByDouble.compute(G.HP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, HighPrecisionVectorMember, HighPrecisionVectorMember> WITHIN =

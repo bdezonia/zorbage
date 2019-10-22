@@ -58,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
@@ -96,6 +97,7 @@ public class QuaternionFloat64Algebra
     Scale<QuaternionFloat64Member,QuaternionFloat64Member>,
     ScaleByHighPrec<QuaternionFloat64Member>,
     ScaleByRational<QuaternionFloat64Member>,
+    ScaleByDouble<QuaternionFloat64Member>,
     Tolerance<Float64Member,QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
@@ -1023,6 +1025,23 @@ public class QuaternionFloat64Algebra
 	@Override
 	public Procedure3<RationalMember, QuaternionFloat64Member, QuaternionFloat64Member> scaleByRational() {
 		return SBR;
+	}
+	
+	private final Procedure3<Double, QuaternionFloat64Member, QuaternionFloat64Member> SBD =
+			new Procedure3<Double, QuaternionFloat64Member, QuaternionFloat64Member>()
+	{
+		@Override
+		public void call(Double a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
+			c.setR(a * b.r());
+			c.setI(a * b.i());
+			c.setJ(a * b.j());
+			c.setK(a * b.k());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, QuaternionFloat64Member, QuaternionFloat64Member> scaleByDouble() {
+		return SBD;
 	}
 	
 	private final Function3<Boolean, Float64Member, QuaternionFloat64Member, QuaternionFloat64Member> WITHIN =

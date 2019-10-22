@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 
@@ -91,6 +92,7 @@ public class Float64TensorProduct
 		NaN<Float64TensorProductMember>,
 		ScaleByHighPrec<Float64TensorProductMember>,
 		ScaleByRational<Float64TensorProductMember>,
+		ScaleByDouble<Float64TensorProductMember>,
 		Tolerance<Float64Member, Float64TensorProductMember>
 {
 	@Override
@@ -720,6 +722,21 @@ public class Float64TensorProduct
 	@Override
 	public Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, Float64TensorProductMember, Float64TensorProductMember> SBD =
+			new Procedure3<Double, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Double a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			shapeResult(b, c);
+			nom.bdezonia.zorbage.algorithm.ScaleByDouble.compute(G.DBL, a, b.rawData(), c.rawData());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, Float64TensorProductMember, Float64TensorProductMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Procedure3<HighPrecisionMember, Float64TensorProductMember, Float64TensorProductMember> SBHP =

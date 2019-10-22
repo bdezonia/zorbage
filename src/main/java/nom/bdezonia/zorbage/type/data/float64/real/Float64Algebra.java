@@ -67,6 +67,7 @@ import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Rounding;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -105,6 +106,7 @@ public class Float64Algebra
     Scale<Float64Member,Float64Member>,
     ScaleByHighPrec<Float64Member>,
     ScaleByRational<Float64Member>,
+    ScaleByDouble<Float64Member>,
     Tolerance<Float64Member,Float64Member>
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
@@ -1513,6 +1515,20 @@ public class Float64Algebra
 	@Override
 	public Procedure3<RationalMember, Float64Member, Float64Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, Float64Member, Float64Member> SBD =
+			new Procedure3<Double, Float64Member, Float64Member>()
+	{
+		@Override
+		public void call(Double a, Float64Member b, Float64Member c) {
+			c.setV(a * b.v());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, Float64Member, Float64Member> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, Float64Member, Float64Member, Float64Member> WITHIN =

@@ -52,6 +52,7 @@ import nom.bdezonia.zorbage.type.algebra.Power;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
 import nom.bdezonia.zorbage.type.algebra.Roots;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -73,6 +74,7 @@ public class HighPrecisionAlgebra
     Scale<HighPrecisionMember,HighPrecisionMember>,
     ScaleByHighPrec<HighPrecisionMember>,
     ScaleByRational<HighPrecisionMember>,
+    ScaleByDouble<HighPrecisionMember>,
     Trigonometric<HighPrecisionMember>,
     Hyperbolic<HighPrecisionMember>,
     InverseTrigonometric<HighPrecisionMember>,
@@ -573,6 +575,23 @@ public class HighPrecisionAlgebra
 	@Override
 	public Procedure3<RationalMember, HighPrecisionMember, HighPrecisionMember> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, HighPrecisionMember, HighPrecisionMember> SBD =
+			new Procedure3<Double, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(Double a, HighPrecisionMember b, HighPrecisionMember c) {
+			BigDecimal d = BigDecimal.valueOf(a);
+			BigDecimal tmp = b.v();
+			tmp = tmp.multiply(d);
+			c.setV(tmp);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, HighPrecisionMember, HighPrecisionMember> scaleByDouble() {
+		return SBD;
 	}
 
 	@Override

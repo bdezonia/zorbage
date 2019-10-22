@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -36,10 +35,8 @@ import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
  * 
@@ -61,7 +58,7 @@ public class ResampleAveragedCubics {
 	 * @param input
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>,
+	public static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>,
 					U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
 	{
@@ -90,7 +87,7 @@ public class ResampleAveragedCubics {
 		return output;
 	}
 	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
+	private static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, U>
 		void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
 							long[] outputDims, IntegerIndex outputPoint, U outVal)
 	{
@@ -115,12 +112,11 @@ public class ResampleAveragedCubics {
 		sum(alg, input, numD, coords, inputPoint, outVal);
 		
 		// now turn sum into average
-		BigDecimal recip = BigDecimal.ONE.divide(BigDecimal.valueOf(numD), HighPrecisionAlgebra.getContext());
-		HighPrecisionMember scale = new HighPrecisionMember(recip);
-		alg.scaleByHighPrec().call(scale, outVal, outVal);
+		double scale = 1.0 / numD;;
+		alg.scaleByDouble().call(scale, outVal, outVal);
 	}
 	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
+	private static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, U>
 		void sum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords,
 							IntegerIndex inputPoint, U outVal)
 	{
@@ -141,7 +137,7 @@ public class ResampleAveragedCubics {
 	
 	// See https://dsp.stackexchange.com/questions/18265/bicubic-interpolation
 	
-	private static <T extends Algebra<T,U> & Addition<U> & ScaleByHighPrec<U>, U>
+	private static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, U>
 		void cubicSolution(T alg, MultiDimDataSource<U> input, IntegerIndex inputPoint, BigDecimal[] coords,
 							int dim, BigDecimal t, U outVal)
 	{
@@ -169,53 +165,40 @@ public class ResampleAveragedCubics {
 		U tmp3 = alg.construct();
 		U tmp4 = alg.construct();
 		
-		HighPrecisionMember hp = G.HP.construct();
-		
 		// find d
 		alg.assign().call(y0, d);
 		
 		// find c
-		hp.setV(BigDecimal.valueOf(-0.5));
-		alg.scaleByHighPrec().call(hp, ym1, tmp1);
-		hp.setV(BigDecimal.valueOf(0.5));
-		alg.scaleByHighPrec().call(hp, y1, tmp2);
+		alg.scaleByDouble().call(-0.5, ym1, tmp1);
+		alg.scaleByDouble().call(0.5, y1, tmp2);
 		alg.add().call(tmp1, tmp2, c);
 		
 		// find b
 		alg.assign().call(ym1, tmp1);
-		hp.setV(BigDecimal.valueOf(-2.5));
-		alg.scaleByHighPrec().call(hp, y0, tmp2);
-		hp.setV(BigDecimal.valueOf(2));
-		alg.scaleByHighPrec().call(hp, y1, tmp3);
-		hp.setV(BigDecimal.valueOf(-0.5));
-		alg.scaleByHighPrec().call(hp, y2, tmp4);
+		alg.scaleByDouble().call(-2.5, y0, tmp2);
+		alg.scaleByDouble().call(2.0, y1, tmp3);
+		alg.scaleByDouble().call(-0.5, y2, tmp4);
 		alg.add().call(tmp1, tmp2, tmp1);
 		alg.add().call(tmp3, tmp4, tmp3);
 		alg.add().call(tmp1, tmp3, b);
 		
 		// find a
-		hp.setV(BigDecimal.valueOf(-0.5));
-		alg.scaleByHighPrec().call(hp, ym1, tmp1);
-		hp.setV(BigDecimal.valueOf(1.5));
-		alg.scaleByHighPrec().call(hp, y0, tmp2);
-		hp.setV(BigDecimal.valueOf(-1.5));
-		alg.scaleByHighPrec().call(hp, y1, tmp3);
-		hp.setV(BigDecimal.valueOf(0.5));
-		alg.scaleByHighPrec().call(hp, y2, tmp4);
+		alg.scaleByDouble().call(-0.5, ym1, tmp1);
+		alg.scaleByDouble().call(1.5, y0, tmp2);
+		alg.scaleByDouble().call(-1.5, y1, tmp3);
+		alg.scaleByDouble().call(0.5, y2, tmp4);
 		alg.add().call(tmp1, tmp2, tmp1);
 		alg.add().call(tmp3, tmp4, tmp3);
 		alg.add().call(tmp1, tmp3, a);
 		
 		// combine: f(x) = ax^3 + bx^2 + cx + d
+		double x = t.doubleValue();
 		alg.assign().call(d, tmp2);
-		hp.setV(t);
-		alg.scaleByHighPrec().call(hp, c, tmp1);
+		alg.scaleByDouble().call(x, c, tmp1);
 		alg.add().call(tmp2, tmp1, tmp2);
-		hp.setV(t.multiply(t));
-		alg.scaleByHighPrec().call(hp, b, tmp1);
+		alg.scaleByDouble().call(x*x, b, tmp1);
 		alg.add().call(tmp2, tmp1, tmp2);
-		hp.setV(t.multiply(t).multiply(t));
-		alg.scaleByHighPrec().call(hp, a, tmp1);
+		alg.scaleByDouble().call(x*x*x, a, tmp1);
 		alg.add().call(tmp2, tmp1, tmp2);
 		
 		// assign the output value

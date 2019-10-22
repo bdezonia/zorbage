@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
+import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
@@ -57,6 +58,7 @@ import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
 import nom.bdezonia.zorbage.type.algebra.RModule;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -80,6 +82,7 @@ public class OctonionHighPrecisionRModule
 	DirectProduct<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMatrixMember>,
 	ScaleByHighPrec<OctonionHighPrecisionRModuleMember>,
 	ScaleByRational<OctonionHighPrecisionRModuleMember>,
+	ScaleByDouble<OctonionHighPrecisionRModuleMember>,
 	Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>
 {
 	public OctonionHighPrecisionRModule() { }
@@ -408,6 +411,20 @@ public class OctonionHighPrecisionRModule
 	@Override
 	public Procedure3<RationalMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByRational() {
 		return SBR;
+	}
+
+	private Procedure3<Double, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> SBD =
+			new Procedure3<Double, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(Double a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			RModuleScaleByDouble.compute(G.OHP, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Double, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> WITHIN =
