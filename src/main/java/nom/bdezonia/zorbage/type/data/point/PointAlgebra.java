@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
@@ -56,7 +57,7 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class PointAlgebra
 	implements Algebra<PointAlgebra,Point>, Addition<Point>, Scale<Point, Float64Member>,
-		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>,
+		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>, ScaleByDouble<Point>,
 		Tolerance<Double, Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
@@ -269,6 +270,24 @@ public class PointAlgebra
 	@Override
 	public Procedure3<RationalMember, Point, Point> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, Point, Point> SBD =
+			new Procedure3<Double, Point, Point>()
+	{
+		@Override
+		public void call(Double a, Point b, Point c) {
+			if (b.numDimensions() != c.numDimensions())
+				throw new IllegalArgumentException("mismatched point dimensionality");
+			for (int i = 0; i < b.numDimensions(); i++) {
+				c.setComponent(i, a * b.component(i));
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<Double, Point, Point> scaleByDouble() {
+		return SBD;
 	}
 
 	private final Procedure3<HighPrecisionMember, Point, Point> SBH =

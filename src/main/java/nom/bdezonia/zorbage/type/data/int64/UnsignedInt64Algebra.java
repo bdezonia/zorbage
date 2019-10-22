@@ -722,6 +722,22 @@ public class UnsignedInt64Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member> SBD =
+			new Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt64Member b, UnsignedInt64Member c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(a));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member> WITHIN =
 			new Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member>()
 	{

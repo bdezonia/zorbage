@@ -882,6 +882,22 @@ public class SignedInt128Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt128Member, SignedInt128Member> SBD =
+			new Procedure3<Double, SignedInt128Member, SignedInt128Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt128Member b, SignedInt128Member c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(a));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt128Member, SignedInt128Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt128Member, SignedInt128Member, SignedInt128Member> WITHIN =
 			new Function3<Boolean, SignedInt128Member, SignedInt128Member, SignedInt128Member>()
 	{

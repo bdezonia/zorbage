@@ -741,6 +741,20 @@ public class SignedInt64Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt64Member, SignedInt64Member> SBD =
+			new Procedure3<Double, SignedInt64Member, SignedInt64Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt64Member b, SignedInt64Member c) {
+			c.setV((long)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt64Member, SignedInt64Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt64Member, SignedInt64Member, SignedInt64Member> WITHIN =
 			new Function3<Boolean, SignedInt64Member, SignedInt64Member, SignedInt64Member>()
 	{

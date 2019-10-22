@@ -707,6 +707,20 @@ public class UnsignedInt13Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnsignedInt13Member, UnsignedInt13Member> SBD =
+			new Procedure3<Double, UnsignedInt13Member, UnsignedInt13Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt13Member b, UnsignedInt13Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt13Member, UnsignedInt13Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnsignedInt13Member, UnsignedInt13Member, UnsignedInt13Member> WITHIN =
 			new Function3<Boolean, UnsignedInt13Member, UnsignedInt13Member, UnsignedInt13Member>()
 	{

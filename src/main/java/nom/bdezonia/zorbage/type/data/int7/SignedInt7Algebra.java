@@ -752,6 +752,20 @@ public class SignedInt7Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt7Member, SignedInt7Member> SBD =
+			new Procedure3<Double, SignedInt7Member, SignedInt7Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt7Member b, SignedInt7Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt7Member, SignedInt7Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt7Member, SignedInt7Member, SignedInt7Member> WITHIN =
 			new Function3<Boolean, SignedInt7Member, SignedInt7Member, SignedInt7Member>()
 	{

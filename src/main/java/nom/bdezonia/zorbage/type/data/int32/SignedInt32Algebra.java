@@ -728,6 +728,20 @@ public class SignedInt32Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt32Member, SignedInt32Member> SBD =
+			new Procedure3<Double, SignedInt32Member, SignedInt32Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt32Member b, SignedInt32Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt32Member, SignedInt32Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt32Member, SignedInt32Member, SignedInt32Member> WITHIN =
 			new Function3<Boolean, SignedInt32Member, SignedInt32Member, SignedInt32Member>()
 	{

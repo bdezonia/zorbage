@@ -752,6 +752,20 @@ public class SignedInt9Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt9Member, SignedInt9Member> SBD =
+			new Procedure3<Double, SignedInt9Member, SignedInt9Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt9Member b, SignedInt9Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt9Member, SignedInt9Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt9Member, SignedInt9Member, SignedInt9Member> WITHIN =
 			new Function3<Boolean, SignedInt9Member, SignedInt9Member, SignedInt9Member>()
 	{

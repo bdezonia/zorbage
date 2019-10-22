@@ -707,6 +707,20 @@ public class UnsignedInt2Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnsignedInt2Member, UnsignedInt2Member> SBD =
+			new Procedure3<Double, UnsignedInt2Member, UnsignedInt2Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt2Member b, UnsignedInt2Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt2Member, UnsignedInt2Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnsignedInt2Member, UnsignedInt2Member, UnsignedInt2Member> WITHIN =
 			new Function3<Boolean, UnsignedInt2Member, UnsignedInt2Member, UnsignedInt2Member>()
 	{

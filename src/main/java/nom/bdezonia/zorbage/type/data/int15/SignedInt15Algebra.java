@@ -752,6 +752,20 @@ public class SignedInt15Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt15Member, SignedInt15Member> SBD =
+			new Procedure3<Double, SignedInt15Member, SignedInt15Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt15Member b, SignedInt15Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt15Member, SignedInt15Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt15Member, SignedInt15Member, SignedInt15Member> WITHIN =
 			new Function3<Boolean, SignedInt15Member, SignedInt15Member, SignedInt15Member>()
 	{

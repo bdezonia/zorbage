@@ -701,6 +701,20 @@ public class UnsignedInt16Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnsignedInt16Member, UnsignedInt16Member> SBD =
+			new Procedure3<Double, UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt16Member b, UnsignedInt16Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt16Member, UnsignedInt16Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member> WITHIN =
 			new Function3<Boolean, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member>()
 	{

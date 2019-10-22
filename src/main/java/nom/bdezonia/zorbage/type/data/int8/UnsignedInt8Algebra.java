@@ -700,6 +700,20 @@ public class UnsignedInt8Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnsignedInt8Member, UnsignedInt8Member> SBD =
+			new Procedure3<Double, UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt8Member b, UnsignedInt8Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt8Member, UnsignedInt8Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member> WITHIN =
 			new Function3<Boolean, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member>()
 	{

@@ -829,6 +829,23 @@ public class UnboundedIntAlgebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnboundedIntMember, UnboundedIntMember> SBD =
+			new Procedure3<Double, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(Double a, UnboundedIntMember b, UnboundedIntMember c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			BigDecimal d = BigDecimal.valueOf(a);
+			tmp = tmp.multiply(d);
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnboundedIntMember, UnboundedIntMember> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> WITHIN =
 			new Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember>()
 	{

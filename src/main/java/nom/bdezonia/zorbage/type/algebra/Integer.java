@@ -40,6 +40,7 @@ public interface Integer<T extends Integer<T,U>,U>
     Power<U>,
     Scale<U,U>,
     ScaleByHighPrec<U>,
-    ScaleByRational<U>
+    ScaleByRational<U>,
+    ScaleByDouble<U>
 {
 }

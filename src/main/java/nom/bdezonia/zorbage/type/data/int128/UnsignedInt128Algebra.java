@@ -823,6 +823,22 @@ public class UnsignedInt128Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member> SBD =
+			new Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(a));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member> WITHIN =
 			new Function3<Boolean, UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member>()
 	{

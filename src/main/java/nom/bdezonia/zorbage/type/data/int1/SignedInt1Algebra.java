@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.type.algebra.PredSucc;
 import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Ring;
 import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
@@ -67,7 +68,8 @@ public class SignedInt1Algebra
 		BitOperations<SignedInt1Member>,
 		Random<SignedInt1Member>,
 		ScaleByHighPrec<SignedInt1Member>,
-		ScaleByRational<SignedInt1Member>
+		ScaleByRational<SignedInt1Member>,
+		ScaleByDouble<SignedInt1Member>
 {
 
 	@Override
@@ -670,6 +672,20 @@ public class SignedInt1Algebra
 	@Override
 	public Procedure3<RationalMember, SignedInt1Member, SignedInt1Member> scaleByRational() {
 		return SBR;
+	}
+
+	private final Procedure3<Double, SignedInt1Member, SignedInt1Member> SBD =
+			new Procedure3<Double, SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt1Member b, SignedInt1Member c) {
+			c.setV((int) (a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt1Member, SignedInt1Member> scaleByDouble() {
+		return SBD;
 	}
 
 }

@@ -729,6 +729,20 @@ public class SignedInt8Algebra
 		return SBR;
 	}
 
+	private final Procedure3<Double, SignedInt8Member, SignedInt8Member> SBD =
+			new Procedure3<Double, SignedInt8Member, SignedInt8Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt8Member b, SignedInt8Member c) {
+			c.setV((int)(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt8Member, SignedInt8Member> scaleByDouble() {
+		return SBD;
+	}
+
 	private final Function3<Boolean, SignedInt8Member, SignedInt8Member, SignedInt8Member> WITHIN =
 			new Function3<Boolean, SignedInt8Member, SignedInt8Member, SignedInt8Member>()
 	{
