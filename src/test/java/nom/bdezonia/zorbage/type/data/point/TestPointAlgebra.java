@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.type.data.point;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import org.junit.Test;
 
