@@ -721,6 +721,22 @@ public class SignedInt7Algebra
 		public void call(HighPrecisionMember a, SignedInt7Member b, SignedInt7Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt7Member, SignedInt7Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, SignedInt7Member, SignedInt7Member> SBHPR =
+			new Procedure3<HighPrecisionMember, SignedInt7Member, SignedInt7Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt7Member b, SignedInt7Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -731,8 +747,8 @@ public class SignedInt7Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, SignedInt7Member, SignedInt7Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, SignedInt7Member, SignedInt7Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, SignedInt7Member, SignedInt7Member> SBR =
@@ -764,6 +780,20 @@ public class SignedInt7Algebra
 	@Override
 	public Procedure3<Double, SignedInt7Member, SignedInt7Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, SignedInt7Member, SignedInt7Member> SBDR =
+			new Procedure3<Double, SignedInt7Member, SignedInt7Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt7Member b, SignedInt7Member c) {
+			c.setV((int) Math.round(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt7Member, SignedInt7Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, SignedInt7Member, SignedInt7Member, SignedInt7Member> WITHIN =

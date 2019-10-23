@@ -792,6 +792,22 @@ public class UnsignedInt128Algebra
 		public void call(HighPrecisionMember a, UnsignedInt128Member b, UnsignedInt128Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt128Member, UnsignedInt128Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnsignedInt128Member, UnsignedInt128Member> SBHPR =
+			new Procedure3<HighPrecisionMember, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -802,8 +818,8 @@ public class UnsignedInt128Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, UnsignedInt128Member, UnsignedInt128Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, UnsignedInt128Member, UnsignedInt128Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, UnsignedInt128Member, UnsignedInt128Member> SBR =
@@ -837,6 +853,27 @@ public class UnsignedInt128Algebra
 	@Override
 	public Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member> SBDR =
+			new Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt128Member b, UnsignedInt128Member c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(a));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else
+				tmp = tmp.add(G.ONE_HALF);
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt128Member, UnsignedInt128Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member> WITHIN =

@@ -674,6 +674,22 @@ public class UnsignedInt3Algebra
 		public void call(HighPrecisionMember a, UnsignedInt3Member b, UnsignedInt3Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt3Member, UnsignedInt3Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnsignedInt3Member, UnsignedInt3Member> SBHPR =
+			new Procedure3<HighPrecisionMember, UnsignedInt3Member, UnsignedInt3Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt3Member b, UnsignedInt3Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -684,8 +700,8 @@ public class UnsignedInt3Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, UnsignedInt3Member, UnsignedInt3Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, UnsignedInt3Member, UnsignedInt3Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, UnsignedInt3Member, UnsignedInt3Member> SBR =
@@ -717,6 +733,20 @@ public class UnsignedInt3Algebra
 	@Override
 	public Procedure3<Double, UnsignedInt3Member, UnsignedInt3Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, UnsignedInt3Member, UnsignedInt3Member> SBDR =
+			new Procedure3<Double, UnsignedInt3Member, UnsignedInt3Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt3Member b, UnsignedInt3Member c) {
+			c.setV((int) Math.round(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt3Member, UnsignedInt3Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, UnsignedInt3Member, UnsignedInt3Member, UnsignedInt3Member> WITHIN =

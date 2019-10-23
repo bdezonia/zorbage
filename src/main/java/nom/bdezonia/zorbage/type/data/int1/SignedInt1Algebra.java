@@ -46,7 +46,9 @@ import nom.bdezonia.zorbage.type.algebra.Random;
 import nom.bdezonia.zorbage.type.algebra.Ring;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
+import nom.bdezonia.zorbage.type.algebra.ScaleByDoubleAndRound;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrecAndRound;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -68,8 +70,10 @@ public class SignedInt1Algebra
 		BitOperations<SignedInt1Member>,
 		Random<SignedInt1Member>,
 		ScaleByHighPrec<SignedInt1Member>,
+		ScaleByHighPrecAndRound<SignedInt1Member>,
 		ScaleByRational<SignedInt1Member>,
-		ScaleByDouble<SignedInt1Member>
+		ScaleByDouble<SignedInt1Member>,
+		ScaleByDoubleAndRound<SignedInt1Member>
 {
 
 	@Override
@@ -643,6 +647,22 @@ public class SignedInt1Algebra
 		public void call(HighPrecisionMember a, SignedInt1Member b, SignedInt1Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member> SBHPR =
+			new Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt1Member b, SignedInt1Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -653,8 +673,8 @@ public class SignedInt1Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, SignedInt1Member, SignedInt1Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, SignedInt1Member, SignedInt1Member> SBR =
@@ -686,6 +706,20 @@ public class SignedInt1Algebra
 	@Override
 	public Procedure3<Double, SignedInt1Member, SignedInt1Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, SignedInt1Member, SignedInt1Member> SBDR =
+			new Procedure3<Double, SignedInt1Member, SignedInt1Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt1Member b, SignedInt1Member c) {
+			c.setV((int) Math.round(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt1Member, SignedInt1Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 }

@@ -691,6 +691,22 @@ public class UnsignedInt64Algebra
 		public void call(HighPrecisionMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member> SBHPR =
+			new Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -701,8 +717,8 @@ public class UnsignedInt64Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, UnsignedInt64Member, UnsignedInt64Member> SBR =
@@ -736,6 +752,27 @@ public class UnsignedInt64Algebra
 	@Override
 	public Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member> SBDR =
+			new Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt64Member b, UnsignedInt64Member c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(a));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else
+				tmp = tmp.add(G.ONE_HALF);
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member> WITHIN =

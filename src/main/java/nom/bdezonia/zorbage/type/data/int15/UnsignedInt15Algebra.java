@@ -674,6 +674,22 @@ public class UnsignedInt15Algebra
 		public void call(HighPrecisionMember a, UnsignedInt15Member b, UnsignedInt15Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt15Member, UnsignedInt15Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnsignedInt15Member, UnsignedInt15Member> SBHPR =
+			new Procedure3<HighPrecisionMember, UnsignedInt15Member, UnsignedInt15Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt15Member b, UnsignedInt15Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -684,8 +700,8 @@ public class UnsignedInt15Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, UnsignedInt15Member, UnsignedInt15Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, UnsignedInt15Member, UnsignedInt15Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, UnsignedInt15Member, UnsignedInt15Member> SBR =
@@ -717,6 +733,20 @@ public class UnsignedInt15Algebra
 	@Override
 	public Procedure3<Double, UnsignedInt15Member, UnsignedInt15Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, UnsignedInt15Member, UnsignedInt15Member> SBDR =
+			new Procedure3<Double, UnsignedInt15Member, UnsignedInt15Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt15Member b, UnsignedInt15Member c) {
+			c.setV((int) Math.round(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt15Member, UnsignedInt15Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, UnsignedInt15Member, UnsignedInt15Member, UnsignedInt15Member> WITHIN =

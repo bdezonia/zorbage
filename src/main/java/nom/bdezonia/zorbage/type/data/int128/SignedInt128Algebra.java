@@ -851,6 +851,22 @@ public class SignedInt128Algebra
 		public void call(HighPrecisionMember a, SignedInt128Member b, SignedInt128Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member> SBHPR =
+			new Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt128Member b, SignedInt128Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -861,8 +877,8 @@ public class SignedInt128Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, SignedInt128Member, SignedInt128Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, SignedInt128Member, SignedInt128Member> SBR =
@@ -896,6 +912,27 @@ public class SignedInt128Algebra
 	@Override
 	public Procedure3<Double, SignedInt128Member, SignedInt128Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, SignedInt128Member, SignedInt128Member> SBDR =
+			new Procedure3<Double, SignedInt128Member, SignedInt128Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt128Member b, SignedInt128Member c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(a));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else
+				tmp = tmp.add(G.ONE_HALF);
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt128Member, SignedInt128Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, SignedInt128Member, SignedInt128Member, SignedInt128Member> WITHIN =

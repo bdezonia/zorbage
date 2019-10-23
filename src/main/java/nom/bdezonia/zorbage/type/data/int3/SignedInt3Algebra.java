@@ -721,6 +721,22 @@ public class SignedInt3Algebra
 		public void call(HighPrecisionMember a, SignedInt3Member b, SignedInt3Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, SignedInt3Member, SignedInt3Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, SignedInt3Member, SignedInt3Member> SBHPR =
+			new Procedure3<HighPrecisionMember, SignedInt3Member, SignedInt3Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, SignedInt3Member b, SignedInt3Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -731,8 +747,8 @@ public class SignedInt3Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, SignedInt3Member, SignedInt3Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, SignedInt3Member, SignedInt3Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, SignedInt3Member, SignedInt3Member> SBR =
@@ -764,6 +780,20 @@ public class SignedInt3Algebra
 	@Override
 	public Procedure3<Double, SignedInt3Member, SignedInt3Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, SignedInt3Member, SignedInt3Member> SBDR =
+			new Procedure3<Double, SignedInt3Member, SignedInt3Member>()
+	{
+		@Override
+		public void call(Double a, SignedInt3Member b, SignedInt3Member c) {
+			c.setV((int) Math.round(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, SignedInt3Member, SignedInt3Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, SignedInt3Member, SignedInt3Member, SignedInt3Member> WITHIN =

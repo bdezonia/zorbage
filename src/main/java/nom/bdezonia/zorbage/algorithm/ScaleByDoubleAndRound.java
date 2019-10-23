@@ -24,25 +24,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.algebra;
+package nom.bdezonia.zorbage.algorithm;
+
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Integer<T extends Integer<T,U>,U>
-  extends
-    OrderedIntegralDomain<T,U>,
-    EuclideanDomain<T,U>,
-    BitOperations<U>,
-    PredSucc<U>,
-    Power<U>,
-    Scale<U,U>,
-    ScaleByHighPrec<U>,
-    ScaleByHighPrecAndRound<U>,
-    ScaleByRational<U>,
-    ScaleByDouble<U>,
-    ScaleByDoubleAndRound<U>
-{
+public class ScaleByDoubleAndRound {
+
+	private ScaleByDoubleAndRound() {}
+	
+	/**
+	 * 
+	 * @param algebra
+	 * @param scale
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.ScaleByDoubleAndRound<U>, U>
+		void compute(T algebra, Double scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	{
+		FixedTransform2.compute(algebra, algebra, scale, algebra.scaleByDoubleAndRound(), a, b);
+	}
 }

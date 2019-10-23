@@ -676,6 +676,22 @@ public class UnsignedInt9Algebra
 		public void call(HighPrecisionMember a, UnsignedInt9Member b, UnsignedInt9Member c) {
 			BigDecimal tmp = a.v();
 			tmp = tmp.multiply(new BigDecimal(b.v()));
+			c.setV(tmp.intValue());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnsignedInt9Member, UnsignedInt9Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<HighPrecisionMember, UnsignedInt9Member, UnsignedInt9Member> SBHPR =
+			new Procedure3<HighPrecisionMember, UnsignedInt9Member, UnsignedInt9Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnsignedInt9Member b, UnsignedInt9Member c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
@@ -686,8 +702,8 @@ public class UnsignedInt9Algebra
 	};
 
 	@Override
-	public Procedure3<HighPrecisionMember, UnsignedInt9Member, UnsignedInt9Member> scaleByHighPrec() {
-		return SBHP;
+	public Procedure3<HighPrecisionMember, UnsignedInt9Member, UnsignedInt9Member> scaleByHighPrecAndRound() {
+		return SBHPR;
 	}
 
 	private final Procedure3<RationalMember, UnsignedInt9Member, UnsignedInt9Member> SBR =
@@ -719,6 +735,20 @@ public class UnsignedInt9Algebra
 	@Override
 	public Procedure3<Double, UnsignedInt9Member, UnsignedInt9Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, UnsignedInt9Member, UnsignedInt9Member> SBDR =
+			new Procedure3<Double, UnsignedInt9Member, UnsignedInt9Member>()
+	{
+		@Override
+		public void call(Double a, UnsignedInt9Member b, UnsignedInt9Member c) {
+			c.setV((int) Math.round(a * b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnsignedInt9Member, UnsignedInt9Member> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, UnsignedInt9Member, UnsignedInt9Member, UnsignedInt9Member> WITHIN =

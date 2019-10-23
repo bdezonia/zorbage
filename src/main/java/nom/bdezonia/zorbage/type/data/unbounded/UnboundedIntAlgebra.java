@@ -812,6 +812,27 @@ public class UnboundedIntAlgebra
 		return SBHP;
 	}
 
+	private final Procedure3<HighPrecisionMember, UnboundedIntMember, UnboundedIntMember> SBHPR =
+			new Procedure3<HighPrecisionMember, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, UnboundedIntMember b, UnboundedIntMember c) {
+			BigDecimal tmp = a.v();
+			tmp = tmp.multiply(new BigDecimal(b.v()));
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else
+				tmp = tmp.add(G.ONE_HALF);
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, UnboundedIntMember, UnboundedIntMember> scaleByHighPrecAndRound() {
+		return SBHPR;
+	}
+
 	private final Procedure3<RationalMember, UnboundedIntMember, UnboundedIntMember> SBR =
 			new Procedure3<RationalMember, UnboundedIntMember, UnboundedIntMember>()
 	{
@@ -844,6 +865,28 @@ public class UnboundedIntAlgebra
 	@Override
 	public Procedure3<Double, UnboundedIntMember, UnboundedIntMember> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Double, UnboundedIntMember, UnboundedIntMember> SBDR =
+			new Procedure3<Double, UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(Double a, UnboundedIntMember b, UnboundedIntMember c) {
+			BigDecimal tmp = new BigDecimal(b.v());
+			BigDecimal d = BigDecimal.valueOf(a);
+			tmp = tmp.multiply(d);
+			int signum = tmp.signum();
+			if (signum < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else
+				tmp = tmp.add(G.ONE_HALF);
+			c.setV(tmp.toBigInteger());
+		}
+	};
+
+	@Override
+	public Procedure3<Double, UnboundedIntMember, UnboundedIntMember> scaleByDoubleAndRound() {
+		return SBDR;
 	}
 
 	private final Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> WITHIN =
