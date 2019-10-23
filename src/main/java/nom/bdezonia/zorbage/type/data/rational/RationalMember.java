@@ -84,6 +84,10 @@ public class RationalMember
 		setV(n, d);
 	}
 
+	public RationalMember(long n, long d) {
+		setV(BigInteger.valueOf(n), BigInteger.valueOf(d));
+	}
+
 	@Override
 	public void v(RationalMember value) {
 		value.set(this);
