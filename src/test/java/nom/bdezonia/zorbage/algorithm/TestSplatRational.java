@@ -44,7 +44,7 @@ public class TestSplatRational {
 
 	@Test
 	public void test1() {
-		RationalMember value = new RationalMember(BigInteger.valueOf(14));
+		RationalMember value = new RationalMember(14);
 		Tuple2<BigInteger,BigInteger> tuple = new Tuple2<BigInteger,BigInteger>(null,null);
 		SplatRational.toTuple(value, tuple);
 		assertEquals(BigInteger.valueOf(14), tuple.a());

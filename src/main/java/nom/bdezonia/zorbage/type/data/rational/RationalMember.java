@@ -80,6 +80,10 @@ public class RationalMember
 		setV(integer);
 	}
 
+	public RationalMember(long integer) {
+		setV(BigInteger.valueOf(integer));
+	}
+
 	public RationalMember(BigInteger n, BigInteger d) {
 		setV(n, d);
 	}

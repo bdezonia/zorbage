@@ -52,9 +52,7 @@ public class TestScaleByRational {
 		IndexedDataSource<SignedInt8Member> bytes1 = ArrayStorage.allocateBytes(
 				new byte[] {-128, -64, -36, -15, -2, -1, 0, 1, 2, 11, 27, 84, 100});
 		IndexedDataSource<SignedInt8Member> bytes2 = Storage.allocate(bytes1.size(), value);
-		BigInteger n = BigInteger.valueOf(9);
-		BigInteger d = BigInteger.valueOf(8);
-		RationalMember scale = new RationalMember(n, d);
+		RationalMember scale = new RationalMember(9, 8);
 		ScaleByRational.compute(G.INT8, scale, bytes1, bytes2);
 		bytes2.get(0, value);
 		assertEquals((byte)(9*(-128) / 8), value.v());
