@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
  * @author Barry DeZonia
  *
  */
-public class ResampleAveragedCubics {
+public class ParallelResampleAveragedCubics {
 
 	/**
 	 * Cubicly resamples one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
@@ -56,6 +56,6 @@ public class ResampleAveragedCubics {
 					U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
 	{
-		return ResampleCubic.compute(alg, newDims, input, 1);
+		return ResampleCubic.compute(alg, newDims, input, Runtime.getRuntime().availableProcessors());
 	}
 }
