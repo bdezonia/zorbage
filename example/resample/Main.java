@@ -121,13 +121,13 @@ public class Main {
 				int rgb = 0;
 				idx.set(0, c);
 				rs.get(idx, value);
-				component = Math.round(value.v());
+				component = (int) Math.round(value.v());
 				rgb = ((component << 16) & 0xff0000);
 				gs.get(idx, value);
-				component = Math.round(value.v());
+				component = (int) Math.round(value.v());
 				rgb |= (component << 8) & 0x00ff00;
 				bs.get(idx, value);
-				component = Math.round(value.v());
+				component = (int) Math.round(value.v());
 				rgb |= (component << 0) & 0x0000ff;
 				img.setRGB(c, r, rgb);
 			}

@@ -189,7 +189,7 @@ public class ResampleCubic {
 			sum(alg, input, numD, coords, inputPoint, outVal);
 			
 			// now turn sum into average
-			double scale = 1.0 / numD;;
+			double scale = 1.0 / numD;
 			alg.scaleByDouble().call(scale, outVal, outVal);
 		}
 		
