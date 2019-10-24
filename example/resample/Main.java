@@ -20,9 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.ResampleAveragedCubics;
-import nom.bdezonia.zorbage.algorithm.ResampleAveragedLinears;
-import nom.bdezonia.zorbage.algorithm.ResampleNearestNeighbor;
+import nom.bdezonia.zorbage.algorithm.ParallelResampleAveragedCubics;
+import nom.bdezonia.zorbage.algorithm.ParallelResampleAveragedLinears;
+import nom.bdezonia.zorbage.algorithm.ParallelResampleNearestNeighbor;
 import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
@@ -178,11 +178,10 @@ public class Main {
 		public MultiDimDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
 				MultiDimDataSource<Float32Member> data)
 		{
-			return ResampleNearestNeighbor.compute(alg, dims, data);
+			return ParallelResampleNearestNeighbor.compute(alg, dims, data);
 		}
 	};
 	
-
 	private static Function3<MultiDimDataSource<Float32Member>,Float32Algebra,long[],MultiDimDataSource<Float32Member>> RESAMPLE_LINEAR
 		= new Function3<MultiDimDataSource<Float32Member>, Float32Algebra, long[], MultiDimDataSource<Float32Member>>()
 	{
@@ -190,7 +189,7 @@ public class Main {
 		public MultiDimDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
 				MultiDimDataSource<Float32Member> data)
 		{
-			return ResampleAveragedLinears.compute(alg, dims, data);
+			return ParallelResampleAveragedLinears.compute(alg, dims, data);
 		}
 	};
 	
@@ -202,7 +201,7 @@ public class Main {
 		public MultiDimDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
 				MultiDimDataSource<Float32Member> data)
 		{
-			return ResampleAveragedCubics.compute(alg, dims, data);
+			return ParallelResampleAveragedCubics.compute(alg, dims, data);
 		}
 	};
  }
