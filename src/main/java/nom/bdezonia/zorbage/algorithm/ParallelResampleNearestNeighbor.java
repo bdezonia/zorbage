@@ -36,9 +36,9 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
  * @author Barry DeZonia
  *
  */
-public class ResampleNearestNeighbor {
+public class ParallelResampleNearestNeighbor {
 
-	private ResampleNearestNeighbor() { }
+	private ParallelResampleNearestNeighbor() { }
 
 	/**
 	 * Resample one multidim dataset into another multidim dataset using the nearest neighbor.
@@ -53,6 +53,6 @@ public class ResampleNearestNeighbor {
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
 	{
-		return ResampleNN.compute(alg, newDims, input, 1);
+		return ResampleNN.compute(alg, newDims, input, Runtime.getRuntime().availableProcessors());
 	}
 }
