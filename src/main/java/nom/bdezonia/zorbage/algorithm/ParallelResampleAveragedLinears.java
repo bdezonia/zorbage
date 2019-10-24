@@ -37,9 +37,9 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
  * @author Barry DeZonia
  *
  */
-public class ResampleAveragedLinears {
+public class ParallelResampleAveragedLinears {
 
-	private ResampleAveragedLinears() { }
+	private ParallelResampleAveragedLinears() { }
 
 	/**
 	 * Linearly resamples one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
@@ -58,6 +58,6 @@ public class ResampleAveragedLinears {
 					U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
 	{
-		return ResampleLinear.compute(alg, newDims, input, 1);
+		return ResampleLinear.compute(alg, newDims, input, Runtime.getRuntime().availableProcessors());
 	}
 }
