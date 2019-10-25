@@ -200,12 +200,12 @@ public class ResampleCubic {
 		{
 			U tmp = alg.construct();
 			
-			for (int i = 0; i < numD; i++) {
+			for (int d = 0; d < numD; d++) {
 					
 				// calc u
-				BigDecimal t = coords[i].remainder(BigDecimal.ONE);
+				BigDecimal t = coords[d].remainder(BigDecimal.ONE);
 				
-				cubicSolution(alg, input, inputPoint, coords, i, t, tmp);
+				cubicSolution(alg, input, inputPoint, coords, d, t, tmp);
 				
 				// add to sum
 				alg.add().call(outVal, tmp, outVal);
