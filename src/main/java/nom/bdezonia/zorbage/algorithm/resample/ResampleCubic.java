@@ -205,7 +205,7 @@ public class ResampleCubic {
 				// calc u
 				BigDecimal t = coords[d].remainder(BigDecimal.ONE);
 				
-				cubicSolution(alg, input, inputPoint, coords, d, t, tmp);
+				cubicSolution(alg, input, inputPoint, d, t, tmp);
 				
 				// add to sum
 				alg.add().call(outVal, tmp, outVal);
@@ -215,7 +215,7 @@ public class ResampleCubic {
 		
 		// See https://dsp.stackexchange.com/questions/18265/bicubic-interpolation
 		
-		private void cubicSolution(T alg, MultiDimDataSource<U> input, IntegerIndex inputPoint, BigDecimal[] coords,
+		private void cubicSolution(T alg, MultiDimDataSource<U> input, IntegerIndex inputPoint,
 									int dim, BigDecimal t, U outVal)
 		{
 			U ym1 = alg.construct();
