@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -52,15 +53,21 @@ public class InvFFT {
 
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param <V>
+	 * @param <W>
+	 * @param cmplxAlg
+	 * @param realAlg
 	 * @param a
 	 * @param b
 	 */
 	public static
 		<T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>,
-		U extends SetComplex<W>,
-		V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W>
-			& Multiplication<W> & Addition<W> & Invertible<W>,
-		W>
+			U extends SetComplex<W>,
+			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> & Unity<W> &
+				Multiplication<W> & Addition<W> & Invertible<W>,
+			W>
 	void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a,IndexedDataSource<U> b)
 	{
 		long aSize = a.size();

@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.RealConstants;
 import nom.bdezonia.zorbage.type.algebra.SetComplex;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -59,8 +60,8 @@ public class FFT {
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,
 						U extends SetComplex<W>,
-						V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W>
-							& Multiplication<W> & Addition<W> & Invertible<W>,
+						V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> &
+							Multiplication<W> & Addition<W> & Invertible<W> & Unity<W>,
 						W>
 		void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
@@ -80,7 +81,7 @@ public class FFT {
 			long j = Long.reverse(k) >>> shift;
 			a.get(j, tmp1);
 			a.get(k, tmp2);
-			if (j < k) { // I used < instead of > and got better results. Reference algorithm differs.
+			if (j < k) {
 				b.set(k, tmp1);
 				b.set(j, tmp2);
 			}
@@ -98,8 +99,10 @@ public class FFT {
 		realAlg.PI().call(pi);
 		W cos = realAlg.construct();
 		W sin = realAlg.construct();
-		W one = realAlg.construct("1");
-		W two = realAlg.construct("2");
+		W one = realAlg.construct();
+		W two = realAlg.construct();
+		realAlg.unity().call(one);
+		realAlg.add().call(one, one, two);
 		W l = realAlg.construct(two);
 		for (long el = 2; el <= aSize; el = el+el) {
 			W k = realAlg.construct();
