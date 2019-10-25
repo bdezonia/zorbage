@@ -122,12 +122,18 @@ public class Main {
 				idx.set(0, c);
 				rs.get(idx, value);
 				component = (int) Math.round(value.v());
+				if (component < 0) component = 0;
+				if (component > 255) component = 255;
 				rgb = ((component << 16) & 0xff0000);
 				gs.get(idx, value);
 				component = (int) Math.round(value.v());
+				if (component < 0) component = 0;
+				if (component > 255) component = 255;
 				rgb |= (component << 8) & 0x00ff00;
 				bs.get(idx, value);
 				component = (int) Math.round(value.v());
+				if (component < 0) component = 0;
+				if (component > 255) component = 255;
 				rgb |= (component << 0) & 0x0000ff;
 				img.setRGB(c, r, rgb);
 			}
