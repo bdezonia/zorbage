@@ -81,7 +81,7 @@ What can I do with Zorbage?
   
   You can use a number of predefined STL-like algorithms plus predefined
     vector, matrix, and other numerical algorithms. There are approximately
-    200 of them in total.
+    260 of them in total.
   
   You can use Zorbage's parallel algorithms for quickly processing data.
   
