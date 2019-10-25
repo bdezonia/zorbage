@@ -242,6 +242,8 @@ public class ResampleCubic {
 			U tmp3 = alg.construct();
 			U tmp4 = alg.construct();
 			
+			// f(x) = ax^3 + bx^2 + cx + d
+
 			// find d
 			alg.assign().call(y0, d);
 			
