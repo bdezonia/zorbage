@@ -48,13 +48,15 @@ public class ResampleCubic {
 	private ResampleCubic() { }
 
 	/**
-	 * Resample one multidim dataset into another multidim dataset using the nearest neighbor.
+	 * Resample one n-d multidim dataset into another n-d multidim dataset by averaging
+	 * n cubicly interpolated points per location.
 	 * 
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
 	 * @param newDims
 	 * @param input
+	 * @param maxPieces
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, 
