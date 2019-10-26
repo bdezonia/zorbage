@@ -51,7 +51,7 @@ public class TestSamplingCylindricalRealGrid {
 			assertTrue(sampling.contains(tmp));
 			count++;
 		}
-		assertEquals(2*3*(4-1) + 2, count);
+		assertEquals(2*3*(4-1) + 2, count); // all pts with rad != 0 + 1 for each zero pt along z axis
 		tmp.set(0, 5);
 		tmp.set(1, 5);
 		assertFalse(sampling.contains(tmp));

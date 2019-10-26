@@ -49,7 +49,7 @@ public class TestSamplingPolarRealGrid {
 			assertTrue(sampling.contains(tmp));
 			count++;
 		}
-		assertEquals(3*(4-1) + 1, count);
+		assertEquals(3*(4-1) + 1, count); // all pts with rad != 0 + 1 for the all zero pt
 		tmp.set(0, 5);
 		tmp.set(1, 5);
 		assertFalse(sampling.contains(tmp));
