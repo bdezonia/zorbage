@@ -45,7 +45,7 @@ public class TaylorEstimateLog {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matAlgebra
+	 * @param elemAlgebra
 	 * @param numAlgebra
 	 * @param x
 	 * @param result
@@ -53,8 +53,8 @@ public class TaylorEstimateLog {
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
 					V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
-					W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
+					W>
+		void compute(int numTerms, V elemAlgebra, T numAlgebra, W x, W result)
 	{
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
@@ -71,36 +71,36 @@ public class TaylorEstimateLog {
 		// TODO: Matrix logs are complicated algorithms. Investigate further and implement
 		// something to replace this code. This code might work in limited circumstances.
 		
-		W xMinusI = matAlgebra.construct();
-		W xPlusI = matAlgebra.construct();
-		W I = matAlgebra.construct(x);
-		matAlgebra.unity().call(I);
-		matAlgebra.add().call(x, I, xPlusI);
-		matAlgebra.subtract().call(x, I, xMinusI);
-		W sum = matAlgebra.construct(x);
-		matAlgebra.zero().call(sum);
-		W subTerm = matAlgebra.construct();
-		matAlgebra.divide().call(xMinusI, xPlusI, subTerm);
-		W term = matAlgebra.construct(subTerm);
-		W term2 = matAlgebra.construct();
-		W term3 = matAlgebra.construct();
+		W xMinusI = elemAlgebra.construct();
+		W xPlusI = elemAlgebra.construct();
+		W I = elemAlgebra.construct(x);
+		elemAlgebra.unity().call(I);
+		elemAlgebra.add().call(x, I, xPlusI);
+		elemAlgebra.subtract().call(x, I, xMinusI);
+		W sum = elemAlgebra.construct(x);
+		elemAlgebra.zero().call(sum);
+		W subTerm = elemAlgebra.construct();
+		elemAlgebra.divide().call(xMinusI, xPlusI, subTerm);
+		W term = elemAlgebra.construct(subTerm);
+		W term2 = elemAlgebra.construct();
+		W term3 = elemAlgebra.construct();
 		U one = numAlgebra.construct();
 		numAlgebra.unity().call(one);
 		U inc = numAlgebra.construct(one);
 		U scale = numAlgebra.construct();
 		for (int i = 0; i < numTerms; i++) {
 			numAlgebra.divide().call(one, inc, scale);
-			matAlgebra.scale().call(scale, term, term2);
-			matAlgebra.add().call(sum, term2, sum);
-			matAlgebra.multiply().call(term, subTerm, term3);
-			matAlgebra.multiply().call(term3, subTerm, term);
+			elemAlgebra.scale().call(scale, term, term2);
+			elemAlgebra.add().call(sum, term2, sum);
+			elemAlgebra.multiply().call(term, subTerm, term3);
+			elemAlgebra.multiply().call(term3, subTerm, term);
 			numAlgebra.add().call(inc, one, inc);
 			numAlgebra.add().call(inc, one, inc);
 		}
 		U two = numAlgebra.construct();
 		numAlgebra.unity().call(two);
 		numAlgebra.add().call(two, two, two);
-		matAlgebra.scale().call(two, sum, sum);
-		matAlgebra.assign().call(sum, result);
+		elemAlgebra.scale().call(two, sum, sum);
+		elemAlgebra.assign().call(sum, result);
 	}
 }

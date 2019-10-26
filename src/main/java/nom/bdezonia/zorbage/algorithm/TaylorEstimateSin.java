@@ -45,7 +45,7 @@ public class TaylorEstimateSin {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matAlgebra
+	 * @param elemAlgebra
 	 * @param numAlgebra
 	 * @param x
 	 * @param result
@@ -53,19 +53,19 @@ public class TaylorEstimateSin {
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
 					V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U>,
-					W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
+					W>
+		void compute(int numTerms, V elemAlgebra, T numAlgebra, W x, W result)
 	{
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
 
 		// sin(x) = x - x^3/3! + x^5/5! - x^7/7! ...
 		
-		W sum = matAlgebra.construct(x);
-		matAlgebra.zero().call(sum);
-		W term = matAlgebra.construct(x);
-		W term2 = matAlgebra.construct();
-		W term3 = matAlgebra.construct();
+		W sum = elemAlgebra.construct(x);
+		elemAlgebra.zero().call(sum);
+		W term = elemAlgebra.construct(x);
+		W term2 = elemAlgebra.construct();
+		W term3 = elemAlgebra.construct();
 		U one = numAlgebra.construct();
 		numAlgebra.unity().call(one);
 		U factorial = numAlgebra.construct(one);
@@ -73,18 +73,18 @@ public class TaylorEstimateSin {
 		U scale = numAlgebra.construct();
 		for (int i = 0; i < numTerms; i++) {
 			numAlgebra.divide().call(one, factorial, scale);
-			matAlgebra.scale().call(scale, term, term2);
+			elemAlgebra.scale().call(scale, term, term2);
 			if ((i & 1) == 0)
-				matAlgebra.add().call(sum, term2, sum);
+				elemAlgebra.add().call(sum, term2, sum);
 			else
-				matAlgebra.subtract().call(sum, term2, sum);
-			matAlgebra.multiply().call(term, x, term3);
-			matAlgebra.multiply().call(term3, x, term);
+				elemAlgebra.subtract().call(sum, term2, sum);
+			elemAlgebra.multiply().call(term, x, term3);
+			elemAlgebra.multiply().call(term3, x, term);
 			numAlgebra.add().call(inc,one,inc);
 			numAlgebra.multiply().call(factorial, inc, factorial);
 			numAlgebra.add().call(inc,one,inc);
 			numAlgebra.multiply().call(factorial, inc, factorial);
 		}
-		matAlgebra.assign().call(sum, result);
+		elemAlgebra.assign().call(sum, result);
 	}
 }

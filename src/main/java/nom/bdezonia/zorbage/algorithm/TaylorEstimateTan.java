@@ -45,7 +45,7 @@ public class TaylorEstimateTan {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matAlgebra
+	 * @param elemAlgebra
 	 * @param numAlgebra
 	 * @param x
 	 * @param result
@@ -53,13 +53,13 @@ public class TaylorEstimateTan {
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 		U,
 		V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W> & Invertible<W>,
-		W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
+		W>
+		void compute(int numTerms, V elemAlgebra, T numAlgebra, W x, W result)
 	{
-		W s = matAlgebra.construct();
-		W c = matAlgebra.construct();
-		TaylorEstimateSin.compute(numTerms, matAlgebra, numAlgebra, x, s);
-		TaylorEstimateCos.compute(numTerms, matAlgebra, numAlgebra, x, c);
-		matAlgebra.divide().call(s, c, result);
+		W s = elemAlgebra.construct();
+		W c = elemAlgebra.construct();
+		TaylorEstimateSin.compute(numTerms, elemAlgebra, numAlgebra, x, s);
+		TaylorEstimateCos.compute(numTerms, elemAlgebra, numAlgebra, x, c);
+		elemAlgebra.divide().call(s, c, result);
 	}
 }

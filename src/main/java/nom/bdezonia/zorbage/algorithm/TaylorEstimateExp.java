@@ -45,7 +45,7 @@ public class TaylorEstimateExp {
 	/**
 	 * 
 	 * @param numTerms
-	 * @param matAlgebra
+	 * @param elemAlgebra
 	 * @param numAlgebra
 	 * @param x
 	 * @param result
@@ -53,20 +53,20 @@ public class TaylorEstimateExp {
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U>,
 					U,
 					V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Scale<W, U> & Unity<W>,
-					W /*extends MatrixMember<U>*/>
-		void compute(int numTerms, V matAlgebra, T numAlgebra, W x, W result)
+					W>
+		void compute(int numTerms, V elemAlgebra, T numAlgebra, W x, W result)
 	{
 		if (numTerms < 1)
 			throw new IllegalArgumentException("estimation requires 1 or more terms");
 
 		// exp(x) = 1 + x^1/1! + x^2/2! + x^3/3! + x^4/4! ...
 		
-		W sum = matAlgebra.construct(x);
-		matAlgebra.zero().call(sum);;
-		W term = matAlgebra.construct(x);
-		matAlgebra.unity().call(term);
-		W term2 = matAlgebra.construct();
-		W term3 = matAlgebra.construct();
+		W sum = elemAlgebra.construct(x);
+		elemAlgebra.zero().call(sum);;
+		W term = elemAlgebra.construct(x);
+		elemAlgebra.unity().call(term);
+		W term2 = elemAlgebra.construct();
+		W term3 = elemAlgebra.construct();
 		U one = numAlgebra.construct();
 		numAlgebra.unity().call(one);
 		U factorial = numAlgebra.construct(one);
@@ -74,13 +74,13 @@ public class TaylorEstimateExp {
 		U scale = numAlgebra.construct();
 		for (int i = 0; i < numTerms; i++) {
 			numAlgebra.divide().call(one, factorial, scale);
-			matAlgebra.scale().call(scale, term, term2);
-			matAlgebra.add().call(sum, term2, sum);
-			matAlgebra.assign().call(term, term3);
-			matAlgebra.multiply().call(term3, x, term);
+			elemAlgebra.scale().call(scale, term, term2);
+			elemAlgebra.add().call(sum, term2, sum);
+			elemAlgebra.assign().call(term, term3);
+			elemAlgebra.multiply().call(term3, x, term);
 			numAlgebra.add().call(inc,one,inc);
 			numAlgebra.multiply().call(factorial, inc, factorial);
 		}
-		matAlgebra.assign().call(sum, result);
+		elemAlgebra.assign().call(sum, result);
 	}
 }
