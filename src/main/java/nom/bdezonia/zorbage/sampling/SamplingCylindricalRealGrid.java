@@ -64,7 +64,8 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 					value.set(0, FastMath.cos(angle) * radius);  // xcoord
 					value.set(1, FastMath.sin(angle) * radius);  // ycoord
 					value.set(2, zed);  // zcoord
-					sampling.add(value);
+					if ((r != 0) || (r == 0 && th == 0)) // only add origin once per z plane
+						sampling.add(value);
 				}
 			}
 		}

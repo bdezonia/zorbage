@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.sampling;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 /**
@@ -49,7 +51,7 @@ public class TestSamplingCylindricalRealGrid {
 			assertTrue(sampling.contains(tmp));
 			count++;
 		}
-		assertEquals(24, count);
+		assertEquals(2*3*(4-1) + 2, count);
 		tmp.set(0, 5);
 		tmp.set(1, 5);
 		assertFalse(sampling.contains(tmp));

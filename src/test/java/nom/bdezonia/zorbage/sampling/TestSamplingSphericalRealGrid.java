@@ -49,7 +49,7 @@ public class TestSamplingSphericalRealGrid {
 			assertTrue(sampling.contains(tmp));
 			count++;
 		}
-		assertEquals(48, count);
+		assertEquals(4*3*4 - 4*3 + 1, count); // all pts - those with rad == 0 + 1 for the all zero pt
 		tmp.set(0, 5);
 		tmp.set(1, 5);
 		tmp.set(2, 5);

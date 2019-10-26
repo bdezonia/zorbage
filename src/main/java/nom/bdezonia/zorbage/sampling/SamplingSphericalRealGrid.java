@@ -55,6 +55,7 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 			throw new IllegalArgumentException("counts must be >= 1 in spherical grid");
 		sampling = new SamplingGeneral<>(3);
 		RealIndex value = new RealIndex(sampling.numDimensions());
+		boolean originAdded = false;
 		for (int p = 0; p < phiCount; p++) {
 			double anglePhi = p * dphi;
 			for (int th = 0; th < thetaCount; th++) {
@@ -69,7 +70,14 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 					value.set(0, radius * sinePhi * cosineTheta); // xcoord
 					value.set(1, radius * sinePhi * sineTheta);  // ycoord
 					value.set(2, radius * cosinePhi);  // zcoord
-					sampling.add(value);
+					if (value.get(0) == 0 && value.get(1) == 0 && value.get(2) == 0) {
+						if (!originAdded) {
+							sampling.add(value);
+							originAdded = true;
+						}
+					}
+					else
+						sampling.add(value);
 				}
 			}
 		}
