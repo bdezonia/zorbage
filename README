@@ -113,7 +113,7 @@ Programming notes
 
   Eclipse info
     Zorbage has also been compiled and tested within Eclipse versions Mars,
-      Neon, and Oxygen
+      Neon, and Oxygen, and 2019-09 R
 
 How to include zorbage in your Maven project
 
