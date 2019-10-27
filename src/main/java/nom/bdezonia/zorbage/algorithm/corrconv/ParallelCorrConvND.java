@@ -118,7 +118,7 @@ public class ParallelCorrConvND {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error in ParallelMatrixMultiply");
+				throw new IllegalArgumentException("Thread execution error in ParallelCorrConvND");
 			}
 		}
 	}
