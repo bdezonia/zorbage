@@ -48,11 +48,11 @@ public class ResampleLinear {
 	private ResampleLinear() { }
 
 	/**
-	 * Resample one n-d multidim dataset into another n-d multidim dataset by averaging
-	 * n linearly interpolated points per location.
+	 * Linearly resamples one multidim dataset into another multidim dataset using 2 points per axis.
+	 * The algorithm computes a series of linear interpolated values, 1 per dimension, from the two
+	 * nearest points along that dimension. Then that series of values is averaged.
+	 * Note: The input datasource should be padded. This algorithm can poke outside the input boundaries.
 	 * 
-	 * @param <T>
-	 * @param <U>
 	 * @param alg
 	 * @param newDims
 	 * @param input

@@ -49,10 +49,8 @@ public class ResampleNN {
 
 	/**
 	 * Resample one multidim dataset into another multidim dataset using the nearest neighbor
-	 * data points.
+	 * values across the n-d space.
 	 * 
-	 * @param <T>
-	 * @param <U>
 	 * @param alg
 	 * @param newDims
 	 * @param input

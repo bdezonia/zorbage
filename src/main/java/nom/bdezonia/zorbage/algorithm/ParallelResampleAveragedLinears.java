@@ -42,13 +42,11 @@ public class ParallelResampleAveragedLinears {
 	private ParallelResampleAveragedLinears() { }
 
 	/**
-	 * Linearly resamples one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
-	 * The algorithm computes a series of linear combined values, 1 per dimension, from the two nearest points
-	 * along that dimension. Then that series of values is averaged.
+	 * Linearly resamples one multidim dataset into another multidim dataset using 2 points per axis.
+	 * The algorithm computes a series of linear interpolated values, 1 per dimension, from the two
+	 * nearest points along that dimension. Then that series of values is averaged.
 	 * Note: The input datasource should be padded. This algorithm can poke outside the input boundaries.
 	 * 
-	 * @param <T>
-	 * @param <U>
 	 * @param alg
 	 * @param newDims
 	 * @param input

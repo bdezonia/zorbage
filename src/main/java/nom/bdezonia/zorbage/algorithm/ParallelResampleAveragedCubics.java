@@ -40,13 +40,11 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 public class ParallelResampleAveragedCubics {
 
 	/**
-	 * Cubicly resamples one multidim dataset into another multidim dataset using a generalized 4 neighborhood.
-	 * The algorithm computes a series of cubicly combined values, 1 per 2-dimensional combination, from the four
-	 * nearest points along those two dimensions. Then that series of values is averaged.
+	 * Cubicly resamples one multidim dataset into another multidim dataset using 4 points per axis.
+	 * The algorithm computes a series of cubicly interpolated values from the four nearest points
+	 * in a line along the axis. Then that series of values (1 per axis) is averaged.
 	 * Note: The input datasource should be padded. This algorithm can poke outside the input boundaries.
 	 * 
-	 * @param <T>
-	 * @param <U>
 	 * @param alg
 	 * @param newDims
 	 * @param input

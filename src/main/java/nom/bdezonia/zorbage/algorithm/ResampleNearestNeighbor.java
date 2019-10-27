@@ -41,10 +41,9 @@ public class ResampleNearestNeighbor {
 	private ResampleNearestNeighbor() { }
 
 	/**
-	 * Resample one multidim dataset into another multidim dataset using the nearest neighbor.
+	 * Resample one multidim dataset into another multidim dataset using the nearest neighbor
+	 * values across the n-d space.
 	 * 
-	 * @param <T>
-	 * @param <U>
 	 * @param alg
 	 * @param newDims
 	 * @param input
