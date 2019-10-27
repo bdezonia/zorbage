@@ -90,7 +90,6 @@ public class Main {
 			idx.set(1, r);
 			for (int c = 0; c < COLS; c++) {
 				idx.set(0, c);
-				srcFrame.get(idx, currState);
 				int numNeighs = numNeighs(srcFrame, idx);
 				UnsignedInt1Member nextState;
 				switch(numNeighs) {
@@ -101,6 +100,7 @@ public class Main {
 						nextState = dead;
 						break;
 					case 2:
+						srcFrame.get(idx, currState);
 						nextState = currState;
 						break;
 					case 3:
