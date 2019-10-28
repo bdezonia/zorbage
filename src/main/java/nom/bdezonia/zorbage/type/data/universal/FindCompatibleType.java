@@ -44,41 +44,38 @@ public class FindCompatibleType {
 	 */
 	public static PrimitiveRepresentation bestRep(PrimitiveConversion a, PrimitiveConversion b)
 	{
-		if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
-				(b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE)) {
-			if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
-					(b.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
-				return PrimitiveRepresentation.BIGDECIMAL;
-			return PrimitiveRepresentation.DOUBLE;
-		}
-		if ((a.preferredRepresentation() == PrimitiveRepresentation.FLOAT) ||
-				(b.preferredRepresentation() == PrimitiveRepresentation.FLOAT)) {
-			if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
-					(b.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
-				return PrimitiveRepresentation.BIGDECIMAL;
-			if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
-				(b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE))
-				return PrimitiveRepresentation.DOUBLE;
-			return PrimitiveRepresentation.FLOAT;
-		}
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.BIGDECIMAL))
 			return PrimitiveRepresentation.BIGDECIMAL;
+
+		if ((a.preferredRepresentation() == PrimitiveRepresentation.DOUBLE) ||
+				(b.preferredRepresentation() == PrimitiveRepresentation.DOUBLE))
+			return PrimitiveRepresentation.DOUBLE;
+		
+		if ((a.preferredRepresentation() == PrimitiveRepresentation.FLOAT) ||
+				(b.preferredRepresentation() == PrimitiveRepresentation.FLOAT))
+			return PrimitiveRepresentation.FLOAT;
+
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.BIGINTEGER) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.BIGINTEGER))
 			return PrimitiveRepresentation.BIGINTEGER;
+		
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.LONG) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.LONG))
 			return PrimitiveRepresentation.LONG;
+
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.INT) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.INT))
 			return PrimitiveRepresentation.INT;
+		
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.SHORT) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.SHORT))
 			return PrimitiveRepresentation.SHORT;
+		
 		if ((a.preferredRepresentation() == PrimitiveRepresentation.BYTE) ||
 				(b.preferredRepresentation() == PrimitiveRepresentation.BYTE))
 			return PrimitiveRepresentation.BYTE;
+		
 		throw new IllegalArgumentException("unknown representations "+a.preferredRepresentation()+" "+b.preferredRepresentation());
 	}
 
