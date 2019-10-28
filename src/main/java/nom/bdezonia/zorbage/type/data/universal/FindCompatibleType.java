@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.data.universal;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
 
 /**
  * 
@@ -86,8 +85,8 @@ public class FindCompatibleType {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Algebra<T,U>, U>
-		Algebra<T,U> bestAlgebra(int components, PrimitiveRepresentation rep)
+	public static <T>
+		T bestAlgebra(int components, PrimitiveRepresentation rep)
 	{
 		if (components <= 0)
 			throw new IllegalArgumentException("must specify 1 or more components");

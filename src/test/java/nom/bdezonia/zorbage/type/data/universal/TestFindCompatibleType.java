@@ -31,7 +31,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Constructable;
+import nom.bdezonia.zorbage.type.algebra.Equality;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 
 /**
  * 
@@ -41,12 +44,15 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class TestFindCompatibleType {
 
 	@Test
-	public <T extends Algebra<T,U>, U> void test() {
-		
-		Algebra<T,U> x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
+	public <T extends Constructable<U> & Equality<U> & Addition<U> & Multiplication<U>, U> 
+		void test()
+	{
+		T x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.CDBL);
 		
-		U tmp = x.construct();
-		assertTrue(x.isZero().call(tmp));
+		U a = x.construct("3");
+		U b = x.construct("9");
+		x.multiply().call(a,a,a);
+		assertTrue(x.isEqual().call(a,b));
 	}
 }
