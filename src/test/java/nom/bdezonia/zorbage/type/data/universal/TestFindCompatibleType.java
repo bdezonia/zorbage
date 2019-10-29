@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.universal;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -41,6 +42,8 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16Member;
+import nom.bdezonia.zorbage.type.data.int10.SignedInt10Member;
 
 /**
  * 
@@ -57,7 +60,7 @@ public class TestFindCompatibleType {
 	public <T extends Constructable<U> & Equality<U> & Addition<U> & Multiplication<U> & Random<U> &
 				Scale<U,U> & ScaleByDouble<U> & ScaleByHighPrec<U> & ScaleByRational<U> & Unity<U>,
 			U> 
-		void test()
+		void test1()
 	{
 		T x;
 		U a;
@@ -183,5 +186,17 @@ public class TestFindCompatibleType {
 		b = x.construct("9");
 		x.multiply().call(a,a,a);
 		assertTrue(x.isEqual().call(a,b));
+	}
+	
+	// Note: a typical way to find a common type follows.
+	
+	@Test
+	public <T> void test2() {
+		SignedInt10Member a = G.INT10.construct();
+		QuaternionFloat16Member b = G.QHLF.construct();
+		PrimitiveRepresentation rep = FindCompatibleType.bestRep(a, b);
+		int componentCount = Math.max(a.componentCount(), b.componentCount());
+		T alg = FindCompatibleType.bestAlgebra(componentCount, rep);
+		assertEquals(G.QFLT, alg);
 	}
 }
