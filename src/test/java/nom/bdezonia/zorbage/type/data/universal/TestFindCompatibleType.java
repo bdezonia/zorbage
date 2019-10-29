@@ -52,140 +52,222 @@ import nom.bdezonia.zorbage.type.data.int10.SignedInt10Member;
  */
 public class TestFindCompatibleType {
 
-	// NOTE: This is the common denominator signature that these suported algebras in the
-	// FindCompatibleType share. One could write an algorithm that just used these methods
-	// and would be portable among the types.
+	// NOTE: This is the common denominator signature that these supported algebras in the
+	// FindCompatibleType share. One could write an algorithm that just used all the methods
+	// present in these interfaces and would be portable among the types. You would construct
+	// values from strings or from unity and zero via operations.
 	
 	@Test
-	public <T extends Constructable<U> & Equality<U> & Addition<U> & Multiplication<U> & Random<U> &
+	public <T extends Constructable<U> & Equality<U> & Addition<U> & Multiplication<U> &
 				Scale<U,U> & ScaleByDouble<U> & ScaleByHighPrec<U> & ScaleByRational<U> & Unity<U>,
 			U> 
 		void test1()
 	{
 		T x;
-		U a;
-		U b;
 		
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.DBL);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.CDBL);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(4, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.QDBL);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(8, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.ODBL);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 		
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.FLOAT);
 		assertTrue(x == G.FLT);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.FLOAT);
 		assertTrue(x == G.CFLT);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(4, PrimitiveRepresentation.FLOAT);
 		assertTrue(x == G.QFLT);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(8, PrimitiveRepresentation.FLOAT);
 		assertTrue(x == G.OFLT);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.BIGDECIMAL);
 		assertTrue(x == G.HP);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(2, PrimitiveRepresentation.BIGDECIMAL);
 		assertTrue(x == G.CHP);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(4, PrimitiveRepresentation.BIGDECIMAL);
 		assertTrue(x == G.QHP);
-		a = x.construct("3");
-		b = x.construct("9");
-		//x.multiply().call(a,a,a);
-		//assertTrue(x.isEqual().call(a,b));
-		assertTrue(x.isNotEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(8, PrimitiveRepresentation.BIGDECIMAL);
 		assertTrue(x == G.OHP);
-		a = x.construct("3");
-		b = x.construct("9");
-		//x.multiply().call(a,a,a);
-		//assertTrue(x.isEqual().call(a,b));
-		assertTrue(x.isNotEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.BYTE);
 		assertTrue(x == G.INT8);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.SHORT);
 		assertTrue(x == G.INT16);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.INT);
 		assertTrue(x == G.INT32);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.LONG);
 		assertTrue(x == G.INT64);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.BIGINTEGER);
 		assertTrue(x == G.UNBOUND);
-		a = x.construct("3");
-		b = x.construct("9");
-		x.multiply().call(a,a,a);
-		assertTrue(x.isEqual().call(a,b));
+		x.construct();
+		x.isEqual();
+		x.add();
+		x.multiply();
+		x.scale();
+		x.scaleByDouble();
+		x.scaleByHighPrec();
+		x.scaleByRational();
+		x.unity();
 	}
 	
 	// Note: a typical way to find a common type follows.
