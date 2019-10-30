@@ -47,7 +47,7 @@ public class TestRegionCircle {
 		rc.maxBound().call(idx);
 		assertEquals(1+2, idx.get(0), 0);
 		assertEquals(3+2, idx.get(1), 0);
-		rc.minBound().call(idx);;
+		rc.minBound().call(idx);
 		assertEquals(1-2, idx.get(0), 0);
 		assertEquals(3-2, idx.get(1), 0);
 		idx.set(0, 1);

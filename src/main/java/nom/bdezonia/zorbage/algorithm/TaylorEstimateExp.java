@@ -62,7 +62,7 @@ public class TaylorEstimateExp {
 		// exp(x) = 1 + x^1/1! + x^2/2! + x^3/3! + x^4/4! ...
 		
 		W sum = elemAlgebra.construct(x);
-		elemAlgebra.zero().call(sum);;
+		elemAlgebra.zero().call(sum);
 		W term = elemAlgebra.construct(x);
 		elemAlgebra.unity().call(term);
 		W term2 = elemAlgebra.construct();

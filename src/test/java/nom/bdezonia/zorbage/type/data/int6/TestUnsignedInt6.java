@@ -57,7 +57,7 @@ public class TestUnsignedInt6 {
 		for (long i = 0; i < data.size(); i++) {
 			in.setV((int)i);
 			data.set(i, in);
-			out.setV(in.v-1);;
+			out.setV(in.v-1);
 			data.get(i, out);
 			assertEquals(in.v, out.v);
 		}
@@ -70,7 +70,7 @@ public class TestUnsignedInt6 {
 		for (long i = data.size()-1; i >= 0; i--) {
 			in.setV((int)i);
 			data.set(i, in);
-			out.setV(in.v-1);;
+			out.setV(in.v-1);
 			data.get(i, out);
 			assertEquals(in.v, out.v);
 		}
@@ -83,7 +83,7 @@ public class TestUnsignedInt6 {
 		for (long i = data.size()-1; i >= 0; i--) {
 			in.setV((int)i);
 			data.set(i, in);
-			out.setV(in.v-1);;
+			out.setV(in.v-1);
 			data.get(i, out);
 			assertEquals(in.v, out.v);
 		}

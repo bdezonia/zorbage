@@ -66,7 +66,7 @@ public class TestRationalAlgebra {
 		a.setV(BigInteger.valueOf(-2));
 		assertEquals(BigInteger.valueOf(-2), a.n);
 		assertEquals(BigInteger.ONE, a.d);
-		G.RAT.abs().call(a, a);;
+		G.RAT.abs().call(a, a);
 		assertEquals(BigInteger.valueOf(2), a.n);
 		assertEquals(BigInteger.ONE, a.d);
 
