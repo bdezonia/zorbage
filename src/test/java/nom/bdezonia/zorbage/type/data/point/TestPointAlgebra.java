@@ -115,11 +115,11 @@ public class TestPointAlgebra {
 		assertEquals(1.4*p.component(2), p3.component(2), 0);
 		
 		G.POINT.zero().call(p3);
-		G.POINT.scaleByRational().call(new RationalMember(14,10), p, p3);;
+		G.POINT.scaleByRational().call(new RationalMember(18,10), p, p3);
 		assertEquals(3, p3.numDimensions());
-		assertEquals(1.4*p.component(0), p3.component(0), 0);
-		assertEquals(1.4*p.component(1), p3.component(1), 0);
-		assertEquals(1.4*p.component(2), p3.component(2), 0);
+		assertEquals(1.8*p.component(0), p3.component(0), 0);
+		assertEquals(1.8*p.component(1), p3.component(1), 0);
+		assertEquals(1.8*p.component(2), p3.component(2), 0);
 	
 		G.POINT.random().call(p3);
 		
