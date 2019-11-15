@@ -55,7 +55,7 @@ public class DotProduct {
 	 */
 	public static <T extends RModule<T,U,V,W> & Norm<U,Y>,
 					U extends RModuleMember<W>,
-					V extends Ring<V,W> & Invertible<W> & ScaleComponents<W, Y>,
+					V extends Ring<V,W> & ScaleComponents<W, Y>,
 					W,
 					X extends Algebra<X,Y> & Ordered<Y> & Invertible<Y>,
 					Y>
