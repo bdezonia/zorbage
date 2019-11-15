@@ -1096,7 +1096,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
-			pow().call(a,ONE_HALF,b);
+			pow().call(a, ONE_HALF, b);
 		}
 	};
 	
@@ -1112,7 +1112,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
-			pow().call(a,ONE_THIRD,b);
+			pow().call(a, ONE_THIRD, b);
 		}
 	};
 	

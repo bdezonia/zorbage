@@ -78,7 +78,7 @@ public class TaylorEstimateExp {
 			elemAlgebra.add().call(sum, term2, sum);
 			elemAlgebra.assign().call(term, term3);
 			elemAlgebra.multiply().call(term3, x, term);
-			numAlgebra.add().call(inc,one,inc);
+			numAlgebra.add().call(inc, one, inc);
 			numAlgebra.multiply().call(factorial, inc, factorial);
 		}
 		elemAlgebra.assign().call(sum, result);

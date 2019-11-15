@@ -1123,7 +1123,7 @@ public class ComplexHighPrecisionAlgebra
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
 			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
-			pow().call(a,ONE_HALF,b);
+			pow().call(a, ONE_HALF, b);
 		}
 	};
 	
@@ -1141,7 +1141,7 @@ public class ComplexHighPrecisionAlgebra
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
 			BigDecimal one_third = BigDecimal.ONE.divide(BigDecimal.valueOf(3), HighPrecisionAlgebra.getContext());
 			ComplexHighPrecisionMember ONE_THIRD = new ComplexHighPrecisionMember(one_third, BigDecimal.ZERO);
-			pow().call(a,ONE_THIRD,b);
+			pow().call(a, ONE_THIRD, b);
 		}
 	};
 	

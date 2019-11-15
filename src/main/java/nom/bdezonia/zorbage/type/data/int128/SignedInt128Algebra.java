@@ -557,7 +557,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b) {
-			subtract().call(a,ONE,b);
+			subtract().call(a, ONE, b);
 		}
 	};
 	
@@ -571,7 +571,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b) {
-			add().call(a,ONE,b);
+			add().call(a, ONE, b);
 		}
 	};
 	

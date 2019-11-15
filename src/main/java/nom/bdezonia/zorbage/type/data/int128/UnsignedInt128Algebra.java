@@ -527,7 +527,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			subtract().call(a,ONE,b);
+			subtract().call(a, ONE, b);
 		}
 	};
 	
@@ -541,7 +541,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			add().call(a,ONE,b);
+			add().call(a, ONE, b);
 		}
 	};
 	

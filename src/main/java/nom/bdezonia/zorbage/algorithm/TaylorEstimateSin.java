@@ -80,9 +80,9 @@ public class TaylorEstimateSin {
 				elemAlgebra.subtract().call(sum, term2, sum);
 			elemAlgebra.multiply().call(term, x, term3);
 			elemAlgebra.multiply().call(term3, x, term);
-			numAlgebra.add().call(inc,one,inc);
+			numAlgebra.add().call(inc, one, inc);
 			numAlgebra.multiply().call(factorial, inc, factorial);
-			numAlgebra.add().call(inc,one,inc);
+			numAlgebra.add().call(inc, one, inc);
 			numAlgebra.multiply().call(factorial, inc, factorial);
 		}
 		elemAlgebra.assign().call(sum, result);

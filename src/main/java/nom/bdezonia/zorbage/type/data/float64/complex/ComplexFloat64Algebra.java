@@ -1095,7 +1095,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
-			pow().call(a,ONE_HALF,b);
+			pow().call(a, ONE_HALF, b);
 		}
 	};
 	
@@ -1111,7 +1111,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
-			pow().call(a,ONE_THIRD,b);
+			pow().call(a, ONE_THIRD, b);
 		}
 	};
 	

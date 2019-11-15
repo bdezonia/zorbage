@@ -1095,7 +1095,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(ComplexFloat32Member a, ComplexFloat32Member b) {
-			pow().call(a,ONE_HALF,b);
+			pow().call(a, ONE_HALF, b);
 		}
 	};
 	
@@ -1111,7 +1111,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(ComplexFloat32Member a, ComplexFloat32Member b) {
-			pow().call(a,ONE_THIRD,b);
+			pow().call(a, ONE_THIRD, b);
 		}
 	};
 	
