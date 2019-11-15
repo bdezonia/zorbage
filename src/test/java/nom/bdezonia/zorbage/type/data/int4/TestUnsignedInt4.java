@@ -115,7 +115,7 @@ public class TestUnsignedInt4 {
 				c.set(a);
 				G.UINT4.pred().call(c, c);
 				G.UINT4.pred().call(c, c);
-				G.UINT4.add().call(a,b,c);
+				G.UINT4.add().call(a, b, c);
 				assertEquals((i+j) & 0xf, (int)c.v);
 				
 				c.set(a);

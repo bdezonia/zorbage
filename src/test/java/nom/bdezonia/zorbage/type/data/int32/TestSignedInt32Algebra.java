@@ -51,7 +51,7 @@ public class TestSignedInt32Algebra {
 		SignedInt32Member b = G.INT32.construct("4");
 		SignedInt32Member sum = G.INT32.construct("99");
 
-		G.INT32.add().call(a,b,sum);
+		G.INT32.add().call(a, b, sum);
 		
 		assertEquals(5, sum.v());
 	}

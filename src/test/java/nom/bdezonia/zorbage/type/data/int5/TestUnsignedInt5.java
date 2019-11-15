@@ -115,7 +115,7 @@ public class TestUnsignedInt5 {
 				c.set(a);
 				G.UINT5.pred().call(c, c);
 				G.UINT5.pred().call(c, c);
-				G.UINT5.add().call(a,b,c);
+				G.UINT5.add().call(a, b, c);
 				assertEquals((i+j) & 31, (int)c.v);
 				
 				c.set(a);

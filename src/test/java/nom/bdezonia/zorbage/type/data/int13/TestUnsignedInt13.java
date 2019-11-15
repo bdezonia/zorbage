@@ -117,7 +117,7 @@ public class TestUnsignedInt13 {
 				c.set(a);
 				G.UINT13.pred().call(c, c);
 				G.UINT13.pred().call(c, c);
-				G.UINT13.add().call(a,b,c);
+				G.UINT13.add().call(a, b, c);
 				assertEquals((i+j) & 8191, (int)c.v);
 				
 				c.set(a);

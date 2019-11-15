@@ -115,7 +115,7 @@ public class TestUnsignedInt6 {
 				c.set(a);
 				G.UINT6.pred().call(c, c);
 				G.UINT6.pred().call(c, c);
-				G.UINT6.add().call(a,b,c);
+				G.UINT6.add().call(a, b, c);
 				assertEquals((i+j) & 63, (int)c.v);
 				
 				c.set(a);

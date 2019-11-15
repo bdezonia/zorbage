@@ -111,7 +111,7 @@ public class TestUnsignedInt1 {
 				assertEquals(a.v,c.v);
 				
 				c.setV(1-i);
-				G.UINT1.add().call(a,b,c);
+				G.UINT1.add().call(a, b, c);
 				assertEquals((i+j) & 0x1, (int)c.v);
 				
 				c.setV(1-i);

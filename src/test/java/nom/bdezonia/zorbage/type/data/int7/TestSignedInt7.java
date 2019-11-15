@@ -131,7 +131,7 @@ public class TestSignedInt7 {
 				c.set(a);
 				G.INT7.pred().call(c, c);
 				G.INT7.pred().call(c, c);
-				G.INT7.add().call(a,b,c);
+				G.INT7.add().call(a, b, c);
 				assertEquals(v(i+j), (int)c.v);
 				
 				c.set(a);

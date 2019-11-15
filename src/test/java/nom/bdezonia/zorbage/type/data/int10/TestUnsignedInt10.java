@@ -117,7 +117,7 @@ public class TestUnsignedInt10 {
 				c.set(a);
 				G.UINT10.pred().call(c, c);
 				G.UINT10.pred().call(c, c);
-				G.UINT10.add().call(a,b,c);
+				G.UINT10.add().call(a, b, c);
 				assertEquals((i+j) & 1023, (int)c.v);
 				
 				c.set(a);

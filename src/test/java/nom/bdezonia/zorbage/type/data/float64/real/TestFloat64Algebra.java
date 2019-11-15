@@ -50,7 +50,7 @@ public class TestFloat64Algebra {
 		Float64Member b = G.DBL.construct("4.2");
 		Float64Member sum = G.DBL.construct("99.3");
 
-		G.DBL.add().call(a,b,sum);
+		G.DBL.add().call(a, b, sum);
 		  
 		assertEquals(5.3, sum.v(), 0.000000001);
 	}

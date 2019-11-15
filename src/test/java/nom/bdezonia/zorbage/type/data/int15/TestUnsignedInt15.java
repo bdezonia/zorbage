@@ -117,7 +117,7 @@ public class TestUnsignedInt15 {
 				c.set(a);
 				G.UINT15.pred().call(c, c);
 				G.UINT15.pred().call(c, c);
-				G.UINT15.add().call(a,b,c);
+				G.UINT15.add().call(a, b, c);
 				assertEquals((i+j) & 32767, (int)c.v);
 				
 				c.set(a);

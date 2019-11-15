@@ -117,7 +117,7 @@ public class TestUnsignedInt12 {
 				c.set(a);
 				G.UINT12.pred().call(c, c);
 				G.UINT12.pred().call(c, c);
-				G.UINT12.add().call(a,b,c);
+				G.UINT12.add().call(a, b, c);
 				assertEquals((i+j) & 0xfff, (int)c.v);
 				
 				c.set(a);

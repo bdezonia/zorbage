@@ -115,7 +115,7 @@ public class TestUnsignedInt3 {
 				c.set(a);
 				G.UINT3.pred().call(c, c);
 				G.UINT3.pred().call(c, c);
-				G.UINT3.add().call(a,b,c);
+				G.UINT3.add().call(a, b, c);
 				assertEquals((i+j) & 7, (int)c.v);
 				
 				c.set(a);

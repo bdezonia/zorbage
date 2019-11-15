@@ -117,7 +117,7 @@ public class TestUnsignedInt11 {
 				c.set(a);
 				G.UINT11.pred().call(c, c);
 				G.UINT11.pred().call(c, c);
-				G.UINT11.add().call(a,b,c);
+				G.UINT11.add().call(a, b, c);
 				assertEquals((i+j) & 2047, (int)c.v);
 				
 				c.set(a);

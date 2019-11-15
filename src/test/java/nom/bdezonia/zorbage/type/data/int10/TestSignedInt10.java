@@ -128,7 +128,7 @@ public class TestSignedInt10 {
 				c.set(a);
 				G.INT10.pred().call(c, c);
 				G.INT10.pred().call(c, c);
-				G.INT10.add().call(a,b,c);
+				G.INT10.add().call(a, b, c);
 				assertEquals(v(i+j), (int)c.v);
 				
 				c.set(a);

@@ -119,7 +119,7 @@ public class TestSignedInt1 {
 				}
 				
 				c.setV(i+1);
-				G.INT1.add().call(a,b,c);
+				G.INT1.add().call(a, b, c);
 				assertEquals(((i+j) & 0x1) == 1 ? -1 : 0, (int)c.v);
 				
 				c.setV(i+1);

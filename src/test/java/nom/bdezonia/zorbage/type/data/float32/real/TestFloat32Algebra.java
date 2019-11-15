@@ -51,7 +51,7 @@ public class TestFloat32Algebra {
 		Float32Member b = G.FLT.construct("4.2");
 		Float32Member sum = G.FLT.construct("99.3");
 
-		G.FLT.add().call(a,b,sum);
+		G.FLT.add().call(a, b, sum);
 		  
 		assertEquals(5.3, sum.v(), 0.000001);
 	}
