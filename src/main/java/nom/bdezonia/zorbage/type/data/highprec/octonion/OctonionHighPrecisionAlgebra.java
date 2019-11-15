@@ -54,6 +54,7 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -90,6 +91,7 @@ public class OctonionHighPrecisionAlgebra
     ScaleByHighPrec<OctonionHighPrecisionMember>,
     ScaleByRational<OctonionHighPrecisionMember>,
     ScaleByDouble<OctonionHighPrecisionMember>,
+    ScaleComponents<OctonionHighPrecisionMember, HighPrecisionMember>,
     Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
@@ -1331,6 +1333,27 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Procedure3<Double, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> SC =
+			new Procedure3<HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, OctonionHighPrecisionMember b, OctonionHighPrecisionMember c) {
+			c.setR(a.v().multiply(b.r()));
+			c.setI(a.v().multiply(b.i()));
+			c.setJ(a.v().multiply(b.j()));
+			c.setK(a.v().multiply(b.k()));
+			c.setL(a.v().multiply(b.l()));
+			c.setI0(a.v().multiply(b.i0()));
+			c.setJ0(a.v().multiply(b.j0()));
+			c.setK0(a.v().multiply(b.k0()));
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleComponents() {
+		return SC;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> WITHIN =

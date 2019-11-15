@@ -75,6 +75,7 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.algebra.RealUnreal;
@@ -111,6 +112,7 @@ public class ComplexFloat64Algebra
     ScaleByHighPrec<ComplexFloat64Member>,
     ScaleByRational<ComplexFloat64Member>,
     ScaleByDouble<ComplexFloat64Member>,
+    ScaleComponents<ComplexFloat64Member, Float64Member>,
     Tolerance<Float64Member,ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
@@ -1391,6 +1393,21 @@ public class ComplexFloat64Algebra
 	@Override
 	public Procedure3<Double, ComplexFloat64Member, ComplexFloat64Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Float64Member, ComplexFloat64Member, ComplexFloat64Member> SC =
+			new Procedure3<Float64Member, ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(Float64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			c.setR(a.v() * b.r());
+			c.setI(a.v() * b.i());
+		}
+	};
+
+	@Override
+	public Procedure3<Float64Member, ComplexFloat64Member, ComplexFloat64Member> scaleComponents() {
+		return SC;
 	}
 
 	private final Function3<Boolean, Float64Member, ComplexFloat64Member, ComplexFloat64Member> WITHIN =

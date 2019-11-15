@@ -62,6 +62,7 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.type.algebra.SkewField;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
@@ -103,6 +104,7 @@ public class OctonionFloat16Algebra
     ScaleByHighPrec<OctonionFloat16Member>,
     ScaleByRational<OctonionFloat16Member>,
     ScaleByDouble<OctonionFloat16Member>,
+    ScaleComponents<OctonionFloat16Member, Float16Member>,
     Tolerance<Float16Member,OctonionFloat16Member>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(0, 0, 0, 0, 0, 0, 0, 0);
@@ -1409,6 +1411,27 @@ public class OctonionFloat16Algebra
 	@Override
 	public Procedure3<Double, OctonionFloat16Member, OctonionFloat16Member> scaleByDouble() {
 		return SBD;
+	}
+
+	private final Procedure3<Float16Member, OctonionFloat16Member, OctonionFloat16Member> SC =
+			new Procedure3<Float16Member, OctonionFloat16Member, OctonionFloat16Member>()
+	{
+		@Override
+		public void call(Float16Member a, OctonionFloat16Member b, OctonionFloat16Member c) {
+			c.setR(a.v() * b.r());
+			c.setI(a.v() * b.i());
+			c.setJ(a.v() * b.j());
+			c.setK(a.v() * b.k());
+			c.setL(a.v() * b.l());
+			c.setI0(a.v() * b.i0());
+			c.setJ0(a.v() * b.j0());
+			c.setK0(a.v() * b.k0());
+		}
+	};
+
+	@Override
+	public Procedure3<Float16Member, OctonionFloat16Member, OctonionFloat16Member> scaleComponents() {
+		return SC;
 	}
 
 	private final Function3<Boolean, Float16Member, OctonionFloat16Member, OctonionFloat16Member> WITHIN =

@@ -268,7 +268,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionMember c) {
-			DotProduct.compute(G.QHP, a, b, c);
+			DotProduct.compute(G.QHP_RMOD, G.QHP, G.HP, a, b, c);
 		}
 	};
 	

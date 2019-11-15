@@ -275,7 +275,7 @@ public class OctonionFloat16RModule
 	{
 		@Override
 		public void call(OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b, OctonionFloat16Member c) {
-			DotProduct.compute(G.OHLF, a, b, c);
+			DotProduct.compute(G.OHLF_RMOD, G.OHLF, G.HLF, a, b, c);
 		}
 	};
 	

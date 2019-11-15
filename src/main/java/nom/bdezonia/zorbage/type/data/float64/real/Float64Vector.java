@@ -272,7 +272,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a, Float64VectorMember b, Float64Member c) {
-			DotProduct.compute(G.DBL, a, b, c);
+			DotProduct.compute(G.DBL_VEC, G.DBL, G.DBL, a, b, c);
 		}
 	};
 	

@@ -272,7 +272,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a, Float16VectorMember b, Float16Member c) {
-			DotProduct.compute(G.HLF, a, b, c);
+			DotProduct.compute(G.HLF_VEC, G.HLF, G.HLF, a, b, c);
 		}
 	};
 	

@@ -262,7 +262,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b, ComplexHighPrecisionMember c) {
-			DotProduct.compute(G.CHP, a, b, c);
+			DotProduct.compute(G.CHP_VEC, G.CHP, G.HP, a, b, c);
 		}
 	};
 	

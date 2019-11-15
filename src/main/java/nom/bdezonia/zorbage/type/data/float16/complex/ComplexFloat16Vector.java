@@ -270,7 +270,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16Member c) {
-			DotProduct.compute(G.CHLF, a, b, c);
+			DotProduct.compute(G.CHLF_VEC, G.CHLF, G.HLF, a, b, c);
 		}
 	};
 	

@@ -55,6 +55,7 @@ import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.Trigonometric;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
@@ -75,6 +76,7 @@ public class HighPrecisionAlgebra
     ScaleByHighPrec<HighPrecisionMember>,
     ScaleByRational<HighPrecisionMember>,
     ScaleByDouble<HighPrecisionMember>,
+    ScaleComponents<HighPrecisionMember, HighPrecisionMember>,
     Trigonometric<HighPrecisionMember>,
     Hyperbolic<HighPrecisionMember>,
     InverseTrigonometric<HighPrecisionMember>,
@@ -909,6 +911,20 @@ public class HighPrecisionAlgebra
 	@Override
 	public Procedure2<HighPrecisionMember, HighPrecisionMember> cbrt() {
 		return CBRT;
+	}
+
+	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> SC =
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
+			c.setV(a.v().multiply(b.v()));
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> scaleComponents() {
+		return SC;
 	}
 
 	private final Function3<Boolean, HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> WITHIN =

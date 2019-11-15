@@ -260,7 +260,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionMember c) {
-			DotProduct.compute(G.HP, a, b, c);
+			DotProduct.compute(G.HP_VEC, G.HP, G.HP, a, b, c);
 		}
 	};
 	

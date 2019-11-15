@@ -277,7 +277,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b, QuaternionFloat16Member c) {
-			DotProduct.compute(G.QHLF, a, b, c);
+			DotProduct.compute(G.QHLF_RMOD, G.QHLF, G.HLF, a, b, c);
 		}
 	};
 	

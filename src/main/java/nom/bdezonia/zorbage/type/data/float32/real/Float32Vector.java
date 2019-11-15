@@ -272,7 +272,7 @@ public class Float32Vector
 	{
 		@Override
 		public void call(Float32VectorMember a, Float32VectorMember b, Float32Member c) {
-			DotProduct.compute(G.FLT, a, b, c);
+			DotProduct.compute(G.FLT_VEC, G.FLT, G.FLT, a, b, c);
 		}
 	};
 	

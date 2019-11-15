@@ -26,6 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.RModule;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Ring;
@@ -48,22 +53,36 @@ public class DotProduct {
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends RModule<T,U,V,W>,
+	public static <T extends RModule<T,U,V,W> & Norm<U,Y>,
 					U extends RModuleMember<W>,
-					V extends Ring<V,W>,
-					W>
-		void compute(V memberAlgebra, U a, U b, W c)
+					V extends Ring<V,W> & Invertible<W> & ScaleComponents<W, Y>,
+					W,
+					X extends Algebra<X,Y> & Ordered<Y> & Invertible<Y>,
+					Y>
+		void compute(T rmodAlgebra, V memberAlgebra, X componentAlgebra, U a, U b, W c)
 	{
 		final long min = Math.min(a.length(), b.length());
 		W sum = memberAlgebra.construct();
-		W atmp = memberAlgebra.construct();
-		W btmp = memberAlgebra.construct();
+		W tmpA = memberAlgebra.construct();
+		W tmpB = memberAlgebra.construct();
+		Y normA = componentAlgebra.construct();
+		Y normB = componentAlgebra.construct();
+		Y maxNorm = componentAlgebra.construct();
+		Y scale = componentAlgebra.construct();
+		rmodAlgebra.norm().call(a, normA);
+		rmodAlgebra.norm().call(b, normB);
+		Max.compute(componentAlgebra, normA, normB, maxNorm);
+		componentAlgebra.invert().call(maxNorm, scale);
 		for (long i = 0; i < min; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
-			memberAlgebra.multiply().call(atmp, btmp, btmp);
-			memberAlgebra.add().call(sum, btmp, sum);
+			a.v(i, tmpA);
+			b.v(i, tmpB);
+			memberAlgebra.scaleComponents().call(scale, tmpA, tmpA);
+			memberAlgebra.scaleComponents().call(scale, tmpB, tmpB);
+			memberAlgebra.multiply().call(tmpA, tmpB, tmpB);
+			memberAlgebra.add().call(sum, tmpB, sum);
 		}
-		memberAlgebra.assign().call(sum,c);
+		memberAlgebra.scaleComponents().call(maxNorm, sum, sum);
+		memberAlgebra.scaleComponents().call(maxNorm, sum, sum);
+		memberAlgebra.assign().call(sum, c);
 	}
 }

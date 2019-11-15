@@ -270,7 +270,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b, ComplexFloat32Member c) {
-			DotProduct.compute(G.CFLT, a, b, c);
+			DotProduct.compute(G.CFLT_VEC, G.CFLT, G.FLT, a, b, c);
 		}
 	};
 	

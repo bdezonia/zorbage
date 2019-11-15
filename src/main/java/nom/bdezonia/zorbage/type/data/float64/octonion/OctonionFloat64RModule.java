@@ -275,7 +275,7 @@ public class OctonionFloat64RModule
 	{
 		@Override
 		public void call(OctonionFloat64RModuleMember a, OctonionFloat64RModuleMember b, OctonionFloat64Member c) {
-			DotProduct.compute(G.ODBL, a, b, c);
+			DotProduct.compute(G.ODBL_RMOD, G.ODBL, G.DBL, a, b, c);
 		}
 	};
 	

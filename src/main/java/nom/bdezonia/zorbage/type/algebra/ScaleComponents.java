@@ -24,29 +24,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.type.algebra;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestDotProduct {
-	
-	@Test
-	public void test() {
-		Float64VectorMember x = G.DBL_VEC.construct("[1,2,3]");
-		Float64VectorMember y = G.DBL_VEC.construct("[-1,7,-2]");
-		Float64Member val = G.DBL.construct();
-		G.DBL_VEC.dotProduct().call(x, y, val);
-		assertEquals(7, val.v(), 0.00000000000001);
-	}
+public interface ScaleComponents<U,W> {
+
+	Procedure3<W,U,U> scaleComponents();
 }

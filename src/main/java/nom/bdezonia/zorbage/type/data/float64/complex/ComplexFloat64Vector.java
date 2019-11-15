@@ -270,7 +270,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64Member c) {
-			DotProduct.compute(G.CDBL, a, b, c);
+			DotProduct.compute(G.CDBL_VEC, G.CDBL, G.DBL, a, b, c);
 		}
 	};
 	

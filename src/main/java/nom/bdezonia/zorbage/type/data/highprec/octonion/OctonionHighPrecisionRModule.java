@@ -261,7 +261,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionMember c) {
-			DotProduct.compute(G.OHP, a, b, c);
+			DotProduct.compute(G.OHP_RMOD, G.OHP, G.HP, a, b, c);
 		}
 	};
 	
