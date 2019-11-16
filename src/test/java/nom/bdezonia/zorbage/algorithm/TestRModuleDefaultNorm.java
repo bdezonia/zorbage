@@ -46,7 +46,7 @@ public class TestRModuleDefaultNorm {
 		ComplexFloat64VectorMember a = G.CDBL_VEC.construct("[{1,5},{2,6},{3,7},{4,8}]");
 		Float64Member b = G.DBL.construct();
 		G.CDBL_VEC.norm().call(a, b);
-		assertEquals(Math.sqrt(204), b.v(), 0); // I haven't worked out why this number is right
+		assertEquals(Math.sqrt(1*1 + 5*5 + 2*2 + 6*6 + 3*3 + 7*7 + 4*4 + 8*8), b.v(), 0);
 	}
 
 }
