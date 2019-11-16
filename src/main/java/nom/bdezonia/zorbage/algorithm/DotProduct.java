@@ -72,6 +72,10 @@ public class DotProduct {
 		rmodAlgebra.norm().call(a, normA);
 		rmodAlgebra.norm().call(b, normB);
 		Max.compute(componentAlgebra, normA, normB, maxNorm);
+		if (componentAlgebra.isZero().call(maxNorm)) {
+			memberAlgebra.zero().call(c);
+			return;
+		}
 		componentAlgebra.invert().call(maxNorm, scale);
 		for (long i = 0; i < min; i++) {
 			a.v(i, tmpA);
