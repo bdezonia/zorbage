@@ -57,6 +57,7 @@ public class RModuleDefaultNorm {
 					W extends SetReal<W>>
 		void compute(T rmodAlg, V componentAlg, RModuleMember<U> a, W b)
 	{
+		// TODO: like the DotProduct algorithm I should be able to define code that avoids roundoff
 		U aTmp = rmodAlg.construct();
 		U wTmp = rmodAlg.construct();
 		W yTmp = componentAlg.construct();
