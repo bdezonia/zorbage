@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
@@ -223,17 +224,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(QuaternionFloat32RModuleMember a, Float32Member b) {
-			QuaternionFloat32Member aTmp = new QuaternionFloat32Member();
-			QuaternionFloat32Member sum = new QuaternionFloat32Member();
-			QuaternionFloat32Member tmp = new QuaternionFloat32Member();
-			// TODO Look into preventing overflow. can do so similar to float case using norms
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, aTmp);
-				G.QFLT.conjugate().call(aTmp, tmp);
-				G.QFLT.multiply().call(aTmp, tmp, tmp);
-				G.QFLT.add().call(sum, tmp, sum);
-			}
-			b.setV((float)Math.sqrt(sum.r()));
+			RModuleDefaultNorm.compute(G.QFLT, G.FLT, a, b);
 		}
 	};
 	

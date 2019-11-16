@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
@@ -216,21 +217,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a, Float64Member b) {
-			Float64Member max = new Float64Member();
-			Float64Member tmp = new Float64Member();
-			Float64Member norm2 = new Float64Member(0);
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, tmp);
-				max.setV(Math.max(Math.abs(tmp.v()), max.v()));
-			}
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, tmp);
-				G.DBL.divide().call(tmp, max, tmp);
-				G.DBL.multiply().call(tmp, tmp, tmp);
-				G.DBL.add().call(norm2, tmp, norm2);
-			}
-			double norm = max.v() * Math.sqrt(norm2.v());
-			b.setV(norm);
+			RModuleDefaultNorm.compute(G.DBL, G.DBL, a, b);
 		}
 	};
 	

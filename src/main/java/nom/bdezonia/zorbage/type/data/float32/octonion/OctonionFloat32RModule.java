@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
@@ -218,22 +219,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32RModuleMember a, Float32Member b) {
-			OctonionFloat32Member aTmp = new OctonionFloat32Member();
-			OctonionFloat32Member sum = new OctonionFloat32Member();
-			OctonionFloat32Member tmp = new OctonionFloat32Member();
-			// TODO Look into preventing overflow. can do so similar to float
-			// case using norms. Also could avoid a lot of adds and multiplies
-			// by just working with components of the oct as reals since
-			// that is all that survives. This can be extended to quats and
-			// complexes. maybe not, think it through. But the conjugate()
-			// and multiply() can be simplified.
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, aTmp);
-				G.OFLT.conjugate().call(aTmp, tmp);
-				G.OFLT.multiply().call(aTmp, tmp, tmp);
-				G.OFLT.add().call(sum, tmp, sum);
-			}
-			b.setV((float)Math.sqrt(sum.r()));
+			RModuleDefaultNorm.compute(G.OFLT, G.FLT, a, b);
 		}
 	};
 	

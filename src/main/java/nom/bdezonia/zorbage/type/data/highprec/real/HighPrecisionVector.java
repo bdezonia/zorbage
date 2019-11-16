@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
@@ -210,15 +211,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionMember b) {
-			HighPrecisionMember tmp = new HighPrecisionMember();
-			HighPrecisionMember norm2 = new HighPrecisionMember();
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, tmp);
-				G.HP.multiply().call(tmp, tmp, tmp);
-				G.HP.add().call(norm2, tmp, norm2);
-			}
-			G.HP.sqrt().call(norm2, tmp);
-			b.setV(tmp);
+			RModuleDefaultNorm.compute(G.HP, G.HP, a, b);
 		}
 	};
 	

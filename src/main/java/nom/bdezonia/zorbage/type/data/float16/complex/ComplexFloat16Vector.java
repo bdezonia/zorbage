@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
@@ -218,17 +219,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a, Float16Member b) {
-			ComplexFloat16Member aTmp = new ComplexFloat16Member();
-			ComplexFloat16Member sum = new ComplexFloat16Member();
-			ComplexFloat16Member tmp = new ComplexFloat16Member();
-			// TODO Look into preventing overflow. can do so similar to float case using norms
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, aTmp);
-				G.CHLF.conjugate().call(aTmp, tmp);
-				G.CHLF.multiply().call(aTmp, tmp, tmp);
-				G.CHLF.add().call(sum, tmp, sum);
-			}
-			b.setV((float) Math.sqrt(sum.r()));
+			RModuleDefaultNorm.compute(G.CHLF, G.HLF, a, b);
 		}
 	};
 	

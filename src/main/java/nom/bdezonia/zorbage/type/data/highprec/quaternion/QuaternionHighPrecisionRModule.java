@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.type.data.highprec.quaternion;
 
 import java.math.BigDecimal;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -36,6 +35,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
@@ -64,7 +64,6 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -215,16 +214,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionRModuleMember a, HighPrecisionMember b) {
-			QuaternionHighPrecisionMember aTmp = new QuaternionHighPrecisionMember();
-			QuaternionHighPrecisionMember sum = new QuaternionHighPrecisionMember();
-			QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, aTmp);
-				G.QHP.conjugate().call(aTmp, tmp);
-				G.QHP.multiply().call(aTmp, tmp, tmp);
-				G.QHP.add().call(sum, tmp, sum);
-			}
-			b.setV(BigDecimalMath.sqrt(sum.r(), HighPrecisionAlgebra.getContext()));
+			RModuleDefaultNorm.compute(G.QHP, G.HP, a, b);
 		}
 	};
 	

@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.type.data.highprec.complex;
 
 import java.math.BigDecimal;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -36,6 +35,7 @@ import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
+import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
@@ -64,7 +64,6 @@ import nom.bdezonia.zorbage.type.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.algebra.VectorSpace;
 import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -210,17 +209,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionVectorMember a, HighPrecisionMember b) {
-			ComplexHighPrecisionMember aTmp = new ComplexHighPrecisionMember();
-			ComplexHighPrecisionMember sum = new ComplexHighPrecisionMember();
-			ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
-			// TODO Look into preventing overflow. can do so similar to float case using norms
-			for (long i = 0; i < a.length(); i++) {
-				a.v(i, aTmp);
-				G.CHP.conjugate().call(aTmp, tmp);
-				G.CHP.multiply().call(aTmp, tmp, tmp);
-				G.CHP.add().call(sum, tmp, sum);
-			}
-			b.setV(BigDecimalMath.sqrt(sum.r(), HighPrecisionAlgebra.getContext()));
+			RModuleDefaultNorm.compute(G.CHP, G.HP, a, b);
 		}
 	};
 	
