@@ -55,19 +55,20 @@ public class RModuleDefaultNorm {
 					U extends GetReal<W>,
 					V extends Algebra<V,W> & Addition<W> & Roots<W>,
 					W extends SetReal<W>>
-		void compute(T rmodAlg, V componentAlg, RModuleMember<U> a, W b)
+		void compute(T multicomponentAlg, V componentAlg, RModuleMember<U> a, W b)
 	{
 		// TODO: like the DotProduct algorithm I should be able to define code that avoids roundoff
-		U aTmp = rmodAlg.construct();
-		U wTmp = rmodAlg.construct();
-		W yTmp = componentAlg.construct();
+		U aTmp = multicomponentAlg.construct();
+		U conjATmp = multicomponentAlg.construct();
+		U uTmp = multicomponentAlg.construct();
+		W realPart = componentAlg.construct();
 		W sum = componentAlg.construct();
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, aTmp);
-			rmodAlg.conjugate().call(aTmp, wTmp);
-			rmodAlg.multiply().call(aTmp, wTmp, wTmp);
-			wTmp.getR(yTmp);
-			componentAlg.add().call(sum, yTmp, sum);
+			multicomponentAlg.conjugate().call(aTmp, conjATmp);
+			multicomponentAlg.multiply().call(aTmp, conjATmp, uTmp);
+			uTmp.getR(realPart);
+			componentAlg.add().call(sum, realPart, sum);
 		}
 		componentAlg.sqrt().call(sum, sum);
 		b.setR(sum);
