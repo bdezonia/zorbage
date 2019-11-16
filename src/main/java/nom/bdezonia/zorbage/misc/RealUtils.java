@@ -55,10 +55,16 @@ public class RealUtils {
 		double dx = Math.abs(x2 - x1);
 		double dy = Math.abs(y2 - y1);
 		double max = Math.max(dx, dy);
-		if (max == 0) return 0;
-		dx /= max;
-		dy /= max;
-		return max * Math.sqrt(dx*dx + dy*dy);
+		if (max == 0)
+			return 0;
+		if (max > 1) {
+			dx /= max;
+			dy /= max;
+		}
+		double value = Math.sqrt(dx*dx + dy*dy);
+		if (max > 1)
+			value *= max;
+		return value;
 	}
 
 	// TODO: protect from underflow
@@ -69,11 +75,17 @@ public class RealUtils {
 		double dz = Math.abs(z2 - z1);
 		double max = Math.max(dx, dy);
 		max = Math.max(max, dz);
-		if (max == 0) return 0;
-		dx /= max;
-		dy /= max;
-		dz /= max;
-		return max * Math.sqrt(dx*dx + dy*dy + dz*dz);
+		if (max == 0)
+			return 0;
+		if (max > 1) {
+			dx /= max;
+			dy /= max;
+			dz /= max;
+		}
+		double value = Math.sqrt(dx*dx + dy*dy + dz*dz);
+		if (max > 1)
+			value *= max;
+		return value;
 	}
 
 	// TODO: protect from underflow
@@ -91,14 +103,20 @@ public class RealUtils {
 		for (int i = 1; i < p1.length; i++) {
 			max = Math.max(max, scratchSpace[i]);
 		}
-		if (max == 0) return 0;
-		for (int i = 0; i < p1.length; i++) {
-			scratchSpace[i] /= max;
+		if (max == 0)
+			return 0;
+		if (max > 1) {
+			for (int i = 0; i < p1.length; i++) {
+				scratchSpace[i] /= max;
+			}
 		}
 		double sumSq = 0;
 		for (int i = 0; i < p1.length; i++) {
 			sumSq += scratchSpace[i] * scratchSpace[i];
 		}
-		return max * Math.sqrt(sumSq);
+		double value = Math.sqrt(sumSq);
+		if (max > 1)
+			value *= max;
+		return value;
 	}
 }
