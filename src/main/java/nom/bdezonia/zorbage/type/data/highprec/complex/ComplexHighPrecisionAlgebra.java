@@ -272,7 +272,7 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember a) {
-			assign().call(ONE,a);
+			assign().call(ONE, a);
 		}
 	};
 	
@@ -286,7 +286,7 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
-			divide().call(ONE,a,b);
+			divide().call(ONE, a, b);
 		}
 	};
 

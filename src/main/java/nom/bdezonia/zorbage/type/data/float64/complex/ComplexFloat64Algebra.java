@@ -294,7 +294,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a) {
-			assign().call(ONE,a);
+			assign().call(ONE, a);
 		}
 	};
 	
@@ -308,7 +308,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
-			divide().call(ONE,a,b);
+			divide().call(ONE, a, b);
 		}
 	};
 
