@@ -30,9 +30,14 @@ import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Conjugate;
 import nom.bdezonia.zorbage.type.algebra.GetReal;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.type.algebra.SetReal;
 
 /**
@@ -51,27 +56,41 @@ public class RModuleDefaultNorm {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U> & Conjugate<U>,
+	public static <T extends Algebra<T,U> & Multiplication<U> & Conjugate<U> & Norm<U,W> & ScaleComponents<U,W>,
 					U extends GetReal<W>,
-					V extends Algebra<V,W> & Addition<W> & Roots<W>,
+					V extends Algebra<V,W> & Addition<W> & Roots<W> & Ordered<W> & Invertible<W> & Scale<W,W>,
 					W extends SetReal<W>>
 		void compute(T multicomponentAlg, V componentAlg, RModuleMember<U> a, W b)
 	{
-		// TODO: like the DotProduct algorithm I should be able to define code that avoids overflow.
-		// Later note: can I literally do a dot prod with A and conjA?
+		// Note: this code does extra work to avoid overflow.
 		U aTmp = multicomponentAlg.construct();
 		U conjATmp = multicomponentAlg.construct();
 		U uTmp = multicomponentAlg.construct();
 		W realPart = componentAlg.construct();
 		W sum = componentAlg.construct();
+		W max = componentAlg.construct();
+		W scale = componentAlg.construct();
+		for (long i = 0; i < a.length(); i++) {
+			a.v(i, aTmp);
+			multicomponentAlg.norm().call(aTmp, realPart);
+			Max.compute(componentAlg, max, realPart, max);
+		}
+		if (componentAlg.isZero().call(max)) {
+			componentAlg.zero().call(b);
+			return;
+		}
+		componentAlg.invert().call(max, scale);
 		for (long i = 0; i < a.length(); i++) {
 			a.v(i, aTmp);
 			multicomponentAlg.conjugate().call(aTmp, conjATmp);
+			multicomponentAlg.scaleComponents().call(scale, aTmp, aTmp);
+			multicomponentAlg.scaleComponents().call(scale, conjATmp, conjATmp);
 			multicomponentAlg.multiply().call(aTmp, conjATmp, uTmp);
 			uTmp.getR(realPart);
 			componentAlg.add().call(sum, realPart, sum);
 		}
 		componentAlg.sqrt().call(sum, sum);
+		componentAlg.scale().call(max, sum, sum);
 		b.setR(sum);
 	}
 }
