@@ -57,7 +57,8 @@ public class RModuleDefaultNorm {
 					W extends SetReal<W>>
 		void compute(T multicomponentAlg, V componentAlg, RModuleMember<U> a, W b)
 	{
-		// TODO: like the DotProduct algorithm I should be able to define code that avoids overflow
+		// TODO: like the DotProduct algorithm I should be able to define code that avoids overflow.
+		// Later note: can I literally do a dot prod with A and conjA?
 		U aTmp = multicomponentAlg.construct();
 		U conjATmp = multicomponentAlg.construct();
 		U uTmp = multicomponentAlg.construct();
