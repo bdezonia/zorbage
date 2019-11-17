@@ -31,6 +31,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -106,10 +107,10 @@ public class TestComplexSpeed {
 		long a = System.currentTimeMillis();
 		ComplexFloat64Member z = new ComplexFloat64Member(0.1,0);
 		for (long i = 0; i < 1000000000; i++) {
-			procC.call(z,z);
+			procC.call(z, z);
 		}
 		long b = System.currentTimeMillis();
-		System.out.println((b-a) + " millisecs " + z);
+		System.out.println((b - a) + " millisecs " + z);
 	}
 
 	private Procedure2<ComplexFloat64MatrixMember,ComplexFloat64MatrixMember> procM =
@@ -118,9 +119,9 @@ public class TestComplexSpeed {
 		@Override
 		public void call(ComplexFloat64MatrixMember z, ComplexFloat64MatrixMember res) {
 			// f(z) = z*z + (1,1)*z - 1
-			ComplexFloat64MatrixMember t1 = new ComplexFloat64MatrixMember(6, 6, new double[2*6*6]);
-			ComplexFloat64MatrixMember t2 = new ComplexFloat64MatrixMember(6, 6, new double[2*6*6]);
-			ComplexFloat64MatrixMember t3 = new ComplexFloat64MatrixMember(6, 6, new double[2*6*6]);
+			ComplexFloat64MatrixMember t1 = new ComplexFloat64MatrixMember();
+			ComplexFloat64MatrixMember t2 = new ComplexFloat64MatrixMember();
+			ComplexFloat64MatrixMember t3 = new ComplexFloat64MatrixMember(StorageConstruction.MEM_ARRAY, z.rows(), z.cols());
 			ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
 			G.CDBL_MAT.multiply().call(z, z, t1);
 			G.CDBL_MAT.scale().call(linTerm, z, t2);
@@ -129,16 +130,20 @@ public class TestComplexSpeed {
 			G.CDBL_MAT.subtract().call(t1, t3, res);
 		}
 	};
+
+	// From the 17 minute mark of the talk
+	// This matrix version takes 3.5 times as long as the 1d Java version above.
+	// The C++ example it was based on in the video took 2.5 times as long as the 1d C++ version.
 	
 	@Test
 	public void test2() {
 		long a = System.currentTimeMillis();
-		ComplexFloat64MatrixMember z = new ComplexFloat64MatrixMember(6,6,new double[2*6*6]);
-		MatrixConstantDiagonal.compute(G.CDBL, new ComplexFloat64Member(0.1,0),z);
+		ComplexFloat64MatrixMember z = new ComplexFloat64MatrixMember(StorageConstruction.MEM_ARRAY, 6, 6);
+		MatrixConstantDiagonal.compute(G.CDBL, new ComplexFloat64Member(0.1, 0), z);
 		for (long i = 0; i < 10000000; i++) {
-			procM.call(z,z);
+			procM.call(z, z);
 		}
 		long b = System.currentTimeMillis();
-		System.out.println((b-a) + " millisecs " + z);
+		System.out.println((b - a) + " millisecs " + z);
 	}
 }
