@@ -45,9 +45,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class TestComplexSpeed {
 
 	// Comparing raw speed of my code versus C++:
-	//   See 15 min mark of this talk: http://cds.cern.ch/record/2157242?ln=de
 	//
-	// On BDZ's test machine C++ code is 20% slower than this java code. Surprising.
+	// On BDZ's test machine C++ code is 20% slower than this Java code. Surprising.
 	// Relevant C++ code compiled with g++ -O3
 
 /*
@@ -97,11 +96,16 @@ public class TestComplexSpeed {
 		U t2 = memberAlg.construct();
 		memberAlg.multiply().call(z, z, t1);
 		memberAlg.scale().call(linTerm, z, t2);
+		// This ctor gives the target matrix the right shape. This causes a little extra initialization
+		// that could be avoided with two separate algos or by defining a streamlined constructor for
+		// the algebra. I guess the second idea is a TODO.
 		U t3 = memberAlg.construct(t2);
 		memberAlg.unity().call(t3);
 		memberAlg.add().call(t1, t2, t1);
 		memberAlg.subtract().call(t1, t3, res);
 	}
+
+	// From the 15 min mark of this talk: http://cds.cern.ch/record/2157242?ln=de
 
 	@Test
 	public void test1() {
@@ -115,10 +119,11 @@ public class TestComplexSpeed {
 		System.out.println((b - a) + " millisecs " + z);
 	}
 
-	// From the 17 minute mark of the talk
+	// From the 17 min mark of this talk: http://cds.cern.ch/record/2157242?ln=de
+	//
 	// This matrix version takes 3.5 times as long as the 1d Java version above.
 	// The C++ example it was based on in the video took 2.5 times as long as the 1d C++ version.
-	// 2.5 * local C++ time (18.5 secs) is comparable to 3.5 * local Java time (19.8 secs).
+	// 2.5 * local C++ time (18.5 secs) is comparable to 3.5 * local Java time (21.0 secs).
 	// Also for reference PyPy and NumPy was taking 200-220 seconds for the same work.
 	
 	@Test
