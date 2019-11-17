@@ -134,6 +134,8 @@ public class TestComplexSpeed {
 	// From the 17 minute mark of the talk
 	// This matrix version takes 3.5 times as long as the 1d Java version above.
 	// The C++ example it was based on in the video took 2.5 times as long as the 1d C++ version.
+	// 2.5 * local C++ time (18.5 secs) is comparable to  3.5 * local Java time (19.8 secs).
+	// Also for reference PyPy and NumPy was talking 200-220 seconds for the same work.
 	
 	@Test
 	public void test2() {
