@@ -89,7 +89,7 @@ public class TestComplexSpeed {
 	private static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Scale<U,V>,
 					U,
 					V>
-		void func(T memberAlg, V linTerm, U z, U res)
+		void proc(T memberAlg, V linTerm, U z, U res)
 	{
 		// f(z) = z*z + (1,1)*z - 1
 		U t1 = memberAlg.construct();
@@ -113,7 +113,7 @@ public class TestComplexSpeed {
 		ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
 		ComplexFloat64Member z = new ComplexFloat64Member(0.1,0);
 		for (long i = 0; i < 1000000000; i++) {
-			func(G.CDBL, linTerm, z, z);
+			proc(G.CDBL, linTerm, z, z);
 		}
 		long b = System.currentTimeMillis();
 		System.out.println((b - a) + " millisecs " + z);
@@ -133,7 +133,7 @@ public class TestComplexSpeed {
 		ComplexFloat64MatrixMember z = new ComplexFloat64MatrixMember(StorageConstruction.MEM_ARRAY, 6, 6);
 		MatrixConstantDiagonal.compute(G.CDBL, new ComplexFloat64Member(0.1, 0), z);
 		for (long i = 0; i < 10000000; i++) {
-			func(G.CDBL_MAT, linTerm, z, z);
+			proc(G.CDBL_MAT, linTerm, z, z);
 		}
 		long b = System.currentTimeMillis();
 		System.out.println((b - a) + " millisecs " + z);
