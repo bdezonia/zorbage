@@ -30,7 +30,11 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Scale;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
@@ -83,53 +87,33 @@ public class TestComplexSpeed {
 	}
 */
 
-
-	private Procedure2<ComplexFloat64Member,ComplexFloat64Member> procC =
-			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	private static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Scale<U,V>,
+					U,
+					V>
+		void func(T memberAlg, V linTerm, U z, U res)
 	{
-		@Override
-		public void call(ComplexFloat64Member z, ComplexFloat64Member res) {
-			// f(z) = z*z + (1,1)*z - 1
-			ComplexFloat64Member t1 = G.CDBL.construct();
-			ComplexFloat64Member t2 = G.CDBL.construct();
-			ComplexFloat64Member t3 = G.CDBL.construct();
-			ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
-			G.CDBL.multiply().call(z, z, t1);
-			G.CDBL.multiply().call(linTerm, z, t2);
-			G.CDBL.unity().call(t3);
-			G.CDBL.add().call(t1, t2, t1);
-			G.CDBL.subtract().call(t1, t3, res);
-		}
-	};
-	
+		// f(z) = z*z + (1,1)*z - 1
+		U t1 = memberAlg.construct();
+		U t2 = memberAlg.construct();
+		memberAlg.multiply().call(z, z, t1);
+		memberAlg.scale().call(linTerm, z, t2);
+		U t3 = memberAlg.construct(t2);
+		memberAlg.unity().call(t3);
+		memberAlg.add().call(t1, t2, t1);
+		memberAlg.subtract().call(t1, t3, res);
+	}
+
 	@Test
 	public void test1() {
 		long a = System.currentTimeMillis();
+		ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
 		ComplexFloat64Member z = new ComplexFloat64Member(0.1,0);
 		for (long i = 0; i < 1000000000; i++) {
-			procC.call(z, z);
+			func(G.CDBL, linTerm, z, z);
 		}
 		long b = System.currentTimeMillis();
 		System.out.println((b - a) + " millisecs " + z);
 	}
-
-	private Procedure2<ComplexFloat64MatrixMember,ComplexFloat64MatrixMember> procM =
-			new Procedure2<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
-	{
-		@Override
-		public void call(ComplexFloat64MatrixMember z, ComplexFloat64MatrixMember res) {
-			// f(z) = z*z + (1,1)*z - 1
-			ComplexFloat64MatrixMember t1 = new ComplexFloat64MatrixMember();
-			ComplexFloat64MatrixMember t2 = new ComplexFloat64MatrixMember();
-			ComplexFloat64MatrixMember t3 = new ComplexFloat64MatrixMember(StorageConstruction.MEM_ARRAY, z.rows(), z.cols());
-			ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
-			G.CDBL_MAT.multiply().call(z, z, t1);
-			G.CDBL_MAT.scale().call(linTerm, z, t2);
-			G.CDBL_MAT.unity().call(t3);
-			G.CDBL_MAT.add().call(t1, t2, t1);
-			G.CDBL_MAT.subtract().call(t1, t3, res);
-		}
-	};
 
 	// From the 17 minute mark of the talk
 	// This matrix version takes 3.5 times as long as the 1d Java version above.
@@ -140,10 +124,11 @@ public class TestComplexSpeed {
 	@Test
 	public void test2() {
 		long a = System.currentTimeMillis();
+		ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
 		ComplexFloat64MatrixMember z = new ComplexFloat64MatrixMember(StorageConstruction.MEM_ARRAY, 6, 6);
 		MatrixConstantDiagonal.compute(G.CDBL, new ComplexFloat64Member(0.1, 0), z);
 		for (long i = 0; i < 10000000; i++) {
-			procM.call(z, z);
+			func(G.CDBL_MAT, linTerm, z, z);
 		}
 		long b = System.currentTimeMillis();
 		System.out.println((b - a) + " millisecs " + z);
