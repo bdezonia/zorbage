@@ -38,24 +38,65 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  */
 public class TestComplexSpeed {
 
-	// Comparing raw speed of my code versus other libraries:
+	// Comparing raw speed of my code versus C++:
 	//   See 15 min mark of this talk: http://cds.cern.ch/record/2157242?ln=de
+	//
+	// On BDZ's test machine C++ code is 20% slower than this java code. Surprising.
+	// Relevant C++ code compiled with g++ -O3
+
+/*	
+	#include <iostream>
+	#include <complex>
+	#include <sys/time.h>
+
+	std::complex<double> factor(1,1);
+
+	inline std::complex<double>
+	f(const std::complex<double> &z)
+	{
+		return z*z + factor*z - 1.0;
+	}
+
+	int main()
+	{
+	    struct timeval start, end;
+
+	    long mtime, seconds, useconds;    
+
+	    gettimeofday(&start, NULL);
+
+	 	std::complex<double> z = 0.1;
+		for (int i = 0; i < 1000000000; i++) {
+			z = f(z);
+		}
+	 
+	    gettimeofday(&end, NULL);
+	 
+	    seconds  = end.tv_sec  - start.tv_sec;
+	    useconds = end.tv_usec - start.tv_usec;
+
+	    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+
+	 	std::cout << mtime << " " << z;
+	}
+*/
+	
 	
 	private Procedure2<ComplexFloat64Member,ComplexFloat64Member> proc =
 			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
 	{
 		@Override
-		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+		public void call(ComplexFloat64Member z, ComplexFloat64Member res) {
 			// f(z) = z*z + (1,1)*z - 1
 			ComplexFloat64Member t1 = G.CDBL.construct();
 			ComplexFloat64Member t2 = G.CDBL.construct();
 			ComplexFloat64Member t3 = G.CDBL.construct();
 			ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
-			G.CDBL.multiply().call(a, a, t1);
-			G.CDBL.multiply().call(linTerm, a, t2);
+			G.CDBL.multiply().call(z, z, t1);
+			G.CDBL.multiply().call(linTerm, z, t2);
 			G.CDBL.unity().call(t3);
 			G.CDBL.add().call(t1, t2, t1);
-			G.CDBL.add().call(t1, t3, b);
+			G.CDBL.subtract().call(t1, t3, res);
 		}
 	};
 	
@@ -67,6 +108,6 @@ public class TestComplexSpeed {
 			proc.call(z,z);
 		}
 		long b = System.currentTimeMillis();
-		System.out.println((b-a) + " millisecs");
+		System.out.println((b-a) + " millisecs " + z);
 	}
 }
