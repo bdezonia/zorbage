@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestClassicRungeKutta {
+public class TestOdeSolveRK4 {
 
 	private static final double TOL = 0.00000000001;
 	
@@ -78,7 +78,7 @@ public class TestClassicRungeKutta {
 		
 		IndexedDataSource<Float64Member> results = Storage.allocate(numSteps, value);
 		
-		ClassicRungeKutta.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, results);
+		OdeSolveRK4.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, results);
 		
 		results.get(numSteps-1, value);
 		
@@ -117,7 +117,7 @@ public class TestClassicRungeKutta {
 		IndexedDataSource<Float64VectorMember> results = ArrayDataSource.construct(G.DBL_VEC, NUM_STEPS);
 		//IndexedDataSource<Float64VectorMember> results = ListDataSource.construct(G.DBL_VEC, NUM_STEPS);
 
-		ClassicRungeKutta.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, NUM_STEPS, dt, results);
+		OdeSolveRK4.compute(G.DBL_VEC, G.DBL, vectorDeriv, t0, y0, NUM_STEPS, dt, results);
 
 		results.get(NUM_STEPS-1, value);
 		

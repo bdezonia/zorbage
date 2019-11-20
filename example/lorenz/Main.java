@@ -16,7 +16,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Line;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.ClassicRungeKutta;
+import nom.bdezonia.zorbage.algorithm.OdeSolveRK4;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32VectorMember;
@@ -87,7 +87,7 @@ public class Main extends SimpleApplication {
 		IndexedDataSource<Float32VectorMember> outputVecs = ArrayDataSource.construct(G.FLT_VEC, numSteps);
 		
 		// solve the 3-d differential equation
-		ClassicRungeKutta.compute(G.FLT_VEC, G.FLT, lorenz, t0, y0, numSteps, dt, outputVecs);
+		OdeSolveRK4.compute(G.FLT_VEC, G.FLT, lorenz, t0, y0, numSteps, dt, outputVecs);
 		
 		// format output as JMonkeyEngine wants
 		float[] xs = new float[numSteps];
