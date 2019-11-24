@@ -46,7 +46,6 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 	private MatrixMaximumAbsoluteRowSumNorm() {}
 
 	/**
-	 * 
 	 * @param algebra1
 	 * @param algebra2
 	 * @param matrix

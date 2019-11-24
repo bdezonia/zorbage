@@ -46,10 +46,10 @@ public class MatrixMaximumAbsoluteColumnSumNorm {
 	private MatrixMaximumAbsoluteColumnSumNorm() {}
 
 	/**
-	 * 
-	 * @param numAlgebra
+	 * @param algebra1
+	 * @param algebra2
 	 * @param matrix
-	 * @param norm
+	 * @param result
 	 */
 	public static
 		<T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Ordered<W>, W>
