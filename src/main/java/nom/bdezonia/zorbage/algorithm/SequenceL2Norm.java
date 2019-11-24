@@ -63,6 +63,10 @@ public class SequenceL2Norm {
 			normAlgebra.norm().call(value, tmp);
 			Max.compute(numAlgebra, max, tmp, max);
 		}
+		if (numAlgebra.isZero().call(max)) {
+			numAlgebra.zero().call(result);
+			return;
+		}
 		for (long i = 0; i < seq.size(); i++) {
 			seq.get(i, value);
 			normAlgebra.norm().call(value, tmp);
