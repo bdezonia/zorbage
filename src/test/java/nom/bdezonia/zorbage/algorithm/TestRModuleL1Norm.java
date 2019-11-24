@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.RModuleL1Norm;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModuleMember;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModuleMember;
@@ -49,7 +48,7 @@ public class TestRModuleL1Norm {
 	public void testReal() {
 		Float64Member result = G.DBL.construct();
 		Float64VectorMember rmod = new Float64VectorMember(new double[] {0,-2,4,-6,8,-10});
-		RModuleL1Norm.compute(G.DBL, G.DBL, rmod, result);
+		SequenceL1Norm.compute(G.DBL, G.DBL, rmod.rawData(), result);
 		assertEquals(30, result.v(), 0);
 	}
 
@@ -57,7 +56,7 @@ public class TestRModuleL1Norm {
 	public void testComplex() {
 		Float64Member result = G.DBL.construct();
 		ComplexFloat64VectorMember rmod = new ComplexFloat64VectorMember(new double[] {0,0,-2,0,4,0,-6,0,8,0,-10,0});
-		RModuleL1Norm.compute(G.CDBL, G.DBL, rmod, result);
+		SequenceL1Norm.compute(G.CDBL, G.DBL, rmod.rawData(), result);
 		assertEquals(30, result.v(), 0);
 	}
 
@@ -65,7 +64,7 @@ public class TestRModuleL1Norm {
 	public void testQuat() {
 		Float64Member result = G.DBL.construct();
 		QuaternionFloat64RModuleMember rmod = new QuaternionFloat64RModuleMember(new double[] {0,0,0,0,-2,0,0,0,4,0,0,0,-6,0,0,0,8,0,0,0,-10,0,0,0});
-		RModuleL1Norm.compute(G.QDBL, G.DBL, rmod, result);
+		SequenceL1Norm.compute(G.QDBL, G.DBL, rmod.rawData(), result);
 		assertEquals(30, result.v(), 0);
 	}
 
@@ -73,7 +72,7 @@ public class TestRModuleL1Norm {
 	public void testOct() {
 		Float64Member result = G.DBL.construct();
 		OctonionFloat64RModuleMember rmod = new OctonionFloat64RModuleMember(new double[] {0,0,0,0,-2,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,-6,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0});
-		RModuleL1Norm.compute(G.ODBL, G.DBL, rmod, result);
+		SequenceL1Norm.compute(G.ODBL, G.DBL, rmod.rawData(), result);
 		assertEquals(30, result.v(), 0);
 	}
 }

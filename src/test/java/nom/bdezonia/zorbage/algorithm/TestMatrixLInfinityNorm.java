@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.MatrixLInfinityNorm;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64MatrixMember;
@@ -49,7 +48,7 @@ public class TestMatrixLInfinityNorm {
 	public void testReal() {
 		Float64Member result = G.DBL.construct();
 		Float64MatrixMember mat = new Float64MatrixMember(2, 3, new double[] {0,-2,4,-6,8,-10});
-		MatrixLInfinityNorm.compute(G.DBL, G.DBL, mat, result);
+		SequenceLInfinityNorm.compute(G.DBL, G.DBL, mat.rawData(), result);
 		assertEquals(10, result.v(), 0);
 	}
 
@@ -57,7 +56,7 @@ public class TestMatrixLInfinityNorm {
 	public void testComplex() {
 		Float64Member result = G.DBL.construct();
 		ComplexFloat64MatrixMember mat = new ComplexFloat64MatrixMember(2, 3, new double[] {0, 0, -2, 0, 4, 0, -6, 0, 8, 0, -10, 0});
-		MatrixLInfinityNorm.compute(G.CDBL, G.DBL, mat, result);
+		SequenceLInfinityNorm.compute(G.CDBL, G.DBL, mat.rawData(), result);
 		assertEquals(10, result.v(), 0);
 	}
 
@@ -65,7 +64,7 @@ public class TestMatrixLInfinityNorm {
 	public void testQuat() {
 		Float64Member result = G.DBL.construct();
 		QuaternionFloat64MatrixMember mat = new QuaternionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, -2, 0, 0, 0, 4, 0, 0, 0, -6, 0, 0, 0, 8, 0, 0, 0, -10, 0, 0, 0});
-		MatrixLInfinityNorm.compute(G.QDBL, G.DBL, mat, result);
+		SequenceLInfinityNorm.compute(G.QDBL, G.DBL, mat.rawData(), result);
 		assertEquals(10, result.v(), 0);
 	}
 
@@ -73,7 +72,7 @@ public class TestMatrixLInfinityNorm {
 	public void testOct() {
 		Float64Member result = G.DBL.construct();
 		OctonionFloat64MatrixMember mat = new OctonionFloat64MatrixMember(2, 3, new double[] {0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0});
-		MatrixLInfinityNorm.compute(G.ODBL, G.DBL, mat, result);
+		SequenceLInfinityNorm.compute(G.ODBL, G.DBL, mat.rawData(), result);
 		assertEquals(10, result.v(), 0);
 	}
 }

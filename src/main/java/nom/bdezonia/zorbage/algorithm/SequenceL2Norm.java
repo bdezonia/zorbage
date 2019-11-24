@@ -28,38 +28,50 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MatrixL1Norm {
+public class SequenceL2Norm {
 
-	private MatrixL1Norm() { }
-
+	private SequenceL2Norm() { }
+	
 	/**
 	 * 
-	 * @param matAlgebra
+	 * @param normAlgebra
 	 * @param numAlgebra
-	 * @param mat
+	 * @param seq
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W>, W>
-		void compute(T matAlgebra, V numAlgebra, MatrixMember<U> mat, W result)
+	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Roots<W> & Ordered<W>& Invertible<W>, W>
+		void compute(T normAlgebra, V numAlgebra, IndexedDataSource<U> seq, W result)
 	{
-		U value = matAlgebra.construct();
+		U value = normAlgebra.construct();
 		W sum = numAlgebra.construct();
 		W tmp = numAlgebra.construct();
-		for (long r = 0; r < mat.rows(); r++) {
-			for (long c = 0; c < mat.cols(); c++) {
-				mat.v(r, c, value);
-				matAlgebra.norm().call(value, tmp);
-				numAlgebra.add().call(sum, tmp, sum);
-			}
+		W max = numAlgebra.construct();
+		for (long i = 0; i < seq.size(); i++) {
+			seq.get(i, value);
+			normAlgebra.norm().call(value, tmp);
+			Max.compute(numAlgebra, max, tmp, max);
 		}
+		for (long i = 0; i < seq.size(); i++) {
+			seq.get(i, value);
+			normAlgebra.norm().call(value, tmp);
+			numAlgebra.divide().call(tmp, max, tmp);
+			numAlgebra.multiply().call(tmp, tmp, tmp);
+			numAlgebra.add().call(sum, tmp, sum);
+		}
+		numAlgebra.sqrt().call(sum, sum);
+		numAlgebra.multiply().call(sum, max, sum);
 		numAlgebra.assign().call(sum, result);
 	}
 }

@@ -26,42 +26,38 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class MatrixL0Norm {
+public class SequenceLInfinityNorm {
 
-	private MatrixL0Norm() { }
-
+	private SequenceLInfinityNorm() { }
+	
 	/**
 	 * 
-	 * @param matAlgebra
+	 * @param normAlgebra
 	 * @param numAlgebra
-	 * @param mat
+	 * @param seq
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T matAlgebra, V numAlgebra, MatrixMember<U> mat, W result)
+	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Ordered<W>, W>
+		void compute(T normAlgebra, V numAlgebra, IndexedDataSource<U> seq, W result)
 	{
-		U value = matAlgebra.construct();
-		W sum = numAlgebra.construct();
-		W one = numAlgebra.construct();
-		numAlgebra.unity().call(one);
-		for (long r = 0; r < mat.rows(); r++) {
-			for (long c = 0; c < mat.cols(); c++) {
-				mat.v(r, c, value);
-				if (!matAlgebra.isZero().call(value)) {
-					numAlgebra.add().call(sum, one, sum);
-				}
-			}
+		U value = normAlgebra.construct();
+		W max = numAlgebra.construct();
+		W tmp = numAlgebra.construct();
+		for (long i = 0; i < seq.size(); i++) {
+			seq.get(i, value);
+			normAlgebra.norm().call(value, tmp);
+			numAlgebra.max().call(max, tmp, max);
 		}
-		numAlgebra.assign().call(sum, result);
+		numAlgebra.assign().call(max, result);
 	}
 }

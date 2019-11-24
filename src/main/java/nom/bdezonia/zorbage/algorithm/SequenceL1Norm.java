@@ -28,18 +28,18 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RModuleL0Norm {
+public class SequenceL1Norm {
 
-	private RModuleL0Norm() { }
-
+	private SequenceL1Norm() { }
+	
 	/**
 	 * 
 	 * @param rmodAlgebra
@@ -47,18 +47,16 @@ public class RModuleL0Norm {
 	 * @param rmod
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T rmodAlgebra, V numAlgebra, RModuleMember<U> rmod, W result)
+	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W>, W>
+		void compute(T normAlgebra, V numAlgebra, IndexedDataSource<U> seq, W result)
 	{
-		U value = rmodAlgebra.construct();
+		U value = normAlgebra.construct();
 		W sum = numAlgebra.construct();
-		W one = numAlgebra.construct();
-		numAlgebra.unity().call(one);
-		for (long i = 0; i < rmod.length(); i++) {
-			rmod.v(i, value);
-			if (!rmodAlgebra.isZero().call(value)) {
-				numAlgebra.add().call(sum, one, sum);
-			}
+		W tmp = numAlgebra.construct();
+		for (long i = 0; i < seq.size(); i++) {
+			seq.get(i, value);
+			normAlgebra.norm().call(value, tmp);
+			numAlgebra.add().call(sum, tmp, sum);
 		}
 		numAlgebra.assign().call(sum, result);
 	}
