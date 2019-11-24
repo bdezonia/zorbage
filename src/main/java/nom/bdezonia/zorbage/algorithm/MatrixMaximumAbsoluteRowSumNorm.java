@@ -47,9 +47,10 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 
 	/**
 	 * 
-	 * @param numAlgebra
+	 * @param algebra1
+	 * @param algebra2
 	 * @param matrix
-	 * @param norm
+	 * @param result
 	 */
 	public static
 		<T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Ordered<W>, W>
@@ -58,15 +59,15 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 		W tmp = algebra2.construct();
 		W max = algebra2.construct();
 		for (long r = 0; r < matrix.rows(); r++) {
-			W colSum = algebra2.construct();
+			W rowSum = algebra2.construct();
 			U value = algebra1.construct();
 			for (long c = 0; c < matrix.cols(); c++) {
 				matrix.v(r, c, value);
 				algebra1.norm().call(value, tmp);
-				algebra2.add().call(colSum, tmp, colSum);
+				algebra2.add().call(rowSum, tmp, rowSum);
 			}
-			if (algebra2.isGreater().call(colSum, max))
-				algebra2.assign().call(colSum, max);
+			if (algebra2.isGreater().call(rowSum, max))
+				algebra2.assign().call(rowSum, max);
 		}
 		algebra2.assign().call(max, result);
 	}
