@@ -57,9 +57,10 @@ public class MatrixMaximumAbsoluteColumnSumNorm {
 	{
 		W tmp = algebra2.construct();
 		W max = algebra2.construct();
+		W colSum = algebra2.construct();
+		U value = algebra1.construct();
 		for (long c = 0; c < matrix.cols(); c++) {
-			W colSum = algebra2.construct();
-			U value = algebra1.construct();
+			algebra2.zero().call(colSum);
 			for (long r = 0; r < matrix.rows(); r++) {
 				matrix.v(r, c, value);
 				algebra1.norm().call(value, tmp);
