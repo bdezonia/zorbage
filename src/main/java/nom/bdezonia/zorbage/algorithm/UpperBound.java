@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class UpperBound {
 
 	private UpperBound() { }
+
+	// see http://www.cplusplus.com/reference/algorithm/upper_bound/
 	
 	/**
 	 * 

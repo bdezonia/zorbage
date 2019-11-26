@@ -41,6 +41,8 @@ public class LowerBound {
 
 	private LowerBound() { }
 	
+	// see http://www.cplusplus.com/reference/algorithm/lower_bound/
+	
 	/**
 	 * 
 	 * @param alg
