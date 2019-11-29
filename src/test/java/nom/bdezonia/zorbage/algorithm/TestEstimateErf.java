@@ -48,33 +48,33 @@ public class TestEstimateErf {
 		Float64Member input = G.DBL.construct();
 		Float64Member result = G.DBL.construct();
 		
-		input.setV(0);
-		EstimateErf.compute(G.DBL, 8, input, result);
-		assertEquals(0, result.v(), 0.000001);
-		
-		input.setV(0.1);
-		EstimateErf.compute(G.DBL, 8, input, result);
-		assertEquals(0.112463, result.v(), 0.000001);
-		
-		input.setV(0.3);
-		EstimateErf.compute(G.DBL, 8, input, result);
-		assertEquals(0.328627, result.v(), 0.000001);
-		
-		input.setV(0.5);
-		EstimateErf.compute(G.DBL, 8, input, result);
-		assertEquals(0.520500, result.v(), 0.000001);
-		
-		input.setV(0.7);
-		EstimateErf.compute(G.DBL, 8, input, result);
-		assertEquals(0.677801, result.v(), 0.000001);
+		input.setV(3);
+		EstimateErf.compute(G.DBL, 32, input, result);
+		assertEquals(0.999977, result.v(), 0.000001);
 		
 		input.setV(0.9);
 		EstimateErf.compute(G.DBL, 8, input, result);
 		assertEquals(0.796908, result.v(), 0.000001);
 		
-		input.setV(3);
-		EstimateErf.compute(G.DBL, 32, input, result);
-		assertEquals(0.999977, result.v(), 0.000001);
+		input.setV(0.7);
+		EstimateErf.compute(G.DBL, 8, input, result);
+		assertEquals(0.677801, result.v(), 0.000001);
+		
+		input.setV(0.5);
+		EstimateErf.compute(G.DBL, 8, input, result);
+		assertEquals(0.520500, result.v(), 0.000001);
+		
+		input.setV(0.3);
+		EstimateErf.compute(G.DBL, 8, input, result);
+		assertEquals(0.328627, result.v(), 0.000001);
+		
+		input.setV(0.1);
+		EstimateErf.compute(G.DBL, 8, input, result);
+		assertEquals(0.112463, result.v(), 0.000001);
+		
+		input.setV(0);
+		EstimateErf.compute(G.DBL, 8, input, result);
+		assertEquals(0, result.v(), 0.000001);
 		
 		input.setV(-0.1);
 		EstimateErf.compute(G.DBL, 8, input, result);
@@ -98,6 +98,6 @@ public class TestEstimateErf {
 		
 		input.setV(-3);
 		EstimateErf.compute(G.DBL, 32, input, result);
-		assertEquals(-0.999978, result.v(), 0.000001);
+		assertEquals(-0.999977, result.v(), 0.000001);
 	}
 }
