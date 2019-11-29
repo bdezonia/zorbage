@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
@@ -99,5 +100,15 @@ public class TestEstimateErf {
 		input.setV(-3);
 		EstimateErf.compute(G.DBL, 32, input, result);
 		assertEquals(-0.999977, result.v(), 0.000001);
+		
+		// Do a complex valued erf() test
+		
+		ComplexFloat64Member x = G.CDBL.construct();
+		ComplexFloat64Member res = G.CDBL.construct();
+		x.setR(1);
+		x.setI(2);
+		EstimateErf.compute(G.CDBL, 21, x, res);
+		assertEquals(-0.53664356577, res.r(), 0.000001);
+		assertEquals(-5.04914370344, res.i(), 0.000001);
 	}
 }
