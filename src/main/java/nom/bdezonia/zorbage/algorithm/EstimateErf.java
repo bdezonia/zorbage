@@ -92,10 +92,10 @@ public class EstimateErf {
 			alg.add().call(n, one, n);
 		}
 		U pi = alg.construct();
-		alg.multiply().call(sum, two, sum);
 		alg.PI().call(pi);
 		alg.sqrt().call(pi, pi);
 		alg.divide().call(sum, pi, sum);
+		alg.multiply().call(sum, two, sum);
 		alg.assign().call(sum, result);
 	}
 }
