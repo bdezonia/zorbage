@@ -101,10 +101,6 @@ public class TestEstimateErf {
 		EstimateErf.compute(G.DBL, 32, input, result);
 		assertEquals(-0.999977, result.v(), 0.000001);
 		
-		// Note: I tried estimating the erf() of x = 1000
-		// with this algorithm and no number of terms
-		// could converge to an accurate estimate.
-
 		// Do a complex valued erf() test
 		
 		ComplexFloat64Member x = G.CDBL.construct();
@@ -114,5 +110,20 @@ public class TestEstimateErf {
 		EstimateErf.compute(G.CDBL, 21, x, res);
 		assertEquals(-0.53664356577, res.r(), 0.000001);
 		assertEquals(-5.04914370344, res.i(), 0.000001);
+	}
+	
+	// Note: I tried estimating the erf() of x = 1000 with this algorithm and no number of terms
+	// could converge to an accurate estimate. See below
+
+	@Test
+	public void test2() {
+		Float64Member input = G.DBL.construct();
+		Float64Member result = G.DBL.construct();
+		
+		input.setV(1000);
+		for (int i = 1; i <= 52; i++) {
+			EstimateErf.compute(G.DBL, i, input, result);
+			//System.out.println(result.v());
+		}
 	}
 }
