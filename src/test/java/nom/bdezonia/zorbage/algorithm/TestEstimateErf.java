@@ -35,6 +35,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
@@ -122,14 +123,21 @@ public class TestEstimateErf {
 	// investigate. Later: I wrote simple java code to check term by term and for input values
 	// somewhat greater than 3 the terms seem to diverge. I need to check what the math theory
 	// says about this series. MathWorld mentioned nothing about radius of convergence.
+	// Even later edit: you can see that it converges of decimal places of accuracy set to
+	// 150 and iterations at least 365. It's possible for the old 1000 input we'd need hundreds
+	// of decimal places and thousands of terms. Apparently the series does converge but
+	// sometimes very slowly.
 
 	@Test
 	public void test2() {
+		// Force convergence
+		//HighPrecisionAlgebra.setPrecision(150);
+		
 		HighPrecisionMember input = G.HP.construct();
 		HighPrecisionMember result = G.HP.construct();
 		
 		input.setV(BigDecimal.valueOf(10));
-		for (int i = 1; i <= 280; i++) {
+		for (int i = 1; i <= 365; i++) {
 			EstimateErf.compute(G.HP, i, input, result);
 			//System.out.println(result.v());
 		}
