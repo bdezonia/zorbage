@@ -116,7 +116,10 @@ public class TestEstimateErf {
 	}
 	
 	// Note: I tried estimating the erf() of x = 1000 with this algorithm and no number of terms
-	// could converge to an accurate estimate. See below
+	// could converge to an accurate estimate. See below. This implies the code might be wrong.
+	// However I have gone over the definitions in the code over and over and can see no flaw.
+	// It's also possible one of the subroutines that the algorithm calls is broken. Must
+	// investigate.
 
 	@Test
 	public void test2() {

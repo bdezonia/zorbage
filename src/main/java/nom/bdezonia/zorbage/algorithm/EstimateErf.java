@@ -57,44 +57,47 @@ public class EstimateErf {
 	{
 		if (numTerms <= 0)
 			throw new IllegalArgumentException("numTerms must be greater than zero");
-		
+		U zero = alg.construct();
+		U tmp = alg.construct();
 		U n = alg.construct();
 		U one = alg.construct();
-		alg.unity().call(one);
 		U minus_one = alg.construct();
-		alg.subtract().call(n, one, minus_one);
 		U two = alg.construct();
-		alg.add().call(one, one, two);
-		U a = alg.construct();
-		U b = alg.construct();
-		U c = alg.construct();
-		U d = alg.construct();
+		U minus_one_to_the_n = alg.construct();
+		U two_n_plus_one = alg.construct();
+		U n_factorial = alg.construct();
+		U powTerm = alg.construct();
+		U numer = alg.construct();
+		U denom = alg.construct();
 		U term = alg.construct();
 		U sum = alg.construct();
-		alg.assign().call(minus_one, a);
+		alg.unity().call(one);
+		alg.add().call(one, one, two);
+		alg.subtract().call(zero, one, minus_one);
+		alg.assign().call(minus_one, minus_one_to_the_n);
 		for (int i = 0; i < numTerms; i++) {
 			
-			alg.multiply().call(a, minus_one, a);
+			alg.multiply().call(minus_one_to_the_n, minus_one, minus_one_to_the_n);
 			
-			alg.multiply().call(n, two, d);
-			alg.add().call(d, one, d);
+			alg.multiply().call(two, n, tmp);
+			alg.add().call(tmp, one, two_n_plus_one);
 			
-			alg.pow().call(input, d, b);
+			alg.pow().call(input, two_n_plus_one, powTerm);
 			
-			Factorial.compute(alg, i, c);
+			Factorial.compute(alg, i, n_factorial);
 			
-			alg.multiply().call(a, b, b);
-			alg.multiply().call(c, d, d);
-			alg.divide().call(b, d, term);
+			alg.multiply().call(minus_one_to_the_n, powTerm, numer);
+			alg.multiply().call(n_factorial, two_n_plus_one, denom);
+			alg.divide().call(numer, denom, term);
 			
 			alg.add().call(sum, term, sum);
 
 			alg.add().call(n, one, n);
 		}
-		U pi = alg.construct();
-		alg.PI().call(pi);
-		alg.sqrt().call(pi, pi);
-		alg.divide().call(sum, pi, sum);
+		U sqrt_pi = alg.construct();
+		alg.PI().call(tmp);
+		alg.sqrt().call(tmp, sqrt_pi);
+		alg.divide().call(sum, sqrt_pi, sum);
 		alg.multiply().call(sum, two, sum);
 		alg.assign().call(sum, result);
 	}
