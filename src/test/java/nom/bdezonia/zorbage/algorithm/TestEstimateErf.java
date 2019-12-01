@@ -115,19 +115,21 @@ public class TestEstimateErf {
 		assertEquals(-5.04914370344, res.i(), 0.000001);
 	}
 	
-	// Note: I tried estimating the erf() of x = 1000 with this algorithm and no number of terms
+	// Note: I tried estimating the erf() of x = 10 with this algorithm and no number of terms
 	// could converge to an accurate estimate. See below. This implies the code might be wrong.
 	// However I have gone over the definitions in the code over and over and can see no flaw.
 	// It's also possible one of the subroutines that the algorithm calls is broken. Must
-	// investigate.
+	// investigate. Later: I wrote simple java code to check term by term and for input values
+	// somewhat greater than 3 the terms seem to diverge. I need to check what the math theory
+	// says about this series. MathWorld mentioned nothing about radius of convergence.
 
 	@Test
 	public void test2() {
 		HighPrecisionMember input = G.HP.construct();
 		HighPrecisionMember result = G.HP.construct();
 		
-		input.setV(BigDecimal.valueOf(1000));
-		for (int i = 1; i <= 150; i++) {
+		input.setV(BigDecimal.valueOf(10));
+		for (int i = 1; i <= 280; i++) {
 			EstimateErf.compute(G.HP, i, input, result);
 			//System.out.println(result.v());
 		}
