@@ -28,11 +28,14 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
  * 
@@ -117,12 +120,12 @@ public class TestEstimateErf {
 
 	@Test
 	public void test2() {
-		Float64Member input = G.DBL.construct();
-		Float64Member result = G.DBL.construct();
+		HighPrecisionMember input = G.HP.construct();
+		HighPrecisionMember result = G.HP.construct();
 		
-		input.setV(1000);
-		for (int i = 1; i <= 52; i++) {
-			EstimateErf.compute(G.DBL, i, input, result);
+		input.setV(BigDecimal.valueOf(1000));
+		for (int i = 1; i <= 150; i++) {
+			EstimateErf.compute(G.HP, i, input, result);
 			//System.out.println(result.v());
 		}
 	}
