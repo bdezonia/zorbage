@@ -93,8 +93,10 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M3</version>
         <configuration>
-          <parallel>classes</parallel>
-          <useUnlimitedThreads>true</useUnlimitedThreads>
+          <!--
+            <parallel>classes</parallel>
+            <useUnlimitedThreads>true</useUnlimitedThreads>
+          -->
         </configuration>
       </plugin>
       <plugin>
