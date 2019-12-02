@@ -52,11 +52,11 @@ public class TestParallelCorrelateND {
 	public void test1() {
 		Float64Member value = G.DBL.construct();
 		MultiDimDataSource<Float64Member> filter = MultiDimStorage.allocate(new long[] {3, 3}, value);
-		MultiDimDataSource<Float64Member> a = MultiDimStorage.allocate(new long[] {4000, 3333}, value);
+		MultiDimDataSource<Float64Member> a = MultiDimStorage.allocate(new long[] {400, 333}, value);
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
 		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
-		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {4000, 3333}, value);
-		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {4000, 3333}, value);
+		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {400, 333}, value);
+		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {400, 333}, value);
 		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
@@ -123,11 +123,11 @@ public class TestParallelCorrelateND {
 	public void test2() {
 		Float64Member value = G.DBL.construct();
 		MultiDimDataSource<Float64Member> filter = MultiDimStorage.allocate(new long[] {3, 3}, value);
-		MultiDimDataSource<Float64Member> a = MultiDimStorage.allocate(new long[] {4000, 3333}, value);
+		MultiDimDataSource<Float64Member> a = MultiDimStorage.allocate(new long[] {400, 333}, value);
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
 		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
-		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {4000, 3333}, value);
-		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {4000, 3333}, value);
+		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {400, 333}, value);
+		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {400, 333}, value);
 		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
