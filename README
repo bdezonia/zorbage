@@ -11,7 +11,7 @@ Support for:
   4) very large datasets (arrays, virtual files, sparse structures, JDBC storage)
   5) generic programming
   6) algebraic/group-theoretic algorithms
-  7) procedural, object oriented, and functional coding styles
+  7) procedural java with object oriented comforts
 
 What can I do with Zorbage?
 
