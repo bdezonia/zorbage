@@ -122,10 +122,10 @@ public class TestEstimateErf {
 	// investigate. Later: I wrote simple java code to check term by term and for input values
 	// somewhat greater than 3 the terms seem to diverge. I need to check what the math theory
 	// says about this series. MathWorld mentioned nothing about radius of convergence.
-	// Even later edit: you can see that it converges of decimal places of accuracy set to
-	// 150 and iterations at least 365. It's possible for the old 1000 input we'd need hundreds
-	// of decimal places and thousands of terms. Apparently the series does converge but
-	// sometimes very slowly.
+	// Even later edit: you can see that it converges if decimal places of accuracy set to
+	// 150 and iterations at least 365. It's possible for the old x = 1000 input we'd need
+	// hundreds of decimal places of accuracy and thousands of iterations. Apparently the
+	// series does converge but sometimes very slowly.
 
 	@Test
 	public void test2() {
