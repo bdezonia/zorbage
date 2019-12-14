@@ -1,17 +1,17 @@
 Zorbage: algebraic data types and algorithms for use in numeric processing
 
 Goals:
-  1) provide the framework for reusable numeric algorithms
-  2) support numeric computing in Java in an efficient manner
+  - provide the framework for reusable numeric algorithms
+  - support numeric computing in Java in an efficient manner
 
 Support for:
-  1) integers, rationals, reals, complex numbers, quaternions, octonions
-  2) numbers, vectors, matrices, and tensors
-  3) various precisions: 1-bit to 128-bit to unbounded (signed and unsigned and float)
-  4) very large datasets (arrays, virtual files, sparse structures, JDBC storage)
-  5) generic programming
-  6) algebraic/group-theoretic algorithms
-  7) procedural java with object oriented comforts
+  - integers, rationals, reals, complex numbers, quaternions, octonions
+  - numbers, vectors, matrices, and tensors
+  - various precisions: 1-bit to 128-bit to unbounded (signed and unsigned and float)
+  - very large datasets (arrays, virtual files, sparse structures, JDBC storage)
+  - generic programming
+  - algebraic/group-theoretic algorithms
+  - procedural java with object oriented comforts
 
 What can I do with Zorbage?
 
@@ -20,21 +20,21 @@ What can I do with Zorbage?
     
   Use many different data types
 
-    signed integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+    - signed integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128, unbounded)
 
-    unsigned integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+    - unsigned integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128)
 
-    floats (bits: 16, 32, 64, unbounded)
+    - floats (bits: 16, 32, 64, unbounded)
 
-    rational numbers (unbounded)
+    - rational numbers (unbounded)
   
-    booleans
+    - booleans
     
-    n-dimensional real Points
+    - n-dimensional real Points
     
-    ARGB and RGB tuples
+    - ARGB and RGB tuples
   
   A conversion api exists for moving between types accurately and efficiently.
   
