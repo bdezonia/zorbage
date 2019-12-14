@@ -46,7 +46,7 @@ public class TestComplexSpeed {
 
 	// Comparing raw speed of my code versus C++:
 	//
-	// On BDZ's test machine C++ code is 20% slower than this Java code. Surprising.
+	// On BDZ's test machine C++ code is 20% slower than Java code below. Surprising.
 	// Relevant C++ code compiled with g++ -O3
 
 /*
@@ -139,4 +139,33 @@ public class TestComplexSpeed {
 		long b = System.currentTimeMillis();
 		System.out.println((b - a) + " millisecs " + z);
 	}
+
+	/*
+
+	 Equivalent python matrix case code. On reference machine python took 28 secs and java took 21.5.
+	 
+	 import time
+	 import numpy
+
+	 I = numpy.array([[1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+	                  [0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+	                  [0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
+	                  [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+	                  [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+	                  [0.0, 0.0, 0.0, 0.0, 0.0, 1.0]])
+
+	 def f(z):
+	   return z*z + (1+1j)*z - I
+
+	 a_milli_sec = int(round(time.time() * 1000))
+	 z = I*0.1
+	 for i in range(10000000):
+	   z = f(z)
+	 b_milli_sec = int(round(time.time() * 1000))
+
+	 print(b_milli_sec-a_milli_sec)
+
+	 print(z)
+
+	 */
 }
