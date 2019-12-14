@@ -20,37 +20,19 @@ What can I do with Zorbage?
     
   Use many different data types
 
-    1-bit integers (signed and unsigned)
-    2-bit integers (signed and unsigned)
-    3-bit integers (signed and unsigned)
-    4-bit integers (signed and unsigned)
-    5-bit integers (signed and unsigned)
-    6-bit integers (signed and unsigned)
-    7-bit integers (signed and unsigned)
-    8-bit integers (signed and unsigned)
-    9-bit integers (signed and unsigned)
-    10-bit integers (signed and unsigned)
-    11-bit integers (signed and unsigned)
-    12-bit integers (signed and unsigned)
-    13-bit integers (signed and unsigned)
-    14-bit integers (signed and unsigned)
-    15-bit integers (signed and unsigned)
-    16-bit integers (signed and unsigned)
-    32-bit integers (signed and unsigned)
-    64-bit integers (signed and unsigned)
-    128-bit integers (signed and unsigned)
-    Unbounded integers
+    signed integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                           14, 15, 16, 32, 64, 128, unbounded)
 
-    16-bit floats
-    32-bit floats
-    64-bit floats
-    Unbounded floats
+    unsigned integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                           14, 15, 16, 32, 64, 128)
+
+    floats (bits: 16, 32, 64, unbounded)
+
+    rational numbers (unbounded)
   
-    Unbounded rational numbers
-  
-    Booleans
+    booleans
     
-    n-dimensional Points
+    n-dimensional real Points
     
     ARGB and RGB tuples
   
@@ -77,22 +59,27 @@ What can I do with Zorbage?
     no data conversions.
   
   You can use existing or write your own algorithms that work with numbers,
-    vectors, matrices, and tensors.
-  
-  You can use a number of predefined STL-like algorithms plus predefined
-    vector, matrix, and other numerical algorithms. There are approximately
-    260 of them in total.
-  
-  You can use Zorbage's parallel algorithms for quickly processing data.
+    vectors, matrices, and tensors. Zorbage includes 100's of predefined
+    algorithms too.
+    - Basic vector and matrix operations
+    - Calculate sin/cos/tan/sinh/cosh/tanh/exp of matrices
+    - Basic runge kutta ode solver
+    - FFT/InvFFT
+    - Convolution/Correlation
+    - Resamplers
+    - LUDecomp
+    - Many C++ STL algorithms replicated
+    - It can find roots, find derivatives, and solve differential
+        equations numerically involving arbitrary scalar and vector
+        Procedures. It also includes algorithms from linear algebra,
+        signal processing, statistics, set theory, and analysis.
+    - Use Zorbage's parallel algorithms for quickly processing data.
   
   Define complex data sampling algorithms from prebuilt sampling components.
   
   Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
-    Zorbage can also find roots, find derivatives and solve differential
-    equations numerically involving arbitrary scalar and vector Procedures.
-    It also includes algorithms from linear algebra, signal processing,
-    statistics, set theory, and analysis.
+    Write methods that return Functions and Procedures if needed.
  
   Use parsers to create Procedures from strings. These Procedures represent
     equations that when fed values will compute a return value (the result of
@@ -102,6 +89,64 @@ What can I do with Zorbage?
     variable references, constants (like E, PI, etc.) and typical functions
     like sin(), atan(), exp(), log(), etc. For more info see:
     https://github.com/bdezonia/zorbage/blob/master/EQUATION_LANGUAGE
+
+Why Java?
+
+  - numerical computing in Java is under represented
+  - with Java there is no need to worry about memory or pointer bugs
+  - the JRE optimizes many object allocations into stack allocations
+  - Java is portable: Zorbage runs everywhere the JVM does
+
+Why is Zorbage the way it is?
+
+  - procedural programming is efficient
+  - object oriented comforts can be used where needed
+  - generics allow for reusable algorithms. often one can write one
+      algorithm and use it for reals, complex numbers, quaternions,
+      etc.
+  - there is no telling what one bored developer can get up to when
+      looking for fun
+  
+Zorbage breaks Java barriers
+  
+  - in Zorbage "arrays" are indexed by longs rather than ints.
+      relatedly data lists sizes can reach Long.MAX_VALUE
+    
+  - breaks the limitation to integer types being in byte aligned sizes
+    
+  - supports unsigned numbers
+    
+  - supports 128-bit signed and unsigned integers
+    
+  - supports 16-bit floating numbers
+    
+  - supports high precision floating numbers
+    
+  - supports unbounded ints
+    
+  - supports (unbounded) rational numbers
+    
+  - builds reals, complexes, quaternions, and octonions from any
+      of the floating types
+    
+Zorbage is fast
+  
+  - Zorbage can run numeric algorithms in speeds comparable to C++
+    
+  - Some multithreaded algorithms are provided
+      - matrix multiplies
+      - resampling
+      - convolutions/correlations
+      - fills
+      - transforms
+
+Zorbage is flexible
+  
+  - supports n-dimensional data sets with flexible out of bounds data
+      handling procedures
+      
+  - the n-dimensional data sets can use the equational language to
+      carefully and powerfully calibrate their axes.
 
 Programming notes
 
