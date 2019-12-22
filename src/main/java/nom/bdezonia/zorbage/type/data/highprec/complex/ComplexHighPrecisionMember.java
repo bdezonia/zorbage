@@ -85,32 +85,32 @@ public final class ComplexHighPrecisionMember
 	
 	public BigDecimal i() { return i; }
 	
-    public void setR(BigDecimal val) { r = val; }
+	public void setR(BigDecimal val) { r = val; }
     
-    public void setI(BigDecimal val) { i = val; }	
+	public void setI(BigDecimal val) { i = val; }	
 
-    @Override
-    public void get(ComplexHighPrecisionMember other) {
-    	other.r = r;
-    	other.i = i;
-    }
+	@Override
+	public void get(ComplexHighPrecisionMember other) {
+		other.r = r;
+		other.i = i;
+	}
 
-    @Override
-    public void set(ComplexHighPrecisionMember other) {
-    	r = other.r;
-    	i = other.i;
-    }
+	@Override
+	public void set(ComplexHighPrecisionMember other) {
+		r = other.r;
+		i = other.i;
+	}
     
-    @Override
+	@Override
 	public String toString() {
-    	StringBuilder builder = new StringBuilder();
-    	builder.append('{');
-    	builder.append(r());
-    	builder.append(',');
-    	builder.append(i());
-    	builder.append('}');
-    	return builder.toString();
-    }
+		StringBuilder builder = new StringBuilder();
+		builder.append('{');
+		builder.append(r());
+		builder.append(',');
+		builder.append(i());
+		builder.append('}');
+		return builder.toString();
+	}
 
 	@Override
 	public int bigDecimalCount() {
