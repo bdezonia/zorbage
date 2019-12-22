@@ -47,7 +47,7 @@ public class TestMatrixDeterminant {
 
 		Float64MatrixMember a = new Float64MatrixMember(2, 2,
 				new double[] {1,2,
-						      3,4});
+								3,4});
 
 		MatrixDeterminant.compute(G.DBL_MAT, G.DBL, a, val);
 

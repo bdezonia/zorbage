@@ -94,11 +94,11 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	// Thread local variable containing each thread's temp array
     private final ThreadLocal<boolean[]> tmpSpace =
-        new ThreadLocal<boolean[]>() {
-            @Override protected boolean[] initialValue() {
-                return new boolean[type.booleanCount()];
-        }
-    };
+    	new ThreadLocal<boolean[]>() {
+    		@Override protected boolean[] initialValue() {
+    			return new boolean[type.booleanCount()];
+    		}
+    	};
 
 	@Override
 	public JdbcStorageBoolean<U> allocate() {

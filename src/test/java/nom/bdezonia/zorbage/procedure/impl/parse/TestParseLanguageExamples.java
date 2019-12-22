@@ -65,7 +65,7 @@ public class TestParseLanguageExamples {
 
 		   4 * $0 + 7
 		   
-		     Scale input[0] by 4 and add 7
+			Scale input[0] by 4 and add 7
 		 */
 		
 		SignedInt32Member value = G.INT32.construct();
@@ -101,7 +101,7 @@ public class TestParseLanguageExamples {
 		/*
 		   {1,2}^{3,4}
 		   
-		     Raise complex number 1+2i to the 3+4i power
+			Raise complex number 1+2i to the 3+4i power
 		 */
 
 		ComplexFloat64Member value = G.CDBL.construct();
@@ -125,7 +125,7 @@ public class TestParseLanguageExamples {
 		/*
 		   (tmin + tmax) / 2
 		   
-		     Produce a number at the midpt of a range. 0 for signed numbers. max/2 for unsigned numbers.
+			Produce a number at the midpt of a range. 0 for signed numbers. max/2 for unsigned numbers.
 		 */
 		
 		SignedInt16Member value = G.INT16.construct();
@@ -144,7 +144,7 @@ public class TestParseLanguageExamples {
 		/*
 		   (tmin + tmax) / 2
 		   
-		     Produce a number at the midpt of a range. 0 for signed numbers. max/2 for unsigned numbers.
+			Produce a number at the midpt of a range. 0 for signed numbers. max/2 for unsigned numbers.
 		 */
 		
 		UnsignedInt16Member value = G.UINT16.construct();
@@ -163,8 +163,8 @@ public class TestParseLanguageExamples {
 		/*
 		   (2 * sin($0)) + (3 * cos($1))
 		   
-		     Add two times the sine of input[0] with three times the cosine of
-		     input[1]. The inputs can be numbers or matrices.
+			Add two times the sine of input[0] with three times the cosine of
+			input[1]. The inputs can be numbers or matrices.
 		 */
 
 		Float64Member value = G.DBL.construct();
@@ -187,8 +187,8 @@ public class TestParseLanguageExamples {
 		/*
 		   exp( [[1,2][3,4]] )
 		   
-		     Take the exponential of the specified 2x2 matrix. The result is a
-		     matrix too.
+			Take the exponential of the specified 2x2 matrix. The result is a
+			matrix too.
 		 */
 
 		Float64MatrixMember value = G.DBL_MAT.construct();
@@ -210,7 +210,7 @@ public class TestParseLanguageExamples {
 		/*
 		   PI + rand
 		   
-		     Return a random number between PI and PI+1.0
+			Return a random number between PI and PI+1.0
 		
 		 */
 

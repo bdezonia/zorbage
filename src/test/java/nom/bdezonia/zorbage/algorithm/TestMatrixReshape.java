@@ -48,8 +48,8 @@ public class TestMatrixReshape {
 		
 		Float64MatrixMember mat = new Float64MatrixMember(
 				3, 3, new double[] {1,2,3,
-						            4,5,6,
-						            7,8,9});
+									4,5,6,
+									7,8,9});
 		
 		MatrixReshape.compute(G.DBL_MAT, G.DBL, 3, 4, mat);
 

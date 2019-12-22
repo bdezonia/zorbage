@@ -94,11 +94,11 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	// Thread local variable containing each thread's temp array
     private final ThreadLocal<byte[]> tmpSpace =
-        new ThreadLocal<byte[]>() {
-            @Override protected byte[] initialValue() {
-                return new byte[type.byteCount()];
-        }
-    };
+    	new ThreadLocal<byte[]>() {
+    		@Override protected byte[] initialValue() {
+    			return new byte[type.byteCount()];
+    		}
+    	};
 
 	@Override
 	public JdbcStorageSignedInt8<U> allocate() {

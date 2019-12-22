@@ -46,8 +46,8 @@ public class TestMatrixConstantDiagonal {
 		Float64Member value = G.DBL.construct();
 		Float64MatrixMember mat = new Float64MatrixMember(
 				3, 3, new double[]{1,2,3,
-						           4,5,6,
-						           7,8,9});
+									4,5,6,
+									7,8,9});
 		value.setV(-13);
 		
 		MatrixConstantDiagonal.compute(G.DBL, value, mat);

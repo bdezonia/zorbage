@@ -65,7 +65,7 @@ public class OctonionCylindrical {
 		
 		alg.multiply().call(rad, tmpAngC, r);
 		alg.multiply().call(rad, tmpAngS, i);
-        
+   
 		out.setR(r);
 		out.setI(i);
 		out.setJ(j);

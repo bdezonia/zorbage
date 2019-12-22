@@ -47,8 +47,8 @@ public class TestMatrixTrace {
 		Float64Member result = G.DBL.construct();
 		Float64MatrixMember matrix = new Float64MatrixMember(
 				3, 3, new double[] {0,1,2,
-						            3,4,5,
-						            6,7,8});
+									3,4,5,
+									6,7,8});
 		MatrixTrace.compute(G.DBL, matrix, result);
 		assertEquals(12, result.v(), 0);
 	}

@@ -66,24 +66,24 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  *
  */
 public class HighPrecisionAlgebra
-  implements
-    OrderedField<HighPrecisionAlgebra,HighPrecisionMember>,
-    Norm<HighPrecisionMember,HighPrecisionMember>,
-    RealConstants<HighPrecisionMember>,
-    RealUnreal<HighPrecisionMember,HighPrecisionMember>,
-    Conjugate<HighPrecisionMember>,
-    Scale<HighPrecisionMember,HighPrecisionMember>,
-    ScaleByHighPrec<HighPrecisionMember>,
-    ScaleByRational<HighPrecisionMember>,
-    ScaleByDouble<HighPrecisionMember>,
-    ScaleComponents<HighPrecisionMember, HighPrecisionMember>,
-    Trigonometric<HighPrecisionMember>,
-    Hyperbolic<HighPrecisionMember>,
-    InverseTrigonometric<HighPrecisionMember>,
-    InverseHyperbolic<HighPrecisionMember>,
-    Roots<HighPrecisionMember>,
-    Power<HighPrecisionMember>,
-    Tolerance<HighPrecisionMember,HighPrecisionMember>
+	implements
+		OrderedField<HighPrecisionAlgebra,HighPrecisionMember>,
+		Norm<HighPrecisionMember,HighPrecisionMember>,
+		RealConstants<HighPrecisionMember>,
+		RealUnreal<HighPrecisionMember,HighPrecisionMember>,
+		Conjugate<HighPrecisionMember>,
+		Scale<HighPrecisionMember,HighPrecisionMember>,
+		ScaleByHighPrec<HighPrecisionMember>,
+		ScaleByRational<HighPrecisionMember>,
+		ScaleByDouble<HighPrecisionMember>,
+		ScaleComponents<HighPrecisionMember, HighPrecisionMember>,
+		Trigonometric<HighPrecisionMember>,
+		Hyperbolic<HighPrecisionMember>,
+		InverseTrigonometric<HighPrecisionMember>,
+		InverseHyperbolic<HighPrecisionMember>,
+		Roots<HighPrecisionMember>,
+		Power<HighPrecisionMember>,
+		Tolerance<HighPrecisionMember,HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);

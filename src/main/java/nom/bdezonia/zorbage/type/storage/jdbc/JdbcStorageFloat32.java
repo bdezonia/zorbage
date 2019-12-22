@@ -95,11 +95,11 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 
 	// Thread local variable containing each thread's temp array
     private final ThreadLocal<float[]> tmpSpace =
-        new ThreadLocal<float[]>() {
-            @Override protected float[] initialValue() {
-                return new float[type.floatCount()];
-        }
-    };
+    	new ThreadLocal<float[]>() {
+    		@Override protected float[] initialValue() {
+    			return new float[type.floatCount()];
+    		}
+    	};
 
 	@Override
 	public JdbcStorageFloat32<U> allocate() {

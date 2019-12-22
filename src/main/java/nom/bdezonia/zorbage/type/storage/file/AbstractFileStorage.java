@@ -105,8 +105,8 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 		    Path TO = Paths.get(file.getAbsolutePath());
 		    //overwrite existing file, if exists
 		    CopyOption[] options = new CopyOption[]{
-		      StandardCopyOption.REPLACE_EXISTING,
-		      StandardCopyOption.COPY_ATTRIBUTES
+		    	StandardCopyOption.REPLACE_EXISTING,
+		    	StandardCopyOption.COPY_ATTRIBUTES
 		    }; 
 		    Files.copy(FROM, TO, options);
 			this.file.deleteOnExit();

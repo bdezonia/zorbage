@@ -94,11 +94,11 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 
 	// Thread local variable containing each thread's temp array
     private final ThreadLocal<short[]> tmpSpace =
-        new ThreadLocal<short[]>() {
-            @Override protected short[] initialValue() {
-                return new short[type.shortCount()];
-        }
-    };
+    	new ThreadLocal<short[]>() {
+    		@Override protected short[] initialValue() {
+    			return new short[type.shortCount()];
+    		}
+    	};
 
 	@Override
 	public JdbcStorageSignedInt16<U> allocate() {
