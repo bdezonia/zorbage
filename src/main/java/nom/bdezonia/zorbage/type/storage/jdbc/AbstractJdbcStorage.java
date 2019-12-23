@@ -111,13 +111,13 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			long i = 0;
 			while (i < size) {
 				long num;
-				if (size - i > MAX) {
+				if (size - i < MAX) {
 					num = size - i;
 				}
 				else {
 					num = MAX;
 				}
-				String sql = makeInsertZeroesStatement(i,num, valueCount);
+				String sql = makeInsertZeroesStatement(i, num, valueCount);
 				i += num;
 				statement.execute(sql);
 			}
@@ -210,7 +210,8 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 				name = sb.toString();
 			}
 			try {
-				if (statement != null) statement.close();
+				if (statement != null)
+					statement.close();
 			} catch (SQLException e) {
 				;
 			}
@@ -271,7 +272,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	}
 	
 	private char randomChar(Random rng) {
-		return (char)(rng.nextInt('z' - 'a') + 'a');
+		return (char)('a' + rng.nextInt(26));
 	}
 	
 }

@@ -49,10 +49,11 @@ public class TestJdbc {
 		
 		try {
 			Connection conn = getConnection();
-			
+
 			JdbcStorageFloat64<QuaternionFloat64Member> storage = new JdbcStorageFloat64<QuaternionFloat64Member>(19, G.QDBL.construct(), conn);
 			
 			QuaternionFloat64Member value = G.QDBL.construct();
+
 			for (long i = 0; i < storage.size(); i++) {
 				storage.get(i, value);
 				assertEquals(0, value.r(), 0);
@@ -60,6 +61,7 @@ public class TestJdbc {
 				assertEquals(0, value.j(), 0);
 				assertEquals(0, value.k(), 0);
 			}
+
 			for (long i = 0; i < storage.size(); i++) {
 				value.setR(i+4);
 				value.setI(i+5);
@@ -67,6 +69,7 @@ public class TestJdbc {
 				value.setK(i+7);
 				storage.set(i, value);
 			}
+
 			for (long i = 0; i < storage.size(); i++) {
 				storage.get(i, value);
 				assertEquals(i+4, value.r(), 0);
@@ -76,6 +79,7 @@ public class TestJdbc {
 			}
 			
 			storage.cleanup();
+			
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
