@@ -101,14 +101,14 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 			duplicateBuffer(other.buffer());
 			this.page = other.page;
 			this.file = File.createTempFile("Storage", ".storage");
-		    Path FROM = Paths.get(other.file.getAbsolutePath());
-		    Path TO = Paths.get(file.getAbsolutePath());
-		    //overwrite existing file, if exists
-		    CopyOption[] options = new CopyOption[]{
-		    	StandardCopyOption.REPLACE_EXISTING,
-		    	StandardCopyOption.COPY_ATTRIBUTES
-		    }; 
-		    Files.copy(FROM, TO, options);
+			Path FROM = Paths.get(other.file.getAbsolutePath());
+			Path TO = Paths.get(file.getAbsolutePath());
+			//overwrite existing file, if exists
+			CopyOption[] options = new CopyOption[]{
+				StandardCopyOption.REPLACE_EXISTING,
+				StandardCopyOption.COPY_ATTRIBUTES
+			};
+			Files.copy(FROM, TO, options);
 			this.file.deleteOnExit();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e.getMessage());
