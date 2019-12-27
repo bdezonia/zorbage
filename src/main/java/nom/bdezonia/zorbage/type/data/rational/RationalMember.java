@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.storage.coder.BigIntegerCoder;
 
 /**
  * 
@@ -50,6 +51,7 @@ import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
  */
 public class RationalMember
 	implements
+		BigIntegerCoder,
 		Allocatable<RationalMember>, Duplicatable<RationalMember>,
 		Settable<RationalMember>, Gettable<RationalMember>,
 		UniversalRepresentation, NumberMember<RationalMember>,
@@ -165,6 +167,25 @@ public class RationalMember
 		return n.toString() + "/" + d.toString();
 	}
 	
+
+	@Override
+	public int bigIntegerCount() {
+		return 2;
+	}
+
+	@Override
+	public void fromBigIntegerArray(BigInteger[] arr, int index) {
+		BigInteger numer = arr[index];
+		BigInteger denom = arr[index+1];
+		setV(numer, denom);
+	}
+
+	@Override
+	public void toBigIntegerArray(BigInteger[] arr, int index) {
+		arr[index] = n;
+		arr[index+1] = d;
+	}
+
 	@Override
 	public long dimension(int d) {
 		return 0;
