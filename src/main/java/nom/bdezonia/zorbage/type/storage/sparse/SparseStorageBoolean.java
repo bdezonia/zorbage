@@ -33,10 +33,6 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
-// NOTE: this class can't be thread friendly. One thread can insert a value
-// while another thread is searching structure. Doing so would cause probs
-// unless we make the methods synchronized which I don't want to do.
-
 /**
  * 
  * @author Barry DeZonia
@@ -60,60 +56,66 @@ public class SparseStorageBoolean<U extends BooleanCoder>
 	
 	@Override
 	public SparseStorageBoolean<U> duplicate() {
-		SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(numElements, type);
-		Stack<RedBlackTree<boolean[]>.Node> nodes = new Stack<RedBlackTree<boolean[]>.Node>();
-		if (data.root != data.nil) {
-			nodes.push(data.root);
-			while (!nodes.isEmpty()) {
-				RedBlackTree<boolean[]>.Node n = nodes.pop();
-				type.fromBooleanArray(n.value, 0);
-				list.set(n.key, type);
-				if (n.left != data.nil) nodes.push(n.left);
-				if (n.right != data.nil) nodes.push(n.right);
+		synchronized(this) {
+			SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(numElements, type);
+			Stack<RedBlackTree<boolean[]>.Node> nodes = new Stack<RedBlackTree<boolean[]>.Node>();
+			if (data.root != data.nil) {
+				nodes.push(data.root);
+				while (!nodes.isEmpty()) {
+					RedBlackTree<boolean[]>.Node n = nodes.pop();
+					type.fromBooleanArray(n.value, 0);
+					list.set(n.key, type);
+					if (n.left != data.nil) nodes.push(n.left);
+					if (n.right != data.nil) nodes.push(n.right);
+				}
 			}
+			return list;
 		}
-		return list;
 	}
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= numElements)
-			throw new IllegalArgumentException("index out of bounds");
-		value.toBooleanArray(tmp, 0);
-		RedBlackTree<boolean[]>.Node node = data.findElement(index);
-		if (Arrays.equals(tmp, zero)) {
-			if (node != data.nil)
-				data.delete(node);
-		}
-		else { // nonzero
-			if (node == data.nil) {
-				RedBlackTree<boolean[]>.Node n = data.new Node();
-				n.key = index;
-				n.p = data.nil;
-				n.left = data.nil;
-				n.right = data.nil;
-				n.value = new boolean[tmp.length];
-				// n.color =? What?
-				for (int i = 0; i < tmp.length; i++)
-					n.value[i] = tmp[i];
-				data.insert(n);
+		synchronized(this) {
+			if (index < 0 || index >= numElements)
+				throw new IllegalArgumentException("index out of bounds");
+			value.toBooleanArray(tmp, 0);
+			RedBlackTree<boolean[]>.Node node = data.findElement(index);
+			if (Arrays.equals(tmp, zero)) {
+				if (node != data.nil)
+					data.delete(node);
 			}
-			else {
-				value.toBooleanArray(node.value, 0);
+			else { // nonzero
+				if (node == data.nil) {
+					RedBlackTree<boolean[]>.Node n = data.new Node();
+					n.key = index;
+					n.p = data.nil;
+					n.left = data.nil;
+					n.right = data.nil;
+					n.value = new boolean[tmp.length];
+					// n.color =? What?
+					for (int i = 0; i < tmp.length; i++)
+						n.value[i] = tmp[i];
+					data.insert(n);
+				}
+				else {
+					value.toBooleanArray(node.value, 0);
+				}
 			}
 		}
 	}
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= numElements)
-			throw new IllegalArgumentException("index out of bounds");
-		RedBlackTree<boolean[]>.Node node = data.findElement(index);
-		if (node == data.nil) {
-			value.fromBooleanArray(zero, 0);
-		}
-		else { // nonzero
-			value.fromBooleanArray(node.value, 0);
+		synchronized(this) {
+			if (index < 0 || index >= numElements)
+				throw new IllegalArgumentException("index out of bounds");
+			RedBlackTree<boolean[]>.Node node = data.findElement(index);
+			if (node == data.nil) {
+				value.fromBooleanArray(zero, 0);
+			}
+			else { // nonzero
+				value.fromBooleanArray(node.value, 0);
+			}
 		}
 	}
 

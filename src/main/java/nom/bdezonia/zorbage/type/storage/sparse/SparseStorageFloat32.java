@@ -33,10 +33,6 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
-// NOTE: this class can't be thread friendly. One thread can insert a value
-// while another thread is searching structure. Doing so would cause probs
-// unless we make the methods synchronized which I don't want to do.
-
 /**
  * 
  * @author Barry DeZonia
@@ -60,60 +56,66 @@ public class SparseStorageFloat32<U extends FloatCoder>
 	
 	@Override
 	public SparseStorageFloat32<U> duplicate() {
-		SparseStorageFloat32<U> list = new SparseStorageFloat32<U>(numElements, type);
-		Stack<RedBlackTree<float[]>.Node> nodes = new Stack<RedBlackTree<float[]>.Node>();
-		if (data.root != data.nil) {
-			nodes.push(data.root);
-			while (!nodes.isEmpty()) {
-				RedBlackTree<float[]>.Node n = nodes.pop();
-				type.fromFloatArray(n.value, 0);
-				list.set(n.key, type);
-				if (n.left != data.nil) nodes.push(n.left);
-				if (n.right != data.nil) nodes.push(n.right);
+		synchronized(this) {
+			SparseStorageFloat32<U> list = new SparseStorageFloat32<U>(numElements, type);
+			Stack<RedBlackTree<float[]>.Node> nodes = new Stack<RedBlackTree<float[]>.Node>();
+			if (data.root != data.nil) {
+				nodes.push(data.root);
+				while (!nodes.isEmpty()) {
+					RedBlackTree<float[]>.Node n = nodes.pop();
+					type.fromFloatArray(n.value, 0);
+					list.set(n.key, type);
+					if (n.left != data.nil) nodes.push(n.left);
+					if (n.right != data.nil) nodes.push(n.right);
+				}
 			}
+			return list;
 		}
-		return list;
 	}
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= numElements)
-			throw new IllegalArgumentException("index out of bounds");
-		value.toFloatArray(tmp, 0);
-		RedBlackTree<float[]>.Node node = data.findElement(index);
-		if (Arrays.equals(tmp, zero)) {
-			if (node != data.nil)
-				data.delete(node);
-		}
-		else { // nonzero
-			if (node == data.nil) {
-				RedBlackTree<float[]>.Node n = data.new Node();
-				n.key = index;
-				n.p = data.nil;
-				n.left = data.nil;
-				n.right = data.nil;
-				n.value = new float[tmp.length];
-				// n.color =? What?
-				for (int i = 0; i < tmp.length; i++)
-					n.value[i] = tmp[i];
-				data.insert(n);
+		synchronized(this) {
+			if (index < 0 || index >= numElements)
+				throw new IllegalArgumentException("index out of bounds");
+			value.toFloatArray(tmp, 0);
+			RedBlackTree<float[]>.Node node = data.findElement(index);
+			if (Arrays.equals(tmp, zero)) {
+				if (node != data.nil)
+					data.delete(node);
 			}
-			else {
-				value.toFloatArray(node.value, 0);
+			else { // nonzero
+				if (node == data.nil) {
+					RedBlackTree<float[]>.Node n = data.new Node();
+					n.key = index;
+					n.p = data.nil;
+					n.left = data.nil;
+					n.right = data.nil;
+					n.value = new float[tmp.length];
+					// n.color =? What?
+					for (int i = 0; i < tmp.length; i++)
+						n.value[i] = tmp[i];
+					data.insert(n);
+				}
+				else {
+					value.toFloatArray(node.value, 0);
+				}
 			}
 		}
 	}
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= numElements)
-			throw new IllegalArgumentException("index out of bounds");
-		RedBlackTree<float[]>.Node node = data.findElement(index);
-		if (node == data.nil) {
-			value.fromFloatArray(zero, 0);
-		}
-		else { // nonzero
-			value.fromFloatArray(node.value, 0);
+		synchronized(this) {
+			if (index < 0 || index >= numElements)
+				throw new IllegalArgumentException("index out of bounds");
+			RedBlackTree<float[]>.Node node = data.findElement(index);
+			if (node == data.nil) {
+				value.fromFloatArray(zero, 0);
+			}
+			else { // nonzero
+				value.fromFloatArray(node.value, 0);
+			}
 		}
 	}
 
