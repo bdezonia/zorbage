@@ -48,7 +48,7 @@ public class ArrayStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBigDecimal cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.bigDecimalCount()))
-			throw new IllegalArgumentException("ArrayStorageBigDecimal can handle at most " + (Integer.MAX_VALUE / type.bigDecimalCount()) + " BigDecimal based entities");
+			throw new IllegalArgumentException("ArrayStorageBigDecimal can handle at most " + (Integer.MAX_VALUE / type.bigDecimalCount()) + " of the type of requested BigDecimal based entities");
 		this.type = type.allocate();
 		this.data = new BigDecimal[(int)size * type.bigDecimalCount()];
 		for (int i = 0; i < data.length; i++) {

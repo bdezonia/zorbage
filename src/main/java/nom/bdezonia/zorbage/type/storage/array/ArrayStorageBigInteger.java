@@ -48,7 +48,7 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBigInteger cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.bigIntegerCount()))
-			throw new IllegalArgumentException("ArrayStorageBigInteger can handle at most " + (Integer.MAX_VALUE / type.bigIntegerCount()) + " BigInteger based entities");
+			throw new IllegalArgumentException("ArrayStorageBigInteger can handle at most " + (Integer.MAX_VALUE / type.bigIntegerCount()) + " of the type of requested BigInteger based entities");
 		this.type = type.allocate();
 		this.data = new BigInteger[(int)size * type.bigIntegerCount()];
 		for (int i = 0; i < data.length; i++) {

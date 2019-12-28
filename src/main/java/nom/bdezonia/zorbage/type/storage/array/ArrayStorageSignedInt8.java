@@ -46,7 +46,7 @@ public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt8 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.byteCount()))
-			throw new IllegalArgumentException("ArrayStorageSignedInt8 can handle at most " + (Integer.MAX_VALUE / type.byteCount()) + " byte based entities");
+			throw new IllegalArgumentException("ArrayStorageSignedInt8 can handle at most " + (Integer.MAX_VALUE / type.byteCount()) + " of the type of requested byte based entities");
 		this.type = type.allocate();
 		this.data = new byte[(int)size * type.byteCount()];
 	}

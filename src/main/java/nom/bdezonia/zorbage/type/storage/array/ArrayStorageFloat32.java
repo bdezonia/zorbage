@@ -46,7 +46,7 @@ public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat32 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.floatCount()))
-			throw new IllegalArgumentException("ArrayStorageFloat32 can handle at most " + (Integer.MAX_VALUE / type.floatCount()) + " float based entities");
+			throw new IllegalArgumentException("ArrayStorageFloat32 can handle at most " + (Integer.MAX_VALUE / type.floatCount()) + " of the type of requested float based entities");
 		this.type = type.allocate();
 		this.data = new float[(int)size * type.floatCount()];
 	}

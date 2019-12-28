@@ -46,7 +46,7 @@ public class ArrayStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.doubleCount()))
-			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " double based entities");
+			throw new IllegalArgumentException("ArrayStorageFloat64 can handle at most " + (Integer.MAX_VALUE / type.doubleCount()) + " of the type of requested double based entities");
 		this.type = type.allocate();
 		this.data = new double[(int)size * type.doubleCount()];
 	}
