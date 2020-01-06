@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageBoolean<U extends BooleanCoder>
+public class SparseStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<SparseStorageBoolean<U>>
 {
 	private final RedBlackTree<boolean[]> data;
@@ -48,7 +48,7 @@ public class SparseStorageBoolean<U extends BooleanCoder>
 	
 	public SparseStorageBoolean(long numElements, U type) {
 		this.numElements = numElements;
-		this.type = type;
+		this.type = type.allocate();
 		this.zero = new boolean[type.booleanCount()];
 		this.tmp = new boolean[type.booleanCount()];
 		this.data = new RedBlackTree<boolean[]>();

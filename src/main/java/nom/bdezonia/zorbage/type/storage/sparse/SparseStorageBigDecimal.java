@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageBigDecimal<U extends BigDecimalCoder>
+public class SparseStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<SparseStorageBigDecimal<U>>
 {
 	private final RedBlackTree<BigDecimal[]> data;
@@ -49,7 +49,7 @@ public class SparseStorageBigDecimal<U extends BigDecimalCoder>
 	
 	public SparseStorageBigDecimal(long numElements, U type) {
 		this.numElements = numElements;
-		this.type = type;
+		this.type = type.allocate();
 		this.zero = new BigDecimal[type.bigDecimalCount()];
 		this.tmp = new BigDecimal[type.bigDecimalCount()];
 		this.data = new RedBlackTree<BigDecimal[]>();

@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageFloat32<U extends FloatCoder>
+public class SparseStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<SparseStorageFloat32<U>>
 {
 	private final RedBlackTree<float[]> data;
@@ -48,7 +48,7 @@ public class SparseStorageFloat32<U extends FloatCoder>
 	
 	public SparseStorageFloat32(long numElements, U type) {
 		this.numElements = numElements;
-		this.type = type;
+		this.type = type.allocate();
 		this.zero = new float[type.floatCount()];
 		this.tmp = new float[type.floatCount()];
 		this.data = new RedBlackTree<float[]>();

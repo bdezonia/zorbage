@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageFloat64<U extends DoubleCoder>
+public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<SparseStorageFloat64<U>>
 {
 	private final RedBlackTree<double[]> data;
@@ -48,7 +48,7 @@ public class SparseStorageFloat64<U extends DoubleCoder>
 	
 	public SparseStorageFloat64(long numElements, U type) {
 		this.numElements = numElements;
-		this.type = type;
+		this.type = type.allocate();
 		this.zero = new double[type.doubleCount()];
 		this.tmp = new double[type.doubleCount()];
 		this.data = new RedBlackTree<double[]>();

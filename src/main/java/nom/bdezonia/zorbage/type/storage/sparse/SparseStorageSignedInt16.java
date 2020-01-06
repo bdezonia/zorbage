@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SparseStorageSignedInt16<U extends ShortCoder>
+public class SparseStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<SparseStorageSignedInt16<U>>
 {
 	private final RedBlackTree<short[]> data;
@@ -48,7 +48,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder>
 	
 	public SparseStorageSignedInt16(long numElements, U type) {
 		this.numElements = numElements;
-		this.type = type;
+		this.type = type.allocate();
 		this.zero = new short[type.shortCount()];
 		this.tmp = new short[type.shortCount()];
 		this.data = new RedBlackTree<short[]>();

@@ -35,6 +35,7 @@ import java.io.RandomAccessFile;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 
 /**
@@ -44,7 +45,7 @@ import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
  */
 public class TestSparseStorage {
 
-	private class Data implements BooleanCoder {
+	private class Data implements BooleanCoder, Allocatable<Data> {
 
 		private boolean a,b,c,d;
 		
@@ -77,6 +78,11 @@ public class TestSparseStorage {
 		@Override
 		public void toBooleanFile(RandomAccessFile raf) throws IOException {
 			throw new UnsupportedOperationException("unimplemented for example");
+		}
+
+		@Override
+		public Data allocate() {
+			return new Data();
 		}
 		
 	}
