@@ -30,7 +30,7 @@ package nom.bdezonia.zorbage.accessor;
  * 
  * @author Barry DeZonia
  *
- * @param <A>
+ * @param <J>
  */
 public interface AccessorJ<J> {
 
