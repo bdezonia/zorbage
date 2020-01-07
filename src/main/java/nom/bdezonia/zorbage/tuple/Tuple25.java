@@ -36,6 +36,21 @@ import nom.bdezonia.zorbage.accessor.AccessorG;
 import nom.bdezonia.zorbage.accessor.AccessorH;
 import nom.bdezonia.zorbage.accessor.AccessorI;
 import nom.bdezonia.zorbage.accessor.AccessorJ;
+import nom.bdezonia.zorbage.accessor.AccessorK;
+import nom.bdezonia.zorbage.accessor.AccessorL;
+import nom.bdezonia.zorbage.accessor.AccessorM;
+import nom.bdezonia.zorbage.accessor.AccessorN;
+import nom.bdezonia.zorbage.accessor.AccessorO;
+import nom.bdezonia.zorbage.accessor.AccessorP;
+import nom.bdezonia.zorbage.accessor.AccessorQ;
+import nom.bdezonia.zorbage.accessor.AccessorR;
+import nom.bdezonia.zorbage.accessor.AccessorS;
+import nom.bdezonia.zorbage.accessor.AccessorT;
+import nom.bdezonia.zorbage.accessor.AccessorU;
+import nom.bdezonia.zorbage.accessor.AccessorV;
+import nom.bdezonia.zorbage.accessor.AccessorW;
+import nom.bdezonia.zorbage.accessor.AccessorX;
+import nom.bdezonia.zorbage.accessor.AccessorY;
 
 /**
  * 
@@ -51,11 +66,28 @@ import nom.bdezonia.zorbage.accessor.AccessorJ;
  * @param <H>
  * @param <I>
  * @param <J>
+ * @param <K>
+ * @param <L>
+ * @param <M>
+ * @param <N>
+ * @param <O>
+ * @param <P>
+ * @param <Q>
+ * @param <R>
+ * @param <S>
+ * @param <T>
+ * @param <U>
+ * @param <V>
+ * @param <W>
+ * @param <X>
+ * @param <Y>
  */
-public class Tuple10<A,B,C,D,E,F,G,H,I,J>
+public class Tuple25<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y>
 	implements
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
-		AccessorH<H>, AccessorI<I>, AccessorJ<J>
+		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>, AccessorN<N>,
+		AccessorO<O>, AccessorP<P>, AccessorQ<Q>, AccessorR<R>, AccessorS<S>, AccessorT<T>, AccessorU<U>,
+		AccessorV<V>, AccessorW<W>, AccessorX<X>, AccessorY<Y>
 {
 	
 	private A a;
@@ -68,8 +100,23 @@ public class Tuple10<A,B,C,D,E,F,G,H,I,J>
 	private H h;
 	private I i;
 	private J j;
+	private K k;
+	private L l;
+	private M m;
+	private N n;
+	private O o;
+	private P p;
+	private Q q;
+	private R r;
+	private S s;
+	private T t;
+	private U u;
+	private V v;
+	private W w;
+	private X x;
+	private Y y;
 	
-	public Tuple10(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) {
+	public Tuple25(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k, L l, M m, N n, O o, P p, Q q, R r, S s, T t, U u, V v, W w, X x, Y y) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -81,6 +128,21 @@ public class Tuple10<A,B,C,D,E,F,G,H,I,J>
 		this.i = i;
 		this.i = i;
 		this.j = j;
+		this.k = k;
+		this.l = l;
+		this.m = m;
+		this.n = n;
+		this.o = o;
+		this.p = p;
+		this.q = q;
+		this.r = r;
+		this.s = s;
+		this.t = t;
+		this.u = u;
+		this.v = v;
+		this.w = w;
+		this.x = x;
+		this.y = y;
 	}
 	
 	@Override
@@ -142,5 +204,95 @@ public class Tuple10<A,B,C,D,E,F,G,H,I,J>
 
 	@Override
 	public void setJ(J j) { this.j = j; }
+
+	@Override
+	public K k() { return k; }
+
+	@Override
+	public void setK(K k) { this.k = k; }
+
+	@Override
+	public L l() { return l; }
+
+	@Override
+	public void setL(L l) { this.l = l; }
+
+	@Override
+	public M m() { return m; }
+
+	@Override
+	public void setM(M m) { this.m = m; }
+
+	@Override
+	public N n() { return n; }
+
+	@Override
+	public void setN(N n) { this.n = n; }
+
+	@Override
+	public O o() { return o; }
+
+	@Override
+	public void setO(O o) { this.o = o; }
+
+	@Override
+	public P p() { return p; }
+
+	@Override
+	public void setP(P p) { this.p = p; }
+
+	@Override
+	public Q q() { return q; }
+
+	@Override
+	public void setQ(Q q) { this.q = q; }
+
+	@Override
+	public R r() { return r; }
+
+	@Override
+	public void setR(R r) { this.r = r; }
+
+	@Override
+	public S s() { return s; }
+
+	@Override
+	public void setS(S s) { this.s = s; }
+
+	@Override
+	public T t() { return t; }
+
+	@Override
+	public void setT(T t) { this.t = t; }
+
+	@Override
+	public U u() { return u; }
+
+	@Override
+	public void setU(U u) { this.u = u; }
+
+	@Override
+	public V v() { return v; }
+
+	@Override
+	public void setV(V v) { this.v = v; }
+
+	@Override
+	public W w() { return w; }
+
+	@Override
+	public void setW(W w) { this.w = w; }
+
+	@Override
+	public X x() { return x; }
+
+	@Override
+	public void setX(X x) { this.x = x; }
+
+	@Override
+	public Y y() { return y; }
+
+	@Override
+	public void setY(Y y) { this.y = y; }
 
 }

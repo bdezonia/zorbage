@@ -38,7 +38,10 @@ import nom.bdezonia.zorbage.accessor.AccessorC;
  * @param <B>
  * @param <C>
  */
-public class Tuple3<A,B,C> implements AccessorA<A>, AccessorB<B>, AccessorC<C> {
+public class Tuple3<A,B,C>
+	implements
+		AccessorA<A>, AccessorB<B>, AccessorC<C>
+{
 	
 	private A a;
 	private B b;

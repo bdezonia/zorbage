@@ -48,8 +48,10 @@ import nom.bdezonia.zorbage.accessor.AccessorH;
  * @param <G>
  * @param <H>
  */
-public class Tuple8<A,B,C,D,E,F,G,H> implements AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>,
-	AccessorE<E>, AccessorF<F>, AccessorG<G>, AccessorH<H>
+public class Tuple8<A,B,C,D,E,F,G,H>
+	implements
+		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
+		AccessorH<H>
 {
 	
 	private A a;

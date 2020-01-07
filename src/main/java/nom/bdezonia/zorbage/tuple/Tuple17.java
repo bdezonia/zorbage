@@ -35,6 +35,14 @@ import nom.bdezonia.zorbage.accessor.AccessorF;
 import nom.bdezonia.zorbage.accessor.AccessorG;
 import nom.bdezonia.zorbage.accessor.AccessorH;
 import nom.bdezonia.zorbage.accessor.AccessorI;
+import nom.bdezonia.zorbage.accessor.AccessorJ;
+import nom.bdezonia.zorbage.accessor.AccessorK;
+import nom.bdezonia.zorbage.accessor.AccessorL;
+import nom.bdezonia.zorbage.accessor.AccessorM;
+import nom.bdezonia.zorbage.accessor.AccessorN;
+import nom.bdezonia.zorbage.accessor.AccessorO;
+import nom.bdezonia.zorbage.accessor.AccessorP;
+import nom.bdezonia.zorbage.accessor.AccessorQ;
 
 /**
  * 
@@ -49,11 +57,20 @@ import nom.bdezonia.zorbage.accessor.AccessorI;
  * @param <G>
  * @param <H>
  * @param <I>
+ * @param <J>
+ * @param <K>
+ * @param <L>
+ * @param <M>
+ * @param <N>
+ * @param <O>
+ * @param <P>
+ * @param <Q>
  */
-public class Tuple9<A,B,C,D,E,F,G,H,I>
+public class Tuple17<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q>
 	implements
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
-		AccessorH<H>, AccessorI<I>
+		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>, AccessorN<N>,
+		AccessorO<O>, AccessorP<P>, AccessorQ<Q>
 {
 	
 	private A a;
@@ -65,8 +82,16 @@ public class Tuple9<A,B,C,D,E,F,G,H,I>
 	private G g;
 	private H h;
 	private I i;
+	private J j;
+	private K k;
+	private L l;
+	private M m;
+	private N n;
+	private O o;
+	private P p;
+	private Q q;
 	
-	public Tuple9(A a, B b, C c, D d, E e, F f, G g, H h, I i) {
+	public Tuple17(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k, L l, M m, N n, O o, P p, Q q) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -76,6 +101,15 @@ public class Tuple9<A,B,C,D,E,F,G,H,I>
 		this.g = g;
 		this.h = h;
 		this.i = i;
+		this.i = i;
+		this.j = j;
+		this.k = k;
+		this.l = l;
+		this.m = m;
+		this.n = n;
+		this.o = o;
+		this.p = p;
+		this.q = q;
 	}
 	
 	@Override
@@ -131,5 +165,53 @@ public class Tuple9<A,B,C,D,E,F,G,H,I>
 
 	@Override
 	public void setI(I i) { this.i = i; }
+
+	@Override
+	public J j() { return j; }
+
+	@Override
+	public void setJ(J j) { this.j = j; }
+
+	@Override
+	public K k() { return k; }
+
+	@Override
+	public void setK(K k) { this.k = k; }
+
+	@Override
+	public L l() { return l; }
+
+	@Override
+	public void setL(L l) { this.l = l; }
+
+	@Override
+	public M m() { return m; }
+
+	@Override
+	public void setM(M m) { this.m = m; }
+
+	@Override
+	public N n() { return n; }
+
+	@Override
+	public void setN(N n) { this.n = n; }
+
+	@Override
+	public O o() { return o; }
+
+	@Override
+	public void setO(O o) { this.o = o; }
+
+	@Override
+	public P p() { return p; }
+
+	@Override
+	public void setP(P p) { this.p = p; }
+
+	@Override
+	public Q q() { return q; }
+
+	@Override
+	public void setQ(Q q) { this.q = q; }
 
 }

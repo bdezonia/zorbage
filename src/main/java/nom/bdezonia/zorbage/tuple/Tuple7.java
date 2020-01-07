@@ -46,8 +46,9 @@ import nom.bdezonia.zorbage.accessor.AccessorG;
  * @param <F>
  * @param <G>
  */
-public class Tuple7<A,B,C,D,E,F,G> implements AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>,
-	AccessorE<E>, AccessorF<F>, AccessorG<G>
+public class Tuple7<A,B,C,D,E,F,G>
+	implements
+		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>
 {
 	
 	private A a;

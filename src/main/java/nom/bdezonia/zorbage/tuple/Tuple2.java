@@ -36,7 +36,10 @@ import nom.bdezonia.zorbage.accessor.AccessorB;
  * @param <A>
  * @param <B>
  */
-public class Tuple2<A,B> implements AccessorA<A>, AccessorB<B> {
+public class Tuple2<A,B>
+	implements
+		AccessorA<A>, AccessorB<B>
+{
 	
 	private A a;
 	private B b;
