@@ -39,9 +39,12 @@ package nom.bdezonia.zorbage.function;
  * @param <F>
  * @param <G>
  * @param <H>
+ * @param <I>
+ * @param <J>
+ * @param <K>
  */
-public interface Function8<RETVAL,A,B,C,D,E,F,G,H> {
+public interface Function11<RETVAL,A,B,C,D,E,F,G,H,I,J,K> {
 
-	RETVAL call(A a, B b, C c, D d, E e, F f, G g, H h);
+	RETVAL call(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j, K k);
 	
 }

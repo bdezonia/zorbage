@@ -30,13 +30,13 @@ package nom.bdezonia.zorbage.function;
  * 
  * @author Barry DeZonia
  *
+ * @param <RETVAL>
  * @param <A>
  * @param <B>
  * @param <C>
- * @param <D>
  */
-public interface Function3<A,B,C,D> {
+public interface Function3<RETVAL,A,B,C> {
 
-	A call(B b, C c, D d);
+	RETVAL call(A a, B b, C c);
 	
 }

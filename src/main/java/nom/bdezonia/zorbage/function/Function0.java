@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.function;
  *
  * @param <A>
  */
-public interface Function0<A> {
+public interface Function0<RETVAL> {
 
-	A call();
+	RETVAL call();
 
 }

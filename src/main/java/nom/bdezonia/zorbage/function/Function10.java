@@ -30,6 +30,7 @@ package nom.bdezonia.zorbage.function;
  * 
  * @author Barry DeZonia
  *
+ * @param <RETVAL>
  * @param <A>
  * @param <B>
  * @param <C>
@@ -40,10 +41,9 @@ package nom.bdezonia.zorbage.function;
  * @param <H>
  * @param <I>
  * @param <J>
- * @param <K>
  */
-public interface Function10<A,B,C,D,E,F,G,H,I,J,K> {
+public interface Function10<RETVAL,A,B,C,D,E,F,G,H,I,J> {
 
-	A call(B b, C c, D d, E e, F f, G g, H h, I i, J j, K k);
+	RETVAL call(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j);
 	
 }
