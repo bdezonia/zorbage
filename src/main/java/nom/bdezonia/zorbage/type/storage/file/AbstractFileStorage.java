@@ -67,9 +67,12 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	protected AbstractFileStorage(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
+		int componentsPerType = typeCount(type);
+		if (componentsPerType <= 0)
+			throw new IllegalArgumentException("type size must be >= 0");
 		setLocals(type);
 		this.numElements = numElements;
-		this.elemsPerPage = 2048 / typeCount(type);
+		this.elemsPerPage = 2048 / componentsPerType;
 		if (this.elemsPerPage < 1)
 			this.elemsPerPage = 1;
 		this.dirty = false;
