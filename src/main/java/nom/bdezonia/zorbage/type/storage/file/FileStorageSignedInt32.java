@@ -143,4 +143,9 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
+	
+	@Override
+	protected int typeCount(U type) {
+		return type.intCount();
+	}
 }

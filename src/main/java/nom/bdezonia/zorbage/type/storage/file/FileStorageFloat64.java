@@ -143,4 +143,9 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
+	
+	@Override
+	protected int typeCount(U type) {
+		return type.doubleCount();
+	}
 }

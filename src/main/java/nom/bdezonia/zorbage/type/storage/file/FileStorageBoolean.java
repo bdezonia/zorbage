@@ -143,4 +143,9 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
+	
+	@Override
+	protected int typeCount(U type) {
+		return type.booleanCount();
+	}
 }

@@ -143,4 +143,9 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
+	
+	@Override
+	protected int typeCount(U type) {
+		return type.byteCount();
+	}
 }

@@ -143,4 +143,9 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	protected IndexedDataSource<U> buffer() {
 		return buffer;
 	}
+	
+	@Override
+	protected int typeCount(U type) {
+		return type.shortCount();
+	}
 }

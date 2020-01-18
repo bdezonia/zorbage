@@ -47,6 +47,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	implements IndexedDataSource<U>
 {
 	protected abstract void setLocals(U type);
+	protected abstract int typeCount(U type);
 	protected abstract void allocateBuffer(long numElements, U type);
 	protected abstract void writeZeroElement(RandomAccessFile raf) throws IOException;
 	protected abstract int elementByteSize();
@@ -61,14 +62,16 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	private File file;
 	private boolean dirty;
 	private long page;
-	
-	private static final long BUFFERSIZE = 512;
+	private long elemsPerPage;
 
 	protected AbstractFileStorage(long numElements, U type) {
 		if (numElements < 0)
 			throw new IllegalArgumentException("size must be >= 0");
 		setLocals(type);
 		this.numElements = numElements;
+		this.elemsPerPage = 2048 / typeCount(type);
+		if (this.elemsPerPage < 1)
+			this.elemsPerPage = 1;
 		this.dirty = false;
 		this.page = 0;
 		try {
@@ -76,10 +79,11 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 			// if the file is new set it all to zero
 			if (!file.exists() || file.length() == 0) {
 				RandomAccessFile raf = new RandomAccessFile(file, "rw");
-				long pages = numElements / BUFFERSIZE;
-				if ((numElements % BUFFERSIZE) > 0) pages++;
+				long pages = numElements / elemsPerPage;
+				if ((numElements % elemsPerPage) > 0)
+					pages++;
 				for (long l = 0; l < pages; l++) {
-					for (long i = 0; i < BUFFERSIZE; i++) {
+					for (long i = 0; i < elemsPerPage; i++) {
 						writeZeroElement(raf);
 					}
 				}
@@ -90,13 +94,14 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 		catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		allocateBuffer(BUFFERSIZE, type);
+		allocateBuffer(elemsPerPage, type);
 	}
 	
 	protected AbstractFileStorage(AbstractFileStorage<U> other, U type) {
 		setLocals(type);
 		try {
 			this.numElements = other.numElements;
+			this.elemsPerPage = other.elemsPerPage;
 			this.dirty = other.dirty;
 			duplicateBuffer(other.buffer());
 			this.page = other.page;
@@ -119,7 +124,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	public void set(long index, U value) {
 		synchronized (this) {
 			load(index);
-			setBufferValue(index % BUFFERSIZE, value);
+			setBufferValue(index % elemsPerPage, value);
 			dirty = true;
 		}
 	}
@@ -128,7 +133,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	public void get(long index, U value) {
 		synchronized (this) {
 			load(index);
-			getBufferValue(index % BUFFERSIZE, value);
+			getBufferValue(index % elemsPerPage, value);
 		}
 	}
 
@@ -141,8 +146,8 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 		if (!dirty) return;
 		try {
 			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.seek(page * BUFFERSIZE * elementByteSize());
-			for (long i = 0; i < BUFFERSIZE; i++) {
+			raf.seek(page * elemsPerPage * elementByteSize());
+			for (long i = 0; i < elemsPerPage; i++) {
 				writeFromBufferToRaf(raf, i);
 			}
 			raf.close();
@@ -155,16 +160,16 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	private void load(long index) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		if (index < (page*BUFFERSIZE) || index >= ((page+1)*BUFFERSIZE)) {
+		if (index < (page*elemsPerPage) || index >= ((page+1)*elemsPerPage)) {
 			if (dirty) {
 				flush();
 			}
-			page = index / BUFFERSIZE;
+			page = index / elemsPerPage;
 			// read file data into array using sizeof()
 			try {
 				RandomAccessFile raf = new RandomAccessFile(file, "r");
-				raf.seek(page * BUFFERSIZE * elementByteSize());
-				for (long i = 0; i < BUFFERSIZE; i++) {
+				raf.seek(page * elemsPerPage * elementByteSize());
+				for (long i = 0; i < elemsPerPage; i++) {
 					readFromRafIntoBuffer(raf, i);
 				}
 				raf.close();
