@@ -145,7 +145,7 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.booleanCount();
 	}
 }

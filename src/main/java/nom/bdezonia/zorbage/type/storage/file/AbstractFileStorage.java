@@ -47,7 +47,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 	implements IndexedDataSource<U>
 {
 	protected abstract void setLocals(U type);
-	protected abstract int typeCount(U type);
+	protected abstract int componentCount(U type);
 	protected abstract void allocateBuffer(long numElements, U type);
 	protected abstract void writeZeroElement(RandomAccessFile raf) throws IOException;
 	protected abstract int elementByteSize();
@@ -66,10 +66,10 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 
 	protected AbstractFileStorage(long numElements, U type) {
 		if (numElements < 0)
-			throw new IllegalArgumentException("size must be >= 0");
-		int componentsPerType = typeCount(type);
+			throw new IllegalArgumentException("num elements must be >= 0");
+		int componentsPerType = componentCount(type);
 		if (componentsPerType <= 0)
-			throw new IllegalArgumentException("type size must be >= 0");
+			throw new IllegalArgumentException("components per type (U size) must be >= 1");
 		setLocals(type);
 		this.numElements = numElements;
 		this.elemsPerPage = 2048 / componentsPerType;
@@ -85,7 +85,7 @@ public abstract class AbstractFileStorage<U extends Allocatable<U>>
 				long pages = numElements / elemsPerPage;
 				if ((numElements % elemsPerPage) > 0)
 					pages++;
-				for (long l = 0; l < pages; l++) {
+				for (long p = 0; p < pages; p++) {
 					for (long i = 0; i < elemsPerPage; i++) {
 						writeZeroElement(raf);
 					}

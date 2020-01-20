@@ -145,7 +145,7 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.floatCount();
 	}
 }

@@ -145,7 +145,7 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.shortCount();
 	}
 }

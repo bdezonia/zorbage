@@ -145,7 +145,7 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.longCount();
 	}
 }

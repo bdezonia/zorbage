@@ -145,7 +145,7 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.intCount();
 	}
 }

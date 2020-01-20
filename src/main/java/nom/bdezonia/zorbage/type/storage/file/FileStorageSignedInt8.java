@@ -145,7 +145,7 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.byteCount();
 	}
 }

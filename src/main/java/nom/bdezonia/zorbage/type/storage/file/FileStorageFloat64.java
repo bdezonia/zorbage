@@ -145,7 +145,7 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 	
 	@Override
-	protected int typeCount(U type) {
+	protected int componentCount(U type) {
 		return type.doubleCount();
 	}
 }
