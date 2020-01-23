@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 public class TestTaylorEstimateTanh {
 
 	@Test
-	public void test() {
+	public void test1() {
 		Float64MatrixMember x = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		Float64MatrixMember result = G.DBL_MAT.construct();
 		TaylorEstimateTanh.compute(8, G.DBL_MAT, G.DBL, x, result);
@@ -52,7 +52,7 @@ public class TestTaylorEstimateTanh {
 	}
 	
 	@Test
-	public void test1() {
+	public void test2() {
 		Float64Member x = new Float64Member(Math.PI/4);
 		Float64Member result = G.DBL.construct();
 		TaylorEstimateTanh.compute(8, G.DBL, G.DBL, x, result);
