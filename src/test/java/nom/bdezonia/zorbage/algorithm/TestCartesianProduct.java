@@ -86,7 +86,7 @@ public class TestCartesianProduct {
 		
 		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
 		Float64VectorMember b = new Float64VectorMember(new double[] {4,5,6});
-		Float64MatrixMember result = new Float64MatrixMember((int)a.length(), (int)b.length(), new double[9]);
+		Float64MatrixMember result = new Float64MatrixMember(3, 3, new double[9]);
 		Procedure3<Float64Member, Float64Member, Float64Member> proc =
 				new Procedure3<Float64Member, Float64Member, Float64Member>()
 		{
