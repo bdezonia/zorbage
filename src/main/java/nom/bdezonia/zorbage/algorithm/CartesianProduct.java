@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigInteger;
+
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -39,12 +41,6 @@ public class CartesianProduct {
 
 	/**
 	 * 
-	 * @param <T>
-	 * @param <U>
-	 * @param <V>
-	 * @param <W>
-	 * @param <X>
-	 * @param <Y>
 	 * @param algU
 	 * @param algW
 	 * @param algY
@@ -62,10 +58,10 @@ public class CartesianProduct {
 		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc,
 						IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> result)
 	{
-		if (a.size() == 0 || b.size() == 0 || result.size() == 0)
-			throw new IllegalArgumentException("empty data source error");
-		if (result.size() / a.size() != b.size())
-			throw new IllegalArgumentException("preallocation error");
+		if (a.size() <= 0 || b.size() <= 0 || result.size() <= 0)
+			throw new IllegalArgumentException("input arrays must all be length >= 1");
+		if (!BigInteger.valueOf(result.size()).equals(BigInteger.valueOf(a.size()).multiply(BigInteger.valueOf(b.size()))))
+			throw new IllegalArgumentException("input arrays are not shape compatible");
 		U u = algU.construct();
 		W w = algW.construct();
 		Y y = algY.construct();
