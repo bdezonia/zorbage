@@ -30,6 +30,8 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -72,6 +74,40 @@ public class CartesianProduct {
 				b.get(c, w);
 				proc.call(u, w, y);
 				result.set(i++, y);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param algU
+	 * @param algW
+	 * @param algY
+	 * @param proc
+	 * @param a
+	 * @param b
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U>,
+					U,
+					V extends Algebra<V,W>,
+					W,
+					X extends Algebra<X,Y>,
+					Y>
+		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc,
+				RModuleMember<U> a, RModuleMember<W> b, MatrixMember<Y> result)
+	{
+		if (a.length() != result.rows() || b.length() != result.cols())
+			throw new IllegalArgumentException("input array sizes do not match");
+		U u = algU.construct();
+		W w = algW.construct();
+		Y y = algY.construct();
+		for (long r = 0; r < a.length(); r++) {
+			a.v(r, u);
+			for (long c = 0; c < b.length(); c++) {
+				b.v(c, w);
+				proc.call(u, w, y);
+				result.setV(r, c, y);
 			}
 		}
 	}
