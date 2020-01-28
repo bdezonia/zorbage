@@ -72,7 +72,7 @@ public class GaussianFilter1D {
 		Gaussian.compute(alg, mu, sigma, x, val);
 		result.set(radius, val);
 		for (int i = 1; i <= radius; i++) {
-			x = alg.construct(""+i);
+			x = alg.construct(Integer.toString(i));
 			Gaussian.compute(alg, mu, sigma, x, val);
 			result.set(radius-1, val);
 			result.set(radius+1, val);

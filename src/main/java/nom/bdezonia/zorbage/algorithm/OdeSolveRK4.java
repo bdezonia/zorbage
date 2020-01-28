@@ -73,7 +73,7 @@ public class OdeSolveRK4 {
 		U k4 = uAlg.construct();
 		U dy = uAlg.construct();
 		W one_half = wAlg.construct("0.5");
-		W one_sixth = wAlg.construct(""+(BigDecimal.ONE.divide(BigDecimal.valueOf(6),HighPrecisionAlgebra.getContext())));
+		W one_sixth = wAlg.construct((BigDecimal.ONE.divide(BigDecimal.valueOf(6),HighPrecisionAlgebra.getContext())).toString());
 		U tmp = uAlg.construct();
 		W tt = wAlg.construct();
 		U ty = uAlg.construct();

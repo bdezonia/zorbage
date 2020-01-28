@@ -76,7 +76,7 @@ public class InvFFT {
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
-		U one_over_n = cmplxAlg.construct("" + (BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))));
+		U one_over_n = cmplxAlg.construct((BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))).toString());
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, a, b);
 		FFT.compute(cmplxAlg, realAlg, b, b);
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, b, b);
