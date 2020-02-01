@@ -191,7 +191,7 @@ public class TestSignedInt7 {
 				SignedInt7Member v = G.INT7.construct();
 				assertEquals(0, v.v);
 				
-				v = G.INT7.construct(""+(i+j));
+				v = G.INT7.construct(Integer.toString(i+j));
 				assertEquals(v(i+j), v.v);
 				
 				v = G.INT7.construct(a);

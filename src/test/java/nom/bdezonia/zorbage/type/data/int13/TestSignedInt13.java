@@ -188,7 +188,7 @@ public class TestSignedInt13 {
 				SignedInt13Member v = G.INT13.construct();
 				assertEquals(0, v.v);
 				
-				v = G.INT13.construct(""+(i+j));
+				v = G.INT13.construct(Integer.toString(i+j));
 				assertEquals(v(i+j), v.v);
 				
 				v = G.INT13.construct(a);

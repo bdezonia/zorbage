@@ -171,7 +171,7 @@ public class TestUnsignedInt9 {
 				UnsignedInt9Member v = G.UINT9.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT9.construct(""+((i+j) & 511));
+				v = G.UINT9.construct(Integer.toString((i+j) & 511));
 				assertEquals(((i+j) & 511), v.v);
 				
 				v = G.UINT9.construct(a);

@@ -151,7 +151,7 @@ public class TestUnsignedInt1 {
 				UnsignedInt1Member v = G.UINT1.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT1.construct(""+((i+j) & 1));
+				v = G.UINT1.construct(Integer.toString((i+j) & 1));
 				assertEquals(((i+j) & 1), v.v);
 				
 				v = G.UINT1.construct(a);

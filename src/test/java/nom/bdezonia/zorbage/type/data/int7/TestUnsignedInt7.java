@@ -169,7 +169,7 @@ public class TestUnsignedInt7 {
 				UnsignedInt7Member v = G.UINT7.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT7.construct(""+(i+j));
+				v = G.UINT7.construct(Integer.toString(i+j));
 				assertEquals(((i+j) & 127), v.v);
 				
 				v = G.UINT7.construct(a);

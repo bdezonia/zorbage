@@ -169,7 +169,7 @@ public class TestUnsignedInt2 {
 				UnsignedInt2Member v = G.UINT2.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT2.construct(""+((i+j) & 0x03));
+				v = G.UINT2.construct(Integer.toString((i+j) & 0x03));
 				assertEquals(((i+j) & 0x03), v.v);
 				
 				v = G.UINT2.construct(a);

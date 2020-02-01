@@ -169,7 +169,7 @@ public class TestUnsignedInt4 {
 				UnsignedInt4Member v = G.UINT4.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT4.construct(""+((i+j) & 0xf));
+				v = G.UINT4.construct(Integer.toString((i+j) & 0xf));
 				assertEquals(((i+j) & 0xf), v.v);
 				
 				v = G.UINT4.construct(a);

@@ -171,7 +171,7 @@ public class TestUnsignedInt13 {
 				UnsignedInt13Member v = G.UINT13.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT13.construct(""+((i+j) & 8191));
+				v = G.UINT13.construct(Integer.toString((i+j) & 8191));
 				assertEquals(((i+j) & 8191), v.v);
 				
 				v = G.UINT13.construct(a);

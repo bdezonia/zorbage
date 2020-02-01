@@ -188,7 +188,7 @@ public class TestSignedInt10 {
 				SignedInt10Member v = G.INT10.construct();
 				assertEquals(0, v.v);
 				
-				v = G.INT10.construct(""+(i+j));
+				v = G.INT10.construct(Integer.toString(i+j));
 				assertEquals(v(i+j), v.v);
 				
 				v = G.INT10.construct(a);

@@ -169,7 +169,7 @@ public class TestUnsignedInt5 {
 				UnsignedInt5Member v = G.UINT5.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT5.construct(""+(i+j));
+				v = G.UINT5.construct(Integer.toString(i+j));
 				assertEquals(((i+j) & 31), v.v);
 				
 				v = G.UINT5.construct(a);

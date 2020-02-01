@@ -171,7 +171,7 @@ public class TestUnsignedInt12 {
 				UnsignedInt12Member v = G.UINT12.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT12.construct(""+((i+j) & 0xfff));
+				v = G.UINT12.construct(Integer.toString((i+j) & 0xfff));
 				assertEquals(((i+j) & 0xfff), v.v);
 				
 				v = G.UINT12.construct(a);

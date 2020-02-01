@@ -171,7 +171,7 @@ public class TestUnsignedInt11 {
 				UnsignedInt11Member v = G.UINT11.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT11.construct(""+((i+j) & 2047));
+				v = G.UINT11.construct(Integer.toString((i+j) & 2047));
 				assertEquals(((i+j) & 2047), v.v);
 				
 				v = G.UINT11.construct(a);

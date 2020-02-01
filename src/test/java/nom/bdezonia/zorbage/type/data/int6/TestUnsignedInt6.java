@@ -169,7 +169,7 @@ public class TestUnsignedInt6 {
 				UnsignedInt6Member v = G.UINT6.construct();
 				assertEquals(0, v.v);
 				
-				v = G.UINT6.construct(""+(i+j));
+				v = G.UINT6.construct(Integer.toString(i+j));
 				assertEquals(((i+j) & 63), v.v);
 				
 				v = G.UINT6.construct(a);

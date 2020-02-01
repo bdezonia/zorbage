@@ -226,7 +226,7 @@ public class TestUnsignedInt128 {
 				UnsignedInt128Member v = G.UINT128.construct();
 				assertEquals(BigInteger.ZERO, v.v());
 				
-				v = G.UINT128.construct(""+(bigA.add(bigB).and(two128minus1)));
+				v = G.UINT128.construct((bigA.add(bigB).and(two128minus1)).toString());
 				assertEquals(bigA.add(bigB).and(two128minus1), v.v());
 				
 				v = G.UINT128.construct(a);
