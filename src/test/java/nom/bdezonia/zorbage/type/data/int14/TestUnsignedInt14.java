@@ -101,6 +101,10 @@ public class TestUnsignedInt14 {
 		UnsignedInt14Member b = G.UINT14.construct();
 		UnsignedInt14Member c = G.UINT14.construct();
 		for (int i = 0; i < 16384; i++) {
+
+			if (i % 1000 == 0)
+				System.out.println(i);
+			
 			a.setV(i);
 			
 			for (int j = 0; j < 16384; j++) {

@@ -110,6 +110,10 @@ public class TestSignedInt13 {
 		SignedInt13Member b = G.INT13.construct();
 		SignedInt13Member c = G.INT13.construct();
 		for (int i = -4096; i < 4096; i++) {
+
+			if (i % 1000 == 0)
+				System.out.println(i);
+			
 			a.setV(i);
 			
 			for (int j = -4096; j < 4096; j++) {
