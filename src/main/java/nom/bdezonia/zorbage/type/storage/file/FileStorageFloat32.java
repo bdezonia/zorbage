@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageFloat32;
 import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -147,5 +148,10 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	@Override
 	protected int componentCount(U type) {
 		return type.floatCount();
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_VIRTUAL;
 	}
 }

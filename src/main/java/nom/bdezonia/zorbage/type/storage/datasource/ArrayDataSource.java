@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -89,5 +90,10 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 			array[i] = algebra.construct();
 		}
 		return new ArrayDataSource<T,U>(algebra, (U[]) array); // magic
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
 	}
 }

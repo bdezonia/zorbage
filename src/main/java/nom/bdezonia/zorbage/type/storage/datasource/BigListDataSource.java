@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -77,5 +78,10 @@ public class BigListDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public long size() {
 		return size;
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
 	}
 }

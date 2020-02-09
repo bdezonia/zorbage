@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.ctor.StorageType;
 
 /**
  * 
@@ -36,7 +37,7 @@ import nom.bdezonia.zorbage.type.ctor.Duplicatable;
  * @param <U>
  */
 public interface IndexedDataSource<U>
-	extends Duplicatable<IndexedDataSource<U>>
+	extends Duplicatable<IndexedDataSource<U>>, StorageType
 {
 	void set(long index, U value);
 	void get(long index, U value);

@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.array;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -38,7 +39,6 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<ArrayStorageSignedInt64<U>>
 {
-
 	private final U type;
 	private final long[] data;
 	
@@ -79,5 +79,9 @@ public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		return new ArrayStorageSignedInt64<U>(size(), type);
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
+	}
 
 }

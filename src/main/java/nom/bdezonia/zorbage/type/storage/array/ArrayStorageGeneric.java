@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.storage.array;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -84,6 +85,11 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	@Override
 	public ArrayStorageGeneric<T,U> allocate() {
 		return new ArrayStorageGeneric<T,U>(size(), alg);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
 	}
 
 }

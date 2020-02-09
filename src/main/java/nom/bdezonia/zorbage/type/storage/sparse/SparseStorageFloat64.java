@@ -30,6 +30,8 @@ import java.util.Arrays;
 import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.ctor.StorageType;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -39,7 +41,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  *
  */
 public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
-	implements IndexedDataSource<U>, Allocatable<SparseStorageFloat64<U>>
+	implements IndexedDataSource<U>, Allocatable<SparseStorageFloat64<U>>, StorageType
 {
 	private final RedBlackTree<double[]> data;
 	private final long numElements;
@@ -129,4 +131,8 @@ public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		return new SparseStorageFloat64<U>(size(), type);
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
+	}
 }

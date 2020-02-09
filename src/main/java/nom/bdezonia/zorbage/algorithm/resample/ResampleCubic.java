@@ -70,7 +70,7 @@ public class ResampleCubic {
 
 		U value = alg.construct();
 		
-		MultiDimDataSource<U> output = MultiDimStorage.allocate(newDims, value);
+		MultiDimDataSource<U> output = MultiDimStorage.allocate(input.storageType(), newDims, value);
 
 		int index = -1;
 		long maxDim = -1;

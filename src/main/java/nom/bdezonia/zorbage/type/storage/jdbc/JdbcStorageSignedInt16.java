@@ -33,6 +33,7 @@ import java.sql.Statement;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -103,6 +104,11 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	@Override
 	public JdbcStorageSignedInt16<U> allocate() {
 		return new JdbcStorageSignedInt16<U>(size(), type, conn);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_VIRTUAL;
 	}
     
 }

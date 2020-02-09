@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.array;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -79,4 +80,8 @@ public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 		return new ArrayStorageBoolean<U>(size(), type);
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
+	}
 }

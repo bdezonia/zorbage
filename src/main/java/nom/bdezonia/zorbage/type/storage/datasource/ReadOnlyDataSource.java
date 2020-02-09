@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
 /**
  * 
  * @author Barry DeZonia
@@ -58,6 +60,11 @@ public class ReadOnlyDataSource<U>
 	@Override
 	public long size() {
 		return source.size();
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return source.storageType();
 	}
 
 }

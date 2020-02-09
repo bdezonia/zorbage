@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -129,4 +130,8 @@ public class SparseStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 		return new SparseStorageSignedInt8<U>(size(), type);
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_SPARSE;
+	}
 }

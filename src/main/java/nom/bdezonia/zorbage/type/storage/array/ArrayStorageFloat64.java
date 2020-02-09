@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.array;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -79,5 +80,9 @@ public class ArrayStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		return new ArrayStorageFloat64<U>(size(), type);
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
+	}
 
 }

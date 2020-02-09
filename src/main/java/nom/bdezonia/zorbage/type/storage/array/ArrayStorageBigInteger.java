@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.storage.array;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -82,5 +83,10 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageBigInteger<U> allocate() {
 		return new ArrayStorageBigInteger<U>(size(), type);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
 	}
 }

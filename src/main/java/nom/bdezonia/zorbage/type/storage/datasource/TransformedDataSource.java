@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -88,5 +89,10 @@ public class TransformedDataSource<U,W>
 	@Override
 	public long size() {
 		return sz;
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return uCollection.storageType();
 	}
 }

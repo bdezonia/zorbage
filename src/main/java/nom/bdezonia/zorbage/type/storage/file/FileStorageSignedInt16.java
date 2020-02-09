@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt16;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -147,5 +148,10 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	@Override
 	protected int componentCount(U type) {
 		return type.shortCount();
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_VIRTUAL;
 	}
 }

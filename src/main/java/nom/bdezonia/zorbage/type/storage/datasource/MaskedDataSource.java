@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
 
 /**
@@ -138,5 +139,10 @@ public class MaskedDataSource<U>
 		pos += i;
 		//System.out.println("in " + index + "  out " + pos);
 		return pos;
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return list.storageType();
 	}
 }

@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -132,6 +133,11 @@ public class SparseStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	@Override
 	public SparseStorageBigDecimal<U> allocate() {
 		return new SparseStorageBigDecimal<U>(size(), type);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_SPARSE;
 	}
 
 }

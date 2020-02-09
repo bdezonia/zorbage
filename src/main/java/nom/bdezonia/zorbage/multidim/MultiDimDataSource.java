@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.multidim;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Dimensioned;
+import nom.bdezonia.zorbage.type.ctor.StorageType;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.datasource.RawData;
@@ -39,7 +40,7 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  *
  */
 public interface MultiDimDataSource<U>
-	extends Dimensioned, RawData<U>
+	extends Dimensioned, RawData<U>, StorageType
 {
 	long numElements();
 
@@ -58,4 +59,5 @@ public interface MultiDimDataSource<U>
 	void getSafe(IntegerIndex index, U v);
 	
 	boolean oob(IntegerIndex index);
+	
 }

@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
 
@@ -118,4 +119,8 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		return sz;
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return source.storageType();
+	}
 }

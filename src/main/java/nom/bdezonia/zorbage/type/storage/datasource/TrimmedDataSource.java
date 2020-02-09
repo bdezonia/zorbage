@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
 /**
  * 
  * @author Barry DeZonia
@@ -85,4 +87,8 @@ public class TrimmedDataSource<U>
 		return count;
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return list.storageType();
+	}
 }

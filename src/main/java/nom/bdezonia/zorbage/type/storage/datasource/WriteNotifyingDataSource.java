@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -96,4 +97,8 @@ public class WriteNotifyingDataSource<T extends Algebra<T,U>, U>
 		return source.size();
 	}
 
+	@Override
+	public StorageConstruction storageType() {
+		return source.storageType();
+	}
 }

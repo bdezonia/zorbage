@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
 /**
  * 
  * @author Barry DeZonia
@@ -64,6 +66,11 @@ public class ReversedDataSource<U> implements IndexedDataSource<U>{
 	@Override
 	public long size() {
 		return sz;
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return storage.storageType();
 	}
 
 }

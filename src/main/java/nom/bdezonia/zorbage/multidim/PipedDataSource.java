@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.multidim;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.datasource.SequencedDataSource;
 
@@ -116,6 +117,11 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 			stride = (IndexUtils.indexToLong(parentDims,stop) - offset) / (count - 1);
 		}
 		return new SequencedDataSource<>(d.rawData(), offset, stride, count);
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return d.storageType();
 	}
 	
 }

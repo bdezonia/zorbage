@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
 /**
  * 
@@ -96,5 +97,10 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 			array.add(algebra.construct());
 		}
 		return new ListDataSource<T,U>(algebra, (List<U>) array); // magic
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return StorageConstruction.MEM_ARRAY;
 	}
 }

@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.storage.datasource;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 
 /**
@@ -82,6 +83,11 @@ public class ReadOnlyHighPrecisionDataSource<T extends Algebra<T,U>, U extends H
 	@Override
 	public long size() {
 		return src.size();
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return src.storageType();
 	}
 
 }

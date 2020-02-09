@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
 /**
  * 
  * @author Barry DeZonia
@@ -91,5 +93,10 @@ public class SequencedDataSource<U>
 	@Override
 	public long size() {
 		return count;
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return data.storageType();
 	}
 }

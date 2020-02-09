@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+
 /**
  * A typical use for this class is to take a source, wrap it with an out of
  * bounds procedure, and pass that wrapped source to this constructor with
@@ -73,6 +75,11 @@ public class FixedSizeDataSource<U>
 	@Override
 	public long size() {
 		return size;
+	}
+
+	@Override
+	public StorageConstruction storageType() {
+		return src.storageType();
 	}
 
 }
