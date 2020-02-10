@@ -133,6 +133,6 @@ public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public StorageConstruction storageType() {
-		return StorageConstruction.MEM_ARRAY;
+		return StorageConstruction.MEM_SPARSE;
 	}
 }
