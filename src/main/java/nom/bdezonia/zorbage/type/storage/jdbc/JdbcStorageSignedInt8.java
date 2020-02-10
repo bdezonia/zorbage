@@ -108,6 +108,10 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public StorageConstruction storageType() {
+		// There is no exact match for our type. But if someone has a large JDBC backed structure
+		// that we want to derive an allocation from then a VIRTUAL structure might be best. This
+		// return value reflects that idea and kind of generalizes the idea of how the data is
+		// stored in actuality.
 		return StorageConstruction.MEM_VIRTUAL;
 	}
     
