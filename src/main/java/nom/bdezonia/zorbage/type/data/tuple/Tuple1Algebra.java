@@ -42,11 +42,9 @@ public class Tuple1Algebra<A extends Algebra<A,B>,B>
 	implements Algebra<Tuple1Algebra<A,B>, Tuple1<B>>
 {
 	private final A alg1;
-	private final B z1;
 	
 	public Tuple1Algebra(A alg1) {
 		this.alg1 = alg1;
-		this.z1 = alg1.construct();
 	}
 	
 	@Override
@@ -128,7 +126,7 @@ public class Tuple1Algebra<A extends Algebra<A,B>,B>
 	{
 		@Override
 		public void call(Tuple1<B> a) {
-			alg1.assign().call(z1, a.a());
+			alg1.zero().call(a.a());
 		}
 	};
 	

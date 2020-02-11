@@ -52,12 +52,6 @@ public class Tuple6Algebra<A extends Algebra<A,B>,B,
 	private final G alg4;
 	private final I alg5;
 	private final K alg6;
-	private final B z1;
-	private final D z2;
-	private final F z3;
-	private final H z4;
-	private final J z5;
-	private final L z6;
 	
 	public Tuple6Algebra(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6) {
 		this.alg1 = alg1;
@@ -66,12 +60,6 @@ public class Tuple6Algebra<A extends Algebra<A,B>,B,
 		this.alg4 = alg4;
 		this.alg5 = alg5;
 		this.alg6 = alg6;
-		this.z1 = alg1.construct();
-		this.z2 = alg2.construct();
-		this.z3 = alg3.construct();
-		this.z4 = alg4.construct();
-		this.z5 = alg5.construct();
-		this.z6 = alg6.construct();
 	}
 	
 	@Override
@@ -173,13 +161,12 @@ public class Tuple6Algebra<A extends Algebra<A,B>,B,
 	{
 		@Override
 		public void call(Tuple6<B,D,F,H,J,L> a) {
-			alg1.assign().call(z1, a.a());
-			alg2.assign().call(z2, a.b());
-			alg2.assign().call(z2, a.b());
-			alg3.assign().call(z3, a.c());
-			alg4.assign().call(z4, a.d());
-			alg5.assign().call(z5, a.e());
-			alg6.assign().call(z6, a.f());
+			alg1.zero().call(a.a());
+			alg2.zero().call(a.b());
+			alg3.zero().call(a.c());
+			alg4.zero().call(a.d());
+			alg5.zero().call(a.e());
+			alg6.zero().call(a.f());
 		}
 	};
 	

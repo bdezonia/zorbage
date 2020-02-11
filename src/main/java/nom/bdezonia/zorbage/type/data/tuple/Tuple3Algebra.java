@@ -46,17 +46,11 @@ public class Tuple3Algebra<A extends Algebra<A,B>,B,
 	private final A alg1;
 	private final C alg2;
 	private final E alg3;
-	private final B z1;
-	private final D z2;
-	private final F z3;
 	
 	public Tuple3Algebra(A alg1, C alg2, E alg3) {
 		this.alg1 = alg1;
 		this.alg2 = alg2;
 		this.alg3 = alg3;
-		this.z1 = alg1.construct();
-		this.z2 = alg2.construct();
-		this.z3 = alg3.construct();
 	}
 	
 	@Override
@@ -146,9 +140,9 @@ public class Tuple3Algebra<A extends Algebra<A,B>,B,
 	{
 		@Override
 		public void call(Tuple3<B,D,F> a) {
-			alg1.assign().call(z1, a.a());
-			alg2.assign().call(z2, a.b());
-			alg3.assign().call(z3, a.c());
+			alg1.zero().call(a.a());
+			alg2.zero().call(a.b());
+			alg3.zero().call(a.c());
 		}
 	};
 	

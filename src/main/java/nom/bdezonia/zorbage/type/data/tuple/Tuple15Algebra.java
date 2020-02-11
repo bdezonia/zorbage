@@ -70,21 +70,6 @@ public class Tuple15Algebra<A extends Algebra<A,B>,B,
 	private final Y alg13;
 	private final AA alg14;
 	private final CC alg15;
-	private final B z1;
-	private final D z2;
-	private final F z3;
-	private final H z4;
-	private final J z5;
-	private final L z6;
-	private final N z7;
-	private final P z8;
-	private final R z9;
-	private final T z10;
-	private final V z11;
-	private final X z12;
-	private final Z z13;
-	private final BB z14;
-	private final DD z15;
 	
 	public Tuple15Algebra(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9, S alg10, U alg11, W alg12, Y alg13, AA alg14, CC alg15) {
 		this.alg1 = alg1;
@@ -102,21 +87,6 @@ public class Tuple15Algebra<A extends Algebra<A,B>,B,
 		this.alg13 = alg13;
 		this.alg14 = alg14;
 		this.alg15 = alg15;
-		this.z1 = alg1.construct();
-		this.z2 = alg2.construct();
-		this.z3 = alg3.construct();
-		this.z4 = alg4.construct();
-		this.z5 = alg5.construct();
-		this.z6 = alg6.construct();
-		this.z7 = alg7.construct();
-		this.z8 = alg8.construct();
-		this.z9 = alg9.construct();
-		this.z10 = alg10.construct();
-		this.z11 = alg11.construct();
-		this.z12 = alg12.construct();
-		this.z13 = alg13.construct();
-		this.z14 = alg14.construct();
-		this.z15 = alg15.construct();
 	}
 	
 	@Override

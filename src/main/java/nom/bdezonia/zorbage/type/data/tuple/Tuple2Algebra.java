@@ -43,14 +43,10 @@ public class Tuple2Algebra<A extends Algebra<A,B>,B,C extends Algebra<C,D>,D>
 {
 	private final A alg1;
 	private final C alg2;
-	private final B z1;
-	private final D z2;
 	
 	public Tuple2Algebra(A alg1, C alg2) {
 		this.alg1 = alg1;
 		this.alg2 = alg2;
-		this.z1 = alg1.construct();
-		this.z2 = alg2.construct();
 	}
 	
 	@Override
@@ -132,8 +128,8 @@ public class Tuple2Algebra<A extends Algebra<A,B>,B,C extends Algebra<C,D>,D>
 	{
 		@Override
 		public void call(Tuple2<B, D> a) {
-			alg1.assign().call(z1, a.a());
-			alg2.assign().call(z2, a.b());
+			alg1.zero().call(a.a());
+			alg2.zero().call(a.b());
 		}
 	};
 	

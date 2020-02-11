@@ -48,20 +48,12 @@ public class Tuple4Algebra<A extends Algebra<A,B>,B,
 	private final C alg2;
 	private final E alg3;
 	private final G alg4;
-	private final B z1;
-	private final D z2;
-	private final F z3;
-	private final H z4;
 	
 	public Tuple4Algebra(A alg1, C alg2, E alg3, G alg4) {
 		this.alg1 = alg1;
 		this.alg2 = alg2;
 		this.alg3 = alg3;
 		this.alg4 = alg4;
-		this.z1 = alg1.construct();
-		this.z2 = alg2.construct();
-		this.z3 = alg3.construct();
-		this.z4 = alg4.construct();
 	}
 	
 	@Override
@@ -155,11 +147,10 @@ public class Tuple4Algebra<A extends Algebra<A,B>,B,
 	{
 		@Override
 		public void call(Tuple4<B,D,F,H> a) {
-			alg1.assign().call(z1, a.a());
-			alg2.assign().call(z2, a.b());
-			alg2.assign().call(z2, a.b());
-			alg3.assign().call(z3, a.c());
-			alg4.assign().call(z4, a.d());
+			alg1.zero().call(a.a());
+			alg2.zero().call(a.b());
+			alg3.zero().call(a.c());
+			alg4.zero().call(a.d());
 		}
 	};
 	

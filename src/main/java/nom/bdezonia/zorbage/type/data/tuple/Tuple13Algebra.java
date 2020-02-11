@@ -66,19 +66,6 @@ public class Tuple13Algebra<A extends Algebra<A,B>,B,
 	private final U alg11;
 	private final W alg12;
 	private final Y alg13;
-	private final B z1;
-	private final D z2;
-	private final F z3;
-	private final H z4;
-	private final J z5;
-	private final L z6;
-	private final N z7;
-	private final P z8;
-	private final R z9;
-	private final T z10;
-	private final V z11;
-	private final X z12;
-	private final Z z13;
 	
 	public Tuple13Algebra(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9, S alg10, U alg11, W alg12, Y alg13) {
 		this.alg1 = alg1;
@@ -94,19 +81,6 @@ public class Tuple13Algebra<A extends Algebra<A,B>,B,
 		this.alg11 = alg11;
 		this.alg12 = alg12;
 		this.alg13 = alg13;
-		this.z1 = alg1.construct();
-		this.z2 = alg2.construct();
-		this.z3 = alg3.construct();
-		this.z4 = alg4.construct();
-		this.z5 = alg5.construct();
-		this.z6 = alg6.construct();
-		this.z7 = alg7.construct();
-		this.z8 = alg8.construct();
-		this.z9 = alg9.construct();
-		this.z10 = alg10.construct();
-		this.z11 = alg11.construct();
-		this.z12 = alg12.construct();
-		this.z13 = alg13.construct();
 	}
 	
 	@Override
@@ -236,20 +210,19 @@ public class Tuple13Algebra<A extends Algebra<A,B>,B,
 	{
 		@Override
 		public void call(Tuple13<B,D,F,H,J,L,N,P,R,T,V,X,Z> a) {
-			alg1.assign().call(z1, a.a());
-			alg2.assign().call(z2, a.b());
-			alg2.assign().call(z2, a.b());
-			alg3.assign().call(z3, a.c());
-			alg4.assign().call(z4, a.d());
-			alg5.assign().call(z5, a.e());
-			alg6.assign().call(z6, a.f());
-			alg7.assign().call(z7, a.g());
-			alg8.assign().call(z8, a.h());
-			alg9.assign().call(z9, a.i());
-			alg10.assign().call(z10, a.j());
-			alg11.assign().call(z11, a.k());
-			alg12.assign().call(z12, a.l());
-			alg13.assign().call(z13, a.m());
+			alg1.zero().call(a.a());
+			alg2.zero().call(a.b());
+			alg3.zero().call(a.c());
+			alg4.zero().call(a.d());
+			alg5.zero().call(a.e());
+			alg6.zero().call(a.f());
+			alg7.zero().call(a.g());
+			alg8.zero().call(a.h());
+			alg9.zero().call(a.i());
+			alg10.zero().call(a.j());
+			alg11.zero().call(a.k());
+			alg12.zero().call(a.l());
+			alg13.zero().call(a.m());
 		}
 	};
 	
