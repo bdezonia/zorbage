@@ -90,12 +90,12 @@ public class ConcatenatedDataSource<U>
 
 	@Override
 	public StorageConstruction storageType() {
+		if ((first.storageType() == StorageConstruction.MEM_SPARSE) &&
+				(second.storageType() == StorageConstruction.MEM_SPARSE))
+			return StorageConstruction.MEM_SPARSE;
 		if ((first.storageType() == StorageConstruction.MEM_VIRTUAL) ||
 				(second.storageType() == StorageConstruction.MEM_VIRTUAL))
 			return StorageConstruction.MEM_VIRTUAL;
-		if ((first.storageType() == StorageConstruction.MEM_ARRAY) ||
-				(second.storageType() == StorageConstruction.MEM_ARRAY))
-			return StorageConstruction.MEM_ARRAY;
-		return StorageConstruction.MEM_SPARSE;
+		return StorageConstruction.MEM_ARRAY;
 	}
 }
