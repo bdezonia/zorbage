@@ -96,6 +96,8 @@ public class ConcatenatedDataSource<U>
 		if ((first.storageType() == StorageConstruction.MEM_VIRTUAL) ||
 				(second.storageType() == StorageConstruction.MEM_VIRTUAL))
 			return StorageConstruction.MEM_VIRTUAL;
-		return StorageConstruction.MEM_ARRAY;
+		if (size() <= Integer.MAX_VALUE)
+			return StorageConstruction.MEM_ARRAY;
+		return StorageConstruction.MEM_VIRTUAL;
 	}
 }
