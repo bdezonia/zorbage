@@ -52,28 +52,24 @@ public class TestSumSquareCount {
 		Float64Member avg = G.DBL.construct();
 
 		IndexedDataSource<Float64Member> data = ArrayStorage.allocateDoubles(new double[] {-5,5,0,0,0,0,0,0,0,0});
-		avg.setV(0);
 		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(50, sumSqDevs.v(), tol);
 
 		data = ArrayStorage.allocateDoubles(new double[] {18,28,23,23,23,23,23,23,23,23});
-		avg.setV(23);
 		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(50, sumSqDevs.v(), tol);
 		
 		data = ArrayStorage.allocateDoubles(new double[] {996,998,1000,1000,1000,1002,1004,1000,1000,1000});
-		avg.setV(1000);
 		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(40, sumSqDevs.v(), tol);
 		
 		data = ArrayStorage.allocateDoubles(new double[] {-2000,-3000,-1000,-1000,-1000,0,1000,-1000,-1000,-1000});
-		avg.setV(-1000);
 		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
@@ -91,7 +87,6 @@ public class TestSumSquareCount {
 		Float64Member sumSqDevs = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
 		Float64Member avg = G.DBL.construct();
-		Mean.compute(G.DBL, data, avg);
 		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
 		double expSumSq = 0;
 		for (int i = 0; i < nums.length; i++) {

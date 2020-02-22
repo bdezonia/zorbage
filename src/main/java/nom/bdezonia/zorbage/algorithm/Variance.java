@@ -63,7 +63,6 @@ public class Variance {
 		U count = alg.construct();
 		U one = alg.construct();
 		alg.unity().call(one);
-		Mean.compute(alg, storage, avg);
 		SumSquareCount.compute(alg, storage, avg, sum, count);
 		alg.subtract().call(count, one, count);
 		alg.divide().call(sum, count, result);

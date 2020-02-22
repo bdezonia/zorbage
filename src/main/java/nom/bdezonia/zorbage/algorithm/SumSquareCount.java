@@ -119,7 +119,7 @@ public class SumSquareCount {
 		alg.assign().call(cnt, count);
 		 */
 		
-		/* second optimization: based on some Algebra I did: impl 3
+		/* Another optimization: based on some Algebra I did: impl 3
 		 * The idea behind it is to scale big numbers into manageable range to avoid overflows
 		 * if possible. Might have an accuracy cost.
 		 */
@@ -214,6 +214,7 @@ public class SumSquareCount {
 		alg.multiply().call(term, sumY, term);
 		alg.subtract().call(tmp, term, tmp);
 		
+		alg.assign().call(a, avg);
 		alg.assign().call(cnt, count);
 		alg.assign().call(tmp, sumSqDevs);
 	}
