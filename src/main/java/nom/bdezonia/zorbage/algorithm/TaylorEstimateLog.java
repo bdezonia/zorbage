@@ -98,8 +98,7 @@ public class TaylorEstimateLog {
 			numAlgebra.add().call(inc, one, inc);
 		}
 		U two = numAlgebra.construct();
-		numAlgebra.unity().call(two);
-		numAlgebra.add().call(two, two, two);
+		numAlgebra.add().call(one, one, two);
 		elemAlgebra.scale().call(two, sum, sum);
 		elemAlgebra.assign().call(sum, result);
 	}
