@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
@@ -501,19 +502,28 @@ public class Float64TensorProduct
 	
 	// http://mathworld.wolfram.com/CommaDerivative.html
 	
-	// TODO
-	
-	private final Procedure1<java.lang.Integer> COMMA =
-			new Procedure1<Integer>()
+	private final Procedure3<IntegerIndex,Float64TensorProductMember,Float64TensorProductMember> COMMA =
+			new Procedure3<IntegerIndex,Float64TensorProductMember,Float64TensorProductMember>()
 	{
 		@Override
-		public void call(Integer a) {
-			throw new IllegalArgumentException("TODO");
+		public void call(IntegerIndex index, Float64TensorProductMember a, Float64TensorProductMember b) {
+			Float64Member val = G.DBL.construct();
+			a.v(index, val);
+			shapeResult(a, b);
+			Procedure3<Float64Member,Float64Member,Float64Member> proc =
+					new Procedure3<Float64Member, Float64Member, Float64Member>()
+			{
+				@Override
+				public void call(Float64Member a, Float64Member b, Float64Member c) {
+					c.setV(b.v() / a.v());
+				}
+			};
+			FixedTransform2.compute(G.DBL, val, proc, a.rawData(), b.rawData());
 		}
 	};
 	
 	@Override
-	public Procedure1<java.lang.Integer> commaDerivative() {
+	public Procedure3<IntegerIndex,Float64TensorProductMember,Float64TensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	
