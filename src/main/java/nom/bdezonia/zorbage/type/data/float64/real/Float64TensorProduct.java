@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
@@ -509,16 +508,9 @@ public class Float64TensorProduct
 		public void call(IntegerIndex index, Float64TensorProductMember a, Float64TensorProductMember b) {
 			Float64Member val = G.DBL.construct();
 			a.v(index, val);
+			G.DBL.invert().call(val, val);
 			shapeResult(a, b);
-			Procedure3<Float64Member,Float64Member,Float64Member> proc =
-					new Procedure3<Float64Member, Float64Member, Float64Member>()
-			{
-				@Override
-				public void call(Float64Member a, Float64Member b, Float64Member c) {
-					c.setV(b.v() / a.v());
-				}
-			};
-			FixedTransform2.compute(G.DBL, val, proc, a.rawData(), b.rawData());
+			nom.bdezonia.zorbage.algorithm.Scale.compute(G.DBL, val, a.rawData(), b.rawData());
 		}
 	};
 	
