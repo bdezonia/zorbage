@@ -39,6 +39,7 @@ public interface TensorLikeMethods<U,W> {
 	
 	Procedure4<java.lang.Integer, java.lang.Integer,U,U> contract();
 	Procedure3<W,U,U> addToElements();
+	Procedure3<W,U,U> subtractFromElements();
 	Procedure3<U,U,U> multiplyElements();
 	Procedure3<U,U,U> divideElements();
 	Procedure1<java.lang.Integer> semicolonDerivative();

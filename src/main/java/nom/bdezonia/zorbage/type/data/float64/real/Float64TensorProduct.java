@@ -321,7 +321,7 @@ public class Float64TensorProduct
 			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
 				a.v(i, tmp);
-				G.DBL.add().call(scalar, tmp, tmp);
+				G.DBL.add().call(tmp, scalar, tmp);
 				b.setV(i, tmp);
 			}
 		}
@@ -330,6 +330,27 @@ public class Float64TensorProduct
 	@Override
 	public Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> addToElements() {
 		return ADDEL;
+	}
+
+	private final Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> SUBEL =
+			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
+			Float64Member tmp = new Float64Member();
+			shapeResult(a, b);
+			long numElems = a.numElems();
+			for (long i = 0; i < numElems; i++) {
+				a.v(i, tmp);
+				G.DBL.subtract().call(tmp, scalar, tmp);
+				b.setV(i, tmp);
+			}
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> subtractFromElements() {
+		return SUBEL;
 	}
 
 	private Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> MULEL =
