@@ -205,7 +205,7 @@ public class Float64TensorProduct
 		return NEG;
 	}
 
-	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> ADD =
+	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> ADDEL =
 			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
@@ -228,10 +228,10 @@ public class Float64TensorProduct
 	
 	@Override
 	public Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> add() {
-		return ADD;
+		return ADDEL;
 	}
 
-	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> SUB =
+	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> SUBEL =
 			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
@@ -254,7 +254,7 @@ public class Float64TensorProduct
 	
 	@Override
 	public Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> subtract() {
-		return SUB;
+		return SUBEL;
 	}
 
 	private final Procedure2<Float64TensorProductMember,Float64Member> NORM =
@@ -311,7 +311,7 @@ public class Float64TensorProduct
 		return SCALE;
 	}
 
-	private final Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> ADDEL =
+	private final Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> ADDSCALAR =
 			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
@@ -328,11 +328,11 @@ public class Float64TensorProduct
 	};
 	
 	@Override
-	public Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> addToElements() {
-		return ADDEL;
+	public Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> addScalar() {
+		return ADDSCALAR;
 	}
 
-	private final Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> SUBEL =
+	private final Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> SUBSCALAR =
 			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
@@ -349,8 +349,8 @@ public class Float64TensorProduct
 	};
 	
 	@Override
-	public Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> subtractFromElements() {
-		return SUBEL;
+	public Procedure3<Float64Member,Float64TensorProductMember,Float64TensorProductMember> subtractScalar() {
+		return SUBSCALAR;
 	}
 
 	private Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> MULEL =
@@ -452,6 +452,8 @@ public class Float64TensorProduct
 	// https://en.wikipedia.org/wiki/Tensor_contraction
 
 	// TODO
+	
+	// Note: I'm doing cartesian tensors. Maybe contract is not an operation on that type of tensor.
 	
 	private final Procedure4<java.lang.Integer,java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> CONTRACT =
 			new Procedure4<Integer, Integer, Float64TensorProductMember, Float64TensorProductMember>()
@@ -795,5 +797,35 @@ public class Float64TensorProduct
 	@Override
 	public Function3<Boolean, Float64Member, Float64TensorProductMember, Float64TensorProductMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> MULBYSCALAR =
+			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Float64Member a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			scale().call(a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> mutiplyByScalar() {
+		return MULBYSCALAR;
+	}
+
+	private final Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> DIVBYSCALAR =
+			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Float64Member a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			Float64Member invA = G.DBL.construct();
+			G.DBL.invert().call(a, invA);
+			scale().call(invA, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> divideByScalar() {
+		return DIVBYSCALAR;
 	}
 }
