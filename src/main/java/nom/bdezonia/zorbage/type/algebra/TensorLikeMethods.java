@@ -41,7 +41,7 @@ public interface TensorLikeMethods<U,W> {
 	Procedure4<java.lang.Integer, java.lang.Integer,U,U> contract();
 	Procedure3<W,U,U> addScalar();
 	Procedure3<W,U,U> subtractScalar();
-	Procedure3<W,U,U> mutiplyByScalar();
+	Procedure3<W,U,U> multiplyByScalar();
 	Procedure3<W,U,U> divideByScalar();
 	Procedure3<U,U,U> multiplyElements();
 	Procedure3<U,U,U> divideElements();

@@ -809,7 +809,7 @@ public class Float64TensorProduct
 	};
 	
 	@Override
-	public Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> mutiplyByScalar() {
+	public Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> multiplyByScalar() {
 		return MULBYSCALAR;
 	}
 
