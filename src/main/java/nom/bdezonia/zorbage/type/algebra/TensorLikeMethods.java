@@ -38,7 +38,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  */
 public interface TensorLikeMethods<U,W> {
 	
-	Procedure4<java.lang.Integer, java.lang.Integer,U,U> contract();
 	Procedure3<W,U,U> addScalar();
 	Procedure3<W,U,U> subtractScalar();
 	Procedure3<W,U,U> multiplyByScalar();
@@ -47,6 +46,7 @@ public interface TensorLikeMethods<U,W> {
 	Procedure3<U,U,U> divideElements();
 	Procedure1<java.lang.Integer> semicolonDerivative();
 	Procedure3<IntegerIndex,U,U> commaDerivative();
+	Procedure4<java.lang.Integer,java.lang.Integer,U,U> contract();
 
 	// TODO
 	// ProcX innerProduct();

@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -451,30 +453,67 @@ public class Float64TensorProduct
 	
 	// https://en.wikipedia.org/wiki/Tensor_contraction
 
-	// TODO
+	// Okay, I'm not finding predefined algorithms. I think in cartesian tensors each vector is its
+	// own dual. So contraction doesn't have to worry about upper and lower indices. Follow the
+	// general rules but treat every upper/lower alignment with simple multiplication and addition.
 	
-	// Note: I'm doing cartesian tensors. Maybe contract is not an operation on that type of tensor.
-	
-	private final Procedure4<java.lang.Integer,java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> CONTRACT =
-			new Procedure4<Integer, Integer, Float64TensorProductMember, Float64TensorProductMember>()
+	private final Procedure4<Integer,Integer,Float64TensorProductMember,Float64TensorProductMember> CONTRACT =
+			new Procedure4<Integer,Integer,Float64TensorProductMember,Float64TensorProductMember>()
 	{
 		@Override
 		public void call(Integer i, Integer j, Float64TensorProductMember a, Float64TensorProductMember b) {
-			if (a.rank() < 2)
-				throw new IllegalArgumentException("input tensor must be rank 2 or greater to contract");
-			if (i < 0 || j < 0 || i >= a.rank() || j >= a.rank())
-				throw new IllegalArgumentException("bad contraction indices given");
 			if (i == j)
 				throw new IllegalArgumentException("cannot contract along a single axis");
+			if (i < 0 || j < 0)
+				throw new IllegalArgumentException("negative contraction indices given");
+			if (i >= a.rank() || j >= a.rank())
+				throw new IllegalArgumentException("contraction indices cannot be out of bounds of input tensor's rank");
 			if (a == b)
-				throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
+				throw new IllegalArgumentException("src cannot equal dest: contraction is not an in place operation");
+			// TODO
+			// when the rank goes down but the dims stay the same does it have the shape of a tensor
+			// anymore? Do I need to fix this code or fix assumptions/conventions elsewhere in the code?
 			int rank = a.rank() - 2;
 			long[] newDims = new long[rank];
 			for (int k = 0; k < newDims.length; k++) {
 				newDims[k] = a.dimension(0);
 			}
 			b.alloc(newDims);
-			throw new IllegalArgumentException("TODO");
+			IntegerIndex point1 = new IntegerIndex(rank);
+			IntegerIndex point2 = new IntegerIndex(rank);
+			for (int k = 0; k < newDims.length; k++) {
+				point2.set(k, newDims[k] - 1);
+			}
+			SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
+			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			IntegerIndex contractedPos = new IntegerIndex(sampling.numDimensions());
+			IntegerIndex origPos = new IntegerIndex(a.rank());
+			Float64Member sum = G.DBL.construct();
+			Float64Member tmp = G.DBL.construct();
+			while (iter.hasNext()) {
+				iter.next(contractedPos);
+				G.DBL.zero().call(sum);
+				int p = 0;
+				for (int r = 0; r < a.rank(); r++) {
+					if (r == i)
+						origPos.set(i, 0);
+					else if (r == j)
+						origPos.set(j, 0);
+					else
+						origPos.set(r, contractedPos.get(p++));
+				}
+				for (int idx = 0; idx < a.dimension(0); idx++) {
+					origPos.set(i, idx);
+					origPos.set(j, idx);
+					a.v(origPos, tmp);
+					// TODO
+					// The wikipedia article implies in some ways we should multiply things and in
+					// other ways we should add things. I can only understand it to be add. I must
+					// debug this assumption.
+					G.DBL.add().call(sum, tmp, sum);
+				}
+				b.setV(contractedPos, sum);
+			}
 		}
 	};
 	
