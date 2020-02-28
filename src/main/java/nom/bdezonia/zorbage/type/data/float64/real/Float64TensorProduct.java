@@ -214,7 +214,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
-			shapeResult(a,c);
+			shapeResult(a, c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -362,7 +362,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a,c);
+			shapeResult(a, c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -388,7 +388,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a,c);
+			shapeResult(a, c);
 			Float64Member aTmp = new Float64Member();
 			Float64Member bTmp = new Float64Member();
 			Float64Member cTmp = new Float64Member();
@@ -730,9 +730,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float64Member delta, Float64TensorProductMember a, Float64TensorProductMember b) {
-			if (a != b) {
-				shapeResult(a, b);
-			}
+			shapeResult(a, b);
 			Float64Member tmp = G.DBL.construct();
 			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
