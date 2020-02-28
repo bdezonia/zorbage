@@ -549,9 +549,7 @@ public class Float64TensorProduct
 		public void call(IntegerIndex index, Float64TensorProductMember a, Float64TensorProductMember b) {
 			Float64Member val = G.DBL.construct();
 			a.v(index, val);
-			G.DBL.invert().call(val, val);
-			shapeResult(a, b);
-			nom.bdezonia.zorbage.algorithm.Scale.compute(G.DBL, val, a.rawData(), b.rawData());
+			divideByScalar().call(val, a, b);
 		}
 	};
 	
