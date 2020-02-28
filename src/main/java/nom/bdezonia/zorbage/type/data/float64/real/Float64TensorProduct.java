@@ -28,10 +28,13 @@ package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -173,11 +176,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a) {
-			Float64Member tmp = new Float64Member();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.setV(i, tmp);
-			}
+			a.primitiveInit();
 		}
 	};
 	
@@ -318,14 +317,8 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
-			Float64Member tmp = new Float64Member();
 			shapeResult(a, b);
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.DBL.add().call(tmp, scalar, tmp);
-				b.setV(i, tmp);
-			}
+			FixedTransform2.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
 		}
 	};
 	
@@ -340,13 +333,8 @@ public class Float64TensorProduct
 		@Override
 		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
 			Float64Member tmp = new Float64Member();
-			shapeResult(a, b);
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.DBL.subtract().call(tmp, scalar, tmp);
-				b.setV(i, tmp);
-			}
+			G.DBL.negate().call(scalar, tmp);
+			addScalar().call(tmp, a, b);
 		}
 	};
 	
@@ -363,16 +351,7 @@ public class Float64TensorProduct
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			Float64Member cTmp = new Float64Member();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, aTmp);
-				b.v(i, bTmp);
-				G.DBL.multiply().call(aTmp, bTmp, cTmp);
-				c.setV(i, cTmp);
-			}
+			Transform3.compute(G.DBL,G.DBL.multiply(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -389,16 +368,7 @@ public class Float64TensorProduct
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			Float64Member cTmp = new Float64Member();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, aTmp);
-				b.v(i, bTmp);
-				G.DBL.divide().call(aTmp, bTmp, cTmp);
-				c.setV(i, cTmp);
-			}
+			Transform3.compute(G.DBL,G.DBL.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -680,10 +650,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
 			G.DBL.nan().call(value);
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.setV(i, value);
-			}
+			Fill.compute(G.DBL, value, a.rawData());
 		}
 	};
 	
@@ -713,10 +680,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a) {
 			Float64Member value = G.DBL.construct();
 			G.DBL.infinite().call(value);
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.setV(i, value);
-			}
+			Fill.compute(G.DBL, value, a.rawData());
 		}
 	};
 			
