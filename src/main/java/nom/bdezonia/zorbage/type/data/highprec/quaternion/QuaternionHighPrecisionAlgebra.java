@@ -166,7 +166,7 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember a) {
-			assign().call(ZERO, a);
+			a.primitiveInit();
 		}
 	};
 	

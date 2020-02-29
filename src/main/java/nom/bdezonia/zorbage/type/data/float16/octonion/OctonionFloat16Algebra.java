@@ -325,7 +325,7 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(OctonionFloat16Member a) {
-			assign().call(ZERO, a);
+			a.primitiveInit();
 		}
 	};
 	

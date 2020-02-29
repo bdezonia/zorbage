@@ -204,7 +204,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV( 0 );
+			a.primitiveInit();
 		}
 	};
 

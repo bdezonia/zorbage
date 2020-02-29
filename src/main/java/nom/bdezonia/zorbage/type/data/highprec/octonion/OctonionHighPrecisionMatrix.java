@@ -46,7 +46,6 @@ import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
-import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Sinc;
@@ -138,7 +137,7 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMatrixMember a) {
-			MatrixZero.compute(a);
+			a.primitiveInit();
 		}
 	};
 	

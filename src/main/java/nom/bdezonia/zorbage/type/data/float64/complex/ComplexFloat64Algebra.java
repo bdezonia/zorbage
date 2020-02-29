@@ -115,7 +115,6 @@ public class ComplexFloat64Algebra
     ScaleComponents<ComplexFloat64Member, Float64Member>,
     Tolerance<Float64Member,ComplexFloat64Member>
 {
-	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
 	private static final ComplexFloat64Member MINUS_ONE = new ComplexFloat64Member(-1,0);
@@ -178,7 +177,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a) {
-			assign().call(ZERO,a);
+			a.primitiveInit();
 		}
 	};
 

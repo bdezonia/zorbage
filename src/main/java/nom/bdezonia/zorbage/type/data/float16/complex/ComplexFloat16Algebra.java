@@ -115,7 +115,6 @@ public class ComplexFloat16Algebra
     ScaleComponents<ComplexFloat16Member, Float16Member>,
     Tolerance<Float16Member,ComplexFloat16Member>
 {
-	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);
 	private static final ComplexFloat16Member MINUS_ONE = new ComplexFloat16Member(-1,0);
@@ -178,7 +177,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a) {
-			assign().call(ZERO,a);
+			a.primitiveInit();
 		}
 	};
 

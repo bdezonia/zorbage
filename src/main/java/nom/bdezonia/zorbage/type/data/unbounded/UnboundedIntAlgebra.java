@@ -111,7 +111,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public void call(UnboundedIntMember a) {
-			a.setV( BigInteger.ZERO );
+			a.primitiveInit();
 		}
 	};
 			

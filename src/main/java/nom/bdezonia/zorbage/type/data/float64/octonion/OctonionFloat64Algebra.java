@@ -325,7 +325,7 @@ public class OctonionFloat64Algebra
 	{
 		@Override
 		public void call(OctonionFloat64Member a) {
-			assign().call(ZERO, a);
+			a.primitiveInit();
 		}
 	};
 	

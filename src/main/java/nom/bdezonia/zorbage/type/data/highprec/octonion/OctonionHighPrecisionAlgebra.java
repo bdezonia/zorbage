@@ -306,7 +306,7 @@ public class OctonionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember a) {
-			assign().call(ZERO, a);
+			a.primitiveInit();
 		}
 	};
 	

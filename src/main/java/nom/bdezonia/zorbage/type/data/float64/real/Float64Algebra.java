@@ -208,7 +208,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a) {
-			a.setV( 0 );
+			a.primitiveInit();
 		}
 	};
 	

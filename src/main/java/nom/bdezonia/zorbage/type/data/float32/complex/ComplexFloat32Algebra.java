@@ -115,7 +115,6 @@ public class ComplexFloat32Algebra
     ScaleComponents<ComplexFloat32Member, Float32Member>,
     Tolerance<Float32Member,ComplexFloat32Member>
 {
-	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
 	private static final ComplexFloat32Member ONE = new ComplexFloat32Member(1,0);
 	private static final ComplexFloat32Member TWO = new ComplexFloat32Member(2,0);
 	private static final ComplexFloat32Member MINUS_ONE = new ComplexFloat32Member(-1,0);
@@ -178,7 +177,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(ComplexFloat32Member a) {
-			assign().call(ZERO,a);
+			a.primitiveInit();
 		}
 	};
 

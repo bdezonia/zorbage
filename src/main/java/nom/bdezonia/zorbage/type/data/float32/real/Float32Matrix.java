@@ -48,7 +48,6 @@ import nom.bdezonia.zorbage.algorithm.MatrixSpectralNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
-import nom.bdezonia.zorbage.algorithm.MatrixZero;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -151,7 +150,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			MatrixZero.compute(a);
+			a.primitiveInit();
 		}
 	};
 	

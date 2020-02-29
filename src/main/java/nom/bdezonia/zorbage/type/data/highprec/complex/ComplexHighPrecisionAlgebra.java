@@ -102,7 +102,6 @@ public class ComplexHighPrecisionAlgebra
     ScaleComponents<ComplexHighPrecisionMember, HighPrecisionMember>,
     Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
 {
-	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember MINUS_ONE = new ComplexHighPrecisionMember(BigDecimal.valueOf(-1),BigDecimal.ZERO);
@@ -156,7 +155,7 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember a) {
-			assign().call(ZERO,a);
+			a.primitiveInit();
 		}
 	};
 

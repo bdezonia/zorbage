@@ -213,7 +213,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a) {
-			a.setV( BigDecimal.ZERO );
+			a.primitiveInit();
 		}
 	};
 	

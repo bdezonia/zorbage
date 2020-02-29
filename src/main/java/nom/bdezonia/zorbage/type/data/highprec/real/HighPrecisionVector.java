@@ -43,7 +43,6 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
-import nom.bdezonia.zorbage.algorithm.RModuleZero;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.function.Function1;
@@ -93,7 +92,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a) {
-			RModuleZero.compute(a);
+			a.primitiveInit();
 		}
 	};
 	

@@ -172,7 +172,7 @@ public class QuaternionFloat32Algebra
 	{
 		@Override
 		public void call(QuaternionFloat32Member a) {
-			assign().call(ZERO, a);
+			a.primitiveInit();
 		}
 	};
 	
