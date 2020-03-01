@@ -29,15 +29,15 @@ package nom.bdezonia.zorbage.type.data.float64.complex;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
+import nom.bdezonia.zorbage.algorithm.FillInfinite;
+import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
-import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
-import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -383,7 +383,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a) {
-			RModuleNaN.compute(G.CDBL, a);
+			FillNaN.compute(G.CDBL, a);
 		}
 	};
 	
@@ -411,7 +411,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a) {
-			RModuleInfinite.compute(G.CDBL, a);
+			FillInfinite.compute(G.CDBL, a);
 		}
 	};
 

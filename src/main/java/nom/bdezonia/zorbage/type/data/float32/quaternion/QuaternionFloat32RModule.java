@@ -29,15 +29,15 @@ package nom.bdezonia.zorbage.type.data.float32.quaternion;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
+import nom.bdezonia.zorbage.algorithm.FillInfinite;
+import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
 import nom.bdezonia.zorbage.algorithm.RModuleConjugate;
 import nom.bdezonia.zorbage.algorithm.RModuleDefaultNorm;
 import nom.bdezonia.zorbage.algorithm.RModuleDirectProduct;
-import nom.bdezonia.zorbage.algorithm.RModuleInfinite;
 import nom.bdezonia.zorbage.algorithm.RModuleEqual;
-import nom.bdezonia.zorbage.algorithm.RModuleNaN;
 import nom.bdezonia.zorbage.algorithm.RModuleNegate;
 import nom.bdezonia.zorbage.algorithm.RModuleRound;
 import nom.bdezonia.zorbage.algorithm.RModuleScale;
@@ -394,7 +394,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(QuaternionFloat32RModuleMember a) {
-			RModuleNaN.compute(G.QFLT, a);
+			FillNaN.compute(G.QFLT, a);
 		}
 	};
 	
@@ -422,7 +422,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(QuaternionFloat32RModuleMember a) {
-			RModuleInfinite.compute(G.QFLT, a);
+			FillInfinite.compute(G.QFLT, a);
 		}
 	};
 

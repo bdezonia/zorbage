@@ -26,30 +26,26 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NaN;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.storage.datasource.RawData;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class RModuleNaN {
+public class TestFillInfinite {
 
-	private RModuleNaN() { }
-	
-	/**
-	 * 
-	 * @param alg
-	 * @param a
-	 */
-	public static <T extends Algebra<T,U> & NaN<U>, U, W extends RModuleMember<U> & RawData<U>>
-		void compute(T alg, W a)
-	{
-		U value = alg.construct();
-		alg.nan().call(value);
-		Fill.compute(alg, value, a.rawData());
+	@Test
+	public void test() {
+		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
+		assertFalse(SequenceIsInf.compute(G.DBL, a.rawData()));
+		FillInfinite.compute(G.DBL, a);
+		assertTrue(SequenceIsInf.compute(G.DBL, a.rawData()));
 	}
 }

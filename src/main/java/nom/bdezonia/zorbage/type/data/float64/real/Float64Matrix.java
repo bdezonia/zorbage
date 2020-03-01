@@ -27,16 +27,16 @@
 package nom.bdezonia.zorbage.type.data.float64.real;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.FillInfinite;
+import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
-import nom.bdezonia.zorbage.algorithm.MatrixInfinite;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
-import nom.bdezonia.zorbage.algorithm.MatrixNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
 import nom.bdezonia.zorbage.algorithm.MatrixRound;
@@ -310,7 +310,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a) {
-			MatrixNaN.compute(G.DBL, a);
+			FillNaN.compute(G.DBL, a);
 		}
 	};
 
@@ -338,7 +338,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a) {
-			MatrixInfinite.compute(G.DBL, a);
+			FillInfinite.compute(G.DBL, a);
 		}
 	};
 	
