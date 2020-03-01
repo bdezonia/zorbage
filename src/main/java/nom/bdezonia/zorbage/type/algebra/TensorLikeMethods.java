@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.algebra;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
@@ -44,9 +46,9 @@ public interface TensorLikeMethods<U,W> {
 	Procedure3<W,U,U> divideByScalar();
 	Procedure3<U,U,U> multiplyElements();
 	Procedure3<U,U,U> divideElements();
-	Procedure1<java.lang.Integer> semicolonDerivative();
+	Procedure1<Object> semicolonDerivative();
 	Procedure3<IntegerIndex,U,U> commaDerivative();
-	Procedure4<java.lang.Integer,java.lang.Integer,U,U> contract();
+	Procedure4<Integer,Integer,U,U> contract();
 
 	// TODO
 	// ProcX innerProduct();

@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.Fill;
@@ -488,7 +490,7 @@ public class Float64TensorProduct
 	};
 	
 	@Override
-	public Procedure4<java.lang.Integer,java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> contract() {
+	public Procedure4<Integer,Integer,Float64TensorProductMember,Float64TensorProductMember> contract() {
 		return CONTRACT;
 	}
 		
@@ -496,17 +498,17 @@ public class Float64TensorProduct
 
 	// TODO
 	
-	private final Procedure1<java.lang.Integer> SEMI =
-			new Procedure1<Integer>()
+	private final Procedure1<Object> SEMI =
+			new Procedure1<Object>()
 	{
 		@Override
-		public void call(Integer a) {
+		public void call(Object a) {
 			throw new IllegalArgumentException("TODO");
 		}
 	};
 	
 	@Override
-	public Procedure1<java.lang.Integer> semicolonDerivative() {
+	public Procedure1<Object> semicolonDerivative() {
 		return SEMI;
 	}
 	
@@ -564,7 +566,7 @@ public class Float64TensorProduct
 
 	// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 	
-	private final Procedure3<java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> POWER =
+	private final Procedure3<Integer,Float64TensorProductMember,Float64TensorProductMember> POWER =
 			new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
@@ -602,7 +604,7 @@ public class Float64TensorProduct
 	};
 	
 	@Override
-	public Procedure3<java.lang.Integer,Float64TensorProductMember,Float64TensorProductMember> power() {
+	public Procedure3<Integer,Float64TensorProductMember,Float64TensorProductMember> power() {
 		return POWER;
 	}
 
