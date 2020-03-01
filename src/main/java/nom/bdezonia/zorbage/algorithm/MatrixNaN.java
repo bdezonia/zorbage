@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.NaN;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -44,16 +45,11 @@ public class MatrixNaN {
 	 * @param alg
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U> & NaN<U>, U>
-		void compute(T alg, MatrixMember<U> a)
+	public static <T extends Algebra<T,U> & NaN<U>, U, W extends MatrixMember<U> & RawData<U>>
+		void compute(T alg, W a)
 	{
 		U value = alg.construct();
 		alg.nan().call(value);
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.setV(r, c, value);
-			}
-		}
-		
+		Fill.compute(alg, value, a.rawData());
 	}
 }

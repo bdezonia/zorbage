@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -44,20 +45,11 @@ public class MatrixInfinite {
 	 * @param alg
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U> & Infinite<U>, U>
-		void compute(T alg, MatrixMember<U> a)
+	public static <T extends Algebra<T,U> & Infinite<U>, U, W extends MatrixMember<U> & RawData<U>>
+		void compute(T alg, W a)
 	{
-		// comment out this possible source of bugs. empty matrices will remain that way.
-		//if (a.rows() == 0 || a.cols() == 0) {
-		//	a.alloc(1,1);
-		//}
 		U value = alg.construct();
 		alg.infinite().call(value);
-		for (long r = 0; r < a.rows(); r++) {
-			for (long c = 0; c < a.cols(); c++) {
-				a.setV(r, c, value);
-			}
-		}
-		
+		Fill.compute(alg, value, a.rawData());
 	}
 }

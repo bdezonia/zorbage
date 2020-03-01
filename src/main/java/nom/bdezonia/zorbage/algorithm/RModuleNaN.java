@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.storage.datasource.RawData;
 
 /**
  * 
@@ -44,18 +45,11 @@ public class RModuleNaN {
 	 * @param alg
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U> & NaN<U>, U>
-		void compute(T alg, RModuleMember<U> a)
+	public static <T extends Algebra<T,U> & NaN<U>, U, W extends RModuleMember<U> & RawData<U>>
+		void compute(T alg, W a)
 	{
-		// comment out this possible source of bugs. empty rmodules will remain that way.
-		//if (a.length() == 0) {
-		//	a.alloc(1);
-		//}
 		U value = alg.construct();
 		alg.nan().call(value);
-		for (long i = 0; i < a.length(); i++) {
-			a.setV(i, value);
-		}
-		
+		Fill.compute(alg, value, a.rawData());
 	}
 }
