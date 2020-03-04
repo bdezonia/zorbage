@@ -442,17 +442,14 @@ public class Float64TensorProduct
 				throw new IllegalArgumentException("contraction indices cannot be out of bounds of input tensor's rank");
 			if (a == b)
 				throw new IllegalArgumentException("src cannot equal dest: contraction is not an in place operation");
-			// TODO
-			// when the rank goes down but the dims stay the same does it have the shape of a tensor
-			// anymore? Do I need to fix this code or fix assumptions/conventions elsewhere in the code?
-			int rank = a.rank() - 2;
-			long[] newDims = new long[rank];
+			int newRank = a.rank() - 2;
+			long[] newDims = new long[newRank];
 			for (int k = 0; k < newDims.length; k++) {
 				newDims[k] = a.dimension(0);
 			}
 			b.alloc(newDims);
-			IntegerIndex point1 = new IntegerIndex(rank);
-			IntegerIndex point2 = new IntegerIndex(rank);
+			IntegerIndex point1 = new IntegerIndex(newRank);
+			IntegerIndex point2 = new IntegerIndex(newRank);
 			for (int k = 0; k < newDims.length; k++) {
 				point2.set(k, newDims[k] - 1);
 			}
@@ -464,7 +461,6 @@ public class Float64TensorProduct
 			Float64Member tmp = G.DBL.construct();
 			while (iter.hasNext()) {
 				iter.next(contractedPos);
-				G.DBL.zero().call(sum);
 				int p = 0;
 				for (int r = 0; r < a.rank(); r++) {
 					if (r == i)
@@ -474,14 +470,11 @@ public class Float64TensorProduct
 					else
 						origPos.set(r, contractedPos.get(p++));
 				}
+				G.DBL.zero().call(sum);
 				for (int idx = 0; idx < a.dimension(0); idx++) {
 					origPos.set(i, idx);
 					origPos.set(j, idx);
 					a.v(origPos, tmp);
-					// TODO
-					// The wikipedia article implies in some ways we should multiply things and in
-					// other ways we should add things. I can only understand it to be add. I must
-					// debug this assumption.
 					G.DBL.add().call(sum, tmp, sum);
 				}
 				b.setV(contractedPos, sum);
