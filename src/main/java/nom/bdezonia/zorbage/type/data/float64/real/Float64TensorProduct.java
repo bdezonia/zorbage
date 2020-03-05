@@ -424,6 +424,19 @@ public class Float64TensorProduct
 				newDims[k] = a.dimension(0);
 			}
 			b.alloc(newDims);
+			if (newRank == 0) {
+				Float64Member sum = G.DBL.construct();
+				Float64Member tmp = G.DBL.construct();
+				IntegerIndex pos = new IntegerIndex(2);
+				for (int idx = 0; idx < a.dimension(0); idx++) {
+					pos.set(i, idx);
+					pos.set(j, idx);
+					a.v(pos, tmp);
+					G.DBL.add().call(sum, tmp, sum);
+				}
+				b.setV(0, sum);
+				return;
+			}
 			IntegerIndex point1 = new IntegerIndex(newRank);
 			IntegerIndex point2 = new IntegerIndex(newRank);
 			for (int k = 0; k < newDims.length; k++) {
