@@ -126,7 +126,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64TensorProductMember a, Float64TensorProductMember b) {
-			if (!shapesMatch(a,b))
+			if (!shapesMatch(a, b))
 				return false;
 			return SequencesSimilar.compute(G.DBL, G.DBL.construct(), a.rawData(), b.rawData());
 		}
@@ -142,7 +142,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64TensorProductMember a, Float64TensorProductMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	
@@ -206,7 +206,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (!shapesMatch(a,b))
+			if (!shapesMatch(a, b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
 			shapeResult(a, c);
 			Transform3.compute(G.DBL, G.DBL.add(), a.rawData(), b.rawData(), c.rawData());
@@ -223,7 +223,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (!shapesMatch(a,b))
+			if (!shapesMatch(a, b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
 			shapeResult(a, c);
 			Transform3.compute(G.DBL, G.DBL.subtract(), a.rawData(), b.rawData(), c.rawData());
@@ -325,7 +325,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (!shapesMatch(a,b))
+			if (!shapesMatch(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
 			Transform3.compute(G.DBL, G.DBL.multiply(), a.rawData(), b.rawData(), c.rawData());
@@ -342,7 +342,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (!shapesMatch(a,b))
+			if (!shapesMatch(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
 			Transform3.compute(G.DBL,G.DBL.divide(),a.rawData(),b.rawData(),c.rawData());
@@ -506,7 +506,7 @@ public class Float64TensorProduct
 			else {
 				Float64TensorProductMember tmp1 = G.DBL_TEN.construct();
 				Float64TensorProductMember tmp2 = G.DBL_TEN.construct();
-				multiply().call(a,a,tmp1);
+				multiply().call(a, a, tmp1);
 				for (int i = 2; i < (power/2)*2; i += 2) {
 					multiply().call(tmp1, a, tmp2);
 					multiply().call(tmp2, a, tmp1);
@@ -644,9 +644,9 @@ public class Float64TensorProduct
 			new Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
-		public void call(RationalMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			shapeResult(b, c);
-			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.DBL, a, b.rawData(), c.rawData());
+		public void call(RationalMember factor, Float64TensorProductMember a, Float64TensorProductMember b) {
+			shapeResult(a, b);
+			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.DBL, factor, a.rawData(), b.rawData());
 		}
 	};
 
@@ -659,9 +659,9 @@ public class Float64TensorProduct
 			new Procedure3<Double, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
-		public void call(Double a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			shapeResult(b, c);
-			nom.bdezonia.zorbage.algorithm.ScaleByDouble.compute(G.DBL, a, b.rawData(), c.rawData());
+		public void call(Double factor, Float64TensorProductMember a, Float64TensorProductMember b) {
+			shapeResult(a, b);
+			nom.bdezonia.zorbage.algorithm.ScaleByDouble.compute(G.DBL, factor, a.rawData(), b.rawData());
 		}
 	};
 
@@ -674,9 +674,9 @@ public class Float64TensorProduct
 			new Procedure3<HighPrecisionMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			shapeResult(b, c);
-			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.DBL, a, b.rawData(), c.rawData());
+		public void call(HighPrecisionMember factor, Float64TensorProductMember a, Float64TensorProductMember b) {
+			shapeResult(a, b);
+			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.DBL, factor, a.rawData(), b.rawData());
 		}
 	};
 
