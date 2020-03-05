@@ -799,6 +799,9 @@ public class Float64TensorProduct
 		@Override
 		public void call(Integer idx, Float64TensorProductMember a, Float64TensorProductMember b) {
 			
+			if (idx < 0 || idx >= a.rank())
+				throw new IllegalArgumentException("index outside rank bounds in raiseIndex");
+			
 			// this operation should not affect a cartesian tensor
 			
 			G.DBL_TEN.assign().call(a, b);
@@ -815,6 +818,9 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Integer idx, Float64TensorProductMember a, Float64TensorProductMember b) {
+			
+			if (idx < 0 || idx >= a.rank())
+				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
 			
 			// this operation should not affect a cartesian tensor
 			
