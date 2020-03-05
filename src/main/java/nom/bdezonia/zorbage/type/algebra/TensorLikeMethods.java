@@ -31,6 +31,7 @@ import java.lang.Integer;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -51,6 +52,6 @@ public interface TensorLikeMethods<U,W> {
 	Procedure4<Integer,Integer,U,U> contract();
 	Procedure3<Integer,U,U> raiseIndex();
 	Procedure3<Integer,U,U> lowerIndex();
-	Procedure3<U,U,U> innerProduct();
+	Procedure5<Integer,Integer,U,U,U> innerProduct();
 	Procedure3<U,U,U> outerProduct();
 }
