@@ -62,9 +62,6 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 
 //do I skip Vector and Matrix and even Scalar?
 
-//TODO: make one tensor/member pair for each of float64, complex64, quat64, oct64
-//TODO: determine if this is a field or something else or two things for float/complex vs. quat/oct
-
 // this implies it is an OrderedField. Do tensors have an ordering? abs() exists in TensorFlow.
 //@Override
 //public void abs(TensorMember a, TensorMember b) {}
@@ -489,14 +486,12 @@ public class Float64TensorProduct
 		
 	// http://mathworld.wolfram.com/CovariantDerivative.html
 
-	// TODO
-	
 	private final Procedure1<Object> SEMI =
 			new Procedure1<Object>()
 	{
 		@Override
 		public void call(Object a) {
-			throw new IllegalArgumentException("TODO");
+			throw new IllegalArgumentException("TODO - implement semicolonDerivative()");
 		}
 	};
 	
@@ -522,41 +517,6 @@ public class Float64TensorProduct
 	public Procedure3<IntegerIndex,Float64TensorProductMember,Float64TensorProductMember> commaDerivative() {
 		return COMMA;
 	}
-	
-	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
-		if (a.numDimensions() != b.numDimensions())
-			return false;
-		for (int i = 0; i < a.numDimensions(); i++) {
-			if (a.dimension(i) != b.dimension(i))
-				return false;
-		}
-		return true;
-	}
-	
-	/* future version
-	
-	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
-		int i = 0;
-		int j = 0;
-		while (i < a.numDimensions() && j < b.numDimensions()) {
-			while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-			while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-			if (i < a.numDimensions() && j < b.numDimensions() && a.dimension(i) != b.dimension(j))
-				return false;
-			else {
-				i++;
-				j++;
-			}
-		}
-		while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-		while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-		if (i != a.numDimensions() || j != b.numDimensions())
-			return false;
-		return true;
-	}
-	
-	*/
-
 	// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 	
 	private final Procedure3<Integer,Float64TensorProductMember,Float64TensorProductMember> POWER =
@@ -822,4 +782,103 @@ public class Float64TensorProduct
 	public Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
+	
+	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
+		if (a.numDimensions() != b.numDimensions())
+			return false;
+		for (int i = 0; i < a.numDimensions(); i++) {
+			if (a.dimension(i) != b.dimension(i))
+				return false;
+		}
+		return true;
+	}
+
+	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> RAISE
+		= new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Integer idx, Float64TensorProductMember a, Float64TensorProductMember b) {
+			
+			// this operation should not affect a cartesian tensor
+			
+			G.DBL_TEN.assign().call(a, b);
+		}
+	};
+	
+	@Override
+	public Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> raiseIndex() {
+		return RAISE;
+	}
+
+	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> LOWER
+		= new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Integer idx, Float64TensorProductMember a, Float64TensorProductMember b) {
+			
+			// this operation should not affect a cartesian tensor
+			
+			G.DBL_TEN.assign().call(a, b);
+		}
+	};
+	
+	@Override
+	public Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> lowerIndex() {
+		return LOWER;
+	}
+
+	private final Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember> INNER =
+		new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			
+			throw new IllegalArgumentException("TODO - implement innerProduct()");
+		}
+	};
+		
+	@Override
+	public Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember> innerProduct() {
+		return INNER;
+	}
+
+	private final Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember> OUTER =
+			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
+	{
+		@Override
+		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+			
+			throw new IllegalArgumentException("TODO - implement outerProduct()");
+		}
+	};
+			
+	@Override
+	public Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember> outerProduct() {
+		return OUTER;
+	}
+	
+	/* future version
+	
+	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
+		int i = 0;
+		int j = 0;
+		while (i < a.numDimensions() && j < b.numDimensions()) {
+			while (i < a.numDimensions() && a.dimension(i) == 1) i++;
+			while (j < b.numDimensions() && b.dimension(i) == 1) j++;
+			if (i < a.numDimensions() && j < b.numDimensions() && a.dimension(i) != b.dimension(j))
+				return false;
+			else {
+				i++;
+				j++;
+			}
+		}
+		while (i < a.numDimensions() && a.dimension(i) == 1) i++;
+		while (j < b.numDimensions() && b.dimension(i) == 1) j++;
+		if (i != a.numDimensions() || j != b.numDimensions())
+			return false;
+		return true;
+	}
+	
+	*/
+
 }
