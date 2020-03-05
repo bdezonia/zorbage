@@ -30,7 +30,8 @@ import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
-import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.FillInfinite;
+import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
@@ -566,9 +567,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a) {
-			Float64Member value = G.DBL.construct();
-			G.DBL.nan().call(value);
-			Fill.compute(G.DBL, value, a.rawData());
+			FillNaN.compute(G.DBL, a);
 		}
 	};
 	
@@ -596,9 +595,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a) {
-			Float64Member value = G.DBL.construct();
-			G.DBL.infinite().call(value);
-			Fill.compute(G.DBL, value, a.rawData());
+			FillInfinite.compute(G.DBL, a);
 		}
 	};
 			
