@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -59,7 +60,7 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 
 //note that many implementations of tensors on the internet treat them as generalized matrices.
 //they do not worry about upper and lower indices or even matching shapes. They do element by
-//element ops like sin() of each elem.
+//element ops like sin() of each elem. That will not be my approach.
 
 //do I skip Vector and Matrix and even Scalar?
 
@@ -68,7 +69,6 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 //public void abs(TensorMember a, TensorMember b) {}
 // tensorflow also has trigonometric and hyperbolic
 
-//public void contract(int i, int j, TensorMember a, TensorMember b, TensorMember c) {}
 //public void takeDiagonal(TensorMember a, Object b) {} // change Object to Vector
 //many more
 
@@ -190,14 +190,8 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b) {
-			Float64Member tmp = new Float64Member();
 			shapeResult(a, b);
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.DBL.negate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			Transform2.compute(G.DBL, G.DBL.negate(), a.rawData(), b.rawData());
 		}
 	};
 	
@@ -214,16 +208,7 @@ public class Float64TensorProduct
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
 			shapeResult(a, c);
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			Float64Member cTmp = new Float64Member();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, aTmp);
-				b.v(i, bTmp);
-				G.DBL.add().call(aTmp, bTmp, cTmp);
-				c.setV(i, cTmp);
-			}
+			Transform3.compute(G.DBL, G.DBL.add(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
 	
@@ -240,16 +225,7 @@ public class Float64TensorProduct
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
 			shapeResult(a, c);
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			Float64Member cTmp = new Float64Member();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, aTmp);
-				b.v(i, bTmp);
-				G.DBL.subtract().call(aTmp, bTmp, cTmp);
-				c.setV(i, cTmp);
-			}
+			Transform3.compute(G.DBL, G.DBL.subtract(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
 	
@@ -351,7 +327,7 @@ public class Float64TensorProduct
 			if (!shapesMatch(a,b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
-			Transform3.compute(G.DBL,G.DBL.multiply(),a.rawData(),b.rawData(),c.rawData());
+			Transform3.compute(G.DBL, G.DBL.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
 	
@@ -378,6 +354,8 @@ public class Float64TensorProduct
 	}
 
 	// TODO citation needed. I wrote this long ago and no longer can tell if it makes sense.
+	
+	// Later edit: is this actually an implementation of an outer product? Investigate.
 	
 	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> MUL =
 			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
@@ -680,15 +658,6 @@ public class Float64TensorProduct
 		return ISZERO;
 	}
 
-	private void shapeResult(Float64TensorProductMember from, Float64TensorProductMember to) {
-		if (from == to) return;
-		long[] dims = new long[from.numDimensions()];
-		for (int i = 0; i < dims.length; i++) {
-			dims[i] = from.dimension(i);
-		}
-		to.alloc(dims);
-	}
-
 	private final Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember> SBR =
 			new Procedure3<RationalMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
@@ -784,16 +753,6 @@ public class Float64TensorProduct
 		return DIVBYSCALAR;
 	}
 	
-	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
-		if (a.numDimensions() != b.numDimensions())
-			return false;
-		for (int i = 0; i < a.numDimensions(); i++) {
-			if (a.dimension(i) != b.dimension(i))
-				return false;
-		}
-		return true;
-	}
-
 	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> RAISE
 		= new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
 	{
@@ -870,6 +829,25 @@ public class Float64TensorProduct
 		return OUTER;
 	}
 	
+	private void shapeResult(Float64TensorProductMember from, Float64TensorProductMember to) {
+		if (from == to) return;
+		long[] dims = new long[from.numDimensions()];
+		for (int i = 0; i < dims.length; i++) {
+			dims[i] = from.dimension(i);
+		}
+		to.alloc(dims);
+	}
+
+	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
+		if (a.numDimensions() != b.numDimensions())
+			return false;
+		for (int i = 0; i < a.numDimensions(); i++) {
+			if (a.dimension(i) != b.dimension(i))
+				return false;
+		}
+		return true;
+	}
+
 	/* future version
 	
 	private boolean shapesMatch(Float64TensorProductMember a, Float64TensorProductMember b) {
