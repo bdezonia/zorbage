@@ -737,8 +737,8 @@ public class Float64TensorProduct
 		return DIVBYSCALAR;
 	}
 	
-	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> RAISE
-		= new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
+	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> RAISE =
+		new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
 		public void call(Integer idx, Float64TensorProductMember a, Float64TensorProductMember b) {
@@ -757,8 +757,8 @@ public class Float64TensorProduct
 		return RAISE;
 	}
 
-	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> LOWER
-		= new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
+	private final Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember> LOWER =
+		new Procedure3<Integer, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
 		public void call(Integer idx, Float64TensorProductMember a, Float64TensorProductMember b) {
@@ -783,6 +783,10 @@ public class Float64TensorProduct
 		@Override
 		public void call(Integer aIndex, Integer bIndex, Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			
+			if (aIndex < 0 || bIndex < 0)
+				throw new IllegalArgumentException("tensor innerProduct() cannot handle negative indices");
+			if (aIndex >= a.rank() || bIndex >= b.rank())
+				throw new IllegalArgumentException("tensor innerProduct() cannot handle out of bounds indices");
 			Float64TensorProductMember tmp = G.DBL_TEN.construct();
 			outerProduct().call(a, b, tmp);
 			contract().call(aIndex, a.rank() + bIndex, tmp, c);
