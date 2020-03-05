@@ -353,44 +353,15 @@ public class Float64TensorProduct
 		return DIVIDEEL;
 	}
 
-	// TODO citation needed. I wrote this long ago and no longer can tell if it makes sense.
-	
-	// Later edit: is this actually an implementation of an outer product? Investigate.
+	// multiplication is a tensor product
+	// https://www.math3ma.com/blog/the-tensor-product-demystified
 	
 	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> MUL =
 			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			if (c == a || c == b)
-				throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
-			long dimA = a.dimension(0);
-			long dimB = b.dimension(0);
-			if (dimA != dimB)
-				throw new IllegalArgumentException("dimension of tensors must match");
-			int rankA = a.numDimensions();
-			int rankB = b.numDimensions();
-			int rankC = rankA + rankB;
-			long[] cDims = new long[rankC];
-			for (int i = 0; i < cDims.length; i++) {
-				cDims[i] = dimA;
-			}
-			c.alloc(cDims);
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			Float64Member cTmp = new Float64Member();
-			long k = 0;
-			long numElemsA = a.numElems();
-			long numElemsB = b.numElems();
-			for (long i = 0; i < numElemsA; i++) {
-				a.v(i, aTmp);
-				for (long j = 0; j < numElemsB; j++) {
-					b.v(j, bTmp);
-					G.DBL.multiply().call(aTmp, bTmp, cTmp);
-					c.setV(k, cTmp);
-					k++;
-				}
-			}
+			outerProduct().call(a, b, c);
 		}
 	};
 	
@@ -833,7 +804,35 @@ public class Float64TensorProduct
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			
-			throw new IllegalArgumentException("TODO - implement outerProduct()");
+			if (c == a || c == b)
+				throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
+			long dimA = a.dimension(0);
+			long dimB = b.dimension(0);
+			if (dimA != dimB)
+				throw new IllegalArgumentException("dimension of tensors must match");
+			int rankA = a.numDimensions();
+			int rankB = b.numDimensions();
+			int rankC = rankA + rankB;
+			long[] cDims = new long[rankC];
+			for (int i = 0; i < cDims.length; i++) {
+				cDims[i] = dimA;
+			}
+			c.alloc(cDims);
+			Float64Member aTmp = new Float64Member();
+			Float64Member bTmp = new Float64Member();
+			Float64Member cTmp = new Float64Member();
+			long k = 0;
+			long numElemsA = a.numElems();
+			long numElemsB = b.numElems();
+			for (long i = 0; i < numElemsA; i++) {
+				a.v(i, aTmp);
+				for (long j = 0; j < numElemsB; j++) {
+					b.v(j, bTmp);
+					G.DBL.multiply().call(aTmp, bTmp, cTmp);
+					c.setV(k, cTmp);
+					k++;
+				}
+			}
 		}
 	};
 			
