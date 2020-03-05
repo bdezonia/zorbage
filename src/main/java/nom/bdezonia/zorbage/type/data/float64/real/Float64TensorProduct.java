@@ -777,19 +777,15 @@ public class Float64TensorProduct
 		return LOWER;
 	}
 
-	// TODO: I'm guessing i and j have to be specified relative to the outer product result. Is this
-	// confusing to use or natural? If confusing should I work in i and j local to a and b. And then
-	// I do some manipulations of i and j to put them in the outer product index space?
-	
 	private final Procedure5<Integer, Integer, Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember> INNER =
 		new Procedure5<Integer, Integer, Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
-		public void call(Integer i, Integer j, Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+		public void call(Integer aIndex, Integer bIndex, Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
 			
 			Float64TensorProductMember tmp = G.DBL_TEN.construct();
 			outerProduct().call(a, b, tmp);
-			contract().call(i, j, tmp, c);
+			contract().call(aIndex, a.rank() + bIndex, tmp, c);
 		}
 	};
 		
