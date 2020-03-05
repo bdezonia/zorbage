@@ -158,7 +158,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember from, Float64TensorProductMember to) {
 			if (to == from) return;
 			shapeResult(from, to);
-			Float64Member tmp = new Float64Member();
+			Float64Member tmp = G.DBL.construct();
 			long numElems = from.numElems();
 			for (long i = 0; i < numElems; i++) {
 				from.v(i, tmp);
@@ -242,8 +242,8 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember a, Float64Member b) {
 			// TODO: to port to complex, quat, oct do I need to multiply() not by self but by the
 			// conjugate of self. We need to transform a comp, quat, oct into a real.
-			Float64Member max = new Float64Member();
-			Float64Member value = new Float64Member();
+			Float64Member max = G.DBL.construct();
+			Float64Member value = G.DBL.construct();
 			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
@@ -251,7 +251,7 @@ public class Float64TensorProduct
 				if (G.DBL.isGreater().call(value, max))
 					G.DBL.assign().call(value, max);
 			}
-			Float64Member sum = new Float64Member();
+			Float64Member sum = G.DBL.construct();
 			for (long i = 0; i < numElems; i++) {
 				a.v(i, value);
 				G.DBL.divide().call(value, max, value);
@@ -309,7 +309,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64Member scalar, Float64TensorProductMember a, Float64TensorProductMember b) {
-			Float64Member tmp = new Float64Member();
+			Float64Member tmp = G.DBL.construct();
 			G.DBL.negate().call(scalar, tmp);
 			addScalar().call(tmp, a, b);
 		}
@@ -354,14 +354,15 @@ public class Float64TensorProduct
 		return DIVIDEEL;
 	}
 
-	// multiplication is a tensor product
-	// https://www.math3ma.com/blog/the-tensor-product-demystified
-	
 	private final Procedure3<Float64TensorProductMember,Float64TensorProductMember,Float64TensorProductMember> MUL =
 			new Procedure3<Float64TensorProductMember, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+
+			// multiplication is a tensor product
+			// https://www.math3ma.com/blog/the-tensor-product-demystified
+			
 			outerProduct().call(a, b, c);
 		}
 	};
@@ -503,8 +504,8 @@ public class Float64TensorProduct
 				assign().call(a, b);
 			}
 			else {
-				Float64TensorProductMember tmp1 = new Float64TensorProductMember();
-				Float64TensorProductMember tmp2 = new Float64TensorProductMember();
+				Float64TensorProductMember tmp1 = G.DBL_TEN.construct();
+				Float64TensorProductMember tmp2 = G.DBL_TEN.construct();
 				multiply().call(a,a,tmp1);
 				for (int i = 2; i < (power/2)*2; i += 2) {
 					multiply().call(tmp1, a, tmp2);
@@ -530,7 +531,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember result) {
-			Float64Member one = new Float64Member();
+			Float64Member one = G.DBL.construct();
 			G.DBL.unity().call(one);
 			zero().call(result);
 			IntegerIndex index = new IntegerIndex(result.rank());
@@ -708,8 +709,8 @@ public class Float64TensorProduct
 			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
-		public void call(Float64Member a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			scale().call(a, b, c);
+		public void call(Float64Member factor, Float64TensorProductMember a, Float64TensorProductMember b) {
+			scale().call(factor, a, b);
 		}
 	};
 	
@@ -722,10 +723,10 @@ public class Float64TensorProduct
 			new Procedure3<Float64Member, Float64TensorProductMember, Float64TensorProductMember>()
 	{
 		@Override
-		public void call(Float64Member a, Float64TensorProductMember b, Float64TensorProductMember c) {
-			Float64Member invA = G.DBL.construct();
-			G.DBL.invert().call(a, invA);
-			scale().call(invA, b, c);
+		public void call(Float64Member factor, Float64TensorProductMember a, Float64TensorProductMember b) {
+			Float64Member invFactor = G.DBL.construct();
+			G.DBL.invert().call(factor, invFactor);
+			scale().call(invFactor, a, b);
 		}
 	};
 	
@@ -800,6 +801,9 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64TensorProductMember b, Float64TensorProductMember c) {
+
+			// how an outer product is calculated:
+			//   https://www.math3ma.com/blog/the-tensor-product-demystified
 			
 			if (c == a || c == b)
 				throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
@@ -815,9 +819,9 @@ public class Float64TensorProduct
 				cDims[i] = dimA;
 			}
 			c.alloc(cDims);
-			Float64Member aTmp = new Float64Member();
-			Float64Member bTmp = new Float64Member();
-			Float64Member cTmp = new Float64Member();
+			Float64Member aTmp = G.DBL.construct();
+			Float64Member bTmp = G.DBL.construct();
+			Float64Member cTmp = G.DBL.construct();
 			long k = 0;
 			long numElemsA = a.numElems();
 			long numElemsB = b.numElems();
