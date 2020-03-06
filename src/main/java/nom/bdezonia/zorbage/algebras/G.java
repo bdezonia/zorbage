@@ -55,6 +55,7 @@ import nom.bdezonia.zorbage.type.data.float32.real.Float32Matrix;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Vector;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
+import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Vector;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Matrix;
@@ -193,7 +194,7 @@ public class G {
 	public static final ComplexFloat64Algebra CDBL = new ComplexFloat64Algebra();
 	public static final ComplexFloat64Vector CDBL_VEC = new ComplexFloat64Vector();
 	public static final ComplexFloat64Matrix CDBL_MAT = new ComplexFloat64Matrix();
-	//TODO public static final ComplexFloat64TensorProduct CDBL_TEN = new Float64TensorProduct();
+	public static final ComplexFloat64TensorProduct CDBL_TEN = new ComplexFloat64TensorProduct();
 
 	public static final QuaternionFloat64Algebra QDBL = new QuaternionFloat64Algebra();
 	public static final QuaternionFloat64RModule QDBL_RMOD = new QuaternionFloat64RModule();
