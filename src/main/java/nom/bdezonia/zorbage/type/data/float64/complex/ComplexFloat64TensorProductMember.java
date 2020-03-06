@@ -518,7 +518,7 @@ public final class ComplexFloat64TensorProductMember
 
 	@Override
 	public int componentCount() {
-		return 1;
+		return 2;
 	}
 
 	@Override
