@@ -31,27 +31,35 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.type.data.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Matrix;
+import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16TensorProduct;
 import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Vector;
 import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16Matrix;
 import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16RModule;
+import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16TensorProduct;
 import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16Matrix;
 import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16RModule;
+import nom.bdezonia.zorbage.type.data.float16.quaternion.QuaternionFloat16TensorProduct;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Algebra;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Matrix;
+import nom.bdezonia.zorbage.type.data.float16.real.Float16TensorProduct;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Vector;
 import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Matrix;
+import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32TensorProduct;
 import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Vector;
 import nom.bdezonia.zorbage.type.data.float32.octonion.OctonionFloat32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.octonion.OctonionFloat32Matrix;
 import nom.bdezonia.zorbage.type.data.float32.octonion.OctonionFloat32RModule;
+import nom.bdezonia.zorbage.type.data.float32.octonion.OctonionFloat32TensorProduct;
 import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Matrix;
 import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32RModule;
+import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32TensorProduct;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Algebra;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Matrix;
+import nom.bdezonia.zorbage.type.data.float32.real.Float32TensorProduct;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Vector;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Matrix;
@@ -151,42 +159,42 @@ public class G {
 	public static final Float16Algebra HLF = new Float16Algebra();
 	public static final Float16Vector HLF_VEC = new Float16Vector();
 	public static final Float16Matrix HLF_MAT = new Float16Matrix();
-	// TODO: HLF_TEN
+	public static final Float16TensorProduct HLF_TEN = new Float16TensorProduct();
 	
 	public static final ComplexFloat16Algebra CHLF = new ComplexFloat16Algebra();
 	public static final ComplexFloat16Vector CHLF_VEC = new ComplexFloat16Vector();
 	public static final ComplexFloat16Matrix CHLF_MAT = new ComplexFloat16Matrix();
-	// TODO: CHLF_TEN
+	public static final ComplexFloat16TensorProduct CHLF_TEN = new ComplexFloat16TensorProduct();
 	
 	public static final QuaternionFloat16Algebra QHLF = new QuaternionFloat16Algebra();
 	public static final QuaternionFloat16RModule QHLF_RMOD = new QuaternionFloat16RModule();
 	public static final QuaternionFloat16Matrix QHLF_MAT = new QuaternionFloat16Matrix();
-	// TODO: QHLF_TEN
+	public static final QuaternionFloat16TensorProduct QHLF_TEN = new QuaternionFloat16TensorProduct();
 	
 	public static final OctonionFloat16Algebra OHLF = new OctonionFloat16Algebra();
 	public static final OctonionFloat16RModule OHLF_RMOD = new OctonionFloat16RModule();
 	public static final OctonionFloat16Matrix OHLF_MAT = new OctonionFloat16Matrix();
-	// TODO: OHLF_TEN
+	public static final OctonionFloat16TensorProduct OHLF_TEN = new OctonionFloat16TensorProduct();
 	
 	public static final Float32Algebra FLT = new Float32Algebra();
 	public static final Float32Vector FLT_VEC = new Float32Vector();
 	public static final Float32Matrix FLT_MAT = new Float32Matrix();
-	// TODO: OFLT_TEN
+	public static final Float32TensorProduct FLT_TEN = new Float32TensorProduct();
 	
 	public static final ComplexFloat32Algebra CFLT = new ComplexFloat32Algebra();
 	public static final ComplexFloat32Vector CFLT_VEC = new ComplexFloat32Vector();
 	public static final ComplexFloat32Matrix CFLT_MAT = new ComplexFloat32Matrix();
-	// TODO: CFLT_TEN
+	public static final ComplexFloat32TensorProduct CFLT_TEN = new ComplexFloat32TensorProduct();
 	
 	public static final QuaternionFloat32Algebra QFLT = new QuaternionFloat32Algebra();
 	public static final QuaternionFloat32RModule QFLT_RMOD = new QuaternionFloat32RModule();
 	public static final QuaternionFloat32Matrix QFLT_MAT = new QuaternionFloat32Matrix();
-	// TODO: QFLT_TEN
+	public static final QuaternionFloat32TensorProduct QFLT_TEN = new QuaternionFloat32TensorProduct();
 	
 	public static final OctonionFloat32Algebra OFLT = new OctonionFloat32Algebra();
 	public static final OctonionFloat32RModule OFLT_RMOD = new OctonionFloat32RModule();
 	public static final OctonionFloat32Matrix OFLT_MAT = new OctonionFloat32Matrix();
-	// TODO: OFLT_TEN
+	public static final OctonionFloat32TensorProduct OFLT_TEN = new OctonionFloat32TensorProduct();
 	
 	public static final Float64Algebra DBL = new Float64Algebra();
 	public static final Float64Vector DBL_VEC = new Float64Vector();
