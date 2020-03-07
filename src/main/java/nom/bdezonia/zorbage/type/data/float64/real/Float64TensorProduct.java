@@ -157,7 +157,6 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember from, Float64TensorProductMember to) {
-			if (to == from) return;
 			shapeResult(from, to);
 			Copy.compute(G.DBL, from.rawData(), to.rawData());
 		}

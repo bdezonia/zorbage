@@ -158,7 +158,6 @@ public class OctonionFloat64TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat64TensorProductMember from, OctonionFloat64TensorProductMember to) {
-			if (to == from) return;
 			shapeResult(from, to);
 			Copy.compute(G.ODBL, from.rawData(), to.rawData());
 		}

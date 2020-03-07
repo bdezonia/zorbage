@@ -158,7 +158,6 @@ public class QuaternionFloat64TensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat64TensorProductMember from, QuaternionFloat64TensorProductMember to) {
-			if (to == from) return;
 			shapeResult(from, to);
 			Copy.compute(G.QDBL, from.rawData(), to.rawData());
 		}

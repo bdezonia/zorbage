@@ -158,7 +158,6 @@ public class ComplexFloat64TensorProduct
 	{
 		@Override
 		public void call(ComplexFloat64TensorProductMember from, ComplexFloat64TensorProductMember to) {
-			if (to == from) return;
 			shapeResult(from, to);
 			Copy.compute(G.CDBL, from.rawData(), to.rawData());
 		}
