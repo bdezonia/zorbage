@@ -515,8 +515,8 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			Float64MatrixMember s = G.DBL_MAT.construct();
-			Float64MatrixMember c = G.DBL_MAT.construct();
+			Float64MatrixMember s = construct();
+			Float64MatrixMember c = construct();
 			sinhAndCosh().call(a, s, c);
 			divide().call(s, c, b);
 		}
@@ -588,8 +588,8 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b) {
-			Float64MatrixMember s = G.DBL_MAT.construct();
-			Float64MatrixMember c = G.DBL_MAT.construct();
+			Float64MatrixMember s = construct();
+			Float64MatrixMember c = construct();
 			sinAndCos().call(a, s, c);
 			divide().call(s, c, b);
 		}

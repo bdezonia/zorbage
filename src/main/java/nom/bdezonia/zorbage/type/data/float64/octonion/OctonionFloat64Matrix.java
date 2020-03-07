@@ -531,8 +531,8 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			OctonionFloat64MatrixMember s = G.ODBL_MAT.construct();
-			OctonionFloat64MatrixMember c = G.ODBL_MAT.construct();
+			OctonionFloat64MatrixMember s = construct();
+			OctonionFloat64MatrixMember c = construct();
 			sinhAndCosh().call(a, s, c);
 			divide().call(s, c, b);
 		}
@@ -604,8 +604,8 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
-			OctonionFloat64MatrixMember s = G.ODBL_MAT.construct();
-			OctonionFloat64MatrixMember c = G.ODBL_MAT.construct();
+			OctonionFloat64MatrixMember s = construct();
+			OctonionFloat64MatrixMember c = construct();
 			sinAndCos().call(a, s, c);
 			divide().call(s, c, b);
 		}

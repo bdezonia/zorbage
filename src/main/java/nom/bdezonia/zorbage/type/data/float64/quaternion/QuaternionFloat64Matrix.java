@@ -545,8 +545,8 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64MatrixMember s = G.QDBL_MAT.construct();
-			QuaternionFloat64MatrixMember c = G.QDBL_MAT.construct();
+			QuaternionFloat64MatrixMember s = construct();
+			QuaternionFloat64MatrixMember c = construct();
 			sinhAndCosh().call(a, s, c);
 			divide().call(s, c, b);
 		}
@@ -618,8 +618,8 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b) {
-			QuaternionFloat64MatrixMember s = G.QDBL_MAT.construct();
-			QuaternionFloat64MatrixMember c = G.QDBL_MAT.construct();
+			QuaternionFloat64MatrixMember s = construct();
+			QuaternionFloat64MatrixMember c = construct();
 			sinAndCos().call(a, s, c);
 			divide().call(s, c, b);
 		}

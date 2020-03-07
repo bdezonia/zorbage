@@ -531,8 +531,8 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember s = G.CDBL_MAT.construct();
-			ComplexFloat64MatrixMember c = G.CDBL_MAT.construct();
+			ComplexFloat64MatrixMember s = construct();
+			ComplexFloat64MatrixMember c = construct();
 			sinhAndCosh().call(a, s, c);
 			divide().call(s, c, b);
 		}
@@ -604,8 +604,8 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember s = G.CDBL_MAT.construct();
-			ComplexFloat64MatrixMember c = G.CDBL_MAT.construct();
+			ComplexFloat64MatrixMember s = construct();
+			ComplexFloat64MatrixMember c = construct();
 			sinAndCos().call(a, s, c);
 			divide().call(s, c, b);
 		}
