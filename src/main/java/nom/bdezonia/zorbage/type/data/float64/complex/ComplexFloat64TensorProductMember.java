@@ -760,12 +760,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return (byte) tmp.r();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return (byte) tmp.i();
-		}
 		return 0;
 	}
 
@@ -776,12 +774,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return (short) tmp.r();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return (short) tmp.i();
-		}
 		return 0;
 	}
 
@@ -792,12 +788,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return (int) tmp.r();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return (int) tmp.i();
-		}
 		return 0;
 	}
 
@@ -808,12 +802,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return (long) tmp.r();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return (long) tmp.i();
-		}
 		return 0;
 	}
 
@@ -824,12 +816,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return (float) tmp.r();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return (float) tmp.i();
-		}
 		return 0;
 	}
 
@@ -840,12 +830,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return (double) tmp.r();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return (double) tmp.i();
-		}
 		return 0;
 	}
 
@@ -856,12 +844,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return BigDecimal.valueOf(tmp.r()).toBigInteger();
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return BigDecimal.valueOf(tmp.i()).toBigInteger();
-		}
 		return BigInteger.ZERO;
 	}
 
@@ -872,12 +858,10 @@ public final class ComplexFloat64TensorProductMember
 					"negative component index error");
 		ComplexFloat64Member tmp = tmpComp.get();
 		v(index, tmp);
-		if (component == 0) {
+		if (component == 0)
 			return BigDecimal.valueOf(tmp.r());
-		}
-		else if (component == 1) {
+		else if (component == 1)
 			return BigDecimal.valueOf(tmp.i());
-		}
 		return BigDecimal.ZERO;
 	}
 
@@ -889,9 +873,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return (byte) tmp.r();
-			}
 			else
 				return (byte) tmp.i();
 		}
@@ -905,9 +888,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return (short) tmp.r();
-			}
 			else
 				return (short) tmp.i();
 		}
@@ -921,9 +903,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return (int) tmp.r();
-			}
 			else
 				return (int) tmp.i();
 		}
@@ -937,9 +918,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return (long) tmp.r();
-			}
 			else
 				return (long) tmp.i();
 		}
@@ -953,9 +933,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return (float) tmp.r();
-			}
 			else
 				return (float) tmp.i();
 		}
@@ -969,9 +948,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return tmp.r();
-			}
 			else
 				return tmp.i();
 		}
@@ -985,9 +963,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return BigDecimal.valueOf(tmp.r()).toBigInteger();
-			}
 			else
 				return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		}
@@ -1001,9 +978,8 @@ public final class ComplexFloat64TensorProductMember
 		else {
 			ComplexFloat64Member tmp = tmpComp.get();
 			v(index, tmp);
-			if (component == 0) {
+			if (component == 0)
 				return BigDecimal.valueOf(tmp.r());
-			}
 			else
 				return BigDecimal.valueOf(tmp.i());
 		}
