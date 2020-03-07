@@ -79,15 +79,19 @@ import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Vector;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionMatrix;
+import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionTensorProduct;
 import nom.bdezonia.zorbage.type.data.highprec.complex.ComplexHighPrecisionVector;
 import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionRModule;
+import nom.bdezonia.zorbage.type.data.highprec.octonion.OctonionHighPrecisionTensorProduct;
 import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionRModule;
+import nom.bdezonia.zorbage.type.data.highprec.quaternion.QuaternionHighPrecisionTensorProduct;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMatrix;
+import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionTensorProduct;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionVector;
 import nom.bdezonia.zorbage.type.data.int1.SignedInt1Algebra;
 import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Algebra;
@@ -219,22 +223,22 @@ public class G {
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
 	public static final HighPrecisionMatrix HP_MAT = new HighPrecisionMatrix();
-	//TODO public static final HighPrecisionTensorProduct HPL_TEN = new HighPrecisionTensorProduct();
+	public static final HighPrecisionTensorProduct HP_TEN = new HighPrecisionTensorProduct();
 
 	public static final ComplexHighPrecisionAlgebra CHP = new ComplexHighPrecisionAlgebra();
 	public static final ComplexHighPrecisionVector CHP_VEC = new ComplexHighPrecisionVector();
 	public static final ComplexHighPrecisionMatrix CHP_MAT = new ComplexHighPrecisionMatrix();
-	//TODO public static final ComplexHighPrecisionTensorProduct CHPL_TEN = new ComplexHighPrecisionTensorProduct();
+	public static final ComplexHighPrecisionTensorProduct CHP_TEN = new ComplexHighPrecisionTensorProduct();
 		
 	public static final QuaternionHighPrecisionAlgebra QHP = new QuaternionHighPrecisionAlgebra();
 	public static final QuaternionHighPrecisionRModule QHP_RMOD = new QuaternionHighPrecisionRModule();
 	public static final QuaternionHighPrecisionMatrix QHP_MAT = new QuaternionHighPrecisionMatrix();
-	//TODO public static final QuaternionHighPrecisionTensorProduct QHPL_TEN = new QuaternionHighPrecisionTensorProduct();
+	public static final QuaternionHighPrecisionTensorProduct QHP_TEN = new QuaternionHighPrecisionTensorProduct();
 		
 	public static final OctonionHighPrecisionAlgebra OHP = new OctonionHighPrecisionAlgebra();
 	public static final OctonionHighPrecisionRModule OHP_RMOD = new OctonionHighPrecisionRModule();
 	public static final OctonionHighPrecisionMatrix OHP_MAT = new OctonionHighPrecisionMatrix();
-	//TODO public static final OctonionHighPrecisionTensorProduct OHPL_TEN = new OctonionHighPrecisionTensorProduct();
+	public static final OctonionHighPrecisionTensorProduct OHP_TEN = new OctonionHighPrecisionTensorProduct();
 		
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();
