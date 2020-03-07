@@ -116,7 +116,7 @@ public final class ComplexFloat64TensorProductMember
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (int i = 0; i < vals.length; i+=2) {
 			value.setR(vals[i]);
-			value.setR(vals[i+1]);
+			value.setI(vals[i+1]);
 			storage.set(i, value);
 		}
 	}
@@ -460,7 +460,7 @@ public final class ComplexFloat64TensorProductMember
 	private boolean indexOob(IntegerIndex idx, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException("negative component specified in indexOob");
-		if (component > 0)
+		if (component > 1)
 			return true;
 		for (int i = 0; i < dims.length; i++) {
 			final long index = idx.get(i);
