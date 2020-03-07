@@ -30,6 +30,7 @@ import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2;
@@ -158,12 +159,7 @@ public class Float64TensorProduct
 		public void call(Float64TensorProductMember from, Float64TensorProductMember to) {
 			if (to == from) return;
 			shapeResult(from, to);
-			Float64Member tmp = G.DBL.construct();
-			long numElems = from.numElems();
-			for (long i = 0; i < numElems; i++) {
-				from.v(i, tmp);
-				to.setV(i, tmp);
-			}
+			Copy.compute(G.DBL, from.rawData(), to.rawData());
 		}
 	};
 	
@@ -504,8 +500,8 @@ public class Float64TensorProduct
 				assign().call(a, b);
 			}
 			else {
-				Float64TensorProductMember tmp1 = G.DBL_TEN.construct();
-				Float64TensorProductMember tmp2 = G.DBL_TEN.construct();
+				Float64TensorProductMember tmp1 = construct();
+				Float64TensorProductMember tmp2 = construct();
 				multiply().call(a, a, tmp1);
 				for (int i = 2; i < (power/2)*2; i += 2) {
 					multiply().call(tmp1, a, tmp2);
@@ -746,7 +742,7 @@ public class Float64TensorProduct
 			
 			// this operation should not affect a cartesian tensor
 			
-			G.DBL_TEN.assign().call(a, b);
+			assign().call(a, b);
 		}
 	};
 	
@@ -766,7 +762,7 @@ public class Float64TensorProduct
 			
 			// this operation should not affect a cartesian tensor
 			
-			G.DBL_TEN.assign().call(a, b);
+			assign().call(a, b);
 		}
 	};
 	
@@ -785,7 +781,7 @@ public class Float64TensorProduct
 				throw new IllegalArgumentException("tensor innerProduct() cannot handle negative indices");
 			if (aIndex >= a.rank() || bIndex >= b.rank())
 				throw new IllegalArgumentException("tensor innerProduct() cannot handle out of bounds indices");
-			Float64TensorProductMember tmp = G.DBL_TEN.construct();
+			Float64TensorProductMember tmp = construct();
 			outerProduct().call(a, b, tmp);
 			contract().call(aIndex, a.rank() + bIndex, tmp, c);
 		}

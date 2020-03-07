@@ -30,6 +30,7 @@ import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2;
@@ -159,12 +160,7 @@ public class ComplexFloat64TensorProduct
 		public void call(ComplexFloat64TensorProductMember from, ComplexFloat64TensorProductMember to) {
 			if (to == from) return;
 			shapeResult(from, to);
-			ComplexFloat64Member tmp = G.CDBL.construct();
-			long numElems = from.numElems();
-			for (long i = 0; i < numElems; i++) {
-				from.v(i, tmp);
-				to.setV(i, tmp);
-			}
+			Copy.compute(G.CDBL, from.rawData(), to.rawData());
 		}
 	};
 	
@@ -273,9 +269,27 @@ public class ComplexFloat64TensorProduct
 		return NORM;
 	}
 
+	private final Procedure2<ComplexFloat64TensorProductMember,ComplexFloat64TensorProductMember> CONJ =
+			new Procedure2<ComplexFloat64TensorProductMember, ComplexFloat64TensorProductMember>()
+	{
+		@Override
+		public void call(ComplexFloat64TensorProductMember a, ComplexFloat64TensorProductMember b) {
+			shapeResult(a,b);
+			ComplexFloat64Member tmp = G.CDBL.construct();
+			long numElems = a.numElems();
+			if (numElems == 0)
+				numElems = 1;
+			for (long i = 0; i < numElems; i++) {
+				a.v(i, tmp);
+				G.CDBL.conjugate().call(tmp, tmp);
+				b.setV(i, tmp);
+			}
+		}
+	};
+
 	@Override
 	public Procedure2<ComplexFloat64TensorProductMember,ComplexFloat64TensorProductMember> conjugate() {
-		return ASSIGN;
+		return CONJ;
 	}
 
 	private final Procedure3<ComplexFloat64Member,ComplexFloat64TensorProductMember,ComplexFloat64TensorProductMember> SCALE =
@@ -349,7 +363,7 @@ public class ComplexFloat64TensorProduct
 			if (!shapesMatch(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
-			Transform3.compute(G.CDBL,G.CDBL.divide(),a.rawData(),b.rawData(),c.rawData());
+			Transform3.compute(G.CDBL, G.CDBL.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
 	
@@ -508,8 +522,8 @@ public class ComplexFloat64TensorProduct
 				assign().call(a, b);
 			}
 			else {
-				ComplexFloat64TensorProductMember tmp1 = G.CDBL_TEN.construct();
-				ComplexFloat64TensorProductMember tmp2 = G.CDBL_TEN.construct();
+				ComplexFloat64TensorProductMember tmp1 = construct();
+				ComplexFloat64TensorProductMember tmp2 = construct();
 				multiply().call(a, a, tmp1);
 				for (int i = 2; i < (power/2)*2; i += 2) {
 					multiply().call(tmp1, a, tmp2);
@@ -750,7 +764,7 @@ public class ComplexFloat64TensorProduct
 			
 			// this operation should not affect a cartesian tensor
 			
-			G.CDBL_TEN.assign().call(a, b);
+			assign().call(a, b);
 		}
 	};
 	
@@ -770,7 +784,7 @@ public class ComplexFloat64TensorProduct
 			
 			// this operation should not affect a cartesian tensor
 			
-			G.CDBL_TEN.assign().call(a, b);
+			assign().call(a, b);
 		}
 	};
 	
@@ -789,7 +803,7 @@ public class ComplexFloat64TensorProduct
 				throw new IllegalArgumentException("tensor innerProduct() cannot handle negative indices");
 			if (aIndex >= a.rank() || bIndex >= b.rank())
 				throw new IllegalArgumentException("tensor innerProduct() cannot handle out of bounds indices");
-			ComplexFloat64TensorProductMember tmp = G.CDBL_TEN.construct();
+			ComplexFloat64TensorProductMember tmp = construct();
 			outerProduct().call(a, b, tmp);
 			contract().call(aIndex, a.rank() + bIndex, tmp, c);
 		}

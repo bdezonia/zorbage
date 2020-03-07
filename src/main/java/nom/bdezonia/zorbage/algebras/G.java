@@ -60,9 +60,11 @@ import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Vector;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64RModule;
+import nom.bdezonia.zorbage.type.data.float64.octonion.OctonionFloat64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64RModule;
+import nom.bdezonia.zorbage.type.data.float64.quaternion.QuaternionFloat64TensorProduct;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProduct;
@@ -199,12 +201,12 @@ public class G {
 	public static final QuaternionFloat64Algebra QDBL = new QuaternionFloat64Algebra();
 	public static final QuaternionFloat64RModule QDBL_RMOD = new QuaternionFloat64RModule();
 	public static final QuaternionFloat64Matrix QDBL_MAT = new QuaternionFloat64Matrix();
-	//TODO public static final QuaternionFloat64TensorProduct QDBL_TEN = new QuaternionFloat64TensorProduct();
+	public static final QuaternionFloat64TensorProduct QDBL_TEN = new QuaternionFloat64TensorProduct();
 
 	public static final OctonionFloat64Algebra ODBL = new OctonionFloat64Algebra();
 	public static final OctonionFloat64RModule ODBL_RMOD = new OctonionFloat64RModule();
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
-	//TODO public static final OctonionFloat64TensorProduct ODBL_TEN = new OctonionFloat64TensorProduct();
+	public static final OctonionFloat64TensorProduct ODBL_TEN = new OctonionFloat64TensorProduct();
 
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
