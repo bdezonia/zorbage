@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
@@ -50,8 +51,6 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
-import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -359,75 +358,12 @@ public class QuaternionFloat64TensorProduct
 		return MUL;
 	}
 	
-	// https://en.wikipedia.org/wiki/Tensor_contraction
-
-	// Okay, I'm not finding predefined algorithms. I think in cartesian tensors each vector is its
-	// own dual. So contraction doesn't have to worry about upper and lower indices. Follow the
-	// general rules but treat every upper/lower alignment with simple multiplication and addition.
-	
 	private final Procedure4<Integer,Integer,QuaternionFloat64TensorProductMember,QuaternionFloat64TensorProductMember> CONTRACT =
 			new Procedure4<Integer,Integer,QuaternionFloat64TensorProductMember,QuaternionFloat64TensorProductMember>()
 	{
 		@Override
 		public void call(Integer i, Integer j, QuaternionFloat64TensorProductMember a, QuaternionFloat64TensorProductMember b) {
-			if (i == j)
-				throw new IllegalArgumentException("cannot contract along a single axis");
-			if (i < 0 || j < 0)
-				throw new IllegalArgumentException("negative contraction indices given");
-			if (i >= a.rank() || j >= a.rank())
-				throw new IllegalArgumentException("contraction indices cannot be out of bounds of input tensor's rank");
-			if (a == b)
-				throw new IllegalArgumentException("src cannot equal dest: contraction is not an in place operation");
-			int newRank = a.rank() - 2;
-			long[] newDims = new long[newRank];
-			for (int k = 0; k < newDims.length; k++) {
-				newDims[k] = a.dimension(0);
-			}
-			b.alloc(newDims);
-			if (newRank == 0) {
-				QuaternionFloat64Member sum = G.QDBL.construct();
-				QuaternionFloat64Member tmp = G.QDBL.construct();
-				IntegerIndex pos = new IntegerIndex(2);
-				for (int idx = 0; idx < a.dimension(0); idx++) {
-					pos.set(i, idx);
-					pos.set(j, idx);
-					a.v(pos, tmp);
-					G.QDBL.add().call(sum, tmp, sum);
-				}
-				b.setV(0, sum);
-				return;
-			}
-			IntegerIndex point1 = new IntegerIndex(newRank);
-			IntegerIndex point2 = new IntegerIndex(newRank);
-			for (int k = 0; k < newDims.length; k++) {
-				point2.set(k, newDims[k] - 1);
-			}
-			SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
-			SamplingIterator<IntegerIndex> iter = sampling.iterator();
-			IntegerIndex contractedPos = new IntegerIndex(sampling.numDimensions());
-			IntegerIndex origPos = new IntegerIndex(a.rank());
-			QuaternionFloat64Member sum = G.QDBL.construct();
-			QuaternionFloat64Member tmp = G.QDBL.construct();
-			while (iter.hasNext()) {
-				iter.next(contractedPos);
-				int p = 0;
-				for (int r = 0; r < a.rank(); r++) {
-					if (r == i)
-						origPos.set(i, 0);
-					else if (r == j)
-						origPos.set(j, 0);
-					else
-						origPos.set(r, contractedPos.get(p++));
-				}
-				G.QDBL.zero().call(sum);
-				for (int idx = 0; idx < a.dimension(0); idx++) {
-					origPos.set(i, idx);
-					origPos.set(j, idx);
-					a.v(origPos, tmp);
-					G.QDBL.add().call(sum, tmp, sum);
-				}
-				b.setV(contractedPos, sum);
-			}
+			TensorContract.compute(G.QDBL, a.rank(), i, j, a, b);
 		}
 	};
 	
