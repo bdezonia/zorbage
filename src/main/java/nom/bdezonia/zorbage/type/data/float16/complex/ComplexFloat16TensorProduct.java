@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -236,30 +237,7 @@ public class ComplexFloat16TensorProduct
 	{
 		@Override
 		public void call(ComplexFloat16TensorProductMember a, Float16Member b) {
-			// TODO: this algorithm needs testing. I kinda made it up on the spot and it might not be
-			// mathematically correct. Dig deeper. Note I avoiding multiply value by conjugate value.
-			// This might be a mistake.
-			ComplexFloat16Member value = G.CHLF.construct();
-			Float16Member max = G.HLF.construct();
-			Float16Member nrm = G.HLF.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.CHLF.norm().call(value, nrm);
-				if (G.HLF.isGreater().call(nrm, max))
-					G.HLF.assign().call(nrm, max);
-			}
-			Float16Member sum = G.HLF.construct();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.CHLF.norm().call(value, nrm);
-				G.HLF.divide().call(nrm, max, nrm);
-				G.HLF.multiply().call(nrm, nrm, nrm);
-				G.HLF.add().call(sum, nrm, sum);
-			}
-			G.HLF.sqrt().call(sum, sum);
-			G.HLF.multiply().call(max, sum, sum);
-			G.HLF.assign().call(sum, b);
+			TensorNorm.compute(G.CHLF, G.HLF, a.rawData(), b);
 		}
 	};
 

@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -224,27 +225,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionMember b) {
-			// TODO: to port to complex, quat, oct do I need to multiply() not by self but by the
-			// conjugate of self. We need to transform a comp, quat, oct into a real.
-			HighPrecisionMember max = G.HP.construct();
-			HighPrecisionMember value = G.HP.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.HP.norm().call(value, value);
-				if (G.HP.isGreater().call(value, max))
-					G.HP.assign().call(value, max);
-			}
-			HighPrecisionMember sum = G.HP.construct();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.HP.divide().call(value, max, value);
-				G.HP.multiply().call(value, value, value); // See TODO above
-				G.HP.add().call(sum, value, sum);
-			}
-			G.HP.sqrt().call(sum, sum);
-			G.HP.multiply().call(max, sum, sum);
-			G.HP.assign().call(sum, b);
+			TensorNorm.compute(G.HP, G.HP, a.rawData(), b);
 		}
 	};
 

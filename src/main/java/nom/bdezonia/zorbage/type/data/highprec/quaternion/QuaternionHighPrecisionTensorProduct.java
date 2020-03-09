@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -224,30 +225,7 @@ public class QuaternionHighPrecisionTensorProduct
 	{
 		@Override
 		public void call(QuaternionHighPrecisionTensorProductMember a, HighPrecisionMember b) {
-			// TODO: this algorithm needs testing. I kinda made it up on the spot and it might not be
-			// mathematically correct. Dig deeper. Note I avoiding multiply value by conjugate value.
-			// This might be a mistake.
-			QuaternionHighPrecisionMember value = G.QHP.construct();
-			HighPrecisionMember max = G.HP.construct();
-			HighPrecisionMember nrm = G.HP.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.QHP.norm().call(value, nrm);
-				if (G.HP.isGreater().call(nrm, max))
-					G.HP.assign().call(nrm, max);
-			}
-			HighPrecisionMember sum = G.HP.construct();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.QHP.norm().call(value, nrm);
-				G.HP.divide().call(nrm, max, nrm);
-				G.HP.multiply().call(nrm, nrm, nrm);
-				G.HP.add().call(sum, nrm, sum);
-			}
-			G.HP.sqrt().call(sum, sum);
-			G.HP.multiply().call(max, sum, sum);
-			G.HP.assign().call(sum, b);
+			TensorNorm.compute(G.QHP, G.HP, a.rawData(), b);
 		}
 	};
 

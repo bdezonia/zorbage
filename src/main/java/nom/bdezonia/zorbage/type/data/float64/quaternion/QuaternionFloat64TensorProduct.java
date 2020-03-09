@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -236,30 +237,7 @@ public class QuaternionFloat64TensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat64TensorProductMember a, Float64Member b) {
-			// TODO: this algorithm needs testing. I kinda made it up on the spot and it might not be
-			// mathematically correct. Dig deeper. Note I avoiding multiply value by conjugate value.
-			// This might be a mistake.
-			QuaternionFloat64Member value = G.QDBL.construct();
-			Float64Member max = G.DBL.construct();
-			Float64Member nrm = G.DBL.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.QDBL.norm().call(value, nrm);
-				if (G.DBL.isGreater().call(nrm, max))
-					G.DBL.assign().call(nrm, max);
-			}
-			Float64Member sum = G.DBL.construct();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.QDBL.norm().call(value, nrm);
-				G.DBL.divide().call(nrm, max, nrm);
-				G.DBL.multiply().call(nrm, nrm, nrm);
-				G.DBL.add().call(sum, nrm, sum);
-			}
-			G.DBL.sqrt().call(sum, sum);
-			G.DBL.multiply().call(max, sum, sum);
-			G.DBL.assign().call(sum, b);
+			TensorNorm.compute(G.QDBL, G.DBL, a.rawData(), b);
 		}
 	};
 

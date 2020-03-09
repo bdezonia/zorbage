@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -235,27 +236,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember a, Float64Member b) {
-			// TODO: to port to complex, quat, oct do I need to multiply() not by self but by the
-			// conjugate of self. We need to transform a comp, quat, oct into a real.
-			Float64Member max = G.DBL.construct();
-			Float64Member value = G.DBL.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.DBL.norm().call(value, value);
-				if (G.DBL.isGreater().call(value, max))
-					G.DBL.assign().call(value, max);
-			}
-			Float64Member sum = G.DBL.construct();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, value);
-				G.DBL.divide().call(value, max, value);
-				G.DBL.multiply().call(value, value, value); // See TODO above
-				G.DBL.add().call(sum, value, sum);
-			}
-			G.DBL.sqrt().call(sum, sum);
-			G.DBL.multiply().call(max, sum, sum);
-			G.DBL.assign().call(sum, b);
+			TensorNorm.compute(G.DBL, G.DBL, a.rawData(), b);
 		}
 	};
 
