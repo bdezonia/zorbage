@@ -336,7 +336,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 
@@ -350,7 +350,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 
@@ -364,7 +364,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 
@@ -378,7 +378,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public Boolean call(RationalMember a, RationalMember b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 

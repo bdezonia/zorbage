@@ -227,7 +227,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 	
@@ -241,7 +241,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 	
@@ -255,7 +255,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 	
@@ -269,7 +269,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt32Member a, UnsignedInt32Member b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 	

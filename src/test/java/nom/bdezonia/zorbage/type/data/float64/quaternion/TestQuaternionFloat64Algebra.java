@@ -243,7 +243,7 @@ public class TestQuaternionFloat64Algebra {
 		a.setI(0);
 		a.setJ(0);
 		a.setK(0);
-		G.QDBL.exp().call(a,b);
+		G.QDBL.exp().call(a, b);
 		assertEquals(FastMath.exp(2), b.r(), 0);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);

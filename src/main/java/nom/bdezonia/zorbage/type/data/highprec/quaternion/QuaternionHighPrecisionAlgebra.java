@@ -242,7 +242,7 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public Boolean call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

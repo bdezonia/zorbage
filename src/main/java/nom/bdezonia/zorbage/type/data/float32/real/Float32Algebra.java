@@ -440,7 +440,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			abs().call(a,b);
+			abs().call(a, b);
 		}
 	};
 

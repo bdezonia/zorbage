@@ -410,7 +410,7 @@ public class OctonionFloat32Algebra
 	{
 		@Override
 		public Boolean call(OctonionFloat32Member a, OctonionFloat32Member b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

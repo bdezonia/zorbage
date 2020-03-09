@@ -160,7 +160,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public Boolean call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 

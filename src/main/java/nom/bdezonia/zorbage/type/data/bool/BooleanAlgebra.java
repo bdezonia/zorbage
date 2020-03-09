@@ -217,8 +217,8 @@ public class BooleanAlgebra
 	{
 		@Override
 		public Integer call(BooleanMember a, BooleanMember b) {
-			if (isLess().call(a,b)) return -1;
-			if (isGreater().call(a,b)) return 1;
+			if (isLess().call(a, b)) return -1;
+			if (isGreater().call(a, b)) return 1;
 			return 0;
 		}
 	};

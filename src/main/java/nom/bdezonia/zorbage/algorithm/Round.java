@@ -68,7 +68,7 @@ public class Round {
 		// For symmetry provide a NONE option. This simplifies algorithms
 		// from having to check "if mode == NONE should I skip Round?".
 		if (mode == Mode.NONE) {
-			algebra.assign().call(a,b);
+			algebra.assign().call(a, b);
 			return;
 		}
 		U zero = algebra.construct();

@@ -440,7 +440,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			abs().call(a,b);
+			abs().call(a, b);
 		}
 	};
 

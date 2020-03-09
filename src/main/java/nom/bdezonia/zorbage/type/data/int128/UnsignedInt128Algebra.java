@@ -268,7 +268,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 
@@ -282,7 +282,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 
@@ -296,7 +296,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 
@@ -310,7 +310,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt128Member a, UnsignedInt128Member b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 

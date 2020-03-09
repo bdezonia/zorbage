@@ -46,6 +46,6 @@ public class Max<T extends Algebra<T,U> & Ordered<U>, U>
 		
 	@Override
 	public void call(U a, U b, U c) {
-		algebra.max().call(a,b,c);
+		algebra.max().call(a, b, c);
 	}
 }

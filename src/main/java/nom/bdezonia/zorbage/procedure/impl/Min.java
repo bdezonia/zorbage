@@ -46,6 +46,6 @@ public class Min<T extends Algebra<T,U> & Ordered<U>, U>
 		
 	@Override
 	public void call(U a, U b, U c) {
-		algebra.min().call(a,b,c);
+		algebra.min().call(a, b, c);
 	}
 }

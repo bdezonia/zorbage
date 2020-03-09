@@ -168,7 +168,7 @@ public class UnboundedIntAlgebra
 
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare().call(a,b) == 0;
+			return compare().call(a, b) == 0;
 		}
 
 	};
@@ -183,7 +183,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare().call(a,b) != 0;
+			return compare().call(a, b) != 0;
 		}
 	};
 	
@@ -240,7 +240,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 
@@ -254,7 +254,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 
@@ -268,7 +268,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 
@@ -282,7 +282,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a, UnboundedIntMember b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 

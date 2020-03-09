@@ -228,7 +228,7 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt64Member a, UnsignedInt64Member b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 	
@@ -242,7 +242,7 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt64Member a, UnsignedInt64Member b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 	
@@ -256,7 +256,7 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt64Member a, UnsignedInt64Member b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 	
@@ -270,7 +270,7 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt64Member a, UnsignedInt64Member b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 	

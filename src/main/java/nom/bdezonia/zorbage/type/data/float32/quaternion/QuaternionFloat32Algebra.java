@@ -248,7 +248,7 @@ public class QuaternionFloat32Algebra
 	{
 		@Override
 		public Boolean call(QuaternionFloat32Member a, QuaternionFloat32Member b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

@@ -168,7 +168,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a, Float64VectorMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 

@@ -165,7 +165,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public Boolean call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

@@ -162,7 +162,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public Boolean call(HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 

@@ -175,7 +175,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public Boolean call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

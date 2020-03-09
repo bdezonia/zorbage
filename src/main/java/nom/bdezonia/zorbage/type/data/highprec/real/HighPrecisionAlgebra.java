@@ -413,7 +413,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b) {
-			abs().call(a,b);
+			abs().call(a, b);
 		}
 	};
 

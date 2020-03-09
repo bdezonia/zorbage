@@ -248,7 +248,7 @@ public class QuaternionFloat64Algebra
 	{
 		@Override
 		public Boolean call(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

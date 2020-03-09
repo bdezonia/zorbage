@@ -272,7 +272,7 @@ public class TestOctonionFloat32Algebra {
 		a.setI0(0);
 		a.setJ0(0);
 		a.setK0(0);
-		G.OFLT.exp().call(a,b);
+		G.OFLT.exp().call(a, b);
 		assertEquals(FastMath.exp(2), b.r(), tol);
 		assertEquals(0, b.i(), 0);
 		assertEquals(0, b.j(), 0);

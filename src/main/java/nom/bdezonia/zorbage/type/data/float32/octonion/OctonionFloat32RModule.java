@@ -170,7 +170,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 

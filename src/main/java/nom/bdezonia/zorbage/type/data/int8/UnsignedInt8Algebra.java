@@ -225,7 +225,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 	
@@ -239,7 +239,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 	
@@ -253,7 +253,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 	
@@ -267,7 +267,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public Boolean call(UnsignedInt8Member a, UnsignedInt8Member b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 	

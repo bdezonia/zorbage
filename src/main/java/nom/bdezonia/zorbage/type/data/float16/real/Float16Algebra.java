@@ -439,7 +439,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			abs().call(a,b);
+			abs().call(a, b);
 		}
 	};
 

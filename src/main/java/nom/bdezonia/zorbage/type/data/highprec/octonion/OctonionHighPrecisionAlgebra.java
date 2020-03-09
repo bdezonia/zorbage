@@ -391,7 +391,7 @@ public class OctonionHighPrecisionAlgebra
 	{
 		@Override
 		public Boolean call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
-			return !isEqual().call(a,b);
+			return !isEqual().call(a, b);
 		}
 	};
 	

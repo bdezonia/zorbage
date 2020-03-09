@@ -278,7 +278,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public Boolean call(SignedInt128Member a, SignedInt128Member b) {
-			return compare().call(a,b) < 0;
+			return compare().call(a, b) < 0;
 		}
 	};
 
@@ -292,7 +292,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public Boolean call(SignedInt128Member a, SignedInt128Member b) {
-			return compare().call(a,b) <= 0;
+			return compare().call(a, b) <= 0;
 		}
 	};
 
@@ -306,7 +306,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public Boolean call(SignedInt128Member a, SignedInt128Member b) {
-			return compare().call(a,b) > 0;
+			return compare().call(a, b) > 0;
 		}
 	};
 
@@ -320,7 +320,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public Boolean call(SignedInt128Member a, SignedInt128Member b) {
-			return compare().call(a,b) >= 0;
+			return compare().call(a, b) >= 0;
 		}
 	};
 
