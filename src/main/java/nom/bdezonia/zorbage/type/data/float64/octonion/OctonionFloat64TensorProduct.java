@@ -252,15 +252,7 @@ public class OctonionFloat64TensorProduct
 		@Override
 		public void call(OctonionFloat64TensorProductMember a, OctonionFloat64TensorProductMember b) {
 			shapeResult(a, b);
-			OctonionFloat64Member tmp = G.ODBL.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.ODBL.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			Transform2.compute(G.ODBL, G.ODBL.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

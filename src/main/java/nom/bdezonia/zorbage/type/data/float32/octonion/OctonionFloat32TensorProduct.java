@@ -252,15 +252,7 @@ public class OctonionFloat32TensorProduct
 		@Override
 		public void call(OctonionFloat32TensorProductMember a, OctonionFloat32TensorProductMember b) {
 			shapeResult(a, b);
-			OctonionFloat32Member tmp = G.OFLT.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.OFLT.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			Transform2.compute(G.OFLT, G.OFLT.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

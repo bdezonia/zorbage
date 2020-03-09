@@ -251,16 +251,8 @@ public class ComplexFloat16TensorProduct
 	{
 		@Override
 		public void call(ComplexFloat16TensorProductMember a, ComplexFloat16TensorProductMember b) {
-			shapeResult(a,b);
-			ComplexFloat16Member tmp = G.CHLF.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.CHLF.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.CHLF, G.CHLF.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

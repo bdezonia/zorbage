@@ -251,16 +251,8 @@ public class QuaternionFloat16TensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat16TensorProductMember a, QuaternionFloat16TensorProductMember b) {
-			shapeResult(a,b);
-			QuaternionFloat16Member tmp = G.QHLF.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.QHLF.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.QHLF, G.QHLF.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

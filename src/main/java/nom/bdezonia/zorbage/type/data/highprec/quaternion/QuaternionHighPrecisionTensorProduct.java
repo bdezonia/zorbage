@@ -239,16 +239,8 @@ public class QuaternionHighPrecisionTensorProduct
 	{
 		@Override
 		public void call(QuaternionHighPrecisionTensorProductMember a, QuaternionHighPrecisionTensorProductMember b) {
-			shapeResult(a,b);
-			QuaternionHighPrecisionMember tmp = G.QHP.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.QHP.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.QHP, G.QHP.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

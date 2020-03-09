@@ -251,16 +251,8 @@ public class ComplexFloat64TensorProduct
 	{
 		@Override
 		public void call(ComplexFloat64TensorProductMember a, ComplexFloat64TensorProductMember b) {
-			shapeResult(a,b);
-			ComplexFloat64Member tmp = G.CDBL.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.CDBL.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.CDBL, G.CDBL.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

@@ -251,16 +251,8 @@ public class ComplexFloat32TensorProduct
 	{
 		@Override
 		public void call(ComplexFloat32TensorProductMember a, ComplexFloat32TensorProductMember b) {
-			shapeResult(a,b);
-			ComplexFloat32Member tmp = G.CFLT.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.CFLT.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.CFLT, G.CFLT.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

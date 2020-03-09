@@ -252,15 +252,7 @@ public class OctonionFloat16TensorProduct
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
 			shapeResult(a, b);
-			OctonionFloat16Member tmp = G.OHLF.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.OHLF.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			Transform2.compute(G.OHLF, G.OHLF.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

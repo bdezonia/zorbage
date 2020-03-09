@@ -240,15 +240,7 @@ public class OctonionHighPrecisionTensorProduct
 		@Override
 		public void call(OctonionHighPrecisionTensorProductMember a, OctonionHighPrecisionTensorProductMember b) {
 			shapeResult(a, b);
-			OctonionHighPrecisionMember tmp = G.OHP.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.OHP.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			Transform2.compute(G.OHP, G.OHP.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

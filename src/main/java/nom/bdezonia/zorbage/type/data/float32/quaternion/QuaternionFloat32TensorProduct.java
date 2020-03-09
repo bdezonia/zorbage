@@ -251,16 +251,8 @@ public class QuaternionFloat32TensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat32TensorProductMember a, QuaternionFloat32TensorProductMember b) {
-			shapeResult(a,b);
-			QuaternionFloat32Member tmp = G.QFLT.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.QFLT.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.QFLT, G.QFLT.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

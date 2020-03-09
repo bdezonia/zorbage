@@ -251,16 +251,8 @@ public class QuaternionFloat64TensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat64TensorProductMember a, QuaternionFloat64TensorProductMember b) {
-			shapeResult(a,b);
-			QuaternionFloat64Member tmp = G.QDBL.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.QDBL.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.QDBL, G.QDBL.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 

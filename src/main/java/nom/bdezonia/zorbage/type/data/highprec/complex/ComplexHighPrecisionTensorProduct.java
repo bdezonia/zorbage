@@ -239,16 +239,8 @@ public class ComplexHighPrecisionTensorProduct
 	{
 		@Override
 		public void call(ComplexHighPrecisionTensorProductMember a, ComplexHighPrecisionTensorProductMember b) {
-			shapeResult(a,b);
-			ComplexHighPrecisionMember tmp = G.CHP.construct();
-			long numElems = a.numElems();
-			if (numElems == 0)
-				numElems = 1;
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.CHP.conjugate().call(tmp, tmp);
-				b.setV(i, tmp);
-			}
+			shapeResult(a, b);
+			Transform2.compute(G.CHP, G.CHP.conjugate(), a.rawData(), b.rawData());
 		}
 	};
 
