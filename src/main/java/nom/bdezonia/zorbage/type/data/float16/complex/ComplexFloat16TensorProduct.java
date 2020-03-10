@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
+import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -372,14 +373,12 @@ public class ComplexFloat16TensorProduct
 		return CONTRACT;
 	}
 		
-	// http://mathworld.wolfram.com/CovariantDerivative.html
-
 	private final Procedure1<Object> SEMI =
 			new Procedure1<Object>()
 	{
 		@Override
 		public void call(Object a) {
-			throw new IllegalArgumentException("TODO - implement semicolonDerivative()");
+			TensorSemicolonDerivative.compute();
 		}
 	};
 	
