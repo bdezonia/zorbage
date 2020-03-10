@@ -94,22 +94,22 @@ public class TestBooleanAlgebra {
 		assertTrue(G.BOOL.isZero().call(a));
 		assertFalse(G.BOOL.isZero().call(b));
 		
-		G.BOOL.logicalAnd().call(a,a,c);
+		G.BOOL.logicalAnd().call(a, a, c);
 		assertEquals(false && false, c.v());
-		G.BOOL.logicalAnd().call(a,b,c);
+		G.BOOL.logicalAnd().call(a, b, c);
 		assertEquals(false && true, c.v());
-		G.BOOL.logicalAnd().call(b,a,c);
+		G.BOOL.logicalAnd().call(b, a, c);
 		assertEquals(true && false, c.v());
-		G.BOOL.logicalAnd().call(b,b,c);
+		G.BOOL.logicalAnd().call(b, b, c);
 		assertEquals(true && true, c.v());
 		
-		G.BOOL.logicalAndNot().call(a,a,c);
+		G.BOOL.logicalAndNot().call(a, a, c);
 		assertEquals(false && !false, c.v());
-		G.BOOL.logicalAndNot().call(a,b,c);
+		G.BOOL.logicalAndNot().call(a, b, c);
 		assertEquals(false && !true, c.v());
-		G.BOOL.logicalAndNot().call(b,a,c);
+		G.BOOL.logicalAndNot().call(b, a, c);
 		assertEquals(true && !false, c.v());
-		G.BOOL.logicalAndNot().call(b,b,c);
+		G.BOOL.logicalAndNot().call(b, b, c);
 		assertEquals(true && !true, c.v());
 		
 		G.BOOL.logicalNot().call(a, c);
@@ -117,22 +117,22 @@ public class TestBooleanAlgebra {
 		G.BOOL.logicalNot().call(b, c);
 		assertFalse(c.v());
 		
-		G.BOOL.logicalOr().call(a,a,c);
+		G.BOOL.logicalOr().call(a, a, c);
 		assertEquals(false || false, c.v());
-		G.BOOL.logicalOr().call(a,b,c);
+		G.BOOL.logicalOr().call(a, b, c);
 		assertEquals(false || true, c.v());
-		G.BOOL.logicalOr().call(b,a,c);
+		G.BOOL.logicalOr().call(b, a, c);
 		assertEquals(true || false, c.v());
-		G.BOOL.logicalOr().call(b,b,c);
+		G.BOOL.logicalOr().call(b, b, c);
 		assertEquals(true || true, c.v());
 		
-		G.BOOL.logicalXor().call(a,a,c);
+		G.BOOL.logicalXor().call(a, a, c);
 		assertEquals(false ^ false, c.v());
-		G.BOOL.logicalXor().call(a,b,c);
+		G.BOOL.logicalXor().call(a, b, c);
 		assertEquals(false ^ true, c.v());
-		G.BOOL.logicalXor().call(b,a,c);
+		G.BOOL.logicalXor().call(b, a, c);
 		assertEquals(true ^ false, c.v());
-		G.BOOL.logicalXor().call(b,b,c);
+		G.BOOL.logicalXor().call(b, b, c);
 		assertEquals(true ^ true, c.v());
 		
 		G.BOOL.max().call(a, a, c);
