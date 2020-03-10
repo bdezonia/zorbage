@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
+import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -149,7 +150,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember from, HighPrecisionTensorProductMember to) {
-			shapeResult(from, to);
+			TensorShape.compute(from, to);
 			Copy.compute(G.HP, from.rawData(), to.rawData());
 		}
 	};
@@ -178,7 +179,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			Transform2.compute(G.HP, G.HP.negate(), a.rawData(), b.rawData());
 		}
 	};
@@ -195,7 +196,7 @@ public class HighPrecisionTensorProduct
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.HP, G.HP.add(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -212,7 +213,7 @@ public class HighPrecisionTensorProduct
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.HP, G.HP.subtract(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -246,7 +247,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.Scale.compute(G.HP, scalar, a.rawData(), b.rawData());
 		}
 	};
@@ -261,7 +262,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			FixedTransform2.compute(G.HP, scalar, G.HP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -294,7 +295,7 @@ public class HighPrecisionTensorProduct
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.HP, G.HP.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -311,7 +312,7 @@ public class HighPrecisionTensorProduct
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.HP,G.HP.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
@@ -441,7 +442,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(RationalMember factor, HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.HP, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -456,7 +457,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(Double factor, HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByDouble.compute(G.HP, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -471,7 +472,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionMember factor, HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.HP, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -638,13 +639,4 @@ public class HighPrecisionTensorProduct
 		return OUTER;
 	}
 	
-	private void shapeResult(HighPrecisionTensorProductMember from, HighPrecisionTensorProductMember to) {
-		if (from == to) return;
-		long[] dims = new long[from.numDimensions()];
-		for (int i = 0; i < dims.length; i++) {
-			dims[i] = from.dimension(i);
-		}
-		to.alloc(dims);
-	}
-
 }
