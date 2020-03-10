@@ -497,12 +497,8 @@ public class OctonionHighPrecisionTensorProduct
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, OctonionHighPrecisionTensorProductMember a, OctonionHighPrecisionTensorProductMember b) {
-			if (a.numDimensions() != b.numDimensions())
+			if (!ShapesMatch.compute(a, b))
 				return false;
-			for (int i = 0; i < a.numDimensions(); i++) {
-				if (a.dimension(i) != b.dimension(i))
-					return false;
-			}
 			return SequencesSimilar.compute(G.OHP, tol, a.rawData(), b.rawData());
 		}
 	};

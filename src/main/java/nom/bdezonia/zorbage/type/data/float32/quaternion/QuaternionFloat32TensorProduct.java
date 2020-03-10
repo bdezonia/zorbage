@@ -586,12 +586,8 @@ public class QuaternionFloat32TensorProduct
 	{
 		@Override
 		public Boolean call(Float32Member tol, QuaternionFloat32TensorProductMember a, QuaternionFloat32TensorProductMember b) {
-			if (a.numDimensions() != b.numDimensions())
+			if (!ShapesMatch.compute(a, b))
 				return false;
-			for (int i = 0; i < a.numDimensions(); i++) {
-				if (a.dimension(i) != b.dimension(i))
-					return false;
-			}
 			return SequencesSimilar.compute(G.QFLT, tol, a.rawData(), b.rawData());
 		}
 	};

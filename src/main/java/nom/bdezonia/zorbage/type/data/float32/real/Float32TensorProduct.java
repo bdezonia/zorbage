@@ -575,12 +575,8 @@ public class Float32TensorProduct
 	{
 		@Override
 		public Boolean call(Float32Member tol, Float32TensorProductMember a, Float32TensorProductMember b) {
-			if (a.numDimensions() != b.numDimensions())
+			if (!ShapesMatch.compute(a, b))
 				return false;
-			for (int i = 0; i < a.numDimensions(); i++) {
-				if (a.dimension(i) != b.dimension(i))
-					return false;
-			}
 			return SequencesSimilar.compute(G.FLT, tol, a.rawData(), b.rawData());
 		}
 	};

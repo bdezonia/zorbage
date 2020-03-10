@@ -497,12 +497,8 @@ public class QuaternionHighPrecisionTensorProduct
 	{
 		@Override
 		public Boolean call(HighPrecisionMember tol, QuaternionHighPrecisionTensorProductMember a, QuaternionHighPrecisionTensorProductMember b) {
-			if (a.numDimensions() != b.numDimensions())
+			if (!ShapesMatch.compute(a, b))
 				return false;
-			for (int i = 0; i < a.numDimensions(); i++) {
-				if (a.dimension(i) != b.dimension(i))
-					return false;
-			}
 			return SequencesSimilar.compute(G.QHP, tol, a.rawData(), b.rawData());
 		}
 	};

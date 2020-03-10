@@ -575,12 +575,8 @@ public class Float64TensorProduct
 	{
 		@Override
 		public Boolean call(Float64Member tol, Float64TensorProductMember a, Float64TensorProductMember b) {
-			if (a.numDimensions() != b.numDimensions())
+			if (!ShapesMatch.compute(a, b))
 				return false;
-			for (int i = 0; i < a.numDimensions(); i++) {
-				if (a.dimension(i) != b.dimension(i))
-					return false;
-			}
 			return SequencesSimilar.compute(G.DBL, tol, a.rawData(), b.rawData());
 		}
 	};
