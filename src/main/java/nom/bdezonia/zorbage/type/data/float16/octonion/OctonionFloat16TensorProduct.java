@@ -38,9 +38,12 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
+import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
+import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -129,7 +132,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public Boolean call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				return false;
 			return SequencesSimilar.compute(G.OHLF, G.HLF.construct(), a.rawData(), b.rawData());
 		}
@@ -159,7 +162,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember from, OctonionFloat16TensorProductMember to) {
-			shapeResult(from, to);
+			TensorShape.compute(from, to);
 			Copy.compute(G.OHLF, from.rawData(), to.rawData());
 		}
 	};
@@ -188,7 +191,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			Transform2.compute(G.OHLF, G.OHLF.negate(), a.rawData(), b.rawData());
 		}
 	};
@@ -203,9 +206,9 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b, OctonionFloat16TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.OHLF, G.OHLF.add(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -220,9 +223,9 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b, OctonionFloat16TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.OHLF, G.OHLF.subtract(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -251,7 +254,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			Transform2.compute(G.OHLF, G.OHLF.conjugate(), a.rawData(), b.rawData());
 		}
 	};
@@ -266,7 +269,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.Scale.compute(G.OHLF, scalar, a.rawData(), b.rawData());
 		}
 	};
@@ -281,7 +284,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			FixedTransform2.compute(G.OHLF, scalar, G.OHLF.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -312,9 +315,9 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b, OctonionFloat16TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.OHLF, G.OHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -329,9 +332,9 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b, OctonionFloat16TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.OHLF, G.OHLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -404,42 +407,13 @@ public class OctonionFloat16TensorProduct
 	public Procedure3<IntegerIndex,OctonionFloat16TensorProductMember,OctonionFloat16TensorProductMember> commaDerivative() {
 		return COMMA;
 	}
-	// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 	
 	private final Procedure3<Integer,OctonionFloat16TensorProductMember,OctonionFloat16TensorProductMember> POWER =
 			new Procedure3<Integer, OctonionFloat16TensorProductMember, OctonionFloat16TensorProductMember>()
 	{
 		@Override
 		public void call(Integer power, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			if (power < 0) {
-				// TODO: is this a valid limitation?
-				throw new IllegalArgumentException("negative powers not supported");
-			}
-			else if (power == 0) {
-				if (isZero().call(a)) {
-					throw new IllegalArgumentException("0^0 is not a number");
-				}
-				shapeResult(a, b); // set the shape of result
-				unity().call(b); // and make it have value 1
-			}
-			else if (power == 1) {
-				assign().call(a, b);
-			}
-			else {
-				OctonionFloat16TensorProductMember tmp1 = construct();
-				OctonionFloat16TensorProductMember tmp2 = construct();
-				multiply().call(a, a, tmp1);
-				for (int i = 2; i < (power/2)*2; i += 2) {
-					multiply().call(tmp1, a, tmp2);
-					multiply().call(tmp2, a, tmp1);
-				}
-				// an odd power
-				if (power > 2 && (power&1)==1) {
-					assign().call(tmp1, tmp2);
-					multiply().call(tmp2, a, tmp1);
-				}
-				assign().call(tmp1, b);
-			}
+			TensorPower.compute(G.OHLF_TEN, power, a, b);
 		}
 	};
 	
@@ -532,7 +506,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float16Member delta, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			OctonionFloat16Member tmp = G.OHLF.construct();
 			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
@@ -567,7 +541,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(RationalMember factor, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.OHLF, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -582,7 +556,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(Double factor, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByDouble.compute(G.OHLF, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -597,7 +571,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(HighPrecisionMember factor, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.OHLF, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -764,47 +738,4 @@ public class OctonionFloat16TensorProduct
 		return OUTER;
 	}
 	
-	private void shapeResult(OctonionFloat16TensorProductMember from, OctonionFloat16TensorProductMember to) {
-		if (from == to) return;
-		long[] dims = new long[from.numDimensions()];
-		for (int i = 0; i < dims.length; i++) {
-			dims[i] = from.dimension(i);
-		}
-		to.alloc(dims);
-	}
-
-	private boolean shapesMatch(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-		if (a.numDimensions() != b.numDimensions())
-			return false;
-		for (int i = 0; i < a.numDimensions(); i++) {
-			if (a.dimension(i) != b.dimension(i))
-				return false;
-		}
-		return true;
-	}
-
-	/* future version
-	
-	private boolean shapesMatch(OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-		int i = 0;
-		int j = 0;
-		while (i < a.numDimensions() && j < b.numDimensions()) {
-			while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-			while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-			if (i < a.numDimensions() && j < b.numDimensions() && a.dimension(i) != b.dimension(j))
-				return false;
-			else {
-				i++;
-				j++;
-			}
-		}
-		while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-		while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-		if (i != a.numDimensions() || j != b.numDimensions())
-			return false;
-		return true;
-	}
-	
-	*/
-
 }

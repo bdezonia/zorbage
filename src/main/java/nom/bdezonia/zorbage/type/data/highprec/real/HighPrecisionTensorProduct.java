@@ -33,8 +33,10 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
+import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
@@ -117,7 +119,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public Boolean call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				return false;
 			return SequencesSimilar.compute(G.HP, G.HP.construct(), a.rawData(), b.rawData());
 		}
@@ -191,7 +193,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
 			shapeResult(a, c);
 			Transform3.compute(G.HP, G.HP.add(), a.rawData(), b.rawData(), c.rawData());
@@ -208,7 +210,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
 			shapeResult(a, c);
 			Transform3.compute(G.HP, G.HP.subtract(), a.rawData(), b.rawData(), c.rawData());
@@ -290,7 +292,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
 			Transform3.compute(G.HP, G.HP.multiply(), a.rawData(), b.rawData(), c.rawData());
@@ -307,7 +309,7 @@ public class HighPrecisionTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b, HighPrecisionTensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			shapeResult(a, c);
 			Transform3.compute(G.HP,G.HP.divide(),a.rawData(),b.rawData(),c.rawData());
@@ -382,42 +384,13 @@ public class HighPrecisionTensorProduct
 	public Procedure3<IntegerIndex,HighPrecisionTensorProductMember,HighPrecisionTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
-	// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 	
 	private final Procedure3<Integer,HighPrecisionTensorProductMember,HighPrecisionTensorProductMember> POWER =
 			new Procedure3<Integer, HighPrecisionTensorProductMember, HighPrecisionTensorProductMember>()
 	{
 		@Override
 		public void call(Integer power, HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-			if (power < 0) {
-				// TODO: is this a valid limitation?
-				throw new IllegalArgumentException("negative powers not supported");
-			}
-			else if (power == 0) {
-				if (isZero().call(a)) {
-					throw new IllegalArgumentException("0^0 is not a number");
-				}
-				shapeResult(a, b); // set the shape of result
-				unity().call(b); // and make it have value 1
-			}
-			else if (power == 1) {
-				assign().call(a, b);
-			}
-			else {
-				HighPrecisionTensorProductMember tmp1 = construct();
-				HighPrecisionTensorProductMember tmp2 = construct();
-				multiply().call(a, a, tmp1);
-				for (int i = 2; i < (power/2)*2; i += 2) {
-					multiply().call(tmp1, a, tmp2);
-					multiply().call(tmp2, a, tmp1);
-				}
-				// an odd power
-				if (power > 2 && (power&1)==1) {
-					assign().call(tmp1, tmp2);
-					multiply().call(tmp2, a, tmp1);
-				}
-				assign().call(tmp1, b);
-			}
+			TensorPower.compute(G.HP_TEN, power, a, b);
 		}
 	};
 	
@@ -673,39 +646,5 @@ public class HighPrecisionTensorProduct
 		}
 		to.alloc(dims);
 	}
-
-	private boolean shapesMatch(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-		if (a.numDimensions() != b.numDimensions())
-			return false;
-		for (int i = 0; i < a.numDimensions(); i++) {
-			if (a.dimension(i) != b.dimension(i))
-				return false;
-		}
-		return true;
-	}
-
-	/* future version
-	
-	private boolean shapesMatch(HighPrecisionTensorProductMember a, HighPrecisionTensorProductMember b) {
-		int i = 0;
-		int j = 0;
-		while (i < a.numDimensions() && j < b.numDimensions()) {
-			while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-			while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-			if (i < a.numDimensions() && j < b.numDimensions() && a.dimension(i) != b.dimension(j))
-				return false;
-			else {
-				i++;
-				j++;
-			}
-		}
-		while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-		while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-		if (i != a.numDimensions() || j != b.numDimensions())
-			return false;
-		return true;
-	}
-	
-	*/
 
 }

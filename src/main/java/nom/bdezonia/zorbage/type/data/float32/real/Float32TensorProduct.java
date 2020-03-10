@@ -38,9 +38,12 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
+import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
+import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -128,7 +131,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public Boolean call(Float32TensorProductMember a, Float32TensorProductMember b) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				return false;
 			return SequencesSimilar.compute(G.FLT, G.FLT.construct(), a.rawData(), b.rawData());
 		}
@@ -158,7 +161,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32TensorProductMember from, Float32TensorProductMember to) {
-			shapeResult(from, to);
+			TensorShape.compute(from, to);
 			Copy.compute(G.FLT, from.rawData(), to.rawData());
 		}
 	};
@@ -187,7 +190,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			Transform2.compute(G.FLT, G.FLT.negate(), a.rawData(), b.rawData());
 		}
 	};
@@ -202,9 +205,9 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32TensorProductMember a, Float32TensorProductMember b, Float32TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor add shape mismatch");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.FLT, G.FLT.add(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -219,9 +222,9 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32TensorProductMember a, Float32TensorProductMember b, Float32TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.FLT, G.FLT.subtract(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -255,7 +258,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32Member scalar, Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.Scale.compute(G.FLT, scalar, a.rawData(), b.rawData());
 		}
 	};
@@ -270,7 +273,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32Member scalar, Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			FixedTransform2.compute(G.FLT, scalar, G.FLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -301,9 +304,9 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32TensorProductMember a, Float32TensorProductMember b, Float32TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.FLT, G.FLT.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -318,9 +321,9 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Float32TensorProductMember a, Float32TensorProductMember b, Float32TensorProductMember c) {
-			if (!shapesMatch(a, b))
+			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
-			shapeResult(a, c);
+			TensorShape.compute(a, c);
 			Transform3.compute(G.FLT,G.FLT.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
@@ -393,42 +396,13 @@ public class Float32TensorProduct
 	public Procedure3<IntegerIndex,Float32TensorProductMember,Float32TensorProductMember> commaDerivative() {
 		return COMMA;
 	}
-	// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 	
 	private final Procedure3<Integer,Float32TensorProductMember,Float32TensorProductMember> POWER =
 			new Procedure3<Integer, Float32TensorProductMember, Float32TensorProductMember>()
 	{
 		@Override
 		public void call(Integer power, Float32TensorProductMember a, Float32TensorProductMember b) {
-			if (power < 0) {
-				// TODO: is this a valid limitation?
-				throw new IllegalArgumentException("negative powers not supported");
-			}
-			else if (power == 0) {
-				if (isZero().call(a)) {
-					throw new IllegalArgumentException("0^0 is not a number");
-				}
-				shapeResult(a, b); // set the shape of result
-				unity().call(b); // and make it have value 1
-			}
-			else if (power == 1) {
-				assign().call(a, b);
-			}
-			else {
-				Float32TensorProductMember tmp1 = construct();
-				Float32TensorProductMember tmp2 = construct();
-				multiply().call(a, a, tmp1);
-				for (int i = 2; i < (power/2)*2; i += 2) {
-					multiply().call(tmp1, a, tmp2);
-					multiply().call(tmp2, a, tmp1);
-				}
-				// an odd power
-				if (power > 2 && (power&1)==1) {
-					assign().call(tmp1, tmp2);
-					multiply().call(tmp2, a, tmp1);
-				}
-				assign().call(tmp1, b);
-			}
+			TensorPower.compute(G.FLT_TEN, power, a, b);
 		}
 	};
 	
@@ -521,7 +495,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float32Member delta, Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			Float32Member tmp = G.FLT.construct();
 			long numElems = a.numElems();
 			for (long i = 0; i < numElems; i++) {
@@ -556,7 +530,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(RationalMember factor, Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByRational.compute(G.FLT, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -571,7 +545,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Double factor, Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByDouble.compute(G.FLT, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -586,7 +560,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(HighPrecisionMember factor, Float32TensorProductMember a, Float32TensorProductMember b) {
-			shapeResult(a, b);
+			TensorShape.compute(a, b);
 			nom.bdezonia.zorbage.algorithm.ScaleByHighPrec.compute(G.FLT, factor, a.rawData(), b.rawData());
 		}
 	};
@@ -753,47 +727,4 @@ public class Float32TensorProduct
 		return OUTER;
 	}
 	
-	private void shapeResult(Float32TensorProductMember from, Float32TensorProductMember to) {
-		if (from == to) return;
-		long[] dims = new long[from.numDimensions()];
-		for (int i = 0; i < dims.length; i++) {
-			dims[i] = from.dimension(i);
-		}
-		to.alloc(dims);
-	}
-
-	private boolean shapesMatch(Float32TensorProductMember a, Float32TensorProductMember b) {
-		if (a.numDimensions() != b.numDimensions())
-			return false;
-		for (int i = 0; i < a.numDimensions(); i++) {
-			if (a.dimension(i) != b.dimension(i))
-				return false;
-		}
-		return true;
-	}
-
-	/* future version
-	
-	private boolean shapesMatch(Float32TensorProductMember a, Float32TensorProductMember b) {
-		int i = 0;
-		int j = 0;
-		while (i < a.numDimensions() && j < b.numDimensions()) {
-			while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-			while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-			if (i < a.numDimensions() && j < b.numDimensions() && a.dimension(i) != b.dimension(j))
-				return false;
-			else {
-				i++;
-				j++;
-			}
-		}
-		while (i < a.numDimensions() && a.dimension(i) == 1) i++;
-		while (j < b.numDimensions() && b.dimension(i) == 1) j++;
-		if (i != a.numDimensions() || j != b.numDimensions())
-			return false;
-		return true;
-	}
-	
-	*/
-
 }
