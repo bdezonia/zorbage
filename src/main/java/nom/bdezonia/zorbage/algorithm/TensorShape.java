@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 
 /**
@@ -44,7 +43,7 @@ public class TensorShape {
 	 * @param to
 	 */
 	public static
-		void compute(Dimensioned from, TensorMember<?> to)
+		void compute(TensorMember<?> from, TensorMember<?> to)
 	{
 		if (from == to) return;
 		long[] dims = new long[from.numDimensions()];
