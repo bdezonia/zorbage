@@ -412,7 +412,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.multiply();
 		a = new Float64Member(-8);
 		b = new Float64Member(-2);
-		G.DBL.multiply().call(a,b,c);
+		G.DBL.multiply().call(a, b, c);
 		assertEquals(16, c.v(), 0);
 		
 		// G.CDBL.nan();
@@ -467,7 +467,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.scale();
 		a = new Float64Member(3);
 		b = new Float64Member(3);
-		G.DBL.scale().call(a,b,c);
+		G.DBL.scale().call(a, b, c);
 		assertEquals(9, c.v(), 0);
 		
 		// G.CDBL.sec();

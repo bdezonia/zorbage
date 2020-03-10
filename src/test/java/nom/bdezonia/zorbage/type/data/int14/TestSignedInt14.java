@@ -256,7 +256,7 @@ public class TestSignedInt14 {
 				c.set(a);
 				G.INT14.pred().call(c, c);
 				G.INT14.pred().call(c, c);
-				G.INT14.multiply().call(a,b,c);
+				G.INT14.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -8192) {

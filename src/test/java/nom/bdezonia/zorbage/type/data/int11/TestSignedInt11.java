@@ -252,7 +252,7 @@ public class TestSignedInt11 {
 				c.set(a);
 				G.INT11.pred().call(c, c);
 				G.INT11.pred().call(c, c);
-				G.INT11.multiply().call(a,b,c);
+				G.INT11.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -1024) {

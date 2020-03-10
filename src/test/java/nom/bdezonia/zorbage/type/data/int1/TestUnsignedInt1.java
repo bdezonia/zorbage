@@ -199,7 +199,7 @@ public class TestUnsignedInt1 {
 				}
 				
 				c.setV(1-i);
-				G.UINT1.multiply().call(a,b,c);
+				G.UINT1.multiply().call(a, b, c);
 				assertEquals((i*j) & 1,c.v);
 				
 				c.setV(1-i);

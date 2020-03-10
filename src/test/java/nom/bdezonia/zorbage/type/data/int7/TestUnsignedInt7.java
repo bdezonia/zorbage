@@ -231,7 +231,7 @@ public class TestUnsignedInt7 {
 				c.set(a);
 				G.UINT7.pred().call(c, c);
 				G.UINT7.pred().call(c, c);
-				G.UINT7.multiply().call(a,b,c);
+				G.UINT7.multiply().call(a, b, c);
 				assertEquals((i*j) & 127,c.v);
 				
 				c.set(a);

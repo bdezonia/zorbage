@@ -255,7 +255,7 @@ public class TestSignedInt6 {
 				c.set(a);
 				G.INT6.pred().call(c, c);
 				G.INT6.pred().call(c, c);
-				G.INT6.multiply().call(a,b,c);
+				G.INT6.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -32) {

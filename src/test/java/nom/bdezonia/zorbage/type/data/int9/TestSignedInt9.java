@@ -128,7 +128,7 @@ public class TestSignedInt9 {
 				c.set(a);
 				G.INT9.pred().call(c, c);
 				G.INT9.pred().call(c, c);
-				G.INT9.add().call(a,b,c);
+				G.INT9.add().call(a, b, c);
 				assertEquals(v(i+j), (int)c.v);
 				
 				c.set(a);
@@ -252,7 +252,7 @@ public class TestSignedInt9 {
 				c.set(a);
 				G.INT9.pred().call(c, c);
 				G.INT9.pred().call(c, c);
-				G.INT9.multiply().call(a,b,c);
+				G.INT9.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -256) {

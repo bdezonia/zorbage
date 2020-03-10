@@ -198,7 +198,7 @@ public class TestSignedInt1 {
 				assertEquals(-1, c.v);
 				
 				c.setV(i+1);
-				G.INT1.multiply().call(a,b,c);
+				G.INT1.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				try {

@@ -288,7 +288,7 @@ public class TestUnsignedInt128 {
 				c.set(a);
 				G.UINT128.pred().call(c, c);
 				G.UINT128.pred().call(c, c);
-				G.UINT128.multiply().call(a,b,c);
+				G.UINT128.multiply().call(a, b, c);
 				assertEquals(bigA.multiply(bigB).and(two128minus1),c.v());
 				
 				c.set(a);

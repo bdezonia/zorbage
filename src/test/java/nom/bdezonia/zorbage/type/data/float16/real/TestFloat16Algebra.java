@@ -422,7 +422,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.multiply();
 		a = new Float16Member(-8);
 		b = new Float16Member(-2);
-		G.HLF.multiply().call(a,b,c);
+		G.HLF.multiply().call(a, b, c);
 		assertEquals(16, c.v(), 0);
 		
 		// G.CDBL.nan();
@@ -477,7 +477,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.scale();
 		a = new Float16Member(3);
 		b = new Float16Member(3);
-		G.HLF.scale().call(a,b,c);
+		G.HLF.scale().call(a, b, c);
 		assertEquals(9, c.v(), 0);
 		
 		// G.CDBL.sec();

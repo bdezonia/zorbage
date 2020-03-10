@@ -255,7 +255,7 @@ public class TestSignedInt7 {
 				c.set(a);
 				G.INT7.pred().call(c, c);
 				G.INT7.pred().call(c, c);
-				G.INT7.multiply().call(a,b,c);
+				G.INT7.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -64) {

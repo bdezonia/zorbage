@@ -256,7 +256,7 @@ public class TestSignedInt13 {
 				c.set(a);
 				G.INT13.pred().call(c, c);
 				G.INT13.pred().call(c, c);
-				G.INT13.multiply().call(a,b,c);
+				G.INT13.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -4096) {

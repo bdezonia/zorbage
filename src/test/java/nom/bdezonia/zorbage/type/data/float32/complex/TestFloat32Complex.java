@@ -227,7 +227,7 @@ public class TestFloat32Complex {
 		// G.CFLT.multiply();
 		a = new ComplexFloat32Member(-8, 1);
 		b = new ComplexFloat32Member(-2, 0);
-		G.CFLT.multiply().call(a,b,c);
+		G.CFLT.multiply().call(a, b, c);
 		assertEquals(16, c.r(), 0);
 		assertEquals(-2, c.i(), 0);
 		
@@ -288,7 +288,7 @@ public class TestFloat32Complex {
 		// G.CFLT.scale();
 		a = new ComplexFloat32Member(3, -4);
 		b = new ComplexFloat32Member(3, 0);
-		G.CFLT.scale().call(a,b,c);
+		G.CFLT.scale().call(a, b, c);
 		assertEquals(9, c.r(), 0);
 		assertEquals(-12, c.i(), 0);
 		

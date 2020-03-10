@@ -405,7 +405,7 @@ public class TestFloat32Algebra {
 		// G.CDBL.multiply();
 		a = new Float32Member(-8);
 		b = new Float32Member(-2);
-		G.FLT.multiply().call(a,b,c);
+		G.FLT.multiply().call(a, b, c);
 		assertEquals(16, c.v(), 0);
 		
 		// G.CDBL.nan();
@@ -460,7 +460,7 @@ public class TestFloat32Algebra {
 		// G.CDBL.scale();
 		a = new Float32Member(3);
 		b = new Float32Member(3);
-		G.FLT.scale().call(a,b,c);
+		G.FLT.scale().call(a, b, c);
 		assertEquals(9, c.v(), 0);
 		
 		// G.CDBL.sec();

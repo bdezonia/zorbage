@@ -252,7 +252,7 @@ public class TestSignedInt10 {
 				c.set(a);
 				G.INT10.pred().call(c, c);
 				G.INT10.pred().call(c, c);
-				G.INT10.multiply().call(a,b,c);
+				G.INT10.multiply().call(a, b, c);
 				assertEquals(v(i*j),c.v);
 				
 				if (i != -512) {

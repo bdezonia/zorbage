@@ -233,7 +233,7 @@ public class TestUnsignedInt9 {
 				c.set(a);
 				G.UINT9.pred().call(c, c);
 				G.UINT9.pred().call(c, c);
-				G.UINT9.multiply().call(a,b,c);
+				G.UINT9.multiply().call(a, b, c);
 				assertEquals((i*j) & 511,c.v);
 				
 				c.set(a);

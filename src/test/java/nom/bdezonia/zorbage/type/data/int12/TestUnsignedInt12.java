@@ -233,7 +233,7 @@ public class TestUnsignedInt12 {
 				c.set(a);
 				G.UINT12.pred().call(c, c);
 				G.UINT12.pred().call(c, c);
-				G.UINT12.multiply().call(a,b,c);
+				G.UINT12.multiply().call(a, b, c);
 				assertEquals((i*j) & 0xfff,c.v);
 				
 				c.set(a);

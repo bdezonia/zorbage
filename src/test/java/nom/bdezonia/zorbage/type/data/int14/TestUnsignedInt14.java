@@ -237,7 +237,7 @@ public class TestUnsignedInt14 {
 				c.set(a);
 				G.UINT14.pred().call(c, c);
 				G.UINT14.pred().call(c, c);
-				G.UINT14.multiply().call(a,b,c);
+				G.UINT14.multiply().call(a, b, c);
 				assertEquals((i*j) & 16383,c.v);
 				
 				c.set(a);

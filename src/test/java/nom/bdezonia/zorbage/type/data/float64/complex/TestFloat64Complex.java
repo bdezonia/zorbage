@@ -231,7 +231,7 @@ public class TestFloat64Complex {
 		// G.CDBL.multiply();
 		a = new ComplexFloat64Member(-8, 1);
 		b = new ComplexFloat64Member(-2, 0);
-		G.CDBL.multiply().call(a,b,c);
+		G.CDBL.multiply().call(a, b, c);
 		assertEquals(16, c.r(), 0);
 		assertEquals(-2, c.i(), 0);
 		
@@ -292,7 +292,7 @@ public class TestFloat64Complex {
 		// G.CDBL.scale();
 		a = new ComplexFloat64Member(3, -4);
 		b = new ComplexFloat64Member(3, 0);
-		G.CDBL.scale().call(a,b,c);
+		G.CDBL.scale().call(a, b, c);
 		assertEquals(9, c.r(), 0);
 		assertEquals(-12, c.i(), 0);
 		
