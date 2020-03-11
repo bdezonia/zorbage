@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
+import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
@@ -669,38 +670,8 @@ public class Float32TensorProduct
 		@Override
 		public void call(Float32TensorProductMember a, Float32TensorProductMember b, Float32TensorProductMember c) {
 
-			// how an outer product is calculated:
-			//   https://www.math3ma.com/blog/the-tensor-product-demystified
-			
-			if (c == a || c == b)
-				throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
-			long dimA = a.dimension(0);
-			long dimB = b.dimension(0);
-			if (dimA != dimB)
-				throw new IllegalArgumentException("dimension of tensors must match");
-			int rankA = a.numDimensions();
-			int rankB = b.numDimensions();
-			int rankC = rankA + rankB;
-			long[] cDims = new long[rankC];
-			for (int i = 0; i < cDims.length; i++) {
-				cDims[i] = dimA;
-			}
-			c.alloc(cDims);
-			Float32Member aTmp = G.FLT.construct();
-			Float32Member bTmp = G.FLT.construct();
-			Float32Member cTmp = G.FLT.construct();
-			long k = 0;
-			long numElemsA = a.numElems();
-			long numElemsB = b.numElems();
-			for (long i = 0; i < numElemsA; i++) {
-				a.v(i, aTmp);
-				for (long j = 0; j < numElemsB; j++) {
-					b.v(j, bTmp);
-					G.FLT.multiply().call(aTmp, bTmp, cTmp);
-					c.setV(k, cTmp);
-					k++;
-				}
-			}
+			TensorOuterProduct.compute(G.FLT_TEN, G.FLT, a, b, c);
+
 		}
 	};
 			
