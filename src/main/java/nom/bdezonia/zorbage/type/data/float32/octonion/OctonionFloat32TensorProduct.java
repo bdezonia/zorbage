@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
+import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -428,16 +429,7 @@ public class OctonionFloat32TensorProduct
 	{
 		@Override
 		public void call(OctonionFloat32TensorProductMember result) {
-			OctonionFloat32Member one = G.OFLT.construct();
-			G.OFLT.unity().call(one);
-			zero().call(result);
-			IntegerIndex index = new IntegerIndex(result.rank());
-			for (long d = 0; d < result.dimension(0); d++) {
-				for (int r = 0; r < result.rank(); r++) {
-					index.set(r, d);
-				}
-				result.setV(index, one);
-			}
+			TensorUnity.compute(G.OFLT_TEN, G.OFLT, result);
 		}
 	};
 	

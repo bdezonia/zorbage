@@ -141,6 +141,11 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		return mat.storageType();
 	}
 
+	@Override
+	public int rank() {
+		throw new IllegalArgumentException("to be impemented");
+	}
+	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 2) return false;
 		for (int i = 2; i < newDims.length; i++) {

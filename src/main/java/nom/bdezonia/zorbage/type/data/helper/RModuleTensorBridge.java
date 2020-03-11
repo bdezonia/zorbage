@@ -113,6 +113,11 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 		return rmod.storageType();
 	}
 
+	@Override
+	public int rank() {
+		throw new IllegalArgumentException("to be impemented");
+	}
+	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 1) return false;
 		for (int i = 1; i < newDims.length; i++) {

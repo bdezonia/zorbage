@@ -112,6 +112,11 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public int rank() {
+		throw new IllegalArgumentException("to be impemented");
+	}
+	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 1) return false;
 		for (int i = 0; i < newDims.length; i++) {

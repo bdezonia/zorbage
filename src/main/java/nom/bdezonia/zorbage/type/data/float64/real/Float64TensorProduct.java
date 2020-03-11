@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
+import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -417,16 +418,7 @@ public class Float64TensorProduct
 	{
 		@Override
 		public void call(Float64TensorProductMember result) {
-			Float64Member one = G.DBL.construct();
-			G.DBL.unity().call(one);
-			zero().call(result);
-			IntegerIndex index = new IntegerIndex(result.rank());
-			for (long d = 0; d < result.dimension(0); d++) {
-				for (int r = 0; r < result.rank(); r++) {
-					index.set(r, d);
-				}
-				result.setV(index, one);
-			}
+			TensorUnity.compute(G.DBL_TEN, G.DBL, result);
 		}
 	};
 	

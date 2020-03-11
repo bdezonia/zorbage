@@ -24,23 +24,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.ctor.StorageType;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.TensorMember;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <A>
  */
-public interface TensorMember<A> extends Dimensioned, StorageType {
-	// n dims
-	int rank();
-	boolean alloc(long[] dims);
-	void init(long[] dims);
-	void reshape(long[] dims);
-	void v(IntegerIndex index, A value);
-	void setV(IntegerIndex index, A value);
+public class TensorUnity {
+
+	/**
+	 * 
+	 * @param <S>
+	 * @param <TENSOR>
+	 * @param <M>
+	 * @param <NUMBER>
+	 * @param tensAlg
+	 * @param numberAlg
+	 * @param result
+	 */
+	public static <S extends Algebra<S,TENSOR>,
+					TENSOR extends TensorMember<NUMBER>,
+					M extends Algebra<M,NUMBER> & Unity<NUMBER>,
+					NUMBER>
+		void compute(S tensAlg, M numberAlg, TENSOR result)
+	{
+		NUMBER one = numberAlg.construct();
+		numberAlg.unity().call(one);
+		tensAlg.zero().call(result);
+		IntegerIndex index = new IntegerIndex(result.rank());
+		for (long d = 0; d < result.dimension(0); d++) {
+			for (int r = 0; r < result.rank(); r++) {
+				index.set(r, d);
+			}
+			result.setV(index, one);
+		}
+	}
 }

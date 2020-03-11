@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
+import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
@@ -428,16 +429,7 @@ public class QuaternionFloat32TensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat32TensorProductMember result) {
-			QuaternionFloat32Member one = G.QFLT.construct();
-			G.QFLT.unity().call(one);
-			zero().call(result);
-			IntegerIndex index = new IntegerIndex(result.rank());
-			for (long d = 0; d < result.dimension(0); d++) {
-				for (int r = 0; r < result.rank(); r++) {
-					index.set(r, d);
-				}
-				result.setV(index, one);
-			}
+			TensorUnity.compute(G.QFLT_TEN, G.QFLT, result);
 		}
 	};
 	

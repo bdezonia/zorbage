@@ -180,6 +180,11 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		return tensor.storageType();
 	}
 
+	@Override
+	public int rank() {
+		throw new IllegalArgumentException("to be impemented");
+	}
+	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length != rangingDims.length)
 			return false;
