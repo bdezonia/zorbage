@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
+import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -506,14 +507,7 @@ public class QuaternionFloat64TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float64Member delta, QuaternionFloat64TensorProductMember a, QuaternionFloat64TensorProductMember b) {
-			TensorShape.compute(a, b);
-			QuaternionFloat64Member tmp = G.QDBL.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.QDBL.round().call(mode, delta, tmp, tmp);
-				b.setV(i, tmp);
-			}
+			TensorRound.call(G.QDBL_TEN, G.QDBL, mode, delta, a, b);
 		}
 	};
 

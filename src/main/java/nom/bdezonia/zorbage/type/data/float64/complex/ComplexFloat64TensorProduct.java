@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
+import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -506,14 +507,7 @@ public class ComplexFloat64TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float64Member delta, ComplexFloat64TensorProductMember a, ComplexFloat64TensorProductMember b) {
-			TensorShape.compute(a, b);
-			ComplexFloat64Member tmp = G.CDBL.construct();
-			long numElems = a.numElems();
-			for (long i = 0; i < numElems; i++) {
-				a.v(i, tmp);
-				G.CDBL.round().call(mode, delta, tmp, tmp);
-				b.setV(i, tmp);
-			}
+			TensorRound.call(G.CDBL_TEN, G.CDBL, mode, delta, a, b);
 		}
 	};
 
