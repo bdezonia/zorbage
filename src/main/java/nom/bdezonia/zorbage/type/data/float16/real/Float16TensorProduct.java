@@ -489,7 +489,7 @@ public class Float16TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float16Member delta, Float16TensorProductMember a, Float16TensorProductMember b) {
-			TensorRound.call(G.HLF_TEN, G.HLF, mode, delta, a, b);
+			TensorRound.compute(G.HLF_TEN, G.HLF, mode, delta, a, b);
 		}
 	};
 

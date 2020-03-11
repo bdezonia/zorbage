@@ -499,7 +499,7 @@ public class OctonionFloat16TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float16Member delta, OctonionFloat16TensorProductMember a, OctonionFloat16TensorProductMember b) {
-			TensorRound.call(G.OHLF_TEN, G.OHLF, mode, delta, a, b);
+			TensorRound.compute(G.OHLF_TEN, G.OHLF, mode, delta, a, b);
 		}
 	};
 

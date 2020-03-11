@@ -499,7 +499,7 @@ public class ComplexFloat32TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float32Member delta, ComplexFloat32TensorProductMember a, ComplexFloat32TensorProductMember b) {
-			TensorRound.call(G.CFLT_TEN, G.CFLT, mode, delta, a, b);
+			TensorRound.compute(G.CFLT_TEN, G.CFLT, mode, delta, a, b);
 		}
 	};
 

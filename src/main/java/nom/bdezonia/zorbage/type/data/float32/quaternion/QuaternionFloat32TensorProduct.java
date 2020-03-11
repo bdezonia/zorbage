@@ -499,7 +499,7 @@ public class QuaternionFloat32TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float32Member delta, QuaternionFloat32TensorProductMember a, QuaternionFloat32TensorProductMember b) {
-			TensorRound.call(G.QFLT_TEN, G.QFLT, mode, delta, a, b);
+			TensorRound.compute(G.QFLT_TEN, G.QFLT, mode, delta, a, b);
 		}
 	};
 

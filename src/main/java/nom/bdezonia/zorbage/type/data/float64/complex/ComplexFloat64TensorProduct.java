@@ -499,7 +499,7 @@ public class ComplexFloat64TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float64Member delta, ComplexFloat64TensorProductMember a, ComplexFloat64TensorProductMember b) {
-			TensorRound.call(G.CDBL_TEN, G.CDBL, mode, delta, a, b);
+			TensorRound.compute(G.CDBL_TEN, G.CDBL, mode, delta, a, b);
 		}
 	};
 

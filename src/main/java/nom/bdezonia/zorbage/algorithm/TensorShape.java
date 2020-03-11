@@ -35,6 +35,8 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class TensorShape {
 
+	// do not instantiate
+	
 	private TensorShape() { }
 	
 	/**

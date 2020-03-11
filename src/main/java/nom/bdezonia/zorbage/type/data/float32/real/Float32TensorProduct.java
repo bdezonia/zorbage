@@ -488,7 +488,7 @@ public class Float32TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float32Member delta, Float32TensorProductMember a, Float32TensorProductMember b) {
-			TensorRound.call(G.FLT_TEN, G.FLT, mode, delta, a, b);
+			TensorRound.compute(G.FLT_TEN, G.FLT, mode, delta, a, b);
 		}
 	};
 

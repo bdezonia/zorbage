@@ -61,7 +61,7 @@ public class TensorRound {
 					NUMBER,
 					B extends Algebra<B,COMPONENT>,
 					COMPONENT>
-		void call(S tensAlg, M numberAlg, Mode mode, COMPONENT delta, TENSOR a, TENSOR b)
+		void compute(S tensAlg, M numberAlg, Mode mode, COMPONENT delta, TENSOR a, TENSOR b)
 	{
 		TensorShape.compute(a, b);
 		NUMBER tmp = numberAlg.construct();

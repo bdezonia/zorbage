@@ -499,7 +499,7 @@ public class ComplexFloat16TensorProduct
 	{
 		@Override
 		public void call(Mode mode, Float16Member delta, ComplexFloat16TensorProductMember a, ComplexFloat16TensorProductMember b) {
-			TensorRound.call(G.CHLF_TEN, G.CHLF, mode, delta, a, b);
+			TensorRound.compute(G.CHLF_TEN, G.CHLF, mode, delta, a, b);
 		}
 	};
 
