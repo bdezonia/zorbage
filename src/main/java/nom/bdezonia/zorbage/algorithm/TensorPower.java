@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Dimensioned;
 import nom.bdezonia.zorbage.type.algebra.Multiplication;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.algebra.Unity;
@@ -43,8 +42,8 @@ public class TensorPower {
 	
 	private TensorPower() { }
 	
-	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U extends Dimensioned & TensorMember<?>>
-		void compute(T alg, int power, U a, U b)
+	public static <S extends Algebra<S,TENSOR> & Multiplication<TENSOR> & Unity<TENSOR>, TENSOR extends TensorMember<?>>
+		void compute(S tensAlg, int power, TENSOR a, TENSOR b)
 	{
 		// TODO - make much more efficient by copying style of MatrixMultiply algorithm
 		
@@ -53,29 +52,29 @@ public class TensorPower {
 			throw new IllegalArgumentException("negative powers not supported");
 		}
 		else if (power == 0) {
-			if (alg.isZero().call(a)) {
+			if (tensAlg.isZero().call(a)) {
 				throw new IllegalArgumentException("0^0 is not a number");
 			}
 			TensorShape.compute(a, b); // set the shape of result
-			alg.unity().call(b); // and make it have value 1
+			tensAlg.unity().call(b); // and make it have value 1
 		}
 		else if (power == 1) {
-			alg.assign().call(a, b);
+			tensAlg.assign().call(a, b);
 		}
 		else {
-			U tmp1 = alg.construct();
-			U tmp2 = alg.construct();
-			alg.multiply().call(a, a, tmp1);
+			TENSOR tmp1 = tensAlg.construct();
+			TENSOR tmp2 = tensAlg.construct();
+			tensAlg.multiply().call(a, a, tmp1);
 			for (int i = 2; i < (power/2)*2; i += 2) {
-				alg.multiply().call(tmp1, a, tmp2);
-				alg.multiply().call(tmp2, a, tmp1);
+				tensAlg.multiply().call(tmp1, a, tmp2);
+				tensAlg.multiply().call(tmp2, a, tmp1);
 			}
 			// an odd power
 			if (power > 2 && (power&1)==1) {
-				alg.assign().call(tmp1, tmp2);
-				alg.multiply().call(tmp2, a, tmp1);
+				tensAlg.assign().call(tmp1, tmp2);
+				tensAlg.multiply().call(tmp2, a, tmp1);
 			}
-			alg.assign().call(tmp1, b);
+			tensAlg.assign().call(tmp1, b);
 		}
 	}
 
