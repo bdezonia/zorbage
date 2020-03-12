@@ -114,7 +114,7 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public int rank() {
-		throw new IllegalArgumentException("to be impemented");
+		return 0;
 	}
 	
 	private boolean dimsCompatible(long[] newDims) {

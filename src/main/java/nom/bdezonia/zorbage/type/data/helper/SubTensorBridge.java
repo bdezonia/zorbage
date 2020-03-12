@@ -182,6 +182,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public int rank() {
+		// TODO this should be easy to do I think but I will need to ponder a little
 		throw new IllegalArgumentException("to be impemented");
 	}
 	

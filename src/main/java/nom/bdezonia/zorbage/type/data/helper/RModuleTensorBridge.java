@@ -115,7 +115,7 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public int rank() {
-		throw new IllegalArgumentException("to be impemented");
+		return 1;
 	}
 	
 	private boolean dimsCompatible(long[] newDims) {
