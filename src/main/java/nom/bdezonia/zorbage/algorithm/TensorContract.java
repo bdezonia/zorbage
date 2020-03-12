@@ -48,8 +48,8 @@ public class TensorContract {
 
 	private TensorContract() { }
 	
-	public static <T extends Algebra<T,U> & Addition<U>, U>
-		void compute(T alg, Integer aRank, Integer i, Integer j, TensorMember<U> a, TensorMember<U> b)
+	public static <M extends Algebra<M,NUMBER> & Addition<NUMBER>, NUMBER>
+		void compute(M numberAlg, Integer aRank, Integer i, Integer j, TensorMember<NUMBER> a, TensorMember<NUMBER> b)
 	{
 		if (i == j)
 			throw new IllegalArgumentException("cannot contract along a single axis");
@@ -66,14 +66,14 @@ public class TensorContract {
 		}
 		b.alloc(newDims);
 		if (newRank == 0) {
-			U sum = alg.construct();
-			U tmp = alg.construct();
+			NUMBER sum = numberAlg.construct();
+			NUMBER tmp = numberAlg.construct();
 			IntegerIndex pos = new IntegerIndex(2);
 			for (int idx = 0; idx < a.dimension(0); idx++) {
 				pos.set(i, idx);
 				pos.set(j, idx);
 				a.v(pos, tmp);
-				alg.add().call(sum, tmp, sum);
+				numberAlg.add().call(sum, tmp, sum);
 			}
 			IntegerIndex origin = new IntegerIndex(0);
 			// TODO: this assignment won't work cuz lower level code does not allow zero dim index.
@@ -90,8 +90,8 @@ public class TensorContract {
 		SamplingIterator<IntegerIndex> iter = sampling.iterator();
 		IntegerIndex contractedPos = new IntegerIndex(sampling.numDimensions());
 		IntegerIndex origPos = new IntegerIndex(aRank);
-		U sum = alg.construct();
-		U tmp = alg.construct();
+		NUMBER sum = numberAlg.construct();
+		NUMBER tmp = numberAlg.construct();
 		while (iter.hasNext()) {
 			iter.next(contractedPos);
 			int p = 0;
@@ -103,12 +103,12 @@ public class TensorContract {
 				else
 					origPos.set(r, contractedPos.get(p++));
 			}
-			alg.zero().call(sum);
+			numberAlg.zero().call(sum);
 			for (int idx = 0; idx < a.dimension(0); idx++) {
 				origPos.set(i, idx);
 				origPos.set(j, idx);
 				a.v(origPos, tmp);
-				alg.add().call(sum, tmp, sum);
+				numberAlg.add().call(sum, tmp, sum);
 			}
 			b.setV(contractedPos, sum);
 		}
