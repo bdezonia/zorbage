@@ -39,6 +39,22 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  */
 public class TensorOuterProduct {
 
+	// do not instantiate
+	
+	private TensorOuterProduct() { }
+	
+	/**
+	 * 
+	 * @param <S>
+	 * @param <TENSOR>
+	 * @param <M>
+	 * @param <NUMBER>
+	 * @param tensAlg
+	 * @param numberAlg
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public static <S extends Algebra<S,TENSOR>,
 					TENSOR extends TensorMember<NUMBER> & RawData<NUMBER>,
 					M extends Algebra<M,NUMBER> & Multiplication<NUMBER>,

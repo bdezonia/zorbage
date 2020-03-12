@@ -40,7 +40,7 @@ public class TensorSemicolonDerivative {
 	// http://mathworld.wolfram.com/CovariantDerivative.html
 
 	/**
-	 * 
+	 * TODO
 	 */
 	public static
 		void compute()

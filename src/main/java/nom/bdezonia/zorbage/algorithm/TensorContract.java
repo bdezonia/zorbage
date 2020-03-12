@@ -46,8 +46,21 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class TensorContract {
 
+	// do not instantiate
+	
 	private TensorContract() { }
 	
+	/**
+	 * 
+	 * @param <M>
+	 * @param <NUMBER>
+	 * @param numberAlg
+	 * @param aRank
+	 * @param i
+	 * @param j
+	 * @param a
+	 * @param b
+	 */
 	public static <M extends Algebra<M,NUMBER> & Addition<NUMBER>, NUMBER>
 		void compute(M numberAlg, Integer aRank, Integer i, Integer j, TensorMember<NUMBER> a, TensorMember<NUMBER> b)
 	{

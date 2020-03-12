@@ -40,6 +40,10 @@ import nom.bdezonia.zorbage.type.storage.datasource.RawData;
  */
 public class TensorRound {
 
+	// do not instantiate
+	
+	private TensorRound() { }
+	
 	/**
 	 * 
 	 * @param <S>

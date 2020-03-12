@@ -42,6 +42,15 @@ public class TensorPower {
 	
 	private TensorPower() { }
 	
+	/**
+	 * 
+	 * @param <S>
+	 * @param <TENSOR>
+	 * @param tensAlg
+	 * @param power
+	 * @param a
+	 * @param b
+	 */
 	public static <S extends Algebra<S,TENSOR> & Multiplication<TENSOR> & Unity<TENSOR>, TENSOR extends TensorMember<?>>
 		void compute(S tensAlg, int power, TENSOR a, TENSOR b)
 	{
