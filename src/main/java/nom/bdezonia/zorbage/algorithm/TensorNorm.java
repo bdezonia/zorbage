@@ -48,39 +48,39 @@ public class TensorNorm {
 
 	/**
 	 * 
-	 * @param <T>
-	 * @param <U>
-	 * @param <V>
-	 * @param <W>
-	 * @param elementAlg
+	 * @param <M>
+	 * @param <NUMBER>
+	 * @param <B>
+	 * @param <COMPONENT>
+	 * @param numberAlg
 	 * @param componentAlg
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U> & Norm<U,W>,
-					U,
-					V extends Algebra<V,W> & Ordered<W> & Invertible<W> & Addition<W> & Multiplication<W> & Roots<W>,
-					W>
-		void compute(T elementAlg, V componentAlg, IndexedDataSource<U> a, W b)
+	public static <M extends Algebra<M,NUMBER> & Norm<NUMBER,COMPONENT>,
+					NUMBER,
+					B extends Algebra<B,COMPONENT> & Ordered<COMPONENT> & Invertible<COMPONENT> & Addition<COMPONENT> & Multiplication<COMPONENT> & Roots<COMPONENT>,
+					COMPONENT>
+		void compute(M numberAlg, B componentAlg, IndexedDataSource<NUMBER> a, COMPONENT b)
 	{
 		
 		// TODO: this algorithm needs testing. I kinda made it up on the spot and it might not be
 		// mathematically correct. Dig deeper. Note I am avoiding a multiply the value by it's
 		// conjugate in my code. This might be a mistake.
 
-		U value = elementAlg.construct();
-		W max = componentAlg.construct();
-		W nrm = componentAlg.construct();
+		NUMBER value = numberAlg.construct();
+		COMPONENT max = componentAlg.construct();
+		COMPONENT nrm = componentAlg.construct();
 		long numElems = a.size();
 		for (long i = 0; i < numElems; i++) {
 			a.get(i, value);
-			elementAlg.norm().call(value, nrm);
+			numberAlg.norm().call(value, nrm);
 			if (componentAlg.isGreater().call(nrm, max))
 				componentAlg.assign().call(nrm, max);
 		}
-		W sum = componentAlg.construct();
+		COMPONENT sum = componentAlg.construct();
 		for (long i = 0; i < numElems; i++) {
 			a.get(i, value);
-			elementAlg.norm().call(value, nrm);
+			numberAlg.norm().call(value, nrm);
 			componentAlg.divide().call(nrm, max, nrm);
 			componentAlg.multiply().call(nrm, nrm, nrm);
 			componentAlg.add().call(sum, nrm, sum);
