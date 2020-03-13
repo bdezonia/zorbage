@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64TensorProductMember;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.data.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
@@ -196,8 +196,8 @@ public class TestPrimitiveConversions {
 
 		double[] vals = new double[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
 		
-		Float64TensorProductMember t =
-				new Float64TensorProductMember(
+		Float64CartesianTensorProductMember t =
+				new Float64CartesianTensorProductMember(
 						new long[]{2,3,4},
 						vals);
 
@@ -241,7 +241,7 @@ public class TestPrimitiveConversions {
 		tmp1 = new IntegerIndex(4);
 		tmp2 = new IntegerIndex(4);
 		tmp3 = new IntegerIndex(4);
-		Float64TensorProductMember t2 = new Float64TensorProductMember(new long[] {5,3,2,2}, new double[60]);
+		Float64CartesianTensorProductMember t2 = new Float64CartesianTensorProductMember(new long[] {5,3,2,2}, new double[60]);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, t2);
 		assertEquals(5,t2.dimension(0));
 		assertEquals(5,t2.dimension(1));
