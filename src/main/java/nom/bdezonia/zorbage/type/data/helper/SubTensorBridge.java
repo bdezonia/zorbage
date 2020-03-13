@@ -181,10 +181,38 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public int rank() {
+	public int rank() { return lowerRank() + upperRank(); }
+	
+	@Override
+	public int lowerRank() {
 		// TODO this should be easy to do I think but I will need to ponder a little
 		throw new IllegalArgumentException("to be impemented");
 	}
+	
+	@Override
+	public int upperRank() {
+		// TODO this should be easy to do I think but I will need to ponder a little
+		throw new IllegalArgumentException("to be impemented");
+	}
+	
+	@Override
+	public boolean indexIsLower(int index) {
+		if (index < 0 || index > lowerRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		// TODO this should be easy to do I think but I will need to ponder a little
+		throw new IllegalArgumentException("to be impemented");
+	}
+	
+	@Override
+	public boolean indexIsUpper(int index) {
+		if (index < 0 || index > upperRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		// TODO this should be easy to do I think but I will need to ponder a little
+		throw new IllegalArgumentException("to be impemented");
+	}
+
+	@Override
+	public long dimension() { throw new IllegalArgumentException("TODO"); }
 	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length != rangingDims.length)

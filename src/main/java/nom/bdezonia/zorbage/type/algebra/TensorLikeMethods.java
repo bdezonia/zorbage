@@ -50,8 +50,8 @@ public interface TensorLikeMethods<U,W> {
 	Procedure1<Object> semicolonDerivative();
 	Procedure3<IntegerIndex,U,U> commaDerivative();
 	Procedure4<Integer,Integer,U,U> contract();
-	Procedure3<Integer,U,U> raiseIndex();
-	Procedure3<Integer,U,U> lowerIndex();
 	Procedure5<Integer,Integer,U,U,U> innerProduct();
 	Procedure3<U,U,U> outerProduct();
+	Procedure3<Integer,U,U> raiseIndex();
+	Procedure3<Integer,U,U> lowerIndex();
 }

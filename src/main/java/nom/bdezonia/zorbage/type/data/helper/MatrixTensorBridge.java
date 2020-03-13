@@ -142,9 +142,30 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public int rank() {
-		return 2;
+	public int rank() { return lowerRank() + upperRank(); }
+	
+	@Override
+	public int lowerRank() { return 2; }
+	
+	@Override
+	public int upperRank() { return 0; }
+	
+	@Override
+	public boolean indexIsLower(int index) {
+		if (index < 0 || index > lowerRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		return true;
 	}
+	
+	@Override
+	public boolean indexIsUpper(int index) {
+		if (index < 0 || index > upperRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		return false;
+	}
+
+	@Override
+	public long dimension() { return size; }
 	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 2) return false;

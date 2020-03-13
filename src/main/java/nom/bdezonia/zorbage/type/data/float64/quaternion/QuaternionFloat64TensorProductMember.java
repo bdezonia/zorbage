@@ -78,9 +78,35 @@ public final class QuaternionFloat64TensorProductMember
 
 	// rank() is also numDimensions(). Confusing. TODO - fix
 	
-	public int rank() { return rank; }
+	@Override
+	public int rank() { return lowerRank() + upperRank(); }
 	
-	public long dimensions() { return dimCount; }
+	@Override
+	public int lowerRank() {
+		return rank;
+	}
+	
+	@Override
+	public int upperRank() {
+		return 0;
+	}
+	
+	@Override
+	public boolean indexIsLower(int index) {
+		if (index < 0 || index > lowerRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		return true;
+	}
+	
+	@Override
+	public boolean indexIsUpper(int index) {
+		if (index < 0 || index > upperRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		return false;
+	}
+
+	@Override
+	public long dimension() { return dimCount; }
 
 	public QuaternionFloat64TensorProductMember() {
 		rank = 0;

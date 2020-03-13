@@ -113,9 +113,30 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public int rank() {
-		return 0;
+	public int rank() { return lowerRank() + upperRank(); }
+	
+	@Override
+	public int lowerRank() { return 0; }
+	
+	@Override
+	public int upperRank() { return 0; }
+	
+	@Override
+	public boolean indexIsLower(int index) {
+		if (index < 0 || index > lowerRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		return true;
 	}
+	
+	@Override
+	public boolean indexIsUpper(int index) {
+		if (index < 0 || index > upperRank())
+			throw new IllegalArgumentException("index of tensor component is outside bounds");
+		return false;
+	}
+
+	@Override
+	public long dimension() { return 1; } // TODO: this is hacky. Nearly any number is valid.
 	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 1) return false;

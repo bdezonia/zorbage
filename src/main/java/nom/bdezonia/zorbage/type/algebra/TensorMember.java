@@ -37,7 +37,12 @@ import nom.bdezonia.zorbage.type.ctor.StorageType;
  */
 public interface TensorMember<A> extends Dimensioned, StorageType {
 	// n dims
+	long dimension();
 	int rank();
+	int upperRank();
+	int lowerRank();
+	boolean indexIsUpper(int index);
+	boolean indexIsLower(int index);
 	boolean alloc(long[] dims);
 	void init(long[] dims);
 	void reshape(long[] dims);
