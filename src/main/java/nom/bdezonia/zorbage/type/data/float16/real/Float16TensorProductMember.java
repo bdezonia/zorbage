@@ -78,10 +78,13 @@ public final class Float16TensorProductMember
 
 	// rank() is also numDimensions(). Confusing. TODO - fix
 	
+	@Override
 	public int rank() { return lowerRank() + upperRank(); }
 	
+	@Override
 	public int lowerRank() { return rank; }
 	
+	@Override
 	public int upperRank() { return 0; }
 	
 	@Override

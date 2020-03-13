@@ -78,12 +78,14 @@ public final class ComplexFloat32TensorProductMember
 
 	// rank() is also numDimensions(). Confusing. TODO - fix
 	
+	@Override
 	public int rank() { return lowerRank() + upperRank(); }
 	
+	@Override
 	public int lowerRank() { return rank; }
 	
+	@Override
 	public int upperRank() { return 0; }
-	
 	
 	@Override
 	public boolean indexIsLower(int index) {
