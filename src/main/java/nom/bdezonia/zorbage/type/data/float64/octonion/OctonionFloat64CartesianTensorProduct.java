@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -95,7 +96,7 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  * 
  * @author Barry DeZonia
  *
-omplex */
+ */
 public class OctonionFloat64CartesianTensorProduct
 	implements
 		TensorLikeProduct<OctonionFloat64CartesianTensorProduct,OctonionFloat64CartesianTensorProductMember,OctonionFloat64Algebra,OctonionFloat64Member>,
@@ -393,21 +394,17 @@ public class OctonionFloat64CartesianTensorProduct
 		return SEMI;
 	}
 	
-	// http://mathworld.wolfram.com/CommaDerivative.html
-	
-	private final Procedure3<IntegerIndex,OctonionFloat64CartesianTensorProductMember,OctonionFloat64CartesianTensorProductMember> COMMA =
-			new Procedure3<IntegerIndex,OctonionFloat64CartesianTensorProductMember,OctonionFloat64CartesianTensorProductMember>()
+	private final Procedure3<Integer,OctonionFloat64CartesianTensorProductMember,OctonionFloat64CartesianTensorProductMember> COMMA =
+			new Procedure3<Integer,OctonionFloat64CartesianTensorProductMember,OctonionFloat64CartesianTensorProductMember>()
 	{
 		@Override
-		public void call(IntegerIndex index, OctonionFloat64CartesianTensorProductMember a, OctonionFloat64CartesianTensorProductMember b) {
-			OctonionFloat64Member val = G.ODBL.construct();
-			a.v(index, val);
-			divideByScalar().call(val, a, b);
+		public void call(Integer index, OctonionFloat64CartesianTensorProductMember a, OctonionFloat64CartesianTensorProductMember b) {
+			TensorCommaDerivative.compute(G.ODBL_TEN, G.ODBL, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<IntegerIndex,OctonionFloat64CartesianTensorProductMember,OctonionFloat64CartesianTensorProductMember> commaDerivative() {
+	public Procedure3<Integer,OctonionFloat64CartesianTensorProductMember,OctonionFloat64CartesianTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	

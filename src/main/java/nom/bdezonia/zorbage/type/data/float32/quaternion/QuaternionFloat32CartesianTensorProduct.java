@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -95,7 +96,7 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  * 
  * @author Barry DeZonia
  *
-omplex */
+ */
 public class QuaternionFloat32CartesianTensorProduct
 	implements
 		TensorLikeProduct<QuaternionFloat32CartesianTensorProduct,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32Algebra,QuaternionFloat32Member>,
@@ -393,21 +394,17 @@ public class QuaternionFloat32CartesianTensorProduct
 		return SEMI;
 	}
 	
-	// http://mathworld.wolfram.com/CommaDerivative.html
-	
-	private final Procedure3<IntegerIndex,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> COMMA =
-			new Procedure3<IntegerIndex,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember>()
+	private final Procedure3<Integer,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> COMMA =
+			new Procedure3<Integer,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember>()
 	{
 		@Override
-		public void call(IntegerIndex index, QuaternionFloat32CartesianTensorProductMember a, QuaternionFloat32CartesianTensorProductMember b) {
-			QuaternionFloat32Member val = G.QFLT.construct();
-			a.v(index, val);
-			divideByScalar().call(val, a, b);
+		public void call(Integer index, QuaternionFloat32CartesianTensorProductMember a, QuaternionFloat32CartesianTensorProductMember b) {
+			TensorCommaDerivative.compute(G.QFLT_TEN, G.QFLT, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<IntegerIndex,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> commaDerivative() {
+	public Procedure3<Integer,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	

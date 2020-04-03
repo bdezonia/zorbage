@@ -27,28 +27,22 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.TensorLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
-import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TensorSemicolonDerivative {
+public class TensorCommaDerivative {
 
 	// do not instantiate
 	
-	private TensorSemicolonDerivative() { }
+	private TensorCommaDerivative() { }
 	
-	// http://mathworld.wolfram.com/CovariantDerivative.html
-	// https://en.wikipedia.org/wiki/Covariant_derivative
-	// https://en.wikipedia.org/wiki/Christoffel_symbols
-		
 	/**
 	 * 
 	 * @param <S>
@@ -61,34 +55,34 @@ public class TensorSemicolonDerivative {
 	 * @param a
 	 * @param b
 	 */
-	public static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
+	public static <S extends Algebra<S,TENSOR>,
 					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M,NUMBER> & Invertible<NUMBER> & Unity<NUMBER>, NUMBER>
+					M extends Algebra<M, NUMBER>,
+					NUMBER>
 		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
 	{
-		TENSOR sum = tensAlg.construct();
-		TENSOR tmp = tensAlg.construct();
-		tensAlg.commaDerivative().call(index, a, sum);
-		for (int i = 0; i < a.rank(); i++) {
-			if (a.indexIsUpper(i)) {
-				// this position is an upper index
-				christoffel(i, d, index, a, tmp);
-				tensAlg.add().call(sum, tmp, sum);
-			}
-			else {
-				// this position is a lower index
-				christoffel(d, i, index, a, tmp);
-				tensAlg.subtract().call(sum, tmp, sum);
-			}
+		if (a.rank() == 0) {
+			tensAlg.assign().call(a, b);
+			return;
 		}
-		tensAlg.assign().call(sum, b);
-	}
-	
-	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
-						TENSOR extends TensorMember<NUMBER>,
-						M extends Algebra<M,NUMBER> & Invertible<NUMBER> & Unity<NUMBER>, NUMBER>
-		void christoffel(int k, int i, int j, TENSOR a, TENSOR out)
-	{
-		
+		TENSOR tmp = tensAlg.construct();
+		TensorShape.compute(a, tmp);
+		NUMBER value = numAlg.construct();
+		IntegerIndex min = new IntegerIndex(a.rank());
+		IntegerIndex max = new IntegerIndex(a.rank());
+		IntegerIndex tmpIdx = new IntegerIndex(a.rank());
+		min.set(a.rank()-1, index);
+		max.set(a.rank()-1, index);
+		for (int i = 0; i < a.rank()-1; i++) {
+			max.set(i, a.dimension()-1);
+		}
+		SamplingCartesianIntegerGrid grid = new SamplingCartesianIntegerGrid(min, max);
+		SamplingIterator<IntegerIndex> iter = grid.iterator();
+		while (iter.hasNext()) {
+			iter.next(tmpIdx);
+			a.v(tmpIdx, value);
+			tmp.setV(tmpIdx, value);
+		}
+		tensAlg.assign().call(tmp, b);
 	}
 }

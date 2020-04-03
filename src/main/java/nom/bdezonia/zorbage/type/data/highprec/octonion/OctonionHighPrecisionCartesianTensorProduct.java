@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -85,7 +86,7 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  * 
  * @author Barry DeZonia
  *
-omplex */
+ */
 public class OctonionHighPrecisionCartesianTensorProduct
 	implements
 		TensorLikeProduct<OctonionHighPrecisionCartesianTensorProduct,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>,
@@ -380,21 +381,17 @@ public class OctonionHighPrecisionCartesianTensorProduct
 		return SEMI;
 	}
 	
-	// http://mathworld.wolfram.com/CommaDerivative.html
-	
-	private final Procedure3<IntegerIndex,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember> COMMA =
-			new Procedure3<IntegerIndex,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember>()
+	private final Procedure3<Integer,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember> COMMA =
+			new Procedure3<Integer,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override
-		public void call(IntegerIndex index, OctonionHighPrecisionCartesianTensorProductMember a, OctonionHighPrecisionCartesianTensorProductMember b) {
-			OctonionHighPrecisionMember val = G.OHP.construct();
-			a.v(index, val);
-			divideByScalar().call(val, a, b);
+		public void call(Integer index, OctonionHighPrecisionCartesianTensorProductMember a, OctonionHighPrecisionCartesianTensorProductMember b) {
+			TensorCommaDerivative.compute(G.OHP_TEN, G.OHP, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<IntegerIndex,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember> commaDerivative() {
+	public Procedure3<Integer,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	

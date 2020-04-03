@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.FixedTransform2;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -380,21 +381,17 @@ public class ComplexHighPrecisionCartesianTensorProduct
 		return SEMI;
 	}
 	
-	// http://mathworld.wolfram.com/CommaDerivative.html
-	
-	private final Procedure3<IntegerIndex,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> COMMA =
-			new Procedure3<IntegerIndex,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember>()
+	private final Procedure3<Integer,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> COMMA =
+			new Procedure3<Integer,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override
-		public void call(IntegerIndex index, ComplexHighPrecisionCartesianTensorProductMember a, ComplexHighPrecisionCartesianTensorProductMember b) {
-			ComplexHighPrecisionMember val = G.CHP.construct();
-			a.v(index, val);
-			divideByScalar().call(val, a, b);
+		public void call(Integer index, ComplexHighPrecisionCartesianTensorProductMember a, ComplexHighPrecisionCartesianTensorProductMember b) {
+			TensorCommaDerivative.compute(G.CHP_TEN, G.CHP, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<IntegerIndex,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> commaDerivative() {
+	public Procedure3<Integer,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	

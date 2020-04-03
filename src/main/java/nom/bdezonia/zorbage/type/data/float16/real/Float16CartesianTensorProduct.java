@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -382,21 +383,17 @@ public class Float16CartesianTensorProduct
 		return SEMI;
 	}
 	
-	// http://mathworld.wolfram.com/CommaDerivative.html
-	
-	private final Procedure3<IntegerIndex,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> COMMA =
-			new Procedure3<IntegerIndex,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember>()
+	private final Procedure3<Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> COMMA =
+			new Procedure3<Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember>()
 	{
 		@Override
-		public void call(IntegerIndex index, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
-			Float16Member val = G.HLF.construct();
-			a.v(index, val);
-			divideByScalar().call(val, a, b);
+		public void call(Integer index, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
+			TensorCommaDerivative.compute(G.HLF_TEN, G.HLF, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<IntegerIndex,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> commaDerivative() {
+	public Procedure3<Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	// TODO - make much more efficient by copying style of MatrixMultiply algorithm

@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -58,6 +59,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -368,35 +371,31 @@ public class Float64CartesianTensorProduct
 		return CONTRACT;
 	}
 		
-	private final Procedure1<Object> SEMI =
-			new Procedure1<Object>()
+	private final Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> SEMI =
+			new Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember>()
 	{
 		@Override
-		public void call(Object a) {
-			TensorSemicolonDerivative.compute();
+		public void call(Integer index, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
+			TensorSemicolonDerivative.compute(G.DBL_TEN, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure1<Object> semicolonDerivative() {
+	public Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> semicolonDerivative() {
 		return SEMI;
 	}
 	
-	// http://mathworld.wolfram.com/CommaDerivative.html
-	
-	private final Procedure3<IntegerIndex,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> COMMA =
-			new Procedure3<IntegerIndex,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember>()
+	private final Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> COMMA =
+			new Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember>()
 	{
 		@Override
-		public void call(IntegerIndex index, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
-			Float64Member val = G.DBL.construct();
-			a.v(index, val);
-			divideByScalar().call(val, a, b);
+		public void call(Integer index, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
+			TensorCommaDerivative.compute(G.DBL_TEN, G.DBL, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<IntegerIndex,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> commaDerivative() {
+	public Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> commaDerivative() {
 		return COMMA;
 	}
 	
