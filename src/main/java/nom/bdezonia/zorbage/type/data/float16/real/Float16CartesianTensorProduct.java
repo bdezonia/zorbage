@@ -58,7 +58,6 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -368,18 +367,18 @@ public class Float16CartesianTensorProduct
 	public Procedure4<Integer,Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> contract() {
 		return CONTRACT;
 	}
-		
-	private final Procedure1<Object> SEMI =
-			new Procedure1<Object>()
+	
+	private final Procedure3<Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> SEMI =
+			new Procedure3<Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember>()
 	{
 		@Override
-		public void call(Object a) {
-			TensorSemicolonDerivative.compute();
+		public void call(Integer index, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
+			TensorSemicolonDerivative.compute(G.HLF_TEN, G.HLF, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure1<Object> semicolonDerivative() {
+	public Procedure3<Integer,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> semicolonDerivative() {
 		return SEMI;
 	}
 	

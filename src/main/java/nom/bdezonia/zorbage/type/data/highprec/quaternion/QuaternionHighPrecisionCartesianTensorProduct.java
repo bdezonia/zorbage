@@ -52,7 +52,6 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Scale;
 import nom.bdezonia.zorbage.type.algebra.ScaleByDouble;
@@ -366,18 +365,18 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	public Procedure4<Integer,Integer,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> contract() {
 		return CONTRACT;
 	}
-		
-	private final Procedure1<Object> SEMI =
-			new Procedure1<Object>()
+	
+	private final Procedure3<Integer,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> SEMI =
+			new Procedure3<Integer,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override
-		public void call(Object a) {
-			TensorSemicolonDerivative.compute();
+		public void call(Integer index, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
+			TensorSemicolonDerivative.compute(G.QHP_TEN, G.QHP, index, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure1<Object> semicolonDerivative() {
+	public Procedure3<Integer,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> semicolonDerivative() {
 		return SEMI;
 	}
 	

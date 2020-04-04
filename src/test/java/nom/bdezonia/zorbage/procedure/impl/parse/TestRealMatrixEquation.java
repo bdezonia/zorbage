@@ -32,7 +32,6 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;

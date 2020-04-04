@@ -36,8 +36,6 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.MinMaxElement;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntAlgebra;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageGeneric;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 

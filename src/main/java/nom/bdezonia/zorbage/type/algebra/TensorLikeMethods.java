@@ -31,7 +31,6 @@ import java.lang.Integer;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 

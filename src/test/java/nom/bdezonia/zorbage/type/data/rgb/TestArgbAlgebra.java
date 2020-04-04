@@ -31,7 +31,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.rgb.ArgbMember;
 
 /**
  * 

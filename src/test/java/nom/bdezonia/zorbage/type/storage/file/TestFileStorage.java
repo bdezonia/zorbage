@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.storage.file.FileStorageFloat64;
 
 /**
  * 

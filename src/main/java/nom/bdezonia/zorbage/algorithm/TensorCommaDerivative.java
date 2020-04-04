@@ -43,6 +43,8 @@ public class TensorCommaDerivative {
 	
 	private TensorCommaDerivative() { }
 	
+	// https://mathworld.wolfram.com/CommaDerivative.html
+	
 	/**
 	 * 
 	 * @param <S>

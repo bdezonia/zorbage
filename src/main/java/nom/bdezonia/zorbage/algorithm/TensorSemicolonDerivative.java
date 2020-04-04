@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Invertible;
@@ -66,6 +65,7 @@ public class TensorSemicolonDerivative {
 					M extends Algebra<M,NUMBER> & Invertible<NUMBER> & Unity<NUMBER>, NUMBER>
 		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
 	{
+		/*
 		TENSOR sum = tensAlg.construct();
 		TENSOR tmp = tensAlg.construct();
 		tensAlg.commaDerivative().call(index, a, sum);
@@ -82,8 +82,11 @@ public class TensorSemicolonDerivative {
 			}
 		}
 		tensAlg.assign().call(sum, b);
+		*/
 	}
 	
+	/*
+
 	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
 						TENSOR extends TensorMember<NUMBER>,
 						M extends Algebra<M,NUMBER> & Invertible<NUMBER> & Unity<NUMBER>, NUMBER>
@@ -91,4 +94,6 @@ public class TensorSemicolonDerivative {
 	{
 		
 	}
+
+	*/
 }

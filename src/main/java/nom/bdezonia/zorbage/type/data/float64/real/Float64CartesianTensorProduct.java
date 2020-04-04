@@ -58,9 +58,6 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
-import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -370,13 +367,13 @@ public class Float64CartesianTensorProduct
 	public Procedure4<Integer,Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> contract() {
 		return CONTRACT;
 	}
-		
+	
 	private final Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> SEMI =
 			new Procedure3<Integer,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember>()
 	{
 		@Override
 		public void call(Integer index, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.DBL_TEN, index, a, b);
+			TensorSemicolonDerivative.compute(G.DBL_TEN, G.DBL, index, a, b);
 		}
 	};
 	

@@ -35,7 +35,6 @@ import org.junit.Test;
 import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
-import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Member;
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 
 /**

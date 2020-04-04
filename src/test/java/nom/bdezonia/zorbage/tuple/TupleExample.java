@@ -32,8 +32,6 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
 import nom.bdezonia.zorbage.accessor.AccessorB;
-import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.tuple.Tuple5;
 
 /**
  * 
