@@ -28,10 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
 import nom.bdezonia.zorbage.type.algebra.TensorLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
-import nom.bdezonia.zorbage.type.algebra.Unity;
 
 /**
  * 
@@ -62,14 +60,24 @@ public class TensorSemicolonDerivative {
 	 */
 	public static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
 					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M,NUMBER> & Invertible<NUMBER> & Unity<NUMBER>, NUMBER>
+					M extends Algebra<M,NUMBER>, NUMBER>
 		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
 	{
-		/*
+		
+		TensorCommaDerivative.compute(tensAlg, numAlg, index, a, b);
+		
 		TENSOR sum = tensAlg.construct();
 		TENSOR tmp = tensAlg.construct();
+		TensorShape.compute(a, sum);
+		TensorShape.compute(a, tmp);
 		tensAlg.commaDerivative().call(index, a, sum);
 		for (int i = 0; i < a.rank(); i++) {
+			/*
+			
+			// TODO: since all my tensor impls are cartesian ones in euclidean space right now I think that the
+			// semicolon derivative degenerates into the comma derivative because the christoffel symbols are
+			// all zero. This might be wrong so should revisit.
+			 
 			if (a.indexIsUpper(i)) {
 				// this position is an upper index
 				christoffel(i, d, index, a, tmp);
@@ -80,20 +88,18 @@ public class TensorSemicolonDerivative {
 				christoffel(d, i, index, a, tmp);
 				tensAlg.subtract().call(sum, tmp, sum);
 			}
+			 */
 		}
 		tensAlg.assign().call(sum, b);
-		*/
 	}
 	
-	/*
-
-	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
+	/* future code
+	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER>,
 						TENSOR extends TensorMember<NUMBER>,
-						M extends Algebra<M,NUMBER> & Invertible<NUMBER> & Unity<NUMBER>, NUMBER>
+						M extends Algebra<M,NUMBER>, NUMBER>
 		void christoffel(int k, int i, int j, TENSOR a, TENSOR out)
 	{
 		
 	}
-
 	*/
 }

@@ -45,6 +45,10 @@ public class TensorCommaDerivative {
 	
 	// https://mathworld.wolfram.com/CommaDerivative.html
 	
+	// My current understanding is this populates a tensor zero everywhere except where an input tensor
+	// is sliced by the index value (0 .. dimension-1) in the outermost dimension. This may be incorrect
+	// but that is what seems most logical when I look at the math definition above.
+	
 	/**
 	 * 
 	 * @param <S>
