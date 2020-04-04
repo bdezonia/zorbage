@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.procedure.impl.parse;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.procedure.impl.AbsL;
 import nom.bdezonia.zorbage.procedure.impl.AcosL;
 import nom.bdezonia.zorbage.procedure.impl.AcoshL;
 import nom.bdezonia.zorbage.procedure.impl.AddL;
@@ -63,6 +64,7 @@ import nom.bdezonia.zorbage.procedure.impl.TanhL;
 import nom.bdezonia.zorbage.procedure.impl.VariableConstantL;
 import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.type.algebra.Addition;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Bounded;
@@ -701,6 +703,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						toks.add(new FunctionName(i, "log"));
 						i += 2;
 					}
+					else if (nextFew(str, i, "abs")) {
+						toks.add(new FunctionName(i, "abs"));
+						i += 2;
+					}
 					else {
 						result.setA("Lex err near position "+i+": unknown function name or other bad syntax");
 						return result;
@@ -1047,6 +1053,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (algebra instanceof Random<?>) {
 			if (funcName.equals("rand"))
 				return new RandL(algebra);
+		}
+		if (algebra instanceof AbsoluteValue<?>) {
+			if (funcName.equals("abs"))
+				return new AbsL(algebra,ancestor1);
 		}
 		
 		throw new IllegalArgumentException("Unsupported function type : "+funcName+" for given algebra");

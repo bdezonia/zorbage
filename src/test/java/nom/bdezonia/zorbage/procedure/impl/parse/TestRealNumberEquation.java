@@ -174,4 +174,128 @@ public class TestRealNumberEquation {
 		assertEquals(-32768, tmp.v());
 	}
 	*/
+
+	// Verify that I can parse a bunch of things by using a benchmark some other parsers are tested with.
+	// from https://raw.githubusercontent.com/ArashPartow/math-parser-benchmark-project/master/bench_expr.txt 4/4/2020
+	
+	@Test
+	public void monsterTest() {
+
+		String[] eqns = {
+				
+			// trivial expressions and expressions eliminated by
+			// constant folding
+			"1",
+			"$0",
+			"2/abs(3*4/5)",
+			"sin((1+2/2*3)*4^5)+cos(6*PI)",
+	
+			//
+			// Variablen und Variablenzusammenfassung
+			//
+			// direkte Rckgabe von Variablen Zusammenfassung von Variablen
+			// Alle gleichungen hier knnen auf eine Variable oder einen Term
+			//  der Form a*x+b mit a,b konstant zurckgefhrt werden
+			"$0+1",
+			"$0*2",
+			"2*$0+1",
+			"(2*$0+1)*3",
+	
+			//
+			// Polynome / Optimierung von Potenzfunktionen testen
+			//
+			// Polynomials with integer exponents
+			"$0^2+1",
+			"1+$0^2",
+			"1.1*$0^2",
+			"1.1*$0^2 + 2.2*$1^3",
+			"1.1*$0^2 + 2.2*$1^3 + 3.3*$2^4",
+	
+			// Polynome mit floating point exponenten
+			"1.1*$0^2.01",
+			"1.1*$0^2.01 + 2.2*$1^3.01",
+			"1.1*$0^2.01 + 2.2*$1^3.01 + 3.3*$2^4.01",
+	
+			//physikalisch relevante gleichungen (variablen sind willkrlich gesetzt)
+			// gausskurve
+			"1/($0*sqrt(2*PI))*E^(-0.5*(($1-$0)/$0)^2)",
+	
+			// hornerschema:
+			"(((((((7*$0+6)*$0+5)*$0+4)*$0+3)*$0+2)*$0+1)*$0+0.1)",
+			"7*$0^7+6*$0^6+5*$0^5+4*$0^4+3*$0^3+2*$0^2+1*$0^1+0.1",
+	
+			// distance calculation
+			"sqrt($0^2+$1^2)",
+	
+			// Overhead of basic function calls
+			"sin($0)",
+			"sqrt($0)",
+			"abs($0)",
+	
+			// Simple expressions without functions
+			"$0+$1",
+			"$0+$1-$2",
+			"$0*$1*$2",
+			"$0/$1/$2",
+			"$0+$1*$2",
+			"$0*$1+$2",
+			"$0/(($0+$1)*($0-$1))/$1",
+			"1-(($0*$1)+($0/$1))-3",
+			"($0+$1)*3",
+			"-($1^1.1)",
+			"$0+$1*($0+$1)",
+			"(1+$1)*(-3)",
+			"$0+$1-E*PI/5^6",
+			"$0^$1/E*PI-5+6",
+			"$0*2+2*$1",
+			"2*($0+$1)",
+			"($0+$1)*2",
+			"-$0+-$1",
+			"-$0--$1",
+			"-$0*-$1",
+			"-$0/-$1",
+			"-$0*$1",
+			"-$0/$1",
+			"$0*-$1",
+			"$0/-$1",
+			"$0+1-2/3",
+			"1+$0-2/3",
+			"(1+$0)-2/3",
+			"1+($0-2/3)",
+			"($0/(((($1+(((E*(((((PI*((((3.45*((PI+$0)+PI))+$1)+$1)*$0))+0.68)+E)+$0)/$0))+$0)+$1))+$1)*$0)-PI))",
+			"(5.5+$0)+(2*$0-2/3*$1)*($0/3+$1/4)+($2+7.7)",
+			"(((($0)-($1))+(($2)-($3)))/((($4)-($5))+(($6)-($0))))*(((($1)-($2))+(($3)-($4)))/((($5)-($6))+(($0)-($1))))",
+			"((((2*$0)-($1*3))+((4*$2)-($3*5)))/((($4/6)-(7/$5))+(($6/8)-($0^2))))*(((($1^3)-($2/4))+((5/$3)-(6/$4)))/((($5/7)-(8/$6))+(($0)-($1))))",
+	
+			// expressions with functions
+			"$0+(cos($1-sin(2/$0*PI))-sin($0-cos(2*$1/PI)))-$1",
+			"sin($0)+sin($1)",
+			"abs(sin(sqrt($0^2+$1^2))*255)",
+			"-abs($0+1)*-sin(2-$1)",
+			"sqrt($0)*sin(8)", // slightly modified by BDZ
+			"(10+sqrt($0))*(sin(8)^2)", // slightly modified by BDZ
+			"($1+$0/$1) * ($0-$1/$0)",
+			"(0.1*$0+1)*$0+1.1-sin($0)-log($0)/$0*3/4",
+			"sin(2 * $0) + cos(PI / $1)",
+			"1 - sin(2 * $0) + cos(PI / $1)",
+			"sqrt(1 - sin(2 * $0) + cos(PI / $1) / 3)",
+			"($0^2 / sin(2 * PI / $1)) -$0 / 2",
+			"1-($0/$1*0.5)",
+			"E^log(7*$0)",
+			"10^log(3+$1)",
+			"(cos(2.41)/$1)",
+			"-(sin(PI+$0)+1)",
+			"$0-(E^(log(7+$1)))"
+		};
+		
+		EquationParser<Float64Algebra,Float64Member> parser =
+			new EquationParser<Float64Algebra,Float64Member>();
+
+		String eqn = null;
+		for (int i = 0; i < eqns.length; i++) {
+			eqn = eqns[i];
+			Tuple2<String, Procedure<Float64Member>> result = parser.parse(G.DBL, eqn);
+			assertEquals(null, result.a());
+		}
+	}
 }
