@@ -291,9 +291,7 @@ public class TestRealNumberEquation {
 		EquationParser<Float64Algebra,Float64Member> parser =
 			new EquationParser<Float64Algebra,Float64Member>();
 
-		String eqn = null;
-		for (int i = 0; i < eqns.length; i++) {
-			eqn = eqns[i];
+		for (String eqn : eqns) {
 			Tuple2<String, Procedure<Float64Member>> result = parser.parse(G.DBL, eqn);
 			assertEquals(null, result.a());
 		}
