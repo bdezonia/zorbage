@@ -616,12 +616,8 @@ public class ComplexFloat32CartesianTensorProduct
 		@Override
 		public void call(Integer idx, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
 			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in raiseIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
+
 		}
 	};
 	

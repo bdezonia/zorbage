@@ -533,12 +533,8 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		@Override
 		public void call(Integer idx, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
 			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in raiseIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
+
 		}
 	};
 	

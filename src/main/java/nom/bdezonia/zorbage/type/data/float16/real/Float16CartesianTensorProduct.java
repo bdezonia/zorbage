@@ -606,12 +606,8 @@ public class Float16CartesianTensorProduct
 		@Override
 		public void call(Integer idx, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
 			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in raiseIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
+
 		}
 	};
 	
