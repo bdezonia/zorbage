@@ -195,10 +195,10 @@ Partial bibliography
   Discrete Time Signal Processing, Oppenheim and Schaffer
   Introduction to Algorithms, Cormen, Lesserson, Rivest, Stein
   Probability and Statistics for Engineering and the Sciences, Devore
-  Numerical Methods for Scienctists and Engineers, Hamming
+  Numerical Methods for Scientists and Engineers, Hamming
   Design Patterns, gang of four
   Div, Grad, Curl, and All That
-  Real World Haskell,
+  Real World Haskell
   Haskell School of Expression
   Advanced Engineering Mathematics, Wylie, Barrett
   Partial Differential Equations for Scientists and Engineers, Farlow
@@ -207,7 +207,7 @@ Partial bibliography
   Complex Variables with Applications, Wunsch
   Introduction to Abstract Algebra, Dubisch
   Elements of Modern Algbera, Gilbert
-  Introduction to Octonion and Other Non-assocociative Algebras in Physics, Okubo 
+  Introduction to Octonion and Other Non-associative Algebras in Physics, Okubo 
   Differential Equations, Ross
   Digital Signal Processing, Proakis
   Rings, Fields, and Groups, Arnold
@@ -219,6 +219,11 @@ Partial bibliography
   Schaum's Outline of Tensor Calculus, Kay
   Tensor Calculus Made Simple, Sochi
   A Student's Guide to Vectors and Tensors, Fleisch
+  Calculus and Analytic Geometry, Thomas, Finney
   GNU Scientific Library documentation
+  Numerical Recipes documentation
+  Boost Library documentation
+  C++ Stdlib documentation
+  Pascal language definitions
   Many articles on Mathworld and Wikipedia
-  Many other web pages
+  Many other web pages and pdfs and slide presentations
