@@ -39,9 +39,7 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 
 	private final SamplingGeneral<RealIndex> sampling;
 
-	// TODO: calc me from grid cell size
-
-	private final double TOL = 0.000001;
+	private double TOL = 0.000001;
 
 	public SamplingCartesianRealGrid(double[] point1, double[] point2, long[] counts) {
 		if ((point1.length != point2.length) || (point1.length != counts.length))
@@ -88,6 +86,14 @@ public class SamplingCartesianRealGrid implements Sampling<RealIndex> {
 		}
 	}
 
+	public double tolerance() {
+		return TOL;
+	}
+	
+	public void setTolerance(double tol) {
+		TOL = tol;
+	}
+	
 	@Override
 	public int numDimensions() {
 		return sampling.numDimensions();

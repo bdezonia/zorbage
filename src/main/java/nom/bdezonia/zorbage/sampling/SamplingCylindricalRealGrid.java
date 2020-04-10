@@ -42,9 +42,7 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 
 	private final SamplingGeneral<RealIndex> sampling;
 	
-	// TODO: calc me from grid cell size
-	
-	private final double TOL = 0.000001;
+	private double TOL = 0.000001;
 	
 	public SamplingCylindricalRealGrid(
 			double dr, int rCount,
@@ -69,6 +67,14 @@ public class SamplingCylindricalRealGrid implements Sampling<RealIndex> {
 				}
 			}
 		}
+	}
+	
+	public double tolerance() {
+		return TOL;
+	}
+	
+	public void setTolerance(double tol) {
+		TOL = tol;
 	}
 	
 	@Override

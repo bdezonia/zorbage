@@ -42,9 +42,7 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 
 	private final SamplingGeneral<RealIndex> sampling;
 	
-	// TODO: calc me from grid cell size
-	
-	private final double TOL = 0.000001;
+	private double TOL = 0.000001;
 	
 	public SamplingPolarRealGrid(
 			double dr, int rCount,
@@ -64,6 +62,14 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 					sampling.add(value);
 			}
 		}
+	}
+	
+	public double tolerance() {
+		return TOL;
+	}
+	
+	public void setTolerance(double tol) {
+		TOL = tol;
 	}
 	
 	@Override
