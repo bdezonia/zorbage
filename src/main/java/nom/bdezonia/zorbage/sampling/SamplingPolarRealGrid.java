@@ -69,6 +69,8 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 	}
 	
 	public void setTolerance(double tol) {
+		if (tol < 0)
+			throw new IllegalArgumentException("tolerance must be >= 0");
 		TOL = tol;
 	}
 	
