@@ -81,8 +81,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class OctonionFloat16RModule
   implements
-    RModule<OctonionFloat16RModule,OctonionFloat16RModuleMember,OctonionFloat16Algebra,OctonionFloat16Member>,
-    Constructible1dLong<OctonionFloat16RModuleMember>,
+	RModule<OctonionFloat16RModule,OctonionFloat16RModuleMember,OctonionFloat16Algebra,OctonionFloat16Member>,
+	Constructible1dLong<OctonionFloat16RModuleMember>,
 	Norm<OctonionFloat16RModuleMember,Float16Member>,
 	Products<OctonionFloat16RModuleMember, OctonionFloat16Member, OctonionFloat16MatrixMember>,
 	DirectProduct<OctonionFloat16RModuleMember, OctonionFloat16MatrixMember>,

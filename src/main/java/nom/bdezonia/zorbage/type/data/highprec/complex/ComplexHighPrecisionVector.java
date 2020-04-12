@@ -73,15 +73,15 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class ComplexHighPrecisionVector
   implements
-    VectorSpace<ComplexHighPrecisionVector,ComplexHighPrecisionVectorMember,ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>,
-    Constructible1dLong<ComplexHighPrecisionVectorMember>,
-    Norm<ComplexHighPrecisionVectorMember,HighPrecisionMember>,
-    Products<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMember, ComplexHighPrecisionMatrixMember>,
-    DirectProduct<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMatrixMember>,
-    ScaleByHighPrec<ComplexHighPrecisionVectorMember>,
-    ScaleByRational<ComplexHighPrecisionVectorMember>,
-    ScaleByDouble<ComplexHighPrecisionVectorMember>,
-    Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>
+	VectorSpace<ComplexHighPrecisionVector,ComplexHighPrecisionVectorMember,ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>,
+	Constructible1dLong<ComplexHighPrecisionVectorMember>,
+	Norm<ComplexHighPrecisionVectorMember,HighPrecisionMember>,
+	Products<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMember, ComplexHighPrecisionMatrixMember>,
+	DirectProduct<ComplexHighPrecisionVectorMember, ComplexHighPrecisionMatrixMember>,
+	ScaleByHighPrec<ComplexHighPrecisionVectorMember>,
+	ScaleByRational<ComplexHighPrecisionVectorMember>,
+	ScaleByDouble<ComplexHighPrecisionVectorMember>,
+	Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>
 {
 	public ComplexHighPrecisionVector() { }
 	

@@ -73,8 +73,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class OctonionHighPrecisionRModule
   implements
-    RModule<OctonionHighPrecisionRModule,OctonionHighPrecisionRModuleMember,OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>,
-    Constructible1dLong<OctonionHighPrecisionRModuleMember>,
+	RModule<OctonionHighPrecisionRModule,OctonionHighPrecisionRModuleMember,OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>,
+	Constructible1dLong<OctonionHighPrecisionRModuleMember>,
 	Norm<OctonionHighPrecisionRModuleMember,HighPrecisionMember>,
 	Products<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMember, OctonionHighPrecisionMatrixMember>,
 	DirectProduct<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMatrixMember>,

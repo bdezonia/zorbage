@@ -79,7 +79,7 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class Float64Vector
   implements
-    VectorSpace<Float64Vector,Float64VectorMember,Float64Algebra,Float64Member>,
+	VectorSpace<Float64Vector,Float64VectorMember,Float64Algebra,Float64Member>,
     Constructible1dLong<Float64VectorMember>,
 	Norm<Float64VectorMember,Float64Member>,
 	Products<Float64VectorMember, Float64Member, Float64MatrixMember>,

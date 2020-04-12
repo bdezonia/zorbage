@@ -81,11 +81,11 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class QuaternionFloat32RModule
   implements
-    RModule<QuaternionFloat32RModule,QuaternionFloat32RModuleMember,QuaternionFloat32Algebra,QuaternionFloat32Member>,
-    Constructible1dLong<QuaternionFloat32RModuleMember>,
-    Norm<QuaternionFloat32RModuleMember,Float32Member>,
-    Products<QuaternionFloat32RModuleMember,QuaternionFloat32Member, QuaternionFloat32MatrixMember>,
-    DirectProduct<QuaternionFloat32RModuleMember, QuaternionFloat32MatrixMember>,
+	RModule<QuaternionFloat32RModule,QuaternionFloat32RModuleMember,QuaternionFloat32Algebra,QuaternionFloat32Member>,
+	Constructible1dLong<QuaternionFloat32RModuleMember>,
+	Norm<QuaternionFloat32RModuleMember,Float32Member>,
+	Products<QuaternionFloat32RModuleMember,QuaternionFloat32Member, QuaternionFloat32MatrixMember>,
+	DirectProduct<QuaternionFloat32RModuleMember, QuaternionFloat32MatrixMember>,
 	Rounding<Float32Member,QuaternionFloat32RModuleMember>, Infinite<QuaternionFloat32RModuleMember>,
 	NaN<QuaternionFloat32RModuleMember>,
 	ScaleByHighPrec<QuaternionFloat32RModuleMember>,

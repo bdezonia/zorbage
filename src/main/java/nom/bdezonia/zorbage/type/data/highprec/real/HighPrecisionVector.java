@@ -73,8 +73,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class HighPrecisionVector
   implements
-    VectorSpace<HighPrecisionVector,HighPrecisionVectorMember,HighPrecisionAlgebra,HighPrecisionMember>,
-    Constructible1dLong<HighPrecisionVectorMember>,
+	VectorSpace<HighPrecisionVector,HighPrecisionVectorMember,HighPrecisionAlgebra,HighPrecisionMember>,
+	Constructible1dLong<HighPrecisionVectorMember>,
 	Norm<HighPrecisionVectorMember,HighPrecisionMember>,
 	Products<HighPrecisionVectorMember, HighPrecisionMember, HighPrecisionMatrixMember>,
 	DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,

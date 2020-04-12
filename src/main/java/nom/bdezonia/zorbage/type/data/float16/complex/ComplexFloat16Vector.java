@@ -81,17 +81,17 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class ComplexFloat16Vector
   implements
-    VectorSpace<ComplexFloat16Vector,ComplexFloat16VectorMember,ComplexFloat16Algebra,ComplexFloat16Member>,
-    Constructible1dLong<ComplexFloat16VectorMember>,
-    Norm<ComplexFloat16VectorMember,Float16Member>,
-    Products<ComplexFloat16VectorMember, ComplexFloat16Member, ComplexFloat16MatrixMember>,
-    DirectProduct<ComplexFloat16VectorMember, ComplexFloat16MatrixMember>,
-    Rounding<Float16Member,ComplexFloat16VectorMember>, Infinite<ComplexFloat16VectorMember>,
-    NaN<ComplexFloat16VectorMember>,
-    ScaleByHighPrec<ComplexFloat16VectorMember>,
-    ScaleByRational<ComplexFloat16VectorMember>,
-    ScaleByDouble<ComplexFloat16VectorMember>,
-    Tolerance<Float16Member,ComplexFloat16VectorMember>
+	VectorSpace<ComplexFloat16Vector,ComplexFloat16VectorMember,ComplexFloat16Algebra,ComplexFloat16Member>,
+	Constructible1dLong<ComplexFloat16VectorMember>,
+	Norm<ComplexFloat16VectorMember,Float16Member>,
+	Products<ComplexFloat16VectorMember, ComplexFloat16Member, ComplexFloat16MatrixMember>,
+	DirectProduct<ComplexFloat16VectorMember, ComplexFloat16MatrixMember>,
+	Rounding<Float16Member,ComplexFloat16VectorMember>, Infinite<ComplexFloat16VectorMember>,
+	NaN<ComplexFloat16VectorMember>,
+	ScaleByHighPrec<ComplexFloat16VectorMember>,
+	ScaleByRational<ComplexFloat16VectorMember>,
+	ScaleByDouble<ComplexFloat16VectorMember>,
+	Tolerance<Float16Member,ComplexFloat16VectorMember>
 {
 	public ComplexFloat16Vector() { }
 	

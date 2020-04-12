@@ -81,17 +81,17 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class ComplexFloat32Vector
   implements
-    VectorSpace<ComplexFloat32Vector,ComplexFloat32VectorMember,ComplexFloat32Algebra,ComplexFloat32Member>,
-    Constructible1dLong<ComplexFloat32VectorMember>,
-    Norm<ComplexFloat32VectorMember,Float32Member>,
-    Products<ComplexFloat32VectorMember, ComplexFloat32Member, ComplexFloat32MatrixMember>,
-    DirectProduct<ComplexFloat32VectorMember, ComplexFloat32MatrixMember>,
-    Rounding<Float32Member,ComplexFloat32VectorMember>, Infinite<ComplexFloat32VectorMember>,
-    NaN<ComplexFloat32VectorMember>,
+	VectorSpace<ComplexFloat32Vector,ComplexFloat32VectorMember,ComplexFloat32Algebra,ComplexFloat32Member>,
+	Constructible1dLong<ComplexFloat32VectorMember>,
+	Norm<ComplexFloat32VectorMember,Float32Member>,
+	Products<ComplexFloat32VectorMember, ComplexFloat32Member, ComplexFloat32MatrixMember>,
+	DirectProduct<ComplexFloat32VectorMember, ComplexFloat32MatrixMember>,
+	Rounding<Float32Member,ComplexFloat32VectorMember>, Infinite<ComplexFloat32VectorMember>,
+	NaN<ComplexFloat32VectorMember>,
 	ScaleByHighPrec<ComplexFloat32VectorMember>,
 	ScaleByRational<ComplexFloat32VectorMember>,
 	ScaleByDouble<ComplexFloat32VectorMember>,
-    Tolerance<Float32Member,ComplexFloat32VectorMember>
+	Tolerance<Float32Member,ComplexFloat32VectorMember>
 {
 	public ComplexFloat32Vector() { }
 	

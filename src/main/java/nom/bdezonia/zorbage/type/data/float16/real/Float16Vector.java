@@ -79,8 +79,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class Float16Vector
   implements
-    VectorSpace<Float16Vector,Float16VectorMember,Float16Algebra,Float16Member>,
-    Constructible1dLong<Float16VectorMember>,
+	VectorSpace<Float16Vector,Float16VectorMember,Float16Algebra,Float16Member>,
+	Constructible1dLong<Float16VectorMember>,
 	Norm<Float16VectorMember,Float16Member>,
 	Products<Float16VectorMember, Float16Member, Float16MatrixMember>,
 	DirectProduct<Float16VectorMember, Float16MatrixMember>,

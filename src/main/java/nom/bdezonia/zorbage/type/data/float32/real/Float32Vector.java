@@ -79,8 +79,8 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
  */
 public class Float32Vector
   implements
-    VectorSpace<Float32Vector,Float32VectorMember,Float32Algebra,Float32Member>,
-    Constructible1dLong<Float32VectorMember>,
+	VectorSpace<Float32Vector,Float32VectorMember,Float32Algebra,Float32Member>,
+	Constructible1dLong<Float32VectorMember>,
 	Norm<Float32VectorMember,Float32Member>,
 	Products<Float32VectorMember, Float32Member, Float32MatrixMember>,
 	DirectProduct<Float32VectorMember, Float32MatrixMember>,
