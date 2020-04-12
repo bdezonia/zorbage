@@ -49,6 +49,6 @@ public class ScaleByHighPrec {
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec<U>, U>
 		void compute(T algebra, HighPrecisionMember scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		FixedTransform2.compute(algebra, algebra, scale, algebra.scaleByHighPrec(), a, b);
+		FixedTransform2a.compute(algebra, algebra, scale, algebra.scaleByHighPrec(), a, b);
 	}
 }

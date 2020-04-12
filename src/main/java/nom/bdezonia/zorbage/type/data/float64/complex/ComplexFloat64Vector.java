@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -48,6 +49,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -57,6 +59,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
@@ -91,7 +94,8 @@ public class ComplexFloat64Vector
 	ScaleByHighPrec<ComplexFloat64VectorMember>,
 	ScaleByRational<ComplexFloat64VectorMember>,
 	ScaleByDouble<ComplexFloat64VectorMember>,
-	Tolerance<Float64Member,ComplexFloat64VectorMember>
+	Tolerance<Float64Member,ComplexFloat64VectorMember>,
+	ArrayLikeMethods<ComplexFloat64VectorMember,ComplexFloat64Member>
 {
 	public ComplexFloat64Vector() { }
 	
@@ -502,5 +506,89 @@ public class ComplexFloat64Vector
 	@Override
 	public Function3<Boolean, Float64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> ADDS =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SUBS =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> MULS =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> DIVS =
+			new Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64Member, ComplexFloat64VectorMember, ComplexFloat64VectorMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> MULTELEM =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			Transform3.compute(G.CDBL, G.CDBL.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> DIVELEM =
+			new Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			Transform3.compute(G.CDBL, G.CDBL.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> divideElements() {
+		return DIVELEM;
 	}
 }

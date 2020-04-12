@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -46,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -53,6 +55,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
@@ -81,7 +84,8 @@ public class QuaternionHighPrecisionRModule
 	ScaleByHighPrec<QuaternionHighPrecisionRModuleMember>,
 	ScaleByRational<QuaternionHighPrecisionRModuleMember>,
 	ScaleByDouble<QuaternionHighPrecisionRModuleMember>,
-	Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>
+	Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>,
+	ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>
 {
 	public QuaternionHighPrecisionRModule() { }
 	
@@ -439,6 +443,90 @@ public class QuaternionHighPrecisionRModule
 	@Override
 	public Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> ADDS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SUBS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> MULS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> DIVS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> MULTELEM =
+			new Procedure3<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			Transform3.compute(G.QHP, G.QHP.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> DIVELEM =
+			new Procedure3<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			Transform3.compute(G.QHP, G.QHP.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> divideElements() {
+		return DIVELEM;
 	}
 
 }

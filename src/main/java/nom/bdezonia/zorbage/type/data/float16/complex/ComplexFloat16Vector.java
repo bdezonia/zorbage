@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -48,6 +49,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -57,6 +59,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
@@ -91,7 +94,8 @@ public class ComplexFloat16Vector
 	ScaleByHighPrec<ComplexFloat16VectorMember>,
 	ScaleByRational<ComplexFloat16VectorMember>,
 	ScaleByDouble<ComplexFloat16VectorMember>,
-	Tolerance<Float16Member,ComplexFloat16VectorMember>
+	Tolerance<Float16Member,ComplexFloat16VectorMember>,
+	ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>
 {
 	public ComplexFloat16Vector() { }
 	
@@ -502,5 +506,89 @@ public class ComplexFloat16Vector
 	@Override
 	public Function3<Boolean, Float16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> ADDS =
+			new Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> SUBS =
+			new Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> MULS =
+			new Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> DIVS =
+			new Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat16Member, ComplexFloat16VectorMember, ComplexFloat16VectorMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> MULTELEM =
+			new Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c) {
+			Transform3.compute(G.CHLF, G.CHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> DIVELEM =
+			new Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c) {
+			Transform3.compute(G.CHLF, G.CHLF.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> divideElements() {
+		return DIVELEM;
 	}
 }

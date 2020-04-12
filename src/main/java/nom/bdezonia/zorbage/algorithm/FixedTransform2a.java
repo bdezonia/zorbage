@@ -35,12 +35,14 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class FixedTransform2 {
+public class FixedTransform2a {
 
-	private FixedTransform2() {}
-	
+	private FixedTransform2a() {}
+
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
 	 * @param algU
 	 * @param fixedValue
 	 * @param proc
@@ -52,13 +54,17 @@ public class FixedTransform2 {
 	{
 		compute(algU, algU, fixedValue, proc, a, b);
 	}
-	
+
 	/**
 	 * 
-	 * @param algB
+	 * @param <B>
+	 * @param <C>
+	 * @param <D>
+	 * @param <E>
+	 * @param <F>
 	 * @param algD
 	 * @param algF
-	 * @param value
+	 * @param fixedValue
 	 * @param proc
 	 * @param a
 	 * @param b

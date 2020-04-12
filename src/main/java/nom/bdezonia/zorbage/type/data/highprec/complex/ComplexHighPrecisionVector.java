@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -46,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -53,6 +55,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
@@ -81,7 +84,8 @@ public class ComplexHighPrecisionVector
 	ScaleByHighPrec<ComplexHighPrecisionVectorMember>,
 	ScaleByRational<ComplexHighPrecisionVectorMember>,
 	ScaleByDouble<ComplexHighPrecisionVectorMember>,
-	Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>
+	Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>,
+	ArrayLikeMethods<ComplexHighPrecisionVectorMember,ComplexHighPrecisionMember>
 {
 	public ComplexHighPrecisionVector() { }
 	
@@ -428,5 +432,89 @@ public class ComplexHighPrecisionVector
 	@Override
 	public Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> ADDS =
+			new Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			FixedTransform2b.compute(G.CHP, scalar, G.CHP.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SUBS =
+			new Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			FixedTransform2b.compute(G.CHP, scalar, G.CHP.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> MULS =
+			new Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			FixedTransform2b.compute(G.CHP, scalar, G.CHP.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> DIVS =
+			new Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			FixedTransform2b.compute(G.CHP, scalar, G.CHP.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> MULTELEM =
+			new Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b, ComplexHighPrecisionVectorMember c) {
+			Transform3.compute(G.CHP, G.CHP.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> DIVELEM =
+			new Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b, ComplexHighPrecisionVectorMember c) {
+			Transform3.compute(G.CHP, G.CHP.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> divideElements() {
+		return DIVELEM;
 	}
 }

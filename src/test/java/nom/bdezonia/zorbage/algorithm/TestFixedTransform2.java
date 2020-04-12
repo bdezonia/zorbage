@@ -62,7 +62,7 @@ public class TestFixedTransform2 {
 			}
 		};
 
-		FixedTransform2.compute(G.INT32, seven, operation, a, b);
+		FixedTransform2a.compute(G.INT32, seven, operation, a, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);
@@ -93,7 +93,7 @@ public class TestFixedTransform2 {
 			}
 		};
 
-		FixedTransform2.compute(G.INT32, seven, operation, a, b);
+		FixedTransform2a.compute(G.INT32, seven, operation, a, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);

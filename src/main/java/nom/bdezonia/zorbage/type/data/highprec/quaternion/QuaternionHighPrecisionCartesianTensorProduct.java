@@ -30,7 +30,7 @@ import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.Copy;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
@@ -277,7 +277,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
 			TensorShape.compute(a, b);
-			FixedTransform2.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
+			FixedTransform2a.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
 		}
 	};
 	

@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -49,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -56,6 +58,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
@@ -89,7 +92,8 @@ public class Float64Vector
 	ScaleByHighPrec<Float64VectorMember>,
 	ScaleByRational<Float64VectorMember>,
 	ScaleByDouble<Float64VectorMember>,
-	Tolerance<Float64Member,Float64VectorMember>
+	Tolerance<Float64Member,Float64VectorMember>,
+	ArrayLikeMethods<Float64VectorMember,Float64Member>
 {
 	public Float64Vector() { }
 	
@@ -486,5 +490,89 @@ public class Float64Vector
 	@Override
 	public Function3<Boolean, Float64Member, Float64VectorMember, Float64VectorMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> ADDS =
+			new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			FixedTransform2b.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> SUBS =
+			new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			FixedTransform2b.compute(G.DBL, scalar, G.DBL.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> MULS =
+			new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			FixedTransform2b.compute(G.DBL, scalar, G.DBL.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> DIVS =
+			new Procedure3<Float64Member, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			FixedTransform2b.compute(G.DBL, scalar, G.DBL.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64Member, Float64VectorMember, Float64VectorMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<Float64VectorMember, Float64VectorMember, Float64VectorMember> MULTELEM =
+			new Procedure3<Float64VectorMember, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
+			Transform3.compute(G.DBL, G.DBL.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64VectorMember, Float64VectorMember, Float64VectorMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<Float64VectorMember, Float64VectorMember, Float64VectorMember> DIVELEM =
+			new Procedure3<Float64VectorMember, Float64VectorMember, Float64VectorMember>()
+	{
+		@Override
+		public void call(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
+			Transform3.compute(G.DBL, G.DBL.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<Float64VectorMember, Float64VectorMember, Float64VectorMember> divideElements() {
+		return DIVELEM;
 	}
 }

@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -35,20 +35,53 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ScaleByHighPrecAndRound {
+public class FixedTransform2b {
 
-	private ScaleByHighPrecAndRound() {}
-	
+	private FixedTransform2b() {}
+
 	/**
 	 * 
-	 * @param algebra
-	 * @param scale
+	 * @param <T>
+	 * @param <U>
+	 * @param algU
+	 * @param fixedValue
+	 * @param proc
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.ScaleByHighPrecAndRound<U>, U>
-		void compute(T algebra, HighPrecisionMember scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	public static <T extends Algebra<T,U>, U>
+		void compute(T algU, U fixedValue, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		FixedTransform2a.compute(algebra, algebra, scale, algebra.scaleByHighPrecAndRound(), a, b);
+		compute(algU, algU, fixedValue, proc, a, b);
+	}
+
+	/**
+	 * 
+	 * @param <B>
+	 * @param <C>
+	 * @param <D>
+	 * @param <E>
+	 * @param <F>
+	 * @param algD
+	 * @param algF
+	 * @param fixedValue
+	 * @param proc
+	 * @param a
+	 * @param b
+	 */
+	public static <B, C extends Algebra<C,D>, D, E extends Algebra<E,F>, F>
+		void compute(C algD, E algF, B fixedValue, Procedure3<D,B,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
+	{
+		long aSize = a.size();
+		long bSize = b.size();
+		if (aSize != bSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+		D tmp1 = algD.construct();
+		F tmp2 = algF.construct();
+		for (long i = 0; i < aSize; i++) {
+			a.get(i, tmp1);
+			proc.call(tmp1, fixedValue, tmp2);
+			b.set(i, tmp2);
+		}
 	}
 }

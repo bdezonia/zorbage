@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -279,7 +279,7 @@ public class Float64CartesianTensorProduct
 		@Override
 		public void call(Float64Member scalar, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
 			TensorShape.compute(a, b);
-			FixedTransform2.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
+			FixedTransform2a.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
 		}
 	};
 	

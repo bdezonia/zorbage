@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -48,6 +49,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -57,6 +59,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
@@ -91,7 +94,8 @@ public class OctonionFloat32RModule
 	ScaleByHighPrec<OctonionFloat32RModuleMember>,
 	ScaleByRational<OctonionFloat32RModuleMember>,
 	ScaleByDouble<OctonionFloat32RModuleMember>,
-	Tolerance<Float32Member,OctonionFloat32RModuleMember>
+	Tolerance<Float32Member,OctonionFloat32RModuleMember>,
+	ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>
 {
 	public OctonionFloat32RModule() { }
 	
@@ -504,4 +508,87 @@ public class OctonionFloat32RModule
 		return WITHIN;
 	}
 
+	private final Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> ADDS =
+			new Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SUBS =
+			new Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> MULS =
+			new Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> DIVS =
+			new Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat32Member, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> MULTELEM =
+			new Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b, OctonionFloat32RModuleMember c) {
+			Transform3.compute(G.OFLT, G.OFLT.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> DIVELEM =
+			new Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b, OctonionFloat32RModuleMember c) {
+			Transform3.compute(G.OFLT, G.OFLT.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> divideElements() {
+		return DIVELEM;
+	}
 }

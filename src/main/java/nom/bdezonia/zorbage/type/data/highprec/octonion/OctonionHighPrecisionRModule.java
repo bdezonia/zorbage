@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -46,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -53,6 +55,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Norm;
 import nom.bdezonia.zorbage.type.algebra.Products;
@@ -81,7 +84,8 @@ public class OctonionHighPrecisionRModule
 	ScaleByHighPrec<OctonionHighPrecisionRModuleMember>,
 	ScaleByRational<OctonionHighPrecisionRModuleMember>,
 	ScaleByDouble<OctonionHighPrecisionRModuleMember>,
-	Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>
+	Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
+	ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>
 {
 	public OctonionHighPrecisionRModule() { }
 	
@@ -428,6 +432,90 @@ public class OctonionHighPrecisionRModule
 	@Override
 	public Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> ADDS =
+			new Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.OHP, scalar, G.OHP.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> SUBS =
+			new Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.OHP, scalar, G.OHP.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> MULS =
+			new Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.OHP, scalar, G.OHP.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> DIVS =
+			new Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			FixedTransform2b.compute(G.OHP, scalar, G.OHP.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionHighPrecisionMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> MULTELEM =
+			new Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			Transform3.compute(G.OHP, G.OHP.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> DIVELEM =
+			new Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			Transform3.compute(G.OHP, G.OHP.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> divideElements() {
+		return DIVELEM;
 	}
 
 }
