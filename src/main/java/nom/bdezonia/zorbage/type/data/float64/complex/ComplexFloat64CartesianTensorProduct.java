@@ -58,6 +58,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.Infinite;
 import nom.bdezonia.zorbage.type.algebra.NaN;
 import nom.bdezonia.zorbage.type.algebra.Norm;
@@ -108,7 +109,8 @@ public class ComplexFloat64CartesianTensorProduct
 		ScaleByHighPrec<ComplexFloat64CartesianTensorProductMember>,
 		ScaleByRational<ComplexFloat64CartesianTensorProductMember>,
 		ScaleByDouble<ComplexFloat64CartesianTensorProductMember>,
-		Tolerance<Float64Member, ComplexFloat64CartesianTensorProductMember>
+		Tolerance<Float64Member, ComplexFloat64CartesianTensorProductMember>,
+		ArrayLikeMethods<ComplexFloat64CartesianTensorProductMember, ComplexFloat64Member>
 {
 	@Override
 	public ComplexFloat64CartesianTensorProductMember construct() {

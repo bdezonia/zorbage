@@ -39,12 +39,6 @@ import nom.bdezonia.zorbage.procedure.Procedure5;
  */
 public interface TensorLikeMethods<U,W> {
 	
-	Procedure3<W,U,U> addScalar();
-	Procedure3<W,U,U> subtractScalar();
-	Procedure3<W,U,U> multiplyByScalar();
-	Procedure3<W,U,U> divideByScalar();
-	Procedure3<U,U,U> multiplyElements();
-	Procedure3<U,U,U> divideElements();
 	Procedure3<Integer,U,U> semicolonDerivative();
 	Procedure3<Integer,U,U> commaDerivative();
 	Procedure4<Integer,Integer,U,U> contract();
