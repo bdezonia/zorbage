@@ -27,6 +27,17 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.algebra.MatrixOps;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Norm;
+import nom.bdezonia.zorbage.type.algebra.NumberMember;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -36,21 +47,67 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 public class MatrixSpectralNorm {
 
 	// http://mathworld.wolfram.com/MatrixNorm.html
+	// https://mathworld.wolfram.com/SpectralNorm.html
 	
 	// do not instantiate
 	
 	private MatrixSpectralNorm() {}
 	
+	public static <T extends Algebra<T,MATRIX>,
+					MATRIX,
+					X extends Algebra<X,COMPONENT>,
+					COMPONENT>
+		void compute(T matAlgebra, X cmpAlgebra, MATRIX matrix, COMPONENT normValue)
+	{
+		
+		// future implementation is below
+
+		throw new IllegalArgumentException("TODO");
+	}
+	
 	/**
 	 * 
 	 * @param matAlgebra
 	 * @param numAlgebra
+	 * @param cmpAlgebra
 	 * @param matrix
 	 * @param normValue
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T matAlgebra, V numAlgebra, U matrix, W normValue)
+	public static <T extends Algebra<T,MATRIX> & MatrixOps<MATRIX,COMPONENT> & Multiplication<MATRIX>,
+					MATRIX extends MatrixMember<NUMBER>,
+					V extends Algebra<V,NUMBER> & Norm<NUMBER,COMPONENT>,
+					NUMBER extends NumberMember<COMPONENT> & Allocatable<NUMBER>,
+					X extends Algebra<X,COMPONENT> & Invertible<COMPONENT> & Roots<COMPONENT> & Ordered<COMPONENT>,
+					COMPONENT>
+		void compute(T matAlgebra, V numAlgebra, X cmpAlgebra, MATRIX matrix, COMPONENT normValue)
 	{
-		throw new IllegalArgumentException("TODO");
+		MATRIX conjTransp = matAlgebra.construct();
+		MATRIX tmp = matAlgebra.construct();
+		matAlgebra.conjugateTranspose().call(matrix, conjTransp);
+		matAlgebra.multiply().call(conjTransp, matrix, tmp);
+		NUMBER num = numAlgebra.construct();
+		IndexedDataSource<NUMBER> eigenValues = Storage.allocate(tmp.cols(), num);
+		// TODO find the eigenvalues of tmp matrix
+		COMPONENT l2x = cmpAlgebra.construct();
+		COMPONENT l2Ax = cmpAlgebra.construct();
+		COMPONENT ratio = cmpAlgebra.construct();
+		COMPONENT max = cmpAlgebra.construct();
+		
+		for (long i = 0; i < eigenValues.size(); i++) {
+			// TODO
+			// find the eigenvector associated with this eigenvalue
+			// then multiply the tmp matrix by the eigenvector to get a new vector
+			// take the norm of that vector: l2x
+			numAlgebra.norm().call(num, l2x);
+			if (cmpAlgebra.isZero().call(l2x))
+				continue;
+			// take the norm of the eigenvector l2Ax
+			numAlgebra.norm().call(num, l2Ax);
+			// calc their ratio
+			cmpAlgebra.divide().call(l2Ax, l2x, ratio);
+			// record the max so far
+			Max.compute(cmpAlgebra, ratio, max, max);
+		}
+		cmpAlgebra.sqrt().call(max, normValue);
 	}
 }
