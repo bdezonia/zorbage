@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.data.highprec.quaternion;
 
 import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -58,12 +59,14 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
@@ -100,7 +103,8 @@ public class QuaternionHighPrecisionMatrix
 		ScaleByHighPrec<QuaternionHighPrecisionMatrixMember>,
 		ScaleByRational<QuaternionHighPrecisionMatrixMember>,
 		ScaleByDouble<QuaternionHighPrecisionMatrixMember>,
-		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>
+		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>,
+		ArrayLikeMethods<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMember>
 {
 	public QuaternionHighPrecisionMatrix() { }
 
@@ -749,4 +753,89 @@ public class QuaternionHighPrecisionMatrix
 	public Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> within() {
 		return WITHIN;
 	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> ADDS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> SUBS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> MULS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> DIVS =
+			new Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			FixedTransform2b.compute(G.QHP, scalar, G.QHP.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> MULTELEM =
+			new Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b, QuaternionHighPrecisionMatrixMember c) {
+			Transform3.compute(G.QHP, G.QHP.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> DIVELEM =
+			new Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b, QuaternionHighPrecisionMatrixMember c) {
+			Transform3.compute(G.QHP, G.QHP.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember> divideElements() {
+		return DIVELEM;
+	}
+
 }

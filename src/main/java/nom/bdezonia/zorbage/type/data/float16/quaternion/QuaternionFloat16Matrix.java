@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float16.quaternion;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -63,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -72,6 +74,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
@@ -115,7 +118,8 @@ public class QuaternionFloat16Matrix
 		ScaleByHighPrec<QuaternionFloat16MatrixMember>,
 		ScaleByRational<QuaternionFloat16MatrixMember>,
 		ScaleByDouble<QuaternionFloat16MatrixMember>,
-		Tolerance<Float16Member,QuaternionFloat16MatrixMember>
+		Tolerance<Float16Member,QuaternionFloat16MatrixMember>,
+		ArrayLikeMethods<QuaternionFloat16MatrixMember,QuaternionFloat16Member>
 {
 	public QuaternionFloat16Matrix() { }
 
@@ -835,5 +839,89 @@ public class QuaternionFloat16Matrix
 	@Override
 	public Function3<Boolean, Float16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> ADDS =
+			new Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16Member scalar, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
+			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> SUBS =
+			new Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16Member scalar, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
+			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> MULS =
+			new Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16Member scalar, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
+			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> DIVS =
+			new Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16Member scalar, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
+			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat16Member, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> MULTELEM =
+			new Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b, QuaternionFloat16MatrixMember c) {
+			Transform3.compute(G.QHLF, G.QHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> DIVELEM =
+			new Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b, QuaternionFloat16MatrixMember c) {
+			Transform3.compute(G.QHLF, G.QHLF.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> divideElements() {
+		return DIVELEM;
 	}
 }

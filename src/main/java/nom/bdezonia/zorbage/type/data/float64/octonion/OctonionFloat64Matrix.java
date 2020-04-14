@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float64.octonion;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
+import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -63,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateExp;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
+import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -72,6 +74,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.algebra.ArrayLikeMethods;
 import nom.bdezonia.zorbage.type.algebra.DirectProduct;
 import nom.bdezonia.zorbage.type.algebra.Exponential;
 import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
@@ -115,7 +118,8 @@ public class OctonionFloat64Matrix
 		ScaleByHighPrec<OctonionFloat64MatrixMember>,
 		ScaleByRational<OctonionFloat64MatrixMember>,
 		ScaleByDouble<OctonionFloat64MatrixMember>,
-		Tolerance<Float64Member,OctonionFloat64MatrixMember>
+		Tolerance<Float64Member,OctonionFloat64MatrixMember>,
+		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>
 {
 	public OctonionFloat64Matrix() { }
 
@@ -822,4 +826,89 @@ public class OctonionFloat64Matrix
 	public Function3<Boolean, Float64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> within() {
 		return WITHIN;
 	}
+
+	private final Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> ADDS =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64Member scalar, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			FixedTransform2b.compute(G.ODBL, scalar, G.ODBL.add(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> addScalar() {
+		return ADDS;
+	}
+
+	private final Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SUBS =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64Member scalar, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			FixedTransform2b.compute(G.ODBL, scalar, G.ODBL.subtract(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> subtractScalar() {
+		return SUBS;
+	}
+
+	private final Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> MULS =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64Member scalar, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			FixedTransform2b.compute(G.ODBL, scalar, G.ODBL.multiply(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> multiplyByScalar() {
+		return MULS;
+	}
+
+	private final Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> DIVS =
+			new Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64Member scalar, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			FixedTransform2b.compute(G.ODBL, scalar, G.ODBL.divide(), a.rawData(), b.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64Member, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> divideByScalar() {
+		return DIVS;
+	}
+
+	private final Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> MULTELEM =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			Transform3.compute(G.ODBL, G.ODBL.multiply(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> multiplyElements() {
+		return MULTELEM;
+	}
+
+	private final Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> DIVELEM =
+			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b, OctonionFloat64MatrixMember c) {
+			Transform3.compute(G.ODBL, G.ODBL.divide(), a.rawData(), b.rawData(), c.rawData());
+		}
+	};
+	
+	@Override
+	public Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> divideElements() {
+		return DIVELEM;
+	}
+
 }
