@@ -31,8 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.predicate.Predicate;
-import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.predicate.Equal;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -48,10 +47,8 @@ public class TestSearchN {
 	public void test1() {
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,6});
-		Predicate<Tuple2<SignedInt32Member,SignedInt32Member>> cond1 = new nom.bdezonia.zorbage.predicate.Equal<>(G.INT32);
-		assertEquals(16, SearchN.compute(G.INT32, 4, cond1, new SignedInt32Member(7), a));
-		Predicate<Tuple2<SignedInt32Member,SignedInt32Member>> cond2 = new nom.bdezonia.zorbage.predicate.Equal<>(G.INT32);
-		assertEquals(6, SearchN.compute(G.INT32, 4, cond2, new SignedInt32Member(4), a));
+		assertEquals(16, SearchN.compute(G.INT32, 4, new Equal<>(G.INT32), new SignedInt32Member(7), a));
+		assertEquals(6, SearchN.compute(G.INT32, 4, new Equal<>(G.INT32), new SignedInt32Member(4), a));
 	}
 
 	@Test
