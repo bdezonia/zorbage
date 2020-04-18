@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.predicate.Predicate;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -38,54 +39,104 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class SearchN {
 
 	private SearchN() { }
-	
+
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
 	 * @param algebra
-	 * @param n
+	 * @param count
 	 * @param value
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, U value, IndexedDataSource<U> a)
+		long compute(T algebra, long count, U value, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
-		long aSize = a.size();
-		for (long i = 0; i < aSize-n; i++) {
-			for (long j = 0; j < n; j++) {
-				a.get(i+j, tmpA);
-				if (algebra.isNotEqual().call(tmpA, value))
+		long first = 0;
+		long last = a.size();
+		if (count <= 0) {
+			return first;
+		}
+		for(; first != last; first++) {
+			a.get(first, tmpA);
+			if (algebra.isNotEqual().call(tmpA, value)) {
+				continue;
+			}
+
+			long candidate = first;
+			long cur_count = 0;
+			
+			while (true) {
+				cur_count++;
+				if (cur_count >= count) {
+					// success
+					return candidate;
+				}
+				first++;
+				if (first == last) {
+					// exhausted the list
+					return last;
+				}
+				a.get(first, tmpA);
+				if (algebra.isNotEqual().call(tmpA, value)) {
+					// too few in a row
 					break;
-				if (j == n-1)
-					return i;
+				}
 			}
 		}
-		return aSize;
+		return last;
 	}
 
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
 	 * @param algebra
-	 * @param n
+	 * @param count
 	 * @param cond
+	 * @param value
 	 * @param a
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long n, Predicate<U> cond, IndexedDataSource<U> a)
+		long compute(T algebra, long count, Predicate<Tuple2<U,U>> cond, U value, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
-		long aSize = a.size();
-		for (long i = 0; i < aSize-n; i++) {
-			for (long j = 0; j < n; j++) {
-				a.get(i+j, tmpA);
-				if (!cond.isTrue(tmpA))
+		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, value);
+		long first = 0;
+		long last = a.size();
+		if (count <= 0) {
+			return first;
+		}
+		for(; first != last; first++) {
+			a.get(first, tmpA);
+			if (!cond.isTrue(tuple)) {
+				continue;
+			}
+
+			long candidate = first;
+			long cur_count = 0;
+			
+			while (true) {
+				cur_count++;
+				if (cur_count >= count) {
+					// success
+					return candidate;
+				}
+				first++;
+				if (first == last) {
+					// exhausted the list
+					return last;
+				}
+				a.get(first, tmpA);
+				if (!cond.isTrue(tuple)) {
+					// too few in a row
 					break;
-				if (j == n-1)
-					return i;
+				}
 			}
 		}
-		return aSize;
+		return last;
 	}
 }

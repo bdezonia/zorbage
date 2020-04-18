@@ -31,10 +31,6 @@ import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
-// TODO - use boyer moore algorithm
-
-// TODO - does SearchN need to be updated like this Search class was?
-
 /**
  * 
  * @author Barry DeZonia
@@ -43,9 +39,11 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class Search {
 
 	private Search() { }
-	
+
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
 	 * @param algebra
 	 * @param elements
 	 * @param a
@@ -55,24 +53,33 @@ public class Search {
 		long compute(T algebra, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
-		U element = algebra.construct();
-		final long max = elements.size();
-		long aSize = a.size();
-		for (long i = 0; i < aSize - max; i++) {
-			for (long j = 0; j < max; j++) {
-				a.get(i+j, tmpA);
-				elements.get(j, element);
-				if (algebra.isNotEqual().call(tmpA, element))
+		U tmpElement = algebra.construct();
+		long first = 0;
+		long last = a.size();
+		long s_first = 0;
+		long s_last = elements.size();
+		for (; ; first++) {
+			long it = first;
+			for (long s_it = s_first; ; it++, s_it++) {
+				if (s_it == s_last) {
+					return first;
+				}
+				if (it == last) {
+					return last;
+				}
+				a.get(it, tmpA);
+				elements.get(s_it, tmpElement);
+				if (algebra.isNotEqual().call(tmpA, tmpElement)) {
 					break;
-				if (j == max-1)
-					return i;
+				}
 			}
 		}
-		return aSize;
 	}	
 
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
 	 * @param algebra
 	 * @param cond
 	 * @param elements
@@ -83,20 +90,27 @@ public class Search {
 		long compute(T algebra, Predicate<Tuple2<U,U>> cond, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
-		U element = algebra.construct();
-		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, element);
-		final long max = elements.size();
-		long aSize = a.size();
-		for (long i = 0; i < aSize - max; i++) {
-			for (long j = 0; j < max; j++) {
-				a.get(i+j, tmpA);
-				elements.get(j, element);
-				if (!cond.isTrue(tuple))
+		U tmpElement = algebra.construct();
+		Tuple2<U,U> tuple = new Tuple2<U,U>(tmpA, tmpElement);
+		long first = 0;
+		long last = a.size();
+		long s_first = 0;
+		long s_last = elements.size();
+		for (; ; first++) {
+			long it = first;
+			for (long s_it = s_first; ; it++, s_it++) {
+				if (s_it == s_last) {
+					return first;
+				}
+				if (it == last) {
+					return last;
+				}
+				a.get(it, tmpA);
+				elements.get(s_it, tmpElement);
+				if (!cond.isTrue(tuple)) {
 					break;
-				if (j == max-1)
-					return i;
+				}
 			}
 		}
-		return aSize;
 	}	
 }
