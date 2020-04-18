@@ -41,66 +41,56 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class SubTensorBridge<U> implements TensorMember<U> {
 
 	private final Algebra<?,U> algebra;
-	private final U zero;
 	private final TensorMember<U> tensor;
-	private IntegerIndex index;
 	private int[] rangingDims;
-	private long dim;
+	private final U zero;
+	private final IntegerIndex index;
 
-	public SubTensorBridge(Algebra<?,U> algebra, TensorMember<U> tensor) {
-		if (tensor.numDimensions() < 2)
-			throw new IllegalArgumentException("subtensor can only be constructed on tensor with 2 or more dimensions");
+	public SubTensorBridge(Algebra<?,U> algebra, TensorMember<U> tensor, int[] rangingDims, long[] fixedDimValues) {
 		this.algebra = algebra;
-		this.zero = algebra.construct();
 		this.tensor = tensor;
-		this.index = new IntegerIndex(tensor.numDimensions());
-		this.rangingDims = new int[tensor.numDimensions()];
-		for (int i = 0; i < tensor.numDimensions(); i++) {
-			this.rangingDims[i] = i;
-		}
-		this.dim = tensor.dimension(0);
+		this.zero = algebra.construct();
+		this.index = new IntegerIndex(tensor.rank());
+		setDims(rangingDims, fixedDimValues);
 	}
+	
+	// checks subdims fit inside given tensor
 
-	public void setSubrange(int rank, int dim, int[] rangingDims, long[] fixedDimValues) {
-		if (rank < 2 || rank > tensor.numDimensions())
-			throw new IllegalArgumentException("rank of subtensor outside legal range");
-		if (dim < 1 || dim > tensor.dimension(0))
-			throw new IllegalArgumentException("dimension of subtensor outside legal range");
-		if (rank != rangingDims.length)
-			throw new IllegalArgumentException("count of ranging dimensions does not match given rank");
-		if (rangingDims.length + fixedDimValues.length != tensor.numDimensions())
-			throw new IllegalArgumentException("combined dims are incompatible with given tensor");
+	private void checkDims(int[] rangingDims, long[] fixedDimValues) {
+		if (rangingDims.length + fixedDimValues.length != tensor.rank())
+			throw new IllegalArgumentException("subtensor dims don't fit within parent tensor");
 		for (int i = 0; i < rangingDims.length; i++) {
-			int v = rangingDims[i];
-			if (v < 0 || v >= tensor.numDimensions())
-				throw new IllegalArgumentException("");
-			for (int j = i+1; j < rangingDims.length; j++) {
-				if (rangingDims[j] == v)
-					throw new IllegalArgumentException("repeated ranging dim not allowed");
-				if (rangingDims[j] < v)
-					throw new IllegalArgumentException("ranging dims must be specified as increasing values");
+			if (rangingDims[i] < 0 || rangingDims[i] >= tensor.rank())
+				throw new IllegalArgumentException("rangingDim["+i+"] is out of parent tensor's bounds");
+			for (int j = 0; j < i; j++) {
+				if (rangingDims[i] == rangingDims[j])
+					throw new IllegalArgumentException("subtensor repeats a ranging dimension of the parent tensor");
 			}
 		}
 		for (int i = 0; i < fixedDimValues.length; i++) {
-			long v = fixedDimValues[i];
-			if (v < 0 || v >= tensor.dimension(0))
-				throw new IllegalArgumentException("fixed dimensions out of range");
+			if (fixedDimValues[i] < 0 || fixedDimValues[i] >= tensor.dimension())
+				throw new IllegalArgumentException("fixedDim["+i+"] is out of parent tensor's bounds");
 		}
+	}
+	
+	public void setDims(int[] rangingDims, long[] fixedDimValues) {
+		checkDims(rangingDims, fixedDimValues);
 		this.rangingDims = rangingDims.clone();
-		this.dim = dim;
-		int f = 0;
+		int fIdx = 0;
+		int found = 0;
 		for (int i = 0; i < rangingDims.length; i++) {
 			int v = rangingDims[i];
-			while (f < v) {
-				index.set(f, fixedDimValues[f]);
-				f++;
+			while (fIdx < v) {
+				index.set(fIdx, fixedDimValues[found]);
+				found++;
+				fIdx++;
 			}
-			index.set(f, 0);
-			f++;
+			index.set(fIdx, 0);
+			fIdx++;
 		}
-		for (int i = rangingDims[rangingDims.length-1]+1; i < tensor.numDimensions(); i++) {
-			index.set(i, fixedDimValues[f]);
-			f++;
+		for (int i = rangingDims[rangingDims.length-1]+1; i < tensor.rank(); i++) {
+			index.set(i, fixedDimValues[found]);
+			found++;
 		}
 	}
 	
@@ -110,7 +100,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("negative dimension exception");
 		if (d >= rangingDims.length)
 			throw new IllegalArgumentException("dimension out of bounds exception");
-		return dim;
+		return tensor.dimension();
 	}
 
 	@Override
@@ -152,12 +142,12 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
-			index.set(rangingDims[i], index.get(i));
+			this.index.set(rangingDims[i], index.get(i));
 		}
 		if (oob())
 			algebra.assign().call(zero, value);
 		else
-			tensor.v(index, value);
+			tensor.v(this.index, value);
 	}
 
 	@Override
@@ -165,14 +155,14 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
-			index.set(rangingDims[i], index.get(i));
+			this.index.set(rangingDims[i], index.get(i));
 		}
 		if (oob()) {
 			if (algebra.isNotEqual().call(zero, value))
 				throw new IllegalArgumentException("out of bounds nonzero write");
 		}
 		else
-			tensor.setV(index, value);
+			tensor.setV(this.index, value);
 	}
 
 	@Override
@@ -181,44 +171,52 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public int rank() { return lowerRank() + upperRank(); }
+	public int rank() { return rangingDims.length; }
 	
 	@Override
 	public int lowerRank() {
-		// TODO this should be easy to do I think but I will need to ponder a little
-		throw new IllegalArgumentException("to be impemented");
+		int count = 0;
+		for (int i = 0; i < rank(); i++) {
+			if (indexIsLower(i))
+				count++;
+		}
+		return count;
 	}
 	
 	@Override
 	public int upperRank() {
-		// TODO this should be easy to do I think but I will need to ponder a little
-		throw new IllegalArgumentException("to be impemented");
+		int count = 0;
+		for (int i = 0; i < rank(); i++) {
+			if (indexIsUpper(i))
+				count++;
+		}
+		return count;
 	}
 	
 	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index > lowerRank())
+		if (index < 0 || index > rangingDims.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		// TODO this should be easy to do I think but I will need to ponder a little
-		throw new IllegalArgumentException("to be impemented");
+		return tensor.indexIsLower(rangingDims[index]);
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index > upperRank())
+		if (index < 0 || index > rangingDims.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		// TODO this should be easy to do I think but I will need to ponder a little
-		throw new IllegalArgumentException("to be impemented");
+		return tensor.indexIsUpper(rangingDims[index]);
 	}
 
 	@Override
-	public long dimension() { throw new IllegalArgumentException("TODO"); }
+	public long dimension() {
+		return tensor.dimension();
+	}
 	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length != rangingDims.length)
 			return false;
 		for (int i = 0; i < rangingDims.length; i++) {
-			if (newDims[i] != dim)
+			if (newDims[i] != tensor.dimension())
 				return false;
 		}
 		return true;
@@ -227,7 +225,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	private boolean oob() {
 		for (int i = 0; i < index.numDimensions(); i++) {
 			long v = index.get(i);
-			if (v < 0 || v >= tensor.dimension(i))
+			if (v < 0 || v >= tensor.dimension())
 				return true;
 		}
 		return false;
