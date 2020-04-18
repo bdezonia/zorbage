@@ -432,7 +432,9 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						}
 					}
 					String data = sb.toString();
-					// workaround here: signed -MININT can't be parsed unless we fold the sign into the number
+					
+					// Workaround here: signed -MININT can't be parsed unless we fold the sign into the number
+					
 					Token lastTok = toks.size() > 0 ? toks.get(toks.size()-1) : null;
 					if (lastTok != null && lastTok.getClass() == Minus.class) {
 						// change the last token from Minus to Plus
@@ -440,6 +442,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 						// change token string from X to -X
 						data = "-" + data;
 					}
+					
 					U value = alg.construct(data);
 					toks.add(new Numeric(i, value));
 					i = p - 1;
