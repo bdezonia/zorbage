@@ -35,6 +35,8 @@ import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Algebra;
+import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 
 /**
  * 
@@ -160,7 +162,6 @@ public class TestRealNumberEquation {
 		assertEquals(5-0.0014, tmp.v(), 0.00000000000001);
 	}
 
-	/* TODO BROKEN
 	@Test
 	public void test10() {
 		
@@ -173,7 +174,6 @@ public class TestRealNumberEquation {
 		result.b().call(tmp);
 		assertEquals(-32768, tmp.v());
 	}
-	*/
 
 	// Verify that I can parse a bunch of things by using a benchmark some other parsers are tested with.
 	// from https://raw.githubusercontent.com/ArashPartow/math-parser-benchmark-project/master/bench_expr.txt 4/4/2020
