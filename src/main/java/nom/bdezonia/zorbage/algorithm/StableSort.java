@@ -6,7 +6,6 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
@@ -71,10 +70,13 @@ public class StableSort {
 
 	// array A[] has the items to sort; array B[] is a work array
 	private static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		void bottomUpMergeSort(T alg, Function2<Boolean,U,U> lessOrEqual, long n, IndexedDataSource<U> a)
+		void bottomUpMergeSort(T alg, Function2<Boolean,U,U> lessOrEqual, long n, IndexedDataSource<U> storage)
 	{
 		U type = alg.construct();
-		IndexedDataSource<U> b = Storage.allocate(a.size(), type);
+		IndexedDataSource<U> tmp = Storage.allocate(storage.size(), type);
+		
+		IndexedDataSource<U> a = storage;
+		IndexedDataSource<U> b = tmp;
 		
 		// Each 1-element run in A is already "sorted".
 		// Make successively longer sorted runs of length 2, 4, 8, 16... until whole array is sorted.
@@ -88,11 +90,15 @@ public class StableSort {
 				bottomUpMerge(alg, lessOrEqual, i, Math.min(i+width, n), Math.min(i+2*width, n), a, b);
 			}
 			// Now work array B is full of runs of length 2*width.
-			// Copy array B to array A for next iteration.
-			// A more efficient implementation would swap the roles of A and B.
-			copyArray(alg, n, b, a);
+			// Swap the roles of A and B.
+			IndexedDataSource<U> x = b;
+			b = a;
+			a = x;
 			// Now array A is full of runs of length 2*width.
 		}
+		// last iter storage was copied to tmp
+		if (a == tmp)
+			copyArray(alg, n, tmp, storage);
 	}
 
 	// Left run is A[iLeft :iRight-1].
