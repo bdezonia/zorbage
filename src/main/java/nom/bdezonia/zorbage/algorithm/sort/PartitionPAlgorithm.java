@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm.sort;
 
-import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -35,22 +35,47 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class StableSortAlgorithm {
+public class PartitionPAlgorithm {
 
 	/**
 	 * 
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param isLeftOf
-	 * @param storage
+	 * @param cond
 	 * @param left
 	 * @param right
+	 * @param storage
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> ,U>
-		long compute(T alg, Function2<Boolean,U,U> isLeftOf, long left, long right, IndexedDataSource<U> storage)
+		long compute(T alg, Predicate<U> cond, long left, long right, IndexedDataSource<U> storage)
 	{
-		// TODO
+		U tmpL = alg.construct();
+		U tmpR = alg.construct();
+		while (left < right) {
+			storage.get(left, tmpL);
+			if (cond.isTrue(tmpL)) {
+				left++;
+			}
+			else {  // cond not true
+				while (true) {
+					storage.get(right, tmpR);
+					if (!cond.isTrue(tmpR)) {
+						right--;
+					}
+					else { // cond is true
+						storage.set(left, tmpR);
+						storage.set(right, tmpL);
+						left++;
+						right--;
+						break;
+					}
+					if (left >= right)
+						break;
+				}
+			}
+		}
+		return left;
 	}
 }

@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algorithm.sort.InsertionSort;
-import nom.bdezonia.zorbage.algorithm.sort.StableSortAlgorithm;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.Storage;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
@@ -49,10 +49,10 @@ public class StableSort {
 	 * @param alg
 	 * @param storage
 	 */
-	public static <T extends Algebra<T,U> & Ordered<U> ,U>
+	public static <T extends Algebra<T,U> & Ordered<U> ,U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage)
 	{
-		compute(alg, alg.isLess(), storage);
+		compute(alg, alg.isLessEqual(), storage);
 	}
 
 	/**
@@ -63,25 +63,71 @@ public class StableSort {
 	 * @param compare
 	 * @param storage
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Function2<Boolean,U,U> compare, IndexedDataSource<U> storage)
+	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
+		void compute(T alg, Function2<Boolean,U,U> lessOrEqual, IndexedDataSource<U> storage)
 	{
-		qsort(alg, compare, 0, storage.size()-1, storage);
+		bottomUpMergeSort(alg, lessOrEqual, storage.size(), storage);
+	}
+
+	// array A[] has the items to sort; array B[] is a work array
+	private static <T extends Algebra<T,U>, U extends Allocatable<U>>
+		void bottomUpMergeSort(T alg, Function2<Boolean,U,U> lessOrEqual, long n, IndexedDataSource<U> a)
+	{
+		U type = alg.construct();
+		IndexedDataSource<U> b = Storage.allocate(a.size(), type);
+		
+		// Each 1-element run in A is already "sorted".
+		// Make successively longer sorted runs of length 2, 4, 8, 16... until whole array is sorted.
+		for (long width = 1; width < n; width = 2 * width)
+		{
+			// Array A is full of runs of length width.
+			for (long i = 0; i < n; i = i + 2 * width)
+			{
+				// Merge two runs: A[i:i+width-1] and A[i+width:i+2*width-1] to B[]
+				// or copy A[i:n-1] to B[] ( if(i+width >= n) )
+				bottomUpMerge(alg, lessOrEqual, i, Math.min(i+width, n), Math.min(i+2*width, n), a, b);
+			}
+			// Now work array B is full of runs of length 2*width.
+			// Copy array B to array A for next iteration.
+			// A more efficient implementation would swap the roles of A and B.
+			copyArray(alg, n, b, a);
+			// Now array A is full of runs of length 2*width.
+		}
+	}
+
+	// Left run is A[iLeft :iRight-1].
+	// Right run is A[iRight:iEnd-1	].
+	private static <T extends Algebra<T,U>, U>
+		void bottomUpMerge(T alg, Function2<Boolean,U,U> lessOrEqual, long iLeft, long iRight, long iEnd, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	{
+		U tmpI = alg.construct();
+		U tmpJ = alg.construct();
+		long i = iLeft, j = iRight;
+		// While there are elements in the left or right runs...
+		for (long k = iLeft; k < iEnd; k++) {
+			// If left run head exists and is <= existing right run head.
+			if (i < iRight && j < iEnd) {
+				a.get(i, tmpI);
+				a.get(j, tmpJ);
+			}
+			if (i < iRight && (j >= iEnd || lessOrEqual.call(tmpI, tmpJ))) {
+				b.set(k, tmpI);
+				i = i + 1;
+			}
+			else {
+				b.set(k, tmpJ);
+				j = j + 1;
+			}
+		} 
 	}
 
 	private static <T extends Algebra<T,U>, U>
-		void qsort(T alg, Function2<Boolean,U,U> compare, long left, long right, IndexedDataSource<U> storage)
+		void copyArray(T alg, long n, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		if (left < right) {
-			// small list?
-			if (right - left < 10) {
-				InsertionSort.compute(alg, compare, storage, left, right);
-			}
-			else {
-				long pivotPoint = StableSortAlgorithm.compute(alg, compare, left, right, storage);
-				qsort(alg, compare, left, pivotPoint-1, storage);
-				qsort(alg, compare, pivotPoint+1, right, storage);
-			}
+		U tmp = alg.construct();
+		for(long i = 0; i < n; i++) {
+			b.get(i, tmp);
+			a.set(i, tmp);
 		}
 	}
 }

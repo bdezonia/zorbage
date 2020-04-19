@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.sort.InsertionSort;
-import nom.bdezonia.zorbage.algorithm.sort.SortAlgorithm;
+import nom.bdezonia.zorbage.algorithm.sort.SortPAlgorithm;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -78,7 +78,7 @@ public class Sort {
 				InsertionSort.compute(alg, compare, storage, left, right);
 			}
 			else {
-				long pivotPoint = SortAlgorithm.compute(alg, compare, left, right, storage);
+				long pivotPoint = SortPAlgorithm.compute(alg, compare, left, right, storage);
 				qsort(alg, compare, left, pivotPoint-1, storage);
 				qsort(alg, compare, pivotPoint+1, right, storage);
 			}

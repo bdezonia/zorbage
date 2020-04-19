@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algorithm.sort.StablePartitionAlgorithm;
+import nom.bdezonia.zorbage.algorithm.sort.StablePartitionPAlgorithm;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -49,6 +49,6 @@ public class StablePartition {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> storage)
 	{
-		StablePartitionAlgorithm.compute(alg, cond, 0, storage.size()-1, storage);
+		StablePartitionPAlgorithm.compute(alg, cond, 0, storage.size()-1, storage);
 	}
 }
