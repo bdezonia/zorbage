@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algorithm.sort.StablePartitionAlgorithm;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -43,12 +44,11 @@ public class StablePartition {
 	 * 
 	 * @param alg
 	 * @param cond
-	 * @param a
+	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a)
+		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> storage)
 	{
-		throw new IllegalArgumentException("not written yet");
+		StablePartitionAlgorithm.compute(alg, cond, 0, storage.size()-1, storage);
 	}
-	
 }

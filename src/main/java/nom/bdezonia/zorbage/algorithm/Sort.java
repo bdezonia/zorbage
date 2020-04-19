@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algorithm.sort.InsertionSort;
+import nom.bdezonia.zorbage.algorithm.sort.SortAlgorithm;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -39,109 +41,47 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class Sort {
 
 	private Sort() {}
-	
+
 	/**
 	 * 
+	 * @param <T>
+	 * @param <U>
 	 * @param alg
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U> ,U>
 		void compute(T alg, IndexedDataSource<U> storage)
 	{
-		qsort(alg, alg.isLess(), storage, 0, storage.size()-1);
+		compute(alg, alg.isLess(), storage);
 	}
-	
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param compare
+	 * @param storage
+	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage)
+		void compute(T alg, Function2<Boolean,U,U> compare, IndexedDataSource<U> storage)
 	{
-		qsort(alg, isLeftOf, storage, 0L, storage.size()-1);
+		qsort(alg, compare, 0, storage.size()-1, storage);
 	}
 
 	private static <T extends Algebra<T,U>, U>
-		void qsort(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
+		void qsort(T alg, Function2<Boolean,U,U> compare, long left, long right, IndexedDataSource<U> storage)
 	{
 		if (left < right) {
 			// small list?
 			if (right - left < 10) {
-				insertionSort(alg, isLeftOf, storage, left, right);
+				InsertionSort.compute(alg, compare, storage, left, right);
 			}
 			else {
-				long pivotPoint = partition(alg, isLeftOf, storage, left, right);
-				qsort(alg, isLeftOf, storage, left, pivotPoint-1);
-				qsort(alg, isLeftOf, storage, pivotPoint+1, right);
+				long pivotPoint = SortAlgorithm.compute(alg, compare, left, right, storage);
+				qsort(alg, compare, left, pivotPoint-1, storage);
+				qsort(alg, compare, pivotPoint+1, right, storage);
 			}
-		}
-	}
-
-
-	private static <T extends Algebra<T,U> ,U>
-		long partition(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
-	{
-		U tmp1 = alg.construct();
-		U tmp2 = alg.construct();
-		
-		U pivotValue = alg.construct();
-		storage.get(left, pivotValue);
-
-		long leftmark = left+1;
-		long rightmark = right;
-	
-		boolean done = false;
-		while (!done) {
-	
-			while (true) {
-				if (leftmark > rightmark) break;
-				storage.get(leftmark, tmp1);
-				boolean isRightOf =
-						!isLeftOf.call(tmp1, pivotValue) &&
-						(isLeftOf.call(tmp1, pivotValue) != isLeftOf.call(pivotValue, tmp1));
-				if (isRightOf) break;
-				leftmark++;
-			}
-	
-			while (true) {
-				storage.get(rightmark, tmp1);
-				if (isLeftOf.call(tmp1, pivotValue)) break;
-				if (rightmark < leftmark) break;
-				rightmark--;
-			}
-	
-			if (rightmark < leftmark)
-				done = true;
-			else {
-				storage.get(leftmark, tmp1);
-				storage.get(rightmark, tmp2);
-				storage.set(leftmark,tmp2);
-				storage.set(rightmark, tmp1);
-			}
-		}
-		storage.get(left, tmp1);
-		storage.get(rightmark, tmp2);
-		storage.set(left, tmp2);
-		storage.set(rightmark, tmp1);
-
-		return rightmark;
-	}
-	
-	private static <T extends Algebra<T,U>, U>
-		void insertionSort(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage, long left, long right)
-	{
-		U key = alg.construct();
-		U tmp = alg.construct();
-		U t2 = alg.construct();
-		long n = right - left + 1;
-		for (long i = 1; i < n; i++) {
-			storage.get(left+i, key);
-			long j = i-1; 
-			storage.get(left+j, tmp);
-			while (j >= 0 && isLeftOf.call(key, tmp)) {
-				storage.get(left+j, t2);
-				storage.set(left+j+1, t2);
-				j = j - 1;
-				if (j >= 0)
-					storage.get(left+j, tmp);
-			}
-			storage.set(left+j+1, key);
 		}
 	}
 }

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algorithm.sort.PartitionAlgorithm;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
@@ -44,33 +45,11 @@ public class Partition {
 	 * 
 	 * @param alg
 	 * @param cond
-	 * @param a
+	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> a)
+		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> storage)
 	{
-		U tmp1 = alg.construct();
-		U tmp2 = alg.construct();
-		long first = 0;
-		long last = a.size();
-		while (first < last) {
-			a.get(first, tmp1);
-			while (cond.isTrue(tmp1)) {
-				first++;
-				if (first==last) return;
-				a.get(first, tmp1);
-			}
-			do {
-				last--;
-				if (first==last) return;
-				a.get(last, tmp1);
-			} while (!cond.isTrue(tmp1));
-			// swap first and last
-			a.get(first, tmp1);
-			a.get(last, tmp2);
-			a.set(first, tmp2);
-			a.set(last, tmp1);
-			first++;
-		}
+		PartitionAlgorithm.compute(alg, cond, 0, storage.size()-1, storage);
 	}
 }

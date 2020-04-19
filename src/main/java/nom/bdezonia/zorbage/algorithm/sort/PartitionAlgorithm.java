@@ -24,64 +24,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.sort;
 
-import nom.bdezonia.zorbage.algorithm.sort.InsertionSort;
-import nom.bdezonia.zorbage.algorithm.sort.StableSortAlgorithm;
-import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
-/**
- * 
- * @author Barry DeZonia
- *
- */
-public class StableSort {
-
-	private StableSort() { }
+public class PartitionAlgorithm {
 
 	/**
 	 * 
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
+	 * @param cond
+	 * @param left
+	 * @param right
 	 * @param storage
+	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Ordered<U> ,U>
-		void compute(T alg, IndexedDataSource<U> storage)
+	public static <T extends Algebra<T,U> ,U>
+		long compute(T alg, Predicate<U> cond, long left, long right, IndexedDataSource<U> storage)
 	{
-		compute(alg, alg.isLess(), storage);
-	}
-
-	/**
-	 * 
-	 * @param <T>
-	 * @param <U>
-	 * @param alg
-	 * @param compare
-	 * @param storage
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Function2<Boolean,U,U> compare, IndexedDataSource<U> storage)
-	{
-		qsort(alg, compare, 0, storage.size()-1, storage);
-	}
-
-	private static <T extends Algebra<T,U>, U>
-		void qsort(T alg, Function2<Boolean,U,U> compare, long left, long right, IndexedDataSource<U> storage)
-	{
-		if (left < right) {
-			// small list?
-			if (right - left < 10) {
-				InsertionSort.compute(alg, compare, storage, left, right);
-			}
-			else {
-				long pivotPoint = StableSortAlgorithm.compute(alg, compare, left, right, storage);
-				qsort(alg, compare, left, pivotPoint-1, storage);
-				qsort(alg, compare, pivotPoint+1, right, storage);
-			}
-		}
+		// TODO
 	}
 }
