@@ -221,8 +221,9 @@ public class TestSignedInt128Algebra {
 		}
 		
 		for (int g = 0; g < numsg.size(); g++) {
-			//if (g % 70 == 0)
-			//	System.out.println(g);
+
+			if (g % 100 == 0)
+				System.out.println(g);
 			
 			a.set(numsg.get(g));
 			
