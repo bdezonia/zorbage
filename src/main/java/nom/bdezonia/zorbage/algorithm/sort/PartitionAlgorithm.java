@@ -30,6 +30,11 @@ import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
 public class PartitionAlgorithm {
 
 	/**
@@ -46,6 +51,31 @@ public class PartitionAlgorithm {
 	public static <T extends Algebra<T,U> ,U>
 		long compute(T alg, Predicate<U> cond, long left, long right, IndexedDataSource<U> storage)
 	{
-		// TODO
+		U tmpL = alg.construct();
+		U tmpR = alg.construct();
+		while (left < right) {
+			storage.get(left, tmpL);
+			if (cond.isTrue(tmpL)) {
+				left++;
+			}
+			else {  // cond not true
+				while (true) {
+					storage.get(right, tmpR);
+					if (!cond.isTrue(tmpR)) {
+						right--;
+					}
+					else { // cond is true
+						storage.set(left, tmpR);
+						storage.set(right, tmpL);
+						left++;
+						right--;
+						break;
+					}
+					if (left >= right)
+						break;
+				}
+			}
+		}
+		return left;
 	}
 }
