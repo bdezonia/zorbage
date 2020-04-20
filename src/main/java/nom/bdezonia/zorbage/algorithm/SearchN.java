@@ -53,40 +53,20 @@ public class SearchN {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, long count, U value, IndexedDataSource<U> a)
 	{
-		U tmpA = algebra.construct();
-		long first = 0;
-		long last = a.size();
-		if (count <= 0) {
-			return first;
-		}
-		for(; first != last; first++) {
-			a.get(first, tmpA);
-			if (algebra.isNotEqual().call(tmpA, value)) {
-				continue;
+		class Pred implements Predicate<Tuple2<U,U>> {
+
+			private Algebra<T,U> algebra;
+
+			Pred(Algebra<T,U> alg) {
+				algebra = alg;
 			}
 
-			long candidate = first;
-			long cur_count = 0;
-			
-			while (true) {
-				cur_count++;
-				if (cur_count >= count) {
-					// success
-					return candidate;
-				}
-				first++;
-				if (first == last) {
-					// exhausted the list
-					return last;
-				}
-				a.get(first, tmpA);
-				if (algebra.isNotEqual().call(tmpA, value)) {
-					// too few in a row
-					break;
-				}
+			@Override
+			public boolean isTrue(Tuple2<U, U> value) {
+				return algebra.isEqual().call(value.a(), value.b());
 			}
 		}
-		return last;
+		return compute(algebra, new Pred(algebra), count, value, a);
 	}
 
 	/**
@@ -101,7 +81,7 @@ public class SearchN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, long count, Predicate<Tuple2<U,U>> cond, U value, IndexedDataSource<U> a)
+		long compute(T algebra, Predicate<Tuple2<U,U>> cond, long count, U value, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		Tuple2<U,U> tuple = new Tuple2<U, U>(tmpA, value);

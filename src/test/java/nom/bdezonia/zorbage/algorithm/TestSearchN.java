@@ -47,8 +47,8 @@ public class TestSearchN {
 	public void test1() {
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,6});
-		assertEquals(16, SearchN.compute(G.INT32, 4, new Equal<>(G.INT32), new SignedInt32Member(7), a));
-		assertEquals(6, SearchN.compute(G.INT32, 4, new Equal<>(G.INT32), new SignedInt32Member(4), a));
+		assertEquals(16, SearchN.compute(G.INT32, new Equal<>(G.INT32), 4, new SignedInt32Member(7), a));
+		assertEquals(6, SearchN.compute(G.INT32, new Equal<>(G.INT32), 4, new SignedInt32Member(4), a));
 	}
 
 	@Test
