@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm.sort;
+package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;

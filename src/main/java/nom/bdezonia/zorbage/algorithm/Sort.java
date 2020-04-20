@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algorithm.sort.InsertionSort;
-import nom.bdezonia.zorbage.algorithm.sort.SortPAlgorithm;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Ordered;
@@ -78,10 +76,61 @@ public class Sort {
 				InsertionSort.compute(alg, compare, storage, left, right);
 			}
 			else {
-				long pivotPoint = SortPAlgorithm.compute(alg, compare, left, right, storage);
+				long pivotPoint = partition(alg, compare, left, right, storage);
 				qsort(alg, compare, left, pivotPoint-1, storage);
 				qsort(alg, compare, pivotPoint+1, right, storage);
 			}
 		}
 	}
+	
+	private static <T extends Algebra<T,U> ,U>
+		long partition(T alg, Function2<Boolean,U,U> isLeftOf, long left, long right, IndexedDataSource<U> storage)
+	{
+		U tmp1 = alg.construct();
+		U tmp2 = alg.construct();
+		
+		U pivotValue = alg.construct();
+		storage.get(left, pivotValue);
+	
+		long leftmark = left+1;
+		long rightmark = right;
+	
+		boolean done = false;
+		while (!done) {
+	
+			while (true) {
+				if (leftmark > rightmark) break;
+				storage.get(leftmark, tmp1);
+				boolean isRightOf =
+						!isLeftOf.call(tmp1, pivotValue) &&
+						(isLeftOf.call(tmp1, pivotValue) != isLeftOf.call(pivotValue, tmp1));
+				if (isRightOf) break;
+				leftmark++;
+			}
+	
+			while (true) {
+				storage.get(rightmark, tmp1);
+				if (isLeftOf.call(tmp1, pivotValue)) break;
+				if (rightmark < leftmark) break;
+				rightmark--;
+			}
+	
+			if (rightmark < leftmark)
+				done = true;
+			else {
+				storage.get(leftmark, tmp1);
+				storage.get(rightmark, tmp2);
+				storage.set(leftmark,tmp2);
+				storage.set(rightmark, tmp1);
+			}
+		}
+		
+		storage.get(left, tmp1);
+		storage.get(rightmark, tmp2);
+		storage.set(left, tmp2);
+		storage.set(rightmark, tmp1);
+	
+		return rightmark;
+	}
+
 }
