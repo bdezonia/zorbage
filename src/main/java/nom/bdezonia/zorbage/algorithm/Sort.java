@@ -72,7 +72,7 @@ public class Sort {
 	{
 		if (left < right) {
 			// small list?
-			if (right - left < 10) {
+			if (right - left < 6) {
 				InsertionSort.compute(alg, compare, storage, left, right);
 			}
 			else {

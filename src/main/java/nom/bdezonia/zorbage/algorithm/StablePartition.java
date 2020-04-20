@@ -62,7 +62,7 @@ public class StablePartition {
 			numTrue = 0;
 			endFalse = -1;
 			boolean stop = true;
-			for (long i = left; i < right; i++) // TODO - is this now off by one?
+			for (long i = left; i <= right; i++) // TODO - is this now off by one?
 			{
 				storage.get(i, value);
 				if (!cond.isTrue(value))
@@ -90,13 +90,13 @@ public class StablePartition {
 					endFalse = i;
 				}
 			}
-			//to handle the case where the end of the array is negative
+			//to handle the case where the end of the array is false
 			if (firstTrue > 0)
 			{
 				// TODO: do I have a bunch of off by ones here?
 				reverse(alg, firstTrue, right, storage);
 				reverse(alg, firstTrue, right - numTrue, storage);
-				reverse(alg, right - numTrue, right, storage);
+				reverse(alg, right - numTrue + 1, right, storage);
 			}
 			if (stop)
 				break;

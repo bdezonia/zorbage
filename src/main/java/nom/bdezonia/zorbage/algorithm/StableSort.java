@@ -48,7 +48,7 @@ public class StableSort {
 	 * @param alg
 	 * @param storage
 	 */
-	public static <T extends Algebra<T,U> & Ordered<U> ,U extends Allocatable<U>>
+	public static <T extends Algebra<T,U> & Ordered<U>, U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage)
 	{
 		compute(alg, alg.isLessEqual(), storage);
@@ -65,29 +65,32 @@ public class StableSort {
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
 		void compute(T alg, Function2<Boolean,U,U> lessOrEqual, IndexedDataSource<U> storage)
 	{
-		bottomUpMergeSort(alg, lessOrEqual, storage.size(), storage);
+		bottomUpMergeSort(alg, lessOrEqual, storage);
 	}
 
-	// array A[] has the items to sort; array B[] is a work array
 	private static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		void bottomUpMergeSort(T alg, Function2<Boolean,U,U> leftOfEqual, long n, IndexedDataSource<U> storage)
+		void bottomUpMergeSort(T alg, Function2<Boolean,U,U> leftOfEqual, IndexedDataSource<U> storage)
 	{
+		long n = storage.size();
+		
 		U type = alg.construct();
-		IndexedDataSource<U> tmp = Storage.allocate(storage.size(), type);
+		IndexedDataSource<U> tmp = Storage.allocate(n, type);
 		
 		IndexedDataSource<U> a = storage;
 		IndexedDataSource<U> b = tmp;
 		IndexedDataSource<U> lastDest = null;
 		
+		// array A has the items to sort; array B is a work array
+
 		// Each 1-element run in A is already "sorted".
 		// Make successively longer sorted runs of length 2, 4, 8, 16... until whole array is sorted.
-		for (long width = 1; width < n; width = 2 * width)
+		for (long width = 1; width < n; width *= 2)
 		{
 			// Array A is full of runs of length width.
-			for (long i = 0; i < n; i = i + 2 * width)
+			for (long i = 0; i < n; i += 2*width)
 			{
 				// Merge two runs: A[i:i+width-1] and A[i+width:i+2*width-1] to B[]
-				// or copy A[i:n-1] to B[] ( if(i+width >= n) )
+				// or copy A[i:n-1] to B[] ( if (i+width >= n) )
 				bottomUpMerge(alg, leftOfEqual, i, Math.min(i+width, n), Math.min(i+2*width, n), a, b);
 			}
 			// Now work array B is full of runs of length 2*width.
@@ -97,44 +100,38 @@ public class StableSort {
 			a = lastDest;
 			// Now array A is full of runs of length 2*width.
 		}
-		// last iter storage was copied to tmp
+		// if on the last iteration the storage array was copied to the tmp array
 		if (lastDest == tmp)
-			copyArray(alg, n, tmp, storage);
+			Copy.compute(alg, tmp, storage);
 	}
 
 	// Left run is A[iLeft :iRight-1].
-	// Right run is A[iRight:iEnd-1	].
+	// Right run is A[iRight:iEnd-1].
 	private static <T extends Algebra<T,U>, U>
 		void bottomUpMerge(T alg, Function2<Boolean,U,U> lessOrEqual, long iLeft, long iRight, long iEnd, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpI = alg.construct();
 		U tmpJ = alg.construct();
-		long i = iLeft, j = iRight;
+		long i = iLeft;
+		long j = iRight;
 		// While there are elements in the left or right runs...
 		for (long k = iLeft; k < iEnd; k++) {
-			// If left run head exists and is <= existing right run head.
+			// under appropriate conditions preload variables for lessOrEqual call below
 			if (i < iRight && j < iEnd) {
 				a.get(i, tmpI);
 				a.get(j, tmpJ);
 			}
+			// If left run head exists and is <= existing right run head.
 			if (i < iRight && (j >= iEnd || lessOrEqual.call(tmpI, tmpJ))) {
+				a.get(i, tmpI);
 				b.set(k, tmpI);
-				i = i + 1;
+				i++;
 			}
 			else {
+				a.get(j, tmpJ);
 				b.set(k, tmpJ);
-				j = j + 1;
+				j++;
 			}
 		} 
-	}
-
-	private static <T extends Algebra<T,U>, U>
-		void copyArray(T alg, long n, IndexedDataSource<U> a, IndexedDataSource<U> b)
-	{
-		U tmp = alg.construct();
-		for(long i = 0; i < n; i++) {
-			a.get(i, tmp);
-			b.set(i, tmp);
-		}
 	}
 }
