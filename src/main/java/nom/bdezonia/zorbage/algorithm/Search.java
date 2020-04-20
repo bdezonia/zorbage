@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.predicate.Equal;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
@@ -52,20 +53,7 @@ public class Search {
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
-		class Pred implements Predicate<Tuple2<U,U>> {
-
-			private Algebra<T,U> algebra;
-
-			Pred(Algebra<T,U> alg) {
-				algebra = alg;
-			}
-
-			@Override
-			public boolean isTrue(Tuple2<U, U> value) {
-				return algebra.isEqual().call(value.a(), value.b());
-			}
-		}
-		return compute(algebra, new Pred(algebra), elements, a);
+		return compute(algebra, new Equal<T,U>(algebra), elements, a);
 	}	
 
 	/**
