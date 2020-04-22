@@ -504,5 +504,10 @@ public class TestFloat64CartesianTensor {
 		ctmp1.getI(tmp1);
 		ctmp2.getI(tmp2);
 		assertEquals(tmp1.v(), tmp2.v(), 0);
+		
+		// a test to make sure rank 0 tensors can be accessed
+		IntegerIndex idx = new IntegerIndex(0);
+		value1 = new Float64CartesianTensorProductMember(0,3);
+		value1.v(idx, tmp1);
 	}
 }

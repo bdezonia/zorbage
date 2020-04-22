@@ -504,8 +504,8 @@ public final class OctonionFloat16CartesianTensorProductMember
 	 * long = 3*5*4 + 2*4 + 1;
 	 */
 	private long indexToLong(IntegerIndex idx) {
-		if (idx.numDimensions() == 0)
-			throw new IllegalArgumentException("null index");
+		//if (idx.numDimensions() == 0)
+		//	throw new IllegalArgumentException("null index");
 		if ((idx.numDimensions() >= dims.length) && indexOob(idx, 0))
 			throw new IllegalArgumentException("index out of bounds");
 		long index = 0;
