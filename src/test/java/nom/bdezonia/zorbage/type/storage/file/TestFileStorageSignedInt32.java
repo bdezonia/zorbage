@@ -28,48 +28,112 @@ package nom.bdezonia.zorbage.type.storage.file;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestFileStorage {
+public class TestFileStorageSignedInt32 {
 
+	private class SomeType implements IntCoder, Allocatable<SomeType> {
+
+		private int a, b, c;
+
+		@Override
+		public int intCount() {
+			return 3;
+		}
+
+		@Override
+		public void fromIntArray(int[] arr, int index) {
+			a = arr[index+0];
+			b = arr[index+1];
+			c = arr[index+2];
+		}
+
+		@Override
+		public void toIntArray(int[] arr, int index) {
+			arr[index+0] = a;
+			arr[index+1] = b;
+			arr[index+2] = c;
+		}
+
+		@Override
+		public void fromIntFile(RandomAccessFile raf) throws IOException {
+			throw new IllegalArgumentException("should not need to implement for this example");
+		}
+
+		@Override
+		public void toIntFile(RandomAccessFile raf) throws IOException {
+			throw new IllegalArgumentException("should not need to implement for this example");
+		}
+		
+		@Override
+		public SomeType allocate() {
+			return new SomeType();
+		}
+	}
+	
 	@Test
-	public void run() {
-		final int SIZE = 4000;
+	public void test1() {
+
+		final int SIZE = 100;
 		
-		ComplexFloat64Member v = new ComplexFloat64Member();
+		SomeType v = new SomeType();
 		
-		FileStorageFloat64<ComplexFloat64Member> store = new FileStorageFloat64<ComplexFloat64Member>(SIZE, new ComplexFloat64Member());
+		FileStorageSignedInt32<SomeType> store = new FileStorageSignedInt32<SomeType>(SIZE, v);
 
 		assertEquals(SIZE, store.size());
 		
 		for (long i = 0; i < store.size(); i++) {
-			v.setR(i);
-			v.setI(i+1);
-			store.set(i, v);
+			v.a = -1;
+			v.b = -1;
+			v.c = -1;
+			store.get(i, v);
+			assertEquals(0, v.a);
+			assertEquals(0, v.b);
+			assertEquals(0, v.c);
 		}
 		
 		for (long i = 0; i < store.size(); i++) {
+			v.a = (byte) (i+0);
+			v.b = (byte) (i+1);
+			v.c = (byte) (i+2);
+			store.set(i, v);
+		}
+
+		for (long i = 0; i < store.size(); i++) {
+			v.a = -1;
+			v.b = -1;
+			v.c = -1;
 			store.get(i, v);
-			assertEquals(i, v.r(), 0);
-			assertEquals(i+1, v.i(), 0);
+			assertEquals(i+0, v.a);
+			assertEquals(i+1, v.b);
+			assertEquals(i+2, v.c);
 		}
 		
-		FileStorageFloat64<ComplexFloat64Member> dup = store.duplicate();
+		FileStorageSignedInt32<SomeType> dup = store.duplicate();
 		
 		assertEquals(store.size(), dup.size());
 
 		for (long i = 0; i < dup.size(); i++) {
+			v.a = -1;
+			v.b = -1;
+			v.c = -1;
 			dup.get(i, v);
-			assertEquals(i, v.r(), 0);
-			assertEquals(i+1, v.i(), 0);
+			assertEquals(i+0, v.a);
+			assertEquals(i+1, v.b);
+			assertEquals(i+2, v.c);
 		}
 		
 	}
+	
 }

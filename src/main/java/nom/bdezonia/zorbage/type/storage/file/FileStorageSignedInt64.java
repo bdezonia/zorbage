@@ -26,12 +26,19 @@
  */
 package nom.bdezonia.zorbage.type.storage.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt64;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -41,117 +48,140 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  *
  */
 public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
-	extends AbstractFileStorage<U>
-	implements Allocatable<FileStorageSignedInt64<U>>
+	implements IndexedDataSource<U>, Allocatable<FileStorageSignedInt64<U>>
 {
-	private ArrayStorageSignedInt64<U> buffer;
-	private U type;
-	private ThreadLocal<long[]> tmpA;
-	private ThreadLocal<U> tmpU;
+	private final long numElements;
+	private final U type;
+	private final long[] tmpArray;
+	private final int bufSize;
+	private final File file;
+	private final RandomAccessFile raf;
+	private final FileChannel channel;
+	private final ByteBuffer buffer;
 	
+	/**
+	 * 
+	 * @param numElements
+	 * @param type
+	 */
 	public FileStorageSignedInt64(long numElements, U type) {
-		super(numElements,type);
-	}
-	
-	public FileStorageSignedInt64(FileStorageSignedInt64<U> other, U t) {
-		super(other, t);
-	}
-	
-	@Override
-	public FileStorageSignedInt64<U> duplicate() {
-		return new FileStorageSignedInt64<U>(this, this.type);
-	}
-	
-	@Override
-	public FileStorageSignedInt64<U> allocate() {
-		return new FileStorageSignedInt64<U>(size(), type);
-	}
-
-	@Override
-	protected void setLocals(U t) {
-		this.type = t.allocate();
-		this.tmpA = new ThreadLocal<long[]>() {
-			@Override
-			protected long[] initialValue() {
-				return new long[type.longCount()];
+		this.numElements = numElements;
+		this.type = type.allocate();
+		this.tmpArray = new long[type.longCount()];
+		this.bufSize = type.longCount() * 8;
+		try {
+			this.file = File.createTempFile("Storage", ".storage");
+			this.file.deleteOnExit();
+			this.raf = new RandomAccessFile(file, "rw");
+			this.channel = raf.getChannel();
+			// make a one element buffer
+			this.buffer = ByteBuffer.allocate(bufSize);
+			// fill the buffer with zeroes
+			for (int i = 0; i < type.longCount(); i++) {
+				buffer.putLong(0);
 			}
-		};
-		this.tmpU = new ThreadLocal<U>() {
-			@Override
-			protected U initialValue() {
-				return type.allocate();
+			// write zeroes to the file over and over
+			channel.position(0);
+			for (long i = 0; i < numElements; i++) {
+				buffer.rewind();
+				channel.write(buffer);
 			}
-		};
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 	
-	@Override
-	protected void allocateBuffer(long numElements, U type) {
-		buffer = new ArrayStorageSignedInt64<U>(numElements, type);
-	}
-
-	@Override
-	protected void writeZeroElement(RandomAccessFile raf) throws IOException {
-		long[] arr = tmpA.get();
-		for (int i = 0; i < arr.length; i++) {
-			raf.writeLong(0);
+	public FileStorageSignedInt64(FileStorageSignedInt64<U> other, U type) {
+		synchronized(other) {
+			this.numElements = other.numElements;
+			this.type = type.allocate();
+			this.tmpArray = other.tmpArray.clone();
+			this.bufSize = other.bufSize;
+			try {
+				this.file = File.createTempFile("Storage", ".storage");
+				this.file.deleteOnExit();
+				this.buffer = ByteBuffer.allocate(bufSize);
+				Path from = Paths.get(other.file.getAbsolutePath());
+				Path to = Paths.get(file.getAbsolutePath());
+				//overwrite existing file, if exists
+				CopyOption[] options = new CopyOption[]{
+					StandardCopyOption.REPLACE_EXISTING,
+					StandardCopyOption.COPY_ATTRIBUTES
+				};
+				Files.copy(from, to, options);
+				// these two must happen after the file copy
+				this.raf = new RandomAccessFile(file, "rw");
+				this.channel = raf.getChannel();
+			} catch (Exception e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
 		}
-	}
-
-	@Override
-	protected void writeFromBufferToRaf(RandomAccessFile raf, long index) throws IOException {
-		U value = tmpU.get();
-		buffer.get(index, value);
-		long arr[] = tmpA.get();
-		value.toLongArray(arr, 0);
-		for (int i = 0; i < arr.length; i++) {
-			raf.writeLong(arr[i]);
-		}
-	}
-
-	@Override
-	protected void readFromRafIntoBuffer(RandomAccessFile raf, long index) throws IOException {
-		long arr[] = tmpA.get();
-		for (int i = 0; i < type.longCount(); i++) {
-			arr[i] = raf.readLong();
-		}
-		U value = tmpU.get();
-		value.fromLongArray(arr, 0);
-		buffer.set(index, value);
-	}
-
-	@Override
-	protected int elementByteSize() {
-		return type.longCount() * 8;
-	}
-
-	@Override
-	protected void setBufferValue(long idx, U value) {
-		buffer.set(idx, value);
-	}
-
-	@Override
-	protected void getBufferValue(long idx, U value) {
-		buffer.get(idx, value);
-	}
-
-	@Override
-	protected void duplicateBuffer(IndexedDataSource<U> other) {
-		ArrayStorageSignedInt64<U> otherBuffer = (ArrayStorageSignedInt64<U>) other;
-		buffer = otherBuffer.duplicate();
-	}
-
-	@Override
-	protected IndexedDataSource<U> buffer() {
-		return buffer;
 	}
 	
-	@Override
-	protected int componentCount(U type) {
-		return type.longCount();
-	}
-
 	@Override
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_VIRTUAL;
+	}
+
+	@Override
+	public void set(long index, U value) {
+		if (index < 0 || index >= this.numElements)
+			throw new IllegalArgumentException("storage index out of bounds");
+		synchronized(this) {
+			try {
+				value.toLongArray(this.tmpArray, 0);
+				this.buffer.rewind();
+				for (int i = 0; i < this.tmpArray.length; i++) {
+					this.buffer.putLong(i*8, this.tmpArray[i]);
+				}
+				this.buffer.rewind();
+				long pos = index * this.bufSize;
+				this.channel.position(pos);
+				this.channel.write(this.buffer);
+			} catch (IOException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void get(long index, U value) {
+		if (index < 0 || index >= this.numElements)
+			throw new IllegalArgumentException("storage index out of bounds");
+		synchronized(this) {
+			try {
+				buffer.rewind();
+				long pos = index * bufSize;
+				this.channel.position(pos);
+				this.channel.read(this.buffer);
+				buffer.rewind();
+				for (int i = 0; i < this.tmpArray.length; i++) {
+					this.tmpArray[i] = this.buffer.getLong(i*8);
+				}
+				value.fromLongArray(this.tmpArray, 0);
+			} catch (IOException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public long size() {
+		return this.numElements;
+	}
+
+	@Override
+	public FileStorageSignedInt64<U> allocate() {
+		return new FileStorageSignedInt64<U>(this.numElements, this.type);
+	}
+
+	@Override
+	public FileStorageSignedInt64<U> duplicate() {
+		return new FileStorageSignedInt64<U>(this, type);
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		this.raf.close();
 	}
 }

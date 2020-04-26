@@ -26,12 +26,19 @@
  */
 package nom.bdezonia.zorbage.type.storage.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBoolean;
 import nom.bdezonia.zorbage.type.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
@@ -41,117 +48,142 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  *
  */
 public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
-	extends AbstractFileStorage<U>
-	implements Allocatable<FileStorageBoolean<U>>
+	implements IndexedDataSource<U>, Allocatable<FileStorageBoolean<U>>
 {
-	private ArrayStorageBoolean<U> buffer;
-	private U type;
-	private ThreadLocal<boolean[]> tmpA;
-	private ThreadLocal<U> tmpU;
+	private final long numElements;
+	private final U type;
+	private final boolean[] tmpArray;
+	private final int bufSize;
+	private final File file;
+	private final RandomAccessFile raf;
+	private final FileChannel channel;
+	private final ByteBuffer buffer;
 	
+	/**
+	 * 
+	 * @param numElements
+	 * @param type
+	 */
 	public FileStorageBoolean(long numElements, U type) {
-		super(numElements,type);
-	}
-	
-	public FileStorageBoolean(FileStorageBoolean<U> other, U t) {
-		super(other, t);
-	}
-	
-	@Override
-	public FileStorageBoolean<U> duplicate() {
-		return new FileStorageBoolean<U>(this, this.type);
-	}
-	
-	@Override
-	public FileStorageBoolean<U> allocate() {
-		return new FileStorageBoolean<U>(size(), type);
-	}
-
-	@Override
-	protected void setLocals(U t) {
-		this.type = t.allocate();
-		this.tmpA = new ThreadLocal<boolean[]>() {
-			@Override
-			protected boolean[] initialValue() {
-				return new boolean[type.booleanCount()];
+		this.numElements = numElements;
+		this.type = type.allocate();
+		this.tmpArray = new boolean[type.booleanCount()];
+		this.bufSize = type.booleanCount() * 1;
+		try {
+			this.file = File.createTempFile("Storage", ".storage");
+			this.file.deleteOnExit();
+			this.raf = new RandomAccessFile(file, "rw");
+			this.channel = raf.getChannel();
+			// make a one element buffer
+			this.buffer = ByteBuffer.allocate(bufSize);
+			// fill the buffer with zeroes
+			for (int i = 0; i < type.booleanCount(); i++) {
+				buffer.put((byte) 0);
 			}
-		};
-		this.tmpU = new ThreadLocal<U>() {
-			@Override
-			protected U initialValue() {
-				return type.allocate();
+			// write zeroes to the file over and over
+			channel.position(0);
+			for (long i = 0; i < numElements; i++) {
+				buffer.rewind();
+				channel.write(buffer);
 			}
-		};
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 	
-	@Override
-	protected void allocateBuffer(long numElements, U type) {
-		buffer = new ArrayStorageBoolean<U>(numElements, type);
-	}
-
-	@Override
-	protected void writeZeroElement(RandomAccessFile raf) throws IOException {
-		boolean[] arr = tmpA.get();
-		for (int i = 0; i < arr.length; i++) {
-			raf.writeBoolean(false);
+	public FileStorageBoolean(FileStorageBoolean<U> other, U type) {
+		synchronized(other) {
+			this.numElements = other.numElements;
+			this.type = type.allocate();
+			this.tmpArray = other.tmpArray.clone();
+			this.bufSize = other.bufSize;
+			try {
+				this.file = File.createTempFile("Storage", ".storage");
+				this.file.deleteOnExit();
+				this.buffer = ByteBuffer.allocate(bufSize);
+				Path from = Paths.get(other.file.getAbsolutePath());
+				Path to = Paths.get(file.getAbsolutePath());
+				//overwrite existing file, if exists
+				CopyOption[] options = new CopyOption[]{
+					StandardCopyOption.REPLACE_EXISTING,
+					StandardCopyOption.COPY_ATTRIBUTES
+				};
+				Files.copy(from, to, options);
+				// these two must happen after the file copy
+				this.raf = new RandomAccessFile(file, "rw");
+				this.channel = raf.getChannel();
+			} catch (Exception e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
 		}
-	}
-
-	@Override
-	protected void writeFromBufferToRaf(RandomAccessFile raf, long index) throws IOException {
-		U value = tmpU.get();
-		buffer.get(index, value);
-		boolean arr[] = tmpA.get();
-		value.toBooleanArray(arr, 0);
-		for (int i = 0; i < arr.length; i++) {
-			raf.writeBoolean(arr[i]);
-		}
-	}
-
-	@Override
-	protected void readFromRafIntoBuffer(RandomAccessFile raf, long index) throws IOException {
-		boolean arr[] = tmpA.get();
-		for (int i = 0; i < type.booleanCount(); i++) {
-			arr[i] = raf.readBoolean();
-		}
-		U value = tmpU.get();
-		value.fromBooleanArray(arr, 0);
-		buffer.set(index, value);
-	}
-
-	@Override
-	protected int elementByteSize() {
-		return type.booleanCount() * 1;
-	}
-
-	@Override
-	protected void setBufferValue(long idx, U value) {
-		buffer.set(idx, value);
-	}
-
-	@Override
-	protected void getBufferValue(long idx, U value) {
-		buffer.get(idx, value);
-	}
-
-	@Override
-	protected void duplicateBuffer(IndexedDataSource<U> other) {
-		ArrayStorageBoolean<U> otherBuffer = (ArrayStorageBoolean<U>) other;
-		buffer = otherBuffer.duplicate();
-	}
-
-	@Override
-	protected IndexedDataSource<U> buffer() {
-		return buffer;
 	}
 	
-	@Override
-	protected int componentCount(U type) {
-		return type.booleanCount();
-	}
-
 	@Override
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_VIRTUAL;
+	}
+
+	@Override
+	public void set(long index, U value) {
+		if (index < 0 || index >= this.numElements)
+			throw new IllegalArgumentException("storage index out of bounds");
+		synchronized(this) {
+			try {
+				value.toBooleanArray(this.tmpArray, 0);
+				this.buffer.rewind();
+				for (int i = 0; i < this.tmpArray.length; i++) {
+					byte b = (byte) (this.tmpArray[i] ? 1 : 0);
+					this.buffer.put(i*1, b);
+				}
+				this.buffer.rewind();
+				long pos = index * this.bufSize;
+				this.channel.position(pos);
+				this.channel.write(this.buffer);
+			} catch (IOException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void get(long index, U value) {
+		if (index < 0 || index >= this.numElements)
+			throw new IllegalArgumentException("storage index out of bounds");
+		synchronized(this) {
+			try {
+				buffer.rewind();
+				long pos = index * bufSize;
+				this.channel.position(pos);
+				this.channel.read(this.buffer);
+				buffer.rewind();
+				for (int i = 0; i < this.tmpArray.length; i++) {
+					byte b = this.buffer.get(i*1);
+					this.tmpArray[i] = (b == 1);
+				}
+				value.fromBooleanArray(this.tmpArray, 0);
+			} catch (IOException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public long size() {
+		return this.numElements;
+	}
+
+	@Override
+	public FileStorageBoolean<U> allocate() {
+		return new FileStorageBoolean<U>(this.numElements, this.type);
+	}
+
+	@Override
+	public FileStorageBoolean<U> duplicate() {
+		return new FileStorageBoolean<U>(this, type);
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		this.raf.close();
 	}
 }
