@@ -30,9 +30,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -68,16 +65,6 @@ public class TestSparseStorage {
 			arr[index+1] = b;
 			arr[index+2] = c;
 			arr[index+3] = d;
-		}
-
-		@Override
-		public void fromBooleanFile(RandomAccessFile raf) throws IOException {
-			throw new UnsupportedOperationException("unimplemented for example");
-		}
-
-		@Override
-		public void toBooleanFile(RandomAccessFile raf) throws IOException {
-			throw new UnsupportedOperationException("unimplemented for example");
 		}
 
 		@Override

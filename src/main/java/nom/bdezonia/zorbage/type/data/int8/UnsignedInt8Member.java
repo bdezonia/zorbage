@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.int8;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -120,16 +118,6 @@ public final class UnsignedInt8Member
 	@Override
 	public void toByteArray(byte[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromByteFile(RandomAccessFile raf) throws IOException {
-		v = raf.readByte();
-	}
-
-	@Override
-	public void toByteFile(RandomAccessFile raf) throws IOException {
-		raf.writeByte(v);
 	}
 
 	@Override

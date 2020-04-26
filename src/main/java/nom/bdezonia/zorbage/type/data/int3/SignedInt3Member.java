@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.int3;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -213,16 +211,6 @@ public final class SignedInt3Member
 	@Override
 	public void toByteArray(byte[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromByteFile(RandomAccessFile raf) throws IOException {
-		setV(raf.readByte());
-	}
-
-	@Override
-	public void toByteFile(RandomAccessFile raf) throws IOException {
-		raf.writeByte(v);
 	}
 
 	@Override

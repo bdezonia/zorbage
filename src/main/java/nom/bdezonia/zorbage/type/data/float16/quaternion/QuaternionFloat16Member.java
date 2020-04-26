@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float16.quaternion;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -159,22 +157,6 @@ public final class QuaternionFloat16Member
 		arr[index+1] = i;
 		arr[index+2] = j;
 		arr[index+3] = k;
-	}
-
-	@Override
-	public void fromShortFile(RandomAccessFile raf) throws IOException {
-		r = raf.readShort();
-		i = raf.readShort();
-		j = raf.readShort();
-		k = raf.readShort();
-	}
-
-	@Override
-	public void toShortFile(RandomAccessFile raf) throws IOException {
-		raf.writeShort(r);
-		raf.writeShort(i);
-		raf.writeShort(j);
-		raf.writeShort(k);
 	}
 
 	@Override

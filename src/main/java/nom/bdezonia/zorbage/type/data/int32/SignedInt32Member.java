@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.int32;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -114,16 +112,6 @@ public final class SignedInt32Member
 	@Override
 	public void toIntArray(int[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromIntFile(RandomAccessFile raf) throws IOException {
-		v = raf.readInt();
-	}
-
-	@Override
-	public void toIntFile(RandomAccessFile raf) throws IOException {
-		raf.writeInt(v);
 	}
 
 	@Override

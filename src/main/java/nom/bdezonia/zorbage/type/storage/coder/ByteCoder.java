@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.coder;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * 
  * @author Barry DeZonia
@@ -39,6 +36,4 @@ public interface ByteCoder {
 	int byteCount();
 	void fromByteArray(byte[] arr, int index);
 	void toByteArray(byte[] arr, int index);
-	void fromByteFile(RandomAccessFile raf) throws IOException;
-	void toByteFile(RandomAccessFile raf) throws IOException;
 }

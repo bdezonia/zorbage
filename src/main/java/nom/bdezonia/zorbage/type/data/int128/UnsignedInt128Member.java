@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.int128;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -149,18 +147,6 @@ public final class UnsignedInt128Member
 	public void toLongArray(long[] arr, int index) {
 		arr[index] = lo;
 		arr[index+1] = hi;
-	}
-
-	@Override
-	public void fromLongFile(RandomAccessFile raf) throws IOException {
-		lo = raf.readLong();
-		hi = raf.readLong();
-	}
-
-	@Override
-	public void toLongFile(RandomAccessFile raf) throws IOException {
-		raf.writeLong(lo);
-		raf.writeLong(hi);
 	}
 
 	@Override

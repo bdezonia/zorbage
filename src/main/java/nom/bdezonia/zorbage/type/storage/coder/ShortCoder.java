@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.coder;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * 
  * @author Barry DeZonia
@@ -39,6 +36,4 @@ public interface ShortCoder {
 	int shortCount();
 	void fromShortArray(short[] arr, int index);
 	void toShortArray(short[] arr, int index);
-	void fromShortFile(RandomAccessFile raf) throws IOException;
-	void toShortFile(RandomAccessFile raf) throws IOException;
 }

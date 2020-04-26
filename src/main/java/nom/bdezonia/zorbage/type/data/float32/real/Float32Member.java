@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float32.real;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -115,16 +113,6 @@ public final class Float32Member
 	@Override
 	public void toFloatArray(float[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromFloatFile(RandomAccessFile raf) throws IOException {
-		v = raf.readFloat();
-	}
-
-	@Override
-	public void toFloatFile(RandomAccessFile raf) throws IOException {
-		raf.writeFloat(v);
 	}
 
 	@Override

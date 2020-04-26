@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.point;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 
 import nom.bdezonia.zorbage.algebras.G;
@@ -134,43 +132,6 @@ public class Point
 	}
 
 	@Override
-	public void fromByteFile(RandomAccessFile raf) throws IOException {
-		ByteBuffer buff = ByteBuffer.allocate(4);
-		buff.put(0, raf.readByte());
-		buff.put(1, raf.readByte());
-		buff.put(2, raf.readByte());
-		buff.put(3, raf.readByte());
-		int n = buff.getInt();
-		if (this.numDimensions() != n) {
-			this.vector = new double[n];
-		}
-		buff = ByteBuffer.allocate(8);
-		for (int k = 0; k < n; k++) {
-			for (int i = 0; i < 8; i++) {
-				buff.put(i, raf.readByte()); 
-			}
-			this.vector[k] = buff.getDouble();
-		}
-	}
-
-	@Override
-	public void toByteFile(RandomAccessFile raf) throws IOException {
-		ByteBuffer buff = ByteBuffer.allocate(4);
-		byte[] bytes = buff.putInt(this.vector.length).array();
-		for (int i = 0; i < 4; i++) {
-			raf.writeByte(bytes[i]);
-		}
-		buff = ByteBuffer.allocate(8);
-		for (int k = 0; k < this.vector.length; k++) {
-			bytes = buff.putDouble(this.vector[k]).array();
-			for (int i = 0; i < 8; i++) {
-				raf.writeByte(bytes[i]);
-			}
-		}
-	}
-
-
-	@Override
 	public int doubleCount() {
 		return numDimensions() + 1;
 	}
@@ -191,25 +152,6 @@ public class Point
 		arr[index] = numDimensions();
 		for (int i = 0; i < numDimensions(); i++) {
 			arr[index + 1 + i] = this.vector[i];
-		}
-	}
-
-	@Override
-	public void fromDoubleFile(RandomAccessFile raf) throws IOException {
-		int dim = (int) raf.readDouble();
-		if (dim != numDimensions()) {
-			this.vector = new double[dim];
-		}
-		for (int i = 0; i < dim; i++) {
-			this.vector[i] = raf.readDouble();
-		}
-	}
-
-	@Override
-	public void toDoubleFile(RandomAccessFile raf) throws IOException {
-		raf.writeDouble(numDimensions());
-		for (int i = 0; i < numDimensions(); i++) {
-			raf.writeDouble(this.vector[i]);
 		}
 	}
 

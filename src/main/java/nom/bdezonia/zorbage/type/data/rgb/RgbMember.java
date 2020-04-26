@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.rgb;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -97,20 +94,6 @@ public class RgbMember
 		arr[index] = r;
 		arr[index+1] = g;
 		arr[index+2] = b;
-	}
-
-	@Override
-	public void fromByteFile(RandomAccessFile raf) throws IOException {
-		r = raf.readByte();
-		g = raf.readByte();
-		b = raf.readByte();
-	}
-
-	@Override
-	public void toByteFile(RandomAccessFile raf) throws IOException {
-		raf.writeByte(r);
-		raf.writeByte(g);
-		raf.writeByte(b);
 	}
 
 	@Override

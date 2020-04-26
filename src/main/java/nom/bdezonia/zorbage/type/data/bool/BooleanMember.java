@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.bool;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -128,16 +126,6 @@ public final class BooleanMember
 	@Override
 	public void toBooleanArray(boolean[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromBooleanFile(RandomAccessFile raf) throws IOException {
-		v = raf.readBoolean();
-	}
-
-	@Override
-	public void toBooleanFile(RandomAccessFile raf) throws IOException {
-		raf.writeBoolean(v);
 	}
 
 	@Override

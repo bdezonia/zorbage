@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.coder;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * 
  * @author Barry DeZonia
@@ -39,6 +36,4 @@ public interface BooleanCoder {
 	int booleanCount();
 	void fromBooleanArray(boolean[] arr, int index);
 	void toBooleanArray(boolean[] arr, int index);
-	void fromBooleanFile(RandomAccessFile raf) throws IOException;
-	void toBooleanFile(RandomAccessFile raf) throws IOException;
 }

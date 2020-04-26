@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.coder;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * 
  * @author Barry DeZonia
@@ -39,6 +36,4 @@ public interface IntCoder {
 	int intCount();
 	void fromIntArray(int[] arr, int index);
 	void toIntArray(int[] arr, int index);
-	void fromIntFile(RandomAccessFile raf) throws IOException;
-	void toIntFile(RandomAccessFile raf) throws IOException;
 }

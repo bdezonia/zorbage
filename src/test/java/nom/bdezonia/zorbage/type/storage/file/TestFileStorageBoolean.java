@@ -28,9 +28,6 @@ package nom.bdezonia.zorbage.type.storage.file;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
@@ -66,16 +63,6 @@ public class TestFileStorageBoolean {
 			arr[index+2] = c;
 		}
 
-		@Override
-		public void fromBooleanFile(RandomAccessFile raf) throws IOException {
-			throw new IllegalArgumentException("should not need to implement for this example");
-		}
-
-		@Override
-		public void toBooleanFile(RandomAccessFile raf) throws IOException {
-			throw new IllegalArgumentException("should not need to implement for this example");
-		}
-		
 		@Override
 		public SomeType allocate() {
 			return new SomeType();

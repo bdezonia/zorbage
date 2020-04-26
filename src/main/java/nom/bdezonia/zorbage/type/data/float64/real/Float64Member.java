@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.real;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -115,16 +113,6 @@ public final class Float64Member
 	@Override
 	public void toDoubleArray(double[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromDoubleFile(RandomAccessFile raf) throws IOException {
-		v = raf.readDouble();
-	}
-
-	@Override
-	public void toDoubleFile(RandomAccessFile raf) throws IOException {
-		raf.writeDouble(v);
 	}
 
 	@Override

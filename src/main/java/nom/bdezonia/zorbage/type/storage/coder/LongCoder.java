@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.coder;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * 
  * @author Barry DeZonia
@@ -39,6 +36,4 @@ public interface LongCoder {
 	int longCount();
 	void fromLongArray(long[] arr, int index);
 	void toLongArray(long[] arr, int index);
-	void fromLongFile(RandomAccessFile raf) throws IOException;
-	void toLongFile(RandomAccessFile raf) throws IOException;
 }

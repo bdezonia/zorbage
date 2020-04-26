@@ -26,9 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.storage.coder;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * 
  * @author Barry DeZonia
@@ -39,6 +36,4 @@ public interface DoubleCoder {
 	int doubleCount();
 	void fromDoubleArray(double[] arr, int index);
 	void toDoubleArray(double[] arr, int index);
-	void fromDoubleFile(RandomAccessFile raf) throws IOException;
-	void toDoubleFile(RandomAccessFile raf) throws IOException;
 }

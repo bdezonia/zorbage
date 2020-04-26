@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float64.octonion;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -205,30 +203,6 @@ public final class OctonionFloat64Member
 		arr[index+5] = i0;
 		arr[index+6] = j0;
 		arr[index+7] = k0;
-	}
-
-	@Override
-	public void fromDoubleFile(RandomAccessFile raf) throws IOException {
-		r = raf.readDouble();
-		i = raf.readDouble();
-		j = raf.readDouble();
-		k = raf.readDouble();
-		l = raf.readDouble();
-		i0 = raf.readDouble();
-		j0 = raf.readDouble();
-		k0 = raf.readDouble();
-	}
-
-	@Override
-	public void toDoubleFile(RandomAccessFile raf) throws IOException {
-		raf.writeDouble(r);
-		raf.writeDouble(i);
-		raf.writeDouble(j);
-		raf.writeDouble(k);
-		raf.writeDouble(l);
-		raf.writeDouble(i0);
-		raf.writeDouble(j0);
-		raf.writeDouble(k0);
 	}
 
 	@Override

@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.int11;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -350,16 +348,6 @@ public final class SignedInt11Member
 	@Override
 	public void toShortArray(short[] arr, int index) {
 		arr[index] = v;
-	}
-
-	@Override
-	public void fromShortFile(RandomAccessFile raf) throws IOException {
-		setV(raf.readShort());
-	}
-
-	@Override
-	public void toShortFile(RandomAccessFile raf) throws IOException {
-		raf.writeShort(v);
 	}
 
 	@Override

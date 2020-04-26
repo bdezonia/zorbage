@@ -26,8 +26,6 @@
  */
 package nom.bdezonia.zorbage.type.data.float32.complex;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -129,18 +127,6 @@ public final class ComplexFloat32Member
 	public void toFloatArray(float[] arr, int index) {
 		arr[index] = r;
 		arr[index+1] = i;
-	}
-
-	@Override
-	public void fromFloatFile(RandomAccessFile raf) throws IOException {
-		r = raf.readFloat();
-		i = raf.readFloat();
-	}
-
-	@Override
-	public void toFloatFile(RandomAccessFile raf) throws IOException {
-		raf.writeFloat(r);
-		raf.writeFloat(i);
 	}
 
 	@Override
