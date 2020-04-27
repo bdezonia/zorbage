@@ -83,7 +83,6 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			// write zeroes to the file over and over
 			channel.position(0);
 			for (long i = 0; i < numElements; i++) {
-				buffer.rewind();
 				channel.write(buffer);
 			}
 		} catch (IOException e) {
@@ -125,19 +124,18 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= this.numElements)
+		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				value.toDoubleArray(this.tmpArray, 0);
-				this.buffer.rewind();
-				for (int i = 0; i < this.tmpArray.length; i++) {
-					this.buffer.putDouble(i*8, this.tmpArray[i]);
+				value.toDoubleArray(tmpArray, 0);
+				for (int i = 0; i < tmpArray.length; i++) {
+					buffer.putDouble(i*8, tmpArray[i]);
 				}
-				this.buffer.rewind();
-				long pos = index * this.bufSize;
-				this.channel.position(pos);
-				this.channel.write(this.buffer);
+				buffer.rewind();
+				long pos = index * bufSize;
+				channel.position(pos);
+				channel.write(buffer);
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -146,19 +144,18 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= this.numElements)
+		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
 				buffer.rewind();
 				long pos = index * bufSize;
-				this.channel.position(pos);
-				this.channel.read(this.buffer);
-				buffer.rewind();
-				for (int i = 0; i < this.tmpArray.length; i++) {
-					this.tmpArray[i] = this.buffer.getDouble(i*8);
+				channel.position(pos);
+				channel.read(buffer);
+				for (int i = 0; i < tmpArray.length; i++) {
+					tmpArray[i] = buffer.getDouble(i*8);
 				}
-				value.fromDoubleArray(this.tmpArray, 0);
+				value.fromDoubleArray(tmpArray, 0);
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -167,12 +164,12 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public long size() {
-		return this.numElements;
+		return numElements;
 	}
 
 	@Override
 	public FileStorageFloat64<U> allocate() {
-		return new FileStorageFloat64<U>(this.numElements, this.type);
+		return new FileStorageFloat64<U>(numElements, type);
 	}
 
 	@Override
@@ -182,6 +179,6 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	protected void finalize() throws Throwable {
-		this.raf.close();
+		raf.close();
 	}
 }

@@ -83,7 +83,6 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 			// write zeroes to the file over and over
 			channel.position(0);
 			for (long i = 0; i < numElements; i++) {
-				buffer.rewind();
 				channel.write(buffer);
 			}
 		} catch (IOException e) {
@@ -125,19 +124,18 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= this.numElements)
+		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				value.toByteArray(this.tmpArray, 0);
-				this.buffer.rewind();
-				for (int i = 0; i < this.tmpArray.length; i++) {
-					this.buffer.put(i, this.tmpArray[i]);
+				value.toByteArray(tmpArray, 0);
+				for (int i = 0; i < tmpArray.length; i++) {
+					buffer.put(i, tmpArray[i]);
 				}
-				this.buffer.rewind();
-				long pos = index * this.bufSize;
-				this.channel.position(pos);
-				this.channel.write(this.buffer);
+				buffer.rewind();
+				long pos = index * bufSize;
+				channel.position(pos);
+				channel.write(buffer);
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -146,19 +144,18 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= this.numElements)
+		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
 				buffer.rewind();
 				long pos = index * bufSize;
-				this.channel.position(pos);
-				this.channel.read(this.buffer);
-				buffer.rewind();
-				for (int i = 0; i < this.tmpArray.length; i++) {
-					this.tmpArray[i] = this.buffer.get(i*1);
+				channel.position(pos);
+				channel.read(buffer);
+				for (int i = 0; i < tmpArray.length; i++) {
+					tmpArray[i] = buffer.get(i*1);
 				}
-				value.fromByteArray(this.tmpArray, 0);
+				value.fromByteArray(tmpArray, 0);
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -167,12 +164,12 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public long size() {
-		return this.numElements;
+		return numElements;
 	}
 
 	@Override
 	public FileStorageSignedInt8<U> allocate() {
-		return new FileStorageSignedInt8<U>(this.numElements, this.type);
+		return new FileStorageSignedInt8<U>(numElements, type);
 	}
 
 	@Override
@@ -182,6 +179,6 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	protected void finalize() throws Throwable {
-		this.raf.close();
+		raf.close();
 	}
 }

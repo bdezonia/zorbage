@@ -83,7 +83,6 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 			// write zeroes to the file over and over
 			channel.position(0);
 			for (long i = 0; i < numElements; i++) {
-				buffer.rewind();
 				channel.write(buffer);
 			}
 		} catch (IOException e) {
@@ -125,20 +124,19 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= this.numElements)
+		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				value.toBooleanArray(this.tmpArray, 0);
-				this.buffer.rewind();
-				for (int i = 0; i < this.tmpArray.length; i++) {
-					byte b = (byte) (this.tmpArray[i] ? 1 : 0);
-					this.buffer.put(i*1, b);
+				value.toBooleanArray(tmpArray, 0);
+				for (int i = 0; i < tmpArray.length; i++) {
+					byte b = (byte) (tmpArray[i] ? 1 : 0);
+					buffer.put(i*1, b);
 				}
-				this.buffer.rewind();
-				long pos = index * this.bufSize;
-				this.channel.position(pos);
-				this.channel.write(this.buffer);
+				buffer.rewind();
+				long pos = index * bufSize;
+				channel.position(pos);
+				channel.write(buffer);
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -147,20 +145,19 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= this.numElements)
+		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
 				buffer.rewind();
 				long pos = index * bufSize;
-				this.channel.position(pos);
-				this.channel.read(this.buffer);
-				buffer.rewind();
-				for (int i = 0; i < this.tmpArray.length; i++) {
-					byte b = this.buffer.get(i*1);
-					this.tmpArray[i] = (b == 1);
+				channel.position(pos);
+				channel.read(buffer);
+				for (int i = 0; i < tmpArray.length; i++) {
+					byte b = buffer.get(i*1);
+					tmpArray[i] = (b == 1);
 				}
-				value.fromBooleanArray(this.tmpArray, 0);
+				value.fromBooleanArray(tmpArray, 0);
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -169,12 +166,12 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public long size() {
-		return this.numElements;
+		return numElements;
 	}
 
 	@Override
 	public FileStorageBoolean<U> allocate() {
-		return new FileStorageBoolean<U>(this.numElements, this.type);
+		return new FileStorageBoolean<U>(numElements, type);
 	}
 
 	@Override
@@ -184,6 +181,6 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	protected void finalize() throws Throwable {
-		this.raf.close();
+		raf.close();
 	}
 }
