@@ -102,7 +102,7 @@ public class TestUnsignedInt13 {
 		UnsignedInt13Member c = G.UINT13.construct();
 		for (int i = 0; i < 8192; i++) {
 
-			if (i % 1000 == 0)
+			if (i % 100 == 0)
 				System.out.println(i);
 			
 			a.setV(i);

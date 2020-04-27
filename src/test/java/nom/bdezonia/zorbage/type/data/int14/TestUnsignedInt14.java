@@ -102,7 +102,7 @@ public class TestUnsignedInt14 {
 		UnsignedInt14Member c = G.UINT14.construct();
 		for (int i = 0; i < 16384; i++) {
 
-			if (i % 1000 == 0)
+			if (i % 100 == 0)
 				System.out.println(i);
 			
 			a.setV(i);

@@ -191,6 +191,9 @@ public class TestSignedInt16Algebra {
 		
 		for (int g = 0; g < numsg.size(); g++) {
 			
+			if (g % 100 == 0)
+				System.out.println(g);
+
 			a.set(numsg.get(g));
 
 			if (a.v() != Short.MIN_VALUE) {

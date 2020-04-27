@@ -111,7 +111,7 @@ public class TestSignedInt14 {
 		SignedInt14Member c = G.INT14.construct();
 		for (int i = -8192; i < 8192; i++) {
 
-			if (i % 1000 == 0)
+			if (i % 100 == 0)
 				System.out.println(i);
 			
 			a.setV(i);
