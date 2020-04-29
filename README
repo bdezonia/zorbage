@@ -109,8 +109,9 @@ Why is Zorbage the way it is?
   
 Zorbage breaks Java barriers
   
-  - in Zorbage "arrays" are indexed by longs rather than ints.
-      relatedly data lists sizes can reach Long.MAX_VALUE
+  - in Zorbage "arrays" are indexed by 64-bit long integers rather
+      than 32-bit integers. Relatedly data lists sizes can reach
+      Long.MAX_VALUE.
     
   - breaks the limitation to integer types being in byte aligned sizes
     
