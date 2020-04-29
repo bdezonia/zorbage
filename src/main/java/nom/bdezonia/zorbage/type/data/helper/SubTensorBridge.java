@@ -195,14 +195,14 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	
 	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index > rangingDims.length)
+		if (index < 0 || index >= rangingDims.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return tensor.indexIsLower(rangingDims[index]);
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index > rangingDims.length)
+		if (index < 0 || index >= rangingDims.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return tensor.indexIsUpper(rangingDims[index]);
 	}
