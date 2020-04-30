@@ -104,9 +104,10 @@ public class FFT {
 		realAlg.unity().call(one);
 		realAlg.add().call(one, one, two);
 		W l = realAlg.construct(two);
+		W k = realAlg.construct();
+		W kth = realAlg.construct();
 		for (long el = 2; el <= aSize; el = el+el) {
-			W k = realAlg.construct();
-			W kth = realAlg.construct();
+			realAlg.zero().call(k);
 			for (long kay = 0; kay < el/2; kay++) {
 				realAlg.negate().call(two, kth);
 				realAlg.multiply().call(kth, k, kth);
