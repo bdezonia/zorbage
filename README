@@ -12,6 +12,7 @@ Support for:
   - generic programming
   - algebraic/group-theoretic algorithms
   - procedural java with object oriented comforts
+  - the definition of your own types while reusing existing algorithms
 
 What can I do with Zorbage?
 
@@ -35,6 +36,13 @@ What can I do with Zorbage?
     - n-dimensional real Points
     
     - ARGB and RGB tuples
+  
+  Define your own data types
+  
+    Do you have a custom data type? (Like DNA base pairs?). Can you define operators
+      between elements? (Like when two base pairs are equal?). Then you can define
+      their algebra and reuse any zorbage algorithms that accept similarly defined
+      types.
   
   A conversion api exists for moving between types accurately and efficiently.
   
