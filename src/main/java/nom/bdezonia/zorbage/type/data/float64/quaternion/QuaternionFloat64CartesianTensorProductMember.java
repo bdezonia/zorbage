@@ -150,62 +150,6 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 	}
 
-	public QuaternionFloat64CartesianTensorProductMember(long[] dims) {
-		this.rank = dims.length;
-		long max = 0;
-		for (long d : dims) {
-			if (max < d)
-				max = d;
-		}
-		this.dimCount = max;
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new QuaternionFloat64Member());
-		this.multipliers = IndexUtils.calcMultipliers(dims);
-	}
-	
-	public QuaternionFloat64CartesianTensorProductMember(long[] dims, double[] vals) {
-		this(dims);
-		long numElems = LongUtils.numElements(dims);
-		if (numElems == 0) numElems = 1;
-		if (vals.length != numElems*4)
-			throw new IllegalArgumentException("incorrect number of values provided to tensor constructor");
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		if (numElems == 1) {
-			value.setR(vals[0]);
-			value.setI(vals[1]);
-			value.setJ(vals[2]);
-			value.setK(vals[3]);
-			storage.set(0, value);
-		}
-		else {
-			long[] point1 = new long[dims.length];
-			long[] point2 = new long[dims.length];
-			for (int i = 0; i < dims.length; i++) {
-				point2[i] = dims[i] - 1;
-			}
-			int i = 0;
-			SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
-			SamplingIterator<IntegerIndex> iter = sampling.iterator();
-			IntegerIndex index = new IntegerIndex(dims.length);
-			while (iter.hasNext()) {
-				iter.next(index);
-				value.setR(vals[i]);
-				value.setI(vals[i+1]);
-				value.setJ(vals[i+2]);
-				value.setK(vals[i+3]);
-				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
-				storage.set(idx, value);
-				i+=4;
-			}
-		}
-	}
-	
 	public QuaternionFloat64CartesianTensorProductMember(QuaternionFloat64CartesianTensorProductMember other) {
 		set(other);
 	}
