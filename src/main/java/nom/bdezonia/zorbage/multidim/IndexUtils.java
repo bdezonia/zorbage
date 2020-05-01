@@ -62,12 +62,10 @@ public class IndexUtils {
 	 * 
 	 * @param dims
 	 * @param idx
-	 * @param component
-	 * @param componentCount
 	 * @return
 	 */
-	public static long safeIndexToLong(long[] dims, IntegerIndex idx, int component, int componentCount) {
-		if ((idx.numDimensions() >= dims.length) && indexOob(dims, idx, component, componentCount))
+	public static long safeIndexToLong(long[] dims, IntegerIndex idx) {
+		if ((idx.numDimensions() >= dims.length) && indexOob(dims, idx))
 			throw new IllegalArgumentException("index out of bounds");
 		return indexToLong(dims, idx);
 	}
@@ -76,15 +74,9 @@ public class IndexUtils {
 	 * 
 	 * @param dims
 	 * @param idx
-	 * @param component
-	 * @param componentCount
 	 * @return
 	 */
-	public static boolean indexOob(long[] dims, IntegerIndex idx, Integer component, Integer componentCount) {
-		if (component < 0)
-			throw new IllegalArgumentException("negative component specified in indexOob");
-		if (component >= componentCount)
-			return true;
+	public static boolean indexOob(long[] dims, IntegerIndex idx) {
 		for (int i = 0; i < dims.length; i++) {
 			final long index = idx.get(i);
 			if (index < 0)
@@ -100,6 +92,22 @@ public class IndexUtils {
 				return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @param dims
+	 * @param idx
+	 * @param component
+	 * @param componentCount
+	 * @return
+	 */
+	public static boolean componentOob(long[] dims, IntegerIndex idx, Integer component, Integer componentCount) {
+		if (component < 0)
+			throw new IllegalArgumentException("negative component specified in indexOob");
+		if (component >= componentCount)
+			return true;
+		return indexOob(dims, idx);
 	}
 	
 	/**

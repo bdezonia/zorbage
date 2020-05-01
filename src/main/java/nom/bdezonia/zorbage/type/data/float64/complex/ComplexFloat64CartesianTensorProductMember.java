@@ -191,7 +191,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 				OctonionRepresentation val = data.get(i);
 				value.setR(val.r().doubleValue());
 				value.setI(val.i().doubleValue());
-				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 2);
+				long idx = IndexUtils.safeIndexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
 			}
@@ -300,7 +300,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, ComplexFloat64Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 2);
+		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
@@ -310,7 +310,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, ComplexFloat64Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 2);
+		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
 	
@@ -513,7 +513,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -531,7 +531,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -549,7 +549,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -567,7 +567,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -585,7 +585,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -603,7 +603,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -621,7 +621,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -639,7 +639,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -769,7 +769,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return 0;
 		}
 		else {
@@ -784,7 +784,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return 0;
 		}
 		else {
@@ -799,7 +799,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return 0;
 		}
 		else {
@@ -814,7 +814,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return 0;
 		}
 		else {
@@ -829,7 +829,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return 0;
 		}
 		else {
@@ -844,7 +844,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return 0;
 		}
 		else {
@@ -859,7 +859,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return BigInteger.ZERO;
 		}
 		else {
@@ -874,7 +874,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 
 	@Override
 	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(dims, index, component, 2)) {
 			return BigDecimal.ZERO;
 		}
 		else {

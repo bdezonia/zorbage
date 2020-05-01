@@ -213,7 +213,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 				value.setI0(val.i0());
 				value.setJ0(val.j0());
 				value.setK0(val.k0());
-				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 8);
+				long idx = IndexUtils.safeIndexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
 			}
@@ -322,7 +322,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, OctonionHighPrecisionMember value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 8);
+		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
@@ -332,7 +332,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, OctonionHighPrecisionMember value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 8);
+		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
 	
@@ -751,7 +751,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -793,7 +793,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -835,7 +835,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -877,7 +877,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -919,7 +919,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -961,7 +961,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1003,7 +1003,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1044,7 +1044,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1382,7 +1382,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
@@ -1421,7 +1421,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
@@ -1460,7 +1460,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
@@ -1499,7 +1499,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
@@ -1538,7 +1538,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
@@ -1577,7 +1577,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
@@ -1616,7 +1616,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return BigInteger.ZERO;
 		}
 		else {
@@ -1655,7 +1655,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.indexOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return BigDecimal.ZERO;
 		}
 		else {
