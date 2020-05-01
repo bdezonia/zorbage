@@ -67,6 +67,8 @@ public class IndexUtils {
 	 * @return
 	 */
 	public static long safeIndexToLong(long[] dims, IntegerIndex idx, int component, int componentCount) {
+		if ((idx.numDimensions() >= dims.length) && indexOob(dims, idx, component, componentCount))
+			throw new IllegalArgumentException("index out of bounds");
 		return indexToLong(dims, idx);
 	}
 
