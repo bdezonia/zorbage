@@ -32,6 +32,7 @@ import java.util.Arrays;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
+import nom.bdezonia.zorbage.multidim.IndexUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
@@ -114,7 +115,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, 1, new QuaternionFloat64Member());
-		multipliers = calcMultipliers();
+		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
 	public QuaternionFloat64CartesianTensorProductMember(int rank, long dimCount) {
@@ -132,7 +133,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, numElems, new QuaternionFloat64Member());
-		multipliers = calcMultipliers();
+		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
 	public QuaternionFloat64CartesianTensorProductMember(int rank, long dimCount, double[] vals) {
@@ -165,7 +166,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, numElems, new QuaternionFloat64Member());
-		multipliers = calcMultipliers();
+		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
 	public QuaternionFloat64CartesianTensorProductMember(long[] dims, double[] vals) {
@@ -198,7 +199,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 				value.setI(vals[i+1]);
 				value.setJ(vals[i+2]);
 				value.setK(vals[i+3]);
-				long idx = indexToLong(index);
+				long idx = IndexUtils.indexToLong(dims, index, 0, 4);
 				storage.set(idx, value);
 				i+=4;
 			}
@@ -228,7 +229,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
 		this.storage = Storage.allocate(this.s, numElems, new QuaternionFloat64Member());
-		this.multipliers = calcMultipliers();
+		this.multipliers = IndexUtils.calcMultipliers(dims);
 		QuaternionFloat64Member value = new QuaternionFloat64Member();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
@@ -256,7 +257,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 				value.setI(val.i().doubleValue());
 				value.setJ(val.j().doubleValue());
 				value.setK(val.k().doubleValue());
-				long idx = indexToLong(index);
+				long idx = IndexUtils.indexToLong(dims, index, 0, 4);
 				storage.set(idx, value);
 				i++;
 			}
@@ -275,7 +276,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		for (int i = 0; i < rank; i++) {
 			this.dims[i] = dimCount;
 		}
-		this.multipliers = calcMultipliers();
+		this.multipliers = IndexUtils.calcMultipliers(dims);
 		this.s = s;
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
@@ -335,7 +336,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		for (int i = 0; i < rank; i++) {
 			this.dims[i] = dimCount;
 		}
-		this.multipliers = calcMultipliers();
+		this.multipliers = IndexUtils.calcMultipliers(dims);
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
@@ -365,7 +366,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, QuaternionFloat64Member value) {
-		long idx = indexToLong(index);
+		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
 		storage.get(idx, value);
 	}
 	
@@ -375,7 +376,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, QuaternionFloat64Member value) {
-		long idx = indexToLong(index);
+		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
 		storage.set(idx, value);
 	}
 	
@@ -432,7 +433,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, tmp);
-			longToIntegerIndex(i, index);
+			IndexUtils.longToIntegerIndex(multipliers, dims.length, storageSize, i, index);
 			int j = 0;
 			while (j < index.numDimensions() && index.get(j++) == 0)
 				builder.append('[');
@@ -454,75 +455,6 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		return builder.toString();
 	}
 
-	private long[] calcMultipliers() {
-		if (dims.length == 0)
-			return new long[0];
-		long[] result = new long[dims.length-1];
-		long mult = 1;
-		for (int i = 0; i < result.length; i++) {
-			result[i] = mult;
-			mult *= dims[i];
-		}
-		return result;
-	}
-	
-	/*
-	 * dims = [4,5,6]
-	 * idx = [1,2,3]
-	 * long = 3*5*4 + 2*4 + 1;
-	 */
-	private long indexToLong(IntegerIndex idx) {
-		//if (idx.numDimensions() == 0)
-		//	throw new IllegalArgumentException("null index");
-		if ((idx.numDimensions() >= dims.length) && indexOob(idx, 0))
-			throw new IllegalArgumentException("index out of bounds");
-		long index = 0;
-		long mult = 1;
-		for (int i = 0; i < dims.length; i++) {
-			index += mult * idx.get(i);
-			mult *= dims[i];
-		}
-		return index;
-	}
-
-	private void longToIntegerIndex(long idx, IntegerIndex result) {
-		if (idx < 0)
-			throw new IllegalArgumentException("negative index in tensor addressing");
-		if (idx >= storage.size())
-			throw new IllegalArgumentException("index beyond end of tensor storage");
-		if (result.numDimensions() < this.dims.length)
-			throw new IllegalArgumentException("mismatched dims in tensor member");
-		for (int i = dims.length; i < result.numDimensions(); i++) {
-			result.set(i, 0);
-		}
-		for (int i = dims.length-1; i >= 0; i--) {
-			result.set(i, idx / multipliers[i]);
-			idx = idx % multipliers[i];
-		}
-	}
-
-	private boolean indexOob(IntegerIndex idx, int component) {
-		if (component < 0)
-			throw new IllegalArgumentException("negative component specified in indexOob");
-		if (component > 3)
-			return true;
-		for (int i = 0; i < dims.length; i++) {
-			final long index = idx.get(i);
-			if (index < 0)
-				throw new IllegalArgumentException("negative index in indexOob");
-			if (index >= dims[i])
-				return true;
-		}
-		for (int i = dims.length; i < idx.numDimensions(); i++) {
-			final long index = idx.get(i);
-			if (index < 0)
-				throw new IllegalArgumentException("negative index in indexOob");
-			if (index > 0)
-				return true;
-		}
-		return false;
-	}
-	
 	@Override
 	public int numDimensions() {
 		return dims.length;
@@ -719,7 +651,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -745,7 +677,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -771,7 +703,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -797,7 +729,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -823,7 +755,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -849,7 +781,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -875,7 +807,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -900,7 +832,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1094,7 +1026,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return 0;
 		}
 		else {
@@ -1117,7 +1049,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return 0;
 		}
 		else {
@@ -1140,7 +1072,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return 0;
 		}
 		else {
@@ -1163,7 +1095,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return 0;
 		}
 		else {
@@ -1186,7 +1118,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return 0;
 		}
 		else {
@@ -1209,7 +1141,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return 0;
 		}
 		else {
@@ -1232,7 +1164,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return BigInteger.ZERO;
 		}
 		else {
@@ -1255,7 +1187,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (indexOob(index, component)) {
+		if (IndexUtils.indexOob(dims, index, component, 4)) {
 			return BigDecimal.ZERO;
 		}
 		else {

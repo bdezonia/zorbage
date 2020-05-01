@@ -57,4 +57,101 @@ public class IndexUtils {
 		}
 		return index;
 	}
+
+	/**
+	 * 
+	 * @param dims
+	 * @param idx
+	 * @param component
+	 * @param componentCount
+	 * @return
+	 */
+	public static long indexToLong(long[] dims, IntegerIndex idx, int component, int componentCount) {
+		/*
+		 * dims = [4,5,6]
+		 * idx = [1,2,3]
+		 * long = 3*5*4 + 2*4 + 1;
+		 */
+		if ((idx.numDimensions() >= dims.length) && indexOob(dims, idx, component, componentCount))
+			throw new IllegalArgumentException("index out of bounds");
+		long index = 0;
+		long mult = 1;
+		for (int i = 0; i < dims.length; i++) {
+			index += mult * idx.get(i);
+			mult *= dims[i];
+		}
+		return index;
+	}
+
+	/**
+	 * 
+	 * @param dims
+	 * @param idx
+	 * @param component
+	 * @param componentCount
+	 * @return
+	 */
+	public static boolean indexOob(long[] dims, IntegerIndex idx, Integer component, Integer componentCount) {
+		if (component < 0)
+			throw new IllegalArgumentException("negative component specified in indexOob");
+		if (component >= componentCount)
+			return true;
+		for (int i = 0; i < dims.length; i++) {
+			final long index = idx.get(i);
+			if (index < 0)
+				throw new IllegalArgumentException("negative index in indexOob");
+			if (index >= dims[i])
+				return true;
+		}
+		for (int i = dims.length; i < idx.numDimensions(); i++) {
+			final long index = idx.get(i);
+			if (index < 0)
+				throw new IllegalArgumentException("negative index in indexOob");
+			if (index > 0)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param dims
+	 * @return
+	 */
+	public static long[] calcMultipliers(long[] dims) {
+		if (dims.length == 0)
+			return new long[0];
+		long[] result = new long[dims.length-1];
+		long mult = 1;
+		for (int i = 0; i < result.length; i++) {
+			result[i] = mult;
+			mult *= dims[i];
+		}
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param multipliers
+	 * @param dimCount
+	 * @param size
+	 * @param idx
+	 * @param result
+	 */
+	public static void longToIntegerIndex(long[] multipliers, int dimCount, long size, long idx, IntegerIndex result) {
+		if (idx < 0)
+			throw new IllegalArgumentException("negative index in tensor addressing");
+		if (idx >= size)
+			throw new IllegalArgumentException("index beyond end of tensor storage");
+		if (result.numDimensions() < dimCount)
+			throw new IllegalArgumentException("mismatched dims in tensor member");
+		for (int i = dimCount; i < result.numDimensions(); i++) {
+			result.set(i, 0);
+		}
+		for (int i = dimCount-1; i >= 0; i--) {
+			result.set(i, idx / multipliers[i]);
+			idx = idx % multipliers[i];
+		}
+	}
+
 }

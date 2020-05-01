@@ -92,36 +92,18 @@ public class TestFloat64CartesianTensor {
 				assertEquals(0, value.v(), 0);
 		}
 
-		Float64CartesianTensorProductMember x = new Float64CartesianTensorProductMember(
-				new long[] {3,2,2},
-				new double[]{1,2,3,
-								4,5,6,
-								7,8,9,
-								10,11,12});
-		Float64CartesianTensorProductMember y = new Float64CartesianTensorProductMember(
-				new long[] {2,3,2},
-				new double[]{13,14,
-								15,16,
-								17,18,
-								19,20,
-								21,22,
-								23,24
-								});
+		Float64CartesianTensorProductMember x = new Float64CartesianTensorProductMember(2, 2, new double[] {1,2,3,4});
+		Float64CartesianTensorProductMember y = new Float64CartesianTensorProductMember(2, 2, new double[] {5,6,7,8});
 		Float64CartesianTensorProductMember z = new Float64CartesianTensorProductMember();
 
 		G.DBL_TEN.multiply().call(x, y, z);
+		
+		assertEquals(4, z.rank());
+		assertEquals(2, z.dimension());
 
-		// from example at 
+		// TODO I only support "square" tensors. Make a non square example from
 		//   https://www.tensorflow.org/api_docs/python/tf/linalg/matmul
-		// which assumes multiply is a generalized mat mul. my code might not do this.
-		//assertEquals(94, value.v(), 0);
-		//assertEquals(100, value.v(), 0);
-		//assertEquals(229, value.v(), 0);
-		//assertEquals(244, value.v(), 0);
-		//assertEquals(508, value.v(), 0);
-		//assertEquals(532, value.v(), 0);
-		//assertEquals(697, value.v(), 0);
-		//assertEquals(732, value.v(), 0);
+		//   and modify my code to work with it.
 	}
 	
 	@Test
