@@ -188,7 +188,7 @@ public final class Float64CartesianTensorProductMember
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
 				value.setV(val.r().doubleValue());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 1);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 1);
 				storage.set(idx, value);
 				i++;
 			}
@@ -297,7 +297,7 @@ public final class Float64CartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, Float64Member value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 1);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 1);
 		storage.get(idx, value);
 	}
 	
@@ -307,7 +307,7 @@ public final class Float64CartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, Float64Member value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 1);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 1);
 		storage.set(idx, value);
 	}
 	

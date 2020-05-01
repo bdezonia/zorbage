@@ -213,7 +213,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 				value.setI0(val.i0());
 				value.setJ0(val.j0());
 				value.setK0(val.k0());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 8);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 8);
 				storage.set(idx, value);
 				i++;
 			}
@@ -322,7 +322,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, OctonionHighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 8);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 8);
 		storage.get(idx, value);
 	}
 	
@@ -332,7 +332,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, OctonionHighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 8);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 8);
 		storage.set(idx, value);
 	}
 	

@@ -191,7 +191,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 				OctonionRepresentation val = data.get(i);
 				value.setR(val.r());
 				value.setI(val.i());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 2);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 2);
 				storage.set(idx, value);
 				i++;
 			}
@@ -300,7 +300,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, ComplexHighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 2);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 2);
 		storage.get(idx, value);
 	}
 	
@@ -310,7 +310,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, ComplexHighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 2);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 2);
 		storage.set(idx, value);
 	}
 	

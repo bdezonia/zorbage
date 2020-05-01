@@ -188,7 +188,7 @@ public final class HighPrecisionCartesianTensorProductMember
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
 				value.setV(val.r());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 1);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 1);
 				storage.set(idx, value);
 				i++;
 			}
@@ -297,7 +297,7 @@ public final class HighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, HighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 1);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 1);
 		storage.get(idx, value);
 	}
 	
@@ -307,7 +307,7 @@ public final class HighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, HighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 1);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 1);
 		storage.set(idx, value);
 	}
 	

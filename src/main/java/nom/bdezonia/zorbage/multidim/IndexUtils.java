@@ -66,21 +66,8 @@ public class IndexUtils {
 	 * @param componentCount
 	 * @return
 	 */
-	public static long indexToLong(long[] dims, IntegerIndex idx, int component, int componentCount) {
-		/*
-		 * dims = [4,5,6]
-		 * idx = [1,2,3]
-		 * long = 3*5*4 + 2*4 + 1;
-		 */
-		if ((idx.numDimensions() >= dims.length) && indexOob(dims, idx, component, componentCount))
-			throw new IllegalArgumentException("index out of bounds");
-		long index = 0;
-		long mult = 1;
-		for (int i = 0; i < dims.length; i++) {
-			index += mult * idx.get(i);
-			mult *= dims[i];
-		}
-		return index;
+	public static long safeIndexToLong(long[] dims, IntegerIndex idx, int component, int componentCount) {
+		return indexToLong(dims, idx);
 	}
 
 	/**

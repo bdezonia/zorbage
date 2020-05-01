@@ -199,7 +199,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 				value.setI(vals[i+1]);
 				value.setJ(vals[i+2]);
 				value.setK(vals[i+3]);
-				long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 				storage.set(idx, value);
 				i+=4;
 			}
@@ -257,7 +257,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 				value.setI(val.i().doubleValue());
 				value.setJ(val.j().doubleValue());
 				value.setK(val.k().doubleValue());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 				storage.set(idx, value);
 				i++;
 			}
@@ -366,7 +366,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, QuaternionFloat64Member value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 		storage.get(idx, value);
 	}
 	
@@ -376,7 +376,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, QuaternionFloat64Member value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 		storage.set(idx, value);
 	}
 	

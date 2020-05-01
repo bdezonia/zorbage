@@ -201,7 +201,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 				value.setI(val.i().floatValue());
 				value.setJ(val.j().floatValue());
 				value.setK(val.k().floatValue());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 				storage.set(idx, value);
 				i++;
 			}
@@ -310,7 +310,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, QuaternionFloat16Member value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 		storage.get(idx, value);
 	}
 	
@@ -320,7 +320,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, QuaternionFloat16Member value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 		storage.set(idx, value);
 	}
 	

@@ -201,7 +201,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 				value.setI(val.i());
 				value.setJ(val.j());
 				value.setK(val.k());
-				long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+				long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 				storage.set(idx, value);
 				i++;
 			}
@@ -310,7 +310,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void v(IntegerIndex index, QuaternionHighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 		storage.get(idx, value);
 	}
 	
@@ -320,7 +320,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, QuaternionHighPrecisionMember value) {
-		long idx = IndexUtils.indexToLong(dims, index, 0, 4);
+		long idx = IndexUtils.safeIndexToLong(dims, index, 0, 4);
 		storage.set(idx, value);
 	}
 	
