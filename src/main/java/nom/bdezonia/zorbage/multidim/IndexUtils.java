@@ -51,7 +51,7 @@ public class IndexUtils {
 		if (idx.numDimensions() == 0) return 0;
 		long index = 0;
 		long mult = 1;
-		for (int i = 0; i < idx.numDimensions(); i++) {
+		for (int i = 0; i < dims.length; i++) {
 			index += mult * idx.get(i);
 			mult *= dims[i];
 		}
@@ -65,7 +65,7 @@ public class IndexUtils {
 	 * @return
 	 */
 	public static long safeIndexToLong(long[] dims, IntegerIndex idx) {
-		if ((idx.numDimensions() >= dims.length) && indexOob(dims, idx))
+		if (indexOob(dims, idx))
 			throw new IllegalArgumentException("index out of bounds");
 		return indexToLong(dims, idx);
 	}
@@ -77,19 +77,28 @@ public class IndexUtils {
 	 * @return
 	 */
 	public static boolean indexOob(long[] dims, IntegerIndex idx) {
-		for (int i = 0; i < dims.length; i++) {
+
+		// calc the overlapping dims
+		int overlap = Math.min(dims.length, idx.numDimensions());
+		
+		// check the overlapping dims
+		for (int i = 0; i < overlap; i++) {
 			final long index = idx.get(i);
 			if (index < 0)
 				throw new IllegalArgumentException("negative index in indexOob");
 			if (index >= dims[i])
 				return true;
 		}
-		for (int i = dims.length; i < idx.numDimensions(); i++) {
-			final long index = idx.get(i);
-			if (index < 0)
-				throw new IllegalArgumentException("negative index in indexOob");
-			if (index > 0)
-				return true;
+
+		// check the idx dims that are beyond the overlap
+		if (idx.numDimensions() > dims.length) {
+			for (int i = overlap; i < idx.numDimensions(); i++) {
+				final long index = idx.get(i);
+				if (index < 0)
+					throw new IllegalArgumentException("negative index in indexOob");
+				if (index > 0)
+					return true;
+			}
 		}
 		return false;
 	}
