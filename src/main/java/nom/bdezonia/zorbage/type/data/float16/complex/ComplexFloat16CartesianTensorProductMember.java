@@ -203,25 +203,6 @@ public final class ComplexFloat16CartesianTensorProductMember
 		}
 	}
 	
-	public ComplexFloat16CartesianTensorProductMember(StorageConstruction s, long[] nd) {
-		this.rank = dims.length;
-		long max = 0;
-		for (long d : dims) {
-			if (max < d)
-				max = d;
-		}
-		this.dimCount = max;
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		this.multipliers = IndexUtils.calcMultipliers(dims);
-		this.s = s;
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
-		this.storage = Storage.allocate(s, numElems, new ComplexFloat16Member());
-	}
-	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

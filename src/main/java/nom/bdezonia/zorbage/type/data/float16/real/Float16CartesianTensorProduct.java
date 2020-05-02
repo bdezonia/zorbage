@@ -84,8 +84,6 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 
 import nom.bdezonia.zorbage.type.algebra.TensorProduct;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
-import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -99,7 +97,6 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 public class Float16CartesianTensorProduct
 	implements
 		TensorProduct<Float16CartesianTensorProduct,Float16CartesianTensorProductMember,Float16Algebra,Float16Member>,
-		ConstructibleNdLong<Float16CartesianTensorProductMember>,
 		Norm<Float16CartesianTensorProductMember,Float16Member>,
 		Scale<Float16CartesianTensorProductMember,Float16Member>,
 		Rounding<Float16Member,Float16CartesianTensorProductMember>,
@@ -125,11 +122,6 @@ public class Float16CartesianTensorProduct
 	@Override
 	public Float16CartesianTensorProductMember construct(String s) {
 		return new Float16CartesianTensorProductMember(s);
-	}
-
-	@Override
-	public Float16CartesianTensorProductMember construct(StorageConstruction s, long[] nd) {
-		return new Float16CartesianTensorProductMember(s, nd);
 	}
 
 	private final Function2<Boolean,Float16CartesianTensorProductMember,Float16CartesianTensorProductMember> EQ =

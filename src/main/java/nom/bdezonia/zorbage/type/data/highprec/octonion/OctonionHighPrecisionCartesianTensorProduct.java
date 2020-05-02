@@ -75,8 +75,6 @@ import nom.bdezonia.zorbage.type.algebra.TensorLikeProduct;
 //many more
 
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
-import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -90,7 +88,6 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 public class OctonionHighPrecisionCartesianTensorProduct
 	implements
 		TensorLikeProduct<OctonionHighPrecisionCartesianTensorProduct,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>,
-		ConstructibleNdLong<OctonionHighPrecisionCartesianTensorProductMember>,
 		Norm<OctonionHighPrecisionCartesianTensorProductMember,HighPrecisionMember>,
 		Scale<OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionMember>,
 		ScaleByHighPrec<OctonionHighPrecisionCartesianTensorProductMember>,
@@ -112,11 +109,6 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	@Override
 	public OctonionHighPrecisionCartesianTensorProductMember construct(String s) {
 		return new OctonionHighPrecisionCartesianTensorProductMember(s);
-	}
-
-	@Override
-	public OctonionHighPrecisionCartesianTensorProductMember construct(StorageConstruction s, long[] nd) {
-		return new OctonionHighPrecisionCartesianTensorProductMember(s, nd);
 	}
 
 	private final Function2<Boolean,OctonionHighPrecisionCartesianTensorProductMember,OctonionHighPrecisionCartesianTensorProductMember> EQ =

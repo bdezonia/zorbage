@@ -75,8 +75,6 @@ import nom.bdezonia.zorbage.type.algebra.ScaleByRational;
 
 import nom.bdezonia.zorbage.type.algebra.TensorProduct;
 import nom.bdezonia.zorbage.type.algebra.Tolerance;
-import nom.bdezonia.zorbage.type.ctor.ConstructibleNdLong;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 
@@ -90,7 +88,6 @@ import nom.bdezonia.zorbage.type.data.rational.RationalMember;
 public class ComplexHighPrecisionCartesianTensorProduct
 	implements
 		TensorProduct<ComplexHighPrecisionCartesianTensorProduct,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>,
-		ConstructibleNdLong<ComplexHighPrecisionCartesianTensorProductMember>,
 		Norm<ComplexHighPrecisionCartesianTensorProductMember,HighPrecisionMember>,
 		Scale<ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionMember>,
 		ScaleByHighPrec<ComplexHighPrecisionCartesianTensorProductMember>,
@@ -112,11 +109,6 @@ public class ComplexHighPrecisionCartesianTensorProduct
 	@Override
 	public ComplexHighPrecisionCartesianTensorProductMember construct(String s) {
 		return new ComplexHighPrecisionCartesianTensorProductMember(s);
-	}
-
-	@Override
-	public ComplexHighPrecisionCartesianTensorProductMember construct(StorageConstruction s, long[] nd) {
-		return new ComplexHighPrecisionCartesianTensorProductMember(s, nd);
 	}
 
 	private final Function2<Boolean,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> EQ =
