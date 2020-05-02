@@ -159,12 +159,17 @@ public final class OctonionFloat16CartesianTensorProductMember
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
 		this.rank = tmpDims.length;
-		long max = 0;
-		for (long d : tmpDims) {
-			if (max < d)
-				max = d;
+		if (tmpDims.length == 0) {
+			this.dimCount = 1;
 		}
-		this.dimCount = max;
+		else {
+			long d0 = tmpDims[0];
+			for (int i = 1; i < tmpDims.length; i++) {
+				if (tmpDims[i] != d0)
+					throw new IllegalArgumentException("tensors must be the same in all dimensions");
+			}
+			this.dimCount = d0;
+		}
 		this.dims = new long[rank];
 		for (int i = 0; i < rank; i++) {
 			this.dims[i] = dimCount;
@@ -209,7 +214,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 				value.setI0(val.i0().floatValue());
 				value.setJ0(val.j0().floatValue());
 				value.setK0(val.k0().floatValue());
-				long idx = IndexUtils.safeIndexToLong(dims, index);
+				long idx = IndexUtils.indexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
 			}
