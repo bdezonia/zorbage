@@ -90,14 +90,14 @@ public final class ComplexFloat16CartesianTensorProductMember
 	
 	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index > lowerRank())
+		if (index < 0 || index >= lowerRank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return true;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index > upperRank())
+		if (index < 0 || index >= upperRank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return false;
 	}
