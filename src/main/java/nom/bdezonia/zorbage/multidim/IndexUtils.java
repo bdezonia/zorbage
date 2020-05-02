@@ -47,11 +47,11 @@ public class IndexUtils {
 		 * idx = [1,2,3]
 		 * long = 3*5*4 + 2*4 + 1;
 		 */
-		
-		if (idx.numDimensions() == 0) return 0;
+	
+		int overlap = Math.min(dims.length, idx.numDimensions());
 		long index = 0;
 		long mult = 1;
-		for (int i = 0; i < dims.length; i++) {
+		for (int i = 0; i < overlap; i++) {
 			index += mult * idx.get(i);
 			mult *= dims[i];
 		}
@@ -83,7 +83,7 @@ public class IndexUtils {
 		
 		// check the overlapping dims
 		for (int i = 0; i < overlap; i++) {
-			final long index = idx.get(i);
+			long index = idx.get(i);
 			if (index < 0)
 				throw new IllegalArgumentException("negative index in indexOob");
 			if (index >= dims[i])
@@ -91,14 +91,12 @@ public class IndexUtils {
 		}
 
 		// check the idx dims that are beyond the overlap
-		if (idx.numDimensions() > dims.length) {
-			for (int i = overlap; i < idx.numDimensions(); i++) {
-				final long index = idx.get(i);
-				if (index < 0)
-					throw new IllegalArgumentException("negative index in indexOob");
-				if (index > 0)
-					return true;
-			}
+		for (int i = overlap; i < idx.numDimensions(); i++) {
+			long index = idx.get(i);
+			if (index < 0)
+				throw new IllegalArgumentException("negative index in indexOob");
+			if (index > 0)
+				return true;
 		}
 		return false;
 	}
