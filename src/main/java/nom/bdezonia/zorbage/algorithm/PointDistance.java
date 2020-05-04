@@ -50,7 +50,8 @@ public class PointDistance {
 	 * @return
 	 */
 	public static
-		void compute(Point a, Point b, Float64Member result) {
+		void compute(Point a, Point b, Float64Member result)
+	{
 		if (a.numDimensions() != b.numDimensions())
 			throw new IllegalArgumentException("points do not share the same dimensionality");
 		// Do a two pass hypot approach to avoid overflow
@@ -70,5 +71,4 @@ public class PointDistance {
 		}
 		result.setV(max * Math.sqrt(sum));
 	}
-	
 }
