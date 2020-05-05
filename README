@@ -104,6 +104,10 @@ Why Java?
   - with Java there is no need to worry about memory or pointer bugs
   - the JRE optimizes many object allocations into stack allocations
   - Java is portable: Zorbage runs everywhere the JVM does
+  - Java is safer at runtime than C++ while still supporting good performance
+  - Java is faster at runtime than Python while also avoiding simple "oops,
+      that typo in my code just killed my long application run" situations
+    
 
 Why is Zorbage the way it is?
 
