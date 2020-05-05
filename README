@@ -107,7 +107,6 @@ Why Java?
   - Java is safer at runtime than C++ while still supporting good performance
   - Java is faster at runtime than Python while also avoiding simple "oops,
       that typo in my code just killed my long application run" situations
-    
 
 Why is Zorbage the way it is?
 
