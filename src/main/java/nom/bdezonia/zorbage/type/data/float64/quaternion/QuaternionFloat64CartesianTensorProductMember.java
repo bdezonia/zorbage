@@ -256,12 +256,17 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		if (theSame)
 			return false;
 		this.rank = newDims.length;
-		long max = 0;
-		for (long d : newDims) {
-			if (max < d)
-				max = d;
+		if (rank == 0) {
+			this.dimCount = 1;
 		}
-		this.dimCount = max;
+		else {
+			long d0 = newDims[0];
+			for (int i = 1; i < newDims.length; i++) {
+				if (newDims[i] != d0)
+					throw new IllegalArgumentException("tensors must be the same in all dimensions");
+			}
+			this.dimCount = d0;
+		}
 		this.dims = new long[rank];
 		for (int i = 0; i < rank; i++) {
 			this.dims[i] = dimCount;
