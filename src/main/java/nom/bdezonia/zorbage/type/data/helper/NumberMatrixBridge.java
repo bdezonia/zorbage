@@ -59,7 +59,7 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 
 	@Override
 	public int numDimensions() {
-		return 0;
+		return 2;
 	}
 
 	@Override

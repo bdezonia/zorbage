@@ -42,16 +42,25 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	private final U zero;
 	private final Algebra<?,U> algebra;
 	private NumberMember<U> num;
+	private long dimension;
 	
 	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num) {
 		this.zero = algebra.construct();
 		this.algebra = algebra;
 		this.num = num;
+		this.dimension = 1;
 	}
 	
 	public void setNum(NumberMember<U> num) {
 		this.num = num;
 	}
+	
+	public void setDimension(long dimension) {
+		this.dimension = dimension;
+	}
+
+	@Override
+	public long dimension() { return dimension; }
 	
 	@Override
 	public long dimension(int d) {
@@ -87,7 +96,7 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public void v(IntegerIndex index, U value) {
-		for (int i = 1; i < index.numDimensions(); i++) {
+		for (int i = 0; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
 				algebra.assign().call(zero, value);
 				return;
@@ -98,7 +107,7 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public void setV(IntegerIndex index, U value) {
-		for (int i = 1; i < index.numDimensions(); i++) {
+		for (int i = 0; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
 				if (algebra.isNotEqual().call(zero, value))
 					throw new IllegalArgumentException("out of bounds nonzero write");
@@ -135,9 +144,6 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		return false;
 	}
 
-	@Override
-	public long dimension() { return 1; } // TODO: this is hacky. Nearly any number is valid.
-	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 1) return false;
 		for (int i = 0; i < newDims.length; i++) {

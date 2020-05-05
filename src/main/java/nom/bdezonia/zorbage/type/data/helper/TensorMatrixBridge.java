@@ -108,7 +108,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 		if (rows == rows() && cols == cols()) {
 			for (long r = 0; r < rows; r++) {
 				for (long c = 0; c < cols; c++) {
-					setV(r,c,zero);
+					setV(r, c, zero);
 				}
 			}
 		}
