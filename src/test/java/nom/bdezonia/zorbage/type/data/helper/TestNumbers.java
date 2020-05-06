@@ -414,5 +414,26 @@ public class TestNumbers {
 		
 		assertEquals(-100, c.r(), 0);
 		assertEquals(-200, c.i(), 0);
+
+		try {
+			bridge.indexIsLower(0);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+		try {
+			bridge.indexIsUpper(0);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+		assertEquals(0, bridge.lowerRank());
+		assertEquals(0, bridge.upperRank());
+		assertEquals(0, bridge.rank());
+		
+		assertEquals(3, bridge.dimension());
+		bridge.setDimension(99);
+		assertEquals(99, bridge.dimension());
 	}
 }
