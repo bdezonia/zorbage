@@ -39,12 +39,10 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
 	private final U zero;
-	private final Algebra<?,U> algebra;
 	private NumberMember<U> num;
 	
 	public NumberRModuleBridge(Algebra<?,U> algebra, NumberMember<U> num) {
 		this.zero = algebra.construct();
-		this.algebra = algebra;
 		this.num = num;
 	}
 	
@@ -73,7 +71,8 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 	public boolean alloc(long len) {
 		if (len == 1)
 			return false;
-		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+		else
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -95,16 +94,15 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 		if (i == 0)
 			num.v(value);
 		else
-			algebra.assign().call(zero, value);
+			throw new IllegalArgumentException("out of bounds read");
 	}
 
 	@Override
 	public void setV(long i, U value) {
 		if (i == 0)
 			num.setV(value);
-		else if (algebra.isNotEqual().call(zero, value))
-			throw new IllegalArgumentException("out of bounds nonzero write");
-
+		else
+			throw new IllegalArgumentException("out of bounds write");
 	}
 
 	@Override

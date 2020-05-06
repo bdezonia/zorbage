@@ -40,13 +40,11 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
-	private final Algebra<?,U> algebra;
 	private NumberMember<U> num;
 	private long dimension;
 	
 	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num, long dimension) {
 		this.zero = algebra.construct();
-		this.algebra = algebra;
 		this.num = num;
 		this.dimension = dimension;
 	}
@@ -76,10 +74,10 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public boolean alloc(long[] dims) {
-		if (dimsCompatible(dims)) {
+		if (dimsCompatible(dims))
 			return false;
-		}
-		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+		else
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -99,10 +97,8 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public void v(IntegerIndex index, U value) {
 		for (int i = 0; i < index.numDimensions(); i++) {
-			if (index.get(i) != 0) {
-				algebra.assign().call(zero, value);
-				return;
-			}
+			if (index.get(i) != 0)
+				throw new IllegalArgumentException("out of bounds read");
 		}
 		num.v(value);
 	}
@@ -110,10 +106,8 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public void setV(IntegerIndex index, U value) {
 		for (int i = 0; i < index.numDimensions(); i++) {
-			if (index.get(i) != 0) {
-				if (algebra.isNotEqual().call(zero, value))
-					throw new IllegalArgumentException("out of bounds nonzero write");
-			}
+			if (index.get(i) != 0)
+				throw new IllegalArgumentException("out of bounds write");
 		}
 		num.setV(value);
 	}
