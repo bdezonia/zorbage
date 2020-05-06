@@ -145,9 +145,9 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	}
 
 	private boolean dimsCompatible(long[] newDims) {
-		if (newDims.length < 1) return false;
 		for (int i = 0; i < newDims.length; i++) {
-			if (newDims[i] != 1) return false;
+			if (newDims[i] != 1)
+				return false;
 		}
 		return true;
 	}
