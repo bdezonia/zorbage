@@ -54,6 +54,8 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 	
 	@Override
 	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("negative index exception");
 		return 1;
 	}
 
@@ -76,7 +78,7 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 	public boolean alloc(long rows, long cols) {
 		if (rows == 1 && cols == 1)
 			return false;
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -84,13 +86,13 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 		if (rows == 1 && cols == 1)
 			num.setV(zero);
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long rows, long cols) {
 		if (rows != 1 || cols != 1)
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override

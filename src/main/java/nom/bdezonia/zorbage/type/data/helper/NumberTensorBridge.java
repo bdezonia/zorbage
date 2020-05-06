@@ -64,6 +64,8 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	
 	@Override
 	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("negative index exception");
 		return 1;
 	}
 
@@ -77,7 +79,7 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		if (dimsCompatible(dims)) {
 			return false;
 		}
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -85,13 +87,13 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		if (dimsCompatible(dims))
 			num.setV(zero);
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long[] dims) {
 		if (!dimsCompatible(dims))
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
