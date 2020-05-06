@@ -81,12 +81,12 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 
 	@Override
 	public long rows() {
-		return isColumn ? 1 : rmod.length();
+		return isColumn ? rmod.length() : 1;
 	}
 
 	@Override
 	public long cols() {
-		return isColumn ? rmod.length() : 1;
+		return isColumn ? 1 : rmod.length();
 	}
 
 	@Override
@@ -126,32 +126,38 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void v(long r, long c, U value) {
 		if (isColumn) {
-			if (r != 0)
+			if (c != 0) {
 				algebra.assign().call(zero, value);
-			else
-				rmod.v(c, value);
-		}
-		else {
-			if (c != 0)
-				algebra.assign().call(zero, value);
+			}
 			else
 				rmod.v(r, value);
+		}
+		else {
+			if (r != 0) {
+				algebra.assign().call(zero, value);
+			}
+			else
+				rmod.setV(c, value);
 		}
 	}
 
 	@Override
 	public void setV(long r, long c, U value) {
 		if (isColumn) {
-			if (r != 0 && algebra.isNotEqual().call(zero, value))
-				throw new IllegalArgumentException("out of bounds nonzero write");
-			else
-				rmod.setV(c, value);
-		}
-		else {
-			if (c != 0 && algebra.isNotEqual().call(zero, value))
-				throw new IllegalArgumentException("out of bounds nonzero write");
+			if (c != 0) {
+				if (algebra.isNotEqual().call(zero, value))
+					throw new IllegalArgumentException("out of bounds nonzero write");
+			}
 			else
 				rmod.setV(r, value);
+		}
+		else {
+			if (r != 0) {
+				if (algebra.isNotEqual().call(zero, value))
+					throw new IllegalArgumentException("out of bounds nonzero write");
+			}
+			else
+				rmod.setV(c, value);
 		}
 	}
 

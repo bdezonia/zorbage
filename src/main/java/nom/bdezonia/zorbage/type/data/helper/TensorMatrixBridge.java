@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class TensorMatrixBridge<U> implements MatrixMember<U> {
 
+	// Note - the handling of the index for this class is not threadsafe
+	
 	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;

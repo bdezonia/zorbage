@@ -44,11 +44,11 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	private NumberMember<U> num;
 	private long dimension;
 	
-	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num) {
+	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num, long dimension) {
 		this.zero = algebra.construct();
 		this.algebra = algebra;
 		this.num = num;
-		this.dimension = 1;
+		this.dimension = dimension;
 	}
 	
 	public void setNum(NumberMember<U> num) {

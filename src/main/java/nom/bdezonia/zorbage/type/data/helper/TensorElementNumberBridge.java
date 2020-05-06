@@ -37,11 +37,13 @@ import nom.bdezonia.zorbage.type.algebra.TensorMember;
  */
 public class TensorElementNumberBridge<U> implements NumberMember<U> {
 
+	// Note - the handling of the index for this class is not threadsafe
+	
 	private final TensorMember<U> tensor;
 	private final IntegerIndex index;
 	
-	public TensorElementNumberBridge(TensorMember<U> tensor) {
-		this.tensor = tensor;
+	public TensorElementNumberBridge(TensorMember<U> tens) {
+		this.tensor = tens;
 		this.index = new IntegerIndex(tensor.numDimensions());
 	}
 	

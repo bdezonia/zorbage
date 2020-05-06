@@ -71,11 +71,11 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	
 	@Override
 	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("negative index exception");
 		if (d == 0 || d == 1)
 			return size;
-		// TODO: should I be returning 1 for d > 1?
-		// that is not a tensor shape.
-		throw new IllegalArgumentException("dimension out of bounds exception");
+		return 1;
 	}
 
 	@Override
