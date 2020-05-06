@@ -273,7 +273,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(BigDecimal.valueOf(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -282,7 +282,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(BigDecimal.valueOf(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -291,7 +291,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(BigDecimal.valueOf(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -300,7 +300,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(BigDecimal.valueOf(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -309,7 +309,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(BigDecimal.valueOf(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -318,7 +318,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(BigDecimal.valueOf(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -327,7 +327,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(new BigDecimal(v));
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -336,7 +336,7 @@ public final class HighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		tmp.setV(v);
-		setV(r,c, tmp);
+		setV(r, c, tmp);
 	}
 
 	@Override
@@ -375,7 +375,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(BigDecimal.valueOf(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -415,7 +415,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(BigDecimal.valueOf(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -455,7 +455,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(BigDecimal.valueOf(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -495,7 +495,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(BigDecimal.valueOf(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -535,7 +535,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(BigDecimal.valueOf(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -575,7 +575,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(BigDecimal.valueOf(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -615,7 +615,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(new BigDecimal(v));
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
@@ -655,7 +655,7 @@ public final class HighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			tmp.setV(v);
-			setV(r,c, tmp);
+			setV(r, c, tmp);
 		}
 	}
 
