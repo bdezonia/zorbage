@@ -690,6 +690,8 @@ public final class BooleanMember
 
 	@Override
 	public int hashCode() {
-		return Hasher.hashCode(v);
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(v);
+		return v;
 	}
 }

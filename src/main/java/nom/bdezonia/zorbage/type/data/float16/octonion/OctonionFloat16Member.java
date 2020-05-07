@@ -1828,7 +1828,8 @@ public final class OctonionFloat16Member
 
 	@Override
 	public int hashCode() {
-		int v = Hasher.hashCode(r);
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(r);
 		v = 23 * v + Hasher.hashCode(i);
 		v = 23 * v + Hasher.hashCode(j);
 		v = 23 * v + Hasher.hashCode(k);

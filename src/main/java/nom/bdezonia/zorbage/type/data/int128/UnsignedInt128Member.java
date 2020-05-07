@@ -709,7 +709,8 @@ public final class UnsignedInt128Member
 
 	@Override
 	public int hashCode() {
-		int v = Hasher.hashCode(hi);
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(hi);
 		v = 23 * v + Hasher.hashCode(lo);
 		return v;
 	}

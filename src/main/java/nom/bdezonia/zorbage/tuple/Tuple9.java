@@ -134,7 +134,8 @@ public class Tuple9<A,B,C,D,E,F,G,H,I>
 
 	@Override
 	public int hashCode() {
-		int v = a.hashCode();
+		int v = 1;
+		v = 23 * v + a.hashCode();
 		v = 23 * v + b.hashCode();
 		v = 23 * v + c.hashCode();
 		v = 23 * v + d.hashCode();

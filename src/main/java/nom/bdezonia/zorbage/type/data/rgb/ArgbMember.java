@@ -159,7 +159,8 @@ public class ArgbMember
 
 	@Override
 	public int hashCode() {
-		int v = Hasher.hashCode(a);
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(a);
 		v = 23 * v + Hasher.hashCode(r);
 		v = 23 * v + Hasher.hashCode(g);
 		v = 23 * v + Hasher.hashCode(b);

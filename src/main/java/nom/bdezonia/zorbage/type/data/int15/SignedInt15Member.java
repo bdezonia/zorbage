@@ -927,7 +927,8 @@ public final class SignedInt15Member
 
 	@Override
 	public int hashCode() {
-		int v = Hasher.hashCode(this.v);
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(this.v);
 		return v;
 	}
 }

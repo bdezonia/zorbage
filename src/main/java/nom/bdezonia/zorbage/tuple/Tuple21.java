@@ -256,7 +256,8 @@ public class Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U>
 
 	@Override
 	public int hashCode() {
-		int v = a.hashCode();
+		int v = 1;
+		v = 23 * v + a.hashCode();
 		v = 23 * v + b.hashCode();
 		v = 23 * v + c.hashCode();
 		v = 23 * v + d.hashCode();

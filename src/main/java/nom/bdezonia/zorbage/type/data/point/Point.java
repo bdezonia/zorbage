@@ -217,7 +217,8 @@ public class Point
 
 	@Override
 	public int hashCode() {
-		int v = Hasher.hashCode(vector.length);
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(vector.length);
 		for (int i = 0; i < vector.length; i++) {
 			v = 23 * v + Hasher.hashCode(vector[i]);
 		}

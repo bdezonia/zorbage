@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.type.data.universal;
 
 import java.math.BigDecimal;
 
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
+
 /**
  * 
  * @author Barry DeZonia
@@ -91,4 +93,18 @@ public class OctonionRepresentation {
 	public void setI0(BigDecimal i0) { if (i0 == null) i0 = BigDecimal.ZERO; this.i0 = i0; }
 	public void setJ0(BigDecimal j0) { if (j0 == null) j0 = BigDecimal.ZERO; this.j0 = j0; }
 	public void setK0(BigDecimal k0) { if (k0 == null) k0 = BigDecimal.ZERO; this.k0 = k0; }
+	
+	@Override
+	public int hashCode() {
+		int v = 1;
+		v = 23 * v + Hasher.hashCode(r);
+		v = 23 * v + Hasher.hashCode(i);
+		v = 23 * v + Hasher.hashCode(j);
+		v = 23 * v + Hasher.hashCode(k);
+		v = 23 * v + Hasher.hashCode(l);
+		v = 23 * v + Hasher.hashCode(i0);
+		v = 23 * v + Hasher.hashCode(j0);
+		v = 23 * v + Hasher.hashCode(k0);
+		return v;
+	}
 }

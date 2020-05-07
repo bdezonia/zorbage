@@ -73,7 +73,8 @@ public class Tuple3<A,B,C>
 
 	@Override
 	public int hashCode() {
-		int v = a.hashCode();
+		int v = 1;
+		v = 23 * v + a.hashCode();
 		v = 23 * v + b.hashCode();
 		v = 23 * v + c.hashCode();
 		return v;
