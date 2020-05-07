@@ -46,10 +46,6 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 		this.num = num;
 	}
 	
-	public void setNum(NumberMember<U> num) {
-		this.num = num;
-	}
-	
 	@Override
 	public long dimension(int d) {
 		if (d < 0)

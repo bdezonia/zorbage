@@ -143,16 +143,6 @@ public class TestNumbers {
 		assertEquals(7, c.i(), 0);
 		
 		assertEquals(StorageConstruction.MEM_ARRAY, bridge.storageType());
-
-		tmp.setR(-100);
-		tmp.setI(-200);
-		
-		bridge.setNum(tmp);
-		
-		bridge.v(0, c);
-		
-		assertEquals(-100, c.r(), 0);
-		assertEquals(-200, c.i(), 0);
 	}
 
 	@Test
@@ -273,16 +263,6 @@ public class TestNumbers {
 		assertEquals(7, c.i(), 0);
 
 		assertEquals(StorageConstruction.MEM_ARRAY, bridge.storageType());
-
-		tmp.setR(-100);
-		tmp.setI(-200);
-		
-		bridge.setNum(tmp);
-		
-		bridge.v(0, 0, c);
-		
-		assertEquals(-100, c.r(), 0);
-		assertEquals(-200, c.i(), 0);
 	}
 	
 	@Test
@@ -404,16 +384,6 @@ public class TestNumbers {
 		assertEquals(7, c.i(), 0);
 
 		assertEquals(StorageConstruction.MEM_ARRAY, bridge.storageType());
-
-		tmp.setR(-100);
-		tmp.setI(-200);
-		
-		bridge.setNum(tmp);
-		
-		bridge.v(idx, c);
-		
-		assertEquals(-100, c.r(), 0);
-		assertEquals(-200, c.i(), 0);
 
 		try {
 			bridge.indexIsLower(0);

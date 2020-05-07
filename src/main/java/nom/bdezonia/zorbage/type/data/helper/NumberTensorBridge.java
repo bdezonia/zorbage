@@ -49,10 +49,6 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		this.dimension = dimension;
 	}
 	
-	public void setNum(NumberMember<U> num) {
-		this.num = num;
-	}
-	
 	public void setDimension(long dimension) {
 		this.dimension = dimension;
 	}
