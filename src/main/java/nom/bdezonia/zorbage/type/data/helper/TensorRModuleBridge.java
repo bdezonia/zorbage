@@ -41,14 +41,12 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 
 	// Note - the handling of the index for this class is not threadsafe
 	
-	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private final IntegerIndex fixedDims;
 	private int rangingDim;
 
 	public TensorRModuleBridge(Algebra<?,U> algebra, TensorMember<U> tensor) {
-		this.algebra = algebra;
 		this.zero = algebra.construct();
 		this.tensor = tensor;
 		this.fixedDims = new IntegerIndex(tensor.numDimensions());
@@ -109,8 +107,9 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 
 	@Override
 	public void v(long i, U value) {
-		if (i < 0 || i >= length())
-			algebra.assign().call(zero, value);
+		if (i < 0 || i >= length()) {
+			throw new IllegalArgumentException("out of bounds read");
+		}
 		else {
 			fixedDims.set(rangingDim, i);
 			tensor.v(fixedDims, value);
@@ -120,8 +119,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	@Override
 	public void setV(long i, U value) {
 		if (i < 0 || i >= length()) {
-			if (algebra.isNotEqual().call(zero, value))
-				throw new IllegalArgumentException("out of bounds nonzero write");
+			throw new IllegalArgumentException("out of bounds write");
 		}
 		else {
 			fixedDims.set(rangingDim, i);

@@ -40,14 +40,12 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class SubTensorBridge<U> implements TensorMember<U> {
 
-	private final Algebra<?,U> algebra;
 	private final TensorMember<U> tensor;
 	private int[] rangingDims;
 	private final U zero;
 	private final IntegerIndex index;
 
 	public SubTensorBridge(Algebra<?,U> algebra, TensorMember<U> tensor, int[] rangingDims, long[] fixedDimValues) {
-		this.algebra = algebra;
 		this.tensor = tensor;
 		this.zero = algebra.construct();
 		this.index = new IntegerIndex(tensor.rank());
@@ -145,7 +143,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			this.index.set(rangingDims[i], index.get(i));
 		}
 		if (oob())
-			algebra.assign().call(zero, value);
+			throw new IllegalArgumentException("out of bounds read");
 		else
 			tensor.v(this.index, value);
 	}
@@ -157,10 +155,8 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		for (int i = 0; i < rangingDims.length; i++) {
 			this.index.set(rangingDims[i], index.get(i));
 		}
-		if (oob()) {
-			if (algebra.isNotEqual().call(zero, value))
-				throw new IllegalArgumentException("out of bounds nonzero write");
-		}
+		if (oob())
+			throw new IllegalArgumentException("out of bounds write");
 		else
 			tensor.setV(this.index, value);
 	}

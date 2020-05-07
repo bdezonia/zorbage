@@ -41,7 +41,6 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 
 	// Note - the handling of the index for this class is not threadsafe
 	
-	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final TensorMember<U> tensor;
 	private final IntegerIndex fixedDims;
@@ -51,7 +50,6 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	public TensorMatrixBridge(Algebra<?,U> algebra, TensorMember<U> tensor) {
 		if (tensor.numDimensions() < 2)
 			throw new IllegalArgumentException();
-		this.algebra = algebra;
 		this.zero = algebra.construct();
 		this.tensor = tensor;
 		this.fixedDims = new IntegerIndex(tensor.numDimensions());
@@ -127,7 +125,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void v(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols())
-			algebra.assign().call(zero, value);
+			throw new IllegalArgumentException("out of bounds read");
 		else {
 			fixedDims.set(rangingDimR, r);
 			fixedDims.set(rangingDimC, c);
@@ -138,8 +136,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void setV(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols()) {
-			if (algebra.isNotEqual().call(zero, value))
-				throw new IllegalArgumentException("out of bounds nonzero write");
+			throw new IllegalArgumentException("out of bounds write");
 		}
 		else {
 			fixedDims.set(rangingDimR, r);
