@@ -80,4 +80,19 @@ public class Tuple3<A,B,C>
 		v = Hasher.PRIME * v + c.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple3) {
+			@SuppressWarnings("rawtypes")
+			Tuple3 other = (Tuple3) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c);
+		}
+		return false;
+	}
 }

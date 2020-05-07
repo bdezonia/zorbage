@@ -159,4 +159,26 @@ public class Tuple10<A,B,C,D,E,F,G,H,I,J>
 		v = Hasher.PRIME * v + j.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple10) {
+			@SuppressWarnings("rawtypes")
+			Tuple10 other = (Tuple10) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f) &&
+					g.equals(other.g) &&
+					h.equals(other.h) &&
+					i.equals(other.i) &&
+					j.equals(other.j);
+		}
+		return false;
+	}
 }

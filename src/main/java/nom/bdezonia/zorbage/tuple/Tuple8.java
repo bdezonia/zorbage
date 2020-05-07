@@ -136,4 +136,24 @@ public class Tuple8<A,B,C,D,E,F,G,H>
 		v = Hasher.PRIME * v + h.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple8) {
+			@SuppressWarnings("rawtypes")
+			Tuple8 other = (Tuple8) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f) &&
+					g.equals(other.g) &&
+					h.equals(other.h);
+		}
+		return false;
+	}
 }

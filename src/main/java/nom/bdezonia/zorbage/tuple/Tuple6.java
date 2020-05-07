@@ -113,4 +113,22 @@ public class Tuple6<A,B,C,D,E,F>
 		v = Hasher.PRIME * v + f.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple6) {
+			@SuppressWarnings("rawtypes")
+			Tuple6 other = (Tuple6) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f);
+		}
+		return false;
+	}
 }

@@ -58,4 +58,16 @@ public class Tuple1<A>
 		v = Hasher.PRIME * v + a.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple1) {
+			@SuppressWarnings("rawtypes")
+			Tuple1 other = (Tuple1) o;
+			return a.equals(other.a);
+		}
+		return false;
+	}
 }

@@ -91,4 +91,20 @@ public class Tuple4<A,B,C,D>
 		v = Hasher.PRIME * v + d.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple4) {
+			@SuppressWarnings("rawtypes")
+			Tuple4 other = (Tuple4) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d);
+		}
+		return false;
+	}
 }

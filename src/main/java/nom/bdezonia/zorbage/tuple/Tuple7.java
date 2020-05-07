@@ -124,4 +124,23 @@ public class Tuple7<A,B,C,D,E,F,G>
 		v = Hasher.PRIME * v + g.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple7) {
+			@SuppressWarnings("rawtypes")
+			Tuple7 other = (Tuple7) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f) &&
+					g.equals(other.g);
+		}
+		return false;
+	}
 }

@@ -293,4 +293,38 @@ public class Tuple22<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V>
 		v = Hasher.PRIME * v + this.v.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple22) {
+			@SuppressWarnings("rawtypes")
+			Tuple22 other = (Tuple22) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f) &&
+					g.equals(other.g) &&
+					h.equals(other.h) &&
+					i.equals(other.i) &&
+					j.equals(other.j) &&
+					k.equals(other.k) &&
+					l.equals(other.l) &&
+					m.equals(other.m) &&
+					n.equals(other.n) &&
+					this.o.equals(other.o) &&
+					p.equals(other.p) &&
+					q.equals(other.q) &&
+					r.equals(other.r) &&
+					s.equals(other.s) &&
+					t.equals(other.t) &&
+					u.equals(other.u) &&
+					v.equals(other.v);
+		}
+		return false;
+	}
 }

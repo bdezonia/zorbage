@@ -147,4 +147,25 @@ public class Tuple9<A,B,C,D,E,F,G,H,I>
 		v = Hasher.PRIME * v + i.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple9) {
+			@SuppressWarnings("rawtypes")
+			Tuple9 other = (Tuple9) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f) &&
+					g.equals(other.g) &&
+					h.equals(other.h) &&
+					i.equals(other.i);
+		}
+		return false;
+	}
 }

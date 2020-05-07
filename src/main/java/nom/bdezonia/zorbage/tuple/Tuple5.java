@@ -102,4 +102,21 @@ public class Tuple5<A,B,C,D,E>
 		v = Hasher.PRIME * v + e.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple5) {
+			@SuppressWarnings("rawtypes")
+			Tuple5 other = (Tuple5) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e);
+		}
+		return false;
+	}
 }

@@ -170,4 +170,27 @@ public class Tuple11<A,B,C,D,E,F,G,H,I,J,K>
 		v = Hasher.PRIME * v + k.hashCode();
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Tuple11) {
+			@SuppressWarnings("rawtypes")
+			Tuple11 other = (Tuple11) o;
+			return
+					a.equals(other.a) &&
+					b.equals(other.b) &&
+					c.equals(other.c) &&
+					d.equals(other.d) &&
+					e.equals(other.e) &&
+					f.equals(other.f) &&
+					g.equals(other.g) &&
+					h.equals(other.h) &&
+					i.equals(other.i) &&
+					j.equals(other.j) &&
+					k.equals(other.k);
+		}
+		return false;
+	}
 }
