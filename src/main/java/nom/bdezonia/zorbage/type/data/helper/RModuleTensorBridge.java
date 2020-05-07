@@ -39,12 +39,10 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class RModuleTensorBridge<U> implements TensorMember<U> {
 
-	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final RModuleMember<U> rmod;
 	
 	public RModuleTensorBridge(Algebra<?,U> algebra, RModuleMember<U> rmod) {
-		this.algebra = algebra;
 		this.zero = algebra.construct();
 		this.rmod = rmod;
 	}
@@ -64,7 +62,7 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 		if (dimsCompatible(dims)) {
 			return false;
 		}
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -75,22 +73,20 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 			}
 		}
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long[] dims) {
 		if (!dimsCompatible(dims))
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
-			if (index.get(i) != 0) {
-				algebra.assign().call(zero, value);
-				return;
-			}
+			if (index.get(i) != 0)
+				throw new IllegalArgumentException("out of bounds read");
 		}
 		long i = index.get(0);
 		rmod.v(i, value);
@@ -99,10 +95,8 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public void setV(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
-			if (index.get(i) != 0) {
-				if (algebra.isNotEqual().call(zero, value))
-					throw new IllegalArgumentException("out of bounds nonzero write");
-			}
+			if (index.get(i) != 0)
+				throw new IllegalArgumentException("out of bounds write");
 		}
 		long i = index.get(0);
 		rmod.setV(i, value);

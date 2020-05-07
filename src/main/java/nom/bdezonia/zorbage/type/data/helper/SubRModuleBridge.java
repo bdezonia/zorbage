@@ -81,7 +81,7 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 	public boolean alloc(long len) {
 		if (len == countElems)
 			return false;
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -92,14 +92,14 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 			}
 		}
 		else {
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 		}
 	}
 
 	@Override
 	public void reshape(long len) {
 		if (len != countElems) {
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 		}
 	}
 

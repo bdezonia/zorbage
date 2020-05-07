@@ -38,13 +38,11 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
  */
 public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 
-	private final Algebra<?,U> algebra;
 	private final U zero;
 	private final RModuleMember<U> rmod;
 	private boolean isColumn;
 	
 	public RModuleMatrixBridge(Algebra<?,U> algebra, RModuleMember<U> rmod) {
-		this.algebra = algebra;
 		this.zero = algebra.construct();
 		this.rmod = rmod;
 		this.isColumn = true;
@@ -91,53 +89,54 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 
 	@Override
 	public boolean alloc(long rows, long cols) {
-		if (isColumn && rows == 1 && cols == rmod.length())
+		if (isColumn && rows == rmod.length() && cols == 1)
 			return false;
-		else if (!isColumn && rows == rmod.length() && cols == 1)
+		else if (!isColumn && rows == 1 && cols == rmod.length())
 			return false;
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void init(long rows, long cols) {
-		if (isColumn && rows == 1 && cols == rmod.length()) {
+		if (isColumn && rows == rmod.length() && cols == 1) {
 			for (long i = 0; i < rmod.length(); i++)
 				rmod.setV(i, zero);
 		}
-		else if (!isColumn && rows == rmod.length() && cols == 1) {
+		else if (!isColumn && rows == 1 && cols == rmod.length()) {
 			for (long i = 0; i < rmod.length(); i++)
 				rmod.setV(i, zero);
 		}
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		else
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long rows, long cols) {
-		if (isColumn && rows == 1 && cols == rmod.length()) {
+		if (isColumn && rows == rmod.length() && cols == 1) {
 			;
 		}
-		else if (!isColumn && rows == rmod.length() && cols == 1) {
+		else if (!isColumn && rows == 1 && cols == rmod.length()) {
 			;
 		}
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void v(long r, long c, U value) {
 		if (isColumn) {
 			if (c != 0) {
-				algebra.assign().call(zero, value);
+				throw new IllegalArgumentException("out of bounds read");
 			}
 			else
 				rmod.v(r, value);
 		}
 		else {
 			if (r != 0) {
-				algebra.assign().call(zero, value);
+				throw new IllegalArgumentException("out of bounds read");
 			}
 			else
-				rmod.setV(c, value);
+				rmod.v(c, value);
 		}
 	}
 
@@ -145,16 +144,14 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	public void setV(long r, long c, U value) {
 		if (isColumn) {
 			if (c != 0) {
-				if (algebra.isNotEqual().call(zero, value))
-					throw new IllegalArgumentException("out of bounds nonzero write");
+				throw new IllegalArgumentException("out of bounds write");
 			}
 			else
 				rmod.setV(r, value);
 		}
 		else {
 			if (r != 0) {
-				if (algebra.isNotEqual().call(zero, value))
-					throw new IllegalArgumentException("out of bounds nonzero write");
+				throw new IllegalArgumentException("out of bounds write");
 			}
 			else
 				rmod.setV(c, value);
