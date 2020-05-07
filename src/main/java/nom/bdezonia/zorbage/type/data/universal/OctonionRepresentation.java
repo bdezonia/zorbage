@@ -97,14 +97,14 @@ public class OctonionRepresentation {
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + Hasher.hashCode(r);
-		v = 23 * v + Hasher.hashCode(i);
-		v = 23 * v + Hasher.hashCode(j);
-		v = 23 * v + Hasher.hashCode(k);
-		v = 23 * v + Hasher.hashCode(l);
-		v = 23 * v + Hasher.hashCode(i0);
-		v = 23 * v + Hasher.hashCode(j0);
-		v = 23 * v + Hasher.hashCode(k0);
+		v = Hasher.PRIME * v + Hasher.hashCode(r);
+		v = Hasher.PRIME * v + Hasher.hashCode(i);
+		v = Hasher.PRIME * v + Hasher.hashCode(j);
+		v = Hasher.PRIME * v + Hasher.hashCode(k);
+		v = Hasher.PRIME * v + Hasher.hashCode(l);
+		v = Hasher.PRIME * v + Hasher.hashCode(i0);
+		v = Hasher.PRIME * v + Hasher.hashCode(j0);
+		v = Hasher.PRIME * v + Hasher.hashCode(k0);
 		return v;
 	}
 }

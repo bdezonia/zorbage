@@ -147,9 +147,9 @@ public class RgbMember
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + Hasher.hashCode(r);
-		v = 23 * v + Hasher.hashCode(g);
-		v = 23 * v + Hasher.hashCode(b);
+		v = Hasher.PRIME * v + Hasher.hashCode(r);
+		v = Hasher.PRIME * v + Hasher.hashCode(g);
+		v = Hasher.PRIME * v + Hasher.hashCode(b);
 		return v;
 	}
 }

@@ -706,8 +706,8 @@ public class RationalMember
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + Hasher.hashCode(n);
-		v = 23 * v + Hasher.hashCode(d);
+		v = Hasher.PRIME * v + Hasher.hashCode(n);
+		v = Hasher.PRIME * v + Hasher.hashCode(d);
 		return v;
 	}
 }

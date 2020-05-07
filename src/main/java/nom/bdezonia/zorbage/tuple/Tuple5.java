@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.accessor.AccessorB;
 import nom.bdezonia.zorbage.accessor.AccessorC;
 import nom.bdezonia.zorbage.accessor.AccessorD;
 import nom.bdezonia.zorbage.accessor.AccessorE;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 
 /**
  * 
@@ -94,11 +95,11 @@ public class Tuple5<A,B,C,D,E>
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + a.hashCode();
-		v = 23 * v + b.hashCode();
-		v = 23 * v + c.hashCode();
-		v = 23 * v + d.hashCode();
-		v = 23 * v + e.hashCode();
+		v = Hasher.PRIME * v + a.hashCode();
+		v = Hasher.PRIME * v + b.hashCode();
+		v = Hasher.PRIME * v + c.hashCode();
+		v = Hasher.PRIME * v + d.hashCode();
+		v = Hasher.PRIME * v + e.hashCode();
 		return v;
 	}
 }

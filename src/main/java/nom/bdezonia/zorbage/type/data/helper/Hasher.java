@@ -36,6 +36,8 @@ import java.math.BigInteger;
  */
 public class Hasher {
 
+	public static final int PRIME = 23;
+	
 	public static int hashCode(boolean v) {
 		return v ? 1 : 0;
 	}

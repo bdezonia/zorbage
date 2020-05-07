@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.accessor.AccessorG;
 import nom.bdezonia.zorbage.accessor.AccessorH;
 import nom.bdezonia.zorbage.accessor.AccessorI;
 import nom.bdezonia.zorbage.accessor.AccessorJ;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 
 /**
  * 
@@ -146,16 +147,16 @@ public class Tuple10<A,B,C,D,E,F,G,H,I,J>
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + a.hashCode();
-		v = 23 * v + b.hashCode();
-		v = 23 * v + c.hashCode();
-		v = 23 * v + d.hashCode();
-		v = 23 * v + e.hashCode();
-		v = 23 * v + f.hashCode();
-		v = 23 * v + g.hashCode();
-		v = 23 * v + h.hashCode();
-		v = 23 * v + i.hashCode();
-		v = 23 * v + j.hashCode();
+		v = Hasher.PRIME * v + a.hashCode();
+		v = Hasher.PRIME * v + b.hashCode();
+		v = Hasher.PRIME * v + c.hashCode();
+		v = Hasher.PRIME * v + d.hashCode();
+		v = Hasher.PRIME * v + e.hashCode();
+		v = Hasher.PRIME * v + f.hashCode();
+		v = Hasher.PRIME * v + g.hashCode();
+		v = Hasher.PRIME * v + h.hashCode();
+		v = Hasher.PRIME * v + i.hashCode();
+		v = Hasher.PRIME * v + j.hashCode();
 		return v;
 	}
 }

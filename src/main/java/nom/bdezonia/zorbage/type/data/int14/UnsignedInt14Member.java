@@ -907,7 +907,7 @@ public final class UnsignedInt14Member
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + Hasher.hashCode(this.v);
+		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
 		return v;
 	}
 }

@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.tuple;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
 import nom.bdezonia.zorbage.accessor.AccessorB;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 
 /**
  * 
@@ -64,8 +65,8 @@ public class Tuple2<A,B>
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = 23 * v + a.hashCode();
-		v = 23 * v + b.hashCode();
+		v = Hasher.PRIME * v + a.hashCode();
+		v = Hasher.PRIME * v + b.hashCode();
 		return v;
 	}
 }
