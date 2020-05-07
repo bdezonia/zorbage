@@ -51,4 +51,9 @@ public class Tuple1<A>
 	@Override
 	public void setA(A a) { this.a = a; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		return v;
+	}
 }

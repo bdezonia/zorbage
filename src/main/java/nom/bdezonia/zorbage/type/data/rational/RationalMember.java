@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -700,5 +701,12 @@ public class RationalMember
 	public void primitiveInit() {
 		this.n = BigInteger.ZERO;
 		this.d = BigInteger.ONE;
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(n);
+		v = 23 * v + Hasher.hashCode(d);
+		return v;
 	}
 }

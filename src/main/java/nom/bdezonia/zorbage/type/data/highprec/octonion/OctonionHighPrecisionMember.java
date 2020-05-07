@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.SetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -1821,5 +1822,18 @@ public final class OctonionHighPrecisionMember
 	@Override
 	public void getK0(HighPrecisionMember v) {
 		v.setV(k0);
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(r);
+		v = 23 * v + Hasher.hashCode(i);
+		v = 23 * v + Hasher.hashCode(j);
+		v = 23 * v + Hasher.hashCode(k);
+		v = 23 * v + Hasher.hashCode(l);
+		v = 23 * v + Hasher.hashCode(i0);
+		v = 23 * v + Hasher.hashCode(j0);
+		v = 23 * v + Hasher.hashCode(k0);
+		return v;
 	}
 }

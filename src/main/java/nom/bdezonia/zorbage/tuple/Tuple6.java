@@ -101,4 +101,14 @@ public class Tuple6<A,B,C,D,E,F>
 	@Override
 	public void setF(F f) { this.f = f; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		v = 23 * v + c.hashCode();
+		v = 23 * v + d.hashCode();
+		v = 23 * v + e.hashCode();
+		v = 23 * v + f.hashCode();
+		return v;
+	}
 }

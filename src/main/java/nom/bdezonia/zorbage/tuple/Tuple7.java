@@ -111,4 +111,15 @@ public class Tuple7<A,B,C,D,E,F,G>
 	@Override
 	public void setG(G g) { this.g = g; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		v = 23 * v + c.hashCode();
+		v = 23 * v + d.hashCode();
+		v = 23 * v + e.hashCode();
+		v = 23 * v + f.hashCode();
+		v = 23 * v + g.hashCode();
+		return v;
+	}
 }

@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -753,5 +754,12 @@ public final class ComplexFloat64Member
 	@Override
 	public void getI(Float64Member v) {
 		v.setV(i);
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(r);
+		v = 23 * v + Hasher.hashCode(i);
+		return v;
 	}
 }

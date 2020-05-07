@@ -194,4 +194,23 @@ public class Tuple15<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O>
 	@Override
 	public void setO(O o) { this.o = o; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		v = 23 * v + c.hashCode();
+		v = 23 * v + d.hashCode();
+		v = 23 * v + e.hashCode();
+		v = 23 * v + f.hashCode();
+		v = 23 * v + g.hashCode();
+		v = 23 * v + h.hashCode();
+		v = 23 * v + i.hashCode();
+		v = 23 * v + j.hashCode();
+		v = 23 * v + k.hashCode();
+		v = 23 * v + l.hashCode();
+		v = 23 * v + m.hashCode();
+		v = 23 * v + n.hashCode();
+		v = 23 * v + o.hashCode();
+		return v;
+	}
 }

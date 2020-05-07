@@ -61,4 +61,10 @@ public class Tuple2<A,B>
 	@Override
 	public void setB(B b) { this.b = b; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		return v;
+	}
 }

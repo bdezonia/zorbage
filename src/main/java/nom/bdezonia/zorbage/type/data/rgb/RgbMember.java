@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
 /**
@@ -141,5 +142,13 @@ public class RgbMember
 	@Override
 	public RgbMember allocate() {
 		return new RgbMember();
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(r);
+		v = 23 * v + Hasher.hashCode(g);
+		v = 23 * v + Hasher.hashCode(b);
+		return v;
 	}
 }

@@ -153,4 +153,19 @@ public class Tuple11<A,B,C,D,E,F,G,H,I,J,K>
 	@Override
 	public void setK(K k) { this.k = k; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		v = 23 * v + c.hashCode();
+		v = 23 * v + d.hashCode();
+		v = 23 * v + e.hashCode();
+		v = 23 * v + f.hashCode();
+		v = 23 * v + g.hashCode();
+		v = 23 * v + h.hashCode();
+		v = 23 * v + i.hashCode();
+		v = 23 * v + j.hashCode();
+		v = 23 * v + k.hashCode();
+		return v;
+	}
 }

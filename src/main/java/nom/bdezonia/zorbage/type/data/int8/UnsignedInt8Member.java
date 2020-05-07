@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
@@ -674,5 +675,11 @@ public final class UnsignedInt8Member
 	@Override
 	public void getR(SignedInt16Member val) {
 		val.setV(v());
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(this.v);
+		return v;
 	}
 }

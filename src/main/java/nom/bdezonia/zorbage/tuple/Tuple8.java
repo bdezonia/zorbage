@@ -122,4 +122,16 @@ public class Tuple8<A,B,C,D,E,F,G,H>
 	@Override
 	public void setH(H h) { this.h = h; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		v = 23 * v + c.hashCode();
+		v = 23 * v + d.hashCode();
+		v = 23 * v + e.hashCode();
+		v = 23 * v + f.hashCode();
+		v = 23 * v + g.hashCode();
+		v = 23 * v + h.hashCode();
+		return v;
+	}
 }

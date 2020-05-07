@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Member;
 import nom.bdezonia.zorbage.type.data.float16.real.Float16Util;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -1823,5 +1824,18 @@ public final class OctonionFloat16Member
 	@Override
 	public void getK0(Float16Member v) {
 		v.setEncV(k0);
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(r);
+		v = 23 * v + Hasher.hashCode(i);
+		v = 23 * v + Hasher.hashCode(j);
+		v = 23 * v + Hasher.hashCode(k);
+		v = 23 * v + Hasher.hashCode(l);
+		v = 23 * v + Hasher.hashCode(i0);
+		v = 23 * v + Hasher.hashCode(j0);
+		v = 23 * v + Hasher.hashCode(k0);
+		return v;
 	}
 }

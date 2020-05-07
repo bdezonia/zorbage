@@ -265,4 +265,30 @@ public class Tuple22<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V>
 	@Override
 	public void setV(V v) { this.v = v; }
 
+	@Override
+	public int hashCode() {
+		int v = a.hashCode();
+		v = 23 * v + b.hashCode();
+		v = 23 * v + c.hashCode();
+		v = 23 * v + d.hashCode();
+		v = 23 * v + e.hashCode();
+		v = 23 * v + f.hashCode();
+		v = 23 * v + g.hashCode();
+		v = 23 * v + h.hashCode();
+		v = 23 * v + i.hashCode();
+		v = 23 * v + j.hashCode();
+		v = 23 * v + k.hashCode();
+		v = 23 * v + l.hashCode();
+		v = 23 * v + m.hashCode();
+		v = 23 * v + n.hashCode();
+		v = 23 * v + o.hashCode();
+		v = 23 * v + p.hashCode();
+		v = 23 * v + q.hashCode();
+		v = 23 * v + r.hashCode();
+		v = 23 * v + s.hashCode();
+		v = 23 * v + t.hashCode();
+		v = 23 * v + u.hashCode();
+		v = 23 * v + this.v.hashCode();
+		return v;
+	}
 }

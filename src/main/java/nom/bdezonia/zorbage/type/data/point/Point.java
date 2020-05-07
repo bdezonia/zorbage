@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.storage.coder.DoubleCoder;
 
@@ -212,5 +213,14 @@ public class Point
 	@Override
 	public Function3<Boolean, Float64Member, Point, Point> within() {
 		return WITHIN;
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(vector.length);
+		for (int i = 0; i < vector.length; i++) {
+			v = 23 * v + Hasher.hashCode(vector[i]);
+		}
+		return v;
 	}
 }

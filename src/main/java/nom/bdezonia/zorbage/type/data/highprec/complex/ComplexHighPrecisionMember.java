@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.type.algebra.SetComplex;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -753,5 +754,12 @@ public final class ComplexHighPrecisionMember
 	@Override
 	public void getI(HighPrecisionMember v) {
 		v.setV(i);
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(r);
+		v = 23 * v + Hasher.hashCode(i);
+		return v;
 	}
 }

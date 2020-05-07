@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
 import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
@@ -667,5 +668,11 @@ public final class SignedInt32Member
 	@Override
 	public void getR(SignedInt32Member val) {
 		get(val);
+	}
+
+	@Override
+	public int hashCode() {
+		int v = Hasher.hashCode(this.v);
+		return v;
 	}
 }
