@@ -35,9 +35,6 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16VectorMember;
-import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Member;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64VectorMember;
 
