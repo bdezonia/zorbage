@@ -37,6 +37,9 @@ import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.MatrixMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16MatrixMember;
+import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Member;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -1490,5 +1493,30 @@ public final class QuaternionFloat16MatrixMember
 	@Override
 	public IndexedDataSource<QuaternionFloat16Member> rawData() {
 		return storage;
+	}
+
+	@Override
+	public int hashCode() {
+		QuaternionFloat16Member tmp = G.QHLF.construct();
+		long rows = rows();
+		long cols = cols();
+		int v = 1;
+		v = Hasher.PRIME * v + Hasher.hashCode(rows);
+		v = Hasher.PRIME * v + Hasher.hashCode(cols);
+		if (rows > 0 && cols > 0) {
+			storage.get(0, tmp);
+			v = Hasher.PRIME * v + tmp.hashCode();
+		}
+		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof QuaternionFloat16MatrixMember) {
+			return G.QHLF_MAT.isEqual().call(this, (QuaternionFloat16MatrixMember) o);
+		}
+		return false;
 	}
 }
