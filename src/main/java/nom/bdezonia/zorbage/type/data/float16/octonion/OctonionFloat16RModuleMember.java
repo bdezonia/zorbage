@@ -37,8 +37,6 @@ import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16Member;
-import nom.bdezonia.zorbage.type.data.float16.complex.ComplexFloat16VectorMember;
 import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
