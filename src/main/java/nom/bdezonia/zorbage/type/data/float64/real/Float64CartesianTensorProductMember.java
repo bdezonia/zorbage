@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.multidim.IndexUtils;
@@ -40,6 +41,7 @@ import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -783,5 +785,28 @@ public final class Float64CartesianTensorProductMember
 	@Override
 	public IndexedDataSource<Float64Member> rawData() {
 		return storage;
+	}
+
+	@Override
+	public int hashCode() {
+		Float64Member tmp = G.DBL.construct();
+		long len = dimension(0);
+		int v = 1;
+		v = Hasher.PRIME * v + Hasher.hashCode(len);
+		if (len > 0) {
+			storage.get(0, tmp);
+			v = Hasher.PRIME * v + tmp.hashCode();
+		}
+		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Float64CartesianTensorProductMember) {
+			return G.DBL_TEN.isEqual().call(this, (Float64CartesianTensorProductMember) o);
+		}
+		return false;
 	}
 }
