@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.universal;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.type.algebra.DimensionsResizable;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 
 /**
  * 
@@ -184,4 +185,39 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		return new OctonionRepresentation();
 	}
 	
+	@Override
+	public int hashCode() {
+		OctonionRepresentation tmp = null;
+		long len = values.size();
+		int v = 1;
+		v = Hasher.PRIME * v + Hasher.hashCode(len);
+		if (len > 0) {
+			tmp = values.get(0);
+			v = Hasher.PRIME * v + tmp.hashCode();
+		}
+		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof TensorOctonionRepresentation) {
+			TensorOctonionRepresentation t = (TensorOctonionRepresentation) o;
+			if (this.dims.length != t.dims.length)
+				return false;
+			for (int i = 0; i < this.dims.length; i++) {
+				if (this.dims[i] != t.dims[i])
+					return false;
+			}
+			for (long i = 0; i < values.size(); i++) {
+				OctonionRepresentation a = this.values.get(i);
+				OctonionRepresentation b = t.values.get(i);
+				if (!a.equals(b))
+					return false;
+			}
+			return true;
+		}
+		return false;
+	}
 }
