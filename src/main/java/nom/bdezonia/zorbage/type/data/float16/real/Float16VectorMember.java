@@ -37,6 +37,9 @@ import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.RModuleMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16Member;
+import nom.bdezonia.zorbage.type.data.float16.octonion.OctonionFloat16RModuleMember;
+import nom.bdezonia.zorbage.type.data.helper.Hasher;
 import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveRepresentation;
@@ -914,5 +917,28 @@ public final class Float16VectorMember
 	@Override
 	public IndexedDataSource<Float16Member> rawData() {
 		return storage;
+	}
+
+	@Override
+	public int hashCode() {
+		Float16Member tmp = G.HLF.construct();
+		long len = length();
+		int v = 1;
+		v = Hasher.PRIME * v + Hasher.hashCode(len);
+		if (len > 0) {
+			storage.get(0, tmp);
+			v = Hasher.PRIME * v + tmp.hashCode();
+		}
+		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Float16VectorMember) {
+			return G.HLF_VEC.isEqual().call(this, (Float16VectorMember) o);
+		}
+		return false;
 	}
 }
