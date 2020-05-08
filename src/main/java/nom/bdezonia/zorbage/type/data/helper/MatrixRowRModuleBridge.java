@@ -77,7 +77,7 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 		if (len == mat.cols()) {
 			return false;
 		}
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -87,13 +87,13 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 				setV(i, zero);
 		}
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long len) {
 		if (len != mat.cols())
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -110,6 +110,4 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 	public StorageConstruction storageType() {
 		return mat.storageType();
 	}
-
-	
 }

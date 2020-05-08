@@ -86,7 +86,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		if (dimsCompatible(dims)) {
 			return false;
 		}
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -99,13 +99,13 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 			}
 		}
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long[] dims) {
 		if (!dimsCompatible(dims))
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override

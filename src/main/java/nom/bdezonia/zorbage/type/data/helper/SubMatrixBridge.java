@@ -100,7 +100,7 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	public boolean alloc(long rows, long cols) {
 		if (rows == countRows && cols == countCols)
 			return false;
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -113,14 +113,14 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 			}
 		}
 		else {
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 		}
 	}
 
 	@Override
 	public void reshape(long rows, long cols) {
 		if (rows != countRows || cols != countCols) {
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 		}
 	}
 
