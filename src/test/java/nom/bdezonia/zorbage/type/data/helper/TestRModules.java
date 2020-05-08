@@ -590,7 +590,7 @@ public class TestRModules {
 		}
 
 		assertTrue(bridge.indexIsLower(0));
-		try { bridge.indexIsUpper(0); fail(); } catch (IllegalArgumentException e) { assertTrue(true);}
+		assertFalse(bridge.indexIsUpper(0));
 		
 		assertEquals(0, bridge.upperRank());
 		assertEquals(1, bridge.lowerRank());

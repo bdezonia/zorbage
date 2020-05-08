@@ -811,10 +811,10 @@ public class TestMatrices {
 		}
 
 		assertTrue(bridge.indexIsLower(0));
-		try { bridge.indexIsUpper(0); fail(); } catch (IllegalArgumentException e) { assertTrue(true);}
+		assertFalse(bridge.indexIsUpper(0));
 		
 		assertTrue(bridge.indexIsLower(1));
-		try { bridge.indexIsUpper(1); fail(); } catch (IllegalArgumentException e) { assertTrue(true);}
+		assertFalse(bridge.indexIsUpper(1));
 		
 		assertEquals(0, bridge.upperRank());
 		assertEquals(2, bridge.lowerRank());
