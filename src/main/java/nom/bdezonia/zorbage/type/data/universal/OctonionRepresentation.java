@@ -107,4 +107,23 @@ public class OctonionRepresentation {
 		v = Hasher.PRIME * v + Hasher.hashCode(k0);
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof OctonionRepresentation) {
+			OctonionRepresentation oct = (OctonionRepresentation) o;
+			return
+					this.r.equals(oct.r) &&
+					this.i.equals(oct.i) &&
+					this.j.equals(oct.j) &&
+					this.k.equals(oct.k) &&
+					this.l.equals(oct.l) &&
+					this.i0.equals(oct.i0) &&
+					this.j0.equals(oct.j0) &&
+					this.k0.equals(oct.k0);
+		}
+		return false;
+	}
 }

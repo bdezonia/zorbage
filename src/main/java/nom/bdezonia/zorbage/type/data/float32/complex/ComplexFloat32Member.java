@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float32.complex;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.GetComplex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -762,5 +763,15 @@ public final class ComplexFloat32Member
 		v = Hasher.PRIME * v + Hasher.hashCode(r);
 		v = Hasher.PRIME * v + Hasher.hashCode(i);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof ComplexFloat32Member) {
+			return G.CFLT.isEqual().call(this, (ComplexFloat32Member) o);
+		}
+		return false;
 	}
 }

@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.highprec.octonion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.GetOctonion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -1836,5 +1837,15 @@ public final class OctonionHighPrecisionMember
 		v = Hasher.PRIME * v + Hasher.hashCode(j0);
 		v = Hasher.PRIME * v + Hasher.hashCode(k0);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof OctonionHighPrecisionMember) {
+			return G.OHP.isEqual().call(this, (OctonionHighPrecisionMember) o);
+		}
+		return false;
 	}
 }

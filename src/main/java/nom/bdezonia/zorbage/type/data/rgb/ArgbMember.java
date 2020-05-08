@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.rgb;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -165,5 +166,15 @@ public class ArgbMember
 		v = Hasher.PRIME * v + Hasher.hashCode(g);
 		v = Hasher.PRIME * v + Hasher.hashCode(b);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof ArgbMember) {
+			return G.ARGB.isEqual().call(this, (ArgbMember) o);
+		}
+		return false;
 	}
 }

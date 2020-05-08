@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.data.rgb;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
@@ -151,5 +152,15 @@ public class RgbMember
 		v = Hasher.PRIME * v + Hasher.hashCode(g);
 		v = Hasher.PRIME * v + Hasher.hashCode(b);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof RgbMember) {
+			return G.RGB.isEqual().call(this, (RgbMember) o);
+		}
+		return false;
 	}
 }

@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.int3;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -725,5 +726,15 @@ public final class SignedInt3Member
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof SignedInt3Member) {
+			return G.INT3.isEqual().call(this, (SignedInt3Member) o);
+		}
+		return false;
 	}
 }

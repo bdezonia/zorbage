@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.float16.real;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -686,5 +687,15 @@ public final class Float16Member
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Float16Member) {
+			return G.HLF.isEqual().call(this, (Float16Member) o);
+		}
+		return false;
 	}
 }

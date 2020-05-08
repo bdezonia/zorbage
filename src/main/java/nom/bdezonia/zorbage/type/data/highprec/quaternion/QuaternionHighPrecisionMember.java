@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.highprec.quaternion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -1159,5 +1160,15 @@ public final class QuaternionHighPrecisionMember
 		v = Hasher.PRIME * v + Hasher.hashCode(j);
 		v = Hasher.PRIME * v + Hasher.hashCode(k);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof QuaternionHighPrecisionMember) {
+			return G.QHP.isEqual().call(this, (QuaternionHighPrecisionMember) o);
+		}
+		return false;
 	}
 }

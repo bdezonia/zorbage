@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
 import nom.bdezonia.zorbage.type.algebra.NumberMember;
@@ -709,5 +710,15 @@ public class RationalMember
 		v = Hasher.PRIME * v + Hasher.hashCode(n);
 		v = Hasher.PRIME * v + Hasher.hashCode(d);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof RationalMember) {
+			return G.RAT.isEqual().call(this, (RationalMember) o);
+		}
+		return false;
 	}
 }

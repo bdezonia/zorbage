@@ -224,4 +224,14 @@ public class Point
 		}
 		return v;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof Point) {
+			return G.POINT.isEqual().call(this, (Point) o);
+		}
+		return false;
+	}
 }

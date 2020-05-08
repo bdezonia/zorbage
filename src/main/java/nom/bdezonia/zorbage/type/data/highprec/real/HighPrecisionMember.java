@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.data.highprec.real;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.GetReal;
 import nom.bdezonia.zorbage.type.algebra.Gettable;
@@ -675,5 +676,15 @@ public final class HighPrecisionMember
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
 		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof HighPrecisionMember) {
+			return G.HP.isEqual().call(this, (HighPrecisionMember) o);
+		}
+		return false;
 	}
 }
