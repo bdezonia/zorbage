@@ -36,11 +36,9 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class ReversedDataSource<U> implements IndexedDataSource<U>{
 
 	private final IndexedDataSource<U> storage;
-	private final long sz;
 	
 	public ReversedDataSource(IndexedDataSource<U> a) {
 		this.storage = a;
-		this.sz = a.size();
 	}
 	
 	@Override
@@ -51,21 +49,21 @@ public class ReversedDataSource<U> implements IndexedDataSource<U>{
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= sz)
+		if (index < 0 || index >= storage.size())
 			throw new IllegalArgumentException("index out of bounds");
-		storage.set(sz-1-index, value);
+		storage.set(storage.size()-1-index, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
-		if (index < 0 || index >= sz)
+		if (index < 0 || index >= storage.size())
 			throw new IllegalArgumentException("index out of bounds");
-		storage.get(sz-1-index, value);
+		storage.get(storage.size()-1-index, value);
 	}
 
 	@Override
 	public long size() {
-		return sz;
+		return storage.size();
 	}
 
 	@Override

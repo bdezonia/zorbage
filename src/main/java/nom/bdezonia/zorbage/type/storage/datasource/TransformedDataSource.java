@@ -43,7 +43,6 @@ public class TransformedDataSource<U,W>
 	private final Algebra<?,U> uAlg;
 	private final Procedure2<W,U> wToU;
 	private final Procedure2<U,W> uToW;
-	private final long sz;
 	private final ThreadLocal<U> tmpU = new ThreadLocal<U>() {
 		@Override
 		protected U initialValue() {
@@ -63,7 +62,6 @@ public class TransformedDataSource<U,W>
 		this.uCollection = uCollection;
 		this.uToW = uToW;
 		this.wToU = wToU;
-		this.sz = uCollection.size();
 	}
 
 	@Override
@@ -88,7 +86,7 @@ public class TransformedDataSource<U,W>
 
 	@Override
 	public long size() {
-		return sz;
+		return uCollection.size();
 	}
 
 	@Override

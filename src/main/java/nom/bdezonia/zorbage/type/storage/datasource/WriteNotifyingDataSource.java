@@ -82,7 +82,7 @@ public class WriteNotifyingDataSource<T extends Algebra<T,U>, U>
 			// listener would not know which list changed. If I pass "this" the listener
 			// can compare object ids to its known WriteNotifiers to know who changed.
 			// Also if we pass "source" then a listener can write to the source list without
-			// causing write notifications to other listeners That would be bad.
+			// causing write notifications to other listeners. That would be bad.
 			listeners.get(i).notify(algebra, this, index);
 		}
 	}
