@@ -62,7 +62,11 @@ public class TestComputedDataSource {
 		
 		IndexedDataSource<Float64Member> source = new ComputedDataSource<Float64Member>(proc);
 		
-		// specify the area of interest we want: the consecutive squares 10^2 to 20^2
+		// test size
+		
+		assertEquals(Long.MAX_VALUE, source.size());
+
+		// specify the area of interest we want from the source: the consecutive squares 10^2 to 30^2
 		
 		IndexedDataSource<Float64Member> sublist = new TrimmedDataSource<Float64Member>(source, 10, 20);
 		
@@ -71,6 +75,8 @@ public class TestComputedDataSource {
 		Mean.compute(G.DBL, sublist, result);
 		
 		assertEquals(413.5, result.v(), 0);
+
+		// make sure you can't set values
 		
 		try {
 			source.set(4, result);
@@ -78,6 +84,8 @@ public class TestComputedDataSource {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+	
+		// test duplicate()
 		
 		IndexedDataSource<Float64Member> src2 = source.duplicate();
 		
@@ -88,6 +96,5 @@ public class TestComputedDataSource {
 		Mean.compute(G.DBL, sublist, result);
 		
 		assertEquals(413.5, result.v(), 0);
-		
 	}
 }
