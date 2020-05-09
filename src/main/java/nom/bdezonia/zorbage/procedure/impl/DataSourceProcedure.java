@@ -34,17 +34,17 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ListProc<U> implements Procedure2<Long,U>
+public class DataSourceProcedure<U> implements Procedure2<Long,U>
 {
-	private final IndexedDataSource<U> list;
+	private final IndexedDataSource<U> source;
 	
-	public ListProc(IndexedDataSource<U> list) {
-		this.list = list;
+	public DataSourceProcedure(IndexedDataSource<U> source) {
+		this.source = source;
 	}
 	
 	@Override
 	public void call(Long idx, U value) {
-		list.get(idx, value);
+		source.get(idx, value);
 	}
 
 }
