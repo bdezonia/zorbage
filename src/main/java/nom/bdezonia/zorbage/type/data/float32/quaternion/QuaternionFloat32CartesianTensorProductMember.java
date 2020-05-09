@@ -148,7 +148,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 			value.setI(vals[i+1]);
 			value.setJ(vals[i+2]);
 			value.setK(vals[i+3]);
-			storage.set(i, value);
+			storage.set(i/4, value);
 		}
 	}
 

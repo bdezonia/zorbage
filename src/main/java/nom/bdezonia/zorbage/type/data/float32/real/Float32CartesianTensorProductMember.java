@@ -141,7 +141,7 @@ public final class Float32CartesianTensorProductMember
 		Float32Member value = new Float32Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(vals[i]);
-			storage.set(i, value);
+			storage.set(i/1, value);
 		}
 	}
 

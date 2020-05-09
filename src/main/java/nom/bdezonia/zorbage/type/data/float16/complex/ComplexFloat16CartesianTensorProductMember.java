@@ -142,7 +142,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		for (int i = 0; i < vals.length; i+=2) {
 			value.setR(vals[i]);
 			value.setI(vals[i+1]);
-			storage.set(i, value);
+			storage.set(i/2, value);
 		}
 	}
 

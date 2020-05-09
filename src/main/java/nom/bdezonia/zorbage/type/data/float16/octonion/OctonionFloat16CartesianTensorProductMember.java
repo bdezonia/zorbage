@@ -148,7 +148,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			value.setI0(vals[i+5]);
 			value.setJ0(vals[i+6]);
 			value.setK0(vals[i+7]);
-			storage.set(i, value);
+			storage.set(i/8, value);
 		}
 	}
 
