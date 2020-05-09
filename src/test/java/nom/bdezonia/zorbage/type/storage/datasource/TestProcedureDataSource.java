@@ -26,45 +26,75 @@
  */
 package nom.bdezonia.zorbage.type.storage.datasource;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ComputedDataSource<U> implements IndexedDataSource<U>
-{
-	private final Procedure2<Long,U> proc;
+public class TestProcedureDataSource {
+
+	@Test
+	public void test() {
+		
+		Float64Member result = G.DBL.construct();
+
+		// a procedure that returns the square of its input
+		
+		Procedure2<Long,Float64Member> proc =
+				new Procedure2<Long, Float64Member>()
+		{
+			@Override
+			public void call(Long a, Float64Member b) {
+				b.setV(a*a);
+			}
+		};
+
+		// setup the computed data source
+		
+		IndexedDataSource<Float64Member> source = new ProcedureDataSource<Float64Member>(proc);
+		
+		// test size
+		
+		assertEquals(Long.MAX_VALUE, source.size());
+
+		// specify the area of interest we want from the source: the consecutive squares 10^2 to 30^2
+		
+		IndexedDataSource<Float64Member> sublist = new TrimmedDataSource<Float64Member>(source, 10, 20);
+		
+		// calculate the mean of the function of the given range
+		
+		Mean.compute(G.DBL, sublist, result);
+		
+		assertEquals(413.5, result.v(), 0);
+
+		// make sure you can't set values
+		
+		try {
+			source.set(4, result);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 	
-	public ComputedDataSource(Procedure2<Long,U> proc) {
-		this.proc = proc;
-	}
-	
-	@Override
-	public IndexedDataSource<U> duplicate() {
-		return new ComputedDataSource<U>(proc);
-	}
+		// test duplicate()
+		
+		IndexedDataSource<Float64Member> src2 = source.duplicate();
+		
+		sublist = new TrimmedDataSource<Float64Member>(src2, 10, 20);
 
-	@Override
-	public StorageConstruction storageType() {
-		return StorageConstruction.MEM_ARRAY;
+		result.setV(0);
+		
+		Mean.compute(G.DBL, sublist, result);
+		
+		assertEquals(413.5, result.v(), 0);
 	}
-
-	@Override
-	public void set(long index, U value) {
-		throw new IllegalArgumentException("computed data sources are read only");
-	}
-
-	@Override
-	public void get(long index, U value) {
-		proc.call(index, value);
-	}
-
-	@Override
-	public long size() {
-		return Long.MAX_VALUE;
-	}
-
 }
