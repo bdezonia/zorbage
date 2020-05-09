@@ -40,11 +40,10 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 	implements IndexedDataSource<U>
 {
-	final private T algebra;
-	final private IndexedDataSource<U> storage;
-	final private Procedure2<Long,U> proc;
-	final private long sz;
-	final private ThreadLocal<U> tmp;
+	private final T algebra;
+	private final IndexedDataSource<U> storage;
+	private final Procedure2<Long,U> proc;
+	private final ThreadLocal<U> tmp;
 
 	/**
 	 * 
@@ -56,7 +55,6 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 		this.algebra = alg;
 		this.storage = storage;
 		this.proc = proc;
-		this.sz = storage.size();
 		this.tmp = new ThreadLocal<U>() {
 			@Override
 			protected U initialValue() {
@@ -73,7 +71,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public void set(long index, U value) {
-		if (index < 0 || index >= sz) {
+		if (index < 0 || index >= storage.size()) {
 			U t = tmp.get();
 			proc.call(index, t);
 			if (algebra.isNotEqual().call(t, value))
@@ -96,7 +94,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long size() {
-		return sz;
+		return storage.size();
 	}
 
 	@Override
