@@ -2,6 +2,8 @@ bin
 .settings
 .classpath
 .project
+.idea
+*.iml
 /target/
 mysql*
 launch_tests.sh
