@@ -33,8 +33,6 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
-import java.util.Arrays;
-
 /**
  * 
  * @author Barry DeZonia
@@ -52,6 +50,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		this.tensor = tensor;
 		this.zero = algebra.construct();
 		this.index = new IntegerIndex(tensor.rank());
+		this.rangingDims = new int[rangingDims.length];
 		this.rangingOffsets = new long[rangingDims.length];
 		setDims(rangingDims, rangingOffsets, fixedDimValues);
 	}
@@ -79,8 +78,10 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	
 	public void setDims(int[] rangingDims, long[] rangingOffsets, long[] fixedDimValues) {
 		checkDims(rangingDims, rangingOffsets, fixedDimValues);
-		this.rangingDims = rangingDims.clone();
-		this.rangingOffsets = rangingOffsets.clone();
+		for (int i = 0; i < rangingDims.length; i++) {
+			this.rangingDims[i] = rangingDims[i];
+			this.rangingOffsets[i] = rangingOffsets[i];
+		}
 		int fIdx = 0;
 		int found = 0;
 		for (int i = 0; i < rangingDims.length; i++) {
