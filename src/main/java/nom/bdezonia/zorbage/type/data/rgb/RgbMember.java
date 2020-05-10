@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.type.algebra.NumberMember;
 import nom.bdezonia.zorbage.type.algebra.Settable;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.data.helper.Hasher;
+import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.type.storage.coder.ByteCoder;
 
 /**

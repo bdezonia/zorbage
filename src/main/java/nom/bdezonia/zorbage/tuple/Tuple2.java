@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.tuple;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
 import nom.bdezonia.zorbage.accessor.AccessorB;
-import nom.bdezonia.zorbage.type.data.helper.Hasher;
+import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
  * 

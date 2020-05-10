@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.accessor.AccessorP;
 import nom.bdezonia.zorbage.accessor.AccessorQ;
 import nom.bdezonia.zorbage.accessor.AccessorR;
 import nom.bdezonia.zorbage.accessor.AccessorS;
-import nom.bdezonia.zorbage.type.data.helper.Hasher;
+import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
  * 

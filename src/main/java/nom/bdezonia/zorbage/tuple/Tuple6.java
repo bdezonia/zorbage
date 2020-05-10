@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.accessor.AccessorC;
 import nom.bdezonia.zorbage.accessor.AccessorD;
 import nom.bdezonia.zorbage.accessor.AccessorE;
 import nom.bdezonia.zorbage.accessor.AccessorF;
-import nom.bdezonia.zorbage.type.data.helper.Hasher;
+import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
  * 

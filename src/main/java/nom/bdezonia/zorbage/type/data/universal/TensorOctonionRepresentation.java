@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.type.data.universal;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.type.algebra.DimensionsResizable;
-import nom.bdezonia.zorbage.type.data.helper.Hasher;
+import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
  * 
