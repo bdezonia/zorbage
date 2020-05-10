@@ -631,11 +631,11 @@ public class TestMatrices {
 		}
 		bridge.init(1, 2);
 		tmp.setR(104);
-		tmp.setR(105);
+		tmp.setI(105);
 		bridge.v(0, 0, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		tmp.setR(104);
-		tmp.setR(105);
+		tmp.setI(105);
 		bridge.v(0, 1, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		try {
@@ -671,11 +671,11 @@ public class TestMatrices {
 		}
 		bridge.reshape(1, 2);
 		tmp.setR(104);
-		tmp.setR(105);
+		tmp.setI(105);
 		bridge.v(0, 0, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		tmp.setR(104);
-		tmp.setR(105);
+		tmp.setI(105);
 		bridge.v(0, 1, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		try {

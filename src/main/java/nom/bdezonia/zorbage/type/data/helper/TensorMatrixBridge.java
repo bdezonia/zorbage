@@ -57,19 +57,23 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 		this.rangingDimR = 0;
 	}
 	
-	public void setMatrix(IntegerIndex idx, int rDim, int cDim) {
-		if (idx.numDimensions() != fixedDims.numDimensions())
+	public void setMatrix(int rangeR, int rangeC, IntegerIndex fixed) {
+		if (fixed.numDimensions() + 2 != fixedDims.numDimensions())
 			throw new IllegalArgumentException("mismatched dimensions");
-		if (rDim < 0 || rDim >= fixedDims.numDimensions())
+		if (rangeR < 0 || rangeR >= fixedDims.numDimensions())
 			throw new IllegalArgumentException("row dim out of range");
-		if (cDim < 0 || cDim >= fixedDims.numDimensions())
+		if (rangeC < 0 || rangeC >= fixedDims.numDimensions())
 			throw new IllegalArgumentException("col dim out of range");
-		if (rDim == cDim)
+		if (rangeR == rangeC)
 			throw new IllegalArgumentException("cannot specify same dim twice");
-		rangingDimR = rDim;
-		rangingDimC = cDim;
-		for (int i = 0; i < idx.numDimensions(); i++)
-			fixedDims.set(i, idx.get(i));
+		rangingDimR = rangeR;
+		rangingDimC = rangeC;
+		int tmp = 0;
+		for (int i = 0; i < fixedDims.numDimensions(); i++) {
+			if (i != rangeR && i != rangeC) {
+				fixedDims.set(i, fixed.get(tmp++));
+			}
+		}
 	}
 	
 	@Override
@@ -100,7 +104,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	public boolean alloc(long rows, long cols) {
 		if (rows == rows() && cols == cols())
 			return false;
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -113,13 +117,13 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 			}
 		}
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long rows, long cols) {
 		if (rows != rows() && cols != cols())
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override

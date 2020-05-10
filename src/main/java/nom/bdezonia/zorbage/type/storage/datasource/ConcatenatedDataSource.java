@@ -86,6 +86,8 @@ public class ConcatenatedDataSource<U>
 
 	@Override
 	public StorageConstruction storageType() {
+		// TODO - Maybe the order of these if statements should change. Or maybe more testing of the size()'s
+		//   should factor in.
 		if ((first.storageType() == StorageConstruction.MEM_SPARSE) &&
 				(second.storageType() == StorageConstruction.MEM_SPARSE))
 			return StorageConstruction.MEM_SPARSE;

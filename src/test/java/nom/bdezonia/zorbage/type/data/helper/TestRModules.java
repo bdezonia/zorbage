@@ -171,7 +171,7 @@ public class TestRModules {
 		bridge.init(3);
 		for (int i = 0; i < 3; i++) {
 			tmp.setR(104);
-			tmp.setR(105);
+			tmp.setI(105);
 			bridge.v(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
@@ -209,7 +209,7 @@ public class TestRModules {
 		bridge.reshape(3);
 		for (int i = 0; i < 3; i++) {
 			tmp.setR(104);
-			tmp.setR(105);
+			tmp.setI(105);
 			bridge.v(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}

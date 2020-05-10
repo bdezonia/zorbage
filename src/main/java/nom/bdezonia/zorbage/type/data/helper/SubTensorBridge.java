@@ -33,6 +33,8 @@ import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.TensorMember;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 
+import java.util.Arrays;
+
 /**
  * 
  * @author Barry DeZonia
@@ -42,6 +44,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 
 	private final TensorMember<U> tensor;
 	private int[] rangingDims;
+	private long[] rangingOffsets;
 	private final U zero;
 	private final IntegerIndex index;
 
@@ -49,12 +52,15 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		this.tensor = tensor;
 		this.zero = algebra.construct();
 		this.index = new IntegerIndex(tensor.rank());
-		setDims(rangingDims, fixedDimValues);
+		this.rangingOffsets = new long[rangingDims.length];
+		setDims(rangingDims, rangingOffsets, fixedDimValues);
 	}
 	
 	// checks subdims fit inside given tensor
 
-	private void checkDims(int[] rangingDims, long[] fixedDimValues) {
+	private void checkDims(int[] rangingDims, long[] rangingOffsets, long[] fixedDimValues) {
+		if (rangingDims.length != rangingOffsets.length)
+			throw new IllegalArgumentException("ranging parameters do not match in length");
 		if (rangingDims.length + fixedDimValues.length != tensor.rank())
 			throw new IllegalArgumentException("subtensor dims don't fit within parent tensor");
 		for (int i = 0; i < rangingDims.length; i++) {
@@ -71,9 +77,10 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		}
 	}
 	
-	public void setDims(int[] rangingDims, long[] fixedDimValues) {
-		checkDims(rangingDims, fixedDimValues);
+	public void setDims(int[] rangingDims, long[] rangingOffsets, long[] fixedDimValues) {
+		checkDims(rangingDims, rangingOffsets, fixedDimValues);
 		this.rangingDims = rangingDims.clone();
+		this.rangingOffsets = rangingOffsets.clone();
 		int fIdx = 0;
 		int found = 0;
 		for (int i = 0; i < rangingDims.length; i++) {
@@ -83,10 +90,10 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 				found++;
 				fIdx++;
 			}
-			index.set(fIdx, 0);
+			index.set(fIdx, rangingOffsets[i]);
 			fIdx++;
 		}
-		for (int i = rangingDims[rangingDims.length-1]+1; i < tensor.rank(); i++) {
+		for (int i = fIdx; i < tensor.rank(); i++) {
 			index.set(i, fixedDimValues[found]);
 			found++;
 		}
@@ -117,8 +124,13 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	public void init(long[] dims) {
 		if (dimsCompatible(dims)) {
 			IntegerIndex idx = new IntegerIndex(dims.length);
+			long[] minPt = new long[dims.length];
+			long[] maxPt = new long[dims.length];
+			for (int i = 0; i < dims.length; i++) {
+				maxPt[i] = dims[i]-1;
+			}
 			SamplingCartesianIntegerGrid sampling =
-					new SamplingCartesianIntegerGrid(new long[dims.length], dims);
+					new SamplingCartesianIntegerGrid(minPt,maxPt);
 			SamplingIterator<IntegerIndex> iter = sampling.iterator();
 			while (iter.hasNext()) {
 				iter.next(idx);
@@ -140,7 +152,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
-			this.index.set(rangingDims[i], index.get(i));
+			this.index.set(rangingDims[i], index.get(i) + rangingOffsets[i]);
 		}
 		if (oob())
 			throw new IllegalArgumentException("out of bounds read");
@@ -153,7 +165,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
-			this.index.set(rangingDims[i], index.get(i));
+			this.index.set(rangingDims[i], index.get(i) + rangingOffsets[i]);
 		}
 		if (oob())
 			throw new IllegalArgumentException("out of bounds write");
@@ -212,7 +224,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (newDims.length != rangingDims.length)
 			return false;
 		for (int i = 0; i < rangingDims.length; i++) {
-			if (newDims[i] != tensor.dimension())
+			if (newDims[i] != rangingDims.length)
 				return false;
 		}
 		return true;

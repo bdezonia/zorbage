@@ -131,4 +131,17 @@ public class IntegerIndex
 	public IntegerIndex allocate() {
 		return new IntegerIndex(index.length);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		b.append('{');
+		for (int i = 0; i < index.length; i++) {
+			if (i > 0)
+				b.append(',');
+			b.append(index[i]);
+		}
+		b.append('}');
+		return b.toString();
+	}
 }

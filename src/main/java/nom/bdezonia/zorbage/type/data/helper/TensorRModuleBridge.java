@@ -53,14 +53,18 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 		this.rangingDim = 0;
 	}
 	
-	public void setRmodule(IntegerIndex idx, int dim) {
-		if (idx.numDimensions() != fixedDims.numDimensions())
+	public void setRmodule(int rangeDim, IntegerIndex fixed) {
+		if (fixed.numDimensions() + 1 != fixedDims.numDimensions())
 			throw new IllegalArgumentException("mismatched dimensions");
-		if (dim < 0 || dim >= fixedDims.numDimensions())
+		if (rangeDim < 0 || rangeDim >= fixedDims.numDimensions())
 			throw new IllegalArgumentException("dim out of range");
-		this.rangingDim = dim;
-		for (int i = 0; i < idx.numDimensions(); i++)
-			fixedDims.set(i, idx.get(i));
+		this.rangingDim = rangeDim;
+		int tmp = 0;
+		for (int i = 0; i < fixedDims.numDimensions(); i++) {
+			if (i != rangeDim) {
+				fixedDims.set(i, fixed.get(tmp++));
+			}
+		}
 	}
 	
 	@Override
@@ -86,7 +90,7 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	public boolean alloc(long len) {
 		if (len == length())
 			return false;
-		throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -96,13 +100,13 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 				setV(i, zero);
 		}
 		else
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public void reshape(long len) {
 		if (len != length())
-			throw new UnsupportedOperationException("read only wrapper does not allow reallocation of data");
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
