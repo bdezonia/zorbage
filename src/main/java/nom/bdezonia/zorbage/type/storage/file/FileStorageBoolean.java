@@ -101,6 +101,7 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 			// write zeroes to the file over and over
 			channel.position(0);
 			for (long i = 0; i <= (numElements / elementsPerPage); i++) {  // <= is intentional here
+				buffer.rewind();
 				channel.write(buffer);
 			}
 		} catch (IOException e) {
