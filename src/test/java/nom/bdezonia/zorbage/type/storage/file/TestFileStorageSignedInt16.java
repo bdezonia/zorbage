@@ -72,7 +72,7 @@ public class TestFileStorageSignedInt16 {
 	@Test
 	public void test1() {
 
-		final int SIZE = 100;
+		final int SIZE = 5000;
 		
 		SomeType v = new SomeType();
 		
@@ -91,9 +91,9 @@ public class TestFileStorageSignedInt16 {
 		}
 		
 		for (long i = 0; i < store.size(); i++) {
-			v.a = (byte) (i+0);
-			v.b = (byte) (i+1);
-			v.c = (byte) (i+2);
+			v.a = (short) (i+0);
+			v.b = (short) (i+1);
+			v.c = (short) (i+2);
 			store.set(i, v);
 		}
 
@@ -102,9 +102,9 @@ public class TestFileStorageSignedInt16 {
 			v.b = -1;
 			v.c = -1;
 			store.get(i, v);
-			assertEquals(i+0, v.a);
-			assertEquals(i+1, v.b);
-			assertEquals(i+2, v.c);
+			assertEquals((short) (i+0), v.a);
+			assertEquals((short) (i+1), v.b);
+			assertEquals((short) (i+2), v.c);
 		}
 		
 		FileStorageSignedInt16<SomeType> dup = store.duplicate();
@@ -116,9 +116,9 @@ public class TestFileStorageSignedInt16 {
 			v.b = -1;
 			v.c = -1;
 			dup.get(i, v);
-			assertEquals(i+0, v.a);
-			assertEquals(i+1, v.b);
-			assertEquals(i+2, v.c);
+			assertEquals((short) (i+0), v.a);
+			assertEquals((short) (i+1), v.b);
+			assertEquals((short) (i+2), v.c);
 		}
 		
 	}

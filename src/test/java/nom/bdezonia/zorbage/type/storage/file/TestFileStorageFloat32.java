@@ -72,7 +72,7 @@ public class TestFileStorageFloat32 {
 	@Test
 	public void test1() {
 
-		final int SIZE = 100;
+		final int SIZE = 5000;
 		
 		SomeType v = new SomeType();
 		
@@ -91,9 +91,9 @@ public class TestFileStorageFloat32 {
 		}
 		
 		for (long i = 0; i < store.size(); i++) {
-			v.a = (byte) (i+0);
-			v.b = (byte) (i+1);
-			v.c = (byte) (i+2);
+			v.a = (float) (i+0);
+			v.b = (float) (i+1);
+			v.c = (float) (i+2);
 			store.set(i, v);
 		}
 
@@ -102,9 +102,9 @@ public class TestFileStorageFloat32 {
 			v.b = -1;
 			v.c = -1;
 			store.get(i, v);
-			assertEquals(i+0, v.a, 0);
-			assertEquals(i+1, v.b, 0);
-			assertEquals(i+2, v.c, 0);
+			assertEquals((float)(i+0), v.a, 0);
+			assertEquals((float)(i+1), v.b, 0);
+			assertEquals((float)(i+2), v.c, 0);
 		}
 		
 		FileStorageFloat32<SomeType> dup = store.duplicate();
@@ -116,9 +116,9 @@ public class TestFileStorageFloat32 {
 			v.b = -1;
 			v.c = -1;
 			dup.get(i, v);
-			assertEquals(i+0, v.a, 0);
-			assertEquals(i+1, v.b, 0);
-			assertEquals(i+2, v.c, 0);
+			assertEquals((float)(i+0), v.a, 0);
+			assertEquals((float)(i+1), v.b, 0);
+			assertEquals((float)(i+2), v.c, 0);
 		}
 		
 	}

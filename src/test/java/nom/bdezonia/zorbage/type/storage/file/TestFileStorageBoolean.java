@@ -72,7 +72,7 @@ public class TestFileStorageBoolean {
 	@Test
 	public void test1() {
 
-		final int SIZE = 100;
+		final int SIZE = 5000;
 		
 		SomeType v = new SomeType();
 		

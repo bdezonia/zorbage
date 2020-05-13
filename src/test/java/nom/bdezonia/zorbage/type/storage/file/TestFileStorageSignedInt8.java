@@ -72,7 +72,7 @@ public class TestFileStorageSignedInt8 {
 	@Test
 	public void test1() {
 
-		final int SIZE = 100;
+		final int SIZE = 5000;
 		
 		SomeType v = new SomeType();
 		
@@ -102,9 +102,9 @@ public class TestFileStorageSignedInt8 {
 			v.b = -1;
 			v.c = -1;
 			store.get(i, v);
-			assertEquals(i+0, v.a);
-			assertEquals(i+1, v.b);
-			assertEquals(i+2, v.c);
+			assertEquals((byte) (i+0), v.a);
+			assertEquals((byte) (i+1), v.b);
+			assertEquals((byte) (i+2), v.c);
 		}
 		
 		FileStorageSignedInt8<SomeType> dup = store.duplicate();
@@ -116,9 +116,9 @@ public class TestFileStorageSignedInt8 {
 			v.b = -1;
 			v.c = -1;
 			dup.get(i, v);
-			assertEquals(i+0, v.a);
-			assertEquals(i+1, v.b);
-			assertEquals(i+2, v.c);
+			assertEquals((byte) (i+0), v.a);
+			assertEquals((byte) (i+1), v.b);
+			assertEquals((byte) (i+2), v.c);
 		}
 		
 	}
