@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 public class TestFloat64Matrix {
 
 	// toggle true/false if want to run this big slow test
-	private static final boolean RUN = false;
+	private static final boolean RUN = true;
 	
 	@Test
 	public void testHugeMatrix() {
@@ -58,17 +58,21 @@ public class TestFloat64Matrix {
 			Float64Member zero = G.DBL.construct();
 			Float64Member one = G.DBL.construct();
 			G.DBL.unity().call(one);
+			long errs = 0;
 			for (long r = 0; r < m.rows(); r++) {
 				for (long c = 0; c < m.cols(); c++) {
 					m.v(r, c, value);
 					if (r == c) {
-						assertTrue(G.DBL.isEqual().call(value, one));
+						if (value.v() != one.v())
+							errs++;
 					}
 					else {
-						assertTrue(G.DBL.isEqual().call(value, zero));
+						if (value.v() != zero.v())
+							errs++;
 					}
 				}
 			}
+			assertEquals(0, errs);
 		}
 	}
 	
