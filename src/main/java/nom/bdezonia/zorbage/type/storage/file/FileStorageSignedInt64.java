@@ -2,16 +2,16 @@
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2020 Barry DeZonia
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -43,24 +43,29 @@ import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 
 /**
- * 
+ *
  * @author Barry DeZonia
  *
  */
 public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
-	implements IndexedDataSource<U>, Allocatable<FileStorageSignedInt64<U>>
+		implements IndexedDataSource<U>, Allocatable<FileStorageSignedInt64<U>>
 {
+	private static final int BYTE_CHUNK = 2000;
 	private final long numElements;
 	private final U type;
 	private final long[] tmpArray;
-	private final int bufSize;
 	private final File file;
 	private final RandomAccessFile raf;
 	private final FileChannel channel;
 	private final ByteBuffer buffer;
-	
+	private final int elementByteSize;
+	private final int elementsPerPage;
+	private final int bytesPerPage;
+	private long pageLoaded;
+	private boolean dirty;
+
 	/**
-	 * 
+	 *
 	 * @param numElements
 	 * @param type
 	 */
@@ -68,55 +73,72 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new long[type.longCount()];
-		this.bufSize = type.longCount() * 8;
+		this.elementByteSize = type.longCount() * 8;
+		if (elementByteSize <= 0) {
+			// overflow happened
+			throw new IllegalArgumentException("virtual type is too big to be buffered: max longCount is "+(Integer.MAX_VALUE/8));
+		}
+		long byteSize = BYTE_CHUNK / elementByteSize;
+		if (byteSize <= 0) {
+			// emergency: type is very big. Just buffer one.
+			byteSize = elementByteSize;
+		}
+		this.bytesPerPage = (int) byteSize;
+		this.elementsPerPage = (int) (byteSize / elementByteSize);
+		this.pageLoaded = -1;
+		this.dirty = false;
 		try {
 			this.file = File.createTempFile("Storage", ".storage");
 			this.file.deleteOnExit();
 			this.raf = new RandomAccessFile(file, "rw");
 			this.channel = raf.getChannel();
 			// make a one element buffer
-			this.buffer = ByteBuffer.allocate(bufSize);
+			this.buffer = ByteBuffer.allocate(bytesPerPage);
 			// fill the buffer with zeroes
-			for (int i = 0; i < type.longCount(); i++) {
-				buffer.putLong(0);
+			for (int i = 0; i < bytesPerPage; i++) {
+				buffer.put((byte) 0);
 			}
 			// write zeroes to the file over and over
 			channel.position(0);
-			for (long i = 0; i < numElements; i++) {
+			for (long i = 0; i <= (numElements / elementsPerPage); i++) {  // <= is intentional here
 				channel.write(buffer);
 			}
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
-	
+
 	public FileStorageSignedInt64(FileStorageSignedInt64<U> other, U type) {
 		synchronized(other) {
 			this.numElements = other.numElements;
 			this.type = type.allocate();
 			this.tmpArray = other.tmpArray.clone();
-			this.bufSize = other.bufSize;
+			this.bytesPerPage = other.bytesPerPage;
+			this.elementByteSize = other.elementByteSize;
+			this.elementsPerPage = other.elementsPerPage;
+			this.pageLoaded = other.pageLoaded;
+			this.dirty = other.dirty;
 			try {
 				this.file = File.createTempFile("Storage", ".storage");
 				this.file.deleteOnExit();
-				this.buffer = ByteBuffer.allocate(bufSize);
 				Path from = Paths.get(other.file.getAbsolutePath());
 				Path to = Paths.get(file.getAbsolutePath());
 				//overwrite existing file, if exists
 				CopyOption[] options = new CopyOption[]{
-					StandardCopyOption.REPLACE_EXISTING,
-					StandardCopyOption.COPY_ATTRIBUTES
+						StandardCopyOption.REPLACE_EXISTING,
+						StandardCopyOption.COPY_ATTRIBUTES
 				};
 				Files.copy(from, to, options);
-				// these two must happen after the file copy
+				// these first two must happen after the file copy
 				this.raf = new RandomAccessFile(file, "rw");
 				this.channel = raf.getChannel();
+				this.buffer = other.buffer.duplicate();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
 		}
 	}
-	
+
 	@Override
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_VIRTUAL;
@@ -128,14 +150,27 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				value.toLongArray(tmpArray, 0);
-				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.putLong(i*8, tmpArray[i]);
+				long newPage = index / elementsPerPage;
+				if (newPage != pageLoaded) {
+					// save out old page if needed
+					if (dirty) {
+						buffer.rewind();
+						channel.position(pageLoaded * bytesPerPage);
+						channel.write(buffer);
+						dirty = false;
+					}
+					// read in new page
+					buffer.rewind();
+					channel.position(newPage * bytesPerPage);
+					channel.read(buffer);
+					pageLoaded = newPage;
 				}
-				buffer.rewind();
-				long pos = index * bufSize;
-				this.channel.position(pos);
-				this.channel.write(buffer);
+				value.toLongArray(tmpArray, 0);
+				int idx = (int)(index % elementsPerPage);
+				for (int i = 0; i < tmpArray.length; i++) {
+					buffer.putLong(idx*elementByteSize + i*8, tmpArray[i]);
+				}
+				dirty = true;
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -148,12 +183,24 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				buffer.rewind();
-				long pos = index * bufSize;
-				channel.position(pos);
-				channel.read(buffer);
+				long newPage = index / elementsPerPage;
+				if (newPage != pageLoaded) {
+					// save out old page if needed
+					if (dirty) {
+						buffer.rewind();
+						channel.position(pageLoaded * bytesPerPage);
+						channel.write(buffer);
+						dirty = false;
+					}
+					// read in new page
+					buffer.rewind();
+					channel.position(newPage * bytesPerPage);
+					channel.read(buffer);
+					pageLoaded = newPage;
+				}
+				int idx = (int) (index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					tmpArray[i] = buffer.getLong(i*8);
+					tmpArray[i] = buffer.getLong(idx*elementByteSize + i*8);
 				}
 				value.fromLongArray(tmpArray, 0);
 			} catch (IOException e) {

@@ -50,15 +50,20 @@ import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
 public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	implements IndexedDataSource<U>, Allocatable<FileStorageFloat64<U>>
 {
+	private static final int BYTE_CHUNK = 2000;
 	private final long numElements;
 	private final U type;
 	private final double[] tmpArray;
-	private final int bufSize;
 	private final File file;
 	private final RandomAccessFile raf;
 	private final FileChannel channel;
 	private final ByteBuffer buffer;
-	
+	private final int elementByteSize;
+	private final int elementsPerPage;
+	private final int bytesPerPage;
+	private long pageLoaded;
+	private boolean dirty;
+
 	/**
 	 * 
 	 * @param numElements
@@ -68,21 +73,34 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new double[type.doubleCount()];
-		this.bufSize = type.doubleCount() * 8;
+		this.elementByteSize = type.doubleCount() * 8;
+		if (elementByteSize <= 0) {
+			// overflow happened
+			throw new IllegalArgumentException("virtual type is too big to be buffered: max doubleCount is "+(Integer.MAX_VALUE/8));
+		}
+		long byteSize = BYTE_CHUNK / elementByteSize;
+		if (byteSize <= 0) {
+			// emergency: type is very big. Just buffer one.
+			byteSize = elementByteSize;
+		}
+		this.bytesPerPage = (int) byteSize;
+		this.elementsPerPage = (int) (byteSize / elementByteSize);
+		this.pageLoaded = -1;
+		this.dirty = false;
 		try {
 			this.file = File.createTempFile("Storage", ".storage");
 			this.file.deleteOnExit();
 			this.raf = new RandomAccessFile(file, "rw");
 			this.channel = raf.getChannel();
 			// make a one element buffer
-			this.buffer = ByteBuffer.allocate(bufSize);
+			this.buffer = ByteBuffer.allocate(bytesPerPage);
 			// fill the buffer with zeroes
-			for (int i = 0; i < type.doubleCount(); i++) {
-				buffer.putDouble(0);
+			for (int i = 0; i < bytesPerPage; i++) {
+				buffer.put((byte) 0);
 			}
 			// write zeroes to the file over and over
 			channel.position(0);
-			for (long i = 0; i < numElements; i++) {
+			for (long i = 0; i <= (numElements / elementsPerPage); i++) {  // <= is intentional here
 				channel.write(buffer);
 			}
 		} catch (IOException e) {
@@ -95,11 +113,14 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			this.numElements = other.numElements;
 			this.type = type.allocate();
 			this.tmpArray = other.tmpArray.clone();
-			this.bufSize = other.bufSize;
+			this.bytesPerPage = other.bytesPerPage;
+			this.elementByteSize = other.elementByteSize;
+			this.elementsPerPage = other.elementsPerPage;
+			this.pageLoaded = other.pageLoaded;
+			this.dirty = other.dirty;
 			try {
 				this.file = File.createTempFile("Storage", ".storage");
 				this.file.deleteOnExit();
-				this.buffer = ByteBuffer.allocate(bufSize);
 				Path from = Paths.get(other.file.getAbsolutePath());
 				Path to = Paths.get(file.getAbsolutePath());
 				//overwrite existing file, if exists
@@ -108,9 +129,10 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 					StandardCopyOption.COPY_ATTRIBUTES
 				};
 				Files.copy(from, to, options);
-				// these two must happen after the file copy
+				// these first two must happen after the file copy
 				this.raf = new RandomAccessFile(file, "rw");
 				this.channel = raf.getChannel();
+				this.buffer = other.buffer.duplicate();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -128,14 +150,27 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				value.toDoubleArray(tmpArray, 0);
-				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.putDouble(i*8, tmpArray[i]);
+				long newPage = index / elementsPerPage;
+				if (newPage != pageLoaded) {
+					// save out old page if needed
+					if (dirty) {
+						buffer.rewind();
+						channel.position(pageLoaded * bytesPerPage);
+						channel.write(buffer);
+						dirty = false;
+					}
+					// read in new page
+					buffer.rewind();
+					channel.position(newPage * bytesPerPage);
+					channel.read(buffer);
+					pageLoaded = newPage;
 				}
-				buffer.rewind();
-				long pos = index * bufSize;
-				channel.position(pos);
-				channel.write(buffer);
+				value.toDoubleArray(tmpArray, 0);
+				int idx = (int)(index % elementsPerPage);
+				for (int i = 0; i < tmpArray.length; i++) {
+					buffer.putDouble(idx*elementByteSize + i*8, tmpArray[i]);
+				}
+				dirty = true;
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -148,12 +183,24 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				buffer.rewind();
-				long pos = index * bufSize;
-				channel.position(pos);
-				channel.read(buffer);
+				long newPage = index / elementsPerPage;
+				if (newPage != pageLoaded) {
+					// save out old page if needed
+					if (dirty) {
+						buffer.rewind();
+						channel.position(pageLoaded * bytesPerPage);
+						channel.write(buffer);
+						dirty = false;
+					}
+					// read in new page
+					buffer.rewind();
+					channel.position(newPage * bytesPerPage);
+					channel.read(buffer);
+					pageLoaded = newPage;
+				}
+				int idx = (int) (index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					tmpArray[i] = buffer.getDouble(i*8);
+					tmpArray[i] = buffer.getDouble(idx*elementByteSize + i*8);
 				}
 				value.fromDoubleArray(tmpArray, 0);
 			} catch (IOException e) {
