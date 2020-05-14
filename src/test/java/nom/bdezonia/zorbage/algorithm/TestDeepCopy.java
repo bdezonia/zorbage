@@ -33,8 +33,8 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.storage.datasource.ConcatenatedDataSource;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.ConcatenatedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 

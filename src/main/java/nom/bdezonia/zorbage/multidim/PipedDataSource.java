@@ -28,8 +28,8 @@ package nom.bdezonia.zorbage.multidim;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.datasource.SequencedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.SequencedDataSource;
 
 /**
  * 

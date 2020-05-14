@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.type.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.type.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.type.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.type.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 // TODO: notes that apply to all the file storage classes in this package:
 // I moved from RandomAccessFile ops to NIO buffered reads and writes. Speeds improved by a factor of 10 to 100,

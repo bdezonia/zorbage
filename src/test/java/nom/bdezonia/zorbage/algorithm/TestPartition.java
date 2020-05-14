@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 

@@ -35,7 +35,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageBit;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorageSignedInt8;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 

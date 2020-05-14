@@ -30,8 +30,8 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.data.universal.PrimitiveConverter;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
 
 /**
  * 

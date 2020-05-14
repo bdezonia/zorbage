@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Member
 import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.data.int3.UnsignedInt3Member;
 import nom.bdezonia.zorbage.type.storage.Storage;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 

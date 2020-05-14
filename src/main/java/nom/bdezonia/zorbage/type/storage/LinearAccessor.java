@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.storage;
 
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 

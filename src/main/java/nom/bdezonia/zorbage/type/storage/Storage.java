@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.type.storage;
 import nom.bdezonia.zorbage.type.ctor.Allocatable;
 import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
 import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.storage.file.FileStorage;
 import nom.bdezonia.zorbage.type.storage.sparse.SparseStorage;
 

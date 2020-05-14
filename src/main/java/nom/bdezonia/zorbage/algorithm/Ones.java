@@ -28,8 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.type.algebra.Algebra;
 import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.storage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.storage.datasource.RawData;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.RawData;
 
 /**
  * 
