@@ -77,7 +77,7 @@ public class UpperBound {
 	/**
 	 * 
 	 * @param alg
-	 * @param cond
+	 * @param isLess
 	 * @param a
 	 * @return
 	 */

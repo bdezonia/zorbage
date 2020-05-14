@@ -33,8 +33,7 @@ import nom.bdezonia.zorbage.type.ctor.StorageType;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
- * @param <U>
+ * @param <U></U>
  */
 public interface IndexedDataSource<U>
 	extends Duplicatable<IndexedDataSource<U>>, StorageType

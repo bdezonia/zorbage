@@ -30,7 +30,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
- * {@link SamplingCylindricalGrid} is a 3-d {@link Sampling} in real cylindrical space.
+ * {@link SamplingCylindricalRealGrid} is a 3-d {@link Sampling} in real cylindrical space.
  * It defines the grid origin's r, z, and theta coordinates plus spacings and counts.
  * This allows one to build cylindrical coordinate grids that are partially complete
  * if so desired.

@@ -42,7 +42,7 @@ public class NanOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<Lo
 	/**
 	 * 
 	 * @param alg
-	 * @param a
+	 * @param length
 	 */
 	public NanOOB(T alg, long length) {
 		U nan = alg.construct();

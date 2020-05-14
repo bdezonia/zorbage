@@ -51,7 +51,7 @@ public class RModuleDefaultNorm {
 
 	/**
 	 * 
-	 * @param rmodAlg
+	 * @param multicomponentAlg
 	 * @param componentAlg
 	 * @param a
 	 * @param b

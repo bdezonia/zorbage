@@ -30,7 +30,7 @@ package nom.bdezonia.zorbage.function;
  * 
  * @author Barry DeZonia
  *
- * @param <A>
+ * @param <RETVAL></RETVAL>
  */
 public interface Function0<RETVAL> {
 

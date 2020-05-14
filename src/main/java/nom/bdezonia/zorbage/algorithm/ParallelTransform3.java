@@ -64,7 +64,7 @@ public class ParallelTransform3 {
 	 * @param c
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T algU, V algW, X algX, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
+		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
 	{
 		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
@@ -85,7 +85,7 @@ public class ParallelTransform3 {
 			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
 			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
 			IndexedDataSource<Y> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
-			Runnable r = new Computer<T,U,V,W,X,Y>(algU, algW, algX, proc, aTrimmed, bTrimmed, cTrimmed);
+			Runnable r = new Computer<T,U,V,W,X,Y>(algU, algW, algY, proc, aTrimmed, bTrimmed, cTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
 			aSize -= slice;

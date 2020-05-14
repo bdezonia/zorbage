@@ -42,7 +42,7 @@ public class CyclicNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
 	/**
 	 * 
-	 * @param ds
+	 * @param d
 	 */
 	public CyclicNdOOB(MultiDimDataSource<U> d) {
 		this.ds = d;

@@ -47,7 +47,7 @@ public class MatrixDeterminant {
 	 * Calculate the determinant of a matrix.
 	 * @param matAlgebra
 	 * @param numAlgebra
-	 * @param matrix
+	 * @param a
 	 * @param det
 	 */
 	public static

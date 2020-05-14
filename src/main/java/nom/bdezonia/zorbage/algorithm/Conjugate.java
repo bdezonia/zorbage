@@ -45,7 +45,6 @@ public class Conjugate {
 	 * @param algebra
 	 * @param a
 	 * @param b
-	 * @param c
 	 */
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Conjugate<U>,U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)

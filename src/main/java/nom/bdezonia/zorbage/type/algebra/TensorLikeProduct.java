@@ -34,10 +34,10 @@ package nom.bdezonia.zorbage.type.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param T the tensor like space
- * @param U the tensor like member
- * @param V the scalar space
- * @param W the scalar member
+ * @param <T> the tensor like space </T>
+ * @param <U> the tensor like member </U>
+ * @param <V> the scalar space </V>
+ * @param <W> the scalar member </W>
  */
 public interface TensorLikeProduct<T extends TensorLikeProduct<T,U,V,W>, U, V extends Ring<V,W>, W>
   extends

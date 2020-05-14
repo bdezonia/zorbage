@@ -42,7 +42,6 @@ public class ComplexNumberWithin {
 	
 	/**
 	 * 
-	 * @param composAlg
 	 * @param singleAlg
 	 * @param a
 	 * @param b

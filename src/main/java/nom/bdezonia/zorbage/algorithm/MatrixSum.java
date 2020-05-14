@@ -43,7 +43,7 @@ public class MatrixSum {
 	/**
 	 * 
 	 * @param algebra
-	 * @param rmod
+	 * @param matrix
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U>, U, V extends MatrixMember<U> & RawData<U>>

@@ -45,8 +45,8 @@ public class MatrixScaleByDouble {
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar
-	 * @param a
-	 * @param b
+	 * @param matrixIn
+	 * @param matrixOut
 	 */
 	public static <U extends MatrixMember<W> & RawData<W>,
 					V extends Algebra<V,W> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<W>,

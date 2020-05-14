@@ -58,7 +58,7 @@ public class ParallelTransform4 {
 	 * @param algU
 	 * @param algW
 	 * @param algY
-	 * @param algB
+	 * @param algA
 	 * @param proc
 	 * @param a
 	 * @param b
@@ -66,7 +66,7 @@ public class ParallelTransform4 {
 	 * @param d
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
-		void compute(T algU, V algW, X algX, Z algZ, Procedure4<U,W,Y,A> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c, IndexedDataSource<A> d)
+		void compute(T algU, V algW, X algY, Z algA, Procedure4<U,W,Y,A> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c, IndexedDataSource<A> d)
 	{
 		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
@@ -88,7 +88,7 @@ public class ParallelTransform4 {
 			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
 			IndexedDataSource<Y> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
 			IndexedDataSource<A> dTrimmed = new TrimmedDataSource<>(d, thOffset, thSize);
-			Runnable r = new Computer<T,U,V,W,X,Y,Z,A>(algU, algW, algX, algZ, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
+			Runnable r = new Computer<T,U,V,W,X,Y,Z,A>(algU, algW, algY, algA, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
 			aSize -= slice;

@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.sampling;
 // TODO - this class name and concept is already in Algebra hierarchy. Think how to improve.
 
 /**
- * {@link SupportsBoundCalcs} is a helper interface so that some types can be made to
+ * {@link SupportsBoundsCalc} is a helper interface so that some types can be made to
  * allow their bounds to be calculated easily by the {@link Bounds} class.
  * 
  * @author Barry DeZonia

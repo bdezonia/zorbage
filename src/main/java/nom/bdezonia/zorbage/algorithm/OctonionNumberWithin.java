@@ -42,7 +42,6 @@ public class OctonionNumberWithin {
 		
 	/**
 	 * 
-	 * @param composAlg
 	 * @param singleAlg
 	 * @param a
 	 * @param b

@@ -53,9 +53,9 @@ public class Multiply {
 	/**
 	 * 
 	 * @param algebra
-	 * @param a
-	 * @param b
-	 * @param c
+	 * @param x
+	 * @param y
+	 * @param z
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & EvenOdd<U> & BitOperations<U> & Bounded<U>,U>
 		void compute(T algebra, U x, U y, U z)

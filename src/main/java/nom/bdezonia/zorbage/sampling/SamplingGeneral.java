@@ -82,7 +82,7 @@ public class SamplingGeneral<U extends Duplicatable<U> & DimensionCount & Settab
 	 * Create a {@link SamplingGeneral} from any other (possibly compound) {@link Sampling}.
 	 * 
 	 * @param other
-	 * @param type
+	 * @param scratch
 	 * @return
 	 */
 	public static <T extends Settable<T> & Duplicatable<T> & DimensionCount>

@@ -45,7 +45,6 @@ public class NanSum {
 	 * @param alg
 	 * @param storage
 	 * @param sum
-	 * @param count
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & NaN<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U sum)

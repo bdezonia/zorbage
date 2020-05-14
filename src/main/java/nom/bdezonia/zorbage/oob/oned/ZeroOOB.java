@@ -41,7 +41,7 @@ public class ZeroOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 	/**
 	 * 
 	 * @param alg
-	 * @param a
+	 * @param length
 	 */
 	public ZeroOOB(T alg, long length) {
 		U zero = alg.construct();

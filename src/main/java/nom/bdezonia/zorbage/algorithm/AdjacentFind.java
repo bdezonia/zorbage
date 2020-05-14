@@ -42,8 +42,7 @@ public class AdjacentFind {
 	 * 
 	 * @param algebra
 	 * @param a
-	 * @param value
-	 * @return
+\	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
 		long compute(T algebra, IndexedDataSource<U> a)
@@ -55,7 +54,6 @@ public class AdjacentFind {
 	 * 
 	 * @param algebra
 	 * @param a
-	 * @param value
 	 * @param start
 	 * @param count
 	 * @return

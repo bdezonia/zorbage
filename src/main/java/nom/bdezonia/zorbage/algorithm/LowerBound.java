@@ -77,7 +77,8 @@ public class LowerBound {
 	/**
 	 * 
 	 * @param alg
-	 * @param cond
+	 * @param val
+	 * @param isLess
 	 * @param a
 	 * @return
 	 */

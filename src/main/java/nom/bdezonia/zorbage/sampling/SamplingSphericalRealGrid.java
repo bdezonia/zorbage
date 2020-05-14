@@ -30,7 +30,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
- * {@link SamplingSphericalGrid} is a 3-d {@link Sampling} in real spherical space.
+ * {@link SamplingSphericalRealGrid} is a 3-d {@link Sampling} in real spherical space.
  * It defines the grid origin's r, theta, and phi coordinates plus spacings and counts.
  * This allows one to build spherical coordinate grids that are partially complete
  * if so desired.

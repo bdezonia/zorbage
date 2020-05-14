@@ -43,7 +43,8 @@ public class ConstantOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U
 	/**
 	 * 
 	 * @param alg
-	 * @param a
+	 * @param length
+	 * @param c
 	 */
 	public ConstantOOB(T alg, long length, U c) {
 		this.alg = alg;

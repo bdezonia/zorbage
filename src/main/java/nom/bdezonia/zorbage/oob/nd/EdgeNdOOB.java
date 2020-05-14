@@ -42,8 +42,7 @@ public class EdgeNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
 	/**
 	 * 
-	 * @param alg
-	 * @param ds
+	 * @param d
 	 */
 	public EdgeNdOOB(MultiDimDataSource<U> d) {
 		if (d.numElements() < 1)

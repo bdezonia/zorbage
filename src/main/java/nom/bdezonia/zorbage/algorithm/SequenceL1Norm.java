@@ -42,9 +42,9 @@ public class SequenceL1Norm {
 	
 	/**
 	 * 
-	 * @param rmodAlgebra
+	 * @param normAlgebra
 	 * @param numAlgebra
-	 * @param rmod
+	 * @param seq
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W>, W>

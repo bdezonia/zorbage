@@ -45,7 +45,6 @@ public class ParallelTransform1 {
 	 * @param algU
 	 * @param proc
 	 * @param a
-	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure1<U> proc, IndexedDataSource<U> a)

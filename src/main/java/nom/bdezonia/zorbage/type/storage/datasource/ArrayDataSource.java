@@ -43,7 +43,7 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 	 * Contract: the U[] must not contain null elements.
 	 * 
 	 * @param algebra
-	 * @param list
+	 * @param data
 	 */
 	public ArrayDataSource(T algebra, U[] data) {
 		this.algebra = algebra;

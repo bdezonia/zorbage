@@ -59,7 +59,7 @@ public class StableSort {
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param compare
+	 * @param lessOrEqual
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>

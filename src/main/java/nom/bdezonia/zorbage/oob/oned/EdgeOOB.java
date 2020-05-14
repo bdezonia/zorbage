@@ -40,7 +40,7 @@ public class EdgeOOB<U> implements Procedure2<Long,U> {
 
 	/**
 	 * 
-	 * @param a
+	 * @param ds
 	 */
 	public EdgeOOB(IndexedDataSource<U> ds) {
 		if (ds.size() < 1)

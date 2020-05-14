@@ -30,10 +30,10 @@ package nom.bdezonia.zorbage.type.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param T the tensor space
- * @param U the tensor member
- * @param V the scalar space
- * @param W the scalar member
+ * @param <T> the tensor space </T>
+ * @param <U> the tensor member </U>
+ * @param <V> the scalar space </V>
+ * @param <W> the scalar member </W>
  */
 public interface TensorProduct<T extends TensorProduct<T,U,V,W>, U, V extends Field<V,W>, W>
   extends

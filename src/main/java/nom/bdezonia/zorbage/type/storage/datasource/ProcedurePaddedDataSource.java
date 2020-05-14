@@ -47,7 +47,7 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 
 	/**
 	 * 
-	 * @param algebra
+	 * @param alg
 	 * @param storage
 	 * @param proc
 	 */
