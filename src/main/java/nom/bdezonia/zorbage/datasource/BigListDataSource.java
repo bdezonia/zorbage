@@ -41,26 +41,25 @@ public class BigListDataSource<T extends Algebra<T,U>,U>
 	public static long MAX_ITEMS = BigList.MAX_ITEMS;
 	
 	private final T algebra;
-	private final long size;
 	private final BigList<U> data;
 	
 	public BigListDataSource(T algebra, long numItems) {
 		this.algebra = algebra;
-		this.size = numItems;
 		this.data = new BigList<U>(numItems);
 		for (long i = 0; i < numItems; i++) {
 			this.data.set(i, algebra.construct());
 		}
 	}
 
+	public BigListDataSource(T alg, BigList<U> list) {
+		this.algebra = alg;
+		this.data = list;
+	}
+
 	@Override
 	public BigListDataSource<T,U> duplicate() {
-		BigListDataSource<T,U> ds = new BigListDataSource<T,U>(algebra, size);
-		for (long i = 0; i < size; i++) {
-			U v = this.data.get(i);
-			ds.set(i, v);
-		}
-		return ds;
+		// shallow copy
+		return new BigListDataSource<T,U>(algebra, data);
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class BigListDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public long size() {
-		return size;
+		return data.size();
 	}
 
 	@Override
