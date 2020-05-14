@@ -93,7 +93,7 @@ public class TestSumSquareCount {
 			expSumSq += (nums[i] - avg.v()) * (nums[i] - avg.v());
 		}
 		assertEquals(expSumSq,sumSqDevs.v(),0.1);
-		StdDev.compute(G.DBL, data, tmp);
+		StdDevApprox.compute(G.DBL, data, tmp);
 		assertEquals(13384.333819806,tmp.v(),tol);
 		// value according to https://www.calculator.net/statistics-calculator.html
 	}

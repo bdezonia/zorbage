@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestStdDev {
+public class TestVarianceApprox {
 
 	@Test
 	public void test() {
@@ -48,7 +48,7 @@ public class TestStdDev {
 		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,-7,4,9,-13});
 		Float64Member result = G.DBL.construct();
-		StdDev.compute(G.DBL, a, result);
-		assertEquals(8.7863530545955, result.v(), 0.000000000001);
+		VarianceApprox.compute(G.DBL, a, result);
+		assertEquals(77.19999999999967340366862025, result.v(), 0.00000000001);
 	}
 }

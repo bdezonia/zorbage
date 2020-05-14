@@ -2,16 +2,16 @@
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2020 Barry DeZonia
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -26,45 +26,44 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.type.algebra.*;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
- * 
  * @author Barry DeZonia
- *
  */
 public class Variance {
 
-	private Variance() {}
-	
-	/**
-	 * 
-	 * @param alg
-	 * @param storage
-	 * @param result
-	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> &
-								Invertible<U> & Ordered<U>, U>
-		void compute(T alg, IndexedDataSource<U> storage, U result)
-	{
-		long storageSize = storage.size();
-		if (storageSize == 0 || storageSize == 1) {
-			alg.zero().call(result);
-			return;
-		}
-		U avg = alg.construct();
-		U sum = alg.construct();
-		U count = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
-		SumSquareCount.compute(alg, storage, avg, sum, count);
-		alg.subtract().call(count, one, count);
-		alg.divide().call(sum, count, result);
-	}
+    /**
+     *
+     * @param alg
+     * @param source
+     * @param result
+     * @param <T>
+     * @param <U>
+     */
+    public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Invertible<U> & Unity<U>, U>
+        void compute(T alg, IndexedDataSource<U> source, U result)
+    {
+        if (source.size() <= 1) {
+            alg.zero().call(result);
+            return;
+        }
+        U mean = alg.construct();
+        U sum = alg.construct();
+        U tmp = alg.construct();
+        U n = alg.construct();
+        U one = alg.construct();
+        alg.unity().call(one);
+        Mean.compute(alg, source, mean);
+        for (long i = 0; i < source.size(); i++) {
+            source.get(i, tmp);
+            alg.subtract().call(tmp, mean, tmp);
+            alg.multiply().call(tmp, tmp, tmp);
+            alg.add().call(sum, tmp, sum);
+            alg.add().call(n, one, n);
+        }
+        alg.subtract().call(n, one, n);
+        alg.divide().call(sum, n, result);
+    }
 }

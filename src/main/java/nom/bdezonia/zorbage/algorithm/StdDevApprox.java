@@ -2,16 +2,16 @@
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2020 Barry DeZonia
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -26,56 +26,33 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.algebra.Addition;
+import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.type.algebra.Invertible;
+import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.type.algebra.Roots;
+import nom.bdezonia.zorbage.type.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
 
 /**
+ * 
  * @author Barry DeZonia
+ *
  */
-public class TestVarianceNaive {
+public class StdDevApprox {
 
-	@Test
-	public void test1() {
-
-		double tol = 0.0000000000000001;
-
-		Float64Member v = G.DBL.construct();
-		Float64Member vn = G.DBL.construct();
-
-		double[] values;
-		IndexedDataSource<Float64Member> nums;
-
-		values = new double[]{-44.33333, 100, -2.4, -3, 10000, 400, 250000.1};
-		nums = ArrayStorage.allocateDoubles(values);
-
-		Variance.compute(G.DBL, nums, v);
-		VarianceNaive.compute(G.DBL, nums, vn);
-
-		assertTrue(Math.abs(v.v() - vn.v()) < tol);
-
-		values = new double[]{1.0e150, 0.00001};
-		nums = ArrayStorage.allocateDoubles(values);
-
-		// BOTH slightly wrong
-		Variance.compute(G.DBL, nums, v);
-		VarianceNaive.compute(G.DBL, nums, vn);
-
-		// CORRECT
-		HighPrecisionMember vp = G.HP.construct();
-		IndexedDataSource<HighPrecisionMember> numsPrecise = new ReadOnlyHighPrecisionDataSource<>(G.DBL, nums);
-		VarianceNaive.compute(G.HP, numsPrecise, vp);
-
-		//System.out.println("optimized " + v.v());
-		//System.out.println("naive " + vn.v());
-		//System.out.println("precise " + vp.v());
-
-		//assertTrue(Math.abs(v.v() - vn.v()) < 0.1);
+	private StdDevApprox() {}
+	
+	/**
+	 * 
+	 * @param storage
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U> & Ordered<U>, U>
+		void compute(T alg, IndexedDataSource<U> storage, U result)
+	{
+		VarianceApprox.compute(alg, storage, result);
+		alg.sqrt().call(result, result);
 	}
 }

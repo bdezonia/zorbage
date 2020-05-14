@@ -2,16 +2,16 @@
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2020 Barry DeZonia
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -26,44 +26,29 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebras.G;
+import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
+ * 
  * @author Barry DeZonia
+ *
  */
-public class VarianceNaive {
+public class TestStdDevApprox {
 
-    /**
-     *
-     * @param alg
-     * @param source
-     * @param result
-     * @param <T>
-     * @param <U>
-     */
-    public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Invertible<U> & Unity<U>, U>
-        void compute(T alg, IndexedDataSource<U> source, U result)
-    {
-        if (source.size() <= 1) {
-            alg.zero().call(result);
-            return;
-        }
-        U mean = alg.construct();
-        U sum = alg.construct();
-        U tmp = alg.construct();
-        U n = alg.construct();
-        U one = alg.construct();
-        alg.unity().call(one);
-        Mean.compute(alg, source, mean);
-        for (long i = 0; i < source.size(); i++) {
-            source.get(i, tmp);
-            alg.subtract().call(tmp, mean, tmp);
-            alg.multiply().call(tmp, tmp, tmp);
-            alg.add().call(sum, tmp, sum);
-            alg.add().call(n, one, n);
-        }
-        alg.subtract().call(n, one, n);
-        alg.divide().call(sum, n, result);
-    }
+	@Test
+	public void test() {
+
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
+				new double[] {1,-7,4,9,-13});
+		Float64Member result = G.DBL.construct();
+		StdDevApprox.compute(G.DBL, a, result);
+		assertEquals(8.7863530545955, result.v(), 0.000000000001);
+	}
 }
