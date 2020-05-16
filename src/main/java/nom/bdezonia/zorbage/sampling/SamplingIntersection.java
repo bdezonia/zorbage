@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
-import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
+import nom.bdezonia.zorbage.algebra.Settable;
 
 /**
  * {@link SamplingIntersection} is a {@link Sampling} that iterated the set of points

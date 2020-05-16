@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.datasource;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * 

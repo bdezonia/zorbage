@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.data.rational.RationalMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.datasource.RawData;
 
 /**
@@ -50,7 +50,7 @@ public class MatrixScaleByRational {
 	 * @param matrixOut
 	 */
 	public static <U extends MatrixMember<W> & RawData<W>,
-					V extends Algebra<V,W> & nom.bdezonia.zorbage.type.algebra.ScaleByRational<W>,
+					V extends Algebra<V,W> & nom.bdezonia.zorbage.algebra.ScaleByRational<W>,
 					W>
 		void compute(V memberAlgebra, RationalMember scalar, U matrixIn, U matrixOut)
 	{

@@ -28,13 +28,12 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.tuple.Tuple10;
 import nom.bdezonia.zorbage.tuple.Tuple8;
-import nom.bdezonia.zorbage.type.data.float32.octonion.OctonionFloat32Member;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
+import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 
 /**
  * 
@@ -48,7 +47,7 @@ public class TestSplat8 {
 		OctonionFloat32Member value = G.OFLT.construct("{1,2,3,4,5,6,7,8}");
 		Tuple8<Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member>
 			tuple =
-				new Tuple8<>(G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct());
+				new Tuple8<>(G.FLT.construct(), G.FLT.construct(), G.FLT.construct(), G.FLT.construct(), G.FLT.construct(), G.FLT.construct(), G.FLT.construct(), G.FLT.construct());
 		Splat8.toTuple(value, tuple);
 		assertEquals(1, tuple.a().v(), 0);
 		assertEquals(2, tuple.b().v(), 0);
@@ -64,7 +63,7 @@ public class TestSplat8 {
 	public void test2() {
 		Tuple8<Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member,Float32Member>
 			tuple =
-				new Tuple8<>(G.FLT.construct("1"),G.FLT.construct("2"),G.FLT.construct("3"),G.FLT.construct("4"),G.FLT.construct("5"),G.FLT.construct("6"),G.FLT.construct("7"),G.FLT.construct("8"));
+				new Tuple8<>(G.FLT.construct("1"), G.FLT.construct("2"), G.FLT.construct("3"), G.FLT.construct("4"), G.FLT.construct("5"), G.FLT.construct("6"), G.FLT.construct("7"), G.FLT.construct("8"));
 		OctonionFloat32Member value = G.OFLT.construct();
 		Splat8.toValue(tuple, value);
 		assertEquals(1, value.r(), 0);

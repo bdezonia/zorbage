@@ -28,16 +28,16 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
 import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Algebra;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * 

@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.oob.oned;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NaN;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.NaN;
 
 /**
  * 

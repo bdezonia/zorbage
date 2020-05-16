@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
 
 /**
  * {@link Bounds} is a private class with a static public calculation method for finding

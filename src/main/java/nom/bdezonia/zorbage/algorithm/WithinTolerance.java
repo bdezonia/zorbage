@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Tolerance;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Tolerance;
 
 /**
  * 

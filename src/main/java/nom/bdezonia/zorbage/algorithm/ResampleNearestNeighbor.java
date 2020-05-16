@@ -28,8 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.resample.ResampleNN;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Allocatable;
 
 /**
  * 

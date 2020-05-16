@@ -29,16 +29,15 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.predicate.EqualConstant;
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
 import nom.bdezonia.zorbage.predicate.LessThanConstant;
 import nom.bdezonia.zorbage.predicate.Predicate;
-import nom.bdezonia.zorbage.type.data.int8.SignedInt8Algebra;
-import nom.bdezonia.zorbage.type.data.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.int8.SignedInt8Algebra;
+import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

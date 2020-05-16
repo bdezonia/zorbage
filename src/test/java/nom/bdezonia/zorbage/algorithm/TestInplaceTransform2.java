@@ -28,15 +28,11 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import nom.bdezonia.zorbage.algebra.*;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 
 /**
  * 

@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * A typical use for this class is to take a source, wrap it with an out of

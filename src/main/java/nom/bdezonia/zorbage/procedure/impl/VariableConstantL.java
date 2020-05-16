@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 
 /**
  * 

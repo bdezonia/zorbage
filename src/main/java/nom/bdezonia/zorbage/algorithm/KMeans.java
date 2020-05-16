@@ -29,11 +29,11 @@ package nom.bdezonia.zorbage.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.data.point.Point;
-import nom.bdezonia.zorbage.type.data.point.PointAlgebra;
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.point.Point;
+import nom.bdezonia.zorbage.type.point.PointAlgebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

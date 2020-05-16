@@ -30,12 +30,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
  * 

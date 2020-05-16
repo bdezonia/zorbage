@@ -28,14 +28,14 @@ package nom.bdezonia.zorbage.predicate;
 
 // TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Infinite<U>,U>
+public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.Infinite<U>,U>
 	implements Predicate<U>
 {
 	private final T algebra;

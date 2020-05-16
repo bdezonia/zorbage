@@ -28,10 +28,9 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 
 /**
  * 

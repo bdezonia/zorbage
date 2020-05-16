@@ -30,7 +30,7 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
 import nom.bdezonia.zorbage.accessor.AccessorB;
-import nom.bdezonia.zorbage.type.data.rational.RationalMember;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
  * 

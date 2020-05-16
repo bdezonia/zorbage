@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
 import nom.bdezonia.zorbage.datasource.RawData;
 
 /**
@@ -49,7 +49,7 @@ public class MatrixScaleByDouble {
 	 * @param matrixOut
 	 */
 	public static <U extends MatrixMember<W> & RawData<W>,
-					V extends Algebra<V,W> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<W>,
+					V extends Algebra<V,W> & nom.bdezonia.zorbage.algebra.ScaleByDouble<W>,
 					W>
 		void compute(V memberAlgebra, Double scalar, U matrixIn, U matrixOut)
 	{

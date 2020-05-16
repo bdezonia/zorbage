@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -45,7 +45,7 @@ public class ScaleByDoubleAndRound {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.ScaleByDoubleAndRound<U>, U>
+	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.ScaleByDoubleAndRound<U>, U>
 		void compute(T algebra, Double scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		FixedTransform2a.compute(algebra, algebra, scale, algebra.scaleByDoubleAndRound(), a, b);

@@ -28,11 +28,11 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
+import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
 
 /**
  * 

@@ -26,15 +26,16 @@
  */
 package nom.bdezonia.zorbage.procedure.impl;
 
+import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Negate<T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Addition<U>,U>
+public class Negate<T extends Algebra<T,U> & Addition<U>,U>
 	implements Procedure2<U,U>
 {
 	private final T algebra;

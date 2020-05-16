@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.RModule;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.Ring;
+import nom.bdezonia.zorbage.algebra.RModule;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
+import nom.bdezonia.zorbage.algebra.Ring;
 
 /**
  * 

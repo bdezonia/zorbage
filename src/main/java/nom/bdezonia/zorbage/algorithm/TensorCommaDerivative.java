@@ -29,8 +29,8 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.TensorMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.TensorMember;
 
 /**
  * 

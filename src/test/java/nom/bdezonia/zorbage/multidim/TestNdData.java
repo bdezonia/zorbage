@@ -28,16 +28,15 @@ package nom.bdezonia.zorbage.multidim;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.axis.IdentityAxis;
 import nom.bdezonia.zorbage.axis.StringDefinedAxis;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

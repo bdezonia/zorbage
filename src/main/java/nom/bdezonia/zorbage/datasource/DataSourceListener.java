@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 
 /**
  * 

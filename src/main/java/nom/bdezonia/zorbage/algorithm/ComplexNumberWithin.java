@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.GetComplex;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.GetComplex;
+import nom.bdezonia.zorbage.algebra.Ordered;
 
 /**
  * 

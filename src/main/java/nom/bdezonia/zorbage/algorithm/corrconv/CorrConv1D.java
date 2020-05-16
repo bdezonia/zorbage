@@ -27,9 +27,9 @@
 package nom.bdezonia.zorbage.algorithm.corrconv;
 
 import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

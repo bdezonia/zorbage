@@ -26,12 +26,12 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.predicate.Predicate;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * 

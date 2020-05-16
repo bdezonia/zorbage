@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 
 /**
  * 

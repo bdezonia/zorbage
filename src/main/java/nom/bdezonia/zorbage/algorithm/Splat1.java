@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
-import nom.bdezonia.zorbage.type.algebra.GetReal;
-import nom.bdezonia.zorbage.type.algebra.SetReal;
+import nom.bdezonia.zorbage.algebra.GetReal;
+import nom.bdezonia.zorbage.algebra.SetReal;
 
 /**
  * 

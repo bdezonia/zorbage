@@ -26,12 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.RModule;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.RingWithUnity;
-import nom.bdezonia.zorbage.type.ctor.Constructible1dLong;
+import nom.bdezonia.zorbage.algebra.Constructible1dLong;
+import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
+import nom.bdezonia.zorbage.algebra.RModule;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
+import nom.bdezonia.zorbage.algebra.RingWithUnity;
 
 /**
  * 

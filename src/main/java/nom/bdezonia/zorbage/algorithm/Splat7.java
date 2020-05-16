@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.accessor.AccessorD;
 import nom.bdezonia.zorbage.accessor.AccessorE;
 import nom.bdezonia.zorbage.accessor.AccessorF;
 import nom.bdezonia.zorbage.accessor.AccessorG;
-import nom.bdezonia.zorbage.type.algebra.GetOctonion;
-import nom.bdezonia.zorbage.type.algebra.SetOctonion;
+import nom.bdezonia.zorbage.algebra.GetOctonion;
+import nom.bdezonia.zorbage.algebra.SetOctonion;
 
 /**
  * 

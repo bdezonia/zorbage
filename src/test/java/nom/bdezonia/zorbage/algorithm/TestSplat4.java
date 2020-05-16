@@ -28,13 +28,12 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.tuple.Tuple10;
 import nom.bdezonia.zorbage.tuple.Tuple4;
-import nom.bdezonia.zorbage.type.data.float32.quaternion.QuaternionFloat32Member;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32Member;
+import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 
 /**
  * 
@@ -47,7 +46,7 @@ public class TestSplat4 {
 	public void test1() {
 		QuaternionFloat32Member value = G.QFLT.construct("{1,2,3,4}");
 		Tuple4<Float32Member,Float32Member,Float32Member,Float32Member> tuple =
-				new Tuple4<>(G.FLT.construct(),G.FLT.construct(),G.FLT.construct(),G.FLT.construct());
+				new Tuple4<>(G.FLT.construct(), G.FLT.construct(), G.FLT.construct(), G.FLT.construct());
 		Splat4.toTuple(value, tuple);
 		assertEquals(1, tuple.a().v(), 0);
 		assertEquals(2, tuple.b().v(), 0);
@@ -58,7 +57,7 @@ public class TestSplat4 {
 	@Test
 	public void test2() {
 		Tuple4<Float32Member,Float32Member,Float32Member,Float32Member> tuple =
-				new Tuple4<>(G.FLT.construct("1"),G.FLT.construct("2"),G.FLT.construct("3"),G.FLT.construct("4"));
+				new Tuple4<>(G.FLT.construct("1"), G.FLT.construct("2"), G.FLT.construct("3"), G.FLT.construct("4"));
 		QuaternionFloat32Member value = G.QFLT.construct();
 		Splat4.toValue(tuple, value);
 		assertEquals(1, value.r(), 0);

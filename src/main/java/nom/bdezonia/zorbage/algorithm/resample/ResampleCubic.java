@@ -28,15 +28,16 @@ package nom.bdezonia.zorbage.algorithm.resample;
 
 import java.math.BigDecimal;
 
+import nom.bdezonia.zorbage.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 
 /**
  * 
@@ -59,7 +60,7 @@ public class ResampleCubic {
 	 * @param maxPieces
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, 
+	public static <T extends Algebra<T,U> & Addition<U> & ScaleByDouble<U>,
 					U extends Allocatable<U>>
 		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input, int maxPieces)
 	{
@@ -128,7 +129,7 @@ public class ResampleCubic {
 		return output;
 	}
 	
-	private static class Computer<T extends Algebra<T,U> & Addition<U> & nom.bdezonia.zorbage.type.algebra.ScaleByDouble<U>, U> implements Runnable {
+	private static class Computer<T extends Algebra<T,U> & Addition<U> & ScaleByDouble<U>, U> implements Runnable {
 	
 		private final int numD;
 		private final long[] newDims;

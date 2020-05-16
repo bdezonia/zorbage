@@ -19,11 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.algorithm.FFT;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

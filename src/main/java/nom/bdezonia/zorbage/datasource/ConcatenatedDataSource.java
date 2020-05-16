@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.datasource;
 
 import java.math.BigInteger;
 
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * 

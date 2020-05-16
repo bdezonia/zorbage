@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.algebra.Trigonometric;
 
 /* Adapted from code in the Boost libraries
  * 

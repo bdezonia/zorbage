@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.data.rational.RationalMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -46,7 +46,7 @@ public class ScaleByRational {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.ScaleByRational<U>, U>
+	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.ScaleByRational<U>, U>
 		void compute(T algebra, RationalMember scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		FixedTransform2a.compute(algebra, algebra, scale, algebra.scaleByRational(), a, b);

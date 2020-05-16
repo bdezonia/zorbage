@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
 
 /**
  * 

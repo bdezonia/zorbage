@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.tuple.Tuple6;
 import nom.bdezonia.zorbage.tuple.Tuple7;
 import nom.bdezonia.zorbage.tuple.Tuple8;
 import nom.bdezonia.zorbage.tuple.Tuple9;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

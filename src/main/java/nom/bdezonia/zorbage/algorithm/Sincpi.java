@@ -26,13 +26,13 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.RealConstants;
-import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.algebra.RealConstants;
+import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.Trigonometric;
+import nom.bdezonia.zorbage.algebra.Unity;
 
 /**
  * 

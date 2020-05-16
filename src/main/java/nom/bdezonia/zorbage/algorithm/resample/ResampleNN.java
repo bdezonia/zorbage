@@ -28,15 +28,15 @@ package nom.bdezonia.zorbage.algorithm.resample;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 
 /**
  * 

@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
-import nom.bdezonia.zorbage.type.ctor.StorageType;
+import nom.bdezonia.zorbage.algebra.Duplicatable;
+import nom.bdezonia.zorbage.algebra.StorageType;
 
 /**
  * 

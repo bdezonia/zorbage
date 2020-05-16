@@ -29,9 +29,9 @@ package nom.bdezonia.zorbage.algorithm;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

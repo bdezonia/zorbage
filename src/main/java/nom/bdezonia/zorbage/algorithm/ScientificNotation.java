@@ -30,9 +30,9 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import nom.bdezonia.zorbage.type.data.universal.OctonionRepresentation;
-import nom.bdezonia.zorbage.type.data.universal.TensorOctonionRepresentation;
-import nom.bdezonia.zorbage.type.data.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.universal.TensorOctonionRepresentation;
+import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
 
 /**
  * 

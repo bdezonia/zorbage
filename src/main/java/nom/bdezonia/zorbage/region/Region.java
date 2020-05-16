@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.region;
 
 import nom.bdezonia.zorbage.misc.Set;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
+import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
 
 /**
  * 

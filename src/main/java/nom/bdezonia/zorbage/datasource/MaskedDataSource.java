@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.bool.BooleanMember;
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.type.bool.BooleanMember;
 
 /**
  * 

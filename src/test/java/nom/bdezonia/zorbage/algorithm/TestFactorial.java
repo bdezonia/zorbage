@@ -32,24 +32,23 @@ import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.data.int10.UnsignedInt10Member;
-import nom.bdezonia.zorbage.type.data.int11.SignedInt11Member;
-import nom.bdezonia.zorbage.type.data.int128.UnsignedInt128Member;
-import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Member;
-import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Member;
-import nom.bdezonia.zorbage.type.data.int2.UnsignedInt2Member;
-import nom.bdezonia.zorbage.type.data.int3.UnsignedInt3Member;
-import nom.bdezonia.zorbage.type.data.int32.UnsignedInt32Member;
-import nom.bdezonia.zorbage.type.data.int5.UnsignedInt5Member;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.data.int64.UnsignedInt64Member;
-import nom.bdezonia.zorbage.type.data.int7.UnsignedInt7Member;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.int10.UnsignedInt10Member;
+import nom.bdezonia.zorbage.type.int11.SignedInt11Member;
+import nom.bdezonia.zorbage.type.int128.UnsignedInt128Member;
+import nom.bdezonia.zorbage.type.int13.UnsignedInt13Member;
+import nom.bdezonia.zorbage.type.int16.UnsignedInt16Member;
+import nom.bdezonia.zorbage.type.int2.UnsignedInt2Member;
+import nom.bdezonia.zorbage.type.int3.UnsignedInt3Member;
+import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
+import nom.bdezonia.zorbage.type.int5.UnsignedInt5Member;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.int64.UnsignedInt64Member;
+import nom.bdezonia.zorbage.type.int7.UnsignedInt7Member;
+import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
  * 

@@ -28,8 +28,8 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
 import nom.bdezonia.zorbage.accessor.AccessorB;
-import nom.bdezonia.zorbage.type.algebra.GetComplex;
-import nom.bdezonia.zorbage.type.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.GetComplex;
+import nom.bdezonia.zorbage.algebra.SetComplex;
 
 /**
  * 

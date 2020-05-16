@@ -28,18 +28,17 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Algebra;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Algebra;
-import nom.bdezonia.zorbage.type.data.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.data.tuple.Tuple2Algebra;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorageGeneric;
+import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
+import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.tuple.Tuple2Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorageGeneric;
 
 /**
  * 

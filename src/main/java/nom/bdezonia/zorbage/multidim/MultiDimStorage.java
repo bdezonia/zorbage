@@ -27,10 +27,10 @@
 package nom.bdezonia.zorbage.multidim;
 
 import nom.bdezonia.zorbage.misc.LongUtils;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

@@ -28,13 +28,12 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.tuple.Tuple10;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.data.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 
 /**
  * 
@@ -46,7 +45,7 @@ public class TestSplat2 {
 	@Test
 	public void test1() {
 		ComplexFloat32Member value = G.CFLT.construct("{1.2,2.4}");
-		Tuple2<Float32Member,Float32Member> tuple = new Tuple2<>(G.FLT.construct(),G.FLT.construct());
+		Tuple2<Float32Member,Float32Member> tuple = new Tuple2<>(G.FLT.construct(), G.FLT.construct());
 		Splat2.toTuple(value, tuple);
 		assertEquals(1.2f, tuple.a().v(), 0);
 		assertEquals(2.4f, tuple.b().v(), 0);
@@ -54,7 +53,7 @@ public class TestSplat2 {
 
 	@Test
 	public void test2() {
-		Tuple2<Float32Member,Float32Member> tuple = new Tuple2<>(G.FLT.construct("1.2"),G.FLT.construct("2.4"));
+		Tuple2<Float32Member,Float32Member> tuple = new Tuple2<>(G.FLT.construct("1.2"), G.FLT.construct("2.4"));
 		ComplexFloat32Member value = G.CFLT.construct();
 		Splat2.toValue(tuple, value);
 		assertEquals(1.2f, value.r(), 0);

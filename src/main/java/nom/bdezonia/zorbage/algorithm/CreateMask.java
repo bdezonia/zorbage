@@ -26,13 +26,13 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.NdData;
 import nom.bdezonia.zorbage.predicate.Predicate;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.storage.Storage;
+import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

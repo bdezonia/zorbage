@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.axis.IdentityAxis;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

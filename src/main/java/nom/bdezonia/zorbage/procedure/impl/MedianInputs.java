@@ -27,11 +27,11 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.type.algebra.AdditiveGroup;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.algebra.AdditiveGroup;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.ArrayDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 

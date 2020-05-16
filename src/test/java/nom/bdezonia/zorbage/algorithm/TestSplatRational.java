@@ -33,7 +33,7 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.rational.RationalMember;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
  * 

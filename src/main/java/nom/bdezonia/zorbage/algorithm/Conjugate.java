@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -46,7 +46,7 @@ public class Conjugate {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.type.algebra.Conjugate<U>,U>
+	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.Conjugate<U>,U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		U tmpA = algebra.construct();

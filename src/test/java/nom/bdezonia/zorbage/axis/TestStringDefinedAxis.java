@@ -30,10 +30,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 /**
  * 

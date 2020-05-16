@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.procedure.impl.parse;
 
+import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.impl.AbsL;
@@ -64,25 +65,11 @@ import nom.bdezonia.zorbage.procedure.impl.TanhL;
 import nom.bdezonia.zorbage.procedure.impl.VariableConstantL;
 import nom.bdezonia.zorbage.procedure.impl.ZeroL;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.RealConstants;
-import nom.bdezonia.zorbage.type.algebra.Exponential;
-import nom.bdezonia.zorbage.type.algebra.Hyperbolic;
-import nom.bdezonia.zorbage.type.algebra.ImaginaryConstants;
-import nom.bdezonia.zorbage.type.algebra.InverseHyperbolic;
-import nom.bdezonia.zorbage.type.algebra.InverseTrigonometric;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.ModularDivision;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.OctonionConstants;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.QuaternionConstants;
-import nom.bdezonia.zorbage.type.algebra.Random;
-import nom.bdezonia.zorbage.type.algebra.Roots;
-import nom.bdezonia.zorbage.type.algebra.Trigonometric;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.QuaternionConstants;
+import nom.bdezonia.zorbage.algebra.Trigonometric;
 
 /**
  * 
@@ -875,7 +862,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Power.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof nom.bdezonia.zorbage.type.algebra.Power<?>)) {
+			if (!(algebra instanceof nom.bdezonia.zorbage.algebra.Power<?>)) {
 				status2.errMsg = "Parse error near '^' token: exponentiation not defined for given algebra";
 			}
 			else

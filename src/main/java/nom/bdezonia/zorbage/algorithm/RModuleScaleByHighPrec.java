@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.RawData;
 
 /**
@@ -50,7 +50,7 @@ public class RModuleScaleByHighPrec {
 	 * @param b
 	 */
 	public static <U extends RModuleMember<W> & RawData<W>,
-					V extends Algebra<V,W> & nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec<W>,
+					V extends Algebra<V,W> & nom.bdezonia.zorbage.algebra.ScaleByHighPrec<W>,
 					W>
 		void compute(V memberAlgebra, HighPrecisionMember scalar, U a, U b)
 	{

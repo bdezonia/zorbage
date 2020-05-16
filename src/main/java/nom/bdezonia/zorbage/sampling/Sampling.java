@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.sampling;
 
 import nom.bdezonia.zorbage.misc.Set;
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
 
 /**
  * {@link Sampling} defines the base class for samplings of all types. It

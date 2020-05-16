@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.GetComplex;
-import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.GetComplex;
+import nom.bdezonia.zorbage.algebra.SetQuaternion;
 
 /**
  * 

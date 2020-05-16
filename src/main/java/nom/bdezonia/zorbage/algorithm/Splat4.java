@@ -30,8 +30,8 @@ import nom.bdezonia.zorbage.accessor.AccessorA;
 import nom.bdezonia.zorbage.accessor.AccessorB;
 import nom.bdezonia.zorbage.accessor.AccessorC;
 import nom.bdezonia.zorbage.accessor.AccessorD;
-import nom.bdezonia.zorbage.type.algebra.GetQuaternion;
-import nom.bdezonia.zorbage.type.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.algebra.GetQuaternion;
+import nom.bdezonia.zorbage.algebra.SetQuaternion;
 
 /**
  * 

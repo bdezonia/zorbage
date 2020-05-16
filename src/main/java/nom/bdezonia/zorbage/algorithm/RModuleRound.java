@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.NumberMember;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.Rounding;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.NumberMember;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
+import nom.bdezonia.zorbage.algebra.Rounding;
 
 /**
  * 

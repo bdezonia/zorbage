@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.HighPrecRepresentation;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 /**
  * 

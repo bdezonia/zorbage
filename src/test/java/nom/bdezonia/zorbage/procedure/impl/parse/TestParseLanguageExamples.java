@@ -31,23 +31,22 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Algebra;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Matrix;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Algebra;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Algebra;
-import nom.bdezonia.zorbage.type.data.int16.UnsignedInt16Member;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Algebra;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
+import nom.bdezonia.zorbage.type.float64.real.Float64Matrix;
+import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.int16.SignedInt16Algebra;
+import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.int16.UnsignedInt16Algebra;
+import nom.bdezonia.zorbage.type.int16.UnsignedInt16Member;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
  * 

@@ -28,15 +28,14 @@ package nom.bdezonia.zorbage.procedure.impl.parse;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Algebra;
-import nom.bdezonia.zorbage.type.data.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.int16.SignedInt16Algebra;
+import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 
 /**
  * 
@@ -106,7 +105,7 @@ public class TestRealNumberEquation {
 				parser.parse(G.DBL, "$0+$1");
 		assertEquals(null, result.a());
 		Float64Member tmp = G.DBL.construct();
-		result.b().call(tmp,G.DBL.construct("7"),G.DBL.construct("9"));
+		result.b().call(tmp, G.DBL.construct("7"), G.DBL.construct("9"));
 		assertEquals(16, tmp.v(), 0.00000000000001);
 	}
 

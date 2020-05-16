@@ -7,14 +7,13 @@
 //
 package conway;
 
-import nom.bdezonia.zorbage.algebras.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
 import nom.bdezonia.zorbage.oob.nd.CyclicNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Algebra;
-import nom.bdezonia.zorbage.type.data.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.int1.UnsignedInt1Algebra;
+import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 
 /**
  * 

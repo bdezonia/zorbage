@@ -30,9 +30,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.data.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.algebra.G;
+
+import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
  * 

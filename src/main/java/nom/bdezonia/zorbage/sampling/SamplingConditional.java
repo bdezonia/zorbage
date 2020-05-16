@@ -27,9 +27,9 @@
 package nom.bdezonia.zorbage.sampling;
 
 import nom.bdezonia.zorbage.predicate.Predicate;
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
-import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
+import nom.bdezonia.zorbage.algebra.Settable;
 
 /**
  * {@link SamplingConditional} is a {@link Sampling} that includes the points of another

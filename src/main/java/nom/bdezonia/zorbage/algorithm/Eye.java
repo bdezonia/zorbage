@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.algebra.Unity;
-import nom.bdezonia.zorbage.type.ctor.Constructible2dLong;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Constructible2dLong;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.algebra.Unity;
 
 /**
  * 

@@ -27,12 +27,12 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.BitOperations;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.BitOperations;
+import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.Unity;
 
 //Adapted from an algorithm as published by Stepanov and Rose 2015.
 

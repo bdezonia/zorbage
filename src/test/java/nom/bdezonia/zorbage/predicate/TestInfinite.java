@@ -29,11 +29,10 @@ package nom.bdezonia.zorbage.predicate;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 public class TestInfinite {
 

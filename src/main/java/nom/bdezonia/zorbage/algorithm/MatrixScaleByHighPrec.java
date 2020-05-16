@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.MatrixMember;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.RawData;
 
 /**
@@ -50,7 +50,7 @@ public class MatrixScaleByHighPrec {
 	 * @param matrixOut
 	 */
 	public static <U extends MatrixMember<W> & RawData<W>,
-					V extends Algebra<V,W> & nom.bdezonia.zorbage.type.algebra.ScaleByHighPrec<W>,
+					V extends Algebra<V,W> & nom.bdezonia.zorbage.algebra.ScaleByHighPrec<W>,
 					W>
 		void compute(V memberAlgebra, HighPrecisionMember scalar, U matrixIn, U matrixOut)
 	{

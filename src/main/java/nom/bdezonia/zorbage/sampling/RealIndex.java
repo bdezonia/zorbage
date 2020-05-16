@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
-import nom.bdezonia.zorbage.type.algebra.Gettable;
-import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.Allocatable;
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
+import nom.bdezonia.zorbage.algebra.Duplicatable;
+import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.Settable;
 
 /**
  * {@link RealIndex} defines an n-dimensional real space point. Uses doubles as the basis

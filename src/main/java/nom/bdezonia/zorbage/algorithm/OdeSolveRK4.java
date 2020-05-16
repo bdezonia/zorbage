@@ -29,10 +29,10 @@ package nom.bdezonia.zorbage.algorithm;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Scale;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Scale;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

@@ -26,13 +26,13 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import org.junit.Test;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import static org.junit.Assert.assertTrue;
 

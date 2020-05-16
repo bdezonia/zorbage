@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.axis;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.data.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 /**
  * 

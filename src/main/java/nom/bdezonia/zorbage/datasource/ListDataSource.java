@@ -29,8 +29,8 @@ package nom.bdezonia.zorbage.datasource;
 import java.util.ArrayList;
 import java.util.List;
 
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.ctor.StorageConstruction;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * 

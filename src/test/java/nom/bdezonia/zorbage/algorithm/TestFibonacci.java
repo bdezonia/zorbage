@@ -30,11 +30,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.Test;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.int13.UnsignedInt13Member;
-import nom.bdezonia.zorbage.type.data.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.int13.UnsignedInt13Member;
+import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
  * 

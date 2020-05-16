@@ -26,8 +26,8 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebras.G;
-import nom.bdezonia.zorbage.type.data.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
 
 /**
  * 

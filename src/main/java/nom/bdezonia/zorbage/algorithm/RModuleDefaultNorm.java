@@ -26,19 +26,19 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.Conjugate;
-import nom.bdezonia.zorbage.type.algebra.GetReal;
-import nom.bdezonia.zorbage.type.algebra.Invertible;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Norm;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.RModuleMember;
-import nom.bdezonia.zorbage.type.algebra.Roots;
-import nom.bdezonia.zorbage.type.algebra.Scale;
-import nom.bdezonia.zorbage.type.algebra.ScaleComponents;
-import nom.bdezonia.zorbage.type.algebra.SetReal;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.GetReal;
+import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.Norm;
+import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
+import nom.bdezonia.zorbage.algebra.Roots;
+import nom.bdezonia.zorbage.algebra.Scale;
+import nom.bdezonia.zorbage.algebra.ScaleComponents;
+import nom.bdezonia.zorbage.algebra.SetReal;
 
 /**
  * 

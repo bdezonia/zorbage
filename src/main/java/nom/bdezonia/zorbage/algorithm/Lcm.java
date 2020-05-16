@@ -26,16 +26,16 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.type.algebra.AbsoluteValue;
-import nom.bdezonia.zorbage.type.algebra.Addition;
-import nom.bdezonia.zorbage.type.algebra.Algebra;
-import nom.bdezonia.zorbage.type.algebra.BitOperations;
-import nom.bdezonia.zorbage.type.algebra.Bounded;
-import nom.bdezonia.zorbage.type.algebra.EvenOdd;
-import nom.bdezonia.zorbage.type.algebra.ModularDivision;
-import nom.bdezonia.zorbage.type.algebra.Multiplication;
-import nom.bdezonia.zorbage.type.algebra.Ordered;
-import nom.bdezonia.zorbage.type.algebra.Unity;
+import nom.bdezonia.zorbage.algebra.AbsoluteValue;
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.BitOperations;
+import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.EvenOdd;
+import nom.bdezonia.zorbage.algebra.ModularDivision;
+import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.Unity;
 
 /**
  * Least Common Multiple algorithm

@@ -28,9 +28,9 @@ package nom.bdezonia.zorbage.sampling;
 
 import java.util.ArrayList;
 
-import nom.bdezonia.zorbage.type.algebra.DimensionCount;
-import nom.bdezonia.zorbage.type.algebra.Settable;
-import nom.bdezonia.zorbage.type.ctor.Duplicatable;
+import nom.bdezonia.zorbage.algebra.DimensionCount;
+import nom.bdezonia.zorbage.algebra.Duplicatable;
+import nom.bdezonia.zorbage.algebra.Settable;
 
 /**
  * {@link SamplingGeneral} is a {@link Sampling} where the point coordinates are added
