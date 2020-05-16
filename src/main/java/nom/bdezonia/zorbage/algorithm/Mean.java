@@ -51,7 +51,7 @@ public class Mean {
 	{
 		U sum = alg.construct();
 		U count = alg.construct();
-		SumCount.compute(alg, storage, sum, count);
+		SumWithCount.compute(alg, storage, sum, count);
 		alg.divide().call(sum, count, result);
 	}
 }

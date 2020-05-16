@@ -26,53 +26,50 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Addition;
-import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.NaN;
-import nom.bdezonia.zorbage.algebra.Unity;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NanSumCount {
+public class TestNanSumWithCount {
 
-	private NanSumCount() {}
-	
-	/**
-	 * 
-	 * @param alg
-	 * @param storage
-	 * @param sum
-	 * @param count
-	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & NaN<U>, U>
-		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
-	{
-		boolean foundSome = false;
-		U tmpSum = alg.construct();
-		U tmpCnt = alg.construct();
-		U value = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
-		long size = storage.size();
-		for (long i = 0; i < size; i++) {
-			storage.get(i, value);
-			if (!alg.isNaN().call(value)) {
-				foundSome = true;
-				alg.add().call(tmpSum, value, tmpSum);
-				alg.add().call(tmpCnt, one, tmpCnt);
-			}
-		}
-		if (foundSome) {
-			alg.assign().call(tmpSum, sum);
-			alg.assign().call(tmpCnt, count);
-		}
-		else {
-			alg.nan().call(sum);
-			alg.zero().call(count);
-		}
+	@Test
+	public void test1() {
+		Float64Member sum = G.DBL.construct();
+		Float64Member count = G.DBL.construct();
+		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(new double[0]);
+		NanSumWithCount.compute(G.DBL, storage, sum, count);
+		assertTrue(G.DBL.isNaN().call(sum));
+		assertEquals(0, count.v(), 0);
+	}
+
+	@Test
+	public void test2() {
+		Float64Member sum = G.DBL.construct();
+		Float64Member count = G.DBL.construct();
+		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(new double[] {Double.NaN});
+		NanSumWithCount.compute(G.DBL, storage, sum, count);
+		assertTrue(G.DBL.isNaN().call(sum));
+		assertEquals(0, count.v(), 0);
+	}
+
+	@Test
+	public void test3() {
+		Float64Member sum = G.DBL.construct();
+		Float64Member count = G.DBL.construct();
+		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(
+				new double[] {1, Double.NaN, 2, Double.NaN, 3, Double.NaN});
+		NanSumWithCount.compute(G.DBL, storage, sum, count);
+		assertEquals(6, sum.v(), 0);
+		assertEquals(3, count.v(), 0);
 	}
 }

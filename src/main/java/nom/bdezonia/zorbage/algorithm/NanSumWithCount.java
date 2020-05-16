@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -36,9 +37,9 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SumCount {
+public class NanSumWithCount {
 
-	private SumCount() {}
+	private NanSumWithCount() {}
 	
 	/**
 	 * 
@@ -47,22 +48,31 @@ public class SumCount {
 	 * @param sum
 	 * @param count
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & NaN<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
 	{
-		Sum.compute(alg, storage, sum);
-
-		// This avoids a need to compute a value from a long size at the expense of calculation.
-		// Maybe this will get optimized away. If not then need to build a construct from long
-		// capability that succeeds if long fits in U's range else throws exception.
-		
-		U tmp = alg.construct();
+		boolean foundSome = false;
+		U tmpSum = alg.construct();
+		U tmpCnt = alg.construct();
+		U value = alg.construct();
 		U one = alg.construct();
 		alg.unity().call(one);
 		long size = storage.size();
 		for (long i = 0; i < size; i++) {
-			alg.add().call(tmp, one, tmp);
+			storage.get(i, value);
+			if (!alg.isNaN().call(value)) {
+				foundSome = true;
+				alg.add().call(tmpSum, value, tmpSum);
+				alg.add().call(tmpCnt, one, tmpCnt);
+			}
 		}
-		alg.assign().call(tmp, count);
+		if (foundSome) {
+			alg.assign().call(tmpSum, sum);
+			alg.assign().call(tmpCnt, count);
+		}
+		else {
+			alg.nan().call(sum);
+			alg.zero().call(count);
+		}
 	}
 }

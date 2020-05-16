@@ -52,7 +52,7 @@ public class NanMean {
 	{
 		U sum = alg.construct();
 		U count = alg.construct();
-		NanSumCount.compute(alg, storage, sum, count);
+		NanSumWithCount.compute(alg, storage, sum, count);
 		alg.divide().call(sum, count, result);
 	}
 }
