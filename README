@@ -3,6 +3,12 @@ Zorbage: algebraic data types and algorithms for use in numeric processing
 Goals:
   - provide the framework for reusable numeric algorithms
   - support numeric computing in Java in an efficient manner
+    - provide code easier to develop and almost as fast as C++
+    - provide code that is faster and less error prone than Python & Matlab
+  - support very large data sets in an efficient manner
+  - break limitations of many programming languages in terms of the 
+      computable types provided and the extensibility of such types
+  - do all this with a powerful set of simple abstractions
 
 Support for:
   - integers, rationals, reals, complex numbers, quaternions, octonions
@@ -39,7 +45,7 @@ What can I do with Zorbage?
   
   Define your own data types
   
-    Do you have a custom data type? (Like DNA base pairs?). Can you define operators
+    Do you have a custom data type? (Like RNA base pairs?). Can you define operators
       between elements? (Like when two base pairs are equal?). Then you can define
       their algebra and reuse any zorbage algorithms that accept similarly defined
       types.
@@ -52,7 +58,7 @@ What can I do with Zorbage?
   Types can be stored in arrays, files, sparse structures, and JDBC
     database tables.
     
-  You can allocate and use huge (length Long.MAX_VAUE) data structures.
+  You can allocate and use huge (length > 2^32 elements) data structures.
   
   Data access is standardized as if everything is an array. Arrays can be
     concatenated, trimmed, subsampled, masked, padded, readonly, as well as
@@ -70,12 +76,12 @@ What can I do with Zorbage?
     vectors, matrices, and tensors. Zorbage includes 100's of predefined
     algorithms too.
     - Basic vector and matrix operations
-    - Calculate sin/cos/tan/sinh/cosh/tanh/exp of matrices
+    - Calculate sin/cos/tan/sinh/cosh/tanh/exp of various floats and also matrices
     - Basic runge kutta ode solver
     - FFT/InvFFT
     - Convolution/Correlation
     - Resamplers
-    - LUDecomp
+    - LUDecomp/LUSolve
     - Many C++ STL algorithms replicated
     - It can find roots, find derivatives, and solve differential
         equations numerically involving arbitrary scalar and vector
@@ -87,7 +93,8 @@ What can I do with Zorbage?
   
   Use type safe first class Function and Procedure objects. Pass them as
     arguments to code that can transform your data quickly and generically.
-    Write methods that return Functions and Procedures if needed.
+    Write methods that return Functions and Procedures if needed. Compute
+    values from user defined Functions and Procedures.
  
   Use parsers to create Procedures from strings. These Procedures represent
     equations that when fed values will compute a return value (the result of
@@ -122,7 +129,7 @@ Zorbage breaks Java barriers
   
   - in Zorbage "arrays" are indexed by 64-bit long integers rather
       than 32-bit integers. Relatedly data lists sizes can reach
-      Long.MAX_VALUE.
+      2^64-1.
     
   - breaks the limitation to integer types being in byte aligned sizes
     
@@ -239,6 +246,7 @@ Partial bibliography
   C++ STL documentation
   Mathematica documentation
   Matlab documentation
+  Haskell documentation
   Ruby documentation
   Pascal language definitions
   Many articles on Mathworld and Wikipedia
