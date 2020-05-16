@@ -178,7 +178,7 @@ public class Nth {
 	 * @param <U>
 	 */
 	public static <U>
-	void twelth(IndexedDataSource<U> data, U value)
+	void twelfth(IndexedDataSource<U> data, U value)
 	{
 		data.get(11, value);
 	}
@@ -517,7 +517,7 @@ public class Nth {
 	 * @param <U>
 	 */
 	public static <T extends Algebra<T,U>, U>
-	void twelth(T alg, AccessorL<U> data, U value)
+	void twelfth(T alg, AccessorL<U> data, U value)
 	{
 		alg.assign().call(data.l(), value);
 	}
