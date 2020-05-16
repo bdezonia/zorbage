@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.storage;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.datasource.BigListDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.storage.file.FileStorage;
@@ -50,22 +51,14 @@ public class Storage {
 		allocate(long numElements, U type)
 	{
 		try {
-
 			return ArrayStorage.allocate(numElements, type);
-
 		}
-		// not enough mem avail
-		catch (OutOfMemoryError e) {
-
-			return FileStorage.allocate(numElements, type);
-
+		catch (Exception e) {
+			// out of memory
+			// or requested size is larger than any array can hold
+			// or others I might be too accepting of
 		}
-		// probably numElements bigger than will fit in an array
-		catch (IllegalArgumentException e) {
-
-			return FileStorage.allocate(numElements, type);
-
-		}
+		return FileStorage.allocate(numElements, type);
 	}
 	
 	/**
@@ -78,8 +71,14 @@ public class Storage {
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
 		allocate(StorageConstruction strategy, long numElements, U type)
 	{
-		if (strategy == StorageConstruction.MEM_ARRAY)
+		if (strategy == StorageConstruction.MEM_ARRAY) {
 			return ArrayStorage.allocate(numElements, type);
+			// if would be nice if we tested size and if too big for array we tried to
+			//   allocate a BigListDataSource. But that ctor needs an Algebra. At one
+			//   time I tried changing these signatures to take (numElem, algebra)
+			//   which was pretty elegant but it killed the ability to support the
+			//   Point type with varying sized elements (2d or 3d or 4d etc.).
+		}
 		else if (strategy == StorageConstruction.MEM_SPARSE)
 			return SparseStorage.allocate(numElements, type);
 		else if (strategy == StorageConstruction.MEM_VIRTUAL)
