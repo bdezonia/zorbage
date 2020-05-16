@@ -128,7 +128,7 @@ public class Nth {
 	 * @param <U>
 	 */
 	public static <U>
-	void eigth(IndexedDataSource<U> data, U value)
+	void eighth(IndexedDataSource<U> data, U value)
 	{
 		data.get(7, value);
 	}
