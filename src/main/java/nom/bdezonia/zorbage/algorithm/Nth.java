@@ -276,4 +276,19 @@ public class Nth {
 	{
 		data.get(19, value);
 	}
+
+        /**
+         *
+         * @param data
+         * @param value
+         * @param <U>
+         */
+        public static <U>
+        void last(IndexedDataSource<U> data, U value)
+        {
+		long sz = data.size();
+		if (sz == 0)
+			throw new IllegalArgumentException("cannot get last element from empty list");
+                data.get(sz-1, value);
+        }
 }
