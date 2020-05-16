@@ -289,6 +289,6 @@ public class Nth {
 		long sz = data.size();
 		if (sz == 0)
 			throw new IllegalArgumentException("cannot get last element from empty list");
-                data.get(sz-1, value);
+		data.get(sz-1, value);
         }
 }
