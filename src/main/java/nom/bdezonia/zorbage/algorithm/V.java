@@ -33,11 +33,11 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 /**
  * @author Barry DeZonia
  */
-public class Nth {
+public class V {
 
 	// do not instantiate
 
-	private Nth() { }
+	private V() { }
 
 	/**
 	 *
