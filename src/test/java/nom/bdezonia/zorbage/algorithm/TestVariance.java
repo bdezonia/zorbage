@@ -55,7 +55,7 @@ public class TestVariance {
 		values = new double[]{-44.33333, 100, -2.4, -3, 10000, 400, 250000.1};
 		nums = ArrayStorage.allocateDoubles(values);
 
-		VarianceApprox.compute(G.DBL, nums, v);
+		ApproxVariance.compute(G.DBL, nums, v);
 		Variance.compute(G.DBL, nums, vn);
 
 		assertTrue(Math.abs(v.v() - vn.v()) < tol);
@@ -64,7 +64,7 @@ public class TestVariance {
 		nums = ArrayStorage.allocateDoubles(values);
 
 		// BOTH wrong
-		VarianceApprox.compute(G.DBL, nums, v);
+		ApproxVariance.compute(G.DBL, nums, v);
 		Variance.compute(G.DBL, nums, vn);
 
 		// CORRECT

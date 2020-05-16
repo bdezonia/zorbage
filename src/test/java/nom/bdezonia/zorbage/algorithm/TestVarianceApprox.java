@@ -47,7 +47,7 @@ public class TestVarianceApprox {
 		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,-7,4,9,-13});
 		Float64Member result = G.DBL.construct();
-		VarianceApprox.compute(G.DBL, a, result);
+		ApproxVariance.compute(G.DBL, a, result);
 		assertEquals(77.19999999999967340366862025, result.v(), 0.00000000001);
 	}
 }

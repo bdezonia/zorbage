@@ -51,25 +51,25 @@ public class TestSumSquareCount {
 		Float64Member avg = G.DBL.construct();
 
 		IndexedDataSource<Float64Member> data = ArrayStorage.allocateDoubles(new double[] {-5,5,0,0,0,0,0,0,0,0});
-		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(50, sumSqDevs.v(), tol);
 
 		data = ArrayStorage.allocateDoubles(new double[] {18,28,23,23,23,23,23,23,23,23});
-		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(50, sumSqDevs.v(), tol);
 		
 		data = ArrayStorage.allocateDoubles(new double[] {996,998,1000,1000,1000,1002,1004,1000,1000,1000});
-		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(40, sumSqDevs.v(), tol);
 		
 		data = ArrayStorage.allocateDoubles(new double[] {-2000,-3000,-1000,-1000,-1000,0,1000,-1000,-1000,-1000});
-		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(10000000, sumSqDevs.v(), tol);
@@ -86,13 +86,13 @@ public class TestSumSquareCount {
 		Float64Member sumSqDevs = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
 		Float64Member avg = G.DBL.construct();
-		SumSquareCount.compute(G.DBL, data, avg, sumSqDevs, count);
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 		double expSumSq = 0;
 		for (int i = 0; i < nums.length; i++) {
 			expSumSq += (nums[i] - avg.v()) * (nums[i] - avg.v());
 		}
 		assertEquals(expSumSq,sumSqDevs.v(),0.1);
-		StdDevApprox.compute(G.DBL, data, tmp);
+		ApproxStdDev.compute(G.DBL, data, tmp);
 		assertEquals(13384.333819806,tmp.v(),tol);
 		// value according to https://www.calculator.net/statistics-calculator.html
 	}

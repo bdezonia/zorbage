@@ -47,7 +47,7 @@ public class TestStdDevApprox {
 		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,-7,4,9,-13});
 		Float64Member result = G.DBL.construct();
-		StdDevApprox.compute(G.DBL, a, result);
+		ApproxStdDev.compute(G.DBL, a, result);
 		assertEquals(8.7863530545955, result.v(), 0.000000000001);
 	}
 }

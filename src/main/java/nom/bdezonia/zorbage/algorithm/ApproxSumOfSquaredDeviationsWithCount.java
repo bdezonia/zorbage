@@ -39,11 +39,11 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class SumSquareCount {
+public class ApproxSumOfSquaredDeviationsWithCount {
 
 	// TODO: maybe based upon data characteristics we can choose between impl 1 and impl 3
 	
-	private SumSquareCount() {}
+	private ApproxSumOfSquaredDeviationsWithCount() {}
 	
 	/**
 	 * 

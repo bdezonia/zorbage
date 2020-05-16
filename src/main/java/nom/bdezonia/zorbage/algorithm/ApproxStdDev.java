@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.Roots;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -39,32 +40,19 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class VarianceApprox {
+public class ApproxStdDev {
 
-	private VarianceApprox() {}
+	private ApproxStdDev() {}
 	
 	/**
 	 * 
-	 * @param alg
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> &
-								Invertible<U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Invertible<U> & Roots<U> & Ordered<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		long storageSize = storage.size();
-		if (storageSize == 0 || storageSize == 1) {
-			alg.zero().call(result);
-			return;
-		}
-		U avg = alg.construct();
-		U sum = alg.construct();
-		U count = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
-		SumSquareCount.compute(alg, storage, avg, sum, count);
-		alg.subtract().call(count, one, count);
-		alg.divide().call(sum, count, result);
+		ApproxVariance.compute(alg, storage, result);
+		alg.sqrt().call(result, result);
 	}
 }
