@@ -115,10 +115,7 @@ public class Multiply {
 		// swap terms so that fastest form of input is used
 		
 		if (algebra.isGreater().call(xPos, yPos)) {
-			U xTmp = algebra.construct();
-			algebra.assign().call(xPos, xTmp);
-			algebra.assign().call(yPos, xPos);
-			algebra.assign().call(xTmp, yPos);
+			Swap.compute(algebra, xPos, yPos);
 		}
 		
 		// 1st Stepanov algorithm inline
