@@ -339,7 +339,7 @@ public final class ComplexFloat64CartesianTensorProductMember
 			OctonionRepresentation o = tensor.get(i);
 			value.setR(o.r().doubleValue());
 			value.setI(o.i().doubleValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

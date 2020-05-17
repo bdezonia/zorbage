@@ -164,7 +164,7 @@ public final class ComplexFloat16VectorMember
 			OctonionRepresentation o = rmod.get(i);
 			value.setR(o.r().floatValue());
 			value.setI(o.i().floatValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

@@ -334,7 +334,7 @@ public final class Float32CartesianTensorProductMember
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
 			value.setV(o.r().floatValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

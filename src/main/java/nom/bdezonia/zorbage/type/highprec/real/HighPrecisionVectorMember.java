@@ -159,7 +159,7 @@ public final class HighPrecisionVectorMember
 		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
 			value.setV(o.r());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

@@ -172,7 +172,7 @@ public final class QuaternionFloat64RModuleMember
 			value.setI(o.i().doubleValue());
 			value.setJ(o.j().doubleValue());
 			value.setK(o.k().doubleValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

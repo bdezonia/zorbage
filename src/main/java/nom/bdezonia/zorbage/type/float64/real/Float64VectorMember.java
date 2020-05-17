@@ -159,7 +159,7 @@ public final class Float64VectorMember
 		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
 			value.setV(o.r().doubleValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

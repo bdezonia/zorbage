@@ -353,7 +353,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 			value.setI(o.i());
 			value.setJ(o.j());
 			value.setK(o.k());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

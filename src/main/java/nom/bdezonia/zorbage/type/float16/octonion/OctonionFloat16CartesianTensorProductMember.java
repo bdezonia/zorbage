@@ -369,7 +369,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			value.setI0(o.i0().floatValue());
 			value.setJ0(o.j0().floatValue());
 			value.setK0(o.k0().floatValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

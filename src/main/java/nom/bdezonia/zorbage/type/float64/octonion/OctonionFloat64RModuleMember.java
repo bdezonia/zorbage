@@ -188,7 +188,7 @@ public final class OctonionFloat64RModuleMember
 			value.setI0(o.i0().doubleValue());
 			value.setJ0(o.j0().doubleValue());
 			value.setK0(o.k0().doubleValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

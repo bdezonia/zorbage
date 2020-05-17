@@ -239,7 +239,7 @@ public final class OctonionHighPrecisionMatrixMember
 			value.setI0(o.i0());
 			value.setJ0(o.j0());
 			value.setK0(o.k0());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

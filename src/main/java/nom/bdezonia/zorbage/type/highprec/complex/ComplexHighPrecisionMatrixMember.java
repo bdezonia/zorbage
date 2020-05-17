@@ -215,7 +215,7 @@ public final class ComplexHighPrecisionMatrixMember
 			OctonionRepresentation o = mat.get(i);
 			value.setR(o.r());
 			value.setI(o.i());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

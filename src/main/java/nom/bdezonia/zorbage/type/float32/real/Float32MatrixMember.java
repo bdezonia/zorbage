@@ -210,7 +210,7 @@ public final class Float32MatrixMember
 		for (long i = 0; i < matSize; i++) {
 			OctonionRepresentation o = mat.get(i);
 			value.setV(o.r().floatValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

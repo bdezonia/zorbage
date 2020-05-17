@@ -164,7 +164,7 @@ public final class ComplexHighPrecisionVectorMember
 			OctonionRepresentation o = rmod.get(i);
 			value.setR(o.r());
 			value.setI(o.i());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

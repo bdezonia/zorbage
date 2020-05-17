@@ -339,7 +339,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			OctonionRepresentation o = tensor.get(i);
 			value.setR(o.r());
 			value.setI(o.i());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 

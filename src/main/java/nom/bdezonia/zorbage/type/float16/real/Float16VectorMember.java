@@ -159,7 +159,7 @@ public final class Float16VectorMember
 		for (long i = 0; i < rmodSize; i++) {
 			OctonionRepresentation o = rmod.get(i);
 			value.setV(o.r().floatValue());
-			storage.set(i,value);
+			storage.set(i, value);
 		}
 	}
 
