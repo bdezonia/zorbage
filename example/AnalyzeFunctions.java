@@ -1,3 +1,6 @@
+/*
+ */
+
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Derivative;
 import nom.bdezonia.zorbage.algorithm.FindFixedPoint;
@@ -9,6 +12,8 @@ import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Algebra;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
@@ -206,5 +211,66 @@ public class AnalyzeFunctions {
 		ffp.setMaxIters(10000);
 		foundIndex = ffp.call(guess, result);
 		// etc.
+	}
+
+	public void example6() {
+
+		// let's show that you can work with complex valued functions
+
+		// Let's define a procedure in complex plane that computes y = (x + (1.4,3.2))^2
+
+		Procedure2<ComplexFloat64Member, ComplexFloat64Member> func =
+
+				new Procedure2<ComplexFloat64Member, ComplexFloat64Member>() {
+
+					// define the constant that later we will use repeatedly
+
+					private final ComplexFloat64Member constant = new ComplexFloat64Member(1.4, 3.2);
+
+					// define the procedure's transformation code here
+
+					public void call(ComplexFloat64Member in, ComplexFloat64Member out) {
+
+						// G.CDBL is the Algebra that holds all the operations you can do with
+						//   complex float 64 numbers.
+
+						// allocate a temporary variable
+
+						ComplexFloat64Member tmp = G.CDBL.construct();
+
+						// add the constant to the input and store in tmp
+
+						G.CDBL.add().call(in, constant, tmp);
+
+						// multiply tmp by itself and stor in out
+
+						G.CDBL.multiply().call(tmp, tmp, out);
+
+					}
+
+				};
+
+		// now let's calculate it's derivative at the point 5, -3
+
+		ComplexFloat64Member point = new ComplexFloat64Member(5, -3);
+
+		// compute the derivative from a point on the curve and a point (0.001,0.002) away
+
+		ComplexFloat64Member delta = new ComplexFloat64Member(0.001, 0.002);
+
+		// set aside space for the result
+
+		ComplexFloat64Member result = new ComplexFloat64Member();
+
+		// setup the derivative calculator
+
+		Derivative<ComplexFloat64Algebra,ComplexFloat64Member> deriv =
+				new Derivative<ComplexFloat64Algebra, ComplexFloat64Member>(G.CDBL, func, delta);
+
+		// compute the derivative at the point
+
+		deriv.call(point, result);
+
+		System.out.println(result);
 	}
 }
