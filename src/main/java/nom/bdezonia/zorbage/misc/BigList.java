@@ -95,6 +95,8 @@ public class BigList<T extends Allocatable<T>> {
 	}
 
 	public void set(long i, T v) {
+		if (v == null)
+			throw new IllegalArgumentException("biglists cannot accept null values");
 		if (i < 0)
 			throw new IllegalArgumentException("negative index error");
 		if (i >= MAX_ITEMS)
@@ -106,6 +108,8 @@ public class BigList<T extends Allocatable<T>> {
 	}
 	
 	public void add(T val) {
+		if (v == null)
+			throw new IllegalArgumentException("biglists cannot accept null values");
 		if ((lists.size() == 0) ||
 			(lists.get(lists.size()-1).size() == Integer.MAX_VALUE))
 		{

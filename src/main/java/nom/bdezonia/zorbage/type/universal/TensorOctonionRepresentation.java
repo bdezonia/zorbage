@@ -51,9 +51,6 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		if (count == 0) count = 1;
 		if (values == null || count != values.size()) {
 			values = new BigList<OctonionRepresentation>(count, new OctonionRepresentation());
-			for (long i = 0; i < count; i++) {
-				values.add(null);
-			}
 		}
 		this.dims = dims.clone();
 	}
