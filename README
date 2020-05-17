@@ -22,6 +22,9 @@ Support for:
 
 What can I do with Zorbage?
 
+  (For more in depth introductions see:
+     https://github.com/bdezonia/zorbage/tree/master/example)
+
   Define multidimensional data sets with flexible out of bounds data
     handling procedures.
     
