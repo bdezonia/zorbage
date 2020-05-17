@@ -136,13 +136,20 @@ public final class ComplexHighPrecisionVectorMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length(), new OctonionRepresentation());
 		for (long i = 0; i < length(); i++) {
 			storage.get(i, value);
 			BigDecimal real = value.r();
 			BigDecimal imag = value.i();
-			OctonionRepresentation o = new OctonionRepresentation(real,imag);
-			values.set(i, o);
+			OctonionRepresentation o = values.get(i);
+			o.setR(real);
+			o.setI(imag);
+			o.setJ(BigDecimal.ZERO);
+			o.setK(BigDecimal.ZERO);
+			o.setL(BigDecimal.ZERO);
+			o.setI0(BigDecimal.ZERO);
+			o.setJ0(BigDecimal.ZERO);
+			o.setK0(BigDecimal.ZERO);
 		}
 		rep.setRModule(length(), values);
 	}

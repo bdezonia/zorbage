@@ -29,13 +29,15 @@ package nom.bdezonia.zorbage.misc;
 import java.util.ArrayList;
 import java.util.List;
 
+import nom.bdezonia.zorbage.algebra.Allocatable;
+
 /**
  * 
  * @author Barry DeZonia
  *
  * @param <T>
  */
-public class BigList<T> {
+public class BigList<T extends Allocatable<T>> {
 	
 	public static long MAX_ITEMS = 1L * Integer.MAX_VALUE * Integer.MAX_VALUE;
 
@@ -45,7 +47,7 @@ public class BigList<T> {
 		lists = new ArrayList<List<T>>();
 	}
 	
-	public BigList(long size) {
+	public BigList(long size, T example) {
 		if (size < 0)
 			throw new IllegalArgumentException("negative index error");
 		if (size > MAX_ITEMS)
@@ -56,14 +58,14 @@ public class BigList<T> {
 			if ((size / Integer.MAX_VALUE) > 0) {
 				l = new ArrayList<T>(Integer.MAX_VALUE);
 				for (int i = 0; i < Integer.MAX_VALUE; i++) {
-					l.add(null);
+					l.add(example.allocate());
 				}
 			}
 			else {
 				int sz = (int) size;
 				l = new ArrayList<T>(sz);
 				for (int i = 0; i < sz; i++) {
-					l.add(null);
+					l.add(example.allocate());
 				}
 			}
 			lists.add(l);

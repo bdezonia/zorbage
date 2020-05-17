@@ -50,7 +50,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		long count = LongUtils.numElements(dims);
 		if (count == 0) count = 1;
 		if (values == null || count != values.size()) {
-			values = new BigList<OctonionRepresentation>(count);
+			values = new BigList<OctonionRepresentation>(count, new OctonionRepresentation());
 			for (long i = 0; i < count; i++) {
 				values.add(null);
 			}
@@ -134,7 +134,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 	
 	public BigList<OctonionRepresentation> getRModule() {
 		long size = getRModuleDim();
-		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size);
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size, new OctonionRepresentation());
 		for (long i = 0; i < size; i++) {
 			list.set(i, nonNull(values.get(i)));
 		}
@@ -159,7 +159,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 		long r = getMatrixRowDim();
 		long c = getMatrixColDim();
 		long size = LongUtils.numElements(new long[] {c,r});
-		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size);
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(size, new OctonionRepresentation());
 		for (long i = 0; i < size; i++) {
 			list.set(i, nonNull(values.get(i)));
 		}
@@ -172,7 +172,7 @@ public class TensorOctonionRepresentation implements DimensionsResizable {
 
 	public BigList<OctonionRepresentation> getTensor() {
 		long valuesSize = values.size();
-		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(valuesSize);
+		BigList<OctonionRepresentation> list = new BigList<OctonionRepresentation>(valuesSize, new OctonionRepresentation());
 		for (long i = 0; i < valuesSize; i++) {
 			list.set(i, nonNull(values.get(i)));
 		}

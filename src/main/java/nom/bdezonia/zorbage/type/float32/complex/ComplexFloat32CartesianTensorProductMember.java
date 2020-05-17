@@ -311,13 +311,20 @@ public final class ComplexFloat32CartesianTensorProductMember
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
 		ComplexFloat32Member value = new ComplexFloat32Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = BigDecimal.valueOf(value.r());
 			BigDecimal im = BigDecimal.valueOf(value.i());
-			OctonionRepresentation o = new OctonionRepresentation(re,im);
-			values.set(i, o);
+			OctonionRepresentation o = values.get(i);
+			o.setR(re);
+			o.setI(im);
+			o.setJ(BigDecimal.ZERO);
+			o.setK(BigDecimal.ZERO);
+			o.setL(BigDecimal.ZERO);
+			o.setI0(BigDecimal.ZERO);
+			o.setJ0(BigDecimal.ZERO);
+			o.setK0(BigDecimal.ZERO);
 		}
 		rep.setTensor(dims, values);
 	}

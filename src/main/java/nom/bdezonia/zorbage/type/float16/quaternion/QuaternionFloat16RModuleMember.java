@@ -140,15 +140,22 @@ public final class QuaternionFloat16RModuleMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		QuaternionFloat16Member value = new QuaternionFloat16Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length());
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length(), new OctonionRepresentation());
 		for (long i = 0; i < length(); i++) {
 			storage.get(i, value);
 			BigDecimal r = BigDecimal.valueOf(value.r());
 			BigDecimal im = BigDecimal.valueOf(value.i());
 			BigDecimal j = BigDecimal.valueOf(value.j());
 			BigDecimal k = BigDecimal.valueOf(value.k());
-			OctonionRepresentation o = new OctonionRepresentation(r,im,j,k);
-			values.set(i, o);
+			OctonionRepresentation o = values.get(i);
+			o.setR(r);
+			o.setI(im);
+			o.setJ(j);
+			o.setK(k);
+			o.setL(BigDecimal.ZERO);
+			o.setI0(BigDecimal.ZERO);
+			o.setJ0(BigDecimal.ZERO);
+			o.setK0(BigDecimal.ZERO);
 		}
 		rep.setRModule(length(), values);
 	}

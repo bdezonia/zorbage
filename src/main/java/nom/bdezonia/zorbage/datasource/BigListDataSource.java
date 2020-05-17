@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.datasource;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
@@ -35,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
  * @author Barry DeZonia
  *
  */
-public class BigListDataSource<T extends Algebra<T,U>,U>
+public class BigListDataSource<T extends Algebra<T,U>, U extends Allocatable<U>>
 	implements IndexedDataSource<U>
 {
 	public static long MAX_ITEMS = BigList.MAX_ITEMS;
@@ -43,22 +44,13 @@ public class BigListDataSource<T extends Algebra<T,U>,U>
 	private final T algebra;
 	private final BigList<U> data;
 	
-	public BigListDataSource(T algebra, long numItems) {
+	public BigListDataSource(T algebra, BigList<U> list) {
 		this.algebra = algebra;
-		this.data = new BigList<U>(numItems);
-		for (long i = 0; i < numItems; i++) {
-			this.data.set(i, algebra.construct());
-		}
+		this.data = list;
 	}
 
-	public BigListDataSource(T alg, BigList<U> list) {
-		this.algebra = alg;
-		this.data = list;
-
-		// NOTE: lurking bug - Imagine someone defines a BigList. The default is that the U's are all null in a BigList.
-		// Not pass it in here. We construct without changing the BigList. Now get() from the DataSource. Runtime crash.
-		// the U passed into get() cannot be set to null. It's important we educate users on the correct way to use
-		// BigLists.
+	public BigListDataSource(T algebra, long numItems) {
+		this(algebra, new BigList<U>(numItems, algebra.construct()));
 	}
 
 	@Override
@@ -69,14 +61,11 @@ public class BigListDataSource<T extends Algebra<T,U>,U>
 		//   This is the only DataSource that actually holds elements. Subtle bugs will happen if duplicate will only
 		//   return a shallow copy.
 
-		BigList<U> newData = new BigList<>(data.size());
+		BigList<U> newData = new BigList<>(data.size(), algebra.construct());
 		for (long i = 0; i < data.size(); i++) {
 			U oldVal = data.get(i);
-			if (oldVal != null) {
-				U newVal = algebra.construct();
-				algebra.assign().call(oldVal, newVal);
-				newData.set(i, newVal);
-			}
+			U newVal = newData.get(i);
+			algebra.assign().call(oldVal, newVal);
 		}
 		return new BigListDataSource<T,U>(algebra, newData);
 	}

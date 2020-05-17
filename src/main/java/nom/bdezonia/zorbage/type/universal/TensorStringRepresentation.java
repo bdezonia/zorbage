@@ -84,7 +84,7 @@ public class TensorStringRepresentation {
 
 	public BigList<OctonionRepresentation> firstVectorValues() {
 		long count = firstVectorDimension();
-		BigList<OctonionRepresentation> vectorElements = new BigList<OctonionRepresentation>(count);
+		BigList<OctonionRepresentation> vectorElements = new BigList<OctonionRepresentation>(count, new OctonionRepresentation());
 		for (long i = 0; i < count; i++)
 			vectorElements.set(i,elements.get(i));
 		return vectorElements;
@@ -100,7 +100,7 @@ public class TensorStringRepresentation {
 	public BigList<OctonionRepresentation> firstMatrixValues() {
 		long[] dims = firstMatrixDimensions();
 		long count = dims[0] * dims[1];
-		BigList<OctonionRepresentation> matrixElements = new BigList<OctonionRepresentation>(count);
+		BigList<OctonionRepresentation> matrixElements = new BigList<OctonionRepresentation>(count, new OctonionRepresentation());
 		for (long i = 0; i < count; i++)
 			matrixElements.set(i,elements.get(i));
 		return matrixElements;

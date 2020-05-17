@@ -199,7 +199,7 @@ public final class OctonionHighPrecisionMatrixMember
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = value.r();
@@ -210,8 +210,15 @@ public final class OctonionHighPrecisionMatrixMember
 			BigDecimal i0 = value.i0();
 			BigDecimal j0 = value.j0();
 			BigDecimal k0 = value.k0();
-			OctonionRepresentation o = new OctonionRepresentation(re,im,j,k,l,i0,j0,k0);
-			values.set(i, o);
+			OctonionRepresentation o = values.get(i);
+			o.setR(re);
+			o.setI(im);
+			o.setJ(j);
+			o.setK(k);
+			o.setL(l);
+			o.setI0(i0);
+			o.setJ0(j0);
+			o.setK0(k0);
 		}
 		rep.setMatrix(rows, cols, values);
 	}

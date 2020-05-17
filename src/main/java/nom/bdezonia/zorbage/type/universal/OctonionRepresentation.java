@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.type.universal;
 
 import java.math.BigDecimal;
 
+import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -35,7 +36,9 @@ import nom.bdezonia.zorbage.misc.Hasher;
  * @author Barry DeZonia
  *
  */
-public class OctonionRepresentation {
+public class OctonionRepresentation
+	implements Allocatable<OctonionRepresentation>
+{
 
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
 	
@@ -125,5 +128,10 @@ public class OctonionRepresentation {
 					this.k0.equals(oct.k0);
 		}
 		return false;
+	}
+
+	@Override
+	public OctonionRepresentation allocate() {
+		return new OctonionRepresentation();
 	}
 }

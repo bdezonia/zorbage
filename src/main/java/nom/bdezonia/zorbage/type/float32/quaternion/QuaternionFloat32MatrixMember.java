@@ -191,15 +191,22 @@ public final class QuaternionFloat32MatrixMember
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
 		QuaternionFloat32Member value = new QuaternionFloat32Member();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = BigDecimal.valueOf(value.r());
 			BigDecimal im = BigDecimal.valueOf(value.i());
 			BigDecimal j = BigDecimal.valueOf(value.j());
 			BigDecimal k = BigDecimal.valueOf(value.k());
-			OctonionRepresentation o = new OctonionRepresentation(re,im,j,k);
-			values.set(i, o);
+			OctonionRepresentation o = values.get(i);
+			o.setR(re);
+			o.setI(im);
+			o.setJ(j);
+			o.setK(k);
+			o.setL(BigDecimal.ZERO);
+			o.setI0(BigDecimal.ZERO);
+			o.setJ0(BigDecimal.ZERO);
+			o.setK0(BigDecimal.ZERO);
 		}
 		rep.setMatrix(rows, cols, values);
 	}

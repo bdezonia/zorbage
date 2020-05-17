@@ -104,7 +104,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 	}
 	
-	private class Token {
+	private class Token implements Allocatable<Token>{
 
 		private String text;
 		private int start;
@@ -124,6 +124,8 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		int getStart() {
 			return start;
 		}
+		
+		public Token allocate() { return new Token(); }
 	}
 	
 	// $0, $1, $99, etc.

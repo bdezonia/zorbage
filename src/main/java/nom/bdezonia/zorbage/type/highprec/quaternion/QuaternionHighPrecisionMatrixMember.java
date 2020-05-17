@@ -191,15 +191,22 @@ public final class QuaternionHighPrecisionMatrixMember
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
 		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
-		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize);
+		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
 			BigDecimal re = value.r();
 			BigDecimal im = value.i();
 			BigDecimal j = value.j();
 			BigDecimal k = value.k();
-			OctonionRepresentation o = new OctonionRepresentation(re,im,j,k);
-			values.set(i, o);
+			OctonionRepresentation o = values.get(i);
+			o.setR(re);
+			o.setI(im);
+			o.setJ(j);
+			o.setK(k);
+			o.setL(BigDecimal.ZERO);
+			o.setI0(BigDecimal.ZERO);
+			o.setJ0(BigDecimal.ZERO);
+			o.setK0(BigDecimal.ZERO);
 		}
 		rep.setMatrix(rows, cols, values);
 	}
