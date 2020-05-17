@@ -108,7 +108,7 @@ public class BigList<T extends Allocatable<T>> {
 	}
 	
 	public void add(T val) {
-		if (v == null)
+		if (val == null)
 			throw new IllegalArgumentException("biglists cannot accept null values");
 		if ((lists.size() == 0) ||
 			(lists.get(lists.size()-1).size() == Integer.MAX_VALUE))
