@@ -1,7 +1,7 @@
 Zorbage: algebraic data types and algorithms for use in numeric processing
 
 Goals:
-  - provide the framework for reusable numeric algorithms
+  - provide a framework for reusable numeric algorithms
   - support numeric computing in Java in an efficient manner
     - provide code easier to develop and almost as fast as C++
     - provide code that is faster and less error prone than Python & Matlab
@@ -58,7 +58,7 @@ What can I do with Zorbage?
   Types can be stored in arrays, files, sparse structures, and JDBC
     database tables.
     
-  You can allocate and use huge (length > 2^32 elements) data structures.
+  You can allocate and use huge (length up to 2^63 elements) data structures.
   
   Data access is standardized as if everything is an array. Arrays can be
     concatenated, trimmed, subsampled, masked, padded, readonly, as well as
@@ -129,7 +129,7 @@ Zorbage breaks Java barriers
   
   - in Zorbage "arrays" are indexed by 64-bit long integers rather
       than 32-bit integers. Relatedly data lists sizes can reach
-      2^64-1.
+      2^63.
     
   - breaks the limitation to integer types being in byte aligned sizes
     
@@ -146,7 +146,9 @@ Zorbage breaks Java barriers
   - supports (unbounded) rational numbers
     
   - builds reals, complexes, quaternions, and octonions from any
-      of the floating types
+      of the floating types. You can write one algorithm and substitute
+      one runtime parameter to calculate in 16 bit, 32 bit, 64 bit, or
+      seemingly unbounded accuracy.
     
 Zorbage is fast
   
