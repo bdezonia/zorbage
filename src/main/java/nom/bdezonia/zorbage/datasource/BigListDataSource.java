@@ -54,12 +54,31 @@ public class BigListDataSource<T extends Algebra<T,U>,U>
 	public BigListDataSource(T alg, BigList<U> list) {
 		this.algebra = alg;
 		this.data = list;
+
+		// NOTE: lurking bug - Imagine someone defines a BigList. The default is that the U's are all null in a BigList.
+		// Not pass it in here. We construct without changing the BigList. Now get() from the DataSource. Runtime crash.
+		// the U passed into get() cannot be set to null. It's important we educate users on the correct way to use
+		// BigLists.
 	}
 
 	@Override
 	public BigListDataSource<T,U> duplicate() {
-		// shallow copy
-		return new BigListDataSource<T,U>(algebra, data);
+
+		// Deep copy needed!
+		//
+		//   This is the only DataSource that actually holds elements. Subtle bugs will happen if duplicate will only
+		//   return a shallow copy.
+
+		BigList<U> newData = new BigList<>(data.size());
+		for (long i = 0; i < data.size(); i++) {
+			U oldVal = data.get(i);
+			if (oldVal != null) {
+				U newVal = algebra.construct();
+				algebra.assign().call(oldVal, newVal);
+				newData.set(i, newVal);
+			}
+		}
+		return new BigListDataSource<T,U>(algebra, newData);
 	}
 
 	@Override
