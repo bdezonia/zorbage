@@ -1,13 +1,28 @@
-/*
- */
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.Derivative;
+import nom.bdezonia.zorbage.algorithm.FindFixedPoint;
+import nom.bdezonia.zorbage.algorithm.Mean;
+import nom.bdezonia.zorbage.algorithm.NewtonRaphson;
+import nom.bdezonia.zorbage.datasource.ProcedureDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
+import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
+/**
+ * @author Barry DeZonia
+ */
 public class AnalyzeFunctions {
 
 	// This is an example showing some of the things you can do with functions and procedures.
 
 	// A function takes input values and returns a computed value. A procedure is very similar.
 	// It is a function that takes input values and rather than returning an output it places
-	// its output value in the last input passed to the procedure.
+	// its output value in the last inputs passed to the procedure. The procedure reserves
+	// space for its outputs.
 
 	public void example1() {
 
@@ -15,17 +30,20 @@ public class AnalyzeFunctions {
 
 		Procedure2<Float64Member, Float64Member> squarer =
 				new Procedure2<Float64Member, Float64Member>()
-		{
-			public void call(Float64Member in, Float64Member out) {
-				out.setV(in.v() * in.v());
-			}
-		};
+				{
+					public void call(Float64Member in, Float64Member out) {
+						out.setV(in.v() * in.v());
+					}
+				};
 
 		// Now let's exercise it
 
 		Float64Member in = G.DBL.construct("4");
+
 		Float64Member out = G.DBL.construct();
+
 		squarer.call(in, out);
+
 		System.out.println(out); // prints 16.0
 	}
 
@@ -35,27 +53,28 @@ public class AnalyzeFunctions {
 
 		Procedure2<Long, Float64Member> cuber =
 				new Procedure2<Long, Float64Member>()
-		{
-			public void call(Long in, Float64Member out) {
-				out.setV(in.v() * in.v() * in.v());
-			}
-		};
+				{
+					public void call(Long in, Float64Member out) {
+						out.setV(in * in * in);
+					}
+				};
 
 		// Let's treat this procedure as a source of data
 
-		ProcedureDataSource<Float64Member> source = new ProcedureDataSource<>(cuber);
+		ProcedureDataSource<Float64Member> source = new ProcedureDataSource<Float64Member>(cuber);
 
 		// And specify that we want to look at the 10 cubes starting at 5^3
 
-		TrimmedDataSource<Float64Member> trimmed = new TrimmedDataSource<>(source, 5, 10);
+		TrimmedDataSource<Float64Member> trimmed =
+				new TrimmedDataSource<Float64Member>(source, 5, 10);
 
-		// Now calc the mean of the first 10 cubes starting with 5^3
+		// So no we can calc the mean of 5^3 + 6^3 + 7^3 + 8^3 + 9^3 + 10^3 + 11^3 + 12^3 + 13^3 + 14^3
 
 		Float64Member mean = G.DBL.construct();
 
-		Mean.compute(trimmed, mean);
+		Mean.compute(G.DBL, trimmed, mean);
 
-		System.out.println(mean);  // prints X: TODO test and use actual value here
+		System.out.println(mean);
 	}
 
 	public void example3() {
@@ -64,37 +83,128 @@ public class AnalyzeFunctions {
 
 		Procedure2<Float64Member, Float64Member> line =
 				new Procedure2<Float64Member, Float64Member>()
-		{
-			public void call(Float64Member in, Float64Member out) {
-				out.setV(4 * in.v() + 7);
-			}
-		};
+				{
+					public void call(Float64Member in, Float64Member out) {
+						out.setV(4 * in.v() + 7);
+					}
+				};
 
 		// now let's calculate it's derivative at the point 14.0
 
 		Float64Member point = new Float64Member(14.0);
+
+		// compute the derivative from a point on the curve and a point 0.001 away
+
 		Float64Member delta = new Float64Member(0.001);
-		Float64Member value = new Float64Member();
 
-		Derivative<Float64Algebra,Float64Member> deriv = new Derivative<>(G.DBL, line, delta);
+		// set aside space for the result
 
-		deriv.call(point, value);
+		Float64Member result = new Float64Member();
 
-		System.out.println(value);  // prints 4.0
+		// setup the derivative calculator
+
+		Derivative<Float64Algebra,Float64Member> deriv =
+				new Derivative<Float64Algebra,Float64Member>(G.DBL, line, delta);
+
+		// compute the derivative at the point
+
+		deriv.call(point, result);
+
+		System.out.println(result);  // prints 4.0
 	}
 
 	public void example4() {
 
-		// let's calculate a root of a procedure near a point
+		// let's calculate a root of an equation near a point
 
-		NewtonRaphson
+		// define a quadratic formula as a procedure
 
+		Procedure2<Float32Member,Float32Member> proc =
+				new Procedure2<Float32Member, Float32Member>()
+				{
+					public void call(Float32Member in, Float32Member out) {
+						// y = 2x^2 -13x + 3
+						out.setV(2f*in.v()*in.v() - 13f*in.v() + 3f);
+					}
+				};
+
+		// set the granularity of the search
+
+		Float32Member delta = G.FLT.construct("0.1");
+
+		// guess a point we think is near the root
+
+		Float32Member guess = G.FLT.construct("1.5");
+
+		// set aside space for the result
+
+		Float32Member result = G.FLT.construct();
+
+		// set up the most iterations we'll try
+
+		long maxIters = 100;
+
+		NewtonRaphson<Float32Algebra,Float32Member> nr =
+				new NewtonRaphson<Float32Algebra,Float32Member>(G.FLT, proc, delta, maxIters);
+
+		// do the search and respond
+
+		if (nr.call(guess, result)) {
+			System.out.println("root found at " + result.v());
+		}
+		else {
+			System.out.println("no root found near " + guess.v() + " after " + maxIters + " iterations");
+		}
 	}
 
 	public void example5() {
 
 		// let's find a fixed point of a procedure
 
-		FindFixedPoint
+		// we're going to look at the sine function that applies to Float64Members (doubles).
+
+		Procedure2<Float64Member,Float64Member> sine = G.DBL.sin();
+
+		// we define a tolerancing function that tells us what is closeEnough when evaluating roots
+
+		Function2<Boolean,Float64Member,Float64Member> closeEnough =
+				new Function2<Boolean, Float64Member, Float64Member>() {
+					public Boolean call(Float64Member a, Float64Member b) {
+						return Math.abs(a.v()-b.v()) < 0.000001;
+					}
+				};
+
+		// guess a point we think is near the fixed point
+
+		Float64Member guess = new Float64Member(0.1);
+
+		// set aside space for the result
+
+		Float64Member result = G.DBL.construct();
+
+		// set up the most iterations we'll try
+
+		long maxIters = 100;
+
+		// we setup the solver
+
+		FindFixedPoint<Float64Algebra,Float64Member> ffp =
+				new FindFixedPoint<Float64Algebra,Float64Member>(G.DBL, sine, closeEnough, maxIters);
+
+		// and we invoke it and react
+
+		long foundIndex = ffp.call(guess, result);
+		if (foundIndex < 0) {
+			System.out.println("no root found near " + guess.v() + " after " + maxIters + " iterations");
+		}
+		else {
+			System.out.println("fixed point found at " + result.v() + " after " + foundIndex + " iterations");
+		}
+
+		// if you didn't find it you can try again
+
+		ffp.setMaxIters(10000);
+		foundIndex = ffp.call(guess, result);
+		// etc.
 	}
 }
