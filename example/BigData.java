@@ -65,7 +65,7 @@ public class BigData {
 		// can be set between 1 and 4000 decimal places. These numbers maintain said precision and
 		// do not over/underflow.
 
-		// Allocate a value to pass to the storage allocator
+		// Allocate a 16 bit unsigned value to pass to the storage allocator
 
 		UnsignedInt16Member value = G.UINT16.construct();
 
@@ -78,7 +78,9 @@ public class BigData {
 
 		FillSerially.compute(G.UINT16, G.UINT16.random(), data);
 
-		// Let's pull out values as high precision floating point numbers that can't lose precision
+		// Let's pull out values as high precision floating point numbers that can't lose precision. We wrap the
+		// original data in a filter that reads values in the original data type and converts the result to
+		// a high precision value.
 
 		ReadOnlyHighPrecisionDataSource<UnsignedInt16Algebra,UnsignedInt16Member> filter =
 				new ReadOnlyHighPrecisionDataSource<UnsignedInt16Algebra,UnsignedInt16Member>(G.UINT16, data);
@@ -88,19 +90,24 @@ public class BigData {
 
 		HighPrecisionAlgebra.setPrecision(30); // 30 decimal places
 
+		// Create placeholders for results
+		
 		HighPrecisionMember sum = G.HP.construct();
+		HighPrecisionMember mean = G.HP.construct();
+
+		// Compute the sum of all the data
 
 		Sum.compute(G.HP, filter, sum);  // will not overflow
 
-		System.out.println("sum = " + sum);
-
-		HighPrecisionMember mean = G.HP.construct();
+		// Compute the mean of all the data
 
 		Mean.compute(G.HP, filter, mean);  // will not lose precision
 
+		System.out.println("sum = " + sum);
+
 		System.out.println("mean = " + mean);
 
-		// A quicker way to calculate the mean. Avoid the Mean() call altogether.
+		// A quicker way to calculate the mean. Avoid the Mean.compute() call altogether.
 
 		HighPrecisionMember count = G.HP.construct();
 

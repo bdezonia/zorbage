@@ -242,7 +242,7 @@ public class AnalyzeFunctions {
 
 						G.CDBL.add().call(in, constant, tmp);
 
-						// multiply tmp by itself and stor in out
+						// multiply tmp by itself and store in out
 
 						G.CDBL.multiply().call(tmp, tmp, out);
 
