@@ -40,6 +40,7 @@ public class FillNaN {
 	private FillNaN() { }
 	
 	/**
+	 * A helper method that allows a lot of multidim data types to be filled with NaN values
 	 * 
 	 * @param alg
 	 * @param a
@@ -49,6 +50,6 @@ public class FillNaN {
 	{
 		U value = alg.construct();
 		alg.nan().call(value);
-		Fill.compute(alg, value, a.rawData());
+		FillSerially.compute(alg, value, a.rawData());
 	}
 }

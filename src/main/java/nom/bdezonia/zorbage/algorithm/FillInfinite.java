@@ -40,6 +40,7 @@ public class FillInfinite {
 	private FillInfinite() { }
 	
 	/**
+	 * A helper method that allows a lot of multidim data types to be filled with Infinite values
 	 * 
 	 * @param alg
 	 * @param a
@@ -49,6 +50,6 @@ public class FillInfinite {
 	{
 		U value = alg.construct();
 		alg.infinite().call(value);
-		Fill.compute(alg, value, a.rawData());
+		FillSerially.compute(alg, value, a.rawData());
 	}
 }
