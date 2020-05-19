@@ -1,3 +1,4 @@
- blurb about rawData() too
+multidimensional datasets
+iterating in multidim space
 calibrated axes
-oob values 
+blurb about rawData() too
