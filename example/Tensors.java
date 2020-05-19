@@ -1,3 +1,4 @@
 all are cartesian right now
 all indices are lower
 they are true tensors with perfectly shaped dimensions
+describe supported operations

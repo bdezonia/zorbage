@@ -4,5 +4,4 @@ why not OOP approach
   what is the most general base class
 runtime algebra discovery based on data needs
 the basic set of algebras
-taylor for number and for matrix
 how powerful it can be to define you own algebra
