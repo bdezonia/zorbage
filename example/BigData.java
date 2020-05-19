@@ -11,7 +11,6 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Algebra;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.type.int16.UnsignedInt16Algebra;
 import nom.bdezonia.zorbage.type.int16.UnsignedInt16Member;
 
 import java.math.BigDecimal;
@@ -24,7 +23,7 @@ public class BigData {
 	// Zorbage is written to store and accurately calculate upon very large sets of data.
 
 	public void example1() {
-
+		
 		// G contains all the algebras provided by default in Zorbage.
 		// G.INT16 is the algebra for signed 16 bit integers
 
@@ -121,8 +120,7 @@ public class BigData {
 		// original data in a filter that reads values in the original data type and converts the result to
 		// a high precision value.
 
-		ReadOnlyHighPrecisionDataSource<UnsignedInt16Algebra,UnsignedInt16Member> filter =
-				new ReadOnlyHighPrecisionDataSource<UnsignedInt16Algebra,UnsignedInt16Member>(G.UINT16, data);
+		IndexedDataSource<HighPrecisionMember> filter = new ReadOnlyHighPrecisionDataSource<>(G.UINT16, data);
 
 		// Let's set the decimal place accuracy we want to maintain. Ideally this is called once by your
 		// whole program at start up.
@@ -132,6 +130,7 @@ public class BigData {
 		// Create placeholders for results
 
 		HighPrecisionMember sum = G.HP.construct();
+		
 		HighPrecisionMember mean = G.HP.construct();
 
 		// Compute the sum of all the data
