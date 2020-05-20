@@ -10,7 +10,7 @@ Goals:
       computable types provided and the extensibility of such types
   - do all this with a powerful set of simple abstractions
 
-Support for:
+Contains support for:
   - integers, rationals, reals, complex numbers, quaternions, octonions
   - numbers, vectors, matrices, and tensors
   - various precisions: 1-bit to 128-bit to unbounded (signed and unsigned and float)
@@ -77,19 +77,19 @@ What can I do with Zorbage?
   
   You can use existing or write your own algorithms that work with numbers,
     vectors, matrices, and tensors. Zorbage includes 100's of predefined
-    algorithms too.
-    - Basic vector and matrix operations
-    - Calculate sin/cos/tan/sinh/cosh/tanh/exp of various floats and also matrices
+    algorithms too. It can find roots, find derivatives, and solve differential
+    equations numerically involving arbitrary scalar and vector functions and
+    procedures. It also includes algorithms from linear algebra, signal
+    processing, statistics, set theory, and analysis.
+    Algorithms include:
+    - Basic vector and matrix and tensor operations
+    - Transcendental functions of various precision floats and matrices
     - Basic runge kutta ode solver
-    - FFT/InvFFT
-    - Convolution/Correlation
-    - Resamplers
-    - LUDecomp/LUSolve
-    - Many C++ STL algorithms replicated
-    - It can find roots, find derivatives, and solve differential
-        equations numerically involving arbitrary scalar and vector
-        Procedures. It also includes algorithms from linear algebra,
-        signal processing, statistics, set theory, and analysis.
+    - FFT and Inverse FFT
+    - Convolutions and Correlations
+    - Resampling algorithms
+    - LU Decomposition and LU Solving (simultaneous equation solving)
+    - Most C++ STL algorithms replicated
     - Use Zorbage's parallel algorithms for quickly processing data.
   
   Define complex data sampling algorithms from prebuilt sampling components.
