@@ -23,11 +23,11 @@ public class FloatingTypes<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> &
 	 * 
 	 *   16-bit floating point numbers (supported in software): the half type in the IEEE-754 standard
 	 *   
-	 *     Float16Member: approximately 16decimal places of precision
+	 *     Float16Member: approximately 3 decimal places of precision
 	 * 
 	 *   32-bit floating point numbers (supported in hardware): the float type in the IEEE-754 standard
 	 *     
-	 *     Float32Member: approximately 16decimal places of precision
+	 *     Float32Member: approximately 7 decimal places of precision
 	 *   
 	 *   64-bit floating point numbers (supported in hardware): the double type in the IEEE-754 standard
 	 *     
@@ -44,7 +44,7 @@ public class FloatingTypes<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> &
 	
 	// Now let's define a function that can work at any precision
 	
-	public Function1<U,T> func = new Function1<U,T>()    // T and U specified in class declaration above
+	public Function1<U,T> func = new Function1<U,T>()  // T and U specified in class declaration above
 	{
 
 		@Override
