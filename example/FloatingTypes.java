@@ -111,7 +111,7 @@ public class FloatingTypes<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> &
 	}
 	
 	/*
-	 * The hardware floating types support many basic operations you'd expect:
+	 * The floating types support many basic operations you'd expect:
 	 *   sin(), cos(), tan()
 	 *   sinh(), cosh(), tanh()
 	 *   exp(), log()
@@ -123,7 +123,7 @@ public class FloatingTypes<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> &
 	
 	/*
 	 * Calculating other things with floating point: note that each supported floating type represents Real
-	 * values. Zorbage also supports composye values like Complex values, Quaternion values, and Octonion
+	 * values. Zorbage also supports composite values like Complex values, Quaternion values, and Octonion
 	 * values. Each of these composite types of numbers use the above floating types to support multiple
 	 * precision code for their implementations. Finally there are other composite types (Vectors, Matrices,
 	 * and Tensors). Again the basic Real floating types are used to calculate operations on Vectors, Matrices,
