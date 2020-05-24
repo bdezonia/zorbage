@@ -1,6 +1,6 @@
 package example;
 
-public class OutOfBoundsData {
+class OutOfBoundsData {
 
 	// 1-d
 	// fft

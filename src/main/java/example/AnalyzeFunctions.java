@@ -19,7 +19,7 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 /**
  * @author Barry DeZonia
  */
-public class AnalyzeFunctions {
+class AnalyzeFunctions {
 
 	// This is an example showing some of the things you can do with functions and procedures.
 
@@ -28,7 +28,7 @@ public class AnalyzeFunctions {
 	// its output value in the last inputs passed to the procedure. The procedure reserves
 	// space for its outputs.
 
-	public void example1() {
+	void example1() {
 
 		// Let's define a procedure that squares an input floating point number
 
@@ -51,7 +51,7 @@ public class AnalyzeFunctions {
 		System.out.println(out); // prints 16.0
 	}
 
-	public void example2() {
+	void example2() {
 
 		// Let's define a procedure that cubes an input integer
 
@@ -81,7 +81,7 @@ public class AnalyzeFunctions {
 		System.out.println(mean);
 	}
 
-	public void example3() {
+	void example3() {
 
 		// Let's define a procedure that computes the numbers on the line 4*x + 7
 
@@ -117,7 +117,7 @@ public class AnalyzeFunctions {
 		System.out.println(result);  // prints 4.0
 	}
 
-	public void example4() {
+	void example4() {
 
 		// let's calculate a root of an equation near a point
 
@@ -161,7 +161,7 @@ public class AnalyzeFunctions {
 		}
 	}
 
-	public void example5() {
+	void example5() {
 
 		// let's find a fixed point of a procedure
 
@@ -212,7 +212,7 @@ public class AnalyzeFunctions {
 		// etc.
 	}
 
-	public void example6() {
+	void example6() {
 
 		// let's show that you can work with complex valued functions
 

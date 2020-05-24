@@ -1,6 +1,6 @@
 package example;
 
-public class ReusableAlgorithms {
+class ReusableAlgorithms {
 
 	// taylor for number and for matrix
 	// floating types stuff here or there?

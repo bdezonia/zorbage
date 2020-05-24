@@ -14,7 +14,7 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class FloatingTypes
+class FloatingTypes
 {
 	/*
 	 * Currently Zorbage supports four different floating number types:
@@ -42,7 +42,7 @@ public class FloatingTypes
 	
 	// Now let's define a method that can work at any precision
 	
-	public static <T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> & RealConstants<U> & Multiplication<U>,
+	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> & RealConstants<U> & Multiplication<U>,
 					U>
 		U calcConstant(T algebra)
 	{
@@ -71,7 +71,7 @@ public class FloatingTypes
 	
 	// Now I am going to show how you can use it
 	
-	public void example1() {
+	void example1() {
 		
 		// Calculate e * pi * phi * gamma for four different accuracies using one algorithm
 		

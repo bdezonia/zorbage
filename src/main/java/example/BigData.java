@@ -20,11 +20,11 @@ import java.math.BigDecimal;
 /**
  * @author Barry DeZonia
  */
-public class BigData {
+class BigData {
 
 	// Zorbage is written to store and accurately calculate upon very large sets of data.
 
-	public void example1() {
+	void example1() {
 		
 		// G contains all the algebras provided by default in Zorbage.
 		// G.INT16 is the algebra for signed 16 bit integers
@@ -61,7 +61,7 @@ public class BigData {
 		System.out.println("Number of integers with value of 4 was " + numFours);
 	}
 
-	public void example2() {
+	void example2() {
 
 		// Another way to allocate a huge list (ALL IN RAM): 10 billion short integers (20 billion bytes).
 		//   Use the BigList class from Zorbage. The created list is zero filled. BigList based code
@@ -97,7 +97,7 @@ public class BigData {
 		System.out.println("Number of integers with value of 4 was " + numFours);
 	}
 
-	public void example3() {
+	void example3() {
 
 		// One issue with working with lots of data is that doing math with many numbers can result
 		// in overflows or underflows or losses of precision. One trick Zorbage uses is to allow

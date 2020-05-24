@@ -1,6 +1,6 @@
 package example;
 
-public class SpecialFunctions {
+class SpecialFunctions {
 
 	// erf erfc
 	// fibonacci factorial

@@ -1,6 +1,6 @@
 package example;
 
-public class SetOperations {
+class SetOperations {
 
 	// all the set based list manipulation methods
 	
