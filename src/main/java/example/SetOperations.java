@@ -1,5 +1,6 @@
+package example;
 
-public class SetTheory {
+public class SetOperations {
 
 	// all the set based list manipulation methods
 	

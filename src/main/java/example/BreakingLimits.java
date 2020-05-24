@@ -1,3 +1,5 @@
+package example;
+
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.G;

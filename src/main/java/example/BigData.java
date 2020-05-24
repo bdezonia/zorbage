@@ -1,3 +1,5 @@
+package example;
+
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.FillSerially;

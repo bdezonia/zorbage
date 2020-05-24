@@ -1,1 +1,0 @@
-explain the conway code 
