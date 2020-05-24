@@ -240,15 +240,15 @@ public class BreakingLimits {
 		
 		valueUB.setV(BigInteger.ONE.add(BigInteger.ONE).pow(264)); // set to 2^264
 		
-		RationalMember scale = new RationalMember(7,5);  // 7/5's : a little more than one
+		RationalMember rationalScale = new RationalMember(7,5);  // 7/5's : a little more than one
 		
 		UnsignedInt8Member value = G.UINT8.construct("128");
 		
-		G.UINT8.scaleByRational().call(scale, value, value);
+		G.UINT8.scaleByRational().call(rationalScale, value, value);
 		
 		System.out.println(value.v()); // prints 179
 		
-		// notice how the number did not overflow even though 7 * 128 is greater than 255
+		// notice how the number did not overflow even though 128 * 7 / 5 does temporarily exceed 255
 	}
 	
 }
