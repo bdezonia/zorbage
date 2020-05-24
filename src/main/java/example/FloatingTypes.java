@@ -10,9 +10,7 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 /**
- * 
  * @author Barry DeZonia
- *
  */
 class FloatingTypes
 {

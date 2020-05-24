@@ -8,9 +8,7 @@ import nom.bdezonia.zorbage.type.int4.SignedInt4Member;
 import nom.bdezonia.zorbage.type.universal.FindCompatibleType;
 
 /**
- * 
  * @author Barry DeZonia
- *
  */
 class Algebra {
 

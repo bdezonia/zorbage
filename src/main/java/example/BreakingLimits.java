@@ -17,6 +17,9 @@ import nom.bdezonia.zorbage.type.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
+/**
+ * @author Barry DeZonia
+ */
 public class BreakingLimits {
 	
 	// Zorbage breaks through a lot of limitations that Java normally imposes on its programs:
