@@ -28,8 +28,10 @@ What can I do with Zorbage?
        
      Once you've covered that if you have more questions look at Zorbage's
      extensive test code at:
-       https://https://github.com/bdezonia/zorbage/tree/master/src/test/java/nom/bdezonia/zorbage
+       https://github.com/bdezonia/zorbage/tree/master/src/test/java/nom/bdezonia/zorbage
   )
+
+You can:
 
   Define multidimensional data sets with flexible out of bounds data
     handling procedures.
