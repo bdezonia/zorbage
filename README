@@ -202,51 +202,56 @@ How to include zorbage in a different build system
 
 Partial bibliography
 
+  Books:
+  
+  A Book of Abstract Algebra; Pinter
+  A Student's Guide to Vectors and Tensors; Fleisch
+  Advanced Engineering Mathematics; Wylie, Barrett
   Algorithms for Computer Algebra; Geddes
-  Functions of Matrices; Higham
   Basic Partial Differential Equations; Bleecker
-  Computer Algebra and Symbolic Computation (2 vols); Cohen
+  Calculus and Analytic Geometry; Thomas, Finney
   Compilers; Aho, Sethi, and Ullman
-  Structure and Interpretation of Computer Programs; Abelson
+  Complex Variables and Applications; Brown, Churchill
+  Complex Variables with Applications; Wunsch
+  Computer Algebra and Symbolic Computation (2 vols); Cohen
+  Design Patterns, gang of four
+  Differential Equations; Ross
+  Differential Equations and Linear Algebra; Edwards and Penny
+  Digital Image Proccessing; Burger
+  Digital Image Processing; Gonzalez, Woods
+  Digital Signal Processing; Proakis
+  Discrete Time Signal Processing; Oppenheim and Schaffer
+  Div, Grad, Curl, and All That
+  Elements of Modern Algebra; Gilbert
   Elements of Programming; Stepanov
   From Mathematics to Generic Programming; Stepanov
-  A Book of Abstract Algebra; Pinter
-  Digital Image Proccessing; Burger
-  Complex Variables and Applications; Brown, Churchill
-  Haskell: the Craft of Functional Programming; Thompson
-  Numerical Methods for Engineers; Chapra
+  Functions of Matrices; Higham
   Handbook of Math and Computational Science; Harris, Stocker
-  Discrete Time Signal Processing; Oppenheim and Schaffer
-  Introduction to Algorithms; Cormen, Lesserson, Rivest, Stein
-  Probability and Statistics for Engineering and the Sciences; Devore
-  Numerical Methods for Scientists and Engineers; Hamming
-  Design Patterns, gang of four
-  Div, Grad, Curl, and All That
-  Real World Haskell
   Haskell School of Expression
-  Advanced Engineering Mathematics; Wylie, Barrett
-  Partial Differential Equations for Scientists and Engineers; Farlow
-  Modern Mathematical Methods for Physicists and Engineers; Cantrell
-  Matrix Algebra; Robbin
-  Complex Variables with Applications; Wunsch
+  Haskell: the Craft of Functional Programming; Thompson
   Introduction to Abstract Algebra; Dubisch
-  Elements of Modern Algebra; Gilbert
-  Introduction to Octonion and Other Non-associative Algebras in Physics; Okubo 
-  Differential Equations; Ross
-  Digital Signal Processing; Proakis
-  Rings, Fields, and Groups; Arnold
-  Differential Equations and Linear Algebra; Edwards and Penny
+  Introduction to Algorithms; Cormen, Lesserson, Rivest, Stein
   Introduction to Computer Simulation Methods; Gould
-  Digital Image Processing; Gonzalez, Woods
-  Numerical Methods for Engineers and Scientists; Gilat
-  Tensors Made Easy; Bernacchi
-  Schaum's Outline of Tensor Calculus; Kay
-  Tensor Calculus Made Simple; Sochi
-  A Student's Guide to Vectors and Tensors; Fleisch
-  Calculus and Analytic Geometry; Thomas, Finney
+  Introduction to Octonion and Other Non-associative Algebras in Physics; Okubo 
   Linear Algebra and Analytic Geometry for Physical Sciences; Landi, Zampini
+  Matrix Algebra; Robbin
+  Modern Mathematical Methods for Physicists and Engineers; Cantrell
+  Numerical Methods for Engineers; Chapra
+  Numerical Methods for Engineers and Scientists; Gilat
+  Numerical Methods for Scientists and Engineers; Hamming
+  Numerical Recipes; Press etal
+  Partial Differential Equations for Scientists and Engineers; Farlow
+  Probability and Statistics for Engineering and the Sciences; Devore
+  Real World Haskell
+  Rings, Fields, and Groups; Arnold
+  Schaum's Outline of Tensor Calculus; Kay
+  Structure and Interpretation of Computer Programs; Abelson
+  Tensors Made Easy; Bernacchi
+  Tensor Calculus Made Simple; Sochi
+  
+  Online manuals:
+  
   GNU Scientific Library documentation
-  Numerical Recipes documentation
   Boost Library documentation
   C++ STL documentation
   Mathematica documentation
@@ -254,5 +259,8 @@ Partial bibliography
   Haskell documentation
   Ruby documentation
   Pascal language definitions
+
+  Online articles:
+  
   Many articles on Mathworld and Wikipedia
   Many other web pages and pdfs and slide presentations
