@@ -1,12 +1,8 @@
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.type.float16.real.Float16Algebra;
 import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -16,7 +12,7 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class FloatingTypes<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> & RealConstants<U> & Multiplication<U>, U>
+public class FloatingTypes
 {
 	/*
 	 * Currently Zorbage supports four different floating number types:
@@ -42,65 +38,61 @@ public class FloatingTypes<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> &
 	 * 
 	 */
 	
-	// Now let's define a function that can work at any precision
+	// Now let's define a method that can work at any precision
 	
-	public Function1<U,T> func = new Function1<U,T>()  // T and U specified in class declaration above
+	public static <T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> & RealConstants<U> & Multiplication<U>,
+					U>
+		U calcConstant(T algebra)
 	{
-
-		@Override
-		public U call(T algebra) {
-			
-			// construct some working variables on the stack
-			U result = algebra.construct();
-			U tmp = algebra.construct();
-			U e = algebra.construct();
-			U pi = algebra.construct();
-			U gamma = algebra.construct();
-			U phi = algebra.construct();
-			
-			// initialize the constants
-			algebra.E().call(e);  // get the E constant
-			algebra.PI().call(pi);  // get the PI constant
-			algebra.PHI().call(phi);  // get the PHI constant
-			algebra.GAMMA().call(gamma); // get the GAMMA constant
-			
-			// multiply them all together
-			algebra.multiply().call(e, pi, tmp);
-			algebra.multiply().call(tmp, phi, tmp);
-			algebra.multiply().call(tmp, gamma, result);
-			
-			// return the result
-			return result;
-		}
+		// construct some working variables on the stack
+		U result = algebra.construct();
+		U tmp = algebra.construct();
+		U e = algebra.construct();
+		U pi = algebra.construct();
+		U gamma = algebra.construct();
+		U phi = algebra.construct();
+		
+		// initialize the constants
+		algebra.E().call(e);  // get the E constant
+		algebra.PI().call(pi);  // get the PI constant
+		algebra.PHI().call(phi);  // get the PHI constant
+		algebra.GAMMA().call(gamma); // get the GAMMA constant
+		
+		// multiply them all together
+		algebra.multiply().call(e, pi, tmp);
+		algebra.multiply().call(tmp, phi, tmp);
+		algebra.multiply().call(tmp, gamma, result);
+		
+		// return the result
+		return result;
+	}
 	
-	};
-
 	// Now I am going to show how you can use it
 	
 	public void example1() {
 		
 		// Calculate e * pi * phi * gamma for four different accuracies using one algorithm
 		
-		// Let's push the high precision accuracy to a 1000 decimal places. Ideally this method is called
+		// Let's push the high precision accuracy to a 100 decimal places. Ideally this method is called
 		// once at your program's startup.
 		
-		HighPrecisionAlgebra.setPrecision(1000);
+		HighPrecisionAlgebra.setPrecision(100);
 
 		// Calculate the constant in 16 bit float precision
 		
-		Float16Member hlfVal = new FloatingTypes<Float16Algebra,Float16Member>().func.call(G.HLF);
+		Float16Member hlfVal = calcConstant(G.HLF);
 
 		// Calculate the constant in 32 bit float precision
 		
-		Float32Member fltVal = new FloatingTypes<Float32Algebra,Float32Member>().func.call(G.FLT);
+		Float32Member fltVal = calcConstant(G.FLT);
 		
 		// Calculate the constant in 64 bit float precision
 		
-		Float64Member dblVal = new FloatingTypes<Float64Algebra,Float64Member>().func.call(G.DBL);
+		Float64Member dblVal = calcConstant(G.DBL);
 		
-		// Calculate the constant in 1000 place float precision
+		// Calculate the constant in 100 place float precision
 		
-		HighPrecisionMember hpVal = new FloatingTypes<HighPrecisionAlgebra,HighPrecisionMember>().func.call(G.HP);
+		HighPrecisionMember hpVal = calcConstant(G.HP);
 		
 		// Now print out and compare the results
 		
