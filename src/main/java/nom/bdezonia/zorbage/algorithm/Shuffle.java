@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Shuffle {
 
+	// do not instantiate
+	
 	private Shuffle() { }
 	
 	/**
@@ -53,6 +55,7 @@ public class Shuffle {
 		Random rng = new Random(System.currentTimeMillis());
 		long aSize = a.size();
 		for (long i = 0; i < aSize-1; i++) {
+			// note: for a huge list the 16 decimal places of rng.nextDouble might not be sufficient
 			long index = (long)(Math.round((aSize-1-i)*rng.nextDouble()));
 			a.get(i, tmp1);
 			a.get(i+index, tmp2);

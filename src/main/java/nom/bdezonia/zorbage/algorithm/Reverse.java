@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Reverse {
 
+	// do not instantiate
+	
 	private Reverse() { }
 	
 	/**
