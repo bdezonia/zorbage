@@ -65,12 +65,16 @@ public class TestFloat64Matrix {
 				for (long c = 0; c < m.cols(); c++) {
 					m.v(r, c, value);
 					if (r == c) {
-						if (value.v() != one.v())
+						if (value.v() != one.v()) {
+							//System.out.println(r+" == "+c+" and v = "+value.v());
 							errs++;
+						}
 					}
 					else {
-						if (value.v() != zero.v())
+						if (value.v() != zero.v()) {
+							//System.out.println(r+" != "+c+" and v = "+value.v());
 							errs++;
+						}
 					}
 				}
 			}

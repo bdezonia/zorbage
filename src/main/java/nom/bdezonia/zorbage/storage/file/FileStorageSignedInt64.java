@@ -93,7 +93,7 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		this.pageLoaded2 = -1;
 		this.dirty1 = false;
 		this.dirty2 = false;
-		this.lru = -1;
+		this.lru = 1;
 		try {
 			this.file = File.createTempFile("Storage", ".storage");
 			this.file.deleteOnExit();
@@ -179,11 +179,13 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 						channel.position(newPage * bytesPerPage);
 						channel.read(buffer1);
 						pageLoaded1 = newPage;
+						dirty1 = true; // anticipate the setting of data below
+						lru = 2;
 					}
 					else if (lru == 2) {
 						if (dirty2) {
 							buffer2.rewind();
-							channel.position(pageLoaded1 * bytesPerPage);
+							channel.position(pageLoaded2 * bytesPerPage);
 							channel.write(buffer2);
 							dirty2 = false;
 						}
@@ -192,23 +194,15 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 						channel.position(newPage * bytesPerPage);
 						channel.read(buffer2);
 						pageLoaded2 = newPage;
+						dirty2 = true; // anticipate the setting of data below
+						lru = 1;
 					}
 				}
 				value.toLongArray(tmpArray, 0);
 				int idx = (int)(index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					if (pageLoaded1 == newPage)
-						buffer1.putLong(idx*elementByteSize + i*8, tmpArray[i]);
-					else
-						buffer2.putLong(idx*elementByteSize + i*8, tmpArray[i]);
-				}
-				if (pageLoaded1 == newPage) {
-					dirty1 = true;
-					lru = 2;
-				}
-				else {
-					dirty2 = true;
-					lru = 1;
+					ByteBuffer buffer = (pageLoaded1 == newPage) ? buffer1 : buffer2;
+					buffer.putLong(idx*elementByteSize + i*8, tmpArray[i]);
 				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -237,11 +231,12 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 						channel.position(newPage * bytesPerPage);
 						channel.read(buffer1);
 						pageLoaded1 = newPage;
+						lru = 2;
 					}
 					else if (lru == 2) {
 						if (dirty2) {
 							buffer2.rewind();
-							channel.position(pageLoaded1 * bytesPerPage);
+							channel.position(pageLoaded2 * bytesPerPage);
 							channel.write(buffer2);
 							dirty2 = false;
 						}
@@ -250,20 +245,13 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 						channel.position(newPage * bytesPerPage);
 						channel.read(buffer2);
 						pageLoaded2 = newPage;
+						lru = 1;
 					}
 				}
 				int idx = (int) (index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					if (pageLoaded1 == newPage)
-						tmpArray[i] = buffer1.getLong(idx*elementByteSize + i*8);
-					else
-						tmpArray[i] = buffer2.getLong(idx*elementByteSize + i*8);
-				}
-				if (pageLoaded1 == newPage) {
-					lru = 2;
-				}
-				else {
-					lru = 1;
+					ByteBuffer buffer = (pageLoaded1 == newPage) ? buffer1 : buffer2;
+					tmpArray[i] = buffer.getLong(idx*elementByteSize + i*8);
 				}
 				value.fromLongArray(tmpArray, 0);
 			} catch (IOException e) {

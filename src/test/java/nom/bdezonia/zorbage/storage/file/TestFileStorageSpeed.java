@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.FillSerially;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Reverse;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
+import nom.bdezonia.zorbage.algorithm.Sort;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
@@ -51,6 +52,7 @@ public class TestFileStorageSpeed {
 		FillSerially.compute(G.DBL, G.DBL.random(), list);
 		Mean.compute(G.DBL, list, mean);
 		Shuffle.compute(G.DBL, list);
+		Sort.compute(G.DBL, list);
 		Reverse.compute(G.DBL, list);
 		long end = System.currentTimeMillis();
 		System.out.println(end-begin);
