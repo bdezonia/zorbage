@@ -47,6 +47,7 @@ public class Combinations {
 	 * 
 	 * @param algebra
 	 * @param n
+	 * @param k
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & ModularDivision<U>, U>
