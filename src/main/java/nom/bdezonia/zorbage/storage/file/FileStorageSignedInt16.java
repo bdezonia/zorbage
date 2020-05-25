@@ -57,12 +57,16 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	private final File file;
 	private final RandomAccessFile raf;
 	private final FileChannel channel;
-	private final ByteBuffer buffer;
+	private final ByteBuffer buffer1;
+	private final ByteBuffer buffer2;
 	private final int elementByteSize;
 	private final int elementsPerPage;
 	private final int bytesPerPage;
-	private long pageLoaded;
-	private boolean dirty;
+	private long pageLoaded1;
+	private long pageLoaded2;
+	private boolean dirty1;
+	private boolean dirty2;
+	private int lru;
 
 	/**
 	 *
@@ -85,24 +89,29 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		}
 		this.bytesPerPage = (int) byteSize;
 		this.elementsPerPage = (int) (byteSize / elementByteSize);
-		this.pageLoaded = -1;
-		this.dirty = false;
+		this.pageLoaded1 = -1;
+		this.pageLoaded2 = -1;
+		this.dirty1 = false;
+		this.dirty2 = false;
+		this.lru = -1;
 		try {
 			this.file = File.createTempFile("Storage", ".storage");
 			this.file.deleteOnExit();
 			this.raf = new RandomAccessFile(file, "rw");
 			this.channel = raf.getChannel();
 			// make a one element buffer
-			this.buffer = ByteBuffer.allocate(bytesPerPage);
-			// fill the buffer with zeroes
+			this.buffer1 = ByteBuffer.allocate(bytesPerPage);
+			this.buffer2 = ByteBuffer.allocate(bytesPerPage);
+			// fill the buffers with zeroes
 			for (int i = 0; i < bytesPerPage; i++) {
-				buffer.put((byte) 0);
+				buffer1.put((byte) 0);
+				buffer2.put((byte) 0);
 			}
 			// write zeroes to the file over and over
 			channel.position(0);
 			for (long i = 0; i <= (numElements / elementsPerPage); i++) {  // <= is intentional here
-				buffer.rewind();
-				channel.write(buffer);
+				buffer1.rewind();
+				channel.write(buffer1);
 			}
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
@@ -117,8 +126,11 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 			this.bytesPerPage = other.bytesPerPage;
 			this.elementByteSize = other.elementByteSize;
 			this.elementsPerPage = other.elementsPerPage;
-			this.pageLoaded = other.pageLoaded;
-			this.dirty = other.dirty;
+			this.pageLoaded1 = other.pageLoaded1;
+			this.pageLoaded2 = other.pageLoaded2;
+			this.dirty1 = other.dirty1;
+			this.dirty2 = other.dirty2;
+			this.lru = other.lru;
 			try {
 				this.file = File.createTempFile("Storage", ".storage");
 				this.file.deleteOnExit();
@@ -126,14 +138,15 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 				Path to = Paths.get(file.getAbsolutePath());
 				//overwrite existing file, if exists
 				CopyOption[] options = new CopyOption[]{
-						StandardCopyOption.REPLACE_EXISTING,
-						StandardCopyOption.COPY_ATTRIBUTES
+					StandardCopyOption.REPLACE_EXISTING,
+					StandardCopyOption.COPY_ATTRIBUTES
 				};
 				Files.copy(from, to, options);
 				// these first two must happen after the file copy
 				this.raf = new RandomAccessFile(file, "rw");
 				this.channel = raf.getChannel();
-				this.buffer = other.buffer.duplicate();
+				this.buffer1 = other.buffer1.duplicate();
+				this.buffer2 = other.buffer2.duplicate();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -152,26 +165,51 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		synchronized(this) {
 			try {
 				long newPage = index / elementsPerPage;
-				if (newPage != pageLoaded) {
+				if (newPage != pageLoaded1 && newPage != pageLoaded2) {
 					// save out old page if needed
-					if (dirty) {
-						buffer.rewind();
-						channel.position(pageLoaded * bytesPerPage);
-						channel.write(buffer);
-						dirty = false;
+					if (lru == 1) {
+						if (dirty1) {
+							buffer1.rewind();
+							channel.position(pageLoaded1 * bytesPerPage);
+							channel.write(buffer1);
+							dirty1 = false;
+						}
+						// read in new page
+						buffer1.rewind();
+						channel.position(newPage * bytesPerPage);
+						channel.read(buffer1);
+						pageLoaded1 = newPage;
 					}
-					// read in new page
-					buffer.rewind();
-					channel.position(newPage * bytesPerPage);
-					channel.read(buffer);
-					pageLoaded = newPage;
+					else if (lru == 2) {
+						if (dirty2) {
+							buffer2.rewind();
+							channel.position(pageLoaded1 * bytesPerPage);
+							channel.write(buffer2);
+							dirty2 = false;
+						}
+						// read in new page
+						buffer2.rewind();
+						channel.position(newPage * bytesPerPage);
+						channel.read(buffer2);
+						pageLoaded2 = newPage;
+					}
 				}
 				value.toShortArray(tmpArray, 0);
 				int idx = (int)(index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.putShort(idx*elementByteSize + i*2, tmpArray[i]);
+					if (pageLoaded1 == newPage)
+						buffer1.putShort(idx*elementByteSize + i*2, tmpArray[i]);
+					else
+						buffer2.putShort(idx*elementByteSize + i*2, tmpArray[i]);
 				}
-				dirty = true;
+				if (pageLoaded1 == newPage) {
+					dirty1 = true;
+					lru = 2;
+				}
+				else {
+					dirty2 = true;
+					lru = 1;
+				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -185,23 +223,47 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		synchronized(this) {
 			try {
 				long newPage = index / elementsPerPage;
-				if (newPage != pageLoaded) {
+				if (newPage != pageLoaded1 && newPage != pageLoaded2) {
 					// save out old page if needed
-					if (dirty) {
-						buffer.rewind();
-						channel.position(pageLoaded * bytesPerPage);
-						channel.write(buffer);
-						dirty = false;
+					if (lru == 1) {
+						if (dirty1) {
+							buffer1.rewind();
+							channel.position(pageLoaded1 * bytesPerPage);
+							channel.write(buffer1);
+							dirty1 = false;
+						}
+						// read in new page
+						buffer1.rewind();
+						channel.position(newPage * bytesPerPage);
+						channel.read(buffer1);
+						pageLoaded1 = newPage;
 					}
-					// read in new page
-					buffer.rewind();
-					channel.position(newPage * bytesPerPage);
-					channel.read(buffer);
-					pageLoaded = newPage;
+					else if (lru == 2) {
+						if (dirty2) {
+							buffer2.rewind();
+							channel.position(pageLoaded1 * bytesPerPage);
+							channel.write(buffer2);
+							dirty2 = false;
+						}
+						// read in new page
+						buffer2.rewind();
+						channel.position(newPage * bytesPerPage);
+						channel.read(buffer2);
+						pageLoaded2 = newPage;
+					}
 				}
 				int idx = (int) (index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					tmpArray[i] = buffer.getShort(idx*elementByteSize + i*2);
+					if (pageLoaded1 == newPage)
+						tmpArray[i] = buffer1.getShort(idx*elementByteSize + i*2);
+					else
+						tmpArray[i] = buffer2.getShort(idx*elementByteSize + i*2);
+				}
+				if (pageLoaded1 == newPage) {
+					lru = 2;
+				}
+				else {
+					lru = 1;
 				}
 				value.fromShortArray(tmpArray, 0);
 			} catch (IOException e) {
