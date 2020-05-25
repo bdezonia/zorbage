@@ -80,15 +80,15 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		this.elementByteSize = type.floatCount() * 4;
 		if (elementByteSize <= 0) {
 			// overflow happened
-			throw new IllegalArgumentException("virtual type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
+			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
 		}
-		long byteSize = BYTE_CHUNK / elementByteSize;
-		if (byteSize <= 0) {
-			// emergency: type is very big. Just buffer one.
-			byteSize = elementByteSize;
+		long elementsInPage = BYTE_CHUNK / elementByteSize;
+		if (elementsInPage <= 0) {
+			// Emergency: type is bigger than our default max buffer size. Just buffer one.
+			elementsInPage = 1;
 		}
-		this.bytesPerPage = (int) byteSize;
-		this.elementsPerPage = (int) (byteSize / elementByteSize);
+		this.elementsPerPage = (int) elementsInPage;
+		this.bytesPerPage = (int) (elementsInPage * elementByteSize);
 		this.pageLoaded1 = -1;
 		this.pageLoaded2 = -1;
 		this.dirty1 = false;
@@ -164,8 +164,8 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				long newPage = index / elementsPerPage;
-				if (newPage != pageLoaded1 && newPage != pageLoaded2) {
+				long desiredPage = index / elementsPerPage;
+				if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
 					// save out old page if needed
 					if (lru == 1) {
 						if (dirty1) {
@@ -176,10 +176,9 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 						}
 						// read in new page
 						buffer1.rewind();
-						channel.position(newPage * bytesPerPage);
+						channel.position(desiredPage * bytesPerPage);
 						channel.read(buffer1);
-						pageLoaded1 = newPage;
-						dirty1 = true; // anticipate the setting of data below
+						pageLoaded1 = desiredPage;
 						lru = 2;
 					}
 					else if (lru == 2) {
@@ -191,18 +190,25 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 						}
 						// read in new page
 						buffer2.rewind();
-						channel.position(newPage * bytesPerPage);
+						channel.position(desiredPage * bytesPerPage);
 						channel.read(buffer2);
-						pageLoaded2 = newPage;
-						dirty2 = true; // anticipate the setting of data below
+						pageLoaded2 = desiredPage;
 						lru = 1;
 					}
 				}
 				value.toFloatArray(tmpArray, 0);
+				ByteBuffer buffer;
+				if (desiredPage == pageLoaded1) {
+					buffer = buffer1;
+					dirty1 = true;
+				}
+				else {
+					buffer = buffer2;
+					dirty2 = true;
+				}
 				int idx = (int)(index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					ByteBuffer buffer = (pageLoaded1 == newPage) ? buffer1 : buffer2;
-					buffer.putFloat(idx*elementByteSize + i*4, tmpArray[i]);
+					buffer.putDouble(idx*elementByteSize + i*4, tmpArray[i]);
 				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -216,8 +222,8 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			throw new IllegalArgumentException("storage index out of bounds");
 		synchronized(this) {
 			try {
-				long newPage = index / elementsPerPage;
-				if (newPage != pageLoaded1 && newPage != pageLoaded2) {
+				long desiredPage = index / elementsPerPage;
+				if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
 					// save out old page if needed
 					if (lru == 1) {
 						if (dirty1) {
@@ -228,9 +234,9 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 						}
 						// read in new page
 						buffer1.rewind();
-						channel.position(newPage * bytesPerPage);
+						channel.position(desiredPage * bytesPerPage);
 						channel.read(buffer1);
-						pageLoaded1 = newPage;
+						pageLoaded1 = desiredPage;
 						lru = 2;
 					}
 					else if (lru == 2) {
@@ -242,15 +248,15 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 						}
 						// read in new page
 						buffer2.rewind();
-						channel.position(newPage * bytesPerPage);
+						channel.position(desiredPage * bytesPerPage);
 						channel.read(buffer2);
-						pageLoaded2 = newPage;
+						pageLoaded2 = desiredPage;
 						lru = 1;
 					}
 				}
+				ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
 				int idx = (int) (index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					ByteBuffer buffer = (pageLoaded1 == newPage) ? buffer1 : buffer2;
 					tmpArray[i] = buffer.getFloat(idx*elementByteSize + i*4);
 				}
 				value.fromFloatArray(tmpArray, 0);
