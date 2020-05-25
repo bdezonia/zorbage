@@ -26,10 +26,13 @@
  */
 package nom.bdezonia.zorbage.storage.file;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.FillSerially;
+import nom.bdezonia.zorbage.algorithm.IsSorted;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Reverse;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
@@ -47,14 +50,26 @@ public class TestFileStorageSpeed {
 	@Test
 	public void test1() {
 		IndexedDataSource<Float64Member> list = FileStorage.allocate(1300111, new Float64Member());
-		Float64Member mean = G.DBL.construct();
+		Float64Member value1 = G.DBL.construct();
+		Float64Member value2 = G.DBL.construct();
 		long begin = System.currentTimeMillis();
 		FillSerially.compute(G.DBL, G.DBL.random(), list);
-		Mean.compute(G.DBL, list, mean);
+		Mean.compute(G.DBL, list, value1);
 		Shuffle.compute(G.DBL, list);
 		Sort.compute(G.DBL, list);
+		assertTrue(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
 		Reverse.compute(G.DBL, list);
+		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), list));
 		long end = System.currentTimeMillis();
 		System.out.println(end-begin);
+		list.get(0, value1);
+		long errs = 0;
+		for (long i = 1; i < list.size(); i++) {
+			list.get(i, value2);
+			if (G.DBL.isLess().call(value1, value2))
+				errs++;
+			G.DBL.assign().call(value2, value1);
+		}
+		assertEquals(0, errs);
 	}
 }
