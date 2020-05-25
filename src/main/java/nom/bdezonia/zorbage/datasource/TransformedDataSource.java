@@ -72,6 +72,8 @@ public class TransformedDataSource<U,W>
 
 	@Override
 	public void set(long index, W value) {
+		if (wToU == null)
+			throw new IllegalArgumentException("TransformedDataSource cannot write: it's missing a transform");
 		U tmp = tmpU.get();
 		wToU.call(value, tmp);
 		uCollection.set(index, tmp);
@@ -79,6 +81,8 @@ public class TransformedDataSource<U,W>
 
 	@Override
 	public void get(long index, W value) {
+		if (uToW == null)
+			throw new IllegalArgumentException("TransformedDataSource cannot read: it's missing a transform");
 		U tmp = tmpU.get();
 		uCollection.get(index, tmp);
 		uToW.call(tmp, value);
