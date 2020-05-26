@@ -28,15 +28,18 @@ package nom.bdezonia.zorbage.storage.file;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Random;
+
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algorithm.FillSerially;
 import nom.bdezonia.zorbage.algorithm.IsSorted;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Reverse;
 import nom.bdezonia.zorbage.algorithm.Shuffle;
 import nom.bdezonia.zorbage.algorithm.Sort;
+import nom.bdezonia.zorbage.algorithm.StableSort;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
@@ -49,27 +52,62 @@ public class TestFileStorageSpeed {
 
 	@Test
 	public void test1() {
-		IndexedDataSource<Float64Member> list = FileStorage.allocate(1300111, new Float64Member());
-		Float64Member value1 = G.DBL.construct();
-		Float64Member value2 = G.DBL.construct();
+		Float64Member value = G.DBL.construct();
+		Random rng = new Random(System.currentTimeMillis());
+		double[] dbls = new double[1300111];
+		for (int i = 0; i < dbls.length; i++) {
+			dbls[i] = rng.nextDouble();
+		}
 		long begin = System.currentTimeMillis();
-		FillSerially.compute(G.DBL, G.DBL.random(), list);
-		Mean.compute(G.DBL, list, value1);
+		IndexedDataSource<Float64Member> list = FileStorage.allocate(dbls.length, new Float64Member());
+		for (int i = 0; i < dbls.length; i++) {
+			value.setV(dbls[i]);
+			list.set(i, value);
+		}
+		Arrays.sort(dbls);
+		//FillSerially.compute(G.DBL, G.DBL.random(), list);
+		Mean.compute(G.DBL, list, value);
 		Shuffle.compute(G.DBL, list);
+		assertFalse(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
 		Sort.compute(G.DBL, list);
 		assertTrue(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
+		assertTrue(listIsSorted(list, dbls));
 		Reverse.compute(G.DBL, list);
 		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), list));
+		assertTrue(listIsReverseSorted(list, dbls));
+		Shuffle.compute(G.DBL, list);
+		assertFalse(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
+		StableSort.compute(G.DBL, list);
+		assertTrue(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
+		assertTrue(listIsSorted(list, dbls));
+		Reverse.compute(G.DBL, list);
+		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), list));
+		assertTrue(listIsReverseSorted(list, dbls));
 		long end = System.currentTimeMillis();
 		System.out.println(end-begin);
-		list.get(0, value1);
-		long errs = 0;
-		for (long i = 1; i < list.size(); i++) {
-			list.get(i, value2);
-			if (G.DBL.isLess().call(value1, value2))
-				errs++;
-			G.DBL.assign().call(value2, value1);
+	}
+	
+	private boolean listIsSorted(IndexedDataSource<Float64Member> list, double[] dbls) {
+		Float64Member value = G.DBL.construct();
+		if (dbls.length != list.size())
+			return false;
+		for (int i = 0; i < dbls.length; i++) {
+			list.get(i, value);
+			if (value.v() != dbls[i])
+				return false;
 		}
-		assertEquals(0, errs);
+		return true;
+	}
+	
+	private boolean listIsReverseSorted(IndexedDataSource<Float64Member> list, double[] dbls) {
+		Float64Member value = G.DBL.construct();
+		if (dbls.length != list.size())
+			return false;
+		for (int i = 0; i < dbls.length; i++) {
+			list.get(i, value);
+			if (value.v() != dbls[dbls.length-1-i])
+				return false;
+		}
+		return true;
 	}
 }
