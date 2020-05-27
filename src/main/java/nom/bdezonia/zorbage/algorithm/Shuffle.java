@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigInteger;
 import java.util.Random;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -57,19 +58,9 @@ public class Shuffle {
 		for (long i = 0; i < aSize-1; i++) {
 			// Safely generate a random long in the right range
 			// I'm avoiding nextLong() because it uses a 48-bit generator so it can't cover the
-			// entire space.
-			long rh = rng.nextInt();
-			long rl = rng.nextInt();
-			long index = (rh << 32) & rl;
-			long mask = aSize-i;
-			long upperBit = Long.highestOneBit(mask);
-			while (upperBit > 0) {
-				mask = mask | upperBit;
-				upperBit >>= 1;
-			}
-			index &= mask;
-			if (index < 0)
-				index = Math.abs(index);
+			// entire space. This might not either but it might be a better approach.
+			BigInteger bi = new BigInteger(63, rng);
+			long index = bi.longValue() % (aSize-i);
 			a.get(i, tmp1);
 			a.get(i+index, tmp2);
 			a.set(i, tmp2);
