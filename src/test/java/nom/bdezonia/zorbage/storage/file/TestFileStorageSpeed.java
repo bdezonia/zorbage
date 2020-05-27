@@ -58,32 +58,47 @@ public class TestFileStorageSpeed {
 		for (int i = 0; i < dbls.length; i++) {
 			dbls[i] = rng.nextDouble();
 		}
+		
 		long begin = System.currentTimeMillis();
+		
 		IndexedDataSource<Float64Member> list = FileStorage.allocate(dbls.length, new Float64Member());
 		for (int i = 0; i < dbls.length; i++) {
 			value.setV(dbls[i]);
 			list.set(i, value);
 		}
+		
 		Arrays.sort(dbls);
-		//FillSerially.compute(G.DBL, G.DBL.random(), list);
+
 		Mean.compute(G.DBL, list, value);
 		Shuffle.compute(G.DBL, list);
+		
 		assertFalse(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
+		
 		Sort.compute(G.DBL, list);
+		
 		assertTrue(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
 		assertTrue(listIsSorted(list, dbls));
+		
 		Reverse.compute(G.DBL, list);
+		
 		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), list));
 		assertTrue(listIsReverseSorted(list, dbls));
+		
 		Shuffle.compute(G.DBL, list);
+		
 		assertFalse(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
+		
 		StableSort.compute(G.DBL, list);
+		
 		assertTrue(IsSorted.compute(G.DBL, G.DBL.isLess(), list));
 		assertTrue(listIsSorted(list, dbls));
+		
 		Reverse.compute(G.DBL, list);
 		assertTrue(IsSorted.compute(G.DBL, G.DBL.isGreater(), list));
 		assertTrue(listIsReverseSorted(list, dbls));
+		
 		long end = System.currentTimeMillis();
+		
 		System.out.println(end-begin);
 	}
 	

@@ -27,7 +27,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import java.math.BigInteger;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -53,7 +53,7 @@ public class Shuffle {
 	{
 		U tmp1 = algebra.construct();
 		U tmp2 = algebra.construct();
-		Random rng = new Random(System.currentTimeMillis());
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		long aSize = a.size();
 		for (long i = 0; i < aSize-1; i++) {
 			// Safely generate a random long in the right range
