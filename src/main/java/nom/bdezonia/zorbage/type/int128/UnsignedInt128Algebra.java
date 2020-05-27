@@ -574,9 +574,14 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(UnsignedInt128Member a) {
+			// Safely generate a random long in the right range
+			// I'm avoiding nextLong() because it uses a 48-bit generator so it can't cover the
+			// entire space. This might not either but it might be a better approach.
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.lo = rng.nextLong();
-			a.hi = rng.nextLong();
+			BigInteger bi = new BigInteger(64, rng);
+			a.lo = bi.longValue();
+			bi = new BigInteger(64, rng);
+			a.hi = bi.longValue();
 		}
 	};
 	
