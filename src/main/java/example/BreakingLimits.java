@@ -10,6 +10,7 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float16.real.Float16Member;
 import nom.bdezonia.zorbage.type.int12.SignedInt12Member;
 import nom.bdezonia.zorbage.type.int128.SignedInt128Member;
+import nom.bdezonia.zorbage.type.int128.UnsignedInt128Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.int4.UnsignedInt4Member;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
@@ -54,7 +55,7 @@ public class BreakingLimits {
 	
 	void example2() {
 		
-		UnsignedInt4Member u4 = G.UINT4.construct();
+		UnsignedInt4Member u4 = G.UINT4.construct();  // stores values from 0 to 15
 		
 		u4.setV(14);
 		
@@ -182,10 +183,17 @@ public class BreakingLimits {
 	 */
 	
 	void example6() {
-		
+
 		// You've already seen some examples above
+
+		// construct the integers that match Java's standard bit-depths
 		
-		// construct some signed integer types
+		G.INT8.construct();
+		G.INT16.construct();
+		G.INT32.construct();
+		G.INT64.construct();
+
+		// now construct some nonstandard signed integer types
 		
 		G.INT1.construct();
 		G.INT2.construct();
@@ -194,7 +202,6 @@ public class BreakingLimits {
 		G.INT5.construct();
 		G.INT6.construct();
 		G.INT7.construct();
-		G.INT8.construct();
 		G.INT9.construct();
 		G.INT10.construct();
 		G.INT11.construct();
@@ -202,9 +209,9 @@ public class BreakingLimits {
 		G.INT13.construct();
 		G.INT14.construct();
 		G.INT15.construct();
-		G.INT16.construct();
+		G.INT128.construct();
 		
-		// construct some unsigned integer types
+		// now construct unsigned integer types : all nonstandard according to Java
 		
 		G.UINT1.construct();
 		G.UINT2.construct();
@@ -222,6 +229,9 @@ public class BreakingLimits {
 		G.UINT14.construct();
 		G.UINT15.construct();
 		G.UINT16.construct();
+		G.UINT32.construct();
+		G.UINT64.construct();
+		G.UINT128.construct();
 		
 	}
 	
@@ -229,6 +239,7 @@ public class BreakingLimits {
 	 * Specialized numeric types
 	 *   Zorbage supports things Java does not:
 	 *   - 128 bit signed integers (SignedInt128Member)
+	 *   - 128 bit unsigned integers (UnsignedInt128Member)
 	 *   - unbounded integers (UnboundedIntMember)
 	 *   - rational numbers (RationalMember)
 	 *       Rational numbers are great for safely scaling lists of integers while avoiding overflow and
@@ -237,13 +248,25 @@ public class BreakingLimits {
 
 	void example7() {
 		
-		SignedInt128Member value128 = G.INT128.construct();
+		// signed 128 bit ints
 		
-		value128.setV(BigInteger.ONE.add(BigInteger.ONE).pow(93)); // set to 2^93
+		SignedInt128Member value128s = G.INT128.construct();
+		
+		value128s.setV(BigInteger.ONE.add(BigInteger.ONE).pow(93)); // set to 2^93
+		
+		// unsigned 128 bit ints
+		
+		UnsignedInt128Member value128u = G.UINT128.construct();
+		
+		value128u.setV(BigInteger.ONE.add(BigInteger.ONE).pow(93)); // set to 2^93
+		
+		// unbounded ints
 		
 		UnboundedIntMember valueUB = G.UNBOUND.construct();
 		
 		valueUB.setV(BigInteger.ONE.add(BigInteger.ONE).pow(264)); // set to 2^264
+		
+		// rational numbers
 		
 		RationalMember rationalScale = new RationalMember(7,5);  // 7/5's : a little more than one
 		
