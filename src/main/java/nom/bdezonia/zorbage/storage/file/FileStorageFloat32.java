@@ -50,7 +50,7 @@ import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		implements IndexedDataSource<U>, Allocatable<FileStorageFloat32<U>>
 {
-	private static final int BYTE_CHUNK = 2000;
+	private static final int BYTE_CHUNK = 4096;
 	private final long numElements;
 	private final U type;
 	private final float[] tmpArray;
