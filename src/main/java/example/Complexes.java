@@ -101,7 +101,7 @@ class Complexes {
 		
 		G.CDBL.construct();  // construct a zero value
 		G.CDBL.construct(num);  // construct a copy of a number
-		G.DBL.construct("{44,77}");  // construct a complex number from a string
+		G.CDBL.construct("{44,77}");  // construct a complex number from a string
 
 		// comparisons
 		
@@ -144,8 +144,8 @@ class Complexes {
 
 		// query operations
 
-		G.CDBL.real();  // get a real number with real qual my r
-		G.CDBL.unreal(); // get a complex number with real 0 and imaginary equal my i
+		G.CDBL.real();  // get a real number with real equal my r
+		G.CDBL.unreal(); // get a complex number equal to my 0,i
 
 		// scaling
 		
