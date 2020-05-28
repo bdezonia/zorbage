@@ -128,9 +128,11 @@ class Quaternions {
 		
 		G.QDBL.E();
 		G.QDBL.GAMMA();
-		G.QDBL.I();
 		G.QDBL.PI();
 		G.QDBL.PHI();
+		G.QDBL.I();
+		G.QDBL.J();
+		G.QDBL.K();
 
 		// basic operations
 		
