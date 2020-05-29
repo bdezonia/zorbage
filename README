@@ -4,7 +4,7 @@ Goals:
   - provide a framework for reusable numeric algorithms
   - support numeric computing in Java in an efficient manner
     - provide code easier to develop and almost as fast as C++
-    - provide code that is faster and less error prone than Python & Matlab
+    - provide code that is faster and less error prone than Python/R/Matlab
   - support very large data sets in an efficient manner
   - break limitations of many programming languages in terms of the 
       computable types provided and the extensibility of such types
@@ -98,7 +98,7 @@ You can:
     - Resampling algorithms
     - LU Decomposition and LU Solving (simultaneous equation solving)
     - Most C++ STL algorithms replicated
-    - Use Zorbage's parallel algorithms for quickly processing data.
+    - Numerous parallel algorithms are provided for quickly processing data.
   
   Define complex data sampling algorithms from prebuilt sampling components.
   
@@ -123,8 +123,8 @@ Why Java?
   - the JRE optimizes many object allocations into stack allocations
   - Java is portable: Zorbage runs everywhere the JVM does
   - Java is safer at runtime than C++ while still supporting good performance
-  - Java is faster at runtime than Python while also avoiding simple "oops,
-      that typo in my code just killed my long application run" situations
+  - Java is faster at runtime than Python/R/Matlab while also avoiding simple
+      "oops, that typo in my code just killed my long run" situations
 
 Why is Zorbage the way it is?
 
@@ -132,7 +132,7 @@ Why is Zorbage the way it is?
   - object oriented comforts can be used where needed
   - generics allow for reusable algorithms. often one can write one
       algorithm and use it for reals, complex numbers, quaternions,
-      etc.
+      matrices, etc.
   - there is no telling what one bored developer can get up to when
       looking for fun
   
