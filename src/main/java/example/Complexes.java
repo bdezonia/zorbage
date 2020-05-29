@@ -50,6 +50,13 @@ class Complexes {
 		
 		@SuppressWarnings("unused")
 		HighPrecisionMember rBig = getImaginary(G.HP, cBig);
+		
+		// an alternative way to get this data without a reusable approach
+
+		c16.getI(r16);
+		c32.getI(r32);
+		c64.getI(r64);
+		cBig.getI(rBig);
 	}
 	
 	<NUMBER extends GetComplex<COMPONENT>,

@@ -13,6 +13,8 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.octonion.OctonionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
+// What are Octonions? See https://en.wikipedia.org/wiki/Octonion
+
 class Octonions {
 
 	// Zorbage supports Octonion numbers in a variety precisions
@@ -53,6 +55,13 @@ class Octonions {
 		
 		@SuppressWarnings("unused")
 		HighPrecisionMember rBig = getK0(G.HP, oBig);
+		
+		// an alternative way to get this data without a reusable approach
+
+		o16.getK0(r16);
+		o32.getK0(r32);
+		o64.getK0(r64);
+		oBig.getK0(rBig);
 	}
 	
 	<NUMBER extends GetOctonion<COMPONENT>,

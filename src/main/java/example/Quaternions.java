@@ -13,6 +13,8 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.quaternion.QuaternionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
+// What are Quaternions? See https://en.wikipedia.org/wiki/Quaternion
+
 class Quaternions {
 
 	// Zorbage supports Quaternion numbers in a variety precisions
@@ -51,6 +53,13 @@ class Quaternions {
 		
 		@SuppressWarnings("unused")
 		HighPrecisionMember rBig = getK(G.HP, qBig);
+		
+		// an alternative way to get this data without a reusable approach
+
+		q16.getK(r16);
+		q32.getK(r32);
+		q64.getK(r64);
+		qBig.getK(rBig);
 	}
 	
 	<NUMBER extends GetQuaternion<COMPONENT>,
