@@ -1,3 +1,6 @@
+/**
+ * @author Barry DeZonia
+ */
 /*
  * Why?
 how to understand?

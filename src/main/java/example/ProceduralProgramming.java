@@ -1,3 +1,6 @@
+/**
+ * @author Barry DeZonia
+ */
 /*
 discussion
 examples?

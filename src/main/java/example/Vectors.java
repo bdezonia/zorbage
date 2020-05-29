@@ -5,6 +5,9 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float32.real.Float32VectorMember;
 
+/**
+ * @author Barry DeZonia
+ */
 class Vectors {
 
 	/*

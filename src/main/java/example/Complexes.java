@@ -13,6 +13,9 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
+/**
+ * @author Barry DeZonia
+ */
 class Complexes {
 
 	// Zorbage supports complex numbers in a variety precisions

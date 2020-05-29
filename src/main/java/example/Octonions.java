@@ -15,6 +15,9 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 // What are Octonions? See https://en.wikipedia.org/wiki/Octonion
 
+/**
+ * @author Barry DeZonia
+ */
 class Octonions {
 
 	// Zorbage supports Octonion numbers in a variety precisions

@@ -1,3 +1,6 @@
+/**
+ * @author Barry DeZonia
+ */
 /*
 improve the lorenz example? the fft example? what do I want to do here
 		

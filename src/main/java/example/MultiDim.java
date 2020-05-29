@@ -1,3 +1,6 @@
+/**
+ * @author Barry DeZonia
+ */
 /*
 multidimensional datasets
 iterating in multidim space

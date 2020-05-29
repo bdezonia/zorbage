@@ -1,3 +1,6 @@
+/**
+ * @author Barry DeZonia
+ */
 /*
 No overflows and no roundoff errors
 highprecision sum

@@ -15,6 +15,9 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 // What are Quaternions? See https://en.wikipedia.org/wiki/Quaternion
 
+/**
+ * @author Barry DeZonia
+ */
 class Quaternions {
 
 	// Zorbage supports Quaternion numbers in a variety precisions

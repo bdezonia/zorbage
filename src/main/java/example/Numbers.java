@@ -1,5 +1,8 @@
 package example;
 
+/**
+ * @author Barry DeZonia
+ */
 class Numbers {
 
 	/*

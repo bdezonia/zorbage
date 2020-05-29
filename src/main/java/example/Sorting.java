@@ -1,3 +1,6 @@
+/**
+ * @author Barry DeZonia
+ */
 /*
 straight sort
 reverse sort in two ways

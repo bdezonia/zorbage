@@ -5,6 +5,9 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.type.float16.real.Float16MatrixMember;
 import nom.bdezonia.zorbage.type.float16.real.Float16Member;
 
+/**
+ * @author Barry DeZonia
+ */
 class Matrices {
 	
 	/*

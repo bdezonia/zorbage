@@ -8,6 +8,9 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 // What are Tensors? See https://en.wikipedia.org/wiki/Tensor
 
+/**
+ * @author Barry DeZonia
+ */
 class Tensors {
 	
 	/*

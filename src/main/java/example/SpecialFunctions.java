@@ -6,9 +6,9 @@ package example;
 class SpecialFunctions {
 
 	// erf erfc
-	// fibonacci factorial
+	// fibonacci factorial (also that they can return an Int or a Complex etc.
 	// permutations combinations
-	// binomial coeffs
+	// binomial coeffs: not written yet?
 	// exponential calc   scinot too
 	// gaussian
 	// gcd lcm
