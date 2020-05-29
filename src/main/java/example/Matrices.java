@@ -20,15 +20,15 @@ class Matrices {
 	 * ComplexFloat64MatrixMember - 64 bit complexes
 	 * ComplexHighPrecisionMatrixMember - high precision complexes
 	 * 
-	 * QuaternionFloat16RModuleMember - 16 bit quaternions
-	 * QuaternionFloat32RModuleMember - 32 bit quaternions
-	 * QuaternionFloat64RModuleMember - 64 bit quaternions
-	 * QuaternionHighPrecisionRModuleMember - high precision quaternions
+	 * QuaternionFloat16MatrixMember - 16 bit quaternions
+	 * QuaternionFloat32MatrixMember - 32 bit quaternions
+	 * QuaternionFloat64MatrixMember - 64 bit quaternions
+	 * QuaternionHighPrecisionMatrixMember - high precision quaternions
 	 * 
-	 * OctonionFloat16RModuleMember - 16 bit octonions
-	 * OctonionFloat32RModuleMember - 32 bit octonions
-	 * OctonionFloat64RModuleMember - 64 bit octonions
-	 * OctonionHighPrecisionRModuleMember - high precision octonions
+	 * OctonionFloat16MatrixMember - 16 bit octonions
+	 * OctonionFloat32MatrixMember - 32 bit octonions
+	 * OctonionFloat64MatrixMember - 64 bit octonions
+	 * OctonionHighPrecisionMatrixMember - high precision octonions
 	 * 
 	 */
 	
