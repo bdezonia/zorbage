@@ -19,6 +19,7 @@ class Octonions {
 
 	// Zorbage supports Octonion numbers in a variety precisions
 	
+	@SuppressWarnings("unused")
 	void example1() {
 		
 		// 16-bit float based
@@ -44,16 +45,12 @@ class Octonions {
 		// use code (defined below) that can work with any of them
 		//   and use it to extract values from all kinds of Octonion values
 		
-		@SuppressWarnings("unused")
 		Float16Member r16 = getK0(G.HLF, o16);
 	
-		@SuppressWarnings("unused")
 		Float32Member r32 = getK0(G.FLT, o32);
 		
-		@SuppressWarnings("unused")
 		Float64Member r64 = getK0(G.DBL, o64);
 		
-		@SuppressWarnings("unused")
 		HighPrecisionMember rBig = getK0(G.HP, oBig);
 		
 		// an alternative way to get this data without a reusable approach

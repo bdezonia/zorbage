@@ -17,6 +17,7 @@ class Complexes {
 
 	// Zorbage supports complex numbers in a variety precisions
 	
+	@SuppressWarnings("unused")
 	void example1() {
 		
 		// 16-bit float based
@@ -39,16 +40,12 @@ class Complexes {
 		// use code (defined below) that can work with any of them
 		//   and use it to extract values from all kinds of complex values
 		
-		@SuppressWarnings("unused")
 		Float16Member r16 = getImaginary(G.HLF, c16);
 	
-		@SuppressWarnings("unused")
 		Float32Member r32 = getImaginary(G.FLT, c32);
 		
-		@SuppressWarnings("unused")
 		Float64Member r64 = getImaginary(G.DBL, c64);
 		
-		@SuppressWarnings("unused")
 		HighPrecisionMember rBig = getImaginary(G.HP, cBig);
 		
 		// an alternative way to get this data without a reusable approach

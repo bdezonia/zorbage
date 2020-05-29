@@ -19,6 +19,7 @@ class Quaternions {
 
 	// Zorbage supports Quaternion numbers in a variety precisions
 	
+	@SuppressWarnings("unused")
 	void example1() {
 		
 		// 16-bit float based
@@ -42,16 +43,12 @@ class Quaternions {
 		// use code (defined below) that can work with any of them
 		//   and use it to extract values from all kinds of Quaternion values
 		
-		@SuppressWarnings("unused")
 		Float16Member r16 = getK(G.HLF, q16);
 	
-		@SuppressWarnings("unused")
 		Float32Member r32 = getK(G.FLT, q32);
 		
-		@SuppressWarnings("unused")
 		Float64Member r64 = getK(G.DBL, q64);
 		
-		@SuppressWarnings("unused")
 		HighPrecisionMember rBig = getK(G.HP, qBig);
 		
 		// an alternative way to get this data without a reusable approach
