@@ -36,11 +36,11 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class Fill {
+public class ParallelFill {
 
 	// do not instantiate
 	
-	private Fill() {}
+	private ParallelFill() {}
 	
 	/**
 	 * 

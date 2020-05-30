@@ -56,7 +56,7 @@ public class TestParallelCorrelateND {
 		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
 		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {400, 333}, value);
 		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {400, 333}, value);
-		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
+		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
 		idx.set(1, 0);
@@ -127,7 +127,7 @@ public class TestParallelCorrelateND {
 		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
 		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {400, 333}, value);
 		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {400, 333}, value);
-		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
+		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
 		idx.set(1, 0);

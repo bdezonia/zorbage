@@ -30,8 +30,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.FillSerially;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
@@ -55,7 +54,7 @@ public class TestNanNdOOB {
 		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded =
 				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, oobProc);
 		value.setV(6);
-		Fill.compute(G.DBL, value, ds.rawData());
+		FillSerially.compute(G.DBL, value, ds.rawData());
 		IntegerIndex index = new IntegerIndex(ds.numDimensions());
 
 		index.set(0, -1);
