@@ -104,7 +104,9 @@ class ParallelProcessing {
 		// the shortList is now full of 44s
 	}
 	
-	// ParallelTransform1
+	// ParallelTransform1 : transform one list by setting values to the computation of a passed in Procedure1.
+	//   A Procedure1 computes a value with no input form any source (except initialization provided to the
+	//   Procedure1 by the developer). This is in essence very similar to Generate.
 	
 	void example4() {
 		
@@ -117,7 +119,10 @@ class ParallelProcessing {
 		// the shortList has each value set to 32767
 	}
 	
-	// ParallelTransform2
+	// ParallelTransform2 : transform a destination list by applying a Procedure2 to a source list. This is
+	// an honest to goodness transformation. A Procedure2 takes an input value, calculates something, and
+	// sets an output value to the result. ParallelTransform2 uses as many threads as the cpu can spare to
+	// do this transformation quickly. This algorithm is very similar to the Map algorithm.
 	
 	void example5() {
 
@@ -129,16 +134,19 @@ class ParallelProcessing {
 		
 		IndexedDataSource<SignedInt16Member> shortList2 = shortList1.duplicate();
 		
-		// fill the source list with random positive and negative values
+		// fill the source list with random positive and negative 16-bit values
 		
 		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
 		
-		// now set the destination list to contain only the absolute values of the values in the source list
+		// now set the destination list to contain only the values in the source list each incremented by one.
+		// pred(x) == x+1.
 		
-		ParallelTransform2.compute(G.INT16, G.INT16.abs(), shortList1, shortList2);
+		ParallelTransform2.compute(G.INT16, G.INT16.pred(), shortList1, shortList2);
 	}
 	
-	// ParallelTransform3
+	// ParallelTransform3 : transform a destination list by applying a Procedure3 to two source lists. A
+	// Procedure3 takes two input values, calculates something, and sets an output value to the result.
+	// ParallelTransform3 uses as many threads as the cpu can spare to do this transformation quickly.
 	
 	void example6() {
 		
@@ -154,7 +162,7 @@ class ParallelProcessing {
 		
 		IndexedDataSource<SignedInt16Member> shortList3 = shortList1.duplicate();
 		
-		// fill the source lists with random positive and negative values
+		// fill the source lists with random positive and negative 16-bit values
 		
 		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
 		ParallelFill.compute(G.INT16, G.INT16.random(), shortList2);
@@ -164,7 +172,9 @@ class ParallelProcessing {
 		ParallelTransform3.compute(G.INT16, G.INT16.add(), shortList1, shortList2, shortList3);
 	}
 	
-	// ParallelTransform4
+	// ParallelTransform4 : transform a destination list by applying a Procedure4 to three source lists.
+	// A Procedure4 takes three input values, calculates something, and sets an output value to the result.
+	// ParallelTransform4 uses as many threads as the cpu can spare to do this transformation quickly.
 	
 	void example7() {
 		
@@ -197,6 +207,9 @@ class ParallelProcessing {
 		{
 			@Override
 			public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c, SignedInt16Member d) {
+				
+				// set d to a linear combination of a, b, and c
+				
 				d.setV(4*a.v() - 2*b.v() + c.v());
 			}
 		}; 
