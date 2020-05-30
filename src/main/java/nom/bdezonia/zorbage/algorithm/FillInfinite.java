@@ -50,6 +50,6 @@ public class FillInfinite {
 	{
 		U value = alg.construct();
 		alg.infinite().call(value);
-		FillSerially.compute(alg, value, a.rawData());
+		Fill.compute(alg, value, a.rawData());
 	}
 }

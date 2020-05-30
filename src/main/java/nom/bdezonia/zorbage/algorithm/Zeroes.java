@@ -48,7 +48,7 @@ public class Zeroes {
 		void compute(T algebra, IndexedDataSource<U> data)
 	{
 		U zero = algebra.construct();
-		FillSerially.compute(algebra, zero, data);
+		Fill.compute(algebra, zero, data);
 	}
 
 	/**

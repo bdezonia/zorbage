@@ -3,7 +3,7 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.BoolToUInt1;
 import nom.bdezonia.zorbage.algorithm.DataConvert;
-import nom.bdezonia.zorbage.algorithm.FillSerially;
+import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.UInt1ToBool;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
@@ -141,7 +141,7 @@ class Conversions {
 		
 		// fill the uint1 container with true values
 		
-		FillSerially.compute(G.UINT1, value, uint1s);
+		Fill.compute(G.UINT1, value, uint1s);
 		
 		// convert the uint1s back into booleans
 		

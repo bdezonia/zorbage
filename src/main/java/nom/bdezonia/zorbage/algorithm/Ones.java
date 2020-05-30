@@ -50,7 +50,7 @@ public class Ones {
 	{
 		U one = algebra.construct();
 		algebra.unity().call(one);
-		FillSerially.compute(algebra, one, data);
+		Fill.compute(algebra, one, data);
 	}
 	
 	/**

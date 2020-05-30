@@ -2,7 +2,7 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.ParallelFill;
-import nom.bdezonia.zorbage.algorithm.FillSerially;
+import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.datasource.BigListDataSource;
@@ -46,7 +46,7 @@ class BigData {
 		//   that way. The basic Fill algorithm works parallelly and is designed for in memory data
 		//   structures.
 
-		FillSerially.compute(G.INT16, G.INT16.random(), data);
+		Fill.compute(G.INT16, G.INT16.random(), data);
 
 		// Now count the number of fours we found.
 		//   Notice the list is indexed by a 64-bit integer. Lists can contain up to 2^63 elements.
@@ -116,7 +116,7 @@ class BigData {
 
 		// Fill it with random data
 
-		FillSerially.compute(G.UINT16, G.UINT16.random(), data);
+		Fill.compute(G.UINT16, G.UINT16.random(), data);
 
 		// Let's pull out values as unbounded floating point numbers that can't lose precision. We wrap the
 		// original data in a filter that reads values in the original data type and converts the result to

@@ -36,11 +36,11 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class FillSerially {
+public class Fill {
 
 	// do not instantiate
 
-	private FillSerially() {}
+	private Fill() {}
 
 	/**
 	 * Fill a target data source in a non-threaded fashion. This is usually needed when you

@@ -121,7 +121,7 @@ public class TestSort {
 			
 			IndexedDataSource<Float64Member> nums = Storage.allocate(1000+i, value);
 			
-			FillSerially.compute(G.DBL, G.DBL.random(), nums);
+			Fill.compute(G.DBL, G.DBL.random(), nums);
 			
 			Procedure2<Float64Member, Float64Member> proc =
 					new Procedure2<Float64Member, Float64Member>()

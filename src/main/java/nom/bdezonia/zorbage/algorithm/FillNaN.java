@@ -50,6 +50,6 @@ public class FillNaN {
 	{
 		U value = alg.construct();
 		alg.nan().call(value);
-		FillSerially.compute(alg, value, a.rawData());
+		Fill.compute(alg, value, a.rawData());
 	}
 }
