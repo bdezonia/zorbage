@@ -80,7 +80,7 @@ class BigData {
 				new BigListDataSource<SignedInt16Algebra,SignedInt16Member>(G.INT16, 10L * 1000 * 1000 * 1000);
 
 		// Fill the list with random numbers. A memory based list will work faster with the multithreaded
-		// Fill code (the default fill).
+		// ParallelFill code.
 
 		ParallelFill.compute(G.INT16, G.INT16.random(), data);
 

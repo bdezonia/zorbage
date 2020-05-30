@@ -142,7 +142,7 @@ class Algebras {
 
 	/* Zorbage also has a basic discovery mechanism for algebras. This is not something you'd usually
 	 * do but you can if you like. (You can find more enhanced examples of this in Zorbage's test code
-	 * for the FindCompatibleType class.
+	 * for the FindCompatibleType class).
 	 */
 	
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>

@@ -117,6 +117,16 @@ class Tensors {
 		G.DBL_TEN.scaleByHighPrec();
 		G.DBL_TEN.scaleByHighPrec();
 		G.DBL_TEN.scaleByRational();
+		
+		// tensor methods
+		
+		G.DBL_TEN.lowerIndex();
+		G.DBL_TEN.raiseIndex();
+		G.DBL_TEN.contract();
+		G.DBL_TEN.innerProduct();
+		G.DBL_TEN.outerProduct();
+		G.DBL_TEN.commaDerivative();
+		G.DBL_TEN.semicolonDerivative();
 
 	}
 
