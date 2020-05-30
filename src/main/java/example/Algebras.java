@@ -10,7 +10,7 @@ import nom.bdezonia.zorbage.type.universal.FindCompatibleType;
 /**
  * @author Barry DeZonia
  */
-class Algebra {
+class Algebras {
 
 	/*
 	 * Zorbage at it's heart is organized around algebra. The simplest way to describe Zorbage's organization
@@ -44,7 +44,7 @@ class Algebra {
 	// Let's illustrate these concepts with some code. Here is an algorithm that checks numbers for equality.
 	
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
-	void compute(T algebra, U algMemberOne, U algMemberTwo)
+		void compute(T algebra, U algMemberOne, U algMemberTwo)
 	{
 		// isEqual() is a method all Algebras must implement
 		
@@ -88,12 +88,12 @@ class Algebra {
 	 */
 	
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U> & Multiplication<U>, U>
-	void test2(T algebra, U a, U b, U c)
+		void test2(T algebra, U a, U b, U c)
 	{
 		// The above declaration says T is an Algebra. The Algebra is defined by T and U. T is basically
 		// its own name and U is type of values the Algebra will manipulate.
 		
-		// In addition to tying the T's and U's togeher it also delineates that the Algebra supports
+		// In addition to tying the T's and U's together it also delineates that the Algebra supports
 		// the Multiplication operation. This allows the next line to be sensible.
 		
 		algebra.multiply().call(a, b, c);  // c = a * b
@@ -146,7 +146,7 @@ class Algebra {
 	 */
 	
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
-	void test3()
+		void test3()
 	{
 		Float64Member num = G.DBL.construct();
 		
