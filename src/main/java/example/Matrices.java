@@ -64,8 +64,8 @@ class Matrices {
 		b.rows();
 		b.cols();
 		b.get(e);
-		b.v(1, 0, value);
 		b.set(f);
+		b.v(1, 0, value);
 		b.setV(0, 1, value);
 
 		// constants

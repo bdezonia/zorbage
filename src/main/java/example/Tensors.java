@@ -73,8 +73,8 @@ class Tensors {
 		b.rank();
 		b.dimension();
 		b.get(e);
-		b.v(idx, value);
 		b.set(c);
+		b.v(idx, value);
 		b.setV(idx, value);
 
 		// basic operations

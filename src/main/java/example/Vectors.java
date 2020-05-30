@@ -74,8 +74,8 @@ class Vectors {
 		
 		b.length();
 		b.get(e);
-		b.v(2, value);
 		b.set(f);
+		b.v(2, value);
 		b.setV(1, value);
 
 		// basic operations
