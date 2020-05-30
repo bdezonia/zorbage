@@ -73,7 +73,7 @@ class Numbers {
 	 *   
 	 * SignedInt13Member
 	 *   Min: -4096
-	 *   Max: 4195
+	 *   Max: 4095
 	 *   Memory size: 2 bytes
 	 *   
 	 * SignedInt14Member
