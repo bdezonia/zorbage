@@ -91,11 +91,11 @@ class Complexes {
 		num.r();
 		num.i();
 		num.v(other);
+		num.setV(other);
+		num.set(other);
 		num.get(other);
 		num.getR(val);
 		num.getI(val);
-		num.setV(other);
-		num.set(other);
 		num.setR(val);
 		num.setI(val);
 		
