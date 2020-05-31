@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.ParallelResampleAveragedCubics;
 import nom.bdezonia.zorbage.algorithm.ParallelResampleAveragedLinears;
 import nom.bdezonia.zorbage.algorithm.ParallelResampleNearestNeighbor;
