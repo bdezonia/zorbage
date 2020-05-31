@@ -7,6 +7,7 @@
 //
 package conway;
 
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
