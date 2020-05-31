@@ -95,10 +95,10 @@ class Octonions {
 
 		num.r();
 		num.i();
-		num.v(other);
-		num.setV(other);
 		num.get(other);
 		num.set(other);
+		num.v(other);
+		num.setV(other);
 		num.getR(val);
 		num.getI(val);
 		num.getJ(val);
