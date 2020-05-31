@@ -68,7 +68,7 @@ public class Point
 			throw new IllegalArgumentException("string has too many components to fit in a Point");
 		this.vector = new double[(int)vec.length()];
 		for (int i = 0; i < this.vector.length; i++) {
-			vec.v(i, val);
+			vec.getV(i, val);
 			setComponent(i, val.v());
 		}
 	}

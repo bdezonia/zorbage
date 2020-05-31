@@ -49,7 +49,7 @@ public class TestEye {
 		Float64Member value = G.DBL.construct();
 		for (long r = 0; r < x.rows(); r++) {
 			for (long c = 0; c < x.cols(); c++) {
-				x.v(r, c, value);
+				x.getV(r, c, value);
 				if (r == c)
 					assertEquals(1, value.v(), 0);
 				else

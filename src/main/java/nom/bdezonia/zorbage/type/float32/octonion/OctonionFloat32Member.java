@@ -216,7 +216,7 @@ public final class OctonionFloat32Member
 	}
 
 	@Override
-	public void v(OctonionFloat32Member value) {
+	public void getV(OctonionFloat32Member value) {
 		get(value);
 	}
 

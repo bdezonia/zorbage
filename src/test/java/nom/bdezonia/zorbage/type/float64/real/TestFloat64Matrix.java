@@ -63,7 +63,7 @@ public class TestFloat64Matrix {
 				if (r % 1000 == 0)
 					System.out.println(r);
 				for (long c = 0; c < m.cols(); c++) {
-					m.v(r, c, value);
+					m.getV(r, c, value);
 					if (r == c) {
 						if (value.v() != one.v()) {
 							//System.out.println(r+" == "+c+" and v = "+value.v());
@@ -100,44 +100,44 @@ public class TestFloat64Matrix {
 		
 		Float64Member value = new Float64Member();
 
-		invMat.v(0, 0, value);
+		invMat.getV(0, 0, value);
 		assertEquals(-6.0/145, value.v(), tol);
-		invMat.v(0, 1, value);
+		invMat.getV(0, 1, value);
 		assertEquals(-9.0/145, value.v(), tol);
-		invMat.v(0, 2, value);
+		invMat.getV(0, 2, value);
 		assertEquals(20.0/145, value.v(), tol);
-		invMat.v(1, 0, value);
+		invMat.getV(1, 0, value);
 		assertEquals(29.0/145, value.v(), tol);
-		invMat.v(1, 1, value);
+		invMat.getV(1, 1, value);
 		assertEquals(-29.0/145, value.v(), tol);
-		invMat.v(1, 2, value);
+		invMat.getV(1, 2, value);
 		assertEquals(0.0/145, value.v(), tol);
-		invMat.v(2, 0, value);
+		invMat.getV(2, 0, value);
 		assertEquals(-13.0/145, value.v(), tol);
-		invMat.v(2, 1, value);
+		invMat.getV(2, 1, value);
 		assertEquals(53.0/145, value.v(), tol);
-		invMat.v(2, 2, value);
+		invMat.getV(2, 2, value);
 		assertEquals(-5.0/145, value.v(), tol);
 		
 		G.DBL_MAT.multiply().call(mat, invMat, ident);
 
-		ident.v(0, 0, value);
+		ident.getV(0, 0, value);
 		assertEquals(1, value.v(), tol);
-		ident.v(0, 1, value);
+		ident.getV(0, 1, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(0, 2, value);
+		ident.getV(0, 2, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(1, 0, value);
+		ident.getV(1, 0, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(1, 1, value);
+		ident.getV(1, 1, value);
 		assertEquals(1, value.v(), tol);
-		ident.v(1, 2, value);
+		ident.getV(1, 2, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(2, 0, value);
+		ident.getV(2, 0, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(2, 1, value);
+		ident.getV(2, 1, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(2, 2, value);
+		ident.getV(2, 2, value);
 		assertEquals(1, value.v(), tol);
 	}
 	
@@ -149,11 +149,11 @@ public class TestFloat64Matrix {
 		LUDecomp.compute(G.DBL, G.DBL_MAT, a);
 		LUSolve.compute(G.DBL, G.DBL_VEC, a, b, x);
 		Float64Member v = new Float64Member();
-		x.v(0, v);
+		x.getV(0, v);
 		//System.out.println(v.v());
-		x.v(1, v);
+		x.getV(1, v);
 		//System.out.println(v.v());
-		x.v(2, v);
+		x.getV(2, v);
 		//System.out.println(v.v());
 	}
 }

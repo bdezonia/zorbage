@@ -90,9 +90,9 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 	}
 
 	@Override
-	public void v(long r, long c, U value) {
+	public void getV(long r, long c, U value) {
 		if (r == 0 && c == 0)
-			num.v(value);
+			num.getV(value);
 		else
 			throw new IllegalArgumentException("out of bounds read");
 	}

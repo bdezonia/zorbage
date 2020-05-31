@@ -69,7 +69,7 @@ public class TestRModules {
 		
 		for (int i = 0; i < v.length(); i++) {
 			bridge.setIndex(i);
-			bridge.v(tmp);
+			bridge.getV(tmp);
 			assertEquals(2*i+1, tmp.r(), 0);
 			assertEquals(2*i+2, tmp.i(), 0);
 		}
@@ -80,7 +80,7 @@ public class TestRModules {
 		bridge.setV(tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 	}
@@ -171,7 +171,7 @@ public class TestRModules {
 		for (int i = 0; i < 3; i++) {
 			tmp.setR(104);
 			tmp.setI(105);
-			bridge.v(i, tmp);
+			bridge.getV(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -209,13 +209,13 @@ public class TestRModules {
 		for (int i = 0; i < 3; i++) {
 			tmp.setR(104);
 			tmp.setI(105);
-			bridge.v(i, tmp);
+			bridge.getV(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
-		v.v(0, tmp);
+		v.getV(0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
-		v.v(1, tmp);
+		v.getV(1, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 		try {
@@ -309,7 +309,7 @@ public class TestRModules {
 		for (int i = 0; i < 5; i++) {
 			tmp.setR(102);
 			tmp.setI(105);
-			bridge.v(i, 0, tmp);
+			bridge.getV(i, 0, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -350,7 +350,7 @@ public class TestRModules {
 		bridge.setV(1, 0, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(1, 0, tmp);
+		bridge.getV(1, 0, tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 
@@ -422,7 +422,7 @@ public class TestRModules {
 		for (int i = 0; i < 5; i++) {
 			tmp.setR(102);
 			tmp.setI(105);
-			bridge.v(0, i, tmp);
+			bridge.getV(0, i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -469,7 +469,7 @@ public class TestRModules {
 		bridge.setV(0, 1, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 
@@ -552,7 +552,7 @@ public class TestRModules {
 			idx.set(0, i);
 			tmp.setR(123);
 			tmp.setI(456);
-			bridge.v(idx, tmp);
+			bridge.getV(idx, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -602,7 +602,7 @@ public class TestRModules {
 		bridge.setV(idx, tmp);
 		tmp.setR(0);
 		tmp.setI(0);
-		bridge.v(idx, tmp);
+		bridge.getV(idx, tmp);
 		assertEquals(103,  tmp.r(), 0);
 		assertEquals(109,  tmp.i(), 0);
 	}

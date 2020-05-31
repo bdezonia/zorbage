@@ -100,7 +100,7 @@ public final class Float16Member
 	}
 
 	@Override
-	public void v(Float16Member value) {
+	public void getV(Float16Member value) {
 		get(value);
 	}
 

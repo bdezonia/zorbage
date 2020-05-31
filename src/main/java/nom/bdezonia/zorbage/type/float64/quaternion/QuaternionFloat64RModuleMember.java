@@ -114,7 +114,7 @@ public final class QuaternionFloat64RModuleMember
 	}
 	
 	@Override
-	public void v(long i, QuaternionFloat64Member v) {
+	public void getV(long i, QuaternionFloat64Member v) {
 		storage.get(i, v);
 	}
 
@@ -188,7 +188,7 @@ public final class QuaternionFloat64RModuleMember
 		for (long i = 0; i < storageSize; i++) {
 			if (i != 0)
 				builder.append(',');
-			v(i, tmp);
+			getV(i, tmp);
 			builder.append(tmp.toString());
 		}
 		builder.append(']');
@@ -253,7 +253,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -275,7 +275,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -297,7 +297,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -319,7 +319,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -341,7 +341,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -363,7 +363,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -385,7 +385,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -407,7 +407,7 @@ public final class QuaternionFloat64RModuleMember
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
 		long i = index.get(0);
-		v(i, tmp);
+		getV(i, tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -453,7 +453,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -500,7 +500,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -547,7 +547,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -594,7 +594,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -641,7 +641,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -688,7 +688,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -735,7 +735,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -782,7 +782,7 @@ public final class QuaternionFloat64RModuleMember
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
 			long i = index.get(0);
-			v(i, tmp);
+			getV(i, tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -808,7 +808,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -832,7 +832,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -856,7 +856,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -880,7 +880,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -904,7 +904,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -928,7 +928,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return 0;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -952,7 +952,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return BigInteger.ZERO;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -976,7 +976,7 @@ public final class QuaternionFloat64RModuleMember
 					"negative component index error");
 		if (component > 3) return BigDecimal.ZERO;
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
@@ -1018,7 +1018,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1061,7 +1061,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1104,7 +1104,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1147,7 +1147,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1190,7 +1190,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1233,7 +1233,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1276,7 +1276,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
@@ -1319,7 +1319,7 @@ public final class QuaternionFloat64RModuleMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)

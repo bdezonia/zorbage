@@ -80,13 +80,13 @@ public class TestPrimitiveConversions {
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec, cvec);
 		ComplexFloat64Member ctmp = new ComplexFloat64Member();
 		assertEquals(3, cvec.length());
-		cvec.v(0, ctmp);
+		cvec.getV(0, ctmp);
 		assertEquals(-7, ctmp.r(), 0);
 		assertEquals(0, ctmp.i(), 0);
-		cvec.v(1, ctmp);
+		cvec.getV(1, ctmp);
 		assertEquals(12, ctmp.r(), 0);
 		assertEquals(0, ctmp.i(), 0);
-		cvec.v(2, ctmp);
+		cvec.getV(2, ctmp);
 		assertEquals(Math.PI, ctmp.r(), 0);
 		assertEquals(0, ctmp.i(), 0);
 		
@@ -99,28 +99,28 @@ public class TestPrimitiveConversions {
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec, fvec2);
 		assertEquals(3, fvec.length());
 		assertEquals(6, fvec2.length());
-		fvec2.v(0, ftmp);
+		fvec2.getV(0, ftmp);
 		assertEquals(-7,ftmp.v(),0);
-		fvec2.v(1, ftmp);
+		fvec2.getV(1, ftmp);
 		assertEquals(12,ftmp.v(),0);
-		fvec2.v(2, ftmp);
+		fvec2.getV(2, ftmp);
 		assertEquals(Math.PI,ftmp.v(),0);
-		fvec2.v(3, ftmp);
+		fvec2.getV(3, ftmp);
 		assertEquals(0,ftmp.v(),0);
-		fvec2.v(4, ftmp);
+		fvec2.getV(4, ftmp);
 		assertEquals(0,ftmp.v(),0);
-		fvec2.v(5, ftmp);
+		fvec2.getV(5, ftmp);
 		assertEquals(0,ftmp.v(),0);
 
 		fvec2 = new Float64VectorMember(new double[] {101,102,103,104,105});
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec2, fvec);
 		assertEquals(3, fvec.length());
 		assertEquals(5, fvec2.length());
-		fvec.v(0, ftmp);
+		fvec.getV(0, ftmp);
 		assertEquals(101,ftmp.v(),0);
-		fvec.v(1, ftmp);
+		fvec.getV(1, ftmp);
 		assertEquals(102,ftmp.v(),0);
-		fvec.v(2, ftmp);
+		fvec.getV(2, ftmp);
 		assertEquals(103,ftmp.v(),0);
 	}
 	
@@ -142,49 +142,49 @@ public class TestPrimitiveConversions {
 		Float64VectorMember v = new Float64VectorMember(new double[] {9,9,9});
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, v);
 		assertEquals(3, v.length());
-		v.v(0, tmp);
+		v.getV(0, tmp);
 		assertEquals(1, tmp.v(), 0);
-		v.v(1, tmp);
+		v.getV(1, tmp);
 		assertEquals(2, tmp.v(), 0);
-		v.v(2, tmp);
+		v.getV(2, tmp);
 		assertEquals(3, tmp.v(), 0);
 
 		v = new Float64VectorMember(new double[] {9,9,9,9,9});
 
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, v);
 		assertEquals(5, v.length());
-		v.v(0, tmp);
+		v.getV(0, tmp);
 		assertEquals(1, tmp.v(), 0);
-		v.v(1, tmp);
+		v.getV(1, tmp);
 		assertEquals(2, tmp.v(), 0);
-		v.v(2, tmp);
+		v.getV(2, tmp);
 		assertEquals(3, tmp.v(), 0);
-		v.v(3, tmp);
+		v.getV(3, tmp);
 		assertEquals(4, tmp.v(), 0);
-		v.v(4, tmp);
+		v.getV(4, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		Float64MatrixMember m2 = new Float64MatrixMember(3, 3, new double[] {99,99,99,99,99,99,99,99,99});
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, m2);
 		assertEquals(3, m2.rows());
 		assertEquals(3, m2.cols());
-		m2.v(0, 0, tmp);
+		m2.getV(0, 0, tmp);
 		assertEquals(1,tmp.v(),0);
-		m2.v(0, 1, tmp);
+		m2.getV(0, 1, tmp);
 		assertEquals(2,tmp.v(),0);
-		m2.v(0, 2, tmp);
+		m2.getV(0, 2, tmp);
 		assertEquals(3,tmp.v(),0);
-		m2.v(1, 0, tmp);
+		m2.getV(1, 0, tmp);
 		assertEquals(5,tmp.v(),0);
-		m2.v(1, 1, tmp);
+		m2.getV(1, 1, tmp);
 		assertEquals(6,tmp.v(),0);
-		m2.v(1, 2, tmp);
+		m2.getV(1, 2, tmp);
 		assertEquals(7,tmp.v(),0);
-		m2.v(2, 0, tmp);
+		m2.getV(2, 0, tmp);
 		assertEquals(0,tmp.v(),0);
-		m2.v(2, 1, tmp);
+		m2.getV(2, 1, tmp);
 		assertEquals(0,tmp.v(),0);
-		m2.v(2, 2, tmp);
+		m2.getV(2, 2, tmp);
 		assertEquals(0,tmp.v(),0);
 	}
 	
@@ -209,32 +209,32 @@ public class TestPrimitiveConversions {
 		Float64VectorMember v = new Float64VectorMember(StorageConstruction.MEM_ARRAY, 5);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, v);
 		assertEquals(5, v.length());
-		v.v(0, tmp);
+		v.getV(0, tmp);
 		assertEquals(1, tmp.v(), 0);
-		v.v(1, tmp);
+		v.getV(1, tmp);
 		assertEquals(2, tmp.v(), 0);
-		v.v(2, tmp);
+		v.getV(2, tmp);
 		assertEquals(0, tmp.v(), 0);
-		v.v(3, tmp);
+		v.getV(3, tmp);
 		assertEquals(0, tmp.v(), 0);
-		v.v(4, tmp);
+		v.getV(4, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		Float64MatrixMember m = new Float64MatrixMember(StorageConstruction.MEM_ARRAY, 3, 2);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, m);
 		assertEquals(2, m.rows());
 		assertEquals(3, m.cols());
-		m.v(0, 0, tmp);
+		m.getV(0, 0, tmp);
 		assertEquals(1, tmp.v(), 0);
-		m.v(0, 1, tmp);
+		m.getV(0, 1, tmp);
 		assertEquals(2, tmp.v(), 0);
-		m.v(0, 2, tmp);
+		m.getV(0, 2, tmp);
 		assertEquals(0, tmp.v(), 0);
-		m.v(1, 0, tmp);
+		m.getV(1, 0, tmp);
 		assertEquals(3, tmp.v(), 0);
-		m.v(1, 1, tmp);
+		m.getV(1, 1, tmp);
 		assertEquals(4, tmp.v(), 0);
-		m.v(1, 2, tmp);
+		m.getV(1, 2, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		tmp1 = new IntegerIndex(4);
@@ -261,7 +261,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(1, tmp.v(), 0);
 
 		index.set(0,1);
@@ -269,7 +269,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(2, tmp.v(), 0);
 
 		index.set(0,2);
@@ -277,7 +277,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -285,7 +285,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(3, tmp.v(), 0);
 
 		index.set(0,1);
@@ -293,7 +293,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(4, tmp.v(), 0);
 
 		index.set(0,2);
@@ -301,7 +301,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -309,7 +309,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -317,7 +317,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -325,7 +325,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		index.set(0,0);
@@ -333,7 +333,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(5, tmp.v(), 0);
 
 		index.set(0,1);
@@ -341,7 +341,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(6, tmp.v(), 0);
 
 		index.set(0,2);
@@ -349,7 +349,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -357,7 +357,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(7, tmp.v(), 0);
 
 		index.set(0,1);
@@ -365,7 +365,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(8, tmp.v(), 0);
 
 		index.set(0,2);
@@ -373,7 +373,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -381,7 +381,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -389,7 +389,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -397,7 +397,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -405,7 +405,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -413,7 +413,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -421,7 +421,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -429,7 +429,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -437,7 +437,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -445,7 +445,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -453,7 +453,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -461,7 +461,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -469,7 +469,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,0);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -477,7 +477,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		index.set(0,1);
@@ -485,7 +485,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -493,7 +493,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -501,7 +501,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -509,7 +509,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -517,7 +517,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -525,7 +525,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -533,7 +533,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -541,7 +541,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		index.set(0,0);
@@ -549,7 +549,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -557,7 +557,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -565,7 +565,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -573,7 +573,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -581,7 +581,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -589,7 +589,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -597,7 +597,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -605,7 +605,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -613,7 +613,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -621,7 +621,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -629,7 +629,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -637,7 +637,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -645,7 +645,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -653,7 +653,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -661,7 +661,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -669,7 +669,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -677,7 +677,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -685,7 +685,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,1);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -693,7 +693,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		index.set(0,1);
@@ -701,7 +701,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -709,7 +709,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -717,7 +717,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -725,7 +725,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -733,7 +733,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -741,7 +741,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -749,7 +749,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -757,7 +757,7 @@ public class TestPrimitiveConversions {
 		index.set(2,0);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		index.set(0,0);
@@ -765,7 +765,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -773,7 +773,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -781,7 +781,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -789,7 +789,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -797,7 +797,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -805,7 +805,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -813,7 +813,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -821,7 +821,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -829,7 +829,7 @@ public class TestPrimitiveConversions {
 		index.set(2,1);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -837,7 +837,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -845,7 +845,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -853,7 +853,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -861,7 +861,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -869,7 +869,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -877,7 +877,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,0);
@@ -885,7 +885,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,1);
@@ -893,7 +893,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 
 		index.set(0,2);
@@ -901,7 +901,7 @@ public class TestPrimitiveConversions {
 		index.set(2,2);
 		index.set(3,2);
 		
-		t2.v(index, tmp);
+		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		Float64CartesianTensorProductMember t3 = new Float64CartesianTensorProductMember(2,1, new double[] {77});
@@ -921,7 +921,7 @@ public class TestPrimitiveConversions {
 		index.set(0,0);
 		index.set(1,0);
 
-		t3.v(index, tmp);
+		t3.getV(index, tmp);
 		assertEquals(1, tmp.v(), 0);
 		
 	}

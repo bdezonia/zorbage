@@ -48,13 +48,13 @@ public class TestMatrixInvert {
 		Float64Member value = G.DBL.construct();
 		assertEquals(2, b.rows());
 		assertEquals(2, b.cols());
-		b.v(0, 0, value);
+		b.getV(0, 0, value);
 		assertEquals(0.6, value.v(), 0.0000000000001);
-		b.v(0, 1, value);
+		b.getV(0, 1, value);
 		assertEquals(-0.7, value.v(), 0.0000000000001);
-		b.v(1, 0, value);
+		b.getV(1, 0, value);
 		assertEquals(-0.2, value.v(), 0.0000000000001);
-		b.v(1, 1, value);
+		b.getV(1, 1, value);
 		assertEquals(0.4, value.v(), 0.0000000000001);
 	}
 }

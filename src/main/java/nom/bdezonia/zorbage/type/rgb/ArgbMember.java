@@ -116,7 +116,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void v(ArgbMember value) {
+	public void getV(ArgbMember value) {
 		get(value);
 	}
 

@@ -130,7 +130,7 @@ public class TestOdeSolveRK4 {
 		// y = 1 * e^(SLOPE * t)
 		
 		expected_value = 1.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
-		value.v(0, component);
+		value.getV(0, component);
 		assertEquals(expected_value, component.v(), TOL);
 		
 		// y = C * e^(at)
@@ -139,7 +139,7 @@ public class TestOdeSolveRK4 {
 		// y = 4 * e^(SLOPE * t)
 
 		expected_value = 4.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
-		value.v(1, component);
+		value.getV(1, component);
 		assertEquals(expected_value, component.v(), TOL);
 		
 		// y = C * e^(at)
@@ -148,7 +148,7 @@ public class TestOdeSolveRK4 {
 		// y = 7 * e^(SLOPE * t)
 
 		expected_value = 7.0 * Math.exp(SLOPE * (NUM_STEPS-1) * DT);
-		value.v(2, component);
+		value.getV(2, component);
 		assertEquals(expected_value, component.v(), TOL);
 	}
 

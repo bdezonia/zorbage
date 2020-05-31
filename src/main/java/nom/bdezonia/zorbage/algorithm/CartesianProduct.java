@@ -103,9 +103,9 @@ public class CartesianProduct {
 		W w = algW.construct();
 		Y y = algY.construct();
 		for (long r = 0; r < a.length(); r++) {
-			a.v(r, u);
+			a.getV(r, u);
 			for (long c = 0; c < b.length(); c++) {
-				b.v(c, w);
+				b.getV(c, w);
 				proc.call(u, w, y);
 				result.setV(r, c, y);
 			}

@@ -50,16 +50,16 @@ public class TestMatrixConjugate {
 		ComplexFloat64Member value = G.CDBL.construct();
 		assertEquals(2, b.rows());
 		assertEquals(2, b.cols());
-		b.v(0, 0, value);
+		b.getV(0, 0, value);
 		assertEquals(1, value.r(), 0);
 		assertEquals(-2, value.i(), 0);
-		b.v(0, 1, value);
+		b.getV(0, 1, value);
 		assertEquals(2, value.r(), 0);
 		assertEquals(-3, value.i(), 0);
-		b.v(1, 0, value);
+		b.getV(1, 0, value);
 		assertEquals(3, value.r(), 0);
 		assertEquals(-4, value.i(), 0);
-		b.v(1, 1, value);
+		b.getV(1, 1, value);
 		assertEquals(4, value.r(), 0);
 		assertEquals(-5, value.i(), 0);
 	}

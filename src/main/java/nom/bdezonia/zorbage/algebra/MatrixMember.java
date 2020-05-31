@@ -39,7 +39,7 @@ public interface MatrixMember<A> extends Dimensioned, StorageType {
 	boolean alloc(long rows, long cols);
 	void init(long rows, long cols);
 	void reshape(long rows, long cols);
-	void v(long r, long c, A value);
+	void getV(long r, long c, A value);
 	void setV(long r, long c, A value);
 }
 

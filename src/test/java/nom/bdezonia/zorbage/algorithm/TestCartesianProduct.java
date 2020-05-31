@@ -97,23 +97,23 @@ public class TestCartesianProduct {
 		};
 		CartesianProduct.compute(G.DBL, G.DBL, G.DBL, proc, a, b, result);
 		Float64Member val = G.DBL.construct();
-		result.v(0, 0, val);
+		result.getV(0, 0, val);
 		assertEquals(4, val.v(), 0);
-		result.v(0, 1, val);
+		result.getV(0, 1, val);
 		assertEquals(5, val.v(), 0);
-		result.v(0, 2, val);
+		result.getV(0, 2, val);
 		assertEquals(6, val.v(), 0);
-		result.v(1, 0, val);
+		result.getV(1, 0, val);
 		assertEquals(8, val.v(), 0);
-		result.v(1, 1, val);
+		result.getV(1, 1, val);
 		assertEquals(10, val.v(), 0);
-		result.v(1, 2, val);
+		result.getV(1, 2, val);
 		assertEquals(12, val.v(), 0);
-		result.v(2, 0, val);
+		result.getV(2, 0, val);
 		assertEquals(12, val.v(), 0);
-		result.v(2, 1, val);
+		result.getV(2, 1, val);
 		assertEquals(15, val.v(), 0);
-		result.v(2, 2, val);
+		result.getV(2, 2, val);
 		assertEquals(18, val.v(), 0);
 	}
 }

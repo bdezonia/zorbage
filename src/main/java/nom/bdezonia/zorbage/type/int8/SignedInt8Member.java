@@ -135,7 +135,7 @@ public final class SignedInt8Member
 	}
 
 	@Override
-	public void v(SignedInt8Member value) {
+	public void getV(SignedInt8Member value) {
 		get(value);
 	}
 

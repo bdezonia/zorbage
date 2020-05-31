@@ -46,11 +46,11 @@ public class TestRModuleScale {
 		Float64VectorMember b = new Float64VectorMember();
 		Float64Member value = G.DBL.construct("7");
 		RModuleScale.compute(G.DBL, value, a, b);
-		b.v(0, value);
+		b.getV(0, value);
 		assertEquals(-14, value.v(), 0);
-		b.v(1, value);
+		b.getV(1, value);
 		assertEquals(0, value.v(), 0);
-		b.v(2, value);
+		b.getV(2, value);
 		assertEquals(49, value.v(), 0);
 	}
 }

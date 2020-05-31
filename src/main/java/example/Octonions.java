@@ -97,7 +97,7 @@ class Octonions {
 		num.i();
 		num.get(other);
 		num.set(other);
-		num.v(other);
+		num.getV(other);
 		num.setV(other);
 		num.getR(val);
 		num.getI(val);

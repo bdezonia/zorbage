@@ -68,22 +68,22 @@ public class TestMatrices {
 		assertEquals(0, bridge.numDimensions());
 		
 		bridge.setRowCol(0, 0);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 
 		bridge.setRowCol(0, 1);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 
 		bridge.setRowCol(1, 0);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 
 		bridge.setRowCol(1, 1);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
@@ -92,7 +92,7 @@ public class TestMatrices {
 		bridge.setV(tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 	}
@@ -110,21 +110,21 @@ public class TestMatrices {
 		
 		bridge.setCol(0);
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 
 		bridge.setCol(1);
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
@@ -185,7 +185,7 @@ public class TestMatrices {
 		for (int i = 0; i < 2; i++) {
 			tmp.setR(102);
 			tmp.setI(105);
-			bridge.v(i, tmp);
+			bridge.getV(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -226,7 +226,7 @@ public class TestMatrices {
 		bridge.setV(0, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 
@@ -235,7 +235,7 @@ public class TestMatrices {
 		bridge.setV(1, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(100, tmp.r(), 0);
 		assertEquals(200, tmp.i(), 0);
 
@@ -255,21 +255,21 @@ public class TestMatrices {
 		
 		bridge.setRow(0);
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 
 		bridge.setRow(1);
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
@@ -330,7 +330,7 @@ public class TestMatrices {
 		for (int i = 0; i < 2; i++) {
 			tmp.setR(102);
 			tmp.setI(105);
-			bridge.v(i, tmp);
+			bridge.getV(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -371,7 +371,7 @@ public class TestMatrices {
 		bridge.setV(0, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 
@@ -380,7 +380,7 @@ public class TestMatrices {
 		bridge.setV(1, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(100, tmp.r(), 0);
 		assertEquals(200, tmp.i(), 0);
 
@@ -398,11 +398,11 @@ public class TestMatrices {
 
 		// test a rx1 matrix
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
@@ -463,7 +463,7 @@ public class TestMatrices {
 		for (int i = 0; i < 2; i++) {
 			tmp.setR(102);
 			tmp.setI(105);
-			bridge.v(i, tmp);
+			bridge.getV(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -504,7 +504,7 @@ public class TestMatrices {
 		bridge.setV(0, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 
@@ -513,7 +513,7 @@ public class TestMatrices {
 		bridge.setV(1, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(100, tmp.r(), 0);
 		assertEquals(200, tmp.i(), 0);
 
@@ -535,12 +535,12 @@ public class TestMatrices {
 		assertEquals(1, bridge.cols());
 		assertEquals(2, bridge.rows());
 
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
@@ -551,12 +551,12 @@ public class TestMatrices {
 		assertEquals(2, bridge.cols());
 		assertEquals(1, bridge.rows());
 
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
@@ -631,11 +631,11 @@ public class TestMatrices {
 		bridge.init(1, 2);
 		tmp.setR(104);
 		tmp.setI(105);
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		tmp.setR(104);
 		tmp.setI(105);
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		try {
 			bridge.init(2, 1);
@@ -671,11 +671,11 @@ public class TestMatrices {
 		bridge.reshape(1, 2);
 		tmp.setR(104);
 		tmp.setI(105);
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		tmp.setR(104);
 		tmp.setI(105);
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		try {
 			bridge.reshape(2, 1);
@@ -771,7 +771,7 @@ public class TestMatrices {
 				idx.set(0, c);
 				tmp.setR(123);
 				tmp.setI(456);
-				bridge.v(idx, tmp);
+				bridge.getV(idx, tmp);
 				assertTrue(G.CDBL.isZero().call(tmp));
 			}
 		}
@@ -825,7 +825,7 @@ public class TestMatrices {
 		bridge.setV(idx, tmp);
 		tmp.setR(0);
 		tmp.setI(0);
-		bridge.v(idx, tmp);
+		bridge.getV(idx, tmp);
 		assertEquals(103,  tmp.r(), 0);
 		assertEquals(109,  tmp.i(), 0);
 	}

@@ -48,11 +48,11 @@ public class TestCrossProduct {
 		Float64VectorMember result = G.DBL_VEC.construct();
 		Float64Member value = G.DBL.construct();
 		G.DBL_VEC.crossProduct().call(x, y, result);
-		result.v(0, value);
+		result.getV(0, value);
 		assertEquals(-15, value.v(), 0);
-		result.v(1, value);
+		result.getV(1, value);
 		assertEquals(-2, value.v(), 0);
-		result.v(2, value);
+		result.getV(2, value);
 		assertEquals(39, value.v(), 0);
 	}
 }

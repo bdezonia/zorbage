@@ -55,8 +55,8 @@ public class MatrixEqual {
 		U value2 = algebra.construct();
 		for (long r = 0; r < a.rows(); r++) {
 			for (long c = 0; c < a.cols(); c++) {
-				a.v(r, c, value1);
-				b.v(r, c, value2);
+				a.getV(r, c, value1);
+				b.getV(r, c, value2);
 				if (algebra.isNotEqual().call(value1, value2))
 					return false;
 			}

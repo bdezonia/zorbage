@@ -47,13 +47,13 @@ public class TestRModuleConjugate {
 				new double[] {1,0,2,-7,3,5});
 		ComplexFloat64VectorMember b = G.CDBL_VEC.construct();
 		RModuleConjugate.compute(G.CDBL, a, b);
-		b.v(0, value);
+		b.getV(0, value);
 		assertEquals(1, value.r(), 0);
 		assertEquals(0, value.i(), 0);
-		b.v(1, value);
+		b.getV(1, value);
 		assertEquals(2, value.r(), 0);
 		assertEquals(7, value.i(), 0);
-		b.v(2, value);
+		b.getV(2, value);
 		assertEquals(3, value.r(), 0);
 		assertEquals(-5, value.i(), 0);
 	}

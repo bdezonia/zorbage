@@ -170,7 +170,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void v(QuaternionFloat16Member value) {
+	public void getV(QuaternionFloat16Member value) {
 		get(value);
 	}
 

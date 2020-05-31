@@ -54,42 +54,42 @@ public class TestMatrixReshape {
 
 		assertEquals(3, mat.rows());
 		assertEquals(4, mat.cols());
-		mat.v(0, 0, value);
+		mat.getV(0, 0, value);
 		assertEquals(1, value.v(), 0);
-		mat.v(0, 1, value);
+		mat.getV(0, 1, value);
 		assertEquals(2, value.v(), 0);
-		mat.v(0, 2, value);
+		mat.getV(0, 2, value);
 		assertEquals(3, value.v(), 0);
-		mat.v(0, 3, value);
+		mat.getV(0, 3, value);
 		assertEquals(0, value.v(), 0);
-		mat.v(1, 0, value);
+		mat.getV(1, 0, value);
 		assertEquals(4, value.v(), 0);
-		mat.v(1, 1, value);
+		mat.getV(1, 1, value);
 		assertEquals(5, value.v(), 0);
-		mat.v(1, 2, value);
+		mat.getV(1, 2, value);
 		assertEquals(6, value.v(), 0);
-		mat.v(1, 3, value);
+		mat.getV(1, 3, value);
 		assertEquals(0, value.v(), 0);
-		mat.v(2, 0, value);
+		mat.getV(2, 0, value);
 		assertEquals(7, value.v(), 0);
-		mat.v(2, 1, value);
+		mat.getV(2, 1, value);
 		assertEquals(8, value.v(), 0);
-		mat.v(2, 2, value);
+		mat.getV(2, 2, value);
 		assertEquals(9, value.v(), 0);
-		mat.v(2, 3, value);
+		mat.getV(2, 3, value);
 		assertEquals(0, value.v(), 0);
 
 		MatrixReshape.compute(G.DBL_MAT, G.DBL, 2, 2, mat);
 
 		assertEquals(2, mat.rows());
 		assertEquals(2, mat.cols());
-		mat.v(0, 0, value);
+		mat.getV(0, 0, value);
 		assertEquals(1, value.v(), 0);
-		mat.v(0, 1, value);
+		mat.getV(0, 1, value);
 		assertEquals(2, value.v(), 0);
-		mat.v(1, 0, value);
+		mat.getV(1, 0, value);
 		assertEquals(4, value.v(), 0);
-		mat.v(1, 1, value);
+		mat.getV(1, 1, value);
 		assertEquals(5, value.v(), 0);
 	}
 }

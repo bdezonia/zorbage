@@ -61,12 +61,12 @@ public class PerpDotProduct {
 		W btmp = memberAlgebra.construct();
 		W term1 = memberAlgebra.construct();
 		W term2 = memberAlgebra.construct();
-		a.v(1, atmp);
-		b.v(0, btmp);
+		a.getV(1, atmp);
+		b.getV(0, btmp);
 		memberAlgebra.negate().call(atmp, atmp);
 		memberAlgebra.multiply().call(atmp, btmp, term1);
-		a.v(0, atmp);
-		b.v(1, btmp);
+		a.getV(0, atmp);
+		b.getV(1, btmp);
 		memberAlgebra.multiply().call(atmp, btmp, term2);
 		memberAlgebra.add().call(term1, term2, c);
 	}

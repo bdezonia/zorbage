@@ -168,7 +168,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void v(QuaternionFloat64Member value) {
+	public void getV(QuaternionFloat64Member value) {
 		get(value);
 	}
 

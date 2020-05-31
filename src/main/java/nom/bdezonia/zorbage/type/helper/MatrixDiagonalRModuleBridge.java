@@ -103,12 +103,12 @@ public class MatrixDiagonalRModuleBridge<U> implements RModuleMember<U> {
 	}
 
 	@Override
-	public void v(long i, U value) {
+	public void getV(long i, U value) {
 		if (i < 0 || i >= length())
 			throw new IllegalArgumentException("diagonal indexed out of bounds");
 		long r = row(i);
 		long c = col(i);
-		mat.v(r, c, value);
+		mat.getV(r, c, value);
 	}
 
 	@Override

@@ -85,7 +85,7 @@ public class TensorContract {
 			for (int idx = 0; idx < a.dimension(0); idx++) {
 				pos.set(i, idx);
 				pos.set(j, idx);
-				a.v(pos, tmp);
+				a.getV(pos, tmp);
 				numberAlg.add().call(sum, tmp, sum);
 			}
 			IntegerIndex origin = new IntegerIndex(0);
@@ -120,7 +120,7 @@ public class TensorContract {
 			for (int idx = 0; idx < a.dimension(0); idx++) {
 				origPos.set(i, idx);
 				origPos.set(j, idx);
-				a.v(origPos, tmp);
+				a.getV(origPos, tmp);
 				numberAlg.add().call(sum, tmp, sum);
 			}
 			b.setV(contractedPos, sum);

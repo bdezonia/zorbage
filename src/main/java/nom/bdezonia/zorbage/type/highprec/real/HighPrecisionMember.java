@@ -119,7 +119,7 @@ public final class HighPrecisionMember
 	}
 
 	@Override
-	public void v(HighPrecisionMember value) {
+	public void getV(HighPrecisionMember value) {
 		get(value);
 	}
 

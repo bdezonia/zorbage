@@ -50,7 +50,7 @@ public class TestMatrixDiagonalRModuleBridge {
 		MatrixDiagonalRModuleBridge<Float64Member> diag = new MatrixDiagonalRModuleBridge<Float64Member>(G.DBL,matrix);
 		assertEquals(5, diag.length());
 		for (long i = 0; i < diag.length(); i++) {
-			diag.v(i, value);
+			diag.getV(i, value);
 			assertEquals(i*6,value.v(),0);
 		}
 		

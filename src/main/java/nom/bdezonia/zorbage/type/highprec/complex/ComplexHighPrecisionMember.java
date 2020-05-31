@@ -140,7 +140,7 @@ public final class ComplexHighPrecisionMember
 	}
 
 	@Override
-	public void v(ComplexHighPrecisionMember value) {
+	public void getV(ComplexHighPrecisionMember value) {
 		get(value);
 	}
 

@@ -110,7 +110,7 @@ public final class ComplexHighPrecisionVectorMember
 	}
 	
 	@Override
-	public void v(long i, ComplexHighPrecisionMember v) {
+	public void getV(long i, ComplexHighPrecisionMember v) {
 		storage.get(i, v);
 	}
 
@@ -180,7 +180,7 @@ public final class ComplexHighPrecisionVectorMember
 		for (long i = 0; i < storageSize; i++) {
 			if (i != 0)
 				builder.append(',');
-			v(i, tmp);
+			getV(i, tmp);
 			builder.append(tmp.toString());
 		}
 		builder.append(']');
@@ -245,7 +245,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
 		else
@@ -257,7 +257,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
 		else
@@ -269,7 +269,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
 		else
@@ -281,7 +281,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
 		else
@@ -293,7 +293,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
 		else
@@ -305,7 +305,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
 		else
@@ -317,7 +317,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(new BigDecimal(v));
 		else
@@ -329,7 +329,7 @@ public final class ComplexHighPrecisionVectorMember
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		long i = index.get(0);
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(i, tmp);
+		getV(i, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else
@@ -365,7 +365,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
 			else
@@ -402,7 +402,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
 			else
@@ -439,7 +439,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
 			else
@@ -476,7 +476,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
 			else
@@ -513,7 +513,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
 			else
@@ -550,7 +550,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
 			else
@@ -587,7 +587,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(new BigDecimal(v));
 			else
@@ -624,7 +624,7 @@ public final class ComplexHighPrecisionVectorMember
 		else {
 			long i = index.get(0);
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(i, tmp);
+			getV(i, tmp);
 			if (component == 0)
 				tmp.setR(v);
 			else
@@ -640,7 +640,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return 0;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().byteValue();
 		return tmp.i().byteValue();
 	}
@@ -652,7 +652,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return 0;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().shortValue();
 		return tmp.i().shortValue();
 	}
@@ -664,7 +664,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return 0;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().intValue();
 		return tmp.i().intValue();
 	}
@@ -676,7 +676,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return 0;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().longValue();
 		return tmp.i().longValue();
 	}
@@ -688,7 +688,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return 0;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().floatValue();
 		return tmp.i().floatValue();
 	}
@@ -700,7 +700,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return 0;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().doubleValue();
 		return tmp.i().doubleValue();
 	}
@@ -712,7 +712,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return BigInteger.ZERO;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r().toBigInteger();
 		return tmp.i().toBigInteger();
 	}
@@ -724,7 +724,7 @@ public final class ComplexHighPrecisionVectorMember
 					"negative component index error");
 		if (component > 1) return BigDecimal.ZERO;
 		ComplexHighPrecisionMember tmp = tmpComp.get();
-		v(index.get(0), tmp);
+		getV(index.get(0), tmp);
 		if (component == 0) return tmp.r();
 		return tmp.i();
 	}
@@ -754,7 +754,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().byteValue();
 			return tmp.i().byteValue();
 		}
@@ -785,7 +785,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().shortValue();
 			return tmp.i().shortValue();
 		}
@@ -816,7 +816,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().intValue();
 			return tmp.i().intValue();
 		}
@@ -847,7 +847,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().longValue();
 			return tmp.i().longValue();
 		}
@@ -878,7 +878,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().floatValue();
 			return tmp.i().floatValue();
 		}
@@ -909,7 +909,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().doubleValue();
 			return tmp.i().doubleValue();
 		}
@@ -940,7 +940,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r().toBigInteger();
 			return tmp.i().toBigInteger();
 		}
@@ -971,7 +971,7 @@ public final class ComplexHighPrecisionVectorMember
 		}
 		else {
 			ComplexHighPrecisionMember tmp = tmpComp.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			if (component == 0) return tmp.r();
 			return tmp.i();
 		}

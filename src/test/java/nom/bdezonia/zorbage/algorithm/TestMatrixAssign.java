@@ -48,13 +48,13 @@ public class TestMatrixAssign {
 		Float64Member value = G.DBL.construct();
 		assertEquals(2, b.rows());
 		assertEquals(2, b.cols());
-		b.v(0, 0, value);
+		b.getV(0, 0, value);
 		assertEquals(1, value.v(), 0);
-		b.v(0, 1, value);
+		b.getV(0, 1, value);
 		assertEquals(2, value.v(), 0);
-		b.v(1, 0, value);
+		b.getV(1, 0, value);
 		assertEquals(3, value.v(), 0);
-		b.v(1, 1, value);
+		b.getV(1, 1, value);
 		assertEquals(4, value.v(), 0);
 	}
 }

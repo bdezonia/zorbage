@@ -162,7 +162,7 @@ public final class OctonionHighPrecisionMatrixMember
 	}
 	
 	@Override
-	public void v(long r, long c, OctonionHighPrecisionMember value) {
+	public void getV(long r, long c, OctonionHighPrecisionMember value) {
 		if (r < 0 || r >= rows || c < 0 || c >= cols)
 			throw new IllegalArgumentException("matrix oob access");
 		long index = r * cols + c;
@@ -253,7 +253,7 @@ public final class OctonionHighPrecisionMatrixMember
 			for (long c = 0; c < cols; c++) {
 				if (c != 0)
 					builder.append(',');
-				v(r, c, tmp);
+				getV(r, c, tmp);
 				builder.append(tmp.toString());
 			}
 			builder.append(']');
@@ -305,7 +305,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -346,7 +346,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -387,7 +387,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -428,7 +428,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -469,7 +469,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -510,7 +510,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -551,7 +551,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -592,7 +592,7 @@ public final class OctonionHighPrecisionMatrixMember
 		long c = index.get(0);
 		long r = index.get(1);
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(r, c, tmp);
+		getV(r, c, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -663,7 +663,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -735,7 +735,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -807,7 +807,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -879,7 +879,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -951,7 +951,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1023,7 +1023,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1095,7 +1095,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1167,7 +1167,7 @@ public final class OctonionHighPrecisionMatrixMember
 			long c = index.get(0);
 			long r = index.get(1);
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(r, c, tmp);
+			getV(r, c, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1211,7 +1211,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return 0;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1253,7 +1253,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return 0;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1295,7 +1295,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return 0;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1337,7 +1337,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return 0;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1379,7 +1379,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return 0;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1421,7 +1421,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return 0;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1463,7 +1463,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return BigInteger.ZERO;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1505,7 +1505,7 @@ public final class OctonionHighPrecisionMatrixMember
 					"negative component index error");
 		if (component > 7) return BigDecimal.ZERO;
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index.get(1), index.get(0), tmp);
+		getV(index.get(1), index.get(0), tmp);
 		if (component < 4) {
 			if (component < 2) {
 				// 0 <= component <= 1
@@ -1571,7 +1571,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1638,7 +1638,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1705,7 +1705,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1772,7 +1772,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1839,7 +1839,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1906,7 +1906,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -1973,7 +1973,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1
@@ -2040,7 +2040,7 @@ public final class OctonionHighPrecisionMatrixMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index.get(1), index.get(0), tmp);
+			getV(index.get(1), index.get(0), tmp);
 			if (component < 4) {
 				if (component < 2) {
 					// 0 <= component <= 1

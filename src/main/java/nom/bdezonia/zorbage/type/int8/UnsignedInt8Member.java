@@ -141,7 +141,7 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public void v(UnsignedInt8Member value) {
+	public void getV(UnsignedInt8Member value) {
 		get(value);
 	}
 

@@ -443,9 +443,9 @@ public class TestFloat64CartesianTensor {
 		assertEquals(cvalue1.dimension(), cvalue2.dimension());
 		index.set(0, 0);
 		index.set(1, 0);
-		cvalue1.v(index, ctmp1);
+		cvalue1.getV(index, ctmp1);
 		G.CDBL.conjugate().call(ctmp1, ctmp1);
-		cvalue2.v(index, ctmp2);
+		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
 		assertEquals(tmp1.v(), tmp2.v(), 0);
@@ -454,9 +454,9 @@ public class TestFloat64CartesianTensor {
 		assertEquals(tmp1.v(), tmp2.v(), 0);
 		index.set(0, 1);
 		index.set(1, 0);
-		cvalue1.v(index, ctmp1);
+		cvalue1.getV(index, ctmp1);
 		G.CDBL.conjugate().call(ctmp1, ctmp1);
-		cvalue2.v(index, ctmp2);
+		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
 		assertEquals(tmp1.v(), tmp2.v(), 0);
@@ -465,9 +465,9 @@ public class TestFloat64CartesianTensor {
 		assertEquals(tmp1.v(), tmp2.v(), 0);
 		index.set(0, 0);
 		index.set(1, 1);
-		cvalue1.v(index, ctmp1);
+		cvalue1.getV(index, ctmp1);
 		G.CDBL.conjugate().call(ctmp1, ctmp1);
-		cvalue2.v(index, ctmp2);
+		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
 		assertEquals(tmp1.v(), tmp2.v(), 0);
@@ -476,9 +476,9 @@ public class TestFloat64CartesianTensor {
 		assertEquals(tmp1.v(), tmp2.v(), 0);
 		index.set(0, 1);
 		index.set(1, 1);
-		cvalue1.v(index, ctmp1);
+		cvalue1.getV(index, ctmp1);
 		G.CDBL.conjugate().call(ctmp1, ctmp1);
-		cvalue2.v(index, ctmp2);
+		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
 		assertEquals(tmp1.v(), tmp2.v(), 0);
@@ -489,6 +489,6 @@ public class TestFloat64CartesianTensor {
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
 		value1 = new Float64CartesianTensorProductMember(0,3);
-		value1.v(idx, tmp1);
+		value1.getV(idx, tmp1);
 	}
 }

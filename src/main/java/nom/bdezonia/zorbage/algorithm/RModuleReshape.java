@@ -54,7 +54,7 @@ public class RModuleReshape {
 		W value = numberAlgebra.construct();
 		long size = Math.min(len, orig.length());
 		for (long i = 0; i < size; i++) {
-			orig.v(i, value);
+			orig.getV(i, value);
 			rmod.setV(i, value);
 		}
 	}

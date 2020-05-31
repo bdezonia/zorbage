@@ -140,7 +140,7 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public void v(UnsignedInt32Member value) {
+	public void getV(UnsignedInt32Member value) {
 		get(value);
 	}
 

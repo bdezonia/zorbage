@@ -78,8 +78,8 @@ public class DotProduct {
 		}
 		componentAlgebra.invert().call(maxNorm, scale);
 		for (long i = 0; i < min; i++) {
-			a.v(i, tmpA);
-			b.v(i, tmpB);
+			a.getV(i, tmpA);
+			b.getV(i, tmpB);
 			memberAlgebra.scaleComponents().call(scale, tmpA, tmpA);
 			memberAlgebra.scaleComponents().call(scale, tmpB, tmpB);
 			memberAlgebra.multiply().call(tmpA, tmpB, tmpB);

@@ -66,8 +66,8 @@ public class MatrixMultiply {
 			for (long col = 0; col < cols; col++) {
 				algebra.zero().call(sum);
 				for (long i = 0; i < common; i++) {
-					a.v(row, i, atmp);
-					b.v(i, col, btmp);
+					a.getV(row, i, atmp);
+					b.getV(i, col, btmp);
 					algebra.multiply().call(atmp, btmp, term);
 					algebra.add().call(sum, term, sum);
 				}

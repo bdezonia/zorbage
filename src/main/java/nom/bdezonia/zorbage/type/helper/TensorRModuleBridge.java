@@ -110,13 +110,13 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	}
 
 	@Override
-	public void v(long i, U value) {
+	public void getV(long i, U value) {
 		if (i < 0 || i >= length()) {
 			throw new IllegalArgumentException("out of bounds read");
 		}
 		else {
 			fixedDims.set(rangingDim, i);
-			tensor.v(fixedDims, value);
+			tensor.getV(fixedDims, value);
 		}
 	}
 

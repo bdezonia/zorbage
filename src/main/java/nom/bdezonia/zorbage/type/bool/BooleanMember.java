@@ -175,7 +175,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void v(BooleanMember value) {
+	public void getV(BooleanMember value) {
 		get(value);
 	}
 

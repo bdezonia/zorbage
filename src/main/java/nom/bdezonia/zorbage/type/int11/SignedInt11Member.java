@@ -80,7 +80,7 @@ public final class SignedInt11Member
 	}
 
 	@Override
-	public void v(SignedInt11Member value) {
+	public void getV(SignedInt11Member value) {
 		get(value);
 	}
 

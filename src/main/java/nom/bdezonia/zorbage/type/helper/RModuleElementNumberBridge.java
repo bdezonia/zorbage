@@ -63,8 +63,8 @@ public class RModuleElementNumberBridge<U> implements NumberMember<U> {
 	}
 
 	@Override
-	public void v(U value) {
-		rmod.v(index, value);
+	public void getV(U value) {
+		rmod.getV(index, value);
 	}
 
 	@Override

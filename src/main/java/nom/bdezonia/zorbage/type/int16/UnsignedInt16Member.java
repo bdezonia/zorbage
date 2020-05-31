@@ -141,7 +141,7 @@ public final class UnsignedInt16Member
 	}
 
 	@Override
-	public void v(UnsignedInt16Member value) {
+	public void getV(UnsignedInt16Member value) {
 		get(value);
 	}
 

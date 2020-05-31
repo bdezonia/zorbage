@@ -149,7 +149,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public void v(IntegerIndex index, U value) {
+	public void getV(IntegerIndex index, U value) {
 		if (index.numDimensions() != rangingDims.length)
 			throw new IllegalArgumentException("mismatched dims exception");
 		for (int i = 0; i < rangingDims.length; i++) {
@@ -158,7 +158,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		if (oob())
 			throw new IllegalArgumentException("out of bounds read");
 		else
-			tensor.v(this.index, value);
+			tensor.getV(this.index, value);
 	}
 
 	@Override

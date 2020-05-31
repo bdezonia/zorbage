@@ -55,7 +55,7 @@ public class MatrixConjugate {
 		}
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
+				a.getV(row, col, atmp);
 				algebra.conjugate().call(atmp, btmp);
 				b.setV(row, col, btmp);
 			}

@@ -125,8 +125,8 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	}
 
 	@Override
-	public void v(long r, long c, U value) {
-		mat.v(startRow+r, startCol+c, value);
+	public void getV(long r, long c, U value) {
+		mat.getV(startRow+r, startCol+c, value);
 	}
 
 	@Override

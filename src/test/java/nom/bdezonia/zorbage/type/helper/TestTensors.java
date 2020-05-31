@@ -72,28 +72,28 @@ public class TestTensors {
 		idx.set(0,0);
 		idx.set(1,0);
 		bridge.setIndex(idx);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 
 		idx.set(0,1);
 		idx.set(1,0);
 		bridge.setIndex(idx);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 
 		idx.set(0,0);
 		idx.set(1,1);
 		bridge.setIndex(idx);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 
 		idx.set(0,1);
 		idx.set(1,1);
 		bridge.setIndex(idx);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
@@ -102,7 +102,7 @@ public class TestTensors {
 		bridge.setV(tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(tmp);
+		bridge.getV(tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 	}
@@ -123,44 +123,44 @@ public class TestTensors {
 		idx.set(0, 0);
 		bridge.setRmodule(0, idx);
 
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 
 		idx.set(0, 1);
 		bridge.setRmodule(0, idx);
 
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
 		idx.set(0, 0);
 		bridge.setRmodule(1, idx);
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 
 		idx.set(0, 1);
 		bridge.setRmodule(1, idx);
 
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 		
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 
@@ -221,7 +221,7 @@ public class TestTensors {
 		for (int i = 0; i < 2; i++) {
 			tmp.setR(102);
 			tmp.setI(105);
-			bridge.v(i, tmp);
+			bridge.getV(i, tmp);
 			assertTrue(G.CDBL.isZero().call(tmp));
 		}
 		try {
@@ -262,7 +262,7 @@ public class TestTensors {
 		bridge.setV(0, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertEquals(1000, tmp.r(), 0);
 		assertEquals(2000, tmp.i(), 0);
 
@@ -271,7 +271,7 @@ public class TestTensors {
 		bridge.setV(1, tmp);
 		tmp.setR(1);
 		tmp.setI(2);
-		bridge.v(1, tmp);
+		bridge.getV(1, tmp);
 		assertEquals(100, tmp.r(), 0);
 		assertEquals(200, tmp.i(), 0);
 
@@ -294,37 +294,37 @@ public class TestTensors {
 
 		bridge.setMatrix(1, 0, new IntegerIndex(0));
 
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 		
-		bridge.v(1, 0, tmp);
+		bridge.getV(1, 0, tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 		
-		bridge.v(1, 1, tmp);
+		bridge.getV(1, 1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 		
 		bridge.setMatrix(0, 1, new IntegerIndex(0));
 
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		assertEquals(1, tmp.r(), 0);
 		assertEquals(2, tmp.i(), 0);
 		
-		bridge.v(0, 1, tmp);
+		bridge.getV(0, 1, tmp);
 		assertEquals(5, tmp.r(), 0);
 		assertEquals(6, tmp.i(), 0);
 		
-		bridge.v(1, 0, tmp);
+		bridge.getV(1, 0, tmp);
 		assertEquals(3, tmp.r(), 0);
 		assertEquals(4, tmp.i(), 0);
 		
-		bridge.v(1, 1, tmp);
+		bridge.getV(1, 1, tmp);
 		assertEquals(7, tmp.r(), 0);
 		assertEquals(8, tmp.i(), 0);
 		
@@ -390,7 +390,7 @@ public class TestTensors {
 			for (int c = 0; c < 2; c++) {
 				tmp.setR(123);
 				tmp.setI(456);
-				bridge.v(r, c, tmp);
+				bridge.getV(r, c, tmp);
 				assertTrue(G.CDBL.isZero().call(tmp));
 			}
 		}
@@ -434,7 +434,7 @@ public class TestTensors {
 		bridge.setV(0, 0, tmp);
 		tmp.setR(0);
 		tmp.setI(0);
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		assertEquals(103,  tmp.r(), 0);
 		assertEquals(109,  tmp.i(), 0);
 	}
@@ -478,8 +478,8 @@ public class TestTensors {
 		bridge.setDims(new int[] {0}, new long[] {0}, new long[] {0});
 		idx.set(0,0);
 
-		bridge.v(idx, tmp);
-		t.v(idx2, tmp2);
+		bridge.getV(idx, tmp);
+		t.getV(idx2, tmp2);
 		
 		assertTrue(G.CDBL.isEqual().call(tmp, tmp2));
 		
@@ -488,8 +488,8 @@ public class TestTensors {
 		bridge.setDims(new int[] {0}, new long[] {1}, new long[] {0});
 		idx.set(0,0);
 		
-		bridge.v(idx, tmp);
-		t.v(idx2, tmp2);
+		bridge.getV(idx, tmp);
+		t.getV(idx2, tmp2);
 		
 		assertTrue(G.CDBL.isEqual().call(tmp, tmp2));
 		
@@ -498,8 +498,8 @@ public class TestTensors {
 		bridge.setDims(new int[] {1}, new long[] {1}, new long[] {0});
 		idx.set(0,0);
 		
-		bridge.v(idx, tmp);
-		t.v(idx2, tmp2);
+		bridge.getV(idx, tmp);
+		t.getV(idx2, tmp2);
 		
 		assertTrue(G.CDBL.isEqual().call(tmp, tmp2));
 		
@@ -508,8 +508,8 @@ public class TestTensors {
 		bridge.setDims(new int[] {1}, new long[] {1}, new long[] {1});
 		idx.set(0,0);  // 0,1 works but is nonsensical
 		
-		bridge.v(idx, tmp);
-		t.v(idx2, tmp2);
+		bridge.getV(idx, tmp);
+		t.getV(idx2, tmp2);
 		
 		assertTrue(G.CDBL.isEqual().call(tmp, tmp2));
 
@@ -562,7 +562,7 @@ public class TestTensors {
 		idx.set(0, 0);
 		tmp.setR(104);
 		tmp.setI(105);
-		bridge.v(idx, tmp);
+		bridge.getV(idx, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		try {
 			bridge.init(new long[] {2});
@@ -599,7 +599,7 @@ public class TestTensors {
 		idx.set(0,0);
 		tmp.setR(104);
 		tmp.setI(105);
-		bridge.v(idx, tmp);
+		bridge.getV(idx, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
 		try {
 			bridge.reshape(new long[] {2});
@@ -626,7 +626,7 @@ public class TestTensors {
 		bridge.setV(idx, tmp);
 		tmp.setR(-1);
 		tmp.setI(-1);
-		bridge.v(idx, tmp);
+		bridge.getV(idx, tmp);
 		assertEquals(101, tmp.r(), 0);
 		assertEquals(102, tmp.i(), 0);
 		

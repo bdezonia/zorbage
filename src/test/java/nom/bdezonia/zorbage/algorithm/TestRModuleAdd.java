@@ -47,11 +47,11 @@ public class TestRModuleAdd {
 		Float64VectorMember c = G.DBL_VEC.construct();
 		Float64Member value = G.DBL.construct();
 		RModuleAdd.compute(G.DBL, a, b, c);
-		c.v(0, value);
+		c.getV(0, value);
 		assertEquals(6, value.v(), 0);
-		c.v(1, value);
+		c.getV(1, value);
 		assertEquals(5, value.v(), 0);
-		c.v(2, value);
+		c.getV(2, value);
 		assertEquals(4, value.v(), 0);
 	}
 }

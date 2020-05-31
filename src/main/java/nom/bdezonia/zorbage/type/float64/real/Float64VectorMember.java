@@ -106,7 +106,7 @@ public final class Float64VectorMember
 	}
 	
 	@Override
-	public void v(long i, Float64Member v) {
+	public void getV(long i, Float64Member v) {
 		storage.get(i, v);
 	}
 
@@ -175,7 +175,7 @@ public final class Float64VectorMember
 		for (long i = 0; i < storageSize; i++) {
 			if (i != 0)
 				builder.append(',');
-			v(i, tmp);
+			getV(i, tmp);
 			builder.append(tmp.toString());
 		}
 		builder.append(']');
@@ -571,7 +571,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (byte) tmp.v();
 		}
 		return 0;
@@ -584,7 +584,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (short) tmp.v();
 		}
 		return 0;
@@ -597,7 +597,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (int) tmp.v();
 		}
 		return 0;
@@ -610,7 +610,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (long) tmp.v();
 		}
 		return 0;
@@ -623,7 +623,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (float) tmp.v();
 		}
 		return 0;
@@ -636,7 +636,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v();
 		}
 		return 0;
@@ -649,7 +649,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 		return BigInteger.ZERO;
@@ -662,7 +662,7 @@ public final class Float64VectorMember
 					"negative component index error");
 		if (component == 0) {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return BigDecimal.valueOf(tmp.v());
 		}
 		return BigDecimal.ZERO;
@@ -693,7 +693,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (byte) tmp.v();
 		}
 	}
@@ -723,7 +723,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (short) tmp.v();
 		}
 	}
@@ -753,7 +753,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (int) tmp.v();
 		}
 	}
@@ -783,7 +783,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (long) tmp.v();
 		}
 	}
@@ -813,7 +813,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return (float) tmp.v();
 		}
 	}
@@ -843,7 +843,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v();
 		}
 	}
@@ -873,7 +873,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 	}
@@ -903,7 +903,7 @@ public final class Float64VectorMember
 		}
 		else {
 			Float64Member tmp = tmpFloat.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return BigDecimal.valueOf(tmp.v());
 		}
 	}

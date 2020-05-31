@@ -53,40 +53,40 @@ public class TestMatrixDirectProduct {
 		assertEquals(4, c.rows());
 		assertEquals(4, c.cols());
 		
-		c.v(0, 0, value);
+		c.getV(0, 0, value);
 		assertEquals(5, value.v(), 0);
-		c.v(0, 1, value);
+		c.getV(0, 1, value);
 		assertEquals(6, value.v(), 0);
-		c.v(1, 0, value);
+		c.getV(1, 0, value);
 		assertEquals(7, value.v(), 0);
-		c.v(1, 1, value);
+		c.getV(1, 1, value);
 		assertEquals(8, value.v(), 0);
 		
-		c.v(0, 2, value);
+		c.getV(0, 2, value);
 		assertEquals(10, value.v(), 0);
-		c.v(0, 3, value);
+		c.getV(0, 3, value);
 		assertEquals(12, value.v(), 0);
-		c.v(1, 2, value);
+		c.getV(1, 2, value);
 		assertEquals(14, value.v(), 0);
-		c.v(1, 3, value);
+		c.getV(1, 3, value);
 		assertEquals(16, value.v(), 0);
 		
-		c.v(2, 0, value);
+		c.getV(2, 0, value);
 		assertEquals(15, value.v(), 0);
-		c.v(2, 1, value);
+		c.getV(2, 1, value);
 		assertEquals(18, value.v(), 0);
-		c.v(3, 0, value);
+		c.getV(3, 0, value);
 		assertEquals(21, value.v(), 0);
-		c.v(3, 1, value);
+		c.getV(3, 1, value);
 		assertEquals(24, value.v(), 0);
 		
-		c.v(2, 2, value);
+		c.getV(2, 2, value);
 		assertEquals(20, value.v(), 0);
-		c.v(2, 3, value);
+		c.getV(2, 3, value);
 		assertEquals(24, value.v(), 0);
-		c.v(3, 2, value);
+		c.getV(3, 2, value);
 		assertEquals(28, value.v(), 0);
-		c.v(3, 3, value);
+		c.getV(3, 3, value);
 		assertEquals(32, value.v(), 0);
 		
 	}

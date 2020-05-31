@@ -56,8 +56,8 @@ public class TestParallelMatrixMultiply {
 		Float64Member t2 = G.DBL.construct();
 		for (long r = 0; r < c1.rows(); r++) {
 			for (long c = 0; c < c1.cols(); c++) {
-				c1.v(r, c, t1);
-				c2.v(r, c, t2);
+				c1.getV(r, c, t1);
+				c2.getV(r, c, t2);
 				assertEquals(t1.v(), t2.v(), 0);
 			}			
 		}

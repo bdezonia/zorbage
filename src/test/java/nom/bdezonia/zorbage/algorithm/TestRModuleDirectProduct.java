@@ -49,17 +49,17 @@ public class TestRModuleDirectProduct {
 		Float64MatrixMember c = new Float64MatrixMember();
 		RModuleDirectProduct.compute(G.DBL, a, b, c);
 		Float64Member value = G.DBL.construct();
-		c.v(0, 0, value);
+		c.getV(0, 0, value);
 		assertEquals(3, value.v(), 0);
-		c.v(0, 1, value);
+		c.getV(0, 1, value);
 		assertEquals(5, value.v(), 0);
-		c.v(0, 2, value);
+		c.getV(0, 2, value);
 		assertEquals(7, value.v(), 0);
-		c.v(1, 0, value);
+		c.getV(1, 0, value);
 		assertEquals(6, value.v(), 0);
-		c.v(1, 1, value);
+		c.getV(1, 1, value);
 		assertEquals(10, value.v(), 0);
-		c.v(1, 2, value);
+		c.getV(1, 2, value);
 		assertEquals(14, value.v(), 0);
 	}
 }

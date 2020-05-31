@@ -54,9 +54,9 @@ public class RModuleDirectProduct {
 		U val1 = algebra.construct();
 		U val2 = algebra.construct();
 		for (long row = 0; row < a.length(); row++) {
-			a.v(row, val1);
+			a.getV(row, val1);
 			for (long col = 0; col < b.length(); col++) {
-				b.v(col, val2);
+				b.getV(col, val2);
 				algebra.multiply().call(val1, val2, val2);
 				c.setV(row, col, val2);
 			}

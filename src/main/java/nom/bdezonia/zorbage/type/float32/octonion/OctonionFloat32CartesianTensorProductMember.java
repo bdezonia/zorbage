@@ -310,7 +310,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	}
 	
 	@Override
-	public void v(IntegerIndex index, OctonionFloat32Member value) {
+	public void getV(IntegerIndex index, OctonionFloat32Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
@@ -468,7 +468,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -503,7 +503,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -538,7 +538,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -573,7 +573,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -608,7 +608,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -643,7 +643,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -678,7 +678,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -713,7 +713,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -754,7 +754,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -796,7 +796,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -838,7 +838,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -880,7 +880,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -922,7 +922,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -964,7 +964,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1006,7 +1006,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1047,7 +1047,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1086,7 +1086,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1123,7 +1123,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1160,7 +1160,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1197,7 +1197,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1234,7 +1234,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1271,7 +1271,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1308,7 +1308,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1345,7 +1345,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionFloat32Member tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1383,7 +1383,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1422,7 +1422,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1461,7 +1461,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1500,7 +1500,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1539,7 +1539,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1578,7 +1578,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1617,7 +1617,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1656,7 +1656,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		}
 		else {
 			OctonionFloat32Member tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)

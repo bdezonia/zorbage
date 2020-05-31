@@ -109,7 +109,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public void v(IntegerIndex index, U value) {
+	public void getV(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0) {
 				throw new IllegalArgumentException("out of bounds read");
@@ -117,7 +117,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.v(startRow + r, startCol + c, value);
+		mat.getV(startRow + r, startCol + c, value);
 	}
 
 	@Override

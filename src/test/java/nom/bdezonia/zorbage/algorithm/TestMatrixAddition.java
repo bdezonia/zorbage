@@ -49,13 +49,13 @@ public class TestMatrixAddition {
 		Float64Member value = G.DBL.construct();
 		assertEquals(2, c.rows());
 		assertEquals(2, c.cols());
-		c.v(0, 0, value);
+		c.getV(0, 0, value);
 		assertEquals(8, value.v(), 0);
-		c.v(0, 1, value);
+		c.getV(0, 1, value);
 		assertEquals(3, value.v(), 0);
-		c.v(1, 0, value);
+		c.getV(1, 0, value);
 		assertEquals(11, value.v(), 0);
-		c.v(1, 1, value);
+		c.getV(1, 1, value);
 		assertEquals(6, value.v(), 0);
 	}
 }

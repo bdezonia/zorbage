@@ -83,13 +83,13 @@ public class TestLUDecomp {
 		
 		assertEquals(3, x.length());
 		
-		x.v(0, value );
+		x.getV(0, value );
 		assertEquals(7, value.v(), 0.000000000001);
 		
-		x.v(1, value );
+		x.getV(1, value );
 		assertEquals(-3, value.v(), 0.000000000001);
 		
-		x.v(2, value );
+		x.getV(2, value );
 		assertEquals(13, value.v(), 0.000000000001);
 	}
 	
@@ -125,15 +125,15 @@ public class TestLUDecomp {
 		
 		assertEquals(3, x.length());
 		
-		x.v(0, value );
+		x.getV(0, value );
 		assertEquals(7, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		
-		x.v(1, value );
+		x.getV(1, value );
 		assertEquals(-3, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		
-		x.v(2, value );
+		x.getV(2, value );
 		assertEquals(13, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 	}
@@ -170,19 +170,19 @@ public class TestLUDecomp {
 		
 		assertEquals(3, x.length());
 		
-		x.v(0, value );
+		x.getV(0, value );
 		assertEquals(7, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		assertEquals(0, value.j(), 0.000000000001);
 		assertEquals(0, value.k(), 0.000000000001);
 		
-		x.v(1, value );
+		x.getV(1, value );
 		assertEquals(-3, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		assertEquals(0, value.j(), 0.000000000001);
 		assertEquals(0, value.k(), 0.000000000001);
 		
-		x.v(2, value );
+		x.getV(2, value );
 		assertEquals(13, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		assertEquals(0, value.j(), 0.000000000001);
@@ -221,7 +221,7 @@ public class TestLUDecomp {
 		
 		assertEquals(3, x.length());
 		
-		x.v(0, value );
+		x.getV(0, value );
 		assertEquals(7, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		assertEquals(0, value.j(), 0.000000000001);
@@ -231,7 +231,7 @@ public class TestLUDecomp {
 		assertEquals(0, value.j0(), 0.000000000001);
 		assertEquals(0, value.k0(), 0.000000000001);
 		
-		x.v(1, value );
+		x.getV(1, value );
 		assertEquals(-3, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		assertEquals(0, value.j(), 0.000000000001);
@@ -241,7 +241,7 @@ public class TestLUDecomp {
 		assertEquals(0, value.j0(), 0.000000000001);
 		assertEquals(0, value.k0(), 0.000000000001);
 		
-		x.v(2, value );
+		x.getV(2, value );
 		assertEquals(13, value.r(), 0.000000000001);
 		assertEquals(0, value.i(), 0.000000000001);
 		assertEquals(0, value.j(), 0.000000000001);

@@ -56,8 +56,8 @@ public class RModuleAdd {
 		final long length = Math.max(a.length(), b.length());
 		c.alloc(length);
 		for (long i = 0; i < length; i++) {
-			a.v(i, atmp);
-			b.v(i, btmp);
+			a.getV(i, atmp);
+			b.getV(i, btmp);
 			memberAlgebra.add().call(atmp, btmp, btmp);
 			c.setV(i, btmp);
 		}

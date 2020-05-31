@@ -61,16 +61,16 @@ public class TestRealMatrixEquation {
 
 		Float64Member tmp = G.DBL.construct();
 		
-		mat.v(0, 0, tmp);
+		mat.getV(0, 0, tmp);
 		assertEquals(1, tmp.v(), 0);
 		
-		mat.v(0, 1, tmp);
+		mat.getV(0, 1, tmp);
 		assertEquals(2, tmp.v(), 0);
 		
-		mat.v(1, 0, tmp);
+		mat.getV(1, 0, tmp);
 		assertEquals(3, tmp.v(), 0);
 		
-		mat.v(1, 1, tmp);
+		mat.getV(1, 1, tmp);
 		assertEquals(4, tmp.v(), 0);
 	}
 }

@@ -52,39 +52,39 @@ public class TestMatrixConstantDiagonal {
 		MatrixConstantDiagonal.compute(G.DBL, value, mat);
 		
 		value.setV(999);
-		mat.v(0, 0, value);
+		mat.getV(0, 0, value);
 		assertEquals(-13, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(0, 1, value);
+		mat.getV(0, 1, value);
 		assertEquals(0, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(0, 2, value);
+		mat.getV(0, 2, value);
 		assertEquals(0, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(1, 0, value);
+		mat.getV(1, 0, value);
 		assertEquals(0, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(1, 1, value);
+		mat.getV(1, 1, value);
 		assertEquals(-13, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(1, 2, value);
+		mat.getV(1, 2, value);
 		assertEquals(0, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(2, 0, value);
+		mat.getV(2, 0, value);
 		assertEquals(0, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(2, 1, value);
+		mat.getV(2, 1, value);
 		assertEquals(0, value.v(), 0);
 		
 		value.setV(999);
-		mat.v(2, 2, value);
+		mat.getV(2, 2, value);
 		assertEquals(-13, value.v(), 0);
 	}
 }

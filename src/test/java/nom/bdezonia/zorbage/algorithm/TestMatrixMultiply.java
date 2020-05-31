@@ -49,9 +49,9 @@ public class TestMatrixMultiply {
 		Float64Member value = G.DBL.construct();
 		assertEquals(2, c.rows());
 		assertEquals(1, c.cols());
-		c.v(0, 0, value);
+		c.getV(0, 0, value);
 		assertEquals(18, value.v(), 0);
-		c.v(1, 0, value);
+		c.getV(1, 0, value);
 		assertEquals(40, value.v(), 0);
 	}
 }

@@ -59,7 +59,7 @@ public class TestFloat16Matrix {
 			G.HLF.unity().call(one);
 			for (long r = 0; r < m.rows(); r++) {
 				for (long c = 0; c < m.cols(); c++) {
-					m.v(r, c, value);
+					m.getV(r, c, value);
 					if (r == c) {
 						assertTrue(G.HLF.isEqual().call(value, one));
 					}
@@ -89,44 +89,44 @@ public class TestFloat16Matrix {
 		
 		Float16Member value = new Float16Member();
 
-		invMat.v(0, 0, value);
+		invMat.getV(0, 0, value);
 		assertEquals(-6.0/145, value.v(), tol);
-		invMat.v(0, 1, value);
+		invMat.getV(0, 1, value);
 		assertEquals(-9.0/145, value.v(), tol);
-		invMat.v(0, 2, value);
+		invMat.getV(0, 2, value);
 		assertEquals(20.0/145, value.v(), tol);
-		invMat.v(1, 0, value);
+		invMat.getV(1, 0, value);
 		assertEquals(29.0/145, value.v(), tol);
-		invMat.v(1, 1, value);
+		invMat.getV(1, 1, value);
 		assertEquals(-29.0/145, value.v(), tol);
-		invMat.v(1, 2, value);
+		invMat.getV(1, 2, value);
 		assertEquals(0.0/145, value.v(), tol);
-		invMat.v(2, 0, value);
+		invMat.getV(2, 0, value);
 		assertEquals(-13.0/145, value.v(), tol);
-		invMat.v(2, 1, value);
+		invMat.getV(2, 1, value);
 		assertEquals(53.0/145, value.v(), tol);
-		invMat.v(2, 2, value);
+		invMat.getV(2, 2, value);
 		assertEquals(-5.0/145, value.v(), tol);
 		
 		G.HLF_MAT.multiply().call(mat, invMat, ident);
 
-		ident.v(0, 0, value);
+		ident.getV(0, 0, value);
 		assertEquals(1, value.v(), tol);
-		ident.v(0, 1, value);
+		ident.getV(0, 1, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(0, 2, value);
+		ident.getV(0, 2, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(1, 0, value);
+		ident.getV(1, 0, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(1, 1, value);
+		ident.getV(1, 1, value);
 		assertEquals(1, value.v(), tol);
-		ident.v(1, 2, value);
+		ident.getV(1, 2, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(2, 0, value);
+		ident.getV(2, 0, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(2, 1, value);
+		ident.getV(2, 1, value);
 		assertEquals(0, value.v(), tol);
-		ident.v(2, 2, value);
+		ident.getV(2, 2, value);
 		assertEquals(1, value.v(), tol);
 	}
 	
@@ -138,11 +138,11 @@ public class TestFloat16Matrix {
 		LUDecomp.compute(G.HLF, G.HLF_MAT, a);
 		LUSolve.compute(G.HLF, G.HLF_VEC, a, b, x);
 		Float16Member v = new Float16Member();
-		x.v(0, v);
+		x.getV(0, v);
 		//System.out.println(v.v());
-		x.v(1, v);
+		x.getV(1, v);
 		//System.out.println(v.v());
-		x.v(2, v);
+		x.getV(2, v);
 		//System.out.println(v.v());
 	}
 }

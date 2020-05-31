@@ -140,7 +140,7 @@ public final class ComplexFloat32Member
 	}
 
 	@Override
-	public void v(ComplexFloat32Member value) {
+	public void getV(ComplexFloat32Member value) {
 		get(value);
 	}
 

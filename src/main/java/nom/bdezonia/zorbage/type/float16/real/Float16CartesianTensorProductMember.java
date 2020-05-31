@@ -289,7 +289,7 @@ public final class Float16CartesianTensorProductMember
 	}
 	
 	@Override
-	public void v(IntegerIndex index, Float16Member value) {
+	public void getV(IntegerIndex index, Float16Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
@@ -589,7 +589,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (byte) tmp.v();
 		}
 		return 0;
@@ -602,7 +602,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (short) tmp.v();
 		}
 		return 0;
@@ -615,7 +615,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (int) tmp.v();
 		}
 		return 0;
@@ -628,7 +628,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (long) tmp.v();
 		}
 		return 0;
@@ -641,7 +641,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v();
 		}
 		return 0;
@@ -654,7 +654,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v();
 		}
 		return 0;
@@ -667,7 +667,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 		return BigInteger.ZERO;
@@ -680,7 +680,7 @@ public final class Float16CartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return BigDecimal.valueOf(tmp.v());
 		}
 		return BigDecimal.ZERO;
@@ -693,7 +693,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (byte) tmp.v();
 		}
 	}
@@ -705,7 +705,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (short) tmp.v();
 		}
 	}
@@ -717,7 +717,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (int) tmp.v();
 		}
 	}
@@ -729,7 +729,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return (long) tmp.v();
 		}
 	}
@@ -741,7 +741,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v();
 		}
 	}
@@ -753,7 +753,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v();
 		}
 	}
@@ -765,7 +765,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return BigDecimal.valueOf(tmp.v()).toBigInteger();
 		}
 	}
@@ -777,7 +777,7 @@ public final class Float16CartesianTensorProductMember
 		}
 		else {
 			Float16Member tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return BigDecimal.valueOf(tmp.v());
 		}
 	}

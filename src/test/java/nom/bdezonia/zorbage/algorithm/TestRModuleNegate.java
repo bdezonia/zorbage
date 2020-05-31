@@ -46,11 +46,11 @@ public class TestRModuleNegate {
 		Float64VectorMember b = new Float64VectorMember();
 		Float64Member value = G.DBL.construct();
 		RModuleNegate.compute(G.DBL, a, b);
-		b.v(0, value);
+		b.getV(0, value);
 		assertEquals(2, value.v(), 0);
-		b.v(1, value);
+		b.getV(1, value);
 		assertEquals(0, value.v(), 0);
-		b.v(2, value);
+		b.getV(2, value);
 		assertEquals(-7, value.v(), 0);
 	}
 }

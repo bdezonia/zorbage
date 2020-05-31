@@ -54,7 +54,7 @@ public class RModuleConjugate {
 		final long length = a.length();
 		b.alloc(length);
 		for (long i = 0; i < length; i++) {
-			a.v(i, tmp);
+			a.getV(i, tmp);
 			memberAlgebra.conjugate().call(tmp, tmp);
 			b.setV(i, tmp);
 		}

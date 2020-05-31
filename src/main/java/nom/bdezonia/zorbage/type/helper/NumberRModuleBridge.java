@@ -86,9 +86,9 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 	}
 
 	@Override
-	public void v(long i, U value) {
+	public void getV(long i, U value) {
 		if (i == 0)
-			num.v(value);
+			num.getV(value);
 		else
 			throw new IllegalArgumentException("out of bounds read");
 	}

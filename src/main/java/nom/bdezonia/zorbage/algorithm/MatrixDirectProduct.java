@@ -57,10 +57,10 @@ public class MatrixDirectProduct {
 		out.alloc(in1.rows() * in2.rows(), in1.cols() * in2.cols());
 		for (long r1 = 0; r1 < in1.rows(); r1++) {
 			for (long c1 = 0; c1 < in1.cols(); c1++) {
-				in1.v(r1, c1, tmp1);
+				in1.getV(r1, c1, tmp1);
 				for (long r2 = 0; r2 < in2.rows(); r2++) {
 					for (long c2 = 0; c2 < in2.cols(); c2++) {
-						in2.v(r2, c2, tmp2);
+						in2.getV(r2, c2, tmp2);
 						algebra.multiply().call(tmp1, tmp2, tmp3);
 						out.setV(r1*in2.rows()+r2, c1*in2.cols()+c2, tmp3);
 					}

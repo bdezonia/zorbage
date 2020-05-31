@@ -57,8 +57,8 @@ public class MatrixTranspose {
 			// else can transpose square mats in place
 			for (long d = 1; d < a.rows(); d++) {
 				for (long c = 1; c <= d; c++) {
-					a.v(d-c, d, value1);
-					a.v(d, d-c, value2);
+					a.getV(d-c, d, value1);
+					a.getV(d, d-c, value2);
 					a.setV(d-c, d, value2);
 					a.setV(d, d-c, value1);
 				}
@@ -68,7 +68,7 @@ public class MatrixTranspose {
 			b.alloc(a.cols(), a.rows());
 			for (long r = 0; r < a.rows(); r++) {
 				for (long c = 0; c < a.cols(); c++) {
-					a.v(r, c, value1);
+					a.getV(r, c, value1);
 					b.setV(c, r, value1);
 				}
 			}

@@ -55,8 +55,8 @@ public class RModuleEqual {
 		V aTmp = memberAlgebra.construct();
 		V bTmp = memberAlgebra.construct();
 		for (long i = 0; i < a.length(); i++) {
-			a.v(i, aTmp);
-			b.v(i, bTmp);
+			a.getV(i, aTmp);
+			b.getV(i, bTmp);
 			if (memberAlgebra.isNotEqual().call(aTmp, bTmp))
 				return false;
 		}

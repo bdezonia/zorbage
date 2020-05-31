@@ -52,7 +52,7 @@ public class MatrixAssign {
 		U tmp = algebra.construct();
 		for (long row = 0; row < from.rows(); row++) {
 			for (long col = 0; col < from.cols(); col++) {
-				from.v(row, col, tmp);
+				from.getV(row, col, tmp);
 				to.setV(row, col, tmp);
 			}
 		}

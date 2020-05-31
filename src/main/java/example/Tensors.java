@@ -74,7 +74,7 @@ class Tensors {
 		b.dimension();
 		b.get(e);
 		b.set(c);
-		b.v(idx, value);
+		b.getV(idx, value);
 		b.setV(idx, value);
 
 		// basic operations

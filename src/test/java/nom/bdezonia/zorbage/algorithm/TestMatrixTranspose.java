@@ -52,45 +52,45 @@ public class TestMatrixTranspose {
 		
 		assertEquals(3, b.rows());
 		assertEquals(3, b.cols());
-		b.v(0, 0, value);
+		b.getV(0, 0, value);
 		assertEquals(1, value.v(), 0);
-		b.v(0, 1, value);
+		b.getV(0, 1, value);
 		assertEquals(4, value.v(), 0);
-		b.v(0, 2, value);
+		b.getV(0, 2, value);
 		assertEquals(7, value.v(), 0);
-		b.v(1, 0, value);
+		b.getV(1, 0, value);
 		assertEquals(2, value.v(), 0);
-		b.v(1, 1, value);
+		b.getV(1, 1, value);
 		assertEquals(5, value.v(), 0);
-		b.v(1, 2, value);
+		b.getV(1, 2, value);
 		assertEquals(8, value.v(), 0);
-		b.v(2, 0, value);
+		b.getV(2, 0, value);
 		assertEquals(3, value.v(), 0);
-		b.v(2, 1, value);
+		b.getV(2, 1, value);
 		assertEquals(6, value.v(), 0);
-		b.v(2, 2, value);
+		b.getV(2, 2, value);
 		assertEquals(9, value.v(), 0);
 		
 		MatrixTranspose.compute(G.DBL, a, a);
 		assertEquals(3, a.rows());
 		assertEquals(3, a.cols());
-		a.v(0, 0, value);
+		a.getV(0, 0, value);
 		assertEquals(1, value.v(), 0);
-		a.v(0, 1, value);
+		a.getV(0, 1, value);
 		assertEquals(4, value.v(), 0);
-		a.v(0, 2, value);
+		a.getV(0, 2, value);
 		assertEquals(7, value.v(), 0);
-		a.v(1, 0, value);
+		a.getV(1, 0, value);
 		assertEquals(2, value.v(), 0);
-		a.v(1, 1, value);
+		a.getV(1, 1, value);
 		assertEquals(5, value.v(), 0);
-		a.v(1, 2, value);
+		a.getV(1, 2, value);
 		assertEquals(8, value.v(), 0);
-		a.v(2, 0, value);
+		a.getV(2, 0, value);
 		assertEquals(3, value.v(), 0);
-		a.v(2, 1, value);
+		a.getV(2, 1, value);
 		assertEquals(6, value.v(), 0);
-		a.v(2, 2, value);
+		a.getV(2, 2, value);
 		assertEquals(9, value.v(), 0);
 	}
 	
@@ -104,21 +104,21 @@ public class TestMatrixTranspose {
 		
 		assertEquals(4, b.rows());
 		assertEquals(2, b.cols());
-		b.v(0, 0, value);
+		b.getV(0, 0, value);
 		assertEquals(1, value.v(), 0);
-		b.v(0, 1, value);
+		b.getV(0, 1, value);
 		assertEquals(5, value.v(), 0);
-		b.v(1, 0, value);
+		b.getV(1, 0, value);
 		assertEquals(2, value.v(), 0);
-		b.v(1, 1, value);
+		b.getV(1, 1, value);
 		assertEquals(6, value.v(), 0);
-		b.v(2, 0, value);
+		b.getV(2, 0, value);
 		assertEquals(3, value.v(), 0);
-		b.v(2, 1, value);
+		b.getV(2, 1, value);
 		assertEquals(7, value.v(), 0);
-		b.v(3, 0, value);
+		b.getV(3, 0, value);
 		assertEquals(4, value.v(), 0);
-		b.v(3, 1, value);
+		b.getV(3, 1, value);
 		assertEquals(8, value.v(), 0);
 		
 		try {

@@ -38,7 +38,7 @@ public interface RModuleMember<A> extends Dimensioned, StorageType {
 	boolean alloc(long len);
 	void init(long len);
 	void reshape(long len);
-	void v(long i, A value);
+	void getV(long i, A value);
 	void setV(long i, A value);
 }
 

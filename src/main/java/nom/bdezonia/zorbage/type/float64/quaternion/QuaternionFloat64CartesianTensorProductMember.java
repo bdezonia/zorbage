@@ -302,7 +302,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	}
 	
 	@Override
-	public void v(IntegerIndex index, QuaternionFloat64Member value) {
+	public void getV(IntegerIndex index, QuaternionFloat64Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
@@ -444,7 +444,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v);
@@ -463,7 +463,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v);
@@ -482,7 +482,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v);
@@ -501,7 +501,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v);
@@ -520,7 +520,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v);
@@ -539,7 +539,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v);
@@ -558,7 +558,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v.doubleValue());
@@ -577,7 +577,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				tmp.setR(v.doubleValue());
@@ -602,7 +602,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v);
@@ -628,7 +628,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v);
@@ -654,7 +654,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v);
@@ -680,7 +680,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v);
@@ -706,7 +706,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v);
@@ -732,7 +732,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v);
@@ -758,7 +758,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v.doubleValue());
@@ -783,7 +783,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					tmp.setR(v.doubleValue());
@@ -806,7 +806,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return (byte) tmp.r();
@@ -827,7 +827,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return (short) tmp.r();
@@ -848,7 +848,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return (int) tmp.r();
@@ -869,7 +869,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return (long) tmp.r();
@@ -890,7 +890,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return (float) tmp.r();
@@ -911,7 +911,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return tmp.r();
@@ -932,7 +932,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return BigDecimal.valueOf(tmp.r()).toBigInteger();
@@ -953,7 +953,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		QuaternionFloat64Member tmp = tmpQuat.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
 				return BigDecimal.valueOf(tmp.r());
@@ -975,7 +975,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return (byte) tmp.r();
@@ -998,7 +998,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return (short) tmp.r();
@@ -1021,7 +1021,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return (int) tmp.r();
@@ -1044,7 +1044,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return (long) tmp.r();
@@ -1067,7 +1067,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return (float) tmp.r();
@@ -1090,7 +1090,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return tmp.r();
@@ -1113,7 +1113,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return BigDecimal.valueOf(tmp.r()).toBigInteger();
@@ -1136,7 +1136,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		}
 		else {
 			QuaternionFloat64Member tmp = tmpQuat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
 					return BigDecimal.valueOf(tmp.r());

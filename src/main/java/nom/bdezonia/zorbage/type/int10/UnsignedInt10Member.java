@@ -80,7 +80,7 @@ public final class UnsignedInt10Member
 	}
 	
 	@Override
-	public void v(UnsignedInt10Member value) {
+	public void getV(UnsignedInt10Member value) {
 		get(value);
 	}
 

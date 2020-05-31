@@ -71,7 +71,7 @@ public class RModuleDefaultNorm {
 		W max = componentAlg.construct();
 		W scale = componentAlg.construct();
 		for (long i = 0; i < a.length(); i++) {
-			a.v(i, aTmp);
+			a.getV(i, aTmp);
 			multicomponentAlg.norm().call(aTmp, realPart);
 			Max.compute(componentAlg, max, realPart, max);
 		}
@@ -81,7 +81,7 @@ public class RModuleDefaultNorm {
 		}
 		componentAlg.invert().call(max, scale);
 		for (long i = 0; i < a.length(); i++) {
-			a.v(i, aTmp);
+			a.getV(i, aTmp);
 			multicomponentAlg.conjugate().call(aTmp, conjATmp);
 			multicomponentAlg.scaleComponents().call(scale, aTmp, aTmp);
 			multicomponentAlg.scaleComponents().call(scale, conjATmp, conjATmp);

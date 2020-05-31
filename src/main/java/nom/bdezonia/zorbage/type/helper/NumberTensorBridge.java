@@ -91,12 +91,12 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public void v(IntegerIndex index, U value) {
+	public void getV(IntegerIndex index, U value) {
 		for (int i = 0; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0)
 				throw new IllegalArgumentException("out of bounds read");
 		}
-		num.v(value);
+		num.getV(value);
 	}
 
 	@Override

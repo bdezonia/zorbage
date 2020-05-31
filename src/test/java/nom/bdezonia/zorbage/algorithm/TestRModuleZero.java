@@ -47,7 +47,7 @@ public class TestRModuleZero {
 		RModuleZero.compute(vec);
 		assertEquals(4, vec.length());
 		for (long i = 0; i < vec.length(); i++) {
-			vec.v(i, value);
+			vec.getV(i, value);
 			assertEquals(0, value.v(), 0);
 		}
 	}

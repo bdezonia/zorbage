@@ -218,7 +218,7 @@ public final class OctonionFloat16Member
 	}
 
 	@Override
-	public void v(OctonionFloat16Member value) {
+	public void getV(OctonionFloat16Member value) {
 		get(value);
 	}
 

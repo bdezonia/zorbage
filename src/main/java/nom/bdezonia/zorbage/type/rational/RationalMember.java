@@ -92,7 +92,7 @@ public class RationalMember
 	}
 
 	@Override
-	public void v(RationalMember value) {
+	public void getV(RationalMember value) {
 		value.set(this);
 	}
 

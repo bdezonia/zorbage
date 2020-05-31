@@ -53,7 +53,7 @@ public class RModuleAssign {
 		final long length = from.length();
 		to.alloc(length);
 		for (long i = 0; i < length; i++) {
-			from.v(i, tmp);
+			from.getV(i, tmp);
 			to.setV(i, tmp);
 		}
 	}

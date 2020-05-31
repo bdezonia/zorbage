@@ -59,8 +59,8 @@ public class TestMatrixPower {
 				}
 				for (int rr = 0; rr < b.rows(); rr++) {
 					for (int cc = 0; cc < b.cols(); cc++) {
-						b.v(rr, cc, vb);
-						c.v(rr, cc, vc);
+						b.getV(rr, cc, vb);
+						c.getV(rr, cc, vc);
 						assertEquals(vb.v(), vc.v(), 0.0000000000001);
 					}
 				}
@@ -74,8 +74,8 @@ public class TestMatrixPower {
 				}
 				for (int rr = 0; rr < b.rows(); rr++) {
 					for (int cc = 0; cc < b.cols(); cc++) {
-						b.v(rr, cc, vb);
-						c.v(rr, cc, vc);
+						b.getV(rr, cc, vb);
+						c.getV(rr, cc, vc);
 						assertEquals(vb.v(), vc.v(), 0.0000000000001);
 					}
 				}
@@ -84,13 +84,13 @@ public class TestMatrixPower {
 				// i == 0
 				assertEquals(2, b.rows());
 				assertEquals(2, b.cols());
-				b.v(0, 0, vb);
+				b.getV(0, 0, vb);
 				assertEquals(1, vb.v(), 0);
-				b.v(0, 1, vb);
+				b.getV(0, 1, vb);
 				assertEquals(0, vb.v(), 0);
-				b.v(1, 0, vb);
+				b.getV(1, 0, vb);
 				assertEquals(0, vb.v(), 0);
-				b.v(1, 1, vb);
+				b.getV(1, 1, vb);
 				assertEquals(1, vb.v(), 0);
 			}
 		}

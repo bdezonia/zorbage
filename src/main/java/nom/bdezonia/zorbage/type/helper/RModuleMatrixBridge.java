@@ -123,20 +123,20 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	}
 
 	@Override
-	public void v(long r, long c, U value) {
+	public void getV(long r, long c, U value) {
 		if (isColumn) {
 			if (c != 0) {
 				throw new IllegalArgumentException("out of bounds read");
 			}
 			else
-				rmod.v(r, value);
+				rmod.getV(r, value);
 		}
 		else {
 			if (r != 0) {
 				throw new IllegalArgumentException("out of bounds read");
 			}
 			else
-				rmod.v(c, value);
+				rmod.getV(c, value);
 		}
 	}
 

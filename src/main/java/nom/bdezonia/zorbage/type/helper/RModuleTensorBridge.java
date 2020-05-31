@@ -83,13 +83,13 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public void v(IntegerIndex index, U value) {
+	public void getV(IntegerIndex index, U value) {
 		for (int i = 1; i < index.numDimensions(); i++) {
 			if (index.get(i) != 0)
 				throw new IllegalArgumentException("out of bounds read");
 		}
 		long i = index.get(0);
-		rmod.v(i, value);
+		rmod.getV(i, value);
 	}
 
 	@Override

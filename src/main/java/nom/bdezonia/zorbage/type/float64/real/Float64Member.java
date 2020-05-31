@@ -135,7 +135,7 @@ public final class Float64Member
 	}
 
 	@Override
-	public void v(Float64Member value) {
+	public void getV(Float64Member value) {
 		get(value);
 	}
 

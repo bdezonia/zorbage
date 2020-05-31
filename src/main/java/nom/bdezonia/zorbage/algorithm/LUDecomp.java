@@ -78,12 +78,12 @@ public class LUDecomp {
 			{
 				numAlgebra.zero().call(sum);
 				for (long k = 0; k < i; k++) {
-					lu.v(i, k, value1);
-					lu.v(k, j, value2);
+					lu.getV(i, k, value1);
+					lu.getV(k, j, value2);
 					numAlgebra.multiply().call(value1, value2, term);
 					numAlgebra.add().call(sum, term, sum);
 				}
-				a.v(i, j, term);
+				a.getV(i, j, term);
 				numAlgebra.subtract().call(term, sum, term);
 				lu.setV(i, j, term);
 			}
@@ -91,15 +91,15 @@ public class LUDecomp {
 			{
 				numAlgebra.zero().call(sum);
 				for (long k = 0; k < i; k++) {
-					lu.v(j, k, value1);
-					lu.v(k, i, value2);
+					lu.getV(j, k, value1);
+					lu.getV(k, i, value2);
 					numAlgebra.multiply().call(value1, value2, term);
 					numAlgebra.add().call(sum, term, sum);
 				}
 				numAlgebra.unity().call(value1);
-				lu.v(i, i, tmp);
+				lu.getV(i, i, tmp);
 				numAlgebra.divide().call(value1, tmp, value1);
-				a.v(j, i, tmp);
+				a.getV(j, i, tmp);
 				numAlgebra.subtract().call(tmp, sum, value2);
 				numAlgebra.multiply().call(value1, value2, term);
 				lu.setV(j, i, term);

@@ -50,23 +50,23 @@ public class TestRModuleRound {
 				});
 		RModuleRound.compute(G.DBL, Round.Mode.HALF_EVEN, new Float64Member(1), a, a);
 		Float64Member value = G.DBL.construct();
-		a.v(0, value);
+		a.getV(0, value);
 		assertEquals(0, value.v(), 0);
-		a.v(1, value);
+		a.getV(1, value);
 		assertEquals(1, value.v(), 0);
-		a.v(2, value);
+		a.getV(2, value);
 		assertEquals(2, value.v(), 0);
-		a.v(3, value);
+		a.getV(3, value);
 		assertEquals(-3, value.v(), 0);
-		a.v(4, value);
+		a.getV(4, value);
 		assertEquals(-2, value.v(), 0);
-		a.v(5, value);
+		a.getV(5, value);
 		assertEquals(-2, value.v(), 0);
-		a.v(6, value);
+		a.getV(6, value);
 		assertEquals(67, value.v(), 0);
-		a.v(7, value);
+		a.getV(7, value);
 		assertEquals(-44, value.v(), 0);
-		a.v(8, value);
+		a.getV(8, value);
 		assertEquals(-20, value.v(), 0);
 	}
 }

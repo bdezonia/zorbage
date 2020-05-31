@@ -289,7 +289,7 @@ public final class HighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void v(IntegerIndex index, HighPrecisionMember value) {
+	public void getV(IntegerIndex index, HighPrecisionMember value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
@@ -589,7 +589,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().byteValue();
 		}
 		return 0;
@@ -602,7 +602,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().shortValue();
 		}
 		return 0;
@@ -615,7 +615,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().intValue();
 		}
 		return 0;
@@ -628,7 +628,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().longValue();
 		}
 		return 0;
@@ -641,7 +641,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().floatValue();
 		}
 		return 0;
@@ -654,7 +654,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().doubleValue();
 		}
 		return 0;
@@ -667,7 +667,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().toBigInteger();
 		}
 		return BigInteger.ZERO;
@@ -680,7 +680,7 @@ public final class HighPrecisionCartesianTensorProductMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v();
 		}
 		return BigDecimal.ZERO;
@@ -693,7 +693,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().byteValue();
 		}
 	}
@@ -705,7 +705,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().shortValue();
 		}
 	}
@@ -717,7 +717,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().intValue();
 		}
 	}
@@ -729,7 +729,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().longValue();
 		}
 	}
@@ -741,7 +741,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().floatValue();
 		}
 	}
@@ -753,7 +753,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().doubleValue();
 		}
 	}
@@ -765,7 +765,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v().toBigInteger();
 		}
 	}
@@ -777,7 +777,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpFloat.get();
-			v(index, tmp);
+			getV(index, tmp);
 			return tmp.v();
 		}
 	}

@@ -62,8 +62,8 @@ public class RModuleHermitianProduct {
 		U aVal = algU.construct();
 		U bVal = algU.construct();
 		for (long i = 0; i < len; i++) {
-			a.v(i, aVal);
-			b.v(i, bVal);
+			a.getV(i, aVal);
+			b.getV(i, bVal);
 			algU.conjugate().call(aVal, aVal);
 			algU.multiply().call(aVal, bVal, tmp);
 			algU.add().call(sum, tmp, sum);

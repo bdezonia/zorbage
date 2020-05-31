@@ -216,7 +216,7 @@ public final class OctonionHighPrecisionMember
 	}
 
 	@Override
-	public void v(OctonionHighPrecisionMember value) {
+	public void getV(OctonionHighPrecisionMember value) {
 		get(value);
 	}
 

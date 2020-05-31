@@ -72,8 +72,8 @@ public class TensorElementNumberBridge<U> implements NumberMember<U> {
 	}
 
 	@Override
-	public void v(U value) {
-		tensor.v(index, value);
+	public void getV(U value) {
+		tensor.getV(index, value);
 	}
 
 	@Override

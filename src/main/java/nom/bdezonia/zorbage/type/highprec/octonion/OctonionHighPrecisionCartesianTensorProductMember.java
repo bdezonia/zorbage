@@ -314,7 +314,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void v(IntegerIndex index, OctonionHighPrecisionMember value) {
+	public void getV(IntegerIndex index, OctonionHighPrecisionMember value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
@@ -472,7 +472,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -507,7 +507,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -542,7 +542,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -577,7 +577,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -612,7 +612,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -647,7 +647,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -682,7 +682,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -717,7 +717,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -758,7 +758,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -800,7 +800,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -842,7 +842,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -884,7 +884,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -926,7 +926,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -968,7 +968,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1010,7 +1010,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1051,7 +1051,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1090,7 +1090,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1127,7 +1127,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1164,7 +1164,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1201,7 +1201,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1238,7 +1238,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1275,7 +1275,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1312,7 +1312,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1349,7 +1349,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"negative component index error");
 		OctonionHighPrecisionMember tmp = tmpOct.get();
-		v(index, tmp);
+		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
@@ -1387,7 +1387,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1426,7 +1426,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1465,7 +1465,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1504,7 +1504,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1543,7 +1543,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1582,7 +1582,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1621,7 +1621,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
@@ -1660,7 +1660,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		}
 		else {
 			OctonionHighPrecisionMember tmp = tmpOct.get();
-			v(index, tmp);
+			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)

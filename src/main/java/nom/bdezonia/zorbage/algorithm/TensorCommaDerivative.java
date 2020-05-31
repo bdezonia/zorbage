@@ -86,7 +86,7 @@ public class TensorCommaDerivative {
 		SamplingIterator<IntegerIndex> iter = grid.iterator();
 		while (iter.hasNext()) {
 			iter.next(tmpIdx);
-			a.v(tmpIdx, value);
+			a.getV(tmpIdx, value);
 			tmp.setV(tmpIdx, value);
 		}
 		tensAlg.assign().call(tmp, b);

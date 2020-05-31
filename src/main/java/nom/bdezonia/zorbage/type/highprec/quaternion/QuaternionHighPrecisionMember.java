@@ -167,7 +167,7 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void v(QuaternionHighPrecisionMember value) {
+	public void getV(QuaternionHighPrecisionMember value) {
 		get(value);
 	}
 

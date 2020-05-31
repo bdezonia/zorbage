@@ -59,8 +59,8 @@ public class MatrixAddition {
 		U tmp = algebra.construct();
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, atmp);
-				b.v(row, col, btmp);
+				a.getV(row, col, atmp);
+				b.getV(row, col, btmp);
 				algebra.add().call(atmp, btmp, tmp);
 				c.setV(row, col, tmp);
 			}

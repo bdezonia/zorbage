@@ -68,10 +68,10 @@ public class TestTaylorEstimateSin {
 		Float64Member four = G.DBL.construct();
 		for (int i = 1; i <= 50; i++) {
 			TaylorEstimateSin.compute(i, G.DBL_MAT, G.DBL, x, result);
-			result.v(0, 0, one);
-			result.v(0, 1, two);
-			result.v(1, 0, three);
-			result.v(1, 1, four);
+			result.getV(0, 0, one);
+			result.getV(0, 1, two);
+			result.getV(1, 0, three);
+			result.getV(1, 1, four);
 			System.out.println(one.v()+","+two.v()+","+three.v()+","+four.v());
 		}
 	}

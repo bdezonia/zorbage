@@ -55,7 +55,7 @@ public class RModuleRound {
 			b.alloc(a.length());
 		U tmp = entityAlgebra.construct();
 		for (long i = 0; i < a.length(); i++) {
-			a.v(i, tmp);
+			a.getV(i, tmp);
 			entityAlgebra.round().call(mode, delta, tmp, tmp);
 			b.setV(i, tmp);
 		}

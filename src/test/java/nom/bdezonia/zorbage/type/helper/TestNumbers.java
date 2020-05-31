@@ -66,7 +66,7 @@ public class TestNumbers {
 			assertTrue(true);
 		}
 		
-		bridge.v(0, tmp);
+		bridge.getV(0, tmp);
 		assertTrue(G.CFLT.isEqual().call(c, tmp));
 		
 		try {
@@ -136,7 +136,7 @@ public class TestNumbers {
 		tmp.setI(7);
 
 		bridge.setV(0, tmp);
-		bridge.v(0, c);
+		bridge.getV(0, c);
 		
 		assertEquals(3, c.r(), 0);
 		assertEquals(7, c.i(), 0);
@@ -167,7 +167,7 @@ public class TestNumbers {
 			assertTrue(true);
 		}
 		
-		bridge.v(0, 0, tmp);
+		bridge.getV(0, 0, tmp);
 		assertTrue(G.CFLT.isEqual().call(c, tmp));
 		
 		try {
@@ -256,7 +256,7 @@ public class TestNumbers {
 
 		bridge.setV(0, 0, tmp);
 		
-		bridge.v(0, 0, c);
+		bridge.getV(0, 0, c);
 		
 		assertEquals(3, c.r(), 0);
 		assertEquals(7, c.i(), 0);
@@ -288,7 +288,7 @@ public class TestNumbers {
 		idx.set(0, 0);
 		idx.set(1, 0);
 
-		bridge.v(idx, tmp);
+		bridge.getV(idx, tmp);
 		assertTrue(G.CFLT.isEqual().call(c, tmp));
 		
 		try {
@@ -377,7 +377,7 @@ public class TestNumbers {
 
 		bridge.setV(idx, tmp);
 		
-		bridge.v(idx, c);
+		bridge.getV(idx, c);
 		
 		assertEquals(3, c.r(), 0);
 		assertEquals(7, c.i(), 0);

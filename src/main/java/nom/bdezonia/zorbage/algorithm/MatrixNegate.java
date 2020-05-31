@@ -53,7 +53,7 @@ public class MatrixNegate {
 			b.alloc(a.rows(), a.cols());
 		for (long row = 0; row < a.rows(); row++) {
 			for (long col = 0; col < a.cols(); col++) {
-				a.v(row, col, tmp);
+				a.getV(row, col, tmp);
 				algebra.negate().call(tmp, tmp);
 				b.setV(row, col, tmp);
 			}

@@ -135,7 +135,7 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public void v(SignedInt16Member value) {
+	public void getV(SignedInt16Member value) {
 		get(value);
 	}
 

@@ -52,7 +52,7 @@ public class MatrixTrace {
 		U tmp = algebra.construct();
 		long minD = Math.min(matrix.rows(), matrix.cols());
 		for (long i = 0; i < minD; i++) {
-			matrix.v(i, i, tmp);
+			matrix.getV(i, i, tmp);
 			algebra.add().call(sum, tmp, sum);
 		}
 		algebra.assign().call(sum, result);

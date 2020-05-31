@@ -105,7 +105,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void v(RgbMember value) {
+	public void getV(RgbMember value) {
 		get(value);
 	}
 

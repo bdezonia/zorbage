@@ -50,21 +50,21 @@ public class TestRModuleReshape {
 		RModuleReshape.compute(G.DBL_VEC, G.DBL, 4, vec);
 		
 		assertEquals(4, vec.length());
-		vec.v(0, value);
+		vec.getV(0, value);
 		assertEquals(1, value.v(), 0);
-		vec.v(1, value);
+		vec.getV(1, value);
 		assertEquals(2, value.v(), 0);
-		vec.v(2, value);
+		vec.getV(2, value);
 		assertEquals(3, value.v(), 0);
-		vec.v(3, value);
+		vec.getV(3, value);
 		assertEquals(0, value.v(), 0);
 
 		RModuleReshape.compute(G.DBL_VEC, G.DBL, 2, vec);
 		
 		assertEquals(2, vec.length());
-		vec.v(0, value);
+		vec.getV(0, value);
 		assertEquals(1, value.v(), 0);
-		vec.v(1, value);
+		vec.getV(1, value);
 		assertEquals(2, value.v(), 0);
 	}
 }

@@ -135,7 +135,7 @@ public final class Float32Member
 	}
 
 	@Override
-	public void v(Float32Member value) {
+	public void getV(Float32Member value) {
 		get(value);
 	}
 

@@ -60,7 +60,7 @@ public class TestMatrixUnity {
 		Float64Member value = G.DBL.construct();
 		for (int i = 0; i < a.rows(); i++) {
 			for (int j = 0; j < a.cols(); j++) {
-				a.v(i, j, value);
+				a.getV(i, j, value);
 				if (i == j)
 					assertEquals(1, value.v(), 0);
 				else

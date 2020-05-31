@@ -97,8 +97,8 @@ public class MatrixRowRModuleBridge<U> implements RModuleMember<U> {
 	}
 
 	@Override
-	public void v(long i, U value) {
-		mat.v(row, i, value);
+	public void getV(long i, U value) {
+		mat.getV(row, i, value);
 	}
 
 	@Override

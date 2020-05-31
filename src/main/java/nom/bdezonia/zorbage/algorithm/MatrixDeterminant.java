@@ -67,7 +67,7 @@ public class MatrixDeterminant {
 		BASETYPE prod = numAlgebra.construct();
 		numAlgebra.unity().call(prod);
 		for (long i = 0; i < tmpMat.rows(); i++) {
-			tmpMat.v(i, i, tmp);
+			tmpMat.getV(i, i, tmp);
 			numAlgebra.multiply().call(prod, tmp, prod);
 		}
 		numAlgebra.assign().call(prod, det);

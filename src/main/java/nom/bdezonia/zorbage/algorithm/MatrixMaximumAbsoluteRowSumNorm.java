@@ -62,7 +62,7 @@ public class MatrixMaximumAbsoluteRowSumNorm {
 		for (long r = 0; r < matrix.rows(); r++) {
 			algebra2.zero().call(rowSum);
 			for (long c = 0; c < matrix.cols(); c++) {
-				matrix.v(r, c, value);
+				matrix.getV(r, c, value);
 				algebra1.norm().call(value, tmp);
 				algebra2.add().call(rowSum, tmp, rowSum);
 			}

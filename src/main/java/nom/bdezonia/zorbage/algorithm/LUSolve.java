@@ -73,12 +73,12 @@ public class LUSolve {
 		{
 			numAlgebra.zero().call(sum);
 			for (long k = 0; k < i; k++) {
-				a.v(i, k, value1);
-				y.v(k, value2);
+				a.getV(i, k, value1);
+				y.getV(k, value2);
 				numAlgebra.multiply().call(value1, value2, term);
 				numAlgebra.add().call(sum, term, sum);
 			}
-			b.v(i, value1);
+			b.getV(i, value1);
 			numAlgebra.subtract().call(value1, sum, term);
 			y.setV(i, term);
 		}
@@ -88,15 +88,15 @@ public class LUSolve {
 		{
 			numAlgebra.zero().call(sum);
 			for (long k = i + 1; k < n; k++) {
-				a.v(i, k, value1);
-				x.v(k, value2);
+				a.getV(i, k, value1);
+				x.getV(k, value2);
 				numAlgebra.multiply().call(value1, value2, term);
 				numAlgebra.add().call(sum, term, sum);
 			}
 			numAlgebra.unity().call(tmp);
-			a.v(i, i, value1);
+			a.getV(i, i, value1);
 			numAlgebra.divide().call(tmp, value1, value1);
-			y.v(i, value2);
+			y.getV(i, value2);
 			numAlgebra.subtract().call(value2, sum, value2);
 			numAlgebra.multiply().call(value1, value2, term);
 			x.setV(i, term);

@@ -106,7 +106,7 @@ public final class HighPrecisionVectorMember
 	}
 	
 	@Override
-	public void v(long i, HighPrecisionMember v) {
+	public void getV(long i, HighPrecisionMember v) {
 		storage.get(i, v);
 	}
 
@@ -175,7 +175,7 @@ public final class HighPrecisionVectorMember
 		for (long i = 0; i < storageSize; i++) {
 			if (i != 0)
 				builder.append(',');
-			v(i, tmp);
+			getV(i, tmp);
 			builder.append(tmp.toString());
 		}
 		builder.append(']');
@@ -571,7 +571,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().byteValue();
 		}
 		return 0;
@@ -584,7 +584,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().shortValue();
 		}
 		return 0;
@@ -597,7 +597,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().intValue();
 		}
 		return 0;
@@ -610,7 +610,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().longValue();
 		}
 		return 0;
@@ -623,7 +623,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().floatValue();
 		}
 		return 0;
@@ -636,7 +636,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().doubleValue();
 		}
 		return 0;
@@ -649,7 +649,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().toBigInteger();
 		}
 		return BigInteger.ZERO;
@@ -662,7 +662,7 @@ public final class HighPrecisionVectorMember
 					"negative component index error");
 		if (component == 0) {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v();
 		}
 		return BigDecimal.ZERO;
@@ -693,7 +693,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().byteValue();
 		}
 	}
@@ -723,7 +723,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().shortValue();
 		}
 	}
@@ -753,7 +753,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().intValue();
 		}
 	}
@@ -783,7 +783,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().longValue();
 		}
 	}
@@ -813,7 +813,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().floatValue();
 		}
 	}
@@ -843,7 +843,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().doubleValue();
 		}
 	}
@@ -873,7 +873,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v().toBigInteger();
 		}
 	}
@@ -903,7 +903,7 @@ public final class HighPrecisionVectorMember
 		}
 		else {
 			HighPrecisionMember tmp = tmpHP.get();
-			v(index.get(0), tmp);
+			getV(index.get(0), tmp);
 			return tmp.v();
 		}
 	}

@@ -143,7 +143,7 @@ public final class ComplexFloat16Member
 	}
 
 	@Override
-	public void v(ComplexFloat16Member value) {
+	public void getV(ComplexFloat16Member value) {
 		get(value);
 	}
 

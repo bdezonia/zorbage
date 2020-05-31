@@ -66,8 +66,8 @@ public class MatrixElementNumberBridge<U> implements NumberMember<U> {
 	}
 
 	@Override
-	public void v(U value) {
-		mat.v(row, col, value);
+	public void getV(U value) {
+		mat.getV(row, col, value);
 	}
 
 	@Override

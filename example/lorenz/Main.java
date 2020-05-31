@@ -59,9 +59,9 @@ public class Main extends SimpleApplication {
 				if (y.length() != 3)
 					throw new IllegalArgumentException("oops");
 				outputVec.alloc(3);
-				y.v(0, xc);
-				y.v(1, yc);
-				y.v(2, zc);
+				y.getV(0, xc);
+				y.getV(1, yc);
+				y.getV(2, zc);
 				v.setV(SIGMA * (yc.v()-xc.v()));
 				outputVec.setV(0, v);
 				v.setV(xc.v() * (RHO-zc.v()) - yc.v());
@@ -97,11 +97,11 @@ public class Main extends SimpleApplication {
 		Float32Member component = G.FLT.construct();
 		for (int i = 0; i < numSteps; i++) {
 			outputVecs.get(i, vector);
-			vector.v(0, component);
+			vector.getV(0, component);
 			xs[i] = component.v();
-			vector.v(1, component);
+			vector.getV(1, component);
 			ys[i] = component.v();
-			vector.v(2, component);
+			vector.getV(2, component);
 			zs[i] = component.v();
 		}
 		

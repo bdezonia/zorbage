@@ -127,13 +127,13 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	}
 
 	@Override
-	public void v(long r, long c, U value) {
+	public void getV(long r, long c, U value) {
 		if (r < 0 || r >= rows() || c < 0 || c >= cols())
 			throw new IllegalArgumentException("out of bounds read");
 		else {
 			fixedDims.set(rangingDimR, r);
 			fixedDims.set(rangingDimC, c);
-			tensor.v(fixedDims, value);
+			tensor.getV(fixedDims, value);
 		}
 	}
 

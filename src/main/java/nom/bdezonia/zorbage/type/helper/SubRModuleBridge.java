@@ -104,8 +104,8 @@ public class SubRModuleBridge<U> implements RModuleMember<U> {
 	}
 
 	@Override
-	public void v(long i, U value) {
-		rmod.v(startElem + i, value);
+	public void getV(long i, U value) {
+		rmod.getV(startElem + i, value);
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class MatrixReshape {
 		long minCols = Math.min(cols, orig.cols());
 		for (long r = 0; r < minRows; r++) {
 			for (long c = 0; c < minCols; c++) {
-				orig.v(r, c, value);
+				orig.getV(r, c, value);
 				mat.setV(r, c, value);
 			}
 		}

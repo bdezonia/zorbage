@@ -50,23 +50,23 @@ public class TestMatrixRound {
 				});
 		MatrixRound.compute(G.DBL, Round.Mode.HALF_EVEN, new Float64Member(1), a, a);
 		Float64Member value = G.DBL.construct();
-		a.v(0, 0, value);
+		a.getV(0, 0, value);
 		assertEquals(0, value.v(), 0);
-		a.v(0, 1, value);
+		a.getV(0, 1, value);
 		assertEquals(1, value.v(), 0);
-		a.v(0, 2, value);
+		a.getV(0, 2, value);
 		assertEquals(2, value.v(), 0);
-		a.v(1, 0, value);
+		a.getV(1, 0, value);
 		assertEquals(-3, value.v(), 0);
-		a.v(1, 1, value);
+		a.getV(1, 1, value);
 		assertEquals(-2, value.v(), 0);
-		a.v(1, 2, value);
+		a.getV(1, 2, value);
 		assertEquals(-2, value.v(), 0);
-		a.v(2, 0, value);
+		a.getV(2, 0, value);
 		assertEquals(67, value.v(), 0);
-		a.v(2, 1, value);
+		a.getV(2, 1, value);
 		assertEquals(-44, value.v(), 0);
-		a.v(2, 2, value);
+		a.getV(2, 2, value);
 		assertEquals(-20, value.v(), 0);
 	}
 }
