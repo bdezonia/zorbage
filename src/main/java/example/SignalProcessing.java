@@ -5,4 +5,5 @@
 FFT/InvFFT
 correlation and convolution
 resampling?
+are there more?
 */
