@@ -46,6 +46,21 @@ public class GetV {
 	 * @param <U>
 	 */
 	public static <U>
+	void last(IndexedDataSource<U> data, U value)
+	{
+		long sz = data.size();
+		if (sz == 0)
+			throw new IllegalArgumentException("cannot get last element from empty list");
+		data.get(sz-1, value);
+	}
+
+	/**
+	 *
+	 * @param data
+	 * @param value
+	 * @param <U>
+	 */
+	public static <U>
 	void first(IndexedDataSource<U> data, U value)
 	{
 		data.get(0, value);
@@ -349,21 +364,6 @@ public class GetV {
 	void twentysixth(IndexedDataSource<U> data, U value)
 	{
 		data.get(25, value);
-	}
-
-	/**
-	 *
-	 * @param data
-	 * @param value
-	 * @param <U>
-	 */
-	public static <U>
-	void last(IndexedDataSource<U> data, U value)
-	{
-		long sz = data.size();
-		if (sz == 0)
-			throw new IllegalArgumentException("cannot get last element from empty list");
-		data.get(sz-1, value);
 	}
 
 	/**

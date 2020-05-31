@@ -46,6 +46,21 @@ public class SetV {
 	 * @param <U>
 	 */
 	public static <U>
+	void last(IndexedDataSource<U> data, U value)
+	{
+		long sz = data.size();
+		if (sz == 0)
+			throw new IllegalArgumentException("cannot set last element of empty list");
+		data.set(sz-1, value);
+	}
+
+	/**
+	 *
+	 * @param data
+	 * @param value
+	 * @param <U>
+	 */
+	public static <U>
 	void first(IndexedDataSource<U> data, U value)
 	{
 		data.set(0, value);
@@ -349,21 +364,6 @@ public class SetV {
 	void twentysixth(IndexedDataSource<U> data, U value)
 	{
 		data.set(25, value);
-	}
-
-	/**
-	 *
-	 * @param data
-	 * @param value
-	 * @param <U>
-	 */
-	public static <U>
-	void last(IndexedDataSource<U> data, U value)
-	{
-		long sz = data.size();
-		if (sz == 0)
-			throw new IllegalArgumentException("cannot set last element of empty list");
-		data.set(sz-1, value);
 	}
 
 	/**
