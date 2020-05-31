@@ -11,4 +11,5 @@ class SetOperations {
 	// SetIntersection
 	// StSymmetricdifference
 	// SetUnion
+	// Unique
 }

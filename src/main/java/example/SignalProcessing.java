@@ -3,7 +3,7 @@
  */
 /*
 FFT/InvFFT
-correlation and convolution
+correlation and convolution : ND and 1D and mention parallel elsewhere
 resampling?
 are there more?
 */
