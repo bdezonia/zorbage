@@ -187,9 +187,9 @@ class Conveniences {
 	//   transform function and the results are put in one resulting dataset in an interleaved
 	//   order.
 	//
-	//   Data set 1 : a, b
+	//   Data set 1 : a, b, c
 	//   Data set 2 : x, y
-	//   Result data set : xform(a,x), xform(b,x), xform(c,x), xform(a,y), xform(b,y), xform(c,y)
+	//   Result data set : xform(a,x), xform(a,y), xform(b,x), xform(b,y), xform(c,x), xform(c,y)
 
 	void example7() {
 		
