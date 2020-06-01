@@ -20,24 +20,22 @@ Contains support for:
   - procedural java with object oriented comforts
   - the definition of your own types while reusing existing algorithms
 
-What can I do with Zorbage?
+Can you show me what Zorbage can do?
 
-  (
-     For more in depth introductions see:
-       
-       https://github.com/bdezonia/zorbage/tree/master/src/main/java/example
-       
-     Once you've covered that if you have more questions look at Zorbage's
-     extensive test code at:
-       
-       https://github.com/bdezonia/zorbage/tree/master/src/test/java/nom/bdezonia/zorbage
-       
-     To see a few small stand alone programs have a look here:
-     
-       https://github.com/bdezonia/zorbage/tree/master/example
-  )
+  For some overviews see:
 
-Using Zorbage you can:
+    https://github.com/bdezonia/zorbage/tree/master/src/main/java/example
+
+  Once you've covered that if you have more questions look at Zorbage's
+    extensive test code at:
+
+    https://github.com/bdezonia/zorbage/tree/master/src/test/java/nom/bdezonia/zorbage
+
+  To see a few small stand alone programs have a look here:
+
+    https://github.com/bdezonia/zorbage/tree/master/example
+
+Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
 
   Define multidimensional data sets with flexible out of bounds data
     handling procedures.
