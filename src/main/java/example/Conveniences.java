@@ -148,12 +148,15 @@ class Conveniences {
 
 	void example6() {
 		
-		int sz = 43;
+		int sz = 4;
 		
+		// assume it equals [1,2,3,4]
 		IndexedDataSource<UnsignedInt12Member> aList = ArrayStorage.allocate(sz, G.UINT12.construct());
 		
+		// assume it equals [-5,-6,-7,-8]
 		IndexedDataSource<SignedInt14Member> bList = ArrayStorage.allocate(sz, G.INT14.construct());
 		
+		// assume it equals [22.0, 23.0, 24.0, 25.0]
 		IndexedDataSource<Float64Member> cList = ArrayStorage.allocate(sz, G.DBL.construct());
 		
 		Tuple3Algebra<UnsignedInt12Algebra,UnsignedInt12Member,SignedInt14Algebra,SignedInt14Member,Float64Algebra,Float64Member> algebra =
@@ -164,6 +167,8 @@ class Conveniences {
 
 		Zip.three(G.UINT12, G.INT14, G.DBL, aList, bList, cList, tupleList);
 		
+		// tuple list = [ (1,-5,22.0), (2,-6,23.0), (3,-7,24.0), (4,-8,25.0) ]
+		
 		IndexedDataSource<UnsignedInt12Member> xList = ArrayStorage.allocate(sz, G.UINT12.construct());
 		
 		IndexedDataSource<SignedInt14Member> yList = ArrayStorage.allocate(sz, G.INT14.construct());
@@ -172,6 +177,9 @@ class Conveniences {
 		
 		Unzip.three(G.UINT12, G.INT14, G.DBL, tupleList, xList, yList, zList);
 
+		// xlist = [1,2,3,4]
+		// ylist = [-5,-6,-7,-8]
+		// zlist = [22.0, 23.0, 24.0, 25.0]
 	}
 
 	// CartesianProduct: create an interleaved data set from two input data sets. The lists
