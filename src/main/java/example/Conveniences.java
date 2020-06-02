@@ -167,7 +167,7 @@ class Conveniences {
 
 		Zip.three(G.UINT12, G.INT14, G.DBL, aList, bList, cList, tupleList);
 		
-		// tuple list = [ (1,-5,22.0), (2,-6,23.0), (3,-7,24.0), (4,-8,25.0) ]
+		// tupleList = [ (1,-5,22.0), (2,-6,23.0), (3,-7,24.0), (4,-8,25.0) ]
 		
 		IndexedDataSource<UnsignedInt12Member> xList = ArrayStorage.allocate(sz, G.UINT12.construct());
 		
