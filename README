@@ -212,6 +212,11 @@ How to include zorbage in a different build system
   for instructions on how to reference zorbage in build systems such as
   Gradle or others.
 
+Acknowledgements
+
+  Thank you Dr. Pepper for your timely and generous contrributions to the
+  project. Zorbage would not be the same without you.
+
 Partial bibliography
 
   Books:
