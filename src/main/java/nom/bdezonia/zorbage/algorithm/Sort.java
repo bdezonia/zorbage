@@ -71,8 +71,8 @@ public class Sort {
 		void qsort(T alg, Function2<Boolean,U,U> compare, long left, long right, IndexedDataSource<U> storage)
 	{
 		if (left < right) {
-			// small list?
-			if (right - left < 6) {
+			// small list? 20 was determined optimal after many test runs
+			if (right - left <= 20) {
 				InsertionSort.compute(alg, compare, storage, left, right);
 			}
 			else {
