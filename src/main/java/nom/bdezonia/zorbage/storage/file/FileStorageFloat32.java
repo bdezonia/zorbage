@@ -208,7 +208,7 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 				}
 				int idx = (int)(index % elementsPerPage);
 				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.putDouble(idx*elementByteSize + i*4, tmpArray[i]);
+					buffer.putFloat(idx*elementByteSize + i*4, tmpArray[i]);
 				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
