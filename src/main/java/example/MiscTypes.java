@@ -240,7 +240,7 @@ class MiscTypes {
 		G.ARGB.isNotEqual();
 		G.ARGB.isZero();
 		G.ARGB.minBound();  // (0,0,0,0)
-		G.ARGB.maxBound();  // (0,255,255,255)
+		G.ARGB.maxBound();  // (255,255,255,255)
 	}
 
 }
