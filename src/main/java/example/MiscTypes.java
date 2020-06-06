@@ -1,5 +1,246 @@
-// misc types
-//   rational
-//   point
-//   boolean
-//   rgb and argb
+package example;
+
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.point.Point;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.rgb.ArgbMember;
+import nom.bdezonia.zorbage.type.rgb.RgbMember;
+
+class MiscTypes {
+	
+	// Zorbage supports a few types that are neither integers nor float derived.
+
+	// Rational numbers are supported by Zorbage. They lie somewhere between an integer and
+	// a real. They are unlimited in their size and their decimal places of accuracy.
+	
+	void example1() {
+		
+		RationalMember frac = new RationalMember(52, 4007);  // 52/4007
+		
+		// java operations
+		
+		frac.equals(frac);
+		frac.hashCode();
+		frac.toString();
+		
+		// construction
+		
+		G.RAT.construct();
+		G.RAT.construct(frac);
+		G.RAT.construct("4.25");
+
+		// set to zero or 1
+		
+		G.RAT.zero();
+		G.RAT.unity();
+
+		// basic operations
+		
+		G.RAT.assign();
+		G.RAT.add();
+		G.RAT.subtract();
+		G.RAT.multiply();
+		G.RAT.divide();
+		G.RAT.div();
+		G.RAT.mod();
+		G.RAT.divMod();
+		G.RAT.power();
+		G.RAT.abs();
+		G.RAT.invert();
+		G.RAT.negate();
+		G.RAT.norm();
+		G.RAT.within();
+
+		// comparisons
+		
+		G.RAT.compare();
+		G.RAT.signum();
+		G.RAT.isEqual();
+		G.RAT.isGreater();
+		G.RAT.isGreaterEqual();
+		G.RAT.isLess();
+		G.RAT.isLessEqual();
+		G.RAT.isNotEqual();
+		G.RAT.isZero();
+		G.RAT.max();
+		G.RAT.min();
+		
+		// scaling
+		
+		G.RAT.scale();
+		G.RAT.scaleByHighPrec();
+		G.RAT.scaleByRational();
+	}
+	
+	// Zorbage supports a real n-dimensional Point type. The components are doubles.
+	
+	@SuppressWarnings("unused")
+	void example() {
+	
+		// 3d point
+		
+		Point pt = new Point(3);
+		
+		// Allocate 100 of them. Note the pt passed to allocator determines the dimensionality
+		// of all allocated points in the returned list.
+		
+		IndexedDataSource<Point> points = nom.bdezonia.zorbage.storage.Storage.allocate(100, pt);
+
+		// java operations
+		
+		pt.equals(pt);
+		pt.hashCode();
+		pt.toString();
+		
+		// construction
+		
+		G.POINT.construct();
+		G.POINT.construct(pt);
+		G.POINT.construct("something"); // might not actually be supported
+
+		// basic operations
+		
+		G.POINT.assign();
+		G.POINT.add();
+		G.POINT.subtract();
+		G.POINT.negate();
+		G.POINT.zero();    // set to zero
+		G.POINT.random();  // set the coords of a point to a bunch of random doubles
+		G.POINT.within();  // within a tolerance of another point
+
+		// comparison
+		
+		G.POINT.isEqual();
+		G.POINT.isNotEqual();
+		G.POINT.isZero();
+		
+		// scaling
+		
+		G.POINT.scale();
+		G.POINT.scaleByDouble();
+		G.POINT.scaleByHighPrec();
+		G.POINT.scaleByRational();
+	}
+
+	// Zorbage supports Boolean values.
+	
+	void example3() {
+		
+		BooleanMember bool = new BooleanMember(true);
+		
+		// java operations
+		
+		bool.equals(bool);
+		bool.hashCode();
+		bool.toString();
+		
+		// construction
+		
+		G.BOOL.construct();
+		G.BOOL.construct(bool);
+		G.BOOL.construct("1");
+		G.BOOL.construct("0");
+
+		// basic operations
+		
+		G.BOOL.assign();
+		G.BOOL.unity();
+		G.BOOL.zero();
+		G.BOOL.random();
+		G.BOOL.ternary();
+		
+		// comparisons
+
+		G.BOOL.isEqual();
+		G.BOOL.isGreater();
+		G.BOOL.isGreaterEqual();
+		G.BOOL.isLess();
+		G.BOOL.isLessEqual();
+		G.BOOL.isNotEqual();
+		G.BOOL.isZero();
+		G.BOOL.compare();
+		G.BOOL.signum();
+		G.BOOL.min();
+		G.BOOL.max();
+		G.BOOL.minBound();
+		G.BOOL.maxBound();
+		
+		// logical operations
+		G.BOOL.logicalAnd();
+		G.BOOL.logicalAndNot();
+		G.BOOL.logicalNot();
+		G.BOOL.logicalOr();
+		G.BOOL.logicalXor();
+	}
+
+	// Zorbage supports RGB color values
+	
+	void example4() {
+	
+		RgbMember color = new RgbMember(255, 0, 0);
+		
+		// java operations
+		
+		color.equals(color);
+		color.hashCode();
+		color.toString();
+
+		// comparisons
+
+		G.RGB.construct();
+		G.RGB.construct(color);
+		G.RGB.construct("something");  // this may not actually be supported yet
+
+		// basic operations
+		
+		G.RGB.assign();
+		G.RGB.blend();
+		G.RGB.random();
+		G.RGB.zero();
+		
+		// comparisons
+		
+		G.RGB.isEqual();
+		G.RGB.isNotEqual();
+		G.RGB.isZero();
+		G.RGB.minBound();
+		G.RGB.maxBound();
+	}
+
+	// Zorbage supports ARGB color values
+	
+	void example5() {
+	
+		ArgbMember color = new ArgbMember(0, 255, 0, 0);
+		
+		// java operations
+		
+		color.equals(color);
+		color.hashCode();
+		color.toString();
+
+		// comparisons
+
+		G.ARGB.construct();
+		G.ARGB.construct(color);
+		G.ARGB.construct("something");  // this may not actually be supported yet
+
+		// basic operations
+		
+		G.ARGB.assign();
+		G.ARGB.blend();
+		G.ARGB.random();
+		G.ARGB.zero();
+		
+		// comparisons
+		
+		G.ARGB.isEqual();
+		G.ARGB.isNotEqual();
+		G.ARGB.isZero();
+		G.ARGB.minBound();
+		G.ARGB.maxBound();
+	}
+
+}
