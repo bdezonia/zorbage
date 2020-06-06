@@ -51,7 +51,7 @@ class MiscTypes {
 		G.RAT.invert();
 		G.RAT.negate();
 		G.RAT.norm();
-		G.RAT.within();
+		G.RAT.within();  // is one rational within a tolerance of another rational
 
 		// comparisons
 		
@@ -64,8 +64,8 @@ class MiscTypes {
 		G.RAT.isLessEqual();
 		G.RAT.isNotEqual();
 		G.RAT.isZero();
-		G.RAT.max();
-		G.RAT.min();
+		G.RAT.min();  // return the minimum of two values
+		G.RAT.max();  // return the maximum of two values
 		
 		// scaling
 		
@@ -77,7 +77,7 @@ class MiscTypes {
 	// Zorbage supports a real n-dimensional Point type. The components are doubles.
 	
 	@SuppressWarnings("unused")
-	void example() {
+	void example2() {
 	
 		// 3d point
 		
@@ -102,13 +102,13 @@ class MiscTypes {
 
 		// basic operations
 		
-		G.POINT.assign();
-		G.POINT.add();
-		G.POINT.subtract();
-		G.POINT.negate();
-		G.POINT.zero();    // set to zero
-		G.POINT.random();  // set the coords of a point to a bunch of random doubles
-		G.POINT.within();  // within a tolerance of another point
+		G.POINT.assign();   // set b = a
+		G.POINT.add();      // set c = a + b
+		G.POINT.subtract(); // set c = a - b
+		G.POINT.negate();   // set b = -a
+		G.POINT.zero();     // set to zero
+		G.POINT.random();   // set the coords of a point to a bunch of random doubles
+		G.POINT.within();   // within a tolerance of another point
 
 		// comparison
 		
@@ -140,16 +140,16 @@ class MiscTypes {
 		
 		G.BOOL.construct();
 		G.BOOL.construct(bool);
-		G.BOOL.construct("1");
-		G.BOOL.construct("0");
+		G.BOOL.construct("1");  // also "true"  or "T" or "+"
+		G.BOOL.construct("0");  // also "false" or "F" or "-"
 
 		// basic operations
 		
-		G.BOOL.assign();
-		G.BOOL.unity();
-		G.BOOL.zero();
-		G.BOOL.random();
-		G.BOOL.ternary();
+		G.BOOL.assign();   // set b = a
+		G.BOOL.unity();    // set to one  / true
+		G.BOOL.zero();     // set to zero / false
+		G.BOOL.random();   // set to a random value
+		G.BOOL.ternary();  // emulate the (a ? b : c) ternary operator from C
 		
 		// comparisons
 
@@ -162,10 +162,10 @@ class MiscTypes {
 		G.BOOL.isZero();
 		G.BOOL.compare();
 		G.BOOL.signum();
-		G.BOOL.min();
-		G.BOOL.max();
-		G.BOOL.minBound();
-		G.BOOL.maxBound();
+		G.BOOL.min();       // return the minimum of two values
+		G.BOOL.max();       // return the maximum of two values
+		G.BOOL.minBound();  // 0 / false
+		G.BOOL.maxBound();  // 1 / true
 		
 		// logical operations
 		G.BOOL.logicalAnd();
@@ -187,7 +187,7 @@ class MiscTypes {
 		color.hashCode();
 		color.toString();
 
-		// comparisons
+		// construction
 
 		G.RGB.construct();
 		G.RGB.construct(color);
@@ -195,18 +195,18 @@ class MiscTypes {
 
 		// basic operations
 		
-		G.RGB.assign();
-		G.RGB.blend();
-		G.RGB.random();
-		G.RGB.zero();
+		G.RGB.assign();  // set b = a
+		G.RGB.blend();   // blend two colors into a third
+		G.RGB.random();  // set to a random color
+		G.RGB.zero();    // set to zero (minBound)
 		
 		// comparisons
 		
 		G.RGB.isEqual();
 		G.RGB.isNotEqual();
 		G.RGB.isZero();
-		G.RGB.minBound();
-		G.RGB.maxBound();
+		G.RGB.minBound();  // (0,0,0)
+		G.RGB.maxBound();  // (255,255,255)
 	}
 
 	// Zorbage supports ARGB color values
@@ -221,7 +221,7 @@ class MiscTypes {
 		color.hashCode();
 		color.toString();
 
-		// comparisons
+		// construction
 
 		G.ARGB.construct();
 		G.ARGB.construct(color);
@@ -229,18 +229,18 @@ class MiscTypes {
 
 		// basic operations
 		
-		G.ARGB.assign();
-		G.ARGB.blend();
-		G.ARGB.random();
-		G.ARGB.zero();
+		G.ARGB.assign();  // set b = a
+		G.ARGB.blend();   // blend two colors into a third
+		G.ARGB.random();  // set to a random color
+		G.ARGB.zero();    // set to zero (minBound)
 		
 		// comparisons
 		
 		G.ARGB.isEqual();
 		G.ARGB.isNotEqual();
 		G.ARGB.isZero();
-		G.ARGB.minBound();
-		G.ARGB.maxBound();
+		G.ARGB.minBound();  // (0,0,0,0)
+		G.ARGB.maxBound();  // (0,255,255,255)
 	}
 
 }
