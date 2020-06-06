@@ -26,15 +26,192 @@
  */
 package example;
 
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.ApproxStdDev;
+import nom.bdezonia.zorbage.algorithm.ApproxSumOfSquaredDeviationsWithCount;
+import nom.bdezonia.zorbage.algorithm.ApproxVariance;
+import nom.bdezonia.zorbage.algorithm.MaxElement;
+import nom.bdezonia.zorbage.algorithm.Mean;
+import nom.bdezonia.zorbage.algorithm.Median;
+import nom.bdezonia.zorbage.algorithm.MedianI;
+import nom.bdezonia.zorbage.algorithm.MinElement;
+import nom.bdezonia.zorbage.algorithm.MinMaxElement;
+import nom.bdezonia.zorbage.algorithm.NanMaxElement;
+import nom.bdezonia.zorbage.algorithm.NanMean;
+import nom.bdezonia.zorbage.algorithm.NanMedian;
+import nom.bdezonia.zorbage.algorithm.NanMinElement;
+import nom.bdezonia.zorbage.algorithm.NanMinMaxElement;
+import nom.bdezonia.zorbage.algorithm.NanStdDev;
+import nom.bdezonia.zorbage.algorithm.NanSum;
+import nom.bdezonia.zorbage.algorithm.NanSumWithCount;
+import nom.bdezonia.zorbage.algorithm.NanVariance;
+import nom.bdezonia.zorbage.algorithm.Product;
+import nom.bdezonia.zorbage.algorithm.StdDev;
+import nom.bdezonia.zorbage.algorithm.Sum;
+import nom.bdezonia.zorbage.algorithm.SumWithCount;
+import nom.bdezonia.zorbage.algorithm.Variance;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
+import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+
 /**
  * @author Barry DeZonia
  */
 class Statistics {
 
-	// sum mean median min max variance stddev
-	// also the NaN versions of all these
-	// also the approximations to variance and stddev
-	// also calcing in high precision
+	/*
+	 * As of the writing of this example Zorbage's statistical methods are pretty basic.
+	 * There are plans to add more as collaborators request thing they need related to
+	 * their projects.
+	 */
 	
+	// Zorbage can calculate basic statistics from lists of numbers. The numbers can
+	// be of any of the many types supported in Zorbage.
 	
+	void example1() {
+		
+		IndexedDataSource<Float64Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+		
+		Float64Member result1 = G.DBL.construct();
+
+		Float64Member result2 = G.DBL.construct();
+		
+		Mean.compute(G.DBL, data, result1);
+		
+		Median.compute(G.DBL, data, result2);
+		
+		// This method is for calculating the nearest integer to the median value for
+		//   a list of integral data types. It will work for floating point lists too.
+		MedianI.compute(G.DBL, data, result1);
+		
+		StdDev.compute(G.DBL, data, result1);
+		
+		Variance.compute(G.DBL, data, result1);
+		
+		Sum.compute(G.DBL, data, result1);
+		
+		SumWithCount.compute(G.DBL, data, result1, result2);
+		
+		Product.compute(G.DBL, data, result1);
+		
+		MinElement.compute(G.DBL, data, result1);
+		
+		MaxElement.compute(G.DBL, data, result2);
+		
+		MinMaxElement.compute(G.DBL, data, result1, result2);
+	}
+	
+	/*
+	 * One of the aspects of the above listed routines is that they are naive algorithms
+	 * that compute the mathematically correct result. In practice this can lead to
+	 * overflows, underflows, and rounding errors.
+	 * 
+	 * One way to avoid these issues is to compute the values using high precision
+	 * floating point numbers in the calculations. These floating point numbers do not
+	 * overflow, underflow, or lose precision. You can wrap any list in a filter that
+	 * converts values read from a list into a high precision float. One can use the
+	 * same naive algorithms and guarantee you will get the right results.
+	 * 
+	 */
+	
+	void example2() {
+		
+		IndexedDataSource<Float64Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+		
+		IndexedDataSource<HighPrecisionMember> filtered =
+				new ReadOnlyHighPrecisionDataSource<Float64Algebra, Float64Member>(G.DBL, data);
+		
+		HighPrecisionMember result1 = G.HP.construct();
+
+		HighPrecisionMember result2 = G.HP.construct();
+		
+		Mean.compute(G.HP, filtered, result1);
+		
+		Median.compute(G.HP, filtered, result2);
+		
+		StdDev.compute(G.HP, filtered, result1);
+		
+		Variance.compute(G.HP, filtered, result1);
+		
+		Sum.compute(G.HP, filtered, result1);
+		
+		SumWithCount.compute(G.HP, filtered, result1, result2);
+		
+		Product.compute(G.HP, filtered, result1);
+		
+		MinElement.compute(G.HP, filtered, result1);
+		
+		MaxElement.compute(G.HP, filtered, result2);
+		
+		MinMaxElement.compute(G.HP, filtered, result1, result2);
+	}
+
+	/*
+	 * The high precision approach is useful when you have a large dataset. It does
+	 * use a few more cpu cycles to calculate. If cpu cycles are at a premium you can
+	 * use the "approximate" algorithms. These algorithms are written to avoid overflows
+	 * while working in the native type. It's faster but the results are only approximate.
+	 * They are plenty accurate but they may differ in the last places and may be
+	 * significantly off for numbers whose square can exceed floating point limits.
+	 */
+	
+	void example3() {
+
+		IndexedDataSource<Float64Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+		
+		Float64Member result1 = G.DBL.construct();
+
+		Float64Member result2 = G.DBL.construct();
+		
+		Float64Member avg = G.DBL.construct();
+
+		Mean.compute(G.DBL, data, avg);
+		
+		ApproxStdDev.compute(G.DBL, data, result1);
+		
+		ApproxVariance.compute(G.DBL, data, result2);
+		
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, result1, result2);
+	}
+
+	/*
+	 * Finally Zorbage provides methods that will calculate statistics on datasets that
+	 * include NaN values. Most of the algorithms take no more space than the naive
+	 * algorithms. They basically ignore NaN values and calculate the statistics upon
+	 * the remaining data.
+	 */
+	
+	void example4() {
+
+		IndexedDataSource<Float64Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+		
+		Float64Member result1 = G.DBL.construct();
+
+		Float64Member result2 = G.DBL.construct();
+		
+		NanMean.compute(G.DBL, data, result1);
+		
+		NanMedian.compute(G.DBL, data, result1);
+		
+		NanStdDev.compute(G.DBL, data, result1);
+		
+		NanVariance.compute(G.DBL, data, result1);
+		
+		NanSum.compute(G.DBL, data, result1);
+		
+		NanSumWithCount.compute(G.DBL, data, result1, result2);
+		
+		NanMinElement.compute(G.DBL, data, result1);
+		
+		NanMaxElement.compute(G.DBL, data, result2);
+		
+		NanMinMaxElement.compute(G.DBL, data, result1, result2);
+		
+	}
 }
