@@ -1,5 +1,10 @@
 Zorbage: algebraic data types and algorithms for use in numeric processing
 
+(Note: I am looking to help some lab in remote sensing or other big data
+ consumer by taking your slow analyses in Python or R or Matlab,
+ reimplementing them to work with Zorbage, and iterating until the
+ Zorbage implementation can outperform your current solutions)
+
 Goals:
   - provide a framework for reusable numeric algorithms
   - support numeric computing in Java in an efficient manner
@@ -77,7 +82,8 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
   
   Data access is standardized as if everything is an array. Arrays can be
     concatenated, trimmed, subsampled, masked, padded, readonly, as well as
-    other abstractions.
+    other abstractions. Arrays can be adapted to be accessible as
+    n-dimensional data structures.
       
   Array storage can be in native types (for speed of access) or for many
     integer types they can be bit encoded (to save space).
@@ -101,6 +107,7 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
     - Convolutions and Correlations
     - Resampling algorithms
     - LU Decomposition and LU Solving (simultaneous equation solving)
+    - Basic statistical functions
     - Most C++ STL algorithms replicated
     - Numerous parallel algorithms are provided for quickly processing data.
   
@@ -145,7 +152,9 @@ Zorbage breaks Java barriers
   - in Zorbage "arrays" are indexed by 64-bit long integers rather
       than 32-bit integers. Relatedly data lists sizes can reach
       2^63.
-    
+
+  - supports multidimensional arrays
+      
   - breaks the limitation to integer types being in byte aligned sizes
     
   - supports unsigned numbers
