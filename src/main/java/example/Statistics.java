@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.NanStdDev;
 import nom.bdezonia.zorbage.algorithm.NanSum;
 import nom.bdezonia.zorbage.algorithm.NanSumWithCount;
 import nom.bdezonia.zorbage.algorithm.NanVariance;
+import nom.bdezonia.zorbage.algorithm.NonNanValues;
 import nom.bdezonia.zorbage.algorithm.Product;
 import nom.bdezonia.zorbage.algorithm.StdDev;
 import nom.bdezonia.zorbage.algorithm.Sum;
@@ -52,7 +53,6 @@ import nom.bdezonia.zorbage.algorithm.SumWithCount;
 import nom.bdezonia.zorbage.algorithm.Variance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
@@ -123,7 +123,7 @@ class Statistics {
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
 		
 		IndexedDataSource<HighPrecisionMember> filtered =
-				new ReadOnlyHighPrecisionDataSource<Float64Algebra, Float64Member>(G.DBL, data);
+				new ReadOnlyHighPrecisionDataSource<>(G.DBL, data);
 		
 		HighPrecisionMember result1 = G.HP.construct();
 
@@ -213,5 +213,36 @@ class Statistics {
 		
 		NanMinMaxElement.compute(G.DBL, data, result1, result2);
 		
+	}
+	
+	/*
+	 * Those NaN oriented algorithms use the naive statistical algorithms. You can use
+	 * the method NonNanValues to get a list of values that are not NaN and then pass
+	 * them to a naive or approximate algorithms and even convert them to high precision
+	 * floats if you need. This takes some more memory to do but you have the flexibility
+	 * you might want.
+	 */
+	
+	void example5() {
+		
+		IndexedDataSource<Float64Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+		
+		IndexedDataSource<Float64Member> nonNan = NonNanValues.compute(G.DBL, data);
+		
+		// find an approximate variance value of the nonNan data
+		
+		Float64Member result1 = G.DBL.construct();
+
+		ApproxVariance.compute(G.DBL, nonNan, result1);
+
+		// find an exact variance value of the nonNan data
+		
+		IndexedDataSource<HighPrecisionMember> hiPrec =
+				new ReadOnlyHighPrecisionDataSource<>(G.DBL, nonNan);
+		
+		HighPrecisionMember result2 = G.HP.construct();
+		
+		Variance.compute(G.HP, hiPrec, result2);
 	}
 }
