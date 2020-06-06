@@ -28,14 +28,41 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
 public class InsertionSort {
 
 	/**
 	 * 
-	 * @param <T>
-	 * @param <U>
+	 * @param alg
+	 * @param storage
+	 */
+	public static <T extends Algebra<T,U> & Ordered<U>, U>
+		void compute(T alg, IndexedDataSource<U> storage)
+	{
+		compute(alg, alg.isLess(), storage);
+	}
+	
+	/**
+	 * 
+	 * @param alg
+	 * @param isLeftOf
+	 * @param storage
+	 */
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, Function2<Boolean,U,U> isLeftOf, IndexedDataSource<U> storage)
+	{
+		compute(alg, isLeftOf, storage, 0, storage.size()-1);
+	}
+
+	/**
+	 * 
 	 * @param alg
 	 * @param isLeftOf
 	 * @param storage
