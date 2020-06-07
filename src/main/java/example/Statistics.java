@@ -164,19 +164,19 @@ class Statistics {
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
 		
-		Float64Member result1 = G.DBL.construct();
+		Float64Member result = G.DBL.construct();
 
-		Float64Member result2 = G.DBL.construct();
+		ApproxStdDev.compute(G.DBL, data, result);
+		
+		ApproxVariance.compute(G.DBL, data, result);
 		
 		Float64Member avg = G.DBL.construct();
 
-		Mean.compute(G.DBL, data, avg);
+		Float64Member sumSq = G.DBL.construct();
+
+		Float64Member count = G.DBL.construct();
 		
-		ApproxStdDev.compute(G.DBL, data, result1);
-		
-		ApproxVariance.compute(G.DBL, data, result2);
-		
-		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, result1, result2);
+		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSq, count);
 	}
 
 	/*
