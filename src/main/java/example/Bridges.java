@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.type.helper.NumberRModuleBridge;
 /**
  * @author Barry DeZonia
  */
-public class Bridges {
+class Bridges {
 
 	/*
 	 * Zorbage delineates many data types walled off in designations like NumberMember or

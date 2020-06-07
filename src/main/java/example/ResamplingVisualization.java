@@ -29,7 +29,7 @@ package example;
 /**
  * @author Barry DeZonia
  */
-public class ResamplingVisualization {
+class ResamplingVisualization {
 
 	/*
 	 * Viewing the results of applying Zorbage's resampling algorithms on an image you

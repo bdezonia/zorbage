@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
+// TODO - discuss the Complex constructor helpers
+
 /**
  * @author Barry DeZonia
  */

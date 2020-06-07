@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 // What are Quaternions? See https://en.wikipedia.org/wiki/Quaternion
 
+//TODO - discuss the Quat constructor helpers
+
 /**
  * @author Barry DeZonia
  */

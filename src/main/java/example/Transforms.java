@@ -29,7 +29,7 @@ package example;
 /**
  * @author Barry DeZonia
  */
-public class Transforms {
+class Transforms {
 
 	// inplace
 	// fixed

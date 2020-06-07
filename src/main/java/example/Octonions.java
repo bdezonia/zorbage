@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 // What are Octonions? See https://en.wikipedia.org/wiki/Octonion
 
+//TODO - discuss the Oct constructor helpers
+
 /**
  * @author Barry DeZonia
  */
