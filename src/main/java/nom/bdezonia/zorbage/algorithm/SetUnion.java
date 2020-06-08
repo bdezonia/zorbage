@@ -55,7 +55,8 @@ public class SetUnion {
 	{
 		IndexedDataSource<U> combined = new ConcatenatedDataSource<>(a, b);
 		IndexedDataSource<U> tmpList = DeepCopy.compute(alg, combined);
-		Sort.compute(alg, tmpList);
+		// for now avoiding Sort because it is susceptible to quicksort worst case performance
+		StableSort.compute(alg, tmpList);
 		return Unique.compute(alg, tmpList);
 	}
 	

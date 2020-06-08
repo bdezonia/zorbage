@@ -54,7 +54,8 @@ public class MedianValues {
 		// this method needs to do a deep copy because it will sort the data. So we
 		// avoid sorting original data.
 		IndexedDataSource<U> localStorage = DeepCopy.compute(alg, storage);
-		Sort.compute(alg, localStorage);
+		// for now avoiding Sort because it is susceptible to quicksort worst case performance
+		StableSort.compute(alg, localStorage);
 		long localStorageSize = localStorage.size();
 		if (localStorageSize == 0) {
 			U zero = alg.construct();
