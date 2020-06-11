@@ -69,6 +69,10 @@ public final class UnsignedInt64Member
 		setV(value);
 	}
 	
+	public UnsignedInt64Member(long value) {
+		setV(value);
+	}
+	
 	public UnsignedInt64Member(UnsignedInt64Member value) {
 		set(value);
 	}
@@ -87,6 +91,10 @@ public final class UnsignedInt64Member
 
 	public void setV(BigInteger val) {
 		v = val.longValue();
+	}
+	
+	public void setV(long val) {
+		v = val;
 	}
 	
 	@Override
