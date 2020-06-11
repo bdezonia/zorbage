@@ -193,6 +193,11 @@ Zorbage is flexible
   - the n-dimensional data sets can use the equational language to
       carefully and powerfully calibrate their axes.
 
+Is there a way to get data into a Zorbage backed application?
+
+  Code has been written to load NetCDF data into Zorbage structures.
+  You can find it here: https://github.com/bdezonia/zorbage-netcdf
+
 Programming notes
 
   Java 8 info
