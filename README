@@ -198,6 +198,9 @@ Is there a way to get data into a Zorbage backed application?
   Code has been written to load NetCDF data into Zorbage structures.
   You can find it here: https://github.com/bdezonia/zorbage-netcdf
 
+  Code has been written to load Gdal data into Zorbage structures.
+  You can find it here: https://github.com/bdezonia/zorbage-gdal
+
 Programming notes
 
   Java 8 info
