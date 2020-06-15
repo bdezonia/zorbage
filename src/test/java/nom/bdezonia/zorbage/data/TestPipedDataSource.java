@@ -24,12 +24,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
@@ -51,7 +52,7 @@ public class TestPipedDataSource {
 		idx.set(1,1);
 		idx.set(2,1);
 		IndexedDataSource<SignedInt32Member> data = ArrayStorage.allocateInts(new int[24]);
-		MultiDimDataSource<SignedInt32Member> md = new NdData<>(dims, data);
+		DimensionedDataSource<SignedInt32Member> md = new NdData<>(dims, data);
 		IndexedDataSource<SignedInt32Member> p = md.piped(1, idx);
 		assertEquals(3, p.size());
 		for (long i = 0; i < p.size(); i++) {

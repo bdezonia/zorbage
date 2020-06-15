@@ -42,10 +42,10 @@ import nom.bdezonia.zorbage.algorithm.ParallelTransform4;
 import nom.bdezonia.zorbage.algorithm.ResampleAveragedCubics;
 import nom.bdezonia.zorbage.algorithm.ResampleAveragedLinears;
 import nom.bdezonia.zorbage.algorithm.ResampleNearestNeighbor;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
 import nom.bdezonia.zorbage.oob.nd.MirrorNdOOB;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.procedure.Procedure2;
@@ -277,7 +277,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
 		
 		// fill it
 		
@@ -285,16 +285,16 @@ class ParallelProcessing {
 		
 		// pad it so that out of bounds accesses will still produce a value. Convolution will always poke out of bounds.
 		
-		MultiDimDataSource<Float64Member> padded = 
-				new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, ds, proc);
+		DimensionedDataSource<Float64Member> padded = 
+				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, ds, proc);
 		
 		// get ready to store result
 		
-		MultiDimDataSource<Float64Member> result = MultiDimStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> result = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
 		
 		// create the convolution kernel to use to combine neighboring values with
 		
-		MultiDimDataSource<Float64Member> kernel = MultiDimStorage.allocate(new long[] {3,3,3}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> kernel = DimensionedStorage.allocate(new long[] {3,3,3}, G.DBL.construct());
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		Float64Member value = G.DBL.construct();
 
@@ -337,7 +337,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
 		
 		// fill it
 		
@@ -345,16 +345,16 @@ class ParallelProcessing {
 		
 		// pad it so that out of bounds accesses will still produce a value. Correlation will always poke out of bounds.
 		
-		MultiDimDataSource<Float64Member> padded = 
-				new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, ds, proc);
+		DimensionedDataSource<Float64Member> padded = 
+				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, ds, proc);
 		
 		// get ready to store result
 		
-		MultiDimDataSource<Float64Member> result = MultiDimStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> result = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
 		
 		// create the correlation kernel to use to combine neighboring values with
 		
-		MultiDimDataSource<Float64Member> kernel = MultiDimStorage.allocate(new long[] {3,3,3}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> kernel = DimensionedStorage.allocate(new long[] {3,3,3}, G.DBL.construct());
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		Float64Member value = G.DBL.construct();
 
@@ -383,16 +383,16 @@ class ParallelProcessing {
 
 	// ResampleNearestNeighbor : resample a dataset to a different resolution using nearest neighbor interpolation
 	
-	MultiDimDataSource<Float64Member> example11() {
+	DimensionedDataSource<Float64Member> example11() {
 		
 		// create the dataset to read
 		
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
 
 		// pad the dataset so out of bounds accesses don't fail
 		
-		MultiDimDataSource<Float64Member> padded =
-				new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, ds, new MirrorNdOOB<>(ds));
+		DimensionedDataSource<Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, ds, new MirrorNdOOB<>(ds));
 		
 		// fill it with random data
 		
@@ -405,16 +405,16 @@ class ParallelProcessing {
 	
 	// ResampleAveragedLinears : resample a dataset to a different resolution using linear interpolation
 	
-	MultiDimDataSource<Float64Member> example12() {
+	DimensionedDataSource<Float64Member> example12() {
 		
 		// create the dataset to read
 		
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
 
 		// pad the dataset so out of bounds accesses don't fail
 		
-		MultiDimDataSource<Float64Member> padded =
-				new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, ds, new MirrorNdOOB<>(ds));
+		DimensionedDataSource<Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, ds, new MirrorNdOOB<>(ds));
 		
 		// fill it with random data
 		
@@ -427,16 +427,16 @@ class ParallelProcessing {
 	
 	// ResampleAveragedCubics : resample a dataset to a different resolution using cubic interpolation
 	
-	MultiDimDataSource<Float64Member> example13() {
+	DimensionedDataSource<Float64Member> example13() {
 		
 		// create the dataset to read
 		
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
 
 		// pad the dataset so out of bounds accesses don't fail
 		
-		MultiDimDataSource<Float64Member> padded =
-				new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, ds, new MirrorNdOOB<>(ds));
+		DimensionedDataSource<Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, ds, new MirrorNdOOB<>(ds));
 		
 		// fill it with random data
 		

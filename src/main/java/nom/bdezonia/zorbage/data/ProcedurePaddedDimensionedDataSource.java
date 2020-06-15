@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -41,23 +41,23 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
-	implements MultiDimDataSource<U>
+public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
+	implements DimensionedDataSource<U>
 {
 	private final T algebra;
-	private final MultiDimDataSource<U> md;
+	private final DimensionedDataSource<U> dd;
 	private final Procedure2<IntegerIndex,U> proc;
 	private final ThreadLocal<U> tmp;
 	
 	/**
 	 * 
 	 * @param alg
-	 * @param md
+	 * @param dd
 	 * @param proc
 	 */
-	public ProcedurePaddedMultiDimDataSource(T alg, MultiDimDataSource<U> md, Procedure2<IntegerIndex,U> proc) {
+	public ProcedurePaddedDimensionedDataSource(T alg, DimensionedDataSource<U> dd, Procedure2<IntegerIndex,U> proc) {
 		this.algebra = alg;
-		this.md = md;
+		this.dd = dd;
 		this.proc = proc;
 		this.tmp = new ThreadLocal<U>() {
 			@Override
@@ -69,113 +69,113 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 
 	@Override
 	public IndexedDataSource<U> rawData() {
-		return md.rawData();
+		return dd.rawData();
 	}
 
 	@Override
 	public int numDimensions() {
-		return md.numDimensions();
+		return dd.numDimensions();
 	}
 
 	@Override
 	public long dimension(int d) {
-		return md.dimension(d);
+		return dd.dimension(d);
 	}
 	
 	@Override
 	public long numElements() {
-		return md.numElements();
+		return dd.numElements();
 	}
 
 	@Override
 	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
-		return md.getAxis(i);
+		return dd.getAxis(i);
 	}
 	
 	@Override
 	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
-		md.setAxis(i, proc);
+		dd.setAxis(i, proc);
 	}
 	
 	@Override
 	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
-		return md.piped(dim, coord);
+		return dd.piped(dim, coord);
 	}
 	
 	@Override
 	public void set(IntegerIndex index, U value) {
-		if (md.oob(index)) {
+		if (dd.oob(index)) {
 			U t = tmp.get();
 			proc.call(index,t);
 			if (!algebra.isEqual().call(t,value))
 				throw new IllegalArgumentException("Cannot set out of bounds value in conflict with out of bounds procedure");
 		}
 		else {
-			md.set(index, value);
+			dd.set(index, value);
 		}
 	}
 	
 	public void get(IntegerIndex index, U value) {
-		if (md.oob(index)) {
+		if (dd.oob(index)) {
 			proc.call(index, value);
 		}
 		else {
-			md.get(index, value);
+			dd.get(index, value);
 		}
 	}
 
 	@Override
 	public void setSafe(IntegerIndex index, U value) {
-		md.setSafe(index, value);
+		dd.setSafe(index, value);
 	}
 
 	@Override
 	public void getSafe(IntegerIndex index, U value) {
-		md.getSafe(index, value);
+		dd.getSafe(index, value);
 	}
 
 	@Override
 	public boolean oob(IntegerIndex index) {
-		return md.oob(index);
+		return dd.oob(index);
 	}
 
 	@Override
 	public StorageConstruction storageType() {
-		return md.storageType();
+		return dd.storageType();
 	}
 	
 	@Override
 	public Map<String, String> metadata() {
-		return md.metadata();
+		return dd.metadata();
 	}
 
 	@Override
 	public String getAxisUnit(int i) {
-		return md.getAxisUnit(i);
+		return dd.getAxisUnit(i);
 	}
 
 	@Override
 	public String getAxisType(int i) {
-		return md.getAxisType(i);
+		return dd.getAxisType(i);
 	}
 
 	@Override
 	public void setAxisUnit(int i, String unit) {
-		md.setAxisUnit(i, unit);
+		dd.setAxisUnit(i, unit);
 	}
 
 	@Override
 	public void setAxisType(int i, String type) {
-		md.setAxisType(i, type);
+		dd.setAxisType(i, type);
 	}
 
 	@Override
 	public String getValueUnit() {
-		return md.getValueUnit();
+		return dd.getValueUnit();
 	}
 
 	@Override
 	public void setValueUnit(String unit) {
-		md.setValueUnit(unit);
+		dd.setValueUnit(unit);
 	}
 }

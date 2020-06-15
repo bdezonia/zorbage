@@ -29,10 +29,9 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
@@ -49,7 +48,7 @@ public class TestResampleAveragedLinears {
 	public void test1da() {
 		double tol = 0.000000000000001;
 		Float64Member value = G.DBL.construct();
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[]{10}, value);
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[]{10}, value);
 		RampFill.compute(G.DBL, ds.rawData());
 		Procedure2<IntegerIndex,Float64Member> proc =
 				new Procedure2<IntegerIndex, Float64Member>()
@@ -59,9 +58,9 @@ public class TestResampleAveragedLinears {
 				G.DBL.zero().call(b);
 			}
 		};
-		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
-		MultiDimDataSource<Float64Member> newDs = ResampleAveragedLinears.compute(G.DBL, new long[]{8}, padded);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra,Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.DBL, ds, proc);
+		DimensionedDataSource<Float64Member> newDs = ResampleAveragedLinears.compute(G.DBL, new long[]{8}, padded);
 		
 		assertEquals(8, newDs.dimension(0));
 
@@ -103,7 +102,7 @@ public class TestResampleAveragedLinears {
 	public void test1db() {
 		double tol = 0.000000000000001;
 		Float64Member value = G.DBL.construct();
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[]{8}, value);
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[]{8}, value);
 		RampFill.compute(G.DBL, ds.rawData());
 		Procedure2<IntegerIndex,Float64Member> proc =
 				new Procedure2<IntegerIndex, Float64Member>()
@@ -113,9 +112,9 @@ public class TestResampleAveragedLinears {
 				G.DBL.zero().call(b);
 			}
 		};
-		ProcedurePaddedMultiDimDataSource<Float64Algebra,Float64Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, proc);
-		MultiDimDataSource<Float64Member> newDs = ResampleAveragedLinears.compute(G.DBL, new long[]{10}, padded);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra,Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.DBL, ds, proc);
+		DimensionedDataSource<Float64Member> newDs = ResampleAveragedLinears.compute(G.DBL, new long[]{10}, padded);
 		
 		assertEquals(10, newDs.dimension(0));
 

@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.oob.nd;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class ZeroNdOOB<T extends Algebra<T,U>, U> implements Procedure2<IntegerI
 	 * @param alg
 	 * @param ds
 	 */
-	public ZeroNdOOB(T alg, MultiDimDataSource<U> ds) {
+	public ZeroNdOOB(T alg, DimensionedDataSource<U> ds) {
 		U zero = alg.construct();
 		oobProc = new ConstantNdOOB<T,U>(alg, ds, zero);
 	}

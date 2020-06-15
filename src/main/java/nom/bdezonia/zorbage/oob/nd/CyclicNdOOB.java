@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.oob.nd;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -37,14 +37,14 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  */
 public class CyclicNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
-	private final MultiDimDataSource<U> ds;
+	private final DimensionedDataSource<U> ds;
 	private final ThreadLocal<IntegerIndex> coord;
 
 	/**
 	 * 
 	 * @param d
 	 */
-	public CyclicNdOOB(MultiDimDataSource<U> d) {
+	public CyclicNdOOB(DimensionedDataSource<U> d) {
 		this.ds = d;
 		this.coord = new ThreadLocal<IntegerIndex>() {
 			@Override

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.storage.Storage;
@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class MultiDimStorage {
+public class DimensionedStorage {
 
 	/**
 	 * 
@@ -47,7 +47,7 @@ public class MultiDimStorage {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		MultiDimDataSource<U> allocate(long[] dims, U type)
+		DimensionedDataSource<U> allocate(long[] dims, U type)
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(numElements, type);
@@ -62,7 +62,7 @@ public class MultiDimStorage {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		MultiDimDataSource<U> allocate(StorageConstruction strategy, long[] dims, U type)
+		DimensionedDataSource<U> allocate(StorageConstruction strategy, long[] dims, U type)
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(strategy, numElements, type);

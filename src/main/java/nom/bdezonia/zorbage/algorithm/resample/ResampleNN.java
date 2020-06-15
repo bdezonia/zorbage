@@ -28,14 +28,14 @@ package nom.bdezonia.zorbage.algorithm.resample;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 
 /**
@@ -58,7 +58,7 @@ public class ResampleNN {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input, int maxPieces)
+		DimensionedDataSource<U> compute(T alg, long[] newDims, DimensionedDataSource<U> input, int maxPieces)
 	{
 		int numD = input.numDimensions();
 		
@@ -67,7 +67,7 @@ public class ResampleNN {
 
 		U value = alg.construct();
 		
-		MultiDimDataSource<U> output = MultiDimStorage.allocate(input.storageType(), newDims, value);
+		DimensionedDataSource<U> output = DimensionedStorage.allocate(input.storageType(), newDims, value);
 
 		int index = -1;
 		long maxDim = -1;
@@ -132,10 +132,10 @@ public class ResampleNN {
 		private final long[] min;
 		private final long[] max;
 		private final T alg;
-		private final MultiDimDataSource<U> input;
-		private final MultiDimDataSource<U> output;
+		private final DimensionedDataSource<U> input;
+		private final DimensionedDataSource<U> output;
 		
-		public Computer(T alg, long[] newDims, long[] min, long[] max, MultiDimDataSource<U> input, MultiDimDataSource<U> output) {
+		public Computer(T alg, long[] newDims, long[] min, long[] max, DimensionedDataSource<U> input, DimensionedDataSource<U> output) {
 			this.numD = newDims.length;
 			this.newDims = newDims;
 			this.min = min;
@@ -164,7 +164,7 @@ public class ResampleNN {
 			}
 		}
 		
-		private void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
+		private void computeValue(T alg, DimensionedDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
 									long[] outputDims, IntegerIndex outputPoint, U outVal)
 		{
 			BigDecimal[] coords = new BigDecimal[numD];

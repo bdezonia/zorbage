@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.resample.ResampleLinear;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
@@ -55,7 +55,7 @@ public class ResampleAveragedLinears {
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & ScaleByDouble<U>,
 					U extends Allocatable<U>>
-		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
+		DimensionedDataSource<U> compute(T alg, long[] newDims, DimensionedDataSource<U> input)
 	{
 		return ResampleLinear.compute(alg, newDims, input, 1);
 	}

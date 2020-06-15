@@ -31,9 +31,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
@@ -48,11 +48,11 @@ public class TestNanNdOOB {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		MultiDimDataSource<Float64Member> ds = MultiDimStorage.allocate(new long[] {5,5}, value);
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {5,5}, value);
 		NanNdOOB<Float64Algebra, Float64Member> oobProc =
 				new NanNdOOB<Float64Algebra, Float64Member>(G.DBL, ds);
-		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.DBL, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.DBL, ds, oobProc);
 		value.setV(6);
 		Fill.compute(G.DBL, value, ds.rawData());
 		IntegerIndex index = new IntegerIndex(ds.numDimensions());

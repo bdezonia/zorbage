@@ -24,57 +24,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
-
-import nom.bdezonia.zorbage.algebra.Dimensioned;
-import nom.bdezonia.zorbage.algebra.StorageType;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.datasource.RawData;
+import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.type.int3.SignedInt3Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface MultiDimDataSource<U>
-	extends Dimensioned, RawData<U>, StorageType
-{
-	long numElements();
+public class TestDimensionedStorage {
 
-	String getValueUnit();
-	
-	void setValueUnit(String unit);
-	
-	Procedure2<Long,HighPrecisionMember> getAxis(int i);
-	
-	String getAxisUnit(int i);  // "cm", "mile", "parsec", etc.
-	
-	String getAxisType(int i);  // "x", "y", "lat", "lon", "t", "chan", "band", "z", etc.
-	
-	void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc);
-	
-	void setAxisUnit(int i, String unit);  // "cm", "mile", "parsec", etc.
-	
-	void setAxisType(int i, String type);  // "x", "y", "lat", "lon", "t", "chan", "band", "z", etc.
-	
-	IndexedDataSource<U> piped(int dim, IntegerIndex coord);
-	
-	void set(IntegerIndex index, U value);
-	
-	void setSafe(IntegerIndex index, U value);
-	
-	void get(IntegerIndex index, U value);
-	
-	void getSafe(IntegerIndex index, U value);
-	
-	boolean oob(IntegerIndex index);
-	
-	Map<String,String> metadata();
-	
+	@Test
+	public void test() {
+		DimensionedDataSource<SignedInt3Member> data =
+				DimensionedStorage.allocate(new long[] {25,45,10}, G.INT3.construct());
+		assertEquals(3, data.numDimensions());
+		assertEquals(25, data.dimension(0));
+		assertEquals(45, data.dimension(1));
+		assertEquals(10, data.dimension(2));
+		assertEquals(25*45*10, data.rawData().size());
+	}
 }

@@ -32,7 +32,6 @@ import java.util.Arrays;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
-import nom.bdezonia.zorbage.multidim.IndexUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
@@ -42,6 +41,7 @@ import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.data.IndexUtils;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;

@@ -24,12 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.NdData;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
@@ -41,14 +43,14 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestProcedurePaddedMultiDimDataSource {
+public class TestProcedurePaddedDimensionedDataSource {
 
 	@Test
 	public void test() {
 		IndexedDataSource<SignedInt32Member> data = ArrayStorage.allocateInts(new int[] {1,2,3,4});
-		MultiDimDataSource<SignedInt32Member> md = new NdData<>(new long[] {2,2}, data);
-		ProcedurePaddedMultiDimDataSource<?,SignedInt32Member> pad =
-				new ProcedurePaddedMultiDimDataSource<>(G.INT32, md, proc);
+		DimensionedDataSource<SignedInt32Member> md = new NdData<>(new long[] {2,2}, data);
+		ProcedurePaddedDimensionedDataSource<?,SignedInt32Member> pad =
+				new ProcedurePaddedDimensionedDataSource<>(G.INT32, md, proc);
 		SignedInt32Member value = G.INT32.construct();
 		
 		IntegerIndex idx = new IntegerIndex(2);

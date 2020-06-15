@@ -30,9 +30,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
@@ -47,11 +47,11 @@ public class TestConstantNdOOB {
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
-		MultiDimDataSource<SignedInt32Member> ds = MultiDimStorage.allocate(new long[] {5,5}, value);
+		DimensionedDataSource<SignedInt32Member> ds = DimensionedStorage.allocate(new long[] {5,5}, value);
 		ConstantNdOOB<SignedInt32Algebra, SignedInt32Member> oobProc =
 				new ConstantNdOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ds, G.INT32.construct("33"));
-		ProcedurePaddedMultiDimDataSource<SignedInt32Algebra, SignedInt32Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<SignedInt32Algebra, SignedInt32Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.INT32, ds, oobProc);
 		value.setV(6);
 		Fill.compute(G.INT32, value, ds.rawData());
 		IntegerIndex index = new IntegerIndex(ds.numDimensions());

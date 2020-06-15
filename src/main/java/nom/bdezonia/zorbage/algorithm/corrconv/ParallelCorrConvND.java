@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm.corrconv;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
@@ -34,6 +33,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class ParallelCorrConvND {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
-		void compute(T alg, int maxPieces, Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b)
+		void compute(T alg, int maxPieces, Procedure4<DimensionedDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
 		int numD = a.numDimensions();
 		
@@ -128,14 +128,14 @@ public class ParallelCorrConvND {
 	{
 		private final T alg;
 		private final int numD;
-		private final MultiDimDataSource<U> filter;
-		private final MultiDimDataSource<U> a;
-		private final MultiDimDataSource<U> b;
+		private final DimensionedDataSource<U> filter;
+		private final DimensionedDataSource<U> a;
+		private final DimensionedDataSource<U> b;
 		private final IntegerIndex dataMinPt;
 		private final IntegerIndex dataMaxPt;
-		private final Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer;
+		private final Procedure4<DimensionedDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer;
 		
-		public Computer(T alg, int numD, Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer, MultiDimDataSource<U> filter, MultiDimDataSource<U> a, MultiDimDataSource<U> b, IntegerIndex dataMinPt, IntegerIndex dataMaxPt) {
+		public Computer(T alg, int numD, Procedure4<DimensionedDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> indexer, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b, IntegerIndex dataMinPt, IntegerIndex dataMaxPt) {
 			this.alg = alg;
 			this.numD = numD;
 			this.indexer = indexer;

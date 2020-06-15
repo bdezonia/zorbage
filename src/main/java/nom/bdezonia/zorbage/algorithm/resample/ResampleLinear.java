@@ -29,8 +29,8 @@ package nom.bdezonia.zorbage.algorithm.resample;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.ScaleByDouble;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
@@ -62,7 +62,7 @@ public class ResampleLinear {
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & ScaleByDouble<U>,
 					U extends Allocatable<U>>
-		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input, int maxPieces)
+		DimensionedDataSource<U> compute(T alg, long[] newDims, DimensionedDataSource<U> input, int maxPieces)
 	{
 		int numD = input.numDimensions();
 		
@@ -71,7 +71,7 @@ public class ResampleLinear {
 
 		U value = alg.construct();
 		
-		MultiDimDataSource<U> output = MultiDimStorage.allocate(input.storageType(), newDims, value);
+		DimensionedDataSource<U> output = DimensionedStorage.allocate(input.storageType(), newDims, value);
 
 		int index = -1;
 		long maxDim = -1;
@@ -136,10 +136,10 @@ public class ResampleLinear {
 		private final long[] min;
 		private final long[] max;
 		private final T alg;
-		private final MultiDimDataSource<U> input;
-		private final MultiDimDataSource<U> output;
+		private final DimensionedDataSource<U> input;
+		private final DimensionedDataSource<U> output;
 		
-		public Computer(T alg, long[] newDims, long[] min, long[] max, MultiDimDataSource<U> input, MultiDimDataSource<U> output) {
+		public Computer(T alg, long[] newDims, long[] min, long[] max, DimensionedDataSource<U> input, DimensionedDataSource<U> output) {
 			this.numD = newDims.length;
 			this.newDims = newDims;
 			this.min = min;
@@ -168,7 +168,7 @@ public class ResampleLinear {
 			}
 		}
 		
-		private void computeValue(T alg, MultiDimDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
+		private void computeValue(T alg, DimensionedDataSource<U> input, long[] inputDims, IntegerIndex inputPoint,
 								long[] outputDims, IntegerIndex outputPoint, U outVal)
 		{
 			int numD = inputDims.length;
@@ -196,7 +196,7 @@ public class ResampleLinear {
 			alg.scaleByDouble().call(scale, outVal, outVal);
 		}
 		
-		private void sum(T alg, MultiDimDataSource<U> input, int numD, BigDecimal[] coords,
+		private void sum(T alg, DimensionedDataSource<U> input, int numD, BigDecimal[] coords,
 								IntegerIndex inputPoint, U outVal)
 		{
 			U tmp = alg.construct();

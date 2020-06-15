@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.resample.ResampleCubic;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
@@ -53,7 +53,7 @@ public class ParallelResampleAveragedCubics {
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & ScaleByDouble<U>,
 					U extends Allocatable<U>>
-		MultiDimDataSource<U> compute(T alg, long[] newDims, MultiDimDataSource<U> input)
+		DimensionedDataSource<U> compute(T alg, long[] newDims, DimensionedDataSource<U> input)
 	{
 		return ResampleCubic.compute(alg, newDims, input, Runtime.getRuntime().availableProcessors());
 	}

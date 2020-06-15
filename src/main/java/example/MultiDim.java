@@ -29,9 +29,9 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.axis.StringDefinedAxis;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.ConstantNdOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -57,7 +57,7 @@ class MultiDim {
 		
 		UnsignedInt16Member type = G.UINT16.construct();
 		
-		MultiDimDataSource<UnsignedInt16Member> data = MultiDimStorage.allocate(dims, type);
+		DimensionedDataSource<UnsignedInt16Member> data = DimensionedStorage.allocate(dims, type);
 		
 		data.numDimensions(); // 3
 		data.dimension(0); // 1024
@@ -132,8 +132,8 @@ class MultiDim {
 		ConstantNdOOB<UnsignedInt16Algebra,UnsignedInt16Member> oobProc =
 				new ConstantNdOOB<UnsignedInt16Algebra,UnsignedInt16Member>(G.UINT16, data, value);
 		
-		MultiDimDataSource<UnsignedInt16Member> paddedData =
-				new ProcedurePaddedMultiDimDataSource<UnsignedInt16Algebra, UnsignedInt16Member>(
+		DimensionedDataSource<UnsignedInt16Member> paddedData =
+				new ProcedurePaddedDimensionedDataSource<UnsignedInt16Algebra, UnsignedInt16Member>(
 						G.UINT16, data, oobProc);
 		
 		value.setV(0);

@@ -26,12 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.NdData;
 import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -79,7 +79,7 @@ public class CreateMask {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		MultiDimDataSource<UnsignedInt1Member> compute(T alg, Predicate<U> condition, MultiDimDataSource<U> a)
+		DimensionedDataSource<UnsignedInt1Member> compute(T alg, Predicate<U> condition, DimensionedDataSource<U> a)
 	{
 		long[] dims = new long[a.numDimensions()];
 		for (int i = 0; i < dims.length; i++) {

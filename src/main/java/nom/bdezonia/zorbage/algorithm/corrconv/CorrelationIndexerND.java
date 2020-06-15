@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm.corrconv;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -35,10 +35,10 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class CorrelationIndexerND<U> implements Procedure4<MultiDimDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
+public class CorrelationIndexerND<U> implements Procedure4<DimensionedDataSource<U>,IntegerIndex,IntegerIndex,IntegerIndex> {
 
 	@Override
-	public void call(MultiDimDataSource<U> filter, IntegerIndex dataPoint, IntegerIndex filterPoint, IntegerIndex pt) {
+	public void call(DimensionedDataSource<U> filter, IntegerIndex dataPoint, IntegerIndex filterPoint, IntegerIndex pt) {
 		for (int i = 0; i < filterPoint.numDimensions(); i++) {
 			pt.set(i, dataPoint.get(i) + (filterPoint.get(i) - filter.dimension(i)/2));
 		}

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  */
 public class NdData<U>
-	implements MultiDimDataSource<U>
+	implements DimensionedDataSource<U>
 {
 	private final List<Procedure2<Long,HighPrecisionMember>> axes;
 	private final IndexedDataSource<U> data;

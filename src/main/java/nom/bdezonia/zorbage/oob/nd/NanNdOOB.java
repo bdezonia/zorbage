@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.oob.nd;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.NaN;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class NanNdOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<
 	 * @param alg
 	 * @param ds
 	 */
-	public NanNdOOB(T alg, MultiDimDataSource<U> ds) {
+	public NanNdOOB(T alg, DimensionedDataSource<U> ds) {
 		U nan = alg.construct();
 		alg.nan().call(nan);
 		oobProc = new ConstantNdOOB<T,U>(alg, ds, nan);

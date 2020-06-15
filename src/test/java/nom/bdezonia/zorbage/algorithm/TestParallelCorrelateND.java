@@ -29,10 +29,9 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
@@ -50,12 +49,12 @@ public class TestParallelCorrelateND {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		MultiDimDataSource<Float64Member> filter = MultiDimStorage.allocate(new long[] {3, 3}, value);
-		MultiDimDataSource<Float64Member> a = MultiDimStorage.allocate(new long[] {400, 333}, value);
+		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(new long[] {3, 3}, value);
+		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
-		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
-		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {400, 333}, value);
-		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {400, 333}, value);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
+		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(new long[] {400, 333}, value);
+		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
@@ -121,12 +120,12 @@ public class TestParallelCorrelateND {
 	@Test
 	public void test2() {
 		Float64Member value = G.DBL.construct();
-		MultiDimDataSource<Float64Member> filter = MultiDimStorage.allocate(new long[] {3, 3}, value);
-		MultiDimDataSource<Float64Member> a = MultiDimStorage.allocate(new long[] {400, 333}, value);
+		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(new long[] {3, 3}, value);
+		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
-		ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedMultiDimDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
-		MultiDimDataSource<Float64Member> b1 = MultiDimStorage.allocate(new long[] {400, 333}, value);
-		MultiDimDataSource<Float64Member> b2 = MultiDimStorage.allocate(new long[] {400, 333}, value);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
+		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(new long[] {400, 333}, value);
+		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);

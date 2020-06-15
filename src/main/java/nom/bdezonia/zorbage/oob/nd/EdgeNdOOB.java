@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.oob.nd;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -37,14 +37,14 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  */
 public class EdgeNdOOB<U> implements Procedure2<IntegerIndex,U> {
 
-	private final MultiDimDataSource<U> ds;
+	private final DimensionedDataSource<U> ds;
 	private final ThreadLocal<IntegerIndex> coord;
 
 	/**
 	 * 
 	 * @param d
 	 */
-	public EdgeNdOOB(MultiDimDataSource<U> d) {
+	public EdgeNdOOB(DimensionedDataSource<U> d) {
 		if (d.numElements() < 1)
 			throw new IllegalArgumentException("datset size must be positive");
 		this.ds = d;

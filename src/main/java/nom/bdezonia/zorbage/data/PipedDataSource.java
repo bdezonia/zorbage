@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.multidim;
+package nom.bdezonia.zorbage.data;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
@@ -36,12 +36,12 @@ import nom.bdezonia.zorbage.datasource.SequencedDataSource;
  * @author Barry DeZonia
  *
  * A {@link IndexedDataSource} that is a one dimensional column within a
- * {@link MultiDimDataSource}. Pronounced as "pie" "ped".
+ * {@link DimensionedDataSource}. Pronounced as "pie" "ped".
  * 
  */
 public class PipedDataSource<U> implements IndexedDataSource<U> {
 
-	private final MultiDimDataSource<U> d;
+	private final DimensionedDataSource<U> d;
 	private final int dim;
 	private final long[] parentDims;
 	private final IntegerIndex coords;
@@ -53,7 +53,7 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 	 * @param dim
 	 * @param coords
 	 */
-	public PipedDataSource(MultiDimDataSource<U> d, int dim, IntegerIndex coords) {
+	public PipedDataSource(DimensionedDataSource<U> d, int dim, IntegerIndex coords) {
 		if (coords.numDimensions() != d.numDimensions())
 			throw new IllegalArgumentException("coordinate does not match dimensionality of multidim data");
 		if (dim < 0 || dim >= coords.numDimensions())

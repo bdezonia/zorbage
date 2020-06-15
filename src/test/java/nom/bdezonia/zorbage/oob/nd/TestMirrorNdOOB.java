@@ -29,10 +29,9 @@ package nom.bdezonia.zorbage.oob.nd;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
@@ -47,11 +46,11 @@ public class TestMirrorNdOOB {
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
-		MultiDimDataSource<SignedInt32Member> ds = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt32Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
 		MirrorNdOOB<SignedInt32Member> oobProc =
 				new MirrorNdOOB<SignedInt32Member>(ds);
-		ProcedurePaddedMultiDimDataSource<SignedInt32Algebra, SignedInt32Member> padded =
-				new ProcedurePaddedMultiDimDataSource<>(G.INT32, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<SignedInt32Algebra, SignedInt32Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.INT32, ds, oobProc);
 		IntegerIndex index = new IntegerIndex(ds.numDimensions());
 
 		// set the original 3 x 3 values

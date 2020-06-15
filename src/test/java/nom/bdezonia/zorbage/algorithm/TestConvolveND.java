@@ -29,11 +29,12 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertEquals;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
+
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
 import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
@@ -50,9 +51,9 @@ public class TestConvolveND {
 	public void test1() {
 
 		SignedInt64Member value = G.INT64.construct();
-		MultiDimDataSource<SignedInt64Member> ds = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
 		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
-		ProcedurePaddedMultiDimDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedMultiDimDataSource<>(G.INT64, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
 		
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		
@@ -101,9 +102,9 @@ public class TestConvolveND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		MultiDimDataSource<SignedInt64Member> filter = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(new long[] {3,3}, value);
 
-		MultiDimDataSource<SignedInt64Member> out = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(new long[] {3,3}, value);
 
 		value.setV(1);
 		
@@ -195,9 +196,9 @@ public class TestConvolveND {
 	public void test2() {
 
 		SignedInt64Member value = G.INT64.construct();
-		MultiDimDataSource<SignedInt64Member> ds = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
 		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
-		ProcedurePaddedMultiDimDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedMultiDimDataSource<>(G.INT64, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
 		
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		
@@ -246,9 +247,9 @@ public class TestConvolveND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		MultiDimDataSource<SignedInt64Member> filter = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(new long[] {3,3}, value);
 
-		MultiDimDataSource<SignedInt64Member> out = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(new long[] {3,3}, value);
 
 		value.setV(1);
 		
@@ -346,9 +347,9 @@ public class TestConvolveND {
 		// http://www.songho.ca/dsp/convolution/convolution2d_example.html
 			
 		SignedInt64Member value = G.INT64.construct();
-		MultiDimDataSource<SignedInt64Member> ds = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
 		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
-		ProcedurePaddedMultiDimDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedMultiDimDataSource<>(G.INT64, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
 		
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		
@@ -397,9 +398,9 @@ public class TestConvolveND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		MultiDimDataSource<SignedInt64Member> filter = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(new long[] {3,3}, value);
 
-		MultiDimDataSource<SignedInt64Member> out = MultiDimStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(new long[] {3,3}, value);
 
 		value.setV(1);
 		idx.set(0, 0);
