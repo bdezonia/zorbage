@@ -53,6 +53,7 @@ public class NdData<U>
 	private final Map<String,String> metadata;
 	private final String[] axisUnits;
 	private final String[] axisTypes;
+	private String valueUnit;
 	
 	/**
 	 * 
@@ -176,5 +177,15 @@ public class NdData<U>
 	@Override
 	public void setAxisType(int i, String type) {
 		axisTypes[i] = type;
+	}
+
+	@Override
+	public String getValueUnit() {
+		return valueUnit;
+	}
+
+	@Override
+	public void setValueUnit(String unit) {
+		valueUnit = unit;
 	}
 }

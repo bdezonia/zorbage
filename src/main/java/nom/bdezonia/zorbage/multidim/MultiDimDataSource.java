@@ -47,6 +47,10 @@ public interface MultiDimDataSource<U>
 {
 	long numElements();
 
+	String getValueUnit();
+	
+	void setValueUnit(String unit);
+	
 	Procedure2<Long,HighPrecisionMember> getAxis(int i);
 	
 	String getAxisUnit(int i);  // "cm", "mile", "parsec", etc.
