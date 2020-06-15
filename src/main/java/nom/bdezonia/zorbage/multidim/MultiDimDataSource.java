@@ -61,13 +61,13 @@ public interface MultiDimDataSource<U>
 	
 	IndexedDataSource<U> piped(int dim, IntegerIndex coord);
 	
-	void set(IntegerIndex index, U v);
+	void set(IntegerIndex index, U value);
 	
-	void setSafe(IntegerIndex index, U v);
+	void setSafe(IntegerIndex index, U value);
 	
-	void get(IntegerIndex index, U v);
+	void get(IntegerIndex index, U value);
 	
-	void getSafe(IntegerIndex index, U v);
+	void getSafe(IntegerIndex index, U value);
 	
 	boolean oob(IntegerIndex index);
 	
