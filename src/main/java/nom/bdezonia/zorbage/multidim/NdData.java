@@ -51,6 +51,8 @@ public class NdData<U>
 	private final IndexedDataSource<U> data;
 	private final long[] dims;
 	private final Map<String,String> metadata;
+	private final String[] axisUnits;
+	private final String[] axisTypes;
 	
 	/**
 	 * 
@@ -68,6 +70,8 @@ public class NdData<U>
 		for (int i = 0; i < dims.length; i++)
 			this.axes.add(new IdentityAxis());
 		this.metadata = new HashMap<>();
+		this.axisUnits = new String[dims.length];
+		this.axisTypes = new String[dims.length];
 	}
 	
 	@Override
@@ -152,5 +156,25 @@ public class NdData<U>
 	@Override
 	public Map<String,String> metadata() {
 		return metadata;
+	}
+
+	@Override
+	public String getAxisUnit(int i) {
+		return axisUnits[i];
+	}
+
+	@Override
+	public String getAxisType(int i) {
+		return axisTypes[i];
+	}
+
+	@Override
+	public void setAxisUnit(int i, String unit) {
+		axisUnits[i] = unit;
+	}
+
+	@Override
+	public void setAxisType(int i, String type) {
+		axisTypes[i] = type;
 	}
 }

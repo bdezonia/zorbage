@@ -148,4 +148,24 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	public Map<String, String> metadata() {
 		return md.metadata();
 	}
+
+	@Override
+	public String getAxisUnit(int i) {
+		return md.getAxisUnit(i);
+	}
+
+	@Override
+	public String getAxisType(int i) {
+		return md.getAxisType(i);
+	}
+
+	@Override
+	public void setAxisUnit(int i, String unit) {
+		md.setAxisUnit(i, unit);
+	}
+
+	@Override
+	public void setAxisType(int i, String type) {
+		md.setAxisType(i, type);
+	}
 }
