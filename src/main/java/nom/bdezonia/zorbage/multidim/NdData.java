@@ -113,29 +113,29 @@ public class NdData<U>
 	}
 	
 	@Override
-	public void set(IntegerIndex index, U v) {
+	public void set(IntegerIndex index, U value) {
 		long idx = IndexUtils.indexToLong(dims, index);
-		data.set(idx, v);
+		data.set(idx, value);
 	}
 	
 	@Override
-	public void setSafe(IntegerIndex index, U v) {
+	public void setSafe(IntegerIndex index, U value) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
-		set(index, v);
+		set(index, value);
 	}
 	
 	@Override
-	public void get(IntegerIndex index, U v) {
+	public void get(IntegerIndex index, U value) {
 		long idx = IndexUtils.indexToLong(dims, index);
-		data.get(idx, v);
+		data.get(idx, value);
 	}
 	
 	@Override
-	public void getSafe(IntegerIndex index, U v) {
+	public void getSafe(IntegerIndex index, U value) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
-		get(index, v);
+		get(index, value);
 	}
 	
 	@Override

@@ -103,35 +103,35 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	@Override
-	public void set(IntegerIndex index, U v) {
+	public void set(IntegerIndex index, U value) {
 		if (md.oob(index)) {
 			U t = tmp.get();
 			proc.call(index,t);
-			if (!algebra.isEqual().call(t,v))
+			if (!algebra.isEqual().call(t,value))
 				throw new IllegalArgumentException("Cannot set out of bounds value in conflict with out of bounds procedure");
 		}
 		else {
-			md.set(index, v);
+			md.set(index, value);
 		}
 	}
 	
-	public void get(IntegerIndex index, U v) {
+	public void get(IntegerIndex index, U value) {
 		if (md.oob(index)) {
-			proc.call(index, v);
+			proc.call(index, value);
 		}
 		else {
-			md.get(index, v);
+			md.get(index, value);
 		}
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, U v) {
-		md.setSafe(index, v);
+	public void setSafe(IntegerIndex index, U value) {
+		md.setSafe(index, value);
 	}
 
 	@Override
-	public void getSafe(IntegerIndex index, U v) {
-		md.getSafe(index, v);
+	public void getSafe(IntegerIndex index, U value) {
+		md.getSafe(index, value);
 	}
 
 	@Override
