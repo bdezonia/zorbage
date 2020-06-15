@@ -130,11 +130,10 @@ class MultiDim {
 		value.setV(83);
 		
 		ConstantNdOOB<UnsignedInt16Algebra,UnsignedInt16Member> oobProc =
-				new ConstantNdOOB<UnsignedInt16Algebra,UnsignedInt16Member>(G.UINT16, data, value);
+				new ConstantNdOOB<>(G.UINT16, data, value);
 		
 		DimensionedDataSource<UnsignedInt16Member> paddedData =
-				new ProcedurePaddedDimensionedDataSource<UnsignedInt16Algebra, UnsignedInt16Member>(
-						G.UINT16, data, oobProc);
+				new ProcedurePaddedDimensionedDataSource<>(G.UINT16, data, oobProc);
 		
 		value.setV(0);
 		
