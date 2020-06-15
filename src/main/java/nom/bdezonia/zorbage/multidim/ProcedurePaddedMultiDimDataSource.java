@@ -28,6 +28,9 @@ package nom.bdezonia.zorbage.multidim;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+
+import java.util.Map;
+
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -141,4 +144,8 @@ public class ProcedurePaddedMultiDimDataSource<T extends Algebra<T,U>,U>
 		return md.storageType();
 	}
 	
+	@Override
+	public Map<String, String> metadata() {
+		return md.metadata();
+	}
 }

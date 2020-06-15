@@ -27,7 +27,9 @@
 package nom.bdezonia.zorbage.multidim;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nom.bdezonia.zorbage.axis.IdentityAxis;
 import nom.bdezonia.zorbage.misc.LongUtils;
@@ -48,6 +50,7 @@ public class NdData<U>
 	private final List<Procedure2<Long,HighPrecisionMember>> axes;
 	private final IndexedDataSource<U> data;
 	private final long[] dims;
+	private final Map<String,String> metadata;
 	
 	/**
 	 * 
@@ -64,6 +67,7 @@ public class NdData<U>
 		this.axes = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
 		for (int i = 0; i < dims.length; i++)
 			this.axes.add(new IdentityAxis());
+		this.metadata = new HashMap<>();
 	}
 	
 	@Override
@@ -143,5 +147,10 @@ public class NdData<U>
 	@Override
 	public StorageConstruction storageType() {
 		return data.storageType();
+	}
+	
+	@Override
+	public Map<String,String> metadata() {
+		return metadata;
 	}
 }

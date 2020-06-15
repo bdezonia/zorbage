@@ -28,6 +28,9 @@ package nom.bdezonia.zorbage.multidim;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+
+import java.util.Map;
+
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.algebra.StorageType;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -59,5 +62,7 @@ public interface MultiDimDataSource<U>
 	void getSafe(IntegerIndex index, U v);
 	
 	boolean oob(IntegerIndex index);
+	
+	Map<String,String> metadata();
 	
 }
