@@ -88,13 +88,13 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	}
 
 	@Override
-	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
-		return dd.getAxis(i);
+	public Procedure2<Long,HighPrecisionMember> getAxisEquation(int i) {
+		return dd.getAxisEquation(i);
 	}
 	
 	@Override
-	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
-		dd.setAxis(i, proc);
+	public void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc) {
+		dd.setAxisEquation(i, proc);
 	}
 	
 	@Override

@@ -99,12 +99,12 @@ public class NdData<U>
 	}
 
 	@Override
-	public Procedure2<Long,HighPrecisionMember> getAxis(int i) {
+	public Procedure2<Long,HighPrecisionMember> getAxisEquation(int i) {
 		return this.axes.get(i);
 	}
 	
 	@Override
-	public void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc) {
+	public void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc) {
 		this.axes.set(i, proc);
 	}
 	

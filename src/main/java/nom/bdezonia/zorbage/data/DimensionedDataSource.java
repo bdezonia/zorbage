@@ -51,13 +51,13 @@ public interface DimensionedDataSource<U>
 	
 	void setValueUnit(String unit);
 	
-	Procedure2<Long,HighPrecisionMember> getAxis(int i);
+	Procedure2<Long,HighPrecisionMember> getAxisEquation(int i);
 	
 	String getAxisUnit(int i);  // "cm", "mile", "parsec", etc.
 	
 	String getAxisType(int i);  // "x", "y", "lat", "lon", "t", "chan", "band", "z", etc.
 	
-	void setAxis(int i, Procedure2<Long,HighPrecisionMember> proc);
+	void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc);
 	
 	void setAxisUnit(int i, String unit);  // "cm", "mile", "parsec", etc.
 	

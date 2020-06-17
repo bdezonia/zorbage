@@ -108,15 +108,15 @@ class MultiDim {
 		
 		HighPrecisionMember axisValue = G.HP.construct();
 		
-		Procedure2<Long, HighPrecisionMember> xAxis = data.getAxis(0);
+		Procedure2<Long, HighPrecisionMember> xAxis = data.getAxisEquation(0);
 		
 		xAxis.call(4L, axisValue);  // axisValue will equal 4
 		
 		// You can calibrate the axes to arbitrary precision with any equation you desire.
 		
-		data.setAxis(0, new StringDefinedAxis("$0 * 5 - 3"));  // out = in * 5 - 3
+		data.setAxisEquation(0, new StringDefinedAxis("$0 * 5 - 3"));  // out = in * 5 - 3
 		
-		xAxis = data.getAxis(0);
+		xAxis = data.getAxisEquation(0);
 		
 		xAxis.call(4L, axisValue);  // axisValue will equal 4 * 5 - 3 (= 17)
 		

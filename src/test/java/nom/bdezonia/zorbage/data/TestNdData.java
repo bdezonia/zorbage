@@ -92,18 +92,18 @@ public class TestNdData {
 		assertEquals(6, v.v());
 
 		Procedure2<Long,HighPrecisionMember> axis = null;
-		axis = data.getAxis(0);
+		axis = data.getAxisEquation(0);
 		assertNotNull(axis);
 		assertTrue(axis instanceof IdentityAxis);
-		axis = data.getAxis(1);
+		axis = data.getAxisEquation(1);
 		assertNotNull(axis);
 		assertTrue(axis instanceof IdentityAxis);
 		
-		data.setAxis(0, new StringDefinedAxis("$0^2"));
-		axis = data.getAxis(0);
+		data.setAxisEquation(0, new StringDefinedAxis("$0^2"));
+		axis = data.getAxisEquation(0);
 		assertNotNull(axis);
 		assertTrue(axis instanceof StringDefinedAxis);
-		axis = data.getAxis(1);
+		axis = data.getAxisEquation(1);
 		assertNotNull(axis);
 		assertTrue(axis instanceof IdentityAxis);
 
