@@ -47,6 +47,10 @@ import nom.bdezonia.zorbage.algorithm.NanSumWithCount;
 import nom.bdezonia.zorbage.algorithm.NanVariance;
 import nom.bdezonia.zorbage.algorithm.NonNanValues;
 import nom.bdezonia.zorbage.algorithm.Product;
+import nom.bdezonia.zorbage.algorithm.SequenceL0Norm;
+import nom.bdezonia.zorbage.algorithm.SequenceL1Norm;
+import nom.bdezonia.zorbage.algorithm.SequenceL2Norm;
+import nom.bdezonia.zorbage.algorithm.SequenceLInfinityNorm;
 import nom.bdezonia.zorbage.algorithm.StdDev;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.algorithm.SumWithCount;
@@ -102,6 +106,14 @@ class Statistics {
 		MaxElement.compute(G.DBL, data, result2);
 		
 		MinMaxElement.compute(G.DBL, data, result1, result2);
+		
+		SequenceL0Norm.compute(G.DBL, G.DBL, data, result1);
+		
+		SequenceL1Norm.compute(G.DBL, G.DBL, data, result1);
+		
+		SequenceL2Norm.compute(G.DBL, G.DBL, data, result1);
+		
+		SequenceLInfinityNorm.compute(G.DBL, G.DBL, data, result1);
 	}
 	
 	/*
@@ -148,6 +160,14 @@ class Statistics {
 		MaxElement.compute(G.HP, filtered, result2);
 		
 		MinMaxElement.compute(G.HP, filtered, result1, result2);
+		
+		SequenceL0Norm.compute(G.HP, G.HP, filtered, result1);
+		
+		SequenceL1Norm.compute(G.HP, G.HP, filtered, result1);
+		
+		SequenceL2Norm.compute(G.HP, G.HP, filtered, result1);
+		
+		SequenceLInfinityNorm.compute(G.HP, G.HP, filtered, result1);
 	}
 
 	/*
