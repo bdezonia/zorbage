@@ -30,8 +30,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.axis.IdentityAxis;
-import nom.bdezonia.zorbage.axis.StringDefinedAxis;
+import nom.bdezonia.zorbage.axis.IdentityAxisEquation;
+import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -94,18 +94,18 @@ public class TestNdData {
 		Procedure2<Long,HighPrecisionMember> axis = null;
 		axis = data.getAxisEquation(0);
 		assertNotNull(axis);
-		assertTrue(axis instanceof IdentityAxis);
+		assertTrue(axis instanceof IdentityAxisEquation);
 		axis = data.getAxisEquation(1);
 		assertNotNull(axis);
-		assertTrue(axis instanceof IdentityAxis);
+		assertTrue(axis instanceof IdentityAxisEquation);
 		
-		data.setAxisEquation(0, new StringDefinedAxis("$0^2"));
+		data.setAxisEquation(0, new StringDefinedAxisEquation("$0^2"));
 		axis = data.getAxisEquation(0);
 		assertNotNull(axis);
-		assertTrue(axis instanceof StringDefinedAxis);
+		assertTrue(axis instanceof StringDefinedAxisEquation);
 		axis = data.getAxisEquation(1);
 		assertNotNull(axis);
-		assertTrue(axis instanceof IdentityAxis);
+		assertTrue(axis instanceof IdentityAxisEquation);
 
 		v2.setV(45);
 		

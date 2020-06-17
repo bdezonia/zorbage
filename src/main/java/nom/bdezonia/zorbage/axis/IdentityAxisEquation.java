@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class IdentityAxis implements Procedure2<Long,HighPrecisionMember> {
+public class IdentityAxisEquation implements Procedure2<Long,HighPrecisionMember> {
 
 	@Override
 	public void call(Long in, HighPrecisionMember out) {

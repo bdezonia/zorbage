@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.axis;
 
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.impl.parse.EquationParser;
+import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
 /**
@@ -39,22 +41,24 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class TestStringDefinedAxis {
-
-	@Test
-	public void test() {
-		
-		StringDefinedAxis axis = new StringDefinedAxis("4 * $0 + 13");
-		
-		HighPrecisionMember result = G.HP.construct();
-		
-		axis.call(0L, result);
-		assertTrue(BigDecimal.valueOf(13).equals(result.v()));
-		
-		axis.call(1L, result);
-		assertTrue(BigDecimal.valueOf(17).equals(result.v()));
-		
-		axis.call(2L, result);
-		assertTrue(BigDecimal.valueOf(21).equals(result.v()));
+public class StringDefinedAxisEquation implements Procedure2<Long,HighPrecisionMember>
+{
+	private final Procedure<HighPrecisionMember> parsedAxisProc;
+	
+	public StringDefinedAxisEquation(String eqn) {
+		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.HP, eqn);
+		parsedAxisProc = parseResult.b();
 	}
+	
+	@Override
+	public void call(Long in, HighPrecisionMember out) {
+		
+		// set input value for axis transformation
+		out.setV(BigDecimal.valueOf(in));
+		
+		// left side out set to axis transformation of right side out
+		parsedAxisProc.call(out, out);
+
+	}
+
 }

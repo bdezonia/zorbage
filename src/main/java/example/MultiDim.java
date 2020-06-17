@@ -28,7 +28,7 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
-import nom.bdezonia.zorbage.axis.StringDefinedAxis;
+import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
@@ -114,7 +114,7 @@ class MultiDim {
 		
 		// You can calibrate the axes to arbitrary precision with any equation you desire.
 		
-		data.setAxisEquation(0, new StringDefinedAxis("$0 * 5 - 3"));  // out = in * 5 - 3
+		data.setAxisEquation(0, new StringDefinedAxisEquation("$0 * 5 - 3"));  // out = in * 5 - 3
 		
 		xAxisEqn = data.getAxisEquation(0);
 		

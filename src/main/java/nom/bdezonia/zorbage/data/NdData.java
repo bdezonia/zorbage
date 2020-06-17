@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nom.bdezonia.zorbage.axis.IdentityAxis;
+import nom.bdezonia.zorbage.axis.IdentityAxisEquation;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -50,7 +50,7 @@ public class NdData<U>
 	private String name;
 	private final long[] dims;
 	private final IndexedDataSource<U> data;
-	private final List<Procedure2<Long,HighPrecisionMember>> axes;
+	private final List<Procedure2<Long,HighPrecisionMember>> axisEqns;
 	private final String[] axisUnits;
 	private final String[] axisTypes;
 	private String valueType;
@@ -58,9 +58,9 @@ public class NdData<U>
 	private final Map<String,String> metadata;
 
 	// Ideally, every U type could have a getRepresentation() that for bytes would return
-	// "signed 8-bit byte" and for float64  matrix "64-bit float matrix" etc. Then one can
+	// "signed 8-bit byte" and for float64 matrix "64-bit float matrix" etc. Then one can
 	// query the U data rep for any DimensionedDataSource. But this violates the goal of
-	// having dumb U's everywhere. Changing this would affect a lot of code and mught not
+	// having dumb U's everywhere. Changing this would affect a lot of code and might not
 	// have a big payoff. Think what is best here.
 	
 	/**
@@ -71,14 +71,14 @@ public class NdData<U>
 	public NdData(long[] dims, IndexedDataSource<U> data) {
 		this.name = null;
 		if (dims.length == 0)
-			throw new IllegalArgumentException("multidim data source must have 1 or more dimensions");
+			throw new IllegalArgumentException("dimensioned data source must have 1 or more dimensions");
 		if (LongUtils.numElements(dims) != data.size())
 			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
 		this.dims = dims;
 		this.data = data;
-		this.axes = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
+		this.axisEqns = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
 		for (int i = 0; i < dims.length; i++)
-			this.axes.add(new IdentityAxis());
+			this.axisEqns.add(new IdentityAxisEquation());
 		this.axisUnits = new String[dims.length];
 		this.axisTypes = new String[dims.length];
 		this.valueType = null;
@@ -110,12 +110,12 @@ public class NdData<U>
 
 	@Override
 	public Procedure2<Long,HighPrecisionMember> getAxisEquation(int i) {
-		return this.axes.get(i);
+		return this.axisEqns.get(i);
 	}
 	
 	@Override
 	public void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc) {
-		this.axes.set(i, proc);
+		this.axisEqns.set(i, proc);
 	}
 	
 	@Override
