@@ -108,17 +108,27 @@ class MultiDim {
 		
 		HighPrecisionMember axisValue = G.HP.construct();
 		
-		Procedure2<Long, HighPrecisionMember> xAxis = data.getAxisEquation(0);
+		Procedure2<Long, HighPrecisionMember> xAxisEqn = data.getAxisEquation(0);
 		
-		xAxis.call(4L, axisValue);  // axisValue will equal 4
+		xAxisEqn.call(4L, axisValue);  // axisValue will equal 4
 		
 		// You can calibrate the axes to arbitrary precision with any equation you desire.
 		
 		data.setAxisEquation(0, new StringDefinedAxis("$0 * 5 - 3"));  // out = in * 5 - 3
 		
-		xAxis = data.getAxisEquation(0);
+		xAxisEqn = data.getAxisEquation(0);
 		
-		xAxis.call(4L, axisValue);  // axisValue will equal 4 * 5 - 3 (= 17)
+		xAxisEqn.call(4L, axisValue);  // axisValue will equal 4 * 5 - 3 (= 17)
+		
+		// One more thing you can do with these data sources is store and retrieve
+		// metadata.
+		
+		data.setName("My multidim datasource");
+		data.setValueType("temperature");
+		data.setValueUnit("degrees C");
+		data.setAxisType(0, "distance");
+		data.setAxisUnit(0, "meter");
+		data.metadata().put("data creator", "Barry DeZonia");
 		
 		// Finally let's visit the get()/set() vs. getSafe()/setSafe() discussion from
 		// before. Multi dim data can be padded with a strategy for producing values

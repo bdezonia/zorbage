@@ -47,6 +47,10 @@ public interface DimensionedDataSource<U>
 {
 	long numElements();
 
+	String getValueType();
+	
+	void setValueType(String type);
+	
 	String getValueUnit();
 	
 	void setValueUnit(String unit);

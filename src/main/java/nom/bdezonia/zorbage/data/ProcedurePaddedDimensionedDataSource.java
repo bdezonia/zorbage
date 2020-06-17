@@ -188,4 +188,14 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	public void setName(String name) {
 		dd.setName(name);
 	}
+	
+	@Override
+	public String getValueType() {
+		return dd.getValueType();
+	}
+	
+	@Override
+	public void setValueType(String type) {
+		dd.setValueType(type);
+	}
 }

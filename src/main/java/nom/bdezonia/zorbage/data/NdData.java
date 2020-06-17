@@ -55,6 +55,7 @@ public class NdData<U>
 	private final String[] axisTypes;
 	private String valueUnit;
 	private String name;
+	private String valueType;
 	
 	/**
 	 * 
@@ -172,12 +173,12 @@ public class NdData<U>
 
 	@Override
 	public void setAxisUnit(int i, String unit) {
-		axisUnits[i] = unit;
+		this.axisUnits[i] = unit;
 	}
 
 	@Override
 	public void setAxisType(int i, String type) {
-		axisTypes[i] = type;
+		this.axisTypes[i] = type;
 	}
 
 	@Override
@@ -187,7 +188,7 @@ public class NdData<U>
 
 	@Override
 	public void setValueUnit(String unit) {
-		valueUnit = unit;
+		this.valueUnit = unit;
 	}
 	
 	@Override
@@ -198,5 +199,15 @@ public class NdData<U>
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public String getValueType() {
+		return valueType;
+	}
+	
+	@Override
+	public void setValueType(String type) {
+		this.valueType = type;
 	}
 }
