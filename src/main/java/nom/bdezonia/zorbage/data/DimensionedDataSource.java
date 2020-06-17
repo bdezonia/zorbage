@@ -76,5 +76,8 @@ public interface DimensionedDataSource<U>
 	boolean oob(IntegerIndex index);
 	
 	Map<String,String> metadata();
+
+	String getName();
 	
+	void setName(String name);
 }

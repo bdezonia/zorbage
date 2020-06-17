@@ -178,4 +178,14 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	public void setValueUnit(String unit) {
 		dd.setValueUnit(unit);
 	}
+	
+	@Override
+	public String getName() {
+		return dd.getName();
+	}
+	
+	@Override
+	public void setName(String name) {
+		dd.setName(name);
+	}
 }

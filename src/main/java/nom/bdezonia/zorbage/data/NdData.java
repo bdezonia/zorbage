@@ -54,6 +54,7 @@ public class NdData<U>
 	private final String[] axisUnits;
 	private final String[] axisTypes;
 	private String valueUnit;
+	private String name;
 	
 	/**
 	 * 
@@ -187,5 +188,15 @@ public class NdData<U>
 	@Override
 	public void setValueUnit(String unit) {
 		valueUnit = unit;
+	}
+	
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 }
