@@ -47,15 +47,21 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 public class NdData<U>
 	implements DimensionedDataSource<U>
 {
-	private final List<Procedure2<Long,HighPrecisionMember>> axes;
-	private final IndexedDataSource<U> data;
+	private String name;
 	private final long[] dims;
-	private final Map<String,String> metadata;
+	private final IndexedDataSource<U> data;
+	private final List<Procedure2<Long,HighPrecisionMember>> axes;
 	private final String[] axisUnits;
 	private final String[] axisTypes;
-	private String valueUnit;
-	private String name;
 	private String valueType;
+	private String valueUnit;
+	private final Map<String,String> metadata;
+
+	// Ideally, every U type could have a getRepresentation() that for bytes would return
+	// "signed 8-bit byte" and for float64  matrix "64-bit float matrix" etc. Then one can
+	// query the U data rep for any DimensionedDataSource. But this violates the goal of
+	// having dumb U's everywhere. Changing this would affect a lot of code and mught not
+	// have a big payoff. Think what is best here.
 	
 	/**
 	 * 
@@ -63,6 +69,7 @@ public class NdData<U>
 	 * @param data
 	 */
 	public NdData(long[] dims, IndexedDataSource<U> data) {
+		this.name = null;
 		if (dims.length == 0)
 			throw new IllegalArgumentException("multidim data source must have 1 or more dimensions");
 		if (LongUtils.numElements(dims) != data.size())
@@ -72,9 +79,11 @@ public class NdData<U>
 		this.axes = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
 		for (int i = 0; i < dims.length; i++)
 			this.axes.add(new IdentityAxis());
-		this.metadata = new HashMap<>();
 		this.axisUnits = new String[dims.length];
 		this.axisTypes = new String[dims.length];
+		this.valueType = null;
+		this.valueUnit = null;
+		this.metadata = new HashMap<>();
 	}
 	
 	@Override
