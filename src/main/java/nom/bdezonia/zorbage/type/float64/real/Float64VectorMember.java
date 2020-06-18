@@ -100,6 +100,10 @@ public final class Float64VectorMember
 		alloc(d1);
 	}
 
+	public Float64VectorMember(long d1) {
+		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
 	@Override
 	public StorageConstruction storageType() {
 		return s;

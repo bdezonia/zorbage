@@ -33,7 +33,6 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64VectorMember;
 import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMember;
@@ -206,7 +205,7 @@ public class TestPrimitiveConversions {
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, uint8);
 		assertEquals(1, uint8.v());
 		
-		Float64VectorMember v = new Float64VectorMember(StorageConstruction.MEM_ARRAY, 5);
+		Float64VectorMember v = new Float64VectorMember(5);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, v);
 		assertEquals(5, v.length());
 		v.getV(0, tmp);
@@ -220,7 +219,7 @@ public class TestPrimitiveConversions {
 		v.getV(4, tmp);
 		assertEquals(0, tmp.v(), 0);
 
-		Float64MatrixMember m = new Float64MatrixMember(StorageConstruction.MEM_ARRAY, 3, 2);
+		Float64MatrixMember m = new Float64MatrixMember(3, 2);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, m);
 		assertEquals(2, m.rows());
 		assertEquals(3, m.cols());

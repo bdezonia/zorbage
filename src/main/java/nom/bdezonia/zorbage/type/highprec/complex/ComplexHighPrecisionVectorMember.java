@@ -104,6 +104,10 @@ public final class ComplexHighPrecisionVectorMember
 		alloc(d1);
 	}
 
+	public ComplexHighPrecisionVectorMember(long d1) {
+		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
 	@Override
 	public StorageConstruction storageType() {
 		return s;

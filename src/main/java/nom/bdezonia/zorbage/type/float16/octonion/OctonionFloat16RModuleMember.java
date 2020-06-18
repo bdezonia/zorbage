@@ -116,6 +116,10 @@ public final class OctonionFloat16RModuleMember
 		alloc(d1);
 	}
 
+	public OctonionFloat16RModuleMember(long d1) {
+		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
 	@Override
 	public StorageConstruction storageType() {
 		return s;

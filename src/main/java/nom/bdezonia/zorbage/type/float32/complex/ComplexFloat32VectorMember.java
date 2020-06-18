@@ -104,6 +104,10 @@ public final class ComplexFloat32VectorMember
 		alloc(d1);
 	}
 
+	public ComplexFloat32VectorMember(long d1) {
+		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
 	@Override
 	public StorageConstruction storageType() {
 		return s;

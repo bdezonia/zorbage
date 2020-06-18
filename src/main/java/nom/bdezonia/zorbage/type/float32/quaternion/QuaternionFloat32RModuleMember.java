@@ -108,6 +108,10 @@ public final class QuaternionFloat32RModuleMember
 		alloc(d1);
 	}
 	
+	public QuaternionFloat32RModuleMember(long d1) {
+		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
 	@Override
 	public StorageConstruction storageType() {
 		return s;

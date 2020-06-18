@@ -116,6 +116,10 @@ public final class OctonionHighPrecisionRModuleMember
 		alloc(d1);
 	}
 
+	public OctonionHighPrecisionRModuleMember(long d1) {
+		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
 	@Override
 	public StorageConstruction storageType() {
 		return s;

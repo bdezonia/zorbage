@@ -125,7 +125,7 @@ public class TestComplexSpeed {
 	public void test2() {
 		long a = System.currentTimeMillis();
 		ComplexFloat64Member linTerm = new ComplexFloat64Member(1,1);
-		ComplexFloat64MatrixMember z = new ComplexFloat64MatrixMember(StorageConstruction.MEM_ARRAY, 6, 6);
+		ComplexFloat64MatrixMember z = new ComplexFloat64MatrixMember(6, 6);
 		MatrixConstantDiagonal.compute(G.CDBL, new ComplexFloat64Member(0.1, 0), z);
 		for (long i = 0; i < 10000000; i++) {
 			proc(G.CDBL_MAT, linTerm, z, z);

@@ -30,7 +30,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
@@ -43,7 +42,7 @@ public class TestEye {
 
 	@Test
 	public void test1() {
-		Float64MatrixMember x = Eye.compute(G.DBL_MAT, StorageConstruction.MEM_ARRAY, 3, 4);
+		Float64MatrixMember x = Eye.compute(G.DBL_MAT, 3, 4);
 		assertEquals(3, x.rows());
 		assertEquals(4, x.cols());
 		Float64Member value = G.DBL.construct();
