@@ -128,6 +128,10 @@ public final class OctonionHighPrecisionMatrixMember
 		init(d2,d1);
 	}
 	
+	public OctonionHighPrecisionMatrixMember(long rows, long cols) {
+		this(StorageConstruction.MEM_ARRAY, cols, rows);
+	}
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

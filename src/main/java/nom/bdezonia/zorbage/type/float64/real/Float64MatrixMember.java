@@ -113,6 +113,10 @@ public final class Float64MatrixMember
 		init(d2, d1);
 	}
 
+	public Float64MatrixMember(long rows, long cols) {
+		this(StorageConstruction.MEM_ARRAY, cols, rows);
+	}
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

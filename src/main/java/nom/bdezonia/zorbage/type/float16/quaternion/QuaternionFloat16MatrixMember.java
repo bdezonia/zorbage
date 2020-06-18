@@ -120,6 +120,10 @@ public final class QuaternionFloat16MatrixMember
 		init(d2,d1);
 	}
 
+	public QuaternionFloat16MatrixMember(long rows, long cols) {
+		this(StorageConstruction.MEM_ARRAY, cols, rows);
+	}
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

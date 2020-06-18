@@ -77,8 +77,10 @@ class MatrixAlgorithms {
 	
 	void example1() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
-		Float64MatrixMember b = new Float64MatrixMember(2,2,new double[] {5,6,7,8});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
+		
+		Float64MatrixMember b = new Float64MatrixMember(2, 2, new double[] {5,6,7,8});
+		
 		Float64MatrixMember c = new Float64MatrixMember();
 
 		MatrixAddition.compute(G.DBL, a, b, c);
@@ -89,7 +91,8 @@ class MatrixAlgorithms {
 
 	void example2() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
+		
 		Float64MatrixMember b = new Float64MatrixMember();
 
 		MatrixAssign.compute(G.DBL, a, b);
@@ -100,7 +103,9 @@ class MatrixAlgorithms {
 
 	void example3() {
 		
-		ComplexFloat64MatrixMember a = new ComplexFloat64MatrixMember(2,2,new double[] {1,2,3,4,5,-5,7,-8});
+		ComplexFloat64MatrixMember a =
+				new ComplexFloat64MatrixMember(2, 2, new double[] {1,2,3,4,5,-5,7,-8});
+		
 		ComplexFloat64MatrixMember b = new ComplexFloat64MatrixMember();
 
 		// a = [[(1,2), (3,4)]
@@ -114,7 +119,9 @@ class MatrixAlgorithms {
 	
 	void example4() {
 		
-		ComplexFloat64MatrixMember a = new ComplexFloat64MatrixMember(2,2,new double[] {1,2,3,4,5,-5,7,-8});
+		ComplexFloat64MatrixMember a =
+				new ComplexFloat64MatrixMember(2, 2, new double[] {1,2,3,4,5,-5,7,-8});
+
 		ComplexFloat64MatrixMember b = new ComplexFloat64MatrixMember();
 
 		// a = [[(1,2), (3,4)]
@@ -130,12 +137,12 @@ class MatrixAlgorithms {
 		
 		Float64Member constant = new Float64Member(74);
 		
-		Float64MatrixMember mat = new Float64MatrixMember(3, 3, new double[9]);
+		Float64MatrixMember mat = new Float64MatrixMember(3, 3);
 		
 		MatrixConstantDiagonal.compute(G.DBL, constant, mat);
 		
-		// mat = [[74,0,0],
-		//        [0,74,0],
+		// mat = [[74,0,0]
+		//        [0,74,0]
 		//        [0,0,74]]
 	}
 
@@ -161,19 +168,19 @@ class MatrixAlgorithms {
 		MatrixDirectProduct.compute(G.DBL, in1, in2, out);
 		
 		// out =  [[-2, -4, 0, 0]
-        //         [-6, -8, 0, 0]
-        //         [1, 2, 6, 12]
-        //         [3, 4, 18, 24]]
+		//         [-6, -8, 0, 0]
+		//         [1, 2, 6, 12]
+		//         [3, 4, 18, 24]]
 	}
 
 	@SuppressWarnings("unused")
 	void example8() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 
-		Float64MatrixMember b = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember b = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		
-		Float64MatrixMember c = new Float64MatrixMember(2,2,new double[] {5,6,3,2});
+		Float64MatrixMember c = new Float64MatrixMember(2, 2, new double[] {5,6,3,2});
 		
 		boolean res1 = MatrixEqual.compute(G.DBL, a, b);
 		// res1 = true
@@ -184,7 +191,7 @@ class MatrixAlgorithms {
 
 	void example9() {
 		
-		Float64MatrixMember in = new Float64MatrixMember(2,2,new double[] {5,6,3,2});
+		Float64MatrixMember in = new Float64MatrixMember(2, 2, new double[] {5,6,3,2});
 		
 		Float64MatrixMember out = new Float64MatrixMember();
 
@@ -225,13 +232,13 @@ class MatrixAlgorithms {
 
 		MatrixMultiply.compute(G.DBL, a, b, c);
 		
-		// c = [[13],
+		// c = [[13]
 		//      [29]]
 	}
 
 	void example13() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2, 32, new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 
 		Float64MatrixMember b = new Float64MatrixMember();
 
@@ -243,7 +250,7 @@ class MatrixAlgorithms {
 
 	void example14() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 
 		Float64MatrixMember b = new Float64MatrixMember();
 
@@ -254,18 +261,18 @@ class MatrixAlgorithms {
 
 	void example15() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		
 		MatrixReshape.compute(G.DBL_MAT, G.DBL, 3, 3, a);
 		
-		// a = [[1, 2, 0],
-		//      [3, 4, 0],
-		//      [0, 0, 0]
+		// a = [[1, 2, 0]
+		//      [3, 4, 0]
+		//      [0, 0, 0]]
 	}
 
 	void example16() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1.1, 2.2, 3.3, 4.4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1.1, 2.2, 3.3, 4.4});
 		
 		Float64MatrixMember b = G.DBL_MAT.construct();
 		
@@ -279,7 +286,7 @@ class MatrixAlgorithms {
 
 	void example17() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		
 		Float64MatrixMember b = G.DBL_MAT.construct();
 
@@ -293,7 +300,7 @@ class MatrixAlgorithms {
 
 	void example18() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		
 		Float64MatrixMember b = G.DBL_MAT.construct();
 
@@ -307,7 +314,7 @@ class MatrixAlgorithms {
 
 	void example19() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		
 		Float64MatrixMember b = G.DBL_MAT.construct();
 
@@ -321,7 +328,7 @@ class MatrixAlgorithms {
 	
 	void example20() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
 		
 		Float64MatrixMember b = G.DBL_MAT.construct();
 
@@ -335,8 +342,10 @@ class MatrixAlgorithms {
 	
 	void example22() {
 		
-		Float64MatrixMember a = new Float64MatrixMember(2,2,new double[] {1,2,3,4});
-		Float64MatrixMember b = new Float64MatrixMember(2,2,new double[] {5,6,7,8});
+		Float64MatrixMember a = new Float64MatrixMember(2, 2, new double[] {1,2,3,4});
+		
+		Float64MatrixMember b = new Float64MatrixMember(2, 2, new double[] {5,6,7,8});
+		
 		Float64MatrixMember c = new Float64MatrixMember();
 
 		MatrixSubtraction.compute(G.DBL, a, b, c);
@@ -408,8 +417,7 @@ class MatrixAlgorithms {
 	
 	void example28() {
 		
-		Float64MatrixMember mat = new Float64MatrixMember();
-		mat.reshape(25, 25);
+		Float64MatrixMember mat = new Float64MatrixMember(25, 25);
 
 		Ones.compute(G.DBL, mat);
 		
@@ -433,7 +441,7 @@ class MatrixAlgorithms {
 	@SuppressWarnings("unused")
 	void example30() {
 		
-		MatrixMember<Float64Member> mat = Eye.compute(G.DBL_MAT, 4L, 4L);
+		MatrixMember<Float64Member> mat = Eye.compute(G.DBL_MAT, 4, 4);
 		
 		// mat is [[1,0,0,0]
 		//         [0,1,0,0]

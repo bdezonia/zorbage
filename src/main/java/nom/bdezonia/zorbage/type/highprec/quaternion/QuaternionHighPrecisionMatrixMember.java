@@ -120,6 +120,10 @@ public final class QuaternionHighPrecisionMatrixMember
 		init(d2,d1);
 	}
 
+	public QuaternionHighPrecisionMatrixMember(long rows, long cols) {
+		this(StorageConstruction.MEM_ARRAY, cols, rows);
+	}
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

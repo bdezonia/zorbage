@@ -128,6 +128,10 @@ public final class OctonionFloat16MatrixMember
 		init(d2,d1);
 	}
 	
+	public OctonionFloat16MatrixMember(long rows, long cols) {
+		this(StorageConstruction.MEM_ARRAY, cols, rows);
+	}
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

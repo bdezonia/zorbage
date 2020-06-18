@@ -116,6 +116,10 @@ public final class ComplexHighPrecisionMatrixMember
 		init(d2, d1);
 	}
 	
+	public ComplexHighPrecisionMatrixMember(long rows, long cols) {
+		this(StorageConstruction.MEM_ARRAY, cols, rows);
+	}
+	
 	@Override
 	public StorageConstruction storageType() {
 		return s;
