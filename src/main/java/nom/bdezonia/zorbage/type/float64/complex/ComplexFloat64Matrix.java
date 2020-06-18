@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixConjugateTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
@@ -371,9 +372,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64MatrixMember tmp = new ComplexFloat64MatrixMember();
-			conjugate().call(a, tmp);
-			transpose().call(tmp, b);
+			MatrixConjugateTranspose.compute(G.CDBL, a, b);
 		}
 	};
 

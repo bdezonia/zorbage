@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixConjugateTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
@@ -286,9 +287,7 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
-			OctonionHighPrecisionMatrixMember tmp = new OctonionHighPrecisionMatrixMember();
-			conjugate().call(a, tmp);
-			transpose().call(tmp, b);
+			MatrixConjugateTranspose.compute(G.OHP, a, b);
 		}
 	};
 	

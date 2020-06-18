@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
+import nom.bdezonia.zorbage.algorithm.MatrixConjugateTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
 import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
@@ -368,9 +369,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
-			OctonionFloat16MatrixMember tmp = new OctonionFloat16MatrixMember();
-			conjugate().call(a, tmp);
-			transpose().call(tmp, b);
+			MatrixConjugateTranspose.compute(G.OHLF, a, b);
 		}
 	};
 	
