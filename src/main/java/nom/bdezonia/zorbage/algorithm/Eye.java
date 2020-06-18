@@ -66,6 +66,27 @@ public class Eye {
 	 * 
 	 * @param matAlg
 	 * @param s
+	 * @param rows
+	 * @param cols
+	 * @return
+	 */
+	public static <L extends Algebra<L,M> &
+					Constructible2dLong<M> &
+					Unity<M>,
+					M extends MatrixMember<?>>
+		M compute(L matAlg, long rows, long cols)
+	{
+		if (cols < 1 || rows < 1)
+			throw new IllegalArgumentException("rows/cols must both be greater than 0");
+		M mat = matAlg.construct(StorageConstruction.MEM_ARRAY, cols, rows);
+		matAlg.unity().call(mat);
+		return mat;
+	}
+
+	/**
+	 * 
+	 * @param matAlg
+	 * @param s
 	 * @param sqSz
 	 * @return
 	*/
@@ -76,6 +97,22 @@ public class Eye {
 		M compute(L matAlg, StorageConstruction s, long sqSz)
 	{
 		return compute(matAlg, s, sqSz, sqSz);
+	}
+
+	/**
+	 * 
+	 * @param matAlg
+	 * @param s
+	 * @param sqSz
+	 * @return
+	*/
+	public static <L extends Algebra<L,M> &
+					Constructible2dLong<M> &
+					Unity<M>,
+					M extends MatrixMember<?>>
+		M compute(L matAlg, long sqSz)
+	{
+		return compute(matAlg, sqSz, sqSz);
 	}
 
 }

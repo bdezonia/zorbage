@@ -24,16 +24,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package example;
+package nom.bdezonia.zorbage.algorithm;
+
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
 
 /**
+ * 
  * @author Barry DeZonia
+ *
  */
-class MiscAlgorithms {
+public class MatrixConjugateTranspose {
 
-	// kmeans
-	// ramp fill
-	
-	// sequence algos
-	// within tolerance
+	/**
+	 * 
+	 * @param alg
+	 * @param a
+	 * @param b
+	 */
+	public static <T extends Algebra<T,U> & Conjugate<U>, U>
+		void compute(T alg, MatrixMember<U> a, MatrixMember<U> b)
+	{
+		MatrixTranspose.compute(alg, a, b);
+		MatrixConjugate.compute(alg, b, b);
+	}
 }
