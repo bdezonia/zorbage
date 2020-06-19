@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.storage.array;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
@@ -52,9 +53,7 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 			throw new IllegalArgumentException("ArrayStorageBigInteger can handle at most " + (Integer.MAX_VALUE / type.bigIntegerCount()) + " of the type of requested BigInteger based entities");
 		this.type = type.allocate();
 		this.data = new BigInteger[(int)size * type.bigIntegerCount()];
-		for (int i = 0; i < data.length; i++) {
-			data[i] = BigInteger.ZERO;
-		}
+		Arrays.fill(data, BigInteger.ZERO);
 	}
 
 	@Override

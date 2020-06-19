@@ -32,6 +32,8 @@ import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.Settable;
 
+import java.util.Arrays;
+
 /**
  * {@link IntegerIndex} defines an n-dimensional integer space point. Uses longs as the basis
  * rather than ints;
@@ -105,14 +107,12 @@ public class IntegerIndex
 
 	@Override
 	public void setMax() {
-		for (int i = 0; i < index.length; i++)
-			index[i] = Long.MAX_VALUE;
+		Arrays.fill(index, Long.MAX_VALUE);
 	}
 
 	@Override
 	public void setMin() {
-		for (int i = 0; i < index.length; i++)
-			index[i] = Long.MIN_VALUE;
+		Arrays.fill(index, Long.MIN_VALUE);
 	}
 
 	@Override

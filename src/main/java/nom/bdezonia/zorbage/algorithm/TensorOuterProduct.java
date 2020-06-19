@@ -32,6 +32,8 @@ import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
 
+import java.util.Arrays;
+
 /**
  * 
  * @author Barry DeZonia
@@ -74,9 +76,7 @@ public class TensorOuterProduct {
 		int rankB = b.numDimensions();
 		int rankC = rankA + rankB;
 		long[] cDims = new long[rankC];
-		for (int i = 0; i < cDims.length; i++) {
-			cDims[i] = dimA;
-		}
+		Arrays.fill(cDims, dimA);
 		c.alloc(cDims);
 		NUMBER aTmp = numberAlg.construct();
 		NUMBER bTmp = numberAlg.construct();

@@ -32,6 +32,8 @@ import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.Settable;
 
+import java.util.Arrays;
+
 /**
  * {@link RealIndex} defines an n-dimensional real space point. Uses doubles as the basis
  * rather than floats;
@@ -105,14 +107,12 @@ public class RealIndex
 
 	@Override
 	public void setMax() {
-		for (int i = 0; i < index.length; i++)
-			index[i] = Double.MAX_VALUE;
+		Arrays.fill(index, Double.MAX_VALUE);
 	}
 
 	@Override
 	public void setMin() {
-		for (int i = 0; i < index.length; i++)
-			index[i] = -Double.MAX_VALUE;
+		Arrays.fill(index, -Double.MAX_VALUE);
 	}
 
 	@Override

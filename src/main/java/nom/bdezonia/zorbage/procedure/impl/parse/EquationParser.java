@@ -916,7 +916,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		else if (match(FunctionName.class, tokens, pos)) {
 			FunctionName funcCall = (FunctionName) tokens.get(pos);
 			// 0 arg functions
-			if (funcCall.getText() == "rand") {
+			if (funcCall.getText().equals("rand")) {
 				ParseStatus status = new ParseStatus();
 				if (!(algebra instanceof Random<?>)) {
 					status.errMsg = "Parse error near 'rand' token: randomize not defined for given algebra";

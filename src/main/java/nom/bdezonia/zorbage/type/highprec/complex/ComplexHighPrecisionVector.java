@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.highprec.complex;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -274,8 +275,7 @@ public class ComplexHighPrecisionVector
 				ComplexHighPrecisionVectorMember d)
 		{
 			BigDecimal[] arr = new BigDecimal[3*2];
-			for (int i = 0; i < arr.length; i++)
-				arr[i] = BigDecimal.ZERO;
+			Arrays.fill(arr, BigDecimal.ZERO);
 			ComplexHighPrecisionVectorMember b_cross_c = new ComplexHighPrecisionVectorMember(arr);
 			crossProduct().call(b, c, b_cross_c);
 			crossProduct().call(a, b_cross_c, d);
@@ -296,8 +296,7 @@ public class ComplexHighPrecisionVector
 				ComplexHighPrecisionMember d)
 		{
 			BigDecimal[] arr = new BigDecimal[3*2];
-			for (int i = 0; i < arr.length; i++)
-				arr[i] = BigDecimal.ZERO;
+			Arrays.fill(arr, BigDecimal.ZERO);
 			ComplexHighPrecisionVectorMember b_cross_c = new ComplexHighPrecisionVectorMember(arr);
 			crossProduct().call(b, c, b_cross_c);
 			dotProduct().call(a, b_cross_c, d);

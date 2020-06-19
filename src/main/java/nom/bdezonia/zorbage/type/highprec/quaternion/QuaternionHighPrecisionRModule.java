@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.highprec.quaternion;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -281,8 +282,7 @@ public class QuaternionHighPrecisionRModule
 				QuaternionHighPrecisionRModuleMember c, QuaternionHighPrecisionRModuleMember d)
 		{
 			BigDecimal[] arr = new BigDecimal[3*4];
-			for (int i = 0; i < arr.length; i++)
-				arr[i] = BigDecimal.ZERO;
+			Arrays.fill(arr, BigDecimal.ZERO);
 			QuaternionHighPrecisionRModuleMember b_cross_c = new QuaternionHighPrecisionRModuleMember(arr);
 			crossProduct().call(b, c, b_cross_c);
 			crossProduct().call(a, b_cross_c, d);
@@ -303,8 +303,7 @@ public class QuaternionHighPrecisionRModule
 				QuaternionHighPrecisionRModuleMember c, QuaternionHighPrecisionMember d)
 		{
 			BigDecimal[] arr = new BigDecimal[3*4];
-			for (int i = 0; i < arr.length; i++)
-				arr[i] = BigDecimal.ZERO;
+			Arrays.fill(arr, BigDecimal.ZERO);
 			QuaternionHighPrecisionRModuleMember b_cross_c = new QuaternionHighPrecisionRModuleMember(arr);
 			crossProduct().call(b, c, b_cross_c);
 			dotProduct().call(a, b_cross_c, d);
