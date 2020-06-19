@@ -32,7 +32,7 @@ package example;
 class FftVisualization {
 
 	/*
-	 * Viewing the results of apply the FFT algorithm to an image you choose has been
+	 * Viewing the results of applying the FFT algorithm to an image you choose has been
 	 * implemented as an example to illustrate some of what Zorbage can do. Please see
 	 * the following link for more info:
 	 * 
