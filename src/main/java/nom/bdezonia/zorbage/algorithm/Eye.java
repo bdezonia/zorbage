@@ -65,7 +65,6 @@ public class Eye {
 	/**
 	 * 
 	 * @param matAlg
-	 * @param s
 	 * @param rows
 	 * @param cols
 	 * @return
@@ -102,7 +101,6 @@ public class Eye {
 	/**
 	 * 
 	 * @param matAlg
-	 * @param s
 	 * @param sqSz
 	 * @return
 	*/

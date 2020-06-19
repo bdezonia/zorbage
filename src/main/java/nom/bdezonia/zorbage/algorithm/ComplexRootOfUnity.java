@@ -43,7 +43,7 @@ public class ComplexRootOfUnity {
 	/**
 	 * Compute a root of unity given the order m and suborder n.
 	 * @param m Order of the root. The m'th root of unity.
-	 * @param n Suborder of the root. 1 <= n <= m.
+	 * @param n Suborder of the root. 1 LE n LE m.
 	 * @param root Output value.
 	 */
 	public static

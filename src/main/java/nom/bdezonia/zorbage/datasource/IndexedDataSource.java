@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.algebra.StorageType;
  * 
  * @author Barry DeZonia
  *
- * @param <U></U>
+ * @param <U> the type of data elements that can be pushed to and pulled from the data source
  */
 public interface IndexedDataSource<U>
 	extends Duplicatable<IndexedDataSource<U>>, StorageType

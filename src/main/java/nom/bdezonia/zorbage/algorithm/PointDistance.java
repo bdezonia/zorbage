@@ -47,7 +47,6 @@ public class PointDistance {
 	 * 
 	 * @param a
 	 * @param b
-	 * @return
 	 */
 	public static
 		void compute(Point a, Point b, Float64Member result)

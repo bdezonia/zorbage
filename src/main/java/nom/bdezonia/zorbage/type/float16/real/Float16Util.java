@@ -37,7 +37,7 @@ public class Float16Util {
 	/***
 	 * Convert IEEE single-precision to half-precision (encoded in a short).
 	 * Credit for this goes to [Jeroen van der Zijp](ftp://ftp.fox-toolkit.org/pub/fasthalffloatconversion.pdf).
-	 * Adopted from MIT licensed half library which was implemented by Christian Rau <rauy@users.sourceforge.net>
+	 * Adopted from MIT licensed half library which was implemented by Christian Rau rauy@users.sourceforge.net
 	 * 
 	 * @param value half-precision value to convert
 	 * @return single-precision value
@@ -75,7 +75,7 @@ public class Float16Util {
 	/***
 	 * Convert half-precision to IEEE single-precision.
 	 * Credit for this goes to [Jeroen van der Zijp](ftp://ftp.fox-toolkit.org/pub/fasthalffloatconversion.pdf).
-	 * Adopted from MIT licensed half library which was implemented by Christian Rau <rauy@users.sourceforge.net>
+	 * Adopted from MIT licensed half library which was implemented by Christian Rau rauy@users.sourceforge.net
 	 * 
 	 * @param value single-precision value to convert
 	 * @return half-precision value

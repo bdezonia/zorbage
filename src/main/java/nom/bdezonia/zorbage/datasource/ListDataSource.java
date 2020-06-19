@@ -43,7 +43,7 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 	private final List<U> list;
 
 	/**
-	 * Contract: the List<U> must not contain null elements.
+	 * Contract: the list must not contain null elements.
 	 * 
 	 * @param algebra
 	 * @param list

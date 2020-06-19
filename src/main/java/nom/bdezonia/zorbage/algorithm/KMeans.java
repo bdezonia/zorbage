@@ -47,7 +47,7 @@ public class KMeans {
 	
 	/**
 	 * KMeans.compute()
-	 * Usage: Pass in a list of points (all of the same dimension > 0) that span any region.
+	 * Usage: Pass in a list of points (all of the same dimension greater than 0) that span any region.
 	 *        Pass in a list of ints that will track which points go with which clusters.
 	 *        The two lists must be of the same length.
 	 *        Pass in the number of clusters you want to divide the point set into.
