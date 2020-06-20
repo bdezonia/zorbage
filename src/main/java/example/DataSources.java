@@ -481,7 +481,7 @@ class DataSources {
 	//   If you want you can write a for loop from max to min. But Zorbage does
 	//   provide a ReversedDataSource filter in case you want to pass data in
 	//   reverse order to algorithms or if you want to write straightforward for
-	//   loops and just concentrate on the writing of you algorithm.
+	//   loops and just concentrate on the writing of your algorithm.
 
 	void example12() {
 		
@@ -562,7 +562,7 @@ class DataSources {
 	//   Sometimes you want to calculate a value on a data source that doesn't
 	//   have an appropriate type. You can wrap the data source with a
 	//   TransformedDatSource and do back and forth conversions as necessary.
-	//   The transform needs to use a couple procesdures for translating between
+	//   The transform needs to use a couple procedures for translating between
 	//   types.
 	
 	void example14() {
@@ -602,12 +602,16 @@ class DataSources {
 		// now calculate some results. Notice that Mean can't normally be used on
 		//   integer data
 		
+		// not possible: Integers do not have the correct type of division operator
+		
+		// SignedInt32Member resI = G.INT32.construct();
+		
+		// Mean.compute(G.INT32, list, resI);
+		
+		// with the transformer we can calc mean
+
 		Float64Member result = G.DBL.construct();
 		
-		// not possible:
-		// Mean.compute(G.INT32, list, G.INT32.construct());
-		
-		// possible
 		Mean.compute(G.DBL, xformer, result);
 	}
 	
