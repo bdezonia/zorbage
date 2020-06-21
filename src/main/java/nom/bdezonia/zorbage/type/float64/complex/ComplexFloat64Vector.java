@@ -146,7 +146,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public Boolean call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-			return (Boolean) RModuleEqual.compute(G.CDBL, a, b);
+			return RModuleEqual.compute(G.CDBL, a, b);
 		}
 	};
 
@@ -438,7 +438,7 @@ public class ComplexFloat64Vector
 		return ISZERO;
 	}
 
-	private Procedure3<HighPrecisionMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBHP =
+	private final Procedure3<HighPrecisionMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBHP =
 			new Procedure3<HighPrecisionMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
 	{
 		@Override
@@ -452,7 +452,7 @@ public class ComplexFloat64Vector
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBR =
+	private final Procedure3<RationalMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBR =
 			new Procedure3<RationalMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
 	{
 		@Override
@@ -466,7 +466,7 @@ public class ComplexFloat64Vector
 		return SBR;
 	}
 
-	private Procedure3<Double, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBD =
+	private final Procedure3<Double, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SBD =
 			new Procedure3<Double, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
 	{
 		@Override

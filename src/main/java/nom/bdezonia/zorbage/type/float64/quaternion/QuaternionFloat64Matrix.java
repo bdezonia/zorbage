@@ -260,7 +260,7 @@ public class QuaternionFloat64Matrix
 		return new QuaternionFloat64MatrixMember(s, d1, d2);
 	}
 
-	private Procedure2<QuaternionFloat64MatrixMember,Float64Member> NORM =
+	private final Procedure2<QuaternionFloat64MatrixMember,Float64Member> NORM =
 			new Procedure2<QuaternionFloat64MatrixMember, Float64Member>()
 	{
 		@Override
@@ -764,7 +764,7 @@ public class QuaternionFloat64Matrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
 	{
 		@Override
@@ -778,7 +778,7 @@ public class QuaternionFloat64Matrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBR =
+	private final Procedure3<RationalMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBR =
 			new Procedure3<RationalMember, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
 	{
 		@Override
@@ -792,7 +792,7 @@ public class QuaternionFloat64Matrix
 		return SBR;
 	}
 
-	private Procedure3<Double, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBD =
+	private final Procedure3<Double, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember> SBD =
 			new Procedure3<Double, QuaternionFloat64MatrixMember, QuaternionFloat64MatrixMember>()
 	{
 		@Override

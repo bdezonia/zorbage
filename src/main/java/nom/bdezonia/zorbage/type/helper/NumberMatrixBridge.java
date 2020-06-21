@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
 public class NumberMatrixBridge<U> implements MatrixMember<U> {
 
 	private final U zero;
-	private NumberMember<U> num;
+	private final NumberMember<U> num;
 	
 	public NumberMatrixBridge(Algebra<?,U> algebra, NumberMember<U> num) {
 		this.zero = algebra.construct();

@@ -285,7 +285,7 @@ public final class OctonionHighPrecisionMatrixMember
 		return 1;
 	}
 
-	private static ThreadLocal<OctonionHighPrecisionMember> tmpOct =
+	private static final ThreadLocal<OctonionHighPrecisionMember> tmpOct =
 			new ThreadLocal<OctonionHighPrecisionMember>()
 	{
 		protected OctonionHighPrecisionMember initialValue() {

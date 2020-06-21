@@ -737,7 +737,7 @@ public class Float16Matrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, Float16MatrixMember, Float16MatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, Float16MatrixMember, Float16MatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, Float16MatrixMember, Float16MatrixMember>()
 	{
 		@Override
@@ -751,7 +751,7 @@ public class Float16Matrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, Float16MatrixMember, Float16MatrixMember> SBR =
+	private final Procedure3<RationalMember, Float16MatrixMember, Float16MatrixMember> SBR =
 			new Procedure3<RationalMember, Float16MatrixMember, Float16MatrixMember>()
 	{
 		@Override
@@ -765,7 +765,7 @@ public class Float16Matrix
 		return SBR;
 	}
 
-	private Procedure3<Double, Float16MatrixMember, Float16MatrixMember> SBD =
+	private final Procedure3<Double, Float16MatrixMember, Float16MatrixMember> SBD =
 			new Procedure3<Double, Float16MatrixMember, Float16MatrixMember>()
 	{
 		@Override

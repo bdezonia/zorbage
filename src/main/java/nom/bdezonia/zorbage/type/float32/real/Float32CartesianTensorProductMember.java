@@ -395,7 +395,7 @@ public final class Float32CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<Float32Member> tmpFloat =
+	private static final ThreadLocal<Float32Member> tmpFloat =
 			new ThreadLocal<Float32Member>()
 	{
 		protected Float32Member initialValue() {

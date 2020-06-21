@@ -108,7 +108,7 @@ public class UnsignedInt16Algebra
 		return new UnsignedInt16Member(s);
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> ASSIGN =
+	private final Procedure2<UnsignedInt16Member,UnsignedInt16Member> ASSIGN =
 			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
 	{
 		@Override
@@ -409,7 +409,7 @@ public class UnsignedInt16Algebra
 		return ODD;
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> PRED =
+	private final Procedure2<UnsignedInt16Member,UnsignedInt16Member> PRED =
 			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
 	{
 		@Override
@@ -426,7 +426,7 @@ public class UnsignedInt16Algebra
 		return PRED;
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> SUCC =
+	private final Procedure2<UnsignedInt16Member,UnsignedInt16Member> SUCC =
 			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
 	{
 		@Override
@@ -513,7 +513,7 @@ public class UnsignedInt16Algebra
 		return BITXOR;
 	}
 
-	private Procedure2<UnsignedInt16Member,UnsignedInt16Member> BITNOT =
+	private final Procedure2<UnsignedInt16Member,UnsignedInt16Member> BITNOT =
 			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
 	{
 		@Override

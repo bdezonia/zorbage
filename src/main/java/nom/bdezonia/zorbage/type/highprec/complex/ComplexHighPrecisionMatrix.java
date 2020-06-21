@@ -670,7 +670,7 @@ public class ComplexHighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
 	{
 		@Override
@@ -684,7 +684,7 @@ public class ComplexHighPrecisionMatrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBR =
+	private final Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBR =
 			new Procedure3<RationalMember, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
 	{
 		@Override
@@ -698,7 +698,7 @@ public class ComplexHighPrecisionMatrix
 		return SBR;
 	}
 
-	private Procedure3<Double, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBD =
+	private final Procedure3<Double, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember> SBD =
 			new Procedure3<Double, ComplexHighPrecisionMatrixMember, ComplexHighPrecisionMatrixMember>()
 	{
 		@Override

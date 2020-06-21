@@ -221,7 +221,7 @@ public final class Float32VectorMember
 		return 1;
 	}
 	
-	private static ThreadLocal<Float32Member> tmpFloat =
+	private static final ThreadLocal<Float32Member> tmpFloat =
 			new ThreadLocal<Float32Member>()
 	{
 		protected Float32Member initialValue() {
@@ -628,7 +628,7 @@ public final class Float32VectorMember
 		if (component == 0) {
 			Float32Member tmp = tmpFloat.get();
 			getV(index.get(0), tmp);
-			return (float) tmp.v();
+			return tmp.v();
 		}
 		return 0;
 	}
@@ -818,7 +818,7 @@ public final class Float32VectorMember
 		else {
 			Float32Member tmp = tmpFloat.get();
 			getV(index.get(0), tmp);
-			return (float) tmp.v();
+			return tmp.v();
 		}
 	}
 

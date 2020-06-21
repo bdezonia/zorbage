@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
 public class NumberRModuleBridge<U> implements RModuleMember<U>{
 
 	private final U zero;
-	private NumberMember<U> num;
+	private final NumberMember<U> num;
 	
 	public NumberRModuleBridge(Algebra<?,U> algebra, NumberMember<U> num) {
 		this.zero = algebra.construct();

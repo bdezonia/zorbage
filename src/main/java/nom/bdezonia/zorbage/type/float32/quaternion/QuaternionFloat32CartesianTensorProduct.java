@@ -296,7 +296,7 @@ public class QuaternionFloat32CartesianTensorProduct
 		return SUBSCALAR;
 	}
 
-	private Procedure3<QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> MULEL =
+	private final Procedure3<QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> MULEL =
 			new Procedure3<QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember>()
 	{
 		@Override
@@ -313,7 +313,7 @@ public class QuaternionFloat32CartesianTensorProduct
 		return MULEL;
 	}
 	
-	private Procedure3<QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> DIVIDEEL =
+	private final Procedure3<QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember,QuaternionFloat32CartesianTensorProductMember> DIVIDEEL =
 			new Procedure3<QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember>()
 	{
 		@Override

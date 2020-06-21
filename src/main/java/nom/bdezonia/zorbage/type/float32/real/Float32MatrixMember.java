@@ -256,7 +256,7 @@ public final class Float32MatrixMember
 		return 1;
 	}
 	
-	private static ThreadLocal<Float32Member> tmpFloat =
+	private static final ThreadLocal<Float32Member> tmpFloat =
 			new ThreadLocal<Float32Member>()
 	{
 		protected Float32Member initialValue() {
@@ -727,7 +727,7 @@ public final class Float32MatrixMember
 		if (component == 0) {
 			Float32Member tmp = tmpFloat.get();
 			getV(index.get(1), index.get(0), tmp);
-			return (float) tmp.v();
+			return tmp.v();
 		}
 		return 0;
 	}
@@ -947,7 +947,7 @@ public final class Float32MatrixMember
 		else {
 			Float32Member tmp = tmpFloat.get();
 			getV(index.get(1), index.get(0), tmp);
-			return (float) tmp.v();
+			return tmp.v();
 		}
 	}
 

@@ -395,7 +395,7 @@ public final class Float16CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<Float16Member> tmpFloat =
+	private static final ThreadLocal<Float16Member> tmpFloat =
 			new ThreadLocal<Float16Member>()
 	{
 		protected Float16Member initialValue() {

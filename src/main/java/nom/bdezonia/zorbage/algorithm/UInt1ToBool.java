@@ -57,12 +57,12 @@ public class UInt1ToBool {
 		Transform2.compute(G.UINT1, G.BOOL, converter, ints, bools);
 	}
 
-	private static Procedure2<UnsignedInt1Member,BooleanMember> converter =
+	private static final Procedure2<UnsignedInt1Member,BooleanMember> converter =
 			new Procedure2<UnsignedInt1Member, BooleanMember>()
 	{
 		@Override
 		public void call(UnsignedInt1Member a, BooleanMember b) {
-			b.setV(a.v() == 1 ? true : false);
+			b.setV(a.v() == 1);
 		}
 	};
 }

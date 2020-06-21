@@ -46,7 +46,7 @@ public class Transform1 {
 	 * @param proc
 	 * @param a
 	 */
-	public static final <T extends Algebra<T,U>,U>
+	public static <T extends Algebra<T,U>,U>
 		void compute(T algU, Procedure1<U> proc, IndexedDataSource<U> a)
 	{
 		U value1 = algU.construct();

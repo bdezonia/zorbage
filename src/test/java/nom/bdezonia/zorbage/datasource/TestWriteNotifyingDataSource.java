@@ -69,7 +69,7 @@ public class TestWriteNotifyingDataSource {
 		private boolean seenOne = false;
 		private boolean seenTwo = false;
 		private boolean seenThree = false;
-		private SignedInt32Member tmp = G.INT32.construct();
+		private final SignedInt32Member tmp = G.INT32.construct();
 
 		@Override
 		public void notify(SignedInt32Algebra alegbra, IndexedDataSource<SignedInt32Member> source, long index) {

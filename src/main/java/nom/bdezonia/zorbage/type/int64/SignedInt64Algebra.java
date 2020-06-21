@@ -776,7 +776,7 @@ public class SignedInt64Algebra
 	{
 		@Override
 		public void call(Double a, SignedInt64Member b, SignedInt64Member c) {
-			c.setV((long) Math.round(a * b.v()));
+			c.setV(Math.round(a * b.v()));
 		}
 	};
 

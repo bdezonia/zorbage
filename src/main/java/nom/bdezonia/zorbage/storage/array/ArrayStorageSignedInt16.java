@@ -69,8 +69,7 @@ public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageSignedInt16<U> duplicate() {
 		ArrayStorageSignedInt16<U> s = new ArrayStorageSignedInt16<U>(size(),type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 

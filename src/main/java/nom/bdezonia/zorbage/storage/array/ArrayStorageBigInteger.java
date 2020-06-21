@@ -74,8 +74,7 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageBigInteger<U> duplicate() {
 		ArrayStorageBigInteger<U> s = new ArrayStorageBigInteger<U>(size(), type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 

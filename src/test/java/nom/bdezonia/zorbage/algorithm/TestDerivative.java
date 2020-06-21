@@ -55,7 +55,7 @@ public class TestDerivative {
 		assertEquals(8, result.v(), 0.00001);
 	}
 	
-	private Procedure2<Float64Member,Float64Member> eqn = new Procedure2<Float64Member, Float64Member>() {
+	private final Procedure2<Float64Member,Float64Member> eqn = new Procedure2<Float64Member, Float64Member>() {
 		
 		@Override
 		public void call(Float64Member a, Float64Member b) {

@@ -140,12 +140,12 @@ public class QuaternionHighPrecisionRModule
 		return SUB;
 	}
 
-	private Function2<Boolean,QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionRModuleMember> EQ =
+	private final Function2<Boolean,QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionRModuleMember> EQ =
 			new Function2<Boolean, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
 	{
 		@Override
 		public Boolean call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
-			return (Boolean) RModuleEqual.compute(G.QHP, a, b);
+			return RModuleEqual.compute(G.QHP, a, b);
 		}
 	};
 	
@@ -377,7 +377,7 @@ public class QuaternionHighPrecisionRModule
 		return ISZERO;
 	}
 
-	private Procedure3<HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBHP =
+	private final Procedure3<HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBHP =
 			new Procedure3<HighPrecisionMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
 	{
 		@Override
@@ -391,7 +391,7 @@ public class QuaternionHighPrecisionRModule
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBR =
+	private final Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBR =
 			new Procedure3<RationalMember, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
 	{
 		@Override
@@ -405,7 +405,7 @@ public class QuaternionHighPrecisionRModule
 		return SBR;
 	}
 
-	private Procedure3<Double, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBD =
+	private final Procedure3<Double, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> SBD =
 			new Procedure3<Double, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember>()
 	{
 		@Override

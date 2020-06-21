@@ -144,7 +144,7 @@ public class Float32Vector
 	{
 		@Override
 		public Boolean call(Float32VectorMember a, Float32VectorMember b) {
-			return (Boolean) RModuleEqual.compute(G.FLT, a, b);
+			return RModuleEqual.compute(G.FLT, a, b);
 		}
 	};
 
@@ -201,7 +201,7 @@ public class Float32Vector
 		return ASSIGN;
 	}
 
-	private Procedure2<Float32VectorMember,Float32Member> NORM =
+	private final Procedure2<Float32VectorMember,Float32Member> NORM =
 			new Procedure2<Float32VectorMember, Float32Member>()
 	{
 		@Override
@@ -422,7 +422,7 @@ public class Float32Vector
 		return ISZERO;
 	}
 
-	private Procedure3<HighPrecisionMember, Float32VectorMember, Float32VectorMember> SBHP =
+	private final Procedure3<HighPrecisionMember, Float32VectorMember, Float32VectorMember> SBHP =
 			new Procedure3<HighPrecisionMember, Float32VectorMember, Float32VectorMember>()
 	{
 		@Override
@@ -436,7 +436,7 @@ public class Float32Vector
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, Float32VectorMember, Float32VectorMember> SBR =
+	private final Procedure3<RationalMember, Float32VectorMember, Float32VectorMember> SBR =
 			new Procedure3<RationalMember, Float32VectorMember, Float32VectorMember>()
 	{
 		@Override
@@ -450,7 +450,7 @@ public class Float32Vector
 		return SBR;
 	}
 
-	private Procedure3<Double, Float32VectorMember, Float32VectorMember> SBD =
+	private final Procedure3<Double, Float32VectorMember, Float32VectorMember> SBD =
 			new Procedure3<Double, Float32VectorMember, Float32VectorMember>()
 	{
 		@Override

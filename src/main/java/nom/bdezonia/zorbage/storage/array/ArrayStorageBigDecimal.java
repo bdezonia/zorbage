@@ -74,8 +74,7 @@ public class ArrayStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageBigDecimal<U> duplicate() {
 		ArrayStorageBigDecimal<U> s = new ArrayStorageBigDecimal<U>(size(), type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 

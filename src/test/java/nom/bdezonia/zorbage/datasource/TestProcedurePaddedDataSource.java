@@ -73,7 +73,7 @@ public class TestProcedurePaddedDataSource {
 		assertEquals(-1000, value.v());
 	}
 	
-	private Procedure2<Long,SignedInt64Member> func = new Procedure2<Long, SignedInt64Member>()
+	private final Procedure2<Long,SignedInt64Member> func = new Procedure2<Long, SignedInt64Member>()
 	{
 		@Override
 		public void call(Long a, SignedInt64Member b) {

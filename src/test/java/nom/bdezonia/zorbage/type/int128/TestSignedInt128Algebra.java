@@ -43,11 +43,11 @@ import nom.bdezonia.zorbage.storage.array.ArrayStorage;
  */
 public class TestSignedInt128Algebra {
 
-	BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
-	BigInteger TWO127 = TWO.pow(127);
-	BigInteger TWO128 = TWO.pow(128);
-	BigInteger MIN = TWO127.negate();
-	BigInteger MAX = TWO127.subtract(BigInteger.ONE);
+	final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
+	final BigInteger TWO127 = TWO.pow(127);
+	final BigInteger TWO128 = TWO.pow(128);
+	final BigInteger MIN = TWO127.negate();
+	final BigInteger MAX = TWO127.subtract(BigInteger.ONE);
 	
 	@Test
 	public void testStorageMethods() {

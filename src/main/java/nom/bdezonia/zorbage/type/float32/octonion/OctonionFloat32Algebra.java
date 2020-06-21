@@ -367,7 +367,7 @@ public class OctonionFloat32Algebra
 		return SUB;
 	}
 
-	private Function2<Boolean,OctonionFloat32Member,OctonionFloat32Member> EQ =
+	private final Function2<Boolean,OctonionFloat32Member,OctonionFloat32Member> EQ =
 			new Function2<Boolean, OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
@@ -382,7 +382,7 @@ public class OctonionFloat32Algebra
 		return EQ;
 	}
 
-	private Function2<Boolean,OctonionFloat32Member,OctonionFloat32Member> NEQ =
+	private final Function2<Boolean,OctonionFloat32Member,OctonionFloat32Member> NEQ =
 			new Function2<Boolean, OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
@@ -411,7 +411,7 @@ public class OctonionFloat32Algebra
 		return new OctonionFloat32Member(s);
 	}
 
-	private Procedure2<OctonionFloat32Member,OctonionFloat32Member> ASSIGN =
+	private final Procedure2<OctonionFloat32Member,OctonionFloat32Member> ASSIGN =
 			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
@@ -425,7 +425,7 @@ public class OctonionFloat32Algebra
 		return ASSIGN;
 	}
 
-	private Procedure2<OctonionFloat32Member,OctonionFloat32Member> INV =
+	private final Procedure2<OctonionFloat32Member,OctonionFloat32Member> INV =
 			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
@@ -502,7 +502,7 @@ public class OctonionFloat32Algebra
 		return ROUND;
 	}
 
-	private Function1<Boolean,OctonionFloat32Member> ISNAN =
+	private final Function1<Boolean,OctonionFloat32Member> ISNAN =
 			new Function1<Boolean, OctonionFloat32Member>()
 	{
 		@Override
@@ -538,7 +538,7 @@ public class OctonionFloat32Algebra
 		return NAN;
 	}
 
-	private Function1<Boolean,OctonionFloat32Member> ISINF =
+	private final Function1<Boolean,OctonionFloat32Member> ISINF =
 			new Function1<Boolean, OctonionFloat32Member>()
 	{
 		@Override
@@ -620,7 +620,7 @@ public class OctonionFloat32Algebra
 		return norm * norm;
 	}
 
-	private Procedure2<OctonionFloat32Member,OctonionFloat32Member> CONJ =
+	private final Procedure2<OctonionFloat32Member,OctonionFloat32Member> CONJ =
 			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
@@ -831,7 +831,7 @@ public class OctonionFloat32Algebra
 		return REAL;
 	}
 	
-	private Procedure2<OctonionFloat32Member,OctonionFloat32Member> UNREAL =
+	private final Procedure2<OctonionFloat32Member,OctonionFloat32Member> UNREAL =
 			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
@@ -871,7 +871,7 @@ public class OctonionFloat32Algebra
 		return SINH;
 	}
 
-	private Procedure2<OctonionFloat32Member,OctonionFloat32Member> COSH =
+	private final Procedure2<OctonionFloat32Member,OctonionFloat32Member> COSH =
 			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override

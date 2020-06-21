@@ -221,7 +221,7 @@ public final class Float64VectorMember
 		return 1;
 	}
 	
-	private static ThreadLocal<Float64Member> tmpFloat =
+	private static final ThreadLocal<Float64Member> tmpFloat =
 			new ThreadLocal<Float64Member>()
 	{
 		protected Float64Member initialValue() {

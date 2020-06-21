@@ -726,7 +726,7 @@ public class ComplexFloat64Algebra
 		return COS;
 	}
 
-	private Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> SINCOS =
+	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> SINCOS =
 			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
 	{
 		@Override
@@ -1211,7 +1211,7 @@ public class ComplexFloat64Algebra
 		return RAND;
 	}
 
-	private Procedure2<ComplexFloat64Member,Float64Member> REAL =
+	private final Procedure2<ComplexFloat64Member,Float64Member> REAL =
 			new Procedure2<ComplexFloat64Member, Float64Member>()
 	{
 		@Override
@@ -1225,7 +1225,7 @@ public class ComplexFloat64Algebra
 		return REAL;
 	}
 
-	private Procedure2<ComplexFloat64Member,ComplexFloat64Member> UNREAL =
+	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> UNREAL =
 			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
 	{
 		@Override

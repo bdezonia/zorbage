@@ -296,7 +296,7 @@ public class ComplexFloat16CartesianTensorProduct
 		return SUBSCALAR;
 	}
 
-	private Procedure3<ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember> MULEL =
+	private final Procedure3<ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember> MULEL =
 			new Procedure3<ComplexFloat16CartesianTensorProductMember, ComplexFloat16CartesianTensorProductMember, ComplexFloat16CartesianTensorProductMember>()
 	{
 		@Override
@@ -313,7 +313,7 @@ public class ComplexFloat16CartesianTensorProduct
 		return MULEL;
 	}
 	
-	private Procedure3<ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember> DIVIDEEL =
+	private final Procedure3<ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember,ComplexFloat16CartesianTensorProductMember> DIVIDEEL =
 			new Procedure3<ComplexFloat16CartesianTensorProductMember, ComplexFloat16CartesianTensorProductMember, ComplexFloat16CartesianTensorProductMember>()
 	{
 		@Override

@@ -75,7 +75,7 @@ public class TestMap {
 		
 	}
 	
-	private Procedure2<SignedInt32Member, Float64Member> proc =
+	private final Procedure2<SignedInt32Member, Float64Member> proc =
 			new Procedure2<SignedInt32Member, Float64Member>()
 	{
 		@Override

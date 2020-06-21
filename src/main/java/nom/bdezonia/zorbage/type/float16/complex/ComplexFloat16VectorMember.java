@@ -226,7 +226,7 @@ public final class ComplexFloat16VectorMember
 		return 1;
 	}
 	
-	private static ThreadLocal<ComplexFloat16Member> tmpComp =
+	private static final ThreadLocal<ComplexFloat16Member> tmpComp =
 			new ThreadLocal<ComplexFloat16Member>()
 	{
 		protected ComplexFloat16Member initialValue() {
@@ -693,8 +693,8 @@ public final class ComplexFloat16VectorMember
 		if (component > 1) return 0;
 		ComplexFloat16Member tmp = tmpComp.get();
 		getV(index.get(0), tmp);
-		if (component == 0) return (float) tmp.r();
-		return (float) tmp.i();
+		if (component == 0) return tmp.r();
+		return tmp.i();
 	}
 
 	@Override
@@ -883,8 +883,8 @@ public final class ComplexFloat16VectorMember
 		else {
 			ComplexFloat16Member tmp = tmpComp.get();
 			getV(index.get(0), tmp);
-			if (component == 0) return (float) tmp.r();
-			return (float) tmp.i();
+			if (component == 0) return tmp.r();
+			return tmp.i();
 		}
 	}
 

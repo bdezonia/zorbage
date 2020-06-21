@@ -736,7 +736,7 @@ public class ComplexHighPrecisionAlgebra
 		return COS;
 	}
 
-	private Procedure3<ComplexHighPrecisionMember,ComplexHighPrecisionMember,ComplexHighPrecisionMember> SINCOS =
+	private final Procedure3<ComplexHighPrecisionMember,ComplexHighPrecisionMember,ComplexHighPrecisionMember> SINCOS =
 			new Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
 	{
 		@Override
@@ -1149,7 +1149,7 @@ public class ComplexHighPrecisionAlgebra
 		return POW;
 	}
 
-	private Procedure2<ComplexHighPrecisionMember,HighPrecisionMember> REAL =
+	private final Procedure2<ComplexHighPrecisionMember,HighPrecisionMember> REAL =
 			new Procedure2<ComplexHighPrecisionMember, HighPrecisionMember>()
 	{
 		@Override
@@ -1163,7 +1163,7 @@ public class ComplexHighPrecisionAlgebra
 		return REAL;
 	}
 
-	private Procedure2<ComplexHighPrecisionMember,ComplexHighPrecisionMember> UNREAL =
+	private final Procedure2<ComplexHighPrecisionMember,ComplexHighPrecisionMember> UNREAL =
 			new Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
 	{
 		@Override

@@ -337,7 +337,7 @@ public class Float16Algebra
 		return SIG;
 	}
 
-	private Procedure1<Float16Member> MAXB =
+	private final Procedure1<Float16Member> MAXB =
 			new Procedure1<Float16Member>()
 	{
 		@Override
@@ -351,7 +351,7 @@ public class Float16Algebra
 		return MAXB;
 	}
 
-	private Procedure1<Float16Member> MINB =
+	private final Procedure1<Float16Member> MINB =
 			new Procedure1<Float16Member>()
 	{
 		@Override
@@ -508,7 +508,7 @@ public class Float16Algebra
 		return EXPM1;
 	}
 
-	private Procedure2<Float16Member,Float16Member> LOG =
+	private final Procedure2<Float16Member,Float16Member> LOG =
 			new Procedure2<Float16Member, Float16Member>()
 	{	
 		@Override
@@ -578,7 +578,7 @@ public class Float16Algebra
 		return SINCOS;
 	}
 
-	private Procedure2<Float16Member,Float16Member> TAN =
+	private final Procedure2<Float16Member,Float16Member> TAN =
 			new Procedure2<Float16Member, Float16Member>()
 	{	
 		@Override
@@ -594,7 +594,7 @@ public class Float16Algebra
 
 	// ref: internet
 
-	private Procedure2<Float16Member,Float16Member> CSC =
+	private final Procedure2<Float16Member,Float16Member> CSC =
 			new Procedure2<Float16Member, Float16Member>()
 	{	
 		@Override
@@ -610,7 +610,7 @@ public class Float16Algebra
 	
 	// ref: internet
 
-	private Procedure2<Float16Member,Float16Member> SEC =
+	private final Procedure2<Float16Member,Float16Member> SEC =
 			new Procedure2<Float16Member, Float16Member>()
 	{	
 		@Override
@@ -626,7 +626,7 @@ public class Float16Algebra
 	
 	// ref: internet
 
-	private Procedure2<Float16Member,Float16Member> COT =
+	private final Procedure2<Float16Member,Float16Member> COT =
 			new Procedure2<Float16Member, Float16Member>()
 	{	
 		@Override
@@ -640,7 +640,7 @@ public class Float16Algebra
 		return COT;
 	}
 	
-	private Procedure2<Float16Member,Float16Member> COSH =
+	private final Procedure2<Float16Member,Float16Member> COSH =
 			new Procedure2<Float16Member, Float16Member>()
 	{
 		@Override
@@ -654,7 +654,7 @@ public class Float16Algebra
 		return COSH;
 	}
 
-	private Procedure2<Float16Member,Float16Member> SINH =
+	private final Procedure2<Float16Member,Float16Member> SINH =
 			new Procedure2<Float16Member, Float16Member>()
 	{
 		@Override

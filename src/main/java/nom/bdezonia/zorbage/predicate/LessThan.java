@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.algebra.Ordered;
 public class LessThan<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Predicate<Tuple2<U,U>>
 {
-	private T algebra;
+	private final T algebra;
 	
 	public LessThan(T algebra) {
 		this.algebra = algebra;

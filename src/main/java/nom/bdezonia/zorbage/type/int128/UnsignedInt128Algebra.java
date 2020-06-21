@@ -119,7 +119,7 @@ public class UnsignedInt128Algebra
 		return NEQ;
 	}
 
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> ASSIGN =
+	private final Procedure2<UnsignedInt128Member,UnsignedInt128Member> ASSIGN =
 			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
 	{
 		@Override
@@ -133,7 +133,7 @@ public class UnsignedInt128Algebra
 		return ASSIGN;
 	}
 
-	private Procedure1<UnsignedInt128Member> ZER =
+	private final Procedure1<UnsignedInt128Member> ZER =
 			new Procedure1<UnsignedInt128Member>()
 	{
 		
@@ -245,7 +245,7 @@ public class UnsignedInt128Algebra
 		return POWER;
 	}
 
-	private Procedure1<UnsignedInt128Member> UNITY =
+	private final Procedure1<UnsignedInt128Member> UNITY =
 			new Procedure1<UnsignedInt128Member>()
 	{
 		
@@ -519,7 +519,7 @@ public class UnsignedInt128Algebra
 		return ODD;
 	}
 
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> PRED =
+	private final Procedure2<UnsignedInt128Member,UnsignedInt128Member> PRED =
 			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
 	{
 		@Override
@@ -533,7 +533,7 @@ public class UnsignedInt128Algebra
 		return PRED;
 	}
 
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> SUCC =
+	private final Procedure2<UnsignedInt128Member,UnsignedInt128Member> SUCC =
 			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
 	{
 		@Override
@@ -569,7 +569,7 @@ public class UnsignedInt128Algebra
 		return POW;
 	}
 
-	private Procedure1<UnsignedInt128Member> RAND =
+	private final Procedure1<UnsignedInt128Member> RAND =
 			new Procedure1<UnsignedInt128Member>()
 	{
 		@Override
@@ -635,7 +635,7 @@ public class UnsignedInt128Algebra
 		return BITXOR;
 	}
 
-	private Procedure2<UnsignedInt128Member,UnsignedInt128Member> BITNOT =
+	private final Procedure2<UnsignedInt128Member,UnsignedInt128Member> BITNOT =
 			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
 	{
 		@Override
@@ -722,7 +722,7 @@ public class UnsignedInt128Algebra
 		return BITSHRZ;
 	}
 
-	private Procedure1<UnsignedInt128Member> MAXBOUND =
+	private final Procedure1<UnsignedInt128Member> MAXBOUND =
 			new Procedure1<UnsignedInt128Member>()
 	{
 		@Override
@@ -737,7 +737,7 @@ public class UnsignedInt128Algebra
 		return MAXBOUND;
 	}
 
-	private Procedure1<UnsignedInt128Member> MINBOUND =
+	private final Procedure1<UnsignedInt128Member> MINBOUND =
 			new Procedure1<UnsignedInt128Member>()
 	{
 		@Override

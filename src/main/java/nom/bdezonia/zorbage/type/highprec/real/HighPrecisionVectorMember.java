@@ -221,7 +221,7 @@ public final class HighPrecisionVectorMember
 		return 1;
 	}
 	
-	private static ThreadLocal<HighPrecisionMember> tmpHP =
+	private static final ThreadLocal<HighPrecisionMember> tmpHP =
 			new ThreadLocal<HighPrecisionMember>()
 	{
 		protected HighPrecisionMember initialValue() {

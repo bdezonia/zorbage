@@ -446,7 +446,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<OctonionFloat16Member> tmpOct =
+	private static final ThreadLocal<OctonionFloat16Member> tmpOct =
 			new ThreadLocal<OctonionFloat16Member>()
 	{
 		protected OctonionFloat16Member initialValue() {

@@ -47,7 +47,7 @@ public class RedBlackTree<T> {
 	}
 
 	Node root;
-	Node nil;
+	final Node nil;
 
 	private Node nilNode() {
 		Node nil = new Node();

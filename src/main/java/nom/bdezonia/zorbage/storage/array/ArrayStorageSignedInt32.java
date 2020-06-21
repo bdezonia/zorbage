@@ -69,8 +69,7 @@ public class ArrayStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageSignedInt32<U> duplicate() {
 		ArrayStorageSignedInt32<U> s = new ArrayStorageSignedInt32<U>(size(), type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 

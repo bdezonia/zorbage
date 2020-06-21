@@ -261,7 +261,7 @@ public final class ComplexHighPrecisionMatrixMember
 		return 1;
 	}
 	
-	private static ThreadLocal<ComplexHighPrecisionMember> tmpComp =
+	private static final ThreadLocal<ComplexHighPrecisionMember> tmpComp =
 			new ThreadLocal<ComplexHighPrecisionMember>()
 	{
 		protected ComplexHighPrecisionMember initialValue() {

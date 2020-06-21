@@ -655,7 +655,7 @@ public class HighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember>()
 	{
 		@Override
@@ -669,7 +669,7 @@ public class HighPrecisionMatrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBR =
+	private final Procedure3<RationalMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBR =
 			new Procedure3<RationalMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember>()
 	{
 		@Override
@@ -683,7 +683,7 @@ public class HighPrecisionMatrix
 		return SBR;
 	}
 
-	private Procedure3<Double, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBD =
+	private final Procedure3<Double, HighPrecisionMatrixMember, HighPrecisionMatrixMember> SBD =
 			new Procedure3<Double, HighPrecisionMatrixMember, HighPrecisionMatrixMember>()
 	{
 		@Override

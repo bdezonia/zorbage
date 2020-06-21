@@ -58,7 +58,7 @@ public class BoolToUInt1 {
 		Transform2.compute(G.BOOL, G.UINT1, converter, bools, ints);
 	}
 	
-	private static Procedure2<BooleanMember,UnsignedInt1Member> converter =
+	private static final Procedure2<BooleanMember,UnsignedInt1Member> converter =
 			new Procedure2<BooleanMember, UnsignedInt1Member>()
 	{
 		@Override

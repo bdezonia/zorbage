@@ -443,7 +443,7 @@ public class QuaternionFloat64Algebra
 		return K_;
 	}
 
-	private Procedure4<Round.Mode,Float64Member,QuaternionFloat64Member,QuaternionFloat64Member> ROUND =
+	private final Procedure4<Round.Mode,Float64Member,QuaternionFloat64Member,QuaternionFloat64Member> ROUND =
 			new Procedure4<Round.Mode, Float64Member, QuaternionFloat64Member, QuaternionFloat64Member>()
 	{
 		@Override
@@ -469,7 +469,7 @@ public class QuaternionFloat64Algebra
 		return ROUND;
 	}
 
-	private Function1<Boolean,QuaternionFloat64Member> ISNAN =
+	private final Function1<Boolean,QuaternionFloat64Member> ISNAN =
 			new Function1<Boolean, QuaternionFloat64Member>()
 	{
 		@Override
@@ -500,7 +500,7 @@ public class QuaternionFloat64Algebra
 		return NAN;
 	}
 	
-	private Function1<Boolean,QuaternionFloat64Member> ISINF =
+	private final Function1<Boolean,QuaternionFloat64Member> ISINF =
 			new Function1<Boolean, QuaternionFloat64Member>()
 	{
 		@Override

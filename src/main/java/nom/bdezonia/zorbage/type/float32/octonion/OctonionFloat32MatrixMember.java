@@ -285,7 +285,7 @@ public final class OctonionFloat32MatrixMember
 		return 1;
 	}
 
-	private static ThreadLocal<OctonionFloat32Member> tmpOct =
+	private static final ThreadLocal<OctonionFloat32Member> tmpOct =
 			new ThreadLocal<OctonionFloat32Member>()
 	{
 		protected OctonionFloat32Member initialValue() {
@@ -1388,32 +1388,32 @@ public final class OctonionFloat32MatrixMember
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return (float) tmp.r();
+					return tmp.r();
 				else // component == 1
-					return (float) tmp.i();
+					return tmp.i();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return (float) tmp.j();
+					return tmp.j();
 				else // component == 3
-					return (float) tmp.k();
+					return tmp.k();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return (float) tmp.l();
+					return tmp.l();
 				else // component == 5
-					return (float) tmp.i0();
+					return tmp.i0();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return (float) tmp.j0();
+					return tmp.j0();
 				else // component == 7
-					return (float) tmp.k0();
+					return tmp.k0();
 			}
 		}
 	}
@@ -1848,32 +1848,32 @@ public final class OctonionFloat32MatrixMember
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return (float) tmp.r();
+						return tmp.r();
 					else // component == 1
-						return (float) tmp.i();
+						return tmp.i();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return (float) tmp.j();
+						return tmp.j();
 					else // component == 3
-						return (float) tmp.k();
+						return tmp.k();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return (float) tmp.l();
+						return tmp.l();
 					else // component == 5
-						return (float) tmp.i0();
+						return tmp.i0();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return (float) tmp.j0();
+						return tmp.j0();
 					else // component == 7
-						return (float) tmp.k0();
+						return tmp.k0();
 				}
 			}
 		}

@@ -64,7 +64,7 @@ public class TensorContract {
 	public static <M extends Algebra<M,NUMBER> & Addition<NUMBER>, NUMBER>
 		void compute(M numberAlg, Integer aRank, Integer i, Integer j, TensorMember<NUMBER> a, TensorMember<NUMBER> b)
 	{
-		if (i == j)
+		if ((int)i == (int)j)
 			throw new IllegalArgumentException("cannot contract along a single axis");
 		if (i < 0 || j < 0)
 			throw new IllegalArgumentException("negative contraction indices given");

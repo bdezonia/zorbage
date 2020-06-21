@@ -325,7 +325,7 @@ public class RationalAlgebra
 		return INV;
 	}
 
-	private Function2<Boolean, RationalMember, RationalMember> LESS =
+	private final Function2<Boolean, RationalMember, RationalMember> LESS =
 			new Function2<Boolean, RationalMember, RationalMember>()
 	{
 		@Override
@@ -339,7 +339,7 @@ public class RationalAlgebra
 		return LESS;
 	}
 
-	private Function2<Boolean, RationalMember, RationalMember> LEQ =
+	private final Function2<Boolean, RationalMember, RationalMember> LEQ =
 			new Function2<Boolean, RationalMember, RationalMember>()
 	{
 		@Override
@@ -353,7 +353,7 @@ public class RationalAlgebra
 		return LEQ;
 	}
 
-	private Function2<Boolean, RationalMember, RationalMember> GREAT =
+	private final Function2<Boolean, RationalMember, RationalMember> GREAT =
 			new Function2<Boolean, RationalMember, RationalMember>()
 	{
 		@Override
@@ -367,7 +367,7 @@ public class RationalAlgebra
 		return GREAT;
 	}
 
-	private Function2<Boolean, RationalMember, RationalMember> GEQ =
+	private final Function2<Boolean, RationalMember, RationalMember> GEQ =
 			new Function2<Boolean, RationalMember, RationalMember>()
 	{
 		@Override

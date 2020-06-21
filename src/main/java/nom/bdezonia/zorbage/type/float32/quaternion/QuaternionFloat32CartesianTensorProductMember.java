@@ -422,7 +422,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<QuaternionFloat32Member> tmpQuat =
+	private static final ThreadLocal<QuaternionFloat32Member> tmpQuat =
 			new ThreadLocal<QuaternionFloat32Member>()
 	{
 		protected QuaternionFloat32Member initialValue() {

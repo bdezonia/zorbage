@@ -140,7 +140,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public Boolean call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
-			return (Boolean) RModuleEqual.compute(G.CHP, a, b);
+			return RModuleEqual.compute(G.CHP, a, b);
 		}
 	};
 
@@ -366,7 +366,7 @@ public class ComplexHighPrecisionVector
 		return ISZERO;
 	}
 
-	private Procedure3<HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBHP =
+	private final Procedure3<HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBHP =
 			new Procedure3<HighPrecisionMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
 	{
 		@Override
@@ -380,7 +380,7 @@ public class ComplexHighPrecisionVector
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBR =
+	private final Procedure3<RationalMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBR =
 			new Procedure3<RationalMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
 	{
 		@Override
@@ -394,7 +394,7 @@ public class ComplexHighPrecisionVector
 		return SBR;
 	}
 
-	private Procedure3<Double, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBD =
+	private final Procedure3<Double, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SBD =
 			new Procedure3<Double, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
 	{
 		@Override

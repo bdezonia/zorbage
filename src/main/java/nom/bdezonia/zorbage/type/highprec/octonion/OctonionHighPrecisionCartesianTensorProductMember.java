@@ -450,7 +450,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<OctonionHighPrecisionMember> tmpOct =
+	private static final ThreadLocal<OctonionHighPrecisionMember> tmpOct =
 			new ThreadLocal<OctonionHighPrecisionMember>()
 	{
 		protected OctonionHighPrecisionMember initialValue() {
@@ -1508,15 +1508,15 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return (long) tmp.r().longValue();
+						return tmp.r().longValue();
 					else
-						return (long) tmp.i().longValue();
+						return tmp.i().longValue();
 				}
 				else { // component >= 2
 					if (component == 2)
-						return (long) tmp.j().longValue();
+						return tmp.j().longValue();
 					else
-						return (long) tmp.k().longValue();
+						return tmp.k().longValue();
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7

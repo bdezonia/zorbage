@@ -46,7 +46,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	
 	public ArrayStorageBit(long size, U type) {
 	
-		final long maxElements = 64l * Integer.MAX_VALUE / type.bitCount();
+		final long maxElements = 64L * Integer.MAX_VALUE / type.bitCount();
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
 		if (size > maxElements)
@@ -87,8 +87,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	public ArrayStorageBit<U> duplicate() {
 		ArrayStorageBit<U> s = new ArrayStorageBit<U>(size(), type);
 		synchronized (data) {
-			for (int i = 0; i < data.length; i++)
-				s.data[i] = data[i];
+			System.arraycopy(data, 0, s.data, 0, data.length);
 		}
 		return s;
 	}

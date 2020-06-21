@@ -41,8 +41,8 @@ import nom.bdezonia.zorbage.algebra.TensorMember;
 public class SubTensorBridge<U> implements TensorMember<U> {
 
 	private final TensorMember<U> tensor;
-	private int[] rangingDims;
-	private long[] rangingOffsets;
+	private final int[] rangingDims;
+	private final long[] rangingOffsets;
 	private final U zero;
 	private final IntegerIndex index;
 

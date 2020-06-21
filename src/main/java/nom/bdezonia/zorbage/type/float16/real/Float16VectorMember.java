@@ -221,7 +221,7 @@ public final class Float16VectorMember
 		return 1;
 	}
 	
-	private static ThreadLocal<Float16Member> tmpFloat =
+	private static final ThreadLocal<Float16Member> tmpFloat =
 			new ThreadLocal<Float16Member>()
 	{
 		protected Float16Member initialValue() {
@@ -628,7 +628,7 @@ public final class Float16VectorMember
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
 			getV(index.get(0), tmp);
-			return (float) tmp.v();
+			return tmp.v();
 		}
 		return 0;
 	}
@@ -818,7 +818,7 @@ public final class Float16VectorMember
 		else {
 			Float16Member tmp = tmpFloat.get();
 			getV(index.get(0), tmp);
-			return (float) tmp.v();
+			return tmp.v();
 		}
 	}
 

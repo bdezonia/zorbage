@@ -43,9 +43,9 @@ import nom.bdezonia.zorbage.storage.array.ArrayStorage;
  */
 public class TestUnsignedInt128 {
 
-	BigInteger two = BigInteger.valueOf(2);
-	BigInteger two128 = two.pow(128);
-	BigInteger two128minus1 = two128.subtract(BigInteger.ONE);
+	final BigInteger two = BigInteger.valueOf(2);
+	final BigInteger two128 = two.pow(128);
+	final BigInteger two128minus1 = two128.subtract(BigInteger.ONE);
 	
 	@Test
 	public void testStorageMethods() {
@@ -223,7 +223,7 @@ public class TestUnsignedInt128 {
 				G.UINT128.bitXor().call(a, b, c);
 				assertEquals(bigA.xor(bigB).and(two128minus1), c.v());
 				
-				assertEquals((long)bigA.compareTo(bigB),(long) G.UINT128.compare().call(a, b));
+				assertEquals(bigA.compareTo(bigB),(long) G.UINT128.compare().call(a, b));
 				
 				UnsignedInt128Member v = G.UINT128.construct();
 				assertEquals(BigInteger.ZERO, v.v());

@@ -54,7 +54,7 @@ public class TestNewtonRaphson {
 			fail();
 	}
 	
-	private Procedure2<Float64Member, Float64Member> eqn = new Procedure2<Float64Member, Float64Member>() {
+	private final Procedure2<Float64Member, Float64Member> eqn = new Procedure2<Float64Member, Float64Member>() {
 		
 		@Override
 		public void call(Float64Member a, Float64Member b) {

@@ -261,7 +261,7 @@ public final class ComplexFloat32MatrixMember
 		return 1;
 	}
 	
-	private static ThreadLocal<ComplexFloat32Member> tmpComp =
+	private static final ThreadLocal<ComplexFloat32Member> tmpComp =
 			new ThreadLocal<ComplexFloat32Member>()
 	{
 		protected ComplexFloat32Member initialValue() {
@@ -792,8 +792,8 @@ public final class ComplexFloat32MatrixMember
 		if (component > 1) return 0;
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index.get(1), index.get(0), tmp);
-		if (component == 0) return (float) tmp.r();
-		return (float) tmp.i();
+		if (component == 0) return tmp.r();
+		return tmp.i();
 	}
 
 	@Override
@@ -1012,8 +1012,8 @@ public final class ComplexFloat32MatrixMember
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index.get(1), index.get(0), tmp);
-			if (component == 0) return (float) tmp.r();
-			return (float) tmp.i();
+			if (component == 0) return tmp.r();
+			return tmp.i();
 		}
 	}
 

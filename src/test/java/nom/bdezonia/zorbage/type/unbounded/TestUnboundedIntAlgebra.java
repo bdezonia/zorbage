@@ -236,14 +236,14 @@ public class TestUnboundedIntAlgebra {
 
 		for (int i = -65536; i <= 65536; i++) {
 			a.setV(BigInteger.valueOf(i));
-			assertEquals((int) BigInteger.valueOf(i).bitCount(), (int) G.UNBOUND.bitCount().call(a));
+			assertEquals(BigInteger.valueOf(i).bitCount(), (int) G.UNBOUND.bitCount().call(a));
 		}
 		
 		// bitLength
 
 		for (int i = -65536; i <= 65536; i++) {
 			a.setV(BigInteger.valueOf(i));
-			assertEquals((int) BigInteger.valueOf(i).bitLength(), (int) G.UNBOUND.bitLength().call(a));
+			assertEquals(BigInteger.valueOf(i).bitLength(), (int) G.UNBOUND.bitLength().call(a));
 		}
 		
 		// bitNot

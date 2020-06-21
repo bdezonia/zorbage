@@ -234,7 +234,7 @@ public final class QuaternionFloat16RModuleMember
 		return 1;
 	}
 	
-	private static ThreadLocal<QuaternionFloat16Member> tmpQuat =
+	private static final ThreadLocal<QuaternionFloat16Member> tmpQuat =
 			new ThreadLocal<QuaternionFloat16Member>()
 	{
 		protected QuaternionFloat16Member initialValue() {
@@ -912,16 +912,16 @@ public final class QuaternionFloat16RModuleMember
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return (float) tmp.r();
+				return tmp.r();
 			else // component == 1
-				return (float) tmp.i();
+				return tmp.i();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return (float) tmp.j();
+				return tmp.j();
 			else // component == 3
-				return (float) tmp.k();
+				return tmp.k();
 		}
 	}
 
@@ -1198,16 +1198,16 @@ public final class QuaternionFloat16RModuleMember
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return (float) tmp.r();
+					return tmp.r();
 				else // component == 1
-					return (float) tmp.i();
+					return tmp.i();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return (float) tmp.j();
+					return tmp.j();
 				else // component == 3
-					return (float) tmp.k();
+					return tmp.k();
 			}
 		}
 	}

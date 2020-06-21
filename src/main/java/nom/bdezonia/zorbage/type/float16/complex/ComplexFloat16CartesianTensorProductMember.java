@@ -404,7 +404,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<ComplexFloat16Member> tmpComp =
+	private static final ThreadLocal<ComplexFloat16Member> tmpComp =
 			new ThreadLocal<ComplexFloat16Member>()
 	{
 		protected ComplexFloat16Member initialValue() {

@@ -286,7 +286,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		return SUBSCALAR;
 	}
 
-	private Procedure3<QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> MULEL =
+	private final Procedure3<QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> MULEL =
 			new Procedure3<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override
@@ -303,7 +303,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		return MULEL;
 	}
 	
-	private Procedure3<QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> DIVIDEEL =
+	private final Procedure3<QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember,QuaternionHighPrecisionCartesianTensorProductMember> DIVIDEEL =
 			new Procedure3<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override

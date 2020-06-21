@@ -99,7 +99,7 @@ public class OctonionFloat32RModule
 		return ZER;
 	}
 
-	private Procedure2<OctonionFloat32RModuleMember,OctonionFloat32RModuleMember> NEG =
+	private final Procedure2<OctonionFloat32RModuleMember,OctonionFloat32RModuleMember> NEG =
 			new Procedure2<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
 	{
 		@Override
@@ -146,7 +146,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public Boolean call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
-			return (Boolean) RModuleEqual.compute(G.OFLT, a, b);
+			return RModuleEqual.compute(G.OFLT, a, b);
 		}
 	};
 
@@ -438,7 +438,7 @@ public class OctonionFloat32RModule
 		return ISZERO;
 	}
 
-	private Procedure3<HighPrecisionMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SBHP =
+	private final Procedure3<HighPrecisionMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SBHP =
 			new Procedure3<HighPrecisionMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
 	{
 		@Override
@@ -452,7 +452,7 @@ public class OctonionFloat32RModule
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SBR =
+	private final Procedure3<RationalMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SBR =
 			new Procedure3<RationalMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
 	{
 		@Override
@@ -466,7 +466,7 @@ public class OctonionFloat32RModule
 		return SBR;
 	}
 
-	private Procedure3<Double, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SBD =
+	private final Procedure3<Double, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SBD =
 			new Procedure3<Double, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
 	{
 		@Override

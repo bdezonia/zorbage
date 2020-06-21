@@ -144,7 +144,7 @@ public class Float64Vector
 	{
 		@Override
 		public Boolean call(Float64VectorMember a, Float64VectorMember b) {
-			return (Boolean) RModuleEqual.compute(G.DBL, a, b);
+			return RModuleEqual.compute(G.DBL, a, b);
 		}
 	};
 
@@ -201,7 +201,7 @@ public class Float64Vector
 		return ASSIGN;
 	}
 
-	private Procedure2<Float64VectorMember,Float64Member> NORM =
+	private final Procedure2<Float64VectorMember,Float64Member> NORM =
 			new Procedure2<Float64VectorMember, Float64Member>()
 	{
 		@Override
@@ -422,7 +422,7 @@ public class Float64Vector
 		return ISZERO;
 	}
 
-	private Procedure3<HighPrecisionMember, Float64VectorMember, Float64VectorMember> SBHP =
+	private final Procedure3<HighPrecisionMember, Float64VectorMember, Float64VectorMember> SBHP =
 			new Procedure3<HighPrecisionMember, Float64VectorMember, Float64VectorMember>()
 	{
 		@Override
@@ -436,7 +436,7 @@ public class Float64Vector
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, Float64VectorMember, Float64VectorMember> SBR =
+	private final Procedure3<RationalMember, Float64VectorMember, Float64VectorMember> SBR =
 			new Procedure3<RationalMember, Float64VectorMember, Float64VectorMember>()
 	{
 		@Override
@@ -450,7 +450,7 @@ public class Float64Vector
 		return SBR;
 	}
 
-	private Procedure3<Double, Float64VectorMember, Float64VectorMember> SBD =
+	private final Procedure3<Double, Float64VectorMember, Float64VectorMember> SBD =
 			new Procedure3<Double, Float64VectorMember, Float64VectorMember>()
 	{
 		@Override

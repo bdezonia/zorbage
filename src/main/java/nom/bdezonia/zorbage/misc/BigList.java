@@ -39,9 +39,9 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class BigList<T extends Allocatable<T>> {
 	
-	public static long MAX_ITEMS = 1L * Integer.MAX_VALUE * Integer.MAX_VALUE;
+	public static final long MAX_ITEMS = 1L * Integer.MAX_VALUE * Integer.MAX_VALUE;
 
-	private List<List<T>> lists;
+	private final List<List<T>> lists;
 	
 	public BigList() {
 		lists = new ArrayList<List<T>>();

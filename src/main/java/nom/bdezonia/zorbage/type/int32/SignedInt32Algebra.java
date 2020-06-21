@@ -108,7 +108,7 @@ public class SignedInt32Algebra
 		return new SignedInt32Member(s);
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> ASSIGN =
+	private final Procedure2<SignedInt32Member,SignedInt32Member> ASSIGN =
 			new Procedure2<SignedInt32Member, SignedInt32Member>()
 	{
 		@Override
@@ -122,7 +122,7 @@ public class SignedInt32Algebra
 		return ASSIGN;
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> ABS =
+	private final Procedure2<SignedInt32Member,SignedInt32Member> ABS =
 			new Procedure2<SignedInt32Member, SignedInt32Member>()
 	{
 		@Override
@@ -180,7 +180,7 @@ public class SignedInt32Algebra
 		return ZER;
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> NEG =
+	private final Procedure2<SignedInt32Member,SignedInt32Member> NEG =
 			new Procedure2<SignedInt32Member, SignedInt32Member>()
 	{
 		@Override
@@ -432,7 +432,7 @@ public class SignedInt32Algebra
 		return ODD;
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> PRED =
+	private final Procedure2<SignedInt32Member,SignedInt32Member> PRED =
 			new Procedure2<SignedInt32Member, SignedInt32Member>()
 	{
 		@Override
@@ -446,7 +446,7 @@ public class SignedInt32Algebra
 		return PRED;
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> SUCC =
+	private final Procedure2<SignedInt32Member,SignedInt32Member> SUCC =
 			new Procedure2<SignedInt32Member, SignedInt32Member>()
 	{
 		@Override
@@ -530,7 +530,7 @@ public class SignedInt32Algebra
 		return BITXOR;
 	}
 
-	private Procedure2<SignedInt32Member,SignedInt32Member> BITNOT =
+	private final Procedure2<SignedInt32Member,SignedInt32Member> BITNOT =
 			new Procedure2<SignedInt32Member, SignedInt32Member>()
 	{
 		@Override

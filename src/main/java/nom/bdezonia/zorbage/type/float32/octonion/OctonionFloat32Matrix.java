@@ -134,7 +134,7 @@ public class OctonionFloat32Matrix
 		return POWER;
 	}
 
-	private Procedure1<OctonionFloat32MatrixMember> ZER =
+	private final Procedure1<OctonionFloat32MatrixMember> ZER =
 			new Procedure1<OctonionFloat32MatrixMember>()
 	{
 		@Override
@@ -218,7 +218,7 @@ public class OctonionFloat32Matrix
 		return NEQ;
 	}
 
-	private Procedure2<OctonionFloat32MatrixMember,OctonionFloat32MatrixMember> ASSIGN =
+	private final Procedure2<OctonionFloat32MatrixMember,OctonionFloat32MatrixMember> ASSIGN =
 			new Procedure2<OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
 	{
 		@Override
@@ -280,7 +280,7 @@ public class OctonionFloat32Matrix
 		return ROUND;
 	}
 
-	private Function1<Boolean,OctonionFloat32MatrixMember> ISNAN =
+	private final Function1<Boolean,OctonionFloat32MatrixMember> ISNAN =
 			new Function1<Boolean, OctonionFloat32MatrixMember>()
 	{
 		@Override
@@ -308,7 +308,7 @@ public class OctonionFloat32Matrix
 		return NAN;
 	}
 	
-	private Function1<Boolean,OctonionFloat32MatrixMember> ISINF =
+	private final Function1<Boolean,OctonionFloat32MatrixMember> ISINF =
 			new Function1<Boolean, OctonionFloat32MatrixMember>()
 	{
 		@Override
@@ -750,7 +750,7 @@ public class OctonionFloat32Matrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
 	{
 		@Override
@@ -764,7 +764,7 @@ public class OctonionFloat32Matrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBR =
+	private final Procedure3<RationalMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBR =
 			new Procedure3<RationalMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
 	{
 		@Override
@@ -778,7 +778,7 @@ public class OctonionFloat32Matrix
 		return SBR;
 	}
 
-	private Procedure3<Double, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBD =
+	private final Procedure3<Double, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SBD =
 			new Procedure3<Double, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
 	{
 		@Override

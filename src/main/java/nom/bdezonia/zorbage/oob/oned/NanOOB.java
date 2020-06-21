@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.algebra.NaN;
  */
 public class NanOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<Long,U> {
 
-	private ConstantOOB<T,U> oobProc;
+	private final ConstantOOB<T,U> oobProc;
 
 	/**
 	 * 

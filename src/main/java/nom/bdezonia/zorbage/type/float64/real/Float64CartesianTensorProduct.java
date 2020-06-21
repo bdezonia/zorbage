@@ -285,7 +285,7 @@ public class Float64CartesianTensorProduct
 		return SUBSCALAR;
 	}
 
-	private Procedure3<Float64CartesianTensorProductMember,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> MULEL =
+	private final Procedure3<Float64CartesianTensorProductMember,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> MULEL =
 			new Procedure3<Float64CartesianTensorProductMember, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember>()
 	{
 		@Override
@@ -302,7 +302,7 @@ public class Float64CartesianTensorProduct
 		return MULEL;
 	}
 	
-	private Procedure3<Float64CartesianTensorProductMember,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> DIVIDEEL =
+	private final Procedure3<Float64CartesianTensorProductMember,Float64CartesianTensorProductMember,Float64CartesianTensorProductMember> DIVIDEEL =
 			new Procedure3<Float64CartesianTensorProductMember, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember>()
 	{
 		@Override

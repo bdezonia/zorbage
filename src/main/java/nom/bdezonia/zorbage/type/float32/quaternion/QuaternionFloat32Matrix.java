@@ -260,7 +260,7 @@ public class QuaternionFloat32Matrix
 		return new QuaternionFloat32MatrixMember(s, d1, d2);
 	}
 
-	private Procedure2<QuaternionFloat32MatrixMember,Float32Member> NORM =
+	private final Procedure2<QuaternionFloat32MatrixMember,Float32Member> NORM =
 			new Procedure2<QuaternionFloat32MatrixMember, Float32Member>()
 	{
 		@Override
@@ -764,7 +764,7 @@ public class QuaternionFloat32Matrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
 	{
 		@Override
@@ -778,7 +778,7 @@ public class QuaternionFloat32Matrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBR =
+	private final Procedure3<RationalMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBR =
 			new Procedure3<RationalMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
 	{
 		@Override
@@ -792,7 +792,7 @@ public class QuaternionFloat32Matrix
 		return SBR;
 	}
 
-	private Procedure3<Double, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBD =
+	private final Procedure3<Double, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SBD =
 			new Procedure3<Double, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
 	{
 		@Override

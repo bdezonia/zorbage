@@ -133,17 +133,17 @@ public final class BooleanMember
 	@Override
 	public void fromBitArray(long[] arr, int index, int offset) {
 		final long bucket = arr[index];
-		v = (bucket & (1l << offset)) > 0;
+		v = (bucket & (1L << offset)) > 0;
 	}
 
 	@Override
 	public void toBitArray(long[] arr, int index, int offset) {
 		long bucket = arr[index];
 		if (v) {
-			bucket |= (1l << offset);
+			bucket |= (1L << offset);
 		}
 		else {
-			bucket &= ~(1l << offset);
+			bucket &= ~(1L << offset);
 		}
 		arr[index] = bucket;
 	}

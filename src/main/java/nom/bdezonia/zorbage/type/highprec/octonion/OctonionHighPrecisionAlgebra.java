@@ -352,7 +352,7 @@ public class OctonionHighPrecisionAlgebra
 		return SUB;
 	}
 
-	private Function2<Boolean,OctonionHighPrecisionMember,OctonionHighPrecisionMember> EQ =
+	private final Function2<Boolean,OctonionHighPrecisionMember,OctonionHighPrecisionMember> EQ =
 			new Function2<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
@@ -367,7 +367,7 @@ public class OctonionHighPrecisionAlgebra
 		return EQ;
 	}
 
-	private Function2<Boolean,OctonionHighPrecisionMember,OctonionHighPrecisionMember> NEQ =
+	private final Function2<Boolean,OctonionHighPrecisionMember,OctonionHighPrecisionMember> NEQ =
 			new Function2<Boolean, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
@@ -396,7 +396,7 @@ public class OctonionHighPrecisionAlgebra
 		return new OctonionHighPrecisionMember(s);
 	}
 
-	private Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> ASSIGN =
+	private final Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> ASSIGN =
 			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
@@ -410,7 +410,7 @@ public class OctonionHighPrecisionAlgebra
 		return ASSIGN;
 	}
 
-	private Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> INV =
+	private final Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> INV =
 			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
@@ -480,7 +480,7 @@ public class OctonionHighPrecisionAlgebra
 		return norm.multiply(norm);
 	}
 
-	private Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> CONJ =
+	private final Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> CONJ =
 			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
@@ -705,7 +705,7 @@ public class OctonionHighPrecisionAlgebra
 		return REAL;
 	}
 	
-	private Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> UNREAL =
+	private final Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> UNREAL =
 			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
@@ -745,7 +745,7 @@ public class OctonionHighPrecisionAlgebra
 		return SINH;
 	}
 
-	private Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> COSH =
+	private final Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> COSH =
 			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override

@@ -404,7 +404,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<ComplexFloat32Member> tmpComp =
+	private static final ThreadLocal<ComplexFloat32Member> tmpComp =
 			new ThreadLocal<ComplexFloat32Member>()
 	{
 		protected ComplexFloat32Member initialValue() {
@@ -733,9 +733,9 @@ public final class ComplexFloat32CartesianTensorProductMember
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return (double) tmp.r();
+			return tmp.r();
 		else if (component == 1)
-			return (double) tmp.i();
+			return tmp.i();
 		return 0;
 	}
 

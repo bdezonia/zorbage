@@ -318,7 +318,7 @@ public class HighPrecisionAlgebra
 		return GE;
 	}
 
-	private Function2<java.lang.Integer,HighPrecisionMember,HighPrecisionMember> CMP =
+	private final Function2<java.lang.Integer,HighPrecisionMember,HighPrecisionMember> CMP =
 			new Function2<java.lang.Integer, HighPrecisionMember, HighPrecisionMember>()
 	{
 		@Override
@@ -332,7 +332,7 @@ public class HighPrecisionAlgebra
 		return CMP;
 	}
 
-	private Function1<java.lang.Integer,HighPrecisionMember> SIG =
+	private final Function1<java.lang.Integer,HighPrecisionMember> SIG =
 			new Function1<Integer, HighPrecisionMember>()
 	{
 		@Override
@@ -791,7 +791,7 @@ public class HighPrecisionAlgebra
 			if (a.v().signum() == 0)
 				b.setV(BigDecimal.ONE);
 			else
-				b.setV(BigDecimalMath.sinh(a.v(), CONTEXT).divide(a.v()));
+				b.setV(BigDecimalMath.sinh(a.v(), CONTEXT).divide(a.v(), HighPrecisionAlgebra.getContext()));
 		}
 	};
 
@@ -809,7 +809,7 @@ public class HighPrecisionAlgebra
 				b.setV(BigDecimal.ONE);
 			else {
 				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT));
-				b.setV(BigDecimalMath.sinh(term, CONTEXT).divide(term));
+				b.setV(BigDecimalMath.sinh(term, CONTEXT).divide(term, HighPrecisionAlgebra.getContext()));
 			}
 		}
 	};
@@ -827,7 +827,7 @@ public class HighPrecisionAlgebra
 			if (a.v().signum() == 0)
 				b.setV(BigDecimal.ONE);
 			else
-				b.setV(BigDecimalMath.sin(a.v(), CONTEXT).divide(a.v()));
+				b.setV(BigDecimalMath.sin(a.v(), CONTEXT).divide(a.v(), HighPrecisionAlgebra.getContext()));
 		}
 	};
 
@@ -845,7 +845,7 @@ public class HighPrecisionAlgebra
 				b.setV(BigDecimal.ONE);
 			else {
 				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT));
-				b.setV(BigDecimalMath.sin(term, CONTEXT).divide(term));
+				b.setV(BigDecimalMath.sin(term, CONTEXT).divide(term, HighPrecisionAlgebra.getContext()));
 			}
 		}
 	};

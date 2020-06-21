@@ -104,7 +104,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		}
 	}
 	
-	private class Token implements Allocatable<Token>{
+	private static class Token implements Allocatable<Token>{
 
 		private String text;
 		private int start;
@@ -132,7 +132,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	
 	private class Index extends Token {
 
-		private int number;
+		private final int number;
 		
 		Index(int start, int number) {
 			setStart(start);
@@ -268,7 +268,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 	
 	private class Numeric extends Token {
 
-		private U value;
+		private final U value;
 		
 		Numeric(int start, U value) {
 			setStart(start);

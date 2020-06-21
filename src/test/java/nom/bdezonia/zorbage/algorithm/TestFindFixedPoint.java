@@ -59,7 +59,7 @@ public class TestFindFixedPoint {
 			fail();
 	}
 	
-	private Function2<Boolean, Float64Member, Float64Member> closeEnough = new Function2<Boolean, Float64Member, Float64Member>() {
+	private final Function2<Boolean, Float64Member, Float64Member> closeEnough = new Function2<Boolean, Float64Member, Float64Member>() {
 		
 		@Override
 		public Boolean call(Float64Member a, Float64Member b) {

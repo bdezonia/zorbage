@@ -157,7 +157,7 @@ public class UnsignedInt32Algebra
 		return POWER;
 	}
 
-	private Procedure1<UnsignedInt32Member> ZER =
+	private final Procedure1<UnsignedInt32Member> ZER =
 			new Procedure1<UnsignedInt32Member>()
 	{
 		@Override
@@ -204,7 +204,7 @@ public class UnsignedInt32Algebra
 		return SUB;
 	}
 
-	private Procedure1<UnsignedInt32Member> UNITY =
+	private final Procedure1<UnsignedInt32Member> UNITY =
 			new Procedure1<UnsignedInt32Member>()
 	{
 		@Override
@@ -445,7 +445,7 @@ public class UnsignedInt32Algebra
 		return SUCC;
 	}
 
-	private Procedure1<UnsignedInt32Member> MAXBOUND =
+	private final Procedure1<UnsignedInt32Member> MAXBOUND =
 			new Procedure1<UnsignedInt32Member>()
 	{
 		@Override
@@ -459,7 +459,7 @@ public class UnsignedInt32Algebra
 		return MAXBOUND;
 	}
 
-	private Procedure1<UnsignedInt32Member> MINBOUND =
+	private final Procedure1<UnsignedInt32Member> MINBOUND =
 			new Procedure1<UnsignedInt32Member>()
 	{
 		@Override
@@ -613,7 +613,7 @@ public class UnsignedInt32Algebra
 		return MAX;
 	}
 
-	private Procedure1<UnsignedInt32Member> RAND =
+	private final Procedure1<UnsignedInt32Member> RAND =
 			new Procedure1<UnsignedInt32Member>()
 	{
 		@Override
@@ -742,7 +742,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public void call(Double a, UnsignedInt32Member b, UnsignedInt32Member c) {
-			c.setV((long) Math.round(a * b.v()));
+			c.setV(Math.round(a * b.v()));
 		}
 	};
 

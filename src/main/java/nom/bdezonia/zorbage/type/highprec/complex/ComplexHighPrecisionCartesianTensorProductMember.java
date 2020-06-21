@@ -404,7 +404,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<ComplexHighPrecisionMember> tmpComp =
+	private static final ThreadLocal<ComplexHighPrecisionMember> tmpComp =
 			new ThreadLocal<ComplexHighPrecisionMember>()
 	{
 		protected ComplexHighPrecisionMember initialValue() {

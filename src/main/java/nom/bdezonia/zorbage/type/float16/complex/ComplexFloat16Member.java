@@ -509,8 +509,8 @@ public final class ComplexFloat16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (float) r();
-		if (component == 1) return (float) i();
+		if (component == 0) return r();
+		if (component == 1) return i();
 		return 0;
 	}
 
@@ -654,8 +654,8 @@ public final class ComplexFloat16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (float) r();
-			else return (float) i();
+			if (component == 0) return r();
+			else return i();
 		}
 	}
 

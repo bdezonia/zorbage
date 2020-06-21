@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
  */
 public class ZeroNdOOB<T extends Algebra<T,U>, U> implements Procedure2<IntegerIndex,U> {
 
-	private ConstantNdOOB<T,U> oobProc;
+	private final ConstantNdOOB<T,U> oobProc;
 
 	/**
 	 * 

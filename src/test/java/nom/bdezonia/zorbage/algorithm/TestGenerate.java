@@ -57,7 +57,7 @@ public class TestGenerate {
 		}
 	}
 	
-	private Procedure<Float64Member> proc = new Procedure<Float64Member>() {
+	private final Procedure<Float64Member> proc = new Procedure<Float64Member>() {
 		@Override
 		public void call(Float64Member result, Float64Member... inputs) {
 			assertEquals(2, inputs.length);

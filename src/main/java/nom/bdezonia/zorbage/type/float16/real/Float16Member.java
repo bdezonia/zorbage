@@ -469,7 +469,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return new BigDecimal(v());
+		if (component == 0) return BigDecimal.valueOf(v());
 		return BigDecimal.ZERO;
 	}
 

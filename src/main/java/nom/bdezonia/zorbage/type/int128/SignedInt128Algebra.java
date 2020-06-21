@@ -119,7 +119,7 @@ public class SignedInt128Algebra
 		return NEQ;
 	}
 
-	private Procedure2<SignedInt128Member,SignedInt128Member> ASSIGN =
+	private final Procedure2<SignedInt128Member,SignedInt128Member> ASSIGN =
 			new Procedure2<SignedInt128Member, SignedInt128Member>()
 	{
 		@Override
@@ -133,7 +133,7 @@ public class SignedInt128Algebra
 		return ASSIGN;
 	}
 
-	private Procedure1<SignedInt128Member> ZER =
+	private final Procedure1<SignedInt128Member> ZER =
 			new Procedure1<SignedInt128Member>()
 	{
 		
@@ -256,7 +256,7 @@ public class SignedInt128Algebra
 		return POWER;
 	}
 
-	private Procedure1<SignedInt128Member> UNITY =
+	private final Procedure1<SignedInt128Member> UNITY =
 			new Procedure1<SignedInt128Member>()
 	{
 		@Override
@@ -549,7 +549,7 @@ public class SignedInt128Algebra
 		return ODD;
 	}
 
-	private Procedure2<SignedInt128Member,SignedInt128Member> PRED =
+	private final Procedure2<SignedInt128Member,SignedInt128Member> PRED =
 			new Procedure2<SignedInt128Member, SignedInt128Member>()
 	{
 		@Override
@@ -563,7 +563,7 @@ public class SignedInt128Algebra
 		return PRED;
 	}
 
-	private Procedure2<SignedInt128Member,SignedInt128Member> SUCC =
+	private final Procedure2<SignedInt128Member,SignedInt128Member> SUCC =
 			new Procedure2<SignedInt128Member, SignedInt128Member>()
 	{
 		@Override
@@ -599,7 +599,7 @@ public class SignedInt128Algebra
 		return POW;
 	}
 
-	private Procedure1<SignedInt128Member> RAND =
+	private final Procedure1<SignedInt128Member> RAND =
 			new Procedure1<SignedInt128Member>()
 	{
 		@Override
@@ -665,7 +665,7 @@ public class SignedInt128Algebra
 		return BITXOR;
 	}
 
-	private Procedure2<SignedInt128Member,SignedInt128Member> BITNOT =
+	private final Procedure2<SignedInt128Member,SignedInt128Member> BITNOT =
 			new Procedure2<SignedInt128Member, SignedInt128Member>()
 	{
 		@Override
@@ -772,7 +772,7 @@ public class SignedInt128Algebra
 		return BITSHRZ;
 	}
 
-	private Procedure1<SignedInt128Member> MAXBOUND =
+	private final Procedure1<SignedInt128Member> MAXBOUND =
 			new Procedure1<SignedInt128Member>()
 	{
 		@Override
@@ -787,7 +787,7 @@ public class SignedInt128Algebra
 		return MAXBOUND;
 	}
 
-	private Procedure1<SignedInt128Member> MINBOUND =
+	private final Procedure1<SignedInt128Member> MINBOUND =
 			new Procedure1<SignedInt128Member>()
 	{
 		@Override

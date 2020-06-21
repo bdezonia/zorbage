@@ -95,7 +95,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer power, UnboundedIntMember a, UnboundedIntMember b) {
-			if (power == 0 && a.v() == BigInteger.ZERO) throw new IllegalArgumentException("0^0 is not a number");
+			if (power == 0 && a.v().equals(BigInteger.ZERO)) throw new IllegalArgumentException("0^0 is not a number");
 			if (power < 0) throw new IllegalArgumentException("Cannot get negative powers from integers");
 			b.setV( a.v().pow(power) );
 		}	
@@ -751,7 +751,7 @@ public class UnboundedIntAlgebra
 			if (cmp < 0)
 				throw new IllegalArgumentException("negative powers not supported for unbounded ints");
 			else if (cmp == 0) {
-				if (a.v() == BigInteger.ZERO)
+				if (a.v().equals(BigInteger.ZERO))
 					throw new IllegalArgumentException("0^0 is not a number");
 				else
 					assign().call(ONE, c);
@@ -782,7 +782,7 @@ public class UnboundedIntAlgebra
 	{
 		@Override
 		public Boolean call(UnboundedIntMember a) {
-			return a.v() == BigInteger.ZERO;
+			return a.v().equals(BigInteger.ZERO);
 		}
 	};
 

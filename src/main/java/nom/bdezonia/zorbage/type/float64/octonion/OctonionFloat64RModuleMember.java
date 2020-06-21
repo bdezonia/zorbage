@@ -250,7 +250,7 @@ public final class OctonionFloat64RModuleMember
 		return 1;
 	}
 
-	private static ThreadLocal<OctonionFloat64Member> tmpOct =
+	private static final ThreadLocal<OctonionFloat64Member> tmpOct =
 			new ThreadLocal<OctonionFloat64Member>()
 	{
 		protected OctonionFloat64Member initialValue() {

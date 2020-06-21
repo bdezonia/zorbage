@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 public class NotEqual<T extends Algebra<T,U>,U>
 	implements Predicate<Tuple2<U,U>>
 {
-	private T algebra;
+	private final T algebra;
 	
 	public NotEqual(T algebra) {
 		this.algebra = algebra;

@@ -296,7 +296,7 @@ public class OctonionFloat32CartesianTensorProduct
 		return SUBSCALAR;
 	}
 
-	private Procedure3<OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember> MULEL =
+	private final Procedure3<OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember> MULEL =
 			new Procedure3<OctonionFloat32CartesianTensorProductMember, OctonionFloat32CartesianTensorProductMember, OctonionFloat32CartesianTensorProductMember>()
 	{
 		@Override
@@ -313,7 +313,7 @@ public class OctonionFloat32CartesianTensorProduct
 		return MULEL;
 	}
 	
-	private Procedure3<OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember> DIVIDEEL =
+	private final Procedure3<OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember,OctonionFloat32CartesianTensorProductMember> DIVIDEEL =
 			new Procedure3<OctonionFloat32CartesianTensorProductMember, OctonionFloat32CartesianTensorProductMember, OctonionFloat32CartesianTensorProductMember>()
 	{
 		@Override

@@ -70,8 +70,7 @@ public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageFloat32<U> duplicate() {
 		ArrayStorageFloat32<U> s = new ArrayStorageFloat32<U>(size(), type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 

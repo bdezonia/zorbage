@@ -136,13 +136,13 @@ public class TestSignedInt64Algebra {
 			for (int p = 0; p < 64; p++) {
 				
 				G.INT64.bitShiftLeft().call(p, a, c);
-				assertEquals((long)(a.v() << p), c.v());
+				assertEquals(a.v() << p, c.v());
 				
 				G.INT64.bitShiftRight().call(p, a, c);
-				assertEquals((long)(a.v() >> p), c.v());
+				assertEquals(a.v() >> p, c.v());
 				
 				G.INT64.bitShiftRightFillZero().call(p, a, c);
-				assertEquals((long)(a.v() >>> p), c.v());
+				assertEquals(a.v() >>> p, c.v());
 
 				if (a.v() != 0 || p != 0) {
 					long t = (p == 0) ? 1 : a.v();
@@ -198,7 +198,7 @@ public class TestSignedInt64Algebra {
 				G.INT64.random().call(b);
 				
 				G.INT64.add().call(a, b, c);
-				assertEquals((long)(a.v()+b.v()), c.v());
+				assertEquals(a.v()+b.v(), c.v());
 
 				G.INT64.bitAnd().call(a, b, c);
 				assertEquals(a.v() & b.v(), c.v());
@@ -251,13 +251,13 @@ public class TestSignedInt64Algebra {
 				assertEquals((a.v()<b.v() ? a.v() : b.v()), c.v());
 
 				G.INT64.multiply().call(a, b, c);
-				assertEquals((long)(a.v()*b.v()), c.v());
+				assertEquals(a.v()*b.v(), c.v());
 
 				G.INT64.scale().call(a, b, c);
-				assertEquals((long)(a.v()*b.v()), c.v());
+				assertEquals(a.v()*b.v(), c.v());
 
 				G.INT64.subtract().call(a, b, c);
-				assertEquals((long)(a.v()-b.v()), c.v());
+				assertEquals(a.v()-b.v(), c.v());
 
 			}
 		}

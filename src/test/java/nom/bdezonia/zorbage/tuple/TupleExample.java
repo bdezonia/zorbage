@@ -58,6 +58,6 @@ public class TupleExample {
 	
 	private <T extends AccessorA<Integer> & AccessorB<Float>> void method(T tuple, int expectedA, float expectedB) {
 		assertEquals(expectedA, (int) tuple.a());
-		assertEquals(expectedB, (float) tuple.b(), 0.00001f);
+		assertEquals(expectedB, tuple.b(), 0.00001f);
 	}
 }

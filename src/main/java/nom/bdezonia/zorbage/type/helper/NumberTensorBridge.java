@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.algebra.TensorMember;
 public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
-	private NumberMember<U> num;
+	private final NumberMember<U> num;
 	private long dimension;
 	
 	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num, long dimension) {

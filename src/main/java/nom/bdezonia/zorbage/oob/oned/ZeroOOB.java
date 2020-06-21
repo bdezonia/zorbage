@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  */
 public class ZeroOOB<T extends Algebra<T,U>, U> implements Procedure2<Long,U> {
 
-	private ConstantOOB<T,U> oobProc;
+	private final ConstantOOB<T,U> oobProc;
 
 	/**
 	 * 

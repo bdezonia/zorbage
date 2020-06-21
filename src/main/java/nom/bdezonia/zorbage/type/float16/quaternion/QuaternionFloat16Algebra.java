@@ -443,7 +443,7 @@ public class QuaternionFloat16Algebra
 		return K_;
 	}
 
-	private Procedure4<Round.Mode,Float16Member,QuaternionFloat16Member,QuaternionFloat16Member> ROUND =
+	private final Procedure4<Round.Mode,Float16Member,QuaternionFloat16Member,QuaternionFloat16Member> ROUND =
 			new Procedure4<Round.Mode, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member>()
 	{
 		@Override
@@ -469,7 +469,7 @@ public class QuaternionFloat16Algebra
 		return ROUND;
 	}
 
-	private Function1<Boolean,QuaternionFloat16Member> ISNAN =
+	private final Function1<Boolean,QuaternionFloat16Member> ISNAN =
 			new Function1<Boolean, QuaternionFloat16Member>()
 	{
 		@Override
@@ -500,7 +500,7 @@ public class QuaternionFloat16Algebra
 		return NAN;
 	}
 	
-	private Function1<Boolean,QuaternionFloat16Member> ISINF =
+	private final Function1<Boolean,QuaternionFloat16Member> ISINF =
 			new Function1<Boolean, QuaternionFloat16Member>()
 	{
 		@Override
@@ -568,7 +568,7 @@ public class QuaternionFloat16Algebra
 			Float16Member v2 = new Float16Member();
 			Float16Member v3 = new Float16Member();
 			norm().call(a, norm);
-			Float16Member multiplier = new Float16Member((float) a.r() / norm.v());
+			Float16Member multiplier = new Float16Member(a.r() / norm.v());
 			v1.setV(a.i() * multiplier.v());
 			v2.setV(a.j() * multiplier.v());
 			v3.setV(a.k() * multiplier.v());

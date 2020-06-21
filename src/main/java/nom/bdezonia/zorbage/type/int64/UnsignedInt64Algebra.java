@@ -144,7 +144,7 @@ public class UnsignedInt64Algebra
 		return MUL;
 	}
 
-	private Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> POWER =
+	private final Procedure3<java.lang.Integer,UnsignedInt64Member,UnsignedInt64Member> POWER =
 			new Procedure3<java.lang.Integer, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
@@ -584,7 +584,7 @@ public class UnsignedInt64Algebra
 				b.v = a.v;
 			else {
 				// count >= 1
-				long val = (0x7FFFFFFFFFFFFFFFl & a.v) >> 1;
+				long val = (0x7FFFFFFFFFFFFFFFL & a.v) >> 1;
 				if (a.v < 0) val |= 0x4000000000000000L;
 				b.v = val >> (count-1);
 			}

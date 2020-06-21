@@ -422,7 +422,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<QuaternionHighPrecisionMember> tmpQuat =
+	private static final ThreadLocal<QuaternionHighPrecisionMember> tmpQuat =
 			new ThreadLocal<QuaternionHighPrecisionMember>()
 	{
 		protected QuaternionHighPrecisionMember initialValue() {

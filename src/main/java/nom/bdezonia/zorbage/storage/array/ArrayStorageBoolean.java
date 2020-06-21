@@ -70,8 +70,7 @@ public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageBoolean<U> duplicate() {
 		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(size(), type);
-		for (int i = 0; i < data.length; i++)
-			s.data[i] = data[i];
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 

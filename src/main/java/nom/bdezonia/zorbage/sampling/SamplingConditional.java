@@ -70,8 +70,8 @@ public class SamplingConditional<T extends Allocatable<T> & Settable<T> & Dimens
 	
 	private class Iterator implements SamplingIterator<T> {
 
-		private SamplingIterator<T> iter1 = sampling.iterator();
-		private T index = example.allocate();
+		private final SamplingIterator<T> iter1 = sampling.iterator();
+		private final T index = example.allocate();
 		private boolean cached = false;
 		
 		private boolean positionToNext() {

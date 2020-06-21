@@ -747,16 +747,16 @@ public final class QuaternionFloat16Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return (float) r();
+				return r();
 			else // component == 1
-				return (float) i();
+				return i();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return (float) j();
+				return j();
 			else // component == 3
-				return (float) k();
+				return k();
 		}
 	}
 
@@ -984,16 +984,16 @@ public final class QuaternionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return (float) r();
+					return r();
 				else // component == 1
-					return (float) i();
+					return i();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return (float) j();
+					return j();
 				else // component == 3
-					return (float) k();
+					return k();
 			}
 		}
 	}

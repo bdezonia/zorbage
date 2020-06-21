@@ -48,7 +48,7 @@ public class Transform4 {
 	 * @param c
 	 * @param d
 	 */
-	public static final <T extends Algebra<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure4<U,U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c, IndexedDataSource<U> d)
 	{
 		compute(algU, algU, algU, algU, proc, a, b, c, d);
@@ -66,7 +66,7 @@ public class Transform4 {
 	 * @param c
 	 * @param d
 	 */
-	public static final <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q, R extends Algebra<R,S>, S>
+	public static <L extends Algebra<L,M>, M, N extends Algebra<N,O>, O, P extends Algebra<P,Q>, Q, R extends Algebra<R,S>, S>
 		void compute(L algM, N algO, P algQ, R algS, Procedure4<M,O,Q,S> proc, IndexedDataSource<M> a, IndexedDataSource<O> b, IndexedDataSource<Q> c, IndexedDataSource<S> d)
 	{
 		M valueM = algM.construct();

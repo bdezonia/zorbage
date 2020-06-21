@@ -286,7 +286,7 @@ public class ComplexHighPrecisionCartesianTensorProduct
 		return SUBSCALAR;
 	}
 
-	private Procedure3<ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> MULEL =
+	private final Procedure3<ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> MULEL =
 			new Procedure3<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override
@@ -303,7 +303,7 @@ public class ComplexHighPrecisionCartesianTensorProduct
 		return MULEL;
 	}
 	
-	private Procedure3<ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> DIVIDEEL =
+	private final Procedure3<ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember,ComplexHighPrecisionCartesianTensorProductMember> DIVIDEEL =
 			new Procedure3<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionCartesianTensorProductMember>()
 	{
 		@Override

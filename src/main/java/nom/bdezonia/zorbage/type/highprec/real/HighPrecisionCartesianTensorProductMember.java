@@ -395,7 +395,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static ThreadLocal<HighPrecisionMember> tmpFloat =
+	private static final ThreadLocal<HighPrecisionMember> tmpFloat =
 			new ThreadLocal<HighPrecisionMember>()
 	{
 		protected HighPrecisionMember initialValue() {

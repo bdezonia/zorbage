@@ -304,7 +304,7 @@ public class Float64Algebra
 		return GE;
 	}
 
-	private Function2<java.lang.Integer,Float64Member,Float64Member> CMP =
+	private final Function2<java.lang.Integer,Float64Member,Float64Member> CMP =
 			new Function2<java.lang.Integer, Float64Member, Float64Member>()
 	{
 		@Override
@@ -320,7 +320,7 @@ public class Float64Algebra
 		return CMP;
 	}
 
-	private Function1<java.lang.Integer,Float64Member> SIG =
+	private final Function1<java.lang.Integer,Float64Member> SIG =
 			new Function1<Integer, Float64Member>()
 	{
 		@Override
@@ -890,7 +890,7 @@ public class Float64Algebra
 	
 	// reference: Mathworld
 
-	private Procedure2<Float64Member,Float64Member> ACOSH =
+	private final Procedure2<Float64Member,Float64Member> ACOSH =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override
@@ -906,7 +906,7 @@ public class Float64Algebra
 
 	// reference: Wolfram Alpha
 
-	private Procedure2<Float64Member,Float64Member> ASINH =
+	private final Procedure2<Float64Member,Float64Member> ASINH =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override
@@ -922,7 +922,7 @@ public class Float64Algebra
 
 	// reference: Wolfram Alpha
 
-	private Procedure2<Float64Member,Float64Member> ATANH =
+	private final Procedure2<Float64Member,Float64Member> ATANH =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override
@@ -1378,7 +1378,7 @@ public class Float64Algebra
 		return DIVMOD;
 	}
 
-	private Procedure2<Float64Member,Float64Member> SINCH =
+	private final Procedure2<Float64Member,Float64Member> SINCH =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override
@@ -1392,7 +1392,7 @@ public class Float64Algebra
 		return SINCH;
 	}
 
-	private Procedure2<Float64Member,Float64Member> SINCHPI =
+	private final Procedure2<Float64Member,Float64Member> SINCHPI =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override
@@ -1406,7 +1406,7 @@ public class Float64Algebra
 		return SINCHPI;
 	}
 
-	private Procedure2<Float64Member,Float64Member> SINC =
+	private final Procedure2<Float64Member,Float64Member> SINC =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override
@@ -1420,7 +1420,7 @@ public class Float64Algebra
 		 return SINC;
 	}
 
-	private Procedure2<Float64Member,Float64Member> SINCPI =
+	private final Procedure2<Float64Member,Float64Member> SINCPI =
 			new Procedure2<Float64Member, Float64Member>()
 	{
 		@Override

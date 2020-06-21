@@ -122,7 +122,7 @@ public class OctonionHighPrecisionMatrix
 		return POWER;
 	}
 
-	private Procedure1<OctonionHighPrecisionMatrixMember> ZER =
+	private final Procedure1<OctonionHighPrecisionMatrixMember> ZER =
 			new Procedure1<OctonionHighPrecisionMatrixMember>()
 	{
 		@Override
@@ -206,7 +206,7 @@ public class OctonionHighPrecisionMatrix
 		return NEQ;
 	}
 
-	private Procedure2<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMatrixMember> ASSIGN =
+	private final Procedure2<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMatrixMember> ASSIGN =
 			new Procedure2<OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
 	{
 		@Override
@@ -668,7 +668,7 @@ public class OctonionHighPrecisionMatrix
 		return GAMMA;
 	}
 
-	private Procedure3<HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBHP =
+	private final Procedure3<HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBHP =
 			new Procedure3<HighPrecisionMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
 	{
 		@Override
@@ -682,7 +682,7 @@ public class OctonionHighPrecisionMatrix
 		return SBHP;
 	}
 
-	private Procedure3<RationalMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBR =
+	private final Procedure3<RationalMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBR =
 			new Procedure3<RationalMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
 	{
 		@Override
@@ -696,7 +696,7 @@ public class OctonionHighPrecisionMatrix
 		return SBR;
 	}
 
-	private Procedure3<Double, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBD =
+	private final Procedure3<Double, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SBD =
 			new Procedure3<Double, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
 	{
 		@Override

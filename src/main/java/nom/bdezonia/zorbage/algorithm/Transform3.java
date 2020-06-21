@@ -47,7 +47,7 @@ public class Transform3 {
 	 * @param b
 	 * @param c
 	 */
-	public static final <T extends Algebra<T,U>, U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
 	{
 		compute(algU, algU, algU, proc, a, b, c);
@@ -63,7 +63,7 @@ public class Transform3 {
 	 * @param b
 	 * @param c
 	 */
-	public static final <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
+	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
 		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
 	{
 		U valueU = algU.construct();

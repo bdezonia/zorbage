@@ -37,7 +37,7 @@ public class LongUtils {
 	
 	private LongUtils() {}
 	
-	public static final long numElements(long[] dims) {
+	public static long numElements(long[] dims) {
 		if (dims.length == 0) return 0;
 		long product = 1;
 		long tmp;

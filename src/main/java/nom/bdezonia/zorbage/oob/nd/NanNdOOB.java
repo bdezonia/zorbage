@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
  */
 public class NanNdOOB<T extends Algebra<T,U> & NaN<U>, U> implements Procedure2<IntegerIndex,U> {
 
-	private ConstantNdOOB<T,U> oobProc;
+	private final ConstantNdOOB<T,U> oobProc;
 
 	/**
 	 * 

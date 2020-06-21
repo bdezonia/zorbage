@@ -178,13 +178,13 @@ public class TestSignedInt32Algebra {
 			for (int p = 0; p < 32; p++) {
 				
 				G.INT32.bitShiftLeft().call(p, a, c);
-				assertEquals((int)(a.v() << p), c.v());
+				assertEquals(a.v() << p, c.v());
 				
 				G.INT32.bitShiftRight().call(p, a, c);
-				assertEquals((int)(a.v() >> p), c.v());
+				assertEquals(a.v() >> p, c.v());
 				
 				G.INT32.bitShiftRightFillZero().call(p, a, c);
-				assertEquals((int)(a.v() >>> p), c.v());
+				assertEquals(a.v() >>> p, c.v());
 
 				if (a.v() != 0 || p != 0) {
 					int t = (p == 0) ? 1 : a.v();
@@ -238,7 +238,7 @@ public class TestSignedInt32Algebra {
 				b.set(numsg.get(h));
 				
 				G.INT32.add().call(a, b, c);
-				assertEquals((int)(a.v()+b.v()), c.v());
+				assertEquals(a.v()+b.v(), c.v());
 
 				G.INT32.bitAnd().call(a, b, c);
 				assertEquals(a.v() & b.v(), c.v());
@@ -291,13 +291,13 @@ public class TestSignedInt32Algebra {
 				assertEquals((a.v()<b.v() ? a.v() : b.v()), c.v());
 
 				G.INT32.multiply().call(a, b, c);
-				assertEquals((int)(a.v()*b.v()), c.v());
+				assertEquals(a.v()*b.v(), c.v());
 
 				G.INT32.scale().call(a, b, c);
-				assertEquals((int)(a.v()*b.v()), c.v());
+				assertEquals(a.v()*b.v(), c.v());
 
 				G.INT32.subtract().call(a, b, c);
-				assertEquals((int)(a.v()-b.v()), c.v());
+				assertEquals(a.v()-b.v(), c.v());
 
 			}
 		}

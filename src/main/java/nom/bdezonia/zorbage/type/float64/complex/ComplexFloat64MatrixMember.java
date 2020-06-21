@@ -261,7 +261,7 @@ public final class ComplexFloat64MatrixMember
 		return 1;
 	}
 	
-	private static ThreadLocal<ComplexFloat64Member> tmpComp =
+	private static final ThreadLocal<ComplexFloat64Member> tmpComp =
 			new ThreadLocal<ComplexFloat64Member>()
 	{
 		protected ComplexFloat64Member initialValue() {
