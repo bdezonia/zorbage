@@ -59,7 +59,6 @@ import nom.bdezonia.zorbage.tuple.Tuple3;
 import nom.bdezonia.zorbage.tuple.Tuple4;
 import nom.bdezonia.zorbage.tuple.Tuple6;
 import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16Member;
-import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16Member;
 import nom.bdezonia.zorbage.type.float16.real.Float16Member;
 import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
