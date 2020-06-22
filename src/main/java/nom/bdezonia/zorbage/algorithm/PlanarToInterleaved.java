@@ -63,6 +63,20 @@ public class PlanarToInterleaved {
 		U value = alg.construct();
 		DimensionedDataSource<U> interleaved =
 				DimensionedStorage.allocate(planar.storageType(), newDims, value);
+		interleaved.setValueType(planar.getValueType());
+		interleaved.setValueUnit(planar.getValueUnit());
+		for (int i = 0; i < numD; i++) {
+			if (i == numD-1) {
+				interleaved.setAxisEquation(0, planar.getAxisEquation(numD-1));
+				interleaved.setAxisType(0, planar.getAxisType(numD-1));
+				interleaved.setAxisUnit(0, planar.getAxisUnit(numD-1));
+			}
+			else {
+				interleaved.setAxisEquation(i+1, planar.getAxisEquation(i));
+				interleaved.setAxisType(i+1, planar.getAxisType(i));
+				interleaved.setAxisUnit(i+1, planar.getAxisUnit(i));
+			}
+		}
 		long[] minPt = new long[numD];
 		long[] maxPt = new long[numD];
 		for (int i = 0; i < numD; i++) {
