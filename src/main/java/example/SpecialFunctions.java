@@ -41,5 +41,6 @@ class SpecialFunctions {
 	// round
 	// the sincs
 	// taylor estimates
+	// kronecker
 	
 }

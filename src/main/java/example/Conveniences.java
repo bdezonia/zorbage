@@ -28,11 +28,29 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.CartesianProduct;
+import nom.bdezonia.zorbage.algorithm.GetI0Values;
+import nom.bdezonia.zorbage.algorithm.GetIValues;
+import nom.bdezonia.zorbage.algorithm.GetJ0Values;
+import nom.bdezonia.zorbage.algorithm.GetJValues;
+import nom.bdezonia.zorbage.algorithm.GetK0Values;
+import nom.bdezonia.zorbage.algorithm.GetKValues;
+import nom.bdezonia.zorbage.algorithm.GetLValues;
+import nom.bdezonia.zorbage.algorithm.GetRValues;
 import nom.bdezonia.zorbage.algorithm.GetV;
+import nom.bdezonia.zorbage.algorithm.SetI0Values;
+import nom.bdezonia.zorbage.algorithm.SetIValues;
+import nom.bdezonia.zorbage.algorithm.SetJ0Values;
+import nom.bdezonia.zorbage.algorithm.SetJValues;
+import nom.bdezonia.zorbage.algorithm.SetK0Values;
+import nom.bdezonia.zorbage.algorithm.SetKValues;
+import nom.bdezonia.zorbage.algorithm.SetLValues;
+import nom.bdezonia.zorbage.algorithm.SetRValues;
 import nom.bdezonia.zorbage.algorithm.SetV;
 import nom.bdezonia.zorbage.algorithm.Splat6;
 import nom.bdezonia.zorbage.algorithm.Unzip;
 import nom.bdezonia.zorbage.algorithm.Zip;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ListDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -40,6 +58,9 @@ import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.tuple.Tuple3;
 import nom.bdezonia.zorbage.tuple.Tuple4;
 import nom.bdezonia.zorbage.tuple.Tuple6;
+import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16Member;
+import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16Member;
+import nom.bdezonia.zorbage.type.float16.real.Float16Member;
 import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
@@ -242,8 +263,42 @@ class Conveniences {
 		// result = [9, 3, 14, 13, 7, 18, 17, 11, 22] 
 	}
 	
-	// DataConvert is another convenience algorithm. It allows one to make lists of one type of data
-	//   into a list of another kind of data. Its use is detailed in the Conversions example in this
-	//   directory.
+	// Zorbage has a series of convenience functions for setting and getting the components of
+	//   collections of complex, quaternion, and octonion data en masse.
+	
+	void example8() {
+		
+		DimensionedDataSource<OctonionFloat16Member> data =
+				DimensionedStorage.allocate(new long[] {400, 500}, G.OHLF.construct());
+		
+		IndexedDataSource<Float16Member> components =
+				nom.bdezonia.zorbage.storage.Storage.allocate(data.numElements(), G.HLF.construct());
+
+		GetRValues.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetIValues.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetJValues.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetKValues.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetLValues.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetI0Values.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetJ0Values.compute(G.OHLF, G.HLF, data.rawData(), components);
+		GetK0Values.compute(G.OHLF, G.HLF, data.rawData(), components);
+		
+		Float16Member value = new Float16Member(2525);
+		
+		components.set(0, value);
+		
+		SetRValues.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetIValues.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetJValues.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetKValues.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetLValues.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetI0Values.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetJ0Values.compute(G.HLF, G.OHLF, components, data.rawData());
+		SetK0Values.compute(G.HLF, G.OHLF, components, data.rawData());
+	}
+	
+	// DataConvert is another convenience algorithm. It allows one to make lists of one type
+	//   of data into a list of another kind of data. Its use is detailed in the Conversions
+	//   example in this directory.
 	
 }
