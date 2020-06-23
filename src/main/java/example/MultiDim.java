@@ -27,6 +27,7 @@
 package example;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.DimensionalPermutation;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
@@ -37,6 +38,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int16.UnsignedInt16Algebra;
 import nom.bdezonia.zorbage.type.int16.UnsignedInt16Member;
@@ -152,5 +154,69 @@ class MultiDim {
 		index.set(2, -1);
 		
 		paddedData.get(index, value);  // value == 83 here
+	}
+	
+	// Zorbage has a helper for manipulating multidim datasets. Sometimes when you
+	// import from elsewhere (using let's say zorbage-netcdf or zorbage-gdal) you
+	// might get data encoded in an order you do not wish to work with. You can
+	// permute the data so that it is organized how you wish. No data are changed
+	// by this transformation. Maybe this is best shown with an example.
+	
+	@SuppressWarnings("null")
+	void example2() {
+	
+		DimensionedDataSource<Float64Member> origSrc = null;
+		
+		// We're setting it to null for now but we'll assume it was loaded with the
+		// following metadata.
+		
+		// organized as (channel, x, y, z, t)
+		
+		origSrc.numDimensions(); // == 5
+		
+		origSrc.dimension(0);    // == 4
+		origSrc.getAxisType(0);  // == "channel"
+		
+		origSrc.dimension(1);    // == 512
+		origSrc.getAxisType(1);  // == "x"
+		
+		origSrc.dimension(2);    // == 768
+		origSrc.getAxisType(2);  // == "y"
+		
+		origSrc.dimension(3);    // = 300
+		origSrc.getAxisType(3);  // == "z"
+		
+		origSrc.dimension(4);    // = 1000
+		origSrc.getAxisType(4);  // == "time"
+		
+		int[] permutation = new int[] {3, 0, 1, 2, 4};
+		
+			// orig index 0 -> 3
+			// orig index 1 -> 0
+			// orig index 2 -> 1
+			// orig index 3 -> 2
+			// orig index 4 -> 4
+		
+		DimensionedDataSource<Float64Member> result =
+				DimensionalPermutation.compute(G.DBL, permutation, origSrc);
+
+		// organized as (x, y, z, channel, t)
+		
+		result.numDimensions(); // == 5
+		
+		result.dimension(0);    // == 512
+		result.getAxisType(0);  // == "x"
+		
+		result.dimension(1);    // == 768
+		result.getAxisType(1);  // == "y"
+		
+		result.dimension(2);    // = 300
+		result.getAxisType(2);  // == "z"
+		
+		result.dimension(3);    // == 4
+		result.getAxisType(3);  // == "channel"
+		
+		result.dimension(4);    // = 1000
+		result.getAxisType(4);  // == "time"
 	}
 }
