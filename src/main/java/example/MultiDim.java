@@ -170,7 +170,7 @@ class MultiDim {
 		// We're setting it to null for now but we'll assume it was loaded with the
 		// following metadata.
 		
-		// organized as (channel, x, y, z, t)
+		// organized as (channel, x, y, z, time)
 		
 		origSrc.numDimensions(); // == 5
 		
@@ -200,7 +200,7 @@ class MultiDim {
 		DimensionedDataSource<Float64Member> result =
 				DimensionalPermutation.compute(G.DBL, permutation, origSrc);
 
-		// organized as (x, y, z, channel, t)
+		// organized as (x, y, z, channel, time)
 		
 		result.numDimensions(); // == 5
 		
@@ -216,7 +216,7 @@ class MultiDim {
 		result.dimension(3);    // == 4
 		result.getAxisType(3);  // == "channel"
 		
-		result.dimension(4);    // = 1000
+		result.dimension(4);    // == 1000
 		result.getAxisType(4);  // == "time"
 	}
 }
