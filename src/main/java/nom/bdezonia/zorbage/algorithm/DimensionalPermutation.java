@@ -85,6 +85,7 @@ public class DimensionalPermutation {
 		
 		// copy some metadata
 		
+		output.setName(input.getName());
 		output.setValueType(input.getValueType());
 		output.setValueUnit(input.getValueUnit());
 		for (int i = 0; i < numD; i++) {
