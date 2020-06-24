@@ -38,8 +38,6 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
-// TODO What about equals ignoring case??
-
 /**
  * 
  * @author Barry DeZonia
@@ -311,6 +309,19 @@ public class FixedStringAlgebra
 	@Override
 	public Procedure2<FixedStringMember, SignedInt32Member> norm() {
 		return NORM;
+	}
+
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> EQCASE =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return a.v().equalsIgnoreCase(b.v());
+		}
+	};
+	
+	public Function2<Boolean, FixedStringMember, FixedStringMember> isEqualIgnoreCase() {
+		return EQCASE;
 	}
 
 }
