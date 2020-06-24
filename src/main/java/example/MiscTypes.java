@@ -273,7 +273,7 @@ class MiscTypes {
 		G.ARGB.maxBound();  // (255,255,255,255)
 	}
 	
-	// Zorbage supports ARGB color values
+	// Zorbage supports fixed length string values
 	
 	void example6() {
 		
