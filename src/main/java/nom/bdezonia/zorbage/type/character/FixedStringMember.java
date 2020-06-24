@@ -44,9 +44,15 @@ public final class FixedStringMember
 	private int maxLen;
 	private String v;
 	
-	public FixedStringMember(int len) {
+	public FixedStringMember(int len, String s) {
+		if (len < 0)
+			throw new IllegalArgumentException("max string length must be >= 0");
 		maxLen = len;
-		v = "";
+		setV(s);
+	}
+
+	public FixedStringMember(int len) {
+		this(len, "");
 	}
 
 	public FixedStringMember() {
@@ -54,22 +60,21 @@ public final class FixedStringMember
 	}
 	
 	public FixedStringMember(String value) {
-		maxLen = value.length();
-		v = value;
+		this(value.length(), value);
 	}
 	
 	public FixedStringMember(FixedStringMember value) {
-		maxLen = value.maxLen;
-		v = value.v;
+		this(value.maxLen, value.v);
 	}
 	
 	public String v() {
-		return chars(v);
+		return v;
 	}
 	
 	public void setV(String val) {
-		if (maxLen < val.length()) {
-			v = val.substring(0, maxLen);
+		String st = chars(val);
+		if (maxLen < st.length()) {
+			v = st.substring(0, maxLen);
 		}
 		else {
 			v = val;
@@ -88,7 +93,7 @@ public final class FixedStringMember
 
 	@Override
 	public String toString() {
-		return chars(v);
+		return v;
 	}
 
 	@Override
@@ -101,8 +106,10 @@ public final class FixedStringMember
 		maxLen = arr[index];
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < maxLen; i++) {
-			if (arr[index+1+i] != 0)
-				b.append((char) arr[index+1+i]);
+			int ch = arr[index+1+i];
+			if (ch == 0)
+				break;
+			b.append((char) ch);
 		}
 		v = b.toString();
 	}
@@ -110,11 +117,11 @@ public final class FixedStringMember
 	@Override
 	public void toIntArray(int[] arr, int index) {
 		arr[index] = maxLen;
-		String chs = chars(v);
-		for (int i = 0; i < chs.length() && i < maxLen; i++) {
-			arr[index+1+i] = chs.charAt(i);
+		int len = v.length();
+		for (int i = 0; i < len && i < maxLen; i++) {
+			arr[index+1+i] = v.charAt(i);
 		}
-		for (int i = chs.length(); i < maxLen; i++) {
+		for (int i = len; i < maxLen; i++) {
 			arr[index+1+i] = 0;
 		}
 	}
@@ -140,7 +147,7 @@ public final class FixedStringMember
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = Hasher.PRIME * v + Hasher.hashCode(chars(this.v));
+		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
 		return v;
 	}
 	
@@ -161,8 +168,7 @@ public final class FixedStringMember
 			char ch = value.charAt(i);
 			if (ch == 0)
 				return b.toString();
-			else
-				b.append(ch);
+			b.append(ch);
 		}
 		return b.toString();
 	}
