@@ -56,6 +56,8 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
     - floats (bits: 16, 32, 64, unbounded)
 
     - rational numbers (unbounded)
+    
+    - fixed length strings
   
     - booleans
     

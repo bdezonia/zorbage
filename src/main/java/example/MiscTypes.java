@@ -29,6 +29,7 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.character.FixedStringMember;
 import nom.bdezonia.zorbage.type.point.Point;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.rgb.ArgbMember;
@@ -270,6 +271,47 @@ class MiscTypes {
 		G.ARGB.isZero();
 		G.ARGB.minBound();  // (0,0,0,0)
 		G.ARGB.maxBound();  // (255,255,255,255)
+	}
+	
+	// Zorbage supports ARGB color values
+	
+	void example6() {
+		
+		FixedStringMember fixed = new FixedStringMember(100);
+		FixedStringMember other = null;
+		
+		// java ops
+		fixed.equals(other);
+		fixed.hashCode();
+		
+		// constructions
+		
+		G.FSTRING.construct();
+		G.FSTRING.construct(other);
+		G.FSTRING.construct("how now brown cow?");
+
+		// mathematical operations
+		
+		G.FSTRING.assign();
+		G.FSTRING.add();
+		G.FSTRING.subtract();
+		G.FSTRING.zero();
+		G.FSTRING.negate();  // is actually a no op procedure
+		G.FSTRING.norm();
+		
+		// comparisons
+		
+		G.FSTRING.compare();
+		G.FSTRING.signum();
+		G.FSTRING.isEqual();
+		G.FSTRING.isNotEqual();
+		G.FSTRING.isGreater();
+		G.FSTRING.isLess();
+		G.FSTRING.isGreaterEqual();
+		G.FSTRING.isLessEqual();
+		G.FSTRING.isZero();
+		G.FSTRING.max();
+		G.FSTRING.min();
 	}
 
 }
