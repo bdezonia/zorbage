@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algebra;
 
 import nom.bdezonia.zorbage.type.bool.BooleanAlgebra;
+import nom.bdezonia.zorbage.type.character.FixedStringAlgebra;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Matrix;
@@ -151,6 +152,8 @@ public class G {
 
 	public static final UnboundedIntAlgebra UNBOUND = new UnboundedIntAlgebra();
 
+	public static final FixedStringAlgebra FSTRING = new FixedStringAlgebra();
+	
 	public static final RationalAlgebra RAT = new RationalAlgebra();
 
 	public static final BooleanAlgebra BOOL = new BooleanAlgebra();
