@@ -687,7 +687,7 @@ public final class BooleanMember
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = Hasher.PRIME * v + Hasher.hashCode(v);
+		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
 		return v;
 	}
 	
