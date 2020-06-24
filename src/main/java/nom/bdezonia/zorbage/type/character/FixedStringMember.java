@@ -28,7 +28,7 @@ package nom.bdezonia.zorbage.type.character;
 
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.storage.coder.CharCoder;
+import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -38,10 +38,10 @@ import nom.bdezonia.zorbage.misc.Hasher;
  */
 public final class FixedStringMember
 	implements
-		CharCoder, Allocatable<FixedStringMember>, Duplicatable<FixedStringMember>,
+		IntCoder, Allocatable<FixedStringMember>, Duplicatable<FixedStringMember>,
 		Settable<FixedStringMember>, Gettable<FixedStringMember>
 {
-	private final int maxLen;
+	private int maxLen;
 	private String v;
 	
 	public FixedStringMember(int len) {
@@ -92,27 +92,30 @@ public final class FixedStringMember
 	}
 
 	@Override
-	public int charCount() {
-		return maxLen;
+	public int intCount() {
+		return maxLen + 1;
 	}
 
 	@Override
-	public void fromCharArray(char[] arr, int index) {
+	public void fromIntArray(int[] arr, int index) {
+		maxLen = arr[index];
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < maxLen; i++) {
-			b.append(arr[index+i]);
+			if (arr[index+1+i] != 0)
+				b.append((char) arr[index+1+i]);
 		}
 		v = b.toString();
 	}
 
 	@Override
-	public void toCharArray(char[] arr, int index) {
+	public void toIntArray(int[] arr, int index) {
+		arr[index] = maxLen;
 		String chs = chars(v);
-		for (int i = 0; i < chs.length(); i++) {
-			arr[index+i] = chs.charAt(i);
+		for (int i = 0; i < chs.length() && i < maxLen; i++) {
+			arr[index+1+i] = chs.charAt(i);
 		}
 		for (int i = chs.length(); i < maxLen; i++) {
-			arr[index+i] = 0;
+			arr[index+1+i] = 0;
 		}
 	}
 
