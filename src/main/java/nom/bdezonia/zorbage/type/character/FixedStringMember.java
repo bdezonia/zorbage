@@ -107,7 +107,7 @@ public final class FixedStringMember
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < maxLen; i++) {
 			int ch = arr[index+1+i];
-			if (ch == 0)
+			if (ch == 0) // NUL
 				break;
 			b.append((char) ch);
 		}
@@ -121,9 +121,9 @@ public final class FixedStringMember
 		for (int i = 0; i < len && i < maxLen; i++) {
 			arr[index+1+i] = v.charAt(i);
 		}
-		for (int i = len; i < maxLen; i++) {
-			arr[index+1+i] = 0;
-		}
+		// NUL terminate if necessary
+		if (len < maxLen)
+			arr[index+1+len] = 0;
 	}
 
 	@Override
@@ -166,7 +166,7 @@ public final class FixedStringMember
 		int len = value.length();
 		for (int i = 0; i < len; i++) {
 			char ch = value.charAt(i);
-			if (ch == 0)
+			if (ch == 0) // NUL
 				return b.toString();
 			b.append(ch);
 		}

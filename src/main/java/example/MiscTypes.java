@@ -301,15 +301,16 @@ class MiscTypes {
 		
 		// comparisons
 		
-		G.FSTRING.compare();
-		G.FSTRING.signum();
+		G.FSTRING.isEqualIgnoreCase();
 		G.FSTRING.isEqual();
 		G.FSTRING.isNotEqual();
-		G.FSTRING.isGreater();
 		G.FSTRING.isLess();
-		G.FSTRING.isGreaterEqual();
 		G.FSTRING.isLessEqual();
-		G.FSTRING.isZero();
+		G.FSTRING.isGreater();
+		G.FSTRING.isGreaterEqual();
+		G.FSTRING.isZero();  // is string empty
+		G.FSTRING.compare();
+		G.FSTRING.signum();
 		G.FSTRING.max();
 		G.FSTRING.min();
 	}
