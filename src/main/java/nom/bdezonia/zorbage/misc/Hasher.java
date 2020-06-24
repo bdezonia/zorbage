@@ -38,6 +38,14 @@ public class Hasher {
 
 	public static final int PRIME = 23;
 	
+	public static int hashCode(String v) {
+		return v.hashCode();
+	}
+
+	public static int hashCode(char v) {
+		return Character.valueOf(v).hashCode();
+	}
+
 	public static int hashCode(boolean v) {
 		return v ? 1 : 0;
 	}
