@@ -60,7 +60,7 @@ public final class FixedStringMember
 	}
 	
 	public FixedStringMember(String value) {
-		this(value.length(), value);
+		this(value.codePointCount(0, value.length()), value);
 	}
 	
 	public FixedStringMember(FixedStringMember value) {
@@ -73,8 +73,11 @@ public final class FixedStringMember
 	
 	public void setV(String val) {
 		String st = chars(val);
-		if (maxLen < st.length()) {
-			v = st.substring(0, maxLen);
+		if (maxLen < st.codePointCount(0, st.length())) {
+			StringBuilder b = new StringBuilder();
+			for (int i = 0; i < maxLen; i++)
+				b.appendCodePoint(st.codePointAt(i));
+			v = b.toString();
 		}
 		else {
 			v = val;
@@ -109,7 +112,7 @@ public final class FixedStringMember
 			int ch = arr[index+1+i];
 			if (ch == 0) // NUL
 				break;
-			b.append((char) ch);
+			b.appendCodePoint(ch);
 		}
 		v = b.toString();
 	}
@@ -117,9 +120,9 @@ public final class FixedStringMember
 	@Override
 	public void toIntArray(int[] arr, int index) {
 		arr[index] = maxLen;
-		int len = v.length();
+		int len = v.codePointCount(0, v.length());
 		for (int i = 0; i < len && i < maxLen; i++) {
-			arr[index+1+i] = v.charAt(i);
+			arr[index+1+i] = v.codePointAt(i);
 		}
 		// NUL terminate if necessary
 		if (len < maxLen)
@@ -163,12 +166,12 @@ public final class FixedStringMember
 	
 	private String chars(String value) {
 		StringBuilder b = new StringBuilder();
-		int len = value.length();
+		int len = value.codePointCount(0, value.length());
 		for (int i = 0; i < len; i++) {
-			char ch = value.charAt(i);
+			int ch = value.codePointAt(i);
 			if (ch == 0) // NUL
 				return b.toString();
-			b.append(ch);
+			b.appendCodePoint(ch);
 		}
 		return b.toString();
 	}
