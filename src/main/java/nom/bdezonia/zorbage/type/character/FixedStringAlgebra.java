@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -523,22 +524,111 @@ public class FixedStringAlgebra
 	public Procedure3<Integer, FixedStringMember, FixedStringMember> subString() {
 		return SUBSTR;
 	}
+
+	private final Function2<Integer, Integer, FixedStringMember> IDXOF =
+			new Function2<Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer codePoint, FixedStringMember a) {
+			return indexOfFrom().call(codePoint, 0, a);
+		}
+	};
+	
+	public Function2<Integer, Integer, FixedStringMember> indexOf() {
+		return IDXOF;
+	}
+
+	private final Function3<Integer, Integer, Integer, FixedStringMember> IDXOFFROM =
+			new Function3<Integer, Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer codePoint, Integer from, FixedStringMember a) {
+			for (int i = from; i < a.getCodePointCount(); i++) {
+				int cp = a.getCodePoint(i);
+				if (cp == 0)
+					return -1;
+				if (cp == codePoint)
+					return i;
+			}
+			return -1;
+		}
+	};
+	
+	public Function3<Integer, Integer, Integer, FixedStringMember> indexOfFrom() {
+		return IDXOFFROM;
+	}
+
+	private final Function2<Integer, Integer, FixedStringMember> LASTIDXOF =
+			new Function2<Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer codePoint, FixedStringMember a) {
+			return lastIndexOfFrom().call(codePoint, a.getCodePointCount()-1, a);
+		}
+	};
+	
+	public Function2<Integer, Integer, FixedStringMember> lastIndexOf() {
+		return LASTIDXOF;
+	}
+
+	private final Function3<Integer, Integer, Integer, FixedStringMember> LASTIDXOFFROM =
+			new Function3<Integer, Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer codePoint, Integer from, FixedStringMember a) {
+			int firstNull = a.getCodePointCount();
+			for (int i = 0; i < a.getCodePointCount(); i++) {
+				if (a.getCodePoint(i) == 0) {
+					firstNull = i;
+					break;
+				}
+			}
+			if (firstNull <= from)
+				from = firstNull - 1;
+			for (int i = from; i >= 0; i--) {
+				int cp = a.getCodePoint(i);
+				if (cp == 0)
+					return -1;
+				if (cp == codePoint)
+					return i;
+			}
+			return -1;
+		}
+	};
+	
+	public Function3<Integer, Integer, Integer, FixedStringMember> lastIndexOfFrom() {
+		return LASTIDXOFFROM;
+	}
+
+	private final Procedure4<Integer, Integer, FixedStringMember, FixedStringMember> REPLACE =
+			new Procedure4<Integer, Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(Integer oldCP, Integer newCP, FixedStringMember a, FixedStringMember b) {
+			if (oldCP == 0 || newCP == 0)
+				throw new IllegalArgumentException("replace method does not allow NUL char manipulations");
+			assign().call(a, b);
+			for (int i = 0; i < b.getCodePointCount(); i++) {
+				if (b.getCodePoint(i) == oldCP)
+					b.setCodePoint(i, newCP);
+			}
+		}
+	};
+
+	public Procedure4<Integer, Integer, FixedStringMember, FixedStringMember> replace() {
+		return REPLACE;
+	}
 	
 	/*
 	  TODO - add these
 	
 	  private void tmp() {
 		String s = "";
-		s.indexOf(int ch);
-		s.indexOf(str);
-		s.indexOf(int ch, fromIndex);
-		s.indexOf(str, fromIndex);
-		s.lastIndexOf(int ch);
-		s.lastIndexOf(str);
-		s.lastIndexOf(int ch, fromIndex);
-		s.lastIndexOf(str, fromIndex);
+		//skipping s.indexOf(str);
+		//skipping s.indexOf(str, fromIndex);
+		//skipping s.lastIndexOf(str);
+		//skipping s.lastIndexOf(str, fromIndex);
 		s.matches(regex);
-		s.replace(oldChar, newChar);
 		s.replace(target, replacement);
 		s.replaceAll(regex, replacement);
 		s.replaceFirst(regex, replacement);
