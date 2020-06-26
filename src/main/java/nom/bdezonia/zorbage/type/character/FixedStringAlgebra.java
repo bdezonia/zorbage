@@ -159,11 +159,11 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(FixedStringMember a, FixedStringMember b, FixedStringMember c) {
-			String aTr = a.v();
-			String bTr = b.v();
-			if (aTr.endsWith(bTr)) {
-				int offset = aTr.lastIndexOf(bTr);
-				c.setV(aTr.substring(0,offset));
+			String aV = a.v();
+			String bV = b.v();
+			if (aV.endsWith(bV)) {
+				int offset = aV.lastIndexOf(bV);
+				c.setV(aV.substring(0, offset));
 			}
 			else {
 				c.setV(a.v());
@@ -187,7 +187,6 @@ public class FixedStringAlgebra
 	
 	@Override
 	public Function2<Boolean, FixedStringMember, FixedStringMember> isLess() {
-		// TODO Auto-generated method stub
 		return LESS;
 	}
 
@@ -302,7 +301,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(FixedStringMember a, SignedInt32Member b) {
-			b.setV(a.v().length());
+			b.setV(a.codePointCount());
 		}
 	};
 
@@ -324,4 +323,55 @@ public class FixedStringAlgebra
 		return EQCASE;
 	}
 
+	/*
+	private final Function2<Integer, Integer, FixedStringMember> CPA =
+			new Function2<Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer i, FixedStringMember a) {
+			return a.getCodePoint(i);
+		}
+	};
+
+	private final Function1<Integer, FixedStringMember> CPC =
+			new Function1<Integer, FixedStringMember>()
+	{
+		@Override
+		public Integer call(FixedStringMember a) {
+			return a.getCodeCount();
+		}
+	};
+
+	private void tmp() {
+		String s = "";
+		s.compareToIgnoreCase(str);
+		s.contains(str);
+		s.endsWith(str);
+		s.indexOf(int ch);
+		s.indexOf(str);
+		s.indexOf(int ch, fromIndex);
+		s.indexOf(str, fromIndex);
+		s.isEmpty();
+		s.lastIndexOf(int ch);
+		s.lastIndexOf(str);
+		s.lastIndexOf(int ch, fromIndex);
+		s.lastIndexOf(str, fromIndex);
+		s.matches(regex);
+		s.replace(oldChar, newChar);
+		s.replace(target, replacement);
+		s.replaceAll(regex, replacement);
+		s.replaceFirst(regex, replacement);
+		s.split(regex);
+		s.split(regex, limit);
+		s.startsWith(prefix);
+		s.startsWith(prefix, toffset);
+		s.substring(beginIndex);
+		s.substring(beginIndex, endIndex);
+		s.trim();
+		s.toLowerCase();
+		s.toLowerCase(locale)
+		s.toUpperCase();
+		s.toUpperCase(locale)
+	}
+	*/
 }

@@ -41,13 +41,12 @@ public final class FixedStringMember
 		IntCoder, Allocatable<FixedStringMember>, Duplicatable<FixedStringMember>,
 		Settable<FixedStringMember>, Gettable<FixedStringMember>
 {
-	private int maxLen;
-	private String v;
+	private int[] codePoints;
 	
 	public FixedStringMember(int len, String s) {
 		if (len < 0)
 			throw new IllegalArgumentException("max string length must be >= 0");
-		maxLen = len;
+		codePoints = new int[len];
 		setV(s);
 	}
 
@@ -60,78 +59,109 @@ public final class FixedStringMember
 	}
 	
 	public FixedStringMember(String value) {
-		this(value.codePointCount(0, value.length()), value);
+		this(value.codePointCount(0, value.length()));
+		setV(value);
 	}
 	
 	public FixedStringMember(FixedStringMember value) {
-		this(value.maxLen, value.v);
+		this(value.codePoints.length);
+		set(value);
+	}
+	
+	public int codePointCount() {
+		for (int i = 0; i < codePoints.length; i++) {
+			if (codePoints[i] == 0) { // NUL
+				return i;
+			}
+		}
+		return codePoints.length;
 	}
 	
 	public String v() {
-		return v;
+		StringBuilder b = new StringBuilder();
+		for (int i = 0; i < codePoints.length; i++) {
+			int cp = codePoints[i];
+			if (cp == 0) { // NUL
+				return b.toString();
+			}
+			b.appendCodePoint(cp);
+		}
+		return b.toString();
 	}
 	
 	public void setV(String val) {
-		String st = chars(val);
-		if (maxLen < st.codePointCount(0, st.length())) {
-			StringBuilder b = new StringBuilder();
-			for (int i = 0; i < maxLen; i++)
-				b.appendCodePoint(st.codePointAt(i));
-			v = b.toString();
+		int codePointCount = val.codePointCount(0, val.length());
+		for (int i = 0; i < codePointCount && i < codePoints.length; i++) {
+			int cp = val.codePointAt(i);
+			codePoints[i] = cp;
+			if (cp == 0) { //  NUL
+				break;
+			}
 		}
-		else {
-			v = st;
+		if (codePointCount < codePoints.length) {
+			codePoints[codePointCount] = 0; // NUL
 		}
 	}
 	
 	@Override
 	public void set(FixedStringMember other) {
-		setV(other.v());
+		for (int i = 0; i < codePoints.length && i < other.codePoints.length; i++) {
+			codePoints[i] = other.codePoints[i];
+		}
+		if (codePoints.length > other.codePoints.length) {
+			codePoints[other.codePoints.length] = 0; // NUL
+		}
 	}
 	
 	@Override
 	public void get(FixedStringMember other) {
-		other.setV(v());
+		for (int i = 0; i < codePoints.length && i < other.codePoints.length; i++) {
+			other.codePoints[i] = codePoints[i];
+		}
+		if (other.codePoints.length > codePoints.length) {
+			other.codePoints[codePoints.length] = 0; // NUL
+		}
 	}
 
 	@Override
 	public String toString() {
-		return v;
+		return v();
 	}
 
 	@Override
 	public int intCount() {
-		return maxLen + 1;
+		return codePoints.length + 1;
 	}
 
 	@Override
 	public void fromIntArray(int[] arr, int index) {
-		maxLen = arr[index];
-		StringBuilder b = new StringBuilder();
-		for (int i = 0; i < maxLen; i++) {
-			int ch = arr[index+1+i];
-			if (ch == 0) // NUL
-				break;
-			b.appendCodePoint(ch);
+		if (codePoints.length != arr[index]) {
+			codePoints = new int[arr[index]];
 		}
-		v = b.toString();
+		for (int i = 0; i < codePoints.length; i++) {
+			int cp = arr[index+1+i];
+			codePoints[i] = cp;
+			if (cp == 0) { // NUL 
+				break;
+			}
+		}
 	}
 
 	@Override
 	public void toIntArray(int[] arr, int index) {
-		arr[index] = maxLen;
-		int len = v.codePointCount(0, v.length());
-		for (int i = 0; i < len && i < maxLen; i++) {
-			arr[index+1+i] = v.codePointAt(i);
+		arr[index] = codePoints.length;
+		for (int i = 0; i < codePoints.length; i++) {
+			int cp = codePoints[i];
+			arr[index+1+i] = cp;
+			if (cp == 0) { // NUL
+				break;
+			}
 		}
-		// NUL terminate if necessary
-		if (len < maxLen)
-			arr[index+1+len] = 0;
 	}
 
 	@Override
 	public FixedStringMember allocate() {
-		return new FixedStringMember(maxLen);
+		return new FixedStringMember(codePoints.length);
 	}
 
 	@Override
@@ -139,18 +169,16 @@ public final class FixedStringMember
 		return new FixedStringMember(this);
 	}
 
-	public void getV(FixedStringMember value) {
-		get(value);
-	}
-
-	public void setV(FixedStringMember value) {
-		set(value);
-	}
-
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
+		for (int i = 0; i < codePoints.length; i++) {
+			int cp = codePoints[i];
+			v = Hasher.PRIME * v + Hasher.hashCode(cp);
+			if (cp == 0) { // NUL
+				break;
+			}
+		}
 		return v;
 	}
 	
@@ -162,17 +190,5 @@ public final class FixedStringMember
 			return G.FSTRING.isEqual().call(this, (FixedStringMember) o);
 		}
 		return false;
-	}
-	
-	private String chars(String value) {
-		StringBuilder b = new StringBuilder();
-		int len = value.codePointCount(0, value.length());
-		for (int i = 0; i < len; i++) {
-			int ch = value.codePointAt(i);
-			if (ch == 0) // NUL
-				return b.toString();
-			b.appendCodePoint(ch);
-		}
-		return b.toString();
 	}
 }
