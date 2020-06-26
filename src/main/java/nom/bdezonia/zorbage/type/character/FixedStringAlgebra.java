@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.character;
 
+import java.util.Locale;
+
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -126,7 +128,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Boolean call(FixedStringMember a) {
-			return a.v().length() == 0;
+			return ISEMPTY.call(a);
 		}
 	};
 
@@ -323,7 +325,7 @@ public class FixedStringAlgebra
 		return EQCASE;
 	}
 
-	private final Function2<Integer, Integer, FixedStringMember> CPA =
+	private final Function2<Integer, Integer, FixedStringMember> GCP =
 			new Function2<Integer, Integer, FixedStringMember>()
 	{
 		@Override
@@ -332,7 +334,11 @@ public class FixedStringAlgebra
 		}
 	};
 
-	private final Function1<Integer, FixedStringMember> CPC =
+	public Function2<Integer, Integer, FixedStringMember> getCodePoint() {
+		return GCP;
+	}
+	
+	private final Function1<Integer, FixedStringMember> GCPC =
 			new Function1<Integer, FixedStringMember>()
 	{
 		@Override
@@ -341,17 +347,125 @@ public class FixedStringAlgebra
 		}
 	};
 
+	public Function1<Integer, FixedStringMember> getCodePointCount() {
+		return GCPC;
+	}
+	
+	private final Function2<Boolean, String, FixedStringMember> ENDSWITH =
+			new Function2<Boolean, String, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(String suffix, FixedStringMember a) {
+			return a.v().endsWith(suffix);
+		}
+	};
+
+	public Function2<Boolean, String, FixedStringMember> endsWith() {
+		return ENDSWITH;
+	}
+	
+	private final Function2<Boolean, String, FixedStringMember> STARTSWITH =
+			new Function2<Boolean, String, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(String prefix, FixedStringMember a) {
+			return a.v().startsWith(prefix);
+		}
+	};
+
+	public Function2<Boolean, String, FixedStringMember> startsWith() {
+		return STARTSWITH;
+	}
+	
+	private final Procedure2<FixedStringMember, FixedStringMember> TRIM =
+			new Procedure2<FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().trim());
+		}
+	};
+	
+	public Procedure2<FixedStringMember, FixedStringMember> trim() {
+		return TRIM;
+	}
+
+	private final Procedure2<FixedStringMember, FixedStringMember> TOLOWER =
+			new Procedure2<FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().toLowerCase());
+		}
+	};
+
+	public Procedure2<FixedStringMember, FixedStringMember> toLower() {
+		return TOLOWER;
+	}
+	
+	private final Procedure2<FixedStringMember, FixedStringMember> TOUPPER =
+			new Procedure2<FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().toUpperCase());
+		}
+	};
+
+	public Procedure2<FixedStringMember, FixedStringMember> toUpper() {
+		return TOUPPER;
+	}
+	
+	private final Procedure3<Locale, FixedStringMember, FixedStringMember> TOLOWERL =
+			new Procedure3<Locale, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(Locale locale, FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().toLowerCase(locale));
+		}
+	};
+
+	public Procedure3<Locale, FixedStringMember, FixedStringMember> toLowerWithLocale() {
+		return TOLOWERL;
+	}
+	
+	private final Procedure3<Locale, FixedStringMember, FixedStringMember> TOUPPERL =
+			new Procedure3<Locale, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(Locale locale, FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().toUpperCase(locale));
+		}
+	};
+
+	public Procedure3<Locale, FixedStringMember, FixedStringMember> toUpperWithLocale() {
+		return TOUPPERL;
+	}
+
+	private final Function1<Boolean, FixedStringMember> ISEMPTY =
+			new Function1<Boolean, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a) {
+			return a.getCodePointCount() == 0;
+		}
+	};
+
+	public Function1<Boolean, FixedStringMember> isEmpty() {
+		return ISEMPTY;
+	}
+	
 	/*
-	private void tmp() {
+	  TODO - add these
+	
+	  private void tmp() {
 		String s = "";
 		s.compareToIgnoreCase(str);
 		s.contains(str);
-		s.endsWith(str);
 		s.indexOf(int ch);
 		s.indexOf(str);
 		s.indexOf(int ch, fromIndex);
 		s.indexOf(str, fromIndex);
-		s.isEmpty();
 		s.lastIndexOf(int ch);
 		s.lastIndexOf(str);
 		s.lastIndexOf(int ch, fromIndex);
@@ -363,15 +477,8 @@ public class FixedStringAlgebra
 		s.replaceFirst(regex, replacement);
 		s.split(regex);
 		s.split(regex, limit);
-		s.startsWith(prefix);
-		s.startsWith(prefix, toffset);
 		s.substring(beginIndex);
 		s.substring(beginIndex, endIndex);
-		s.trim();
-		s.toLowerCase();
-		s.toLowerCase(locale)
-		s.toUpperCase();
-		s.toUpperCase(locale)
-	}
+	  }
 	*/
 }
