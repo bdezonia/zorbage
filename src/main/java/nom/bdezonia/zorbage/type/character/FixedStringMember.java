@@ -68,13 +68,23 @@ public final class FixedStringMember
 		set(value);
 	}
 	
-	public int codePointCount() {
+	public int getCodePointCount() {
 		for (int i = 0; i < codePoints.length; i++) {
 			if (codePoints[i] == 0) { // NUL
 				return i;
 			}
 		}
 		return codePoints.length;
+	}
+
+	public int getCodePoint(int i) {
+		if (i < 0 || i >= codePoints.length)
+			throw new IllegalArgumentException("code point index out of bounds");
+		for (int n = 0; n <= i; n++) {
+			if (codePoints[n] == 0) // if a NUL found
+				return 0;  // treat all subsequent codepoints as NUL
+		}
+		return codePoints[i];
 	}
 	
 	public String v() {

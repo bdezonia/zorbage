@@ -301,7 +301,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(FixedStringMember a, SignedInt32Member b) {
-			b.setV(a.codePointCount());
+			b.setV(a.getCodePointCount());
 		}
 	};
 
@@ -323,7 +323,6 @@ public class FixedStringAlgebra
 		return EQCASE;
 	}
 
-	/*
 	private final Function2<Integer, Integer, FixedStringMember> CPA =
 			new Function2<Integer, Integer, FixedStringMember>()
 	{
@@ -338,10 +337,11 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Integer call(FixedStringMember a) {
-			return a.getCodeCount();
+			return a.getCodePointCount();
 		}
 	};
 
+	/*
 	private void tmp() {
 		String s = "";
 		s.compareToIgnoreCase(str);
