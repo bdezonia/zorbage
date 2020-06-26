@@ -80,7 +80,7 @@ public final class FixedStringMember
 			v = b.toString();
 		}
 		else {
-			v = val;
+			v = st;
 		}
 	}
 	
