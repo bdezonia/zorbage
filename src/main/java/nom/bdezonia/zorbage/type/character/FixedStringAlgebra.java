@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
@@ -312,7 +313,7 @@ public class FixedStringAlgebra
 		return NORM;
 	}
 
-	private final Function2<Boolean, FixedStringMember, FixedStringMember> EQCASE =
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> EQIGCASE =
 			new Function2<Boolean, FixedStringMember, FixedStringMember>()
 	{
 		@Override
@@ -322,9 +323,22 @@ public class FixedStringAlgebra
 	};
 	
 	public Function2<Boolean, FixedStringMember, FixedStringMember> isEqualIgnoreCase() {
-		return EQCASE;
+		return EQIGCASE;
 	}
 
+	private final Function2<Integer, FixedStringMember, FixedStringMember> CMPIGCASE =
+			new Function2<Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Integer call(FixedStringMember a, FixedStringMember b) {
+			return a.v().compareToIgnoreCase(b.v());
+		}
+	};
+
+	public Function2<Integer, FixedStringMember, FixedStringMember> compareIgnoreCase() {
+		return CMPIGCASE;
+	}
+	
 	private final Function2<Integer, Integer, FixedStringMember> GCP =
 			new Function2<Integer, Integer, FixedStringMember>()
 	{
@@ -455,13 +469,66 @@ public class FixedStringAlgebra
 		return ISEMPTY;
 	}
 	
+	private final Function2<Boolean, String, FixedStringMember> CONTAINS =
+			new Function2<Boolean, String, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(String a, FixedStringMember b) {
+			return b.v().contains(a);
+		}
+	};
+
+	public Function2<Boolean, String, FixedStringMember> contains() {
+		return CONTAINS;
+	}
+	
+	private final Procedure4<Integer, Integer, FixedStringMember, FixedStringMember> SUBSTR2 =
+			new Procedure4<Integer, Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(Integer start, Integer end, FixedStringMember a, FixedStringMember b) {
+			if (start < 0 || start >= a.getCodePointCount())
+				throw new IllegalArgumentException("start offset out of string bounds");
+			if (end < 0 || end >= a.getCodePointCount() || end < start)
+				throw new IllegalArgumentException("end offset out of string bounds");
+			for (int ai = start, bi = 0;
+					ai < end && ai < a.getCodePointCount() && bi < b.getCodePointCount();
+					ai++, bi++)
+			{
+				int cp = a.getCodePoint(ai);
+				b.setCodePoint(bi, cp);
+				if (cp == 0) { // NUL
+					break;
+				}
+			}
+			if (b.getCodePointCount() > a.getCodePointCount()) {
+				b.setCodePoint(end - start, 0); // NUL
+			}
+		}
+	};
+
+	public Procedure4<Integer, Integer, FixedStringMember, FixedStringMember> substring2() {
+		return SUBSTR2;
+	}
+
+	private final Procedure3<Integer, FixedStringMember, FixedStringMember> SUBSTR =
+			new Procedure3<Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(Integer start, FixedStringMember a, FixedStringMember b) {
+			substring2().call(start, a.getCodePointCount(), a, b);
+		}
+	};
+
+	public Procedure3<Integer, FixedStringMember, FixedStringMember> subString() {
+		return SUBSTR;
+	}
+	
 	/*
 	  TODO - add these
 	
 	  private void tmp() {
 		String s = "";
-		s.compareToIgnoreCase(str);
-		s.contains(str);
 		s.indexOf(int ch);
 		s.indexOf(str);
 		s.indexOf(int ch, fromIndex);
@@ -477,8 +544,6 @@ public class FixedStringAlgebra
 		s.replaceFirst(regex, replacement);
 		s.split(regex);
 		s.split(regex, limit);
-		s.substring(beginIndex);
-		s.substring(beginIndex, endIndex);
 	  }
 	*/
 }

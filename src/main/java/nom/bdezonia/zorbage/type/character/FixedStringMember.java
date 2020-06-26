@@ -86,6 +86,12 @@ public final class FixedStringMember
 		}
 		return codePoints[i];
 	}
+
+	public void setCodePoint(int i, int cp) {
+		if (i < 0 || i >= codePoints.length)
+			throw new IllegalArgumentException("code point index out of bounds");
+		codePoints[i] = cp;
+	}
 	
 	public String v() {
 		StringBuilder b = new StringBuilder();
