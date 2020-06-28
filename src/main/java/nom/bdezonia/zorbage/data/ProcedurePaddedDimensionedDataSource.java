@@ -190,6 +190,16 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	@Override
+	public String getSource() {
+		return dd.getSource();
+	}
+	
+	@Override
+	public void setSource(String locator) {
+		dd.setSource(locator);
+	}
+	
+	@Override
 	public String getValueType() {
 		return dd.getValueType();
 	}

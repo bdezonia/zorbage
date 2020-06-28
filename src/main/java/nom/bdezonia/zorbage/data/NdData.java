@@ -48,6 +48,7 @@ public class NdData<U>
 	implements DimensionedDataSource<U>
 {
 	private String name;
+	private String source;
 	private final long[] dims;
 	private final IndexedDataSource<U> data;
 	private final List<Procedure2<Long,HighPrecisionMember>> axisEqns;
@@ -210,6 +211,16 @@ public class NdData<U>
 		this.name = name;
 	}
 	
+	@Override
+	public String getSource() {
+		return source;
+	}
+	
+	@Override
+	public void setSource(String locator) {
+		this.source = locator;
+	}
+
 	@Override
 	public String getValueType() {
 		return valueType;

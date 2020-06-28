@@ -58,6 +58,16 @@ public interface DimensionedDataSource<U>
 	void setName(String name);
 
 	/**
+	 * get the optional source of the data (i.e. filename or URI etc.)
+	 */
+	String getSource();
+	
+	/**
+	 * set the optional source of the data (i.e. filename or URI etc.)
+	 */
+	void setSource(String locator);
+
+	/**
 	 * Get the value type of the stored data. For example, "temperature", "density", "distance", etc.
 	 */
 	String getValueType();
