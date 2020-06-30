@@ -281,8 +281,10 @@ class MiscTypes {
 		FixedStringMember other = null;
 		
 		// java ops
+
 		fixed.equals(other);
 		fixed.hashCode();
+		fixed.toString();
 		
 		// constructions
 		
@@ -298,21 +300,43 @@ class MiscTypes {
 		G.FSTRING.zero();
 		G.FSTRING.negate();  // is actually a no op procedure
 		G.FSTRING.norm();
+		G.FSTRING.signum();
+		G.FSTRING.max();
+		G.FSTRING.min();
+		G.FSTRING.isZero();  // is string empty
 		
 		// comparisons
 		
-		G.FSTRING.isEqualIgnoreCase();
 		G.FSTRING.isEqual();
+		G.FSTRING.isEqualIgnoreCase();
 		G.FSTRING.isNotEqual();
 		G.FSTRING.isLess();
 		G.FSTRING.isLessEqual();
 		G.FSTRING.isGreater();
 		G.FSTRING.isGreaterEqual();
-		G.FSTRING.isZero();  // is string empty
+		G.FSTRING.isEmpty();
 		G.FSTRING.compare();
-		G.FSTRING.signum();
-		G.FSTRING.max();
-		G.FSTRING.min();
+		G.FSTRING.compareIgnoreCase();
+
+		// simple string operations
+		
+		G.FSTRING.contains();
+		G.FSTRING.endsWith();
+		G.FSTRING.getCodePoint();
+		G.FSTRING.getCodePointCount();
+		G.FSTRING.indexOf();
+		G.FSTRING.indexOfFrom();
+		G.FSTRING.lastIndexOf();
+		G.FSTRING.lastIndexOfFrom();
+		G.FSTRING.replace();
+		G.FSTRING.startsWith();
+		G.FSTRING.subString();
+		G.FSTRING.substring2();
+		G.FSTRING.toLower();
+		G.FSTRING.toLowerWithLocale();
+		G.FSTRING.toUpper();
+		G.FSTRING.toUpperWithLocale();
+		G.FSTRING.trim();
 	}
 
 }
