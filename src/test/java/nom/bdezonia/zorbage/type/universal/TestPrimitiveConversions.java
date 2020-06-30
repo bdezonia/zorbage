@@ -197,7 +197,7 @@ public class TestPrimitiveConversions {
 		double[] vals = new double[]{1,2,3,4,5,6,7,8};
 		
 		Float64CartesianTensorProductMember t =
-				new Float64CartesianTensorProductMember(3,2,vals);
+				new Float64CartesianTensorProductMember(3, 2, vals);
 
 		Float64Member tmp = new Float64Member();
 		
@@ -221,19 +221,19 @@ public class TestPrimitiveConversions {
 
 		Float64MatrixMember m = new Float64MatrixMember(3, 2);
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, m);
-		assertEquals(2, m.rows());
-		assertEquals(3, m.cols());
+		assertEquals(3, m.rows());
+		assertEquals(2, m.cols());
 		m.getV(0, 0, tmp);
 		assertEquals(1, tmp.v(), 0);
 		m.getV(0, 1, tmp);
 		assertEquals(2, tmp.v(), 0);
-		m.getV(0, 2, tmp);
-		assertEquals(0, tmp.v(), 0);
 		m.getV(1, 0, tmp);
 		assertEquals(3, tmp.v(), 0);
 		m.getV(1, 1, tmp);
 		assertEquals(4, tmp.v(), 0);
-		m.getV(1, 2, tmp);
+		m.getV(2, 0, tmp);
+		assertEquals(0, tmp.v(), 0);
+		m.getV(2, 1, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
 		tmp1 = new IntegerIndex(4);
