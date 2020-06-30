@@ -165,9 +165,9 @@ class ParallelProcessing {
 		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
 		
 		// now set the destination list to contain only the values in the source list each incremented by one.
-		// pred(x) == x+1.
+		// succ(x) == x+1.
 		
-		ParallelTransform2.compute(G.INT16, G.INT16.pred(), shortList1, shortList2);
+		ParallelTransform2.compute(G.INT16, G.INT16.succ(), shortList1, shortList2);
 	}
 	
 	// ParallelTransform3 : transform a destination list by applying a Procedure3 to two source lists. A
