@@ -165,7 +165,7 @@ class ParallelProcessing {
 		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
 		
 		// now set the destination list to contain only the values in the source list each incremented by one.
-		// succ(x) == x+1.
+		// For integers succ(x) == x+1.
 		
 		ParallelTransform2.compute(G.INT16, G.INT16.succ(), shortList1, shortList2);
 	}
