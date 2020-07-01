@@ -125,13 +125,13 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	}
 
 	@Override
-	public void setSafe(IntegerIndex index, U value) {
-		dd.setSafe(index, value);
+	public void safeSet(IntegerIndex index, U value) {
+		dd.safeSet(index, value);
 	}
 
 	@Override
-	public void getSafe(IntegerIndex index, U value) {
-		dd.getSafe(index, value);
+	public void safeGet(IntegerIndex index, U value) {
+		dd.safeGet(index, value);
 	}
 
 	@Override

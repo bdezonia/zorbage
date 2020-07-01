@@ -131,7 +131,7 @@ public class NdData<U>
 	}
 	
 	@Override
-	public void setSafe(IntegerIndex index, U value) {
+	public void safeSet(IntegerIndex index, U value) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		set(index, value);
@@ -144,7 +144,7 @@ public class NdData<U>
 	}
 	
 	@Override
-	public void getSafe(IntegerIndex index, U value) {
+	public void safeGet(IntegerIndex index, U value) {
 		if (oob(index))
 			throw new IllegalArgumentException("index out of bounds of multidim dimensions");
 		get(index, value);

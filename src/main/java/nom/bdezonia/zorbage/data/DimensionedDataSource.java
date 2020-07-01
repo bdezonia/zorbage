@@ -125,7 +125,7 @@ public interface DimensionedDataSource<U>
 	/**
 	 * Get a value in the structure. Throw exceptions for out of bounds access.
 	 */
-	void getSafe(IntegerIndex index, U value); // get a value in the data structure (exception on oob)
+	void safeGet(IntegerIndex index, U value); // get a value in the data structure (exception on oob)
 	
 	/**
 	 * Set a value in the structure
@@ -135,7 +135,7 @@ public interface DimensionedDataSource<U>
 	/**
 	 * Set a value in the structure. Throw exceptions for out of bounds access.
 	 */
-	void setSafe(IntegerIndex index, U value);
+	void safeSet(IntegerIndex index, U value);
 
 	/**
 	 * Test if a given index is outside the defined bounds of the data structure

@@ -85,7 +85,7 @@ class MultiDim {
 		index.set(2, 15000);  // z = 15000
 		
 		// set the data but throw an exception if index is outside bounds of data set
-		data.setSafe(index, value);
+		data.safeSet(index, value);
 		
 		// set the data but trust user that index is inside bounds of data set
 		data.set(index, value);

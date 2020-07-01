@@ -112,10 +112,10 @@ public class TestNdData {
 		index.set(0, 0);
 		index.set(1, 0);
 		assertFalse(data.oob(index));
-		data.getSafe(index, v);
+		data.safeGet(index, v);
 		assertEquals(1, v.v());
-		data.setSafe(index, v2);
-		data.getSafe(index, v);
+		data.safeSet(index, v2);
+		data.safeGet(index, v);
 		assertEquals(45, v.v());
 		
 		v2.setV(99);
@@ -123,23 +123,23 @@ public class TestNdData {
 		index.set(0, 1);
 		index.set(1, 2);
 		assertFalse(data.oob(index));
-		data.getSafe(index, v);
+		data.safeGet(index, v);
 		assertEquals(6, v.v());
-		data.setSafe(index, v2);
-		data.getSafe(index, v);
+		data.safeSet(index, v2);
+		data.safeGet(index, v);
 		assertEquals(99, v.v());
 
 		index.set(0, 0);
 		index.set(1, -1);
 		assertTrue(data.oob(index));
 		try {
-			data.getSafe(index, v);
+			data.safeGet(index, v);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		try {
-			data.setSafe(index, v2);
+			data.safeSet(index, v2);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -149,13 +149,13 @@ public class TestNdData {
 		index.set(1, 0);
 		assertTrue(data.oob(index));
 		try {
-			data.getSafe(index, v);
+			data.safeGet(index, v);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 		try {
-			data.setSafe(index, v2);
+			data.safeSet(index, v2);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
