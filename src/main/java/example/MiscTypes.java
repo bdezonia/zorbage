@@ -322,6 +322,9 @@ class MiscTypes {
 		
 		G.FSTRING.contains();
 		G.FSTRING.endsWith();
+		G.FSTRING.getBytes();
+		G.FSTRING.getBytesUsingCharset();
+		G.FSTRING.getBytesUsingCharsetName();
 		G.FSTRING.getCodePoint();
 		G.FSTRING.getCodePointCount();
 		G.FSTRING.indexOf();

@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.character;
 
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 import nom.bdezonia.zorbage.algebra.Addition;
@@ -619,6 +620,51 @@ public class FixedStringAlgebra
 		return REPLACE;
 	}
 	
+	private final Function1<byte[],FixedStringMember> GETBYTES =
+			new Function1<byte[], FixedStringMember>()
+	{
+		@Override
+		public byte[] call(FixedStringMember a) {
+			return a.toString().getBytes();
+		}
+	};
+
+	public Function1<byte[],FixedStringMember> getBytes() {
+		return GETBYTES;
+	}
+	
+	private final Function2<byte[],Charset, FixedStringMember> GETBYTESCHARSET =
+			new Function2<byte[], Charset, FixedStringMember>()
+	{
+		@Override
+		public byte[] call(Charset charset, FixedStringMember a) {
+			return a.toString().getBytes(charset);
+		}
+	};
+
+	public Function2<byte[],Charset, FixedStringMember> getBytesUsingCharset() {
+		return GETBYTESCHARSET;
+	}
+
+	private final Function2<byte[],String, FixedStringMember> GETBYTESSTRING =
+			new Function2<byte[], String, FixedStringMember>()
+	{
+		@Override
+		public byte[] call(String charset, FixedStringMember a) {
+			byte[] bytes;
+			try {
+				bytes = a.toString().getBytes(charset);
+			} catch (Exception e) {
+				bytes = new byte[0];
+			}
+			return bytes;
+		}
+	};
+
+	public Function2<byte[],String, FixedStringMember> getBytesUsingCharsetName() {
+		return GETBYTESSTRING;
+	}
+
 	/*
 	  TODO - add these
 	
