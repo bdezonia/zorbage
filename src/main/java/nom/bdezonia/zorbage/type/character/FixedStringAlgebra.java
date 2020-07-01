@@ -620,7 +620,7 @@ public class FixedStringAlgebra
 		return REPLACE;
 	}
 	
-	private final Function1<byte[],FixedStringMember> GETBYTES =
+	private final Function1<byte[], FixedStringMember> GETBYTES =
 			new Function1<byte[], FixedStringMember>()
 	{
 		@Override
@@ -629,11 +629,11 @@ public class FixedStringAlgebra
 		}
 	};
 
-	public Function1<byte[],FixedStringMember> getBytes() {
+	public Function1<byte[], FixedStringMember> getBytes() {
 		return GETBYTES;
 	}
 	
-	private final Function2<byte[],Charset, FixedStringMember> GETBYTESCHARSET =
+	private final Function2<byte[], Charset, FixedStringMember> GETBYTESCHARSET =
 			new Function2<byte[], Charset, FixedStringMember>()
 	{
 		@Override
@@ -642,18 +642,18 @@ public class FixedStringAlgebra
 		}
 	};
 
-	public Function2<byte[],Charset, FixedStringMember> getBytesUsingCharset() {
+	public Function2<byte[], Charset, FixedStringMember> getBytesUsingCharset() {
 		return GETBYTESCHARSET;
 	}
 
-	private final Function2<byte[],String, FixedStringMember> GETBYTESSTRING =
+	private final Function2<byte[], String, FixedStringMember> GETBYTESSTRING =
 			new Function2<byte[], String, FixedStringMember>()
 	{
 		@Override
-		public byte[] call(String charset, FixedStringMember a) {
+		public byte[] call(String charsetName, FixedStringMember a) {
 			byte[] bytes;
 			try {
-				bytes = a.toString().getBytes(charset);
+				bytes = a.toString().getBytes(charsetName);
 			} catch (Exception e) {
 				bytes = new byte[0];
 			}
@@ -661,7 +661,7 @@ public class FixedStringAlgebra
 		}
 	};
 
-	public Function2<byte[],String, FixedStringMember> getBytesUsingCharsetName() {
+	public Function2<byte[], String, FixedStringMember> getBytesUsingCharsetName() {
 		return GETBYTESSTRING;
 	}
 
