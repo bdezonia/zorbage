@@ -59,7 +59,7 @@ class OutOfBoundsData {
 
 	/*
 	 * Sometimes you use an algorithm that can query data point values which are out of
-	 * the bounds of the dataset of interest Zprbage provides a mechanism for padding
+	 * the bounds of the dataset of interest. Zorbage provides a mechanism for padding
 	 * datasets so that (probably neutral) values can pass through an algorithm without
 	 * corrupting the output values.
 	 */
@@ -68,14 +68,14 @@ class OutOfBoundsData {
 	 * This can be apparent in 1-d datasets if you consider the case of finding the FFT
 	 * of a dataset. The current FFT algorithm requires an input dataset whose length
 	 * is a power of 2. In order to pass any size list of data to the FFT algorithm
-	 * Zorbage allows you to pad a dataset with appropriate values. then you wrap the
+	 * Zorbage allows you to pad a dataset with appropriate values. Then you wrap the
 	 * dataset so that any observer thinks its list's length is a power of two. Maybe
 	 * an example will be helpful here.
 	 */
 	
 	void example1() {
 		
-		// make an unusual size list
+		// Make an unusual size list
 		
 		IndexedDataSource<ComplexFloat32Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(413, G.CFLT.construct());
@@ -86,12 +86,12 @@ class OutOfBoundsData {
 		// 512
 		long perfectSize = FFT.enclosingPowerOf2(weirdSize);
 		
-		// fill our input list with random data
+		// Fill our input list with random data
 		
 		Fill.compute(G.CFLT, G.CFLT.random(), data);
 		
-		// now make sure querying it outside its bounds will return the value zero. the
-		// ZeroOOB procedure does the heavy lifting. the ProcedurePaddedDataSource returns
+		// Now make sure querying it outside its bounds will return the value zero. The
+		// ZeroOOB procedure does the heavy lifting. The ProcedurePaddedDataSource returns
 		// values from its underlying data source when the coordinates queried are within
 		// its bounds and returns the result from a procedure call when they are out.
 		
@@ -101,24 +101,24 @@ class OutOfBoundsData {
 						data,
 						new ZeroOOB<>(G.CFLT, data.size()));
 		
-		// the FFT wants a power of two size. make the list have a perfect size.
+		// The FFT wants a power of two size. make the list have a perfect size.
 		
 		IndexedDataSource<ComplexFloat32Member> perfectSizedData =
 				new FixedSizeDataSource<>(perfectSize, paddedData);
 		
-		// allocate the destination data list
+		// Allocate the destination data list
 		
 		IndexedDataSource<ComplexFloat32Member> fftData =
-				nom.bdezonia.zorbage.storage.Storage.allocate(512L, G.CFLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(perfectSize, G.CFLT.construct());
 		
-		// the fft algorithm will hit every location (0 to 511). the out of bounds procedure
-		//   will return 0 when the original data is queried beyond location 412. The extra
-		//   zero values will have no effect on the final results
+		// The fft algorithm will hit every location (0 to 511). The out of bounds procedure
+		// will return 0 when the original data is queried beyond location 412. The extra
+		// zero values will have no effect on the final results
 		
 		FFT.compute(G.CFLT, G.FLT, perfectSizedData, fftData);
 	}
 	
-	// there are other predefined 1-d out of bounds behaviors. here is a quick tour of them.
+	// There are other predefined 1-d out of bounds behaviors. Here is a quick tour of them.
 	
 	@SuppressWarnings("unused")
 	void example2() {
@@ -254,7 +254,7 @@ class OutOfBoundsData {
 		DimensionedDataSource<Float32Member> filter =
 				DimensionedStorage.allocate(new long[] {3,3}, G.FLT.construct());
 		
-		// assume we've set the 8 values to something sensible
+		// assume we've set the nine filter values to something sensible
 		
 		// run a convolution. the convolve algorithm will slide the window around on the
 		// padded image and will poke outside the bounds of the original image. the padded
@@ -264,8 +264,8 @@ class OutOfBoundsData {
 		ConvolveND.compute(G.FLT, filter, paddedInput, output);
 	}
 	
-	// there are other predefined n-d out of bounds behaviors. here is a quick tour of them.
-	// note that their behavior matches their 1-d counterparts documented above. the
+	// There are other predefined n-d out of bounds behaviors. Here is a quick tour of them.
+	// Note that their behavior matches their 1-d counterparts documented above. The
 	// following code just shows you how to construct them.
 	
 	@SuppressWarnings("unused")
