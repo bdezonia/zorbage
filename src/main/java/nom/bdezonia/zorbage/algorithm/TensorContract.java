@@ -27,7 +27,6 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -99,9 +98,8 @@ public class TensorContract {
 		for (int k = 0; k < newDims.length; k++) {
 			point2.set(k, newDims[k] - 1);
 		}
-		SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
-		SamplingIterator<IntegerIndex> iter = sampling.iterator();
-		IntegerIndex contractedPos = new IntegerIndex(sampling.numDimensions());
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(point1, point2);
+		IntegerIndex contractedPos = new IntegerIndex(newRank);
 		IntegerIndex origPos = new IntegerIndex(aRank);
 		NUMBER sum = numberAlg.construct();
 		NUMBER tmp = numberAlg.construct();

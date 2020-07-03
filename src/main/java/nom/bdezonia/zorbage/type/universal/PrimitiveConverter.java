@@ -29,8 +29,8 @@ package nom.bdezonia.zorbage.type.universal;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
 /**
@@ -120,9 +120,7 @@ public class PrimitiveConverter {
 
 			// iterate the overlap and set values
 			
-			SamplingCartesianIntegerGrid sampling =
-					new SamplingCartesianIntegerGrid(min, max);
-			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
 			while (iter.hasNext()) {
 				iter.next(tmp);
 				convertOneValue(tmp, from, to);

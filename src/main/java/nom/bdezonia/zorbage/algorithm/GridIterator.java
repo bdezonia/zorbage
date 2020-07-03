@@ -26,67 +26,80 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.TensorMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TensorCommaDerivative {
+public class GridIterator {
 
 	// do not instantiate
 	
-	private TensorCommaDerivative() { }
-	
-	// https://mathworld.wolfram.com/CommaDerivative.html
-	
-	// My current understanding is this populates a tensor zero everywhere except where an input tensor
-	// is sliced by the index value (0 .. dimension-1) in the outermost dimension. This may be incorrect
-	// but that is what seems most logical when I look at the math definition above.
+	private GridIterator() { }
 	
 	/**
 	 * 
-	 * @param <S>
-	 * @param <TENSOR>
-	 * @param <M>
-	 * @param <NUMBER>
-	 * @param tensAlg
-	 * @param numAlg
-	 * @param index
-	 * @param a
-	 * @param b
+	 * @param minPt
+	 * @param maxPt
+	 * @return
 	 */
-	public static <S extends Algebra<S,TENSOR>,
-					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M, NUMBER>,
-					NUMBER>
-		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
+	public static
+		SamplingIterator<IntegerIndex> compute(long[] minPt, long[] maxPt)
 	{
-		if (a.rank() == 0) {
-			tensAlg.assign().call(a, b);
-			return;
-		}
-		TENSOR tmp = tensAlg.construct();
-		TensorShape.compute(a, tmp);
-		NUMBER value = numAlg.construct();
-		IntegerIndex min = new IntegerIndex(a.rank());
-		IntegerIndex max = new IntegerIndex(a.rank());
-		IntegerIndex tmpIdx = new IntegerIndex(a.rank());
-		min.set(a.rank()-1, index);
-		max.set(a.rank()-1, index);
-		for (int i = 0; i < a.rank()-1; i++) {
-			max.set(i, a.dimension()-1);
-		}
-		SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
-		while (iter.hasNext()) {
-			iter.next(tmpIdx);
-			a.getV(tmpIdx, value);
-			tmp.setV(tmpIdx, value);
-		}
-		tensAlg.assign().call(tmp, b);
+		return new SamplingCartesianIntegerGrid(minPt, maxPt).iterator();
 	}
+		
+	/**
+	 * 
+	 * @param minPt
+	 * @param maxPt
+	 * @return
+	 */
+	public static
+		SamplingIterator<IntegerIndex> compute(IntegerIndex minPt, IntegerIndex maxPt)
+	{
+		return new SamplingCartesianIntegerGrid(minPt, maxPt).iterator();
+	}
+		
+	/**
+	 * 
+	 * @param dims
+	 * @return
+	 */
+	public static
+		SamplingIterator<IntegerIndex> compute(long[] dims)
+	{
+		int numD = dims.length;
+		long[] minPt = new long[numD];
+		long[] maxPt = new long[numD];
+		for (int i = 0; i < numD; i++) {
+			maxPt[i] = dims[i] - 1;
+		}
+		return compute(minPt, maxPt);
+	}
+		
+	/**
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public static
+		SamplingIterator<IntegerIndex> compute(Dimensioned entity)
+	{
+		int numD = entity.numDimensions();
+		
+		long[] dims = new long[numD];
+		
+		for (int i = 0; i < numD; i++) {
+			dims[i] = entity.dimension(i);
+		}
+		
+		return compute(dims);
+	}
+		
 }

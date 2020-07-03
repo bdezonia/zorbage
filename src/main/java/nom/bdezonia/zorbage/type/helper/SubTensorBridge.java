@@ -27,11 +27,11 @@
 package nom.bdezonia.zorbage.type.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 
 /**
  * 
@@ -125,14 +125,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	public void init(long[] dims) {
 		if (dimsCompatible(dims)) {
 			IntegerIndex idx = new IntegerIndex(dims.length);
-			long[] minPt = new long[dims.length];
-			long[] maxPt = new long[dims.length];
-			for (int i = 0; i < dims.length; i++) {
-				maxPt[i] = dims[i]-1;
-			}
-			SamplingCartesianIntegerGrid sampling =
-					new SamplingCartesianIntegerGrid(minPt,maxPt);
-			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			SamplingIterator<IntegerIndex> iter = GridIterator.compute(dims);
 			while (iter.hasNext()) {
 				iter.next(idx);
 				setV(idx, zero);

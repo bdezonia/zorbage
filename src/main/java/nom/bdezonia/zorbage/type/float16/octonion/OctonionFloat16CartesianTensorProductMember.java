@@ -33,7 +33,6 @@ import java.util.Arrays;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
@@ -41,6 +40,7 @@ import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.IndexUtils;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
@@ -196,14 +196,8 @@ public final class OctonionFloat16CartesianTensorProductMember
 			storage.set(0, value);
 		}
 		else {
-			long[] point1 = new long[tmpDims.length];
-			long[] point2 = new long[tmpDims.length];
-			for (int i = 0; i < tmpDims.length; i++) {
-				point2[i] = tmpDims[i] - 1;
-			}
 			long i = 0;
-			SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(point1, point2);
-			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			SamplingIterator<IntegerIndex> iter = GridIterator.compute(tmpDims);
 			IntegerIndex index = new IntegerIndex(dims.length);
 			while (iter.hasNext()) {
 				iter.next(index);

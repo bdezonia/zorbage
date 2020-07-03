@@ -29,11 +29,11 @@ package nom.bdezonia.zorbage.algorithm.resample;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
@@ -154,9 +154,7 @@ public class ResampleNN {
 			for (int i = 0; i < numD; i++) {
 				inputDims[i] = input.dimension(i);
 			}
-			SamplingCartesianIntegerGrid sampling =
-					new SamplingCartesianIntegerGrid(min, max);
-			SamplingIterator<IntegerIndex> iter = sampling.iterator();
+			SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
 			while (iter.hasNext()) {
 				iter.next(outputPoint);
 				computeValue(alg, input, inputDims, inputPoint, newDims, outputPoint, value);

@@ -28,11 +28,11 @@ package nom.bdezonia.zorbage.algorithm.corrconv;
 
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 
 /**
@@ -163,14 +163,10 @@ public class ParallelCorrConvND {
 			U tmp = alg.construct();
 			U f = alg.construct();
 			U sum = alg.construct();
-			SamplingCartesianIntegerGrid dataBounds =
-					new SamplingCartesianIntegerGrid(dataMinPt, dataMaxPt);
-			SamplingCartesianIntegerGrid filterBounds =
-					new SamplingCartesianIntegerGrid(filterMin, filterMax);
-			SamplingIterator<IntegerIndex> dataPoints = dataBounds.iterator();
+			SamplingIterator<IntegerIndex> dataPoints = GridIterator.compute(dataMinPt, dataMaxPt);
 			while (dataPoints.hasNext()) {
 				dataPoints.next(dataPoint);
-				SamplingIterator<IntegerIndex> filterPoints = filterBounds.iterator();
+				SamplingIterator<IntegerIndex> filterPoints = GridIterator.compute(filterMin, filterMax);
 				alg.zero().call(sum);
 				while (filterPoints.hasNext()) {
 					filterPoints.next(filterPoint);

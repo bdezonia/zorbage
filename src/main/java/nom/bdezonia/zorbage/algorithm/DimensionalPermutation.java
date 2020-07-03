@@ -31,7 +31,6 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
 /**
@@ -56,6 +55,11 @@ public class DimensionalPermutation {
 		DimensionedDataSource<U> compute(T alg, int[] permutation, DimensionedDataSource<U> input)
 	{
 		int numD = input.numDimensions();
+		
+		long[] origDims = new long[numD];
+		for (int i = 0; i < numD; i++) {
+			origDims[i] = input.dimension(i);
+		}
 		
 		// test the correctness of the input data
 		
@@ -96,15 +100,9 @@ public class DimensionalPermutation {
 		
 		// copy all the sample data
 		
-		long[] minPt = new long[numD];
-		long[] maxPt = new long[numD];
-		for (int i = 0; i < numD; i++) {
-			maxPt[i] = input.dimension(i) - 1;
-		}
 		IntegerIndex inputIndex = new IntegerIndex(numD);
 		IntegerIndex outputIndex = new IntegerIndex(numD);
-		SamplingCartesianIntegerGrid grid = new SamplingCartesianIntegerGrid(minPt, maxPt);
-		SamplingIterator<IntegerIndex> iter = grid.iterator();
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(origDims);
 		while (iter.hasNext()) {
 			iter.next(inputIndex);
 			for (int i = 0; i < numD; i++) {

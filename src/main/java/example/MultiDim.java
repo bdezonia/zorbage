@@ -29,6 +29,7 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.DimensionalPermutation;
 import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
@@ -36,7 +37,6 @@ import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.ConstantNdOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -95,10 +95,8 @@ class MultiDim {
 		
 		value.setV(7);
 		
-		SamplingCartesianIntegerGrid coords = new SamplingCartesianIntegerGrid(
-				new long[] {0,0,4}, new long[] {1023,1023,4});
-		
-		SamplingIterator<IntegerIndex> coordIterator = coords.iterator();
+		SamplingIterator<IntegerIndex> coordIterator =
+				GridIterator.compute(new long[] {0,0,4}, new long[] {1023,1023,4});
 		
 		while (coordIterator.hasNext()) {
 			coordIterator.next(index);
