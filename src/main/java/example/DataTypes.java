@@ -88,22 +88,5 @@ class DataTypes {
 	 *      with them. And the data can still be huge (see BigListDataSource) provided
 	 *      you have enough RAM.
 	 *      
-	 * Some notes about specific types
-	 * 
-	 *   1) The integer types are uncoupled from the machine's 8 bit byte boundaries.
-	 *      Zorbage has all kinds of bit depth integers and supports unsigned values
-	 *      where Java does not. You can use 6-bit integers if you have a need. They
-	 *      will overflow and underflow (and thus wrap around) in a way that is
-	 *      consistent with how Java's 8-bit aligned types do. The sub byte/short
-	 *      types are stored as bytes/short to improve their speed of calculation.
-	 *      If you want them to use less space you can store them in bit oriented
-	 *      data structures at some runtime cost.
-	 *   
-	 *   2) The floating types are written to be interchangeable in algorithms.
-	 *      At the writing of this help file Zorbage supports 16-bit, 32-bit, 64-bit,
-	 *      and nearly unlimited size floating point numbers. You can use or write
-	 *      one algorithm and can substitute the precision you desire. Use just
-	 *      what you need or just what is fast etc. Zorbage will figure it out for
-	 *      you.
 	 */
 }

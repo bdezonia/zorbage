@@ -31,6 +31,38 @@ package example;
  */
 class IntegerTypes {
 
-	// Also the many int types and not divisible by 8. Still byte sized. Show bitcoder?
+	/*
+	 *   The integer types are uncoupled from the machine's 8 bit byte boundaries.
+	 *   Zorbage has all kinds of bit depth integers and supports unsigned values
+	 *   where Java does not. You can use 6-bit integers if you have a need. They
+	 *   will overflow and underflow (and thus wrap around) in a way that is
+	 *   consistent with how Java's 8-bit aligned types do. The sub byte/short
+	 *   types are stored as bytes/short to improve their speed of calculation.
+	 *   If you want them to use less space you can store them in bit oriented
+	 *   data structures at some runtime cost.
+	 */
+	
+	// Zorbage supports integers of the following sizes:
+	
+	// 1-bit (signed and unsigned)
+	// 2-bit (signed and unsigned)
+	// 3-bit (signed and unsigned)
+	// 4-bit (signed and unsigned)
+	// 5-bit (signed and unsigned)
+	// 6-bit (signed and unsigned)
+	// 7-bit (signed and unsigned)
+	// 8-bit (signed and unsigned)
+	// 9-bit (signed and unsigned)
+	// 10-bit (signed and unsigned)
+	// 11-bit (signed and unsigned)
+	// 12-bit (signed and unsigned)
+	// 13-bit (signed and unsigned)
+	// 14-bit (signed and unsigned)
+	// 15-bit (signed and unsigned)
+	// 16-bit (signed and unsigned)
+	// 32-bit (signed and unsigned)
+	// 64-bit (signed and unsigned)
+	// 128-bit (signed and unsigned)
+	// unbounded (signed)
 	
 }
