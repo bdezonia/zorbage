@@ -65,4 +65,7 @@ class IntegerTypes {
 	// 128-bit (signed and unsigned)
 	// unbounded (signed)
 	
+	// For more details about the ranges and sizes of these integers see:
+	//
+	//   https://github.com/bdezonia/zorbage/blob/master/src/main/java/example/Numbers.java
 }
