@@ -310,10 +310,15 @@ class MiscTypes {
 		G.FSTRING.isEqual();
 		G.FSTRING.isEqualIgnoreCase();
 		G.FSTRING.isNotEqual();
+		G.FSTRING.isNotEqualIgnoreCase();
 		G.FSTRING.isLess();
+		G.FSTRING.isLessIgnoreCase();
 		G.FSTRING.isLessEqual();
+		G.FSTRING.isLessEqualIgnoreCase();
 		G.FSTRING.isGreater();
+		G.FSTRING.isGreaterIgnoreCase();
 		G.FSTRING.isGreaterEqual();
+		G.FSTRING.isGreaterEqualIgnoreCase();
 		G.FSTRING.isEmpty();
 		G.FSTRING.compare();
 		G.FSTRING.compareIgnoreCase();
@@ -333,8 +338,8 @@ class MiscTypes {
 		G.FSTRING.lastIndexOfFrom();
 		G.FSTRING.replace();
 		G.FSTRING.startsWith();
-		G.FSTRING.subString();
-		G.FSTRING.substring2();
+		G.FSTRING.subStringFromStart();
+		G.FSTRING.substringFromStartToEnd();
 		G.FSTRING.toLower();
 		G.FSTRING.toLowerWithLocale();
 		G.FSTRING.toUpper();

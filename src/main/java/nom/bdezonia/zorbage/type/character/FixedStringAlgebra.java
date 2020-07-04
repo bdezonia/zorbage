@@ -509,7 +509,7 @@ public class FixedStringAlgebra
 		}
 	};
 
-	public Procedure4<Integer, Integer, FixedStringMember, FixedStringMember> substring2() {
+	public Procedure4<Integer, Integer, FixedStringMember, FixedStringMember> substringFromStartToEnd() {
 		return SUBSTR2;
 	}
 
@@ -518,11 +518,11 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(Integer start, FixedStringMember a, FixedStringMember b) {
-			substring2().call(start, a.getCodePointCount(), a, b);
+			substringFromStartToEnd().call(start, a.getCodePointCount(), a, b);
 		}
 	};
 
-	public Procedure3<Integer, FixedStringMember, FixedStringMember> subString() {
+	public Procedure3<Integer, FixedStringMember, FixedStringMember> subStringFromStart() {
 		return SUBSTR;
 	}
 
@@ -663,6 +663,71 @@ public class FixedStringAlgebra
 
 	public Function2<byte[], String, FixedStringMember> getBytesUsingCharsetName() {
 		return GETBYTESSTRING;
+	}
+
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> LESSIGCASE =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return compareIgnoreCase().call(a, b) < 0;
+		}
+	};
+
+	public Function2<Boolean, FixedStringMember, FixedStringMember> isLessIgnoreCase() {
+		return LESSIGCASE;
+	}
+	
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> LESSEQIGCASE =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return compareIgnoreCase().call(a, b) <= 0;
+		}
+	};
+
+	public Function2<Boolean, FixedStringMember, FixedStringMember> isLessEqualIgnoreCase() {
+		return LESSEQIGCASE;
+	}
+
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> GREATIGCASE =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return compareIgnoreCase().call(a, b) > 0;
+		}
+	};
+
+	public Function2<Boolean, FixedStringMember, FixedStringMember> isGreaterIgnoreCase() {
+		return GREATIGCASE;
+	}
+
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> GREATEQIGCASE =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return compareIgnoreCase().call(a, b) >= 0;
+		}
+	};
+
+	public Function2<Boolean, FixedStringMember, FixedStringMember> isGreaterEqualIgnoreCase() {
+		return GREATEQIGCASE;
+	}
+
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> NEQIGCASE =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return !isEqualIgnoreCase().call(a, b);
+		}
+	};
+	
+	public Function2<Boolean, FixedStringMember, FixedStringMember> isNotEqualIgnoreCase() {
+		return NEQIGCASE;
 	}
 
 	/*
