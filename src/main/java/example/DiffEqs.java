@@ -24,11 +24,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package example;
+
 /**
  * @author Barry DeZonia
  */
-/*
-improve the lorenz example? the fft example? what do I want to do here
-		
-explain we have the ruge kutta code
-*/
+class DiffEqs {
+	
+	/*
+	 * Zorbage has a differential equation solver built in. See the OdeSolveRK4
+	 * algorithm. This algorithm uses a 4th order Runge Kutta solver. It's use
+	 * is illustrated in the LorenzAttractor example (which you can find by
+	 * referring to the file of the same name in this directory).
+	 * 
+	 * The solver can track a value or a vector of values as needed. All the
+	 * trajectories of the points along the path can be stored and used
+	 * as needed.
+	 * 
+	 * Future plans include adding more diff eq algorithms for better accuracy
+	 * for stiff equations or using adaptive step size methods for better speed.
+	 * 
+	 */
+	
+}

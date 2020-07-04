@@ -48,7 +48,7 @@ class DataTypes {
 	 *   Tensors
 	 *   
 	 *   MiscTypes
-	 *     booleans, strings, rgb, argb, rationals, points
+	 *     booleans, strings, rgb, argb, rationals, n-dimensional real points
 	 *  
 	 * Some things that are worth knowing about types in Zorbage:
 	 * 
@@ -63,7 +63,7 @@ class DataTypes {
 	 *      first example Points would need to be smart. In the second example they
 	 *      don't.
 	 *      
-	 *   2) Zorbage algorithms use this generality to be be widely applicable to many
+	 *   2) Zorbage algorithms use this generality to be widely applicable to many
 	 *      different types. In Zorbage numbers have been the main focus. But recently
 	 *      fixed length strings were added. Because of the flexibility of the
 	 *      algorithms and algebras the existing Sort algorithm just worked with lists
@@ -74,7 +74,7 @@ class DataTypes {
 	 *      the existing algorithms can be used with them. Another possibility: find
 	 *      a software library that does 128-bit floating point in software. Wrap it
 	 *      in a type and use it now. When 128-bit hardware floating point is supported
-	 *      by Java then the guts of the type are rewritten and you old code will
+	 *      by Java then the guts of the type are rewritten and your old code will
 	 *      continue working and just become faster.
 	 *   
 	 *   3) In Zorbage most types derive from the idea that their data can be specified
@@ -86,7 +86,7 @@ class DataTypes {
 	 *      Objects or BigIntegers or BigDecimals or Java Strings) you can still use
 	 *      all of Zorbage's in memory structures and run all the existing algorithms
 	 *      with them. And the data can still be huge (see BigListDataSource) provided
-	 *      you have enough ram.
+	 *      you have enough RAM.
 	 *      
 	 * Some notes about specific types
 	 * 
