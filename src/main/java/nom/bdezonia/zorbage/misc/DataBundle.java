@@ -33,23 +33,72 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
+import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Member;
+import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16VectorMember;
+import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16Member;
+import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16RModuleMember;
+import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16Member;
+import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16RModuleMember;
+import nom.bdezonia.zorbage.type.float16.real.Float16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float16.real.Float16MatrixMember;
 import nom.bdezonia.zorbage.type.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.float16.real.Float16VectorMember;
+import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32VectorMember;
+import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
+import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32RModuleMember;
+import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32Member;
+import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32RModuleMember;
+import nom.bdezonia.zorbage.type.float32.real.Float32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float32.real.Float32MatrixMember;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.float32.real.Float32VectorMember;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64VectorMember;
+import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64Member;
+import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64RModuleMember;
+import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64RModuleMember;
+import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
+import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionVectorMember;
+import nom.bdezonia.zorbage.type.highprec.octonion.OctonionHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.highprec.octonion.OctonionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.octonion.OctonionHighPrecisionMember;
+import nom.bdezonia.zorbage.type.highprec.octonion.OctonionHighPrecisionRModuleMember;
+import nom.bdezonia.zorbage.type.highprec.quaternion.QuaternionHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.highprec.quaternion.QuaternionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.quaternion.QuaternionHighPrecisionMember;
+import nom.bdezonia.zorbage.type.highprec.quaternion.QuaternionHighPrecisionRModuleMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionVectorMember;
 import nom.bdezonia.zorbage.type.int1.SignedInt1Member;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.int10.SignedInt10Member;
@@ -98,25 +147,41 @@ import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
  * @author Barry DeZonia
  */
 public class DataBundle {
-	public List<DimensionedDataSource<UnsignedInt1Member>> uint1s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt2Member>> uint2s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt3Member>> uint3s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt4Member>> uint4s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt5Member>> uint5s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt6Member>> uint6s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt7Member>> uint7s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt8Member>> uint8s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt9Member>> uint9s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt10Member>> uint10s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt11Member>> uint11s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt12Member>> uint12s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt13Member>> uint13s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt14Member>> uint14s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt15Member>> uint15s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt16Member>> uint16s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt32Member>> uint32s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt64Member>> uint64s = new ArrayList<>();
-	public List<DimensionedDataSource<UnsignedInt128Member>> uint128s = new ArrayList<>();
+	public List<DimensionedDataSource<ArgbMember>> argbs = new ArrayList<>();
+	public List<DimensionedDataSource<BooleanMember>> bools = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat64Member>> cdbls = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat64VectorMember>> cdbl_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat64MatrixMember>> cdbl_mats = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat64CartesianTensorProductMember>> cdbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat32Member>> cflts = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat32VectorMember>> cflt_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat32MatrixMember>> cflt_mats = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat32CartesianTensorProductMember>> cflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat16Member>> chlfs = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat16VectorMember>> chlf_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat16MatrixMember>> chlf_mats = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat16CartesianTensorProductMember>> chlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexHighPrecisionMember>> chps = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexHighPrecisionVectorMember>> chp_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexHighPrecisionMatrixMember>> chp_mats = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexHighPrecisionCartesianTensorProductMember>> chp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float64Member>> dbls = new ArrayList<>();
+	public List<DimensionedDataSource<Float64VectorMember>> dbl_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<Float64MatrixMember>> dbl_mats = new ArrayList<>();
+	public List<DimensionedDataSource<Float64CartesianTensorProductMember>> dbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float32Member>> flts = new ArrayList<>();
+	public List<DimensionedDataSource<Float32VectorMember>> flt_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<Float32MatrixMember>> flt_mats = new ArrayList<>();
+	public List<DimensionedDataSource<Float32CartesianTensorProductMember>> flt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
+	public List<DimensionedDataSource<Float16Member>> hlfs = new ArrayList<>();
+	public List<DimensionedDataSource<Float16VectorMember>> hlf_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<Float16MatrixMember>> hlf_mats = new ArrayList<>();
+	public List<DimensionedDataSource<Float16CartesianTensorProductMember>> hlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<HighPrecisionMember>> hps = new ArrayList<>();
+	public List<DimensionedDataSource<HighPrecisionVectorMember>> hp_vecs = new ArrayList<>();
+	public List<DimensionedDataSource<HighPrecisionMatrixMember>> hp_mats = new ArrayList<>();
+	public List<DimensionedDataSource<HighPrecisionCartesianTensorProductMember>> hp_tens = new ArrayList<>();
 	public List<DimensionedDataSource<SignedInt1Member>> int1s = new ArrayList<>();
 	public List<DimensionedDataSource<SignedInt2Member>> int2s = new ArrayList<>();
 	public List<DimensionedDataSource<SignedInt3Member>> int3s = new ArrayList<>();
@@ -136,125 +201,236 @@ public class DataBundle {
 	public List<DimensionedDataSource<SignedInt32Member>> int32s = new ArrayList<>();
 	public List<DimensionedDataSource<SignedInt64Member>> int64s = new ArrayList<>();
 	public List<DimensionedDataSource<SignedInt128Member>> int128s = new ArrayList<>();
-	public List<DimensionedDataSource<Float16Member>> flt16s = new ArrayList<>();
-	public List<DimensionedDataSource<Float32Member>> flt32s = new ArrayList<>();
-	public List<DimensionedDataSource<Float64Member>> flt64s = new ArrayList<>();
-	public List<DimensionedDataSource<HighPrecisionMember>> hps = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat16Member>> cflt16s = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat32Member>> cflt32s = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat64Member>> cflt64s = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexHighPrecisionMember>> chps = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat16Member>> qflt16s = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat32Member>> qflt32s = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat64Member>> qflt64s = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionHighPrecisionMember>> qhps = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat16Member>> oflt16s = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat32Member>> oflt32s = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat64Member>> oflt64s = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat64Member>> odbls = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat64RModuleMember>> odbl_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat64MatrixMember>> odbl_mats = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat64CartesianTensorProductMember>> odbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat32Member>> oflts = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat32RModuleMember>> oflt_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat32MatrixMember>> oflt_mats = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat32CartesianTensorProductMember>> oflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat16Member>> ohlfs = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat16RModuleMember>> ohlf_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat16MatrixMember>> ohlf_mats = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat16CartesianTensorProductMember>> ohlf_tens = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionHighPrecisionMember>> ohps = new ArrayList<>();
-	public List<DimensionedDataSource<RationalMember>> rats = new ArrayList<>();
-	public List<DimensionedDataSource<UnboundedIntMember>> bigs = new ArrayList<>();
-	public List<DimensionedDataSource<ArgbMember>> argbs = new ArrayList<>();
-	public List<DimensionedDataSource<RgbMember>> rgbs = new ArrayList<>();
-	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionHighPrecisionRModuleMember>> ohp_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionHighPrecisionMatrixMember>> ohp_mats = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionHighPrecisionCartesianTensorProductMember>> ohp_tens = new ArrayList<>();
 	public List<DimensionedDataSource<Point>> points = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat64Member>> qdbls = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat64RModuleMember>> qdbl_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat64MatrixMember>> qdbl_mats = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat64CartesianTensorProductMember>> qdbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat32Member>> qflts = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat32RModuleMember>> qflt_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat32MatrixMember>> qflt_mats = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat32CartesianTensorProductMember>> qflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat16Member>> qhlfs = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat16RModuleMember>> qhlf_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat16MatrixMember>> qhlf_mats = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat16CartesianTensorProductMember>> qhlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionHighPrecisionMember>> qhps = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionHighPrecisionRModuleMember>> qhp_rmods = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionHighPrecisionMatrixMember>> qhp_mats = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember>> qhp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<RationalMember>> rationals = new ArrayList<>();
+	public List<DimensionedDataSource<RgbMember>> rgbs = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt1Member>> uint1s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt2Member>> uint2s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt3Member>> uint3s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt4Member>> uint4s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt5Member>> uint5s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt6Member>> uint6s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt7Member>> uint7s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt8Member>> uint8s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt9Member>> uint9s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt10Member>> uint10s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt11Member>> uint11s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt12Member>> uint12s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt13Member>> uint13s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt14Member>> uint14s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt15Member>> uint15s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt16Member>> uint16s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt32Member>> uint32s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt64Member>> uint64s = new ArrayList<>();
+	public List<DimensionedDataSource<UnsignedInt128Member>> uint128s = new ArrayList<>();
+	public List<DimensionedDataSource<UnboundedIntMember>> unbounds = new ArrayList<>();
+	
+	
+	public void mergeArgb(DimensionedDataSource<ArgbMember> ds) {
+		if (ds != null)
+			argbs.add(ds);
+	}
+	
+	public void mergeBool(DimensionedDataSource<BooleanMember> ds) {
+		if (ds != null)
+			bools.add(ds);
+	}
+	
+	public void mergeComplexFlt64(DimensionedDataSource<ComplexFloat64Member> ds) {
+		if (ds != null)
+			cdbls.add(ds);
+	}
+	
+	public void mergeComplexFlt64Vec(DimensionedDataSource<ComplexFloat64VectorMember> ds) {
+		if (ds != null)
+			cdbl_vecs.add(ds);
+	}
+	
+	public void mergeComplexFlt64Mat(DimensionedDataSource<ComplexFloat64MatrixMember> ds) {
+		if (ds != null)
+			cdbl_mats.add(ds);
+	}
+	
+	public void mergeComplexFlt64Tens(DimensionedDataSource<ComplexFloat64CartesianTensorProductMember> ds) {
+		if (ds != null)
+			cdbl_tens.add(ds);
+	}
+	
+	public void mergeComplexFlt32(DimensionedDataSource<ComplexFloat32Member> ds) {
+		if (ds != null)
+			cflts.add(ds);
+	}
+	
+	public void mergeComplexFlt32Vec(DimensionedDataSource<ComplexFloat32VectorMember> ds) {
+		if (ds != null)
+			cflt_vecs.add(ds);
+	}
+	
+	public void mergeComplexFlt32Mat(DimensionedDataSource<ComplexFloat32MatrixMember> ds) {
+		if (ds != null)
+			cflt_mats.add(ds);
+	}
+	
+	public void mergeComplexFlt32Tens(DimensionedDataSource<ComplexFloat32CartesianTensorProductMember> ds) {
+		if (ds != null)
+			cflt_tens.add(ds);
+	}
+	
+	public void mergeComplexFlt16(DimensionedDataSource<ComplexFloat16Member> ds) {
+		if (ds != null)
+			chlfs.add(ds);
+	}
+	
+	public void mergeComplexFlt16Vec(DimensionedDataSource<ComplexFloat16VectorMember> ds) {
+		if (ds != null)
+			chlf_vecs.add(ds);
+	}
+	
+	public void mergeComplexFlt16Mat(DimensionedDataSource<ComplexFloat16MatrixMember> ds) {
+		if (ds != null)
+			chlf_mats.add(ds);
+	}
+	
+	public void mergeComplexFlt16Tens(DimensionedDataSource<ComplexFloat16CartesianTensorProductMember> ds) {
+		if (ds != null)
+			chlf_tens.add(ds);
+	}
+	
+	public void mergeComplexHP(DimensionedDataSource<ComplexHighPrecisionMember> ds) {
+		if (ds != null)
+			chps.add(ds);
+	}
+	
+	public void mergeComplexHPVec(DimensionedDataSource<ComplexHighPrecisionVectorMember> ds) {
+		if (ds != null)
+			chp_vecs.add(ds);
+	}
+	
+	public void mergeComplexHPMat(DimensionedDataSource<ComplexHighPrecisionMatrixMember> ds) {
+		if (ds != null)
+			chp_mats.add(ds);
+	}
+	
+	public void mergeComplexHPTens(DimensionedDataSource<ComplexHighPrecisionCartesianTensorProductMember> ds) {
+		if (ds != null)
+			chp_tens.add(ds);
+	}
+	
+	public void mergeFlt64(DimensionedDataSource<Float64Member> ds) {
+		if (ds != null)
+			dbls.add(ds);
+	}
+	
+	public void mergeFlt64Vec(DimensionedDataSource<Float64VectorMember> ds) {
+		if (ds != null)
+			dbl_vecs.add(ds);
+	}
+	
+	public void mergeFlt64Mat(DimensionedDataSource<Float64MatrixMember> ds) {
+		if (ds != null)
+			dbl_mats.add(ds);
+	}
+	
+	public void mergeFlt64Tens(DimensionedDataSource<Float64CartesianTensorProductMember> ds) {
+		if (ds != null)
+			dbl_tens.add(ds);
+	}
+	
+	public void mergeFlt32(DimensionedDataSource<Float32Member> ds) {
+		if (ds != null)
+			flts.add(ds);
+	}
 
-	// TODO
-	//   add vectors/matrices/tensors of real/comp/quat/oct elements
-	
-	public void mergeUInt1(DimensionedDataSource<UnsignedInt1Member> ds) {
+	public void mergeFlt32Vec(DimensionedDataSource<Float32VectorMember> ds) {
 		if (ds != null)
-			uint1s.add(ds);
-	}
-	
-	public void mergeUInt2(DimensionedDataSource<UnsignedInt2Member> ds) {
-		if (ds != null)
-			uint2s.add(ds);
-	}
-	
-	public void mergeUInt3(DimensionedDataSource<UnsignedInt3Member> ds) {
-		if (ds != null)
-			uint3s.add(ds);
-	}
-	
-	public void mergeUInt4(DimensionedDataSource<UnsignedInt4Member> ds) {
-		if (ds != null)
-			uint4s.add(ds);
-	}
-	
-	public void mergeUInt5(DimensionedDataSource<UnsignedInt5Member> ds) {
-		if (ds != null)
-			uint5s.add(ds);
-	}
-	
-	public void mergeUInt6(DimensionedDataSource<UnsignedInt6Member> ds) {
-		if (ds != null)
-			uint6s.add(ds);
-	}
-	
-	public void mergeUInt7(DimensionedDataSource<UnsignedInt7Member> ds) {
-		if (ds != null)
-			uint7s.add(ds);
-	}
-	
-	public void mergeUInt8(DimensionedDataSource<UnsignedInt8Member> ds) {
-		if (ds != null)
-			uint8s.add(ds);
-	}
-	
-	public void mergeUInt9(DimensionedDataSource<UnsignedInt9Member> ds) {
-		if (ds != null)
-			uint9s.add(ds);
-	}
-	
-	public void mergeUInt10(DimensionedDataSource<UnsignedInt10Member> ds) {
-		if (ds != null)
-			uint10s.add(ds);
-	}
-	
-	public void mergeUInt11(DimensionedDataSource<UnsignedInt11Member> ds) {
-		if (ds != null)
-			uint11s.add(ds);
-	}
-	
-	public void mergeUInt12(DimensionedDataSource<UnsignedInt12Member> ds) {
-		if (ds != null)
-			uint12s.add(ds);
+			flt_vecs.add(ds);
 	}
 
-	public void mergeUInt13(DimensionedDataSource<UnsignedInt13Member> ds) {
+	public void mergeFlt32Mat(DimensionedDataSource<Float32MatrixMember> ds) {
 		if (ds != null)
-			uint13s.add(ds);
+			flt_mats.add(ds);
+	}
+
+	public void mergeFlt32Tens(DimensionedDataSource<Float32CartesianTensorProductMember> ds) {
+		if (ds != null)
+			flt_tens.add(ds);
+	}
+
+	public void mergeFixedString(DimensionedDataSource<FixedStringMember> ds) {
+		if (ds != null)
+			fstrs.add(ds);
 	}
 	
-	public void mergeUInt14(DimensionedDataSource<UnsignedInt14Member> ds) {
+	public void mergeFlt16(DimensionedDataSource<Float16Member> ds) {
 		if (ds != null)
-			uint14s.add(ds);
+			hlfs.add(ds);
 	}
 	
-	public void mergeUInt15(DimensionedDataSource<UnsignedInt15Member> ds) {
+	public void mergeFlt16Vec(DimensionedDataSource<Float16VectorMember> ds) {
 		if (ds != null)
-			uint15s.add(ds);
+			hlf_vecs.add(ds);
 	}
 	
-	public void mergeUInt16(DimensionedDataSource<UnsignedInt16Member> ds) {
+	public void mergeFlt16Mat(DimensionedDataSource<Float16MatrixMember> ds) {
 		if (ds != null)
-			uint16s.add(ds);
+			hlf_mats.add(ds);
 	}
 	
-	public void mergeUInt32(DimensionedDataSource<UnsignedInt32Member> ds) {
+	public void mergeFlt16Tens(DimensionedDataSource<Float16CartesianTensorProductMember> ds) {
 		if (ds != null)
-			uint32s.add(ds);
+			hlf_tens.add(ds);
 	}
 	
-	public void mergeUInt64(DimensionedDataSource<UnsignedInt64Member> ds) {
+	public void mergeHP(DimensionedDataSource<HighPrecisionMember> ds) {
 		if (ds != null)
-			uint64s.add(ds);
+			hps.add(ds);
 	}
 	
-	public void mergeUInt128(DimensionedDataSource<UnsignedInt128Member> ds) {
+	public void mergeHPVec(DimensionedDataSource<HighPrecisionVectorMember> ds) {
 		if (ds != null)
-			uint128s.add(ds);
+			hp_vecs.add(ds);
+	}
+	
+	public void mergeHPMat(DimensionedDataSource<HighPrecisionMatrixMember> ds) {
+		if (ds != null)
+			hp_mats.add(ds);
+	}
+	
+	public void mergeHPTens(DimensionedDataSource<HighPrecisionCartesianTensorProductMember> ds) {
+		if (ds != null)
+			hp_tens.add(ds);
 	}
 	
 	public void mergeInt1(DimensionedDataSource<SignedInt1Member> ds) {
@@ -352,49 +528,294 @@ public class DataBundle {
 			int128s.add(ds);
 	}
 	
-	public void mergeBigInt(DimensionedDataSource<UnboundedIntMember> ds) {
+	public void mergeOct64(DimensionedDataSource<OctonionFloat64Member> ds) {
 		if (ds != null)
-			bigs.add(ds);
+			odbls.add(ds);
+	}
+	
+	public void mergeOct64RMod(DimensionedDataSource<OctonionFloat64RModuleMember> ds) {
+		if (ds != null)
+			odbl_rmods.add(ds);
+	}
+	
+	public void mergeOct64Mat(DimensionedDataSource<OctonionFloat64MatrixMember> ds) {
+		if (ds != null)
+			odbl_mats.add(ds);
+	}
+	
+	public void mergeOct64Tens(DimensionedDataSource<OctonionFloat64CartesianTensorProductMember> ds) {
+		if (ds != null)
+			odbl_tens.add(ds);
+	}
+
+	public void mergeOct32(DimensionedDataSource<OctonionFloat32Member> ds) {
+		if (ds != null)
+			oflts.add(ds);
+	}
+	
+	public void mergeOct32RMod(DimensionedDataSource<OctonionFloat32RModuleMember> ds) {
+		if (ds != null)
+			oflt_rmods.add(ds);
+	}
+	
+	public void mergeOct32Mat(DimensionedDataSource<OctonionFloat32MatrixMember> ds) {
+		if (ds != null)
+			oflt_mats.add(ds);
+	}
+	
+	public void mergeOct32Tens(DimensionedDataSource<OctonionFloat32CartesianTensorProductMember> ds) {
+		if (ds != null)
+			oflt_tens.add(ds);
+	}
+
+	public void mergeOct16(DimensionedDataSource<OctonionFloat16Member> ds) {
+		if (ds != null)
+			ohlfs.add(ds);
+	}
+	
+	public void mergeOct16RMod(DimensionedDataSource<OctonionFloat16RModuleMember> ds) {
+		if (ds != null)
+			ohlf_rmods.add(ds);
+	}
+	
+	public void mergeOct16Mat(DimensionedDataSource<OctonionFloat16MatrixMember> ds) {
+		if (ds != null)
+			ohlf_mats.add(ds);
+	}
+	
+	public void mergeOct16Tens(DimensionedDataSource<OctonionFloat16CartesianTensorProductMember> ds) {
+		if (ds != null)
+			ohlf_tens.add(ds);
+	}
+	
+	public void mergeOctHP(DimensionedDataSource<OctonionHighPrecisionMember> ds) {
+		if (ds != null)
+			ohps.add(ds);
+	}
+	
+	public void mergeOctHPRMod(DimensionedDataSource<OctonionHighPrecisionRModuleMember> ds) {
+		if (ds != null)
+			ohp_rmods.add(ds);
+	}
+	
+	public void mergeOctHPMat(DimensionedDataSource<OctonionHighPrecisionMatrixMember> ds) {
+		if (ds != null)
+			ohp_mats.add(ds);
+	}
+	
+	public void mergeOctHPTens(DimensionedDataSource<OctonionHighPrecisionCartesianTensorProductMember> ds) {
+		if (ds != null)
+			ohp_tens.add(ds);
+	}
+	
+	public void mergePoint(DimensionedDataSource<Point> ds) {
+		if (ds != null)
+			points.add(ds);
+	}
+
+	public void mergeQuat64(DimensionedDataSource<QuaternionFloat64Member> ds) {
+		if (ds != null)
+			qdbls.add(ds);
+	}
+	
+	public void mergeQuat64RMod(DimensionedDataSource<QuaternionFloat64RModuleMember> ds) {
+		if (ds != null)
+			qdbl_rmods.add(ds);
+	}
+	
+	public void mergeQuat64Mat(DimensionedDataSource<QuaternionFloat64MatrixMember> ds) {
+		if (ds != null)
+			qdbl_mats.add(ds);
+	}
+	
+	public void mergeQuat64Tens(DimensionedDataSource<QuaternionFloat64CartesianTensorProductMember> ds) {
+		if (ds != null)
+			qdbl_tens.add(ds);
+	}
+
+	public void mergeQuat32(DimensionedDataSource<QuaternionFloat32Member> ds) {
+		if (ds != null)
+			qflts.add(ds);
+	}
+	
+	public void mergeQuat32RMod(DimensionedDataSource<QuaternionFloat32RModuleMember> ds) {
+		if (ds != null)
+			qflt_rmods.add(ds);
+	}
+	
+	public void mergeQuat32Mat(DimensionedDataSource<QuaternionFloat32MatrixMember> ds) {
+		if (ds != null)
+			qflt_mats.add(ds);
+	}
+	
+	public void mergeQuat32Tens(DimensionedDataSource<QuaternionFloat32CartesianTensorProductMember> ds) {
+		if (ds != null)
+			qflt_tens.add(ds);
+	}
+
+	public void mergeQuat16(DimensionedDataSource<QuaternionFloat16Member> ds) {
+		if (ds != null)
+			qhlfs.add(ds);
+	}
+	
+	public void mergeQuat16RMod(DimensionedDataSource<QuaternionFloat16RModuleMember> ds) {
+		if (ds != null)
+			qhlf_rmods.add(ds);
+	}
+	
+	public void mergeQuat16Mat(DimensionedDataSource<QuaternionFloat16MatrixMember> ds) {
+		if (ds != null)
+			qhlf_mats.add(ds);
+	}
+	
+	public void mergeQuat16Tens(DimensionedDataSource<QuaternionFloat16CartesianTensorProductMember> ds) {
+		if (ds != null)
+			qhlf_tens.add(ds);
+	}
+	
+	public void mergeQuatHP(DimensionedDataSource<QuaternionHighPrecisionMember> ds) {
+		if (ds != null)
+			qhps.add(ds);
+	}
+	
+	public void mergeQuatHPRMod(DimensionedDataSource<QuaternionHighPrecisionRModuleMember> ds) {
+		if (ds != null)
+			qhp_rmods.add(ds);
+	}
+	
+	public void mergeQuatHPMat(DimensionedDataSource<QuaternionHighPrecisionMatrixMember> ds) {
+		if (ds != null)
+			qhp_mats.add(ds);
+	}
+	
+	public void mergeQuatHPTens(DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember> ds) {
+		if (ds != null)
+			qhp_tens.add(ds);
 	}
 	
 	public void mergeRational(DimensionedDataSource<RationalMember> ds) {
 		if (ds != null)
-			rats.add(ds);
+			rationals.add(ds);
 	}
 
-	public void mergeFloat16(DimensionedDataSource<Float16Member> ds) {
+	public void mergeRgb(DimensionedDataSource<RgbMember> ds) {
 		if (ds != null)
-			flt16s.add(ds);
+			rgbs.add(ds);
 	}
 	
-	public void mergeFloat32(DimensionedDataSource<Float32Member> ds) {
+	public void mergeUInt1(DimensionedDataSource<UnsignedInt1Member> ds) {
 		if (ds != null)
-			flt32s.add(ds);
+			uint1s.add(ds);
+	}
+	
+	public void mergeUInt2(DimensionedDataSource<UnsignedInt2Member> ds) {
+		if (ds != null)
+			uint2s.add(ds);
+	}
+	
+	public void mergeUInt3(DimensionedDataSource<UnsignedInt3Member> ds) {
+		if (ds != null)
+			uint3s.add(ds);
+	}
+	
+	public void mergeUInt4(DimensionedDataSource<UnsignedInt4Member> ds) {
+		if (ds != null)
+			uint4s.add(ds);
+	}
+	
+	public void mergeUInt5(DimensionedDataSource<UnsignedInt5Member> ds) {
+		if (ds != null)
+			uint5s.add(ds);
+	}
+	
+	public void mergeUInt6(DimensionedDataSource<UnsignedInt6Member> ds) {
+		if (ds != null)
+			uint6s.add(ds);
+	}
+	
+	public void mergeUInt7(DimensionedDataSource<UnsignedInt7Member> ds) {
+		if (ds != null)
+			uint7s.add(ds);
+	}
+	
+	public void mergeUInt8(DimensionedDataSource<UnsignedInt8Member> ds) {
+		if (ds != null)
+			uint8s.add(ds);
+	}
+	
+	public void mergeUInt9(DimensionedDataSource<UnsignedInt9Member> ds) {
+		if (ds != null)
+			uint9s.add(ds);
+	}
+	
+	public void mergeUInt10(DimensionedDataSource<UnsignedInt10Member> ds) {
+		if (ds != null)
+			uint10s.add(ds);
+	}
+	
+	public void mergeUInt11(DimensionedDataSource<UnsignedInt11Member> ds) {
+		if (ds != null)
+			uint11s.add(ds);
+	}
+	
+	public void mergeUInt12(DimensionedDataSource<UnsignedInt12Member> ds) {
+		if (ds != null)
+			uint12s.add(ds);
 	}
 
-	public void mergeFloat64(DimensionedDataSource<Float64Member> ds) {
+	public void mergeUInt13(DimensionedDataSource<UnsignedInt13Member> ds) {
 		if (ds != null)
-			flt64s.add(ds);
+			uint13s.add(ds);
 	}
 	
-	public void mergeHighPrec(DimensionedDataSource<HighPrecisionMember> ds) {
+	public void mergeUInt14(DimensionedDataSource<UnsignedInt14Member> ds) {
 		if (ds != null)
-			hps.add(ds);
+			uint14s.add(ds);
+	}
+	
+	public void mergeUInt15(DimensionedDataSource<UnsignedInt15Member> ds) {
+		if (ds != null)
+			uint15s.add(ds);
+	}
+	
+	public void mergeUInt16(DimensionedDataSource<UnsignedInt16Member> ds) {
+		if (ds != null)
+			uint16s.add(ds);
+	}
+	
+	public void mergeUInt32(DimensionedDataSource<UnsignedInt32Member> ds) {
+		if (ds != null)
+			uint32s.add(ds);
+	}
+	
+	public void mergeUInt64(DimensionedDataSource<UnsignedInt64Member> ds) {
+		if (ds != null)
+			uint64s.add(ds);
+	}
+	
+	public void mergeUInt128(DimensionedDataSource<UnsignedInt128Member> ds) {
+		if (ds != null)
+			uint128s.add(ds);
+	}
+
+	public void mergeBigInt(DimensionedDataSource<UnboundedIntMember> ds) {
+		if (ds != null)
+			unbounds.add(ds);
 	}
 	
 	public void mergeComplexFloat16(DimensionedDataSource<ComplexFloat16Member> ds) {
 		if (ds != null)
-			cflt16s.add(ds);
+			chlfs.add(ds);
 	}
 	
 	public void mergeComplexFloat32(DimensionedDataSource<ComplexFloat32Member> ds) {
 		if (ds != null)
-			cflt32s.add(ds);
+			cflts.add(ds);
 	}
 
 	public void mergeComplexFloat64(DimensionedDataSource<ComplexFloat64Member> ds) {
 		if (ds != null)
-			cflt64s.add(ds);
+			cdbls.add(ds);
 	}
 	
 	public void mergeComplexHighPrec(DimensionedDataSource<ComplexHighPrecisionMember> ds) {
@@ -404,17 +825,17 @@ public class DataBundle {
 	
 	public void mergeQuaternionFloat16(DimensionedDataSource<QuaternionFloat16Member> ds) {
 		if (ds != null)
-			qflt16s.add(ds);
+			qhlfs.add(ds);
 	}
 	
 	public void mergeQuaternionFloat32(DimensionedDataSource<QuaternionFloat32Member> ds) {
 		if (ds != null)
-			qflt32s.add(ds);
+			qflts.add(ds);
 	}
 
 	public void mergeQuaternionFloat64(DimensionedDataSource<QuaternionFloat64Member> ds) {
 		if (ds != null)
-			qflt64s.add(ds);
+			qdbls.add(ds);
 	}
 	
 	public void mergeQuaternionHighPrec(DimensionedDataSource<QuaternionHighPrecisionMember> ds) {
@@ -424,107 +845,136 @@ public class DataBundle {
 	
 	public void mergeOctonionFloat16(DimensionedDataSource<OctonionFloat16Member> ds) {
 		if (ds != null)
-			oflt16s.add(ds);
+			ohlfs.add(ds);
 	}
 	
 	public void mergeOctonionFloat32(DimensionedDataSource<OctonionFloat32Member> ds) {
 		if (ds != null)
-			oflt32s.add(ds);
+			oflts.add(ds);
 	}
 
 	public void mergeOctonionFloat64(DimensionedDataSource<OctonionFloat64Member> ds) {
 		if (ds != null)
-			oflt64s.add(ds);
+			odbls.add(ds);
 	}
 	
 	public void mergeOctonionHighPrec(DimensionedDataSource<OctonionHighPrecisionMember> ds) {
 		if (ds != null)
 			ohps.add(ds);
 	}
-	
-	public void mergeArgb(DimensionedDataSource<ArgbMember> ds) {
-		if (ds != null)
-			argbs.add(ds);
-	}
-	
-	public void mergeRgb(DimensionedDataSource<RgbMember> ds) {
-		if (ds != null)
-			rgbs.add(ds);
-	}
-	
-	public void mergeFixedString(DimensionedDataSource<FixedStringMember> ds) {
-		if (ds != null)
-			fstrs.add(ds);
-	}
-	
-	public void mergePoint(DimensionedDataSource<Point> ds) {
-		if (ds != null)
-			points.add(ds);
-	}
-	
+
 	public void mergeAll(DataBundle other) {
 		if (this == other) return;
 
-		this.argbs.addAll(other.argbs);
-		this.bigs.addAll(other.bigs);
-		this.cflt16s.addAll(other.cflt16s);
-		this.cflt32s.addAll(other.cflt32s);
-		this.cflt64s.addAll(other.cflt64s);
-		this.chps.addAll(other.chps);
-		this.flt16s.addAll(other.flt16s);
-		this.flt32s.addAll(other.flt32s);
-		this.flt64s.addAll(other.flt64s);
-		this.fstrs.addAll(other.fstrs);
-		this.hps.addAll(other.hps);
-		this.int1s.addAll(other.int1s);
-		this.int2s.addAll(other.int2s);
-		this.int3s.addAll(other.int3s);
-		this.int4s.addAll(other.int4s);
-		this.int5s.addAll(other.int5s);
-		this.int6s.addAll(other.int6s);
-		this.int7s.addAll(other.int7s);
-		this.int8s.addAll(other.int8s);
-		this.int9s.addAll(other.int9s);
-		this.int10s.addAll(other.int10s);
-		this.int11s.addAll(other.int11s);
-		this.int12s.addAll(other.int12s);
-		this.int13s.addAll(other.int13s);
-		this.int14s.addAll(other.int14s);
-		this.int15s.addAll(other.int15s);
-		this.int16s.addAll(other.int16s);
-		this.int32s.addAll(other.int32s);
-		this.int64s.addAll(other.int64s);
-		this.int128s.addAll(other.int128s);
-		this.oflt16s.addAll(other.oflt16s);
-		this.oflt32s.addAll(other.oflt32s);
-		this.oflt64s.addAll(other.oflt64s);
-		this.ohps.addAll(other.ohps);
-		this.points.addAll(other.points);
-		this.qflt16s.addAll(other.qflt16s);
-		this.qflt32s.addAll(other.qflt32s);
-		this.qflt64s.addAll(other.qflt64s);
-		this.qhps.addAll(other.qhps);
-		this.rats.addAll(other.rats);
-		this.rgbs.addAll(other.rgbs);
-		this.uint1s.addAll(other.uint1s);
-		this.uint2s.addAll(other.uint2s);
-		this.uint3s.addAll(other.uint3s);
-		this.uint4s.addAll(other.uint4s);
-		this.uint5s.addAll(other.uint5s);
-		this.uint6s.addAll(other.uint6s);
-		this.uint7s.addAll(other.uint7s);
-		this.uint8s.addAll(other.uint8s);
-		this.uint9s.addAll(other.uint9s);
-		this.uint10s.addAll(other.uint10s);
-		this.uint11s.addAll(other.uint11s);
-		this.uint12s.addAll(other.uint12s);
-		this.uint13s.addAll(other.uint13s);
-		this.uint14s.addAll(other.uint14s);
-		this.uint15s.addAll(other.uint15s);
-		this.uint16s.addAll(other.uint16s);
-		this.uint32s.addAll(other.uint32s);
-		this.uint64s.addAll(other.uint64s);
-		this.uint128s.addAll(other.uint128s);
+		argbs.addAll(other.argbs);
+		bools.addAll(other.bools);
+		cdbls.addAll(other.cdbls);
+		cdbl_vecs.addAll(other.cdbl_vecs);
+		cdbl_mats.addAll(other.cdbl_mats);
+		cdbl_tens.addAll(other.cdbl_tens);
+		cflts.addAll(other.cflts);
+		cflt_vecs.addAll(other.cflt_vecs);
+		cflt_mats.addAll(other.cflt_mats);
+		cflt_tens.addAll(other.cflt_tens);
+		chlfs.addAll(other.chlfs);
+		chlf_vecs.addAll(other.chlf_vecs);
+		chlf_mats.addAll(other.chlf_mats);
+		chlf_tens.addAll(other.chlf_tens);
+		chps.addAll(other.chps);
+		chp_vecs.addAll(other.chp_vecs);
+		chp_mats.addAll(other.chp_mats);
+		chp_tens.addAll(other.chp_tens);
+		dbls.addAll(other.dbls);
+		dbl_vecs.addAll(other.dbl_vecs);
+		dbl_mats.addAll(other.dbl_mats);
+		dbl_tens.addAll(other.dbl_tens);
+		flts.addAll(other.flts);
+		flt_vecs.addAll(other.flt_vecs);
+		flt_mats.addAll(other.flt_mats);
+		flt_tens.addAll(other.flt_tens);
+		fstrs.addAll(other.fstrs);
+		hlfs.addAll(other.hlfs);
+		hlf_vecs.addAll(other.hlf_vecs);
+		hlf_mats.addAll(other.hlf_mats);
+		hlf_tens.addAll(other.hlf_tens);
+		hps.addAll(other.hps);
+		hp_vecs.addAll(other.hp_vecs);
+		hp_mats.addAll(other.hp_mats);
+		hp_tens.addAll(other.hp_tens);
+		int1s.addAll(other.int1s);
+		int2s.addAll(other.int2s);
+		int3s.addAll(other.int3s);
+		int4s.addAll(other.int4s);
+		int5s.addAll(other.int5s);
+		int6s.addAll(other.int6s);
+		int7s.addAll(other.int7s);
+		int8s.addAll(other.int8s);
+		int9s.addAll(other.int9s);
+		int10s.addAll(other.int10s);
+		int11s.addAll(other.int11s);
+		int12s.addAll(other.int12s);
+		int13s.addAll(other.int13s);
+		int14s.addAll(other.int14s);
+		int15s.addAll(other.int15s);
+		int16s.addAll(other.int16s);
+		int32s.addAll(other.int32s);
+		int64s.addAll(other.int64s);
+		int128s.addAll(other.int128s);
+		odbls.addAll(other.odbls);
+		odbl_rmods.addAll(other.odbl_rmods);
+		odbl_mats.addAll(other.odbl_mats);
+		odbl_tens.addAll(other.odbl_tens);
+		oflts.addAll(other.oflts);
+		oflt_rmods.addAll(other.oflt_rmods);
+		oflt_mats.addAll(other.oflt_mats);
+		oflt_tens.addAll(other.oflt_tens);
+		ohlfs.addAll(other.ohlfs);
+		ohlf_rmods.addAll(other.ohlf_rmods);
+		ohlf_mats.addAll(other.ohlf_mats);
+		ohlf_tens.addAll(other.ohlf_tens);
+		ohps.addAll(other.ohps);
+		ohp_rmods.addAll(other.ohp_rmods);
+		ohp_mats.addAll(other.ohp_mats);
+		ohp_tens.addAll(other.ohp_tens);
+		points.addAll(other.points);
+		qdbls.addAll(other.qdbls);
+		qdbl_rmods.addAll(other.qdbl_rmods);
+		qdbl_mats.addAll(other.qdbl_mats);
+		qdbl_tens.addAll(other.qdbl_tens);
+		qflts.addAll(other.qflts);
+		qflt_rmods.addAll(other.qflt_rmods);
+		qflt_mats.addAll(other.qflt_mats);
+		qflt_tens.addAll(other.qflt_tens);
+		qhlfs.addAll(other.qhlfs);
+		qhlf_rmods.addAll(other.qhlf_rmods);
+		qhlf_mats.addAll(other.qhlf_mats);
+		qhlf_tens.addAll(other.qhlf_tens);
+		qhps.addAll(other.qhps);
+		qhp_rmods.addAll(other.qhp_rmods);
+		qhp_mats.addAll(other.qhp_mats);
+		qhp_tens.addAll(other.qhp_tens);
+		rationals.addAll(other.rationals);
+		rgbs.addAll(other.rgbs);
+		uint1s.addAll(other.uint1s);
+		uint2s.addAll(other.uint2s);
+		uint3s.addAll(other.uint3s);
+		uint4s.addAll(other.uint4s);
+		uint5s.addAll(other.uint5s);
+		uint6s.addAll(other.uint6s);
+		uint7s.addAll(other.uint7s);
+		uint8s.addAll(other.uint8s);
+		uint9s.addAll(other.uint9s);
+		uint10s.addAll(other.uint10s);
+		uint11s.addAll(other.uint11s);
+		uint12s.addAll(other.uint12s);
+		uint13s.addAll(other.uint13s);
+		uint14s.addAll(other.uint14s);
+		uint15s.addAll(other.uint15s);
+		uint16s.addAll(other.uint16s);
+		uint32s.addAll(other.uint32s);
+		uint64s.addAll(other.uint64s);
+		uint128s.addAll(other.uint128s);
+		unbounds.addAll(other.unbounds);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -532,33 +982,88 @@ public class DataBundle {
 		List<Tuple2<T,DimensionedDataSource<U>>> bundle()
 	{
 		ArrayList<Tuple2<T,DimensionedDataSource<U>>> fullList = new ArrayList<>();
+		
 		for (DimensionedDataSource<?> ds : this.argbs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.ARGB, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.bigs) {
+		for (DimensionedDataSource<?> ds : this.bools) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.UNBOUND, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.BOOL, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+		for (DimensionedDataSource<?> ds : this.cdbls) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CDBL, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.cflt16s) {
+		for (DimensionedDataSource<?> ds : this.cdbl_vecs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHLF, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CDBL_VEC, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.cflt32s) {
+		for (DimensionedDataSource<?> ds : this.cdbl_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CDBL_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+		for (DimensionedDataSource<?> ds : this.cdbl_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CDBL_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.cflts) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.CFLT, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.cflt64s) {
+		for (DimensionedDataSource<?> ds : this.cflt_vecs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.CDBL, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CFLT_VEC, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.cflt_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CFLT_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.cflt_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CFLT_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.chlfs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHLF, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.chlf_vecs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHLF_VEC, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.chlf_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHLF_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.chlf_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHLF_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
@@ -568,27 +1073,101 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.flt16s) {
+		for (DimensionedDataSource<?> ds : this.chp_vecs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.HLF, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHP_VEC, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.flt32s) {
+		for (DimensionedDataSource<?> ds : this.chp_mats) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.FLT, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHP_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+		for (DimensionedDataSource<?> ds : this.chp_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHP_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.cflt64s) {
+		for (DimensionedDataSource<?> ds : this.dbls) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.DBL, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
+		for (DimensionedDataSource<?> ds : this.dbl_vecs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.DBL_VEC, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.dbl_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.DBL_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.dbl_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.DBL_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.flts) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.FLT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.flt_vecs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.FLT_VEC, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.flt_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.FLT_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.flt_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.FLT_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		
+
 		for (DimensionedDataSource<?> ds : this.fstrs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.FSTRING, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.hlfs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HLF, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.hlf_vecs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HLF_VEC, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.hlf_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HLF_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.hlf_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HLF_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
@@ -598,135 +1177,209 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 		
+		for (DimensionedDataSource<?> ds : this.hp_vecs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HP_VEC, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.hp_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HP_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.hp_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.HP_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
 		for (DimensionedDataSource<?> ds : this.int1s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT1, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int2s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT2, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int3s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT3, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int4s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT4, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int5s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT5, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int6s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT6, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int7s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT7, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int8s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT8, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int9s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT9, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int10s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT10, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int11s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT11, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int12s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT12, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int13s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT13, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int14s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT14, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int15s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT15, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int16s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT16, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int32s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT32, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int64s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT64, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.int128s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.INT128, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
+
 		
-		for (DimensionedDataSource<?> ds : this.oflt16s) {
+		
+		for (DimensionedDataSource<?> ds : this.odbls) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHLF, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.ODBL, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.oflt32s) {
+		for (DimensionedDataSource<?> ds : this.odbl_rmods) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.ODBL_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.odbl_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.ODBL_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.odbl_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.ODBL_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+		for (DimensionedDataSource<?> ds : this.oflts) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.OFLT, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.oflt64s) {
+		for (DimensionedDataSource<?> ds : this.oflt_rmods) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.ODBL, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OFLT_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.oflt_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OFLT_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.oflt_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OFLT_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.ohlfs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHLF, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.ohlf_rmods) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHLF_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.ohlf_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHLF_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.ohlf_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHLF_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
@@ -736,29 +1389,103 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 		
+		for (DimensionedDataSource<?> ds : this.ohp_rmods) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHP_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.ohp_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHP_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.ohp_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.OHP_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
 		for (DimensionedDataSource<?> ds : this.points) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.POINT, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.qflt16s) {
+		for (DimensionedDataSource<?> ds : this.qdbls) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHLF, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QDBL, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.qflt32s) {
+		for (DimensionedDataSource<?> ds : this.qdbl_rmods) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QDBL_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qdbl_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QDBL_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qdbl_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QDBL_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qflts) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.QFLT, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.qflt64s) {
+		for (DimensionedDataSource<?> ds : this.qflt_rmods) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.QDBL, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QFLT_RMOD, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
+		
+		for (DimensionedDataSource<?> ds : this.qflt_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QFLT_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qflt_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QFLT_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+		
+		for (DimensionedDataSource<?> ds : this.qhlfs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHLF, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qhlf_rmods) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHLF_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qhlf_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHLF_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qhlf_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHLF_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
 		
 		for (DimensionedDataSource<?> ds : this.qhps) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
@@ -766,7 +1493,26 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.rats) {
+		for (DimensionedDataSource<?> ds : this.qhp_rmods) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHP_RMOD, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qhp_mats) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHP_MAT, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.qhp_tens) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHP_TEN, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+
+		for (DimensionedDataSource<?> ds : this.rationals) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.RAT, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
@@ -783,112 +1529,118 @@ public class DataBundle {
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT1, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint2s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT2, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint3s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT3, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint4s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT4, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint5s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT5, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint6s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT6, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint7s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT7, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint8s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT8, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint9s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT9, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint10s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT10, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint11s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT11, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint12s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT12, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint13s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT13, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint14s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT14, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint15s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT15, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint16s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT16, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint32s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT32, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint64s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT64, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
+
 		for (DimensionedDataSource<?> ds : this.uint128s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.UINT128, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+
+		for (DimensionedDataSource<?> ds : this.unbounds) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.UNBOUND, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 
