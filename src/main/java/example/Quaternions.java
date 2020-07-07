@@ -50,7 +50,6 @@ class Quaternions {
 
 	// Zorbage supports Quaternion numbers in a variety precisions
 	
-	@SuppressWarnings("unused")
 	void example1() {
 		
 		// 16-bit float based

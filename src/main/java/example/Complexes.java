@@ -48,7 +48,6 @@ class Complexes {
 
 	// Zorbage supports complex numbers in a variety precisions
 	
-	@SuppressWarnings("unused")
 	void example1() {
 		
 		// 16-bit float based
