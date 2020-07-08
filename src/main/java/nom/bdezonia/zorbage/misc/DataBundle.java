@@ -1138,8 +1138,6 @@ public class DataBundle {
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.FLT_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-		
-		
 
 		for (DimensionedDataSource<?> ds : this.fstrs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
@@ -1309,8 +1307,6 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 
-		
-		
 		for (DimensionedDataSource<?> ds : this.odbls) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.ODBL, (DimensionedDataSource<U>)ds);
@@ -1460,7 +1456,6 @@ public class DataBundle {
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.QFLT_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-
 		
 		for (DimensionedDataSource<?> ds : this.qhlfs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
@@ -1485,7 +1480,6 @@ public class DataBundle {
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHLF_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-
 		
 		for (DimensionedDataSource<?> ds : this.qhps) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
@@ -1510,7 +1504,6 @@ public class DataBundle {
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.QHP_TEN, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
-
 
 		for (DimensionedDataSource<?> ds : this.rationals) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
