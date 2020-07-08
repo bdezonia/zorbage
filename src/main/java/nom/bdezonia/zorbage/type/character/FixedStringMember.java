@@ -207,4 +207,8 @@ public final class FixedStringMember
 		}
 		return false;
 	}
+	
+	public int capaciity() {
+		return codePoints.length;
+	}
 }
