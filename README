@@ -1,9 +1,10 @@
-Zorbage: algebraic data types and algorithms for use in numeric processing
-
 (Note: I am looking to help some lab in remote sensing or other big data
  consumer by taking your slow analyses in Python or R or Matlab,
  reimplementing them to work with Zorbage, and iterating until the
- Zorbage implementation can outperform your current solutions)
+ Zorbage implementation can outperform your current solutions. Contact
+ me if you are interested in pursuing something like this.)
+
+Zorbage: algebraic data types and algorithms for use in numeric processing
 
 Goals:
   - provide a framework for reusable numeric algorithms
@@ -45,7 +46,7 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
   Define multidimensional data sets with flexible out of bounds data
     handling procedures.
     
-  Use many different data types
+  Use many different data types (109 and counting)
 
     - signed integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128, unbounded)
@@ -64,6 +65,8 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
     - n-dimensional real Points
     
     - ARGB and RGB tuples
+    
+    - vectors and matrices and tensors made of the various types
   
   Define your own data types
   
@@ -205,6 +208,11 @@ Is there a way to get data into a Zorbage backed application?
 
   Code has been written to load Scifio data into Zorbage structures.
   You can find it here: https://github.com/bdezonia/zorbage-scifio
+  
+Is there a way to view Zorbage data?
+
+  Coding is underway on a data viewer. It will be alpha ready soon.
+  You can find it here: https://github.com/bdezonia/zorbage-viewer
 
 Programming notes
 
