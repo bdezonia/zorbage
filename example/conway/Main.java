@@ -8,9 +8,9 @@
 package conway;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.multidim.MultiDimDataSource;
-import nom.bdezonia.zorbage.multidim.MultiDimStorage;
-import nom.bdezonia.zorbage.multidim.ProcedurePaddedMultiDimDataSource;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.CyclicNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Algebra;
@@ -29,23 +29,23 @@ public class Main {
 	
 	public static void main(String[] args) {
 		UnsignedInt1Member value = G.UINT1.construct();
-		MultiDimDataSource<UnsignedInt1Member> img1 = MultiDimStorage.allocate(new long[] {COLS,ROWS}, value);
-		MultiDimDataSource<UnsignedInt1Member> img2 = MultiDimStorage.allocate(new long[] {COLS,ROWS}, value);
+		DimensionedDataSource<UnsignedInt1Member> img1 = DimensionedStorage.allocate(new long[] {COLS,ROWS}, value);
+		DimensionedDataSource<UnsignedInt1Member> img2 = DimensionedStorage.allocate(new long[] {COLS,ROWS}, value);
 		CyclicNdOOB<UnsignedInt1Member> oob1 = new CyclicNdOOB<UnsignedInt1Member>(img1);
 		CyclicNdOOB<UnsignedInt1Member> oob2 = new CyclicNdOOB<UnsignedInt1Member>(img2);
-		MultiDimDataSource<UnsignedInt1Member> frame1 = new ProcedurePaddedMultiDimDataSource<UnsignedInt1Algebra,UnsignedInt1Member>(G.UINT1, img1, oob1);
-		MultiDimDataSource<UnsignedInt1Member> frame2 = new ProcedurePaddedMultiDimDataSource<UnsignedInt1Algebra,UnsignedInt1Member>(G.UINT1, img2, oob2);
+		DimensionedDataSource<UnsignedInt1Member> frame1 = new ProcedurePaddedDimensionedDataSource<UnsignedInt1Algebra,UnsignedInt1Member>(G.UINT1, img1, oob1);
+		DimensionedDataSource<UnsignedInt1Member> frame2 = new ProcedurePaddedDimensionedDataSource<UnsignedInt1Algebra,UnsignedInt1Member>(G.UINT1, img2, oob2);
 		initData(frame1);
 		displayFrame(frame1);
 		for (int i = 0; i < GENERATIONS; i++) {
-			MultiDimDataSource<UnsignedInt1Member> dstFrame = i % 2 == 0 ? frame2 : frame1;
-			MultiDimDataSource<UnsignedInt1Member> srcFrame = i % 2 == 0 ? frame1 : frame2;
+			DimensionedDataSource<UnsignedInt1Member> dstFrame = i % 2 == 0 ? frame2 : frame1;
+			DimensionedDataSource<UnsignedInt1Member> srcFrame = i % 2 == 0 ? frame1 : frame2;
 			evolve(srcFrame, dstFrame);
 			displayFrame(dstFrame);
 		}
 	}
 	
-	private static void initData(MultiDimDataSource<UnsignedInt1Member> frame) {
+	private static void initData(DimensionedDataSource<UnsignedInt1Member> frame) {
 		UnsignedInt1Member value = G.UINT1.construct();
 		IntegerIndex idx = new IntegerIndex(2);
 		for (int r = 0; r < ROWS; r++) {
@@ -58,7 +58,7 @@ public class Main {
 		}
 	}
 	
-	private static void displayFrame(MultiDimDataSource<UnsignedInt1Member> frame) {
+	private static void displayFrame(DimensionedDataSource<UnsignedInt1Member> frame) {
 		UnsignedInt1Member value = G.UINT1.construct();
 		for (int c = 0; c < COLS; c++) {
 			System.out.print("-");
@@ -79,8 +79,8 @@ public class Main {
 		}
 	}
 
-	private static void evolve(MultiDimDataSource<UnsignedInt1Member> srcFrame,
-								MultiDimDataSource<UnsignedInt1Member> dstFrame)
+	private static void evolve(DimensionedDataSource<UnsignedInt1Member> srcFrame,
+								DimensionedDataSource<UnsignedInt1Member> dstFrame)
 	{
 		UnsignedInt1Member alive = new UnsignedInt1Member(1);
 		UnsignedInt1Member dead = new UnsignedInt1Member(0);
@@ -129,7 +129,7 @@ public class Main {
 		}
 	}
 	
-	private static int numNeighs(MultiDimDataSource<UnsignedInt1Member> frame, IntegerIndex idx) {
+	private static int numNeighs(DimensionedDataSource<UnsignedInt1Member> frame, IntegerIndex idx) {
 		UnsignedInt1Member value = G.UINT1.construct();
 		int neighs = 0;
 		IntegerIndex tmpIdx = new IntegerIndex(2);
