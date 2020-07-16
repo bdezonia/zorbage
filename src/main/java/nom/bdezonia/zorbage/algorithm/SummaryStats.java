@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * 
@@ -46,11 +47,12 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
  */
 public class SummaryStats {
 
-	public static <T extends Algebra<T,U> & NaN<U> & Addition<U> & Unity<U> & Ordered<U>,
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & NaN<U>,
 					U extends Allocatable<U>>
-		void computeSafe(T alg, IndexedDataSource<U> data, U min, U q1, U median, U q3, U max)
+		void computeSafe(T alg, IndexedDataSource<U> data, U min, U q1, U median, U q3, U max, SignedInt64Member noDataCount)
 	{
 		IndexedDataSource<U> trimmed = NonNanValues.compute(alg, data);
+		noDataCount.setV(data.size() - trimmed.size());
 		compute(alg, trimmed, min, q1, median, q3, max);
 	}
 	
