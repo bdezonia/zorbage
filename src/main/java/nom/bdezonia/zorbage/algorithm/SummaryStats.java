@@ -47,6 +47,21 @@ import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
  */
 public class SummaryStats {
 
+	// do not instantiate
+	
+	private SummaryStats() { }
+	
+	/**
+	 * 
+	 * @param alg
+	 * @param data
+	 * @param min
+	 * @param q1
+	 * @param median
+	 * @param q3
+	 * @param max
+	 * @param noDataCount
+	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & NaN<U>,
 					U extends Allocatable<U>>
 		void computeSafe(T alg, IndexedDataSource<U> data, U min, U q1, U median, U q3, U max, SignedInt64Member noDataCount)
@@ -56,6 +71,16 @@ public class SummaryStats {
 		compute(alg, trimmed, min, q1, median, q3, max);
 	}
 	
+	/**
+	 * 
+	 * @param alg
+	 * @param data
+	 * @param min
+	 * @param q1
+	 * @param median
+	 * @param q3
+	 * @param max
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U>,
 					U extends Allocatable<U>>
