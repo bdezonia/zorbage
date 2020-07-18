@@ -45,13 +45,12 @@ public class BoundingBox {
 	
 	/**
 	 * 
-	 * @param alg
 	 * @param data
 	 * @param min
 	 * @param max
 	 */
-	public static <U>
-		void compute(DimensionedDataSource<U> data,
+	public static
+		void compute(DimensionedDataSource<?> data,
 						RModuleMember<HighPrecisionMember> min,
 						RModuleMember<HighPrecisionMember> max)
 	{
