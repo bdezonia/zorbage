@@ -26,18 +26,16 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.math.BigDecimal;
-
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.ModularDivision;
+import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
@@ -52,6 +50,10 @@ public class SummaryStats {
 	private SummaryStats() { }
 	
 	/**
+	 * Note that quartiles do not match R's calculations. There are many ways to calc quartiles by analyzing the
+	 * specific dataset. That is what R does. Zorbage does something simpler. It finds the indexes of the median
+	 * of the dataset. Then it locates quartile 1 at the median of the left sublist and quartile 3 at the median
+	 * of the right sublist.
 	 * 
 	 * @param alg
 	 * @param data
@@ -63,7 +65,7 @@ public class SummaryStats {
 	 * @param max
 	 * @param noDataCount
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & NaN<U>,
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & Multiplication<U> & NaN<U>,
 					U extends Allocatable<U>>
 		void computeSafe(T alg, IndexedDataSource<U> data, U min, U q1, U median, U mean, U q3, U max, SignedInt64Member noDataCount)
 	{
@@ -84,92 +86,123 @@ public class SummaryStats {
 	 * @param max
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U>,
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & Multiplication<U>,
 					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> data, U min, U q1, U median, U mean, U q3, U max)
 	{
-		IndexedDataSource<U> copy = DeepCopy.compute(alg, data);
-		
-		StableSort.compute(alg, copy);
-		
-		long sz = copy.size();
-		
-		U sum = alg.construct();
-		U count = alg.construct();
-
-		SumWithCount.compute(alg, copy, sum, count);
-
-		U med1 = alg.construct();
-		U med2 = alg.construct();
+		long sz = data.size();
 		
 		if (sz == 0) {
 			throw new IllegalArgumentException("cannot extract measures from empty list");
 		}
-		else if (sz == 1) {
-			copy.get(0, min);
-			alg.assign().call(min, q1);
-			alg.assign().call(min, med1);
-			alg.assign().call(min, med2);
-			alg.assign().call(min, q3);
-			alg.assign().call(min, max);
-		}
-		else if (sz == 2) {
-			copy.get(0, min);
-			copy.get(1, max);
-			alg.assign().call(min, q1);
-			alg.assign().call(max, q3);
-			alg.assign().call(min, med1);
-			alg.assign().call(max, med2);
-		}
-		else if (sz == 3) {
-			copy.get(0, min);
-			copy.get(1, med1);
-			copy.get(2, max);
-			alg.assign().call(med1, med2);
-			alg.assign().call(min, q1);
-			alg.assign().call(max, q3);
-		}
-		else if (sz == 4) {
-			copy.get(0, min);
-			copy.get(1, med1);
-			copy.get(2, med2);
-			copy.get(3, max);
-			alg.assign().call(med1, q1);
-			alg.assign().call(med2, q3);
-		}
-		else { //sz >= 5
-			copy.get(0, min);
-			copy.get(sz-1, max);
-			copy.get(sz/4, q1);
-			BigDecimal idx =
-					BigDecimal.valueOf(3).multiply(BigDecimal.valueOf(sz)).divide(BigDecimal.valueOf(4), HighPrecisionAlgebra.getContext());
-			copy.get(idx.longValue(), q3);
-			if (sz % 2 == 1) {
-				copy.get(sz/2, med1);
-				alg.assign().call(med1, med2);
-			}
-			else {
-				copy.get(sz/2-1, med1);
-				copy.get(sz/2, med2);
-			}
-		}
+
+		IndexedDataSource<U> copy = DeepCopy.compute(alg, data);
+		
+		StableSort.compute(alg, copy);
+		
+		U sum = alg.construct();
+		U count = alg.construct();
+
+		U one = alg.construct();
+		U two = alg.construct();
+		
+		alg.unity().call(one);
+		alg.add().call(one, one, two);
+		
+		U medL = alg.construct();
+		U medR = alg.construct();
+		U q1L = alg.construct();
+		U q1R = alg.construct();
+		U q3L = alg.construct();
+		U q3R = alg.construct();
 		U numer = alg.construct();
-		U denom = alg.construct();
-		alg.add().call(med1, med2, numer);
-		alg.unity().call(denom);
-		alg.add().call(denom, denom, denom);
+
+		long medIdxL; 
+		long medIdxR; 
+		long q1IdxL; 
+		long q1IdxR; 
+		long q3IdxL; 
+		long q3IdxR; 
+
+		medIdxL = leftIndex(0, sz-1);
+		medIdxR = rightIndex(medIdxL, sz);
+		
+		if (sz == 1) {
+			q1IdxL = 0;
+			q1IdxR = 0;
+
+			q3IdxL = 0;
+			q3IdxR = 0;
+		}
+		else {
+			q1IdxL = leftIndex(0, sz % 2 == 0 ? medIdxL : medIdxL - 1);
+			q1IdxR = rightIndex(q1IdxL, sz % 2 == 1 ? medIdxL : medIdxL - 1);
+			long tmp = sz % 2 == 0 ? medIdxR : medIdxR + 1;
+			q3IdxL = tmp + leftIndex(tmp, sz-1);
+			q3IdxR = rightIndex(q3IdxL, sz % 2 == 0 ? sz-medIdxR : sz-medIdxR-1);
+		}
+
+		/*
+		System.out.println(sz + " case --------");
+		System.out.println("  median " + medIdxL + " " + medIdxR);
+		System.out.println("  q1     " + q1IdxL + " " + q1IdxR);
+		System.out.println("  q3     " + q3IdxL + " " + q3IdxR);
+		*/
+		
+		SumWithCount.compute(alg, copy, sum, count);
+
+		copy.get(0, min);
+		copy.get(sz-1, max);
+		copy.get(medIdxL, medL);
+		copy.get(medIdxR, medR);
+		copy.get(q1IdxL, q1L);
+		copy.get(q1IdxR, q1R);
+		copy.get(q3IdxL, q3L);
+		copy.get(q3IdxR, q3R);
+		
 		if (alg instanceof Invertible) {
+			alg.add().call(medL, medR, numer);
 			Invertible<U> iAlg = (Invertible<U>) alg;
-			iAlg.divide().call(numer, denom, median);
+			iAlg.divide().call(numer, two, median);
+			alg.add().call(q1L, q1R, numer);
+			iAlg.divide().call(numer, two, q1);
+			alg.add().call(q3L, q3R, numer);
+			iAlg.divide().call(numer, two, q3);
 			iAlg.divide().call(sum, count, mean);
 		}
 		else if (alg instanceof ModularDivision) {
+			alg.add().call(medL, medR, numer);
 			ModularDivision<U> mdAlg = (ModularDivision<U>) alg;
-			mdAlg.div().call(numer, denom, median);
+			mdAlg.div().call(numer, two, median);
+			alg.add().call(q1L, q1R, numer);
+			mdAlg.div().call(numer, two, q1);
+			alg.add().call(q3R, q3L, numer);
+			mdAlg.div().call(numer, two, q3);
 			mdAlg.div().call(sum, count, mean);
 		}
 		else {
 			throw new IllegalArgumentException("given algebra must support some kind of division operation");
+		}
+	}
+
+	private static long leftIndex(long left, long right) {
+		long sz = right - left + 1;
+		// even case
+		if (sz % 2 == 0) {
+			return sz/2 - 1;
+		}
+		else { // odd case
+			return sz/2;
+		}
+	}
+
+	private static long rightIndex(long leftIdx, long sz) {
+		// even case
+		if (sz % 2 == 0) {
+			return leftIdx + 1;
+		}
+		else { // odd case
+			return leftIdx;
 		}
 	}
 }
