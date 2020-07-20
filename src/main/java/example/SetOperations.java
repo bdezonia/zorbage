@@ -26,16 +26,67 @@
  */
 package example;
 
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.SetDifference;
+import nom.bdezonia.zorbage.algorithm.SetIntersection;
+import nom.bdezonia.zorbage.algorithm.SetSymmetricDifference;
+import nom.bdezonia.zorbage.algorithm.SetUnion;
+import nom.bdezonia.zorbage.algorithm.Unique;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+
 /**
  * @author Barry DeZonia
  */
 class SetOperations {
 
-	// all the set based list manipulation methods
+	/*
+	 * Zorbage allows you to do set operations on lists of data if you need to.
+	 */
+
+	// SetDifference : the result is the elements in set a that are not in set b
 	
-	// SetDifference
-	// SetIntersection
-	// StSymmetricdifference
-	// SetUnion
-	// Unique
+	void example1() {
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(new double[] {1,2,3,4});
+		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(new double[] {2,4});
+		IndexedDataSource<Float64Member> result = SetDifference.compute(G.DBL, a, b);
+		System.out.println(result);  // {1,3}
+	}
+	
+	// SetIntersection : the result set is the elements common to both sets a and b
+	
+	void example2() {
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(new double[] {1,2,3,4});
+		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(new double[] {2,4});
+		IndexedDataSource<Float64Member> result = SetIntersection.compute(G.DBL, a, b);
+		System.out.println(result);  // {2,4}
+	}
+	
+	// SetSymmetricDifference : (a - b) union (b - a)
+	
+	void example3() {
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(new double[] {1,2,3,4});
+		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(new double[] {3,4,5,6});
+		IndexedDataSource<Float64Member> result = SetSymmetricDifference.compute(G.DBL, a, b);
+		System.out.println(result);  // {1,2,5,6}
+	}
+	
+	// SetUnion : the result set contains all elements from both sets a and b
+	
+	void example4() {
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(new double[] {1,2,3,4});
+		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(new double[] {5,6});
+		IndexedDataSource<Float64Member> result = SetUnion.compute(G.DBL, a, b);
+		System.out.println(result);  // {1,2,3,4,5,6}
+	}
+	
+	// Unique : return a list which is a copy of another list with duplicates eliminated
+	
+	void example5() {
+		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(new double[] {1,2,2,3,3,3,4,4,4,4});
+		IndexedDataSource<Float64Member> result = Unique.compute(G.DBL, a);
+		System.out.println(result);  // {1,2,3,4}
+	}
+	
 }
