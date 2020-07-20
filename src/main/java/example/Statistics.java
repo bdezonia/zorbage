@@ -54,11 +54,15 @@ import nom.bdezonia.zorbage.algorithm.SequenceLInfinityNorm;
 import nom.bdezonia.zorbage.algorithm.StdDev;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.algorithm.SumWithCount;
+import nom.bdezonia.zorbage.algorithm.SummaryStats;
 import nom.bdezonia.zorbage.algorithm.Variance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * @author Barry DeZonia
@@ -264,5 +268,29 @@ class Statistics {
 		HighPrecisionMember result2 = G.HP.construct();
 		
 		Variance.compute(G.HP, hiPrec, result2);
+	}
+	
+	/*
+	 * FYI there is a method for getting a quick statistical summary of a set of numbers.
+	 */
+	
+	void example6() {
+		
+		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		
+		Float32Member min = G.FLT.construct();
+		Float32Member q1 = G.FLT.construct();
+		Float32Member median = G.FLT.construct();
+		Float32Member mean = G.FLT.construct();
+		Float32Member q3 = G.FLT.construct();
+		Float32Member max = G.FLT.construct();
+		
+		SummaryStats.compute(G.FLT, data, min, q1, median, mean, q3, max);
+		
+		// If your contains NaN values you can calc values working around the NaNs
+		
+		SignedInt64Member numNoData = G.INT64.construct();
+
+		SummaryStats.computeSafe(G.FLT, data, min, q1, median, mean, q3, max, numNoData);
 	}
 }
