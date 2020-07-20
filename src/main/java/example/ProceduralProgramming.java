@@ -56,8 +56,8 @@ class ProceduralProgramming {
 	// Function can change a variable from a long distance if it desires. This
 	// makes for efficient code in terms of speed and space. Java was designed with
 	// some incomplete pass by reference capabilities (for instance, Java cannot
-	// externally modify a single primitive value (byte, short, int, long, float,
-	// double, etc.). Zorbage can modify primitives externally.
+	// externally modify a single primitive value such as byte, short, int, long,
+	// float, double, etc.). Zorbage can modify primitives externally.
 	
 	// An example to show how pass by reference works in Java and in Zorbage
 	
@@ -131,7 +131,7 @@ class ProceduralProgramming {
 
 		G.DBL.sinAndCos().call(angle, sin, cos);
 		
-		// after this call sin contains sine value and cos = cosine value
+		// after this call sin = angle's sine value and cos = angle's cosine value
 	}
 	
 	// One can imagine that this multiple output capability could come in handy
@@ -140,11 +140,11 @@ class ProceduralProgramming {
 	// separately calling sin() and cos(). These two calcs use a lot of the
 	// same intermediate data. A combined method can reuse information to speed
 	// up the overall calculation. Another example where this feature might be
-	// useful is a CalcStats algorithm that makes minimal passes over data while
-	// calculating every conceivable stat of interest.
+	// useful is the SUmmaryStats algorithm. It makes minimal passes over data
+	// while calculating many statistics of interest.
 	//   e.g.
 	//
-	//   CalcStats.compute(list, mean, min, max, median, variance, stddev);
+	//   SummaryStats.compute(list, min, q1, median, mean, q3, max);
 	
 	// Most of Zorbage's algorithms are static classes with a compute() method.
 	// Procedures and Functions have a call() method. Algorithms and Procedures
