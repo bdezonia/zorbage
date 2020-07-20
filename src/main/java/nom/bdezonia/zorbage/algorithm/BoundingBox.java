@@ -56,8 +56,8 @@ public class BoundingBox {
 	{
 		HighPrecisionMember value = G.HP.construct();
 		int numD = data.numDimensions();
-		min.init(numD);
-		max.init(numD);
+		min.alloc(numD);
+		max.alloc(numD);
 		for (int i = 0; i < numD; i++) {
 			Procedure2<Long, HighPrecisionMember> axis = data.getAxisEquation(i);
 			axis.call(0L, value);
