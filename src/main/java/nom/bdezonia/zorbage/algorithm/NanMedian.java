@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
@@ -50,7 +49,7 @@ public class NanMedian {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Ordered<U> &
+	public static <T extends Algebra<T,U> & Addition<U> & Ordered<U> &
 								Unity<U> & NaN<U>,
 					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)

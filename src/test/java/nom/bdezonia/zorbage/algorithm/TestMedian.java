@@ -33,6 +33,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
  * 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 public class TestMedian {
 
 	@Test
-	public void test() {
+	public void test1() {
 		IndexedDataSource<Float64Member> storage =
 				ArrayStorage.allocateDoubles(new double[]{0,1,2,3,4,5,6,7,8,9});
 		Float64Member result = new Float64Member();
@@ -50,4 +51,20 @@ public class TestMedian {
 		assertEquals(4.5, result.v(), 0);
 	}
 
+	@Test
+	public void test2() {
+		IndexedDataSource<SignedInt32Member> list1 =
+				ArrayStorage.allocateInts(new int[]{4,2,1,3});
+		
+		IndexedDataSource<SignedInt32Member> list2 =
+				ArrayStorage.allocateInts(new int[]{4,2,1,3,5});
+
+		SignedInt32Member result = new SignedInt32Member();
+
+		Median.compute(G.INT32, list1, result);
+		assertEquals(2, result.v());
+
+		Median.compute(G.INT32, list2, result);
+		assertEquals(3, result.v());
+	}
 }

@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.algorithm.FFT;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.GetV;
 import nom.bdezonia.zorbage.algorithm.Mean;
-import nom.bdezonia.zorbage.algorithm.MedianI;
+import nom.bdezonia.zorbage.algorithm.Median;
 import nom.bdezonia.zorbage.algorithm.SetV;
 import nom.bdezonia.zorbage.algorithm.Sort;
 import nom.bdezonia.zorbage.algorithm.StdDev;
@@ -153,7 +153,7 @@ class DataSources {
 		
 		SignedInt16Member result = G.INT16.construct();
 		
-		MedianI.compute(G.INT16, list, result);
+		Median.compute(G.INT16, list, result);
 	}
 	
 	// ConcatenatedDataSource

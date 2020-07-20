@@ -33,7 +33,6 @@ import nom.bdezonia.zorbage.algorithm.ApproxVariance;
 import nom.bdezonia.zorbage.algorithm.MaxElement;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Median;
-import nom.bdezonia.zorbage.algorithm.MedianI;
 import nom.bdezonia.zorbage.algorithm.MinElement;
 import nom.bdezonia.zorbage.algorithm.MinMaxElement;
 import nom.bdezonia.zorbage.algorithm.NanMaxElement;
@@ -90,10 +89,6 @@ class Statistics {
 		Mean.compute(G.DBL, data, result1);
 		
 		Median.compute(G.DBL, data, result2);
-		
-		// This method is for calculating the nearest integer to the median value for
-		//   a list of integral data types. It will work for floating point lists too.
-		MedianI.compute(G.DBL, data, result1);
 		
 		StdDev.compute(G.DBL, data, result1);
 		

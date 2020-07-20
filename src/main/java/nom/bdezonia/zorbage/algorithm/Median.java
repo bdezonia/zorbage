@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.ModularDivision;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -49,12 +50,23 @@ public class Median {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Ordered<U> & Unity<U>, U extends Allocatable<U>>
+	@SuppressWarnings("unchecked")
+	public static <T extends Algebra<T,U> & Addition<U> & Ordered<U> & Unity<U>, U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U numer = alg.construct();
 		U denom = alg.construct();
 		FindMedianFraction.compute(alg, storage, numer, denom);
-		alg.divide().call(numer, denom, result);
+		if (alg instanceof Invertible) {
+			Invertible<U> iAlg = (Invertible<U>) alg;
+			iAlg.divide().call(numer, denom, result);
+		}
+		else if (alg instanceof ModularDivision) {
+			ModularDivision<U> mdAlg = (ModularDivision<U>) alg;
+			mdAlg.div().call(numer, denom, result);
+		}
+		else {
+			throw new IllegalArgumentException("given algebra must support some kind of division operation");
+		}
 	}
 }

@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.ArrayDataSource;
@@ -40,7 +39,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class MedianInputs<T extends AdditiveGroup<T,U> & Unity<U> & Invertible<U> & Ordered<U>,U extends Allocatable<U>>
+public class MedianInputs<T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>,U extends Allocatable<U>>
 	implements Procedure<U>
 {
 	private final T algebra;
