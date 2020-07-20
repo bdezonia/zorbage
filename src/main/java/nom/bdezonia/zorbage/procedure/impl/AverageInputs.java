@@ -27,10 +27,14 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.algorithm.Mean;
+import nom.bdezonia.zorbage.datasource.ArrayDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -53,15 +57,8 @@ public class AverageInputs<T extends Algebra<T,U> & Unity<U> & Addition<U> & Inv
 			algebra.zero().call(result);
 		}
 		else {
-			U count = algebra.construct();
-			U sum = algebra.construct();
-			U one = algebra.construct();
-			algebra.unity().call(one);
-			for (int i = 0; i < inputs.length; i++) {
-				algebra.add().call(count, one, count);
-				algebra.add().call(sum, inputs[i], sum);
-			}
-			algebra.divide().call(sum, count, result);
+			IndexedDataSource<U> wrapper = new ArrayDataSource<T,U>(algebra, inputs);
+			Mean.compute(algebra, wrapper, result);
 		}
 	}
 

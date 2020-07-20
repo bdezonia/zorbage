@@ -29,6 +29,9 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.algorithm.Product;
+import nom.bdezonia.zorbage.datasource.ArrayDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.algebra.Algebra;
 
 /**
@@ -48,14 +51,8 @@ public class ProductInputs<T extends Algebra<T,U> & Multiplication<U> & Unity<U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		U prod = algebra.construct();
-		if (inputs.length != 0) {
-			algebra.unity().call(prod);
-		}
-		for (int i = 0; i < inputs.length; i++) {
-			algebra.multiply().call(prod, inputs[i], prod);
-		}
-		algebra.assign().call(prod, result);
+		IndexedDataSource<U> wrapper = new ArrayDataSource<T,U>(algebra, inputs);
+		Product.compute(algebra, wrapper, result);
 	}
 
 }

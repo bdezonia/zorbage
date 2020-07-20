@@ -29,6 +29,9 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algorithm.MaxElement;
+import nom.bdezonia.zorbage.datasource.ArrayDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -47,16 +50,8 @@ public class MaxInputs<T extends Algebra<T,U> & Ordered<U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		if (inputs.length == 0)
-			throw new IllegalArgumentException("no inputs given");
-		U max = algebra.construct();
-		algebra.assign().call(inputs[0], max);
-		for (int i = 1; i < inputs.length; i++) {
-			if (algebra.isGreater().call(inputs[i], max)) {
-				algebra.assign().call(inputs[i], max);
-			}
-		}
-		algebra.assign().call(max, result);
+		IndexedDataSource<U> wrapper = new ArrayDataSource<T,U>(algebra, inputs);
+		MaxElement.compute(algebra, wrapper, result);
 	}
 
 }

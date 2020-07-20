@@ -29,6 +29,9 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algorithm.Sum;
+import nom.bdezonia.zorbage.datasource.ArrayDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -47,11 +50,8 @@ public class SumInputs<T extends Algebra<T,U> & Addition<U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void call(U result, U... inputs) {
-		U sum = algebra.construct();
-		for (int i = 0; i < inputs.length; i++) {
-			algebra.add().call(sum, inputs[i], sum);
-		}
-		algebra.assign().call(sum, result);
+		IndexedDataSource<U> wrapper = new ArrayDataSource<T,U>(algebra, inputs);
+		Sum.compute(algebra, wrapper, result);
 	}
 
 }
