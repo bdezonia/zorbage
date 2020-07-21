@@ -42,7 +42,7 @@ public class Variance {
      * @param <T>
      * @param <U>
      */
-    public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Invertible<U> & Unity<U>, U>
+    public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U>, U>
         void compute(T alg, IndexedDataSource<U> source, U result)
     {
         if (source.size() <= 1) {
@@ -64,6 +64,6 @@ public class Variance {
             alg.add().call(n, one, n);
         }
         alg.subtract().call(n, one, n);
-        alg.divide().call(sum, n, result);
+        KindaDivide.compute(alg, sum, n, result);
     }
 }

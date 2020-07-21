@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
@@ -46,12 +45,12 @@ public class Mean {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U sum = alg.construct();
 		U count = alg.construct();
 		SumWithCount.compute(alg, storage, sum, count);
-		alg.divide().call(sum, count, result);
+		KindaDivide.compute(alg, sum, count, result);
 	}
 }

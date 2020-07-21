@@ -26,34 +26,37 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Addition;
-import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.Ordered;
-import nom.bdezonia.zorbage.algebra.Unity;
-import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.ModularDivision;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Median {
-
-	private Median() {}
+public class KindaDivide {
 
 	/**
 	 * 
 	 * @param alg
-	 * @param storage
-	 * @param result
+	 * @param a
+	 * @param b
+	 * @param c
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Ordered<U> & Unity<U>, U extends Allocatable<U>>
-		void compute(T alg, IndexedDataSource<U> storage, U result)
+	@SuppressWarnings("unchecked")
+	public static <T,U>
+		void compute(T alg, U a, U b, U c)
 	{
-		U numer = alg.construct();
-		U denom = alg.construct();
-		FindMedianFraction.compute(alg, storage, numer, denom);
-		KindaDivide.compute(alg, numer, denom, result);
+		if (alg instanceof Invertible) {
+			Invertible<U> iAlg = (Invertible<U>) alg;
+			iAlg.divide().call(a, b, c);
+		}
+		else if (alg instanceof ModularDivision) {
+			ModularDivision<U> mdAlg = (ModularDivision<U>) alg;
+			mdAlg.div().call(a, b, c);
+		}
+		else {
+			throw new IllegalArgumentException("given algebra must support some kind of division operation");
+		}
 	}
 }

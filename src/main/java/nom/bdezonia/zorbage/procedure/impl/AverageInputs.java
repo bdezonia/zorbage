@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.datasource.ArrayDataSource;
@@ -40,7 +39,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class AverageInputs<T extends Algebra<T,U> & Unity<U> & Addition<U> & Invertible<U>,U>
+public class AverageInputs<T extends Algebra<T,U> & Unity<U> & Addition<U>,U>
 	implements Procedure<U>
 {
 	private final T algebra;

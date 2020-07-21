@@ -29,8 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.Invertible;
-import nom.bdezonia.zorbage.algebra.ModularDivision;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
@@ -85,7 +83,6 @@ public class SummaryStats {
 	 * @param q3
 	 * @param max
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & Multiplication<U>,
 					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> data, U min, U q1, U median, U mean, U q3, U max)
@@ -160,29 +157,13 @@ public class SummaryStats {
 		copy.get(q3IdxL, q3L);
 		copy.get(q3IdxR, q3R);
 		
-		if (alg instanceof Invertible) {
-			alg.add().call(medL, medR, numer);
-			Invertible<U> iAlg = (Invertible<U>) alg;
-			iAlg.divide().call(numer, two, median);
-			alg.add().call(q1L, q1R, numer);
-			iAlg.divide().call(numer, two, q1);
-			alg.add().call(q3L, q3R, numer);
-			iAlg.divide().call(numer, two, q3);
-			iAlg.divide().call(sum, count, mean);
-		}
-		else if (alg instanceof ModularDivision) {
-			alg.add().call(medL, medR, numer);
-			ModularDivision<U> mdAlg = (ModularDivision<U>) alg;
-			mdAlg.div().call(numer, two, median);
-			alg.add().call(q1L, q1R, numer);
-			mdAlg.div().call(numer, two, q1);
-			alg.add().call(q3R, q3L, numer);
-			mdAlg.div().call(numer, two, q3);
-			mdAlg.div().call(sum, count, mean);
-		}
-		else {
-			throw new IllegalArgumentException("given algebra must support some kind of division operation");
-		}
+		alg.add().call(medL, medR, numer);
+		KindaDivide.compute(alg, numer, two, median);
+		alg.add().call(q1L, q1R, numer);
+		KindaDivide.compute(alg, numer, two, q1);
+		alg.add().call(q3L, q3R, numer);
+		KindaDivide.compute(alg, numer, two, q3);
+		KindaDivide.compute(alg, sum, count, mean);
 	}
 
 	private static long leftIndex(long left, long right) {
