@@ -29,7 +29,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
@@ -52,7 +51,7 @@ public class NanStdDev {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> &
-								Invertible<U> & Roots<U> & Ordered<U> & NaN<U>,
+								Roots<U> & Ordered<U> & NaN<U>,
 					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{

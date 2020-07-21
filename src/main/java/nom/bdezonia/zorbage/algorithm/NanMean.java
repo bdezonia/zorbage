@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -47,12 +46,12 @@ public class NanMean {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Invertible<U> & Unity<U> & NaN<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & NaN<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U sum = alg.construct();
 		U count = alg.construct();
 		NanSumWithCount.compute(alg, storage, sum, count);
-		alg.divide().call(sum, count, result);
+		Divide.compute(alg, sum, count, result);
 	}
 }
