@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.ModularDivision;
 
@@ -34,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.ModularDivision;
  * @author Barry DeZonia
  *
  */
-public class KindaDivide {
+public class Divide {
 
 	/**
 	 * 
@@ -44,7 +45,7 @@ public class KindaDivide {
 	 * @param c
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T,U>
+	public static <T extends Algebra<T,U>, U>
 		void compute(T alg, U a, U b, U c)
 	{
 		if (alg instanceof Invertible) {

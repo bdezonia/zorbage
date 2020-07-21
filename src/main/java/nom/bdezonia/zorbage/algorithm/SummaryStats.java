@@ -158,12 +158,12 @@ public class SummaryStats {
 		copy.get(q3IdxR, q3R);
 		
 		alg.add().call(medL, medR, numer);
-		KindaDivide.compute(alg, numer, two, median);
+		Divide.compute(alg, numer, two, median);
 		alg.add().call(q1L, q1R, numer);
-		KindaDivide.compute(alg, numer, two, q1);
+		Divide.compute(alg, numer, two, q1);
 		alg.add().call(q3L, q3R, numer);
-		KindaDivide.compute(alg, numer, two, q3);
-		KindaDivide.compute(alg, sum, count, mean);
+		Divide.compute(alg, numer, two, q3);
+		Divide.compute(alg, sum, count, mean);
 	}
 
 	private static long leftIndex(long left, long right) {

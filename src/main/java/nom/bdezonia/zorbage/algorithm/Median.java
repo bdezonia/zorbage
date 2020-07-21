@@ -54,6 +54,6 @@ public class Median {
 		U numer = alg.construct();
 		U denom = alg.construct();
 		FindMedianFraction.compute(alg, storage, numer, denom);
-		KindaDivide.compute(alg, numer, denom, result);
+		Divide.compute(alg, numer, denom, result);
 	}
 }

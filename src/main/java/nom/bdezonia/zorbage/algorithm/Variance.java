@@ -64,6 +64,6 @@ public class Variance {
             alg.add().call(n, one, n);
         }
         alg.subtract().call(n, one, n);
-        KindaDivide.compute(alg, sum, n, result);
+        Divide.compute(alg, sum, n, result);
     }
 }

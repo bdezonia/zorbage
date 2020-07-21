@@ -51,6 +51,6 @@ public class Mean {
 		U sum = alg.construct();
 		U count = alg.construct();
 		SumWithCount.compute(alg, storage, sum, count);
-		KindaDivide.compute(alg, sum, count, result);
+		Divide.compute(alg, sum, count, result);
 	}
 }
