@@ -438,7 +438,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				}
 				else if (ch == 'E') {
 					U value = alg.construct();
-					if (!(alg instanceof RealConstants<?>)) {
+					if (!(alg instanceof RealConstants)) {
 						result.setA("Lex err near position "+i+": E not defined for given algebra");
 						return result;
 					}
@@ -449,7 +449,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				}
 				else if (ch == 'L') {
 					U value = alg.construct();
-					if (!(alg instanceof OctonionConstants<?>)) {
+					if (!(alg instanceof OctonionConstants)) {
 						result.setA("Lex err near position "+i+": L not defined for given algebra");
 						return result;
 					}
@@ -461,7 +461,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else if (ch == 'I') {
 					if (nextFew(str, i, "I0")) {
 						U value = alg.construct();
-						if (!(alg instanceof OctonionConstants<?>)) {
+						if (!(alg instanceof OctonionConstants)) {
 							result.setA("Lex err near position "+i+": I0 not defined for given algebra");
 							return result;
 						}
@@ -473,7 +473,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else {
 						U value = alg.construct();
-						if (!(alg instanceof ImaginaryConstants<?>)) {
+						if (!(alg instanceof ImaginaryConstants)) {
 							result.setA("Lex err near position "+i+": I not defined for given algebra");
 							return result;
 						}
@@ -486,7 +486,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else if (ch == 'J') {
 					if (nextFew(str, i, "J0")) {
 						U value = alg.construct();
-						if (!(alg instanceof OctonionConstants<?>)) {
+						if (!(alg instanceof OctonionConstants)) {
 							result.setA("Lex err near position "+i+": J0 not defined for given algebra");
 							return result;
 						}
@@ -498,7 +498,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else {
 						U value = alg.construct();
-						if (!(alg instanceof QuaternionConstants<?>)) {
+						if (!(alg instanceof QuaternionConstants)) {
 							result.setA("Lex err near position "+i+": J not defined for given algebra");
 							return result;
 						}
@@ -511,7 +511,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else if (ch == 'K') {
 					if (nextFew(str, i, "K0")) {
 						U value = alg.construct();
-						if (!(alg instanceof OctonionConstants<?>)) {
+						if (!(alg instanceof OctonionConstants)) {
 							result.setA("Lex err near position "+i+": K0 not defined for given algebra");
 							return result;
 						}
@@ -523,7 +523,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else {
 						U value = alg.construct();
-						if (!(alg instanceof QuaternionConstants<?>)) {
+						if (!(alg instanceof QuaternionConstants)) {
 							result.setA("Lex err near position "+i+": K not defined for given algebra");
 							return result;
 						}
@@ -536,7 +536,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else if (ch == 'G') {
 					if (nextFew(str, i, "GAMMA")) {
 						U value = alg.construct();
-						if (!(alg instanceof RealConstants<?>)) {
+						if (!(alg instanceof RealConstants)) {
 							result.setA("Lex err near position "+i+": GAMMA not defined for given algebra");
 							return result;
 						}
@@ -554,7 +554,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 				else if (ch == 'P') {
 					if (nextFew(str, i, "PHI")) {
 						U value = alg.construct();
-						if (!(alg instanceof RealConstants<?>)) {
+						if (!(alg instanceof RealConstants)) {
 							result.setA("Lex err near position "+i+": PHI not defined for given algebra");
 							return result;
 						}
@@ -566,7 +566,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else if (nextFew(str, i, "PI")) {
 						U value = alg.construct();
-						if (!(alg instanceof RealConstants<?>)) {
+						if (!(alg instanceof RealConstants)) {
 							result.setA("Lex err near position "+i+": PI not defined for given algebra");
 							return result;
 						}
@@ -609,7 +609,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else if (nextFew(str, i, "tmin")) {
 						U value = alg.construct();
-						if (!(alg instanceof Bounded<?>)) {
+						if (!(alg instanceof Bounded)) {
 							result.setA("Lex err near position "+i+": tmin not defined for given algebra");
 							return result;
 						}
@@ -621,7 +621,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 					}
 					else if (nextFew(str, i, "tmax")) {
 						U value = alg.construct();
-						if (!(alg instanceof Bounded<?>)) {
+						if (!(alg instanceof Bounded)) {
 							result.setA("Lex err near position "+i+": tmax not defined for given algebra");
 							return result;
 						}
@@ -786,7 +786,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Plus.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof Addition<?>)) {
+			if (!(algebra instanceof Addition)) {
 				status2.errMsg = "Parse error near '+' token: addition not defined for given algebra";
 			}
 			else
@@ -795,7 +795,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			status2.procedure = new AddL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Minus.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof Addition<?>)) {
+			if (!(algebra instanceof Addition)) {
 				status2.errMsg = "Parse error near '-' token: subtraction not defined for given algebra";
 			}
 			else
@@ -819,7 +819,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Times.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof Multiplication<?>)) {
+			if (!(algebra instanceof Multiplication)) {
 				status2.errMsg = "Parse error near '*' token: multiplication not defined for given algebra";
 			}
 			else
@@ -828,10 +828,10 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			status2.procedure = new MultiplyL(algebra, status1.procedure, status2.procedure);
 		}
 		else if (match(Divide.class, tokens, status1.tokenNumber)) {
-			if ((algebra instanceof Invertible<?>) || (algebra instanceof ModularDivision<?>)) {
+			if ((algebra instanceof Invertible) || (algebra instanceof ModularDivision)) {
 				status2 = term(algebra, tokens, status1.tokenNumber+1);
 				if (status2.errMsg != null) return status2;
-				if (algebra instanceof Invertible<?>)
+				if (algebra instanceof Invertible)
 					status2.procedure = new DivideL(algebra, status1.procedure, status2.procedure);
 				else
 					status2.procedure = new DivL(algebra, status1.procedure, status2.procedure);
@@ -842,7 +842,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			}
 		}
 		else if (match(Mod.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof ModularDivision<?>)) {
+			if (!(algebra instanceof ModularDivision)) {
 				status2.errMsg = "Parse error near '%' token: modular division not defined for given algebra";
 			}
 			else
@@ -864,7 +864,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		if (status1.errMsg != null) return status1;
 		ParseStatus status2 = status1;
 		if (match(Power.class, tokens, status1.tokenNumber)) {
-			if (!(algebra instanceof nom.bdezonia.zorbage.algebra.Power<?>)) {
+			if (!(algebra instanceof nom.bdezonia.zorbage.algebra.Power)) {
 				status2.errMsg = "Parse error near '^' token: exponentiation not defined for given algebra";
 			}
 			else
@@ -918,7 +918,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			// 0 arg functions
 			if (funcCall.getText().equals("rand")) {
 				ParseStatus status = new ParseStatus();
-				if (!(algebra instanceof Random<?>)) {
+				if (!(algebra instanceof Random)) {
 					status.errMsg = "Parse error near 'rand' token: randomize not defined for given algebra";
 				}
 				else
@@ -955,7 +955,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 		else if (match(Min.class, tokens, pos) ||
 					match(Max.class, tokens, pos))
 		{
-			if (!(algebra instanceof Ordered<?>)) {
+			if (!(algebra instanceof Ordered)) {
 				return syntaxError(pos, tokens, "'min' or 'max' token: ordering is not defined for given algebra");
 			}
 			// 2 arg functions
@@ -999,7 +999,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 
 	@SuppressWarnings({"unchecked","rawtypes"})
 	private Procedure<U> createFunction(T algebra, String funcName, Procedure<U> ancestor1) {
-		if (algebra instanceof InverseTrigonometric<?>) {
+		if (algebra instanceof InverseTrigonometric) {
 			if (funcName.equals("acos"))
 				return new AcosL(algebra,ancestor1);
 			if (funcName.equals("asin"))
@@ -1007,7 +1007,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			if (funcName.equals("atan"))
 				return new AtanL(algebra,ancestor1);
 		}
-		if (algebra instanceof InverseHyperbolic<?>) {
+		if (algebra instanceof InverseHyperbolic) {
 			if (funcName.equals("acosh"))
 				return new AcoshL(algebra,ancestor1);
 			if (funcName.equals("asinh"))
@@ -1015,13 +1015,13 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			if (funcName.equals("atanh"))
 				return new AtanhL(algebra,ancestor1);
 		}
-		if (algebra instanceof Roots<?>) {
+		if (algebra instanceof Roots) {
 			if (funcName.equals("cbrt"))
 				return new CbrtL(algebra,ancestor1);
 			if (funcName.equals("sqrt"))
 				return new SqrtL(algebra,ancestor1);
 		}
-		if (algebra instanceof Trigonometric<?>) {
+		if (algebra instanceof Trigonometric) {
 			if (funcName.equals("cos"))
 				return new CosL(algebra,ancestor1);
 			if (funcName.equals("sin"))
@@ -1033,7 +1033,7 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			if (funcName.equals("sincpi"))
 				return new SincpiL(algebra,ancestor1);
 		}
-		if (algebra instanceof Hyperbolic<?>) {
+		if (algebra instanceof Hyperbolic) {
 			if (funcName.equals("cosh"))
 				return new CoshL(algebra,ancestor1);
 			if (funcName.equals("sinh"))
@@ -1045,17 +1045,17 @@ public class EquationParser<T extends Algebra<T,U>,U> {
 			if (funcName.equals("sinchpi"))
 				return new SinchpiL(algebra,ancestor1);
 		}
-		if (algebra instanceof Exponential<?>) {
+		if (algebra instanceof Exponential) {
 			if (funcName.equals("exp"))
 				return new ExpL(algebra,ancestor1);
 			if (funcName.equals("log"))
 				return new LogL(algebra,ancestor1);
 		}
-		if (algebra instanceof Random<?>) {
+		if (algebra instanceof Random) {
 			if (funcName.equals("rand"))
 				return new RandL(algebra);
 		}
-		if (algebra instanceof AbsoluteValue<?>) {
+		if (algebra instanceof AbsoluteValue) {
 			if (funcName.equals("abs"))
 				return new AbsL(algebra,ancestor1);
 		}
