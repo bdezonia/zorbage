@@ -53,7 +53,7 @@ public class TestBoundingBox {
 		HighPrecisionVectorMember min = G.HP_VEC.construct();
 		HighPrecisionVectorMember max = G.HP_VEC.construct();
 		
-		long[] dims = new long[] {25,35,45,55,65};
+		long[] dims = new long[] {5,6,7,8,9};
 		
 		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(dims, G.DBL.construct());
 		

@@ -66,10 +66,10 @@ public class SpacingEstimate {
 		HighPrecisionMember left = G.HP.construct();
 		HighPrecisionMember right = G.HP.construct();
 		for (int i = 0; i < data.numDimensions(); i++) {
-			max.getV(i, right);
 			min.getV(i, left);
+			max.getV(i, right);
 			G.HP.subtract().call(right, left, numer);
-			denom.setV(BigDecimal.valueOf(data.dimension(i)));
+			denom.setV(BigDecimal.valueOf(data.dimension(i)-1));
 			G.HP.divide().call(numer, denom, avgSpacing);
 			result.setV(i, avgSpacing);
 		}

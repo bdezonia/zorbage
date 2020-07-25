@@ -52,7 +52,7 @@ public class TestSpacingEstimate {
 		
 		HighPrecisionVectorMember spacings = G.HP_VEC.construct();
 		
-		long[] dims = new long[] {25,35,45,55,65};
+		long[] dims = new long[] {5,6,7,8,9};
 		
 		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(dims, G.DBL.construct());
 		
@@ -69,15 +69,15 @@ public class TestSpacingEstimate {
 		assertEquals(dims.length, spacings.length());
 		
 		spacings.getV(0, value);
-		assertEquals(BigDecimal.valueOf(2), value.v());
+		assertEquals(BigDecimal.valueOf(2.0), value.v());
 		spacings.getV(1, value);
-		assertEquals(BigDecimal.valueOf(3), value.v());
+		assertEquals(BigDecimal.valueOf(3.0), value.v());
 		spacings.getV(2, value);
-		assertEquals(BigDecimal.valueOf(4), value.v());
+		assertEquals(BigDecimal.valueOf(4.0), value.v());
 		spacings.getV(3, value);
-		assertEquals(BigDecimal.valueOf(5), value.v());
+		assertEquals(BigDecimal.valueOf(5.0), value.v());
 		spacings.getV(4, value);
-		assertEquals(BigDecimal.valueOf(6), value.v());
+		assertEquals(BigDecimal.valueOf(6.0), value.v());
 		
 	}
 }
