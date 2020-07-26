@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 
 /**
@@ -49,7 +48,7 @@ public class Fibonacci {
 	 * @param n
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
 		void compute(T algebra, int n, U result)
 	{
 		if (n < 0)
