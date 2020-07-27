@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface Ring<T extends Ring<T,U>,U>
-  extends
-    AdditiveGroup<T,U>,
-    Multiplication<U>
+	extends
+		AdditiveGroup<T,U>,
+		Multiplication<U>
 {
 }
