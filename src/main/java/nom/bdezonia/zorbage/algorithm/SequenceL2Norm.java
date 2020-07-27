@@ -51,7 +51,10 @@ public class SequenceL2Norm {
 	 * @param seq
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Norm<U,W>, U, V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Roots<W> & Ordered<W>& Invertible<W>, W>
+	public static <T extends Algebra<T,U> & Norm<U,W>,
+					U,
+					V extends Algebra<V,W> & Addition<W> & Multiplication<W> & Roots<W> & Ordered<W> & Invertible<W>,
+					W>
 		void compute(T normAlgebra, V numAlgebra, IndexedDataSource<U> seq, W result)
 	{
 		U value = normAlgebra.construct();
