@@ -43,27 +43,27 @@ public class Variance {
      * @param <U>
      */
     public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U>, U>
-        void compute(T alg, IndexedDataSource<U> source, U result)
+    	void compute(T alg, IndexedDataSource<U> source, U result)
     {
-        if (source.size() <= 1) {
-            alg.zero().call(result);
-            return;
-        }
-        U mean = alg.construct();
-        U sum = alg.construct();
-        U tmp = alg.construct();
-        U n = alg.construct();
-        U one = alg.construct();
-        alg.unity().call(one);
-        Mean.compute(alg, source, mean);
-        for (long i = 0; i < source.size(); i++) {
-            source.get(i, tmp);
-            alg.subtract().call(tmp, mean, tmp);
-            alg.multiply().call(tmp, tmp, tmp);
-            alg.add().call(sum, tmp, sum);
-            alg.add().call(n, one, n);
-        }
-        alg.subtract().call(n, one, n);
-        Divide.compute(alg, sum, n, result);
+    	if (source.size() <= 1) {
+    		alg.zero().call(result);
+    		return;
+    	}
+    	U mean = alg.construct();
+    	U sum = alg.construct();
+    	U tmp = alg.construct();
+    	U n = alg.construct();
+    	U one = alg.construct();
+    	alg.unity().call(one);
+    	Mean.compute(alg, source, mean);
+    	for (long i = 0; i < source.size(); i++) {
+    		source.get(i, tmp);
+    		alg.subtract().call(tmp, mean, tmp);
+    		alg.multiply().call(tmp, tmp, tmp);
+    		alg.add().call(sum, tmp, sum);
+    		alg.add().call(n, one, n);
+    	}
+    	alg.subtract().call(n, one, n);
+    	Divide.compute(alg, sum, n, result);
     }
 }
