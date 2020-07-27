@@ -59,30 +59,30 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 //TODO: is it really a skewfield or something else?  Multiplication is not associative
 public class OctonionFloat64Algebra
-  implements
-    SkewField<OctonionFloat64Algebra, OctonionFloat64Member>,
-    Conjugate<OctonionFloat64Member>,
-    Norm<OctonionFloat64Member,Float64Member>,
-    Infinite<OctonionFloat64Member>,
-    NaN<OctonionFloat64Member>,
-    Rounding<Float64Member,OctonionFloat64Member>,
-    RealConstants<OctonionFloat64Member>,
-    ImaginaryConstants<OctonionFloat64Member>,
-    QuaternionConstants<OctonionFloat64Member>,
-    OctonionConstants<OctonionFloat64Member>,
-    Random<OctonionFloat64Member>,
-    Exponential<OctonionFloat64Member>,
-    Trigonometric<OctonionFloat64Member>,
-    Hyperbolic<OctonionFloat64Member>,
-    Power<OctonionFloat64Member>,
-    Roots<OctonionFloat64Member>,
-    RealUnreal<OctonionFloat64Member,Float64Member>,
-    Scale<OctonionFloat64Member, OctonionFloat64Member>,
-    ScaleByHighPrec<OctonionFloat64Member>,
-    ScaleByRational<OctonionFloat64Member>,
-    ScaleByDouble<OctonionFloat64Member>,
-    ScaleComponents<OctonionFloat64Member, Float64Member>,
-    Tolerance<Float64Member,OctonionFloat64Member>
+	implements
+		SkewField<OctonionFloat64Algebra, OctonionFloat64Member>,
+		Conjugate<OctonionFloat64Member>,
+		Norm<OctonionFloat64Member,Float64Member>,
+		Infinite<OctonionFloat64Member>,
+		NaN<OctonionFloat64Member>,
+		Rounding<Float64Member,OctonionFloat64Member>,
+		RealConstants<OctonionFloat64Member>,
+		ImaginaryConstants<OctonionFloat64Member>,
+		QuaternionConstants<OctonionFloat64Member>,
+		OctonionConstants<OctonionFloat64Member>,
+		Random<OctonionFloat64Member>,
+		Exponential<OctonionFloat64Member>,
+		Trigonometric<OctonionFloat64Member>,
+		Hyperbolic<OctonionFloat64Member>,
+		Power<OctonionFloat64Member>,
+		Roots<OctonionFloat64Member>,
+		RealUnreal<OctonionFloat64Member,Float64Member>,
+		Scale<OctonionFloat64Member, OctonionFloat64Member>,
+		ScaleByHighPrec<OctonionFloat64Member>,
+		ScaleByRational<OctonionFloat64Member>,
+		ScaleByDouble<OctonionFloat64Member>,
+		ScaleComponents<OctonionFloat64Member, Float64Member>,
+		Tolerance<Float64Member,OctonionFloat64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);

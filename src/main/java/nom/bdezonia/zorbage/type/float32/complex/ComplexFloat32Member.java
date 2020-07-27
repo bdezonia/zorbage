@@ -80,32 +80,32 @@ public final class ComplexFloat32Member
 	
 	public float i() { return i; }
 	
-    public void setR(float val) { r = val; }
-    
-    public void setI(float val) { i = val; }	
+	public void setR(float val) { r = val; }
 
-    @Override
-    public void get(ComplexFloat32Member other) {
-    	other.r = r;
-    	other.i = i;
-    }
+	public void setI(float val) { i = val; }	
 
-    @Override
-    public void set(ComplexFloat32Member other) {
-    	r = other.r;
-    	i = other.i;
-    }
-    
-    @Override
+	@Override
+	public void get(ComplexFloat32Member other) {
+		other.r = r;
+		other.i = i;
+	}
+	
+	@Override
+	public void set(ComplexFloat32Member other) {
+		r = other.r;
+		i = other.i;
+	}
+	
+	@Override
 	public String toString() {
-    	StringBuilder builder = new StringBuilder();
-    	builder.append('{');
-    	builder.append(r());
-    	builder.append(',');
-    	builder.append(i());
-    	builder.append('}');
-    	return builder.toString();
-    }
+		StringBuilder builder = new StringBuilder();
+		builder.append('{');
+		builder.append(r());
+		builder.append(',');
+		builder.append(i());
+		builder.append('}');
+		return builder.toString();
+	}
 
 	@Override
 	public int floatCount() {

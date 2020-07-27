@@ -69,19 +69,19 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class QuaternionFloat16RModule
-  implements
-	RModule<QuaternionFloat16RModule,QuaternionFloat16RModuleMember,QuaternionFloat16Algebra,QuaternionFloat16Member>,
-	Constructible1dLong<QuaternionFloat16RModuleMember>,
-	Norm<QuaternionFloat16RModuleMember,Float16Member>,
-	Products<QuaternionFloat16RModuleMember,QuaternionFloat16Member, QuaternionFloat16MatrixMember>,
-	DirectProduct<QuaternionFloat16RModuleMember, QuaternionFloat16MatrixMember>,
-	Rounding<Float16Member,QuaternionFloat16RModuleMember>, Infinite<QuaternionFloat16RModuleMember>,
-	NaN<QuaternionFloat16RModuleMember>,
-	ScaleByHighPrec<QuaternionFloat16RModuleMember>,
-	ScaleByRational<QuaternionFloat16RModuleMember>,
-	ScaleByDouble<QuaternionFloat16RModuleMember>,
-	Tolerance<Float16Member,QuaternionFloat16RModuleMember>,
-	ArrayLikeMethods<QuaternionFloat16RModuleMember,QuaternionFloat16Member>
+	implements
+		RModule<QuaternionFloat16RModule,QuaternionFloat16RModuleMember,QuaternionFloat16Algebra,QuaternionFloat16Member>,
+		Constructible1dLong<QuaternionFloat16RModuleMember>,
+		Norm<QuaternionFloat16RModuleMember,Float16Member>,
+		Products<QuaternionFloat16RModuleMember,QuaternionFloat16Member, QuaternionFloat16MatrixMember>,
+		DirectProduct<QuaternionFloat16RModuleMember, QuaternionFloat16MatrixMember>,
+		Rounding<Float16Member,QuaternionFloat16RModuleMember>, Infinite<QuaternionFloat16RModuleMember>,
+		NaN<QuaternionFloat16RModuleMember>,
+		ScaleByHighPrec<QuaternionFloat16RModuleMember>,
+		ScaleByRational<QuaternionFloat16RModuleMember>,
+		ScaleByDouble<QuaternionFloat16RModuleMember>,
+		Tolerance<Float16Member,QuaternionFloat16RModuleMember>,
+		ArrayLikeMethods<QuaternionFloat16RModuleMember,QuaternionFloat16Member>
 {
 	public QuaternionFloat16RModule() { }
 	

@@ -59,30 +59,30 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 //TODO: is it really a skewfield or something else?  Multiplication is not associative
 public class OctonionFloat16Algebra
-  implements
-    SkewField<OctonionFloat16Algebra, OctonionFloat16Member>,
-    Conjugate<OctonionFloat16Member>,
-    Norm<OctonionFloat16Member,Float16Member>,
-    Infinite<OctonionFloat16Member>,
-    NaN<OctonionFloat16Member>,
-    Rounding<Float16Member,OctonionFloat16Member>,
-    RealConstants<OctonionFloat16Member>,
-    ImaginaryConstants<OctonionFloat16Member>,
-    QuaternionConstants<OctonionFloat16Member>,
-    OctonionConstants<OctonionFloat16Member>,
-    Random<OctonionFloat16Member>,
-    Exponential<OctonionFloat16Member>,
-    Trigonometric<OctonionFloat16Member>,
-    Hyperbolic<OctonionFloat16Member>,
-    Power<OctonionFloat16Member>,
-    Roots<OctonionFloat16Member>,
-    RealUnreal<OctonionFloat16Member,Float16Member>,
-    Scale<OctonionFloat16Member, OctonionFloat16Member>,
-    ScaleByHighPrec<OctonionFloat16Member>,
-    ScaleByRational<OctonionFloat16Member>,
-    ScaleByDouble<OctonionFloat16Member>,
-    ScaleComponents<OctonionFloat16Member, Float16Member>,
-    Tolerance<Float16Member,OctonionFloat16Member>
+	implements
+		SkewField<OctonionFloat16Algebra, OctonionFloat16Member>,
+		Conjugate<OctonionFloat16Member>,
+		Norm<OctonionFloat16Member,Float16Member>,
+		Infinite<OctonionFloat16Member>,
+		NaN<OctonionFloat16Member>,
+		Rounding<Float16Member,OctonionFloat16Member>,
+		RealConstants<OctonionFloat16Member>,
+		ImaginaryConstants<OctonionFloat16Member>,
+		QuaternionConstants<OctonionFloat16Member>,
+		OctonionConstants<OctonionFloat16Member>,
+		Random<OctonionFloat16Member>,
+		Exponential<OctonionFloat16Member>,
+		Trigonometric<OctonionFloat16Member>,
+		Hyperbolic<OctonionFloat16Member>,
+		Power<OctonionFloat16Member>,
+		Roots<OctonionFloat16Member>,
+		RealUnreal<OctonionFloat16Member,Float16Member>,
+		Scale<OctonionFloat16Member, OctonionFloat16Member>,
+		ScaleByHighPrec<OctonionFloat16Member>,
+		ScaleByRational<OctonionFloat16Member>,
+		ScaleByDouble<OctonionFloat16Member>,
+		ScaleComponents<OctonionFloat16Member, Float16Member>,
+		Tolerance<Float16Member,OctonionFloat16Member>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member ONE_THIRD = new OctonionFloat16Member((float)1.0/3, 0, 0, 0, 0, 0, 0, 0);

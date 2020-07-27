@@ -36,10 +36,10 @@ package nom.bdezonia.zorbage.algebra;
  * @param <W> the coefficient member type for the coefficients
  */
 public interface RModule<T extends RModule<T,U,V,W>, U, V extends Ring<V,W>, W>
-  extends
-    AdditiveGroup<T,U>,
-    //Products<U,W>,
-    Conjugate<U>
+	extends
+		AdditiveGroup<T,U>,
+		//Products<U,W>,
+		Conjugate<U>
 {
 	// TODO: I don't know how accurate these definitions are. They work.
 	// See http://mathworld.wolfram.com/Module.html

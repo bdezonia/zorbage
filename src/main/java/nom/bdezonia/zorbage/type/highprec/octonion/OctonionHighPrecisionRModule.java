@@ -65,17 +65,17 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class OctonionHighPrecisionRModule
-  implements
-	RModule<OctonionHighPrecisionRModule,OctonionHighPrecisionRModuleMember,OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>,
-	Constructible1dLong<OctonionHighPrecisionRModuleMember>,
-	Norm<OctonionHighPrecisionRModuleMember,HighPrecisionMember>,
-	Products<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMember, OctonionHighPrecisionMatrixMember>,
-	DirectProduct<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMatrixMember>,
-	ScaleByHighPrec<OctonionHighPrecisionRModuleMember>,
-	ScaleByRational<OctonionHighPrecisionRModuleMember>,
-	ScaleByDouble<OctonionHighPrecisionRModuleMember>,
-	Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
-	ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>
+	implements
+		RModule<OctonionHighPrecisionRModule,OctonionHighPrecisionRModuleMember,OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>,
+		Constructible1dLong<OctonionHighPrecisionRModuleMember>,
+		Norm<OctonionHighPrecisionRModuleMember,HighPrecisionMember>,
+		Products<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMember, OctonionHighPrecisionMatrixMember>,
+		DirectProduct<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionMatrixMember>,
+		ScaleByHighPrec<OctonionHighPrecisionRModuleMember>,
+		ScaleByRational<OctonionHighPrecisionRModuleMember>,
+		ScaleByDouble<OctonionHighPrecisionRModuleMember>,
+		Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
+		ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>
 {
 	public OctonionHighPrecisionRModule() { }
 	

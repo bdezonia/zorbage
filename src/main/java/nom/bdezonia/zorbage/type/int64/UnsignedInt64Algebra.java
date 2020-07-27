@@ -56,12 +56,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class UnsignedInt64Algebra
-  implements
-    Integer<UnsignedInt64Algebra, UnsignedInt64Member>,
-    Bounded<UnsignedInt64Member>,
-    BitOperations<UnsignedInt64Member>,
-    Random<UnsignedInt64Member>,
-    Tolerance<UnsignedInt64Member,UnsignedInt64Member>
+	implements
+		Integer<UnsignedInt64Algebra, UnsignedInt64Member>,
+		Bounded<UnsignedInt64Member>,
+		BitOperations<UnsignedInt64Member>,
+		Random<UnsignedInt64Member>,
+		Tolerance<UnsignedInt64Member,UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);

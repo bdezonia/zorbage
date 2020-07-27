@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class SignedInt64Algebra
-  implements
-    Integer<SignedInt64Algebra, SignedInt64Member>,
-    Bounded<SignedInt64Member>,
-    BitOperations<SignedInt64Member>,
-    Random<SignedInt64Member>,
-    Tolerance<SignedInt64Member,SignedInt64Member>
+	implements
+		Integer<SignedInt64Algebra, SignedInt64Member>,
+		Bounded<SignedInt64Member>,
+		BitOperations<SignedInt64Member>,
+		Random<SignedInt64Member>,
+		Tolerance<SignedInt64Member,SignedInt64Member>
 {
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);

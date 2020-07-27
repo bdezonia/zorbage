@@ -94,12 +94,12 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 
 	// Thread local variable containing each thread's temp array
-    private final ThreadLocal<double[]> tmpSpace =
-    	new ThreadLocal<double[]>() {
-    		@Override protected double[] initialValue() {
-    			return new double[type.doubleCount()];
-    		}
-    	};
+	private final ThreadLocal<double[]> tmpSpace =
+		new ThreadLocal<double[]>() {
+			@Override protected double[] initialValue() {
+				return new double[type.doubleCount()];
+			}
+		};
 
 	@Override
 	public JdbcStorageFloat64<U> allocate() {

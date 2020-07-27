@@ -62,19 +62,19 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class HighPrecisionVector
-  implements
-	VectorSpace<HighPrecisionVector,HighPrecisionVectorMember,HighPrecisionAlgebra,HighPrecisionMember>,
-	Constructible1dLong<HighPrecisionVectorMember>,
-	Norm<HighPrecisionVectorMember,HighPrecisionMember>,
-	Products<HighPrecisionVectorMember, HighPrecisionMember, HighPrecisionMatrixMember>,
-	DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,
-	Infinite<HighPrecisionVectorMember>,
-	NaN<HighPrecisionVectorMember>,
-	ScaleByHighPrec<HighPrecisionVectorMember>,
-	ScaleByRational<HighPrecisionVectorMember>,
-	ScaleByDouble<HighPrecisionVectorMember>,
-	Tolerance<HighPrecisionMember,HighPrecisionVectorMember>,
-	ArrayLikeMethods<HighPrecisionVectorMember,HighPrecisionMember>
+	implements
+		VectorSpace<HighPrecisionVector,HighPrecisionVectorMember,HighPrecisionAlgebra,HighPrecisionMember>,
+		Constructible1dLong<HighPrecisionVectorMember>,
+		Norm<HighPrecisionVectorMember,HighPrecisionMember>,
+		Products<HighPrecisionVectorMember, HighPrecisionMember, HighPrecisionMatrixMember>,
+		DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,
+		Infinite<HighPrecisionVectorMember>,
+		NaN<HighPrecisionVectorMember>,
+		ScaleByHighPrec<HighPrecisionVectorMember>,
+		ScaleByRational<HighPrecisionVectorMember>,
+		ScaleByDouble<HighPrecisionVectorMember>,
+		Tolerance<HighPrecisionMember,HighPrecisionVectorMember>,
+		ArrayLikeMethods<HighPrecisionVectorMember,HighPrecisionMember>
 {
 	public HighPrecisionVector() { }
 	

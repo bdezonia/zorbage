@@ -80,32 +80,32 @@ public final class ComplexFloat64Member
 	
 	public double i() { return i; }
 	
-    public void setR(double val) { r = val; }
-    
-    public void setI(double val) { i = val; }	
-
-    @Override
-    public void get(ComplexFloat64Member other) {
-    	other.r = r;
-    	other.i = i;
-    }
-
-    @Override
-    public void set(ComplexFloat64Member other) {
-    	r = other.r;
-    	i = other.i;
-    }
-    
-    @Override
+	public void setR(double val) { r = val; }
+	
+	public void setI(double val) { i = val; }	
+	
+	@Override
+	public void get(ComplexFloat64Member other) {
+		other.r = r;
+		other.i = i;
+	}
+	
+	@Override
+	public void set(ComplexFloat64Member other) {
+		r = other.r;
+		i = other.i;
+	}
+	
+	@Override
 	public String toString() {
-    	StringBuilder builder = new StringBuilder();
-    	builder.append('{');
-    	builder.append(r());
-    	builder.append(',');
-    	builder.append(i());
-    	builder.append('}');
-    	return builder.toString();
-    }
+		StringBuilder builder = new StringBuilder();
+		builder.append('{');
+		builder.append(r());
+		builder.append(',');
+		builder.append(i());
+		builder.append('}');
+		return builder.toString();
+	}
 
 	@Override
 	public int doubleCount() {

@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface RingWithUnity<T extends RingWithUnity<T,U>,U>
-  extends
-    Ring<T,U>,
-    Unity<U>
+	extends
+		Ring<T,U>,
+		Unity<U>
 {
 }

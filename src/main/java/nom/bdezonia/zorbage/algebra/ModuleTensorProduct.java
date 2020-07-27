@@ -36,8 +36,8 @@ package nom.bdezonia.zorbage.algebra;
  * @param <W> the scalar member
  */
 public interface ModuleTensorProduct<T extends ModuleTensorProduct<T,U,V,W>, U, V extends Ring<V,W>, W>
-  extends
-    RingWithUnity<T,U>
+	extends
+		RingWithUnity<T,U>
 {
 	// covariant derivative?
 	// other things?

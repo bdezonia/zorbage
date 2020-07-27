@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class UnsignedInt16Algebra
-  implements
-    Integer<UnsignedInt16Algebra, UnsignedInt16Member>,
-    Bounded<UnsignedInt16Member>,
-    BitOperations<UnsignedInt16Member>,
-    Random<UnsignedInt16Member>,
-    Tolerance<UnsignedInt16Member,UnsignedInt16Member>
+	implements
+		Integer<UnsignedInt16Algebra, UnsignedInt16Member>,
+		Bounded<UnsignedInt16Member>,
+		BitOperations<UnsignedInt16Member>,
+		Random<UnsignedInt16Member>,
+		Tolerance<UnsignedInt16Member,UnsignedInt16Member>
 {
 	
 	public UnsignedInt16Algebra() { }

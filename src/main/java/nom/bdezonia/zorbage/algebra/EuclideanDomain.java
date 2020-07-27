@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface EuclideanDomain<T extends EuclideanDomain<T,U>,U>
-  extends
-    PrincipalIdealDomain<T,U>,
-    EuclideanRing<T,U>
+	extends
+		PrincipalIdealDomain<T,U>,
+		EuclideanRing<T,U>
 {
 }

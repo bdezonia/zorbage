@@ -94,12 +94,12 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 
 	// Thread local variable containing each thread's temp array
-    private final ThreadLocal<int[]> tmpSpace =
-    	new ThreadLocal<int[]>() {
-    		@Override protected int[] initialValue() {
-    			return new int[type.intCount()];
-    		}
-    	};
+	private final ThreadLocal<int[]> tmpSpace =
+		new ThreadLocal<int[]>() {
+			@Override protected int[] initialValue() {
+				return new int[type.intCount()];
+			}
+		};
 
 	@Override
 	public JdbcStorageSignedInt32<U> allocate() {

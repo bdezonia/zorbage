@@ -58,31 +58,31 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class Float16Algebra
-  implements
-    OrderedField<Float16Algebra,Float16Member>,
-    Bounded<Float16Member>,
-    Norm<Float16Member,Float16Member>,
-    RealConstants<Float16Member>,
-    Exponential<Float16Member>,
-    Trigonometric<Float16Member>,
-    InverseTrigonometric<Float16Member>,
-    Hyperbolic<Float16Member>,
-    InverseHyperbolic<Float16Member>,
-    Infinite<Float16Member>,
-    NaN<Float16Member>,
-    Roots<Float16Member>,
-    Power<Float16Member>,
-    Rounding<Float16Member,Float16Member>,
-    Random<Float16Member>,
-    RealUnreal<Float16Member,Float16Member>,
-    ModularDivision<Float16Member>,
-	Conjugate<Float16Member>,
-	Scale<Float16Member,Float16Member>,
-	ScaleByHighPrec<Float16Member>,
-	ScaleByRational<Float16Member>,
-	ScaleByDouble<Float16Member>,
-	ScaleComponents<Float16Member, Float16Member>,
-	Tolerance<Float16Member,Float16Member>
+	implements
+		OrderedField<Float16Algebra,Float16Member>,
+		Bounded<Float16Member>,
+		Norm<Float16Member,Float16Member>,
+		RealConstants<Float16Member>,
+		Exponential<Float16Member>,
+		Trigonometric<Float16Member>,
+		InverseTrigonometric<Float16Member>,
+		Hyperbolic<Float16Member>,
+		InverseHyperbolic<Float16Member>,
+		Infinite<Float16Member>,
+		NaN<Float16Member>,
+		Roots<Float16Member>,
+		Power<Float16Member>,
+		Rounding<Float16Member,Float16Member>,
+		Random<Float16Member>,
+		RealUnreal<Float16Member,Float16Member>,
+		ModularDivision<Float16Member>,
+		Conjugate<Float16Member>,
+		Scale<Float16Member,Float16Member>,
+		ScaleByHighPrec<Float16Member>,
+		ScaleByRational<Float16Member>,
+		ScaleByDouble<Float16Member>,
+		ScaleComponents<Float16Member, Float16Member>,
+		Tolerance<Float16Member,Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);

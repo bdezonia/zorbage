@@ -51,7 +51,10 @@ public class DataConvert {
 	 * @param fromList
 	 * @param toList
 	 */
-	public static <T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
+	public static <T extends Algebra<T,U>,
+					U extends PrimitiveConversion,
+					V extends Algebra<V,W>,
+					W extends PrimitiveConversion>
 		void compute(T fromAlgebra, V toAlgebra, IndexedDataSource<U> fromList, IndexedDataSource<W> toList)
 	{
 		long fromSize = fromList.size();
@@ -87,7 +90,10 @@ public class DataConvert {
 		}
 	}
 
-	private static class Computer<T extends Algebra<T,U>, U extends PrimitiveConversion, V  extends Algebra<V,W>, W extends PrimitiveConversion>
+	private static class Computer<T extends Algebra<T,U>,
+									U extends PrimitiveConversion,
+									V extends Algebra<V,W>,
+									W extends PrimitiveConversion>
 		implements Runnable
 	{
 		private final T algU;

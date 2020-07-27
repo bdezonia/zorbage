@@ -52,25 +52,25 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class QuaternionHighPrecisionAlgebra
-  implements
-    SkewField<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>,
-    RealConstants<QuaternionHighPrecisionMember>,
-    ImaginaryConstants<QuaternionHighPrecisionMember>,
-    QuaternionConstants<QuaternionHighPrecisionMember>,
-    Norm<QuaternionHighPrecisionMember, HighPrecisionMember>,
-    Conjugate<QuaternionHighPrecisionMember>,
-    Exponential<QuaternionHighPrecisionMember>,
-    Trigonometric<QuaternionHighPrecisionMember>,
-    Hyperbolic<QuaternionHighPrecisionMember>,
-    Power<QuaternionHighPrecisionMember>,
-    Roots<QuaternionHighPrecisionMember>,
-    RealUnreal<QuaternionHighPrecisionMember,HighPrecisionMember>,
-    Scale<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember>,
-    ScaleByHighPrec<QuaternionHighPrecisionMember>,
-    ScaleByRational<QuaternionHighPrecisionMember>,
-    ScaleByDouble<QuaternionHighPrecisionMember>,
-    ScaleComponents<QuaternionHighPrecisionMember, HighPrecisionMember>,
-    Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>
+	implements
+		SkewField<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>,
+		RealConstants<QuaternionHighPrecisionMember>,
+		ImaginaryConstants<QuaternionHighPrecisionMember>,
+		QuaternionConstants<QuaternionHighPrecisionMember>,
+		Norm<QuaternionHighPrecisionMember, HighPrecisionMember>,
+		Conjugate<QuaternionHighPrecisionMember>,
+		Exponential<QuaternionHighPrecisionMember>,
+		Trigonometric<QuaternionHighPrecisionMember>,
+		Hyperbolic<QuaternionHighPrecisionMember>,
+		Power<QuaternionHighPrecisionMember>,
+		Roots<QuaternionHighPrecisionMember>,
+		RealUnreal<QuaternionHighPrecisionMember,HighPrecisionMember>,
+		Scale<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember>,
+		ScaleByHighPrec<QuaternionHighPrecisionMember>,
+		ScaleByRational<QuaternionHighPrecisionMember>,
+		ScaleByDouble<QuaternionHighPrecisionMember>,
+		ScaleComponents<QuaternionHighPrecisionMember, HighPrecisionMember>,
+		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);

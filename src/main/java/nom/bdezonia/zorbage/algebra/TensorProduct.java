@@ -36,7 +36,7 @@ package nom.bdezonia.zorbage.algebra;
  * @param <W> the scalar member
  */
 public interface TensorProduct<T extends TensorProduct<T,U,V,W>, U, V extends Field<V,W>, W>
-  extends
-    VectorSpace<T,U,V,W>, Multiplication<U>, Unity<U>, TensorLikeMethods<U,W>
+	extends
+		VectorSpace<T,U,V,W>, Multiplication<U>, Unity<U>, TensorLikeMethods<U,W>
 {
 }

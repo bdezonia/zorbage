@@ -45,13 +45,13 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
  *
  */
 public class BooleanAlgebra
-  implements
-  	Algebra<BooleanAlgebra, BooleanMember>,
-  	Unity<BooleanMember>,
-    Bounded<BooleanMember>,
-    Ordered<BooleanMember>,
-    LogicalOperations<BooleanMember>,
-    Random<BooleanMember>
+	implements
+		Algebra<BooleanAlgebra, BooleanMember>,
+		Unity<BooleanMember>,
+		Bounded<BooleanMember>,
+		Ordered<BooleanMember>,
+		LogicalOperations<BooleanMember>,
+		Random<BooleanMember>
 {
 	
 	public BooleanAlgebra() { }

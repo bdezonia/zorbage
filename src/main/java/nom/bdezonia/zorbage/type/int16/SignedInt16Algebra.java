@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class SignedInt16Algebra
-  implements
-    Integer<SignedInt16Algebra, SignedInt16Member>,
-    Bounded<SignedInt16Member>,
-    BitOperations<SignedInt16Member>,
-    Random<SignedInt16Member>,
-    Tolerance<SignedInt16Member,SignedInt16Member>
+	implements
+		Integer<SignedInt16Algebra, SignedInt16Member>,
+		Bounded<SignedInt16Member>,
+		BitOperations<SignedInt16Member>,
+		Random<SignedInt16Member>,
+		Tolerance<SignedInt16Member,SignedInt16Member>
 {
 
 	public SignedInt16Algebra() { }

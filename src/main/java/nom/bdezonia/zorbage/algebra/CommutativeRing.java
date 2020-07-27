@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface CommutativeRing<T extends CommutativeRing<T,U>, U>
-  extends
-    Ring<T,U>
+	extends
+		Ring<T,U>
 {
 	// multiplication commutes
 }

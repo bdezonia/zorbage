@@ -67,19 +67,19 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class Float16Vector
-  implements
-	VectorSpace<Float16Vector,Float16VectorMember,Float16Algebra,Float16Member>,
-	Constructible1dLong<Float16VectorMember>,
-	Norm<Float16VectorMember,Float16Member>,
-	Products<Float16VectorMember, Float16Member, Float16MatrixMember>,
-	DirectProduct<Float16VectorMember, Float16MatrixMember>,
-	Rounding<Float16Member,Float16VectorMember>, Infinite<Float16VectorMember>,
-	NaN<Float16VectorMember>,
-	ScaleByHighPrec<Float16VectorMember>,
-	ScaleByRational<Float16VectorMember>,
-	ScaleByDouble<Float16VectorMember>,
-	Tolerance<Float16Member,Float16VectorMember>,
-	ArrayLikeMethods<Float16VectorMember,Float16Member>
+	implements
+		VectorSpace<Float16Vector,Float16VectorMember,Float16Algebra,Float16Member>,
+		Constructible1dLong<Float16VectorMember>,
+		Norm<Float16VectorMember,Float16Member>,
+		Products<Float16VectorMember, Float16Member, Float16MatrixMember>,
+		DirectProduct<Float16VectorMember, Float16MatrixMember>,
+		Rounding<Float16Member,Float16VectorMember>, Infinite<Float16VectorMember>,
+		NaN<Float16VectorMember>,
+		ScaleByHighPrec<Float16VectorMember>,
+		ScaleByRational<Float16VectorMember>,
+		ScaleByDouble<Float16VectorMember>,
+		Tolerance<Float16Member,Float16VectorMember>,
+		ArrayLikeMethods<Float16VectorMember,Float16Member>
 {
 	public Float16Vector() { }
 	

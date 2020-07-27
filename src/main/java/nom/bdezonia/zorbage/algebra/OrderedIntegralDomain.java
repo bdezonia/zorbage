@@ -32,9 +32,9 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface OrderedIntegralDomain<T extends OrderedIntegralDomain<T,U>, U>
-  extends
-    IntegralDomain<T,U>,
-    Ordered<U>,
-    AbsoluteValue<U>
+	extends
+		IntegralDomain<T,U>,
+		Ordered<U>,
+		AbsoluteValue<U>
 {
 }

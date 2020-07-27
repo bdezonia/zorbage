@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class SignedInt32Algebra
-  implements
-    Integer<SignedInt32Algebra, SignedInt32Member>,
-    Bounded<SignedInt32Member>,
-    BitOperations<SignedInt32Member>,
-    Random<SignedInt32Member>,
-    Tolerance<SignedInt32Member,SignedInt32Member>
+	implements
+		Integer<SignedInt32Algebra, SignedInt32Member>,
+		Bounded<SignedInt32Member>,
+		BitOperations<SignedInt32Member>,
+		Random<SignedInt32Member>,
+		Tolerance<SignedInt32Member,SignedInt32Member>
 {
 
 	public SignedInt32Algebra() { }

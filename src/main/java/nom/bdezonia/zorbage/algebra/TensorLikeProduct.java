@@ -40,7 +40,7 @@ package nom.bdezonia.zorbage.algebra;
  * @param <W> the scalar member
  */
 public interface TensorLikeProduct<T extends TensorLikeProduct<T,U,V,W>, U, V extends Ring<V,W>, W>
-  extends
-    RModule<T,U,V,W>, Multiplication<U>, Unity<U>, TensorLikeMethods<U,W>
+	extends
+		RModule<T,U,V,W>, Multiplication<U>, Unity<U>, TensorLikeMethods<U,W>
 {
 }

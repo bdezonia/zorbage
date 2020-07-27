@@ -54,26 +54,26 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 //TODO: is it really a skewfield or something else?  Multiplication is not associative
 public class OctonionHighPrecisionAlgebra
-  implements
-    SkewField<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember>,
-    Conjugate<OctonionHighPrecisionMember>,
-    Norm<OctonionHighPrecisionMember,HighPrecisionMember>,
-    RealConstants<OctonionHighPrecisionMember>,
-    ImaginaryConstants<OctonionHighPrecisionMember>,
-    QuaternionConstants<OctonionHighPrecisionMember>,
-    OctonionConstants<OctonionHighPrecisionMember>,
-    Exponential<OctonionHighPrecisionMember>,
-    Trigonometric<OctonionHighPrecisionMember>,
-    Hyperbolic<OctonionHighPrecisionMember>,
-    Power<OctonionHighPrecisionMember>,
-    Roots<OctonionHighPrecisionMember>,
-    RealUnreal<OctonionHighPrecisionMember,HighPrecisionMember>,
-    Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>,
-    ScaleByHighPrec<OctonionHighPrecisionMember>,
-    ScaleByRational<OctonionHighPrecisionMember>,
-    ScaleByDouble<OctonionHighPrecisionMember>,
-    ScaleComponents<OctonionHighPrecisionMember, HighPrecisionMember>,
-    Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
+	implements
+		SkewField<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember>,
+		Conjugate<OctonionHighPrecisionMember>,
+		Norm<OctonionHighPrecisionMember,HighPrecisionMember>,
+		RealConstants<OctonionHighPrecisionMember>,
+		ImaginaryConstants<OctonionHighPrecisionMember>,
+		QuaternionConstants<OctonionHighPrecisionMember>,
+		OctonionConstants<OctonionHighPrecisionMember>,
+		Exponential<OctonionHighPrecisionMember>,
+		Trigonometric<OctonionHighPrecisionMember>,
+		Hyperbolic<OctonionHighPrecisionMember>,
+		Power<OctonionHighPrecisionMember>,
+		Roots<OctonionHighPrecisionMember>,
+		RealUnreal<OctonionHighPrecisionMember,HighPrecisionMember>,
+		Scale<OctonionHighPrecisionMember, OctonionHighPrecisionMember>,
+		ScaleByHighPrec<OctonionHighPrecisionMember>,
+		ScaleByRational<OctonionHighPrecisionMember>,
+		ScaleByDouble<OctonionHighPrecisionMember>,
+		ScaleComponents<OctonionHighPrecisionMember, HighPrecisionMember>,
+		Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);

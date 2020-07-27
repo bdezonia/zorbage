@@ -36,12 +36,12 @@ package nom.bdezonia.zorbage.algebra;
  * @param <W> the scalar member type for the coefficients
  */
 public interface VectorSpace<T extends VectorSpace<T,U,V,W>, U, V extends Field<V,W>, W>
-  extends
-  	RModule<T,U,V,W>
-    //AdditiveAlgebra<T,U>,
-    //Norm<U,W>,
-    //Products<U,W>,  // TODO: not necessarily true of all vector spaces?
-    //Conjugate<U>
+	extends
+		RModule<T,U,V,W>
+		//AdditiveAlgebra<T,U>,
+		//Norm<U,W>,
+		//Products<U,W>,  // TODO: not necessarily true of all vector spaces?
+		//Conjugate<U>
 {
 	// closed under vector addition
 	// closed under scalar multiplication

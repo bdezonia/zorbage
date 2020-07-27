@@ -57,29 +57,29 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class QuaternionFloat16Algebra
-  implements
-    SkewField<QuaternionFloat16Algebra,QuaternionFloat16Member>,
-    RealConstants<QuaternionFloat16Member>,
-    ImaginaryConstants<QuaternionFloat16Member>,
-    QuaternionConstants<QuaternionFloat16Member>,
-    Norm<QuaternionFloat16Member, Float16Member>,
-    Conjugate<QuaternionFloat16Member>,
-    Infinite<QuaternionFloat16Member>,
-    NaN<QuaternionFloat16Member>,
-    Rounding<Float16Member,QuaternionFloat16Member>,
-    Random<QuaternionFloat16Member>,
-    Exponential<QuaternionFloat16Member>,
-    Trigonometric<QuaternionFloat16Member>,
-    Hyperbolic<QuaternionFloat16Member>,
-    Power<QuaternionFloat16Member>,
-    Roots<QuaternionFloat16Member>,
-    RealUnreal<QuaternionFloat16Member,Float16Member>,
-    Scale<QuaternionFloat16Member,QuaternionFloat16Member>,
-    ScaleByHighPrec<QuaternionFloat16Member>,
-    ScaleByRational<QuaternionFloat16Member>,
-    ScaleByDouble<QuaternionFloat16Member>,
-    ScaleComponents<QuaternionFloat16Member, Float16Member>,
-    Tolerance<Float16Member,QuaternionFloat16Member>
+	implements
+		SkewField<QuaternionFloat16Algebra,QuaternionFloat16Member>,
+		RealConstants<QuaternionFloat16Member>,
+		ImaginaryConstants<QuaternionFloat16Member>,
+		QuaternionConstants<QuaternionFloat16Member>,
+		Norm<QuaternionFloat16Member, Float16Member>,
+		Conjugate<QuaternionFloat16Member>,
+		Infinite<QuaternionFloat16Member>,
+		NaN<QuaternionFloat16Member>,
+		Rounding<Float16Member,QuaternionFloat16Member>,
+		Random<QuaternionFloat16Member>,
+		Exponential<QuaternionFloat16Member>,
+		Trigonometric<QuaternionFloat16Member>,
+		Hyperbolic<QuaternionFloat16Member>,
+		Power<QuaternionFloat16Member>,
+		Roots<QuaternionFloat16Member>,
+		RealUnreal<QuaternionFloat16Member,Float16Member>,
+		Scale<QuaternionFloat16Member,QuaternionFloat16Member>,
+		ScaleByHighPrec<QuaternionFloat16Member>,
+		ScaleByRational<QuaternionFloat16Member>,
+		ScaleByDouble<QuaternionFloat16Member>,
+		ScaleComponents<QuaternionFloat16Member, Float16Member>,
+		Tolerance<Float16Member,QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
 	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member((float)1.0/3,0,0,0);

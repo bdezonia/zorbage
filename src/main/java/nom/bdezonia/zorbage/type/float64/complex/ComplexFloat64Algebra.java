@@ -68,30 +68,30 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class ComplexFloat64Algebra
-  implements
-    Field<ComplexFloat64Algebra, ComplexFloat64Member>,
-    Norm<ComplexFloat64Member, Float64Member>,
-    RealConstants<ComplexFloat64Member>,
-    ImaginaryConstants<ComplexFloat64Member>,
-    Exponential<ComplexFloat64Member>,
-    Trigonometric<ComplexFloat64Member>,
-    InverseTrigonometric<ComplexFloat64Member>,
-    Hyperbolic<ComplexFloat64Member>,
-    InverseHyperbolic<ComplexFloat64Member>,
-    Roots<ComplexFloat64Member>,
-    Power<ComplexFloat64Member>,
-    Rounding<Float64Member,ComplexFloat64Member>,
-    Infinite<ComplexFloat64Member>,
-    NaN<ComplexFloat64Member>,
-    Conjugate<ComplexFloat64Member>,
-    Random<ComplexFloat64Member>,
-    RealUnreal<ComplexFloat64Member,Float64Member>,
-    Scale<ComplexFloat64Member,ComplexFloat64Member>,
-    ScaleByHighPrec<ComplexFloat64Member>,
-    ScaleByRational<ComplexFloat64Member>,
-    ScaleByDouble<ComplexFloat64Member>,
-    ScaleComponents<ComplexFloat64Member, Float64Member>,
-    Tolerance<Float64Member,ComplexFloat64Member>
+	implements
+		Field<ComplexFloat64Algebra, ComplexFloat64Member>,
+		Norm<ComplexFloat64Member, Float64Member>,
+		RealConstants<ComplexFloat64Member>,
+		ImaginaryConstants<ComplexFloat64Member>,
+		Exponential<ComplexFloat64Member>,
+		Trigonometric<ComplexFloat64Member>,
+		InverseTrigonometric<ComplexFloat64Member>,
+		Hyperbolic<ComplexFloat64Member>,
+		InverseHyperbolic<ComplexFloat64Member>,
+		Roots<ComplexFloat64Member>,
+		Power<ComplexFloat64Member>,
+		Rounding<Float64Member,ComplexFloat64Member>,
+		Infinite<ComplexFloat64Member>,
+		NaN<ComplexFloat64Member>,
+		Conjugate<ComplexFloat64Member>,
+		Random<ComplexFloat64Member>,
+		RealUnreal<ComplexFloat64Member,Float64Member>,
+		Scale<ComplexFloat64Member,ComplexFloat64Member>,
+		ScaleByHighPrec<ComplexFloat64Member>,
+		ScaleByRational<ComplexFloat64Member>,
+		ScaleByDouble<ComplexFloat64Member>,
+		ScaleComponents<ComplexFloat64Member, Float64Member>,
+		Tolerance<Float64Member,ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);

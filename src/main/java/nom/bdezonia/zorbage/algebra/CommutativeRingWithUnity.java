@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface CommutativeRingWithUnity<T extends CommutativeRingWithUnity<T,U>, U>
-  extends
-    CommutativeRing<T,U>,
-    RingWithUnity<T,U>
+	extends
+		CommutativeRing<T,U>,
+		RingWithUnity<T,U>
 {
 }

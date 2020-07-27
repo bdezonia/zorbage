@@ -83,32 +83,32 @@ public final class ComplexFloat16Member
 	
 	public float i() { return Float16Util.convertHFloatToFloat(i); }
 	
-    public void setR(float val) { r = Float16Util.convertFloatToHFloat(val); }
-    
-    public void setI(float val) { i = Float16Util.convertFloatToHFloat(val); }	
+	public void setR(float val) { r = Float16Util.convertFloatToHFloat(val); }
 
-    @Override
-    public void get(ComplexFloat16Member other) {
-    	other.r = r;
-    	other.i = i;
-    }
+	public void setI(float val) { i = Float16Util.convertFloatToHFloat(val); }	
 
-    @Override
-    public void set(ComplexFloat16Member other) {
-    	r = other.r;
-    	i = other.i;
-    }
-    
-    @Override
+	@Override
+	public void get(ComplexFloat16Member other) {
+		other.r = r;
+		other.i = i;
+	}
+	
+	@Override
+	public void set(ComplexFloat16Member other) {
+		r = other.r;
+		i = other.i;
+	}
+	
+	@Override
 	public String toString() {
-    	StringBuilder builder = new StringBuilder();
-    	builder.append('{');
-    	builder.append(r());
-    	builder.append(',');
-    	builder.append(i());
-    	builder.append('}');
-    	return builder.toString();
-    }
+		StringBuilder builder = new StringBuilder();
+		builder.append('{');
+		builder.append(r());
+		builder.append(',');
+		builder.append(i());
+		builder.append('}');
+		return builder.toString();
+	}
 
 	@Override
 	public int shortCount() {

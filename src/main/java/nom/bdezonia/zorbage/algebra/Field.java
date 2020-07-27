@@ -32,9 +32,9 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface Field<T extends Field<T,U>,U>
-  extends
-    IntegralDomain<T,U>,
-    Invertible<U>
+	extends
+		IntegralDomain<T,U>,
+		Invertible<U>
 {
 	//note: while in a field multiplication does commute
 }

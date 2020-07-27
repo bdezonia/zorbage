@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class SignedInt8Algebra
-  implements
-    Integer<SignedInt8Algebra, SignedInt8Member>,
-    Bounded<SignedInt8Member>,
-    BitOperations<SignedInt8Member>,
-    Random<SignedInt8Member>,
-    Tolerance<SignedInt8Member,SignedInt8Member>
+	implements
+		Integer<SignedInt8Algebra, SignedInt8Member>,
+		Bounded<SignedInt8Member>,
+		BitOperations<SignedInt8Member>,
+		Random<SignedInt8Member>,
+		Tolerance<SignedInt8Member,SignedInt8Member>
 {
 
 	public SignedInt8Algebra() { }

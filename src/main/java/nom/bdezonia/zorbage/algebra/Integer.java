@@ -32,17 +32,17 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface Integer<T extends Integer<T,U>,U>
-  extends
-    OrderedIntegralDomain<T,U>,
-    EuclideanDomain<T,U>,
-    BitOperations<U>,
-    PredSucc<U>,
-    Power<U>,
-    Scale<U,U>,
-    ScaleByHighPrec<U>,
-    ScaleByHighPrecAndRound<U>,
-    ScaleByRational<U>,
-    ScaleByDouble<U>,
-    ScaleByDoubleAndRound<U>
+	extends
+		OrderedIntegralDomain<T,U>,
+		EuclideanDomain<T,U>,
+		BitOperations<U>,
+		PredSucc<U>,
+		Power<U>,
+		Scale<U,U>,
+		ScaleByHighPrec<U>,
+		ScaleByHighPrecAndRound<U>,
+		ScaleByRational<U>,
+		ScaleByDouble<U>,
+		ScaleByDoubleAndRound<U>
 {
 }

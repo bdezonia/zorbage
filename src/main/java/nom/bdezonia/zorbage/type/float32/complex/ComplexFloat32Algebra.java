@@ -68,30 +68,30 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class ComplexFloat32Algebra
-  implements
-    Field<ComplexFloat32Algebra, ComplexFloat32Member>,
-    Norm<ComplexFloat32Member, Float32Member>,
-    RealConstants<ComplexFloat32Member>,
-    ImaginaryConstants<ComplexFloat32Member>,
-    Exponential<ComplexFloat32Member>,
-    Trigonometric<ComplexFloat32Member>,
-    InverseTrigonometric<ComplexFloat32Member>,
-    Hyperbolic<ComplexFloat32Member>,
-    InverseHyperbolic<ComplexFloat32Member>,
-    Roots<ComplexFloat32Member>,
-    Power<ComplexFloat32Member>,
-    Rounding<Float32Member,ComplexFloat32Member>,
-    Infinite<ComplexFloat32Member>,
-    NaN<ComplexFloat32Member>,
-    Conjugate<ComplexFloat32Member>,
-    Random<ComplexFloat32Member>,
-    RealUnreal<ComplexFloat32Member,Float32Member>,
-    Scale<ComplexFloat32Member,ComplexFloat32Member>,
-    ScaleByHighPrec<ComplexFloat32Member>,
-    ScaleByRational<ComplexFloat32Member>,
-    ScaleByDouble<ComplexFloat32Member>,
-    ScaleComponents<ComplexFloat32Member, Float32Member>,
-    Tolerance<Float32Member,ComplexFloat32Member>
+	implements
+		Field<ComplexFloat32Algebra, ComplexFloat32Member>,
+		Norm<ComplexFloat32Member, Float32Member>,
+		RealConstants<ComplexFloat32Member>,
+		ImaginaryConstants<ComplexFloat32Member>,
+		Exponential<ComplexFloat32Member>,
+		Trigonometric<ComplexFloat32Member>,
+		InverseTrigonometric<ComplexFloat32Member>,
+		Hyperbolic<ComplexFloat32Member>,
+		InverseHyperbolic<ComplexFloat32Member>,
+		Roots<ComplexFloat32Member>,
+		Power<ComplexFloat32Member>,
+		Rounding<Float32Member,ComplexFloat32Member>,
+		Infinite<ComplexFloat32Member>,
+		NaN<ComplexFloat32Member>,
+		Conjugate<ComplexFloat32Member>,
+		Random<ComplexFloat32Member>,
+		RealUnreal<ComplexFloat32Member,Float32Member>,
+		Scale<ComplexFloat32Member,ComplexFloat32Member>,
+		ScaleByHighPrec<ComplexFloat32Member>,
+		ScaleByRational<ComplexFloat32Member>,
+		ScaleByDouble<ComplexFloat32Member>,
+		ScaleComponents<ComplexFloat32Member, Float32Member>,
+		Tolerance<Float32Member,ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ONE = new ComplexFloat32Member(1,0);
 	private static final ComplexFloat32Member TWO = new ComplexFloat32Member(2,0);

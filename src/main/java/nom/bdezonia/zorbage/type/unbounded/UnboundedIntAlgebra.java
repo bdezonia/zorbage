@@ -52,10 +52,10 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class UnboundedIntAlgebra
-  implements
-    Integer<UnboundedIntAlgebra, UnboundedIntMember>,
-    BitOperations<UnboundedIntMember>,
-    Tolerance<UnboundedIntMember,UnboundedIntMember>
+	implements
+		Integer<UnboundedIntAlgebra, UnboundedIntMember>,
+		BitOperations<UnboundedIntMember>,
+		Tolerance<UnboundedIntMember,UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);

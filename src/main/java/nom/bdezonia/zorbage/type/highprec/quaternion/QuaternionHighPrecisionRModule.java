@@ -65,17 +65,17 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class QuaternionHighPrecisionRModule
-  implements
-	RModule<QuaternionHighPrecisionRModule,QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>,
-	Constructible1dLong<QuaternionHighPrecisionRModuleMember>,
-	Norm<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>,
-	Products<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember>,
-	DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>,
-	ScaleByHighPrec<QuaternionHighPrecisionRModuleMember>,
-	ScaleByRational<QuaternionHighPrecisionRModuleMember>,
-	ScaleByDouble<QuaternionHighPrecisionRModuleMember>,
-	Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>,
-	ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>
+	implements
+		RModule<QuaternionHighPrecisionRModule,QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>,
+		Constructible1dLong<QuaternionHighPrecisionRModuleMember>,
+		Norm<QuaternionHighPrecisionRModuleMember,HighPrecisionMember>,
+		Products<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember, QuaternionHighPrecisionMatrixMember>,
+		DirectProduct<QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionMatrixMember>,
+		ScaleByHighPrec<QuaternionHighPrecisionRModuleMember>,
+		ScaleByRational<QuaternionHighPrecisionRModuleMember>,
+		ScaleByDouble<QuaternionHighPrecisionRModuleMember>,
+		Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>,
+		ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>
 {
 	public QuaternionHighPrecisionRModule() { }
 	

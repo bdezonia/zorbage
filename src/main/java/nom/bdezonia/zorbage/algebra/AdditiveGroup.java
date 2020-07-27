@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface AdditiveGroup<T extends AdditiveGroup<T,U>, U>
-  extends
-    Algebra<T,U>,
-    Addition<U>
+	extends
+		Algebra<T,U>,
+		Addition<U>
 {
 }

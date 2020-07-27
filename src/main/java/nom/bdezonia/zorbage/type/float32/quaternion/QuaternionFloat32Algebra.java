@@ -57,29 +57,29 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class QuaternionFloat32Algebra
-  implements
-    SkewField<QuaternionFloat32Algebra,QuaternionFloat32Member>,
-    RealConstants<QuaternionFloat32Member>,
-    ImaginaryConstants<QuaternionFloat32Member>,
-    QuaternionConstants<QuaternionFloat32Member>,
-    Norm<QuaternionFloat32Member, Float32Member>,
-    Conjugate<QuaternionFloat32Member>,
-    Infinite<QuaternionFloat32Member>,
-    NaN<QuaternionFloat32Member>,
-    Rounding<Float32Member,QuaternionFloat32Member>,
-    Random<QuaternionFloat32Member>,
-    Exponential<QuaternionFloat32Member>,
-    Trigonometric<QuaternionFloat32Member>,
-    Hyperbolic<QuaternionFloat32Member>,
-    Power<QuaternionFloat32Member>,
-    Roots<QuaternionFloat32Member>,
-    RealUnreal<QuaternionFloat32Member,Float32Member>,
-    Scale<QuaternionFloat32Member,QuaternionFloat32Member>,
-    ScaleByHighPrec<QuaternionFloat32Member>,
-    ScaleByRational<QuaternionFloat32Member>,
-    ScaleByDouble<QuaternionFloat32Member>,
-    ScaleComponents<QuaternionFloat32Member, Float32Member>,
-    Tolerance<Float32Member,QuaternionFloat32Member>
+	implements
+		SkewField<QuaternionFloat32Algebra,QuaternionFloat32Member>,
+		RealConstants<QuaternionFloat32Member>,
+		ImaginaryConstants<QuaternionFloat32Member>,
+		QuaternionConstants<QuaternionFloat32Member>,
+		Norm<QuaternionFloat32Member, Float32Member>,
+		Conjugate<QuaternionFloat32Member>,
+		Infinite<QuaternionFloat32Member>,
+		NaN<QuaternionFloat32Member>,
+		Rounding<Float32Member,QuaternionFloat32Member>,
+		Random<QuaternionFloat32Member>,
+		Exponential<QuaternionFloat32Member>,
+		Trigonometric<QuaternionFloat32Member>,
+		Hyperbolic<QuaternionFloat32Member>,
+		Power<QuaternionFloat32Member>,
+		Roots<QuaternionFloat32Member>,
+		RealUnreal<QuaternionFloat32Member,Float32Member>,
+		Scale<QuaternionFloat32Member,QuaternionFloat32Member>,
+		ScaleByHighPrec<QuaternionFloat32Member>,
+		ScaleByRational<QuaternionFloat32Member>,
+		ScaleByDouble<QuaternionFloat32Member>,
+		ScaleComponents<QuaternionFloat32Member, Float32Member>,
+		Tolerance<Float32Member,QuaternionFloat32Member>
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member(0,0,0,0);
 	private static final QuaternionFloat32Member ONE_THIRD = new QuaternionFloat32Member(1.0f/3,0,0,0);

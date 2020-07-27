@@ -69,19 +69,19 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class OctonionFloat16RModule
-  implements
-	RModule<OctonionFloat16RModule,OctonionFloat16RModuleMember,OctonionFloat16Algebra,OctonionFloat16Member>,
-	Constructible1dLong<OctonionFloat16RModuleMember>,
-	Norm<OctonionFloat16RModuleMember,Float16Member>,
-	Products<OctonionFloat16RModuleMember, OctonionFloat16Member, OctonionFloat16MatrixMember>,
-	DirectProduct<OctonionFloat16RModuleMember, OctonionFloat16MatrixMember>,
-	Rounding<Float16Member,OctonionFloat16RModuleMember>, Infinite<OctonionFloat16RModuleMember>,
-	NaN<OctonionFloat16RModuleMember>,
-	ScaleByHighPrec<OctonionFloat16RModuleMember>,
-	ScaleByRational<OctonionFloat16RModuleMember>,
-	ScaleByDouble<OctonionFloat16RModuleMember>,
-	Tolerance<Float16Member,OctonionFloat16RModuleMember>,
-	ArrayLikeMethods<OctonionFloat16RModuleMember,OctonionFloat16Member>
+	implements
+		RModule<OctonionFloat16RModule,OctonionFloat16RModuleMember,OctonionFloat16Algebra,OctonionFloat16Member>,
+		Constructible1dLong<OctonionFloat16RModuleMember>,
+		Norm<OctonionFloat16RModuleMember,Float16Member>,
+		Products<OctonionFloat16RModuleMember, OctonionFloat16Member, OctonionFloat16MatrixMember>,
+		DirectProduct<OctonionFloat16RModuleMember, OctonionFloat16MatrixMember>,
+		Rounding<Float16Member,OctonionFloat16RModuleMember>, Infinite<OctonionFloat16RModuleMember>,
+		NaN<OctonionFloat16RModuleMember>,
+		ScaleByHighPrec<OctonionFloat16RModuleMember>,
+		ScaleByRational<OctonionFloat16RModuleMember>,
+		ScaleByDouble<OctonionFloat16RModuleMember>,
+		Tolerance<Float16Member,OctonionFloat16RModuleMember>,
+		ArrayLikeMethods<OctonionFloat16RModuleMember,OctonionFloat16Member>
 {
 	public OctonionFloat16RModule() { }
 	

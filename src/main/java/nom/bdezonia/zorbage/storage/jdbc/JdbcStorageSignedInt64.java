@@ -94,12 +94,12 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	}
 
 	// Thread local variable containing each thread's temp array
-    private final ThreadLocal<long[]> tmpSpace =
-    	new ThreadLocal<long[]>() {
-    		@Override protected long[] initialValue() {
-    			return new long[type.longCount()];
-    		}
-    	};
+	private final ThreadLocal<long[]> tmpSpace =
+		new ThreadLocal<long[]>() {
+			@Override protected long[] initialValue() {
+				return new long[type.longCount()];
+			}
+		};
 
 	@Override
 	public JdbcStorageSignedInt64<U> allocate() {

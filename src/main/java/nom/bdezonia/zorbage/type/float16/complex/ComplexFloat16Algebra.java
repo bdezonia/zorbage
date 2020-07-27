@@ -68,30 +68,30 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class ComplexFloat16Algebra
-  implements
-    Field<ComplexFloat16Algebra, ComplexFloat16Member>,
-    Norm<ComplexFloat16Member, Float16Member>,
-    RealConstants<ComplexFloat16Member>,
-    ImaginaryConstants<ComplexFloat16Member>,
-    Exponential<ComplexFloat16Member>,
-    Trigonometric<ComplexFloat16Member>,
-    InverseTrigonometric<ComplexFloat16Member>,
-    Hyperbolic<ComplexFloat16Member>,
-    InverseHyperbolic<ComplexFloat16Member>,
-    Roots<ComplexFloat16Member>,
-    Power<ComplexFloat16Member>,
-    Rounding<Float16Member,ComplexFloat16Member>,
-    Infinite<ComplexFloat16Member>,
-    NaN<ComplexFloat16Member>,
-    Conjugate<ComplexFloat16Member>,
-    Random<ComplexFloat16Member>,
-    RealUnreal<ComplexFloat16Member,Float16Member>,
-    Scale<ComplexFloat16Member,ComplexFloat16Member>,
-    ScaleByHighPrec<ComplexFloat16Member>,
-    ScaleByRational<ComplexFloat16Member>,
-    ScaleByDouble<ComplexFloat16Member>,
-    ScaleComponents<ComplexFloat16Member, Float16Member>,
-    Tolerance<Float16Member,ComplexFloat16Member>
+	implements
+		Field<ComplexFloat16Algebra, ComplexFloat16Member>,
+		Norm<ComplexFloat16Member, Float16Member>,
+		RealConstants<ComplexFloat16Member>,
+		ImaginaryConstants<ComplexFloat16Member>,
+		Exponential<ComplexFloat16Member>,
+		Trigonometric<ComplexFloat16Member>,
+		InverseTrigonometric<ComplexFloat16Member>,
+		Hyperbolic<ComplexFloat16Member>,
+		InverseHyperbolic<ComplexFloat16Member>,
+		Roots<ComplexFloat16Member>,
+		Power<ComplexFloat16Member>,
+		Rounding<Float16Member,ComplexFloat16Member>,
+		Infinite<ComplexFloat16Member>,
+		NaN<ComplexFloat16Member>,
+		Conjugate<ComplexFloat16Member>,
+		Random<ComplexFloat16Member>,
+		RealUnreal<ComplexFloat16Member,Float16Member>,
+		Scale<ComplexFloat16Member,ComplexFloat16Member>,
+		ScaleByHighPrec<ComplexFloat16Member>,
+		ScaleByRational<ComplexFloat16Member>,
+		ScaleByDouble<ComplexFloat16Member>,
+		ScaleComponents<ComplexFloat16Member, Float16Member>,
+		Tolerance<Float16Member,ComplexFloat16Member>
 {
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);

@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class UnsignedInt32Algebra
-  implements
-    Integer<UnsignedInt32Algebra, UnsignedInt32Member>,
-    Bounded<UnsignedInt32Member>,
-    BitOperations<UnsignedInt32Member>,
-    Random<UnsignedInt32Member>,
-    Tolerance<UnsignedInt32Member,UnsignedInt32Member>
+	implements
+		Integer<UnsignedInt32Algebra, UnsignedInt32Member>,
+		Bounded<UnsignedInt32Member>,
+		BitOperations<UnsignedInt32Member>,
+		Random<UnsignedInt32Member>,
+		Tolerance<UnsignedInt32Member,UnsignedInt32Member>
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();

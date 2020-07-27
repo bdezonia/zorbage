@@ -32,9 +32,9 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface EuclideanRing<T extends EuclideanRing<T,U>,U>
-  extends
-    Norm<U,U>,
-    Ring<T,U>, // or is it a ring with unity member?
-    IntegralDivision<U>
+	extends
+		Norm<U,U>,
+		Ring<T,U>, // or is it a ring with unity member?
+		IntegralDivision<U>
 {
 }

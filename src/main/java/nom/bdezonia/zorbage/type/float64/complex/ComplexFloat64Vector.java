@@ -69,19 +69,19 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class ComplexFloat64Vector
-  implements
-	VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Algebra,ComplexFloat64Member>,
-	Constructible1dLong<ComplexFloat64VectorMember>,
-	Norm<ComplexFloat64VectorMember,Float64Member>,
-	Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>,
-	DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>,
-	Rounding<Float64Member,ComplexFloat64VectorMember>, Infinite<ComplexFloat64VectorMember>,
-	NaN<ComplexFloat64VectorMember>,
-	ScaleByHighPrec<ComplexFloat64VectorMember>,
-	ScaleByRational<ComplexFloat64VectorMember>,
-	ScaleByDouble<ComplexFloat64VectorMember>,
-	Tolerance<Float64Member,ComplexFloat64VectorMember>,
-	ArrayLikeMethods<ComplexFloat64VectorMember,ComplexFloat64Member>
+	implements
+		VectorSpace<ComplexFloat64Vector,ComplexFloat64VectorMember,ComplexFloat64Algebra,ComplexFloat64Member>,
+		Constructible1dLong<ComplexFloat64VectorMember>,
+		Norm<ComplexFloat64VectorMember,Float64Member>,
+		Products<ComplexFloat64VectorMember, ComplexFloat64Member, ComplexFloat64MatrixMember>,
+		DirectProduct<ComplexFloat64VectorMember, ComplexFloat64MatrixMember>,
+		Rounding<Float64Member,ComplexFloat64VectorMember>, Infinite<ComplexFloat64VectorMember>,
+		NaN<ComplexFloat64VectorMember>,
+		ScaleByHighPrec<ComplexFloat64VectorMember>,
+		ScaleByRational<ComplexFloat64VectorMember>,
+		ScaleByDouble<ComplexFloat64VectorMember>,
+		Tolerance<Float64Member,ComplexFloat64VectorMember>,
+		ArrayLikeMethods<ComplexFloat64VectorMember,ComplexFloat64Member>
 {
 	public ComplexFloat64Vector() { }
 	

@@ -55,12 +55,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
  *
  */
 public class UnsignedInt8Algebra
-  implements
-    Integer<UnsignedInt8Algebra, UnsignedInt8Member>,
-    Bounded<UnsignedInt8Member>,
-    BitOperations<UnsignedInt8Member>,
-    Random<UnsignedInt8Member>,
-    Tolerance<UnsignedInt8Member,UnsignedInt8Member>
+	implements
+		Integer<UnsignedInt8Algebra, UnsignedInt8Member>,
+		Bounded<UnsignedInt8Member>,
+		BitOperations<UnsignedInt8Member>,
+		Random<UnsignedInt8Member>,
+		Tolerance<UnsignedInt8Member,UnsignedInt8Member>
 {
 
 	public UnsignedInt8Algebra() { }

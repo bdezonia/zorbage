@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  *
  */
 public interface Algebra<T extends Algebra<T,U>, U>
-  extends
-    Constructable<U>,
-    Equality<U>
+	extends
+		Constructable<U>,
+		Equality<U>
 {
 }

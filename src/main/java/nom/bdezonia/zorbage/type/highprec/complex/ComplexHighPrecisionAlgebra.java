@@ -63,26 +63,26 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class ComplexHighPrecisionAlgebra
-  implements
-    Field<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember>,
-    Norm<ComplexHighPrecisionMember, HighPrecisionMember>,
-    RealConstants<ComplexHighPrecisionMember>,
-    ImaginaryConstants<ComplexHighPrecisionMember>,
-    Exponential<ComplexHighPrecisionMember>,
-    Trigonometric<ComplexHighPrecisionMember>,
-    InverseTrigonometric<ComplexHighPrecisionMember>,
-    Hyperbolic<ComplexHighPrecisionMember>,
-    InverseHyperbolic<ComplexHighPrecisionMember>,
-    Roots<ComplexHighPrecisionMember>,
-    Power<ComplexHighPrecisionMember>,
-    Conjugate<ComplexHighPrecisionMember>,
-    RealUnreal<ComplexHighPrecisionMember,HighPrecisionMember>,
-    Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>,
-    ScaleByHighPrec<ComplexHighPrecisionMember>,
-    ScaleByRational<ComplexHighPrecisionMember>,
-    ScaleByDouble<ComplexHighPrecisionMember>,
-    ScaleComponents<ComplexHighPrecisionMember, HighPrecisionMember>,
-    Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
+	implements
+		Field<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember>,
+		Norm<ComplexHighPrecisionMember, HighPrecisionMember>,
+		RealConstants<ComplexHighPrecisionMember>,
+		ImaginaryConstants<ComplexHighPrecisionMember>,
+		Exponential<ComplexHighPrecisionMember>,
+		Trigonometric<ComplexHighPrecisionMember>,
+		InverseTrigonometric<ComplexHighPrecisionMember>,
+		Hyperbolic<ComplexHighPrecisionMember>,
+		InverseHyperbolic<ComplexHighPrecisionMember>,
+		Roots<ComplexHighPrecisionMember>,
+		Power<ComplexHighPrecisionMember>,
+		Conjugate<ComplexHighPrecisionMember>,
+		RealUnreal<ComplexHighPrecisionMember,HighPrecisionMember>,
+		Scale<ComplexHighPrecisionMember,ComplexHighPrecisionMember>,
+		ScaleByHighPrec<ComplexHighPrecisionMember>,
+		ScaleByRational<ComplexHighPrecisionMember>,
+		ScaleByDouble<ComplexHighPrecisionMember>,
+		ScaleComponents<ComplexHighPrecisionMember, HighPrecisionMember>,
+		Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);
