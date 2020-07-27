@@ -49,14 +49,18 @@ public class MinMax {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T algebra, U a, U b, U min, U max)
 	{
+		U tmpMin = algebra.construct();
+		U tmpMax = algebra.construct();
 		if (algebra.isGreater().call(a, b)) {
-			algebra.assign().call(a, max);
-			algebra.assign().call(b, min);
+			algebra.assign().call(a, tmpMax);
+			algebra.assign().call(b, tmpMin);
 		}
 		else {
-			algebra.assign().call(a, min);
-			algebra.assign().call(b, max);
+			algebra.assign().call(a, tmpMin);
+			algebra.assign().call(b, tmpMax);
 		}
+		algebra.assign().call(tmpMin, min);
+		algebra.assign().call(tmpMax, max);
 	}
 
 }
