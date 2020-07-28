@@ -24,12 +24,161 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package example;
+
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.ConvolveND;
+import nom.bdezonia.zorbage.algorithm.CorrelateND;
+import nom.bdezonia.zorbage.algorithm.FFT;
+import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.InvFFT;
+import nom.bdezonia.zorbage.algorithm.ResampleAveragedCubics;
+import nom.bdezonia.zorbage.algorithm.ResampleAveragedLinears;
+import nom.bdezonia.zorbage.algorithm.ResampleNearestNeighbor;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.float16.real.Float16Member;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+
 /**
  * @author Barry DeZonia
  */
-/*
-FFT/InvFFT
-correlation and convolution : ND and 1D and mention parallel elsewhere
-resampling?
-are there more?
-*/
+class SignalProcessing {
+	
+	// Zorbage provides some signal processing algorithms
+	
+	// FFT / inverse FFT
+	
+	void example1() {
+		
+		IndexedDataSource<ComplexFloat64Member> orig =
+				nom.bdezonia.zorbage.storage.Storage.allocate(512L, G.CDBL.construct());
+	
+		IndexedDataSource<ComplexFloat64Member> tmp =
+				nom.bdezonia.zorbage.storage.Storage.allocate(512L, G.CDBL.construct());
+		
+		Fill.compute(G.CDBL, G.CDBL.random(), orig);
+		
+		FFT.compute(G.CDBL, G.DBL, orig, tmp);
+		
+		// < do something here: like make high modulus values into zeroes >
+		
+		InvFFT.compute(G.CDBL, G.DBL, tmp, orig);
+		
+		// here the original signal has now had high frequency values removed
+	}
+	
+	// correlation in 1-d or n-d: n-d shown here
+	//   also note that parallel versions exists for speedy processing
+	
+	void example2() {
+		
+		long[] dims = new long[]{100,100,100};
+		
+		DimensionedDataSource<Float16Member> input =
+				DimensionedStorage.allocate(dims, G.HLF.construct());
+
+		Fill.compute(G.HLF, G.HLF.random(), input.rawData());
+		
+		DimensionedDataSource<Float16Member> output =
+				DimensionedStorage.allocate(dims, G.HLF.construct());
+
+		ProcedurePaddedDimensionedDataSource<?, Float16Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.HLF, input, new ZeroNdOOB<>(G.HLF, input));
+		
+		
+		DimensionedDataSource<Float16Member> filter =
+				DimensionedStorage.allocate(new long[] {3,3,3}, G.HLF.construct());
+
+		Float16Member value = G.HLF.construct();
+		
+		IntegerIndex index = new IntegerIndex(dims.length);
+		
+		index.set(0, 1);
+		index.set(1, 1);
+		index.set(2, 1);
+		value.setV(3);
+		filter.set(index, value);
+		
+		index.set(0, 2);
+		index.set(1, 1);
+		index.set(2, 2);
+		value.setV(-4);
+		filter.set(index, value);
+		
+		index.set(0, 0);
+		index.set(1, 1);
+		index.set(2, 2);
+		value.setV(12);
+		filter.set(index, value);
+		
+		CorrelateND.compute(G.HLF, filter, padded, output);
+	}
+
+	// convolution in 1-d or n-d: n-d shown here
+	//   also note that parallel versions exists for speedy processing
+	
+	void example3() {
+		
+		long[] dims = new long[]{100,100,100};
+		
+		DimensionedDataSource<Float16Member> input =
+				DimensionedStorage.allocate(dims, G.HLF.construct());
+
+		Fill.compute(G.HLF, G.HLF.random(), input.rawData());
+		
+		DimensionedDataSource<Float16Member> output =
+				DimensionedStorage.allocate(dims, G.HLF.construct());
+
+		ProcedurePaddedDimensionedDataSource<?, Float16Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.HLF, input, new ZeroNdOOB<>(G.HLF, input));
+		
+		
+		DimensionedDataSource<Float16Member> filter =
+				DimensionedStorage.allocate(new long[] {3,3,3}, G.HLF.construct());
+
+		Float16Member value = G.HLF.construct();
+		
+		IntegerIndex index = new IntegerIndex(dims.length);
+		
+		index.set(0, 1);
+		index.set(1, 1);
+		index.set(2, 1);
+		value.setV(3);
+		filter.set(index, value);
+		
+		index.set(0, 2);
+		index.set(1, 1);
+		index.set(2, 2);
+		value.setV(-4);
+		filter.set(index, value);
+		
+		index.set(0, 0);
+		index.set(1, 1);
+		index.set(2, 2);
+		value.setV(12);
+		filter.set(index, value);
+		
+		ConvolveND.compute(G.HLF, filter, padded, output);
+	}
+
+	// resampling : multiple algorithms exist. There are the equivalent of nearest neighbor resampling,
+	//   bilinear resampling, and bicubic resampling. The major difference is that they work in n-d
+	//   space.
+	
+	@SuppressWarnings("unused")
+	void example4() {
+		
+		DimensionedDataSource<HighPrecisionMember> input =
+				DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.HP.construct());
+		long[] newDims = new long[] {33,54,97};
+		DimensionedDataSource<HighPrecisionMember> output1 = ResampleNearestNeighbor.compute(G.HP, newDims, input);
+		DimensionedDataSource<HighPrecisionMember> output2 = ResampleAveragedLinears.compute(G.HP, newDims, input);
+		DimensionedDataSource<HighPrecisionMember> output3 = ResampleAveragedCubics.compute(G.HP, newDims, input);
+	}
+}
