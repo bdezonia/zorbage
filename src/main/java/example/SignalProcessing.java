@@ -176,7 +176,7 @@ class SignalProcessing {
 		
 		DimensionedDataSource<HighPrecisionMember> input =
 				DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.HP.construct());
-		long[] newDims = new long[] {33,54,97};
+		long[] newDims = new long[] {330,542,861};
 		DimensionedDataSource<HighPrecisionMember> output1 = ResampleNearestNeighbor.compute(G.HP, newDims, input);
 		DimensionedDataSource<HighPrecisionMember> output2 = ResampleAveragedLinears.compute(G.HP, newDims, input);
 		DimensionedDataSource<HighPrecisionMember> output3 = ResampleAveragedCubics.compute(G.HP, newDims, input);
