@@ -299,11 +299,12 @@ class Statistics {
 		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
 		
 		Float32Member mean = G.FLT.construct();
+		Float32Member stdErrMean = G.FLT.construct();
 		Float32Member stddev = G.FLT.construct();
 		Float32Member sampleVariance = G.FLT.construct();
 		Float32Member sampleSkew = G.FLT.construct();
 		Float32Member excessKurtosis = G.FLT.construct();
 
-		BasicStats.compute(G.FLT, data, mean, stddev, sampleVariance, sampleSkew, excessKurtosis);
+		BasicStats.compute(G.FLT, data, mean, stdErrMean, stddev, sampleVariance, sampleSkew, excessKurtosis);
 	}
 }

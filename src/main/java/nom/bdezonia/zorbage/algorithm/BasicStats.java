@@ -52,6 +52,7 @@ public class BasicStats {
 	 * @param alg
 	 * @param data
 	 * @param mean
+	 * @param stdErrMean
 	 * @param stddev
 	 * @param sampleVariance
 	 * @param sampleSkew
@@ -59,7 +60,7 @@ public class BasicStats {
 	 */
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U> & Roots<U>,
 					U>
-		void compute(T alg, IndexedDataSource<U> data, U mean, U stddev, U sampleVariance, U sampleSkew, U excessKurtosis)
+		void compute(T alg, IndexedDataSource<U> data, U mean, U stdErrMean, U stddev, U sampleVariance, U sampleSkew, U excessKurtosis)
 	{
 		if (data.size() < 2)
 			throw new IllegalArgumentException("Basic statistics cannot be calculated from a data set with less than two elements");
@@ -90,6 +91,8 @@ public class BasicStats {
 			alg.add().call(sum, value, sum);
 		}
 		alg.assign().call(sum, mean);
+		alg.sqrt().call(n, tmp);
+		alg.divide().call(stddev, tmp, stdErrMean);
 		
 		// calc sample variance
 		//   sample variance s^2 = sum ((xi - xbar)^2 / n-1)
