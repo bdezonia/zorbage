@@ -57,7 +57,7 @@ public class BasicStats {
 	 */
 	public static <T extends Algebra<T,U> & Unity<U> & Addition<U> & Multiplication<U> & Invertible<U> & Roots<U>,
 					U>
-		void compute(T alg, IndexedDataSource<U> data, U mean, U sampleVariance, U sampleSkew, U excessKurtosis)
+		void compute(T alg, IndexedDataSource<U> data, U mean, U stddev, U sampleVariance, U sampleSkew, U excessKurtosis)
 	{
 		if (data.size() < 2) {
 			throw new IllegalArgumentException("Basic statistics cannot be calculated from a data set with less than two elements");
@@ -66,7 +66,6 @@ public class BasicStats {
 		U value = alg.construct();
 		U tmp = alg.construct();
 		U sum = alg.construct();
-		U s = alg.construct();
 		U n = alg.construct();
 		U n_minus_one = alg.construct();
 		U one = alg.construct();
@@ -102,7 +101,7 @@ public class BasicStats {
 			alg.add().call(sum, value, sum);
 		}
 		alg.assign().call(sum, sampleVariance);
-		alg.sqrt().call(sampleVariance, s);
+		alg.sqrt().call(sampleVariance, stddev);
 		
 		// calc sample skew
 		//   sample skew = sum ((xi - xbar)^3 / n * s^3)
@@ -110,7 +109,7 @@ public class BasicStats {
 		for (long i = 0; i < data.size(); i++) {
 			data.get(i, tmp);
 			alg.subtract().call(tmp, mean, tmp);
-			alg.divide().call(tmp, s, tmp);
+			alg.divide().call(tmp, stddev, tmp);
 			alg.multiply().call(tmp, tmp, value);
 			alg.multiply().call(value, tmp, value);
 			alg.divide().call(value, n, value);
@@ -124,7 +123,7 @@ public class BasicStats {
 		for (long i = 0; i < data.size(); i++) {
 			data.get(i, tmp);
 			alg.subtract().call(tmp, mean, tmp);
-			alg.divide().call(tmp, s, tmp);
+			alg.divide().call(tmp, stddev, tmp);
 			alg.multiply().call(tmp, tmp, tmp);
 			alg.multiply().call(tmp, tmp, value);
 			alg.divide().call(value, n, value);
