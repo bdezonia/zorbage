@@ -46,6 +46,8 @@ public class BasicStats {
 	private BasicStats() { }
 	
 	/**
+	 * Calculate some basic data measures using naive algorithms. Passing a high precision backed
+	 * data source will result in perfectly accurate results.
 	 * 
 	 * @param alg
 	 * @param data
@@ -59,9 +61,8 @@ public class BasicStats {
 					U>
 		void compute(T alg, IndexedDataSource<U> data, U mean, U stddev, U sampleVariance, U sampleSkew, U excessKurtosis)
 	{
-		if (data.size() < 2) {
+		if (data.size() < 2)
 			throw new IllegalArgumentException("Basic statistics cannot be calculated from a data set with less than two elements");
-		}
 		
 		U value = alg.construct();
 		U tmp = alg.construct();
