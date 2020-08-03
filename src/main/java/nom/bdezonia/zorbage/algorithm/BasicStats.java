@@ -50,8 +50,8 @@ public class BasicStats {
 	 * @param alg
 	 * @param data
 	 * @param mean
-	 * @param variance
 	 * @param stddev
+	 * @param sampleVariance
 	 * @param sampleSkew
 	 * @param excessKurtosis
 	 */
