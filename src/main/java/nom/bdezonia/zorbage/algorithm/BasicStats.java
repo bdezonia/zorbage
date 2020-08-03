@@ -91,8 +91,6 @@ public class BasicStats {
 			alg.add().call(sum, value, sum);
 		}
 		alg.assign().call(sum, mean);
-		alg.sqrt().call(n, tmp);
-		alg.divide().call(stddev, tmp, stdErrMean);
 		
 		// calc sample variance
 		//   sample variance s^2 = sum ((xi - xbar)^2 / n-1)
@@ -106,6 +104,8 @@ public class BasicStats {
 		}
 		alg.assign().call(sum, sampleVariance);
 		alg.sqrt().call(sampleVariance, stddev);
+		alg.sqrt().call(n, tmp);
+		alg.divide().call(stddev, tmp, stdErrMean);
 		
 		// calc sample skew
 		//   sample skew = sum ((xi - xbar)^3 / n * s^3)
