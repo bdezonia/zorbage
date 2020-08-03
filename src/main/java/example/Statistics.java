@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.ApproxStdDev;
 import nom.bdezonia.zorbage.algorithm.ApproxSumOfSquaredDeviationsWithCount;
 import nom.bdezonia.zorbage.algorithm.ApproxVariance;
+import nom.bdezonia.zorbage.algorithm.BasicStats;
 import nom.bdezonia.zorbage.algorithm.MaxElement;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Median;
@@ -266,7 +267,7 @@ class Statistics {
 	}
 	
 	/*
-	 * FYI there is a method for getting a quick statistical summary of a set of numbers.
+	 * FYI here is one method for getting a quick statistical summary of a set of numbers.
 	 */
 	
 	void example6() {
@@ -287,5 +288,22 @@ class Statistics {
 		SignedInt64Member numNoData = G.INT64.construct();
 
 		SummaryStats.computeSafe(G.FLT, data, min, q1, median, mean, q3, max, numNoData);
+	}
+
+	/*
+	 * FYI here is another method for getting a quick statistical summary of a set of numbers.
+	 */
+	
+	void example7() {
+		
+		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		
+		Float32Member mean = G.FLT.construct();
+		Float32Member stddev = G.FLT.construct();
+		Float32Member sampleVariance = G.FLT.construct();
+		Float32Member sampleSkew = G.FLT.construct();
+		Float32Member excessKurtosis = G.FLT.construct();
+
+		BasicStats.compute(G.FLT, data, mean, stddev, sampleVariance, sampleSkew, excessKurtosis);
 	}
 }
