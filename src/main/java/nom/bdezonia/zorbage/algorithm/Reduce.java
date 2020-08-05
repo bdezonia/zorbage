@@ -52,17 +52,14 @@ public class Reduce {
 		void compute(T alg, Procedure3<U,U,U> proc, IndexedDataSource<U> data, U reduction)
 	{
 		U partial = alg.construct();
-		U tmp0 = alg.construct();
-		U tmp1 = alg.construct();
+		U tmp = alg.construct();
 		long sz = data.size();
 		if (sz < 2)
 			throw new IllegalArgumentException("must have two or more values before you can reduce");
-		data.get(0, tmp0);
-		data.get(1, tmp1);
-		proc.call(tmp0, tmp1, partial);
-		for (int i = 2; i < sz; i++) {
-			data.get(i,  tmp0);
-			proc.call(partial, tmp0, partial);
+		data.get(0, partial);
+		for (int i = 1; i < sz; i++) {
+			data.get(i, tmp);
+			proc.call(partial, tmp, partial);
 		}
 		alg.assign().call(partial, reduction);
 	}
