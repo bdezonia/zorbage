@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -58,5 +60,48 @@ public class TestReduce {
 		Reduce.compute(G.DBL, G.DBL.multiply(), nums, reduction);
 		
 		assertEquals(40320, reduction.v(), 0);
+	}
+
+	@Test
+	public void test2() {
+		
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+				new double[] {5}
+				);
+		
+		Float64Member reduction = G.DBL.construct();
+		
+		Reduce.compute(G.DBL, G.DBL.add(), nums, reduction);
+		
+		assertEquals(5, reduction.v(), 0);
+		
+		Reduce.compute(G.DBL, G.DBL.multiply(), nums, reduction);
+		
+		assertEquals(5, reduction.v(), 0);
+	}
+
+	@Test
+	public void test3() {
+		
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+				new double[] {}
+				);
+		
+		Float64Member reduction = G.DBL.construct();
+		
+		try {
+			Reduce.compute(G.DBL, G.DBL.add(), nums, reduction);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+		
+		try {
+			Reduce.compute(G.DBL, G.DBL.multiply(), nums, reduction);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+		
 	}
 }
