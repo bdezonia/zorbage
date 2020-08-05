@@ -54,8 +54,8 @@ public class Reduce {
 		U partial = alg.construct();
 		U tmp = alg.construct();
 		long sz = data.size();
-		if (sz < 2)
-			throw new IllegalArgumentException("must have two or more values before you can reduce");
+		if (sz < 1)
+			throw new IllegalArgumentException("must have one or more values before you can reduce");
 		data.get(0, partial);
 		for (int i = 1; i < sz; i++) {
 			data.get(i, tmp);
