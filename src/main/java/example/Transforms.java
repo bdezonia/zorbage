@@ -345,18 +345,26 @@ class Transforms {
 		// reduce by multiplying values
 		
 		Reduce.compute(G.INT16, G.INT16.multiply(), input, reduction);  // reduction = 1*3*5*8*12*55*101
+
+		// Let's do a compound interest problem by defining our own code. Imagine money compounds at an
+		// 8%/year interest rate. And we are going to deposit funds once every month. How much money
+		// will we have at the end?
 		
-		// reduce by defining your own code
+		IndexedDataSource<Float64Member> monthlyDeposits = ArrayStorage.allocateDoubles(
+				new double[] {1000,1250,500,300,0,475,950,200}
+				);
 		
-		Procedure3<SignedInt16Member, SignedInt16Member, SignedInt16Member> blend =
-				new Procedure3<SignedInt16Member, SignedInt16Member, SignedInt16Member>()
+		Procedure3<Float64Member, Float64Member, Float64Member> grow =
+				new Procedure3<Float64Member, Float64Member, Float64Member>()
 		{
 			@Override
-			public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
-				c.setV(2*a.v() + b.v());
+			public void call(Float64Member a, Float64Member b, Float64Member c) {
+				c.setV((1 + 0.08/12)*a.v() + b.v());
 			}
 		};
 		
-		Reduce.compute(G.INT16, blend, input, reduction);  // reduction = something complicated
+		Float64Member balance = G.DBL.construct();
+		
+		Reduce.compute(G.DBL, grow, monthlyDeposits, balance);
 	}
 }
