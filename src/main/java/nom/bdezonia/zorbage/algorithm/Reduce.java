@@ -44,23 +44,23 @@ public class Reduce {
 	/**
 	 * 
 	 * @param alg
-	 * @param proc
+	 * @param reducer
 	 * @param data
 	 * @param reduction
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Procedure3<U,U,U> proc, IndexedDataSource<U> data, U reduction)
+		void compute(T alg, Procedure3<U,U,U> reducer, IndexedDataSource<U> data, U reduction)
 	{
-		U partial = alg.construct();
+		U accumulator = alg.construct();
 		U tmp = alg.construct();
 		long sz = data.size();
 		if (sz < 1)
 			throw new IllegalArgumentException("must have one or more values before you can reduce");
-		data.get(0, partial);
+		data.get(0, accumulator);
 		for (int i = 1; i < sz; i++) {
 			data.get(i, tmp);
-			proc.call(partial, tmp, partial);
+			reducer.call(accumulator, tmp, accumulator);
 		}
-		alg.assign().call(partial, reduction);
+		alg.assign().call(accumulator, reduction);
 	}
 }
