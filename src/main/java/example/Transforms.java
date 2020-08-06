@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.InplaceTransform3;
 import nom.bdezonia.zorbage.algorithm.Map;
 import nom.bdezonia.zorbage.algorithm.ParallelTransform4;
+import nom.bdezonia.zorbage.algorithm.Reduce;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -45,6 +46,7 @@ import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Member;
 import nom.bdezonia.zorbage.type.float16.real.Float16Member;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.int6.SignedInt6Member;
 
 /**
@@ -318,5 +320,43 @@ class Transforms {
 		// element of the input list
 		
 		IndexedDataSource<Float32Member> result = Map.compute(G.INT6, G.FLT, proc, input);
+	}
+	
+	// Reduce
+	//
+	//   The Reduce algorithm is also not exactly a Transform. But it works hand in hand with
+	//   Map and it does transform a list of values to a single value. This is another algo
+	//   that is common in functional programming.
+	
+	void example7() {
+		
+		// define some input data
+		
+		IndexedDataSource<SignedInt16Member> input = ArrayStorage.allocateShorts(
+				new short[] {1,3,5,8,12,55,101}
+				);
+		
+		SignedInt16Member reduction = G.INT16.construct();
+
+		// reduce by summing values
+		
+		Reduce.compute(G.INT16, G.INT16.add(), input, reduction);  // reduction = 1+3+5+8+12+55+101
+		
+		// reduce by multiplying values
+		
+		Reduce.compute(G.INT16, G.INT16.multiply(), input, reduction);  // reduction = 1*3*5*8*12*55*101
+		
+		// reduce by defining your own code
+		
+		Procedure3<SignedInt16Member, SignedInt16Member, SignedInt16Member> blend =
+				new Procedure3<SignedInt16Member, SignedInt16Member, SignedInt16Member>()
+		{
+			@Override
+			public void call(SignedInt16Member a, SignedInt16Member b, SignedInt16Member c) {
+				c.setV(2*a.v() + b.v());
+			}
+		};
+		
+		Reduce.compute(G.INT16, blend, input, reduction);  // reduction = something complicated
 	}
 }
