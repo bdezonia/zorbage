@@ -347,8 +347,8 @@ class Transforms {
 		Reduce.compute(G.INT16, G.INT16.multiply(), input, reduction);  // reduction = 1*3*5*8*12*55*101
 
 		// Let's do a compound interest problem by defining our own code. Imagine money compounds at an
-		// 8%/year interest rate. And we are going to deposit funds once every month. How much money
-		// will we have at the end?
+		// 8% annual interest rate. And we are going to deposit funds once every month and compound
+		// monthly. How much money will we have at the end?
 		
 		IndexedDataSource<Float64Member> monthlyDeposits = ArrayStorage.allocateDoubles(
 				new double[] {1000,1250,500,300,0,475,950,200}
@@ -359,7 +359,13 @@ class Transforms {
 		{
 			@Override
 			public void call(Float64Member a, Float64Member b, Float64Member c) {
-				c.setV((1 + 0.08/12)*a.v() + b.v());
+				// calc the growth
+				double newValue = (1 + 0.08/12)*a.v() + b.v();
+				// now round to nearest cent
+				newValue = Math.round(newValue * 100);
+				newValue = newValue / 100;
+				// and set output value
+				c.setV(newValue);
 			}
 		};
 		
