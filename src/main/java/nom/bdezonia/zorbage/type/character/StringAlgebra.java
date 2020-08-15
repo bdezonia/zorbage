@@ -912,16 +912,16 @@ public class StringAlgebra
 		return RMATCHCASE;
 	}
 
-	private static final Function2<String,String,String[]> JOIN =
-			new Function2<String, String, String[]>()
+	private static final Function2<StringMember,String,String[]> JOIN =
+			new Function2<StringMember, String, String[]>()
 	{
 		@Override
-		public String call(String delimeter, String[] elements) {
-			return String.join(delimeter, elements);
+		public StringMember call(String delimeter, String[] elements) {
+			return new StringMember(String.join(delimeter, elements));
 		}
 	};
 	
-	public static Function2<String, String, String[]> join() {
+	public static Function2<StringMember, String, String[]> join() {
 		return JOIN;
 	}
 }
