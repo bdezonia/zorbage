@@ -173,7 +173,7 @@ public class StringAlgebra
 				c.setV(aV.substring(0, offset));
 			}
 			else {
-				c.setV(a.v());
+				c.setV(aV);
 			}
 		}
 	};
@@ -258,7 +258,7 @@ public class StringAlgebra
 	{
 		@Override
 		public Integer call(StringMember a) {
-			if (a.v().length() == 0)
+			if (isEmpty().call(a))
 				return 0;
 			return 1;
 		}

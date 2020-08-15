@@ -58,7 +58,10 @@ public final class StringMember
 	}
 	
 	public void setV(String val) {
-		v = val;
+		if (val == null)
+			v = "";
+		else
+			v = val;
 	}
 	
 	@Override

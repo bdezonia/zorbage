@@ -301,7 +301,7 @@ public class FixedStringAlgebra
 		return MAX;
 	}
 
-	private final Procedure2<FixedStringMember, SignedInt32Member> NORM =
+	private final Procedure2<FixedStringMember, SignedInt32Member> LEN =
 			new Procedure2<FixedStringMember, SignedInt32Member>()
 	{
 		@Override
@@ -310,9 +310,13 @@ public class FixedStringAlgebra
 		}
 	};
 
+	public Procedure2<FixedStringMember, SignedInt32Member> length() {
+		return LEN;
+	}
+
 	@Override
 	public Procedure2<FixedStringMember, SignedInt32Member> norm() {
-		return NORM;
+		return LEN;
 	}
 
 	private final Function2<Boolean, FixedStringMember, FixedStringMember> EQIGCASE =
