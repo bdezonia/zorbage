@@ -489,11 +489,11 @@ public class StringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, StringMember a) {
-			return indexOfFrom().call(codePoint, 0, a);
+			return indexOfCodePointFrom().call(codePoint, 0, a);
 		}
 	};
 	
-	public Function2<Integer, Integer, StringMember> indexOf() {
+	public Function2<Integer, Integer, StringMember> indexOfCodePoint() {
 		return IDXOF;
 	}
 
@@ -506,7 +506,7 @@ public class StringAlgebra
 		}
 	};
 	
-	public Function3<Integer, Integer, Integer, StringMember> indexOfFrom() {
+	public Function3<Integer, Integer, Integer, StringMember> indexOfCodePointFrom() {
 		return IDXOFFROM;
 	}
 
@@ -515,11 +515,11 @@ public class StringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, StringMember a) {
-			return lastIndexOfFrom().call(codePoint, a.v().length(), a);
+			return lastIndexOfCodepointFrom().call(codePoint, a.v().length(), a);
 		}
 	};
 	
-	public Function2<Integer, Integer, StringMember> lastIndexOf() {
+	public Function2<Integer, Integer, StringMember> lastIndexOfCodePoint() {
 		return LASTIDXOF;
 	}
 
@@ -532,7 +532,7 @@ public class StringAlgebra
 		}
 	};
 	
-	public Function3<Integer, Integer, Integer, StringMember> lastIndexOfFrom() {
+	public Function3<Integer, Integer, Integer, StringMember> lastIndexOfCodepointFrom() {
 		return LASTIDXOFFROM;
 	}
 
@@ -659,21 +659,121 @@ public class StringAlgebra
 		return NEQIGCASE;
 	}
 
-	/*
-	  TODO - add these
+	private final Function2<Integer, String, StringMember> INDEXOF =
+			new Function2<Integer, String, StringMember>()
+	{
+		@Override
+		public Integer call(String substring, StringMember a) {
+			return a.v().indexOf(substring);
+		}
+	};
+
+	public Function2<Integer, String, StringMember> indexOf()  {
+		return INDEXOF;
+	}
 	
-	  private void tmp() {
-		String s = "";
-		//skipping s.indexOf(str);
-		//skipping s.indexOf(str, fromIndex);
-		//skipping s.lastIndexOf(str);
-		//skipping s.lastIndexOf(str, fromIndex);
-		s.matches(regex);
-		s.replace(target, replacement);
-		s.replaceAll(regex, replacement);
-		s.replaceFirst(regex, replacement);
-		s.split(regex);
-		s.split(regex, limit);
-	  }
-	*/
+	private final Function3<Integer, Integer, String, StringMember> INDEXOFFROM =
+			new Function3<Integer, Integer, String, StringMember>()
+	{
+		@Override
+		public Integer call(Integer from, String substring, StringMember a) {
+			return a.v().indexOf(substring, from);
+		}
+	};
+	
+	public Function3<Integer, Integer, String, StringMember> indexOfFrom()  {
+		return INDEXOFFROM;
+	}
+	
+	private final Function2<Integer, String, StringMember> LASTINDEXOF =
+			new Function2<Integer, String, StringMember>()
+	{
+		@Override
+		public Integer call(String substring, StringMember a) {
+			return a.v().lastIndexOf(substring);
+		}
+	};
+	
+	public Function2<Integer, String, StringMember> lastIndexOf()  {
+		return LASTINDEXOF;
+	}
+	
+	private final Function3<Integer, Integer, String, StringMember> LASTINDEXOFFROM =
+			new Function3<Integer, Integer, String, StringMember>()
+	{
+		@Override
+		public Integer call(Integer from, String substring, StringMember a) {
+			return a.v().lastIndexOf(substring, from);
+		}
+	};
+	
+	public Function3<Integer, Integer, String, StringMember> lastIndexOfFrom()  {
+		return LASTINDEXOFFROM;
+	}
+	
+	private final Function2<Boolean, String, StringMember> MATCHES =
+			new Function2<Boolean, String, StringMember>()
+	{
+		@Override
+		public Boolean call(String regex, StringMember a) {
+			return a.v().matches(regex);
+		}
+	};
+	
+	public Function2<Boolean, String, StringMember> matches() {
+		return MATCHES;
+	}
+
+	private final Procedure4<String, String, StringMember, StringMember> REPLACEALL =
+			new Procedure4<String, String, StringMember, StringMember>()
+	{
+		@Override
+		public void call(String regex, String replacement, StringMember a, StringMember b) {
+			b.setV(a.v().replaceAll(regex, replacement));
+		}
+	};
+	
+	public Procedure4<String, String, StringMember, StringMember> replaceAll() {
+		return REPLACEALL;
+	}
+
+	private final Procedure4<String, String, StringMember, StringMember> REPLACEFIRST =
+			new Procedure4<String, String, StringMember, StringMember>()
+	{
+		@Override
+		public void call(String regex, String replacement, StringMember a, StringMember b) {
+			b.setV(a.v().replaceFirst(regex, replacement));
+		}
+	};
+	
+	public Procedure4<String, String, StringMember, StringMember> replaceFirst() {
+		return REPLACEFIRST;
+	}
+
+	private Function2<String[], String, StringMember> SPLIT =
+			new Function2<String[], String, StringMember>()
+	{
+		@Override
+		public String[] call(String regex, StringMember a) {
+			return a.v().split(regex);
+		}
+	};
+
+	public Function2<String[], String, StringMember> split() {
+		return SPLIT;
+	}
+
+	private Function3<String[], Integer, String, StringMember> SPLITLIM =
+			new Function3<String[], Integer, String, StringMember>()
+	{
+		@Override
+		public String[] call(Integer limit, String regex, StringMember a) {
+			return a.v().split(regex, limit);
+		}
+	};
+
+	public Function3<String[], Integer, String, StringMember> splitWithLimit() {
+		return SPLITLIM;
+	}
+	
 }
