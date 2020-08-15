@@ -731,20 +731,32 @@ public class FixedStringAlgebra
 	}
 
 	/*
-	  TODO - add these
+	  TODO - add these. (Maybe by working with String instead of StringMember I am complicating my
+	  life with some of these. Instead of codepoint arrays I could use FixedStringMembers.
 	
+	  Do I change functions that return Strings into Procedures that assign a StringMember? This
+	  is applicable to FixedStringAlgebra and StringAlgebra.
+	  
 	  private void tmp() {
 		String s = "";
-		//skipping s.indexOf(str);
-		//skipping s.indexOf(str, fromIndex);
-		//skipping s.lastIndexOf(str);
-		//skipping s.lastIndexOf(str, fromIndex);
-		s.matches(regex);
-		s.replace(target, replacement);
+		s.indexOf(codepoints);
+		s.indexOf(codepoints, fromIndex);
+		s.lastIndexOf(codepoints);
+		s.lastIndexOf(codepoints, fromIndex);
+		s.replace(targetcodepoints, replacementcodepoints);
+		split(int[] codePoints)
+		split(int[] codePoints, int limit)
+		concat(FixedStringMember)
+		contentEquals(codepoints)
+		some or all of the codePoint() methods
+		the two regionMatches methods?
+		static join()
+		toCharArray()
+		
+		// skipping these?? or think more abput??
 		s.replaceAll(regex, replacement);
 		s.replaceFirst(regex, replacement);
-		s.split(regex);
-		s.split(regex, limit);
+		s.matches(regex);
 	  }
 	*/
 }
