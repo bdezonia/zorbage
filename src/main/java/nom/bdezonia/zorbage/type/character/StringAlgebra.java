@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.function.Function5;
+import nom.bdezonia.zorbage.function.Function6;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -301,7 +303,7 @@ public class StringAlgebra
 		return MAX;
 	}
 
-	private final Procedure2<StringMember, SignedInt32Member> NORM =
+	private final Procedure2<StringMember, SignedInt32Member> LEN =
 			new Procedure2<StringMember, SignedInt32Member>()
 	{
 		@Override
@@ -310,9 +312,13 @@ public class StringAlgebra
 		}
 	};
 
+	public Procedure2<StringMember, SignedInt32Member> length() {
+		return LEN;
+	}
+
 	@Override
 	public Procedure2<StringMember, SignedInt32Member> norm() {
-		return NORM;
+		return LEN;
 	}
 
 	private final Function2<Boolean, StringMember, StringMember> EQIGCASE =
@@ -515,7 +521,7 @@ public class StringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, StringMember a) {
-			return lastIndexOfCodepointFrom().call(codePoint, a.v().length(), a);
+			return lastIndexOfCodePointFrom().call(codePoint, a.v().length(), a);
 		}
 	};
 	
@@ -532,7 +538,7 @@ public class StringAlgebra
 		}
 	};
 	
-	public Function3<Integer, Integer, Integer, StringMember> lastIndexOfCodepointFrom() {
+	public Function3<Integer, Integer, Integer, StringMember> lastIndexOfCodePointFrom() {
 		return LASTIDXOFFROM;
 	}
 
@@ -750,7 +756,7 @@ public class StringAlgebra
 		return REPLACEFIRST;
 	}
 
-	private Function2<String[], String, StringMember> SPLIT =
+	private final Function2<String[], String, StringMember> SPLIT =
 			new Function2<String[], String, StringMember>()
 	{
 		@Override
@@ -763,7 +769,7 @@ public class StringAlgebra
 		return SPLIT;
 	}
 
-	private Function3<String[], Integer, String, StringMember> SPLITLIM =
+	private final Function3<String[], Integer, String, StringMember> SPLITLIM =
 			new Function3<String[], Integer, String, StringMember>()
 	{
 		@Override
@@ -775,5 +781,147 @@ public class StringAlgebra
 	public Function3<String[], Integer, String, StringMember> splitWithLimit() {
 		return SPLITLIM;
 	}
+
+	private final Function1<char[], StringMember> TOCHARS =
+			new Function1<char[], StringMember>()
+	{
+		@Override
+		public char[] call(StringMember a) {
+			return a.v().toCharArray();
+		}
+	};
+
+	public Function1<char[], StringMember> toCharArray() {
+		return TOCHARS;
+	}
+
+	private final Procedure3<StringMember,StringMember,StringMember> CONCAT =
+			new Procedure3<StringMember, StringMember, StringMember>()
+	{
+		@Override
+		public void call(StringMember a, StringMember b, StringMember c) {
+			c.setV(a.v().concat(b.v()));
+		}
+	};
+
+	public Procedure3<StringMember,StringMember,StringMember> concat() {
+		return CONCAT;
+	}
 	
+	private final Function2<Character,Integer,StringMember> CHARAT =
+			new Function2<Character, Integer, StringMember>()
+	{
+		@Override
+		public Character call(Integer index, StringMember a) {
+			return a.v().charAt(index);
+		}
+	};
+	
+	public Function2<Character,Integer,StringMember> charAt() {
+		return CHARAT;
+	}
+
+	private final Function2<Boolean,String,StringMember> CEQ =
+			new Function2<Boolean, String, StringMember>()
+	{
+		@Override
+		public Boolean call(String content, StringMember a) {
+			return a.v().contentEquals(content);
+		}
+	};
+
+	public Function2<Boolean,String,StringMember> contentEquals() {
+		return CEQ;
+	}
+	
+	private final Function2<Integer,Integer,StringMember> CPA =
+			new Function2<Integer, Integer, StringMember>()
+	{
+		@Override
+		public Integer call(Integer index, StringMember a) {
+			return a.v().codePointAt(index);
+		}
+	};
+	
+	public Function2<Integer,Integer,StringMember> codePointAt() {
+		return CPA;
+	}
+	
+	private final Function2<Integer,Integer,StringMember> CPB =
+			new Function2<Integer, Integer, StringMember>()
+	{
+		@Override
+		public Integer call(Integer index, StringMember a) {
+			return a.v().codePointBefore(index);
+		}
+	};
+	
+	public Function2<Integer,Integer,StringMember> codePointBefore() {
+		return CPB;
+	}
+	
+	private final Function3<Integer,Integer,Integer,StringMember> CPC =
+			new Function3<Integer, Integer, Integer, StringMember>()
+	{
+		@Override
+		public Integer call(Integer beginIndex, Integer endIndex, StringMember a) {
+			return a.v().codePointCount(beginIndex, endIndex);
+		}
+	};
+
+	public Function3<Integer,Integer,Integer,StringMember> codePointCount() {
+		return CPC;
+	}
+	
+	private final Function3<Integer,Integer,Integer,StringMember> OFFCP =
+			new Function3<Integer, Integer, Integer, StringMember>()
+	{
+		@Override
+		public Integer call(Integer index, Integer codePointOffset, StringMember a) {
+			return a.v().offsetByCodePoints(index, codePointOffset);
+		}
+	};
+
+	public Function3<Integer,Integer,Integer,StringMember> offsetByCodePoints() {
+		return OFFCP;
+	}
+
+	private final Function5<Boolean,Integer,String,Integer,Integer,StringMember> RMATCH =
+			new Function5<Boolean, Integer, String, Integer, Integer, StringMember>()
+	{
+		@Override
+		public Boolean call(Integer toffset, String other, Integer ooffset, Integer len, StringMember a) {
+			return a.v().regionMatches(toffset, other, ooffset, len);
+		}
+	};
+	
+	public Function5<Boolean,Integer,String,Integer,Integer,StringMember> regionMatches() {
+		return RMATCH;
+	}
+	
+	private final Function6<Boolean,Boolean,Integer,String,Integer,Integer,StringMember> RMATCHCASE =
+			new Function6<Boolean, Boolean, Integer, String, Integer, Integer, StringMember>()
+	{
+		@Override
+		public Boolean call(Boolean ignoreCase, Integer toffset, String other, Integer ooffset, Integer len, StringMember a) {
+			return a.v().regionMatches(ignoreCase, toffset, other, ooffset, len);
+		}
+	};
+	
+	public Function6<Boolean,Boolean,Integer,String,Integer,Integer,StringMember> regionMatchesWithCase() {
+		return RMATCHCASE;
+	}
+
+	private static final Function2<String,String,String[]> JOIN =
+			new Function2<String, String, String[]>()
+	{
+		@Override
+		public String call(String delimeter, String[] elements) {
+			return String.join(delimeter, elements);
+		}
+	};
+	
+	public static Function2<String, String, String[]> join() {
+		return JOIN;
+	}
 }
