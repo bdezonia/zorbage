@@ -59,7 +59,7 @@ public final class FixedStringMember
 	}
 	
 	public FixedStringMember(String value) {
-		this(value.codePointCount(0, value.length()));
+		this(value == null ? 0 : value.codePointCount(0, value.length()));
 		setV(value);
 	}
 	
@@ -106,7 +106,7 @@ public final class FixedStringMember
 	}
 	
 	public void setV(String val) {
-		int codePointCount = val.codePointCount(0, val.length());
+		int codePointCount = val == null ? 0 : val.codePointCount(0, val.length());
 		for (int i = 0; i < codePointCount && i < codePoints.length; i++) {
 			int cp = val.codePointAt(i);
 			codePoints[i] = cp;
