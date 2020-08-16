@@ -756,29 +756,39 @@ public class StringAlgebra
 		return REPLACEFIRST;
 	}
 
-	private final Function2<String[], String, StringMember> SPLIT =
-			new Function2<String[], String, StringMember>()
+	private final Function2<StringMember[], StringMember, StringMember> SPLIT =
+			new Function2<StringMember[], StringMember, StringMember>()
 	{
 		@Override
-		public String[] call(String regex, StringMember a) {
-			return a.v().split(regex);
+		public StringMember[] call(StringMember regex, StringMember a) {
+			String[] splits = a.v().split(regex.v());
+			StringMember[] members = new StringMember[splits.length];
+			for (int i = 0; i < splits.length; i++) {
+				members[i] = new StringMember(splits[i]);
+			}
+			return members;
 		}
 	};
 
-	public Function2<String[], String, StringMember> split() {
+	public Function2<StringMember[], StringMember, StringMember> split() {
 		return SPLIT;
 	}
 
-	private final Function3<String[], Integer, String, StringMember> SPLITLIM =
-			new Function3<String[], Integer, String, StringMember>()
+	private final Function3<StringMember[], Integer, StringMember, StringMember> SPLITLIM =
+			new Function3<StringMember[], Integer, StringMember, StringMember>()
 	{
 		@Override
-		public String[] call(Integer limit, String regex, StringMember a) {
-			return a.v().split(regex, limit);
+		public StringMember[] call(Integer limit, StringMember regex, StringMember a) {
+			String[] splits = a.v().split(regex.v(), limit);
+			StringMember[] members = new StringMember[splits.length];
+			for (int i = 0; i < splits.length; i++) {
+				members[i] = new StringMember(splits[i]);
+			}
+			return members;
 		}
 	};
 
-	public Function3<String[], Integer, String, StringMember> splitWithLimit() {
+	public Function3<StringMember[], Integer, StringMember, StringMember> splitWithLimit() {
 		return SPLITLIM;
 	}
 
@@ -821,16 +831,16 @@ public class StringAlgebra
 		return CHARAT;
 	}
 
-	private final Function2<Boolean,String,StringMember> CEQ =
-			new Function2<Boolean, String, StringMember>()
+	private final Function2<Boolean,StringMember,StringMember> CEQ =
+			new Function2<Boolean, StringMember, StringMember>()
 	{
 		@Override
-		public Boolean call(String content, StringMember a) {
-			return a.v().contentEquals(content);
+		public Boolean call(StringMember content, StringMember a) {
+			return a.v().contentEquals(content.v());
 		}
 	};
 
-	public Function2<Boolean,String,StringMember> contentEquals() {
+	public Function2<Boolean,StringMember,StringMember> contentEquals() {
 		return CEQ;
 	}
 	
@@ -886,42 +896,46 @@ public class StringAlgebra
 		return OFFCP;
 	}
 
-	private final Function5<Boolean,Integer,String,Integer,Integer,StringMember> RMATCH =
-			new Function5<Boolean, Integer, String, Integer, Integer, StringMember>()
+	private final Function5<Boolean,Integer,StringMember,Integer,Integer,StringMember> RMATCH =
+			new Function5<Boolean, Integer, StringMember, Integer, Integer, StringMember>()
 	{
 		@Override
-		public Boolean call(Integer toffset, String other, Integer ooffset, Integer len, StringMember a) {
-			return a.v().regionMatches(toffset, other, ooffset, len);
+		public Boolean call(Integer toffset, StringMember other, Integer ooffset, Integer len, StringMember a) {
+			return a.v().regionMatches(toffset, other.v(), ooffset, len);
 		}
 	};
 	
-	public Function5<Boolean,Integer,String,Integer,Integer,StringMember> regionMatches() {
+	public Function5<Boolean,Integer,StringMember,Integer,Integer,StringMember> regionMatches() {
 		return RMATCH;
 	}
 	
-	private final Function6<Boolean,Boolean,Integer,String,Integer,Integer,StringMember> RMATCHCASE =
-			new Function6<Boolean, Boolean, Integer, String, Integer, Integer, StringMember>()
+	private final Function6<Boolean,Boolean,Integer,StringMember,Integer,Integer,StringMember> RMATCHCASE =
+			new Function6<Boolean, Boolean, Integer, StringMember, Integer, Integer, StringMember>()
 	{
 		@Override
-		public Boolean call(Boolean ignoreCase, Integer toffset, String other, Integer ooffset, Integer len, StringMember a) {
-			return a.v().regionMatches(ignoreCase, toffset, other, ooffset, len);
+		public Boolean call(Boolean ignoreCase, Integer toffset, StringMember other, Integer ooffset, Integer len, StringMember a) {
+			return a.v().regionMatches(ignoreCase, toffset, other.v(), ooffset, len);
 		}
 	};
 	
-	public Function6<Boolean,Boolean,Integer,String,Integer,Integer,StringMember> regionMatchesWithCase() {
+	public Function6<Boolean,Boolean,Integer,StringMember,Integer,Integer,StringMember> regionMatchesWithCase() {
 		return RMATCHCASE;
 	}
 
-	private static final Function2<StringMember,String,String[]> JOIN =
-			new Function2<StringMember, String, String[]>()
+	private static final Function2<StringMember,StringMember,StringMember[]> JOIN =
+			new Function2<StringMember, StringMember, StringMember[]>()
 	{
 		@Override
-		public StringMember call(String delimeter, String[] elements) {
-			return new StringMember(String.join(delimeter, elements));
+		public StringMember call(StringMember delimeter, StringMember[] elements) {
+			String[] strings = new String[elements.length];
+			for (int i = 0; i < elements.length; i++) {
+				strings[i] = elements[i].v();
+			}
+			return new StringMember(String.join(delimeter.v(), strings));
 		}
 	};
 	
-	public static Function2<StringMember, String, String[]> join() {
+	public static Function2<StringMember, StringMember, StringMember[]> join() {
 		return JOIN;
 	}
 }
