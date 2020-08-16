@@ -371,29 +371,29 @@ public class FixedStringAlgebra
 		return GCPC;
 	}
 	
-	private final Function2<Boolean, String, FixedStringMember> ENDSWITH =
-			new Function2<Boolean, String, FixedStringMember>()
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> ENDSWITH =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
 	{
 		@Override
-		public Boolean call(String suffix, FixedStringMember a) {
-			return a.v().endsWith(suffix);
+		public Boolean call(FixedStringMember suffix, FixedStringMember a) {
+			return a.v().endsWith(suffix.v());
 		}
 	};
 
-	public Function2<Boolean, String, FixedStringMember> endsWith() {
+	public Function2<Boolean, FixedStringMember, FixedStringMember> endsWith() {
 		return ENDSWITH;
 	}
 	
-	private final Function2<Boolean, String, FixedStringMember> STARTSWITH =
-			new Function2<Boolean, String, FixedStringMember>()
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> STARTSWITH =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
 	{
 		@Override
-		public Boolean call(String prefix, FixedStringMember a) {
-			return a.v().startsWith(prefix);
+		public Boolean call(FixedStringMember prefix, FixedStringMember a) {
+			return a.v().startsWith(prefix.v());
 		}
 	};
 
-	public Function2<Boolean, String, FixedStringMember> startsWith() {
+	public Function2<Boolean, FixedStringMember, FixedStringMember> startsWith() {
 		return STARTSWITH;
 	}
 	
@@ -475,16 +475,16 @@ public class FixedStringAlgebra
 		return ISEMPTY;
 	}
 	
-	private final Function2<Boolean, String, FixedStringMember> CONTAINS =
-			new Function2<Boolean, String, FixedStringMember>()
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> CONTAINS =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
 	{
 		@Override
-		public Boolean call(String a, FixedStringMember b) {
-			return b.v().contains(a);
+		public Boolean call(FixedStringMember a, FixedStringMember b) {
+			return b.v().contains(a.v());
 		}
 	};
 
-	public Function2<Boolean, String, FixedStringMember> contains() {
+	public Function2<Boolean, FixedStringMember, FixedStringMember> contains() {
 		return CONTAINS;
 	}
 	
