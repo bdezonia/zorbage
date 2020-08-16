@@ -798,7 +798,7 @@ public class FixedStringAlgebra
 		return TOCHARS;
 	}
 
-	private static final Function2<FixedStringMember,FixedStringMember,FixedStringMember[]> JOIN =
+	private final Function2<FixedStringMember,FixedStringMember,FixedStringMember[]> JOIN =
 			new Function2<FixedStringMember, FixedStringMember, FixedStringMember[]>()
 	{
 		@Override
@@ -811,6 +811,10 @@ public class FixedStringAlgebra
 		}
 	};
 	
+	public Function2<FixedStringMember, FixedStringMember, FixedStringMember[]> join() {
+		return JOIN;
+	}
+
 	private final Function2<Integer, FixedStringMember, FixedStringMember> INDEXOF =
 			new Function2<Integer, FixedStringMember, FixedStringMember>()
 	{
@@ -863,10 +867,6 @@ public class FixedStringAlgebra
 		return LASTINDEXOFFROM;
 	}
 	
-	public static Function2<FixedStringMember, FixedStringMember, FixedStringMember[]> join() {
-		return JOIN;
-	}
-
 	private final Procedure4<FixedStringMember,FixedStringMember,FixedStringMember,FixedStringMember> REPLACECP =
 			new Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember>()
 	{

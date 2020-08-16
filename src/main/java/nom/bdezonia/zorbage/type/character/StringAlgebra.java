@@ -922,7 +922,7 @@ public class StringAlgebra
 		return RMATCHCASE;
 	}
 
-	private static final Function2<StringMember,StringMember,StringMember[]> JOIN =
+	private final Function2<StringMember,StringMember,StringMember[]> JOIN =
 			new Function2<StringMember, StringMember, StringMember[]>()
 	{
 		@Override
@@ -935,7 +935,7 @@ public class StringAlgebra
 		}
 	};
 	
-	public static Function2<StringMember, StringMember, StringMember[]> join() {
+	public Function2<StringMember, StringMember, StringMember[]> join() {
 		return JOIN;
 	}
 }

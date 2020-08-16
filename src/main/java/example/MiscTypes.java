@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
+import nom.bdezonia.zorbage.type.character.StringMember;
 import nom.bdezonia.zorbage.type.point.Point;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.rgb.ArgbMember;
@@ -273,7 +274,12 @@ class MiscTypes {
 		G.ARGB.maxBound();  // (255,255,255,255)
 	}
 	
-	// Zorbage supports fixed length string values
+	// Zorbage supports fixed length string values. All such strings are set with a
+	//   fixed capacity at creation time. Such a string might not use all its
+	//   capacity while containing a string. Any operation that results in a string
+	//   exceeding the container's capacity results in string truncation. With fixed
+	//   capacity sized strings zorbage can easily store them in multiple kinds of
+	//   storage containers.
 	
 	void example6() {
 		
@@ -299,6 +305,7 @@ class MiscTypes {
 		G.FSTRING.subtract();
 		G.FSTRING.zero();
 		G.FSTRING.negate();  // is actually a no op procedure
+		G.FSTRING.length();
 		G.FSTRING.norm();
 		G.FSTRING.signum();
 		G.FSTRING.max();
@@ -325,7 +332,9 @@ class MiscTypes {
 
 		// simple string operations
 		
+		G.FSTRING.concat();
 		G.FSTRING.contains();
+		G.FSTRING.contentEquals();
 		G.FSTRING.endsWith();
 		G.FSTRING.getBytes();
 		G.FSTRING.getBytesUsingCharset();
@@ -334,9 +343,22 @@ class MiscTypes {
 		G.FSTRING.codePointCount();
 		G.FSTRING.indexOf();
 		G.FSTRING.indexOfFrom();
+		G.FSTRING.indexOfCodePoints();
+		G.FSTRING.indexOfCodePointsFrom();
+		G.FSTRING.join();
 		G.FSTRING.lastIndexOf();
 		G.FSTRING.lastIndexOfFrom();
+		G.FSTRING.lastIndexOfCodePoints();
+		G.FSTRING.lastIndexOfCodePointsFrom();
+		G.FSTRING.matches();
+		G.FSTRING.regionMatches();
+		G.FSTRING.regionMatchesWithCase();
 		G.FSTRING.replace();
+		G.FSTRING.replaceAll();
+		G.FSTRING.replaceFirst();
+		G.FSTRING.replaceCodePoints();
+		G.FSTRING.split();
+		G.FSTRING.splitWithLimit();
 		G.FSTRING.startsWith();
 		G.FSTRING.subStringFromStart();
 		G.FSTRING.substringFromStartToEnd();
@@ -345,6 +367,99 @@ class MiscTypes {
 		G.FSTRING.toUpper();
 		G.FSTRING.toUpperWithLocale();
 		G.FSTRING.trim();
+		G.FSTRING.toCharArray();
+	}
+
+	// Zorbage supports unlimited length string values too. All such strings are
+	//   similar to Java strings and can contain up to Integer.MAX_VALUE chars.
+	//   With strings like these there is little or no real worries about data
+	//   truncation. However since they are not of fixed size they cannot be
+	//   stored in most of zorbage's storage containers. All storage structures
+	//   that can store such strings are memory resident and limited to no more
+	//   than Integer.MAX_VALUE elements.
+	
+	void example7() {
+		
+		StringMember str = new StringMember("");
+		StringMember other = null;
+		
+		// java ops
+
+		str.equals(other);
+		str.hashCode();
+		str.toString();
+		
+		// constructions
+		
+		G.STRING.construct();
+		G.STRING.construct(other);
+		G.STRING.construct("how now brown cow?");
+
+		// mathematical operations
+		
+		G.STRING.assign();
+		G.STRING.add();
+		G.STRING.subtract();
+		G.STRING.zero();
+		G.STRING.negate();  // is actually a no op procedure
+		G.STRING.length();
+		G.STRING.norm();
+		G.STRING.signum();
+		G.STRING.max();
+		G.STRING.min();
+		G.STRING.isZero();  // is string empty
+		
+		// comparisons
+		
+		G.STRING.isEqual();
+		G.STRING.isEqualIgnoreCase();
+		G.STRING.isNotEqual();
+		G.STRING.isNotEqualIgnoreCase();
+		G.STRING.isLess();
+		G.STRING.isLessIgnoreCase();
+		G.STRING.isLessEqual();
+		G.STRING.isLessEqualIgnoreCase();
+		G.STRING.isGreater();
+		G.STRING.isGreaterIgnoreCase();
+		G.STRING.isGreaterEqual();
+		G.STRING.isGreaterEqualIgnoreCase();
+		G.STRING.isEmpty();
+		G.STRING.compare();
+		G.STRING.compareIgnoreCase();
+
+		// simple string operations
+		
+		G.STRING.concat();
+		G.STRING.contains();
+		G.STRING.contentEquals();
+		G.STRING.endsWith();
+		G.STRING.getBytes();
+		G.STRING.getBytesUsingCharset();
+		G.STRING.getBytesUsingCharsetName();
+		G.STRING.codePointAt();
+		G.STRING.codePointCount();
+		G.STRING.indexOf();
+		G.STRING.indexOfFrom();
+		G.STRING.join();
+		G.STRING.lastIndexOf();
+		G.STRING.lastIndexOfFrom();
+		G.STRING.matches();
+		G.STRING.regionMatches();
+		G.STRING.regionMatchesWithCase();
+		G.STRING.replace();
+		G.STRING.replaceAll();
+		G.STRING.replaceFirst();
+		G.STRING.split();
+		G.STRING.splitWithLimit();
+		G.STRING.startsWith();
+		G.STRING.subStringFromStart();
+		G.STRING.substringFromStartToEnd();
+		G.STRING.toLower();
+		G.STRING.toLowerWithLocale();
+		G.STRING.toUpper();
+		G.STRING.toUpperWithLocale();
+		G.STRING.trim();
+		G.STRING.toCharArray();
 	}
 
 }
