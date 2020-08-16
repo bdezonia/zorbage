@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+v * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2020 Barry DeZonia
  * 
@@ -347,29 +347,29 @@ public class StringAlgebra
 		return CMPIGCASE;
 	}
 	
-	private final Function2<Boolean, String, StringMember> ENDSWITH =
-			new Function2<Boolean, String, StringMember>()
+	private final Function2<Boolean, StringMember, StringMember> ENDSWITH =
+			new Function2<Boolean, StringMember, StringMember>()
 	{
 		@Override
-		public Boolean call(String suffix, StringMember a) {
-			return a.v().endsWith(suffix);
+		public Boolean call(StringMember suffix, StringMember a) {
+			return a.v().endsWith(suffix.v());
 		}
 	};
 
-	public Function2<Boolean, String, StringMember> endsWith() {
+	public Function2<Boolean, StringMember, StringMember> endsWith() {
 		return ENDSWITH;
 	}
 	
-	private final Function2<Boolean, String, StringMember> STARTSWITH =
-			new Function2<Boolean, String, StringMember>()
+	private final Function2<Boolean, StringMember, StringMember> STARTSWITH =
+			new Function2<Boolean, StringMember, StringMember>()
 	{
 		@Override
-		public Boolean call(String prefix, StringMember a) {
-			return a.v().startsWith(prefix);
+		public Boolean call(StringMember prefix, StringMember a) {
+			return a.v().startsWith(prefix.v());
 		}
 	};
 
-	public Function2<Boolean, String, StringMember> startsWith() {
+	public Function2<Boolean, StringMember, StringMember> startsWith() {
 		return STARTSWITH;
 	}
 	
@@ -451,16 +451,16 @@ public class StringAlgebra
 		return ISEMPTY;
 	}
 	
-	private final Function2<Boolean, String, StringMember> CONTAINS =
-			new Function2<Boolean, String, StringMember>()
+	private final Function2<Boolean, StringMember, StringMember> CONTAINS =
+			new Function2<Boolean, StringMember, StringMember>()
 	{
 		@Override
-		public Boolean call(String a, StringMember b) {
-			return b.v().contains(a);
+		public Boolean call(StringMember pattern, StringMember a) {
+			return a.v().contains(pattern.v());
 		}
 	};
 
-	public Function2<Boolean, String, StringMember> contains() {
+	public Function2<Boolean, StringMember, StringMember> contains() {
 		return CONTAINS;
 	}
 	
@@ -665,94 +665,94 @@ public class StringAlgebra
 		return NEQIGCASE;
 	}
 
-	private final Function2<Integer, String, StringMember> INDEXOF =
-			new Function2<Integer, String, StringMember>()
+	private final Function2<Integer, StringMember, StringMember> INDEXOF =
+			new Function2<Integer, StringMember, StringMember>()
 	{
 		@Override
-		public Integer call(String substring, StringMember a) {
-			return a.v().indexOf(substring);
+		public Integer call(StringMember substring, StringMember a) {
+			return a.v().indexOf(substring.v());
 		}
 	};
 
-	public Function2<Integer, String, StringMember> indexOf()  {
+	public Function2<Integer, StringMember, StringMember> indexOf()  {
 		return INDEXOF;
 	}
 	
-	private final Function3<Integer, Integer, String, StringMember> INDEXOFFROM =
-			new Function3<Integer, Integer, String, StringMember>()
+	private final Function3<Integer, Integer, StringMember, StringMember> INDEXOFFROM =
+			new Function3<Integer, Integer, StringMember, StringMember>()
 	{
 		@Override
-		public Integer call(Integer from, String substring, StringMember a) {
-			return a.v().indexOf(substring, from);
+		public Integer call(Integer from, StringMember substring, StringMember a) {
+			return a.v().indexOf(substring.v(), from);
 		}
 	};
 	
-	public Function3<Integer, Integer, String, StringMember> indexOfFrom()  {
+	public Function3<Integer, Integer, StringMember, StringMember> indexOfFrom()  {
 		return INDEXOFFROM;
 	}
 	
-	private final Function2<Integer, String, StringMember> LASTINDEXOF =
-			new Function2<Integer, String, StringMember>()
+	private final Function2<Integer, StringMember, StringMember> LASTINDEXOF =
+			new Function2<Integer, StringMember, StringMember>()
 	{
 		@Override
-		public Integer call(String substring, StringMember a) {
-			return a.v().lastIndexOf(substring);
+		public Integer call(StringMember substring, StringMember a) {
+			return a.v().lastIndexOf(substring.v());
 		}
 	};
 	
-	public Function2<Integer, String, StringMember> lastIndexOf()  {
+	public Function2<Integer, StringMember, StringMember> lastIndexOf()  {
 		return LASTINDEXOF;
 	}
 	
-	private final Function3<Integer, Integer, String, StringMember> LASTINDEXOFFROM =
-			new Function3<Integer, Integer, String, StringMember>()
+	private final Function3<Integer, Integer, StringMember, StringMember> LASTINDEXOFFROM =
+			new Function3<Integer, Integer, StringMember, StringMember>()
 	{
 		@Override
-		public Integer call(Integer from, String substring, StringMember a) {
-			return a.v().lastIndexOf(substring, from);
+		public Integer call(Integer from, StringMember substring, StringMember a) {
+			return a.v().lastIndexOf(substring.v(), from);
 		}
 	};
 	
-	public Function3<Integer, Integer, String, StringMember> lastIndexOfFrom()  {
+	public Function3<Integer, Integer, StringMember, StringMember> lastIndexOfFrom()  {
 		return LASTINDEXOFFROM;
 	}
 	
-	private final Function2<Boolean, String, StringMember> MATCHES =
-			new Function2<Boolean, String, StringMember>()
+	private final Function2<Boolean, StringMember, StringMember> MATCHES =
+			new Function2<Boolean, StringMember, StringMember>()
 	{
 		@Override
-		public Boolean call(String regex, StringMember a) {
-			return a.v().matches(regex);
+		public Boolean call(StringMember regex, StringMember a) {
+			return a.v().matches(regex.v());
 		}
 	};
 	
-	public Function2<Boolean, String, StringMember> matches() {
+	public Function2<Boolean, StringMember, StringMember> matches() {
 		return MATCHES;
 	}
 
-	private final Procedure4<String, String, StringMember, StringMember> REPLACEALL =
-			new Procedure4<String, String, StringMember, StringMember>()
+	private final Procedure4<StringMember, StringMember, StringMember, StringMember> REPLACEALL =
+			new Procedure4<StringMember, StringMember, StringMember, StringMember>()
 	{
 		@Override
-		public void call(String regex, String replacement, StringMember a, StringMember b) {
-			b.setV(a.v().replaceAll(regex, replacement));
+		public void call(StringMember regex, StringMember replacement, StringMember a, StringMember b) {
+			b.setV(a.v().replaceAll(regex.v(), replacement.v()));
 		}
 	};
 	
-	public Procedure4<String, String, StringMember, StringMember> replaceAll() {
+	public Procedure4<StringMember, StringMember, StringMember, StringMember> replaceAll() {
 		return REPLACEALL;
 	}
 
-	private final Procedure4<String, String, StringMember, StringMember> REPLACEFIRST =
-			new Procedure4<String, String, StringMember, StringMember>()
+	private final Procedure4<StringMember, StringMember, StringMember, StringMember> REPLACEFIRST =
+			new Procedure4<StringMember, StringMember, StringMember, StringMember>()
 	{
 		@Override
-		public void call(String regex, String replacement, StringMember a, StringMember b) {
-			b.setV(a.v().replaceFirst(regex, replacement));
+		public void call(StringMember regex, StringMember replacement, StringMember a, StringMember b) {
+			b.setV(a.v().replaceFirst(regex.v(), replacement.v()));
 		}
 	};
 	
-	public Procedure4<String, String, StringMember, StringMember> replaceFirst() {
+	public Procedure4<StringMember, StringMember, StringMember, StringMember> replaceFirst() {
 		return REPLACEFIRST;
 	}
 

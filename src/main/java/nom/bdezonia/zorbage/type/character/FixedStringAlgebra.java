@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.function.Function5;
+import nom.bdezonia.zorbage.function.Function6;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -306,7 +308,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(FixedStringMember a, SignedInt32Member b) {
-			b.setV(a.getCodePointCount());
+			b.setV(a.codePointCount());
 		}
 	};
 
@@ -350,11 +352,11 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Integer call(Integer i, FixedStringMember a) {
-			return a.getCodePoint(i);
+			return a.codePointAt(i);
 		}
 	};
 
-	public Function2<Integer, Integer, FixedStringMember> getCodePoint() {
+	public Function2<Integer, Integer, FixedStringMember> codePointAt() {
 		return GCP;
 	}
 	
@@ -363,11 +365,11 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Integer call(FixedStringMember a) {
-			return a.getCodePointCount();
+			return a.codePointCount();
 		}
 	};
 
-	public Function1<Integer, FixedStringMember> getCodePointCount() {
+	public Function1<Integer, FixedStringMember> codePointCount() {
 		return GCPC;
 	}
 	
@@ -467,7 +469,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Boolean call(FixedStringMember a) {
-			return a.getCodePointCount() == 0;
+			return a.codePointCount() == 0;
 		}
 	};
 
@@ -493,22 +495,22 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(Integer start, Integer end, FixedStringMember a, FixedStringMember b) {
-			if (start < 0 || start >= a.getCodePointCount())
+			if (start < 0 || start >= a.codePointCount())
 				throw new IllegalArgumentException("start offset out of string bounds");
-			if (end < 0 || end >= a.getCodePointCount() || end < start)
+			if (end < 0 || end >= a.codePointCount() || end < start)
 				throw new IllegalArgumentException("end offset out of string bounds");
 			for (int ai = start, bi = 0;
-					ai < end && ai < a.getCodePointCount() && bi < b.getCodePointCount();
+					ai < end && ai < a.codePointCount() && bi < b.codePointCount();
 					ai++, bi++)
 			{
-				int cp = a.getCodePoint(ai);
-				b.setCodePoint(bi, cp);
+				int cp = a.codePointAt(ai);
+				b.setCodePointAt(bi, cp);
 				if (cp == 0) { // NUL
 					break;
 				}
 			}
-			if (b.getCodePointCount() > a.getCodePointCount()) {
-				b.setCodePoint(end - start, 0); // NUL
+			if (b.codePointCount() > a.codePointCount()) {
+				b.setCodePointAt(end - start, 0); // NUL
 			}
 		}
 	};
@@ -522,7 +524,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(Integer start, FixedStringMember a, FixedStringMember b) {
-			substringFromStartToEnd().call(start, a.getCodePointCount(), a, b);
+			substringFromStartToEnd().call(start, a.codePointCount(), a, b);
 		}
 	};
 
@@ -548,8 +550,8 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, Integer from, FixedStringMember a) {
-			for (int i = from; i < a.getCodePointCount(); i++) {
-				int cp = a.getCodePoint(i);
+			for (int i = from; i < a.codePointCount(); i++) {
+				int cp = a.codePointAt(i);
 				if (cp == 0)
 					return -1;
 				if (cp == codePoint)
@@ -568,7 +570,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, FixedStringMember a) {
-			return lastIndexOfFrom().call(codePoint, a.getCodePointCount()-1, a);
+			return lastIndexOfFrom().call(codePoint, a.codePointCount()-1, a);
 		}
 	};
 	
@@ -581,9 +583,9 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, Integer from, FixedStringMember a) {
-			int firstNull = a.getCodePointCount();
-			for (int i = 0; i < a.getCodePointCount(); i++) {
-				if (a.getCodePoint(i) == 0) {
+			int firstNull = a.codePointCount();
+			for (int i = 0; i < a.codePointCount(); i++) {
+				if (a.codePointAt(i) == 0) {
 					firstNull = i;
 					break;
 				}
@@ -591,7 +593,7 @@ public class FixedStringAlgebra
 			if (firstNull <= from)
 				from = firstNull - 1;
 			for (int i = from; i >= 0; i--) {
-				int cp = a.getCodePoint(i);
+				int cp = a.codePointAt(i);
 				if (cp == 0)
 					return -1;
 				if (cp == codePoint)
@@ -613,9 +615,9 @@ public class FixedStringAlgebra
 			if (oldCP == 0 || newCP == 0)
 				throw new IllegalArgumentException("replace method does not allow NUL char manipulations");
 			assign().call(a, b);
-			for (int i = 0; i < b.getCodePointCount(); i++) {
-				if (b.getCodePoint(i) == oldCP)
-					b.setCodePoint(i, newCP);
+			for (int i = 0; i < b.codePointCount(); i++) {
+				if (b.codePointAt(i) == oldCP)
+					b.setCodePointAt(i, newCP);
 			}
 		}
 	};
@@ -650,7 +652,7 @@ public class FixedStringAlgebra
 		return GETBYTESCHARSET;
 	}
 
-	private final Function2<byte[], String, FixedStringMember> GETBYTESSTRING =
+	private final Function2<byte[],String, FixedStringMember> GETBYTESSTRING =
 			new Function2<byte[], String, FixedStringMember>()
 	{
 		@Override
@@ -734,33 +736,225 @@ public class FixedStringAlgebra
 		return NEQIGCASE;
 	}
 
-	/*
-	  TODO - add these. (Maybe by working with String instead of StringMember I am complicating my
-	  life with some of these. Instead of codepoint arrays I could use FixedStringMembers.
+	private final Procedure3<FixedStringMember,FixedStringMember,FixedStringMember> CONCAT =
+			new Procedure3<FixedStringMember, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember a, FixedStringMember b, FixedStringMember c) {
+			c.setV(a.v().concat(b.v()));
+		}
+	};
+
+	public Procedure3<FixedStringMember,FixedStringMember,FixedStringMember> concat() {
+		return CONCAT;
+	}
 	
-	  Do I change functions that return Strings into Procedures that assign a StringMember? This
-	  is applicable to FixedStringAlgebra and StringAlgebra.
-	  
-	  private void tmp() {
-		String s = "";
-		s.indexOf(codepoints);
-		s.indexOf(codepoints, fromIndex);
-		s.lastIndexOf(codepoints);
-		s.lastIndexOf(codepoints, fromIndex);
-		s.replace(targetcodepoints, replacementcodepoints);
-		split(int[] codePoints)
-		split(int[] codePoints, int limit)
-		concat(FixedStringMember)
-		contentEquals(codepoints)
-		some or all of the codePoint() methods
-		the two regionMatches methods?
-		static join()
-		toCharArray()
-		
-		// skipping these?? or think more abput??
-		s.replaceAll(regex, replacement);
-		s.replaceFirst(regex, replacement);
-		s.matches(regex);
-	  }
-	*/
+	private final Function2<FixedStringMember[], FixedStringMember, FixedStringMember> SPLIT =
+			new Function2<FixedStringMember[], FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public FixedStringMember[] call(FixedStringMember regex, FixedStringMember a) {
+			String[] splits = a.v().split(regex.v());
+			FixedStringMember[] members = new FixedStringMember[splits.length];
+			for (int i = 0; i < splits.length; i++) {
+				members[i] = new FixedStringMember(splits[i]);
+			}
+			return members;
+		}
+	};
+
+	public Function2<FixedStringMember[], FixedStringMember, FixedStringMember> split() {
+		return SPLIT;
+	}
+
+	private final Function3<FixedStringMember[], Integer, FixedStringMember, FixedStringMember> SPLITLIM =
+			new Function3<FixedStringMember[], Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public FixedStringMember[] call(Integer limit, FixedStringMember regex, FixedStringMember a) {
+			String[] splits = a.v().split(regex.v(), limit);
+			FixedStringMember[] members = new FixedStringMember[splits.length];
+			for (int i = 0; i < splits.length; i++) {
+				members[i] = new FixedStringMember(splits[i]);
+			}
+			return members;
+		}
+	};
+
+	public Function3<FixedStringMember[], Integer, FixedStringMember, FixedStringMember> splitWithLimit() {
+		return SPLITLIM;
+	}
+
+	private final Function1<char[], FixedStringMember> TOCHARS =
+			new Function1<char[], FixedStringMember>()
+	{
+		@Override
+		public char[] call(FixedStringMember a) {
+			return a.v().toCharArray();
+		}
+	};
+
+	public Function1<char[], FixedStringMember> toCharArray() {
+		return TOCHARS;
+	}
+
+	private static final Function2<FixedStringMember,FixedStringMember,FixedStringMember[]> JOIN =
+			new Function2<FixedStringMember, FixedStringMember, FixedStringMember[]>()
+	{
+		@Override
+		public FixedStringMember call(FixedStringMember delimeter, FixedStringMember[] elements) {
+			String[] strings = new String[elements.length];
+			for (int i = 0; i < elements.length; i++) {
+				strings[i] = elements[i].v();
+			}
+			return new FixedStringMember(String.join(delimeter.v(), strings));
+		}
+	};
+	
+	private final Function2<Integer, FixedStringMember, FixedStringMember> INDEXOF =
+			new Function2<Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Integer call(FixedStringMember substring, FixedStringMember a) {
+			return a.v().indexOf(substring.v());
+		}
+	};
+
+	public Function2<Integer, FixedStringMember, FixedStringMember> indexOfCodePoints()  {
+		return INDEXOF;
+	}
+	
+	private final Function3<Integer, Integer, FixedStringMember, FixedStringMember> INDEXOFFROM =
+			new Function3<Integer, Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer from, FixedStringMember substring, FixedStringMember a) {
+			return a.v().indexOf(substring.v(), from);
+		}
+	};
+	
+	public Function3<Integer, Integer, FixedStringMember, FixedStringMember> indexOfCodePointsFrom()  {
+		return INDEXOFFROM;
+	}
+	
+	private final Function2<Integer, FixedStringMember, FixedStringMember> LASTINDEXOF =
+			new Function2<Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Integer call(FixedStringMember substring, FixedStringMember a) {
+			return a.v().lastIndexOf(substring.v());
+		}
+	};
+	
+	public Function2<Integer, FixedStringMember, FixedStringMember> lastIndexOfCodePoints()  {
+		return LASTINDEXOF;
+	}
+	
+	private final Function3<Integer, Integer, FixedStringMember, FixedStringMember> LASTINDEXOFFROM =
+			new Function3<Integer, Integer, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Integer call(Integer from, FixedStringMember substring, FixedStringMember a) {
+			return a.v().lastIndexOf(substring.v(), from);
+		}
+	};
+	
+	public Function3<Integer, Integer, FixedStringMember, FixedStringMember> lastIndexOfCodePointsFrom()  {
+		return LASTINDEXOFFROM;
+	}
+	
+	public static Function2<FixedStringMember, FixedStringMember, FixedStringMember[]> join() {
+		return JOIN;
+	}
+
+	private final Procedure4<FixedStringMember,FixedStringMember,FixedStringMember,FixedStringMember> REPLACECP =
+			new Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember fromCodePoints, FixedStringMember toCodePoints, FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().replace(fromCodePoints.v(), toCodePoints.v()));
+		}
+	};
+	
+	public Procedure4<FixedStringMember,FixedStringMember,FixedStringMember,FixedStringMember> replaceCodePoints() {
+		return REPLACECP;
+	}
+	
+	private final Function2<Boolean,FixedStringMember,FixedStringMember> CEQ =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember content, FixedStringMember a) {
+			return a.v().contentEquals(content.v());
+		}
+	};
+
+	public Function2<Boolean,FixedStringMember,FixedStringMember> contentEquals() {
+		return CEQ;
+	}
+	
+	private final Function5<Boolean,Integer,FixedStringMember,Integer,Integer,FixedStringMember> RMATCH =
+			new Function5<Boolean, Integer, FixedStringMember, Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(Integer toffset, FixedStringMember other, Integer ooffset, Integer len, FixedStringMember a) {
+			return a.v().regionMatches(toffset, other.v(), ooffset, len);
+		}
+	};
+	
+	public Function5<Boolean,Integer,FixedStringMember,Integer,Integer,FixedStringMember> regionMatches() {
+		return RMATCH;
+	}
+	
+	private final Function6<Boolean,Boolean,Integer,FixedStringMember,Integer,Integer,FixedStringMember> RMATCHCASE =
+			new Function6<Boolean, Boolean, Integer, FixedStringMember, Integer, Integer, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(Boolean ignoreCase, Integer toffset, FixedStringMember other, Integer ooffset, Integer len, FixedStringMember a) {
+			return a.v().regionMatches(ignoreCase, toffset, other.v(), ooffset, len);
+		}
+	};
+	
+	public Function6<Boolean,Boolean,Integer,FixedStringMember,Integer,Integer,FixedStringMember> regionMatchesWithCase() {
+		return RMATCHCASE;
+	}
+
+	private final Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember> REPLACEALL =
+			new Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember regex, FixedStringMember replacement, FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().replaceAll(regex.v(), replacement.v()));
+		}
+	};
+	
+	public Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember> replaceAll() {
+		return REPLACEALL;
+	}
+
+	private final Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember> REPLACEFIRST =
+			new Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public void call(FixedStringMember regex, FixedStringMember replacement, FixedStringMember a, FixedStringMember b) {
+			b.setV(a.v().replaceFirst(regex.v(), replacement.v()));
+		}
+	};
+	
+	public Procedure4<FixedStringMember, FixedStringMember, FixedStringMember, FixedStringMember> replaceFirst() {
+		return REPLACEFIRST;
+	}
+
+	private final Function2<Boolean, FixedStringMember, FixedStringMember> MATCHES =
+			new Function2<Boolean, FixedStringMember, FixedStringMember>()
+	{
+		@Override
+		public Boolean call(FixedStringMember regex, FixedStringMember a) {
+			return a.v().matches(regex.v());
+		}
+	};
+	
+	public Function2<Boolean, FixedStringMember, FixedStringMember> matches() {
+		return MATCHES;
+	}
 }

@@ -330,8 +330,8 @@ class MiscTypes {
 		G.FSTRING.getBytes();
 		G.FSTRING.getBytesUsingCharset();
 		G.FSTRING.getBytesUsingCharsetName();
-		G.FSTRING.getCodePoint();
-		G.FSTRING.getCodePointCount();
+		G.FSTRING.codePointAt();
+		G.FSTRING.codePointCount();
 		G.FSTRING.indexOf();
 		G.FSTRING.indexOfFrom();
 		G.FSTRING.lastIndexOf();

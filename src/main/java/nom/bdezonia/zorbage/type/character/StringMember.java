@@ -103,4 +103,8 @@ public final class StringMember
 		}
 		return false;
 	}
+	
+	public int[] codePoints() {
+		return v.codePoints().toArray();
+	}
 }

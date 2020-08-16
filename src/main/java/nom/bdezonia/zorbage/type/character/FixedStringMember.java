@@ -68,7 +68,7 @@ public final class FixedStringMember
 		set(value);
 	}
 	
-	public int getCodePointCount() {
+	public int codePointCount() {
 		for (int i = 0; i < codePoints.length; i++) {
 			if (codePoints[i] == 0) { // NUL
 				return i;
@@ -77,7 +77,7 @@ public final class FixedStringMember
 		return codePoints.length;
 	}
 
-	public int getCodePoint(int i) {
+	public int codePointAt(int i) {
 		if (i < 0 || i >= codePoints.length)
 			throw new IllegalArgumentException("code point index out of bounds");
 		for (int n = 0; n <= i; n++) {
@@ -87,7 +87,7 @@ public final class FixedStringMember
 		return codePoints[i];
 	}
 
-	public void setCodePoint(int i, int cp) {
+	public void setCodePointAt(int i, int cp) {
 		if (i < 0 || i >= codePoints.length)
 			throw new IllegalArgumentException("code point index out of bounds");
 		codePoints[i] = cp;
@@ -210,5 +210,9 @@ public final class FixedStringMember
 	
 	public int capacity() {
 		return codePoints.length;
+	}
+	
+	public int[] codePoints() {
+		return codePoints;
 	}
 }
