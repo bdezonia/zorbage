@@ -24,16 +24,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package example;
+
 /**
  * @author Barry DeZonia
  */
-/*
- * Why?
-how to understand?
-conventions
-  dumb u's
-  others I forget right now
-how this accelerates code
+class Generics {
 
-flexibility of Transforms re: typing ?
- */
+	/*
+	 * Zorbage is designed around Java generics. There are many generic algorithms
+	 * included that can be used with many types (even many types that have yet to
+	 * be defined). This is a primary goal of Zorbage: people sharing code between
+	 * each other that can work with many current and (as needed) newly defined
+	 * types.
+	 * 
+	 * Zorbage is defined around Algebras that manipulate generic types which are
+	 * often labeled as U's. A generic U type (such as a SignedInt32Member) is
+	 * meant to be designed as a dumb data holder. A U can set and get values,
+	 * define how they are stored to data structures, and provide various type
+	 * conversions. Otherwise U's should be dumb. This frees up the many algorithms
+	 * of Zorbage to manipulate values using Algebras that are smart.
+	 * 
+	 * One aspect of these dumb U's and an orientation of using generics is that
+	 * Java's code generator can define optimal code for manipulating U objects
+	 * as inline stack constructed data structures.
+	 */
+	
+}
