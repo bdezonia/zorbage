@@ -75,10 +75,54 @@ class Statistics {
 	 * their projects.
 	 */
 	
-	// Zorbage can calculate basic statistics from lists of numbers. The numbers can
-	// be of any of the many types supported in Zorbage.
+	/*
+	 * FYI here is one method for getting a quick statistical summary of a set of numbers.
+	 */
 	
 	void example1() {
+		
+		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		
+		Float32Member min = G.FLT.construct();
+		Float32Member q1 = G.FLT.construct();
+		Float32Member median = G.FLT.construct();
+		Float32Member mean = G.FLT.construct();
+		Float32Member q3 = G.FLT.construct();
+		Float32Member max = G.FLT.construct();
+		
+		SummaryStats.compute(G.FLT, data, min, q1, median, mean, q3, max);
+		
+		// If your data contains NaN values you can calc values working around the NaNs
+		
+		SignedInt64Member numNoData = G.INT64.construct();
+
+		SummaryStats.computeSafe(G.FLT, data, min, q1, median, mean, q3, max, numNoData);
+	}
+
+	/*
+	 * FYI here is another method for getting a quick statistical summary of a set of numbers.
+	 */
+	
+	void example2() {
+		
+		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		
+		Float32Member mean = G.FLT.construct();
+		Float32Member stdErrMean = G.FLT.construct();
+		Float32Member stddev = G.FLT.construct();
+		Float32Member sampleVariance = G.FLT.construct();
+		Float32Member sampleSkew = G.FLT.construct();
+		Float32Member excessKurtosis = G.FLT.construct();
+
+		BasicStats.compute(G.FLT, data, mean, stdErrMean, stddev, sampleVariance, sampleSkew, excessKurtosis);
+	}
+
+	/*
+	 * Zorbage can calculate basic statistics from lists of numbers. The numbers can
+	 * be of any of the many types supported in Zorbage.
+	 */
+	
+	void example3() {
 		
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
@@ -129,7 +173,7 @@ class Statistics {
 	 * 
 	 */
 	
-	void example2() {
+	void example4() {
 		
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
@@ -179,7 +223,7 @@ class Statistics {
 	 * significantly off for numbers whose square can exceed floating point limits.
 	 */
 	
-	void example3() {
+	void example5() {
 
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
@@ -206,7 +250,7 @@ class Statistics {
 	 * the remaining data.
 	 */
 	
-	void example4() {
+	void example6() {
 
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
@@ -243,7 +287,7 @@ class Statistics {
 	 * you might want.
 	 */
 	
-	void example5() {
+	void example7() {
 		
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
@@ -264,47 +308,5 @@ class Statistics {
 		HighPrecisionMember result2 = G.HP.construct();
 		
 		Variance.compute(G.HP, hiPrec, result2);
-	}
-	
-	/*
-	 * FYI here is one method for getting a quick statistical summary of a set of numbers.
-	 */
-	
-	void example6() {
-		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
-		
-		Float32Member min = G.FLT.construct();
-		Float32Member q1 = G.FLT.construct();
-		Float32Member median = G.FLT.construct();
-		Float32Member mean = G.FLT.construct();
-		Float32Member q3 = G.FLT.construct();
-		Float32Member max = G.FLT.construct();
-		
-		SummaryStats.compute(G.FLT, data, min, q1, median, mean, q3, max);
-		
-		// If your contains NaN values you can calc values working around the NaNs
-		
-		SignedInt64Member numNoData = G.INT64.construct();
-
-		SummaryStats.computeSafe(G.FLT, data, min, q1, median, mean, q3, max, numNoData);
-	}
-
-	/*
-	 * FYI here is another method for getting a quick statistical summary of a set of numbers.
-	 */
-	
-	void example7() {
-		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
-		
-		Float32Member mean = G.FLT.construct();
-		Float32Member stdErrMean = G.FLT.construct();
-		Float32Member stddev = G.FLT.construct();
-		Float32Member sampleVariance = G.FLT.construct();
-		Float32Member sampleSkew = G.FLT.construct();
-		Float32Member excessKurtosis = G.FLT.construct();
-
-		BasicStats.compute(G.FLT, data, mean, stdErrMean, stddev, sampleVariance, sampleSkew, excessKurtosis);
 	}
 }
