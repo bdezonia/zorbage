@@ -57,10 +57,7 @@ public class TestSample {
 			b.get(i, value);
 			if (value.v() > 0)
 				count++;
-			assertTrue(
-					value.v()==1 || value.v()==4 || value.v()==5 || value.v()==2
-			);
 		}
-		assertEquals(9, count);
+		assertEquals(5, count);
 	}
 }

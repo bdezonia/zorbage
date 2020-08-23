@@ -26,7 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigInteger;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -48,15 +50,18 @@ public class Sample {
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algebra, int n, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T algebra, long n, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		if (n > aSize)
-			throw new IllegalArgumentException("n too large");
+			n = aSize;
 		U tmp = algebra.construct();
-		Random rng = new Random(System.currentTimeMillis());
-		for (long i = 0; i < aSize; i++) {
-			int j = rng.nextInt(n);
+		Random rng = ThreadLocalRandom.current();
+		for (long i = 0; i < n; i++) {
+			long j = new BigInteger(64, rng).longValue();
+			if (j < 0) j = -j; // translate neg to pos
+			if (j < 0) j = 0;  // translate -1 to 0
+			j = j % n;
 			a.get(j, tmp);
 			b.set(i, tmp);
 		}
