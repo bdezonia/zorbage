@@ -105,7 +105,7 @@ public class StringAlgebra
 	{
 		@Override
 		public void call(StringMember a, StringMember b) {
-			a.setV(b.v());
+			b.setV(a.v());
 		}
 	};
 	
@@ -507,8 +507,16 @@ public class StringAlgebra
 			new Function3<Integer, Integer, Integer, StringMember>()
 	{
 		@Override
-		public Integer call(Integer ch, Integer from, StringMember a) {
-			return a.v().indexOf(ch, from);
+		public Integer call(Integer codePoint, Integer from, StringMember a) {
+			
+			int len = a.v().length();
+			int count = a.v().codePointCount(0, len);
+			if (from >= count) from = count-1;
+			for (int i = from; i < count; i++) {
+				if (a.v().codePointAt(i) == codePoint)
+					return i;
+			}
+			return -1;
 		}
 	};
 	
@@ -521,7 +529,10 @@ public class StringAlgebra
 	{
 		@Override
 		public Integer call(Integer codePoint, StringMember a) {
-			return lastIndexOfCodePointFrom().call(codePoint, a.v().length(), a);
+
+			int len = a.v().length();
+			int count = a.v().codePointCount(0, len);
+			return lastIndexOfCodePointFrom().call(codePoint, len == 0 ? 0 : count-1, a);
 		}
 	};
 	
@@ -533,8 +544,16 @@ public class StringAlgebra
 			new Function3<Integer, Integer, Integer, StringMember>()
 	{
 		@Override
-		public Integer call(Integer ch, Integer from, StringMember a) {
-			return a.v().lastIndexOf(ch, from);
+		public Integer call(Integer codePoint, Integer from, StringMember a) {
+
+			int len = a.v().length();
+			int count = a.v().codePointCount(0, len);
+			if (from >= count) from = count-1;
+			for (int i = from; i >= 0; i--) {
+				if (a.v().codePointAt(i) == codePoint)
+					return i;
+			}
+			return -1;
 		}
 	};
 	
@@ -678,16 +697,16 @@ public class StringAlgebra
 		return INDEXOF;
 	}
 	
-	private final Function3<Integer, Integer, StringMember, StringMember> INDEXOFFROM =
-			new Function3<Integer, Integer, StringMember, StringMember>()
+	private final Function3<Integer, StringMember, Integer, StringMember> INDEXOFFROM =
+			new Function3<Integer, StringMember, Integer, StringMember>()
 	{
 		@Override
-		public Integer call(Integer from, StringMember substring, StringMember a) {
+		public Integer call(StringMember substring, Integer from, StringMember a) {
 			return a.v().indexOf(substring.v(), from);
 		}
 	};
 	
-	public Function3<Integer, Integer, StringMember, StringMember> indexOfFrom()  {
+	public Function3<Integer, StringMember, Integer, StringMember> indexOfFrom()  {
 		return INDEXOFFROM;
 	}
 	
@@ -704,16 +723,16 @@ public class StringAlgebra
 		return LASTINDEXOF;
 	}
 	
-	private final Function3<Integer, Integer, StringMember, StringMember> LASTINDEXOFFROM =
-			new Function3<Integer, Integer, StringMember, StringMember>()
+	private final Function3<Integer, StringMember, Integer, StringMember> LASTINDEXOFFROM =
+			new Function3<Integer, StringMember, Integer, StringMember>()
 	{
 		@Override
-		public Integer call(Integer from, StringMember substring, StringMember a) {
+		public Integer call(StringMember substring, Integer from, StringMember a) {
 			return a.v().lastIndexOf(substring.v(), from);
 		}
 	};
 	
-	public Function3<Integer, Integer, StringMember, StringMember> lastIndexOfFrom()  {
+	public Function3<Integer, StringMember, Integer, StringMember> lastIndexOfFrom()  {
 		return LASTINDEXOFFROM;
 	}
 	

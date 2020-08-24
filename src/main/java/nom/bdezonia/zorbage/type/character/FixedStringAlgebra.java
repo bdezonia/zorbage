@@ -105,7 +105,7 @@ public class FixedStringAlgebra
 	{
 		@Override
 		public void call(FixedStringMember a, FixedStringMember b) {
-			a.setV(b.v());
+			b.setV(a.v());
 		}
 	};
 	
