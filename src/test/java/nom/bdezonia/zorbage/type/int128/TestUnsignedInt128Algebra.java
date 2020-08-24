@@ -31,6 +31,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
@@ -56,7 +57,7 @@ public class TestUnsignedInt128Algebra {
 	
 	@Test
 	public void testAllOpsForSomeNumbers() {
-		Random rng = new Random();
+		Random rng = ThreadLocalRandom.current();
 		int loop_max = 10; // Note: scaled back considerably after new test class added that is thorough
 		BigInteger max = BigInteger.ONE.add(BigInteger.ONE).pow(128);
 		UnsignedInt128Member a = G.UINT128.construct();
@@ -152,7 +153,7 @@ public class TestUnsignedInt128Algebra {
 	
 	@Test
 	public void testVsetV() {
-		Random rng = new Random();
+		Random rng = ThreadLocalRandom.current();
 		int loop_max = 1000000;
 		UnsignedInt128Member a = new UnsignedInt128Member();
 		for (int i = 0; i < loop_max; i++) {

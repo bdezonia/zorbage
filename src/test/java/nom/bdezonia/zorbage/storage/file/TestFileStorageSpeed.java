@@ -30,6 +30,7 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test;
 
@@ -53,7 +54,7 @@ public class TestFileStorageSpeed {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		Random rng = new Random(System.currentTimeMillis());
+		Random rng = ThreadLocalRandom.current();
 		double[] dbls = new double[1300111];
 		for (int i = 0; i < dbls.length; i++) {
 			dbls[i] = rng.nextDouble();
