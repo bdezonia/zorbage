@@ -239,7 +239,16 @@ class CppSTL {
 		//  see https://en.cppreference.com/w/cpp/algorithm/reverse_copy
 	}
 	
-	void example22() {
+	void example22a() {
+		
+		// LeftRotate.compute(Algebra<T,U> algebra, long delta, IndexedDataSource<U> a);
+		
+		// RightRotate.compute(Algebra<T,U> algebra, long delta, IndexedDataSource<U> a);
+		
+		//  see https://en.cppreference.com/w/cpp/algorithm/rotate
+	}
+	
+	void example22b() {
 		
 		// RotateCopy.compute(Algebra<T,U> algebra, long delta, IndexedDataSource<U> a, IndexedDataSource<U> b);
 		
