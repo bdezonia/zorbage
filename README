@@ -233,12 +233,12 @@ How to include zorbage in your Maven project
   <dependency>
     <groupId>io.github.bdezonia</groupId>
     <artifactId>zorbage</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
   </dependency>
   
 How to include zorbage in a different build system
 
-  See https://search.maven.org/artifact/io.github.bdezonia/zorbage/1.4.0/jar
+  See https://search.maven.org/artifact/io.github.bdezonia/zorbage/1.5.0/jar
   for instructions on how to reference zorbage in build systems such as
   Gradle or others.
 
