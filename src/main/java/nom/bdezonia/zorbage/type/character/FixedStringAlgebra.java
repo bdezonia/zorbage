@@ -497,20 +497,24 @@ public class FixedStringAlgebra
 		public void call(Integer start, Integer end, FixedStringMember a, FixedStringMember b) {
 			if (start < 0 || start >= a.codePointCount())
 				throw new IllegalArgumentException("start offset out of string bounds");
-			if (end < 0 || end >= a.codePointCount() || end < start)
+			if (end < 0 || end > a.codePointCount() || end < start)
 				throw new IllegalArgumentException("end offset out of string bounds");
-			for (int ai = start, bi = 0;
-					ai < end && ai < a.codePointCount() && bi < b.codePointCount();
-					ai++, bi++)
+			for (int i = 0; i < end-start; i++)
 			{
-				int cp = a.codePointAt(ai);
-				b.setCodePointAt(bi, cp);
+				if (i >= b.capacity()) {
+					return;
+				}
+				if (start+i >= a.capacity()) {
+					throw new IllegalArgumentException("fixed string substring indexing off end of input");
+				}
+				int cp = a.codePointAt(start+i);
+				b.setCodePointAt(i, cp);
 				if (cp == 0) { // NUL
-					break;
+					return;
 				}
 			}
-			if (b.codePointCount() > a.codePointCount()) {
-				b.setCodePointAt(end - start, 0); // NUL
+			if (end-start < b.capacity()) {
+				b.setCodePointAt(end-start, 0);  // NUL
 			}
 		}
 	};
@@ -828,16 +832,16 @@ public class FixedStringAlgebra
 		return INDEXOF;
 	}
 	
-	private final Function3<Integer, Integer, FixedStringMember, FixedStringMember> INDEXOFFROM =
-			new Function3<Integer, Integer, FixedStringMember, FixedStringMember>()
+	private final Function3<Integer, FixedStringMember, Integer, FixedStringMember> INDEXOFFROM =
+			new Function3<Integer, FixedStringMember, Integer, FixedStringMember>()
 	{
 		@Override
-		public Integer call(Integer from, FixedStringMember substring, FixedStringMember a) {
+		public Integer call(FixedStringMember substring, Integer from, FixedStringMember a) {
 			return a.v().indexOf(substring.v(), from);
 		}
 	};
 	
-	public Function3<Integer, Integer, FixedStringMember, FixedStringMember> indexOfCodePointsFrom()  {
+	public Function3<Integer, FixedStringMember, Integer, FixedStringMember> indexOfCodePointsFrom()  {
 		return INDEXOFFROM;
 	}
 	
@@ -854,16 +858,16 @@ public class FixedStringAlgebra
 		return LASTINDEXOF;
 	}
 	
-	private final Function3<Integer, Integer, FixedStringMember, FixedStringMember> LASTINDEXOFFROM =
-			new Function3<Integer, Integer, FixedStringMember, FixedStringMember>()
+	private final Function3<Integer, FixedStringMember, Integer, FixedStringMember> LASTINDEXOFFROM =
+			new Function3<Integer, FixedStringMember, Integer, FixedStringMember>()
 	{
 		@Override
-		public Integer call(Integer from, FixedStringMember substring, FixedStringMember a) {
+		public Integer call(FixedStringMember substring, Integer from, FixedStringMember a) {
 			return a.v().lastIndexOf(substring.v(), from);
 		}
 	};
 	
-	public Function3<Integer, Integer, FixedStringMember, FixedStringMember> lastIndexOfCodePointsFrom()  {
+	public Function3<Integer, FixedStringMember, Integer, FixedStringMember> lastIndexOfCodePointsFrom()  {
 		return LASTINDEXOFFROM;
 	}
 	
