@@ -26,58 +26,52 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.assertEquals;
-
 import java.math.BigDecimal;
 
-import org.junit.Test;
-
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
+import nom.bdezonia.zorbage.algebra.RModuleMember;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionVectorMember;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestSpacingEstimate {
+public class EstimateSpacing {
 
-	@Test
-	public void test1() {
-		
-		HighPrecisionVectorMember spacings = G.HP_VEC.construct();
-		
-		long[] dims = new long[] {5,6,7,8,9};
-		
-		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(dims, G.DBL.construct());
-		
-		data.setAxisEquation(0, new StringDefinedAxisEquation("0.5 + 2*$0"));
-		data.setAxisEquation(1, new StringDefinedAxisEquation("0.6 + 3*$0"));
-		data.setAxisEquation(2, new StringDefinedAxisEquation("0.7 + 4*$0"));
-		data.setAxisEquation(3, new StringDefinedAxisEquation("0.8 + 5*$0"));
-		data.setAxisEquation(4, new StringDefinedAxisEquation("0.9 + 6*$0"));
+	// do not instantiate
+	
+	private EstimateSpacing() { }
 
-		SpacingEstimate.compute(data, spacings);
+	/**
+	 * Note: for linear axis equations this spacing estimate is exact.
+	 * 
+	 * @param data
+	 * @param result
+	 */
+	public static
+		void compute(DimensionedDataSource<?> data, RModuleMember<HighPrecisionMember> result)
+	{
+		RModuleMember<HighPrecisionMember> min = G.HP_VEC.construct();
+		RModuleMember<HighPrecisionMember> max = G.HP_VEC.construct();
 
-		HighPrecisionMember value = G.HP.construct();
+		BoundingBox.compute(data, min, max);
 		
-		assertEquals(dims.length, spacings.length());
+		result.alloc(min.length());
 		
-		spacings.getV(0, value);
-		assertEquals(BigDecimal.valueOf(2.0), value.v());
-		spacings.getV(1, value);
-		assertEquals(BigDecimal.valueOf(3.0), value.v());
-		spacings.getV(2, value);
-		assertEquals(BigDecimal.valueOf(4.0), value.v());
-		spacings.getV(3, value);
-		assertEquals(BigDecimal.valueOf(5.0), value.v());
-		spacings.getV(4, value);
-		assertEquals(BigDecimal.valueOf(6.0), value.v());
-		
+		HighPrecisionMember avgSpacing = G.HP.construct();
+		HighPrecisionMember numer = G.HP.construct();
+		HighPrecisionMember denom = G.HP.construct();
+		HighPrecisionMember left = G.HP.construct();
+		HighPrecisionMember right = G.HP.construct();
+		for (int i = 0; i < data.numDimensions(); i++) {
+			min.getV(i, left);
+			max.getV(i, right);
+			G.HP.subtract().call(right, left, numer);
+			denom.setV(BigDecimal.valueOf(data.dimension(i)-1));
+			G.HP.divide().call(numer, denom, avgSpacing);
+			result.setV(i, avgSpacing);
+		}
 	}
 }
