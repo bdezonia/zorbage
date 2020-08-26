@@ -58,7 +58,7 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
 
     - rational numbers (unbounded)
     
-    - fixed length strings
+    - variable length strings and fixed length strings
   
     - booleans
     
