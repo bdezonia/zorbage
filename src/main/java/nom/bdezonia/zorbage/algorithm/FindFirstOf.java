@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -77,7 +77,7 @@ public class FindFirstOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T algebra, Predicate<Tuple2<U,U>> cond, IndexedDataSource<U> elements, IndexedDataSource<U> a)
+		long compute(T algebra, Function1<Boolean,Tuple2<U,U>> cond, IndexedDataSource<U> elements, IndexedDataSource<U> a)
 	{
 		U tmpA = algebra.construct();
 		U element = algebra.construct();
@@ -90,7 +90,7 @@ public class FindFirstOf {
 			for (long j = 0; j < elementsSize; j++) {
 				elements.get(j, element);
 				tuple.setB(element);
-				if (cond.isTrue(tuple))
+				if (cond.call(tuple))
 					return i;
 			}
 		}

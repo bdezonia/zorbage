@@ -30,6 +30,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
@@ -40,24 +42,24 @@ public class TestXorPredicate {
 	@Test
 	@SuppressWarnings("all")
 	public void test() {
-		Predicate<Integer> a = new Predicate<Integer>() {
+		Function1<Boolean,Integer> a = new Function1<Boolean,Integer>() {
 			@Override
-			public boolean isTrue(Integer value) {
+			public Boolean call(Integer value) {
 				return value == 3;
 			}
 		};
-		Predicate<Integer> b = new Predicate<Integer>() {
+		Function1<Boolean,Integer> b = new Function1<Boolean,Integer>() {
 			@Override
-			public boolean isTrue(Integer value) {
+			public Boolean call(Integer value) {
 				return value == 4;
 			}
 		};
 		XorPredicate<Integer> pred = new XorPredicate<>(a, b);
 		
-		assertEquals((3 == 3 ^ 3 == 4), pred.isTrue(3));
-		assertEquals((4 == 3 ^ 4 == 4), pred.isTrue(4));
-		assertEquals((5 == 3 ^ 5 == 4), pred.isTrue(5));
-		assertEquals((6 == 3 ^ 6 == 4), pred.isTrue(6));
+		assertEquals((3 == 3 ^ 3 == 4), pred.call(3));
+		assertEquals((4 == 3 ^ 4 == 4), pred.call(4));
+		assertEquals((5 == 3 ^ 5 == 4), pred.call(5));
+		assertEquals((6 == 3 ^ 6 == 4), pred.call(6));
 	}
 
 }

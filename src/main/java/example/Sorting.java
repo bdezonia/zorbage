@@ -36,8 +36,8 @@ import nom.bdezonia.zorbage.algorithm.StablePartition;
 import nom.bdezonia.zorbage.algorithm.StableSort;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReversedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
@@ -132,11 +132,11 @@ class Sorting {
 		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
-		Predicate<SignedInt32Member> lessThan4 =
-				new Predicate<SignedInt32Member>()
+		Function1<Boolean,SignedInt32Member> lessThan4 =
+				new Function1<Boolean,SignedInt32Member>()
 		{
 			@Override
-			public boolean isTrue(SignedInt32Member value) {
+			public Boolean call(SignedInt32Member value) {
 				return value.v() < 4;
 			}
 		};
@@ -149,20 +149,20 @@ class Sorting {
 		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
-		Predicate<SignedInt32Member> lessThan4 =
-				new Predicate<SignedInt32Member>()
+		Function1<Boolean,SignedInt32Member> lessThan4 =
+				new Function1<Boolean,SignedInt32Member>()
 		{
 			@Override
-			public boolean isTrue(SignedInt32Member value) {
+			public Boolean call(SignedInt32Member value) {
 				return value.v() < 4;
 			}
 		};
 		StablePartition.compute(G.INT32, lessThan4, nums);
-		Predicate<SignedInt32Member> isOdd =
-				new Predicate<SignedInt32Member>()
+		Function1<Boolean,SignedInt32Member> isOdd =
+				new Function1<Boolean,SignedInt32Member>()
 		{
 			@Override
-			public boolean isTrue(SignedInt32Member value) {
+			public Boolean call(SignedInt32Member value) {
 				return (value.v() & 1) == 1;
 			}
 		};

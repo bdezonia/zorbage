@@ -49,9 +49,9 @@ public class TestNotEqual {
 		Tuple2<SignedInt32Member,SignedInt32Member> tuple = new Tuple2<>(a, b);
 		a.setV(1);
 		b.setV(1);
-		assertFalse(pred.isTrue(tuple));
+		assertFalse(pred.call(tuple));
 		b.setV(2);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 	}
 
 }

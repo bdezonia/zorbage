@@ -32,11 +32,11 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.predicate.EqualConstant;
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class TestAnyOf {
 		
 		IndexedDataSource<BooleanMember> storage;
 		
-		Predicate<BooleanMember> condition = new EqualConstant<BooleanAlgebra,BooleanMember>(G.BOOL, new BooleanMember(false));
+		Function1<Boolean,BooleanMember> condition = new EqualConstant<BooleanAlgebra,BooleanMember>(G.BOOL, new BooleanMember(false));
 
 		storage = ArrayStorage.allocateBooleans(new boolean[]{});
 				

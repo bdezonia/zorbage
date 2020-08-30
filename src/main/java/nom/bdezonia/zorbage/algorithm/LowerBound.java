@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -83,7 +83,7 @@ public class LowerBound {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T alg, U val, Predicate<Tuple2<U,U>> isLess, IndexedDataSource<U> a)
+		long compute(T alg, U val, Function1<Boolean,Tuple2<U,U>> isLess, IndexedDataSource<U> a)
 	{
 		U value = alg.construct();
 		Tuple2<U,U> tuple = new Tuple2<U,U>(val, value);
@@ -95,7 +95,7 @@ public class LowerBound {
 			long step=count/2;
 			it += step;
 			a.get(it, value);
-			if (!isLess.isTrue(tuple)) {
+			if (!isLess.call(tuple)) {
 				first = ++it;
 				count -= step+1;
 			}

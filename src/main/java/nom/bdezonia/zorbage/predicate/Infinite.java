@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.predicate;
 // TODO: eliminate? It's possible to wrap the Algebra's method call in a BooleanCondition.
 
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -36,7 +37,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  *
  */
 public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.Infinite<U>,U>
-	implements Predicate<U>
+	implements Function1<Boolean,U>
 {
 	private final T algebra;
 	
@@ -45,7 +46,7 @@ public class Infinite<T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.Infi
 	}
 	
 	@Override
-	public boolean isTrue(U value) {
+	public Boolean call(U value) {
 		return algebra.isInfinite().call(value);
 	}
 }

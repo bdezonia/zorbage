@@ -46,9 +46,9 @@ public class TestEqualConstant {
 		SignedInt32Member value2 = G.INT32.construct("3");
 		EqualConstant<SignedInt32Algebra, SignedInt32Member> pred =
 				new EqualConstant<>(G.INT32, value);
-		assertFalse(pred.isTrue(value2));
+		assertFalse(pred.call(value2));
 		value2.setV(17);
-		assertTrue(pred.isTrue(value2));
+		assertTrue(pred.call(value2));
 	}
 
 }

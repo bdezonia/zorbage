@@ -40,20 +40,20 @@ public class TestNan {
 	public void test() {
 		Float64Member value = G.DBL.construct();
 		NaN<Float64Algebra, Float64Member> pred = new NaN<>(G.DBL);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(1);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(-1);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(-Double.MAX_VALUE);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(Double.MAX_VALUE);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(Double.POSITIVE_INFINITY);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(Double.NEGATIVE_INFINITY);
-		assertFalse(pred.isTrue(value));
+		assertFalse(pred.call(value));
 		value.setV(Double.NaN);
-		assertTrue(pred.isTrue(value));
+		assertTrue(pred.call(value));
 	}
 }

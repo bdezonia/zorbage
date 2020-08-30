@@ -26,10 +26,10 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.DimensionCount;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * {@link SamplingConditional} is a {@link Sampling} that includes the points of another
@@ -41,11 +41,11 @@ import nom.bdezonia.zorbage.algebra.Settable;
 public class SamplingConditional<T extends Allocatable<T> & Settable<T> & DimensionCount>
 	implements Sampling<T>
 {
-	private final Predicate<T> condition;
+	private final Function1<Boolean,T> condition;
 	private final Sampling<T> sampling;
 	private final T example;
 	
-	public SamplingConditional(Predicate<T> condition, Sampling<T> sampling, T example) {
+	public SamplingConditional(Function1<Boolean,T> condition, Sampling<T> sampling, T example) {
 		this.condition = condition;
 		this.sampling = sampling;
 		this.example = example.allocate();
@@ -58,7 +58,7 @@ public class SamplingConditional<T extends Allocatable<T> & Settable<T> & Dimens
 
 	@Override
 	public boolean contains(T samplePoint) {
-		if (condition.isTrue(samplePoint))
+		if (condition.call(samplePoint))
 			return sampling.contains(samplePoint);
 		return false;
 	}
@@ -78,7 +78,7 @@ public class SamplingConditional<T extends Allocatable<T> & Settable<T> & Dimens
 			
 			while (iter1.hasNext()) {
 				iter1.next(index);
-				if (condition.isTrue(index)) {
+				if (condition.call(index)) {
 					cached = true;
 					return true;
 				}

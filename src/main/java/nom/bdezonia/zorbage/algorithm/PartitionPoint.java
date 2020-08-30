@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class PartitionPoint {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		long compute(T alg, Predicate<U> cond, IndexedDataSource<U> storage)
+		long compute(T alg, Function1<Boolean,U> cond, IndexedDataSource<U> storage)
 	{
 		U value = alg.construct();
 		long n = storage.size();
@@ -58,7 +58,7 @@ public class PartitionPoint {
 			long step = n/2;
 			it += step;
 			storage.get(it, value);
-			if (cond.isTrue(value)){
+			if (cond.call(value)){
 				first = it+ 1;
 				n -= step+1;
 			}

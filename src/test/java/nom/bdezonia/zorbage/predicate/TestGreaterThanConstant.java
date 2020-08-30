@@ -46,9 +46,9 @@ public class TestGreaterThanConstant {
 		SignedInt32Member value2 = G.INT32.construct("18");
 		GreaterThanConstant<SignedInt32Algebra, SignedInt32Member> pred =
 				new GreaterThanConstant<>(G.INT32, value);
-		assertTrue(pred.isTrue(value2));
+		assertTrue(pred.call(value2));
 		value2.setV(17);
-		assertFalse(pred.isTrue(value2));
+		assertFalse(pred.call(value2));
 	}
 
 }

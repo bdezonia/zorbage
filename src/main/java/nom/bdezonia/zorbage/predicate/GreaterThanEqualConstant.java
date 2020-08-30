@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -35,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  *
  */
 public class GreaterThanEqualConstant<T extends Algebra<T,U> & Ordered<U>,U>
-	implements Predicate<U>
+	implements Function1<Boolean,U>
 {
 	private final T algebra;
 	private final U constant;
@@ -47,7 +48,7 @@ public class GreaterThanEqualConstant<T extends Algebra<T,U> & Ordered<U>,U>
 	}
 
 	@Override
-	public boolean isTrue(U value) {
+	public Boolean call(U value) {
 		return algebra.isGreaterEqual().call(value, constant);
 	}
 }

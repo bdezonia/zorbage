@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -46,13 +46,13 @@ public class StablePartition {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Predicate<U> cond, IndexedDataSource<U> storage)
+		void compute(T alg, Function1<Boolean,U> cond, IndexedDataSource<U> storage)
 	{
 		partition(alg, cond, 0, storage.size()-1, storage);
 	}
 
 	private static <T extends Algebra<T,U> ,U>
-		long partition(T alg, Predicate<U> cond, long left, long right, IndexedDataSource<U> storage)
+		long partition(T alg, Function1<Boolean,U> cond, long left, long right, IndexedDataSource<U> storage)
 	{
 		U value = alg.construct();
 		long firstTrue, numTrue, endFalse;
@@ -65,7 +65,7 @@ public class StablePartition {
 			for (long i = left; i <= right; i++) // TODO - is this now off by one?
 			{
 				storage.get(i, value);
-				if (!cond.isTrue(value))
+				if (!cond.call(value))
 				{
 					//hasMetTrue = true;
 					if (endFalse == -1)

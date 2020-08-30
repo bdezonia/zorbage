@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.datasource;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
@@ -50,7 +50,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		};
 	private final T algebra;
 	private final IndexedDataSource<U> source;
-	private final Predicate<U> condition;
+	private final Function1<Boolean,U> condition;
 	private final IndexedDataSource<SignedInt64Member> indexList;
 	private final long sz;
 
@@ -60,7 +60,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 	 * @param source
 	 * @param condition
 	 */
-	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Predicate<U> condition) {
+	public ConditionalDataSource(T algebra, IndexedDataSource<U> source, Function1<Boolean,U> condition) {
 		this.algebra = algebra;
 		this.source = source;
 		this.condition = condition;
@@ -69,7 +69,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		long srcSize = source.size();
 		for (long i = 0; i < srcSize; i++) {
 			source.get(i, tmp);
-			if (condition.isTrue(tmp)) {
+			if (condition.call(tmp)) {
 				count++;
 			}
 		}
@@ -79,7 +79,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		count = 0;
 		for (long i = 0; i < srcSize; i++) {
 			source.get(i, tmp);
-			if (condition.isTrue(tmp)) {
+			if (condition.call(tmp)) {
 				val.setV(i);
 				indexList.set(count, val);
 				count++;
@@ -98,7 +98,7 @@ public class ConditionalDataSource<T extends Algebra<T,U>, U>
 		if (index < 0 || index >= sz)
 			throw new IllegalArgumentException("index out of bounds for conditional data source");
 		// the size of the list is an invariant!
-		if (!condition.isTrue(value))
+		if (!condition.call(value))
 			throw new IllegalArgumentException("inserted values must conform to the condition");
 		SignedInt64Member tmp = tmp64.get();
 		indexList.get(index, tmp);

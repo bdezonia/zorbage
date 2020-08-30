@@ -48,11 +48,11 @@ public class TestLessThanEqual {
 		LessThanEqual<SignedInt32Algebra, SignedInt32Member> pred = 
 				new LessThanEqual<>(G.INT32);
 		Tuple2<SignedInt32Member, SignedInt32Member> tuple = new Tuple2<>(a, b);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 		a.setV(18);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 		a.setV(19);
-		assertFalse(pred.isTrue(tuple));
+		assertFalse(pred.call(tuple));
 	}
 
 }

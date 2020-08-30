@@ -47,11 +47,11 @@ public class TestLessThan {
 		SignedInt32Member b = G.INT32.construct("18");
 		LessThan<SignedInt32Algebra, SignedInt32Member> pred = new LessThan<>(G.INT32);
 		Tuple2<SignedInt32Member, SignedInt32Member> tuple = new Tuple2<>(a, b);
-		assertFalse(pred.isTrue(tuple));
+		assertFalse(pred.call(tuple));
 		a.setV(18);
-		assertFalse(pred.isTrue(tuple));
+		assertFalse(pred.call(tuple));
 		a.setV(17);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 	}
 
 }

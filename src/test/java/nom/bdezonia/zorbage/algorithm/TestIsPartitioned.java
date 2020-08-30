@@ -34,11 +34,11 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.predicate.EqualConstant;
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
 import nom.bdezonia.zorbage.predicate.LessThanConstant;
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -52,13 +52,13 @@ public class TestIsPartitioned {
 		IndexedDataSource<SignedInt8Member> a = ArrayStorage.allocateBytes(
 				new byte[] {1,2,3,4,5,6,7,8});
 		
-		Predicate<SignedInt8Member> cond1 = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
+		Function1<Boolean,SignedInt8Member> cond1 = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
 		assertFalse(IsPartitioned.compute(G.INT8, cond1, a));
 
-		Predicate<SignedInt8Member> cond2 = new LessThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
+		Function1<Boolean,SignedInt8Member> cond2 = new LessThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
 		assertTrue(IsPartitioned.compute(G.INT8, cond2, a));
 
-		Predicate<SignedInt8Member> cond3 = new GreaterThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
+		Function1<Boolean,SignedInt8Member> cond3 = new GreaterThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));
 		assertTrue(IsPartitioned.compute(G.INT8, cond3, a));
 	}
 }

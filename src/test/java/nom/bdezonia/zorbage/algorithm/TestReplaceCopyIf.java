@@ -31,11 +31,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.predicate.EqualConstant;
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class TestReplaceCopyIf {
 		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(
 				new double[9]);
 		Float64Member value = G.DBL.construct();
-		Predicate<Float64Member> cond =
+		Function1<Boolean,Float64Member> cond =
 				new EqualConstant<Float64Algebra, Float64Member>(G.DBL, new Float64Member(1));
 
 		ReplaceCopyIf.compute(G.DBL, cond, new Float64Member(88), a, b);

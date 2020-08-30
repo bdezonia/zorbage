@@ -26,7 +26,7 @@
  */
 package example;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.RealIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
@@ -231,11 +231,11 @@ class Sampling {
 
 		SamplingCartesianIntegerGrid grid = new SamplingCartesianIntegerGrid(new long[] {0,0,0}, new long[] {20,20,20});
 
-		Predicate<IntegerIndex> xIsEven =
-				new Predicate<IntegerIndex>()
+		Function1<Boolean,IntegerIndex> xIsEven =
+				new Function1<Boolean,IntegerIndex>()
 		{
 			@Override
-			public boolean isTrue(IntegerIndex value) {
+			public Boolean call(IntegerIndex value) {
 				return (value.get(0) & 1) == 0;
 			}
 		};

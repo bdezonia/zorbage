@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -45,15 +45,15 @@ public class TestSamplingConditional {
 	public void test1() {
 		SamplingCartesianIntegerGrid sampling = new SamplingCartesianIntegerGrid(
 				new long[] {0}, new long[] {8});
-		Predicate<IntegerIndex> evens = new Predicate<IntegerIndex>() {
+		Function1<Boolean,IntegerIndex> evens = new Function1<Boolean,IntegerIndex>() {
 			@Override
-			public boolean isTrue(IntegerIndex value) {
+			public Boolean call(IntegerIndex value) {
 				return value.get(0) % 2 == 0;
 			}
 		};
-		Predicate<IntegerIndex> odds = new Predicate<IntegerIndex>() {
+		Function1<Boolean,IntegerIndex> odds = new Function1<Boolean,IntegerIndex>() {
 			@Override
-			public boolean isTrue(IntegerIndex value) {
+			public Boolean call(IntegerIndex value) {
 				return value.get(0) % 2 == 1;
 			}
 		};

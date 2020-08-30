@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.algorithm.CreateMask;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.StablePartition;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.predicate.AndPredicate;
 import nom.bdezonia.zorbage.predicate.Equal;
 import nom.bdezonia.zorbage.predicate.EqualConstant;
@@ -48,7 +49,6 @@ import nom.bdezonia.zorbage.predicate.NotEqual;
 import nom.bdezonia.zorbage.predicate.NotEqualConstant;
 import nom.bdezonia.zorbage.predicate.NotPredicate;
 import nom.bdezonia.zorbage.predicate.OrPredicate;
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.predicate.XnorPredicate;
 import nom.bdezonia.zorbage.predicate.XorPredicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
@@ -91,12 +91,12 @@ class Predicates {
 
 		SignedInt16Member value2 = new SignedInt16Member(105);
 		
-		result = eqC.isTrue(value2);
-		result = neqC.isTrue(value2);
-		result = lessC.isTrue(value2);
-		result = lessEqC.isTrue(value2);
-		result = greatC.isTrue(value2);
-		result = greatEqC.isTrue(value2);
+		result = eqC.call(value2);
+		result = neqC.call(value2);
+		result = lessC.call(value2);
+		result = lessEqC.call(value2);
+		result = greatC.call(value2);
+		result = greatEqC.call(value2);
 		
 		// basic two input predicates
 		
@@ -112,12 +112,12 @@ class Predicates {
 		
 		Tuple2<SignedInt16Member,SignedInt16Member> tuple = new Tuple2<>(a,b);
 		
-		result = eq.isTrue(tuple);
-		result = neq.isTrue(tuple);
-		result = less.isTrue(tuple);
-		result = lessEq.isTrue(tuple);
-		result = great.isTrue(tuple);
-		result = greatEq.isTrue(tuple);
+		result = eq.call(tuple);
+		result = neq.call(tuple);
+		result = less.call(tuple);
+		result = lessEq.call(tuple);
+		result = great.call(tuple);
+		result = greatEq.call(tuple);
 		
 	}
 	
@@ -132,11 +132,11 @@ class Predicates {
 		
 		Fill.compute(G.DBL, G.DBL.random(), data);
 		
-		Predicate<Float64Member> condition =
-				new Predicate<Float64Member>()
+		Function1<Boolean,Float64Member> condition =
+				new Function1<Boolean,Float64Member>()
 		{
 			@Override
-			public boolean isTrue(Float64Member value) {
+			public Boolean call(Float64Member value) {
 				return value.v() > 7;
 			}
 		};
@@ -151,18 +151,18 @@ class Predicates {
 	@SuppressWarnings("unused")
 	void example2() {
 	
-		Predicate<SignedInt16Member> lessThan100 =
-				new Predicate<SignedInt16Member>()
+		Function1<Boolean,SignedInt16Member> lessThan100 =
+				new Function1<Boolean,SignedInt16Member>()
 		{
 			@Override
-			public boolean isTrue(SignedInt16Member value) {
+			public Boolean call(SignedInt16Member value) {
 				return value.v() < 100;
 			}
 		};
 		
 		SignedInt16Member v = new SignedInt16Member(22);
 		
-		boolean result = lessThan100.isTrue(v);
+		boolean result = lessThan100.call(v);
 	}
 	
 	/*
@@ -172,11 +172,11 @@ class Predicates {
 	@SuppressWarnings("unused")
 	void example3() {
 	
-		Predicate<Tuple2<SignedInt16Member,SignedInt16Member>> notEqual =
-				new Predicate<Tuple2<SignedInt16Member,SignedInt16Member>>()
+		Function1<Boolean,Tuple2<SignedInt16Member,SignedInt16Member>> notEqual =
+				new Function1<Boolean,Tuple2<SignedInt16Member,SignedInt16Member>>()
 		{
 			@Override
-			public boolean isTrue(Tuple2<SignedInt16Member,SignedInt16Member> value) {
+			public Boolean call(Tuple2<SignedInt16Member,SignedInt16Member> value) {
 				
 				return value.a().v() != value.b().v();
 			}
@@ -188,7 +188,7 @@ class Predicates {
 		
 		Tuple2<SignedInt16Member,SignedInt16Member> tuple = new Tuple2<>(v1,v2);
 
-		boolean result = notEqual.isTrue(tuple);
+		boolean result = notEqual.call(tuple);
 	}
 	
 	/*
@@ -199,9 +199,9 @@ class Predicates {
 	@SuppressWarnings("unused")
 	void example4() {
 	
-		Predicate<SignedInt16Member> eq7Cond = new EqualConstant<>(G.INT16, new SignedInt16Member(7));
+		Function1<Boolean,SignedInt16Member> eq7Cond = new EqualConstant<>(G.INT16, new SignedInt16Member(7));
 
-		Predicate<SignedInt16Member> lessThan5Cond =  new LessThanConstant<>(G.INT16, new SignedInt16Member(5));
+		Function1<Boolean,SignedInt16Member> lessThan5Cond =  new LessThanConstant<>(G.INT16, new SignedInt16Member(5));
 
 		// Here are the seven basic logical combinations of predicates
 		
@@ -223,13 +223,13 @@ class Predicates {
 		
 		boolean result;
 		
-		result = cond1.isTrue(num);
-		result = cond2.isTrue(num);
-		result = cond3.isTrue(num);
-		result = cond4.isTrue(num);
-		result = cond5.isTrue(num);
-		result = cond6.isTrue(num);
-		result = cond7.isTrue(num);
+		result = cond1.call(num);
+		result = cond2.call(num);
+		result = cond3.call(num);
+		result = cond4.call(num);
+		result = cond5.call(num);
+		result = cond6.call(num);
+		result = cond7.call(num);
 	}
 	
 	/*
@@ -244,11 +244,11 @@ class Predicates {
 		
 		Fill.compute(G.DBL, G.DBL.random(), data);
 		
-		Predicate<Float64Member> condition =
-				new Predicate<Float64Member>()
+		Function1<Boolean,Float64Member> condition =
+				new Function1<Boolean,Float64Member>()
 		{
 			@Override
-			public boolean isTrue(Float64Member value) {
+			public Boolean call(Float64Member value) {
 				return (value.v() >= 0 && value.v() < 0.3);
 			}
 		};

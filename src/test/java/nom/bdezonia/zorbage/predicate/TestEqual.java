@@ -1,5 +1,5 @@
 /*
- * Zorbage: an algebraic data hierarchy for use in numeric processing.
+> * Zorbage: an algebraic data hierarchy for use in numeric processing.
  *
  * Copyright (C) 2016-2020 Barry DeZonia
  * 
@@ -49,9 +49,9 @@ public class TestEqual {
 		Tuple2<SignedInt32Member,SignedInt32Member> tuple = new Tuple2<>(a, b);
 		a.setV(1);
 		b.setV(1);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 		b.setV(2);
-		assertFalse(pred.isTrue(tuple));
+		assertFalse(pred.call(tuple));
 	}
 
 }

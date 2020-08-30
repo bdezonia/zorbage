@@ -48,11 +48,11 @@ public class TestLessThanEqualConstant {
 		SignedInt32Member value2 = G.INT32.construct("18");
 		LessThanEqualConstant<SignedInt32Algebra, SignedInt32Member> pred =
 				new LessThanEqualConstant<>(G.INT32, value);
-		assertFalse(pred.isTrue(value2));
+		assertFalse(pred.call(value2));
 		value2.setV(17);
-		assertTrue(pred.isTrue(value2));
+		assertTrue(pred.call(value2));
 		value2.setV(16);
-		assertTrue(pred.isTrue(value2));
+		assertTrue(pred.call(value2));
 	}
 
 }

@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -49,13 +49,13 @@ public class ReplaceIf {
 	 * @param storage
 	 */
 	public static <T extends Algebra<T,U>,U>
-		void compute(T algebra, Predicate<U> cond, U replacement, IndexedDataSource<U> storage)
+		void compute(T algebra, Function1<Boolean,U> cond, U replacement, IndexedDataSource<U> storage)
 	{
 		U tmp = algebra.construct();
 		long size = storage.size();
 		for (long i = 0; i < size; i++) {
 			storage.get(i, tmp);
-			if (cond.isTrue(tmp))
+			if (cond.call(tmp))
 				storage.set(i, replacement);
 		}
 	}

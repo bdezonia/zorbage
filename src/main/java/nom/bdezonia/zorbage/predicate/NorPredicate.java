@@ -25,24 +25,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 package nom.bdezonia.zorbage.predicate;
+
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NorPredicate<T> implements Predicate<T> {
+public class NorPredicate<T> implements Function1<Boolean,T> {
 
-	private final Predicate<T> a;
-	private final Predicate<T> b;
+	private final Function1<Boolean,T> a;
+	private final Function1<Boolean,T> b;
 	
-	public NorPredicate(Predicate<T> a, Predicate<T> b) {
+	public NorPredicate(Function1<Boolean,T> a, Function1<Boolean,T> b) {
 		this.a = a;
 		this.b = b;
 	}
 	
 	@Override
-	public boolean isTrue(T value) {
-		return !(a.isTrue(value) || b.isTrue(value));
+	public Boolean call(T value) {
+		return !(a.call(value) || b.call(value));
 	}
 
 }

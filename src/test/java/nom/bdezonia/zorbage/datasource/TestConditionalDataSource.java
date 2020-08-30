@@ -31,8 +31,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.predicate.Predicate;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
@@ -50,10 +49,10 @@ public class TestConditionalDataSource {
 		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
 				new int[] {1,2,3,4,5,6,7});
 		
-		Predicate<SignedInt32Member> odd = new Predicate<SignedInt32Member>()
+		Function1<Boolean,SignedInt32Member> odd = new Function1<Boolean,SignedInt32Member>()
 		{
 			@Override
-			public boolean isTrue(SignedInt32Member value) {
+			public Boolean call(SignedInt32Member value) {
 				return value.v() % 2 == 1;
 			}
 		};
@@ -71,10 +70,10 @@ public class TestConditionalDataSource {
 		odds.get(3, value);
 		assertEquals(7, value.v());
 
-		Predicate<SignedInt32Member> even = new Predicate<SignedInt32Member>()
+		Function1<Boolean,SignedInt32Member> even = new Function1<Boolean,SignedInt32Member>()
 		{
 			@Override
-			public boolean isTrue(SignedInt32Member value) {
+			public Boolean call(SignedInt32Member value) {
 				return value.v() % 2 == 0;
 			}
 		};

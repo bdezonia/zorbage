@@ -48,11 +48,11 @@ public class TestGreaterThanEqual {
 		GreaterThanEqual<SignedInt32Algebra, SignedInt32Member> pred =
 				new GreaterThanEqual<>(G.INT32);
 		Tuple2<SignedInt32Member, SignedInt32Member> tuple = new Tuple2<>(a, b);
-		assertFalse(pred.isTrue(tuple));
+		assertFalse(pred.call(tuple));
 		a.setV(18);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 		a.setV(19);
-		assertTrue(pred.isTrue(tuple));
+		assertTrue(pred.call(tuple));
 	}
 
 }

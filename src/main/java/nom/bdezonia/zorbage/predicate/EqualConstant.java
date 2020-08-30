@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.predicate;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -34,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  *
  */
 public class EqualConstant<T extends Algebra<T,U>,U>
-	implements Predicate<U>
+	implements Function1<Boolean,U>
 {
 	private final T algebra;
 	private final U constant;
@@ -46,7 +47,7 @@ public class EqualConstant<T extends Algebra<T,U>,U>
 	}
 
 	@Override
-	public boolean isTrue(U value) {
+	public Boolean call(U value) {
 		return algebra.isEqual().call(value, constant);
 	}
 }

@@ -30,6 +30,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
@@ -40,24 +42,24 @@ public class TestAndPredicate {
 	@Test
 	@SuppressWarnings("unused")
 	public void test() {
-		Predicate<Integer> a = new Predicate<Integer>() {
+		Function1<Boolean,Integer> a = new Function1<Boolean,Integer>() {
 			@Override
-			public boolean isTrue(Integer value) {
+			public Boolean call(Integer value) {
 				return value >= 4;
 			}
 		};
-		Predicate<Integer> b = new Predicate<Integer>() {
+		Function1<Boolean,Integer> b = new Function1<Boolean,Integer>() {
 			@Override
-			public boolean isTrue(Integer value) {
+			public Boolean call(Integer value) {
 				return value > 4;
 			}
 		};
 		AndPredicate<Integer> pred = new AndPredicate<>(a, b);
 		
-		assertEquals((3 >= 4 && 3 > 4), pred.isTrue(3));
-		assertEquals((4 >= 4 && 4 > 4), pred.isTrue(4));
-		assertEquals((5 >= 4 && 5 > 4), pred.isTrue(5));
-		assertEquals((6 >= 4 && 6 > 4), pred.isTrue(6));
+		assertEquals((3 >= 4 && 3 > 4), pred.call(3));
+		assertEquals((4 >= 4 && 4 > 4), pred.call(4));
+		assertEquals((5 >= 4 && 5 > 4), pred.call(5));
+		assertEquals((6 >= 4 && 6 > 4), pred.call(6));
 	}
 
 }

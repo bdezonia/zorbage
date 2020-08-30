@@ -31,11 +31,11 @@ import static org.junit.Assert.*;
 import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -48,9 +48,9 @@ public class TestCreateMask {
 	public void test() {
 		float[] floats = new float[] {1,4,-3,0,3,-7,8,1,1,1,2};
 		IndexedDataSource<Float32Member> nums = ArrayStorage.allocateFloats(floats);
-		Predicate<Float32Member> condition = new Predicate<Float32Member>() {
+		Function1<Boolean,Float32Member> condition = new Function1<Boolean,Float32Member>() {
 			@Override
-			public boolean isTrue(Float32Member value) {
+			public Boolean call(Float32Member value) {
 				return value.v() < 4;
 			}
 		};

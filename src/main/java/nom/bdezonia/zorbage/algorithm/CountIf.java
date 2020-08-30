@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class CountIf {
 	 * @param sum
 	 */
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W> & Addition<W> & Unity<W>, W>
-		void compute(T algebra, V addAlgebra, Predicate<U> condition, IndexedDataSource<U> a, W sum)
+		void compute(T algebra, V addAlgebra, Function1<Boolean,U> condition, IndexedDataSource<U> a, W sum)
 	{
 		U tmp = algebra.construct();
 		W tmpSum = addAlgebra.construct();
@@ -59,7 +59,7 @@ public class CountIf {
 		long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, tmp);
-			if (condition.isTrue(tmp))
+			if (condition.call(tmp))
 				addAlgebra.add().call(tmpSum, one, tmpSum);
 		}
 		addAlgebra.assign().call(tmpSum, sum);

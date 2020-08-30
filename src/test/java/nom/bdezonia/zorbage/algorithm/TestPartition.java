@@ -31,10 +31,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -46,9 +46,9 @@ public class TestPartition {
 	@Test
 	public void test() {
 		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {1,7,9,3,4,1,2,7,0,5,3,8});
-		Predicate<Float64Member> cond = new Predicate<Float64Member>() {
+		Function1<Boolean,Float64Member> cond = new Function1<Boolean,Float64Member>() {
 			@Override
-			public boolean isTrue(Float64Member value) {
+			public Boolean call(Float64Member value) {
 				return value.v() < 4;
 			}
 		};

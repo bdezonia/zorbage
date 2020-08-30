@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -36,7 +37,7 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  *
  */
 public class GreaterThanEqual<T extends Algebra<T,U> & Ordered<U>, U>
-	implements Predicate<Tuple2<U,U>>
+	implements Function1<Boolean,Tuple2<U,U>>
 {
 	private final T algebra;
 	
@@ -45,7 +46,7 @@ public class GreaterThanEqual<T extends Algebra<T,U> & Ordered<U>, U>
 	}
 
 	@Override
-	public boolean isTrue(Tuple2<U,U> value) {
+	public Boolean call(Tuple2<U,U> value) {
 		return algebra.isGreaterEqual().call(value.a(), value.b());
 	}
 }

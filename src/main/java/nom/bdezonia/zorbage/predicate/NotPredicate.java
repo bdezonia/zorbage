@@ -26,22 +26,24 @@
  */
 package nom.bdezonia.zorbage.predicate;
 
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NotPredicate<T> implements Predicate<T> {
+public class NotPredicate<T> implements Function1<Boolean,T> {
 
-	private final Predicate<T> a;
+	private final Function1<Boolean,T> a;
 	
-	public NotPredicate(Predicate<T> a) {
+	public NotPredicate(Function1<Boolean,T> a) {
 		this.a = a;
 	}
 	
 	@Override
-	public boolean isTrue(T value) {
-		return !a.isTrue(value);
+	public Boolean call(T value) {
+		return !a.call(value);
 	}
 	
 	

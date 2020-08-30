@@ -26,25 +26,27 @@
  */
 package nom.bdezonia.zorbage.predicate;
 
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class XorPredicate<T> implements Predicate<T> {
+public class XorPredicate<T> implements Function1<Boolean,T> {
 
-	private final Predicate<T> a;
-	private final Predicate<T> b;
+	private final Function1<Boolean,T> a;
+	private final Function1<Boolean,T> b;
 	
-	public XorPredicate(Predicate<T> a, Predicate<T> b) {
+	public XorPredicate(Function1<Boolean,T> a, Function1<Boolean,T> b) {
 		this.a = a;
 		this.b = b;
 	}
 	
 	@Override
-	public boolean isTrue(T value) {
-		boolean aResult = a.isTrue(value);
-		boolean bResult = b.isTrue(value);
+	public Boolean call(T value) {
+		boolean aResult = a.call(value);
+		boolean bResult = b.call(value);
 		return (aResult && !bResult) || (!aResult && bResult);
 	}
 

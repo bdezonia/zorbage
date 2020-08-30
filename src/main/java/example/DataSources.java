@@ -57,7 +57,7 @@ import nom.bdezonia.zorbage.datasource.SequencedDataSource;
 import nom.bdezonia.zorbage.datasource.TransformedDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
 import nom.bdezonia.zorbage.datasource.WriteNotifyingDataSource;
-import nom.bdezonia.zorbage.predicate.Predicate;
+import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
@@ -198,10 +198,10 @@ class DataSources {
 		
 		// then make the condition "value is less than 44"
 		
-		Predicate<UnsignedInt10Member> lessThan44 = new Predicate<UnsignedInt10Member>()
+		Function1<Boolean,UnsignedInt10Member> lessThan44 = new Function1<Boolean,UnsignedInt10Member>()
 		{
 			@Override
-			public boolean isTrue(UnsignedInt10Member value) {
+			public Boolean call(UnsignedInt10Member value) {
 
 				return value.v() < 44;
 			}

@@ -31,11 +31,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.predicate.LessThanEqualConstant;
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class TestReplaceIf {
 		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
 				new double[] {1,2,1,4,2,6,1,7,1});
 
-		Predicate<Float64Member> cond =
+		Function1<Boolean,Float64Member> cond =
 				new LessThanEqualConstant<Float64Algebra, Float64Member>(G.DBL, new Float64Member(2));
 		Float64Member value = G.DBL.construct();
 		

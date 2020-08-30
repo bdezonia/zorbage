@@ -26,24 +26,26 @@
  */
 package nom.bdezonia.zorbage.predicate;
 
+import nom.bdezonia.zorbage.function.Function1;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class AndPredicate<T> implements Predicate<T> {
+public class AndPredicate<T> implements Function1<Boolean,T> {
 
-	private final Predicate<T> a;
-	private final Predicate<T> b;
+	private final Function1<Boolean,T> a;
+	private final Function1<Boolean,T> b;
 	
-	public AndPredicate(Predicate<T> a, Predicate<T> b) {
+	public AndPredicate(Function1<Boolean,T> a, Function1<Boolean,T> b) {
 		this.a = a;
 		this.b = b;
 	}
 	
 	@Override
-	public boolean isTrue(T value) {
-		return a.isTrue(value) && b.isTrue(value);
+	public Boolean call(T value) {
+		return a.call(value) && b.call(value);
 	}
 
 }

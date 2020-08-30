@@ -26,11 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class EqualRange {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
-		Tuple2<Long,Long> compute(T alg, U val, Predicate<Tuple2<U,U>> isLess, IndexedDataSource<U> a)
+		Tuple2<Long,Long> compute(T alg, U val, Function1<Boolean,Tuple2<U,U>> isLess, IndexedDataSource<U> a)
 	{
 		long lower = LowerBound.compute(alg, val, isLess, a);
 		long upper = UpperBound.compute(alg, val, isLess, a);

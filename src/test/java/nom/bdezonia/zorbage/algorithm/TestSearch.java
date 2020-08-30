@@ -30,11 +30,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -78,10 +78,10 @@ public class TestSearch {
 		assertEquals(3,x);
 	}
 	
-	private class Cond implements Predicate<Tuple2<Float64Member,Float64Member>> {
+	private class Cond implements Function1<Boolean,Tuple2<Float64Member,Float64Member>> {
 
 		@Override
-		public boolean isTrue(Tuple2<Float64Member, Float64Member> value) {
+		public Boolean call(Tuple2<Float64Member, Float64Member> value) {
 			return value.a().v() == value.b().v() + 3;
 		}
 		

@@ -26,9 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -47,14 +47,14 @@ public class AllOf {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		boolean compute(T algebra, Predicate<U> condition, IndexedDataSource<U> a)
+		boolean compute(T algebra, Function1<Boolean,U> condition, IndexedDataSource<U> a)
 	{
 		U value = algebra.construct();
 		long aSize = a.size();
 		if (aSize == 0) return false;
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, value);
-			if (!condition.isTrue(value))
+			if (!condition.call(value))
 				return false;
 		}
 		return true;

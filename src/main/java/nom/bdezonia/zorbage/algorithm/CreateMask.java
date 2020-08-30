@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.predicate.Predicate;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
@@ -34,6 +33,7 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function1;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class CreateMask {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		IndexedDataSource<UnsignedInt1Member> compute(T alg, Predicate<U> condition, IndexedDataSource<U> a)
+		IndexedDataSource<UnsignedInt1Member> compute(T alg, Function1<Boolean,U> condition, IndexedDataSource<U> a)
 	{
 		U value = alg.construct();
 		UnsignedInt1Member zero = G.UINT1.construct();
@@ -61,7 +61,7 @@ public class CreateMask {
 		IndexedDataSource<UnsignedInt1Member> result = Storage.allocate(a.size(), zero);
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, value);
-			if (condition.isTrue(value))
+			if (condition.call(value))
 				result.set(i, one);
 			else
 				result.set(i, zero);
@@ -79,7 +79,7 @@ public class CreateMask {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>
-		DimensionedDataSource<UnsignedInt1Member> compute(T alg, Predicate<U> condition, DimensionedDataSource<U> a)
+		DimensionedDataSource<UnsignedInt1Member> compute(T alg, Function1<Boolean,U> condition, DimensionedDataSource<U> a)
 	{
 		long[] dims = new long[a.numDimensions()];
 		for (int i = 0; i < dims.length; i++) {
