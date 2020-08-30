@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.function.Function1;
  * @author Barry DeZonia
  *
  */
-public class NaN<T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.NaN<U>,U>
+public class NaN<T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.NaN<U>, U>
 	implements Function1<Boolean,U>
 {
 	private final T algebra;

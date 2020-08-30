@@ -33,18 +33,18 @@ import nom.bdezonia.zorbage.function.Function1;
  * @author Barry DeZonia
  *
  */
-public class NandPredicate<T> implements Function1<Boolean,T> {
+public class NandPredicate<U> implements Function1<Boolean,U> {
 
-	private final Function1<Boolean,T> a;
-	private final Function1<Boolean,T> b;
+	private final Function1<Boolean,U> a;
+	private final Function1<Boolean,U> b;
 	
-	public NandPredicate(Function1<Boolean,T> a, Function1<Boolean,T> b) {
+	public NandPredicate(Function1<Boolean,U> a, Function1<Boolean,U> b) {
 		this.a = a;
 		this.b = b;
 	}
 	
 	@Override
-	public Boolean call(T value) {
+	public Boolean call(U value) {
 		return !(a.call(value) && b.call(value));
 	}
 

@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.function.Function1;
  * @author Barry DeZonia
  *
  */
-public class LessThanConstant<T extends Algebra<T,U> & Ordered<U>,U>
+public class LessThanConstant<T extends Algebra<T,U> & Ordered<U>, U>
 	implements Function1<Boolean,U>
 {
 	private final T algebra;

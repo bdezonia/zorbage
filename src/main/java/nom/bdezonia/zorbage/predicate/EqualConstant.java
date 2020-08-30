@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.function.Function1;
  * @author Barry DeZonia
  *
  */
-public class EqualConstant<T extends Algebra<T,U>,U>
+public class EqualConstant<T extends Algebra<T,U>, U>
 	implements Function1<Boolean,U>
 {
 	private final T algebra;

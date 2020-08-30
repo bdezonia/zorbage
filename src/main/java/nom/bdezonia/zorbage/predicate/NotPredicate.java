@@ -33,16 +33,16 @@ import nom.bdezonia.zorbage.function.Function1;
  * @author Barry DeZonia
  *
  */
-public class NotPredicate<T> implements Function1<Boolean,T> {
+public class NotPredicate<U> implements Function1<Boolean,U> {
 
-	private final Function1<Boolean,T> a;
+	private final Function1<Boolean,U> a;
 	
-	public NotPredicate(Function1<Boolean,T> a) {
+	public NotPredicate(Function1<Boolean,U> a) {
 		this.a = a;
 	}
 	
 	@Override
-	public Boolean call(T value) {
+	public Boolean call(U value) {
 		return !a.call(value);
 	}
 	

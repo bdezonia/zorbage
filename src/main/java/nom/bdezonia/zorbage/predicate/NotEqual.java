@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.function.Function1;
  * @author Barry DeZonia
  *
  */
-public class NotEqual<T extends Algebra<T,U>,U>
+public class NotEqual<T extends Algebra<T,U>, U>
 	implements Function1<Boolean,Tuple2<U,U>>
 {
 	private final T algebra;
