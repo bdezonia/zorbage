@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
+import nom.bdezonia.zorbage.type.character.StringMember;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Member;
@@ -174,6 +175,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<Float32MatrixMember>> flt_mats = new ArrayList<>();
 	public List<DimensionedDataSource<Float32CartesianTensorProductMember>> flt_tens = new ArrayList<>();
 	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
+	public List<DimensionedDataSource<StringMember>> strs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16Member>> hlfs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16VectorMember>> hlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16MatrixMember>> hlf_mats = new ArrayList<>();
@@ -391,6 +393,11 @@ public class DataBundle {
 	public void mergeFixedString(DimensionedDataSource<FixedStringMember> ds) {
 		if (ds != null)
 			fstrs.add(ds);
+	}
+	
+	public void mergeString(DimensionedDataSource<StringMember> ds) {
+		if (ds != null)
+			strs.add(ds);
 	}
 	
 	public void mergeFlt16(DimensionedDataSource<Float16Member> ds) {
@@ -1142,6 +1149,12 @@ public class DataBundle {
 		for (DimensionedDataSource<?> ds : this.fstrs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.FSTRING, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.strs) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.STRING, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
