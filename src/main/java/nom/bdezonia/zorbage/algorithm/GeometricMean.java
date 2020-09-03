@@ -24,20 +24,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.NaN;
+import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface Roots<T> {
+public class GeometricMean {
 
-	Procedure2<T,T> sqrt();
-	Procedure2<T,T> cbrt();
-	
-	// TODO
-	// Procedure3<java.lang.Long,T,T> nthRoot();
+	/**
+	 * 
+	 * @param alg
+	 * @param list
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Unity<U> & Multiplication<U> & NaN<U>, U>
+		void compute(T alg, IndexedDataSource<U> list, U result)
+	{
+		// TODO
+		//long sz = list.size();
+		//if (sz == 0) {
+		//	alg.nan().call(result);
+		//	return;
+		//}
+		//U tmp = alg.construct();
+		//Product.compute(alg, list, tmp);
+		//alg.nthRoot().call(sz, tmp, result);
+
+		throw new UnsupportedOperationException("not yet implemented");
+	}
 }
