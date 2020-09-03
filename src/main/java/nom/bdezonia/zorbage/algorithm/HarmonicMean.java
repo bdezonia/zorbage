@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class HarmonicMean {
 
+	// https://mathworld.wolfram.com/HarmonicMean.html
+	
 	/**
 	 * 
 	 * @param alg

@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class GeometricMean {
 
+	// https://mathworld.wolfram.com/GeometricMean.html
+	
 	/**
 	 * 
 	 * @param alg
@@ -55,8 +57,8 @@ public class GeometricMean {
 		//	return;
 		//}
 		//U tmp = alg.construct();
-		//Product.compute(alg, list, tmp);
-		//alg.nthRoot().call(sz, tmp, result);
+		//Product.compute(alg, list, tmp);  // these two lines are a naive approach and may easily overflow
+		//alg.nthRoot().call(sz, tmp, result);  // It may be best to use this with high prec algebras
 
 		throw new UnsupportedOperationException("not yet implemented");
 	}
