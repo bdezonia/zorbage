@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ContraHarmonicMean {
+public class ContraharmonicMean {
 
 	// https://en.wikipedia.org/wiki/Contraharmonic_mean
 		

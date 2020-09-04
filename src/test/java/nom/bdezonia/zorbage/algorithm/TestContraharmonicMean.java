@@ -45,10 +45,10 @@ public class TestContraharmonicMean {
 
 	@Test
 	public void test1() {
-		// https://www.investopedia.com/terms/h/harmonicaverage.asp
+
 		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {1,4,6,8,8});
-		ContraHarmonicMean.compute(G.DBL, nums, value);
+		ContraharmonicMean.compute(G.DBL, nums, value);
 		assertEquals((1.0+4*4+6*6+8*8+8*8)/(1+4+6+8+8), value.v(), 0);
 	}
 
@@ -57,7 +57,7 @@ public class TestContraharmonicMean {
 		
 		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
-		ContraHarmonicMean.compute(G.DBL, nums, value);
+		ContraharmonicMean.compute(G.DBL, nums, value);
 		assertTrue(Double.isNaN(value.v()));
 	}
 
