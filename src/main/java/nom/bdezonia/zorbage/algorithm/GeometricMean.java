@@ -28,8 +28,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
-import nom.bdezonia.zorbage.algebra.NaN;
-import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -47,12 +45,12 @@ public class GeometricMean {
 	 * @param list
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Unity<U> & Multiplication<U> & NaN<U>, U>
+	public static <T extends Algebra<T,U> & Multiplication<U>, U>
 		void compute(T alg, IndexedDataSource<U> list, U result)
 	{
 		long sz = list.size();
 		if (sz == 0) {
-			alg.nan().call(result);
+			alg.zero().call(result);
 			return;
 		}
 

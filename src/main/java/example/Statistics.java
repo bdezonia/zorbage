@@ -218,6 +218,10 @@ class Statistics {
 		SequenceL2Norm.compute(G.HP, G.HP, filtered, result1);
 		
 		SequenceLInfinityNorm.compute(G.HP, G.HP, filtered, result1);
+		
+		HarmonicMean.compute(G.HP, filtered, result1);
+		
+		ContraharmonicMean.compute(G.HP, filtered, result1);
 	}
 
 	/*

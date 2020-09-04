@@ -30,7 +30,6 @@ import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
-import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -48,12 +47,12 @@ public class ContraharmonicMean {
 	 * @param list
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Invertible<U> & NaN<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Invertible<U>, U>
 		void compute(T alg, IndexedDataSource<U> list, U result)
 	{
 		long sz = list.size();
 		if (sz == 0) {
-			alg.nan().call(result);
+			alg.zero().call(result);
 			return;
 		}
 		
