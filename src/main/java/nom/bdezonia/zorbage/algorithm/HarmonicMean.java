@@ -56,18 +56,22 @@ public class HarmonicMean {
 			alg.nan().call(result);
 			return;
 		}
+	
 		U value = alg.construct();
 		U sum = alg.construct();
 		U count = alg.construct();
 		U one = alg.construct();
 		alg.unity().call(one);
+		
 		for (long i = 0; i < list.size(); i++) {
 			list.get(i, value);
 			alg.divide().call(one, value, value);
 			alg.add().call(sum, value, sum);
 			alg.add().call(count, one, count);
 		}
+		
 		alg.divide().call(sum, count, sum);
+		
 		alg.divide().call(one, sum, result);
 	}
 }

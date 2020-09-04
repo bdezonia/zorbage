@@ -56,6 +56,7 @@ public class ContraharmonicMean {
 			alg.nan().call(result);
 			return;
 		}
+		
 		U value = alg.construct();
 		U numerSum = alg.construct();
 		U denomSum = alg.construct();

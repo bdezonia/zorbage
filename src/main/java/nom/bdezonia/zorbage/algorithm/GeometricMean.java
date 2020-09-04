@@ -50,15 +50,16 @@ public class GeometricMean {
 	public static <T extends Algebra<T,U> & Unity<U> & Multiplication<U> & NaN<U>, U>
 		void compute(T alg, IndexedDataSource<U> list, U result)
 	{
+		long sz = list.size();
+		if (sz == 0) {
+			alg.nan().call(result);
+			return;
+		}
+
 		// TODO
-		//long sz = list.size();
-		//if (sz == 0) {
-		//	alg.nan().call(result);
-		//	return;
-		//}
 		//U tmp = alg.construct();
-		//Product.compute(alg, list, tmp);  // these two lines are a naive approach and may easily overflow
-		//alg.nthRoot().call(sz, tmp, result);  // It may be best to use this with high prec algebras
+		//Product.compute(alg, list, tmp);        // These two lines are a naive approach and may easily overflow
+		//alg.nthRoot().call(sz, tmp, result);    // It may be best to use this with high prec algebras
 
 		throw new UnsupportedOperationException("not yet implemented");
 	}
