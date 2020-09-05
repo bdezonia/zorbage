@@ -26,8 +26,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.Exponential;
+import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -45,7 +48,7 @@ public class GeometricMean {
 	 * @param list
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Exponential<U> & Invertible<U>, U>
 		void compute(T alg, IndexedDataSource<U> list, U result)
 	{
 		long sz = list.size();
@@ -53,12 +56,22 @@ public class GeometricMean {
 			alg.zero().call(result);
 			return;
 		}
+		
+		U sum = alg.construct();
+		U count = alg.construct();
+		U value = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
 
-		// TODO
-		//U tmp = alg.construct();
-		//Product.compute(alg, list, tmp);        // These two lines are a naive approach and may easily overflow
-		//alg.nthRoot().call(sz, tmp, result);    // It may be best to use this with high prec algebras
-
-		throw new UnsupportedOperationException("not yet implemented");
+		for (long i = 0; i < sz; i++) {
+			list.get(i, value);
+			alg.log().call(value, value);
+			alg.add().call(sum, value, sum);
+			alg.add().call(count, one, count);
+		}
+		
+		alg.divide().call(sum, count, value);
+		
+		alg.exp().call(value, result);
 	}
 }
