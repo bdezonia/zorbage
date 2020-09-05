@@ -67,7 +67,8 @@ public class HighPrecisionAlgebra
 		InverseHyperbolic<HighPrecisionMember>,
 		Roots<HighPrecisionMember>,
 		Power<HighPrecisionMember>,
-		Tolerance<HighPrecisionMember,HighPrecisionMember>
+		Tolerance<HighPrecisionMember,HighPrecisionMember>,
+		Exponential<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
@@ -924,6 +925,34 @@ public class HighPrecisionAlgebra
 	@Override
 	public Function3<Boolean, HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> EXP =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.exp(a.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> exp() {
+		return EXP;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> LOG =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(BigDecimalMath.log(b.v(), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> log() {
+		return LOG;
 	}
 
 }
