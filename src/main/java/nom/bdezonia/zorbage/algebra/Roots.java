@@ -39,5 +39,5 @@ public interface Roots<T> {
 	Procedure2<T,T> cbrt();
 	
 	// TODO
-	// Procedure3<java.lang.Long,T,T> nthRoot();
+	// Procedure3<java.lang.Integer,T,T> nthRoot();
 }
