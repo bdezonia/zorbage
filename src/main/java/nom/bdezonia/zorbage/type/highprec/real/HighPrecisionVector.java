@@ -68,8 +68,6 @@ public class HighPrecisionVector
 		Norm<HighPrecisionVectorMember,HighPrecisionMember>,
 		Products<HighPrecisionVectorMember, HighPrecisionMember, HighPrecisionMatrixMember>,
 		DirectProduct<HighPrecisionVectorMember, HighPrecisionMatrixMember>,
-		Infinite<HighPrecisionVectorMember>,
-		NaN<HighPrecisionVectorMember>,
 		ScaleByHighPrec<HighPrecisionVectorMember>,
 		ScaleByRational<HighPrecisionVectorMember>,
 		ScaleByDouble<HighPrecisionVectorMember>,
@@ -339,68 +337,6 @@ public class HighPrecisionVector
 	@Override
 	public Procedure3<HighPrecisionVectorMember,HighPrecisionVectorMember,HighPrecisionMatrixMember> directProduct() {
 		return DP;
-	}
-
-	private final Function1<Boolean, HighPrecisionVectorMember> ISNAN =
-			new Function1<Boolean, HighPrecisionVectorMember>()
-	{
-		@Override
-		public Boolean call(HighPrecisionVectorMember a) {
-			// TODO enable me when HighPrec supports NaN's
-			// return SequenceIsNan.compute(G.HP, a.rawData());
-			return false;
-		}
-	};
-
-	@Override
-	public Function1<Boolean, HighPrecisionVectorMember> isNaN() {
-		return ISNAN;
-	}
-	
-	private final Procedure1<HighPrecisionVectorMember> NAN =
-			new Procedure1<HighPrecisionVectorMember>()
-	{
-		@Override
-		public void call(HighPrecisionVectorMember a) {
-			// TODO enable me when HighPrec supports NaN's
-			//RModuleNaN.compute(G.HP, a);
-		}
-	};
-	
-	@Override
-	public Procedure1<HighPrecisionVectorMember> nan() {
-		return NAN;
-	}
-
-	private final Function1<Boolean, HighPrecisionVectorMember> ISINF =
-			new Function1<Boolean, HighPrecisionVectorMember>()
-	{
-		@Override
-		public Boolean call(HighPrecisionVectorMember a) {
-			// TODO enable me when HighPrec supports Inf's
-			//return SequenceIsInf.compute(G.HP, a.rawData());
-			return false;
-		}
-	};
-
-	@Override
-	public Function1<Boolean, HighPrecisionVectorMember> isInfinite() {
-		return ISINF;
-	}
-
-	private final Procedure1<HighPrecisionVectorMember> INF =
-			new Procedure1<HighPrecisionVectorMember>()
-	{
-		@Override
-		public void call(HighPrecisionVectorMember a) {
-			// TODO enable me when HighPrec supports Inf's
-			//RModuleInfinite.compute(G.HP, a);
-		}
-	};
-
-	@Override
-	public Procedure1<HighPrecisionVectorMember> infinite() {
-		return INF;
 	}
 
 	private final Function1<Boolean, HighPrecisionVectorMember> ISZERO =
