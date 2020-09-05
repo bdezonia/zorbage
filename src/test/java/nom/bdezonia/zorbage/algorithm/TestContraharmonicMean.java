@@ -58,7 +58,7 @@ public class TestContraharmonicMean {
 		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
 		ContraharmonicMean.compute(G.DBL, nums, value);
-		assertTrue(Double.isNaN(value.v()));
+		assertEquals(0, value.v(), 0);
 	}
 
 }

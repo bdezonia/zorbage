@@ -26,7 +26,14 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
  * 
@@ -37,6 +44,20 @@ public class TestGeometricMean {
 
 	@Test
 	public void test1() {
-		// TODO: implement me when the algorithm is complete
+		// https://www.wikihow.com/Calculate-the-Geometric-Mean
+		Float64Member value = G.DBL.construct();
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {7,9,12});
+		GeometricMean.compute(G.DBL, nums, value);
+		assertEquals(9.11, value.v(), 0.01);
 	}
+
+	@Test
+	public void test2() {
+		
+		Float64Member value = G.DBL.construct();
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
+		GeometricMean.compute(G.DBL, nums, value);
+		assertEquals(0,value.v(),0);
+	}
+
 }
