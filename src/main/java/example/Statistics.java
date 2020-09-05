@@ -32,6 +32,7 @@ import nom.bdezonia.zorbage.algorithm.ApproxSumOfSquaredDeviationsWithCount;
 import nom.bdezonia.zorbage.algorithm.ApproxVariance;
 import nom.bdezonia.zorbage.algorithm.BasicStats;
 import nom.bdezonia.zorbage.algorithm.ContraharmonicMean;
+import nom.bdezonia.zorbage.algorithm.GeometricMean;
 import nom.bdezonia.zorbage.algorithm.HarmonicMean;
 import nom.bdezonia.zorbage.algorithm.MaxElement;
 import nom.bdezonia.zorbage.algorithm.Mean;
@@ -163,6 +164,8 @@ class Statistics {
 		
 		HarmonicMean.compute(G.DBL, data, result1);
 		
+		GeometricMean.compute(G.DBL, data, result1);
+		
 		ContraharmonicMean.compute(G.DBL, data, result1);
 	}
 	
@@ -220,6 +223,8 @@ class Statistics {
 		SequenceLInfinityNorm.compute(G.HP, G.HP, filtered, result1);
 		
 		HarmonicMean.compute(G.HP, filtered, result1);
+		
+		GeometricMean.compute(G.HP, filtered, result1);
 		
 		ContraharmonicMean.compute(G.HP, filtered, result1);
 	}
