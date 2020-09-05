@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class GeometricMean {
 
-	// https://mathworld.wolfram.com/GeometricMean.html
+	// https://www.wikihow.com/Calculate-the-Geometric-Mean
 	
 	/**
 	 * 

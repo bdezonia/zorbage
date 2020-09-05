@@ -57,7 +57,25 @@ public class TestGeometricMean {
 		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
 		GeometricMean.compute(G.DBL, nums, value);
-		assertEquals(0,value.v(),0);
+		assertEquals(0, value.v(), 0);
+	}
+
+	@Test
+	public void test3() {
+		// https://www.cliffsnotes.com/study-guides/geometry/right-triangles/geometric-mean
+		Float64Member value = G.DBL.construct();
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {4,25});
+		GeometricMean.compute(G.DBL, nums, value);
+		assertEquals(10, value.v(), 0);
+	}
+
+	@Test
+	public void test4() {
+		// https://www.statisticshowto.com/geometric-mean-2/
+		Float64Member value = G.DBL.construct();
+		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {4,8,3,9,17});
+		GeometricMean.compute(G.DBL, nums, value);
+		assertEquals(6.81, value.v(), 0.01);
 	}
 
 }
