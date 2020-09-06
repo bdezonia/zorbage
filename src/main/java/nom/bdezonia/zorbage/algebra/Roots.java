@@ -33,10 +33,10 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface Roots<T> {
+public interface Roots<U> {
 
-	Procedure2<T,T> sqrt();
-	Procedure2<T,T> cbrt();
+	Procedure2<U,U> sqrt();
+	Procedure2<U,U> cbrt();
 	
 	// TODO
 	// Procedure3<java.lang.Integer,T,T> nthRoot();

@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface Exponential<T> {
+public interface Exponential<U> {
 
-	Procedure2<T,T> exp();
-	Procedure2<T,T> log();
+	Procedure2<U,U> exp();
+	Procedure2<U,U> log();
 }

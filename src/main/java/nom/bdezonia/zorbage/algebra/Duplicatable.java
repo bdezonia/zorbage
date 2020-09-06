@@ -32,8 +32,8 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
+ * @param <U>
  */
-public interface Duplicatable<T> {
-	T duplicate();
+public interface Duplicatable<U> {
+	U duplicate();
 }

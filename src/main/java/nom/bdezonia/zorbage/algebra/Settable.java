@@ -32,6 +32,6 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <T>
  */
-public interface Settable<T> {
-	void set(T other);
+public interface Settable<U> {
+	void set(U other);
 }

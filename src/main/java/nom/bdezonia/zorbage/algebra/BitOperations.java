@@ -33,15 +33,15 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
+ * @param <U>
  */
-public interface BitOperations<T> {
-	Procedure3<T,T,T> bitAnd();
-	Procedure3<T,T,T> bitOr();
-	Procedure3<T,T,T> bitXor();
-	Procedure2<T,T> bitNot();
-	Procedure3<T,T,T> bitAndNot();
-	Procedure3<java.lang.Integer,T,T> bitShiftLeft();
-	Procedure3<java.lang.Integer,T,T> bitShiftRight();
-	Procedure3<java.lang.Integer,T,T> bitShiftRightFillZero();
+public interface BitOperations<U> {
+	Procedure3<U,U,U> bitAnd();
+	Procedure3<U,U,U> bitOr();
+	Procedure3<U,U,U> bitXor();
+	Procedure2<U,U> bitNot();
+	Procedure3<U,U,U> bitAndNot();
+	Procedure3<java.lang.Integer,U,U> bitShiftLeft();
+	Procedure3<java.lang.Integer,U,U> bitShiftRight();
+	Procedure3<java.lang.Integer,U,U> bitShiftRightFillZero();
 }

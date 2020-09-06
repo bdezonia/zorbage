@@ -35,6 +35,6 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface Power<T> {
-	Procedure3<T,T,T> pow();
+public interface Power<U> {
+	Procedure3<U,U,U> pow();
 }

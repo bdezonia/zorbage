@@ -30,8 +30,8 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
+ * @param <U>
  */
-public interface Gettable<T> {
-	void get(T other);
+public interface Gettable<U> {
+	void get(U other);
 }

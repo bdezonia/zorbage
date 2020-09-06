@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface QuaternionConstants<T> {
-	Procedure1<T> J();
-	Procedure1<T> K();
+public interface QuaternionConstants<U> {
+	Procedure1<U> J();
+	Procedure1<U> K();
 }
