@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.algebra.Unity;
 public class AverageTwo {
 
 	/**
-	 * Average two things without doing a division
+	 * Average two things without doing a division and avoiding overflow
 	 * 
 	 * @param alg
 	 * @param a
