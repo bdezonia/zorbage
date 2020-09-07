@@ -104,6 +104,13 @@ public class SamplingSymmetricDifference<T extends Allocatable<T> & DimensionCou
 		}
 		
 		@Override
+		public void reset() {
+			iter1.reset();
+			iter2.reset();
+			cached = false;
+		}
+		
+		@Override
 		public boolean hasNext() {
 			if (cached)
 				return true;

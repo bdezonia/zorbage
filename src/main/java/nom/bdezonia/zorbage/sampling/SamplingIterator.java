@@ -39,4 +39,6 @@ public interface SamplingIterator<T> {
 	boolean hasNext();
 	
 	void next(T value);
+	
+	void reset();
 }

@@ -99,7 +99,12 @@ public class SamplingGeneral<U extends Duplicatable<U> & DimensionCount & Settab
 	
 	private class Iterator implements SamplingIterator<U> {
 
-		private final java.util.Iterator<U> iter = points.iterator();
+		private java.util.Iterator<U> iter = points.iterator();
+		
+		@Override
+		public void reset() {
+			iter = points.iterator();
+		}
 		
 		@Override
 		public boolean hasNext() {

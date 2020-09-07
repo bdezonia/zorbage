@@ -92,6 +92,13 @@ public class SamplingIntersection<T extends Allocatable<T> & DimensionCount & Se
 			return false;
 		}
 		
+		
+		@Override
+		public void reset() {
+			iter1.reset();
+			cached = false;
+		}
+		
 		@Override
 		public boolean hasNext() {
 			if (cached)

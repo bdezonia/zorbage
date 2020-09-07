@@ -71,6 +71,11 @@ public class SamplingComplement implements Sampling<IntegerIndex> {
 		}
 
 		@Override
+		public void reset() {
+			iter.reset();
+		}
+		
+		@Override
 		public boolean hasNext() {
 			return iter.hasNext();
 		}

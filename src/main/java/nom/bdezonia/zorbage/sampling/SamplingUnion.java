@@ -100,6 +100,13 @@ public class SamplingUnion<T extends Allocatable<T> & DimensionCount & Settable<
 		}
 		
 		@Override
+		public void reset() {
+			iter1.reset();
+			iter2.reset();
+			cached = false;
+		}
+		
+		@Override
 		public boolean hasNext() {
 			if (cached)
 				return true;

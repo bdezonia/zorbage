@@ -164,10 +164,11 @@ public class ParallelCorrConvND {
 			U f = alg.construct();
 			U sum = alg.construct();
 			SamplingIterator<IntegerIndex> dataPoints = GridIterator.compute(dataMinPt, dataMaxPt);
+			SamplingIterator<IntegerIndex> filterPoints = GridIterator.compute(filterMin, filterMax);
 			while (dataPoints.hasNext()) {
 				dataPoints.next(dataPoint);
-				SamplingIterator<IntegerIndex> filterPoints = GridIterator.compute(filterMin, filterMax);
 				alg.zero().call(sum);
+				filterPoints.reset();
 				while (filterPoints.hasNext()) {
 					filterPoints.next(filterPoint);
 					indexer.call(filter, dataPoint, filterPoint, pt);

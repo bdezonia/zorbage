@@ -87,6 +87,12 @@ public class SamplingConditional<T extends Allocatable<T> & Settable<T> & Dimens
 		}
 
 		@Override
+		public void reset() {
+			iter1.reset();
+			cached = false;
+		}
+		
+		@Override
 		public boolean hasNext() {
 			if (cached)
 				return true;
