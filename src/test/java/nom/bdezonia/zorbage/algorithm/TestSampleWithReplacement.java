@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestSample {
+public class TestSampleWithReplacement {
 
 	@Test
 	public void test() {
@@ -49,7 +49,7 @@ public class TestSample {
 				new double[9]);
 		Float64Member value = G.DBL.construct();
 		
-		Sample.compute(G.DBL, 5, a, b);
+		SampleWithReplacement.compute(G.DBL, 5, a, b);
 		int count = 0;
 		for (int i = 0; i < b.size(); i++) {
 			b.get(i, value);

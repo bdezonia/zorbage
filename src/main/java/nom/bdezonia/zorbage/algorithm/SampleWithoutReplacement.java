@@ -26,21 +26,20 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import java.math.BigInteger;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Sample {
+public class SampleWithoutReplacement {
 
-	private Sample() { }
+	private SampleWithoutReplacement() { }
 	
 	/**
 	 * 
@@ -53,16 +52,22 @@ public class Sample {
 		void compute(T algebra, long n, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
+		long bSize = b.size();
 		if (n > aSize)
-			n = aSize;
-		U tmp = algebra.construct();
-		Random rng = ThreadLocalRandom.current();
+			throw new IllegalArgumentException("cannot take "+n+" samples from "+aSize+" elements without replacement");
+		if (n > bSize)
+			throw new IllegalArgumentException("cannot fit "+n+" samples in "+bSize+" spaces");
+		SignedInt64Member idx = G.INT64.construct();
+		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(n, idx);
 		for (long i = 0; i < n; i++) {
-			long j = new BigInteger(64, rng).longValue();
-			if (j < 0) j = -j; // translate neg to pos
-			if (j < 0) j = 0;  // translate -1 to 0
-			j = j % n;
-			a.get(j, tmp);
+			idx.setV(i);
+			indices.set(i, idx);
+		}
+		Shuffle.compute(G.INT64, indices);
+		U tmp = algebra.construct();
+		for (long i = 0; i < n; i++) {
+			indices.get(i, idx);
+			a.get(idx.v(), tmp);
 			b.set(i, tmp);
 		}
 	}
