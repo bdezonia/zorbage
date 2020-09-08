@@ -58,7 +58,7 @@ public class SampleWithoutReplacement {
 		if (n > bSize)
 			throw new IllegalArgumentException("cannot fit "+n+" samples in "+bSize+" spaces");
 		SignedInt64Member idx = G.INT64.construct();
-		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(n, idx);
+		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(aSize, idx);
 		for (long i = 0; i < n; i++) {
 			idx.setV(i);
 			indices.set(i, idx);
