@@ -31,7 +31,6 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NaN;
-import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
