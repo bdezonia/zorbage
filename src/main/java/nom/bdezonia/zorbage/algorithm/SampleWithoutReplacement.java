@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigInteger;
+import java.util.concurrent.ThreadLocalRandom;
+
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -58,17 +61,31 @@ public class SampleWithoutReplacement {
 		if (n > bSize)
 			throw new IllegalArgumentException("cannot fit "+n+" samples in "+bSize+" spaces");
 		SignedInt64Member idx = G.INT64.construct();
-		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(aSize, idx);
-		for (long i = 0; i < aSize; i++) {
-			idx.setV(i);
-			indices.set(i, idx);
+		SignedInt64Member tmp = G.INT64.construct();
+		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(n, idx);
+		long i = 0;
+		while (i < n) {
+			BigInteger num = new BigInteger(63, ThreadLocalRandom.current());
+			num = num.mod(BigInteger.valueOf(n));
+			idx.setV(num.longValue());
+			boolean done = true;
+			for (long j = 0; j < i; j++) {
+				indices.get(j, tmp);
+				if (tmp.v() == idx.v()) {
+					done = false;
+					break;
+				}
+			}
+			if (done) {
+				indices.set(i, idx);
+				i++;
+			}
 		}
-		Shuffle.compute(G.INT64, indices);
-		U tmp = algebra.construct();
-		for (long i = 0; i < n; i++) {
+		U x = algebra.construct();
+		for (i = 0; i < n; i++) {
 			indices.get(i, idx);
-			a.get(idx.v(), tmp);
-			b.set(i, tmp);
+			a.get(idx.v(), x);
+			b.set(i, x);
 		}
 	}
 }
