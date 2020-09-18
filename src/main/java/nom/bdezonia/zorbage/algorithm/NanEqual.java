@@ -46,7 +46,7 @@ public class NanEqual {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U> & NaN<U>, U>
-	boolean compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		boolean compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long size = a.size();
 		if (b.size() != size)

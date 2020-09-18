@@ -53,6 +53,8 @@ public class NanSum {
 		U tmpSum = alg.construct();
 		U value = alg.construct();
 		long size = storage.size();
+		if (size == 0)
+			throw new IllegalArgumentException("nan sum called with empty list");
 		for (long i = 0; i < size; i++) {
 			storage.get(i, value);
 			if (!alg.isNaN().call(value)) {

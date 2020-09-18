@@ -54,6 +54,8 @@ public class NanMedian {
 					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
+		if (storage.size() == 0)
+			throw new IllegalArgumentException("nan median called with empty list");
 		IndexedDataSource<U> filteredValues = NonNanValues.compute(alg, storage);
 		if (filteredValues.size() == 0)
 			alg.nan().call(result);

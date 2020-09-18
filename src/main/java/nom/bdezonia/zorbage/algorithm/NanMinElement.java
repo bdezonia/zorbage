@@ -51,6 +51,8 @@ public class NanMinElement {
 	{
 		boolean foundSome = false;
 		long size = storage.size();
+		if (size == 0)
+			throw new IllegalArgumentException("nan min element called with empty list");
 		U tmp = alg.construct();
 		for (long i = 0; i < size; i++) {
 			storage.get(i, tmp);

@@ -49,6 +49,8 @@ public class NanMean {
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & NaN<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
+		if (storage.size() == 0)
+			throw new IllegalArgumentException("nan mean called with empty list");
 		U sum = alg.construct();
 		U count = alg.construct();
 		NanSumWithCount.compute(alg, storage, sum, count);

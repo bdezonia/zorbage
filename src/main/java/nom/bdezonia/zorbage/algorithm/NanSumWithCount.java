@@ -58,6 +58,8 @@ public class NanSumWithCount {
 		U one = alg.construct();
 		alg.unity().call(one);
 		long size = storage.size();
+		if (size == 0)
+			throw new IllegalArgumentException("nan sum with count called with empty list");
 		for (long i = 0; i < size; i++) {
 			storage.get(i, value);
 			if (!alg.isNaN().call(value)) {

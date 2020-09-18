@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
@@ -47,9 +48,12 @@ public class TestNanSumWithCount {
 		Float64Member sum = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
 		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(new double[0]);
-		NanSumWithCount.compute(G.DBL, storage, sum, count);
-		assertTrue(G.DBL.isNaN().call(sum));
-		assertEquals(0, count.v(), 0);
+		try {
+			NanSumWithCount.compute(G.DBL, storage, sum, count);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 	}
 
 	@Test
