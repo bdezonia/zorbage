@@ -45,7 +45,10 @@ public class Variance {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U>, U>
 		void compute(T alg, IndexedDataSource<U> source, U result)
 	{
-		if (source.size() <= 1) {
+		if (source.size() == 0)
+			throw new IllegalArgumentException("variance called on an empty list");
+
+		else if (source.size() == 1) {
 			alg.zero().call(result);
 			return;
 		}

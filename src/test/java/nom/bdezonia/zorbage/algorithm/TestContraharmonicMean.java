@@ -27,6 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -56,8 +58,12 @@ public class TestContraharmonicMean {
 		
 		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
-		ContraharmonicMean.compute(G.DBL, nums, value);
-		assertEquals(0, value.v(), 0);
+		try {
+			ContraharmonicMean.compute(G.DBL, nums, value);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 	}
 
 }

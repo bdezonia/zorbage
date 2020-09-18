@@ -51,10 +51,8 @@ public class HarmonicMean {
 		void compute(T alg, IndexedDataSource<U> list, U result)
 	{
 		long sz = list.size();
-		if (sz == 0) {
-			alg.zero().call(result);
-			return;
-		}
+		if (sz == 0)
+			throw new IllegalArgumentException("harmonic mean called on an empty list");
 	
 		U value = alg.construct();
 		U sum = alg.construct();

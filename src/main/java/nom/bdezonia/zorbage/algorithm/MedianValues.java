@@ -58,9 +58,7 @@ public class MedianValues {
 		StableSort.compute(alg, localStorage);
 		long localStorageSize = localStorage.size();
 		if (localStorageSize == 0) {
-			U zero = alg.construct();
-			alg.assign().call(zero, result1);
-			alg.assign().call(zero, result2);
+			throw new IllegalArgumentException("MedianValues called on an empty list");
 		}
 		else if (localStorageSize % 2 == 0) {
 			localStorage.get(localStorageSize/2 - 1, result1);
