@@ -51,7 +51,7 @@ public class NanVariance {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U>
-								& Ordered<U> & NaN<U>, U extends Allocatable<U>>
+								& NaN<U>, U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		if (storage.size() == 0)

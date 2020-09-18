@@ -51,7 +51,7 @@ public class NanStdDev {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> &
-								Roots<U> & Ordered<U> & NaN<U>,
+								Roots<U> & NaN<U>,
 					U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
