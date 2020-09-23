@@ -26,10 +26,23 @@
  */
 package nom.bdezonia.zorbage.storage;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
+import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
+import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
+import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
+import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
+import nom.bdezonia.zorbage.storage.coder.FloatCoder;
+import nom.bdezonia.zorbage.storage.coder.IntCoder;
+import nom.bdezonia.zorbage.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.storage.coder.ShortCoder;
 import nom.bdezonia.zorbage.storage.file.FileStorage;
 import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
 
@@ -83,5 +96,214 @@ public class Storage {
 		else if (strategy == StorageConstruction.MEM_VIRTUAL)
 			return FileStorage.allocate(numElements, type);
 		throw new IllegalArgumentException("Unknown storage strategy "+strategy);
+	}
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & ByteCoder>
+		IndexedDataSource<U> allocate(U type, byte[] array)
+	{
+		if (array.length % type.byteCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.byteCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.byteCount();
+			tmp.fromByteArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & ShortCoder>
+		IndexedDataSource<U> allocate(U type, short[] array)
+	{
+		if (array.length % type.shortCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.shortCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.shortCount();
+			tmp.fromShortArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & IntCoder>
+		IndexedDataSource<U> allocate(U type, int[] array)
+	{
+		if (array.length % type.intCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.intCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.intCount();
+			tmp.fromIntArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & LongCoder>
+		IndexedDataSource<U> allocate(U type, long[] array)
+	{
+		if (array.length % type.longCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.longCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.longCount();
+			tmp.fromLongArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & FloatCoder>
+		IndexedDataSource<U> allocate(U type, float[] array)
+	{
+		if (array.length % type.floatCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.floatCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.floatCount();
+			tmp.fromFloatArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & DoubleCoder>
+		IndexedDataSource<U> allocate(U type, double[] array)
+	{
+		if (array.length % type.doubleCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.doubleCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.doubleCount();
+			tmp.fromDoubleArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & BooleanCoder>
+		IndexedDataSource<U> allocate(U type, boolean[] array)
+	{
+		if (array.length % type.booleanCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.booleanCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.booleanCount();
+			tmp.fromBooleanArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & BigIntegerCoder>
+		IndexedDataSource<U> allocate(U type, BigInteger[] array)
+	{
+		if (array.length % type.bigIntegerCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.bigIntegerCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.bigIntegerCount();
+			tmp.fromBigIntegerArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & BigDecimalCoder>
+		IndexedDataSource<U> allocate(U type, BigDecimal[] array)
+	{
+		if (array.length % type.bigDecimalCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.bigDecimalCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.bigDecimalCount();
+			tmp.fromBigDecimalArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & CharCoder>
+		IndexedDataSource<U> allocate(U type, char[] array)
+	{
+		if (array.length % type.charCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(array.length / type.charCount(), type);
+		U tmp = type.allocate();
+		for (int i = 0; i < list.size(); i++) {
+			int offset = i * type.charCount();
+			tmp.fromCharArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
 	}
 }
