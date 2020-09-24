@@ -31,6 +31,7 @@ import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
@@ -69,6 +70,9 @@ public class SparseStorage {
 		}
 		if (type instanceof BigDecimalCoder) {
 			return (IndexedDataSource<U>) new SparseStorageBigDecimal(size, (BigDecimalCoder)type);
+		}
+		if (type instanceof CharCoder) {
+			return (IndexedDataSource<U>) new SparseStorageChar(size, (CharCoder)type);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {

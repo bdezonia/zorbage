@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
@@ -74,6 +75,9 @@ public class FileStorage {
 		}
 		if (type instanceof BooleanCoder) {
 			return (IndexedDataSource<U>) new FileStorageBoolean(size, (BooleanCoder)type);
+		}
+		if (type instanceof CharCoder) {
+			return (IndexedDataSource<U>) new FileStorageChar(size, (CharCoder)type);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {

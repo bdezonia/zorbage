@@ -24,63 +24,77 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.storage.array;
+package nom.bdezonia.zorbage.type.character;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.StorageConstruction;
-import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
+import nom.bdezonia.zorbage.algebra.Duplicatable;
+import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
-	implements IndexedDataSource<U>, Allocatable<ArrayStorageBoolean<U>>
+public class CharMember
+	implements
+		CharCoder, Gettable<CharMember>, Settable<CharMember>, Allocatable<CharMember>, Duplicatable<CharMember>
 {
-	private final U type;
-	private final boolean[] data;
+	private char v;
 	
-	public ArrayStorageBoolean(long size, U type) {
-		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.booleanCount()))
-			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " of the type of requested boolean based entities");
-		this.type = type.allocate();
-		this.data = new boolean[(int)size * type.booleanCount()];
+	public CharMember() {
+		v = 0;
 	}
-
-	@Override
-	public void set(long index, U value) {
-		value.toBooleanArray(data, (int)(index * type.booleanCount()));
+	
+	public CharMember(char ch) {
+		v = ch;
 	}
-
-	@Override
-	public void get(long index, U value) {
-		value.fromBooleanArray(data, (int)(index * type.booleanCount()));
+	
+	public CharMember(CharMember other) {
+		set(other);
 	}
 	
 	@Override
-	public long size() {
-		return data.length / type.booleanCount();
+	public void set(CharMember ch) {
+		v = ch.v;
+	}
+	
+	@Override
+	public void get(CharMember ch) {
+		ch.v = v;
+	}
+	
+	public char v() {
+		return v;
+	}
+	
+	public void setV(char ch) {
+		v = ch;
 	}
 
 	@Override
-	public ArrayStorageBoolean<U> duplicate() {
-		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(size(), type);
-		System.arraycopy(data, 0, s.data, 0, data.length);
-		return s;
+	public int charCount() {
+		return 1;
 	}
 
 	@Override
-	public ArrayStorageBoolean<U> allocate() {
-		return new ArrayStorageBoolean<U>(size(), type);
+	public void fromCharArray(char[] arr, int index) {
+		v = arr[index];
 	}
 
 	@Override
-	public StorageConstruction storageType() {
-		return StorageConstruction.MEM_ARRAY;
+	public void toCharArray(char[] arr, int index) {
+		arr[index] = v;
+	}
+
+	@Override
+	public CharMember duplicate() {
+		return new CharMember(this);
+	}
+
+	@Override
+	public CharMember allocate() {
+		return new CharMember();
 	}
 }

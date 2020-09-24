@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.storage.array;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 
 /**
  * 
@@ -37,46 +37,46 @@ import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
  *
  * @param <U>
  */
-public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
-	implements IndexedDataSource<U>, Allocatable<ArrayStorageBoolean<U>>
+public class ArrayStorageChar<U extends CharCoder & Allocatable<U>>
+	implements IndexedDataSource<U>, Allocatable<ArrayStorageChar<U>>
 {
 	private final U type;
-	private final boolean[] data;
+	private final char[] data;
 	
-	public ArrayStorageBoolean(long size, U type) {
+	public ArrayStorageChar(long size, U type) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
-		if (size > (Integer.MAX_VALUE / type.booleanCount()))
-			throw new IllegalArgumentException("ArrayStorageBoolean can handle at most " + (Integer.MAX_VALUE / type.booleanCount()) + " of the type of requested boolean based entities");
+			throw new IllegalArgumentException("ArrayStorageChar cannot handle a negative request");
+		if (size > (Integer.MAX_VALUE / type.charCount()))
+			throw new IllegalArgumentException("ArrayStorageChar can handle at most " + (Integer.MAX_VALUE / type.charCount()) + " of the type of requested boolean based entities");
 		this.type = type.allocate();
-		this.data = new boolean[(int)size * type.booleanCount()];
+		this.data = new char[(int)size * type.charCount()];
 	}
 
 	@Override
 	public void set(long index, U value) {
-		value.toBooleanArray(data, (int)(index * type.booleanCount()));
+		value.toCharArray(data, (int)(index * type.charCount()));
 	}
 
 	@Override
 	public void get(long index, U value) {
-		value.fromBooleanArray(data, (int)(index * type.booleanCount()));
+		value.fromCharArray(data, (int)(index * type.charCount()));
 	}
 	
 	@Override
 	public long size() {
-		return data.length / type.booleanCount();
+		return data.length / type.charCount();
 	}
 
 	@Override
-	public ArrayStorageBoolean<U> duplicate() {
-		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(size(), type);
+	public ArrayStorageChar<U> duplicate() {
+		ArrayStorageChar<U> s = new ArrayStorageChar<U>(size(), type);
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
-	public ArrayStorageBoolean<U> allocate() {
-		return new ArrayStorageBoolean<U>(size(), type);
+	public ArrayStorageChar<U> allocate() {
+		return new ArrayStorageChar<U>(size(), type);
 	}
 
 	@Override

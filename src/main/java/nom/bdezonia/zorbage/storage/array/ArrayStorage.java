@@ -31,6 +31,7 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -45,6 +46,7 @@ import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
@@ -91,6 +93,9 @@ public class ArrayStorage {
 		}
 		if (type instanceof BigDecimalCoder) {
 			return (IndexedDataSource<U>) new ArrayStorageBigDecimal(size, (BigDecimalCoder)type);
+		}
+		if (type instanceof CharCoder) {
+			return (IndexedDataSource<U>) new ArrayStorageChar(size, (CharCoder)type);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
@@ -250,4 +255,20 @@ public class ArrayStorage {
 		return store;
 	}
 
+	
+	/**
+	 * 
+	 * @param chars
+	 * @return
+	 */
+	public static IndexedDataSource<CharMember> allocateChars(char[] chars) {
+		CharMember type = new CharMember();
+		IndexedDataSource<CharMember> store =
+				new ArrayStorageChar<CharMember>(chars.length, type);
+		for (int i = 0; i < chars.length; i++) {
+			type.setV(chars[i]);
+			store.set(i, type);
+		}
+		return store;
+	}
 }
