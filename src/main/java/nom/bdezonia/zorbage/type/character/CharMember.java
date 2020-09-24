@@ -56,7 +56,7 @@ public class CharMember
 	}
 	
 	public CharMember(String str) {
-		if (str == null)
+		if (str == null || str.length() == 0)
 			v = 0;
 		else
 			v = str.charAt(0);
