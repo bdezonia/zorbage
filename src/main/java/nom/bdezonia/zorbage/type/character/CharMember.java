@@ -55,6 +55,13 @@ public class CharMember
 		set(other);
 	}
 	
+	public CharMember(String str) {
+		if (str == null)
+			v = 0;
+		else
+			v = str.charAt(0);
+	}
+	
 	@Override
 	public void set(CharMember ch) {
 		v = ch.v;

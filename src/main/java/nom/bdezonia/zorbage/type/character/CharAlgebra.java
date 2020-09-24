@@ -64,9 +64,7 @@ public class CharAlgebra
 
 	@Override
 	public CharMember construct(String str) {
-		if (str == null)
-			return new CharMember();
-		return new CharMember(str.charAt(0));
+		return new CharMember(str);
 	}
 
 	private final Function2<Boolean, CharMember, CharMember> EQ =
