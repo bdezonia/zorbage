@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.algebra;
 
 import nom.bdezonia.zorbage.type.bool.BooleanAlgebra;
+import nom.bdezonia.zorbage.type.character.CharAlgebra;
 import nom.bdezonia.zorbage.type.character.FixedStringAlgebra;
 import nom.bdezonia.zorbage.type.character.StringAlgebra;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Algebra;
@@ -152,6 +153,8 @@ public class G {
 	public static final BigDecimal ONE_HALF = BigDecimal.valueOf(0.5);
 
 	public static final UnboundedIntAlgebra UNBOUND = new UnboundedIntAlgebra();
+
+	public static final CharAlgebra CHAR = new CharAlgebra();
 
 	public static final FixedStringAlgebra FSTRING = new FixedStringAlgebra();
 	

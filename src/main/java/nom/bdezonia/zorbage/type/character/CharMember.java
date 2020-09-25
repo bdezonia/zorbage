@@ -28,8 +28,10 @@ package nom.bdezonia.zorbage.type.character;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
 
 /**
@@ -103,5 +105,27 @@ public class CharMember
 	@Override
 	public CharMember allocate() {
 		return new CharMember();
+	}
+
+	@Override
+	public String toString() {
+		return Character.toString(v);
+	}
+	
+	@Override
+	public int hashCode() {
+		int v = 1;
+		v = Hasher.PRIME * v + Hasher.hashCode(this.v);
+		return v;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o instanceof CharMember) {
+			return G.CHAR.isEqual().call(this, (CharMember) o);
+		}
+		return false;
 	}
 }
