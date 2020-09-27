@@ -128,7 +128,7 @@ public class TestJdbc {
 	private Connection getConnection() throws Exception {
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
