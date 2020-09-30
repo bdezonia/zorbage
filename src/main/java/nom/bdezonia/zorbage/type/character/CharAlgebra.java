@@ -341,4 +341,250 @@ public class CharAlgebra
 		return MINB;
 	}
 
+	private static Function1<Boolean,CharMember> DEF =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isDefined(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isDefined() {
+		return DEF;
+	}
+
+	private static Function1<Boolean,CharMember> DIG =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isDigit(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isDigit() {
+		return DIG;
+	}
+
+	private static Function1<Boolean,CharMember> HS =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isHighSurrogate(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isHighSurrogate() {
+		return HS;
+	}
+
+	private static Function1<Boolean,CharMember> II =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isIdentifierIgnorable(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isIdentifierIgnorable() {
+		return II;
+	}
+
+	private static Function1<Boolean,CharMember> ISOC =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isISOControl(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isISOControl() {
+		return ISOC;
+	}
+
+	private static Function1<Boolean,CharMember> JIS =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isJavaIdentifierStart(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isJavaIdentifierStart() {
+		return JIS;
+	}
+
+	private static Function1<Boolean,CharMember> JIP =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isJavaIdentifierPart(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isJavaIdentifierPart() {
+		return JIP;
+	}
+
+	private static Function1<Boolean,CharMember> LET =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isLetter(ch.v());
+		}
+	};
+	
+	public static Function1<Boolean,CharMember> isLetter() {
+		return LET;
+	}
+
+	private static Function1<Boolean,CharMember> LETD =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isLetterOrDigit(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isLetterOrDigit() {
+		return LETD;
+	}
+
+	private static Function1<Boolean,CharMember> LOWER =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isLowerCase(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isLowerCase() {
+		return LOWER;
+	}
+
+	private static Function1<Boolean,CharMember> UPPER =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isUpperCase(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isUpperCase() {
+		return UPPER;
+	}
+
+	private static Function1<Boolean,CharMember> WS =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isWhitespace(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isWhitespace() {
+		return WS;
+	}
+
+	private static Function1<Boolean,CharMember> TTL =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isTitleCase(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isTitleCase() {
+		return TTL;
+	}
+
+	private static Function1<Boolean,CharMember> MIR =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isMirrored(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isMirrored() {
+		return MIR;
+	}
+
+	private static Function1<Boolean,CharMember> SURR =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isSurrogate(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isSurrogate() {
+		return SURR;
+	}
+
+	private static Function2<Boolean,CharMember,CharMember> SURRP =
+			new Function2<Boolean, CharMember, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember high, CharMember low) {
+			return Character.isSurrogatePair(high.v(), low.v());
+		}
+	};
+
+	public static Function2<Boolean,CharMember,CharMember> isSurrogatePair() {
+		return SURRP;
+	}
+
+	private static Function1<Boolean,CharMember> LSURR =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isLowSurrogate(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isLowSurrogate() {
+		return LSURR;
+	}
+
+	private static Function1<Boolean,CharMember> UIP =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isUnicodeIdentifierPart(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isUnicodeIdentifierPart() {
+		return UIP;
+	}
+
+	private static Function1<Boolean,CharMember> UIS =
+			new Function1<Boolean, CharMember>()
+	{
+		@Override
+		public Boolean call(CharMember ch) {
+			return Character.isUnicodeIdentifierStart(ch.v());
+		}
+	};
+
+	public static Function1<Boolean,CharMember> isUnicodeIdentifierStart() {
+		return UIS;
+	}
 }
