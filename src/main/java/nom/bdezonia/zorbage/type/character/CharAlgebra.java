@@ -341,7 +341,7 @@ public class CharAlgebra
 		return MINB;
 	}
 
-	private static Function1<Boolean,CharMember> DEF =
+	private static final Function1<Boolean,CharMember> DEF =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -354,7 +354,7 @@ public class CharAlgebra
 		return DEF;
 	}
 
-	private static Function1<Boolean,CharMember> DIG =
+	private static final Function1<Boolean,CharMember> DIG =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -367,7 +367,7 @@ public class CharAlgebra
 		return DIG;
 	}
 
-	private static Function1<Boolean,CharMember> HS =
+	private static final Function1<Boolean,CharMember> HS =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -380,7 +380,7 @@ public class CharAlgebra
 		return HS;
 	}
 
-	private static Function1<Boolean,CharMember> II =
+	private static final Function1<Boolean,CharMember> II =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -393,7 +393,7 @@ public class CharAlgebra
 		return II;
 	}
 
-	private static Function1<Boolean,CharMember> ISOC =
+	private static final Function1<Boolean,CharMember> ISOC =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -406,7 +406,7 @@ public class CharAlgebra
 		return ISOC;
 	}
 
-	private static Function1<Boolean,CharMember> JIS =
+	private static final Function1<Boolean,CharMember> JIS =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -419,7 +419,7 @@ public class CharAlgebra
 		return JIS;
 	}
 
-	private static Function1<Boolean,CharMember> JIP =
+	private static final Function1<Boolean,CharMember> JIP =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -432,7 +432,7 @@ public class CharAlgebra
 		return JIP;
 	}
 
-	private static Function1<Boolean,CharMember> LET =
+	private static final Function1<Boolean,CharMember> LET =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -445,7 +445,7 @@ public class CharAlgebra
 		return LET;
 	}
 
-	private static Function1<Boolean,CharMember> LETD =
+	private static final Function1<Boolean,CharMember> LETD =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -458,7 +458,7 @@ public class CharAlgebra
 		return LETD;
 	}
 
-	private static Function1<Boolean,CharMember> LOWER =
+	private static final Function1<Boolean,CharMember> LOWER =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -471,7 +471,7 @@ public class CharAlgebra
 		return LOWER;
 	}
 
-	private static Function1<Boolean,CharMember> UPPER =
+	private static final Function1<Boolean,CharMember> UPPER =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -484,7 +484,7 @@ public class CharAlgebra
 		return UPPER;
 	}
 
-	private static Function1<Boolean,CharMember> WS =
+	private static final Function1<Boolean,CharMember> WS =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -497,7 +497,7 @@ public class CharAlgebra
 		return WS;
 	}
 
-	private static Function1<Boolean,CharMember> TTL =
+	private static final Function1<Boolean,CharMember> TTL =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -510,7 +510,7 @@ public class CharAlgebra
 		return TTL;
 	}
 
-	private static Function1<Boolean,CharMember> MIR =
+	private static final Function1<Boolean,CharMember> MIR =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -523,7 +523,7 @@ public class CharAlgebra
 		return MIR;
 	}
 
-	private static Function1<Boolean,CharMember> SURR =
+	private static final Function1<Boolean,CharMember> SURR =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -536,7 +536,7 @@ public class CharAlgebra
 		return SURR;
 	}
 
-	private static Function2<Boolean,CharMember,CharMember> SURRP =
+	private static final Function2<Boolean,CharMember,CharMember> SURRP =
 			new Function2<Boolean, CharMember, CharMember>()
 	{
 		@Override
@@ -549,7 +549,7 @@ public class CharAlgebra
 		return SURRP;
 	}
 
-	private static Function1<Boolean,CharMember> LSURR =
+	private static final Function1<Boolean,CharMember> LSURR =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -562,7 +562,7 @@ public class CharAlgebra
 		return LSURR;
 	}
 
-	private static Function1<Boolean,CharMember> UIP =
+	private static final Function1<Boolean,CharMember> UIP =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
@@ -575,7 +575,7 @@ public class CharAlgebra
 		return UIP;
 	}
 
-	private static Function1<Boolean,CharMember> UIS =
+	private static final Function1<Boolean,CharMember> UIS =
 			new Function1<Boolean, CharMember>()
 	{
 		@Override
