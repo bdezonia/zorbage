@@ -653,16 +653,16 @@ public class CharAlgebra
 		return RB;
 	}
 	
-	private static final Function1<CharMember,CharMember> VO =
-			new Function1<CharMember, CharMember>()
+	private static final Function1<CharMember,Character> VO =
+			new Function1<CharMember, Character>()
 	{
 		@Override
-		public CharMember call(CharMember ch) {
-			return new CharMember(Character.valueOf(ch.v()));
+		public CharMember call(Character ch) {
+			return new CharMember(Character.valueOf(ch));
 		}
 	};
 
-	public static Function1<CharMember,CharMember> valueOf() {
+	public static Function1<CharMember,Character> valueOf() {
 		return VO;
 	}
 	
