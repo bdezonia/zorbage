@@ -658,7 +658,7 @@ public class CharAlgebra
 	{
 		@Override
 		public CharMember call(Character ch) {
-			return new CharMember(Character.valueOf(ch));
+			return new CharMember(ch);
 		}
 	};
 
