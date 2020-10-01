@@ -587,4 +587,83 @@ public class CharAlgebra
 	public static Function1<Boolean,CharMember> isUnicodeIdentifierStart() {
 		return UIS;
 	}
+	
+	private static final Function2<CharMember,Integer, Integer> FD =
+			new Function2<CharMember,Integer, Integer>()
+	{
+		@Override
+		public CharMember call(Integer digit, Integer radix) {
+			return new CharMember(Character.forDigit(digit, radix));
+		}
+	};
+
+	public static Function2<CharMember,Integer, Integer> forDigit() {
+		return FD;
+	}
+	
+	private static final Function1<Byte,CharMember> GDIR =
+			new Function1<Byte, CharMember>()
+	{
+		@Override
+		public Byte call(CharMember ch) {
+			return Character.getDirectionality(ch.v());
+		}
+	};
+
+	public static Function1<Byte,CharMember> getDirectionality() {
+		return GDIR;
+	}
+	
+	private static final Function1<Integer,CharMember> GNV =
+			new Function1<Integer, CharMember>()
+	{
+		@Override
+		public Integer call(CharMember ch) {
+			return Character.getNumericValue(ch.v());
+		}
+	};
+
+	public static Function1<Integer,CharMember> getNumericValue() {
+		return GNV;
+	}
+	
+	private static final Function1<Integer,CharMember> GT =
+			new Function1<Integer, CharMember>()
+	{
+		@Override
+		public Integer call(CharMember ch) {
+			return Character.getType(ch.v());
+		}
+	};
+
+	public static Function1<Integer,CharMember> getType() {
+		return GT;
+	}
+	
+	private static final Function1<CharMember,CharMember> RB =
+			new Function1<CharMember, CharMember>()
+	{
+		@Override
+		public CharMember call(CharMember ch) {
+			return new CharMember(Character.reverseBytes(ch.v()));
+		}
+	};
+
+	public static Function1<CharMember,CharMember> reverseBytes() {
+		return RB;
+	}
+	
+	private static final Function1<CharMember,CharMember> VO =
+			new Function1<CharMember, CharMember>()
+	{
+		@Override
+		public CharMember call(CharMember ch) {
+			return new CharMember(Character.valueOf(ch.v()));
+		}
+	};
+
+	public static Function1<CharMember,CharMember> valueOf() {
+		return VO;
+	}
+	
 }
