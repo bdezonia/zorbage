@@ -29,6 +29,8 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.character.CharAlgebra;
+import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
 import nom.bdezonia.zorbage.type.character.StringMember;
 import nom.bdezonia.zorbage.type.point.Point;
@@ -460,6 +462,56 @@ class MiscTypes {
 		G.STRING.toUpperWithLocale();
 		G.STRING.trim();
 		G.STRING.toCharArray();
+	}
+	
+	// Standard Java unicode 16 characters
+	
+	void example8() {
+		
+		CharMember ch = new CharMember("A");
+		CharMember other = null;
+		
+		// java ops
+
+		ch.equals(other);
+		ch.hashCode();
+		ch.toString();
+		
+		// constructions
+		
+		G.CHAR.construct();
+		G.CHAR.construct(other);
+		G.CHAR.construct("B");
+
+		// mathematical operations
+		
+		G.CHAR.assign();
+		G.CHAR.signum();
+		G.CHAR.zero();
+		G.CHAR.max();
+		G.CHAR.min();
+		G.CHAR.pred();
+		G.CHAR.succ();
+
+		// comparisons
+		
+		G.CHAR.compare();
+		G.CHAR.isEqual();
+		G.CHAR.isGreater();
+		G.CHAR.isGreaterEqual();
+		G.CHAR.isLess();
+		G.CHAR.isLessEqual();
+		G.CHAR.isNotEqual();
+		G.CHAR.isZero();
+
+		// misc
+		
+		CharMember bound = new CharMember();
+		G.CHAR.maxBound().call(bound);
+		G.CHAR.minBound().call(bound);
+		G.CHAR.random().call(ch);
+		CharAlgebra.reverseBytes().call(ch);
+		CharAlgebra.valueOf().call('n');
 	}
 
 }
