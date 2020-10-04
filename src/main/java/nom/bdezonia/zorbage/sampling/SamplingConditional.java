@@ -32,8 +32,8 @@ import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.function.Function1;
 
 /**
- * {@link SamplingConditional} is a {@link Sampling} that includes the points of another
- * Sampling that match a specified {@link Predicate}.
+ * {@link SamplingConditional} is a {@link Sampling} that includes the
+ * points of another Sampling that match a specified predicate.
  * 
  * @author Barry DeZonia
  *

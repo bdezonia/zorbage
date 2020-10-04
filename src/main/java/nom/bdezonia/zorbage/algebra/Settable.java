@@ -30,7 +30,7 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <T>
+ * @param <U>
  */
 public interface Settable<U> {
 	void set(U other);
