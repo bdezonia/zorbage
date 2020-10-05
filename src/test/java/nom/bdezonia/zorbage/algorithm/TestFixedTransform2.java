@@ -32,7 +32,6 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -49,7 +48,7 @@ public class TestFixedTransform2 {
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
 		SignedInt32Member seven = G.INT32.construct("7");
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4});
 		IndexedDataSource<SignedInt32Member> b = Storage.allocate(a.size(), value);
 		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
@@ -80,7 +79,7 @@ public class TestFixedTransform2 {
 	public void test2() {
 		SignedInt32Member value = G.INT32.construct();
 		SignedInt32Member seven = G.INT32.construct("14");
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4});
 		IndexedDataSource<SignedInt32Member> b = Storage.allocate(a.size(), value);
 		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =

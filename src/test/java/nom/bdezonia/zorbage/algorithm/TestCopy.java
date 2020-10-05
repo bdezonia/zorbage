@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 
 /**
@@ -44,9 +44,11 @@ public class TestCopy {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt8Member> list1 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list1 = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {0,1,2,3,0,0,0,0});
-		IndexedDataSource<SignedInt8Member> list2 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list2 = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {0,0,0,0,0,0,0,0});
 		Copy.compute(G.INT8, list1, list2);
 		SignedInt8Member value1 = G.INT8.construct();

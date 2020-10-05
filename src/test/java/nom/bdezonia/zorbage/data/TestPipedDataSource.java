@@ -32,7 +32,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -51,7 +51,7 @@ public class TestPipedDataSource {
 		idx.set(0,1);
 		idx.set(1,1);
 		idx.set(2,1);
-		IndexedDataSource<SignedInt32Member> data = ArrayStorage.allocateInts(new int[24]);
+		IndexedDataSource<SignedInt32Member> data = Storage.allocate(G.INT32.construct(), new int[24]);
 		DimensionedDataSource<SignedInt32Member> md = new NdData<>(dims, data);
 		IndexedDataSource<SignedInt32Member> p = md.piped(1, idx);
 		assertEquals(3, p.size());

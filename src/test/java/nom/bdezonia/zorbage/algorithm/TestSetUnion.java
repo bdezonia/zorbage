@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -50,27 +50,27 @@ public class TestSetUnion {
 		IndexedDataSource<SignedInt32Member> b;
 		IndexedDataSource<SignedInt32Member> res;
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 		
-		a = ArrayStorage.allocateInts(new int[] {1});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(1, value.v());
 
-		a = ArrayStorage.allocateInts(new int[] {1,1});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,1});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(1, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {1,2});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,2});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(2, res.size());
 		res.get(0, value);
@@ -78,22 +78,22 @@ public class TestSetUnion {
 		res.get(1, value);
 		assertEquals(2, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {1});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(1, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {1,1});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,1});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(1, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {1,2});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,2});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(2, res.size());
 		res.get(0, value);
@@ -111,8 +111,8 @@ public class TestSetUnion {
 		IndexedDataSource<SignedInt32Member> b;
 		IndexedDataSource<SignedInt32Member> res;
 		
-		a = ArrayStorage.allocateInts(new int[] {1,2,3,4});
-		b = ArrayStorage.allocateInts(new int[] {1,2,3,4});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(4, res.size());
 		res.get(0, value);
@@ -134,8 +134,8 @@ public class TestSetUnion {
 		IndexedDataSource<SignedInt32Member> b;
 		IndexedDataSource<SignedInt32Member> res;
 		
-		a = ArrayStorage.allocateInts(new int[] {1,2,5,6});
-		b = ArrayStorage.allocateInts(new int[] {1,2,3,4});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,2,5,6});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(6, res.size());
 		res.get(0, value);
@@ -161,8 +161,8 @@ public class TestSetUnion {
 		IndexedDataSource<SignedInt32Member> b;
 		IndexedDataSource<SignedInt32Member> res;
 		
-		a = ArrayStorage.allocateInts(new int[] {1,7,9,3,3,1,5});
-		b = ArrayStorage.allocateInts(new int[] {8,7,6,5,4,3,2,1});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,7,9,3,3,1,5});
+		b = Storage.allocate(G.INT32.construct(), new int[] {8,7,6,5,4,3,2,1});
 		res = SetUnion.compute(G.INT32, a, b);
 		assertEquals(9, res.size());
 		res.get(0, value);

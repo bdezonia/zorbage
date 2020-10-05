@@ -33,7 +33,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.ConcatenatedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -46,8 +46,8 @@ public class TestDeepCopy {
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(new int[] {1,2});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(new int[] {3,4});
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), new int[] {1,2});
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(G.INT32.construct(), new int[] {3,4});
 		IndexedDataSource<SignedInt32Member> concat = new ConcatenatedDataSource<>(a, b);
 		IndexedDataSource<SignedInt32Member> copy = DeepCopy.compute(G.INT32, concat);
 		assertEquals(4, copy.size());

@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 
 /**
@@ -43,13 +43,17 @@ public class TestFindEnd {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {1,2,3,4,5,1,2,3,4,5});
-		IndexedDataSource<SignedInt8Member> v1 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> v1 = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {1,2,3});
-		IndexedDataSource<SignedInt8Member> v2 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> v2 = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {4,5,1});
-		IndexedDataSource<SignedInt8Member> v3 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> v3 = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {7,4,1});
 		assertEquals(5, FindEnd.compute(G.INT8, v1, list));
 		assertEquals(3, FindEnd.compute(G.INT8, v2, list));

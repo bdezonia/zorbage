@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -44,9 +44,9 @@ public class TestScale {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {-5,-3,-1,0,2,4,6});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(G.INT32.construct(), 
 				new int[7]);
 		SignedInt32Member value = G.INT32.construct();
 		

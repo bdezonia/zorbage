@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -47,12 +47,12 @@ public class TestNanMinMaxElement {
 		Float64Member max = G.DBL.construct();
 		IndexedDataSource<Float64Member> storage = null;
 		
-		storage = ArrayStorage.allocateDoubles(new double[]{-16,20,7,-55,0,1,5,74,44,13});
+		storage = Storage.allocate(G.DBL.construct(), new double[]{-16,20,7,-55,0,1,5,74,44,13});
 		NanMinMaxElement.compute(G.DBL, storage, min, max);
 		assertEquals(-55, min.v(), 0);
 		assertEquals(74, max.v(), 0);
 		
-		storage = ArrayStorage.allocateDoubles(new double[]{Double.NaN,-16,20,7,Double.NaN,-55,0,1,Double.NaN,5,74,44,13,Double.NaN});
+		storage = Storage.allocate(G.DBL.construct(), new double[]{Double.NaN,-16,20,7,Double.NaN,-55,0,1,Double.NaN,5,74,44,13,Double.NaN});
 		NanMinMaxElement.compute(G.DBL, storage, min, max);
 		assertEquals(-55, min.v(), 0);
 		assertEquals(74, max.v(), 0);

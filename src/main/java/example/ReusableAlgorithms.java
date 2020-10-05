@@ -129,10 +129,10 @@ class ReusableAlgorithms {
 		// just work in a type agnostic way no matter what kind of integers you
 		// want to work with.
 
-		IndexedDataSource<SignedInt8Member> i8s = ArrayStorage.allocateBytes(new byte[] {1,2,3,4,5});
-		IndexedDataSource<SignedInt16Member> i16s = ArrayStorage.allocateShorts(new short[] {1,2,3,4,5});
-		IndexedDataSource<SignedInt32Member> i32s = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
-		IndexedDataSource<SignedInt64Member> i64s = ArrayStorage.allocateLongs(new long[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt8Member> i8s = nom.bdezonia.zorbage.storage.Storage.allocate(G.INT8.construct(), new byte[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt16Member> i16s = nom.bdezonia.zorbage.storage.Storage.allocate(G.INT16.construct(), new short[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> i32s = nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt64Member> i64s = nom.bdezonia.zorbage.storage.Storage.allocate(G.INT64.construct(), new long[] {1,2,3,4,5});
 		
 		SignedInt8Member i8Result = G.INT8.construct();
 		SignedInt16Member i16Result = G.INT16.construct();

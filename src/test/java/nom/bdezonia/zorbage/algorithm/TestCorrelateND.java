@@ -53,7 +53,8 @@ public class TestCorrelateND {
 		SignedInt64Member value = G.INT64.construct();
 		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
 		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
-		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
+		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
 		
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		

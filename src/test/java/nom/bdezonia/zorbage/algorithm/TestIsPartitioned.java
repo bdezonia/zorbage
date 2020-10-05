@@ -34,7 +34,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.predicate.EqualConstant;
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
 import nom.bdezonia.zorbage.predicate.LessThanConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -49,7 +49,8 @@ public class TestIsPartitioned {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt8Member> a = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> a = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {1,2,3,4,5,6,7,8});
 		
 		Function1<Boolean,SignedInt8Member> cond1 = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(4));

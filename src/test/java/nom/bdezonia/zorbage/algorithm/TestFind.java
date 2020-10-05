@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 
 /**
@@ -44,7 +44,8 @@ public class TestFind {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {1,7,0,3,9,2,2,2,5});
 		SignedInt8Member value = G.INT8.construct();
 		value.setV((byte)-1);
@@ -70,7 +71,8 @@ public class TestFind {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {1,7,0,3,9,2,2,2,5});
 		SignedInt8Member value = G.INT8.construct();
 		value.setV((byte)2);

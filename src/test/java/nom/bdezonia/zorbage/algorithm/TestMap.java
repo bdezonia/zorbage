@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -46,7 +46,7 @@ public class TestMap {
 	@Test
 	public void test1() {
 	
-		IndexedDataSource<SignedInt32Member> in = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> in = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5,6});
 		assertEquals(6, in.size());
 		

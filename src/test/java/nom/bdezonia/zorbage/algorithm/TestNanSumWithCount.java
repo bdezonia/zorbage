@@ -33,7 +33,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -47,7 +47,7 @@ public class TestNanSumWithCount {
 	public void test1() {
 		Float64Member sum = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(new double[0]);
+		IndexedDataSource<Float64Member> storage = Storage.allocate(G.DBL.construct(), new double[0]);
 		try {
 			NanSumWithCount.compute(G.DBL, storage, sum, count);
 			fail();
@@ -60,7 +60,7 @@ public class TestNanSumWithCount {
 	public void test2() {
 		Float64Member sum = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(new double[] {Double.NaN});
+		IndexedDataSource<Float64Member> storage = Storage.allocate(G.DBL.construct(), new double[] {Double.NaN});
 		NanSumWithCount.compute(G.DBL, storage, sum, count);
 		assertTrue(G.DBL.isNaN().call(sum));
 		assertEquals(0, count.v(), 0);
@@ -70,7 +70,7 @@ public class TestNanSumWithCount {
 	public void test3() {
 		Float64Member sum = G.DBL.construct();
 		Float64Member count = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> storage = Storage.allocate(G.DBL.construct(), 
 				new double[] {1, Double.NaN, 2, Double.NaN, 3, Double.NaN});
 		NanSumWithCount.compute(G.DBL, storage, sum, count);
 		assertEquals(6, sum.v(), 0);

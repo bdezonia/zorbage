@@ -32,7 +32,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
 import nom.bdezonia.zorbage.predicate.LessThanConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -47,7 +47,7 @@ public class TestStablePartition {
 
 	@Test
 	public void test1() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(new int[] {3, -2, -5, 7, 6, 8, 9, -4, 2, -1});
+		IndexedDataSource<SignedInt32Member> nums = Storage.allocate(G.INT32.construct(), new int[] {3, -2, -5, 7, 6, 8, 9, -4, 2, -1});
 		Function1<Boolean,SignedInt32Member> cond =
 				new LessThanConstant<SignedInt32Algebra, SignedInt32Member>(G.INT32, G.INT32.construct());
 		StablePartition.compute(G.INT32, cond, nums);
@@ -76,7 +76,7 @@ public class TestStablePartition {
 
 	@Test
 	public void test2() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(new int[] {0, 0, 3, 0, 2, 4, 5, 0, 7});
+		IndexedDataSource<SignedInt32Member> nums = Storage.allocate(G.INT32.construct(), new int[] {0, 0, 3, 0, 2, 4, 5, 0, 7});
 		Function1<Boolean,SignedInt32Member> cond =
 				new GreaterThanConstant<SignedInt32Algebra, SignedInt32Member>(G.INT32, G.INT32.construct());
 		StablePartition.compute(G.INT32, cond, nums);

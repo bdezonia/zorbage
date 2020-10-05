@@ -140,7 +140,8 @@ class Conveniences {
 		
 		// Make a 4 element tuple and allocate objects for all of it's internal memory
 		
-		IndexedDataSource<Float64Member> list = ArrayStorage.allocateDoubles(new double[] {1,2,3,4,5});
+		IndexedDataSource<Float64Member> list =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4,5});
 
 		// set a value
 		
@@ -239,11 +240,14 @@ class Conveniences {
 
 	void example7() {
 		
-		IndexedDataSource<SignedInt8Member> list1 = ArrayStorage.allocateBytes(new byte[] {1,3,5});
+		IndexedDataSource<SignedInt8Member> list1 =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT8.construct(), new byte[] {1,3,5});
 
-		IndexedDataSource<SignedInt8Member> list2 = ArrayStorage.allocateBytes(new byte[] {7,1,12});
+		IndexedDataSource<SignedInt8Member> list2 =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT8.construct(), new byte[] {7,1,12});
 		
-		IndexedDataSource<SignedInt8Member> result = ArrayStorage.allocate(list1.size() * list2.size(), G.INT8.construct());
+		IndexedDataSource<SignedInt8Member> result =
+				nom.bdezonia.zorbage.storage.Storage.allocate(list1.size() * list2.size(), G.INT8.construct());
 
 		Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> proc =
 				new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()

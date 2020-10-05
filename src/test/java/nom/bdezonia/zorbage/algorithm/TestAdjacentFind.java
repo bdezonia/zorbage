@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 
 /**
@@ -45,7 +45,7 @@ public class TestAdjacentFind {
 	@Test
 	public void test() {
 		IndexedDataSource<BooleanMember> storage =
-				ArrayStorage.allocateBooleans(
+				Storage.allocate(G.BOOL.construct(), 
 						new boolean[]{false,true,true,false,true,false,false,true,true});
 		
 		assertEquals(1,AdjacentFind.compute(G.BOOL, storage));

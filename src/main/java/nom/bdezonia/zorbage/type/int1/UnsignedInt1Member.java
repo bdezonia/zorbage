@@ -33,6 +33,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
+import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -51,7 +52,7 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
  */
 public final class UnsignedInt1Member
 	implements
-		BitCoder, ByteCoder,
+		BitCoder, ByteCoder, BooleanCoder,
 		Allocatable<UnsignedInt1Member>, Duplicatable<UnsignedInt1Member>,
 		Settable<UnsignedInt1Member>, Gettable<UnsignedInt1Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt1Member>,
@@ -168,6 +169,22 @@ public final class UnsignedInt1Member
 	@Override
 	public void toByteArray(byte[] arr, int index) {
 		arr[index] = v;
+	}
+
+
+	@Override
+	public int booleanCount() {
+		return 1;
+	}
+
+	@Override
+	public void fromBooleanArray(boolean[] arr, int index) {
+		v = (byte) (arr[index] ? 1 : 0);
+	}
+
+	@Override
+	public void toBooleanArray(boolean[] arr, int index) {
+		arr[index] = (v == 1);
 	}
 
 	@Override

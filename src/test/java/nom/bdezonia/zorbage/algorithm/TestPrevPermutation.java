@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -50,7 +50,7 @@ public class TestPrevPermutation {
 		
 		IndexedDataSource<SignedInt32Member> nums;
 		
-		nums = ArrayStorage.allocateInts(new int[] {2,1});
+		nums = Storage.allocate(G.INT32.construct(), new int[] {2,1});
 
 		assertTrue(PrevPermutation.compute(G.INT32, nums));
 		nums.get(0, value);
@@ -72,7 +72,7 @@ public class TestPrevPermutation {
 		
 		IndexedDataSource<SignedInt32Member> nums;
 		
-		nums = ArrayStorage.allocateInts(new int[] {3,2,1});
+		nums = Storage.allocate(G.INT32.construct(), new int[] {3,2,1});
 		
 		assertTrue(PrevPermutation.compute(G.INT32, nums));
 		nums.get(0, value);
@@ -130,7 +130,7 @@ public class TestPrevPermutation {
 		
 		IndexedDataSource<SignedInt32Member> nums;
 		
-		nums = ArrayStorage.allocateInts(new int[] {4,3,2,1});
+		nums = Storage.allocate(G.INT32.construct(), new int[] {4,3,2,1});
 		
 		assertTrue(PrevPermutation.compute(G.INT32, nums));
 		nums.get(0, value);

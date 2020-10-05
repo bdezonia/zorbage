@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -48,7 +48,7 @@ public class TestContraharmonicMean {
 	public void test1() {
 
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {1,4,6,8,8});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {1,4,6,8,8});
 		ContraharmonicMean.compute(G.DBL, nums, value);
 		assertEquals((1.0+4*4+6*6+8*8+8*8)/(1+4+6+8+8), value.v(), 0);
 	}
@@ -57,7 +57,7 @@ public class TestContraharmonicMean {
 	public void test2() {
 		
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[0]);
 		try {
 			ContraharmonicMean.compute(G.DBL, nums, value);
 			fail();

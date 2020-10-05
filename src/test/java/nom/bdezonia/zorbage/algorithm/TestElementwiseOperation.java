@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -43,7 +43,7 @@ public class TestElementwiseOperation {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5});
 		ElementwiseOperation.compute(G.INT32, G.INT32.multiply(), list, list, list);
 		SignedInt32Member value = G.INT32.construct();

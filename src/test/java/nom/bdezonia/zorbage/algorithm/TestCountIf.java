@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
@@ -50,7 +50,7 @@ public class TestCountIf {
 		
 		double[] numbers = new double[] {0, 10, 20, 30, 40, 50};
 		
-		IndexedDataSource<Float64Member> data = ArrayStorage.allocateDoubles(numbers);
+		IndexedDataSource<Float64Member> data = Storage.allocate(G.DBL.construct(), numbers);
 		
 		UnsignedInt32Member sum = G.UINT32.construct();
 		

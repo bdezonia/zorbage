@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -45,7 +45,7 @@ public class TestParallelTransform3 {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17});
 		SignedInt32Member value = G.INT32.construct();
 		Procedure3<SignedInt32Member,SignedInt32Member,SignedInt32Member> proc =

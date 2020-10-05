@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -44,7 +44,7 @@ public class TestMean {
 	@Test
 	public void test() {
 		IndexedDataSource<Float64Member> storage =
-				ArrayStorage.allocateDoubles(new double[]{0,1,2,3,4,5,6,7,8,9});
+				Storage.allocate(G.DBL.construct(), new double[]{0,1,2,3,4,5,6,7,8,9});
 		Float64Member result = new Float64Member();
 		Mean.compute(G.DBL, storage, result);
 		assertEquals(4.5, result.v(), 0);

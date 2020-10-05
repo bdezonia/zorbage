@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -48,7 +48,7 @@ public class TestHarmonicMean {
 	public void test1() {
 		// https://www.investopedia.com/terms/h/harmonicaverage.asp
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {4,4,1});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {4,4,1});
 		HarmonicMean.compute(G.DBL, nums, value);
 		assertEquals(2, value.v(), 0);
 	}
@@ -57,7 +57,7 @@ public class TestHarmonicMean {
 	public void test2() {
 		
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[0]);
 		try {
 			HarmonicMean.compute(G.DBL, nums, value);
 			fail();
@@ -70,7 +70,7 @@ public class TestHarmonicMean {
 	public void test3() {
 		// https://www.brainkart.com/article/Harmonic-Mean-(H-M-)_35082/
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {50,65,80,55});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {50,65,80,55});
 		HarmonicMean.compute(G.DBL, nums, value);
 		assertEquals(60.5, value.v(), 0.1);
 	}
@@ -79,7 +79,7 @@ public class TestHarmonicMean {
 	public void test4() {
 		// https://www.emathzone.com/tutorials/basic-statistics/harmonic-mean.html
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {13.2,14.2,14.8,15.2,16.1});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {13.2,14.2,14.8,15.2,16.1});
 		HarmonicMean.compute(G.DBL, nums, value);
 		assertEquals(14.63, value.v(), 0.01);
 	}

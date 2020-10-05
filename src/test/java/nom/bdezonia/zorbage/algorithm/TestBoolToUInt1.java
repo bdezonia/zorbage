@@ -35,7 +35,6 @@ import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 
 /**
  * 
@@ -47,7 +46,7 @@ public class TestBoolToUInt1 {
 	@Test
 	public void test1() {
 		UnsignedInt1Member value = G.UINT1.construct();
-		IndexedDataSource<BooleanMember> bools = ArrayStorage.allocateBooleans(
+		IndexedDataSource<BooleanMember> bools = Storage.allocate(G.BOOL.construct(), 
 				new boolean[] {false, false, true, false, true, true});
 		IndexedDataSource<UnsignedInt1Member> ints = Storage.allocate(bools.size(), value);
 		BoolToUInt1.compute(bools, ints);

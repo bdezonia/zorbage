@@ -31,14 +31,15 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 
 public class TestForEach {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {0,1,2,3,0,-1,-2,-3});
 		ForEach.compute(G.INT8, G.INT8.negate(), list);
 		SignedInt8Member value = G.INT8.construct();

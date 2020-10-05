@@ -33,7 +33,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Sort;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -48,7 +48,7 @@ public class TestReversedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5,6,7});
 		ReversedDataSource<SignedInt32Member> revNums = new ReversedDataSource<>(nums);
 		
@@ -97,7 +97,7 @@ public class TestReversedDataSource {
 
 		SignedInt32Member value = G.INT32.construct();
 
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5,6,7});
 		
 		ReversedDataSource<SignedInt32Member> revNums = new ReversedDataSource<>(nums);

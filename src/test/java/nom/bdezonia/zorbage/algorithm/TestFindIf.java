@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.predicate.EqualConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -46,7 +46,8 @@ public class TestFindIf {
 	
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt8Member> list = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> list = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {1,2,3,4,5,1,2,3,4,5});
 		Function1<Boolean,SignedInt8Member> condition = new EqualConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, new SignedInt8Member(5));
 		assertEquals(4, FindIf.compute(G.INT8, condition, list));

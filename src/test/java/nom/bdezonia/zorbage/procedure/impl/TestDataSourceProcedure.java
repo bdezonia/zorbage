@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
@@ -46,7 +46,7 @@ public class TestDataSourceProcedure {
 		
 		long[] longs = new long[] {0,1,2,3,4,5,6,7,8,9};
 		
-		IndexedDataSource<SignedInt64Member> source = ArrayStorage.allocateLongs(longs);
+		IndexedDataSource<SignedInt64Member> source = Storage.allocate(G.INT64.construct(), longs);
 		
 		DataSourceProcedure<SignedInt64Member> proc = new DataSourceProcedure<SignedInt64Member>(source);
 		

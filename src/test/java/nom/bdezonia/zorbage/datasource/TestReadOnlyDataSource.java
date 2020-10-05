@@ -31,8 +31,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -48,7 +47,7 @@ public class TestReadOnlyDataSource {
 		SignedInt32Member value1 = G.INT32.construct();
 		SignedInt32Member value2 = G.INT32.construct();
 
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {7, -99, 1, 0, 0, 121, 4000, 77, 91});
 		IndexedDataSource<SignedInt32Member> ds = new ReadOnlyDataSource<>(a);
 		

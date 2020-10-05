@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -49,11 +49,11 @@ public class TestBinarySearchRight {
 		
 		IndexedDataSource<Float64Member> nums;
 		
-		nums = ArrayStorage.allocateDoubles(new double[] {});
+		nums = Storage.allocate(G.DBL.construct(), new double[] {});
 		value.setV(5);
 		assertEquals(-1, BinarySearchRight.compute(G.DBL, value, nums));
 
-		nums = ArrayStorage.allocateDoubles(new double[] {1,2,3});
+		nums = Storage.allocate(G.DBL.construct(), new double[] {1,2,3});
 		value.setV(1);
 		assertEquals(0, BinarySearchRight.compute(G.DBL, value, nums));
 		value.setV(2);
@@ -65,7 +65,7 @@ public class TestBinarySearchRight {
 		value.setV(4);
 		assertEquals(-1, BinarySearchRight.compute(G.DBL, value, nums));
 
-		nums = ArrayStorage.allocateDoubles(new double[] {1,1,2,2,2,3,3,3,3});
+		nums = Storage.allocate(G.DBL.construct(), new double[] {1,1,2,2,2,3,3,3,3});
 		value.setV(1);
 		assertEquals(1, BinarySearchRight.compute(G.DBL, value, nums));
 		value.setV(2);
@@ -77,7 +77,7 @@ public class TestBinarySearchRight {
 		value.setV(4);
 		assertEquals(-1, BinarySearchRight.compute(G.DBL, value, nums));
 
-		nums = ArrayStorage.allocateDoubles(new double[] {0,1,1,2,2,2,3,3,3,3,4});
+		nums = Storage.allocate(G.DBL.construct(), new double[] {0,1,1,2,2,2,3,3,3,3,4});
 		value.setV(-1);
 		assertEquals(-1, BinarySearchRight.compute(G.DBL, value, nums));
 		value.setV(0);

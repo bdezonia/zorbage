@@ -30,8 +30,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
@@ -45,7 +44,7 @@ public class TestPartition {
 
 	@Test
 	public void test() {
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {1,7,9,3,4,1,2,7,0,5,3,8});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {1,7,9,3,4,1,2,7,0,5,3,8});
 		Function1<Boolean,Float64Member> cond = new Function1<Boolean,Float64Member>() {
 			@Override
 			public Boolean call(Float64Member value) {

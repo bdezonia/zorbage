@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -44,21 +44,21 @@ public class TestLexicographicalCompare {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(G.INT32.construct(), 
 				new int[] {1});
-		IndexedDataSource<SignedInt32Member> c = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> c = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2});
-		IndexedDataSource<SignedInt32Member> d = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> d = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,3});
-		IndexedDataSource<SignedInt32Member> e = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> e = Storage.allocate(G.INT32.construct(), 
 				new int[] {2,1});
-		IndexedDataSource<SignedInt32Member> f = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> f = Storage.allocate(G.INT32.construct(), 
 				new int[] {2,2});
-		IndexedDataSource<SignedInt32Member> g = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> g = Storage.allocate(G.INT32.construct(), 
 				new int[] {3,9,9,1,2});
-		IndexedDataSource<SignedInt32Member> h = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> h = Storage.allocate(G.INT32.construct(), 
 				new int[] {3,9,9,2,1});
 		
 		assertEquals(false, LexicographicalCompare.compute(G.INT32, a, a));

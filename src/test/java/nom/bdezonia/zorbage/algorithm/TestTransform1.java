@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure1;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -45,7 +45,7 @@ public class TestTransform1 {
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[] {1,2,3});
+		IndexedDataSource<SignedInt32Member> ints = Storage.allocate(G.INT32.construct(), new int[] {1,2,3});
 		Procedure1<SignedInt32Member> proc = new Procedure1<SignedInt32Member>() {
 			@Override
 			public void call(SignedInt32Member a) {

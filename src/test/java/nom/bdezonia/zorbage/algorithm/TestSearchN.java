@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.predicate.Equal;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -44,7 +44,7 @@ public class TestSearchN {
 
 	@Test
 	public void test1() {
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,6});
 		assertEquals(16, SearchN.compute(G.INT32, new Equal<>(G.INT32), 4, new SignedInt32Member(7), a));
 		assertEquals(6, SearchN.compute(G.INT32, new Equal<>(G.INT32), 4, new SignedInt32Member(4), a));
@@ -52,7 +52,7 @@ public class TestSearchN {
 
 	@Test
 	public void test2() {
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,6});
 		assertEquals(16, SearchN.compute(G.INT32, 3, new SignedInt32Member(-1), a));
 		assertEquals(3, SearchN.compute(G.INT32, 3, new SignedInt32Member(3), a));

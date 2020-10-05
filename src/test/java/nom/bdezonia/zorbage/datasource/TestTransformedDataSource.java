@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
@@ -50,7 +50,7 @@ public class TestTransformedDataSource {
 				b.set(a);
 			}
 		};
-		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		IndexedDataSource<Float64Member> doubles = Storage.allocate(G.DBL.construct(), new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
@@ -79,7 +79,7 @@ public class TestTransformedDataSource {
 				b.setV(a.v() * 2.0);
 			}
 		};
-		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		IndexedDataSource<Float64Member> doubles = Storage.allocate(G.DBL.construct(), new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dbl, half);
 		Float64Member value = G.DBL.construct();
 		for (long i = 0; i < doubles.size(); i++) {
@@ -106,7 +106,7 @@ public class TestTransformedDataSource {
 				b.set(a);
 			}
 		};
-		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		IndexedDataSource<Float64Member> doubles = Storage.allocate(G.DBL.construct(), new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,Float64Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, ident, ident);
 		IndexedDataSource<Float64Member> dupe = wrappedData.duplicate();
 		Float64Member value = G.DBL.construct();
@@ -130,7 +130,7 @@ public class TestTransformedDataSource {
 				b.setV((int)a.v());
 			}
 		};
-		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		IndexedDataSource<Float64Member> doubles = Storage.allocate(G.DBL.construct(), new double[] {0,1,2,3,4,5,6,7,8,9});
 		TransformedDataSource<Float64Member,SignedInt32Member> wrappedData = new TransformedDataSource<>(G.DBL, doubles, dblToInt, intToDbl);
 		SignedInt32Member value = G.INT32.construct();
 		for (long i = 0; i < doubles.size(); i++) {

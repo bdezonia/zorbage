@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
 import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -47,7 +47,7 @@ public class TestCreateMask {
 	@Test
 	public void test() {
 		float[] floats = new float[] {1,4,-3,0,3,-7,8,1,1,1,2};
-		IndexedDataSource<Float32Member> nums = ArrayStorage.allocateFloats(floats);
+		IndexedDataSource<Float32Member> nums = Storage.allocate(G.FLT.construct(), floats);
 		Function1<Boolean,Float32Member> condition = new Function1<Boolean,Float32Member>() {
 			@Override
 			public Boolean call(Float32Member value) {

@@ -33,7 +33,6 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 
 /**
  * 
@@ -49,7 +48,7 @@ public class TestConversion {
 	@Test
 	public void test() {
 		// build the initial test data
-		IndexedDataSource<SignedInt32Member> storage = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> storage = Storage.allocate(G.INT32.construct(), 
 				new int[] {0,1,2,3,4,5,6,7,8,9});
 		// scale it by 6.3
 		Float64Member scale = new Float64Member(6.3);

@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.predicate.LessThanEqual;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
@@ -48,9 +48,9 @@ public class TestMismatch {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<SignedInt64Member> a = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> a = Storage.allocate(G.INT64.construct(), 
 				new long[] {1,2,3,7,4,3,2});
-		IndexedDataSource<SignedInt64Member> b = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> b = Storage.allocate(G.INT64.construct(), 
 				new long[] {1,2,3,7,5,1,1});
 		long result = Mismatch.compute(G.INT64, a, b);
 		assertEquals(4, result);
@@ -59,9 +59,9 @@ public class TestMismatch {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<SignedInt64Member> a = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> a = Storage.allocate(G.INT64.construct(), 
 				new long[] {1,2,3,7,4,3,2});
-		IndexedDataSource<SignedInt64Member> b = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> b = Storage.allocate(G.INT64.construct(), 
 				new long[] {1,2,3,7,5,1,1});
 		Function1<Boolean,Tuple2<SignedInt64Member,SignedInt64Member>> cond = new LessThanEqual<SignedInt64Algebra, SignedInt64Member>(G.INT64);
 		long result = Mismatch.compute(G.INT64, cond, a, b);

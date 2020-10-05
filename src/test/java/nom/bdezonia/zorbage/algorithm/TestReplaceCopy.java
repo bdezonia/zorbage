@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -43,9 +43,9 @@ public class TestReplaceCopy {
 
 	@Test
 	public void test() {
-		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = Storage.allocate(G.DBL.construct(), 
 				new double[] {1,2,1,4,2,6,1,7,1});
-		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> b = Storage.allocate(G.DBL.construct(), 
 				new double[9]);
 		Float64Member value = G.DBL.construct();
 		

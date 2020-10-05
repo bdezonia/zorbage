@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.tuple.Tuple2Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorageGeneric;
 
 /**
@@ -82,8 +82,8 @@ public class TestUnzip {
 		value.a().setV(10);
 		value.b().setV(11);
 		store.set(9, value);
-		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[10]);
-		IndexedDataSource<Float32Member> floats = ArrayStorage.allocateFloats(new float[10]);
+		IndexedDataSource<SignedInt64Member> longs = Storage.allocate(G.INT64.construct(), new long[10]);
+		IndexedDataSource<Float32Member> floats = Storage.allocate(G.FLT.construct(), new float[10]);
 		Unzip.two(G.INT64, G.FLT, store, longs, floats);
 		SignedInt64Member lValue = G.INT64.construct();
 		Float32Member fValue = G.FLT.construct();

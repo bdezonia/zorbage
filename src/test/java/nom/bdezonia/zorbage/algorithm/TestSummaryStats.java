@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -47,7 +47,7 @@ public class TestSummaryStats {
 	@Test
 	public void test0() {
 	
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {});
 		
 		try {
 			
@@ -76,7 +76,7 @@ public class TestSummaryStats {
 		//   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 		//   13      13      13      13      13      13
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {13});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {13});
 		
 		Float64Member min = G.DBL.construct();
 		Float64Member q1 = G.DBL.construct();
@@ -104,7 +104,7 @@ public class TestSummaryStats {
 		// Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 		// 13      15      17      17      19      21
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {13,21});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {13,21});
 		
 		Float64Member min = G.DBL.construct();
 		Float64Member q1 = G.DBL.construct();
@@ -132,7 +132,7 @@ public class TestSummaryStats {
 		//  Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
 		//  4.00    8.50   13.00   12.67   17.00   21.00
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {4,13,21});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {4,13,21});
 		
 		Float64Member min = G.DBL.construct();
 		Float64Member q1 = G.DBL.construct();
@@ -160,7 +160,7 @@ public class TestSummaryStats {
 		//   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 		//   1.00    4.00    6.00   14.25   16.25   44.00 
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {1,5,7,44});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {1,5,7,44});
 		
 		Float64Member min = G.DBL.construct();
 		Float64Member q1 = G.DBL.construct();
@@ -188,7 +188,7 @@ public class TestSummaryStats {
 		//   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 		//    3.0     7.0    12.0    19.8    22.0    55.0 
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {3,7,12,22,55});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {3,7,12,22,55});
 		
 		Float64Member min = G.DBL.construct();
 		Float64Member q1 = G.DBL.construct();
@@ -216,7 +216,7 @@ public class TestSummaryStats {
 		//   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 		//   1.00    4.00    9.50   29.67   44.25  100.00		
 
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {1,3,7,12,55,100});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {1,3,7,12,55,100});
 		
 		Float64Member min = G.DBL.construct();
 		Float64Member q1 = G.DBL.construct();

@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 
 /**
  * 
@@ -48,7 +47,8 @@ public class TestScaleByHighPrec {
 	@Test
 	public void test1() {
 		SignedInt8Member value = G.INT8.construct();
-		IndexedDataSource<SignedInt8Member> bytes1 = ArrayStorage.allocateBytes(
+		IndexedDataSource<SignedInt8Member> bytes1 = Storage.allocate(
+				G.INT8.construct(),
 				new byte[] {-128, -64, -36, -15, -2, -1, 0, 1, 2, 11, 27, 84, 100});
 		IndexedDataSource<SignedInt8Member> bytes2 = Storage.allocate(bytes1.size(), value);
 		HighPrecisionMember scale = new HighPrecisionMember(BigDecimal.valueOf(1.3));

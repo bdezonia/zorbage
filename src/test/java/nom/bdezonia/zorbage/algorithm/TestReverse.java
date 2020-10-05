@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -44,7 +44,7 @@ public class TestReverse {
 	@Test
 	public void test() {
 
-		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = Storage.allocate(G.DBL.construct(), 
 				new double[] {1,4,5,2,2,6,9,3,17});
 		Float64Member value = G.DBL.construct();
 		

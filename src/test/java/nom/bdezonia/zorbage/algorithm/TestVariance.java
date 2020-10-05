@@ -30,7 +30,7 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
@@ -53,7 +53,7 @@ public class TestVariance {
 		IndexedDataSource<Float64Member> nums;
 
 		values = new double[]{-44.33333, 100, -2.4, -3, 10000, 400, 250000.1};
-		nums = ArrayStorage.allocateDoubles(values);
+		nums = Storage.allocate(G.DBL.construct(), values);
 
 		ApproxVariance.compute(G.DBL, nums, v);
 		Variance.compute(G.DBL, nums, vn);
@@ -61,7 +61,7 @@ public class TestVariance {
 		assertTrue(Math.abs(v.v() - vn.v()) < tol);
 
 		values = new double[]{1.0e150, 0.00001};
-		nums = ArrayStorage.allocateDoubles(values);
+		nums = Storage.allocate(G.DBL.construct(), values);
 
 		// BOTH wrong
 		ApproxVariance.compute(G.DBL, nums, v);

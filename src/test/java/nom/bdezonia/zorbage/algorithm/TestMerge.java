@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -45,14 +45,14 @@ public class TestMerge {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,2,3,5,8,19});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,3,3,4,4,5,5,13});
 		assertTrue(IsSorted.compute(G.INT32, a));
 		assertTrue(IsSorted.compute(G.INT32, b));
 		
-		IndexedDataSource<SignedInt32Member> c = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> c = Storage.allocate(G.INT32.construct(), 
 				new int[(int)(a.size()+b.size())]);
 		Merge.compute(G.INT32, a, b, c);
 		assertTrue(IsSorted.compute(G.INT32, c));
@@ -66,14 +66,14 @@ public class TestMerge {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,2,3,5,8,19});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(G.INT32.construct(), 
 				new int[] {});
 		assertTrue(IsSorted.compute(G.INT32, a));
 		assertTrue(IsSorted.compute(G.INT32, b));
 		
-		IndexedDataSource<SignedInt32Member> c = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> c = Storage.allocate(G.INT32.construct(), 
 				new int[(int)(a.size()+b.size())]);
 		Merge.compute(G.INT32, a, b, c);
 		assertTrue(IsSorted.compute(G.INT32, c));
@@ -87,14 +87,14 @@ public class TestMerge {
 	@Test
 	public void test3() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {});
-		IndexedDataSource<SignedInt32Member> b = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,2,3,5,8,19});
 		assertTrue(IsSorted.compute(G.INT32, a));
 		assertTrue(IsSorted.compute(G.INT32, b));
 		
-		IndexedDataSource<SignedInt32Member> c = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> c = Storage.allocate(G.INT32.construct(), 
 				new int[(int)(a.size()+b.size())]);
 		Merge.compute(G.INT32, a, b, c);
 		assertTrue(IsSorted.compute(G.INT32, c));

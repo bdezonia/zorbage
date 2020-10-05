@@ -31,8 +31,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
@@ -46,10 +45,10 @@ public class TestMaskedDataSource {
 	@Test
 	public void zero() {
 
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {});
 		try {
 			new MaskedDataSource<>(list, mask);
 			fail();
@@ -63,15 +62,15 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		IndexedDataSource<SignedInt32Member> result;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);
@@ -91,15 +90,15 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		IndexedDataSource<SignedInt32Member> result;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -107,7 +106,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -117,7 +116,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);
@@ -137,21 +136,21 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		IndexedDataSource<SignedInt32Member> result;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(3, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -159,7 +158,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -169,7 +168,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -177,7 +176,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -187,7 +186,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -199,7 +198,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);
@@ -219,27 +218,27 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		IndexedDataSource<SignedInt32Member> result;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(3, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(2, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -247,7 +246,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(3, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -255,7 +254,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -265,7 +264,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -275,7 +274,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -287,13 +286,13 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -301,7 +300,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -309,7 +308,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -319,7 +318,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -329,7 +328,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -341,7 +340,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -353,7 +352,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);
@@ -373,27 +372,27 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		IndexedDataSource<SignedInt32Member> result;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -401,13 +400,13 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -415,7 +414,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -423,7 +422,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -433,13 +432,13 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(2, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -447,7 +446,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -455,7 +454,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -465,7 +464,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -473,7 +472,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -483,7 +482,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -493,7 +492,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -505,13 +504,13 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(1, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -519,7 +518,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -527,7 +526,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -537,7 +536,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -545,7 +544,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -555,7 +554,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -565,7 +564,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -577,7 +576,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -585,7 +584,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(2, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -595,7 +594,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -605,7 +604,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -617,7 +616,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -627,7 +626,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -639,7 +638,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -651,7 +650,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);
@@ -671,27 +670,27 @@ public class TestMaskedDataSource {
 		
 		SignedInt32Member value = G.INT32.construct();
 		
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(new int[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4,5});
 		IndexedDataSource<BooleanMember> mask;
 		IndexedDataSource<SignedInt32Member> result;
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(0, result.size());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -699,13 +698,13 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -713,7 +712,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -721,7 +720,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,false,true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,false,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -731,13 +730,13 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(2, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -745,7 +744,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -753,7 +752,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -763,7 +762,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -771,7 +770,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -781,7 +780,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -791,7 +790,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {false,true,true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {false,true,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -803,13 +802,13 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(1, result.size());
 		result.get(0, value);
 		assertEquals(1, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -817,7 +816,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -825,7 +824,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -835,7 +834,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -843,7 +842,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -853,7 +852,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -863,7 +862,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,false,true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,false,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -875,7 +874,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(2, result.size());
 		result.get(0, value);
@@ -883,7 +882,7 @@ public class TestMaskedDataSource {
 		result.get(1, value);
 		assertEquals(2, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -893,7 +892,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -903,7 +902,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,false,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,false,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -915,7 +914,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,false,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,false,false,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(3, result.size());
 		result.get(0, value);
@@ -925,7 +924,7 @@ public class TestMaskedDataSource {
 		result.get(2, value);
 		assertEquals(3, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,false,true,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,false,true,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -937,7 +936,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(5, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,false,true});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,true,false,true});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(4, result.size());
 		result.get(0, value);
@@ -949,7 +948,7 @@ public class TestMaskedDataSource {
 		result.get(3, value);
 		assertEquals(4, value.v());
 		
-		mask = ArrayStorage.allocateBooleans(new boolean[] {true,true,true,true,true,false});
+		mask = Storage.allocate(G.BOOL.construct(), new boolean[] {true,true,true,true,true,false});
 		result = new MaskedDataSource<>(list, mask);
 		assertEquals(5, result.size());
 		result.get(0, value);

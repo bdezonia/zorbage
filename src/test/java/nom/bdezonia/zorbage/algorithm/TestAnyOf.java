@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.predicate.EqualConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -52,23 +52,23 @@ public class TestAnyOf {
 		
 		Function1<Boolean,BooleanMember> condition = new EqualConstant<BooleanAlgebra,BooleanMember>(G.BOOL, new BooleanMember(false));
 
-		storage = ArrayStorage.allocateBooleans(new boolean[]{});
+		storage = Storage.allocate(G.BOOL.construct(), new boolean[]{});
 				
 		assertEquals(false, AnyOf.compute(G.BOOL, condition, storage));
 		
-		storage = ArrayStorage.allocateBooleans(new boolean[]{false});
+		storage = Storage.allocate(G.BOOL.construct(), new boolean[]{false});
 		
 		assertEquals(true, AnyOf.compute(G.BOOL, condition, storage));
 		
-		storage = ArrayStorage.allocateBooleans(new boolean[]{true});
+		storage = Storage.allocate(G.BOOL.construct(), new boolean[]{true});
 		
 		assertEquals(false, AnyOf.compute(G.BOOL, condition, storage));
 		
-		storage = ArrayStorage.allocateBooleans(new boolean[]{true, false});
+		storage = Storage.allocate(G.BOOL.construct(), new boolean[]{true, false});
 		
 		assertEquals(true, AnyOf.compute(G.BOOL, condition, storage));
 		
-		storage = ArrayStorage.allocateBooleans(new boolean[]{true, true, false});
+		storage = Storage.allocate(G.BOOL.construct(), new boolean[]{true, true, false});
 
 		assertEquals(true, AnyOf.compute(G.BOOL, condition, storage));
 		

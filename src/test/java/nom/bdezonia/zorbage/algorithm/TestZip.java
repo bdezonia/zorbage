@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.tuple.Tuple2Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorageGeneric;
 
 /**
@@ -51,8 +51,8 @@ public class TestZip {
 	public void test() {
 		Tuple2Algebra<SignedInt64Algebra,SignedInt64Member,Float32Algebra,Float32Member> alg = new Tuple2Algebra<>(G.INT64, G.FLT);
 		ArrayStorageGeneric<Tuple2Algebra<SignedInt64Algebra,SignedInt64Member,Float32Algebra,Float32Member>, Tuple2<SignedInt64Member,Float32Member>> store = new ArrayStorageGeneric<Tuple2Algebra<SignedInt64Algebra,SignedInt64Member,Float32Algebra,Float32Member>, Tuple2<SignedInt64Member,Float32Member>>(10, alg);
-		IndexedDataSource<SignedInt64Member> longs = ArrayStorage.allocateLongs(new long[] {1,2,3,4,5,6,7,8,9,10});
-		IndexedDataSource<Float32Member> floats = ArrayStorage.allocateFloats(new float[] {20,19,18,17,16,15,14,13,12,11});
+		IndexedDataSource<SignedInt64Member> longs = Storage.allocate(G.INT64.construct(), new long[] {1,2,3,4,5,6,7,8,9,10});
+		IndexedDataSource<Float32Member> floats = Storage.allocate(G.FLT.construct(), new float[] {20,19,18,17,16,15,14,13,12,11});
 		Zip.two(G.INT64, G.FLT, longs, floats, store);
 		Tuple2<SignedInt64Member, Float32Member> value = alg.construct();
 		store.get(0, value);

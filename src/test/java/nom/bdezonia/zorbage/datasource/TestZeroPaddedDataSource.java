@@ -32,7 +32,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.oob.oned.ZeroOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
@@ -45,7 +45,7 @@ public class TestZeroPaddedDataSource {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(new int[]{1,2,3,4});
+		IndexedDataSource<SignedInt32Member> ints = Storage.allocate(G.INT32.construct(), new int[]{1,2,3,4});
 		Procedure2<Long, SignedInt32Member> oobProc = new ZeroOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints.size());
 		IndexedDataSource<SignedInt32Member> padded = new ProcedurePaddedDataSource<SignedInt32Algebra, SignedInt32Member>(G.INT32, ints, oobProc);
 		SignedInt32Member value = G.INT32.construct();

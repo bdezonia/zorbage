@@ -33,7 +33,6 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -47,7 +46,7 @@ public class TestSort {
 
 	@Test
 	public void test1() {
-		IndexedDataSource<SignedInt32Member> storage = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> storage = Storage.allocate(G.INT32.construct(), 
 				new int[] {6,3,99,-1,66,-50,0,0,3});
 		SignedInt32Member value = G.INT32.construct();
 		

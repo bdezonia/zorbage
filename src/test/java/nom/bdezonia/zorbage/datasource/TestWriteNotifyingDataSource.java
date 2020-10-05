@@ -27,8 +27,7 @@
 package nom.bdezonia.zorbage.datasource;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
@@ -42,7 +41,7 @@ public class TestWriteNotifyingDataSource {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {0,0,0});
 		
 		WriteNotifyingDataSource<SignedInt32Algebra, SignedInt32Member> ds =

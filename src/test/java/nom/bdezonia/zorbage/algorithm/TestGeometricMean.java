@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -48,7 +48,7 @@ public class TestGeometricMean {
 	public void test1() {
 		// https://www.wikihow.com/Calculate-the-Geometric-Mean
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {7,9,12});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {7,9,12});
 		GeometricMean.compute(G.DBL, nums, value);
 		assertEquals(9.11, value.v(), 0.01);
 	}
@@ -57,7 +57,7 @@ public class TestGeometricMean {
 	public void test2() {
 		
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[0]);
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[0]);
 		try {
 			GeometricMean.compute(G.DBL, nums, value);
 			fail();
@@ -70,7 +70,7 @@ public class TestGeometricMean {
 	public void test3() {
 		// https://www.cliffsnotes.com/study-guides/geometry/right-triangles/geometric-mean
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {4,25});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {4,25});
 		GeometricMean.compute(G.DBL, nums, value);
 		assertEquals(10, value.v(), 0);
 	}
@@ -79,7 +79,7 @@ public class TestGeometricMean {
 	public void test4() {
 		// https://www.statisticshowto.com/geometric-mean-2/
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {4,8,3,9,17});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {4,8,3,9,17});
 		GeometricMean.compute(G.DBL, nums, value);
 		assertEquals(6.81, value.v(), 0.01);
 	}

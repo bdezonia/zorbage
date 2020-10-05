@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -47,7 +47,7 @@ public class TestReduce {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
 				new double[] {1,2,3,4,5,6,7,8}
 				);
 		
@@ -65,7 +65,7 @@ public class TestReduce {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
 				new double[] {5}
 				);
 		
@@ -83,7 +83,7 @@ public class TestReduce {
 	@Test
 	public void test3() {
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
 				new double[] {}
 				);
 		

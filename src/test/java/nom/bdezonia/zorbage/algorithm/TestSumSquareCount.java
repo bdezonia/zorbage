@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -50,25 +50,25 @@ public class TestSumSquareCount {
 		Float64Member count = G.DBL.construct();
 		Float64Member avg = G.DBL.construct();
 
-		IndexedDataSource<Float64Member> data = ArrayStorage.allocateDoubles(new double[] {-5,5,0,0,0,0,0,0,0,0});
+		IndexedDataSource<Float64Member> data = Storage.allocate(G.DBL.construct(), new double[] {-5,5,0,0,0,0,0,0,0,0});
 		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(50, sumSqDevs.v(), tol);
 
-		data = ArrayStorage.allocateDoubles(new double[] {18,28,23,23,23,23,23,23,23,23});
+		data = Storage.allocate(G.DBL.construct(), new double[] {18,28,23,23,23,23,23,23,23,23});
 		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(50, sumSqDevs.v(), tol);
 		
-		data = ArrayStorage.allocateDoubles(new double[] {996,998,1000,1000,1000,1002,1004,1000,1000,1000});
+		data = Storage.allocate(G.DBL.construct(), new double[] {996,998,1000,1000,1000,1002,1004,1000,1000,1000});
 		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
 		assertEquals(40, sumSqDevs.v(), tol);
 		
-		data = ArrayStorage.allocateDoubles(new double[] {-2000,-3000,-1000,-1000,-1000,0,1000,-1000,-1000,-1000});
+		data = Storage.allocate(G.DBL.construct(), new double[] {-2000,-3000,-1000,-1000,-1000,0,1000,-1000,-1000,-1000});
 		ApproxSumOfSquaredDeviationsWithCount.compute(G.DBL, data, avg, sumSqDevs, count);
 
 		assertEquals(10, count.v(), 0);
@@ -81,7 +81,7 @@ public class TestSumSquareCount {
 		
 		double[] nums = new double[] {-22, 1006, 30000, -587, 0};
 		
-		IndexedDataSource<Float64Member> data = ArrayStorage.allocateDoubles(nums);
+		IndexedDataSource<Float64Member> data = Storage.allocate(G.DBL.construct(), nums);
 		Float64Member tmp = G.DBL.construct();
 		Float64Member sumSqDevs = G.DBL.construct();
 		Float64Member count = G.DBL.construct();

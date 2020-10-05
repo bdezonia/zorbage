@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -47,7 +47,7 @@ public class TestProcedurePaddedDimensionedDataSource {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt32Member> data = ArrayStorage.allocateInts(new int[] {1,2,3,4});
+		IndexedDataSource<SignedInt32Member> data = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4});
 		DimensionedDataSource<SignedInt32Member> md = new NdData<>(new long[] {2,2}, data);
 		ProcedurePaddedDimensionedDataSource<?,SignedInt32Member> pad =
 				new ProcedurePaddedDimensionedDataSource<>(G.INT32, md, proc);

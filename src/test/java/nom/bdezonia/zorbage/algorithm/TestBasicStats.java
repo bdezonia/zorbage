@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 
 /**
@@ -19,7 +19,7 @@ public class TestBasicStats {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		IndexedDataSource<Float32Member> data = Storage.allocate(G.FLT.construct(), new float[] {43,7,99,1,2,3,100,55,31});
 		
 		Float32Member mean = G.FLT.construct();
 		Float32Member stdErrMean = G.FLT.construct();

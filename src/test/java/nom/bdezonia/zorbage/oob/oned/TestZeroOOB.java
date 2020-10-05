@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -48,7 +48,7 @@ public class TestZeroOOB {
 	public void test1() {
 		
 		Float64Member val = G.DBL.construct();
-		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(new double[] {1,2,3});
+		IndexedDataSource<Float64Member> vals = Storage.allocate(G.DBL.construct(), new double[] {1,2,3});
 		Procedure2<Long, Float64Member> oobProc = new ZeroOOB<Float64Algebra,Float64Member>(G.DBL, vals.size());
 		ProcedurePaddedDataSource<Float64Algebra,Float64Member> pd = new ProcedurePaddedDataSource<Float64Algebra, Float64Member>(G.DBL, vals, oobProc);
 		

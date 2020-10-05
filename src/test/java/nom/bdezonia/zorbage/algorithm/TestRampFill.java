@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -44,7 +44,7 @@ public class TestRampFill {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> ints = Storage.allocate(G.INT32.construct(), 
 				new int[75]);
 		SignedInt32Member tmp = G.INT32.construct();
 		SignedInt32Member startVal = G.INT32.construct();
@@ -69,7 +69,7 @@ public class TestRampFill {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> ints = Storage.allocate(G.INT32.construct(), 
 				new int[75]);
 		SignedInt32Member tmp = G.INT32.construct();
 		SignedInt32Member startVal = G.INT32.construct();

@@ -33,7 +33,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
 import nom.bdezonia.zorbage.predicate.GreaterThanEqualConstant;
 import nom.bdezonia.zorbage.predicate.LessThanConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Algebra;
 import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -49,7 +49,7 @@ public class TestNoneOf {
 	@Test
 	public void test() {
 		IndexedDataSource<SignedInt8Member> storage =
-				ArrayStorage.allocateBytes(new byte[]{0,1,2,3,4,5,6,7,8,9});
+				Storage.allocate(G.INT8.construct(), new byte[]{0,1,2,3,4,5,6,7,8,9});
 		
 		Function1<Boolean,SignedInt8Member> lessZero =
 				new LessThanConstant<SignedInt8Algebra, SignedInt8Member>(G.INT8, G.INT8.construct());

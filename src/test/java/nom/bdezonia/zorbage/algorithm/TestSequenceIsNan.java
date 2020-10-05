@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -45,7 +45,7 @@ public class TestSequenceIsNan {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(new double[] {0,0,0});
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {0,0,0});
 		assertFalse(SequenceIsNan.compute(G.DBL, nums));
 		value.setV(Double.NaN);
 		nums.set(2, value);

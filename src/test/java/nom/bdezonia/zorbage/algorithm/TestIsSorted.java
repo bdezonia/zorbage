@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -44,7 +44,7 @@ public class TestIsSorted {
 
 	@Test
 	public void test() {
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
 				new double[] {0,0,0,1,2,3,4,4,4,7,6,9});
 		assertFalse(IsSorted.compute(G.DBL, nums));
 		Sort.compute(G.DBL, nums);

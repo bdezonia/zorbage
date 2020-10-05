@@ -34,7 +34,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class TestCount {
 		
 		SignedInt32Member value = G.INT32.construct("14");
 		SignedInt64Member sum = G.INT64.construct();
-		IndexedDataSource<SignedInt32Member> a = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {14,1,2,3,14,5,6,14,8,9,10,14});
 		Count.compute(G.INT32, G.INT64, value, a, sum);
 		assertEquals(4, sum.v());

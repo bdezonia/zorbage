@@ -216,7 +216,8 @@ class Transforms {
 
 		// create a list
 		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[27000]);
+		IndexedDataSource<Float32Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), new float[27000]);
 
 		// elsewhere : fill it with values
 		
@@ -256,7 +257,8 @@ class Transforms {
 		
 		// create a list
 		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[27000]);
+		IndexedDataSource<Float32Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), new float[27000]);
 
 		// elsewhere : fill it with values
 		
@@ -332,7 +334,8 @@ class Transforms {
 		
 		// define some input data
 		
-		IndexedDataSource<SignedInt16Member> input = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> input =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT16.construct(), 
 				new short[] {1,3,5,8,12,55,101}
 				);
 		
@@ -350,8 +353,10 @@ class Transforms {
 		// 8% annual interest rate. And we are going to deposit funds once every month and compound
 		// monthly. How much money will we have at the end?
 		
-		IndexedDataSource<Float64Member> monthlyDeposits = ArrayStorage.allocateDoubles(
-				new double[] {1000,1250,500,300,0,475,950,200}
+		IndexedDataSource<Float64Member> monthlyDeposits =
+				nom.bdezonia.zorbage.storage.Storage.allocate(
+						G.DBL.construct(), 
+						new double[] {1000,1250,500,300,0,475,950,200}
 				);
 		
 		Procedure3<Float64Member, Float64Member, Float64Member> grow =

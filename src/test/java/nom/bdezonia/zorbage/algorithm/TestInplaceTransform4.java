@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure4;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -45,7 +45,7 @@ public class TestInplaceTransform4 {
 	@Test
 	public void test() {
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> a = Storage.allocate(G.DBL.construct(), 
 				new double[] {1,2,3,4,5});
 		Procedure4<Float64Member,Float64Member,Float64Member,Float64Member> proc =
 				new Procedure4<Float64Member, Float64Member, Float64Member, Float64Member>()

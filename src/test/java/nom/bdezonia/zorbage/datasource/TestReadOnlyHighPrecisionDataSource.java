@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Sum;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -48,7 +48,7 @@ public class TestReadOnlyHighPrecisionDataSource {
 	@Test
 	public void test1() {
 		HighPrecisionMember result = G.HP.construct();
-		IndexedDataSource<Float64Member> doubles = ArrayStorage.allocateDoubles(new double[] {0,1,2,3,4,5,6,7,8,9});
+		IndexedDataSource<Float64Member> doubles = Storage.allocate(G.DBL.construct(), new double[] {0,1,2,3,4,5,6,7,8,9});
 		ReadOnlyHighPrecisionDataSource<Float64Algebra,Float64Member> hps =
 				new ReadOnlyHighPrecisionDataSource<>(G.DBL, doubles);
 		Sum.compute(G.HP, hps, result);

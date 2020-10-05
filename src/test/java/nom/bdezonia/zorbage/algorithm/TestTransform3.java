@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 
 /**
@@ -51,9 +52,9 @@ public class TestTransform3 {
 		
 		IndexedDataSource<BooleanMember> a,b,c;
 		
-		a = ArrayStorage.allocateBooleans(new boolean[] {false, false, true, true});
-		b = ArrayStorage.allocateBooleans(new boolean[] {false, true, false, true});
-		c = ArrayStorage.allocateBooleans(new boolean[4]);
+		a = Storage.allocate(G.BOOL.construct(), new boolean[] {false, false, true, true});
+		b = Storage.allocate(G.BOOL.construct(), new boolean[] {false, true, false, true});
+		c = Storage.allocate(G.BOOL.construct(), new boolean[4]);
 		
 		Transform3.compute(G.BOOL, G.BOOL, G.BOOL, G.BOOL.logicalAnd(), a, b, c);
 		
@@ -66,9 +67,9 @@ public class TestTransform3 {
 		c.get(3, tmp);
 		assertEquals(true, tmp.v());
 		
-		a = ArrayStorage.allocateBooleans(new boolean[] {false, false, true, true});
-		b = ArrayStorage.allocateBooleans(new boolean[] {false, true, false, true});
-		c = ArrayStorage.allocateBooleans(new boolean[4]);
+		a = Storage.allocate(G.BOOL.construct(), new boolean[] {false, false, true, true});
+		b = Storage.allocate(G.BOOL.construct(), new boolean[] {false, true, false, true});
+		c = Storage.allocate(G.BOOL.construct(), new boolean[4]);
 
 		Transform3.compute(G.BOOL, G.BOOL, G.BOOL, G.BOOL.logicalOr(), a, b, c);
 		
@@ -149,9 +150,9 @@ public class TestTransform3 {
 		
 		IndexedDataSource<SignedInt32Member> a,b,c;
 
-		a = ArrayStorage.allocateInts(new int[] {0, 1, 2, 3});
-		b = ArrayStorage.allocateInts(new int[] {-3, -1, 1, 3});
-		c = ArrayStorage.allocateInts(new int[4]);
+		a = Storage.allocate(G.INT32.construct(), new int[] {0, 1, 2, 3});
+		b = Storage.allocate(G.INT32.construct(), new int[] {-3, -1, 1, 3});
+		c = Storage.allocate(G.INT32.construct(), new int[4]);
 
 		Transform3.compute(G.INT32, G.INT32, G.INT32, G.INT32.add(), a, b, c);
 
@@ -164,9 +165,9 @@ public class TestTransform3 {
 		c.get(3, tmp);
 		assertEquals(6, tmp.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {0, 1, 2, 3});
-		b = ArrayStorage.allocateInts(new int[] {-3, -1, 1, 3});
-		c = ArrayStorage.allocateInts(new int[4]);
+		a = Storage.allocate(G.INT32.construct(), new int[] {0, 1, 2, 3});
+		b = Storage.allocate(G.INT32.construct(), new int[] {-3, -1, 1, 3});
+		c = Storage.allocate(G.INT32.construct(), new int[4]);
 
 		Transform3.compute(G.INT32, G.INT32, G.INT32, G.INT32.multiply(), a, b, c);
 
@@ -187,9 +188,9 @@ public class TestTransform3 {
 		
 		IndexedDataSource<Float64Member> a,b,c;
 
-		a = ArrayStorage.allocateDoubles(new double[] {1, 2, 3, 5});
-		b = ArrayStorage.allocateDoubles(new double[] {7, 6, 5, 4});
-		c = ArrayStorage.allocateDoubles(new double[4]);
+		a = Storage.allocate(G.DBL.construct(), new double[] {1, 2, 3, 5});
+		b = Storage.allocate(G.DBL.construct(), new double[] {7, 6, 5, 4});
+		c = Storage.allocate(G.DBL.construct(), new double[4]);
 
 		Transform3.compute(G.DBL, G.DBL, G.DBL, G.DBL.pow(), a, b, c);
 

@@ -53,8 +53,10 @@ class Sorting {
 	// basic sorting : notice that sorting is an inplace operation
 	
 	void example1() {
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
-				new double[] {-3,1,17,9,-4,5,12,-6,7,7,7}
+		IndexedDataSource<Float64Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(
+						G.DBL.construct(), 
+						new double[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		Sort.compute(G.DBL, nums);  // this sort is QuickSort based
 	}
@@ -63,7 +65,8 @@ class Sorting {
 	//   on mostly sorted data
 
 	void example2() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		StableSort.compute(G.INT32, nums);  // this sort is MergeSort based
@@ -72,7 +75,8 @@ class Sorting {
 	// how to reverse sort: method 1
 	
 	void example3() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		IndexedDataSource<SignedInt32Member> rev = new ReversedDataSource<>(nums);
@@ -82,7 +86,8 @@ class Sorting {
 	// how to reverse sort: method 2
 	
 	void example4() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		IndexedDataSource<SignedInt32Member> rev = new ReversedDataSource<>(nums);
@@ -117,7 +122,8 @@ class Sorting {
 	// there is another sort method you might occasionally use
 	
 	void example6() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		IndexedDataSource<SignedInt32Member> rev = new ReversedDataSource<>(nums);
@@ -129,7 +135,8 @@ class Sorting {
 	// Partition: a one time partition: might be the fastest algo possible
 	
 	void example7() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		Function1<Boolean,SignedInt32Member> lessThan4 =
@@ -146,7 +153,8 @@ class Sorting {
 	// StablePartition: something you can call repeatedly to partition a set of numbers by multiple criteria
 	
 	void example8() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-3,1,17,9,-4,5,12,-6,7,7,7}
 			);
 		Function1<Boolean,SignedInt32Member> lessThan4 =

@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 
 /**
@@ -50,8 +51,8 @@ public class TestTransform2 {
 		
 		IndexedDataSource<BooleanMember> a,c;
 		
-		a = ArrayStorage.allocateBooleans(new boolean[] {false, true});
-		c = ArrayStorage.allocateBooleans(new boolean[2]);
+		a = Storage.allocate(G.BOOL.construct(), new boolean[] {false, true});
+		c = Storage.allocate(G.BOOL.construct(), new boolean[2]);
 
 		Transform2.compute(G.BOOL, G.BOOL, G.BOOL.logicalNot(), a, c);
 		
@@ -91,8 +92,8 @@ public class TestTransform2 {
 		
 		IndexedDataSource<SignedInt32Member> a,c;
 
-		a = ArrayStorage.allocateInts(new int[] {0, 1, 2, 3});
-		c = ArrayStorage.allocateInts(new int[4]);
+		a = Storage.allocate(G.INT32.construct(), new int[] {0, 1, 2, 3});
+		c = Storage.allocate(G.INT32.construct(), new int[4]);
 
 		Transform2.compute(G.INT32, G.INT32, G.INT32.negate(), a, c);
 

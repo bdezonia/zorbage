@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -44,9 +44,9 @@ public class TestIncludes {
 
 	@Test
 	public void test1() {
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,3,4,5,6,7,7,8,9,10});
-		IndexedDataSource<SignedInt32Member> sublist = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> sublist = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5});
 		assertTrue(Includes.compute(G.INT32, list, list));
 		assertTrue(Includes.compute(G.INT32, sublist, sublist));
@@ -56,9 +56,9 @@ public class TestIncludes {
 
 	@Test
 	public void test2() {
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), 
 				new int[] {0,0,2,2,4,4,6,6});
-		IndexedDataSource<SignedInt32Member> sublist = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> sublist = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4,5});
 		assertTrue(Includes.compute(G.INT32, list, list));
 		assertTrue(Includes.compute(G.INT32, sublist, sublist));
@@ -68,9 +68,9 @@ public class TestIncludes {
 
 	@Test
 	public void test3() {
-		IndexedDataSource<SignedInt32Member> list = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> list = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,2,3,4,5,6,7,7,8,9,10});
-		IndexedDataSource<SignedInt32Member> sublist = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> sublist = Storage.allocate(G.INT32.construct(), 
 				new int[] {5,6,7,7});
 		assertTrue(Includes.compute(G.INT32, list, list));
 		assertTrue(Includes.compute(G.INT32, sublist, sublist));

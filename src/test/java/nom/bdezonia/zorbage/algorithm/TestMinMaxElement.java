@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
@@ -44,7 +44,7 @@ public class TestMinMaxElement {
 	@Test
 	public void test() {
 		IndexedDataSource<SignedInt64Member> storage =
-				ArrayStorage.allocateLongs(new long[]{-16,20,7,-55,0,1,5,74,44,13});
+				Storage.allocate(G.INT64.construct(), new long[]{-16,20,7,-55,0,1,5,74,44,13});
 		SignedInt64Member min = G.INT64.construct();
 		SignedInt64Member max = G.INT64.construct();
 		MinMaxElement.compute(G.INT64, storage, min, max);

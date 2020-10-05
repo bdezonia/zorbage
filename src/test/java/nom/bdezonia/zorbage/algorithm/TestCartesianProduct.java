@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
@@ -48,9 +48,9 @@ public class TestCartesianProduct {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<Float64Member> a = ArrayStorage.allocateDoubles(new double[] {1,2,3});
-		IndexedDataSource<Float64Member> b = ArrayStorage.allocateDoubles(new double[] {4,5,6});
-		IndexedDataSource<Float64Member> result = ArrayStorage.allocateDoubles(new double[9]);
+		IndexedDataSource<Float64Member> a = Storage.allocate(G.DBL.construct(), new double[] {1,2,3});
+		IndexedDataSource<Float64Member> b = Storage.allocate(G.DBL.construct(), new double[] {4,5,6});
+		IndexedDataSource<Float64Member> result = Storage.allocate(G.DBL.construct(), new double[9]);
 		Procedure3<Float64Member, Float64Member, Float64Member> proc =
 				new Procedure3<Float64Member, Float64Member, Float64Member>()
 		{

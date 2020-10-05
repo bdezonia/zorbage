@@ -123,7 +123,8 @@ public class TestParallelCorrelateND {
 		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(new long[] {3, 3}, value);
 		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
-		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
 		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(new long[] {400, 333}, value);
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());

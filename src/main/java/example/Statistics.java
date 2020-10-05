@@ -61,7 +61,6 @@ import nom.bdezonia.zorbage.algorithm.SummaryStats;
 import nom.bdezonia.zorbage.algorithm.Variance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -84,7 +83,8 @@ class Statistics {
 	
 	void example1() {
 		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		IndexedDataSource<Float32Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), new float[] {43,7,99,1,2,3,100,55,31});
 		
 		Float32Member min = G.FLT.construct();
 		Float32Member q1 = G.FLT.construct();
@@ -108,7 +108,8 @@ class Statistics {
 	
 	void example2() {
 		
-		IndexedDataSource<Float32Member> data = ArrayStorage.allocateFloats(new float[] {43,7,99,1,2,3,100,55,31});
+		IndexedDataSource<Float32Member> data =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), new float[] {43,7,99,1,2,3,100,55,31});
 		
 		Float32Member mean = G.FLT.construct();
 		Float32Member stdErrMean = G.FLT.construct();

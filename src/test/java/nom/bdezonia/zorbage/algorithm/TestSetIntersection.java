@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -48,38 +48,38 @@ public class TestSetIntersection {
 		IndexedDataSource<SignedInt32Member> b;
 		IndexedDataSource<SignedInt32Member> res;
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 		
-		a = ArrayStorage.allocateInts(new int[] {1});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 
-		a = ArrayStorage.allocateInts(new int[] {1,1});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,1});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 		
-		a = ArrayStorage.allocateInts(new int[] {1,2});
-		b = ArrayStorage.allocateInts(new int[] {});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,2});
+		b = Storage.allocate(G.INT32.construct(), new int[] {});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {1});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {1,1});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,1});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 		
-		a = ArrayStorage.allocateInts(new int[] {});
-		b = ArrayStorage.allocateInts(new int[] {1,2});
+		a = Storage.allocate(G.INT32.construct(), new int[] {});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,2});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(0, res.size());
 	}
@@ -93,29 +93,29 @@ public class TestSetIntersection {
 		IndexedDataSource<SignedInt32Member> b;
 		IndexedDataSource<SignedInt32Member> res;
 		
-		a = ArrayStorage.allocateInts(new int[] {1,2,3,4});
-		b = ArrayStorage.allocateInts(new int[] {2,5});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4});
+		b = Storage.allocate(G.INT32.construct(), new int[] {2,5});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(2, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {2,5});
-		b = ArrayStorage.allocateInts(new int[] {1,2,3,4});
+		a = Storage.allocate(G.INT32.construct(), new int[] {2,5});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,2,3,4});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(2, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {1,1,1,2,2,2,3,3,3,4,4,4});
-		b = ArrayStorage.allocateInts(new int[] {2,5,2,5,2,5,2,5,2});
+		a = Storage.allocate(G.INT32.construct(), new int[] {1,1,1,2,2,2,3,3,3,4,4,4});
+		b = Storage.allocate(G.INT32.construct(), new int[] {2,5,2,5,2,5,2,5,2});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);
 		assertEquals(2, value.v());
 		
-		a = ArrayStorage.allocateInts(new int[] {2,5,2,5,2,5,2,5,2});
-		b = ArrayStorage.allocateInts(new int[] {1,1,1,2,2,2,3,3,3,4,4,4});
+		a = Storage.allocate(G.INT32.construct(), new int[] {2,5,2,5,2,5,2,5,2});
+		b = Storage.allocate(G.INT32.construct(), new int[] {1,1,1,2,2,2,3,3,3,4,4,4});
 		res = SetIntersection.compute(G.INT32, a, b);
 		assertEquals(1, res.size());
 		res.get(0, value);

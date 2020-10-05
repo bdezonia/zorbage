@@ -33,7 +33,6 @@ import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.UInt1ToBool;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.float32.real.Float32VectorMember;
 import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
@@ -60,7 +59,7 @@ class Conversions {
 		
 		// here is my list of short data
 		
-		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocateShorts(new short[] {1,2,3,4,5});
+		IndexedDataSource<SignedInt16Member> shortList = Storage.allocate(G.INT16.construct(), new short[] {1,2,3,4,5});
 		
 		// here is the target list of the same size
 		
@@ -155,7 +154,7 @@ class Conversions {
 		
 		// allocate some booleans
 		
-		IndexedDataSource<BooleanMember> bools = ArrayStorage.allocateBooleans(new boolean[] {true, false, true, false});
+		IndexedDataSource<BooleanMember> bools = Storage.allocate(G.BOOL.construct(), new boolean[] {true, false, true, false});
 		
 		// allocate a similar number of uint1's
 		

@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.oob.oned.ZeroOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -50,15 +50,15 @@ public class TestConvolve1D {
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<Float64Member> filter = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> filter = Storage.allocate(G.DBL.construct(), 
 				new double[] {1.0/3, 1.0/3, 1.0/3}
 			);
 	
-		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> vals = Storage.allocate(G.DBL.construct(), 
 					new double[] {5,4,2,3,7,4,6,5,3,6}
 				);
 		
-		IndexedDataSource<Float64Member> results = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> results = Storage.allocate(G.DBL.construct(), 
 				new double[(int)vals.size()]
 			);
 		
@@ -105,15 +105,15 @@ public class TestConvolve1D {
 	@Test
 	public void test2() {
 		
-		IndexedDataSource<Float64Member> filter = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> filter = Storage.allocate(G.DBL.construct(), 
 				new double[] {1, 2, 3}
 			);
 	
-		IndexedDataSource<Float64Member> vals = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> vals = Storage.allocate(G.DBL.construct(), 
 					new double[] {5,4,2,3,7,4,6,5,3,6}
 				);
 		
-		IndexedDataSource<Float64Member> results = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> results = Storage.allocate(G.DBL.construct(), 
 				new double[(int)vals.size()]
 			);
 		

@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 
 /**
@@ -44,9 +44,9 @@ public class TestRotateCopy {
 	@Test
 	public void test() {
 
-		IndexedDataSource<SignedInt16Member> a = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a = Storage.allocate(G.INT16.construct(), 
 				new short[] {1,2,3,4,5,6});
-		IndexedDataSource<SignedInt16Member> b = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> b = Storage.allocate(G.INT16.construct(), 
 				new short[6]);
 		SignedInt16Member value = G.INT16.construct();
 		RotateCopy.compute(G.INT16, 3, a, b);

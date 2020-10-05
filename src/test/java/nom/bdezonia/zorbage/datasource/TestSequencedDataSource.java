@@ -31,8 +31,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -46,7 +45,7 @@ public class TestSequencedDataSource {
 	public void test() {
 		SignedInt32Member value = G.INT32.construct();
 		int[] tmp = new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		IndexedDataSource<SignedInt32Member> ints = ArrayStorage.allocateInts(tmp);
+		IndexedDataSource<SignedInt32Member> ints = Storage.allocate(G.INT32.construct(), tmp);
 
 		// test one extreme boundary condition of seq
 		

@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.predicate.GreaterThanConstant;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Algebra;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -47,9 +47,9 @@ public class TestCopyIf {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt16Member> a = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a = Storage.allocate(G.INT16.construct(), 
 				new short[] {1,2,3,4,5,6,7,8,9});
-		IndexedDataSource<SignedInt16Member> b = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> b = Storage.allocate(G.INT16.construct(), 
 				new short[] {0,0,0,0,0,0,0,0,0});
 		Function1<Boolean,SignedInt16Member> cond = new GreaterThanConstant<SignedInt16Algebra,SignedInt16Member>(G.INT16, new SignedInt16Member(4));
 		CopyIf.compute(G.INT16, cond, a, b);

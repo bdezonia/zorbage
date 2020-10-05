@@ -345,8 +345,10 @@ class DataSources {
 		
 		// build a mask
 		
-		IndexedDataSource<BooleanMember> mask = ArrayStorage.allocateBooleans(
-				new boolean[] {true, false, false, true, false, false, true, true, true});
+		IndexedDataSource<BooleanMember> mask =
+				nom.bdezonia.zorbage.storage.Storage.allocate(
+						G.BOOL.construct(), 
+						new boolean[] {true, false, false, true, false, false, true, true, true});
 		
 		// make the filter
 		
@@ -489,7 +491,8 @@ class DataSources {
 		
 		// make some data
 		
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 
 				new int[] {-1, 345, 1, -3044, 0, 0, 1066, -12});
 		
 		// sort it

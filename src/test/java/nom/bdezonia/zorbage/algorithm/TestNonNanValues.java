@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -46,7 +46,7 @@ public class TestNonNanValues {
 		
 		Float64Member value = G.DBL.construct();
 		
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
 				new double[] {1,Double.NaN, 2, 3, Double.NaN, Double.NaN, 4, Double.NaN, Double.NaN, Double.NaN});
 		
 		IndexedDataSource<Float64Member> nonnan = NonNanValues.compute(G.DBL, nums);

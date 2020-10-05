@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -43,7 +43,7 @@ public class TestLowerBound {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt32Member> nums = ArrayStorage.allocateInts(
+		IndexedDataSource<SignedInt32Member> nums = Storage.allocate(G.INT32.construct(), 
 				new int[] {10,20,30,30,20,10,10,20});
 		Sort.compute(G.INT32, nums);
 		SignedInt32Member val = G.INT32.construct("20");

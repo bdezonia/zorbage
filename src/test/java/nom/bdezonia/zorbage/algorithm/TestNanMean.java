@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -47,11 +47,11 @@ public class TestNanMean {
 		IndexedDataSource<Float64Member> nums = null;
 		Float64Member result = G.DBL.construct();
 
-		nums = ArrayStorage.allocateDoubles(new double[] {1,2,4});
+		nums = Storage.allocate(G.DBL.construct(), new double[] {1,2,4});
 		NanMean.compute(G.DBL, nums, result);
 		assertEquals(7.0/3, result.v(), 0);
 
-		nums = ArrayStorage.allocateDoubles(new double[] {Double.NaN,1,Double.NaN,2,Double.NaN,4,Double.NaN});
+		nums = Storage.allocate(G.DBL.construct(), new double[] {Double.NaN,1,Double.NaN,2,Double.NaN,4,Double.NaN});
 		NanMean.compute(G.DBL, nums, result);
 		assertEquals(7.0/3, result.v(), 0);
 	}

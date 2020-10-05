@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 
 /**
@@ -48,7 +48,7 @@ public class TestLeftRotate {
 
 		short[] numbers = new short[] {0, 10, 20, 30, 40, 50};
 		
-		IndexedDataSource<SignedInt16Member> data = ArrayStorage.allocateShorts(numbers);
+		IndexedDataSource<SignedInt16Member> data = Storage.allocate(G.INT16.construct(), numbers);
 		
 		LeftRotate.compute(G.INT16, 2, data);
 		

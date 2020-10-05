@@ -32,7 +32,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
@@ -44,9 +44,9 @@ public class TestCopyBackward {
 
 	@Test
 	public void test() {
-		IndexedDataSource<SignedInt64Member> list = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> list = Storage.allocate(G.INT64.construct(), 
 				new long[] {1,2,3,4,5,6,7,8});
-		IndexedDataSource<SignedInt64Member> list2 = ArrayStorage.allocateLongs(
+		IndexedDataSource<SignedInt64Member> list2 = Storage.allocate(G.INT64.construct(), 
 				new long[] {0,0,0,0,0,0,0,0});
 		CopyBackward.compute(G.INT64,list,list2);
 		SignedInt64Member value = G.INT64.construct();

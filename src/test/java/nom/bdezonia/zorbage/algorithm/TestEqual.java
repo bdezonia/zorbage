@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
 
 /**
@@ -44,13 +44,13 @@ public class TestEqual {
 	@Test
 	public void test() {
 		
-		IndexedDataSource<SignedInt16Member> a3 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a3 = Storage.allocate(G.INT16.construct(), 
 				new short[] {1,2,3});
-		IndexedDataSource<SignedInt16Member> a4 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a4 = Storage.allocate(G.INT16.construct(), 
 				new short[] {1,2,3,4});
-		IndexedDataSource<SignedInt16Member> a5 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> a5 = Storage.allocate(G.INT16.construct(), 
 				new short[] {1,2,3,4,5});
-		IndexedDataSource<SignedInt16Member> b4 = ArrayStorage.allocateShorts(
+		IndexedDataSource<SignedInt16Member> b4 = Storage.allocate(G.INT16.construct(), 
 				new short[] {1,2,3,4});
 		assertEquals(false, Equal.compute(G.INT16, a3, a4));
 		assertEquals(false, Equal.compute(G.INT16, a3, a5));

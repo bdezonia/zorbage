@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 
 /**
@@ -45,7 +45,7 @@ public class TestUnique {
 	public void test1() {
 		
 		Float64Member value = G.DBL.construct();
-		IndexedDataSource<Float64Member> nums = ArrayStorage.allocateDoubles(
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
 				new double[] {1.1, 1.1, 1.2, 3, 3, 3, 1.1, 4, 5, 5, 5});
 		// Unique expects a sorted list as input
 		Sort.compute(G.DBL, nums);
