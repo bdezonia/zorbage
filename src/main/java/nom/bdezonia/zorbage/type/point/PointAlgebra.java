@@ -299,8 +299,7 @@ public class PointAlgebra
 				throw new IllegalArgumentException("mismatched point dimensionality");
 			BigDecimal t;
 			for (int i = 0; i < b.numDimensions(); i++) {
-				t = BigDecimal.valueOf(b.component(i));
-				t = t.multiply(a.v());
+				t = a.v().multiply(BigDecimal.valueOf(b.component(i)));
 				c.setComponent(i, t.doubleValue());
 			}
 		}
@@ -318,8 +317,6 @@ public class PointAlgebra
 		public Boolean call(Double tol, Point a, Point b) {
 			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
-			if (tol < 0)
-				throw new IllegalArgumentException("tolerance must be >= 0");
 			for (int i = 0; i < b.numDimensions(); i++) {
 				if (!RealUtils.near(a.component(i), b.component(i), tol))
 					return false;
