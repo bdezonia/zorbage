@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
+import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
@@ -48,7 +49,7 @@ import nom.bdezonia.zorbage.misc.Hasher;
  */
 public final class BooleanMember
 	implements
-		BitCoder, BooleanCoder,
+		BitCoder, ByteCoder, BooleanCoder,
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
@@ -146,6 +147,21 @@ public final class BooleanMember
 			bucket &= ~(1L << offset);
 		}
 		arr[index] = bucket;
+	}
+
+	@Override
+	public int byteCount() {
+		return 1;
+	}
+
+	@Override
+	public void fromByteArray(byte[] arr, int index) {
+		v = (arr[index] & 1) == 1;
+	}
+
+	@Override
+	public void toByteArray(byte[] arr, int index) {
+		arr[index] = (byte) (v ? 1 : 0);
 	}
 
 	@Override
