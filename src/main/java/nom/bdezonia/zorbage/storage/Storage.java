@@ -97,6 +97,7 @@ public class Storage {
 			return FileStorage.allocate(numElements, type);
 		throw new IllegalArgumentException("Unknown storage strategy "+strategy);
 	}
+	
 	/**
 	 * 
 	 * @param type
@@ -110,8 +111,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.byteCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.byteCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.byteCount()) {
 			tmp.fromByteArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -131,8 +131,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.shortCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.shortCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.shortCount()) {
 			tmp.fromShortArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -152,8 +151,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.intCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.intCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.intCount()) {
 			tmp.fromIntArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -173,8 +171,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.longCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.longCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.longCount()) {
 			tmp.fromLongArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -194,8 +191,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.floatCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.floatCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.floatCount()) {
 			tmp.fromFloatArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -215,8 +211,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.doubleCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.doubleCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.doubleCount()) {
 			tmp.fromDoubleArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -236,8 +231,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.booleanCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.booleanCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.booleanCount()) {
 			tmp.fromBooleanArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -257,8 +251,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.bigIntegerCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.bigIntegerCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.bigIntegerCount()) {
 			tmp.fromBigIntegerArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -278,8 +271,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.bigDecimalCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.bigDecimalCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.bigDecimalCount()) {
 			tmp.fromBigDecimalArray(array, offset);
 			list.set(i, tmp);
 		}
@@ -299,8 +291,7 @@ public class Storage {
 			throw new IllegalArgumentException("allocation must be correctly aligned");
 		IndexedDataSource<U> list = allocate(array.length / type.charCount(), type);
 		U tmp = type.allocate();
-		for (int i = 0; i < list.size(); i++) {
-			int offset = i * type.charCount();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.charCount()) {
 			tmp.fromCharArray(array, offset);
 			list.set(i, tmp);
 		}
