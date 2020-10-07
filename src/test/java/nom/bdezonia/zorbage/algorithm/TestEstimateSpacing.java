@@ -54,7 +54,7 @@ public class TestEstimateSpacing {
 		
 		long[] dims = new long[] {5,6,7,8,9};
 		
-		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(dims, G.DBL.construct());
+		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(G.DBL.construct(), dims);
 		
 		data.setAxisEquation(0, new StringDefinedAxisEquation("0.5 + 2*$0"));
 		data.setAxisEquation(1, new StringDefinedAxisEquation("0.6 + 3*$0"));

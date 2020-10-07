@@ -47,7 +47,7 @@ public class DimensionedStorage {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		DimensionedDataSource<U> allocate(long[] dims, U type)
+		DimensionedDataSource<U> allocate(U type, long[] dims)
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(numElements, type);
@@ -62,7 +62,7 @@ public class DimensionedStorage {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		DimensionedDataSource<U> allocate(StorageConstruction strategy, long[] dims, U type)
+		DimensionedDataSource<U> allocate(StorageConstruction strategy, U type, long[] dims)
 	{
 		long numElements = LongUtils.numElements(dims);
 		IndexedDataSource<U> data = Storage.allocate(strategy, numElements, type);

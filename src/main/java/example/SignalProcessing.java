@@ -81,19 +81,19 @@ class SignalProcessing {
 		long[] dims = new long[]{100,100,100};
 		
 		DimensionedDataSource<Float16Member> input =
-				DimensionedStorage.allocate(dims, G.HLF.construct());
+				DimensionedStorage.allocate(G.HLF.construct(), dims);
 
 		Fill.compute(G.HLF, G.HLF.random(), input.rawData());
 		
 		DimensionedDataSource<Float16Member> output =
-				DimensionedStorage.allocate(dims, G.HLF.construct());
+				DimensionedStorage.allocate(G.HLF.construct(), dims);
 
 		ProcedurePaddedDimensionedDataSource<?, Float16Member> padded =
 				new ProcedurePaddedDimensionedDataSource<>(G.HLF, input, new ZeroNdOOB<>(G.HLF, input));
 		
 		
 		DimensionedDataSource<Float16Member> filter =
-				DimensionedStorage.allocate(new long[] {3,3,3}, G.HLF.construct());
+				DimensionedStorage.allocate(G.HLF.construct(), new long[] {3,3,3});
 
 		Float16Member value = G.HLF.construct();
 		
@@ -128,19 +128,19 @@ class SignalProcessing {
 		long[] dims = new long[]{100,100,100};
 		
 		DimensionedDataSource<Float16Member> input =
-				DimensionedStorage.allocate(dims, G.HLF.construct());
+				DimensionedStorage.allocate(G.HLF.construct(), dims);
 
 		Fill.compute(G.HLF, G.HLF.random(), input.rawData());
 		
 		DimensionedDataSource<Float16Member> output =
-				DimensionedStorage.allocate(dims, G.HLF.construct());
+				DimensionedStorage.allocate(G.HLF.construct(), dims);
 
 		ProcedurePaddedDimensionedDataSource<?, Float16Member> padded =
 				new ProcedurePaddedDimensionedDataSource<>(G.HLF, input, new ZeroNdOOB<>(G.HLF, input));
 		
 		
 		DimensionedDataSource<Float16Member> filter =
-				DimensionedStorage.allocate(new long[] {3,3,3}, G.HLF.construct());
+				DimensionedStorage.allocate(G.HLF.construct(), new long[] {3,3,3});
 
 		Float16Member value = G.HLF.construct();
 		
@@ -175,7 +175,7 @@ class SignalProcessing {
 	void example4() {
 		
 		DimensionedDataSource<HighPrecisionMember> input =
-				DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.HP.construct());
+				DimensionedStorage.allocate(G.HP.construct(), new long[] {1000,1000,1000});
 		long[] newDims = new long[] {330,542,861};
 		DimensionedDataSource<HighPrecisionMember> output1 = ResampleNearestNeighbor.compute(G.HP, newDims, input);
 		DimensionedDataSource<HighPrecisionMember> output2 = ResampleAveragedLinears.compute(G.HP, newDims, input);

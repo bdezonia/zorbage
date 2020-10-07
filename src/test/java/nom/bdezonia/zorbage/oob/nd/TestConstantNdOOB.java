@@ -47,7 +47,7 @@ public class TestConstantNdOOB {
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
-		DimensionedDataSource<SignedInt32Member> ds = DimensionedStorage.allocate(new long[] {5,5}, value);
+		DimensionedDataSource<SignedInt32Member> ds = DimensionedStorage.allocate(value, new long[] {5,5});
 		ConstantNdOOB<SignedInt32Algebra, SignedInt32Member> oobProc =
 				new ConstantNdOOB<SignedInt32Algebra, SignedInt32Member>(G.INT32, ds, G.INT32.construct("33"));
 		ProcedurePaddedDimensionedDataSource<SignedInt32Algebra, SignedInt32Member> padded =

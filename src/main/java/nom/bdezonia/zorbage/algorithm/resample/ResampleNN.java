@@ -67,7 +67,7 @@ public class ResampleNN {
 
 		U value = alg.construct();
 		
-		DimensionedDataSource<U> output = DimensionedStorage.allocate(input.storageType(), newDims, value);
+		DimensionedDataSource<U> output = DimensionedStorage.allocate(input.storageType(), value, newDims);
 
 		int index = -1;
 		long maxDim = -1;

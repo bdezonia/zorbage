@@ -29,8 +29,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		UnsignedInt1Member value = G.UINT1.construct();
-		DimensionedDataSource<UnsignedInt1Member> img1 = DimensionedStorage.allocate(new long[] {COLS,ROWS}, value);
-		DimensionedDataSource<UnsignedInt1Member> img2 = DimensionedStorage.allocate(new long[] {COLS,ROWS}, value);
+		DimensionedDataSource<UnsignedInt1Member> img1 = DimensionedStorage.allocate(value, new long[] {COLS,ROWS});
+		DimensionedDataSource<UnsignedInt1Member> img2 = DimensionedStorage.allocate(value, new long[] {COLS,ROWS});
 		CyclicNdOOB<UnsignedInt1Member> oob1 = new CyclicNdOOB<UnsignedInt1Member>(img1);
 		CyclicNdOOB<UnsignedInt1Member> oob2 = new CyclicNdOOB<UnsignedInt1Member>(img2);
 		DimensionedDataSource<UnsignedInt1Member> frame1 = new ProcedurePaddedDimensionedDataSource<UnsignedInt1Algebra,UnsignedInt1Member>(G.UINT1, img1, oob1);

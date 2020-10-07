@@ -43,7 +43,7 @@ public class TestDimensionedStorage {
 	@Test
 	public void test() {
 		DimensionedDataSource<SignedInt3Member> data =
-				DimensionedStorage.allocate(new long[] {25,45,10}, G.INT3.construct());
+				DimensionedStorage.allocate(G.INT3.construct(), new long[] {25,45,10});
 		assertEquals(3, data.numDimensions());
 		assertEquals(25, data.dimension(0));
 		assertEquals(45, data.dimension(1));

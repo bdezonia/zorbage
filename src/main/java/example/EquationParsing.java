@@ -86,7 +86,7 @@ class EquationParsing {
 		Float64Member valueY = G.DBL.construct();
 
 		DimensionedDataSource<Float64Member> data =
-				DimensionedStorage.allocate(dims, G.DBL.construct());
+				DimensionedStorage.allocate(G.DBL.construct(), dims);
 		
 		EquationParser<Float64Algebra, Float64Member> parser = new EquationParser<>();
 		
@@ -133,7 +133,7 @@ class EquationParsing {
 		long[] dims = new long[]{100, 100};
 		
 		DimensionedDataSource<Float64Member> data =
-				DimensionedStorage.allocate(dims, G.DBL.construct());
+				DimensionedStorage.allocate(G.DBL.construct(), dims);
 		
 		data.setAxisEquation(
 				0,

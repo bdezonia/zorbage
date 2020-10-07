@@ -85,7 +85,7 @@ public class DimensionalPermutation {
 		}
 		U value = alg.construct();
 		DimensionedDataSource<U> output =
-				DimensionedStorage.allocate(input.storageType(), newDims, value);
+				DimensionedStorage.allocate(input.storageType(), value, newDims);
 		
 		// copy some metadata
 		

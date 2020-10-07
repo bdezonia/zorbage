@@ -232,7 +232,7 @@ class OutOfBoundsData {
 		// make input
 		
 		DimensionedDataSource<Float32Member> input =
-				DimensionedStorage.allocate(dims, G.FLT.construct());
+				DimensionedStorage.allocate(G.FLT.construct(), dims);
 		
 		// assume here we've filled it with some values
 		
@@ -247,12 +247,12 @@ class OutOfBoundsData {
 		// make an output dataset that has the same dims as the original dataset
 		
 		DimensionedDataSource<Float32Member> output =
-				DimensionedStorage.allocate(dims, G.FLT.construct());
+				DimensionedStorage.allocate(G.FLT.construct(), dims);
 		
 		// make a 3x3 convolution filter
 		
 		DimensionedDataSource<Float32Member> filter =
-				DimensionedStorage.allocate(new long[] {3,3}, G.FLT.construct());
+				DimensionedStorage.allocate(G.FLT.construct(), new long[] {3,3});
 		
 		// assume we've set the nine filter values to something sensible
 		
@@ -274,7 +274,7 @@ class OutOfBoundsData {
 		// make input
 		
 		DimensionedDataSource<Float32Member> input =
-				DimensionedStorage.allocate(new long[] {1024, 1024}, G.FLT.construct());
+				DimensionedStorage.allocate(G.FLT.construct(), new long[] {1024, 1024});
 		
 		// make constant padded input
 		

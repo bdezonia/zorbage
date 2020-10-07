@@ -48,7 +48,7 @@ public class TestNanNdOOB {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {5,5}, value);
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(value, new long[] {5,5});
 		NanNdOOB<Float64Algebra, Float64Member> oobProc =
 				new NanNdOOB<Float64Algebra, Float64Member>(G.DBL, ds);
 		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded =

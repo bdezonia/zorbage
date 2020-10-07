@@ -46,7 +46,7 @@ public class TestEdgeNdOOB {
 	@Test
 	public void test1() {
 		SignedInt32Member value = G.INT32.construct();
-		DimensionedDataSource<SignedInt32Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt32Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
 		EdgeNdOOB<SignedInt32Member> oobProc =
 				new EdgeNdOOB<SignedInt32Member>(ds);
 		ProcedurePaddedDimensionedDataSource<SignedInt32Algebra, SignedInt32Member> padded =

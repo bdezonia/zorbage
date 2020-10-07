@@ -277,7 +277,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(G.DBL.construct(), new long[] {1000,1000,1000});
 		
 		// fill it
 		
@@ -290,11 +290,11 @@ class ParallelProcessing {
 		
 		// get ready to store result
 		
-		DimensionedDataSource<Float64Member> result = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> result = DimensionedStorage.allocate(G.DBL.construct(), new long[] {1000,1000,1000});
 		
 		// create the convolution kernel to use to combine neighboring values with
 		
-		DimensionedDataSource<Float64Member> kernel = DimensionedStorage.allocate(new long[] {3,3,3}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> kernel = DimensionedStorage.allocate(G.DBL.construct(), new long[] {3,3,3});
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		Float64Member value = G.DBL.construct();
 
@@ -337,7 +337,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(G.DBL.construct(), new long[] {1000,1000,1000});
 		
 		// fill it
 		
@@ -350,11 +350,11 @@ class ParallelProcessing {
 		
 		// get ready to store result
 		
-		DimensionedDataSource<Float64Member> result = DimensionedStorage.allocate(new long[] {1000,1000,1000}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> result = DimensionedStorage.allocate(G.DBL.construct(), new long[] {1000,1000,1000});
 		
 		// create the correlation kernel to use to combine neighboring values with
 		
-		DimensionedDataSource<Float64Member> kernel = DimensionedStorage.allocate(new long[] {3,3,3}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> kernel = DimensionedStorage.allocate(G.DBL.construct(), new long[] {3,3,3});
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		Float64Member value = G.DBL.construct();
 
@@ -387,7 +387,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(G.DBL.construct(), new long[] {8192,8192});
 
 		// pad the dataset so out of bounds accesses don't fail
 		
@@ -409,7 +409,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(G.DBL.construct(), new long[] {8192,8192});
 
 		// pad the dataset so out of bounds accesses don't fail
 		
@@ -431,7 +431,7 @@ class ParallelProcessing {
 		
 		// create the dataset to read
 		
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[] {8192,8192}, G.DBL.construct());
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(G.DBL.construct(), new long[] {8192,8192});
 
 		// pad the dataset so out of bounds accesses don't fail
 		

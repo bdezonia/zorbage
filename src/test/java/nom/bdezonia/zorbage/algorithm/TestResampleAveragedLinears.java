@@ -48,7 +48,7 @@ public class TestResampleAveragedLinears {
 	public void test1da() {
 		double tol = 0.000000000000001;
 		Float64Member value = G.DBL.construct();
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[]{10}, value);
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(value, new long[]{10});
 		RampFill.compute(G.DBL, ds.rawData());
 		Procedure2<IntegerIndex,Float64Member> proc =
 				new Procedure2<IntegerIndex, Float64Member>()
@@ -102,7 +102,7 @@ public class TestResampleAveragedLinears {
 	public void test1db() {
 		double tol = 0.000000000000001;
 		Float64Member value = G.DBL.construct();
-		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(new long[]{8}, value);
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(value, new long[]{8});
 		RampFill.compute(G.DBL, ds.rawData());
 		Procedure2<IntegerIndex,Float64Member> proc =
 				new Procedure2<IntegerIndex, Float64Member>()

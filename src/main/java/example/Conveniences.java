@@ -272,7 +272,7 @@ class Conveniences {
 	void example8() {
 		
 		DimensionedDataSource<OctonionFloat16Member> data =
-				DimensionedStorage.allocate(new long[] {400, 500}, G.OHLF.construct());
+				DimensionedStorage.allocate(G.OHLF.construct(), new long[] {400, 500});
 		
 		IndexedDataSource<Float16Member> components =
 				nom.bdezonia.zorbage.storage.Storage.allocate(data.numElements(), G.HLF.construct());

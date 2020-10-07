@@ -51,7 +51,7 @@ public class TestCorrelateND {
 	public void test1() {
 
 		SignedInt64Member value = G.INT64.construct();
-		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
 		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
 		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded =
 				new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
@@ -103,9 +103,9 @@ public class TestCorrelateND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(value, new long[] {3,3});
 
-		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(value, new long[] {3,3});
 
 		value.setV(1);
 		
@@ -197,7 +197,7 @@ public class TestCorrelateND {
 	public void test2() {
 
 		SignedInt64Member value = G.INT64.construct();
-		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
 		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
 		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
 		
@@ -248,9 +248,9 @@ public class TestCorrelateND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(value, new long[] {3,3});
 
-		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(new long[] {3,3}, value);
+		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(value, new long[] {3,3});
 
 		value.setV(1);
 		

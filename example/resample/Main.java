@@ -81,9 +81,9 @@ public class Main {
 		int rows = in.getHeight();
 		int cols = in.getWidth();
 		Float32Member value = G.FLT.construct();
-		DimensionedDataSource<Float32Member> rs = DimensionedStorage.allocate(new long[] {cols,rows}, value);
-		DimensionedDataSource<Float32Member> gs = DimensionedStorage.allocate(new long[] {cols,rows}, value);
-		DimensionedDataSource<Float32Member> bs = DimensionedStorage.allocate(new long[] {cols,rows}, value);
+		DimensionedDataSource<Float32Member> rs = DimensionedStorage.allocate(value, new long[] {cols,rows});
+		DimensionedDataSource<Float32Member> gs = DimensionedStorage.allocate(value, new long[] {cols,rows});
+		DimensionedDataSource<Float32Member> bs = DimensionedStorage.allocate(value, new long[] {cols,rows});
 		IntegerIndex idx = new IntegerIndex(2);
 		for (int r = 0; r < rows; r++) {
 			idx.set(1, r);

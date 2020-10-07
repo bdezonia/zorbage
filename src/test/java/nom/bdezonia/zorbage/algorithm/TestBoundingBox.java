@@ -55,7 +55,7 @@ public class TestBoundingBox {
 		
 		long[] dims = new long[] {5,6,7,8,9};
 		
-		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(dims, G.DBL.construct());
+		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(G.DBL.construct(), dims);
 		
 		BoundingBox.compute(data, min, max);
 

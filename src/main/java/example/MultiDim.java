@@ -59,7 +59,7 @@ class MultiDim {
 		
 		UnsignedInt16Member type = G.UINT16.construct();
 		
-		DimensionedDataSource<UnsignedInt16Member> data = DimensionedStorage.allocate(dims, type);
+		DimensionedDataSource<UnsignedInt16Member> data = DimensionedStorage.allocate(type, dims);
 		
 		data.numDimensions(); // 3
 		data.dimension(0); // 1024
