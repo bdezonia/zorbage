@@ -116,8 +116,8 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	}
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

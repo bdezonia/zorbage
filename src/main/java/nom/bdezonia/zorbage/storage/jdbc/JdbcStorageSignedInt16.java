@@ -116,8 +116,8 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	}
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

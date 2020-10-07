@@ -117,8 +117,8 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	}
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

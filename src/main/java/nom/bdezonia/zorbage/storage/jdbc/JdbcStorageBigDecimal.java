@@ -117,8 +117,8 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
     }
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

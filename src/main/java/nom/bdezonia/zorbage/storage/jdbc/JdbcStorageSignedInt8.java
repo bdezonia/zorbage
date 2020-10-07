@@ -116,8 +116,8 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	}
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

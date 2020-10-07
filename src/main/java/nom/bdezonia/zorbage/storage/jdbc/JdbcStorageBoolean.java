@@ -114,10 +114,13 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 		// stored in actuality.
 		return StorageConstruction.MEM_VIRTUAL;
 	}
-    
+
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		if ((Boolean) o)
+			return "1";
+		else
+			return "0";
 	}
 
 	@Override

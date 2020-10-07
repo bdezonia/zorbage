@@ -116,8 +116,8 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

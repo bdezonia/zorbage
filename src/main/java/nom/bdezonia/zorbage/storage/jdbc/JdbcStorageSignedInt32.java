@@ -116,8 +116,8 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

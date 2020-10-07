@@ -115,10 +115,10 @@ public class JdbcStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
         // stored in actuality.
         return StorageConstruction.MEM_VIRTUAL;
     }
-    
+
 	@Override
-	String escapeChar() {
-		return "";
+	String value(Object o) {
+		return o.toString();
 	}
 
 	@Override

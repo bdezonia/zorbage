@@ -49,7 +49,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	protected final String tableName;
 	protected final Connection conn;
 	
-	abstract String escapeChar();  // some insertion values need to be escaped (like chars need quotes around them).
+	abstract String value(Object o);  // some insertion values need to be escaped (like chars need quotes around them).
 	abstract String zero();  // some types can represent zero as "0" while chars represent 0 as a null char string.
 	
 	protected AbstractJdbcStorage(long size, U type, Connection conn) {
@@ -257,9 +257,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			sb.append('v');
 			sb.append(i);
 			sb.append('=');
-			sb.append(escapeChar());
-			sb.append(Array.get(array, i).toString());
-			sb.append(escapeChar());
+			sb.append(value(Array.get(array, i)));
 			if (i != Array.getLength(array)-1)
 				sb.append(',');
 		}
