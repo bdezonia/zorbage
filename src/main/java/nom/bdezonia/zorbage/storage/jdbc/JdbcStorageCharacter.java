@@ -118,5 +118,15 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
         // stored in actuality.
         return StorageConstruction.MEM_VIRTUAL;
     }
+
+	@Override
+	String escapeChar() {
+		return "'";
+	}
+
+	@Override
+	String zero() {
+		return Character.valueOf((char) 0).toString();
+	}
     
 }

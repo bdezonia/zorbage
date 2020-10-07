@@ -115,4 +115,15 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		// stored in actuality.
 		return StorageConstruction.MEM_VIRTUAL;
 	}
+
+	@Override
+	String escapeChar() {
+		return "";
+	}
+
+	@Override
+	String zero() {
+		return "0";
+	}
+    
 }
