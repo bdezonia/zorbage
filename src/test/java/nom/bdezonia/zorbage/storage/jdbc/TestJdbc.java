@@ -28,6 +28,8 @@ package nom.bdezonia.zorbage.storage.jdbc;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -35,6 +37,9 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
+import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
+import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
 import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
@@ -205,6 +210,240 @@ public class TestJdbc {
 		}
 	}
 	
+
+	@Test
+	public void test4() {
+		try {
+			Connection conn = getConnection();
+			
+			class Bools implements BooleanCoder, Allocatable<Bools> {
+
+				boolean a, b, c;
+				
+				@Override
+				public int booleanCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromBooleanArray(boolean[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toBooleanArray(boolean[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Bools allocate() {
+					return new Bools();
+				}
+				
+			}
+			
+			JdbcStorageBoolean<Bools> storage = new JdbcStorageBoolean<Bools>(512, new Bools(), conn);
+			
+			Bools value = new Bools();
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(false, value.a);
+				assertEquals(false, value.b);
+				assertEquals(false, value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = false;
+				value.b = true;
+				value.c = true;
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(false, value.a);
+				assertEquals(true, value.b);
+				assertEquals(true, value.c);
+			}
+			
+			JdbcStorageBoolean<Bools> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				storage2.get(i, value);
+				assertEquals((char)(i+0), value.a);
+				assertEquals((char)(i+1), value.b);
+				assertEquals((char)(i+2), value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	@Test
+	public void test5() {
+		try {
+			Connection conn = getConnection();
+			
+			class BigDs implements BigDecimalCoder, Allocatable<BigDs> {
+
+				BigDecimal a, b, c;
+				
+				@Override
+				public int bigDecimalCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromBigDecimalArray(BigDecimal[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toBigDecimalArray(BigDecimal[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public BigDs allocate() {
+					return new BigDs();
+				}
+				
+			}
+			
+			JdbcStorageBigDecimal<BigDs> storage = new JdbcStorageBigDecimal<BigDs>(512, new BigDs(), conn);
+			
+			BigDs value = new BigDs();
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(BigDecimal.ZERO, value.a);
+				assertEquals(BigDecimal.ZERO, value.b);
+				assertEquals(BigDecimal.ZERO, value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = BigDecimal.valueOf(i+0+0.25);
+				value.b = BigDecimal.valueOf(i+1+0.5);
+				value.c = BigDecimal.valueOf(i+2+0.8);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(BigDecimal.valueOf(i+0+0.25), value.a);
+				assertEquals(BigDecimal.valueOf(i+1+0.5), value.b);
+				assertEquals(BigDecimal.valueOf(i+1+0.8), value.c);
+			}
+			
+			JdbcStorageBigDecimal<BigDs> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				storage2.get(i, value);
+				assertEquals(BigDecimal.valueOf(i+0+0.25), value.a);
+				assertEquals(BigDecimal.valueOf(i+1+0.5), value.b);
+				assertEquals(BigDecimal.valueOf(i+1+0.8), value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	@Test
+	public void test6() {
+		try {
+			Connection conn = getConnection();
+			
+			class BigIs implements BigIntegerCoder, Allocatable<BigIs> {
+
+				BigInteger a, b, c;
+				
+				@Override
+				public int bigIntegerCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromBigIntegerArray(BigInteger[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toBigIntegerArray(BigInteger[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public BigIs allocate() {
+					return new BigIs();
+				}
+				
+			}
+			
+			JdbcStorageBigInteger<BigIs> storage = new JdbcStorageBigInteger<BigIs>(512, new BigIs(), conn);
+			
+			BigIs value = new BigIs();
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(BigInteger.ZERO, value.a);
+				assertEquals(BigInteger.ZERO, value.b);
+				assertEquals(BigInteger.ZERO, value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = BigInteger.valueOf(i+0);
+				value.b = BigInteger.valueOf(i+1);
+				value.c = BigInteger.valueOf(i+2);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				storage.get(i, value);
+				assertEquals(BigInteger.valueOf(i+0), value.a);
+				assertEquals(BigInteger.valueOf(i+1), value.b);
+				assertEquals(BigInteger.valueOf(i+2), value.c);
+			}
+			
+			JdbcStorageBigInteger<BigIs> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				storage2.get(i, value);
+				assertEquals(BigInteger.valueOf(i+0), value.a);
+				assertEquals(BigInteger.valueOf(i+1), value.b);
+				assertEquals(BigInteger.valueOf(i+2), value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	private Connection getConnection() throws Exception {
 
 		try {
@@ -212,7 +451,7 @@ public class TestJdbc {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?user=root&password=root");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?user=zorbage&password=zorbage");
 
 	}
 	
