@@ -121,7 +121,11 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
 
 	@Override
 	String value(Object o) {
-		return o.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append('\'');
+		sb.append(o);
+		sb.append('\'');
+		return sb.toString();
 	}
 
 	@Override
