@@ -85,8 +85,20 @@ public class TestJdbc {
 				assertEquals(i+7, value.k(), 0);
 			}
 			
-			storage.cleanup();
+			JdbcStorageFloat64<QuaternionFloat64Member> storage2 = storage.duplicate();
 			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				storage2.get(i, value);
+				assertEquals(i+4, value.r(), 0);
+				assertEquals(i+5, value.i(), 0);
+				assertEquals(i+6, value.j(), 0);
+				assertEquals(i+7, value.k(), 0);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
