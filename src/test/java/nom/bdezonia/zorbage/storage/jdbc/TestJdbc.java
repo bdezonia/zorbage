@@ -36,14 +36,16 @@ import java.sql.DriverManager;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
-import nom.bdezonia.zorbage.storage.coder.CharCoder;
-import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.storage.jdbc.JdbcStorageCharacter;
+import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
+import nom.bdezonia.zorbage.storage.coder.FloatCoder;
+import nom.bdezonia.zorbage.storage.coder.IntCoder;
+import nom.bdezonia.zorbage.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.storage.coder.ShortCoder;
+
 /**
  * 
  * @author Barry DeZonia
@@ -53,195 +55,260 @@ public class TestJdbc {
 
 	@Test
 	public void test1() {
-		
-		try {
-			Connection conn = getConnection();
-
-			JdbcStorageFloat64<QuaternionFloat64Member> storage = new JdbcStorageFloat64<QuaternionFloat64Member>(50, G.QDBL.construct(), conn);
-			
-			assertEquals(50, storage.size());
-			
-			QuaternionFloat64Member value = G.QDBL.construct();
-
-			for (long i = 0; i < storage.size(); i++) {
-				value.setR(-1000);
-				value.setI(-1000);
-				value.setJ(-1000);
-				value.setK(-1000);
-				storage.get(i, value);
-				assertEquals(0, value.r(), 0);
-				assertEquals(0, value.i(), 0);
-				assertEquals(0, value.j(), 0);
-				assertEquals(0, value.k(), 0);
-			}
-
-			for (long i = 0; i < storage.size(); i++) {
-				value.setR(i+4);
-				value.setI(i+5);
-				value.setJ(i+6);
-				value.setK(i+7);
-				storage.set(i, value);
-			}
-
-			for (long i = 0; i < storage.size(); i++) {
-				value.setR(0);
-				value.setI(0);
-				value.setJ(0);
-				value.setK(0);
-				storage.get(i, value);
-				assertEquals(i+4, value.r(), 0);
-				assertEquals(i+5, value.i(), 0);
-				assertEquals(i+6, value.j(), 0);
-				assertEquals(i+7, value.k(), 0);
-			}
-			
-			JdbcStorageFloat64<QuaternionFloat64Member> storage2 = storage.duplicate();
-			
-			assertEquals(storage.size(), storage2.size());
-			
-			for (long i = 0; i < storage2.size(); i++) {
-				value.setR(0);
-				value.setI(0);
-				value.setJ(0);
-				value.setK(0);
-				storage2.get(i, value);
-				assertEquals(i+4, value.r(), 0);
-				assertEquals(i+5, value.i(), 0);
-				assertEquals(i+6, value.j(), 0);
-				assertEquals(i+7, value.k(), 0);
-			}
-			
-			storage.cleanup();
-			storage2.cleanup();
-		}
-		catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-	@Test
-	public void test2() {
-		
 		try {
 			Connection conn = getConnection();
 			
-			JdbcStorageSignedInt16<SignedInt16Member> storage = new JdbcStorageSignedInt16<SignedInt16Member>(50, G.INT16.construct(), conn);
-			
-			assertEquals(50, storage.size());
-			
-			SignedInt16Member value = G.INT16.construct();
-			for (long i = 0; i < storage.size(); i++) {
-				value.setV(-1);
-				storage.get(i, value);
-				assertEquals(0, value.v());
-			}
-			for (long i = 0; i < storage.size(); i++) {
-				value.setV((short) i);
-				storage.set(i, value);
-			}
-			
-			for (long i = 0; i < storage.size(); i++) {
-				value.setV(-1);
-				storage.get(i, value);
-				assertEquals(i, value.v());
-			}
-			
-			JdbcStorageSignedInt16<SignedInt16Member> storage2 = storage.duplicate();
-			
-			assertEquals(storage.size(), storage2.size());
-			
-			for (long i = 0; i < storage2.size(); i++) {
-				value.setV(-1);
-				storage2.get(i, value);
-				assertEquals(i, value.v());
-			}
-			
-			storage.cleanup();
-			storage2.cleanup();
-		}
-		catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
+			class Bytes implements ByteCoder, Allocatable<Bytes> {
 
-	@Test
-	public void test3() {
-		try {
-			Connection conn = getConnection();
-			
-			class Chars implements CharCoder, Allocatable<Chars> {
-
-				char a = ' ', b = ' ', c = ' ';
+				byte a, b, c;
 				
 				@Override
-				public int charCount() {
+				public int byteCount() {
 					return 3;
 				}
 
 				@Override
-				public void fromCharArray(char[] arr, int index) {
+				public void fromByteArray(byte[] arr, int index) {
 					a = arr[index+0];
 					b = arr[index+1];
 					c = arr[index+2];
 				}
 
 				@Override
-				public void toCharArray(char[] arr, int index) {
+				public void toByteArray(byte[] arr, int index) {
 					arr[index+0] = a;
 					arr[index+1] = b;
 					arr[index+2] = c;
 				}
 
 				@Override
-				public Chars allocate() {
-					return new Chars();
+				public Bytes allocate() {
+					return new Bytes();
 				}
 				
 			}
 			
-			JdbcStorageCharacter<Chars> storage = new JdbcStorageCharacter<Chars>(50, new Chars(), conn);
+			JdbcStorageSignedInt8<Bytes> storage = new JdbcStorageSignedInt8<Bytes>(50, new Bytes(), conn);
 			
 			assertEquals(50, storage.size());
 			
-			Chars value = new Chars();
+			Bytes value = new Bytes();
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = 'a';
-				value.b = 'b';
-				value.c = 'c';
+				value.a = (byte) -1;
+				value.b = (byte) -1;
+				value.c = (byte) -1;
 				storage.get(i, value);
-				assertEquals(' ', value.a);
-				assertEquals(' ', value.b);
-				assertEquals(' ', value.c);
+				assertEquals(0, value.a);
+				assertEquals(0, value.b);
+				assertEquals(0, value.c);
 			}
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = (char) (32+i+0);
-				value.b = (char) (32+i+1);
-				value.c = (char) (32+i+2);
+				value.a = (byte) (i+0);
+				value.b = (byte) (i+1);
+				value.c = (byte) (i+2);
 				storage.set(i, value);
 			}
 			
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = ' ';
-				value.b = ' ';
-				value.c = ' ';
+				value.a = (byte) 0;
+				value.b = (byte) 0;
+				value.c = (byte) 0;
 				storage.get(i, value);
-				assertEquals((char)(32+i+0), value.a);
-				assertEquals((char)(32+i+1), value.b);
-				assertEquals((char)(32+i+2), value.c);
+				assertEquals((byte) (i+0), value.a);
+				assertEquals((byte) (i+1), value.b);
+				assertEquals((byte) (i+2), value.c);
 			}
 			
-			JdbcStorageCharacter<Chars> storage2 = storage.duplicate();
+			JdbcStorageSignedInt8<Bytes> storage2 = storage.duplicate();
 			
 			assertEquals(storage.size(), storage2.size());
 			
 			for (long i = 0; i < storage2.size(); i++) {
-				value.a = ' ';
-				value.b = ' ';
-				value.c = ' ';
+				value.a = (byte) 0;
+				value.b = (byte) 0;
+				value.c = (byte) 0;
 				storage2.get(i, value);
-				assertEquals((char)(32+i+0), value.a);
-				assertEquals((char)(32+i+1), value.b);
-				assertEquals((char)(32+i+2), value.c);
+				assertEquals((byte) (i+0), value.a);
+				assertEquals((byte) (i+1), value.b);
+				assertEquals((byte) (i+2), value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	@Test
+	public void test2() {
+		try {
+			Connection conn = getConnection();
+			
+			class Shorts implements ShortCoder, Allocatable<Shorts> {
+
+				short a, b, c;
+				
+				@Override
+				public int shortCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromShortArray(short[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toShortArray(short[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Shorts allocate() {
+					return new Shorts();
+				}
+				
+			}
+			
+			JdbcStorageSignedInt16<Shorts> storage = new JdbcStorageSignedInt16<Shorts>(50, new Shorts(), conn);
+			
+			assertEquals(50, storage.size());
+			
+			Shorts value = new Shorts();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = -1;
+				value.b = -1;
+				value.c = -1;
+				storage.get(i, value);
+				assertEquals(0, value.a);
+				assertEquals(0, value.b);
+				assertEquals(0, value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = (short) (i+0);
+				value.b = (short) (i+1);
+				value.c = (short) (i+2);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage.get(i, value);
+				assertEquals(i+0, value.a);
+				assertEquals(i+1, value.b);
+				assertEquals(i+2, value.c);
+			}
+			
+			JdbcStorageSignedInt16<Shorts> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage2.get(i, value);
+				assertEquals(i+0, value.a);
+				assertEquals(i+1, value.b);
+				assertEquals(i+2, value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	@Test
+	public void test3() {
+		try {
+			Connection conn = getConnection();
+			
+			class Ints implements IntCoder, Allocatable<Ints> {
+
+				int a, b, c;
+				
+				@Override
+				public int intCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromIntArray(int[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toIntArray(int[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Ints allocate() {
+					return new Ints();
+				}
+				
+			}
+			
+			JdbcStorageSignedInt32<Ints> storage = new JdbcStorageSignedInt32<Ints>(50, new Ints(), conn);
+			
+			assertEquals(50, storage.size());
+			
+			Ints value = new Ints();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = -1;
+				value.b = -1;
+				value.c = -1;
+				storage.get(i, value);
+				assertEquals(0, value.a);
+				assertEquals(0, value.b);
+				assertEquals(0, value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = (int) (i+0);
+				value.b = (int) (i+1);
+				value.c = (int) (i+2);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage.get(i, value);
+				assertEquals(i+0, value.a);
+				assertEquals(i+1, value.b);
+				assertEquals(i+2, value.c);
+			}
+			
+			JdbcStorageSignedInt32<Ints> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage2.get(i, value);
+				assertEquals(i+0, value.a);
+				assertEquals(i+1, value.b);
+				assertEquals(i+2, value.c);
 			}
 			
 			storage.cleanup();
@@ -255,6 +322,272 @@ public class TestJdbc {
 
 	@Test
 	public void test4() {
+		try {
+			Connection conn = getConnection();
+			
+			class Longs implements LongCoder, Allocatable<Longs> {
+
+				long a, b, c;
+				
+				@Override
+				public int longCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromLongArray(long[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toLongArray(long[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Longs allocate() {
+					return new Longs();
+				}
+				
+			}
+			
+			JdbcStorageSignedInt64<Longs> storage = new JdbcStorageSignedInt64<Longs>(50, new Longs(), conn);
+			
+			assertEquals(50, storage.size());
+			
+			Longs value = new Longs();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = -1;
+				value.b = -1;
+				value.c = -1;
+				storage.get(i, value);
+				assertEquals(0, value.a);
+				assertEquals(0, value.b);
+				assertEquals(0, value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = i+0;
+				value.b = i+1;
+				value.c = i+2;
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage.get(i, value);
+				assertEquals(i+0, value.a);
+				assertEquals(i+1, value.b);
+				assertEquals(i+2, value.c);
+			}
+			
+			JdbcStorageSignedInt64<Longs> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage2.get(i, value);
+				assertEquals(i+0, value.a);
+				assertEquals(i+1, value.b);
+				assertEquals(i+2, value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	@Test
+	public void test5() {
+		try {
+			Connection conn = getConnection();
+			
+			class Floats implements FloatCoder, Allocatable<Floats> {
+
+				float a, b, c;
+				
+				@Override
+				public int floatCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromFloatArray(float[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toFloatArray(float[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Floats allocate() {
+					return new Floats();
+				}
+				
+			}
+			
+			JdbcStorageFloat32<Floats> storage = new JdbcStorageFloat32<Floats>(50, new Floats(), conn);
+			
+			assertEquals(50, storage.size());
+			
+			Floats value = new Floats();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = -1;
+				value.b = -1;
+				value.c = -1;
+				storage.get(i, value);
+				assertEquals(0, value.a, 0);
+				assertEquals(0, value.b, 0);
+				assertEquals(0, value.c, 0);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = i+0+0.25f;
+				value.b = i+1+0.5f;
+				value.c = i+2+0.75f;
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage.get(i, value);
+				assertEquals(i+0+0.25f, value.a, 0);
+				assertEquals(i+1+0.5f, value.b, 0);
+				assertEquals(i+2+0.75f, value.c, 0);
+			}
+			
+			JdbcStorageFloat32<Floats> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage2.get(i, value);
+				assertEquals(i+0+0.25f, value.a, 0);
+				assertEquals(i+1+0.5f, value.b, 0);
+				assertEquals(i+2+0.75f, value.c, 0);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	@Test
+	public void test6() {
+		try {
+			Connection conn = getConnection();
+			
+			class Doubles implements DoubleCoder, Allocatable<Doubles> {
+
+				double a, b, c;
+				
+				@Override
+				public int doubleCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromDoubleArray(double[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toDoubleArray(double[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Doubles allocate() {
+					return new Doubles();
+				}
+				
+			}
+			
+			JdbcStorageFloat64<Doubles> storage = new JdbcStorageFloat64<Doubles>(50, new Doubles(), conn);
+			
+			assertEquals(50, storage.size());
+			
+			Doubles value = new Doubles();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = -1;
+				value.b = -1;
+				value.c = -1;
+				storage.get(i, value);
+				assertEquals(0, value.a, 0);
+				assertEquals(0, value.b, 0);
+				assertEquals(0, value.c, 0);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = i+0+0.25;
+				value.b = i+1+0.5;
+				value.c = i+2+0.75;
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage.get(i, value);
+				assertEquals(i+0+0.25, value.a, 0);
+				assertEquals(i+1+0.5, value.b, 0);
+				assertEquals(i+2+0.75, value.c, 0);
+			}
+			
+			JdbcStorageFloat64<Doubles> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = 0;
+				value.b = 0;
+				value.c = 0;
+				storage2.get(i, value);
+				assertEquals(i+0.25, value.a, 0);
+				assertEquals(i+1.5, value.b, 0);
+				assertEquals(i+2.75, value.c, 0);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void test7() {
 		try {
 			Connection conn = getConnection();
 			
@@ -343,7 +676,7 @@ public class TestJdbc {
 	
 
 	@Test
-	public void test5() {
+	public void test8() {
 		try {
 			Connection conn = getConnection();
 			
@@ -399,9 +732,9 @@ public class TestJdbc {
 			}
 			
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = BigDecimal.valueOf(-1);
-				value.b = BigDecimal.valueOf(-1);
-				value.c = BigDecimal.valueOf(-1);
+				value.a = BigDecimal.ZERO;
+				value.b = BigDecimal.ZERO;
+				value.c = BigDecimal.ZERO;
 				storage.get(i, value);
 				assertEquals(0, BigDecimal.valueOf(i+0+0.25).compareTo(value.a));
 				assertEquals(0, BigDecimal.valueOf(i+1+0.5).compareTo(value.b));
@@ -413,9 +746,9 @@ public class TestJdbc {
 			assertEquals(storage.size(), storage2.size());
 			
 			for (long i = 0; i < storage2.size(); i++) {
-				value.a = BigDecimal.valueOf(-1);
-				value.b = BigDecimal.valueOf(-1);
-				value.c = BigDecimal.valueOf(-1);
+				value.a = BigDecimal.ZERO;
+				value.b = BigDecimal.ZERO;
+				value.c = BigDecimal.ZERO;
 				storage2.get(i, value);
 				assertEquals(0, BigDecimal.valueOf(i+0+0.25).compareTo(value.a));
 				assertEquals(0, BigDecimal.valueOf(i+1+0.5).compareTo(value.b));
@@ -432,7 +765,7 @@ public class TestJdbc {
 	
 
 	@Test
-	public void test6() {
+	public void test9() {
 		try {
 			Connection conn = getConnection();
 			
@@ -488,9 +821,9 @@ public class TestJdbc {
 			}
 			
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = BigInteger.valueOf(-1);
-				value.b = BigInteger.valueOf(-1);
-				value.c = BigInteger.valueOf(-1);
+				value.a = BigInteger.ZERO;
+				value.b = BigInteger.ZERO;
+				value.c = BigInteger.ZERO;
 				storage.get(i, value);
 				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0)), value.a);
 				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1)), value.b);
@@ -502,9 +835,9 @@ public class TestJdbc {
 			assertEquals(storage.size(), storage2.size());
 			
 			for (long i = 0; i < storage2.size(); i++) {
-				value.a = BigInteger.valueOf(-1);
-				value.b = BigInteger.valueOf(-1);
-				value.c = BigInteger.valueOf(-1);
+				value.a = BigInteger.ZERO;
+				value.b = BigInteger.ZERO;
+				value.c = BigInteger.ZERO;
 				storage2.get(i, value);
 				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0)), value.a);
 				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1)), value.b);
