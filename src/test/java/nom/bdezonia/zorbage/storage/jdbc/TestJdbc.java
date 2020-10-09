@@ -526,7 +526,7 @@ public class TestJdbc {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?serverTimezone=UTC", "zorbage", "zorbage");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?serverTimezone=UTC&user=zorbage&password=zorbage");
 
 	}
 	
