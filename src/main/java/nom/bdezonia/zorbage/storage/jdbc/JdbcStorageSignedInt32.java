@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.storage.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -72,7 +73,17 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 			throw new IllegalArgumentException("index out of bounds");
 		int[] arr = tmpSpace.get();
 		value.toIntArray(arr, 0);
-		setHelper(index, arr);
+        String sql = setHelper(index, arr.length);
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			for (int i = 0; i < arr.length; i++) {
+				statement.setInt(i+1, arr[i] );
+			}
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override
@@ -113,11 +124,6 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 		// return value reflects that idea and kind of generalizes the idea of how the data is
 		// stored in actuality.
 		return StorageConstruction.MEM_VIRTUAL;
-	}
-
-	@Override
-	String value(Object o) {
-		return o.toString();
 	}
 
 	@Override

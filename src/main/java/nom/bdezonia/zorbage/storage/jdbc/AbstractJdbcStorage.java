@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.storage.jdbc;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,8 +48,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	protected final String tableName;
 	protected final Connection conn;
 	
-	abstract String value(Object o);  // some insertion values need to be escaped (like chars need quotes around them).
-	abstract String zero();  // some types can represent zero as "0" while chars represent 0 as a null char string.
+	abstract String zero();  // some types can represent zero as "0" while chars represent 0 as a blank.
 	
 	protected AbstractJdbcStorage(long size, U type, Connection conn) {
 		if (size < 0)
@@ -248,30 +246,23 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 	
-	protected void setHelper(long index, Object array) {
+	protected String setHelper(long index, int fieldCount) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE ");
 		sb.append(tableName);
 		sb.append(" SET ");
-		for (int i = 0; i < Array.getLength(array); i++) {
+		for (int i = 0; i < fieldCount; i++) {
 			sb.append('v');
 			sb.append(i);
-			sb.append('=');
-			sb.append(value(Array.get(array, i)));
-			if (i != Array.getLength(array)-1)
-				sb.append(',');
+			sb.append(" = ");
+			sb.append(" ? ");
+			if (i != fieldCount-1)
+				sb.append(", ");
 		}
 		sb.append(" WHERE id = ");
 		sb.append(index);
 		sb.append(';');
-		String sql = sb.toString();
-		try {
-			Statement statement = conn.createStatement();
-			statement.executeUpdate(sql);
-			statement.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+		return sb.toString();
 	}
 	
 	private char randomChar(Random rng) {

@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.storage.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -72,7 +73,17 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
             throw new IllegalArgumentException("index out of bounds");
         char[] arr = tmpSpace.get();
         value.toCharArray(arr, 0);
-        setHelper(index, arr);
+        String sql = setHelper(index, arr.length);
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			for (int i = 0; i < arr.length; i++) {
+				statement.setString(i+1, Character.toString(arr[i]) );
+			}
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
     }
 
     @Override
@@ -86,7 +97,7 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
             for (int i = 0; i < arr.length; i++) {
                 String st = result.b().getString(i+1);
                 if (st == null || st.length() == 0)
-                    arr[i] = 0;
+                    arr[i] = ' ';
                 else
                     arr[i] = st.charAt(0);
             }
@@ -120,17 +131,8 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
     }
 
 	@Override
-	String value(Object o) {
-		StringBuilder sb = new StringBuilder();
-		sb.append('\'');
-		sb.append(o);
-		sb.append('\'');
-		return sb.toString();
-	}
-
-	@Override
 	String zero() {
-		return Character.valueOf((char) 0).toString();
+		return "' '";
 	}
     
 }

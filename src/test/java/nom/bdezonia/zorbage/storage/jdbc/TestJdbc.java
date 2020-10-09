@@ -57,9 +57,9 @@ public class TestJdbc {
 		try {
 			Connection conn = getConnection();
 
-			JdbcStorageFloat64<QuaternionFloat64Member> storage = new JdbcStorageFloat64<QuaternionFloat64Member>(512, G.QDBL.construct(), conn);
+			JdbcStorageFloat64<QuaternionFloat64Member> storage = new JdbcStorageFloat64<QuaternionFloat64Member>(50, G.QDBL.construct(), conn);
 			
-			assertEquals(512, storage.size());
+			assertEquals(50, storage.size());
 			
 			QuaternionFloat64Member value = G.QDBL.construct();
 
@@ -125,9 +125,9 @@ public class TestJdbc {
 		try {
 			Connection conn = getConnection();
 			
-			JdbcStorageSignedInt16<SignedInt16Member> storage = new JdbcStorageSignedInt16<SignedInt16Member>(512, G.INT16.construct(), conn);
+			JdbcStorageSignedInt16<SignedInt16Member> storage = new JdbcStorageSignedInt16<SignedInt16Member>(50, G.INT16.construct(), conn);
 			
-			assertEquals(512, storage.size());
+			assertEquals(50, storage.size());
 			
 			SignedInt16Member value = G.INT16.construct();
 			for (long i = 0; i < storage.size(); i++) {
@@ -171,7 +171,7 @@ public class TestJdbc {
 			
 			class Chars implements CharCoder, Allocatable<Chars> {
 
-				char a, b, c;
+				char a = ' ', b = ' ', c = ' ';
 				
 				@Override
 				public int charCount() {
@@ -199,9 +199,9 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageCharacter<Chars> storage = new JdbcStorageCharacter<Chars>(512, new Chars(), conn);
+			JdbcStorageCharacter<Chars> storage = new JdbcStorageCharacter<Chars>(50, new Chars(), conn);
 			
-			assertEquals(512, storage.size());
+			assertEquals(50, storage.size());
 			
 			Chars value = new Chars();
 			for (long i = 0; i < storage.size(); i++) {
@@ -209,25 +209,25 @@ public class TestJdbc {
 				value.b = 'b';
 				value.c = 'c';
 				storage.get(i, value);
-				assertEquals(0, value.a);
-				assertEquals(0, value.b);
-				assertEquals(0, value.c);
+				assertEquals(' ', value.a);
+				assertEquals(' ', value.b);
+				assertEquals(' ', value.c);
 			}
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = (char) (i+0);
-				value.b = (char) (i+1);
-				value.c = (char) (i+2);
+				value.a = (char) (32+i+0);
+				value.b = (char) (32+i+1);
+				value.c = (char) (32+i+2);
 				storage.set(i, value);
 			}
 			
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = 0;
-				value.b = 0;
-				value.c = 0;
+				value.a = ' ';
+				value.b = ' ';
+				value.c = ' ';
 				storage.get(i, value);
-				assertEquals((char)(i+0), value.a);
-				assertEquals((char)(i+1), value.b);
-				assertEquals((char)(i+2), value.c);
+				assertEquals((char)(32+i+0), value.a);
+				assertEquals((char)(32+i+1), value.b);
+				assertEquals((char)(32+i+2), value.c);
 			}
 			
 			JdbcStorageCharacter<Chars> storage2 = storage.duplicate();
@@ -235,13 +235,13 @@ public class TestJdbc {
 			assertEquals(storage.size(), storage2.size());
 			
 			for (long i = 0; i < storage2.size(); i++) {
-				value.a = 0;
-				value.b = 0;
-				value.c = 0;
+				value.a = ' ';
+				value.b = ' ';
+				value.c = ' ';
 				storage2.get(i, value);
-				assertEquals((char)(i+0), value.a);
-				assertEquals((char)(i+1), value.b);
-				assertEquals((char)(i+2), value.c);
+				assertEquals((char)(32+i+0), value.a);
+				assertEquals((char)(32+i+1), value.b);
+				assertEquals((char)(32+i+2), value.c);
 			}
 			
 			storage.cleanup();
@@ -288,9 +288,9 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageBoolean<Bools> storage = new JdbcStorageBoolean<Bools>(512, new Bools(), conn);
+			JdbcStorageBoolean<Bools> storage = new JdbcStorageBoolean<Bools>(50, new Bools(), conn);
 			
-			assertEquals(512, storage.size());
+			assertEquals(50, storage.size());
 			
 			Bools value = new Bools();
 			for (long i = 0; i < storage.size(); i++) {
@@ -349,7 +349,7 @@ public class TestJdbc {
 			
 			class BigDs implements BigDecimalCoder, Allocatable<BigDs> {
 
-				BigDecimal a, b, c;
+				BigDecimal a = BigDecimal.ZERO, b = BigDecimal.ZERO, c = BigDecimal.ZERO;
 				
 				@Override
 				public int bigDecimalCount() {
@@ -377,9 +377,9 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageBigDecimal<BigDs> storage = new JdbcStorageBigDecimal<BigDs>(512, new BigDs(), conn);
+			JdbcStorageBigDecimal<BigDs> storage = new JdbcStorageBigDecimal<BigDs>(50, new BigDs(), conn);
 			
-			assertEquals(512, storage.size());
+			assertEquals(50, storage.size());
 			
 			BigDs value = new BigDs();
 			for (long i = 0; i < storage.size(); i++) {
@@ -387,9 +387,9 @@ public class TestJdbc {
 				value.b = BigDecimal.valueOf(-1);
 				value.c = BigDecimal.valueOf(-1);
 				storage.get(i, value);
-				assertEquals(BigDecimal.ZERO, value.a);
-				assertEquals(BigDecimal.ZERO, value.b);
-				assertEquals(BigDecimal.ZERO, value.c);
+				assertEquals(0, BigDecimal.ZERO.compareTo(value.a));
+				assertEquals(0, BigDecimal.ZERO.compareTo(value.b));
+				assertEquals(0, BigDecimal.ZERO.compareTo(value.c));
 			}
 			for (long i = 0; i < storage.size(); i++) {
 				value.a = BigDecimal.valueOf(i+0+0.25);
@@ -403,9 +403,9 @@ public class TestJdbc {
 				value.b = BigDecimal.valueOf(-1);
 				value.c = BigDecimal.valueOf(-1);
 				storage.get(i, value);
-				assertEquals(BigDecimal.valueOf(i+0+0.25), value.a);
-				assertEquals(BigDecimal.valueOf(i+1+0.5), value.b);
-				assertEquals(BigDecimal.valueOf(i+1+0.8), value.c);
+				assertEquals(0, BigDecimal.valueOf(i+0+0.25).compareTo(value.a));
+				assertEquals(0, BigDecimal.valueOf(i+1+0.5).compareTo(value.b));
+				assertEquals(0, BigDecimal.valueOf(i+2+0.8).compareTo(value.c));
 			}
 			
 			JdbcStorageBigDecimal<BigDs> storage2 = storage.duplicate();
@@ -417,9 +417,9 @@ public class TestJdbc {
 				value.b = BigDecimal.valueOf(-1);
 				value.c = BigDecimal.valueOf(-1);
 				storage2.get(i, value);
-				assertEquals(BigDecimal.valueOf(i+0+0.25), value.a);
-				assertEquals(BigDecimal.valueOf(i+1+0.5), value.b);
-				assertEquals(BigDecimal.valueOf(i+1+0.8), value.c);
+				assertEquals(0, BigDecimal.valueOf(i+0+0.25).compareTo(value.a));
+				assertEquals(0, BigDecimal.valueOf(i+1+0.5).compareTo(value.b));
+				assertEquals(0, BigDecimal.valueOf(i+2+0.8).compareTo(value.c));
 			}
 			
 			storage.cleanup();
@@ -438,7 +438,7 @@ public class TestJdbc {
 			
 			class BigIs implements BigIntegerCoder, Allocatable<BigIs> {
 
-				BigInteger a, b, c;
+				BigInteger a = BigInteger.ZERO, b = BigInteger.ZERO, c = BigInteger.ZERO;
 				
 				@Override
 				public int bigIntegerCount() {
@@ -466,9 +466,9 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageBigInteger<BigIs> storage = new JdbcStorageBigInteger<BigIs>(512, new BigIs(), conn);
+			JdbcStorageBigInteger<BigIs> storage = new JdbcStorageBigInteger<BigIs>(50, new BigIs(), conn);
 			
-			assertEquals(512, storage.size());
+			assertEquals(50, storage.size());
 			
 			BigIs value = new BigIs();
 			for (long i = 0; i < storage.size(); i++) {
@@ -481,9 +481,9 @@ public class TestJdbc {
 				assertEquals(BigInteger.ZERO, value.c);
 			}
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = BigInteger.valueOf(i+0);
-				value.b = BigInteger.valueOf(i+1);
-				value.c = BigInteger.valueOf(i+2);
+				value.a = new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0));
+				value.b = new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1));
+				value.c = new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+2));
 				storage.set(i, value);
 			}
 			
@@ -492,9 +492,9 @@ public class TestJdbc {
 				value.b = BigInteger.valueOf(-1);
 				value.c = BigInteger.valueOf(-1);
 				storage.get(i, value);
-				assertEquals(BigInteger.valueOf(i+0), value.a);
-				assertEquals(BigInteger.valueOf(i+1), value.b);
-				assertEquals(BigInteger.valueOf(i+2), value.c);
+				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0)), value.a);
+				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1)), value.b);
+				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+2)), value.c);
 			}
 			
 			JdbcStorageBigInteger<BigIs> storage2 = storage.duplicate();
@@ -506,9 +506,9 @@ public class TestJdbc {
 				value.b = BigInteger.valueOf(-1);
 				value.c = BigInteger.valueOf(-1);
 				storage2.get(i, value);
-				assertEquals(BigInteger.valueOf(i+0), value.a);
-				assertEquals(BigInteger.valueOf(i+1), value.b);
-				assertEquals(BigInteger.valueOf(i+2), value.c);
+				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0)), value.a);
+				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1)), value.b);
+				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+2)), value.c);
 			}
 			
 			storage.cleanup();
@@ -526,7 +526,7 @@ public class TestJdbc {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?user=zorbage&password=zorbage");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?serverTimezone=UTC", "zorbage", "zorbage");
 
 	}
 	

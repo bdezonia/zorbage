@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.storage.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -72,7 +73,17 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 			throw new IllegalArgumentException("index out of bounds");
 		boolean[] arr = tmpSpace.get();
 		value.toBooleanArray(arr, 0);
-		setHelper(index, arr);
+        String sql = setHelper(index, arr.length);
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			for (int i = 0; i < arr.length; i++) {
+				statement.setBoolean(i+1, arr[i]);
+			}
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override
@@ -113,14 +124,6 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 		// return value reflects that idea and kind of generalizes the idea of how the data is
 		// stored in actuality.
 		return StorageConstruction.MEM_VIRTUAL;
-	}
-
-	@Override
-	String value(Object o) {
-		if ((Boolean) o)
-			return "1";
-		else
-			return "0";
 	}
 
 	@Override

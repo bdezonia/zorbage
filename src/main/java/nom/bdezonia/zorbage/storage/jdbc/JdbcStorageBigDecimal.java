@@ -28,6 +28,7 @@ package nom.bdezonia.zorbage.storage.jdbc;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -52,13 +53,13 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
     
     public JdbcStorageBigDecimal(long size, U type, Connection conn) {
         super(size, type, conn);
-        createTable(conn, tableName, "NUMERIC", type.bigDecimalCount(), size);
+        createTable(conn, tableName, "NUMERIC(65,30)", type.bigDecimalCount(), size);
         zeroFill(type.bigDecimalCount());
     }
 
     public JdbcStorageBigDecimal(JdbcStorageBigDecimal<U> other) {
         super(other.size, other.type, other.conn);
-        createTable(conn, tableName, "NUMERIC", type.bigDecimalCount(), size);
+        createTable(conn, tableName, "NUMERIC(65,30)", type.bigDecimalCount(), size);
         copyTableToTable(conn, other.tableName, tableName);
     }
 
@@ -73,7 +74,17 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
             throw new IllegalArgumentException("index out of bounds");
         BigDecimal[] arr = tmpSpace.get();
         value.toBigDecimalArray(arr, 0);
-        setHelper(index, arr);
+        String sql = setHelper(index, arr.length);
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			for (int i = 0; i < arr.length; i++) {
+				statement.setBigDecimal(i+1, arr[i] );
+			}
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
     }
 
     @Override
@@ -115,11 +126,6 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
         // stored in actuality.
         return StorageConstruction.MEM_VIRTUAL;
     }
-
-	@Override
-	String value(Object o) {
-		return o.toString();
-	}
 
 	@Override
 	String zero() {
