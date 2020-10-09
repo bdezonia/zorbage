@@ -128,7 +128,7 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	}
 
 	@Override
-	String zero() {
+	String zeroValueAsString() {
 		return "0";
 	}
     

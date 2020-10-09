@@ -129,7 +129,7 @@ public class JdbcStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
     }
 
 	@Override
-	String zero() {
+	String zeroValueAsString() {
 		return "0";
 	}
     

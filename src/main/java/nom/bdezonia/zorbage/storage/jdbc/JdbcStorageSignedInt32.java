@@ -127,7 +127,7 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	}
 
 	@Override
-	String zero() {
+	String zeroValueAsString() {
 		return "0";
 	}
     

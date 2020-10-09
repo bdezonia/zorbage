@@ -127,7 +127,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 
 	@Override
-	String zero() {
+	String zeroValueAsString() {
 		return "0";
 	}
     

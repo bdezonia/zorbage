@@ -53,13 +53,13 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
     
     public JdbcStorageBigDecimal(long size, U type, Connection conn) {
         super(size, type, conn);
-        createTable(conn, tableName, "NUMERIC(65,30)", type.bigDecimalCount(), size);
+        createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount(), size);
         zeroFill(type.bigDecimalCount());
     }
 
     public JdbcStorageBigDecimal(JdbcStorageBigDecimal<U> other) {
         super(other.size, other.type, other.conn);
-        createTable(conn, tableName, "NUMERIC(65,30)", type.bigDecimalCount(), size);
+        createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount(), size);
         copyTableToTable(conn, other.tableName, tableName);
     }
 
@@ -128,7 +128,7 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
     }
 
 	@Override
-	String zero() {
+	String zeroValueAsString() {
 		return "0";
 	}
     

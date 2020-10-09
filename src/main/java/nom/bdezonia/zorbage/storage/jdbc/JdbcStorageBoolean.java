@@ -127,8 +127,8 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	}
 
 	@Override
-	String zero() {
-		return "0";
+	String zeroValueAsString() {
+		return "0";  // given the JDBC type is BIT it's expecting 0's and 1's
 	}
     
 }

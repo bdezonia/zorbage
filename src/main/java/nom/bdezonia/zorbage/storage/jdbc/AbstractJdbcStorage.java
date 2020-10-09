@@ -48,7 +48,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	protected final String tableName;
 	protected final Connection conn;
 	
-	abstract String zero();  // some types can represent zero as "0" while chars represent 0 as a blank.
+	abstract String zeroValueAsString();  // some types can represent zero as "0" while chars represent 0 as a blank.
 	
 	protected AbstractJdbcStorage(long size, U type, Connection conn) {
 		if (size < 0)
@@ -138,7 +138,7 @@ public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			sb.append(offset+c);
 			for (int i = 0; i < valueCount; i++) {
 				sb.append(',');
-				sb.append(zero());
+				sb.append(zeroValueAsString());
 			}
 			sb.append(')');
 			if (c != count-1)

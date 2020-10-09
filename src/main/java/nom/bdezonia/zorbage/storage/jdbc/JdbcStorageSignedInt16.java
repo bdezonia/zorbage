@@ -127,7 +127,7 @@ public class JdbcStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	}
 
 	@Override
-	String zero() {
+	String zeroValueAsString() {
 		return "0";
 	}
     

@@ -30,8 +30,11 @@ import java.sql.Connection;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
+import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
@@ -71,6 +74,15 @@ public class JdbcStorage {
 		}
 		if (type instanceof BooleanCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageBoolean(size, (BooleanCoder)type, conn);
+		}
+		if (type instanceof CharCoder) {
+			return (IndexedDataSource<U>) new JdbcStorageCharacter(size, (CharCoder)type, conn);
+		}
+		if (type instanceof BigIntegerCoder) {
+			return (IndexedDataSource<U>) new JdbcStorageBigInteger(size, (BigIntegerCoder)type, conn);
+		}
+		if (type instanceof BigDecimalCoder) {
+			return (IndexedDataSource<U>) new JdbcStorageBigDecimal(size, (BigDecimalCoder)type, conn);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
