@@ -714,6 +714,8 @@ public class TestJdbc {
 			
 			assertEquals(50, storage.size());
 			
+			BigDecimal offset = new BigDecimal("12345678901234567890123456789012345.00000000000025");
+			
 			BigDs value = new BigDs();
 			for (long i = 0; i < storage.size(); i++) {
 				value.a = BigDecimal.valueOf(-1);
@@ -725,9 +727,9 @@ public class TestJdbc {
 				assertEquals(0, BigDecimal.ZERO.compareTo(value.c));
 			}
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = BigDecimal.valueOf(i+0+0.25);
-				value.b = BigDecimal.valueOf(i+1+0.5);
-				value.c = BigDecimal.valueOf(i+2+0.8);
+				value.a = offset.add(BigDecimal.valueOf(i+0+0.25));
+				value.b = offset.add(BigDecimal.valueOf(i+1+0.5));
+				value.c = offset.add(BigDecimal.valueOf(i+2+0.8));
 				storage.set(i, value);
 			}
 			
@@ -736,9 +738,9 @@ public class TestJdbc {
 				value.b = BigDecimal.ZERO;
 				value.c = BigDecimal.ZERO;
 				storage.get(i, value);
-				assertEquals(0, BigDecimal.valueOf(i+0+0.25).compareTo(value.a));
-				assertEquals(0, BigDecimal.valueOf(i+1+0.5).compareTo(value.b));
-				assertEquals(0, BigDecimal.valueOf(i+2+0.8).compareTo(value.c));
+				assertEquals(0, offset.add(BigDecimal.valueOf(i+0+0.25)).compareTo(value.a));
+				assertEquals(0, offset.add(BigDecimal.valueOf(i+1+0.5)).compareTo(value.b));
+				assertEquals(0, offset.add(BigDecimal.valueOf(i+2+0.8)).compareTo(value.c));
 			}
 			
 			JdbcStorageBigDecimal<BigDs> storage2 = storage.duplicate();
@@ -750,9 +752,9 @@ public class TestJdbc {
 				value.b = BigDecimal.ZERO;
 				value.c = BigDecimal.ZERO;
 				storage2.get(i, value);
-				assertEquals(0, BigDecimal.valueOf(i+0+0.25).compareTo(value.a));
-				assertEquals(0, BigDecimal.valueOf(i+1+0.5).compareTo(value.b));
-				assertEquals(0, BigDecimal.valueOf(i+2+0.8).compareTo(value.c));
+				assertEquals(0, offset.add(BigDecimal.valueOf(i+0+0.25)).compareTo(value.a));
+				assertEquals(0, offset.add(BigDecimal.valueOf(i+1+0.5)).compareTo(value.b));
+				assertEquals(0, offset.add(BigDecimal.valueOf(i+2+0.8)).compareTo(value.c));
 			}
 			
 			storage.cleanup();
@@ -803,6 +805,8 @@ public class TestJdbc {
 			
 			assertEquals(50, storage.size());
 			
+			BigInteger offset = new BigInteger("1234567890123456789012345678901234567890");
+			
 			BigIs value = new BigIs();
 			for (long i = 0; i < storage.size(); i++) {
 				value.a = BigInteger.valueOf(-1);
@@ -814,9 +818,9 @@ public class TestJdbc {
 				assertEquals(BigInteger.ZERO, value.c);
 			}
 			for (long i = 0; i < storage.size(); i++) {
-				value.a = new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0));
-				value.b = new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1));
-				value.c = new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+2));
+				value.a = offset.add(BigInteger.valueOf(i+0));
+				value.b = offset.add(BigInteger.valueOf(i+1));
+				value.c = offset.add(BigInteger.valueOf(i+2));
 				storage.set(i, value);
 			}
 			
@@ -825,9 +829,9 @@ public class TestJdbc {
 				value.b = BigInteger.ZERO;
 				value.c = BigInteger.ZERO;
 				storage.get(i, value);
-				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0)), value.a);
-				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1)), value.b);
-				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+2)), value.c);
+				assertEquals(offset.add(BigInteger.valueOf(i+0)), value.a);
+				assertEquals(offset.add(BigInteger.valueOf(i+1)), value.b);
+				assertEquals(offset.add(BigInteger.valueOf(i+2)), value.c);
 			}
 			
 			JdbcStorageBigInteger<BigIs> storage2 = storage.duplicate();
@@ -839,9 +843,9 @@ public class TestJdbc {
 				value.b = BigInteger.ZERO;
 				value.c = BigInteger.ZERO;
 				storage2.get(i, value);
-				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+0)), value.a);
-				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+1)), value.b);
-				assertEquals(new BigInteger("1234567890123456789012345678901234567890").add(BigInteger.valueOf(i+2)), value.c);
+				assertEquals(offset.add(BigInteger.valueOf(i+0)), value.a);
+				assertEquals(offset.add(BigInteger.valueOf(i+1)), value.b);
+				assertEquals(offset.add(BigInteger.valueOf(i+2)), value.c);
 			}
 			
 			storage.cleanup();
