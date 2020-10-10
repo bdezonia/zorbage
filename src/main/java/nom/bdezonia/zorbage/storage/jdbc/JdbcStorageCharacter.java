@@ -50,7 +50,7 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
     // string passed to createTable based on info from:
     //   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
     
-    public JdbcStorageCharacter(long size, U type, Connection conn) {
+    public JdbcStorageCharacter(Connection conn, U type, long size) {
         super(size, type, conn);
         createTable(conn, tableName, "CHAR", type.charCount(), size);
         zeroFill(type.charCount());
@@ -118,7 +118,7 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
 
     @Override
     public JdbcStorageCharacter<U> allocate() {
-        return new JdbcStorageCharacter<U>(size(), type, conn);
+        return new JdbcStorageCharacter<U>(conn, type, size());
     }
 
     @Override

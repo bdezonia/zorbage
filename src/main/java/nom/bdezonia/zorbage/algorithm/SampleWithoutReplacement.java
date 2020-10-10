@@ -62,7 +62,7 @@ public class SampleWithoutReplacement {
 			throw new IllegalArgumentException("cannot fit "+n+" samples in "+bSize+" spaces");
 		SignedInt64Member idx = G.INT64.construct();
 		SignedInt64Member tmp = G.INT64.construct();
-		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(n, idx);
+		IndexedDataSource<SignedInt64Member> indices = Storage.allocate(idx, n);
 		long i = 0;
 		while (i < n) {
 			BigInteger num = new BigInteger(63, ThreadLocalRandom.current());

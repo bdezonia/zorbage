@@ -69,7 +69,7 @@ public class TestParallelTransform2 {
 		void test(T algebra)
 	{
 		// generic allocation
-		IndexedDataSource<U> a = ArrayStorage.allocate(100, algebra.construct());
+		IndexedDataSource<U> a = ArrayStorage.allocate(algebra.construct(), 100);
 		
 		// set values of storage to random values whose components are in [0,1)
 		ParallelTransform1.compute(algebra, algebra.random(), a);

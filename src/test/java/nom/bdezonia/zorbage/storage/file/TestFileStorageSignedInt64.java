@@ -76,7 +76,7 @@ public class TestFileStorageSignedInt64 {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageSignedInt64<SomeType> store = new FileStorageSignedInt64<SomeType>(SIZE, v);
+		FileStorageSignedInt64<SomeType> store = new FileStorageSignedInt64<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

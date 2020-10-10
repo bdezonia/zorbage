@@ -198,13 +198,13 @@ class Conveniences {
 		int sz = 4;
 		
 		// assume it equals [1,2,3,4]
-		IndexedDataSource<UnsignedInt12Member> aList = ArrayStorage.allocate(sz, G.UINT12.construct());
+		IndexedDataSource<UnsignedInt12Member> aList = ArrayStorage.allocate(G.UINT12.construct(), sz);
 		
 		// assume it equals [-5,-6,-7,-8]
-		IndexedDataSource<SignedInt14Member> bList = ArrayStorage.allocate(sz, G.INT14.construct());
+		IndexedDataSource<SignedInt14Member> bList = ArrayStorage.allocate(G.INT14.construct(), sz);
 		
 		// assume it equals [22.0, 23.0, 24.0, 25.0]
-		IndexedDataSource<Float64Member> cList = ArrayStorage.allocate(sz, G.DBL.construct());
+		IndexedDataSource<Float64Member> cList = ArrayStorage.allocate(G.DBL.construct(), sz);
 		
 		Tuple3Algebra<UnsignedInt12Algebra,UnsignedInt12Member,SignedInt14Algebra,SignedInt14Member,Float64Algebra,Float64Member> algebra =
 				new Tuple3Algebra<UnsignedInt12Algebra,UnsignedInt12Member,SignedInt14Algebra,SignedInt14Member,Float64Algebra,Float64Member>(G.UINT12, G.INT14, G.DBL);
@@ -216,11 +216,11 @@ class Conveniences {
 		
 		// tupleList = [ (1,-5,22.0), (2,-6,23.0), (3,-7,24.0), (4,-8,25.0) ]
 		
-		IndexedDataSource<UnsignedInt12Member> xList = ArrayStorage.allocate(sz, G.UINT12.construct());
+		IndexedDataSource<UnsignedInt12Member> xList = ArrayStorage.allocate(G.UINT12.construct(), sz);
 		
-		IndexedDataSource<SignedInt14Member> yList = ArrayStorage.allocate(sz, G.INT14.construct());
+		IndexedDataSource<SignedInt14Member> yList = ArrayStorage.allocate(G.INT14.construct(), sz);
 		
-		IndexedDataSource<Float64Member> zList = ArrayStorage.allocate(sz, G.DBL.construct());
+		IndexedDataSource<Float64Member> zList = ArrayStorage.allocate(G.DBL.construct(), sz);
 		
 		Unzip.three(G.UINT12, G.INT14, G.DBL, tupleList, xList, yList, zList);
 
@@ -247,7 +247,7 @@ class Conveniences {
 				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT8.construct(), new byte[] {7,1,12});
 		
 		IndexedDataSource<SignedInt8Member> result =
-				nom.bdezonia.zorbage.storage.Storage.allocate(list1.size() * list2.size(), G.INT8.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT8.construct(), list1.size() * list2.size());
 
 		Procedure3<SignedInt8Member,SignedInt8Member,SignedInt8Member> proc =
 				new Procedure3<SignedInt8Member, SignedInt8Member, SignedInt8Member>()
@@ -275,7 +275,7 @@ class Conveniences {
 				DimensionedStorage.allocate(G.OHLF.construct(), new long[] {400, 500});
 		
 		IndexedDataSource<Float16Member> components =
-				nom.bdezonia.zorbage.storage.Storage.allocate(data.numElements(), G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), data.numElements());
 
 		GetRValues.compute(G.OHLF, G.HLF, data.rawData(), components);
 		GetIValues.compute(G.OHLF, G.HLF, data.rawData(), components);

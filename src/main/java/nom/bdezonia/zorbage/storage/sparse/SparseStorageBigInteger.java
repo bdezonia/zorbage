@@ -48,7 +48,7 @@ public class SparseStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	private final BigInteger[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageBigInteger(long numElements, U type) {
+	public SparseStorageBigInteger(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new BigInteger[type.bigIntegerCount()];
@@ -63,7 +63,7 @@ public class SparseStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	@Override
 	public SparseStorageBigInteger<U> duplicate() {
 		synchronized(this) {
-			SparseStorageBigInteger<U> list = new SparseStorageBigInteger<U>(numElements, type);
+			SparseStorageBigInteger<U> list = new SparseStorageBigInteger<U>(type, numElements);
 			Stack<RedBlackTree<BigInteger[]>.Node> nodes = new Stack<RedBlackTree<BigInteger[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -132,7 +132,7 @@ public class SparseStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageBigInteger<U> allocate() {
-		return new SparseStorageBigInteger<U>(size(), type);
+		return new SparseStorageBigInteger<U>(type, size());
 	}
 
 	@Override

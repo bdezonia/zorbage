@@ -95,7 +95,7 @@ class DataSources {
 	void example1() {
 		
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), 100);
 
 		Float64Member value = G.DBL.construct();
 		
@@ -164,10 +164,10 @@ class DataSources {
 	void example4() {
 		
 		IndexedDataSource<UnsignedInt1Member> list1 = 
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.UINT1.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT1.construct(), 100);
 		
 		IndexedDataSource<UnsignedInt1Member> list2 = 
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000, G.UINT1.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT1.construct(), 1000);
 		
 		IndexedDataSource<UnsignedInt1Member> joinedList =
 				new ConcatenatedDataSource<>(list1, list2);
@@ -190,7 +190,7 @@ class DataSources {
 		// allocate a list
 		
 		IndexedDataSource<UnsignedInt10Member> list =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100000, G.UINT10.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT10.construct(), 100000);
 		
 		// fill it with something
 		
@@ -250,7 +250,7 @@ class DataSources {
 		// allocate some data
 		
 		IndexedDataSource<ComplexFloat32Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1234, G.CFLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CFLT.construct(), 1234);
 		
 		// elsewhere fill it with something
 		
@@ -282,7 +282,7 @@ class DataSources {
 		// allocate the same amount of space for the results
 		
 		IndexedDataSource<ComplexFloat32Member> outList =
-				nom.bdezonia.zorbage.storage.Storage.allocate(idealSize, G.CFLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CFLT.construct(), idealSize);
 
 		// and compute the FFT
 		
@@ -337,7 +337,7 @@ class DataSources {
 
 		// setup some data
 		
-		IndexedDataSource<Float64Member> list = ArrayStorage.allocate(9, G.DBL.construct());
+		IndexedDataSource<Float64Member> list = ArrayStorage.allocate(G.DBL.construct(), 9);
 		
 		// fill it with random values
 		
@@ -413,7 +413,7 @@ class DataSources {
 		// allocate a regular list
 		
 		IndexedDataSource<UnsignedInt4Member> list =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000, G.UINT4.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT4.construct(), 1000);
 		
 		// fill it with data
 		
@@ -454,7 +454,7 @@ class DataSources {
 		// allocate a regular list
 		
 		IndexedDataSource<UnsignedInt4Member> list =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000, G.UINT4.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT4.construct(), 1000);
 		
 		// fill it with data
 		
@@ -538,7 +538,7 @@ class DataSources {
 		// create a list of zeroes
 		
 		IndexedDataSource<Float64Member> list =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), 1000);
 
 		// now setup a view that will increment by 3 starting at the list[4] and steps
 		// up to 100 times.
@@ -573,7 +573,7 @@ class DataSources {
 		// original data: a bunch of ints
 		
 		IndexedDataSource<SignedInt32Member> list =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.INT32.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.INT32.construct(), 100);
 		
 		// a procedure to transforms ints to doubles
 		
@@ -631,7 +631,7 @@ class DataSources {
 		// make a list of 10,000 numbers
 		
 		IndexedDataSource<Float32Member> original =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10000, G.FLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), 10000);
 
 		// make a list that is a subset of the previous list (numbers from locations 1,000 - 2,999)
 		
@@ -651,7 +651,7 @@ class DataSources {
 		// allocate 10,000 float16's
 		
 		IndexedDataSource<Float16Member> origData =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10000, G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), 10000);
 		
 		// wrap a notifier around it
 		
@@ -703,7 +703,7 @@ class DataSources {
 		// make a list of 10,000 numbers
 		
 		IndexedDataSource<Float32Member> original =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10000, G.FLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), 10000);
 
 		// make a list that is a subset of the previous list (numbers from locations 1,000 - 2,999)
 		

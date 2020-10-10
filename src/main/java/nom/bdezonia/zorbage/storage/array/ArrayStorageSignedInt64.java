@@ -42,7 +42,7 @@ public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	private final U type;
 	private final long[] data;
 	
-	public ArrayStorageSignedInt64(long size, U type) {
+	public ArrayStorageSignedInt64(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.longCount()))
@@ -68,14 +68,14 @@ public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageSignedInt64<U> duplicate() {
-		ArrayStorageSignedInt64<U> s = new ArrayStorageSignedInt64<U>(size(), type);
+		ArrayStorageSignedInt64<U> s = new ArrayStorageSignedInt64<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageSignedInt64<U> allocate() {
-		return new ArrayStorageSignedInt64<U>(size(), type);
+		return new ArrayStorageSignedInt64<U>(type, size());
 	}
 
 	@Override

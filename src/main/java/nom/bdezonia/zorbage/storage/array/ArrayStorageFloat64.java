@@ -43,7 +43,7 @@ public class ArrayStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	private final U type;
 	private final double[] data;
 	
-	public ArrayStorageFloat64(long size, U type) {
+	public ArrayStorageFloat64(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat64 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.doubleCount()))
@@ -69,14 +69,14 @@ public class ArrayStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageFloat64<U> duplicate() {
-		ArrayStorageFloat64<U> s = new ArrayStorageFloat64<U>(size(), type);
+		ArrayStorageFloat64<U> s = new ArrayStorageFloat64<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageFloat64<U> allocate() {
-		return new ArrayStorageFloat64<U>(size(), type);
+		return new ArrayStorageFloat64<U>(type, size());
 	}
 
 	@Override

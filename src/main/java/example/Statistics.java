@@ -129,7 +129,7 @@ class Statistics {
 	void example3() {
 		
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+				nom.bdezonia.zorbage.storage.Storage.allocate(new Float64Member(), 10);
 		
 		Float64Member result1 = G.DBL.construct();
 
@@ -186,7 +186,7 @@ class Statistics {
 	void example4() {
 		
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+				nom.bdezonia.zorbage.storage.Storage.allocate(new Float64Member(), 10);
 		
 		IndexedDataSource<HighPrecisionMember> filtered =
 				new ReadOnlyHighPrecisionDataSource<>(G.DBL, data);
@@ -242,7 +242,7 @@ class Statistics {
 	void example5() {
 
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+				nom.bdezonia.zorbage.storage.Storage.allocate(new Float64Member(), 10);
 		
 		Float64Member result = G.DBL.construct();
 
@@ -269,7 +269,7 @@ class Statistics {
 	void example6() {
 
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+				nom.bdezonia.zorbage.storage.Storage.allocate(new Float64Member(), 10);
 		
 		Float64Member result1 = G.DBL.construct();
 
@@ -306,7 +306,7 @@ class Statistics {
 	void example7() {
 		
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(10, new Float64Member());
+				nom.bdezonia.zorbage.storage.Storage.allocate(new Float64Member(), 10);
 		
 		IndexedDataSource<Float64Member> nonNan = NonNanValues.compute(G.DBL, data);
 		

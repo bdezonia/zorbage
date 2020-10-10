@@ -102,8 +102,8 @@ public class TestSignedInt2 {
 
 	@Test
 	public void testStorage() {
-		testStorageMethods(new ArrayStorageBit<SignedInt2Member>(12000, G.INT2.construct()));
-		testStorageMethods(new ArrayStorageSignedInt8<SignedInt2Member>(12000, G.INT2.construct()));
+		testStorageMethods(new ArrayStorageBit<SignedInt2Member>(G.INT2.construct(), 12000));
+		testStorageMethods(new ArrayStorageSignedInt8<SignedInt2Member>(G.INT2.construct(), 12000));
 	}
 	
 	@Test

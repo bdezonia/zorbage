@@ -47,7 +47,7 @@ public class SparseStorageChar<U extends CharCoder & Allocatable<U>>
 	private final char[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageChar(long numElements, U type) {
+	public SparseStorageChar(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new char[type.charCount()];
@@ -58,7 +58,7 @@ public class SparseStorageChar<U extends CharCoder & Allocatable<U>>
 	@Override
 	public SparseStorageChar<U> duplicate() {
 		synchronized(this) {
-			SparseStorageChar<U> list = new SparseStorageChar<U>(numElements, type);
+			SparseStorageChar<U> list = new SparseStorageChar<U>(type, numElements);
 			Stack<RedBlackTree<char[]>.Node> nodes = new Stack<RedBlackTree<char[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageChar<U extends CharCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageChar<U> allocate() {
-		return new SparseStorageChar<U>(size(), type);
+		return new SparseStorageChar<U>(type, size());
 	}
 
 	@Override

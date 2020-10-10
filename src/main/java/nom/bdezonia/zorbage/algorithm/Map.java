@@ -52,7 +52,7 @@ public class Map {
 	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W extends Allocatable<W>>
 		IndexedDataSource<W> compute(T algU, V algW, Procedure2<U,W> proc, IndexedDataSource<U> input)
 	{
-		IndexedDataSource<W> output = Storage.allocate(input.size(), algW.construct());
+		IndexedDataSource<W> output = Storage.allocate(algW.construct(), input.size());
 		Transform2.compute(algU, algW, proc, input, output);
 		return output;
 	}

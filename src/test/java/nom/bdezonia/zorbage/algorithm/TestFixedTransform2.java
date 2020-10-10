@@ -50,7 +50,7 @@ public class TestFixedTransform2 {
 		SignedInt32Member seven = G.INT32.construct("7");
 		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4});
-		IndexedDataSource<SignedInt32Member> b = Storage.allocate(a.size(), value);
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(value, a.size());
 		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
 				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
 		{
@@ -81,7 +81,7 @@ public class TestFixedTransform2 {
 		SignedInt32Member seven = G.INT32.construct("14");
 		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4});
-		IndexedDataSource<SignedInt32Member> b = Storage.allocate(a.size(), value);
+		IndexedDataSource<SignedInt32Member> b = Storage.allocate(value, a.size());
 		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
 				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
 		{

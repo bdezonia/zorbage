@@ -63,7 +63,7 @@ class BigData {
 		//   requests like this and has a 2000 byte memory buffer containing values that are paged
 		//   to a file on disk as needed. The created list is zero filled.
 
-		IndexedDataSource<SignedInt16Member> data = Storage.allocate(10L * 1000 * 1000 * 1000, value);
+		IndexedDataSource<SignedInt16Member> data = Storage.allocate(value, 10L * 1000 * 1000 * 1000);
 
 		// Fill the list with random numbers
 		//   G.INT16.random() is the function that returns a random signed 16 bit integer when called
@@ -138,7 +138,7 @@ class BigData {
 		// Allocate a huge list: 10 billion unsigned short integers (20 billion bytes).
 		// The created list is zero filled.
 
-		IndexedDataSource<UnsignedInt16Member> data = Storage.allocate(10L * 1000 * 1000 * 1000, value);
+		IndexedDataSource<UnsignedInt16Member> data = Storage.allocate(value, 10L * 1000 * 1000 * 1000);
 
 		// Fill it with random data
 

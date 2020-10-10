@@ -150,7 +150,7 @@ public final class OctonionHighPrecisionMatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new OctonionHighPrecisionMember());
+			storage = Storage.allocate(s, new OctonionHighPrecisionMember(), r*c);
 			return true;
 		}
 		return false;

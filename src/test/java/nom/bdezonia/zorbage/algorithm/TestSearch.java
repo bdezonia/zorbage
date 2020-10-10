@@ -46,8 +46,8 @@ public class TestSearch {
 	@Test
 	public void test1() {
 		Float64Member tmp = G.DBL.construct();
-		IndexedDataSource<Float64Member> a = Storage.allocate(10, tmp);
-		IndexedDataSource<Float64Member> elements = Storage.allocate(3, tmp);
+		IndexedDataSource<Float64Member> a = Storage.allocate(tmp, 10);
+		IndexedDataSource<Float64Member> elements = Storage.allocate(tmp, 3);
 		for (long i = 0; i < a.size(); i++) {
 			tmp.setV(i+4);
 			a.set(i, tmp);
@@ -63,8 +63,8 @@ public class TestSearch {
 	@Test
 	public void test2() {
 		Float64Member tmp = G.DBL.construct();
-		IndexedDataSource<Float64Member> a = Storage.allocate(10, tmp);
-		IndexedDataSource<Float64Member> elements = Storage.allocate(3, tmp);
+		IndexedDataSource<Float64Member> a = Storage.allocate(tmp, 10);
+		IndexedDataSource<Float64Member> elements = Storage.allocate(tmp, 3);
 		for (long i = 0; i < a.size(); i++) {
 			tmp.setV(i);
 			a.set(i, tmp);

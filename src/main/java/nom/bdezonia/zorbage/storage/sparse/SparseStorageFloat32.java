@@ -47,7 +47,7 @@ public class SparseStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	private final float[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageFloat32(long numElements, U type) {
+	public SparseStorageFloat32(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new float[type.floatCount()];
@@ -58,7 +58,7 @@ public class SparseStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	@Override
 	public SparseStorageFloat32<U> duplicate() {
 		synchronized(this) {
-			SparseStorageFloat32<U> list = new SparseStorageFloat32<U>(numElements, type);
+			SparseStorageFloat32<U> list = new SparseStorageFloat32<U>(type, numElements);
 			Stack<RedBlackTree<float[]>.Node> nodes = new Stack<RedBlackTree<float[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageFloat32<U extends FloatCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageFloat32<U> allocate() {
-		return new SparseStorageFloat32<U>(size(), type);
+		return new SparseStorageFloat32<U>(type, size());
 	}
 
 	@Override

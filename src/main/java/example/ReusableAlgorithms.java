@@ -90,13 +90,13 @@ class ReusableAlgorithms {
 		// allocate differently typed storage: reuse the Storage.allocate() algorithm
 		
 		IndexedDataSource<Float16Member> f16s =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), 100);
 		
 		IndexedDataSource<Float32Member> f32s =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.FLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), 100);
 		
 		IndexedDataSource<Float64Member> f64s =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), 100);
 		
 		// fill each of them with random values. reuse the Fill algorithm over and over
 		
@@ -153,13 +153,13 @@ class ReusableAlgorithms {
 		
 		// Sort a list of numbers
 		
-		IndexedDataSource<SignedInt16Member> nums = ArrayStorage.allocate(100, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> nums = ArrayStorage.allocate(G.INT16.construct(), 100);
 		  // <skip step here where data is filled with something>
 		Sort.compute(G.INT16, nums);
 		
 		// Sort a list of strings
 		
-		IndexedDataSource<StringMember> strings = ArrayStorage.allocate(100, G.STRING.construct());
+		IndexedDataSource<StringMember> strings = ArrayStorage.allocate(G.STRING.construct(), 100);
 		  // <skip step here where data is filled with something>
 		Sort.compute(G.STRING, strings);
 		
@@ -172,8 +172,8 @@ class ReusableAlgorithms {
 		
 		// here is one example: transforming a list of strings into a list of counts
 		
-		IndexedDataSource<StringMember> strings = ArrayStorage.allocate(100, G.STRING.construct());
-		IndexedDataSource<UnsignedInt32Member> counts = ArrayStorage.allocate(strings.size(), G.UINT32.construct());
+		IndexedDataSource<StringMember> strings = ArrayStorage.allocate(G.STRING.construct(), 100);
+		IndexedDataSource<UnsignedInt32Member> counts = ArrayStorage.allocate(G.UINT32.construct(),strings.size());
 		Procedure2<StringMember,UnsignedInt32Member> countWhitespaceChars =
 				new Procedure2<StringMember, UnsignedInt32Member>()
 		{

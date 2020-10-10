@@ -51,9 +51,9 @@ public class TestFFT {
 		SignedInt32Member int32 = new SignedInt32Member();
 		ComplexFloat64Member cdbl = new ComplexFloat64Member();
 		IndexedDataSource<SignedInt32Member> poly1 =
-				Storage.allocate(7, int32);
+				Storage.allocate(int32, 7);
 		IndexedDataSource<SignedInt32Member> poly2 =
-				Storage.allocate(7, int32);
+				Storage.allocate(int32, 7);
 		SignedInt32Member start1 = new SignedInt32Member(3);
 		SignedInt32Member start2 = new SignedInt32Member(-5);
 		SignedInt32Member inc1 = new SignedInt32Member(-1);
@@ -64,9 +64,9 @@ public class TestFFT {
 		RampFill.compute(G.INT32, start2, inc2, tr2);
 		long n = FFT.enclosingPowerOf2(poly1.size());
 		IndexedDataSource<ComplexFloat64Member> data1 =
-				Storage.allocate(n, cdbl);
+				Storage.allocate(cdbl, n);
 		IndexedDataSource<ComplexFloat64Member> data2 =
-				Storage.allocate(n, cdbl);
+				Storage.allocate(cdbl, n);
 		DataConvert.compute(G.INT32, G.CDBL, poly1, data1);
 		DataConvert.compute(G.INT32, G.CDBL, poly2, data2);
 		FFT.compute(G.CDBL, G.DBL, data1, data1); // testing in place algo
@@ -74,7 +74,7 @@ public class TestFFT {
 		ElementwiseOperation.compute(G.CDBL, G.CDBL.multiply(), data1, data2, data1);
 		InvFFT.compute(G.CDBL, G.DBL, data1, data1); // testing in place algo
 		IndexedDataSource<SignedInt32Member> result =
-				Storage.allocate(n, int32);
+				Storage.allocate(int32, n);
 		DataConvert.compute(G.CDBL, G.INT32, data1, result);
 		result.get(0, int32);
 		assertEquals(-15, int32.v());
@@ -153,7 +153,7 @@ public class TestFFT {
 	public void testKnownValues() {
 		double tol = 0.00000000000001;
 		ComplexFloat64Member value = G.CDBL.construct();
-		IndexedDataSource<ComplexFloat64Member> a = Storage.allocate(16, value);
+		IndexedDataSource<ComplexFloat64Member> a = Storage.allocate(value, 16);
 		value.setR(1);
 		value.setI(2);
 		a.set(0, value);
@@ -203,7 +203,7 @@ public class TestFFT {
 		value.setI(9);
 		a.set(15, value);
 		
-		IndexedDataSource<ComplexFloat64Member> b = Storage.allocate(a.size(), value);
+		IndexedDataSource<ComplexFloat64Member> b = Storage.allocate(value, a.size());
 		
 		FFT.compute(G.CDBL, G.DBL, a, b); // testing NOT in place algo
 		
@@ -240,7 +240,7 @@ public class TestFFT {
 		b.get(15, value);
 		assertFalse(Math.abs(value.r() - 0) < tol && Math.abs(value.i() - 9) < tol);
 
-		IndexedDataSource<ComplexFloat64Member> c = Storage.allocate(b.size(), value);
+		IndexedDataSource<ComplexFloat64Member> c = Storage.allocate(value, b.size());
 		
 		InvFFT.compute(G.CDBL, G.DBL, b, c); // testing NOT in place algo
 		

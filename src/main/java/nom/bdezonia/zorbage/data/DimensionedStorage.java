@@ -50,7 +50,7 @@ public class DimensionedStorage {
 		DimensionedDataSource<U> allocate(U type, long[] dims)
 	{
 		long numElements = LongUtils.numElements(dims);
-		IndexedDataSource<U> data = Storage.allocate(numElements, type);
+		IndexedDataSource<U> data = Storage.allocate(type, numElements);
 		return new NdData<U>(dims, data);
 	}
 
@@ -65,7 +65,7 @@ public class DimensionedStorage {
 		DimensionedDataSource<U> allocate(StorageConstruction strategy, U type, long[] dims)
 	{
 		long numElements = LongUtils.numElements(dims);
-		IndexedDataSource<U> data = Storage.allocate(strategy, numElements, type);
+		IndexedDataSource<U> data = Storage.allocate(strategy, type, numElements);
 		return new NdData<U>(dims, data);
 	}
 }

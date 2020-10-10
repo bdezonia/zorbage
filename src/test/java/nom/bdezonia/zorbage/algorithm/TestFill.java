@@ -46,7 +46,7 @@ public class TestFill {
 	public void test1() {
 		Float64Member type = new Float64Member();
 		
-		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
+		IndexedDataSource<Float64Member> data = Storage.allocate(type, 1000);
 		
 		Fill.compute(G.DBL, new Float64Member(17.4), data);
 		data.get(999, type);
@@ -58,7 +58,7 @@ public class TestFill {
 
 		Float64Member type = new Float64Member();
 		
-		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
+		IndexedDataSource<Float64Member> data = Storage.allocate(type, 1000);
 		
 		Fill.compute(G.DBL, G.DBL.zero(), data);
 		data.get(999, type);

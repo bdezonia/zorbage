@@ -75,7 +75,7 @@ public class TestOdeSolveRK4 {
 		Float64Member dt = new Float64Member(deltaT);
 		Float64Member value = G.DBL.construct();
 		
-		IndexedDataSource<Float64Member> results = Storage.allocate(numSteps, value);
+		IndexedDataSource<Float64Member> results = Storage.allocate(value, numSteps);
 		
 		OdeSolveRK4.compute(G.DBL, G.DBL, realDeriv, t0, y0, numSteps, dt, results);
 		

@@ -69,8 +69,8 @@ public class TestTransform2 {
 		
 		IndexedDataSource<UnsignedInt1Member> a,c;
 		
-		a = ArrayStorage.allocate(2, tmp);
-		c = ArrayStorage.allocate(2, tmp);
+		a = ArrayStorage.allocate(tmp, 2);
+		c = ArrayStorage.allocate(tmp, 2);
 
 		tmp.setV(0);
 		a.set(0, tmp);

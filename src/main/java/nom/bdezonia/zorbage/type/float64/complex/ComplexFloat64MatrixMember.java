@@ -138,7 +138,7 @@ public final class ComplexFloat64MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new ComplexFloat64Member());
+			storage = Storage.allocate(s, new ComplexFloat64Member(), r*c);
 			return true;
 		}
 		return false;

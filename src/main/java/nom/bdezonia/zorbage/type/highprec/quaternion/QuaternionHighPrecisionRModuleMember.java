@@ -64,13 +64,13 @@ public final class QuaternionHighPrecisionRModuleMember
 	
 	public QuaternionHighPrecisionRModuleMember() {
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new QuaternionHighPrecisionMember());
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), 0);
 	}
 	
 	public QuaternionHighPrecisionRModuleMember(BigDecimal[] vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new QuaternionHighPrecisionMember());
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
 		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
 		for (int i = 0; i < count; i++) {
 			final int index = 4*i;
@@ -90,7 +90,7 @@ public final class QuaternionHighPrecisionRModuleMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new QuaternionHighPrecisionMember());
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), data.size());
 		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
@@ -201,7 +201,7 @@ public final class QuaternionHighPrecisionRModuleMember
 
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new QuaternionHighPrecisionMember());
+			storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), size);
 			return true;
 		}
 		return false;

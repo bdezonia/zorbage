@@ -73,7 +73,7 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageSignedInt8(long numElements, U type) {
+	public FileStorageSignedInt8(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new byte[type.byteCount()];
@@ -273,7 +273,7 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageSignedInt8<U> allocate() {
-		return new FileStorageSignedInt8<U>(numElements, type);
+		return new FileStorageSignedInt8<U>(type, numElements);
 	}
 
 	@Override

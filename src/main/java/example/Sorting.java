@@ -100,7 +100,7 @@ class Sorting {
 		
 		// normally complex numbers are not ordered and cannot be sorted
 		
-		IndexedDataSource<ComplexFloat32Member> nums = ArrayStorage.allocate(75, G.CFLT.construct());
+		IndexedDataSource<ComplexFloat32Member> nums = ArrayStorage.allocate(G.CFLT.construct(), 75);
 		
 		Fill.compute(G.CFLT, G.CFLT.random(), nums);
 		

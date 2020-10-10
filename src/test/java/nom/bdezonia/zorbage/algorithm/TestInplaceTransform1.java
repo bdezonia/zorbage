@@ -44,7 +44,7 @@ public class TestInplaceTransform1 {
 	@Test
 	public void test() {
 		Float64Member tmp = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(30, tmp);
+		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(tmp, 30);
 		InplaceTransform1.compute(G.DBL, G.DBL.E(), storage);
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);

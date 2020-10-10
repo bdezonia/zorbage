@@ -116,7 +116,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new OctonionHighPrecisionMember());
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -134,7 +134,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new OctonionHighPrecisionMember());
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -183,7 +183,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new OctonionHighPrecisionMember());
+		this.storage = Storage.allocate(this.s, new OctonionHighPrecisionMember(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
 		if (numElems == 1) {
@@ -283,7 +283,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new OctonionHighPrecisionMember());
+			storage = Storage.allocate(s, new OctonionHighPrecisionMember(), newCount);
 			return true;
 		}
 		return false;

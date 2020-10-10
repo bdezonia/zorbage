@@ -44,7 +44,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	private final long[] data;
 	private final long size;
 	
-	public ArrayStorageBit(long size, U type) {
+	public ArrayStorageBit(U type, long size) {
 	
 		final long maxElements = 64L * Integer.MAX_VALUE / type.bitCount();
 		if (size < 0)
@@ -85,7 +85,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageBit<U> duplicate() {
-		ArrayStorageBit<U> s = new ArrayStorageBit<U>(size(), type);
+		ArrayStorageBit<U> s = new ArrayStorageBit<U>(type, size());
 		synchronized (data) {
 			System.arraycopy(data, 0, s.data, 0, data.length);
 		}
@@ -94,7 +94,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageBit<U> allocate() {
-		return new ArrayStorageBit<U>(size(), type);
+		return new ArrayStorageBit<U>(type, size());
 	}
 	
 	@Override

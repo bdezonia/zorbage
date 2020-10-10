@@ -76,7 +76,7 @@ public class TestFileStorageFloat32 {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageFloat32<SomeType> store = new FileStorageFloat32<SomeType>(SIZE, v);
+		FileStorageFloat32<SomeType> store = new FileStorageFloat32<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

@@ -73,7 +73,7 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageSignedInt64(long numElements, U type) {
+	public FileStorageSignedInt64(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new long[type.longCount()];
@@ -273,7 +273,7 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageSignedInt64<U> allocate() {
-		return new FileStorageSignedInt64<U>(numElements, type);
+		return new FileStorageSignedInt64<U>(type, numElements);
 	}
 
 	@Override

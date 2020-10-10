@@ -138,7 +138,7 @@ public final class ComplexHighPrecisionMatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new ComplexHighPrecisionMember());
+			storage = Storage.allocate(s, new ComplexHighPrecisionMember(), r*c);
 			return true;
 		}
 		return false;

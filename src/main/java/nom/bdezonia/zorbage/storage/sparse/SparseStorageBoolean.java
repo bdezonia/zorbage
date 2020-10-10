@@ -47,7 +47,7 @@ public class SparseStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	private final boolean[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageBoolean(long numElements, U type) {
+	public SparseStorageBoolean(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new boolean[type.booleanCount()];
@@ -58,7 +58,7 @@ public class SparseStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	@Override
 	public SparseStorageBoolean<U> duplicate() {
 		synchronized(this) {
-			SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(numElements, type);
+			SparseStorageBoolean<U> list = new SparseStorageBoolean<U>(type, numElements);
 			Stack<RedBlackTree<boolean[]>.Node> nodes = new Stack<RedBlackTree<boolean[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageBoolean<U> allocate() {
-		return new SparseStorageBoolean<U>(size(), type);
+		return new SparseStorageBoolean<U>(type, size());
 	}
 
 	@Override

@@ -150,7 +150,7 @@ public final class OctonionFloat16MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new OctonionFloat16Member());
+			storage = Storage.allocate(s, new OctonionFloat16Member(), r*c);
 			return true;
 		}
 		return false;

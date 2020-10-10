@@ -67,7 +67,7 @@ public class GaussianFilter1D {
 			throw new IllegalArgumentException("sigma must be >= 0");
 		U mu = alg.construct();
 		U val = alg.construct();
-		IndexedDataSource<U> result = Storage.allocate(radius*2+1, val);
+		IndexedDataSource<U> result = Storage.allocate(val, radius*2+1);
 		U x = alg.construct();
 		Gaussian.compute(alg, mu, sigma, x, val);
 		result.set(radius, val);

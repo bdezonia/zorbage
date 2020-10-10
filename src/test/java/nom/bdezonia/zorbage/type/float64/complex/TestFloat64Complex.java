@@ -399,11 +399,11 @@ public class TestFloat64Complex {
 	
 	
 	private IndexedDataSource<SignedInt32Member> makeIntData(int size) {
-		return new ArrayStorageSignedInt32<SignedInt32Member>(size, new SignedInt32Member());
+		return new ArrayStorageSignedInt32<SignedInt32Member>(new SignedInt32Member(), size);
 	}
 	
 	private IndexedDataSource<ComplexFloat64Member> makeComplexData(int size) {
-		return new ArrayStorageFloat64<ComplexFloat64Member>(size, new ComplexFloat64Member());
+		return new ArrayStorageFloat64<ComplexFloat64Member>(new ComplexFloat64Member(), size);
 	}
 	
 	private void fillIntData(IndexedDataSource<SignedInt32Member> input) {

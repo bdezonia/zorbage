@@ -46,7 +46,7 @@ public class ArrayStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	private final U type;
 	private final BigDecimal[] data;
 
-	public ArrayStorageBigDecimal(long size, U type) {
+	public ArrayStorageBigDecimal(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBigDecimal cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.bigDecimalCount()))
@@ -73,14 +73,14 @@ public class ArrayStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	
 	@Override
 	public ArrayStorageBigDecimal<U> duplicate() {
-		ArrayStorageBigDecimal<U> s = new ArrayStorageBigDecimal<U>(size(), type);
+		ArrayStorageBigDecimal<U> s = new ArrayStorageBigDecimal<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageBigDecimal<U> allocate() {
-		return new ArrayStorageBigDecimal<U>(size(), type);
+		return new ArrayStorageBigDecimal<U>(type, size());
 	}
 
 	@Override

@@ -112,7 +112,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new OctonionFloat32Member());
+		storage = Storage.allocate(s, new OctonionFloat32Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -130,7 +130,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new OctonionFloat32Member());
+		storage = Storage.allocate(s, new OctonionFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -179,7 +179,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new OctonionFloat32Member());
+		this.storage = Storage.allocate(this.s, new OctonionFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 		OctonionFloat32Member value = new OctonionFloat32Member();
 		if (numElems == 1) {
@@ -279,7 +279,7 @@ public final class OctonionFloat32CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new OctonionFloat32Member());
+			storage = Storage.allocate(s, new OctonionFloat32Member(), newCount);
 			return true;
 		}
 		return false;

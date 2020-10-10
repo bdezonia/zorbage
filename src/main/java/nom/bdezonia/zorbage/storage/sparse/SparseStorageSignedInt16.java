@@ -47,7 +47,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	private final short[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageSignedInt16(long numElements, U type) {
+	public SparseStorageSignedInt16(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new short[type.shortCount()];
@@ -58,7 +58,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	@Override
 	public SparseStorageSignedInt16<U> duplicate() {
 		synchronized(this) {
-			SparseStorageSignedInt16<U> list = new SparseStorageSignedInt16<U>(numElements, type);
+			SparseStorageSignedInt16<U> list = new SparseStorageSignedInt16<U>(type, numElements);
 			Stack<RedBlackTree<short[]>.Node> nodes = new Stack<RedBlackTree<short[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageSignedInt16<U> allocate() {
-		return new SparseStorageSignedInt16<U>(size(), type);
+		return new SparseStorageSignedInt16<U>(type, size());
 	}
 
 	@Override

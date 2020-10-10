@@ -73,7 +73,7 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageSignedInt32(long numElements, U type) {
+	public FileStorageSignedInt32(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new int[type.intCount()];
@@ -273,7 +273,7 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageSignedInt32<U> allocate() {
-		return new FileStorageSignedInt32<U>(numElements, type);
+		return new FileStorageSignedInt32<U>(type, numElements);
 	}
 
 	@Override

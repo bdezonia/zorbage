@@ -43,7 +43,7 @@ public class TestInplaceTransform3 {
 	
 	@Test
 	public void test1() {
-		IndexedDataSource<Float64Member> data = Storage.allocate(1000, G.DBL.construct());
+		IndexedDataSource<Float64Member> data = Storage.allocate(G.DBL.construct(), 1000);
 		RampFill.compute(G.DBL, new Float64Member(), new Float64Member(0.1), data);
 		// multiply list1 by list2 and store in list2: with 1 list == squared values in place
 		InplaceTransform3.compute(G.DBL, G.DBL.multiply(), data);

@@ -62,10 +62,10 @@ class MiscAlgorithms {
 		int numClusters = 22;
 		
 		// make a bunch of 2d points
-		IndexedDataSource<Point> points = Storage.allocate(4500L, new Point(2));
+		IndexedDataSource<Point> points = Storage.allocate(new Point(2), 4500L);
 
 		// make a bunch of fake clusters
-		IndexedDataSource<SignedInt32Member> clusterIndices = Storage.allocate(points.size(), G.INT32.construct());
+		IndexedDataSource<SignedInt32Member> clusterIndices = Storage.allocate(G.INT32.construct(), points.size());
 		
 		// fill the point values with random values
 		Fill.compute(G.POINT, G.POINT.random(), points);
@@ -87,7 +87,7 @@ class MiscAlgorithms {
 	void example2() {
 
 		// make a bunch of numbers
-		IndexedDataSource<Float64Member> nums = Storage.allocate(4500L, G.DBL.construct());
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 4500L);
 
 		// fill them with a ramp starting at 0 and incrementing by 1 with each step
 		RampFill.compute(G.DBL, nums);
@@ -108,7 +108,7 @@ class MiscAlgorithms {
 		
 		Float64Member value = G.DBL.construct();
 		
-		IndexedDataSource<Float64Member> nums = Storage.allocate(1260, G.DBL.construct());
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 1260);
 		
 		// returns true if any of a sequence of numbers is infinite
 		result = SequenceIsInf.compute(G.DBL, nums);

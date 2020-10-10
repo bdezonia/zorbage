@@ -51,8 +51,8 @@ public class TestSequencesSimilar {
 		UnsignedInt3Member value = G.UINT3.construct();
 		UnsignedInt3Member tol = G.UINT3.construct();
 		
-		IndexedDataSource<UnsignedInt3Member>  l1 = Storage.allocate(4, value);
-		IndexedDataSource<UnsignedInt3Member>  l2 = Storage.allocate(4, value);
+		IndexedDataSource<UnsignedInt3Member>  l1 = Storage.allocate(value, 4);
+		IndexedDataSource<UnsignedInt3Member>  l2 = Storage.allocate(value, 4);
 		
 		assertTrue(SequencesSimilar.compute(G.UINT3, tol, l1, l2));
 		
@@ -63,11 +63,11 @@ public class TestSequencesSimilar {
 		l1.set(l1.size()-1, value);
 		assertFalse(SequencesSimilar.compute(G.UINT3, tol, l1, l2));
 		
-		l1 = Storage.allocate(l2.size()+1, value);
+		l1 = Storage.allocate(value, l2.size()+1);
 		assertFalse(SequencesSimilar.compute(G.UINT3, tol, l1, l2));
 		
-		l1 = Storage.allocate(0, value);
-		l2 = Storage.allocate(0, value);
+		l1 = Storage.allocate(value, 0);
+		l2 = Storage.allocate(value, 0);
 		assertTrue(SequencesSimilar.compute(G.UINT3, tol, l1, l2));
 	}
 	
@@ -76,8 +76,8 @@ public class TestSequencesSimilar {
 		Float32Member value = G.FLT.construct();
 		Float32Member tol = G.FLT.construct();
 		
-		IndexedDataSource<Float32Member>  l1 = Storage.allocate(4, value);
-		IndexedDataSource<Float32Member>  l2 = Storage.allocate(4, value);
+		IndexedDataSource<Float32Member>  l1 = Storage.allocate(value, 4);
+		IndexedDataSource<Float32Member>  l2 = Storage.allocate(value, 4);
 		
 		tol.setV(0.1f);
 		
@@ -97,8 +97,8 @@ public class TestSequencesSimilar {
 		ComplexFloat32Member value = G.CFLT.construct();
 		Float32Member tol = G.FLT.construct();
 		
-		IndexedDataSource<ComplexFloat32Member>  l1 = Storage.allocate(4, value);
-		IndexedDataSource<ComplexFloat32Member>  l2 = Storage.allocate(4, value);
+		IndexedDataSource<ComplexFloat32Member>  l1 = Storage.allocate(value, 4);
+		IndexedDataSource<ComplexFloat32Member>  l2 = Storage.allocate(value, 4);
 		
 		tol.setV(0.1f);
 		
@@ -130,8 +130,8 @@ public class TestSequencesSimilar {
 		QuaternionFloat32Member value = G.QFLT.construct();
 		Float32Member tol = G.FLT.construct();
 		
-		IndexedDataSource<QuaternionFloat32Member>  l1 = Storage.allocate(4, value);
-		IndexedDataSource<QuaternionFloat32Member>  l2 = Storage.allocate(4, value);
+		IndexedDataSource<QuaternionFloat32Member>  l1 = Storage.allocate(value, 4);
+		IndexedDataSource<QuaternionFloat32Member>  l2 = Storage.allocate(value, 4);
 		
 		tol.setV(0.1f);
 		
@@ -191,8 +191,8 @@ public class TestSequencesSimilar {
 		OctonionFloat32Member value = G.OFLT.construct();
 		Float32Member tol = G.FLT.construct();
 		
-		IndexedDataSource<OctonionFloat32Member>  l1 = Storage.allocate(4, value);
-		IndexedDataSource<OctonionFloat32Member>  l2 = Storage.allocate(4, value);
+		IndexedDataSource<OctonionFloat32Member>  l1 = Storage.allocate(value, 4);
+		IndexedDataSource<OctonionFloat32Member>  l2 = Storage.allocate(value, 4);
 		
 		tol.setV(0.1f);
 		

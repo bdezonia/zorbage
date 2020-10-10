@@ -62,7 +62,7 @@ public class TestFileStorageSpeed {
 		
 		long begin = System.currentTimeMillis();
 		
-		IndexedDataSource<Float64Member> list = FileStorage.allocate(dbls.length, new Float64Member());
+		IndexedDataSource<Float64Member> list = FileStorage.allocate(new Float64Member(), dbls.length);
 		for (int i = 0; i < dbls.length; i++) {
 			value.setV(dbls[i]);
 			list.set(i, value);

@@ -57,10 +57,10 @@ class SignalProcessing {
 	void example1() {
 		
 		IndexedDataSource<ComplexFloat64Member> orig =
-				nom.bdezonia.zorbage.storage.Storage.allocate(512L, G.CDBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CDBL.construct(), 512L);
 	
 		IndexedDataSource<ComplexFloat64Member> tmp =
-				nom.bdezonia.zorbage.storage.Storage.allocate(512L, G.CDBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CDBL.construct(), 512L);
 		
 		Fill.compute(G.CDBL, G.CDBL.random(), orig);
 		

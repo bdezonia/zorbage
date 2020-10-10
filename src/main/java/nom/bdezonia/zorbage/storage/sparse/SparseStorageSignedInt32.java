@@ -47,7 +47,7 @@ public class SparseStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	private final int[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageSignedInt32(long numElements, U type) {
+	public SparseStorageSignedInt32(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new int[type.intCount()];
@@ -58,7 +58,7 @@ public class SparseStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	@Override
 	public SparseStorageSignedInt32<U> duplicate() {
 		synchronized(this) {
-			SparseStorageSignedInt32<U> list = new SparseStorageSignedInt32<U>(numElements, type);
+			SparseStorageSignedInt32<U> list = new SparseStorageSignedInt32<U>(type, numElements);
 			Stack<RedBlackTree<int[]>.Node> nodes = new Stack<RedBlackTree<int[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageSignedInt32<U> allocate() {
-		return new SparseStorageSignedInt32<U>(size(), type);
+		return new SparseStorageSignedInt32<U>(type, size());
 	}
 
 	@Override

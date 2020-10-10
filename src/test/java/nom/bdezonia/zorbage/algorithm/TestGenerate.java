@@ -49,7 +49,7 @@ public class TestGenerate {
 	@Test
 	public void test() {
 		Float64Member tmp = G.DBL.construct();
-		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(10001, tmp);
+		IndexedDataSource<Float64Member> storage = ArrayStorage.allocate(tmp, 10001);
 		Generate.compute(G.DBL, proc, storage, new Float64Member(7), new Float64Member(77));
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, tmp);

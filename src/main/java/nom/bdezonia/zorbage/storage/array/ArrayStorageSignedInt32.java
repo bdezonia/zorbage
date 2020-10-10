@@ -42,7 +42,7 @@ public class ArrayStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	private final U type;
 	private final int[] data;
 	
-	public ArrayStorageSignedInt32(long size, U type) {
+	public ArrayStorageSignedInt32(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.intCount()))
@@ -68,14 +68,14 @@ public class ArrayStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageSignedInt32<U> duplicate() {
-		ArrayStorageSignedInt32<U> s = new ArrayStorageSignedInt32<U>(size(), type);
+		ArrayStorageSignedInt32<U> s = new ArrayStorageSignedInt32<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageSignedInt32<U> allocate() {
-		return new ArrayStorageSignedInt32<U>(size(), type);
+		return new ArrayStorageSignedInt32<U>(type, size());
 	}
 
 	@Override

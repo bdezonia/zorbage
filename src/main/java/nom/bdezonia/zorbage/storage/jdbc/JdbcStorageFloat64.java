@@ -50,7 +50,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageFloat64(long size, U type, Connection conn) {
+	public JdbcStorageFloat64(Connection conn, U type, long size) {
 		super(size, type, conn);
 		createTable(conn, tableName, "DOUBLE", type.doubleCount(), size);
 		zeroFill(type.doubleCount());
@@ -114,7 +114,7 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageFloat64<U> allocate() {
-		return new JdbcStorageFloat64<U>(size(), type, conn);
+		return new JdbcStorageFloat64<U>(conn, type, size());
 	}
 
 	@Override

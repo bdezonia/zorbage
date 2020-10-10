@@ -119,7 +119,7 @@ class MiscTypes {
 		// Allocate 100 of them. Note the pt passed to allocator determines the dimensionality
 		// of all allocated points in the returned list.
 		
-		IndexedDataSource<Point> points = nom.bdezonia.zorbage.storage.Storage.allocate(100, pt);
+		IndexedDataSource<Point> points = nom.bdezonia.zorbage.storage.Storage.allocate(pt, 100);
 
 		// java operations
 		

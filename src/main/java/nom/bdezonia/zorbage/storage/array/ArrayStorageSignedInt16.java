@@ -42,7 +42,7 @@ public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	private final U type;
 	private final short[] data;
 	
-	public ArrayStorageSignedInt16(long size, U type) {
+	public ArrayStorageSignedInt16(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.shortCount()))
@@ -68,14 +68,14 @@ public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageSignedInt16<U> duplicate() {
-		ArrayStorageSignedInt16<U> s = new ArrayStorageSignedInt16<U>(size(),type);
+		ArrayStorageSignedInt16<U> s = new ArrayStorageSignedInt16<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageSignedInt16<U> allocate() {
-		return new ArrayStorageSignedInt16<U>(size(), type);
+		return new ArrayStorageSignedInt16<U>(type, size());
 	}
 
 	@Override

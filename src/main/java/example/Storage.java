@@ -93,7 +93,7 @@ class Storage {
 		
 		// allocate storage without worrying where or how it is stored
 		
-		IndexedDataSource<BooleanMember> list = nom.bdezonia.zorbage.storage.Storage.allocate(50000, G.BOOL.construct());
+		IndexedDataSource<BooleanMember> list = nom.bdezonia.zorbage.storage.Storage.allocate(G.BOOL.construct(), 50000);
 	}
 	
 	@SuppressWarnings("unused")
@@ -101,7 +101,7 @@ class Storage {
 		
 		// allocate storage in RAM : preferred approach : elements stored in an array of primitives
 		
-		IndexedDataSource<BooleanMember> list = ArrayStorage.allocate(50000, G.BOOL.construct());
+		IndexedDataSource<BooleanMember> list = ArrayStorage.allocate(G.BOOL.construct(), 50000);
 		
 		// allocate storage in RAM : elements stored in an array of Objects
 		
@@ -121,7 +121,7 @@ class Storage {
 		
 		// allocate storage in a file
 		
-		IndexedDataSource<SignedInt8Member> list = FileStorage.allocate(50000, G.INT8.construct());
+		IndexedDataSource<SignedInt8Member> list = FileStorage.allocate(G.INT8.construct(), 50000);
 	}
 	
 	@SuppressWarnings("unused")
@@ -131,7 +131,7 @@ class Storage {
 		
 		Connection dbConn = null; // Create a database connection to your database as needed.
 		
-		IndexedDataSource<SignedInt32Member> list = JdbcStorage.allocate(dbConn, 50000, G.INT32.construct());
+		IndexedDataSource<SignedInt32Member> list = JdbcStorage.allocate(dbConn, G.INT32.construct(), 50000);
 	}
 	
 	@SuppressWarnings("unused")
@@ -139,6 +139,6 @@ class Storage {
 		
 		// allocate storage sparsely
 		
-		IndexedDataSource<ComplexFloat32Member> list = SparseStorage.allocate(50000, G.CFLT.construct());
+		IndexedDataSource<ComplexFloat32Member> list = SparseStorage.allocate(G.CFLT.construct(), 50000);
 	}
 }

@@ -42,7 +42,7 @@ public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	private final U type;
 	private final byte[] data;
 	
-	public ArrayStorageSignedInt8(long size, U type) {
+	public ArrayStorageSignedInt8(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageSignedInt8 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.byteCount()))
@@ -68,14 +68,14 @@ public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageSignedInt8<U> duplicate() {
-		ArrayStorageSignedInt8<U> s = new ArrayStorageSignedInt8<U>(size(), type);
+		ArrayStorageSignedInt8<U> s = new ArrayStorageSignedInt8<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageSignedInt8<U> allocate() {
-		return new ArrayStorageSignedInt8<U>(size(), type);
+		return new ArrayStorageSignedInt8<U>(type, size());
 	}
 
 	@Override

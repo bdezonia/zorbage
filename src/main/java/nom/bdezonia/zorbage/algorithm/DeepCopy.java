@@ -50,7 +50,7 @@ public class DeepCopy {
 		IndexedDataSource<U> compute(T alg, IndexedDataSource<U> a)
 	{
 		U type = alg.construct();
-		IndexedDataSource<U> result = Storage.allocate(a.size(), type);
+		IndexedDataSource<U> result = Storage.allocate(type, a.size());
 		Copy.compute(alg, a, result);
 		return result;
 	}

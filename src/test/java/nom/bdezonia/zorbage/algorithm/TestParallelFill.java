@@ -46,7 +46,7 @@ public class TestParallelFill {
 	public void test1() {
 		Float64Member type = new Float64Member();
 		
-		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
+		IndexedDataSource<Float64Member> data = Storage.allocate(type, 1000);
 		
 		ParallelFill.compute(G.DBL, new Float64Member(17.4), data);
 		data.get(999, type);
@@ -58,7 +58,7 @@ public class TestParallelFill {
 
 		Float64Member type = new Float64Member();
 		
-		IndexedDataSource<Float64Member> data = Storage.allocate(1000, type);
+		IndexedDataSource<Float64Member> data = Storage.allocate(type, 1000);
 		
 		ParallelFill.compute(G.DBL, G.DBL.zero(), data);
 		data.get(999, type);

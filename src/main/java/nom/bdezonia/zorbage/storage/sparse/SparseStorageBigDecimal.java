@@ -48,7 +48,7 @@ public class SparseStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	private final BigDecimal[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageBigDecimal(long numElements, U type) {
+	public SparseStorageBigDecimal(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new BigDecimal[type.bigDecimalCount()];
@@ -63,7 +63,7 @@ public class SparseStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	@Override
 	public SparseStorageBigDecimal<U> duplicate() {
 		synchronized(this) {
-			SparseStorageBigDecimal<U> list = new SparseStorageBigDecimal<U>(numElements, type);
+			SparseStorageBigDecimal<U> list = new SparseStorageBigDecimal<U>(type, numElements);
 			Stack<RedBlackTree<BigDecimal[]>.Node> nodes = new Stack<RedBlackTree<BigDecimal[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -132,7 +132,7 @@ public class SparseStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageBigDecimal<U> allocate() {
-		return new SparseStorageBigDecimal<U>(size(), type);
+		return new SparseStorageBigDecimal<U>(type, size());
 	}
 
 	@Override

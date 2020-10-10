@@ -51,7 +51,7 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
     // string passed to createTable based on info from:
     //   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
     
-    public JdbcStorageBigDecimal(long size, U type, Connection conn) {
+    public JdbcStorageBigDecimal(Connection conn, U type, long size) {
         super(size, type, conn);
         createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount(), size);
         zeroFill(type.bigDecimalCount());
@@ -115,7 +115,7 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 
     @Override
     public JdbcStorageBigDecimal<U> allocate() {
-        return new JdbcStorageBigDecimal<U>(size(), type, conn);
+        return new JdbcStorageBigDecimal<U>(conn, type, size());
     }
 
     @Override

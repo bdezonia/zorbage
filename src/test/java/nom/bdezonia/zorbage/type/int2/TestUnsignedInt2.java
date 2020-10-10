@@ -90,8 +90,8 @@ public class TestUnsignedInt2 {
 
 	@Test
 	public void testStorage() {
-		testStorageMethods(new ArrayStorageBit<UnsignedInt2Member>(6000, G.UINT2.construct()));
-		testStorageMethods(new ArrayStorageSignedInt8<UnsignedInt2Member>(6000, G.UINT2.construct()));
+		testStorageMethods(new ArrayStorageBit<UnsignedInt2Member>(G.UINT2.construct(), 6000));
+		testStorageMethods(new ArrayStorageSignedInt8<UnsignedInt2Member>(G.UINT2.construct(), 6000));
 	}
 	
 	@Test

@@ -73,7 +73,7 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageBoolean(long numElements, U type) {
+	public FileStorageBoolean(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new boolean[type.booleanCount()];
@@ -273,7 +273,7 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageBoolean<U> allocate() {
-		return new FileStorageBoolean<U>(numElements, type);
+		return new FileStorageBoolean<U>(type, numElements);
 	}
 
 	@Override

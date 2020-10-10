@@ -49,7 +49,7 @@ public class TestConjugate {
 		ComplexFloat64Member start = G.CDBL.construct("{0,0}");
 		ComplexFloat64Member incBy = G.CDBL.construct("{1,1}");
 		
-		IndexedDataSource<ComplexFloat64Member> list = ArrayStorage.allocate(10, tmp);
+		IndexedDataSource<ComplexFloat64Member> list = ArrayStorage.allocate(tmp, 10);
 		
 		RampFill.compute(G.CDBL, start, incBy, list);
 

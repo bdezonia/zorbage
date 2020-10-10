@@ -142,7 +142,7 @@ public final class QuaternionFloat32MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new QuaternionFloat32Member());
+			storage = Storage.allocate(s, new QuaternionFloat32Member(), r*c);
 			return true;
 		}
 		return false;

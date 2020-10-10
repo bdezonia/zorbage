@@ -48,7 +48,7 @@ public class TestBoolToUInt1 {
 		UnsignedInt1Member value = G.UINT1.construct();
 		IndexedDataSource<BooleanMember> bools = Storage.allocate(G.BOOL.construct(), 
 				new boolean[] {false, false, true, false, true, true});
-		IndexedDataSource<UnsignedInt1Member> ints = Storage.allocate(bools.size(), value);
+		IndexedDataSource<UnsignedInt1Member> ints = Storage.allocate(value, bools.size());
 		BoolToUInt1.compute(bools, ints);
 		ints.get(0, value);
 		assertEquals(0, value.v());

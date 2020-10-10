@@ -64,13 +64,13 @@ public final class OctonionFloat16RModuleMember
 	
 	public OctonionFloat16RModuleMember() {
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new OctonionFloat16Member());
+		storage = Storage.allocate(s, new OctonionFloat16Member(), 0);
 	}
 	
 	public OctonionFloat16RModuleMember(float[] vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new OctonionFloat16Member());
+		storage = Storage.allocate(s, new OctonionFloat16Member(), count);
 		OctonionFloat16Member value = new OctonionFloat16Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 8*i;
@@ -94,7 +94,7 @@ public final class OctonionFloat16RModuleMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new OctonionFloat16Member());
+		storage = Storage.allocate(s, new OctonionFloat16Member(), data.size());
 		OctonionFloat16Member tmp = new OctonionFloat16Member();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
@@ -217,7 +217,7 @@ public final class OctonionFloat16RModuleMember
 
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new OctonionFloat16Member());
+			storage = Storage.allocate(s, new OctonionFloat16Member(), size);
 			return true;
 		}
 		return false;

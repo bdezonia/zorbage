@@ -50,7 +50,7 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageSignedInt64(long size, U type, Connection conn) {
+	public JdbcStorageSignedInt64(Connection conn, U type, long size) {
 		super(size, type, conn);
 		createTable(conn, tableName, "BIGINT", type.longCount(), size);
 		zeroFill(type.longCount());
@@ -114,7 +114,7 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageSignedInt64<U> allocate() {
-		return new JdbcStorageSignedInt64<U>(size(), type, conn);
+		return new JdbcStorageSignedInt64<U>(conn, type, size());
 	}
 
 	@Override

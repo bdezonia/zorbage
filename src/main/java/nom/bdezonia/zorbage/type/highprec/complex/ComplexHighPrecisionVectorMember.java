@@ -64,13 +64,13 @@ public final class ComplexHighPrecisionVectorMember
 	
 	public ComplexHighPrecisionVectorMember() {
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new ComplexHighPrecisionMember());
+		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), 0);
 	}
 	
 	public ComplexHighPrecisionVectorMember(BigDecimal[] vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new ComplexHighPrecisionMember());
+		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), count);
 		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
 		for (int i = 0; i < count; i++) {
 			final int index = 2*i;
@@ -88,7 +88,7 @@ public final class ComplexHighPrecisionVectorMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new ComplexHighPrecisionMember());
+		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), data.size());
 		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
@@ -193,7 +193,7 @@ public final class ComplexHighPrecisionVectorMember
 	
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new ComplexHighPrecisionMember());
+			storage = Storage.allocate(s, new ComplexHighPrecisionMember(), size);
 			return true;
 		}
 		return false;

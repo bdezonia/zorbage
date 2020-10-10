@@ -59,7 +59,7 @@ public class NonNanValues {
 			if (!alg.isNaN().call(value))
 				valueCount++;
 		}
-		IndexedDataSource<U> filteredValues = Storage.allocate(valueCount, value);
+		IndexedDataSource<U> filteredValues = Storage.allocate(value, valueCount);
 		valueCount = 0;
 		for (long i = 0; i < sz; i++) {
 			storage.get(i, value);

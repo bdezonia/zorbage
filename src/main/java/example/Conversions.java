@@ -63,7 +63,7 @@ class Conversions {
 		
 		// here is the target list of the same size
 		
-		IndexedDataSource<ComplexFloat64Member> complexList = Storage.allocate(shortList.size(), new ComplexFloat64Member());
+		IndexedDataSource<ComplexFloat64Member> complexList = Storage.allocate(new ComplexFloat64Member(), shortList.size());
 		
 		// convert the data
 		
@@ -158,7 +158,7 @@ class Conversions {
 		
 		// allocate a similar number of uint1's
 		
-		IndexedDataSource<UnsignedInt1Member> uint1s = Storage.allocate(bools.size(), new UnsignedInt1Member());
+		IndexedDataSource<UnsignedInt1Member> uint1s = Storage.allocate(new UnsignedInt1Member(), bools.size());
 
 		// set the uint1's to the same values as the booelans
 		

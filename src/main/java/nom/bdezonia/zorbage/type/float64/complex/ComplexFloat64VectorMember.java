@@ -64,13 +64,13 @@ public final class ComplexFloat64VectorMember
 	
 	public ComplexFloat64VectorMember() {
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new ComplexFloat64Member());
+		storage = Storage.allocate(s, new ComplexFloat64Member(), 0);
 	}
 	
 	public ComplexFloat64VectorMember(double[] vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new ComplexFloat64Member());
+		storage = Storage.allocate(s, new ComplexFloat64Member(), count);
 		ComplexFloat64Member value = new ComplexFloat64Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 2*i;
@@ -88,7 +88,7 @@ public final class ComplexFloat64VectorMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new ComplexFloat64Member());
+		storage = Storage.allocate(s, new ComplexFloat64Member(), data.size());
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
@@ -193,7 +193,7 @@ public final class ComplexFloat64VectorMember
 	
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new ComplexFloat64Member());
+			storage = Storage.allocate(s, new ComplexFloat64Member(), size);
 			return true;
 		}
 		return false;

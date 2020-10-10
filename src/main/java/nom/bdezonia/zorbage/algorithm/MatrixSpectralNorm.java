@@ -86,7 +86,7 @@ public class MatrixSpectralNorm {
 		matAlgebra.conjugateTranspose().call(matrix, conjTransp);
 		matAlgebra.multiply().call(conjTransp, matrix, tmp);
 		NUMBER num = numAlgebra.construct();
-		IndexedDataSource<NUMBER> eigenValues = Storage.allocate(tmp.cols(), num);
+		IndexedDataSource<NUMBER> eigenValues = Storage.allocate(num, tmp.cols());
 		// TODO find the eigenvalues of tmp matrix
 		COMPONENT l2x = cmpAlgebra.construct();
 		COMPONENT l2Ax = cmpAlgebra.construct();

@@ -58,7 +58,7 @@ public class CreateMask {
 		UnsignedInt1Member zero = G.UINT1.construct();
 		UnsignedInt1Member one = G.UINT1.construct();
 		G.UINT1.unity().call(one);
-		IndexedDataSource<UnsignedInt1Member> result = Storage.allocate(a.size(), zero);
+		IndexedDataSource<UnsignedInt1Member> result = Storage.allocate(zero, a.size());
 		for (long i = 0; i < a.size(); i++) {
 			a.get(i, value);
 			if (condition.call(value))

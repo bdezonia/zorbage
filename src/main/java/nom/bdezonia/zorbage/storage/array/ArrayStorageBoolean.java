@@ -43,7 +43,7 @@ public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	private final U type;
 	private final boolean[] data;
 	
-	public ArrayStorageBoolean(long size, U type) {
+	public ArrayStorageBoolean(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBoolean cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.booleanCount()))
@@ -69,14 +69,14 @@ public class ArrayStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageBoolean<U> duplicate() {
-		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(size(), type);
+		ArrayStorageBoolean<U> s = new ArrayStorageBoolean<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageBoolean<U> allocate() {
-		return new ArrayStorageBoolean<U>(size(), type);
+		return new ArrayStorageBoolean<U>(type, size());
 	}
 
 	@Override

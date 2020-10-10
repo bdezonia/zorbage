@@ -63,7 +63,7 @@ class BreakingLimits {
 
 		SignedInt12Member value = G.INT12.construct();
 		
-		IndexedDataSource<SignedInt12Member> list = Storage.allocate(17L * 1000 * 1000 * 1000, value);
+		IndexedDataSource<SignedInt12Member> list = Storage.allocate(value, 17L * 1000 * 1000 * 1000);
 		
 		System.out.println(list.size()); // prints 17000000000
 		

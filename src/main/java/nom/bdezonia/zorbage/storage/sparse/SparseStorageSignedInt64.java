@@ -47,7 +47,7 @@ public class SparseStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	private final long[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageSignedInt64(long numElements, U type) {
+	public SparseStorageSignedInt64(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new long[type.longCount()];
@@ -58,7 +58,7 @@ public class SparseStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	@Override
 	public SparseStorageSignedInt64<U> duplicate() {
 		synchronized(this) {
-			SparseStorageSignedInt64<U> list = new SparseStorageSignedInt64<U>(numElements, type);
+			SparseStorageSignedInt64<U> list = new SparseStorageSignedInt64<U>(type, numElements);
 			Stack<RedBlackTree<long[]>.Node> nodes = new Stack<RedBlackTree<long[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageSignedInt64<U> allocate() {
-		return new SparseStorageSignedInt64<U>(size(), type);
+		return new SparseStorageSignedInt64<U>(type, size());
 	}
 
 	@Override

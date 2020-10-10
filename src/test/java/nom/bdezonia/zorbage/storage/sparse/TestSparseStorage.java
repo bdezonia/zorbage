@@ -77,7 +77,7 @@ public class TestSparseStorage {
 	@Test
 	public void test() {
 		Data elem = new Data();
-		SparseStorageBoolean<Data> data = new SparseStorageBoolean<Data>(1000, elem);
+		SparseStorageBoolean<Data> data = new SparseStorageBoolean<Data>(elem, 1000);
 		for (long i = 0; i < 16; i++) {
 			elem.a = (i & 1) > 0;
 			elem.b = (i & 2) > 0;

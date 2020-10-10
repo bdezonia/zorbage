@@ -75,11 +75,11 @@ class ParallelProcessing {
 		
 		// here is my list of short data
 		
-		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(G.INT16.construct(), 10000000);
 		
 		// here is the target list of the same size
 		
-		IndexedDataSource<HighPrecisionMember> highPrecList = Storage.allocate(shortList.size(), G.HP.construct());
+		IndexedDataSource<HighPrecisionMember> highPrecList = Storage.allocate(G.HP.construct(), shortList.size());
 		
 		// convert the data with as many threads as the computer can spare
 		
@@ -94,7 +94,7 @@ class ParallelProcessing {
 		
 		// here is my list of short data
 		
-		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(G.INT16.construct(), 10000000);
 		
 		// fill it with as many threads as the computer can spare
 		
@@ -111,7 +111,7 @@ class ParallelProcessing {
 
 		// here is my list of short data
 		
-		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(G.INT16.construct(), 10000000);
 
 		// here is my procedure that generates values
 		
@@ -138,7 +138,7 @@ class ParallelProcessing {
 		
 		// here is my list of short data
 		
-		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(G.INT16.construct(), 10000000);
 		
 		ParallelTransform1.compute(G.INT16, G.INT16.maxBound(), shortList);
 		
@@ -154,7 +154,7 @@ class ParallelProcessing {
 
 		// source list of all zeroes
 		
-		IndexedDataSource<SignedInt16Member> shortList1 = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList1 = ArrayStorage.allocate(G.INT16.construct(), 10000000);
 
 		// dest list of same size and contents
 		
@@ -178,7 +178,7 @@ class ParallelProcessing {
 		
 		// source1 list of all zeroes
 		
-		IndexedDataSource<SignedInt16Member> shortList1 = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList1 = ArrayStorage.allocate(G.INT16.construct(),10000000);
 
 		// source2 list of same size and contents
 		
@@ -206,7 +206,7 @@ class ParallelProcessing {
 		
 		// source1 list of all zeroes
 		
-		IndexedDataSource<SignedInt16Member> shortList1 = ArrayStorage.allocate(10000000, G.INT16.construct());
+		IndexedDataSource<SignedInt16Member> shortList1 = ArrayStorage.allocate(G.INT16.construct(),10000000);
 
 		// source2 list of same size and contents
 		

@@ -45,7 +45,7 @@ public class TestSum {
 		Float64Member value = new Float64Member();
 		Float64Member sum = G.DBL.construct();
 		for (int i = 0; i < 256; i++) {
-			ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(i, value);
+			ArrayStorageFloat64<Float64Member> storage = new ArrayStorageFloat64<Float64Member>(value, i);
 			G.DBL.zero().call(sum);
 			// build the initial test data
 			for (long j = 0; j < storage.size(); j++) {

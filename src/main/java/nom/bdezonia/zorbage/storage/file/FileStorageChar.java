@@ -73,7 +73,7 @@ public class FileStorageChar<U extends CharCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageChar(long numElements, U type) {
+	public FileStorageChar(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new char[type.charCount()];
@@ -273,7 +273,7 @@ public class FileStorageChar<U extends CharCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageChar<U> allocate() {
-		return new FileStorageChar<U>(numElements, type);
+		return new FileStorageChar<U>(type, numElements);
 	}
 
 	@Override

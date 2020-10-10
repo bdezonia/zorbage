@@ -73,7 +73,7 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageFloat64(long numElements, U type) {
+	public FileStorageFloat64(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new double[type.doubleCount()];
@@ -273,7 +273,7 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageFloat64<U> allocate() {
-		return new FileStorageFloat64<U>(numElements, type);
+		return new FileStorageFloat64<U>(type, numElements);
 	}
 
 	@Override

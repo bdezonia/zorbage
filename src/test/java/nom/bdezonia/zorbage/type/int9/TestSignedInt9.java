@@ -99,8 +99,8 @@ public class TestSignedInt9 {
 
 	@Test
 	public void testStorage() {
-		testStorageMethods(new ArrayStorageBit<SignedInt9Member>(12000, G.INT9.construct()));
-		testStorageMethods(new ArrayStorageSignedInt16<SignedInt9Member>(12000, G.INT9.construct()));
+		testStorageMethods(new ArrayStorageBit<SignedInt9Member>(G.INT9.construct(), 12000));
+		testStorageMethods(new ArrayStorageSignedInt16<SignedInt9Member>(G.INT9.construct(), 12000));
 	}
 	
 	@Test

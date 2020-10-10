@@ -112,7 +112,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new ComplexFloat16Member());
+		storage = Storage.allocate(s, new ComplexFloat16Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -130,7 +130,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new ComplexFloat16Member());
+		storage = Storage.allocate(s, new ComplexFloat16Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -173,7 +173,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new ComplexFloat16Member());
+		this.storage = Storage.allocate(this.s, new ComplexFloat16Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 		ComplexFloat16Member value = new ComplexFloat16Member();
 		if (numElems == 1) {
@@ -261,7 +261,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new ComplexFloat16Member());
+			storage = Storage.allocate(s, new ComplexFloat16Member(), newCount);
 			return true;
 		}
 		return false;

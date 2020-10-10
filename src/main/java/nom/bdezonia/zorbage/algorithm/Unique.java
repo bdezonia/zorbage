@@ -54,7 +54,7 @@ public class Unique {
 		U type = alg.construct();
 		long dupeCount = countDupes(alg, a);
 		long resultSize = a.size() - dupeCount;
-		IndexedDataSource<U> result = Storage.allocate(resultSize, type);
+		IndexedDataSource<U> result = Storage.allocate(type, resultSize);
 		copyWithoutDupes(alg, a, result);
 		return result;
 	}

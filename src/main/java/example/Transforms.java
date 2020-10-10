@@ -74,7 +74,7 @@ class Transforms {
 		// make a list of 1000 half precision numbers
 		
 		IndexedDataSource<Float16Member> a =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000, G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), 1000);
 		
 		// set them to random values
 		
@@ -83,7 +83,7 @@ class Transforms {
 		// make another list of the same size
 		
 		IndexedDataSource<Float16Member> b =
-				nom.bdezonia.zorbage.storage.Storage.allocate(a.size(), G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), a.size());
 		
 		// set all of them to the mathematical constant E
 		
@@ -92,7 +92,7 @@ class Transforms {
 		// allocate space for the results
 		
 		IndexedDataSource<Float16Member> results =
-				nom.bdezonia.zorbage.storage.Storage.allocate(a.size(), G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), a.size());
 		
 		// set the results to the elementwise multiplication of a and b
 		
@@ -108,7 +108,7 @@ class Transforms {
 		// create a list of complex numbers
 		
 		IndexedDataSource<ComplexFloat16Member> a =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000, G.CHLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CHLF.construct(), 1000);
 
 		// fill it with random values
 		
@@ -117,7 +117,7 @@ class Transforms {
 		// create a similarly sized list of real values
 		
 		IndexedDataSource<Float16Member> results =
-				nom.bdezonia.zorbage.storage.Storage.allocate(a.size(), G.HLF.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.HLF.construct(), a.size());
 		
 		// copy the real values of the inputs to the results
 		
@@ -158,7 +158,7 @@ class Transforms {
 		// allocate a list
 		
 		IndexedDataSource<Float64Member> a =
-				nom.bdezonia.zorbage.storage.Storage.allocate(250000, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), 250000);
 		
 		// set all values in it to the mathematical constant PI
 		
@@ -167,7 +167,7 @@ class Transforms {
 		// allocate a second list
 		
 		IndexedDataSource<Float64Member> b =
-				nom.bdezonia.zorbage.storage.Storage.allocate(a.size(), G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), a.size());
 		
 		// set all values in it to the mathematical constant E
 		
@@ -176,7 +176,7 @@ class Transforms {
 		// allocate a third list
 		
 		IndexedDataSource<Float64Member> c =
-				nom.bdezonia.zorbage.storage.Storage.allocate(a.size(), G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), a.size());
 		
 		// set all the values in it to random numbers between 0 and 1
 		
@@ -185,7 +185,7 @@ class Transforms {
 		// allocate a list to hold the results
 		
 		IndexedDataSource<Float64Member> results =
-				nom.bdezonia.zorbage.storage.Storage.allocate(a.size(), G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), a.size());
 	
 		// define a procedure that combines 3 data elements in a nonlinear fashion
 		//
@@ -265,7 +265,7 @@ class Transforms {
 		// create a results list
 		
 		IndexedDataSource<Float32Member> results =
-				ArrayStorage.allocate(data.size(), G.FLT.construct());
+				ArrayStorage.allocate(G.FLT.construct(), data.size());
 
 		// set results to the scaling by 4.5 of the input data
 		
@@ -302,7 +302,7 @@ class Transforms {
 		
 		// define some input data
 		
-		IndexedDataSource<SignedInt6Member> input = SparseStorage.allocate(1000, G.INT6.construct());
+		IndexedDataSource<SignedInt6Member> input = SparseStorage.allocate(G.INT6.construct(), 1000);
 		
 		// elsewhere fill it with data
 		

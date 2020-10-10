@@ -64,13 +64,13 @@ public final class OctonionHighPrecisionRModuleMember
 	
 	public OctonionHighPrecisionRModuleMember() {
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new OctonionHighPrecisionMember());
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), 0);
 	}
 	
 	public OctonionHighPrecisionRModuleMember(BigDecimal[] vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new OctonionHighPrecisionMember());
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
 		for (int i = 0; i < count; i++) {
 			final int index = 8*i;
@@ -94,7 +94,7 @@ public final class OctonionHighPrecisionRModuleMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new OctonionHighPrecisionMember());
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), data.size());
 		OctonionHighPrecisionMember tmp = new OctonionHighPrecisionMember();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
@@ -217,7 +217,7 @@ public final class OctonionHighPrecisionRModuleMember
 
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new OctonionHighPrecisionMember());
+			storage = Storage.allocate(s, new OctonionHighPrecisionMember(), size);
 			return true;
 		}
 		return false;

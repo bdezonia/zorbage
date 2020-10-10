@@ -76,7 +76,7 @@ public class TestFileStorageSignedInt32 {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageSignedInt32<SomeType> store = new FileStorageSignedInt32<SomeType>(SIZE, v);
+		FileStorageSignedInt32<SomeType> store = new FileStorageSignedInt32<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

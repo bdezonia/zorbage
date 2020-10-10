@@ -44,7 +44,7 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	private final T alg;
 	private final Object[] data;
 	
-	public ArrayStorageGeneric(long size, T alg) {
+	public ArrayStorageGeneric(T alg, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
 		if (size > Integer.MAX_VALUE)
@@ -76,7 +76,7 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayStorageGeneric<T,U> duplicate() {
-		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(size(),alg);
+		ArrayStorageGeneric<T,U> s = new ArrayStorageGeneric<T,U>(alg, size());
 		for (int i = 0; i < data.length; i++)
 			alg.assign().call((U)data[i], (U)s.data[i]);
 		return s;
@@ -84,7 +84,7 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 
 	@Override
 	public ArrayStorageGeneric<T,U> allocate() {
-		return new ArrayStorageGeneric<T,U>(size(), alg);
+		return new ArrayStorageGeneric<T,U>(alg, size());
 	}
 
 	@Override

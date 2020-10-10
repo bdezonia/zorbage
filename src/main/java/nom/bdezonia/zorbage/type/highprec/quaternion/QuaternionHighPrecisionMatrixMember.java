@@ -142,7 +142,7 @@ public final class QuaternionHighPrecisionMatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new QuaternionHighPrecisionMember());
+			storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), r*c);
 			return true;
 		}
 		return false;

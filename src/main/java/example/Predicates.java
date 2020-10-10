@@ -128,7 +128,7 @@ class Predicates {
 	void example1() {
 
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(250, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(),250);
 		
 		Fill.compute(G.DBL, G.DBL.random(), data);
 		
@@ -240,7 +240,7 @@ class Predicates {
 	void example() {
 		
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(250, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(),250);
 		
 		Fill.compute(G.DBL, G.DBL.random(), data);
 		

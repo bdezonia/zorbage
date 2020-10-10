@@ -76,7 +76,7 @@ public class TestFileStorageFloat64 {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageFloat64<SomeType> store = new FileStorageFloat64<SomeType>(SIZE, v);
+		FileStorageFloat64<SomeType> store = new FileStorageFloat64<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

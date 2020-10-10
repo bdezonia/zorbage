@@ -48,7 +48,7 @@ public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	private final double[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageFloat64(long numElements, U type) {
+	public SparseStorageFloat64(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new double[type.doubleCount()];
@@ -59,7 +59,7 @@ public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	@Override
 	public SparseStorageFloat64<U> duplicate() {
 		synchronized(this) {
-			SparseStorageFloat64<U> list = new SparseStorageFloat64<U>(numElements, type);
+			SparseStorageFloat64<U> list = new SparseStorageFloat64<U>(type, numElements);
 			Stack<RedBlackTree<double[]>.Node> nodes = new Stack<RedBlackTree<double[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -128,7 +128,7 @@ public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageFloat64<U> allocate() {
-		return new SparseStorageFloat64<U>(size(), type);
+		return new SparseStorageFloat64<U>(type, size());
 	}
 
 	@Override

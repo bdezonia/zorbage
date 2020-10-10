@@ -112,7 +112,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new HighPrecisionMember());
+		storage = Storage.allocate(s, new HighPrecisionMember(), 1);
 		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -130,7 +130,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new HighPrecisionMember());
+		storage = Storage.allocate(s, new HighPrecisionMember(), numElems);
 		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -172,7 +172,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new HighPrecisionMember());
+		this.storage = Storage.allocate(this.s, new HighPrecisionMember(), numElems);
 		multipliers = IndexUtils.calcMultipliers(dims);
 		HighPrecisionMember value = new HighPrecisionMember();
 		if (numElems == 1) {
@@ -258,7 +258,7 @@ public final class HighPrecisionCartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new HighPrecisionMember());
+			storage = Storage.allocate(s, new HighPrecisionMember(), newCount);
 			return true;
 		}
 		return false;

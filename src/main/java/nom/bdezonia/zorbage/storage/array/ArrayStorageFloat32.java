@@ -43,7 +43,7 @@ public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	private final U type;
 	private final float[] data;
 	
-	public ArrayStorageFloat32(long size, U type) {
+	public ArrayStorageFloat32(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageFloat32 cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.floatCount()))
@@ -69,14 +69,14 @@ public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageFloat32<U> duplicate() {
-		ArrayStorageFloat32<U> s = new ArrayStorageFloat32<U>(size(), type);
+		ArrayStorageFloat32<U> s = new ArrayStorageFloat32<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageFloat32<U> allocate() {
-		return new ArrayStorageFloat32<U>(size(), type);
+		return new ArrayStorageFloat32<U>(type, size());
 	}
 
 	@Override

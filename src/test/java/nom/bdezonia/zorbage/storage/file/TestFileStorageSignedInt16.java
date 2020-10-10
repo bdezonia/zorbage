@@ -76,7 +76,7 @@ public class TestFileStorageSignedInt16 {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageSignedInt16<SomeType> store = new FileStorageSignedInt16<SomeType>(SIZE, v);
+		FileStorageSignedInt16<SomeType> store = new FileStorageSignedInt16<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

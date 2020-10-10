@@ -48,7 +48,7 @@ public class TestScaleByRational {
 		IndexedDataSource<SignedInt8Member> bytes1 = Storage.allocate(
 				G.INT8.construct(),
 				new byte[] {-128, -64, -36, -15, -2, -1, 0, 1, 2, 11, 27, 84, 100});
-		IndexedDataSource<SignedInt8Member> bytes2 = Storage.allocate(bytes1.size(), value);
+		IndexedDataSource<SignedInt8Member> bytes2 = Storage.allocate(value, bytes1.size());
 		RationalMember scale = new RationalMember(9, 8);
 		ScaleByRational.compute(G.INT8, scale, bytes1, bytes2);
 		bytes2.get(0, value);

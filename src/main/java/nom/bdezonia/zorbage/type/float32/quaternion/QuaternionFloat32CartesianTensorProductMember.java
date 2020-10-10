@@ -116,7 +116,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new QuaternionFloat32Member());
+		storage = Storage.allocate(s, new QuaternionFloat32Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -134,7 +134,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new QuaternionFloat32Member());
+		storage = Storage.allocate(s, new QuaternionFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -179,7 +179,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new QuaternionFloat32Member());
+		this.storage = Storage.allocate(this.s, new QuaternionFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 		QuaternionFloat32Member value = new QuaternionFloat32Member();
 		if (numElems == 1) {
@@ -271,7 +271,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new QuaternionFloat32Member());
+			storage = Storage.allocate(s, new QuaternionFloat32Member(), newCount);
 			return true;
 		}
 		return false;

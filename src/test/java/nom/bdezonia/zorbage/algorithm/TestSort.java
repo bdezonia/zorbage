@@ -118,7 +118,7 @@ public class TestSort {
 			
 			Float64Member value = G.DBL.construct();
 			
-			IndexedDataSource<Float64Member> nums = Storage.allocate(1000+i, value);
+			IndexedDataSource<Float64Member> nums = Storage.allocate(value, 1000+i);
 			
 			Fill.compute(G.DBL, G.DBL.random(), nums);
 			

@@ -78,7 +78,7 @@ class OutOfBoundsData {
 		// Make an unusual size list
 		
 		IndexedDataSource<ComplexFloat32Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(413, G.CFLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CFLT.construct(), 413);
 
 		// 413
 		long weirdSize = data.size();
@@ -109,7 +109,7 @@ class OutOfBoundsData {
 		// Allocate the destination data list
 		
 		IndexedDataSource<ComplexFloat32Member> fftData =
-				nom.bdezonia.zorbage.storage.Storage.allocate(perfectSize, G.CFLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.CFLT.construct(), perfectSize);
 		
 		// The fft algorithm will hit every location (0 to 511). The out of bounds procedure
 		// will return 0 when the original data is queried beyond location 412. The extra
@@ -124,7 +124,7 @@ class OutOfBoundsData {
 	void example2() {
 		
 		IndexedDataSource<Float32Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(100, G.FLT.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), 100);
 
 		// pad with a constant like 0.4
 		

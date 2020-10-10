@@ -43,7 +43,7 @@ public class TestLinearAccessor {
 	@Test
 	public void testAccessor() {
 		SignedInt32Member value = new SignedInt32Member();
-		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(10, new SignedInt32Member());
+		ArrayStorageSignedInt32<SignedInt32Member> storage = new ArrayStorageSignedInt32<SignedInt32Member>(new SignedInt32Member(), 10);
 		LinearAccessor<SignedInt32Member> accessor = new LinearAccessor<SignedInt32Member>(value, storage);
 		// build the initial test data
 		int i = 0;

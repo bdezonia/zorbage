@@ -52,7 +52,7 @@ public class JdbcStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
     // string passed to createTable based on info from:
     //   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
     
-    public JdbcStorageBigInteger(long size, U type, Connection conn) {
+    public JdbcStorageBigInteger(Connection conn, U type, long size) {
         super(size, type, conn);
         createTable(conn, tableName, "NUMERIC(65)", type.bigIntegerCount(), size);
         zeroFill(type.bigIntegerCount());
@@ -116,7 +116,7 @@ public class JdbcStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 
     @Override
     public JdbcStorageBigInteger<U> allocate() {
-        return new JdbcStorageBigInteger<U>(size(), type, conn);
+        return new JdbcStorageBigInteger<U>(conn, type, size());
     }
 
     @Override

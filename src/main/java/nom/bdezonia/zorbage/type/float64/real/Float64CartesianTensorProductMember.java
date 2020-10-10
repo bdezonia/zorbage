@@ -112,7 +112,7 @@ public final class Float64CartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new Float64Member());
+		storage = Storage.allocate(s, new Float64Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -130,7 +130,7 @@ public final class Float64CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new Float64Member());
+		storage = Storage.allocate(s, new Float64Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -172,7 +172,7 @@ public final class Float64CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new Float64Member());
+		this.storage = Storage.allocate(this.s, new Float64Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 		Float64Member value = new Float64Member();
 		if (numElems == 1) {
@@ -258,7 +258,7 @@ public final class Float64CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new Float64Member());
+			storage = Storage.allocate(s, new Float64Member(), newCount);
 			return true;
 		}
 		return false;

@@ -73,7 +73,7 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageSignedInt16(long numElements, U type) {
+	public FileStorageSignedInt16(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new short[type.shortCount()];
@@ -273,7 +273,7 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageSignedInt16<U> allocate() {
-		return new FileStorageSignedInt16<U>(numElements, type);
+		return new FileStorageSignedInt16<U>(type, numElements);
 	}
 
 	@Override

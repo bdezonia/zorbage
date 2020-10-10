@@ -90,9 +90,9 @@ public class TestTransform3 {
 		
 		IndexedDataSource<UnsignedInt1Member> a,b,c;
 		
-		a = ArrayStorage.allocate(4, tmp);
-		b = ArrayStorage.allocate(4, tmp);
-		c = ArrayStorage.allocate(4, tmp);
+		a = ArrayStorage.allocate(tmp, 4);
+		b = ArrayStorage.allocate(tmp, 4);
+		c = ArrayStorage.allocate(tmp, 4);
 		
 		tmp.setV(0);
 		a.set(0, tmp);
@@ -116,9 +116,9 @@ public class TestTransform3 {
 		c.get(3, tmp);
 		assertEquals(1, tmp.v());
 		
-		a = ArrayStorage.allocate(4, tmp);
-		b = ArrayStorage.allocate(4, tmp);
-		c = ArrayStorage.allocate(4, tmp);
+		a = ArrayStorage.allocate(tmp, 4);
+		b = ArrayStorage.allocate(tmp, 4);
+		c = ArrayStorage.allocate(tmp, 4);
 		
 		tmp.setV(0);
 		a.set(0, tmp);

@@ -47,7 +47,7 @@ public class SparseStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	private final byte[] zero, tmp;
 	private final U type;
 	
-	public SparseStorageSignedInt8(long numElements, U type) {
+	public SparseStorageSignedInt8(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new byte[type.byteCount()];
@@ -58,7 +58,7 @@ public class SparseStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	@Override
 	public SparseStorageSignedInt8<U> duplicate() {
 		synchronized(this) {
-			SparseStorageSignedInt8<U> list = new SparseStorageSignedInt8<U>(numElements, type);
+			SparseStorageSignedInt8<U> list = new SparseStorageSignedInt8<U>(type, numElements);
 			Stack<RedBlackTree<byte[]>.Node> nodes = new Stack<RedBlackTree<byte[]>.Node>();
 			if (data.root != data.nil) {
 				nodes.push(data.root);
@@ -127,7 +127,7 @@ public class SparseStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public SparseStorageSignedInt8<U> allocate() {
-		return new SparseStorageSignedInt8<U>(size(), type);
+		return new SparseStorageSignedInt8<U>(type, size());
 	}
 
 	@Override

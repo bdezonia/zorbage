@@ -135,7 +135,7 @@ public final class Float64MatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new Float64Member());
+			storage = Storage.allocate(s, new Float64Member(), r*c);
 			return true;
 		}
 		return false;

@@ -73,7 +73,7 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	 * @param numElements
 	 * @param type
 	 */
-	public FileStorageFloat32(long numElements, U type) {
+	public FileStorageFloat32(U type, long numElements) {
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new float[type.floatCount()];
@@ -273,7 +273,7 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 
 	@Override
 	public FileStorageFloat32<U> allocate() {
-		return new FileStorageFloat32<U>(numElements, type);
+		return new FileStorageFloat32<U>(type, numElements);
 	}
 
 	@Override

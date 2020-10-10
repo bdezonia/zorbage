@@ -116,7 +116,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 1, new QuaternionHighPrecisionMember());
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), 1);
 		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
@@ -134,7 +134,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, numElems, new QuaternionHighPrecisionMember());
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), numElems);
 		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
@@ -179,7 +179,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, numElems, new QuaternionHighPrecisionMember());
+		this.storage = Storage.allocate(this.s, new QuaternionHighPrecisionMember(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
 		if (numElems == 1) {
@@ -271,7 +271,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, newCount, new QuaternionHighPrecisionMember());
+			storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), newCount);
 			return true;
 		}
 		return false;

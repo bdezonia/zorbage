@@ -46,7 +46,7 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	private final U type;
 	private final BigInteger[] data;
 
-	public ArrayStorageBigInteger(long size, U type) {
+	public ArrayStorageBigInteger(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageBigInteger cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.bigIntegerCount()))
@@ -73,14 +73,14 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	
 	@Override
 	public ArrayStorageBigInteger<U> duplicate() {
-		ArrayStorageBigInteger<U> s = new ArrayStorageBigInteger<U>(size(), type);
+		ArrayStorageBigInteger<U> s = new ArrayStorageBigInteger<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageBigInteger<U> allocate() {
-		return new ArrayStorageBigInteger<U>(size(), type);
+		return new ArrayStorageBigInteger<U>(type, size());
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class TestFileStorageSignedInt8 {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageSignedInt8<SomeType> store = new FileStorageSignedInt8<SomeType>(SIZE, v);
+		FileStorageSignedInt8<SomeType> store = new FileStorageSignedInt8<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

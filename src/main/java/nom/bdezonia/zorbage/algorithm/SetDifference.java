@@ -57,7 +57,7 @@ public class SetDifference {
 		long aSize = a.size();
 		long bSize = b.size();
 		// the difference of a and b can't be larger than a
-		IndexedDataSource<U> tmpList = Storage.allocate(aSize, type);
+		IndexedDataSource<U> tmpList = Storage.allocate(type, aSize);
 		long count = 0;
 		U value = alg.construct();
 		// kinda n^2 here. if the inputs were sorted this could be much faster. even naively
@@ -69,7 +69,7 @@ public class SetDifference {
 			}
 		}
 		if (count == 0) {
-			return Storage.allocate(0, type);
+			return Storage.allocate(type, 0);
 		}
 		// stamp the unfilled portion of tmpList with duplicated data
 		tmpList.get(0, value);

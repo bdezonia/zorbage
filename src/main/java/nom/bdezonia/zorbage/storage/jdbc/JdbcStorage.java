@@ -56,37 +56,37 @@ public class JdbcStorage {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(Connection conn, long size, U type) {
+	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(Connection conn, U type, long size) {
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageFloat64(size, (DoubleCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageFloat64(conn, (DoubleCoder)type, size);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageFloat32(size, (FloatCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageFloat32(conn, (FloatCoder)type, size);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt64(size, (LongCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageSignedInt64(conn, (LongCoder)type, size);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt32(size, (IntCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageSignedInt32(conn, (IntCoder)type, size);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt16(size, (ShortCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageSignedInt16(conn, (ShortCoder)type, size);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageBoolean(size, (BooleanCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageBoolean(conn, (BooleanCoder)type, size);
 		}
 		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageCharacter(size, (CharCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageCharacter(conn, (CharCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageBigInteger(size, (BigIntegerCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageBigDecimal(size, (BigDecimalCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageBigDecimal(conn, (BigDecimalCoder)type, size);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt8(size, (ByteCoder)type, conn);
+			return (IndexedDataSource<U>) new JdbcStorageSignedInt8(conn, (ByteCoder)type, size);
 		}
 		
 		// TODO: add bitCoder when it is done. It should certainly be last as it will

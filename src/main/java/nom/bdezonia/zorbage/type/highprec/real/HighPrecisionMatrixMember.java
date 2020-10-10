@@ -135,7 +135,7 @@ public final class HighPrecisionMatrixMember
 			cols = c;
 		}
 		if (storage == null || storage.size() != r*c) {
-			storage = Storage.allocate(s, r*c, new HighPrecisionMember());
+			storage = Storage.allocate(s, new HighPrecisionMember(), r*c);
 			return true;
 		}
 		return false;

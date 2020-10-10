@@ -54,7 +54,7 @@ class DataAnalysis {
 	void example1() {
 		
 		IndexedDataSource<UnsignedInt32Member> uints =
-				nom.bdezonia.zorbage.storage.Storage.allocate(Integer.MAX_VALUE, G.UINT32.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT32.construct(), Integer.MAX_VALUE);
 		
 		// elsewhere: fill the list with values
 		
@@ -81,7 +81,7 @@ class DataAnalysis {
 		HighPrecisionAlgebra.setPrecision(150);
 		
 		IndexedDataSource<UnsignedInt32Member> uints =
-				nom.bdezonia.zorbage.storage.Storage.allocate(Integer.MAX_VALUE, G.UINT32.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT32.construct(), Integer.MAX_VALUE);
 		
 		// elsewhere: fill the list with values
 		
@@ -102,7 +102,7 @@ class DataAnalysis {
 		HighPrecisionAlgebra.setPrecision(150);
 		
 		IndexedDataSource<UnsignedInt32Member> uints =
-				nom.bdezonia.zorbage.storage.Storage.allocate(Integer.MAX_VALUE, G.UINT32.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.UINT32.construct(), Integer.MAX_VALUE);
 		
 		// elsewhere: fill the list with values
 		
@@ -134,7 +134,7 @@ class DataAnalysis {
 	void example4() {
 
 		IndexedDataSource<Float64Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(1000000, G.DBL.construct());
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), 1000000);
 		
 		// elsewhere fill list with data
 		

@@ -64,13 +64,13 @@ public final class QuaternionFloat32RModuleMember
 	
 	public QuaternionFloat32RModuleMember() {
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, 0, new QuaternionFloat32Member());
+		storage = Storage.allocate(s, new QuaternionFloat32Member(), 0);
 	}
 	
 	public QuaternionFloat32RModuleMember(float[] vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, count, new QuaternionFloat32Member());
+		storage = Storage.allocate(s, new QuaternionFloat32Member(), count);
 		QuaternionFloat32Member value = new QuaternionFloat32Member();
 		for (int i = 0; i < count; i++) {
 			final int index = 4*i;
@@ -90,7 +90,7 @@ public final class QuaternionFloat32RModuleMember
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, data.size(), new QuaternionFloat32Member());
+		storage = Storage.allocate(s, new QuaternionFloat32Member(), data.size());
 		QuaternionFloat32Member tmp = new QuaternionFloat32Member();
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++) {
@@ -201,7 +201,7 @@ public final class QuaternionFloat32RModuleMember
 
 	public boolean alloc(long size) {
 		if (storage == null || storage.size() != size) {
-			storage = Storage.allocate(s, size, new QuaternionFloat32Member());
+			storage = Storage.allocate(s, new QuaternionFloat32Member(), size);
 			return true;
 		}
 		return false;

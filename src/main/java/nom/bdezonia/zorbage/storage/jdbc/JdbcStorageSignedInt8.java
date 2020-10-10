@@ -50,7 +50,7 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageSignedInt8(long size, U type, Connection conn) {
+	public JdbcStorageSignedInt8(Connection conn, U type, long size) {
 		super(size, type, conn);
 		createTable(conn, tableName, "TINYINT", type.byteCount(), size);
 		zeroFill(type.byteCount());
@@ -114,7 +114,7 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 
 	@Override
 	public JdbcStorageSignedInt8<U> allocate() {
-		return new JdbcStorageSignedInt8<U>(size(), type, conn);
+		return new JdbcStorageSignedInt8<U>(conn, type, size());
 	}
 
 	@Override

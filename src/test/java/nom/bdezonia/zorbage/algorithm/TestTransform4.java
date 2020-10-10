@@ -47,7 +47,7 @@ public class TestTransform4 {
 		
 		UnsignedInt4Member tmp = G.UINT4.construct();
 		
-		IndexedDataSource<UnsignedInt4Member> nums = Storage.allocate(100, tmp);
+		IndexedDataSource<UnsignedInt4Member> nums = Storage.allocate(tmp, 100);
 		
 		for (int i = 0; i < nums.size(); i++) {
 			tmp.setV(i);

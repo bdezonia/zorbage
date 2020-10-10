@@ -76,7 +76,7 @@ public class TestFileStorageBoolean {
 		
 		SomeType v = new SomeType();
 		
-		FileStorageBoolean<SomeType> store = new FileStorageBoolean<SomeType>(SIZE, v);
+		FileStorageBoolean<SomeType> store = new FileStorageBoolean<SomeType>(v, SIZE);
 
 		assertEquals(SIZE, store.size());
 		

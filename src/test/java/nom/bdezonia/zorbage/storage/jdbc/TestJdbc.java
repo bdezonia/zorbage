@@ -88,7 +88,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageSignedInt8<Bytes> storage = new JdbcStorageSignedInt8<Bytes>(50, new Bytes(), conn);
+			JdbcStorageSignedInt8<Bytes> storage = new JdbcStorageSignedInt8<Bytes>(conn, new Bytes(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -177,7 +177,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageSignedInt16<Shorts> storage = new JdbcStorageSignedInt16<Shorts>(50, new Shorts(), conn);
+			JdbcStorageSignedInt16<Shorts> storage = new JdbcStorageSignedInt16<Shorts>(conn, new Shorts(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -266,7 +266,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageSignedInt32<Ints> storage = new JdbcStorageSignedInt32<Ints>(50, new Ints(), conn);
+			JdbcStorageSignedInt32<Ints> storage = new JdbcStorageSignedInt32<Ints>(conn, new Ints(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -355,7 +355,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageSignedInt64<Longs> storage = new JdbcStorageSignedInt64<Longs>(50, new Longs(), conn);
+			JdbcStorageSignedInt64<Longs> storage = new JdbcStorageSignedInt64<Longs>(conn, new Longs(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -444,7 +444,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageFloat32<Floats> storage = new JdbcStorageFloat32<Floats>(50, new Floats(), conn);
+			JdbcStorageFloat32<Floats> storage = new JdbcStorageFloat32<Floats>(conn, new Floats(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -533,7 +533,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageFloat64<Doubles> storage = new JdbcStorageFloat64<Doubles>(50, new Doubles(), conn);
+			JdbcStorageFloat64<Doubles> storage = new JdbcStorageFloat64<Doubles>(conn, new Doubles(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -621,7 +621,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageBoolean<Bools> storage = new JdbcStorageBoolean<Bools>(50, new Bools(), conn);
+			JdbcStorageBoolean<Bools> storage = new JdbcStorageBoolean<Bools>(conn, new Bools(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -710,7 +710,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageBigDecimal<BigDs> storage = new JdbcStorageBigDecimal<BigDs>(50, new BigDs(), conn);
+			JdbcStorageBigDecimal<BigDs> storage = new JdbcStorageBigDecimal<BigDs>(conn, new BigDs(), 50);
 			
 			assertEquals(50, storage.size());
 			
@@ -801,7 +801,7 @@ public class TestJdbc {
 				
 			}
 			
-			JdbcStorageBigInteger<BigIs> storage = new JdbcStorageBigInteger<BigIs>(50, new BigIs(), conn);
+			JdbcStorageBigInteger<BigIs> storage = new JdbcStorageBigInteger<BigIs>(conn, new BigIs(), 50);
 			
 			assertEquals(50, storage.size());
 			

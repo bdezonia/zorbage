@@ -43,7 +43,7 @@ public class ArrayStorageChar<U extends CharCoder & Allocatable<U>>
 	private final U type;
 	private final char[] data;
 	
-	public ArrayStorageChar(long size, U type) {
+	public ArrayStorageChar(U type, long size) {
 		if (size < 0)
 			throw new IllegalArgumentException("ArrayStorageChar cannot handle a negative request");
 		if (size > (Integer.MAX_VALUE / type.charCount()))
@@ -69,14 +69,14 @@ public class ArrayStorageChar<U extends CharCoder & Allocatable<U>>
 
 	@Override
 	public ArrayStorageChar<U> duplicate() {
-		ArrayStorageChar<U> s = new ArrayStorageChar<U>(size(), type);
+		ArrayStorageChar<U> s = new ArrayStorageChar<U>(type, size());
 		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
 	@Override
 	public ArrayStorageChar<U> allocate() {
-		return new ArrayStorageChar<U>(size(), type);
+		return new ArrayStorageChar<U>(type, size());
 	}
 
 	@Override

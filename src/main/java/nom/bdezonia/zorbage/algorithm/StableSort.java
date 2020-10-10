@@ -74,7 +74,7 @@ public class StableSort {
 		long n = storage.size();
 		
 		U type = alg.construct();
-		IndexedDataSource<U> tmp = Storage.allocate(n, type);
+		IndexedDataSource<U> tmp = Storage.allocate(type, n);
 		
 		IndexedDataSource<U> a = storage;
 		IndexedDataSource<U> b = tmp;
