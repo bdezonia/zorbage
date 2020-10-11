@@ -5,7 +5,6 @@
 //
 //   This code is in the public domain. Use however you wish.
 //
-package conway;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;

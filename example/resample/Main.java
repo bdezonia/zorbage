@@ -4,7 +4,6 @@
 //
 //   This code is in the public domain. Use however you wish.
 //
-package resample;
 
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;

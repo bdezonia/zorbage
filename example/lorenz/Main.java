@@ -5,7 +5,6 @@
 //
 //   This code is in the public domain. Use however you wish.
 //
-package lorenz;
 
 import com.jme3.app.*;
 import com.jme3.material.Material;

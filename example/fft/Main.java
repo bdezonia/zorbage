@@ -5,7 +5,6 @@
 //
 //   This code is in the public domain. Use however you wish.
 //
-package fft;
 
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
