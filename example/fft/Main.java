@@ -65,8 +65,8 @@ public class Main {
 		long size = FFT.enclosingPowerOf2(img.getHeight() * img.getWidth());
 		long subSize = (long) Math.ceil(Math.sqrt(size));
 		ComplexFloat64Member value = G.CDBL.construct();
-		IndexedDataSource<ComplexFloat64Member> inData = Storage.allocate(size, value);
-		IndexedDataSource<ComplexFloat64Member> outData = Storage.allocate(size, value);
+		IndexedDataSource<ComplexFloat64Member> inData = Storage.allocate(value, size);
+		IndexedDataSource<ComplexFloat64Member> outData = Storage.allocate(value, size);
 		for (int r = 0, i = 0; r < img.getHeight(); r++) {
 			for (int c = 0; c < img.getWidth(); c++, i++) {
 				int rgb = img.getRGB(c, r);
