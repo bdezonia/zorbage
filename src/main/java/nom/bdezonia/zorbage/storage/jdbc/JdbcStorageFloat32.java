@@ -7,10 +7,10 @@
  * modification, are permitted provided that the following conditions are met:
  * 
  * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ *	this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ *	this list of conditions and the following disclaimer in the documentation
+ *	and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -74,7 +74,7 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			throw new IllegalArgumentException("index out of bounds");
 		float[] arr = tmpSpace.get();
 		value.toFloatArray(arr, 0);
-        String sql = setHelper(index, arr.length);
+		String sql = setHelper(index, arr.length);
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			for (int i = 0; i < arr.length; i++) {
@@ -117,7 +117,7 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	public JdbcStorageFloat32<U> allocate() {
 		return new JdbcStorageFloat32<U>(conn, type, size());
 	}
-    
+	
 	@Override
 	public StorageConstruction storageType() {
 		// There is no exact match for our type. But if someone has a large JDBC backed structure
@@ -131,5 +131,5 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";
 	}
-    
+	
 }
