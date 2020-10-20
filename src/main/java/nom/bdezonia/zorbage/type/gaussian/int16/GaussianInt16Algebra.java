@@ -28,8 +28,10 @@ package nom.bdezonia.zorbage.type.gaussian.int16;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.IntegralDomain;
+import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -39,6 +41,7 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * 
@@ -49,7 +52,9 @@ public class GaussianInt16Algebra
 	implements
 		IntegralDomain<GaussianInt16Algebra, GaussianInt16Member>,
 		Random<GaussianInt16Member>,
-		Tolerance<GaussianInt16Member,GaussianInt16Member>
+		Tolerance<GaussianInt16Member,GaussianInt16Member>,
+		Norm<GaussianInt16Member, SignedInt64Member>,
+		Conjugate<GaussianInt16Member>
 {
 
 	@Override
@@ -264,4 +269,35 @@ public class GaussianInt16Algebra
 		return RAND;
 	}
 
+	private final Procedure2<GaussianInt16Member, SignedInt64Member> NORM =
+			new Procedure2<GaussianInt16Member, SignedInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt16Member a, SignedInt64Member b) {
+			long val = ((long)a.r)*a.r + ((long)a.i)*a.i;
+			if (val < 0)
+				throw new IllegalArgumentException("overflow in norm calculation");
+			b.setV(val);
+		}
+	};
+
+	@Override
+	public Procedure2<GaussianInt16Member, SignedInt64Member> norm() {
+		return NORM;
+	}
+
+	private final Procedure2<GaussianInt16Member, GaussianInt16Member> CONJ =
+			new Procedure2<GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(GaussianInt16Member a, GaussianInt16Member b) {
+			b.r = a.r;
+			b.i = (short) -a.i;
+		}
+	};
+
+	@Override
+	public Procedure2<GaussianInt16Member, GaussianInt16Member> conjugate() {
+		return CONJ;
+	}
 }
