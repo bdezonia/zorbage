@@ -65,7 +65,6 @@ public class GaussianInt32Member
 		SetReal<Integer>, GetReal<SignedInt32Member>,
 		SetComplex<Integer>, GetComplex<SignedInt32Member>
 {
-
 	int r;
 	int i;
 	
@@ -124,6 +123,72 @@ public class GaussianInt32Member
 	}
 
 	@Override
+	public void getV(GaussianInt32Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(GaussianInt32Member value) {
+		set(value);
+	}
+
+	@Override
+	public void toRep(TensorOctonionRepresentation rep) {
+		rep.setValue(
+				new OctonionRepresentation(
+					BigDecimal.valueOf(r()),
+					BigDecimal.valueOf(i())
+				)
+			);
+	}
+
+	@Override
+	public void fromRep(TensorOctonionRepresentation rep) {
+		OctonionRepresentation v = rep.getValue();
+		setR(v.r().intValue());
+		setI(v.i().intValue());
+	}
+
+	@Override
+	public void get(GaussianInt32Member other) {
+		other.r = r;
+		other.i = i;
+	}
+
+	@Override
+	public void set(GaussianInt32Member other) {
+		r = other.r;
+		i = other.i;
+	}
+
+	@Override
+	public GaussianInt32Member duplicate() {
+		return new GaussianInt32Member(this);
+	}
+
+	@Override
+	public GaussianInt32Member allocate() {
+		return new GaussianInt32Member();
+	}
+
+	@Override
+	public int intCount() {
+		return 2;
+	}
+
+	@Override
+	public void fromIntArray(int[] arr, int index) {
+		r = arr[index+0];
+		i = arr[index+1];
+	}
+
+	@Override
+	public void toIntArray(int[] arr, int index) {
+		arr[index+0] = r;
+		arr[index+1] = i;
+	}
+	
+	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
 		return PrimitiveRepresentation.INT;
 	}
@@ -132,7 +197,6 @@ public class GaussianInt32Member
 	public int componentCount() {
 		return 2;
 	}
-
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
@@ -683,73 +747,6 @@ public class GaussianInt32Member
 		r = i = 0;
 	}
 
-	@Override
-	public void getV(GaussianInt32Member value) {
-		get(value);
-	}
-
-	@Override
-	public void setV(GaussianInt32Member value) {
-		set(value);
-	}
-
-	@Override
-	public void toRep(TensorOctonionRepresentation rep) {
-		rep.setValue(
-				new OctonionRepresentation(
-					BigDecimal.valueOf(r()),
-					BigDecimal.valueOf(i())
-				)
-			);
-	}
-
-	@Override
-	public void fromRep(TensorOctonionRepresentation rep) {
-		OctonionRepresentation v = rep.getValue();
-		setR(v.r().intValue());
-		setI(v.i().intValue());
-	}
-
-	@Override
-	public void get(GaussianInt32Member other) {
-		other.r = r;
-		other.i = i;
-	}
-
-	@Override
-	public void set(GaussianInt32Member other) {
-		r = other.r;
-		i = other.i;
-	}
-
-	@Override
-	public GaussianInt32Member duplicate() {
-		return new GaussianInt32Member(this);
-	}
-
-	@Override
-	public GaussianInt32Member allocate() {
-		return new GaussianInt32Member();
-	}
-
-	@Override
-	public int intCount() {
-		return 2;
-	}
-
-	@Override
-	public void fromIntArray(int[] arr, int index) {
-		r = arr[index+0];
-		i = arr[index+1];
-	}
-
-	@Override
-	public void toIntArray(int[] arr, int index) {
-		arr[index+0] = r;
-		arr[index+1] = i;
-	}
-	
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

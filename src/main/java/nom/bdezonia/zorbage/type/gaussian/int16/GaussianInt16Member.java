@@ -65,7 +65,6 @@ public class GaussianInt16Member
 		SetReal<Short>, GetReal<SignedInt16Member>,
 		SetComplex<Short>, GetComplex<SignedInt16Member>
 {
-
 	short r;
 	short i;
 	
@@ -124,6 +123,72 @@ public class GaussianInt16Member
 	}
 
 	@Override
+	public void getV(GaussianInt16Member value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(GaussianInt16Member value) {
+		set(value);
+	}
+
+	@Override
+	public void toRep(TensorOctonionRepresentation rep) {
+		rep.setValue(
+				new OctonionRepresentation(
+					BigDecimal.valueOf(r()),
+					BigDecimal.valueOf(i())
+				)
+			);
+	}
+
+	@Override
+	public void fromRep(TensorOctonionRepresentation rep) {
+		OctonionRepresentation v = rep.getValue();
+		setR(v.r().shortValue());
+		setI(v.i().shortValue());
+	}
+
+	@Override
+	public void get(GaussianInt16Member other) {
+		other.r = r;
+		other.i = i;
+	}
+
+	@Override
+	public void set(GaussianInt16Member other) {
+		r = other.r;
+		i = other.i;
+	}
+
+	@Override
+	public GaussianInt16Member duplicate() {
+		return new GaussianInt16Member(this);
+	}
+
+	@Override
+	public GaussianInt16Member allocate() {
+		return new GaussianInt16Member();
+	}
+
+	@Override
+	public int shortCount() {
+		return 2;
+	}
+
+	@Override
+	public void fromShortArray(short[] arr, int index) {
+		r = arr[index+0];
+		i = arr[index+1];
+	}
+
+	@Override
+	public void toShortArray(short[] arr, int index) {
+		arr[index+0] = r;
+		arr[index+1] = i;
+	}
+	
+	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
 		return PrimitiveRepresentation.SHORT;
 	}
@@ -132,7 +197,6 @@ public class GaussianInt16Member
 	public int componentCount() {
 		return 2;
 	}
-
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
@@ -682,73 +746,6 @@ public class GaussianInt16Member
 	public void primitiveInit() {
 		r = i = 0;
 	}
-
-	@Override
-	public void getV(GaussianInt16Member value) {
-		get(value);
-	}
-
-	@Override
-	public void setV(GaussianInt16Member value) {
-		set(value);
-	}
-
-	@Override
-	public void toRep(TensorOctonionRepresentation rep) {
-		rep.setValue(
-				new OctonionRepresentation(
-					BigDecimal.valueOf(r()),
-					BigDecimal.valueOf(i())
-				)
-			);
-	}
-
-	@Override
-	public void fromRep(TensorOctonionRepresentation rep) {
-		OctonionRepresentation v = rep.getValue();
-		setR(v.r().shortValue());
-		setI(v.i().shortValue());
-	}
-
-	@Override
-	public void get(GaussianInt16Member other) {
-		other.r = r;
-		other.i = i;
-	}
-
-	@Override
-	public void set(GaussianInt16Member other) {
-		r = other.r;
-		i = other.i;
-	}
-
-	@Override
-	public GaussianInt16Member duplicate() {
-		return new GaussianInt16Member(this);
-	}
-
-	@Override
-	public GaussianInt16Member allocate() {
-		return new GaussianInt16Member();
-	}
-
-	@Override
-	public int shortCount() {
-		return 2;
-	}
-
-	@Override
-	public void fromShortArray(short[] arr, int index) {
-		r = arr[index+0];
-		i = arr[index+1];
-	}
-
-	@Override
-	public void toShortArray(short[] arr, int index) {
-		arr[index+0] = r;
-		arr[index+1] = i;
-	}
-	
 	
 	@Override
 	public String toString() {
