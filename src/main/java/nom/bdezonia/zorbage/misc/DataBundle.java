@@ -84,6 +84,8 @@ import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMembe
 import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Member;
+import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Member;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionCartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
@@ -258,6 +260,8 @@ public class DataBundle {
 	public List<DimensionedDataSource<UnsignedInt64Member>> uint64s = new ArrayList<>();
 	public List<DimensionedDataSource<UnsignedInt128Member>> uint128s = new ArrayList<>();
 	public List<DimensionedDataSource<UnboundedIntMember>> unbounds = new ArrayList<>();
+	public List<DimensionedDataSource<GaussianInt16Member>> gint16s = new ArrayList<>();
+	public List<DimensionedDataSource<GaussianInt32Member>> gint32s = new ArrayList<>();
 	
 	
 	public void mergeArgb(DimensionedDataSource<ArgbMember> ds) {
@@ -869,6 +873,16 @@ public class DataBundle {
 		if (ds != null)
 			ohps.add(ds);
 	}
+	
+	public void mergeGaussianInt16(DimensionedDataSource<GaussianInt16Member> ds) {
+		if (ds != null)
+			gint16s.add(ds);
+	}
+	
+	public void mergeGaussianInt32(DimensionedDataSource<GaussianInt32Member> ds) {
+		if (ds != null)
+			gint32s.add(ds);
+	}
 
 	public void mergeAll(DataBundle other) {
 		if (this == other) return;
@@ -900,6 +914,8 @@ public class DataBundle {
 		flt_mats.addAll(other.flt_mats);
 		flt_tens.addAll(other.flt_tens);
 		fstrs.addAll(other.fstrs);
+		gint16s.addAll(other.gint16s);
+		gint32s.addAll(other.gint32s);
 		hlfs.addAll(other.hlfs);
 		hlf_vecs.addAll(other.hlf_vecs);
 		hlf_mats.addAll(other.hlf_mats);
@@ -1155,6 +1171,18 @@ public class DataBundle {
 		for (DimensionedDataSource<?> ds : this.strs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.STRING, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.gint16s) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSS16, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.gint32s) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSS32, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		

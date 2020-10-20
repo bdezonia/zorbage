@@ -78,6 +78,8 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
 import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.float64.real.Float64Matrix;
 import nom.bdezonia.zorbage.type.float64.real.Float64Vector;
+import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Algebra;
+import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Algebra;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionCartesianTensorProduct;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMatrix;
@@ -288,4 +290,7 @@ public class G {
 	public static final SignedInt32Algebra INT32 = new SignedInt32Algebra();
 	public static final SignedInt64Algebra INT64 = new SignedInt64Algebra();
 	public static final SignedInt128Algebra INT128 = new SignedInt128Algebra();
+
+	public static final GaussianInt16Algebra GAUSS16 = new GaussianInt16Algebra();
+	public static final GaussianInt32Algebra GAUSS32 = new GaussianInt32Algebra();
 }
