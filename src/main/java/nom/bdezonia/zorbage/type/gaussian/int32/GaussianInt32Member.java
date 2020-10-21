@@ -72,7 +72,7 @@ public class GaussianInt32Member
 		r = i = 0;
 	}
 	
-	public GaussianInt32Member(Integer r, Integer i) {
+	public GaussianInt32Member(int r, int i) {
 		this.r = r;
 		this.i = i;
 	}

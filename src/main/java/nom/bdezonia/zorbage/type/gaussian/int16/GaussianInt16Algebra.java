@@ -147,8 +147,8 @@ public class GaussianInt16Algebra
 	{
 		@Override
 		public void call(GaussianInt16Member a, GaussianInt16Member b) {
-			b.setR((short) -a.r);
-			b.setI((short) -a.i);
+			b.setR(-a.r);
+			b.setI(-a.i);
 		}
 	};
 	
@@ -193,8 +193,8 @@ public class GaussianInt16Algebra
 		@Override
 		public void call(GaussianInt16Member a, GaussianInt16Member b, GaussianInt16Member c) {
 			// for safety must use tmps
-			short r = (short) (a.r()*b.r() - a.i()*b.i());
-			short i = (short) (a.i()*b.r() + a.r()*b.i());
+			int r = a.r()*b.r() - a.i()*b.i();
+			int i = a.i()*b.r() + a.r()*b.i();
 			c.setR( r );
 			c.setI( i );
 		}
@@ -259,8 +259,8 @@ public class GaussianInt16Algebra
 		@Override
 		public void call(GaussianInt16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setR( (short) rng.nextInt(0x10000) );
-			a.setI( (short) rng.nextInt(0x10000) );
+			a.setR( rng.nextInt(0x10000) );
+			a.setI( rng.nextInt(0x10000) );
 		}
 	};
 	

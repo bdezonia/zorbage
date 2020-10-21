@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.gaussian.int16;
+package nom.bdezonia.zorbage.type.gaussian.int8;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -41,8 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
@@ -55,33 +55,33 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
  * @author Barry DeZonia
  *
  */
-public class GaussianInt16Member
+public class GaussianInt8Member
 	implements
-		ShortCoder,
-		Allocatable<GaussianInt16Member>, Duplicatable<GaussianInt16Member>,
-		Settable<GaussianInt16Member>, Gettable<GaussianInt16Member>,
-		UniversalRepresentation, NumberMember<GaussianInt16Member>,
+		ByteCoder,
+		Allocatable<GaussianInt8Member>, Duplicatable<GaussianInt8Member>,
+		Settable<GaussianInt8Member>, Gettable<GaussianInt8Member>,
+		UniversalRepresentation, NumberMember<GaussianInt8Member>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt16Member>,
-		SetComplex<Integer>, GetComplex<SignedInt16Member>
+		SetReal<Integer>, GetReal<SignedInt8Member>,
+		SetComplex<Integer>, GetComplex<SignedInt8Member>
 {
-	short r;
-	short i;
+	byte r;
+	byte i;
 	
-	public GaussianInt16Member() {
+	public GaussianInt8Member() {
 		r = i = 0;
 	}
 	
-	public GaussianInt16Member(short r, short i) {
-		this.r = r;
-		this.i = i;
+	public GaussianInt8Member(int r, int i) {
+		this.r = (byte) r;
+		this.i = (byte) i;
 	}
 	
-	public GaussianInt16Member(GaussianInt16Member other) {
+	public GaussianInt8Member(GaussianInt8Member other) {
 		set(other);
 	}
 	
-	public GaussianInt16Member(String str) {
+	public GaussianInt8Member(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().intValue());
@@ -104,31 +104,31 @@ public class GaussianInt16Member
 	
 	@Override
 	public void setR(Integer val) {
-		r = (short) (int) val;
+		r = (byte) (int) val;
 	}
 
 	@Override
-	public void getR(SignedInt16Member v) {
+	public void getR(SignedInt8Member v) {
 		v.setV(r);
 	}
 
 	@Override
 	public void setI(Integer val) {
-		i = (short) (int) val;
+		i = (byte) (int) val;
 	}
 
 	@Override
-	public void getI(SignedInt16Member v) {
+	public void getI(SignedInt8Member v) {
 		v.setV(i);
 	}
 
 	@Override
-	public void getV(GaussianInt16Member value) {
+	public void getV(GaussianInt8Member value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(GaussianInt16Member value) {
+	public void setV(GaussianInt8Member value) {
 		set(value);
 	}
 
@@ -150,47 +150,47 @@ public class GaussianInt16Member
 	}
 
 	@Override
-	public void get(GaussianInt16Member other) {
+	public void get(GaussianInt8Member other) {
 		other.r = r;
 		other.i = i;
 	}
 
 	@Override
-	public void set(GaussianInt16Member other) {
+	public void set(GaussianInt8Member other) {
 		r = other.r;
 		i = other.i;
 	}
 
 	@Override
-	public GaussianInt16Member duplicate() {
-		return new GaussianInt16Member(this);
+	public GaussianInt8Member duplicate() {
+		return new GaussianInt8Member(this);
 	}
 
 	@Override
-	public GaussianInt16Member allocate() {
-		return new GaussianInt16Member();
+	public GaussianInt8Member allocate() {
+		return new GaussianInt8Member();
 	}
 
 	@Override
-	public int shortCount() {
+	public int byteCount() {
 		return 2;
 	}
 
 	@Override
-	public void fromShortArray(short[] arr, int index) {
+	public void fromByteArray(byte[] arr, int index) {
 		r = arr[index+0];
 		i = arr[index+1];
 	}
 
 	@Override
-	public void toShortArray(short[] arr, int index) {
+	public void toByteArray(byte[] arr, int index) {
 		arr[index+0] = r;
 		arr[index+1] = i;
 	}
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.SHORT;
+		return PrimitiveRepresentation.BYTE;
 	}
 
 	@Override
@@ -217,9 +217,9 @@ public class GaussianInt16Member
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(v);
 		else
-			this.setI((int) v);
+			this.setI(v);
 	}
 
 	@Override
@@ -337,9 +337,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(v);
 			else
-				this.setI((int) v);
+				this.setI(v);
 		}
 	}
 
@@ -746,7 +746,7 @@ public class GaussianInt16Member
 	public void primitiveInit() {
 		r = i = 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -770,8 +770,8 @@ public class GaussianInt16Member
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o instanceof GaussianInt16Member) {
-			return G.GAUSS16.isEqual().call(this, (GaussianInt16Member) o);
+		if (o instanceof GaussianInt8Member) {
+			return G.GAUSS8.isEqual().call(this, (GaussianInt8Member) o);
 		}
 		return false;
 	}

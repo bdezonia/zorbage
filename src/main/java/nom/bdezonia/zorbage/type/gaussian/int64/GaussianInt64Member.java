@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.gaussian.int16;
+package nom.bdezonia.zorbage.type.gaussian.int64;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -41,8 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.storage.coder.LongCoder;
+import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
@@ -55,37 +55,37 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
  * @author Barry DeZonia
  *
  */
-public class GaussianInt16Member
+public class GaussianInt64Member
 	implements
-		ShortCoder,
-		Allocatable<GaussianInt16Member>, Duplicatable<GaussianInt16Member>,
-		Settable<GaussianInt16Member>, Gettable<GaussianInt16Member>,
-		UniversalRepresentation, NumberMember<GaussianInt16Member>,
+		LongCoder,
+		Allocatable<GaussianInt64Member>, Duplicatable<GaussianInt64Member>,
+		Settable<GaussianInt64Member>, Gettable<GaussianInt64Member>,
+		UniversalRepresentation, NumberMember<GaussianInt64Member>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt16Member>,
-		SetComplex<Integer>, GetComplex<SignedInt16Member>
+		SetReal<Long>, GetReal<SignedInt64Member>,
+		SetComplex<Long>, GetComplex<SignedInt64Member>
 {
-	short r;
-	short i;
+	long r;
+	long i;
 	
-	public GaussianInt16Member() {
+	public GaussianInt64Member() {
 		r = i = 0;
 	}
 	
-	public GaussianInt16Member(short r, short i) {
+	public GaussianInt64Member(long r, long i) {
 		this.r = r;
 		this.i = i;
 	}
 	
-	public GaussianInt16Member(GaussianInt16Member other) {
+	public GaussianInt64Member(GaussianInt64Member other) {
 		set(other);
 	}
 	
-	public GaussianInt16Member(String str) {
+	public GaussianInt64Member(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		OctonionRepresentation val = rep.firstValue();
-		setR(val.r().intValue());
-		setI(val.i().intValue());
+		setR(val.r().longValue());
+		setI(val.i().longValue());
 	}
 	
 	@Override
@@ -98,37 +98,37 @@ public class GaussianInt16Member
 		return 0;
 	}
 
-	public int r() { return r; }
+	public long r() { return r; }
 	
-	public int i() { return i; }
+	public long i() { return i; }
 	
 	@Override
-	public void setR(Integer val) {
-		r = (short) (int) val;
+	public void setR(Long val) {
+		r = val;
 	}
 
 	@Override
-	public void getR(SignedInt16Member v) {
+	public void getR(SignedInt64Member v) {
 		v.setV(r);
 	}
 
 	@Override
-	public void setI(Integer val) {
-		i = (short) (int) val;
+	public void setI(Long val) {
+		i = val;
 	}
 
 	@Override
-	public void getI(SignedInt16Member v) {
+	public void getI(SignedInt64Member v) {
 		v.setV(i);
 	}
 
 	@Override
-	public void getV(GaussianInt16Member value) {
+	public void getV(GaussianInt64Member value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(GaussianInt16Member value) {
+	public void setV(GaussianInt64Member value) {
 		set(value);
 	}
 
@@ -145,52 +145,52 @@ public class GaussianInt16Member
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionRepresentation v = rep.getValue();
-		setR(v.r().intValue());
-		setI(v.i().intValue());
+		setR(v.r().longValue());
+		setI(v.i().longValue());
 	}
 
 	@Override
-	public void get(GaussianInt16Member other) {
+	public void get(GaussianInt64Member other) {
 		other.r = r;
 		other.i = i;
 	}
 
 	@Override
-	public void set(GaussianInt16Member other) {
+	public void set(GaussianInt64Member other) {
 		r = other.r;
 		i = other.i;
 	}
 
 	@Override
-	public GaussianInt16Member duplicate() {
-		return new GaussianInt16Member(this);
+	public GaussianInt64Member duplicate() {
+		return new GaussianInt64Member(this);
 	}
 
 	@Override
-	public GaussianInt16Member allocate() {
-		return new GaussianInt16Member();
+	public GaussianInt64Member allocate() {
+		return new GaussianInt64Member();
 	}
 
 	@Override
-	public int shortCount() {
+	public int longCount() {
 		return 2;
 	}
 
 	@Override
-	public void fromShortArray(short[] arr, int index) {
+	public void fromLongArray(long[] arr, int index) {
 		r = arr[index+0];
 		i = arr[index+1];
 	}
 
 	@Override
-	public void toShortArray(short[] arr, int index) {
+	public void toLongArray(long[] arr, int index) {
 		arr[index+0] = r;
 		arr[index+1] = i;
 	}
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.SHORT;
+		return PrimitiveRepresentation.LONG;
 	}
 
 	@Override
@@ -201,65 +201,65 @@ public class GaussianInt16Member
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR((long) v);
 		else
-			this.setI((int) v);
+			this.setI((long) v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR((long) v);
 		else
-			this.setI((int) v);
+			this.setI((long) v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR((long) v);
 		else
-			this.setI((int) v);
+			this.setI((long) v);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(v);
 		else
-			this.setI((int) v);
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR((long) v);
 		else
-			this.setI((int) v);
+			this.setI((long) v);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR((long) v);
 		else
-			this.setI((int) v);
+			this.setI((long) v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		if (component == 0)
-			this.setR(v.intValue());
+			this.setR(v.longValue());
 		else
-			this.setI(v.intValue());
+			this.setI(v.longValue());
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		if (component == 0)
-			this.setR(v.intValue());
+			this.setR(v.longValue());
 		else
-			this.setI(v.intValue());
+			this.setI(v.longValue());
 	}
 
 	@Override
@@ -283,9 +283,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR((long) v);
 			else
-				this.setI((int) v);
+				this.setI((long) v);
 		}
 	}
 
@@ -310,9 +310,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR((long) v);
 			else
-				this.setI((int) v);
+				this.setI((long) v);
 		}
 	}
 
@@ -337,9 +337,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR((long) v);
 			else
-				this.setI((int) v);
+				this.setI((long) v);
 		}
 	}
 
@@ -364,9 +364,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(v);
 			else
-				this.setI((int) v);
+				this.setI(v);
 		}
 	}
 
@@ -391,9 +391,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR((long) v);
 			else
-				this.setI((int) v);
+				this.setI((long) v);
 		}
 	}
 
@@ -418,9 +418,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR((long) v);
 			else
-				this.setI((int) v);
+				this.setI((long) v);
 		}
 	}
 
@@ -445,9 +445,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v.intValue());
+				this.setR(v.longValue());
 			else
-				this.setI(v.intValue());
+				this.setI(v.longValue());
 		}
 	}
 
@@ -472,9 +472,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v.intValue());
+				this.setR(v.longValue());
 			else
-				this.setI(v.intValue());
+				this.setI(v.longValue());
 		}
 	}
 
@@ -503,8 +503,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r();
-		if (component == 1) return i();
+		if (component == 0) return (int) r();
+		if (component == 1) return (int) i();
 		return 0;
 	}
 
@@ -622,8 +622,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r();
-			else return i();
+			if (component == 0) return (int) r();
+			else return (int) i();
 		}
 	}
 
@@ -746,7 +746,7 @@ public class GaussianInt16Member
 	public void primitiveInit() {
 		r = i = 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -770,8 +770,8 @@ public class GaussianInt16Member
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o instanceof GaussianInt16Member) {
-			return G.GAUSS16.isEqual().call(this, (GaussianInt16Member) o);
+		if (o instanceof GaussianInt64Member) {
+			return G.GAUSS64.isEqual().call(this, (GaussianInt64Member) o);
 		}
 		return false;
 	}
