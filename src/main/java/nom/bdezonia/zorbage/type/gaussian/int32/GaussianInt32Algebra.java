@@ -193,10 +193,10 @@ public class GaussianInt32Algebra
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member c) {
 			// for safety must use tmps
-			int r = a.r()*b.r() - a.i()*b.i();
-			int i = a.i()*b.r() + a.r()*b.i();
-			c.setR( r );
-			c.setI( i );
+			long r = ((long)a.r)*b.r - ((long)a.i)*b.i;
+			long i = ((long)a.i)*b.r + ((long)a.r)*b.i;
+			c.setR( (int) r );
+			c.setI( (int) i );
 		}
 	};
 

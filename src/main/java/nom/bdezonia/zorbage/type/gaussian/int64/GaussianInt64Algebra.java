@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
  * 
@@ -54,7 +54,7 @@ public class GaussianInt64Algebra
 		IntegralDomain<GaussianInt64Algebra, GaussianInt64Member>,
 		Random<GaussianInt64Member>,
 		Tolerance<GaussianInt64Member,GaussianInt64Member>,
-		Norm<GaussianInt64Member, SignedInt64Member>,
+		Norm<GaussianInt64Member, UnboundedIntMember>,
 		Conjugate<GaussianInt64Member>
 {
 
@@ -194,10 +194,10 @@ public class GaussianInt64Algebra
 		@Override
 		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member c) {
 			// for safety must use tmps
-			BigInteger ar = BigInteger.valueOf(a.r());
-			BigInteger ai = BigInteger.valueOf(a.i());
-			BigInteger br = BigInteger.valueOf(b.r());
-			BigInteger bi = BigInteger.valueOf(b.i());
+			BigInteger ar = BigInteger.valueOf(a.r);
+			BigInteger ai = BigInteger.valueOf(a.i);
+			BigInteger br = BigInteger.valueOf(b.r);
+			BigInteger bi = BigInteger.valueOf(b.i);
 			BigInteger r = ar.multiply(br).subtract(ai.multiply(bi));
 			BigInteger i = ai.multiply(br).add(ar.multiply(bi));
 			c.setR( r.longValue() );
@@ -246,10 +246,10 @@ public class GaussianInt64Algebra
 		public Boolean call(GaussianInt64Member tol, GaussianInt64Member a, GaussianInt64Member b) {
 			if (tol.r < 0 || tol.i < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
-			// avoid overflow/underflow conditions by using longs
-			long r = Math.abs(((long) a.r) - b.r);
-			long i = Math.abs(((long) a.i) - b.i);
-			return r <= tol.r && i <= tol.i;
+			// avoid overflow/underflow conditions by using bigInts
+			BigInteger r = BigInteger.valueOf(a.r).subtract(BigInteger.valueOf(b.r)).abs();
+			BigInteger i = BigInteger.valueOf(a.i).subtract(BigInteger.valueOf(b.i)).abs();
+			return r.compareTo(BigInteger.valueOf(tol.r)) <= 0 && i.compareTo(BigInteger.valueOf(tol.i)) <= 0;
 		}
 	};
 
@@ -279,20 +279,20 @@ public class GaussianInt64Algebra
 		return RAND;
 	}
 
-	private final Procedure2<GaussianInt64Member, SignedInt64Member> NORM =
-			new Procedure2<GaussianInt64Member, SignedInt64Member>()
+	private final Procedure2<GaussianInt64Member, UnboundedIntMember> NORM =
+			new Procedure2<GaussianInt64Member, UnboundedIntMember>()
 	{
 		@Override
-		public void call(GaussianInt64Member a, SignedInt64Member b) {
-			long val = ((long)a.r)*a.r + ((long)a.i)*a.i;
-			if (val < 0)
-				throw new IllegalArgumentException("overflow in norm calculation");
+		public void call(GaussianInt64Member a, UnboundedIntMember b) {
+			BigInteger ar = BigInteger.valueOf(a.r);
+			BigInteger ai = BigInteger.valueOf(a.i);
+			BigInteger val = ar.multiply(ar).add(ai.multiply(ai));
 			b.setV(val);
 		}
 	};
 
 	@Override
-	public Procedure2<GaussianInt64Member, SignedInt64Member> norm() {
+	public Procedure2<GaussianInt64Member, UnboundedIntMember> norm() {
 		return NORM;
 	}
 

@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
  * 
@@ -53,7 +53,7 @@ public class GaussianInt16Algebra
 		IntegralDomain<GaussianInt16Algebra, GaussianInt16Member>,
 		Random<GaussianInt16Member>,
 		Tolerance<GaussianInt16Member,GaussianInt16Member>,
-		Norm<GaussianInt16Member, SignedInt64Member>,
+		Norm<GaussianInt16Member, SignedInt32Member>,
 		Conjugate<GaussianInt16Member>
 {
 
@@ -193,8 +193,8 @@ public class GaussianInt16Algebra
 		@Override
 		public void call(GaussianInt16Member a, GaussianInt16Member b, GaussianInt16Member c) {
 			// for safety must use tmps
-			int r = a.r()*b.r() - a.i()*b.i();
-			int i = a.i()*b.r() + a.r()*b.i();
+			int r = ((int)a.r)*b.r - ((int)a.i*b.i);
+			int i = ((int)a.i)*b.r + ((int)a.r*b.i);
 			c.setR( r );
 			c.setI( i );
 		}
@@ -242,8 +242,8 @@ public class GaussianInt16Algebra
 			if (tol.r < 0 || tol.i < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
 			// avoid overflow/underflow conditions by using longs
-			long r = Math.abs(((long) a.r) - b.r);
-			long i = Math.abs(((long) a.i) - b.i);
+			int r = Math.abs(((int) a.r) - b.r);
+			int i = Math.abs(((int) a.i) - b.i);
 			return r <= tol.r && i <= tol.i;
 		}
 	};
@@ -269,12 +269,12 @@ public class GaussianInt16Algebra
 		return RAND;
 	}
 
-	private final Procedure2<GaussianInt16Member, SignedInt64Member> NORM =
-			new Procedure2<GaussianInt16Member, SignedInt64Member>()
+	private final Procedure2<GaussianInt16Member, SignedInt32Member> NORM =
+			new Procedure2<GaussianInt16Member, SignedInt32Member>()
 	{
 		@Override
-		public void call(GaussianInt16Member a, SignedInt64Member b) {
-			long val = ((long)a.r)*a.r + ((long)a.i)*a.i;
+		public void call(GaussianInt16Member a, SignedInt32Member b) {
+			int val = ((int)a.r)*a.r + ((int)a.i)*a.i;
 			if (val < 0)
 				throw new IllegalArgumentException("overflow in norm calculation");
 			b.setV(val);
@@ -282,7 +282,7 @@ public class GaussianInt16Algebra
 	};
 
 	@Override
-	public Procedure2<GaussianInt16Member, SignedInt64Member> norm() {
+	public Procedure2<GaussianInt16Member, SignedInt32Member> norm() {
 		return NORM;
 	}
 
