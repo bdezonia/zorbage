@@ -193,8 +193,8 @@ public class GaussianInt8Algebra
 		@Override
 		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member c) {
 			// for safety must use tmps
-			int r = a.r()*b.r() - a.i()*b.i();
-			int i = a.i()*b.r() + a.r()*b.i();
+			int r = ((int)a.r)*b.r - ((int)a.i)*b.i;
+			int i = ((int)a.i)*b.r + ((int)a.r)*b.i;
 			c.setR( r );
 			c.setI( i );
 		}
