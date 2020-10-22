@@ -46,7 +46,7 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
   Define multidimensional data sets with flexible out of bounds data
     handling procedures.
     
-  Use many different data types (109 and counting)
+  Use many different data types (116 and counting)
 
     - signed integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128, unbounded)
@@ -67,6 +67,8 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
     - ARGB and RGB tuples
     
     - vectors and matrices and tensors made of the various types
+    
+    - gaussian integers (bits: 8, 16, 32, 64, unbounded)
   
   Define your own data types
   
