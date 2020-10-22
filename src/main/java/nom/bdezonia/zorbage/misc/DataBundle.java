@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
+import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.character.FixedStringMember;
 import nom.bdezonia.zorbage.type.character.StringMember;
 import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16CartesianTensorProductMember;
@@ -86,6 +87,9 @@ import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
 import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Member;
 import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Member;
+import nom.bdezonia.zorbage.type.gaussian.int64.GaussianInt64Member;
+import nom.bdezonia.zorbage.type.gaussian.int8.GaussianInt8Member;
+import nom.bdezonia.zorbage.type.gaussian.unbounded.GaussianIntUnboundedMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionCartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
@@ -178,6 +182,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<Float32CartesianTensorProductMember>> flt_tens = new ArrayList<>();
 	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
 	public List<DimensionedDataSource<StringMember>> strs = new ArrayList<>();
+	public List<DimensionedDataSource<CharMember>> chars = new ArrayList<>();
 	public List<DimensionedDataSource<Float16Member>> hlfs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16VectorMember>> hlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16MatrixMember>> hlf_mats = new ArrayList<>();
@@ -260,8 +265,11 @@ public class DataBundle {
 	public List<DimensionedDataSource<UnsignedInt64Member>> uint64s = new ArrayList<>();
 	public List<DimensionedDataSource<UnsignedInt128Member>> uint128s = new ArrayList<>();
 	public List<DimensionedDataSource<UnboundedIntMember>> unbounds = new ArrayList<>();
+	public List<DimensionedDataSource<GaussianInt8Member>> gint8s = new ArrayList<>();
 	public List<DimensionedDataSource<GaussianInt16Member>> gint16s = new ArrayList<>();
 	public List<DimensionedDataSource<GaussianInt32Member>> gint32s = new ArrayList<>();
+	public List<DimensionedDataSource<GaussianInt64Member>> gint64s = new ArrayList<>();
+	public List<DimensionedDataSource<GaussianIntUnboundedMember>> gintus = new ArrayList<>();
 	
 	
 	public void mergeArgb(DimensionedDataSource<ArgbMember> ds) {
@@ -402,6 +410,11 @@ public class DataBundle {
 	public void mergeString(DimensionedDataSource<StringMember> ds) {
 		if (ds != null)
 			strs.add(ds);
+	}
+	
+	public void mergeChar(DimensionedDataSource<CharMember> ds) {
+		if (ds != null)
+			chars.add(ds);
 	}
 	
 	public void mergeFlt16(DimensionedDataSource<Float16Member> ds) {
@@ -874,6 +887,11 @@ public class DataBundle {
 			ohps.add(ds);
 	}
 	
+	public void mergeGaussianInt8(DimensionedDataSource<GaussianInt8Member> ds) {
+		if (ds != null)
+			gint8s.add(ds);
+	}
+	
 	public void mergeGaussianInt16(DimensionedDataSource<GaussianInt16Member> ds) {
 		if (ds != null)
 			gint16s.add(ds);
@@ -882,6 +900,16 @@ public class DataBundle {
 	public void mergeGaussianInt32(DimensionedDataSource<GaussianInt32Member> ds) {
 		if (ds != null)
 			gint32s.add(ds);
+	}
+	
+	public void mergeGaussianInt64(DimensionedDataSource<GaussianInt64Member> ds) {
+		if (ds != null)
+			gint64s.add(ds);
+	}
+	
+	public void mergeGaussianIntUnbounded(DimensionedDataSource<GaussianIntUnboundedMember> ds) {
+		if (ds != null)
+			gintus.add(ds);
 	}
 
 	public void mergeAll(DataBundle other) {
@@ -914,8 +942,13 @@ public class DataBundle {
 		flt_mats.addAll(other.flt_mats);
 		flt_tens.addAll(other.flt_tens);
 		fstrs.addAll(other.fstrs);
+		strs.addAll(other.strs);
+		chars.addAll(other.chars);
+		gint8s.addAll(other.gint8s);
 		gint16s.addAll(other.gint16s);
 		gint32s.addAll(other.gint32s);
+		gint64s.addAll(other.gint64s);
+		gintus.addAll(other.gintus);
 		hlfs.addAll(other.hlfs);
 		hlf_vecs.addAll(other.hlf_vecs);
 		hlf_mats.addAll(other.hlf_mats);
@@ -1174,6 +1207,18 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 		
+		for (DimensionedDataSource<?> ds : this.chars) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CHAR, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.gint8s) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSS8, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
 		for (DimensionedDataSource<?> ds : this.gint16s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSS16, (DimensionedDataSource<U>)ds);
@@ -1183,6 +1228,18 @@ public class DataBundle {
 		for (DimensionedDataSource<?> ds : this.gint32s) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
 					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSS32, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.gint64s) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSS64, (DimensionedDataSource<U>)ds);
+			fullList.add(tuple);
+		}
+		
+		for (DimensionedDataSource<?> ds : this.gintus) {
+			Tuple2<T, DimensionedDataSource<U>> tuple =
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.GAUSSU, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
