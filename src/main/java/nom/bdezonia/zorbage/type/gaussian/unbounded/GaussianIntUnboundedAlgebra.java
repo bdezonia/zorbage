@@ -30,8 +30,8 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algebra.IntegralDomain;
 import nom.bdezonia.zorbage.algebra.Norm;
+import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -49,7 +49,7 @@ import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
  */
 public class GaussianIntUnboundedAlgebra
 	implements
-		IntegralDomain<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>,
+		PrincipalIdealDomain<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>,
 		Tolerance<GaussianIntUnboundedMember,GaussianIntUnboundedMember>,
 		Norm<GaussianIntUnboundedMember, UnboundedIntMember>,
 		Conjugate<GaussianIntUnboundedMember>

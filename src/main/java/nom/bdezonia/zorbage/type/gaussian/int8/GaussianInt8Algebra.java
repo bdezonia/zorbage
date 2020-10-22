@@ -30,8 +30,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algebra.IntegralDomain;
 import nom.bdezonia.zorbage.algebra.Norm;
+import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -50,7 +50,7 @@ import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
  */
 public class GaussianInt8Algebra
 	implements
-		IntegralDomain<GaussianInt8Algebra, GaussianInt8Member>,
+		PrincipalIdealDomain<GaussianInt8Algebra, GaussianInt8Member>,
 		Random<GaussianInt8Member>,
 		Tolerance<GaussianInt8Member,GaussianInt8Member>,
 		Norm<GaussianInt8Member, SignedInt32Member>,

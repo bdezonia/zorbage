@@ -31,8 +31,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algebra.IntegralDomain;
 import nom.bdezonia.zorbage.algebra.Norm;
+import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -51,7 +51,7 @@ import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
  */
 public class GaussianInt64Algebra
 	implements
-		IntegralDomain<GaussianInt64Algebra, GaussianInt64Member>,
+		PrincipalIdealDomain<GaussianInt64Algebra, GaussianInt64Member>,
 		Random<GaussianInt64Member>,
 		Tolerance<GaussianInt64Member,GaussianInt64Member>,
 		Norm<GaussianInt64Member, UnboundedIntMember>,
