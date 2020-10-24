@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class AbsL<T extends Algebra<T,U> & AbsoluteValue<U>,U>
+public class AbsL<T extends Algebra<T,U> & AbsoluteValue<U,U>, U>
 	implements Procedure<U>
 {
 	private final Procedure<U> ancestor;

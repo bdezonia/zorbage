@@ -31,10 +31,10 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface OrderedField<T extends OrderedField<T,U>,U>
+public interface OrderedField<T extends OrderedField<T,U,V>, U, V>
 	extends
 		Field<T,U>,
 		Ordered<U>,
-		AbsoluteValue<U>
+		AbsoluteValue<U,V>
 {
 }

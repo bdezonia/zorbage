@@ -59,7 +59,7 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 public class Float16Algebra
 	implements
-		OrderedField<Float16Algebra,Float16Member>,
+		OrderedField<Float16Algebra,Float16Member,Float16Member>,
 		Bounded<Float16Member>,
 		Norm<Float16Member,Float16Member>,
 		RealConstants<Float16Member>,

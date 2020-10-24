@@ -51,7 +51,7 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 public class HighPrecisionAlgebra
 	implements
-		OrderedField<HighPrecisionAlgebra,HighPrecisionMember>,
+		OrderedField<HighPrecisionAlgebra,HighPrecisionMember,HighPrecisionMember>,
 		Norm<HighPrecisionMember,HighPrecisionMember>,
 		RealConstants<HighPrecisionMember>,
 		RealUnreal<HighPrecisionMember,HighPrecisionMember>,

@@ -31,10 +31,10 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface OrderedIntegralDomain<T extends OrderedIntegralDomain<T,U>, U>
+public interface OrderedIntegralDomain<T extends OrderedIntegralDomain<T,U, V>, U, V>
 	extends
 		IntegralDomain<T,U>,
 		Ordered<U>,
-		AbsoluteValue<U>
+		AbsoluteValue<U,V>
 {
 }

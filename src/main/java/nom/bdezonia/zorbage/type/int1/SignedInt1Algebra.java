@@ -52,7 +52,7 @@ public class SignedInt1Algebra
 		EvenOdd<SignedInt1Member>,
 		Scale<SignedInt1Member,SignedInt1Member>,
 		Bounded<SignedInt1Member>,
-		AbsoluteValue<SignedInt1Member>,
+		AbsoluteValue<SignedInt1Member,SignedInt1Member>,
 		BitOperations<SignedInt1Member>,
 		Random<SignedInt1Member>,
 		ScaleByHighPrec<SignedInt1Member>,

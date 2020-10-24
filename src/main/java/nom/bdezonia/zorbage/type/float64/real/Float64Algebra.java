@@ -59,7 +59,7 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 public class Float64Algebra
 	implements
-		OrderedField<Float64Algebra,Float64Member>,
+		OrderedField<Float64Algebra,Float64Member,Float64Member>,
 		Bounded<Float64Member>,
 		Norm<Float64Member,Float64Member>,
 		RealConstants<Float64Member>,

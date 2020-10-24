@@ -59,7 +59,7 @@ public class Gcd {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & AbsoluteValue<U> & BitOperations<U> &
+	public static <T extends Algebra<T,U> & AbsoluteValue<U,U> & BitOperations<U> &
 						Addition<U> & Ordered<U> & EvenOdd<U> & Bounded<U> & Unity<U> &
 						ModularDivision<U>, U>
 		void compute(T algebra, U a, U b, U result)

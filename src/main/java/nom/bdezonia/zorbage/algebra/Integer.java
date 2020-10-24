@@ -31,10 +31,10 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Integer<T extends Integer<T,U>,U>
+public interface Integer<T extends Integer<T,U>, U>
 	extends
-		OrderedIntegralDomain<T,U>,
-		EuclideanDomain<T,U>,
+		OrderedIntegralDomain<T,U,U>,
+		EuclideanDomain<T,U,U>,
 		BitOperations<U>,
 		PredSucc<U>,
 		Power<U>,

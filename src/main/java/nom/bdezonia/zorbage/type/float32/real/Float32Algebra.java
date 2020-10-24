@@ -59,7 +59,7 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 public class Float32Algebra
 	implements
-		OrderedField<Float32Algebra,Float32Member>,
+		OrderedField<Float32Algebra,Float32Member,Float32Member>,
 		Bounded<Float32Member>,
 		Norm<Float32Member,Float32Member>,
 		RealConstants<Float32Member>,

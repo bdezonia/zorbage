@@ -51,7 +51,7 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  */
 public class RationalAlgebra
 	implements
-		OrderedField<RationalAlgebra,RationalMember>,
+		OrderedField<RationalAlgebra,RationalMember,RationalMember>,
 		Scale<RationalMember,RationalMember>,
 		Norm<RationalMember,RationalMember>,
 		ScaleByHighPrec<RationalMember>,
