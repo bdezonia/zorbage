@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.type.gaussian.int8;
 
+import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
-import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
@@ -43,6 +45,9 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 
 /**
@@ -52,13 +57,14 @@ import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
  */
 public class GaussianInt8Algebra
 	implements
-		PrincipalIdealDomain<GaussianInt8Algebra, GaussianInt8Member>,
+		EuclideanDomain<GaussianInt8Algebra, GaussianInt8Member, SignedInt32Member>,
 		Random<GaussianInt8Member>,
 		Tolerance<GaussianInt8Member,GaussianInt8Member>,
 		Norm<GaussianInt8Member, SignedInt32Member>,
 		Conjugate<GaussianInt8Member>,
 		ScaleByOneHalf<GaussianInt8Member>,
-		ScaleByTwo<GaussianInt8Member>
+		ScaleByTwo<GaussianInt8Member>,
+		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>
 {
 
 	@Override
@@ -333,5 +339,133 @@ public class GaussianInt8Algebra
 	@Override
 	public Procedure2<GaussianInt8Member, GaussianInt8Member> scaleByOneHalf() {
 		return SHALF;
+	}
+
+	private final Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> GCD =
+			new Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member c) {
+			throw new IllegalArgumentException("code not done yet");
+			//Gcd.compute(G.GAUSS16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> gcd() {
+		return GCD;
+	}
+
+	private final Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> LCM =
+			new Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member c) {
+			throw new IllegalArgumentException("code not done yet");
+			//Lcm.compute(G.GAUSS16, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> lcm() {
+		return LCM;
+	}
+
+	private final Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> DIV =
+			new Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member d) {
+			throw new IllegalArgumentException("code not done yet");
+			//GaussianInt16Member m = G.GAUSS16.construct();
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+	@Override
+	public Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> MOD =
+			new Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member m) {
+			throw new IllegalArgumentException("code not done yet");
+			//GaussianInt16Member d = G.GAUSS16.construct();
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+
+	@Override
+	public Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> DIVMOD =
+			new Procedure4<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member d, GaussianInt8Member m) {
+			throw new IllegalArgumentException("code not done yet");
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+
+	@Override
+	public Procedure4<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> divMod() {
+		return DIVMOD;
+	}
+
+	private final Function1<Boolean, GaussianInt8Member> EVEN =
+			new Function1<Boolean, GaussianInt8Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt8Member a) {
+			SignedInt32Member norm = G.INT32.construct();
+			norm().call(a, norm);
+			return (norm.v() & 1) == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, GaussianInt8Member> isEven() {
+		return EVEN;
+	}
+
+	private final Function1<Boolean, GaussianInt8Member> ODD =
+			new Function1<Boolean, GaussianInt8Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt8Member a) {
+			SignedInt32Member norm = G.INT32.construct();
+			norm().call(a, norm);
+			return (norm.v() & 1) == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, GaussianInt8Member> isOdd() {
+		return ODD;
+	}
+
+	private final Procedure2<GaussianInt8Member, HighPrecisionMember> ABS =
+			new Procedure2<GaussianInt8Member, HighPrecisionMember>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, HighPrecisionMember b) {
+			SignedInt32Member norm = G.INT32.construct();
+			norm().call(a, norm);
+			BigDecimal n = new BigDecimal(norm.v());
+			b.setV(n.sqrt(HighPrecisionAlgebra.getContext()));
+		}
+	};
+
+	@Override
+	public Procedure2<GaussianInt8Member, HighPrecisionMember> abs() {
+		return ABS;
 	}
 }

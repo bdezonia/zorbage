@@ -26,13 +26,15 @@
  */
 package nom.bdezonia.zorbage.type.gaussian.int64;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
+import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
-import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
@@ -44,6 +46,9 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
@@ -53,13 +58,14 @@ import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
  */
 public class GaussianInt64Algebra
 	implements
-		PrincipalIdealDomain<GaussianInt64Algebra, GaussianInt64Member>,
+		EuclideanDomain<GaussianInt64Algebra, GaussianInt64Member, UnboundedIntMember>,
 		Random<GaussianInt64Member>,
 		Tolerance<GaussianInt64Member,GaussianInt64Member>,
 		Norm<GaussianInt64Member, UnboundedIntMember>,
 		Conjugate<GaussianInt64Member>,
 		ScaleByOneHalf<GaussianInt64Member>,
-		ScaleByTwo<GaussianInt64Member>
+		ScaleByTwo<GaussianInt64Member>,
+		AbsoluteValue<GaussianInt64Member, HighPrecisionMember>
 {
 
 	@Override
@@ -343,5 +349,133 @@ public class GaussianInt64Algebra
 	@Override
 	public Procedure2<GaussianInt64Member, GaussianInt64Member> scaleByOneHalf() {
 		return SHALF;
+	}
+
+	private final Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> GCD =
+			new Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member c) {
+			throw new IllegalArgumentException("code not done yet");
+			//Gcd.compute(G.GAUSS16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> gcd() {
+		return GCD;
+	}
+
+	private final Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> LCM =
+			new Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member c) {
+			throw new IllegalArgumentException("code not done yet");
+			//Lcm.compute(G.GAUSS16, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> lcm() {
+		return LCM;
+	}
+
+	private final Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> DIV =
+			new Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member d) {
+			throw new IllegalArgumentException("code not done yet");
+			//GaussianInt16Member m = G.GAUSS16.construct();
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+	@Override
+	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> div() {
+		return DIV;
+	}
+
+	private final Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> MOD =
+			new Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member m) {
+			throw new IllegalArgumentException("code not done yet");
+			//GaussianInt16Member d = G.GAUSS16.construct();
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+
+	@Override
+	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> DIVMOD =
+			new Procedure4<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member d, GaussianInt64Member m) {
+			throw new IllegalArgumentException("code not done yet");
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+
+	@Override
+	public Procedure4<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> divMod() {
+		return DIVMOD;
+	}
+
+	private final Function1<Boolean, GaussianInt64Member> EVEN =
+			new Function1<Boolean, GaussianInt64Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt64Member a) {
+			UnboundedIntMember norm = G.UNBOUND.construct();
+			norm().call(a, norm);
+			return norm.v().and(BigInteger.ONE) == BigInteger.ZERO;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, GaussianInt64Member> isEven() {
+		return EVEN;
+	}
+
+	private final Function1<Boolean, GaussianInt64Member> ODD =
+			new Function1<Boolean, GaussianInt64Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt64Member a) {
+			UnboundedIntMember norm = G.UNBOUND.construct();
+			norm().call(a, norm);
+			return norm.v().and(BigInteger.ONE) == BigInteger.ONE;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, GaussianInt64Member> isOdd() {
+		return ODD;
+	}
+
+	private final Procedure2<GaussianInt64Member, HighPrecisionMember> ABS =
+			new Procedure2<GaussianInt64Member, HighPrecisionMember>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, HighPrecisionMember b) {
+			UnboundedIntMember norm = G.UNBOUND.construct();
+			norm().call(a, norm);
+			BigDecimal n = new BigDecimal(norm.v());
+			b.setV(n.sqrt(HighPrecisionAlgebra.getContext()));
+		}
+	};
+
+	@Override
+	public Procedure2<GaussianInt64Member, HighPrecisionMember> abs() {
+		return ABS;
 	}
 }
