@@ -29,8 +29,8 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 
@@ -53,7 +53,7 @@ public class DivMod {
 	 * @param d
 	 * @param m
 	 */
-	public static <T extends Algebra<T,U> & Ordered<U> & Unity<U> & Addition<U> & BitOperations<U> & Bounded<U>,U>
+	public static <T extends Algebra<T,U> & Ordered<U> & Unity<U> & Addition<U> & ScaleByOneHalf<U> & Bounded<U>,U>
 		void compute(T alg, U a, U b, U d, U m)
 	{
 		if (alg.isZero().call(b))
@@ -112,7 +112,7 @@ public class DivMod {
 			U n = alg.construct(one);
 			alg.subtract().call(aNeg, c, aNeg);
 			while (!alg.isEqual().call(c, bNeg)) {
-				alg.bitShiftRight().call(1, c, c);
+				alg.scaleByOneHalf().call(c, c);
 				alg.add().call(n, n, n);
 				if (alg.isGreaterEqual().call(c, aNeg)) {
 					alg.subtract().call(aNeg, c, aNeg);
@@ -144,7 +144,7 @@ public class DivMod {
 			U n = alg.construct(one);
 			alg.subtract().call(aPos, c, aPos);
 			while (!alg.isEqual().call(c, bPos)) {
-				alg.bitShiftRight().call(1, c, c);
+				alg.scaleByOneHalf().call(c, c);
 				alg.add().call(n, n, n);
 				if (alg.isLessEqual().call(c, aPos)) {
 					alg.subtract().call(aPos, c, aPos);

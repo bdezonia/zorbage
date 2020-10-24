@@ -34,6 +34,8 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -55,7 +57,9 @@ public class GaussianInt64Algebra
 		Random<GaussianInt64Member>,
 		Tolerance<GaussianInt64Member,GaussianInt64Member>,
 		Norm<GaussianInt64Member, UnboundedIntMember>,
-		Conjugate<GaussianInt64Member>
+		Conjugate<GaussianInt64Member>,
+		ScaleByOneHalf<GaussianInt64Member>,
+		ScaleByTwo<GaussianInt64Member>
 {
 
 	@Override
@@ -309,5 +313,35 @@ public class GaussianInt64Algebra
 	@Override
 	public Procedure2<GaussianInt64Member, GaussianInt64Member> conjugate() {
 		return CONJ;
+	}
+	
+	private final Procedure2<GaussianInt64Member, GaussianInt64Member> STWO =
+			new Procedure2<GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b) {
+			b.setR( a.r << 1);
+			b.setI( a.i << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianInt64Member, GaussianInt64Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<GaussianInt64Member, GaussianInt64Member> SHALF =
+			new Procedure2<GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(GaussianInt64Member a, GaussianInt64Member b) {
+			b.setR( a.r >> 1);
+			b.setI( a.i >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianInt64Member, GaussianInt64Member> scaleByOneHalf() {
+		return SHALF;
 	}
 }

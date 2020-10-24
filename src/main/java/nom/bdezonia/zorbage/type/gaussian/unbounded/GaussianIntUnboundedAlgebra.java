@@ -32,6 +32,8 @@ import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -52,8 +54,12 @@ public class GaussianIntUnboundedAlgebra
 		PrincipalIdealDomain<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>,
 		Tolerance<GaussianIntUnboundedMember,GaussianIntUnboundedMember>,
 		Norm<GaussianIntUnboundedMember, UnboundedIntMember>,
-		Conjugate<GaussianIntUnboundedMember>
+		Conjugate<GaussianIntUnboundedMember>,
+		ScaleByOneHalf<GaussianIntUnboundedMember>,
+		ScaleByTwo<GaussianIntUnboundedMember>
 {
+
+	private static final BigInteger TWO = BigInteger.valueOf(2);
 
 	@Override
 	public GaussianIntUnboundedMember construct() {
@@ -275,5 +281,35 @@ public class GaussianIntUnboundedAlgebra
 	@Override
 	public Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> conjugate() {
 		return CONJ;
+	}
+	
+	private final Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> STWO =
+			new Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			b.setR( a.r.multiply(TWO));
+			b.setI( a.i.multiply(TWO));
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> SHALF =
+			new Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			b.setR( a.r.divide(TWO));
+			b.setI( a.i.divide(TWO));
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByOneHalf() {
+		return SHALF;
 	}
 }

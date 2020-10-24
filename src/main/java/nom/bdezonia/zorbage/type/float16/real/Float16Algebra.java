@@ -82,12 +82,16 @@ public class Float16Algebra
 		ScaleByRational<Float16Member>,
 		ScaleByDouble<Float16Member>,
 		ScaleComponents<Float16Member, Float16Member>,
-		Tolerance<Float16Member,Float16Member>
+		Tolerance<Float16Member,Float16Member>,
+		ScaleByOneHalf<Float16Member>,
+		ScaleByTwo<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
 	private static final Float16Member GAMMA = new Float16Member((float)0.57721566490153286060);
 	private static final Float16Member PHI = new Float16Member((float)1.61803398874989484820);
+	private static final Float16Member ONE_HALF = new Float16Member(0.5f);
+	private static final Float16Member TWO = new Float16Member(2.0f);
 
 	public Float16Algebra() { }
 	
@@ -1404,4 +1408,33 @@ public class Float16Algebra
 	public Function3<Boolean, Float16Member, Float16Member, Float16Member> within() {
 		return WITHIN;
 	}
+
+	private final Procedure2<Float16Member, Float16Member> STWO =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<Float16Member, Float16Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<Float16Member, Float16Member> SHALF =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<Float16Member, Float16Member> scaleByOneHalf() {
+		return SHALF;
+	}
+
 }

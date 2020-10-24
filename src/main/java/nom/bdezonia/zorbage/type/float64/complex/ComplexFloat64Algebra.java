@@ -91,7 +91,9 @@ public class ComplexFloat64Algebra
 		ScaleByRational<ComplexFloat64Member>,
 		ScaleByDouble<ComplexFloat64Member>,
 		ScaleComponents<ComplexFloat64Member, Float64Member>,
-		Tolerance<Float64Member,ComplexFloat64Member>
+		Tolerance<Float64Member,ComplexFloat64Member>,
+		ScaleByOneHalf<ComplexFloat64Member>,
+		ScaleByTwo<ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
@@ -1400,6 +1402,34 @@ public class ComplexFloat64Algebra
 	@Override
 	public Function3<Boolean, Float64Member, ComplexFloat64Member, ComplexFloat64Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<ComplexFloat64Member, ComplexFloat64Member> STWO =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member, ComplexFloat64Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<ComplexFloat64Member, ComplexFloat64Member> SHALF =
+			new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+	{
+		@Override
+		public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexFloat64Member, ComplexFloat64Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

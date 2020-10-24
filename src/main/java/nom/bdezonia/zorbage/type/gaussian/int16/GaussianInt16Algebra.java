@@ -33,6 +33,8 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -54,7 +56,9 @@ public class GaussianInt16Algebra
 		Random<GaussianInt16Member>,
 		Tolerance<GaussianInt16Member,GaussianInt16Member>,
 		Norm<GaussianInt16Member, SignedInt32Member>,
-		Conjugate<GaussianInt16Member>
+		Conjugate<GaussianInt16Member>,
+		ScaleByOneHalf<GaussianInt16Member>,
+		ScaleByTwo<GaussianInt16Member>
 {
 
 	@Override
@@ -299,5 +303,35 @@ public class GaussianInt16Algebra
 	@Override
 	public Procedure2<GaussianInt16Member, GaussianInt16Member> conjugate() {
 		return CONJ;
+	}
+	
+	private final Procedure2<GaussianInt16Member, GaussianInt16Member> STWO =
+			new Procedure2<GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(GaussianInt16Member a, GaussianInt16Member b) {
+			b.setR( a.r << 1);
+			b.setI( a.i << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianInt16Member, GaussianInt16Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<GaussianInt16Member, GaussianInt16Member> SHALF =
+			new Procedure2<GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(GaussianInt16Member a, GaussianInt16Member b) {
+			b.setR( a.r >> 1);
+			b.setI( a.i >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianInt16Member, GaussianInt16Member> scaleByOneHalf() {
+		return SHALF;
 	}
 }

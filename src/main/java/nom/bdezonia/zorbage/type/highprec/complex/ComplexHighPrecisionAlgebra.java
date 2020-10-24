@@ -82,8 +82,11 @@ public class ComplexHighPrecisionAlgebra
 		ScaleByRational<ComplexHighPrecisionMember>,
 		ScaleByDouble<ComplexHighPrecisionMember>,
 		ScaleComponents<ComplexHighPrecisionMember, HighPrecisionMember>,
-		Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>
+		Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>,
+		ScaleByOneHalf<ComplexHighPrecisionMember>,
+		ScaleByTwo<ComplexHighPrecisionMember>
 {
+	private static final ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(BigDecimal.valueOf(0.5),BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember MINUS_ONE = new ComplexHighPrecisionMember(BigDecimal.valueOf(-1),BigDecimal.ZERO);
@@ -1344,5 +1347,33 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public Function3<Boolean, HighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> STWO =
+			new Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> SHALF =
+			new Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	{
+		@Override
+		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByOneHalf() {
+		return SHALF;
 	}
 }

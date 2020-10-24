@@ -84,12 +84,16 @@ public class Float64Algebra
 		ScaleByRational<Float64Member>,
 		ScaleByDouble<Float64Member>,
 		ScaleComponents<Float64Member, Float64Member>,
-		Tolerance<Float64Member,Float64Member>
+		Tolerance<Float64Member,Float64Member>,
+		ScaleByOneHalf<Float64Member>,
+		ScaleByTwo<Float64Member>
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
 	private static final Float64Member GAMMA = new Float64Member(0.57721566490153286060);
 	private static final Float64Member PHI = new Float64Member(1.61803398874989484820);
+	private static final Float64Member ONE_HALF = new Float64Member(0.5);
+	private static final Float64Member TWO = new Float64Member(2.0);
 	
 	public Float64Algebra() { }
 	
@@ -1535,6 +1539,34 @@ public class Float64Algebra
 	@Override
 	public Function3<Boolean, Float64Member, Float64Member, Float64Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<Float64Member, Float64Member> STWO =
+			new Procedure2<Float64Member, Float64Member>()
+	{
+		@Override
+		public void call(Float64Member a, Float64Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<Float64Member, Float64Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<Float64Member, Float64Member> SHALF =
+			new Procedure2<Float64Member, Float64Member>()
+	{
+		@Override
+		public void call(Float64Member a, Float64Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<Float64Member, Float64Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

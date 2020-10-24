@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Integer;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
@@ -55,10 +57,13 @@ public class UnboundedIntAlgebra
 	implements
 		Integer<UnboundedIntAlgebra, UnboundedIntMember>,
 		BitOperations<UnboundedIntMember>,
-		Tolerance<UnboundedIntMember,UnboundedIntMember>
+		Tolerance<UnboundedIntMember,UnboundedIntMember>,
+		ScaleByOneHalf<UnboundedIntMember>,
+		ScaleByTwo<UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
+	private static final BigInteger TWO = BigInteger.valueOf(2);
 	
 	public UnboundedIntAlgebra() { }
 
@@ -902,5 +907,33 @@ public class UnboundedIntAlgebra
 	@Override
 	public Function3<Boolean, UnboundedIntMember, UnboundedIntMember, UnboundedIntMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<UnboundedIntMember, UnboundedIntMember> STWO =
+			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV(a.v().multiply(TWO));
+		}
+	};
+	
+	@Override
+	public Procedure2<UnboundedIntMember, UnboundedIntMember> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<UnboundedIntMember, UnboundedIntMember> SHALF =
+			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	{
+		@Override
+		public void call(UnboundedIntMember a, UnboundedIntMember b) {
+			b.setV(a.v().divide(TWO));
+		}
+	};
+	
+	@Override
+	public Procedure2<UnboundedIntMember, UnboundedIntMember> scaleByOneHalf() {
+		return SHALF;
 	}
 }

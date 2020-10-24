@@ -68,10 +68,14 @@ public class HighPrecisionAlgebra
 		Roots<HighPrecisionMember>,
 		Power<HighPrecisionMember>,
 		Tolerance<HighPrecisionMember,HighPrecisionMember>,
-		Exponential<HighPrecisionMember>
+		Exponential<HighPrecisionMember>,
+		ScaleByOneHalf<HighPrecisionMember>,
+		ScaleByTwo<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
+	private static final HighPrecisionMember ONE_HALF = new HighPrecisionMember(BigDecimal.valueOf(0.5));
+	private static final HighPrecisionMember TWO = new HighPrecisionMember(BigDecimal.valueOf(2));
 	
 	public static MathContext getContext() {
 		return CONTEXT;
@@ -953,6 +957,34 @@ public class HighPrecisionAlgebra
 	@Override
 	public Procedure2<HighPrecisionMember, HighPrecisionMember> log() {
 		return LOG;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> STWO =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SHALF =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

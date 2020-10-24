@@ -73,9 +73,12 @@ public class OctonionHighPrecisionAlgebra
 		ScaleByRational<OctonionHighPrecisionMember>,
 		ScaleByDouble<OctonionHighPrecisionMember>,
 		ScaleComponents<OctonionHighPrecisionMember, HighPrecisionMember>,
-		Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>
+		Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>,
+		ScaleByOneHalf<OctonionHighPrecisionMember>,
+		ScaleByTwo<OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
+	private static final OctonionHighPrecisionMember ONE_HALF = new OctonionHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 	private static final OctonionHighPrecisionMember TWO = new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 	private static final OctonionHighPrecisionMember I = new OctonionHighPrecisionMember(BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -1350,6 +1353,34 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Function3<Boolean, HighPrecisionMember, OctonionHighPrecisionMember, OctonionHighPrecisionMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> STWO =
+			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> SHALF =
+			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public void call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

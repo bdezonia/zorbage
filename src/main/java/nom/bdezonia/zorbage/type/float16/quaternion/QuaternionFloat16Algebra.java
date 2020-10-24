@@ -79,7 +79,9 @@ public class QuaternionFloat16Algebra
 		ScaleByRational<QuaternionFloat16Member>,
 		ScaleByDouble<QuaternionFloat16Member>,
 		ScaleComponents<QuaternionFloat16Member, Float16Member>,
-		Tolerance<Float16Member,QuaternionFloat16Member>
+		Tolerance<Float16Member,QuaternionFloat16Member>,
+		ScaleByOneHalf<QuaternionFloat16Member>,
+		ScaleByTwo<QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
 	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member((float)1.0/3,0,0,0);
@@ -1055,6 +1057,34 @@ public class QuaternionFloat16Algebra
 	@Override
 	public Function3<Boolean, Float16Member, QuaternionFloat16Member, QuaternionFloat16Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> STWO =
+			new Procedure2<QuaternionFloat16Member, QuaternionFloat16Member>()
+	{
+		@Override
+		public void call(QuaternionFloat16Member a, QuaternionFloat16Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> SHALF =
+			new Procedure2<QuaternionFloat16Member, QuaternionFloat16Member>()
+	{
+		@Override
+		public void call(QuaternionFloat16Member a, QuaternionFloat16Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

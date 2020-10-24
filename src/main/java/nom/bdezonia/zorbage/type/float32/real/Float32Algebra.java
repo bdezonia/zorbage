@@ -84,12 +84,16 @@ public class Float32Algebra
 		ScaleByRational<Float32Member>,
 		ScaleByDouble<Float32Member>,
 		ScaleComponents<Float32Member, Float32Member>,
-		Tolerance<Float32Member,Float32Member>
+		Tolerance<Float32Member,Float32Member>,
+		ScaleByOneHalf<Float32Member>,
+		ScaleByTwo<Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);
 	private static final Float32Member GAMMA = new Float32Member((float)0.57721566490153286060);
 	private static final Float32Member PHI = new Float32Member((float)1.61803398874989484820);
+	private static final Float32Member ONE_HALF = new Float32Member(0.5f);
+	private static final Float32Member TWO = new Float32Member(2.0f);
 	
 	public Float32Algebra() { }
 	
@@ -1500,6 +1504,34 @@ public class Float32Algebra
 	@Override
 	public Function3<Boolean, Float32Member, Float32Member, Float32Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<Float32Member, Float32Member> STWO =
+			new Procedure2<Float32Member, Float32Member>()
+	{
+		@Override
+		public void call(Float32Member a, Float32Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<Float32Member, Float32Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<Float32Member, Float32Member> SHALF =
+			new Procedure2<Float32Member, Float32Member>()
+	{
+		@Override
+		public void call(Float32Member a, Float32Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<Float32Member, Float32Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

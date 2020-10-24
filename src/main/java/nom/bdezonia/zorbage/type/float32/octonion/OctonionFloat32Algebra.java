@@ -82,7 +82,9 @@ public class OctonionFloat32Algebra
 		ScaleByRational<OctonionFloat32Member>,
 		ScaleByDouble<OctonionFloat32Member>,
 		ScaleComponents<OctonionFloat32Member, Float32Member>,
-		Tolerance<Float32Member,OctonionFloat32Member>
+		Tolerance<Float32Member,OctonionFloat32Member>,
+		ScaleByOneHalf<OctonionFloat32Member>,
+		ScaleByTwo<OctonionFloat32Member>
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member ONE_THIRD = new OctonionFloat32Member(1.0f/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1424,6 +1426,34 @@ public class OctonionFloat32Algebra
 	@Override
 	public Function3<Boolean, Float32Member, OctonionFloat32Member, OctonionFloat32Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<OctonionFloat32Member, OctonionFloat32Member> STWO =
+			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
+	{
+		@Override
+		public void call(OctonionFloat32Member a, OctonionFloat32Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat32Member, OctonionFloat32Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<OctonionFloat32Member, OctonionFloat32Member> SHALF =
+			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
+	{
+		@Override
+		public void call(OctonionFloat32Member a, OctonionFloat32Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat32Member, OctonionFloat32Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

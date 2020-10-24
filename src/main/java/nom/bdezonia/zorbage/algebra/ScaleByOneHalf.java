@@ -24,43 +24,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algebra;
 
-import nom.bdezonia.zorbage.algebra.Addition;
-import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.EvenOdd;
-import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
-import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class AverageTwo {
+public interface ScaleByOneHalf<U> {
 
-	/**
-	 * Average two things quickly (avoiding division when possible and avoiding overflow conditions of a naive approach)
-	 * 
-	 * @param alg
-	 * @param a
-	 * @param b
-	 * @param result
-	 */
-	public static <T extends Algebra<T,U> & ScaleByOneHalf<U> & EvenOdd<U> & Unity<U> & Addition<U>, U>
-		void compute(T alg, U a, U b, U result)
-	{
-		U tmp1 = alg.construct();
-		U tmp2 = alg.construct();
-		U tmp3 = alg.construct();
-		alg.scaleByOneHalf().call(a, tmp1);
-		alg.scaleByOneHalf().call(b, tmp2);
-		alg.add().call(tmp1, tmp2, tmp3);
-		if (alg.isOdd().call(a) && alg.isOdd().call(b)) {
-			U one = alg.construct();
-			alg.unity().call(one);
-			alg.add().call(tmp3, one, tmp3);
-		}
-		alg.assign().call(tmp3, result);
-	}
+	Procedure2<U,U> scaleByOneHalf();
 }

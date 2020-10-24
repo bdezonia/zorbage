@@ -82,7 +82,9 @@ public class OctonionFloat64Algebra
 		ScaleByRational<OctonionFloat64Member>,
 		ScaleByDouble<OctonionFloat64Member>,
 		ScaleComponents<OctonionFloat64Member, Float64Member>,
-		Tolerance<Float64Member,OctonionFloat64Member>
+		Tolerance<Float64Member,OctonionFloat64Member>,
+		ScaleByOneHalf<OctonionFloat64Member>,
+		ScaleByTwo<OctonionFloat64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1424,6 +1426,34 @@ public class OctonionFloat64Algebra
 	@Override
 	public Function3<Boolean, Float64Member, OctonionFloat64Member, OctonionFloat64Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<OctonionFloat64Member, OctonionFloat64Member> STWO =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member, OctonionFloat64Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<OctonionFloat64Member, OctonionFloat64Member> SHALF =
+			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	{
+		@Override
+		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<OctonionFloat64Member, OctonionFloat64Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

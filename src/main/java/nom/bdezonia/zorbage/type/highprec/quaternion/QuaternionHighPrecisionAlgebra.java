@@ -70,9 +70,12 @@ public class QuaternionHighPrecisionAlgebra
 		ScaleByRational<QuaternionHighPrecisionMember>,
 		ScaleByDouble<QuaternionHighPrecisionMember>,
 		ScaleComponents<QuaternionHighPrecisionMember, HighPrecisionMember>,
-		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>
+		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>,
+		ScaleByOneHalf<QuaternionHighPrecisionMember>,
+		ScaleByTwo<QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
+	private static final QuaternionHighPrecisionMember ONE_HALF = new QuaternionHighPrecisionMember(BigDecimal.valueOf(0.5),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember TWO = new QuaternionHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember THREE = new QuaternionHighPrecisionMember(BigDecimal.valueOf(3),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
@@ -974,6 +977,32 @@ public class QuaternionHighPrecisionAlgebra
 	public Function3<Boolean, HighPrecisionMember, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> within() {
 		return WITHIN;
 	}
+	
+	private final Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> STWO =
+			new Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByTwo() {
+		return STWO;
+	}
 
-
+	private final Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> SHALF =
+			new Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
+	{
+		@Override
+		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
+			scale().call(a, ONE_HALF, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByOneHalf() {
+		return SHALF;
+	}
 }

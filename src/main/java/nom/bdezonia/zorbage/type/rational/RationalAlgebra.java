@@ -57,8 +57,12 @@ public class RationalAlgebra
 		ScaleByHighPrec<RationalMember>,
 		ScaleByRational<RationalMember>,
 		ModularDivision<RationalMember>,
-		Tolerance<RationalMember,RationalMember>
+		Tolerance<RationalMember,RationalMember>,
+		ScaleByOneHalf<RationalMember>,
+		ScaleByTwo<RationalMember>
 {
+	private static final BigInteger TWO = BigInteger.valueOf(2);
+	
 	@Override
 	public RationalMember construct() {
 		return new RationalMember();
@@ -496,5 +500,33 @@ public class RationalAlgebra
 	@Override
 	public Function3<Boolean, RationalMember, RationalMember, RationalMember> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<RationalMember, RationalMember> STWO =
+			new Procedure2<RationalMember, RationalMember>()
+	{
+		@Override
+		public void call(RationalMember a, RationalMember b) {
+			b.setV(a.n.multiply(TWO), a.d);
+		}
+	};
+	
+	@Override
+	public Procedure2<RationalMember, RationalMember> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<RationalMember, RationalMember> SHALF =
+			new Procedure2<RationalMember, RationalMember>()
+	{
+		@Override
+		public void call(RationalMember a, RationalMember b) {
+			b.setV(a.n, a.d.multiply(TWO));
+		}
+	};
+	
+	@Override
+	public Procedure2<RationalMember, RationalMember> scaleByOneHalf() {
+		return SHALF;
 	}
 }

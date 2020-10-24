@@ -60,7 +60,9 @@ public class UnsignedInt16Algebra
 		Bounded<UnsignedInt16Member>,
 		BitOperations<UnsignedInt16Member>,
 		Random<UnsignedInt16Member>,
-		Tolerance<UnsignedInt16Member,UnsignedInt16Member>
+		Tolerance<UnsignedInt16Member,UnsignedInt16Member>,
+		ScaleByOneHalf<UnsignedInt16Member>,
+		ScaleByTwo<UnsignedInt16Member>
 {
 	
 	public UnsignedInt16Algebra() { }
@@ -754,6 +756,34 @@ public class UnsignedInt16Algebra
 	@Override
 	public Function3<Boolean, UnsignedInt16Member, UnsignedInt16Member, UnsignedInt16Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<UnsignedInt16Member, UnsignedInt16Member> STWO =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			b.setV(a.v << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member, UnsignedInt16Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<UnsignedInt16Member, UnsignedInt16Member> SHALF =
+			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
+	{
+		@Override
+		public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+			b.setV(a.v >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt16Member, UnsignedInt16Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

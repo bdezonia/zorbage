@@ -71,10 +71,13 @@ public class UnsignedInt128Algebra
 		Bounded<UnsignedInt128Member>,
 		BitOperations<UnsignedInt128Member>,
 		Random<UnsignedInt128Member>,
-		Tolerance<UnsignedInt128Member,UnsignedInt128Member>
+		Tolerance<UnsignedInt128Member,UnsignedInt128Member>,
+		ScaleByOneHalf<UnsignedInt128Member>,
+		ScaleByTwo<UnsignedInt128Member>
 {
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
 	private static final UnsignedInt128Member ONE = new UnsignedInt128Member(0,1);
+	private static final UnsignedInt128Member TWO = new UnsignedInt128Member(0,2);
 
 	@Override
 	public UnsignedInt128Member construct() {
@@ -891,6 +894,34 @@ public class UnsignedInt128Algebra
 	@Override
 	public Function3<Boolean, UnsignedInt128Member, UnsignedInt128Member, UnsignedInt128Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<UnsignedInt128Member, UnsignedInt128Member> STWO =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			scale().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt128Member, UnsignedInt128Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<UnsignedInt128Member, UnsignedInt128Member> SHALF =
+			new Procedure2<UnsignedInt128Member, UnsignedInt128Member>()
+	{
+		@Override
+		public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
+			div().call(a, TWO, b);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt128Member, UnsignedInt128Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

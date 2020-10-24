@@ -58,7 +58,9 @@ public class UnsignedInt5Algebra
 		Bounded<UnsignedInt5Member>,
 		BitOperations<UnsignedInt5Member>,
 		Random<UnsignedInt5Member>,
-		Tolerance<UnsignedInt5Member,UnsignedInt5Member>
+		Tolerance<UnsignedInt5Member,UnsignedInt5Member>,
+		ScaleByOneHalf<UnsignedInt5Member>,
+		ScaleByTwo<UnsignedInt5Member>
 {
 
 	@Override
@@ -759,6 +761,34 @@ public class UnsignedInt5Algebra
 	@Override
 	public Function3<Boolean, UnsignedInt5Member, UnsignedInt5Member, UnsignedInt5Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<UnsignedInt5Member, UnsignedInt5Member> STWO =
+			new Procedure2<UnsignedInt5Member, UnsignedInt5Member>()
+	{
+		@Override
+		public void call(UnsignedInt5Member a, UnsignedInt5Member b) {
+			b.setV(a.v << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt5Member, UnsignedInt5Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<UnsignedInt5Member, UnsignedInt5Member> SHALF =
+			new Procedure2<UnsignedInt5Member, UnsignedInt5Member>()
+	{
+		@Override
+		public void call(UnsignedInt5Member a, UnsignedInt5Member b) {
+			b.setV(a.v >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt5Member, UnsignedInt5Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

@@ -60,7 +60,9 @@ public class UnsignedInt8Algebra
 		Bounded<UnsignedInt8Member>,
 		BitOperations<UnsignedInt8Member>,
 		Random<UnsignedInt8Member>,
-		Tolerance<UnsignedInt8Member,UnsignedInt8Member>
+		Tolerance<UnsignedInt8Member,UnsignedInt8Member>,
+		ScaleByOneHalf<UnsignedInt8Member>,
+		ScaleByTwo<UnsignedInt8Member>
 {
 
 	public UnsignedInt8Algebra() { }
@@ -753,6 +755,34 @@ public class UnsignedInt8Algebra
 	@Override
 	public Function3<Boolean, UnsignedInt8Member, UnsignedInt8Member, UnsignedInt8Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<UnsignedInt8Member, UnsignedInt8Member> STWO =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			b.setV(a.v << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt8Member, UnsignedInt8Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<UnsignedInt8Member, UnsignedInt8Member> SHALF =
+			new Procedure2<UnsignedInt8Member, UnsignedInt8Member>()
+	{
+		@Override
+		public void call(UnsignedInt8Member a, UnsignedInt8Member b) {
+			b.setV(a.v >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt8Member, UnsignedInt8Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

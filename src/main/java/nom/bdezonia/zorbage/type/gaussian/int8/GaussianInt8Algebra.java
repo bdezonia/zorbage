@@ -33,6 +33,8 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -54,7 +56,9 @@ public class GaussianInt8Algebra
 		Random<GaussianInt8Member>,
 		Tolerance<GaussianInt8Member,GaussianInt8Member>,
 		Norm<GaussianInt8Member, SignedInt32Member>,
-		Conjugate<GaussianInt8Member>
+		Conjugate<GaussianInt8Member>,
+		ScaleByOneHalf<GaussianInt8Member>,
+		ScaleByTwo<GaussianInt8Member>
 {
 
 	@Override
@@ -299,5 +303,35 @@ public class GaussianInt8Algebra
 	@Override
 	public Procedure2<GaussianInt8Member, GaussianInt8Member> conjugate() {
 		return CONJ;
+	}
+	
+	private final Procedure2<GaussianInt8Member, GaussianInt8Member> STWO =
+			new Procedure2<GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b) {
+			b.setR( a.r << 1);
+			b.setI( a.i << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianInt8Member, GaussianInt8Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<GaussianInt8Member, GaussianInt8Member> SHALF =
+			new Procedure2<GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(GaussianInt8Member a, GaussianInt8Member b) {
+			b.setR( a.r >> 1);
+			b.setI( a.i >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<GaussianInt8Member, GaussianInt8Member> scaleByOneHalf() {
+		return SHALF;
 	}
 }

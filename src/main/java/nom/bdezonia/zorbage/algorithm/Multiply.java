@@ -28,10 +28,10 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.EvenOdd;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.Unity;
 
 // Adapted from an algorithm as published by Stepanov and Rose 2015.
@@ -46,10 +46,6 @@ public class Multiply {
 	
 	private Multiply() { }
 	
-	// TODO: BitOperations dependency should be avoided. Need a HalfDouble interface
-	// that can be depended upon instead and easily implemented for all integer like
-	// types.
-	
 	/**
 	 * 
 	 * @param algebra
@@ -57,7 +53,9 @@ public class Multiply {
 	 * @param y
 	 * @param z
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & EvenOdd<U> & BitOperations<U> & Bounded<U>,U>
+	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & EvenOdd<U> &
+						ScaleByOneHalf<U> & Bounded<U>,
+					U>
 		void compute(T algebra, U x, U y, U z)
 	{
 		// optimize zero calculations away
@@ -124,7 +122,7 @@ public class Multiply {
 		algebra.unity().call(one);
 		while (!algebra.isOdd().call(xPos)) {
 			algebra.add().call(yPos, yPos, yPos);
-			algebra.bitShiftRight().call(1, xPos, xPos);
+			algebra.scaleByOneHalf().call(xPos, xPos);
 		}
 		if (algebra.isEqual().call(one, xPos)) {
 			algebra.assign().call(yPos, z);
@@ -140,7 +138,7 @@ public class Multiply {
 		U r = algebra.construct(yPos);
 		U n = algebra.construct(xPos);
 		algebra.subtract().call(n, one, n);
-		algebra.bitShiftRight().call(1, n, n);
+		algebra.scaleByOneHalf().call(n, n);
 		U a = algebra.construct(yPos);
 		algebra.add().call(a, a, a);
 		while (true) {
@@ -155,7 +153,7 @@ public class Multiply {
 					return;
 				}
 			}
-			algebra.bitShiftRight().call(1, n, n);
+			algebra.scaleByOneHalf().call(n, n);
 			algebra.add().call(a, a, a);
 		}
 	}

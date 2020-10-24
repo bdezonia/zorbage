@@ -58,7 +58,9 @@ public class SignedInt12Algebra
 		Bounded<SignedInt12Member>,
 		BitOperations<SignedInt12Member>,
 		Random<SignedInt12Member>,
-		Tolerance<SignedInt12Member,SignedInt12Member>
+		Tolerance<SignedInt12Member,SignedInt12Member>,
+		ScaleByOneHalf<SignedInt12Member>,
+		ScaleByTwo<SignedInt12Member>
 {
 
 	@Override
@@ -806,6 +808,34 @@ public class SignedInt12Algebra
 	@Override
 	public Function3<Boolean, SignedInt12Member, SignedInt12Member, SignedInt12Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<SignedInt12Member, SignedInt12Member> STWO =
+			new Procedure2<SignedInt12Member, SignedInt12Member>()
+	{
+		@Override
+		public void call(SignedInt12Member a, SignedInt12Member b) {
+			b.setV(a.v << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<SignedInt12Member, SignedInt12Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<SignedInt12Member, SignedInt12Member> SHALF =
+			new Procedure2<SignedInt12Member, SignedInt12Member>()
+	{
+		@Override
+		public void call(SignedInt12Member a, SignedInt12Member b) {
+			b.setV(a.v >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<SignedInt12Member, SignedInt12Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }

@@ -61,7 +61,9 @@ public class UnsignedInt64Algebra
 		Bounded<UnsignedInt64Member>,
 		BitOperations<UnsignedInt64Member>,
 		Random<UnsignedInt64Member>,
-		Tolerance<UnsignedInt64Member,UnsignedInt64Member>
+		Tolerance<UnsignedInt64Member,UnsignedInt64Member>,
+		ScaleByOneHalf<UnsignedInt64Member>,
+		ScaleByTwo<UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);
@@ -788,6 +790,34 @@ public class UnsignedInt64Algebra
 	@Override
 	public Function3<Boolean, UnsignedInt64Member, UnsignedInt64Member, UnsignedInt64Member> within() {
 		return WITHIN;
+	}
+
+	private final Procedure2<UnsignedInt64Member, UnsignedInt64Member> STWO =
+			new Procedure2<UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(UnsignedInt64Member a, UnsignedInt64Member b) {
+			b.setV(a.v << 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt64Member, UnsignedInt64Member> scaleByTwo() {
+		return STWO;
+	}
+
+	private final Procedure2<UnsignedInt64Member, UnsignedInt64Member> SHALF =
+			new Procedure2<UnsignedInt64Member, UnsignedInt64Member>()
+	{
+		@Override
+		public void call(UnsignedInt64Member a, UnsignedInt64Member b) {
+			b.setV(a.v >> 1);
+		}
+	};
+	
+	@Override
+	public Procedure2<UnsignedInt64Member, UnsignedInt64Member> scaleByOneHalf() {
+		return SHALF;
 	}
 
 }
