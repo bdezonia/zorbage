@@ -77,7 +77,6 @@ public class SignedInt128Algebra
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
-	private static final SignedInt128Member TWO = new SignedInt128Member(0,2);
 
 	@Override
 	public SignedInt128Member construct() {
@@ -960,9 +959,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, SignedInt128Member a, SignedInt128Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			bitShiftLeft().call(numTimes, a, b);
 		}
 	};
 	
@@ -976,9 +973,7 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, SignedInt128Member a, SignedInt128Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				div().call(b, TWO, b);
+			bitShiftRight().call(numTimes, a, b);
 		}
 	};
 	

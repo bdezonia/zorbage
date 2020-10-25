@@ -77,7 +77,6 @@ public class UnsignedInt128Algebra
 {
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
 	private static final UnsignedInt128Member ONE = new UnsignedInt128Member(0,1);
-	private static final UnsignedInt128Member TWO = new UnsignedInt128Member(0,2);
 
 	@Override
 	public UnsignedInt128Member construct() {
@@ -693,12 +692,6 @@ public class UnsignedInt128Algebra
 		return BITSHL;
 	}
 
-	@Override
-	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRight() {
-		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
-		return BITSHRZ;
-	}
-
 	// TODO improve performance
 	
 	private final Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> BITSHRZ = 
@@ -722,6 +715,12 @@ public class UnsignedInt128Algebra
 	
 	@Override
 	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRightFillZero() {
+		return BITSHRZ;
+	}
+
+	@Override
+	public Procedure3<java.lang.Integer,UnsignedInt128Member,UnsignedInt128Member> bitShiftRight() {
+		// since this type is unsigned should never shift ones into upper bit. just copy SHRZ.
 		return BITSHRZ;
 	}
 
@@ -901,9 +900,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt128Member a, UnsignedInt128Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			bitShiftLeft().call(numTimes, a, b);
 		}
 	};
 	
@@ -917,9 +914,7 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt128Member a, UnsignedInt128Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				div().call(b, TWO, b);
+			bitShiftRight().call(numTimes, a, b);
 		}
 	};
 	
