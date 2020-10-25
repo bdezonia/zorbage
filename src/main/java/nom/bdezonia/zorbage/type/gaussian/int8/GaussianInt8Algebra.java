@@ -66,7 +66,8 @@ public class GaussianInt8Algebra
 		ScaleByTwo<GaussianInt8Member>,
 		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>
 {
-
+	private static final GaussianInt8Member TWO = new GaussianInt8Member(2, 0);
+	
 	@Override
 	public GaussianInt8Member construct() {
 		return new GaussianInt8Member();
@@ -316,8 +317,9 @@ public class GaussianInt8Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianInt8Member a, GaussianInt8Member b) {
-			b.setR( a.r << numTimes );
-			b.setI( a.i << numTimes );
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				multiply().call(b, TWO, b);
 		}
 	};
 	
@@ -331,8 +333,9 @@ public class GaussianInt8Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianInt8Member a, GaussianInt8Member b) {
-			b.setR( a.r >> numTimes );
-			b.setI( a.i >> numTimes );
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				div().call(b, TWO, b);
 		}
 	};
 	

@@ -293,7 +293,9 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			multiply().call(a, TWO, b);
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				multiply().call(b, TWO, b);
 		}
 	};
 	
@@ -307,7 +309,9 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			div().call(a, TWO, b);
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				div().call(b, TWO, b);
 		}
 	};
 	
