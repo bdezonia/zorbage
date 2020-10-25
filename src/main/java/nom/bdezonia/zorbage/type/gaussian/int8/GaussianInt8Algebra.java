@@ -317,9 +317,8 @@ public class GaussianInt8Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianInt8Member a, GaussianInt8Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			b.setR( a.r << numTimes );
+			b.setI( a.i << numTimes );
 		}
 	};
 	
@@ -333,9 +332,8 @@ public class GaussianInt8Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianInt8Member a, GaussianInt8Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				div().call(b, TWO, b);
+			b.setR( a.r >> numTimes );
+			b.setI( a.i >> numTimes );
 		}
 	};
 	
@@ -382,10 +380,6 @@ public class GaussianInt8Algebra
 			throw new IllegalArgumentException("code not done yet");
 			//GaussianInt16Member m = G.GAUSS16.construct();
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
-			
-			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
-			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
-			// we go that route.
 		}
 	};
 	
@@ -402,10 +396,6 @@ public class GaussianInt8Algebra
 			throw new IllegalArgumentException("code not done yet");
 			//GaussianInt16Member d = G.GAUSS16.construct();
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
-			
-			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
-			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
-			// we go that route.
 		}
 	};
 	
@@ -422,10 +412,6 @@ public class GaussianInt8Algebra
 		public void call(GaussianInt8Member a, GaussianInt8Member b, GaussianInt8Member d, GaussianInt8Member m) {
 			throw new IllegalArgumentException("code not done yet");
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
-			
-			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
-			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
-			// we go that route.
 		}
 	};
 	

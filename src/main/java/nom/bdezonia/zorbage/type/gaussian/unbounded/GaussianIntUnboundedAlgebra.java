@@ -293,9 +293,8 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			b.setR( a.r.shiftLeft(numTimes) );
+			b.setI( a.i.shiftLeft(numTimes) );
 		}
 	};
 	
@@ -309,9 +308,8 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				div().call(b, TWO, b);
+			b.setR( a.r.shiftRight(numTimes) );
+			b.setI( a.i.shiftRight(numTimes) );
 		}
 	};
 	
@@ -358,10 +356,6 @@ public class GaussianIntUnboundedAlgebra
 			throw new IllegalArgumentException("code not done yet");
 			//GaussianInt16Member m = G.GAUSS16.construct();
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
-			
-			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
-			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
-			// we go that route.
 		}
 	};
 	
@@ -378,10 +372,6 @@ public class GaussianIntUnboundedAlgebra
 			throw new IllegalArgumentException("code not done yet");
 			//GaussianInt16Member d = G.GAUSS16.construct();
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
-			
-			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
-			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
-			// we go that route.
 		}
 	};
 	
@@ -398,10 +388,6 @@ public class GaussianIntUnboundedAlgebra
 		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember d, GaussianIntUnboundedMember m) {
 			throw new IllegalArgumentException("code not done yet");
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
-			
-			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
-			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
-			// we go that route.
 		}
 	};
 	
