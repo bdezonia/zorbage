@@ -92,7 +92,6 @@ public class Float64Algebra
 	private static final Float64Member E = new Float64Member(Math.E);
 	private static final Float64Member GAMMA = new Float64Member(0.57721566490153286060);
 	private static final Float64Member PHI = new Float64Member(1.61803398874989484820);
-	private static final Float64Member ONE_HALF = new Float64Member(0.5);
 	private static final Float64Member TWO = new Float64Member(2.0);
 	
 	public Float64Algebra() { }

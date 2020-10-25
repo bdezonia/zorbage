@@ -90,7 +90,6 @@ public class Float16Algebra
 	private static final Float16Member E = new Float16Member((float)Math.E);
 	private static final Float16Member GAMMA = new Float16Member((float)0.57721566490153286060);
 	private static final Float16Member PHI = new Float16Member((float)1.61803398874989484820);
-	private static final Float16Member ONE_HALF = new Float16Member(0.5f);
 	private static final Float16Member TWO = new Float16Member(2.0f);
 
 	public Float16Algebra() { }

@@ -92,7 +92,6 @@ public class Float32Algebra
 	private static final Float32Member E = new Float32Member((float)Math.E);
 	private static final Float32Member GAMMA = new Float32Member((float)0.57721566490153286060);
 	private static final Float32Member PHI = new Float32Member((float)1.61803398874989484820);
-	private static final Float32Member ONE_HALF = new Float32Member(0.5f);
 	private static final Float32Member TWO = new Float32Member(2.0f);
 	
 	public Float32Algebra() { }

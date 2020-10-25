@@ -86,7 +86,6 @@ public class ComplexHighPrecisionAlgebra
 		ScaleByOneHalf<ComplexHighPrecisionMember>,
 		ScaleByTwo<ComplexHighPrecisionMember>
 {
-	private static final ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(BigDecimal.valueOf(0.5),BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember MINUS_ONE = new ComplexHighPrecisionMember(BigDecimal.valueOf(-1),BigDecimal.ZERO);

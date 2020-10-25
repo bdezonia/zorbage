@@ -75,7 +75,6 @@ public class QuaternionHighPrecisionAlgebra
 		ScaleByTwo<QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
-	private static final QuaternionHighPrecisionMember ONE_HALF = new QuaternionHighPrecisionMember(BigDecimal.valueOf(0.5),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember TWO = new QuaternionHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember THREE = new QuaternionHighPrecisionMember(BigDecimal.valueOf(3),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);

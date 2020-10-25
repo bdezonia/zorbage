@@ -74,7 +74,6 @@ public class HighPrecisionAlgebra
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
-	private static final HighPrecisionMember ONE_HALF = new HighPrecisionMember(BigDecimal.valueOf(0.5));
 	private static final HighPrecisionMember TWO = new HighPrecisionMember(BigDecimal.valueOf(2));
 	
 	public static MathContext getContext() {
