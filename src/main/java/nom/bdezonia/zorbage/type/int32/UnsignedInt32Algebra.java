@@ -773,7 +773,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt32Member a, UnsignedInt32Member b) {
-			b.setV(a.v << numTimes);
+			bitShiftLeft().call(numTimes, a, b);
 		}
 	};
 	
@@ -787,7 +787,7 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt32Member a, UnsignedInt32Member b) {
-			b.setV(a.v >> numTimes);
+			bitShiftRight().call(numTimes, a, b);
 		}
 	};
 	
