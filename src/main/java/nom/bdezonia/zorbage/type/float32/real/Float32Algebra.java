@@ -1513,7 +1513,7 @@ public class Float32Algebra
 		public void call(java.lang.Integer numTimes, Float32Member a, Float32Member b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, TWO, b);
+				multiply().call(b, TWO, b);
 		}
 	};
 	
@@ -1529,7 +1529,7 @@ public class Float32Algebra
 		public void call(java.lang.Integer numTimes, Float32Member a, Float32Member b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, ONE_HALF, b);
+				divide().call(b, TWO, b);
 		}
 	};
 	

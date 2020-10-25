@@ -903,7 +903,7 @@ public class UnsignedInt128Algebra
 		public void call(java.lang.Integer numTimes, UnsignedInt128Member a, UnsignedInt128Member b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, TWO, b);
+				multiply().call(b, TWO, b);
 		}
 	};
 	

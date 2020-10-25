@@ -1066,7 +1066,7 @@ public class QuaternionFloat64Algebra
 		public void call(java.lang.Integer numTimes, QuaternionFloat64Member a, QuaternionFloat64Member b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, TWO, b);
+				multiply().call(b, TWO, b);
 		}
 	};
 	
@@ -1082,7 +1082,7 @@ public class QuaternionFloat64Algebra
 		public void call(java.lang.Integer numTimes, QuaternionFloat64Member a, QuaternionFloat64Member b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, ONE_HALF, b);
+				divide().call(b, TWO, b);
 		}
 	};
 	

@@ -962,7 +962,7 @@ public class SignedInt128Algebra
 		public void call(java.lang.Integer numTimes, SignedInt128Member a, SignedInt128Member b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, TWO, b);
+				multiply().call(b, TWO, b);
 		}
 	};
 	

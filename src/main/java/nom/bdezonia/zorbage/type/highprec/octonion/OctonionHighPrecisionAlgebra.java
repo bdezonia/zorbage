@@ -1362,7 +1362,7 @@ public class OctonionHighPrecisionAlgebra
 		public void call(java.lang.Integer numTimes, OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, TWO, b);
+				multiply().call(b, TWO, b);
 		}
 	};
 	
@@ -1378,7 +1378,7 @@ public class OctonionHighPrecisionAlgebra
 		public void call(java.lang.Integer numTimes, OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, ONE_HALF, b);
+				divide().call(b, TWO, b);
 		}
 	};
 	

@@ -509,7 +509,7 @@ public class RationalAlgebra
 		public void call(java.lang.Integer numTimes, RationalMember a, RationalMember b) {
 			assign().call(a, b);
 			for (int i = 0; i < numTimes; i++)
-				scale().call(b, TWO, b);
+				multiply().call(b, TWO, b);
 		}
 	};
 	
