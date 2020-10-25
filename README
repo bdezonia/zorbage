@@ -218,15 +218,16 @@ Is there a way to view Zorbage data?
 
 Programming notes
 
-  Java 8 info
+  Java 11 info
+    
     Zorbage has been compiled and tested using Maven with OpenJDK Java on Linux
-
-  Java 7 info
-    Zorbage has been compiled and tested using Maven with Oracle Java on MacOS
+      
+      (you can possibly use earlier versions of Java but note that Zorbage does
+       use some Java 9 features)
 
   Eclipse info
-    Zorbage has also been compiled and tested within Eclipse versions Mars,
-      Neon, Oxygen, and 2019-09 R
+    
+    Zorbage has been compiled and tested within many versions of Eclipse
 
 How to include zorbage in your Maven project
 
