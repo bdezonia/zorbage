@@ -763,7 +763,7 @@ public class UnsignedInt16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt16Member a, UnsignedInt16Member b) {
-			b.setV(a.v << numTimes);
+			bitShiftLeft().call(numTimes, a, b);
 		}
 	};
 	
@@ -777,7 +777,7 @@ public class UnsignedInt16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt16Member a, UnsignedInt16Member b) {
-			b.setV(a.v >> numTimes);
+			bitShiftRight().call(numTimes, a, b);
 		}
 	};
 	

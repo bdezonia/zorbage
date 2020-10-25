@@ -762,7 +762,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt8Member a, UnsignedInt8Member b) {
-			b.setV(a.v << numTimes);
+			bitShiftLeft().call(numTimes, a, b);
 		}
 	};
 	
@@ -776,7 +776,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, UnsignedInt8Member a, UnsignedInt8Member b) {
-			b.setV(a.v >> numTimes);
+			bitShiftRight().call(numTimes, a, b);
 		}
 	};
 	
