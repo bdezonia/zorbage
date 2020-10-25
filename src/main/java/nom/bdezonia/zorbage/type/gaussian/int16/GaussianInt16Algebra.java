@@ -382,6 +382,10 @@ public class GaussianInt16Algebra
 			throw new IllegalArgumentException("code not done yet");
 			//GaussianInt16Member m = G.GAUSS16.construct();
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			
+			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
+			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
+			// we go that route.
 		}
 	};
 	
@@ -398,6 +402,10 @@ public class GaussianInt16Algebra
 			throw new IllegalArgumentException("code not done yet");
 			//GaussianInt16Member d = G.GAUSS16.construct();
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			
+			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
+			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
+			// we go that route.
 		}
 	};
 	
@@ -414,6 +422,10 @@ public class GaussianInt16Algebra
 		public void call(GaussianInt16Member a, GaussianInt16Member b, GaussianInt16Member d, GaussianInt16Member m) {
 			throw new IllegalArgumentException("code not done yet");
 			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			
+			// Note the new divmod required cannot call scale by two/half since that calls div() and a stack
+			// overflow will occur. We should try to come up with a simple div2/mul2 that avoids divmod if
+			// we go that route.
 		}
 	};
 	
