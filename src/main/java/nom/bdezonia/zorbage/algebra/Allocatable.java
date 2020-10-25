@@ -34,6 +34,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface Allocatable<U> {
+public interface Allocatable<U>
+{
 	U allocate();
 }

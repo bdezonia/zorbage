@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface GetComplex<U> extends GetReal<U>, GetI<U> {
-
+public interface GetComplex<U>
+	extends GetReal<U>, GetI<U>
+{
 }

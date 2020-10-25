@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface GetQuaternion<U> extends GetComplex<U>, GetJ<U>, GetK<U> {
-
+public interface GetQuaternion<U>
+	extends GetComplex<U>, GetJ<U>, GetK<U>
+{
 }

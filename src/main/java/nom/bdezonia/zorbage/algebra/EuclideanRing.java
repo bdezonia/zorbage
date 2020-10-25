@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface EuclideanRing<T extends EuclideanRing<T,U, V>, U, V>
+public interface EuclideanRing<T extends EuclideanRing<T,U,V>, U, V>
 	extends
 		Norm<U,V>,
 		Ring<T,U>, // or is it a ring with unity member?

@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetQuaternion<U> extends SetComplex<U>, SetJ<U>, SetK<U> {
-
+public interface SetQuaternion<U>
+	extends SetComplex<U>, SetJ<U>, SetK<U>
+{
 }

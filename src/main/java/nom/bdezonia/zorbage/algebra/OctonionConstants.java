@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface OctonionConstants<U> {
+public interface OctonionConstants<U>
+{
 	Procedure1<U> L();
 	Procedure1<U> I0();
 	Procedure1<U> J0();

@@ -32,8 +32,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface GetI0<U> {
-
+public interface GetI0<U>
+{
 	void getI0(U v);
-	
 }

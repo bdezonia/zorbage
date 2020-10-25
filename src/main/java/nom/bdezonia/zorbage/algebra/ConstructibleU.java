@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface ConstructibleU<U> {
+public interface ConstructibleU<U>
+{
 	U construct(U other);
 }

@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface Multiplication<U> {
+public interface Multiplication<U>
+{
 	Procedure3<U,U,U> multiply();
 	Procedure3<java.lang.Integer,U,U> power();  // implementations decide if power arg can be negative
 }

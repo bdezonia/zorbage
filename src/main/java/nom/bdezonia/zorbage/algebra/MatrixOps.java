@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface MatrixOps<U,W> {
+public interface MatrixOps<U,W>
+{
 	Procedure2<U,U> transpose();
 	Procedure2<U,U> conjugateTranspose();
 	Procedure2<U,W> det();

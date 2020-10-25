@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface ConstructibleNdLong<U> {
+public interface ConstructibleNdLong<U>
+{
 	U construct(StorageConstruction s, long[] nd);
 }

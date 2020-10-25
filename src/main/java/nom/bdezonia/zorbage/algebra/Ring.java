@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface Ring<T extends Ring<T,U>,U>
+public interface Ring<T extends Ring<T,U>, U>
 	extends
 		AdditiveGroup<T,U>,
 		Multiplication<U>

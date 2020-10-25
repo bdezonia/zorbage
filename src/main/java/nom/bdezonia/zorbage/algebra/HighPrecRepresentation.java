@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public interface HighPrecRepresentation {
-
+public interface HighPrecRepresentation
+{
 	void toHighPrec(HighPrecisionMember output);
 	void fromHighPrec(HighPrecisionMember input);
 }

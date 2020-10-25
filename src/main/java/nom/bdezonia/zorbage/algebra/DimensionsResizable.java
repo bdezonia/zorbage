@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface DimensionsResizable {
+public interface DimensionsResizable
+{
 	void setDims(long[] newDims);
 }

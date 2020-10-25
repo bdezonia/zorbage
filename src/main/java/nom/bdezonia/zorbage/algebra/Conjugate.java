@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface Conjugate<U> {
-
+public interface Conjugate<U>
+{
 	Procedure2<U,U> conjugate();
 }

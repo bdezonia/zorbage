@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface ScaleComponents<U,W> {
-
+public interface ScaleComponents<U,W>
+{
 	Procedure3<W,U,U> scaleComponents();
 }

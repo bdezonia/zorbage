@@ -32,7 +32,9 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <A>
  */
-public interface RModuleMember<A> extends Dimensioned, StorageType {
+public interface RModuleMember<A>
+	extends Dimensioned, StorageType
+{
 	// 1 dims
 	long length();
 	boolean alloc(long len);

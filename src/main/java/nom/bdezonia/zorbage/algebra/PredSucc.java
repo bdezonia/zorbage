@@ -34,7 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  *
  * @param <U>
  */
-public interface PredSucc<U> {
+public interface PredSucc<U>
+{
 	Procedure2<U,U> pred();
 	Procedure2<U,U> succ();
 }

@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface IntegralDivision<U> extends ModularDivision<U>, EvenOdd<U>
+public interface IntegralDivision<U>
+	extends ModularDivision<U>, EvenOdd<U>
 {
 	Procedure3<U,U,U> gcd();
 	Procedure3<U,U,U> lcm();

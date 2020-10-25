@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface Bounded<U> {
+public interface Bounded<U>
+{
 	Procedure1<U> maxBound();  // set a to max value of type
 	Procedure1<U> minBound();  // set a to min value of type
 }

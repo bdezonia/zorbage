@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface GetReal<U> extends GetR<U> {
-
+public interface GetReal<U>
+	extends GetR<U>
+{
 }

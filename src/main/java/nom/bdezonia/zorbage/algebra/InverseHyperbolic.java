@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface InverseHyperbolic<U> {
+public interface InverseHyperbolic<U>
+{
 	Procedure2<U,U> asinh();
 	Procedure2<U,U> acosh();
 	Procedure2<U,U> atanh();

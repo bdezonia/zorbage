@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface RingWithUnity<T extends RingWithUnity<T,U>,U>
+public interface RingWithUnity<T extends RingWithUnity<T,U>, U>
 	extends
 		Ring<T,U>,
 		Unity<U>

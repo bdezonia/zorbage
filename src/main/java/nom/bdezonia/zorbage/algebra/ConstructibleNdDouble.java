@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface ConstructibleNdDouble<U> {
+public interface ConstructibleNdDouble<U>
+{
 	U construct(double[] nd);
 }

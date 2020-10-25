@@ -34,6 +34,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface Duplicatable<U> {
+public interface Duplicatable<U>
+{
 	U duplicate();
 }

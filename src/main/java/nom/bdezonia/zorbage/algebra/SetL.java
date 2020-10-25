@@ -31,8 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetL<U> {
-
+public interface SetL<U>
+{
 	void setL(U val);
-	
 }

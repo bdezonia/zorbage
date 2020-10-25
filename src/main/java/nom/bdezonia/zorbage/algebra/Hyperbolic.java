@@ -34,7 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface Hyperbolic<U> {
+public interface Hyperbolic<U>
+{
 	Procedure2<U,U> sinh();
 	Procedure2<U,U> cosh();
 	Procedure3<U,U,U> sinhAndCosh();

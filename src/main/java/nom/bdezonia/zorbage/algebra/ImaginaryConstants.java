@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface ImaginaryConstants<U> {
+public interface ImaginaryConstants<U>
+{
 	Procedure1<U> I();
 }

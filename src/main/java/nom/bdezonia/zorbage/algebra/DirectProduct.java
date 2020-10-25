@@ -33,8 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface DirectProduct<A,B> {
-
+public interface DirectProduct<A,B>
+{
 	Procedure3<A,A,B> directProduct();
-
 }

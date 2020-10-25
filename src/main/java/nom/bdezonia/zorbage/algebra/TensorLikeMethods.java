@@ -37,8 +37,8 @@ import nom.bdezonia.zorbage.procedure.Procedure5;
  * @author Barry DeZonia
  *
  */
-public interface TensorLikeMethods<U,W> {
-	
+public interface TensorLikeMethods<U,W>
+{
 	Procedure3<Integer,U,U> semicolonDerivative();
 	Procedure3<Integer,U,U> commaDerivative();
 	Procedure4<Integer,Integer,U,U> contract();

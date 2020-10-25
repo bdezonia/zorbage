@@ -34,7 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface Trigonometric<U> {
+public interface Trigonometric<U>
+{
 	Procedure2<U,U> sin();
 	Procedure2<U,U> cos();
 	Procedure2<U,U> tan();

@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetComplex<U> extends SetReal<U>, SetI<U> {
-
+public interface SetComplex<U>
+	extends SetReal<U>, SetI<U>
+{
 }

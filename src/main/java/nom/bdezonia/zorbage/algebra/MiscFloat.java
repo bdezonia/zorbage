@@ -35,11 +35,10 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface MiscFloat<U> {
-
+public interface MiscFloat<U>
+{
 	Procedure3<U,U,U> copySign();
 	Function1<java.lang.Integer,U> getExponent();
 	Procedure3<java.lang.Integer,U,U> scalb();
 	Procedure2<U,U> ulp();
-	
 }

@@ -34,8 +34,7 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  * @author Barry DeZonia
  *
  */
-public interface ScaleByRational<U> {
-
+public interface ScaleByRational<U>
+{
 	Procedure3<RationalMember,U,U> scaleByRational();
-
 }

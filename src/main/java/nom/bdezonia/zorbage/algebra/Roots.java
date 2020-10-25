@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface Roots<U> {
-
+public interface Roots<U>
+{
 	Procedure2<U,U> sqrt();
 	Procedure2<U,U> cbrt();
 	

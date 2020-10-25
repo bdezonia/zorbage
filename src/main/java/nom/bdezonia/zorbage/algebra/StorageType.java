@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface StorageType {
-
+public interface StorageType
+{
 	StorageConstruction storageType();
 }

@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface ScaleByOneHalf<U> {
-
+public interface ScaleByOneHalf<U>
+{
 	Procedure2<U,U> scaleByOneHalf();
 }

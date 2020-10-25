@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface RealUnreal<U,V> {
+public interface RealUnreal<U,V>
+{
 	Procedure2<U,V> real();
 	Procedure2<U,U> unreal();
 }

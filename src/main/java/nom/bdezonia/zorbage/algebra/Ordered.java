@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface Ordered<U> {
+public interface Ordered<U>
+{
 	Function2<Boolean,U,U> isLess(); 
 	Function2<Boolean,U,U> isLessEqual(); 
 	Function2<Boolean,U,U> isGreater(); 

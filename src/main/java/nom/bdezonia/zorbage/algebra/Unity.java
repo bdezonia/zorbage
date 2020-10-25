@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  *
  * @param <U>
  */
-public interface Unity<U> {
+public interface Unity<U>
+{
 	Procedure1<U> unity();
 }

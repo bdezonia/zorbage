@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SkewField<T extends SkewField<T,U>,U>
+public interface SkewField<T extends SkewField<T,U>, U>
 	extends
 		RingWithUnity<T,U>,
 		Invertible<U>

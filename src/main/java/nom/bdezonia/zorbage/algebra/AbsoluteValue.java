@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  *
  * @param <U>
  */
-public interface AbsoluteValue<U,V> {
+public interface AbsoluteValue<U,V>
+{
 	Procedure2<U,V> abs();
 }

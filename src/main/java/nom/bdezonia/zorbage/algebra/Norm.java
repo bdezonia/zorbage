@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface Norm<U,V> {
-
+public interface Norm<U,V>
+{
 	Procedure2<U,V> norm();
 	
 	// from MathWorld

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface Constructable<U> extends Constructible0d<U>, ConstructibleU<U>, ConstructibleString<U>
+public interface Constructable<U>
+	extends Constructible0d<U>, ConstructibleU<U>, ConstructibleString<U>
 {
 }

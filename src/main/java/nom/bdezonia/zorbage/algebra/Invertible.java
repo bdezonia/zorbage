@@ -34,7 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface Invertible<U> {
+public interface Invertible<U>
+{
 	Procedure2<U,U> invert(); // multiplicative inverse
 	Procedure3<U,U,U> divide();
 }

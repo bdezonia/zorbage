@@ -32,7 +32,9 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <A>
  */
-public interface NumberMember<A> extends Dimensioned {
+public interface NumberMember<A>
+	extends Dimensioned
+{
 	// 0 dims
 	void getV(A value);
 	void setV(A value);

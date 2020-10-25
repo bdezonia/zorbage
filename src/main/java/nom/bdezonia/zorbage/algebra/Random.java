@@ -33,6 +33,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface Random<U> {
+public interface Random<U>
+{
 	Procedure1<U> random();
 }

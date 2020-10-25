@@ -34,8 +34,7 @@ import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public interface ScaleByHighPrec<U> {
-
+public interface ScaleByHighPrec<U>
+{
 	Procedure3<HighPrecisionMember,U,U> scaleByHighPrec();
-
 }

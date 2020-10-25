@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  *
  * @param <U>
  */
-public interface Scale<U,W> {
+public interface Scale<U,W>
+{
 	Procedure3<W,U,U> scale();
 }

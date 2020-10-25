@@ -34,8 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface Infinite<U> {
-
+public interface Infinite<U>
+{
 	Function1<Boolean,U> isInfinite();
 
 	// positive or negative can be determined with signum() for Ordered Algebras.

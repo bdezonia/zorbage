@@ -34,9 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
  * @author Barry DeZonia
  *
  */
-public interface NaN<U> {
-
+public interface NaN<U>
+{
 	Function1<Boolean,U> isNaN();
 	Procedure1<U> nan();
-
 }

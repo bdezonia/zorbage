@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface ConstructibleString<U> {
+public interface ConstructibleString<U>
+{
 	U construct(String str);
 }

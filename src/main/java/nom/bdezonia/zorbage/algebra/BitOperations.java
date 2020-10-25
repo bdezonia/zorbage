@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  *
  * @param <U>
  */
-public interface BitOperations<U> {
+public interface BitOperations<U>
+{
 	Procedure3<U,U,U> bitAnd();
 	Procedure3<U,U,U> bitOr();
 	Procedure3<U,U,U> bitXor();

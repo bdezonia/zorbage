@@ -31,6 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface DimensionCount {
+public interface DimensionCount
+{
 	int numDimensions();
 }

@@ -31,7 +31,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface OrderedIntegralDomain<T extends OrderedIntegralDomain<T,U, V>, U, V>
+public interface OrderedIntegralDomain<T extends OrderedIntegralDomain<T,U,V>, U, V>
 	extends
 		IntegralDomain<T,U>,
 		Ordered<U>,

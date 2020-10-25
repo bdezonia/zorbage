@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
  *
  * @param <U>
  */
-public interface Products<U,V,W> extends Scale<U,V> {
+public interface Products<U,V,W> extends Scale<U,V>
+{
 	Procedure3<U,U,U> crossProduct();
 	Procedure3<U,U,V> dotProduct();
 	Procedure3<U,U,V> perpDotProduct();

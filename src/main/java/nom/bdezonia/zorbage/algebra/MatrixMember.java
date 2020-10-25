@@ -32,7 +32,9 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <A>
  */
-public interface MatrixMember<A> extends Dimensioned, StorageType {
+public interface MatrixMember<A>
+	extends Dimensioned, StorageType
+{
 	// 2 dims
 	long rows();
 	long cols();

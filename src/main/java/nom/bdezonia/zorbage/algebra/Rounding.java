@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
  * @author Barry DeZonia
  *
  */
-public interface Rounding<T,U> {
+public interface Rounding<T,U>
+{
 	Procedure4<Round.Mode,T,U,U> round();
 }

@@ -33,7 +33,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public interface InverseTrigonometric<U> {
+public interface InverseTrigonometric<U>
+{
 	Procedure2<U,U> asin();
 	Procedure2<U,U> acos();
 	Procedure2<U,U> atan();

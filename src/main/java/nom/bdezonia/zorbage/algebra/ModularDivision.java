@@ -35,8 +35,8 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
  *
  * @param <U>
  */
-public interface ModularDivision<U> {
-
+public interface ModularDivision<U>
+{
 	Procedure3<U,U,U> div();
 	Procedure3<U,U,U> mod();
 	Procedure4<U,U,U,U> divMod();

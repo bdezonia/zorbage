@@ -34,7 +34,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public interface LogicalOperations<U> {
+public interface LogicalOperations<U>
+{
 	Procedure3<U,U,U> logicalAnd();
 	Procedure3<U,U,U> logicalOr();
 	Procedure3<U,U,U> logicalXor();

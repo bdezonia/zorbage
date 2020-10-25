@@ -31,7 +31,8 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public enum StorageConstruction {
+public enum StorageConstruction
+{
 
 	MEM_ARRAY, MEM_VIRTUAL, MEM_SPARSE;
 }
