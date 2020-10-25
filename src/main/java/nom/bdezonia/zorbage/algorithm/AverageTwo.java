@@ -53,8 +53,8 @@ public class AverageTwo {
 		U tmp1 = alg.construct();
 		U tmp2 = alg.construct();
 		U tmp3 = alg.construct();
-		alg.scaleByOneHalf().call(a, tmp1);
-		alg.scaleByOneHalf().call(b, tmp2);
+		alg.scaleByOneHalf().call(1, a, tmp1);
+		alg.scaleByOneHalf().call(1, b, tmp2);
 		alg.add().call(tmp1, tmp2, tmp3);
 		if (alg.isOdd().call(a) && alg.isOdd().call(b)) {
 			U one = alg.construct();

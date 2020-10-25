@@ -959,31 +959,35 @@ public class HighPrecisionAlgebra
 		return LOG;
 	}
 
-	private final Procedure2<HighPrecisionMember, HighPrecisionMember> STWO =
-			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember> STWO =
+			new Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, HighPrecisionMember b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, HighPrecisionMember a, HighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<HighPrecisionMember, HighPrecisionMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<HighPrecisionMember, HighPrecisionMember> SHALF =
-			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember> SHALF =
+			new Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, HighPrecisionMember b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, HighPrecisionMember a, HighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<HighPrecisionMember, HighPrecisionMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
 	}
 

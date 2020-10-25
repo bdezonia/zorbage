@@ -61,7 +61,7 @@ public class RationalAlgebra
 		ScaleByOneHalf<RationalMember>,
 		ScaleByTwo<RationalMember>
 {
-	private static final BigInteger TWO = BigInteger.valueOf(2);
+	private static final RationalMember TWO = new RationalMember(2);
 	
 	@Override
 	public RationalMember construct() {
@@ -502,31 +502,35 @@ public class RationalAlgebra
 		return WITHIN;
 	}
 
-	private final Procedure2<RationalMember, RationalMember> STWO =
-			new Procedure2<RationalMember, RationalMember>()
+	private final Procedure3<java.lang.Integer, RationalMember, RationalMember> STWO =
+			new Procedure3<java.lang.Integer, RationalMember, RationalMember>()
 	{
 		@Override
-		public void call(RationalMember a, RationalMember b) {
-			b.setV(a.n.multiply(TWO), a.d);
+		public void call(java.lang.Integer numTimes, RationalMember a, RationalMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<RationalMember, RationalMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, RationalMember, RationalMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<RationalMember, RationalMember> SHALF =
-			new Procedure2<RationalMember, RationalMember>()
+	private final Procedure3<java.lang.Integer, RationalMember, RationalMember> SHALF =
+			new Procedure3<java.lang.Integer, RationalMember, RationalMember>()
 	{
 		@Override
-		public void call(RationalMember a, RationalMember b) {
-			b.setV(a.n, a.d.multiply(TWO));
+		public void call(java.lang.Integer numTimes, RationalMember a, RationalMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				div().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<RationalMember, RationalMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, RationalMember, RationalMember> scaleByOneHalf() {
 		return SHALF;
 	}
 }

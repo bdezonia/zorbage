@@ -810,31 +810,31 @@ public class SignedInt5Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<SignedInt5Member, SignedInt5Member> STWO =
-			new Procedure2<SignedInt5Member, SignedInt5Member>()
+	private final Procedure3<java.lang.Integer, SignedInt5Member, SignedInt5Member> STWO =
+			new Procedure3<java.lang.Integer, SignedInt5Member, SignedInt5Member>()
 	{
 		@Override
-		public void call(SignedInt5Member a, SignedInt5Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, SignedInt5Member a, SignedInt5Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt5Member, SignedInt5Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, SignedInt5Member, SignedInt5Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<SignedInt5Member, SignedInt5Member> SHALF =
-			new Procedure2<SignedInt5Member, SignedInt5Member>()
+	private final Procedure3<java.lang.Integer, SignedInt5Member, SignedInt5Member> SHALF =
+			new Procedure3<java.lang.Integer, SignedInt5Member, SignedInt5Member>()
 	{
 		@Override
-		public void call(SignedInt5Member a, SignedInt5Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, SignedInt5Member a, SignedInt5Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt5Member, SignedInt5Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, SignedInt5Member, SignedInt5Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

@@ -909,31 +909,37 @@ public class UnboundedIntAlgebra
 		return WITHIN;
 	}
 
-	private final Procedure2<UnboundedIntMember, UnboundedIntMember> STWO =
-			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	private final Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> STWO =
+			new Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember>()
 	{
 		@Override
-		public void call(UnboundedIntMember a, UnboundedIntMember b) {
-			b.setV(a.v().multiply(TWO));
+		public void call(java.lang.Integer numTimes, UnboundedIntMember a, UnboundedIntMember b) {
+			BigInteger tmp = a.v();
+			for (int i = 0; i < numTimes; i++)
+				tmp = tmp.multiply(TWO);
+			b.setV(tmp);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnboundedIntMember, UnboundedIntMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<UnboundedIntMember, UnboundedIntMember> SHALF =
-			new Procedure2<UnboundedIntMember, UnboundedIntMember>()
+	private final Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> SHALF =
+			new Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember>()
 	{
 		@Override
-		public void call(UnboundedIntMember a, UnboundedIntMember b) {
-			b.setV(a.v().divide(TWO));
+		public void call(java.lang.Integer numTimes, UnboundedIntMember a, UnboundedIntMember b) {
+			BigInteger tmp = a.v();
+			for (int i = 0; i < numTimes; i++)
+				tmp = tmp.divide(TWO);
+			b.setV(tmp);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnboundedIntMember, UnboundedIntMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> scaleByOneHalf() {
 		return SHALF;
 	}
 }

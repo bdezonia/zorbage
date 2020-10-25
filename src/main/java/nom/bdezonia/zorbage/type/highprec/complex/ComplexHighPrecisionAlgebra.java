@@ -1349,31 +1349,35 @@ public class ComplexHighPrecisionAlgebra
 		return WITHIN;
 	}
 
-	private final Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> STWO =
-			new Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember> STWO =
+			new Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
 	{
 		@Override
-		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> SHALF =
-			new Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember> SHALF =
+			new Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
 	{
 		@Override
-		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
 	}
 }

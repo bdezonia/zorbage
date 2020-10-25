@@ -765,31 +765,31 @@ public class UnsignedInt12Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<UnsignedInt12Member, UnsignedInt12Member> STWO =
-			new Procedure2<UnsignedInt12Member, UnsignedInt12Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member> STWO =
+			new Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member>()
 	{
 		@Override
-		public void call(UnsignedInt12Member a, UnsignedInt12Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt12Member a, UnsignedInt12Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt12Member, UnsignedInt12Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<UnsignedInt12Member, UnsignedInt12Member> SHALF =
-			new Procedure2<UnsignedInt12Member, UnsignedInt12Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member> SHALF =
+			new Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member>()
 	{
 		@Override
-		public void call(UnsignedInt12Member a, UnsignedInt12Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt12Member a, UnsignedInt12Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt12Member, UnsignedInt12Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, UnsignedInt12Member, UnsignedInt12Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

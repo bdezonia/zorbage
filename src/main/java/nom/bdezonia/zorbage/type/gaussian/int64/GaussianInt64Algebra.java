@@ -67,6 +67,7 @@ public class GaussianInt64Algebra
 		ScaleByTwo<GaussianInt64Member>,
 		AbsoluteValue<GaussianInt64Member, HighPrecisionMember>
 {
+	private static final GaussianInt64Member TWO = new GaussianInt64Member(2, 0);
 
 	@Override
 	public GaussianInt64Member construct() {
@@ -321,33 +322,35 @@ public class GaussianInt64Algebra
 		return CONJ;
 	}
 	
-	private final Procedure2<GaussianInt64Member, GaussianInt64Member> STWO =
-			new Procedure2<GaussianInt64Member, GaussianInt64Member>()
+	private final Procedure3<java.lang.Integer, GaussianInt64Member, GaussianInt64Member> STWO =
+			new Procedure3<java.lang.Integer, GaussianInt64Member, GaussianInt64Member>()
 	{
 		@Override
-		public void call(GaussianInt64Member a, GaussianInt64Member b) {
-			b.setR( a.r << 1);
-			b.setI( a.i << 1);
+		public void call(java.lang.Integer numTimes, GaussianInt64Member a, GaussianInt64Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				multiply().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianInt64Member, GaussianInt64Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, GaussianInt64Member, GaussianInt64Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<GaussianInt64Member, GaussianInt64Member> SHALF =
-			new Procedure2<GaussianInt64Member, GaussianInt64Member>()
+	private final Procedure3<java.lang.Integer, GaussianInt64Member, GaussianInt64Member> SHALF =
+			new Procedure3<java.lang.Integer, GaussianInt64Member, GaussianInt64Member>()
 	{
 		@Override
-		public void call(GaussianInt64Member a, GaussianInt64Member b) {
-			b.setR( a.r >> 1);
-			b.setI( a.i >> 1);
+		public void call(java.lang.Integer numTimes, GaussianInt64Member a, GaussianInt64Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				div().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianInt64Member, GaussianInt64Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, GaussianInt64Member, GaussianInt64Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

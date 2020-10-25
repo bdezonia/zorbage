@@ -802,31 +802,31 @@ public class SignedInt64Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<SignedInt64Member, SignedInt64Member> STWO =
-			new Procedure2<SignedInt64Member, SignedInt64Member>()
+	private final Procedure3<java.lang.Integer, SignedInt64Member, SignedInt64Member> STWO =
+			new Procedure3<java.lang.Integer, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(SignedInt64Member a, SignedInt64Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, SignedInt64Member a, SignedInt64Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt64Member, SignedInt64Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, SignedInt64Member, SignedInt64Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<SignedInt64Member, SignedInt64Member> SHALF =
-			new Procedure2<SignedInt64Member, SignedInt64Member>()
+	private final Procedure3<java.lang.Integer, SignedInt64Member, SignedInt64Member> SHALF =
+			new Procedure3<java.lang.Integer, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(SignedInt64Member a, SignedInt64Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, SignedInt64Member a, SignedInt64Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt64Member, SignedInt64Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, SignedInt64Member, SignedInt64Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

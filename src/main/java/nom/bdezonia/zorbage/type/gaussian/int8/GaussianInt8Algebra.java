@@ -311,33 +311,33 @@ public class GaussianInt8Algebra
 		return CONJ;
 	}
 	
-	private final Procedure2<GaussianInt8Member, GaussianInt8Member> STWO =
-			new Procedure2<GaussianInt8Member, GaussianInt8Member>()
+	private final Procedure3<java.lang.Integer, GaussianInt8Member, GaussianInt8Member> STWO =
+			new Procedure3<java.lang.Integer, GaussianInt8Member, GaussianInt8Member>()
 	{
 		@Override
-		public void call(GaussianInt8Member a, GaussianInt8Member b) {
-			b.setR( a.r << 1);
-			b.setI( a.i << 1);
+		public void call(java.lang.Integer numTimes, GaussianInt8Member a, GaussianInt8Member b) {
+			b.setR( a.r << numTimes );
+			b.setI( a.i << numTimes );
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianInt8Member, GaussianInt8Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, GaussianInt8Member, GaussianInt8Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<GaussianInt8Member, GaussianInt8Member> SHALF =
-			new Procedure2<GaussianInt8Member, GaussianInt8Member>()
+	private final Procedure3<java.lang.Integer, GaussianInt8Member, GaussianInt8Member> SHALF =
+			new Procedure3<java.lang.Integer, GaussianInt8Member, GaussianInt8Member>()
 	{
 		@Override
-		public void call(GaussianInt8Member a, GaussianInt8Member b) {
-			b.setR( a.r >> 1);
-			b.setI( a.i >> 1);
+		public void call(java.lang.Integer numTimes, GaussianInt8Member a, GaussianInt8Member b) {
+			b.setR( a.r >> numTimes );
+			b.setI( a.i >> numTimes );
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianInt8Member, GaussianInt8Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, GaussianInt8Member, GaussianInt8Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

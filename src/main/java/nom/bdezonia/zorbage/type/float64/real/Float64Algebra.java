@@ -1541,31 +1541,35 @@ public class Float64Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<Float64Member, Float64Member> STWO =
-			new Procedure2<Float64Member, Float64Member>()
+	private final Procedure3<java.lang.Integer, Float64Member, Float64Member> STWO =
+			new Procedure3<java.lang.Integer, Float64Member, Float64Member>()
 	{
 		@Override
-		public void call(Float64Member a, Float64Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, Float64Member a, Float64Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<Float64Member, Float64Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, Float64Member, Float64Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<Float64Member, Float64Member> SHALF =
-			new Procedure2<Float64Member, Float64Member>()
+	private final Procedure3<java.lang.Integer, Float64Member, Float64Member> SHALF =
+			new Procedure3<java.lang.Integer, Float64Member, Float64Member>()
 	{
 		@Override
-		public void call(Float64Member a, Float64Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, Float64Member a, Float64Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<Float64Member, Float64Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, Float64Member, Float64Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

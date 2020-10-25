@@ -1404,31 +1404,35 @@ public class ComplexFloat32Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<ComplexFloat32Member, ComplexFloat32Member> STWO =
-			new Procedure2<ComplexFloat32Member, ComplexFloat32Member>()
+	private final Procedure3<java.lang.Integer, ComplexFloat32Member, ComplexFloat32Member> STWO =
+			new Procedure3<java.lang.Integer, ComplexFloat32Member, ComplexFloat32Member>()
 	{
 		@Override
-		public void call(ComplexFloat32Member a, ComplexFloat32Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, ComplexFloat32Member a, ComplexFloat32Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<ComplexFloat32Member, ComplexFloat32Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, ComplexFloat32Member, ComplexFloat32Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<ComplexFloat32Member, ComplexFloat32Member> SHALF =
-			new Procedure2<ComplexFloat32Member, ComplexFloat32Member>()
+	private final Procedure3<java.lang.Integer, ComplexFloat32Member, ComplexFloat32Member> SHALF =
+			new Procedure3<java.lang.Integer, ComplexFloat32Member, ComplexFloat32Member>()
 	{
 		@Override
-		public void call(ComplexFloat32Member a, ComplexFloat32Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, ComplexFloat32Member a, ComplexFloat32Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<ComplexFloat32Member, ComplexFloat32Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, ComplexFloat32Member, ComplexFloat32Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

@@ -1428,31 +1428,35 @@ public class OctonionFloat64Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<OctonionFloat64Member, OctonionFloat64Member> STWO =
-			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	private final Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member> STWO =
+			new Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member>()
 	{
 		@Override
-		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, OctonionFloat64Member a, OctonionFloat64Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<OctonionFloat64Member, OctonionFloat64Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<OctonionFloat64Member, OctonionFloat64Member> SHALF =
-			new Procedure2<OctonionFloat64Member, OctonionFloat64Member>()
+	private final Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member> SHALF =
+			new Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member>()
 	{
 		@Override
-		public void call(OctonionFloat64Member a, OctonionFloat64Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, OctonionFloat64Member a, OctonionFloat64Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<OctonionFloat64Member, OctonionFloat64Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, OctonionFloat64Member, OctonionFloat64Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

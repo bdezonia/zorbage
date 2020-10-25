@@ -955,31 +955,35 @@ public class SignedInt128Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<SignedInt128Member, SignedInt128Member> STWO =
-			new Procedure2<SignedInt128Member, SignedInt128Member>()
+	private final Procedure3<java.lang.Integer, SignedInt128Member, SignedInt128Member> STWO =
+			new Procedure3<java.lang.Integer, SignedInt128Member, SignedInt128Member>()
 	{
 		@Override
-		public void call(SignedInt128Member a, SignedInt128Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, SignedInt128Member a, SignedInt128Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt128Member, SignedInt128Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, SignedInt128Member, SignedInt128Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<SignedInt128Member, SignedInt128Member> SHALF =
-			new Procedure2<SignedInt128Member, SignedInt128Member>()
+	private final Procedure3<java.lang.Integer, SignedInt128Member, SignedInt128Member> SHALF =
+			new Procedure3<java.lang.Integer, SignedInt128Member, SignedInt128Member>()
 	{
 		@Override
-		public void call(SignedInt128Member a, SignedInt128Member b) {
-			div().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, SignedInt128Member a, SignedInt128Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				div().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt128Member, SignedInt128Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, SignedInt128Member, SignedInt128Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

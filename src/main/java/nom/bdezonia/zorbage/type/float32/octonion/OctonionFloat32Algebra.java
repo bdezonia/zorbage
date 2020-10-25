@@ -1428,31 +1428,35 @@ public class OctonionFloat32Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<OctonionFloat32Member, OctonionFloat32Member> STWO =
-			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
+	private final Procedure3<java.lang.Integer, OctonionFloat32Member, OctonionFloat32Member> STWO =
+			new Procedure3<java.lang.Integer, OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
-		public void call(OctonionFloat32Member a, OctonionFloat32Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, OctonionFloat32Member a, OctonionFloat32Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<OctonionFloat32Member, OctonionFloat32Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, OctonionFloat32Member, OctonionFloat32Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<OctonionFloat32Member, OctonionFloat32Member> SHALF =
-			new Procedure2<OctonionFloat32Member, OctonionFloat32Member>()
+	private final Procedure3<java.lang.Integer, OctonionFloat32Member, OctonionFloat32Member> SHALF =
+			new Procedure3<java.lang.Integer, OctonionFloat32Member, OctonionFloat32Member>()
 	{
 		@Override
-		public void call(OctonionFloat32Member a, OctonionFloat32Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, OctonionFloat32Member a, OctonionFloat32Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<OctonionFloat32Member, OctonionFloat32Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, OctonionFloat32Member, OctonionFloat32Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

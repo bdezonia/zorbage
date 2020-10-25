@@ -765,31 +765,31 @@ public class UnsignedInt13Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<UnsignedInt13Member, UnsignedInt13Member> STWO =
-			new Procedure2<UnsignedInt13Member, UnsignedInt13Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member> STWO =
+			new Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member>()
 	{
 		@Override
-		public void call(UnsignedInt13Member a, UnsignedInt13Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt13Member a, UnsignedInt13Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt13Member, UnsignedInt13Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<UnsignedInt13Member, UnsignedInt13Member> SHALF =
-			new Procedure2<UnsignedInt13Member, UnsignedInt13Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member> SHALF =
+			new Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member>()
 	{
 		@Override
-		public void call(UnsignedInt13Member a, UnsignedInt13Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt13Member a, UnsignedInt13Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt13Member, UnsignedInt13Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, UnsignedInt13Member, UnsignedInt13Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

@@ -29,11 +29,12 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.EvenOdd;
 import nom.bdezonia.zorbage.algebra.ModularDivision;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Unity;
 
 // Stepanov and Rose: Stein gcd algorithm
@@ -59,7 +60,7 @@ public class Gcd {
 	 * @param b
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & AbsoluteValue<U,U> & BitOperations<U> &
+	public static <T extends Algebra<T,U> & AbsoluteValue<U,U> & ScaleByOneHalf<U> & ScaleByTwo<U> &
 						Addition<U> & Ordered<U> & EvenOdd<U> & Bounded<U> & Unity<U> &
 						ModularDivision<U>, U>
 		void compute(T algebra, U a, U b, U result)
@@ -81,7 +82,7 @@ public class Gcd {
 				U d = algebra.construct();
 				U m = algebra.construct();
 				algebra.unity().call(x);
-				algebra.bitShiftLeft().call(1, x, x);
+				algebra.scaleByTwo().call(1, x, x);
 				// x == 2
 				int successes = 0;
 				while (algebra.isGreater().call(x,t)) {
@@ -99,10 +100,10 @@ public class Gcd {
 						else
 							break;
 					}
-					algebra.bitShiftLeft().call(1, x, x);
+					algebra.scaleByTwo().call(1, x, x);
 				}
 				algebra.unity().call(t);
-				algebra.bitShiftLeft().call(successes, t, t);
+				algebra.scaleByTwo().call(successes, t, t);
 				algebra.assign().call(t, result);
 				return;
 			}
@@ -125,13 +126,13 @@ public class Gcd {
 		
 		int d_m = 0;
 		while (algebra.isEven().call(mTmp)) {
-			algebra.bitShiftRight().call(1, mTmp, mTmp);
+			algebra.scaleByOneHalf().call(1, mTmp, mTmp);
 			d_m++;
 		}
 		
 		int d_n = 0;
 		while (algebra.isEven().call(nTmp)) {
-			algebra.bitShiftRight().call(1, nTmp, nTmp);
+			algebra.scaleByOneHalf().call(1, nTmp, nTmp);
 			d_n++;
 		}
 
@@ -145,12 +146,12 @@ public class Gcd {
 			}
 			algebra.subtract().call(mTmp, nTmp, mTmp);
 			do {
-				algebra.bitShiftRight().call(1, mTmp, mTmp);
+				algebra.scaleByOneHalf().call(1, mTmp, mTmp);
 			} while (algebra.isEven().call(mTmp));
 		}
 		
 		// m == n
 		
-		algebra.bitShiftLeft().call(Math.min(d_m, d_n), mTmp, result);
+		algebra.scaleByTwo().call(Math.min(d_m, d_n), mTmp, result);
 	}
 }

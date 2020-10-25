@@ -1355,31 +1355,35 @@ public class OctonionHighPrecisionAlgebra
 		return WITHIN;
 	}
 
-	private final Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> STWO =
-			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, OctonionHighPrecisionMember, OctonionHighPrecisionMember> STWO =
+			new Procedure3<java.lang.Integer, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
-		public void call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> SHALF =
-			new Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, OctonionHighPrecisionMember, OctonionHighPrecisionMember> SHALF =
+			new Procedure3<java.lang.Integer, OctonionHighPrecisionMember, OctonionHighPrecisionMember>()
 	{
 		@Override
-		public void call(OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, OctonionHighPrecisionMember a, OctonionHighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, OctonionHighPrecisionMember, OctonionHighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
 	}
 

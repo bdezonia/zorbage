@@ -1059,31 +1059,35 @@ public class QuaternionFloat16Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> STWO =
-			new Procedure2<QuaternionFloat16Member, QuaternionFloat16Member>()
+	private final Procedure3<java.lang.Integer, QuaternionFloat16Member, QuaternionFloat16Member> STWO =
+			new Procedure3<java.lang.Integer, QuaternionFloat16Member, QuaternionFloat16Member>()
 	{
 		@Override
-		public void call(QuaternionFloat16Member a, QuaternionFloat16Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, QuaternionFloat16Member a, QuaternionFloat16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, QuaternionFloat16Member, QuaternionFloat16Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> SHALF =
-			new Procedure2<QuaternionFloat16Member, QuaternionFloat16Member>()
+	private final Procedure3<java.lang.Integer, QuaternionFloat16Member, QuaternionFloat16Member> SHALF =
+			new Procedure3<java.lang.Integer, QuaternionFloat16Member, QuaternionFloat16Member>()
 	{
 		@Override
-		public void call(QuaternionFloat16Member a, QuaternionFloat16Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, QuaternionFloat16Member a, QuaternionFloat16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<QuaternionFloat16Member, QuaternionFloat16Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, QuaternionFloat16Member, QuaternionFloat16Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

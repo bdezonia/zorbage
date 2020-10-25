@@ -787,31 +787,31 @@ public class SignedInt16Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<SignedInt16Member, SignedInt16Member> STWO =
-			new Procedure2<SignedInt16Member, SignedInt16Member>()
+	private final Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member> STWO =
+			new Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member>()
 	{
 		@Override
-		public void call(SignedInt16Member a, SignedInt16Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, SignedInt16Member a, SignedInt16Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt16Member, SignedInt16Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<SignedInt16Member, SignedInt16Member> SHALF =
-			new Procedure2<SignedInt16Member, SignedInt16Member>()
+	private final Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member> SHALF =
+			new Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member>()
 	{
 		@Override
-		public void call(SignedInt16Member a, SignedInt16Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, SignedInt16Member a, SignedInt16Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt16Member, SignedInt16Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, SignedInt16Member, SignedInt16Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

@@ -978,31 +978,35 @@ public class QuaternionHighPrecisionAlgebra
 		return WITHIN;
 	}
 	
-	private final Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> STWO =
-			new Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> STWO =
+			new Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
 	{
 		@Override
-		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> SHALF =
-			new Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
+	private final Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> SHALF =
+			new Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember>()
 	{
 		@Override
-		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
 	}
 }

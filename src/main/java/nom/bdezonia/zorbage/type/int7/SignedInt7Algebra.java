@@ -810,31 +810,31 @@ public class SignedInt7Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<SignedInt7Member, SignedInt7Member> STWO =
-			new Procedure2<SignedInt7Member, SignedInt7Member>()
+	private final Procedure3<java.lang.Integer, SignedInt7Member, SignedInt7Member> STWO =
+			new Procedure3<java.lang.Integer, SignedInt7Member, SignedInt7Member>()
 	{
 		@Override
-		public void call(SignedInt7Member a, SignedInt7Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, SignedInt7Member a, SignedInt7Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt7Member, SignedInt7Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, SignedInt7Member, SignedInt7Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<SignedInt7Member, SignedInt7Member> SHALF =
-			new Procedure2<SignedInt7Member, SignedInt7Member>()
+	private final Procedure3<java.lang.Integer, SignedInt7Member, SignedInt7Member> SHALF =
+			new Procedure3<java.lang.Integer, SignedInt7Member, SignedInt7Member>()
 	{
 		@Override
-		public void call(SignedInt7Member a, SignedInt7Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, SignedInt7Member a, SignedInt7Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt7Member, SignedInt7Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, SignedInt7Member, SignedInt7Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

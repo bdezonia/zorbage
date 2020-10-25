@@ -763,31 +763,31 @@ public class UnsignedInt14Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<UnsignedInt14Member, UnsignedInt14Member> STWO =
-			new Procedure2<UnsignedInt14Member, UnsignedInt14Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt14Member, UnsignedInt14Member> STWO =
+			new Procedure3<java.lang.Integer, UnsignedInt14Member, UnsignedInt14Member>()
 	{
 		@Override
-		public void call(UnsignedInt14Member a, UnsignedInt14Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt14Member a, UnsignedInt14Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt14Member, UnsignedInt14Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, UnsignedInt14Member, UnsignedInt14Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<UnsignedInt14Member, UnsignedInt14Member> SHALF =
-			new Procedure2<UnsignedInt14Member, UnsignedInt14Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt14Member, UnsignedInt14Member> SHALF =
+			new Procedure3<java.lang.Integer, UnsignedInt14Member, UnsignedInt14Member>()
 	{
 		@Override
-		public void call(UnsignedInt14Member a, UnsignedInt14Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt14Member a, UnsignedInt14Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt14Member, UnsignedInt14Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, UnsignedInt14Member, UnsignedInt14Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

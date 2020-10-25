@@ -786,31 +786,31 @@ public class SignedInt8Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<SignedInt8Member, SignedInt8Member> STWO =
-			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	private final Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member> STWO =
+			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
 	{
 		@Override
-		public void call(SignedInt8Member a, SignedInt8Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, SignedInt8Member a, SignedInt8Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt8Member, SignedInt8Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<SignedInt8Member, SignedInt8Member> SHALF =
-			new Procedure2<SignedInt8Member, SignedInt8Member>()
+	private final Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member> SHALF =
+			new Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member>()
 	{
 		@Override
-		public void call(SignedInt8Member a, SignedInt8Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, SignedInt8Member a, SignedInt8Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<SignedInt8Member, SignedInt8Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, SignedInt8Member, SignedInt8Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

@@ -1409,31 +1409,35 @@ public class Float16Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<Float16Member, Float16Member> STWO =
-			new Procedure2<Float16Member, Float16Member>()
+	private final Procedure3<java.lang.Integer, Float16Member, Float16Member> STWO =
+			new Procedure3<java.lang.Integer, Float16Member, Float16Member>()
 	{
 		@Override
-		public void call(Float16Member a, Float16Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, Float16Member a, Float16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<Float16Member, Float16Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, Float16Member, Float16Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<Float16Member, Float16Member> SHALF =
-			new Procedure2<Float16Member, Float16Member>()
+	private final Procedure3<java.lang.Integer, Float16Member, Float16Member> SHALF =
+			new Procedure3<java.lang.Integer, Float16Member, Float16Member>()
 	{
 		@Override
-		public void call(Float16Member a, Float16Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, Float16Member a, Float16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<Float16Member, Float16Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, Float16Member, Float16Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

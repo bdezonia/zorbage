@@ -26,12 +26,14 @@
  */
 package nom.bdezonia.zorbage.type.gaussian.unbounded;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
-import nom.bdezonia.zorbage.algebra.PrincipalIdealDomain;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
@@ -42,6 +44,9 @@ import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
+import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
@@ -51,15 +56,15 @@ import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
  */
 public class GaussianIntUnboundedAlgebra
 	implements
-		PrincipalIdealDomain<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>,
+		EuclideanDomain<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember, UnboundedIntMember>,
 		Tolerance<GaussianIntUnboundedMember,GaussianIntUnboundedMember>,
 		Norm<GaussianIntUnboundedMember, UnboundedIntMember>,
 		Conjugate<GaussianIntUnboundedMember>,
 		ScaleByOneHalf<GaussianIntUnboundedMember>,
-		ScaleByTwo<GaussianIntUnboundedMember>
+		ScaleByTwo<GaussianIntUnboundedMember>,
+		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>
 {
-
-	private static final BigInteger TWO = BigInteger.valueOf(2);
+	private static final GaussianIntUnboundedMember TWO = new GaussianIntUnboundedMember(BigInteger.valueOf(2), BigInteger.ZERO);
 
 	@Override
 	public GaussianIntUnboundedMember construct() {
@@ -283,33 +288,158 @@ public class GaussianIntUnboundedAlgebra
 		return CONJ;
 	}
 	
-	private final Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> STWO =
-			new Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	private final Procedure3<java.lang.Integer, GaussianIntUnboundedMember, GaussianIntUnboundedMember> STWO =
+			new Procedure3<java.lang.Integer, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
 	{
 		@Override
-		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			b.setR( a.r.multiply(TWO));
-			b.setI( a.i.multiply(TWO));
+		public void call(java.lang.Integer numTimes, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			multiply().call(a, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByTwo() {
+	public Procedure3<java.lang.Integer, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> SHALF =
-			new Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	private final Procedure3<java.lang.Integer, GaussianIntUnboundedMember, GaussianIntUnboundedMember> SHALF =
+			new Procedure3<java.lang.Integer, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
 	{
 		@Override
-		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			b.setR( a.r.divide(TWO));
-			b.setI( a.i.divide(TWO));
+		public void call(java.lang.Integer numTimes, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			div().call(a, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByOneHalf() {
 		return SHALF;
 	}
-}
+
+	private final Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> GCD =
+			new Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember c) {
+			throw new IllegalArgumentException("code not done yet");
+			//Gcd.compute(G.GAUSS16, a, b, c);
+		}
+	};
+	
+	@Override
+	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> gcd() {
+		return GCD;
+	}
+
+	private final Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> LCM =
+			new Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember c) {
+			throw new IllegalArgumentException("code not done yet");
+			//Lcm.compute(G.GAUSS16, a, b, c);
+		}
+	};
+
+	@Override
+	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> lcm() {
+		return LCM;
+	}
+
+	private final Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> DIV =
+			new Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember d) {
+			throw new IllegalArgumentException("code not done yet");
+			//GaussianInt16Member m = G.GAUSS16.construct();
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+	@Override
+	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> div() {
+		return DIV;
+	}
+
+	private final Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> MOD =
+			new Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember m) {
+			throw new IllegalArgumentException("code not done yet");
+			//GaussianInt16Member d = G.GAUSS16.construct();
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+
+	@Override
+	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> mod() {
+		return MOD;
+	}
+
+	private final Procedure4<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> DIVMOD =
+			new Procedure4<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember d, GaussianIntUnboundedMember m) {
+			throw new IllegalArgumentException("code not done yet");
+			//DivMod.compute(G.GAUSS16, a, b, d, m);
+		}
+	};
+	
+
+	@Override
+	public Procedure4<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> divMod() {
+		return DIVMOD;
+	}
+
+	private final Function1<Boolean, GaussianIntUnboundedMember> EVEN =
+			new Function1<Boolean, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public Boolean call(GaussianIntUnboundedMember a) {
+			UnboundedIntMember norm = G.UNBOUND.construct();
+			norm().call(a, norm);
+			return norm.v().and(BigInteger.ONE) == BigInteger.ZERO;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, GaussianIntUnboundedMember> isEven() {
+		return EVEN;
+	}
+
+	private final Function1<Boolean, GaussianIntUnboundedMember> ODD =
+			new Function1<Boolean, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public Boolean call(GaussianIntUnboundedMember a) {
+			UnboundedIntMember norm = G.UNBOUND.construct();
+			norm().call(a, norm);
+			return norm.v().and(BigInteger.ONE) == BigInteger.ONE;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, GaussianIntUnboundedMember> isOdd() {
+		return ODD;
+	}
+
+	private final Procedure2<GaussianIntUnboundedMember, HighPrecisionMember> ABS =
+			new Procedure2<GaussianIntUnboundedMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(GaussianIntUnboundedMember a, HighPrecisionMember b) {
+			UnboundedIntMember norm = G.UNBOUND.construct();
+			norm().call(a, norm);
+			BigDecimal n = new BigDecimal(norm.v());
+			b.setV(n.sqrt(HighPrecisionAlgebra.getContext()));
+		}
+	};
+
+	@Override
+	public Procedure2<GaussianIntUnboundedMember, HighPrecisionMember> abs() {
+		return ABS;
+	}}

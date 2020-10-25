@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
  * 
@@ -35,5 +35,5 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  */
 public interface ScaleByOneHalf<U>
 {
-	Procedure2<U,U> scaleByOneHalf();
+	Procedure3<java.lang.Integer,U,U> scaleByOneHalf();
 }

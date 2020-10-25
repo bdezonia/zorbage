@@ -112,7 +112,7 @@ public class DivMod {
 			U n = alg.construct(one);
 			alg.subtract().call(aNeg, c, aNeg);
 			while (!alg.isEqual().call(c, bNeg)) {
-				alg.scaleByOneHalf().call(c, c);
+				alg.scaleByOneHalf().call(1, c, c);
 				alg.add().call(n, n, n);
 				if (alg.isGreaterEqual().call(c, aNeg)) {
 					alg.subtract().call(aNeg, c, aNeg);
@@ -144,7 +144,7 @@ public class DivMod {
 			U n = alg.construct(one);
 			alg.subtract().call(aPos, c, aPos);
 			while (!alg.isEqual().call(c, bPos)) {
-				alg.scaleByOneHalf().call(c, c);
+				alg.scaleByOneHalf().call(1, c, c);
 				alg.add().call(n, n, n);
 				if (alg.isLessEqual().call(c, aPos)) {
 					alg.subtract().call(aPos, c, aPos);

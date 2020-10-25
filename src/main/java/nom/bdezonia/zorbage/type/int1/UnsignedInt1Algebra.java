@@ -31,8 +31,6 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -351,7 +349,10 @@ public class UnsignedInt1Algebra
 	{
 		@Override
 		public void call(UnsignedInt1Member a, UnsignedInt1Member b, UnsignedInt1Member c) {
-			Gcd.compute(G.UINT1, a, b, c);
+			if (a.v == 0 && b.v == 0)
+				c.setV(0);
+			else
+				c.setV(1);
 		}
 	};
 	
@@ -365,7 +366,10 @@ public class UnsignedInt1Algebra
 	{
 		@Override
 		public void call(UnsignedInt1Member a, UnsignedInt1Member b, UnsignedInt1Member c) {
-			Lcm.compute(G.UINT1, a, b, c);
+			if (a.v == 0 || b.v == 0)
+				c.setV(0);
+			else
+				c.setV(1);
 		}
 	};
 	

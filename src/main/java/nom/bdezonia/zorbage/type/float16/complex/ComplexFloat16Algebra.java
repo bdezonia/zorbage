@@ -1405,31 +1405,35 @@ public class ComplexFloat16Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<ComplexFloat16Member, ComplexFloat16Member> STWO =
-			new Procedure2<ComplexFloat16Member, ComplexFloat16Member>()
+	private final Procedure3<java.lang.Integer, ComplexFloat16Member, ComplexFloat16Member> STWO =
+			new Procedure3<java.lang.Integer, ComplexFloat16Member, ComplexFloat16Member>()
 	{
 		@Override
-		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
-			scale().call(a, TWO, b);
+		public void call(java.lang.Integer numTimes, ComplexFloat16Member a, ComplexFloat16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<ComplexFloat16Member, ComplexFloat16Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, ComplexFloat16Member, ComplexFloat16Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<ComplexFloat16Member, ComplexFloat16Member> SHALF =
-			new Procedure2<ComplexFloat16Member, ComplexFloat16Member>()
+	private final Procedure3<java.lang.Integer, ComplexFloat16Member, ComplexFloat16Member> SHALF =
+			new Procedure3<java.lang.Integer, ComplexFloat16Member, ComplexFloat16Member>()
 	{
 		@Override
-		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
-			scale().call(a, ONE_HALF, b);
+		public void call(java.lang.Integer numTimes, ComplexFloat16Member a, ComplexFloat16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				scale().call(b, ONE_HALF, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<ComplexFloat16Member, ComplexFloat16Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, ComplexFloat16Member, ComplexFloat16Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

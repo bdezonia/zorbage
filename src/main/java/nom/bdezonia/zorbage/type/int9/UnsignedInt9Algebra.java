@@ -765,31 +765,31 @@ public class UnsignedInt9Algebra
 		return WITHIN;
 	}
 
-	private final Procedure2<UnsignedInt9Member, UnsignedInt9Member> STWO =
-			new Procedure2<UnsignedInt9Member, UnsignedInt9Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt9Member, UnsignedInt9Member> STWO =
+			new Procedure3<java.lang.Integer, UnsignedInt9Member, UnsignedInt9Member>()
 	{
 		@Override
-		public void call(UnsignedInt9Member a, UnsignedInt9Member b) {
-			b.setV(a.v << 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt9Member a, UnsignedInt9Member b) {
+			b.setV(a.v << numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt9Member, UnsignedInt9Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, UnsignedInt9Member, UnsignedInt9Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<UnsignedInt9Member, UnsignedInt9Member> SHALF =
-			new Procedure2<UnsignedInt9Member, UnsignedInt9Member>()
+	private final Procedure3<java.lang.Integer, UnsignedInt9Member, UnsignedInt9Member> SHALF =
+			new Procedure3<java.lang.Integer, UnsignedInt9Member, UnsignedInt9Member>()
 	{
 		@Override
-		public void call(UnsignedInt9Member a, UnsignedInt9Member b) {
-			b.setV(a.v >> 1);
+		public void call(java.lang.Integer numTimes, UnsignedInt9Member a, UnsignedInt9Member b) {
+			b.setV(a.v >> numTimes);
 		}
 	};
 	
 	@Override
-	public Procedure2<UnsignedInt9Member, UnsignedInt9Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, UnsignedInt9Member, UnsignedInt9Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

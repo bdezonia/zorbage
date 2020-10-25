@@ -66,7 +66,8 @@ public class GaussianInt16Algebra
 		ScaleByTwo<GaussianInt16Member>,
 		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>
 {
-
+	private static final GaussianInt16Member TWO = new GaussianInt16Member((short)2, (short)0);
+	
 	@Override
 	public GaussianInt16Member construct() {
 		return new GaussianInt16Member();
@@ -311,33 +312,35 @@ public class GaussianInt16Algebra
 		return CONJ;
 	}
 	
-	private final Procedure2<GaussianInt16Member, GaussianInt16Member> STWO =
-			new Procedure2<GaussianInt16Member, GaussianInt16Member>()
+	private final Procedure3<java.lang.Integer, GaussianInt16Member, GaussianInt16Member> STWO =
+			new Procedure3<java.lang.Integer, GaussianInt16Member, GaussianInt16Member>()
 	{
 		@Override
-		public void call(GaussianInt16Member a, GaussianInt16Member b) {
-			b.setR( a.r << 1);
-			b.setI( a.i << 1);
+		public void call(java.lang.Integer numTimes, GaussianInt16Member a, GaussianInt16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				multiply().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianInt16Member, GaussianInt16Member> scaleByTwo() {
+	public Procedure3<java.lang.Integer, GaussianInt16Member, GaussianInt16Member> scaleByTwo() {
 		return STWO;
 	}
 
-	private final Procedure2<GaussianInt16Member, GaussianInt16Member> SHALF =
-			new Procedure2<GaussianInt16Member, GaussianInt16Member>()
+	private final Procedure3<java.lang.Integer, GaussianInt16Member, GaussianInt16Member> SHALF =
+			new Procedure3<java.lang.Integer, GaussianInt16Member, GaussianInt16Member>()
 	{
 		@Override
-		public void call(GaussianInt16Member a, GaussianInt16Member b) {
-			b.setR( a.r >> 1);
-			b.setI( a.i >> 1);
+		public void call(java.lang.Integer numTimes, GaussianInt16Member a, GaussianInt16Member b) {
+			assign().call(a, b);
+			for (int i = 0; i < numTimes; i++)
+				div().call(b, TWO, b);
 		}
 	};
 	
 	@Override
-	public Procedure2<GaussianInt16Member, GaussianInt16Member> scaleByOneHalf() {
+	public Procedure3<java.lang.Integer, GaussianInt16Member, GaussianInt16Member> scaleByOneHalf() {
 		return SHALF;
 	}
 

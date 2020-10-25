@@ -122,7 +122,7 @@ public class Multiply {
 		algebra.unity().call(one);
 		while (!algebra.isOdd().call(xPos)) {
 			algebra.add().call(yPos, yPos, yPos);
-			algebra.scaleByOneHalf().call(xPos, xPos);
+			algebra.scaleByOneHalf().call(1, xPos, xPos);
 		}
 		if (algebra.isEqual().call(one, xPos)) {
 			algebra.assign().call(yPos, z);
@@ -138,7 +138,7 @@ public class Multiply {
 		U r = algebra.construct(yPos);
 		U n = algebra.construct(xPos);
 		algebra.subtract().call(n, one, n);
-		algebra.scaleByOneHalf().call(n, n);
+		algebra.scaleByOneHalf().call(1, n, n);
 		U a = algebra.construct(yPos);
 		algebra.add().call(a, a, a);
 		while (true) {
@@ -153,7 +153,7 @@ public class Multiply {
 					return;
 				}
 			}
-			algebra.scaleByOneHalf().call(n, n);
+			algebra.scaleByOneHalf().call(1, n, n);
 			algebra.add().call(a, a, a);
 		}
 	}
