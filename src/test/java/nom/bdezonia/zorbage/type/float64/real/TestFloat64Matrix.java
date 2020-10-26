@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.float16.real.Float16Member;
 public class TestFloat64Matrix {
 
 	// toggle true/false if want to run this big slow test
-	private static final boolean RUN = true;
+	private static final boolean RUN = false;
 	
 	@Test
 	public void testHugeMatrix() {
