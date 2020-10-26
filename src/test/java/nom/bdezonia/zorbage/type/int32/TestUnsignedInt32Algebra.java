@@ -196,7 +196,7 @@ public class TestUnsignedInt32Algebra {
 			G.UINT32.bitNot().call(a, c);
 			assertEquals(~a.v, c.v);
 			
-			for (int p = 0; p < 16; p++) {
+			for (int p = 0; p < 32; p++) {
 				
 				G.UINT32.bitShiftLeft().call(p, a, c);
 				assertEquals((a.v() << p) & 0xffffffffL, c.v());
