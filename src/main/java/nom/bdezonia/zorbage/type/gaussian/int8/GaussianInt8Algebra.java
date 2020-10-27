@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.gaussian.int8;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
@@ -66,8 +67,6 @@ public class GaussianInt8Algebra
 		ScaleByTwo<GaussianInt8Member>,
 		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>
 {
-	private static final GaussianInt8Member TWO = new GaussianInt8Member(2, 0);
-	
 	@Override
 	public GaussianInt8Member construct() {
 		return new GaussianInt8Member();
@@ -461,7 +460,7 @@ public class GaussianInt8Algebra
 			SignedInt32Member norm = G.INT32.construct();
 			norm().call(a, norm);
 			BigDecimal n = new BigDecimal(norm.v());
-			b.setV(n.sqrt(HighPrecisionAlgebra.getContext()));
+			b.setV(BigDecimalMath.sqrt(n, HighPrecisionAlgebra.getContext()));
 		}
 	};
 

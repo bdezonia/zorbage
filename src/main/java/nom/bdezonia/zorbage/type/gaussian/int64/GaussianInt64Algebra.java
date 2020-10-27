@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
@@ -67,8 +68,6 @@ public class GaussianInt64Algebra
 		ScaleByTwo<GaussianInt64Member>,
 		AbsoluteValue<GaussianInt64Member, HighPrecisionMember>
 {
-	private static final GaussianInt64Member TWO = new GaussianInt64Member(2, 0);
-
 	@Override
 	public GaussianInt64Member construct() {
 		return new GaussianInt64Member();
@@ -471,7 +470,7 @@ public class GaussianInt64Algebra
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
 			BigDecimal n = new BigDecimal(norm.v());
-			b.setV(n.sqrt(HighPrecisionAlgebra.getContext()));
+			b.setV(BigDecimalMath.sqrt(n, HighPrecisionAlgebra.getContext()));
 		}
 	};
 

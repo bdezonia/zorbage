@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.type.gaussian.unbounded;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
@@ -64,8 +65,6 @@ public class GaussianIntUnboundedAlgebra
 		ScaleByTwo<GaussianIntUnboundedMember>,
 		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>
 {
-	private static final GaussianIntUnboundedMember TWO = new GaussianIntUnboundedMember(BigInteger.valueOf(2), BigInteger.ZERO);
-
 	@Override
 	public GaussianIntUnboundedMember construct() {
 		return new GaussianIntUnboundedMember();
@@ -437,7 +436,7 @@ public class GaussianIntUnboundedAlgebra
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
 			BigDecimal n = new BigDecimal(norm.v());
-			b.setV(n.sqrt(HighPrecisionAlgebra.getContext()));
+			b.setV(BigDecimalMath.sqrt(n, HighPrecisionAlgebra.getContext()));
 		}
 	};
 
