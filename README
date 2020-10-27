@@ -221,9 +221,19 @@ Programming notes
   Java 11 info
     
     Zorbage has been compiled and tested using Maven with OpenJDK Java on Linux
-      
-      (you can possibly use earlier versions of Java but note that Zorbage does
-       use some Java 9 features)
+
+  Java 8 info
+
+    Zorbage was previously compiled and tested using Maven with OpenJDK Java on Linux
+
+      The Zorbage code has been scrubbed of API calls later than Java 8 and the
+      Zorbage library API should be callable from Java 8.
+
+  Java 7 info
+
+    At one time Zorbage was tested with Java 7 on the Macintosh. Recently
+      the Zorbage code was updated to take advantage of some Java 8 features
+      so it is possible it will not be callable from Java 7. YMMV
 
   Eclipse info
     
