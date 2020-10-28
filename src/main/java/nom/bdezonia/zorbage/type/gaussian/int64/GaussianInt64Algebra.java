@@ -450,7 +450,7 @@ public class GaussianInt64Algebra
 		public Boolean call(GaussianInt64Member a) {
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
-			return norm.v().and(BigInteger.ONE) == BigInteger.ZERO;
+			return norm.v().and(BigInteger.ONE).equals(BigInteger.ZERO);
 		}
 	};
 
@@ -466,7 +466,7 @@ public class GaussianInt64Algebra
 		public Boolean call(GaussianInt64Member a) {
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
-			return norm.v().and(BigInteger.ONE) == BigInteger.ONE;
+			return norm.v().and(BigInteger.ONE).equals(BigInteger.ONE);
 		}
 	};
 
