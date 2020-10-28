@@ -556,8 +556,9 @@ public class GaussianInt64Algebra
 		public void call(Double factor, GaussianInt64Member a, GaussianInt64Member b) {
 			long r = a.r();
 			long i = a.i();
-			r = (long) Math.round(r * factor);
-			i = (long) Math.round(i * factor);
+			BigDecimal scale = BigDecimal.valueOf(factor);
+			r = BigDecimal.valueOf(r).multiply(scale).add(G.ONE_HALF).longValue();
+			i = BigDecimal.valueOf(i).multiply(scale).add(G.ONE_HALF).longValue();
 			b.setR(r);
 			b.setI(i);
 		}
@@ -575,8 +576,9 @@ public class GaussianInt64Algebra
 		public void call(Double factor, GaussianInt64Member a, GaussianInt64Member b) {
 			long r = a.r();
 			long i = a.i();
-			r = (long) (r * factor);
-			i = (long) (i * factor);
+			BigDecimal scale = BigDecimal.valueOf(factor);
+			r = BigDecimal.valueOf(r).multiply(scale).longValue();
+			i = BigDecimal.valueOf(i).multiply(scale).longValue();
 			b.setR(r);
 			b.setI(i);
 		}
