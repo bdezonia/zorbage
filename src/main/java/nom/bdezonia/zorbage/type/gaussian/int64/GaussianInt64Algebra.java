@@ -557,7 +557,7 @@ public class GaussianInt64Algebra
 			long r = a.r();
 			long i = a.i();
 			r = (long) Math.round(r * factor);
-			i = (long) Math.round(r * factor);
+			i = (long) Math.round(i * factor);
 			b.setR(r);
 			b.setI(i);
 		}
@@ -576,7 +576,7 @@ public class GaussianInt64Algebra
 			long r = a.r();
 			long i = a.i();
 			r = (long) (r * factor);
-			i = (long) (r * factor);
+			i = (long) (i * factor);
 			b.setR(r);
 			b.setI(i);
 		}

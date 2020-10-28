@@ -548,7 +548,7 @@ public class GaussianInt8Algebra
 			int r = a.r();
 			int i = a.i();
 			r = (int) Math.round(r * factor);
-			i = (int) Math.round(r * factor);
+			i = (int) Math.round(i * factor);
 			b.setR(r);
 			b.setI(i);
 		}
@@ -567,7 +567,7 @@ public class GaussianInt8Algebra
 			int r = a.r();
 			int i = a.i();
 			r = (int) (r * factor);
-			i = (int) (r * factor);
+			i = (int) (i * factor);
 			b.setR(r);
 			b.setI(i);
 		}
