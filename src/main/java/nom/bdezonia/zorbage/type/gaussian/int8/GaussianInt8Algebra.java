@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.gaussian.int8;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
@@ -36,7 +37,13 @@ import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.Scale;
+import nom.bdezonia.zorbage.algebra.ScaleByDouble;
+import nom.bdezonia.zorbage.algebra.ScaleByDoubleAndRound;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrecAndRound;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -50,6 +57,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
  * 
@@ -65,6 +73,12 @@ public class GaussianInt8Algebra
 		Conjugate<GaussianInt8Member>,
 		ScaleByOneHalf<GaussianInt8Member>,
 		ScaleByTwo<GaussianInt8Member>,
+		Scale<GaussianInt8Member, GaussianInt8Member>,
+		ScaleByDouble<GaussianInt8Member>,
+		ScaleByDoubleAndRound<GaussianInt8Member>,
+		ScaleByHighPrec<GaussianInt8Member>,
+		ScaleByHighPrecAndRound<GaussianInt8Member>,
+		ScaleByRational<GaussianInt8Member>,
 		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>
 {
 	@Override
@@ -467,5 +481,105 @@ public class GaussianInt8Algebra
 	@Override
 	public Procedure2<GaussianInt8Member, HighPrecisionMember> abs() {
 		return ABS;
+	}
+
+	private final Procedure3<RationalMember, GaussianInt8Member, GaussianInt8Member> SBR =
+			new Procedure3<RationalMember, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(RationalMember factor, GaussianInt8Member a, GaussianInt8Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = BigInteger.valueOf(r).multiply(factor.n()).divide(factor.d()).intValue();
+			i = BigInteger.valueOf(i).multiply(factor.n()).divide(factor.d()).intValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, GaussianInt8Member, GaussianInt8Member> scaleByRational() {
+		return SBR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianInt8Member, GaussianInt8Member> SBHPR =
+			new Procedure3<HighPrecisionMember, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianInt8Member a, GaussianInt8Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = BigDecimal.valueOf(r).multiply(factor.v()).add(G.ONE_HALF).intValue();
+			i = BigDecimal.valueOf(i).multiply(factor.v()).add(G.ONE_HALF).intValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianInt8Member, GaussianInt8Member> scaleByHighPrecAndRound() {
+		return SBHPR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianInt8Member, GaussianInt8Member> SBHP =
+			new Procedure3<HighPrecisionMember, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianInt8Member a, GaussianInt8Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = BigDecimal.valueOf(r).multiply(factor.v()).intValue();
+			i = BigDecimal.valueOf(i).multiply(factor.v()).intValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianInt8Member, GaussianInt8Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<Double, GaussianInt8Member, GaussianInt8Member> SBDR =
+			new Procedure3<Double, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(Double factor, GaussianInt8Member a, GaussianInt8Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = (int) Math.round(r * factor);
+			i = (int) Math.round(r * factor);
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianInt8Member, GaussianInt8Member> scaleByDoubleAndRound() {
+		return SBDR;
+	}
+
+	private final Procedure3<Double, GaussianInt8Member, GaussianInt8Member> SBD =
+			new Procedure3<Double, GaussianInt8Member, GaussianInt8Member>()
+	{
+		@Override
+		public void call(Double factor, GaussianInt8Member a, GaussianInt8Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = (int) (r * factor);
+			i = (int) (r * factor);
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianInt8Member, GaussianInt8Member> scaleByDouble() {
+		return SBD;
+	}
+
+	@Override
+	public Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> scale() {
+		return MUL;
 	}
 }

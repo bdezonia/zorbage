@@ -35,7 +35,13 @@ import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
+import nom.bdezonia.zorbage.algebra.Scale;
+import nom.bdezonia.zorbage.algebra.ScaleByDouble;
+import nom.bdezonia.zorbage.algebra.ScaleByDoubleAndRound;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrecAndRound;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -48,6 +54,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
@@ -63,6 +70,12 @@ public class GaussianIntUnboundedAlgebra
 		Conjugate<GaussianIntUnboundedMember>,
 		ScaleByOneHalf<GaussianIntUnboundedMember>,
 		ScaleByTwo<GaussianIntUnboundedMember>,
+		Scale<GaussianIntUnboundedMember, GaussianIntUnboundedMember>,
+		ScaleByDouble<GaussianIntUnboundedMember>,
+		ScaleByDoubleAndRound<GaussianIntUnboundedMember>,
+		ScaleByHighPrec<GaussianIntUnboundedMember>,
+		ScaleByHighPrecAndRound<GaussianIntUnboundedMember>,
+		ScaleByRational<GaussianIntUnboundedMember>,
 		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>
 {
 	@Override
@@ -445,4 +458,107 @@ public class GaussianIntUnboundedAlgebra
 	@Override
 	public Procedure2<GaussianIntUnboundedMember, HighPrecisionMember> abs() {
 		return ABS;
-	}}
+	}
+
+	private final Procedure3<RationalMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> SBR =
+			new Procedure3<RationalMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(RationalMember factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			BigInteger r = a.r();
+			BigInteger i = a.i();
+			r = r.multiply(factor.n()).divide(factor.d());
+			i = i.multiply(factor.n()).divide(factor.d());
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByRational() {
+		return SBR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> SBHPR =
+			new Procedure3<HighPrecisionMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			BigInteger r = a.r();
+			BigInteger i = a.i();
+			r = new BigDecimal(r).multiply(factor.v()).add(G.ONE_HALF).toBigInteger();
+			i = new BigDecimal(i).multiply(factor.v()).add(G.ONE_HALF).toBigInteger();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByHighPrecAndRound() {
+		return SBHPR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> SBHP =
+			new Procedure3<HighPrecisionMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			BigInteger r = a.r();
+			BigInteger i = a.i();
+			r = new BigDecimal(r).multiply(factor.v()).toBigInteger();
+			i = new BigDecimal(i).multiply(factor.v()).toBigInteger();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<Double, GaussianIntUnboundedMember, GaussianIntUnboundedMember> SBDR =
+			new Procedure3<Double, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(Double factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			BigInteger r = a.r();
+			BigInteger i = a.i();
+			BigDecimal scale = new BigDecimal(factor);
+			r = new BigDecimal(r).multiply(scale).add(G.ONE_HALF).toBigInteger();
+			i = new BigDecimal(i).multiply(scale).add(G.ONE_HALF).toBigInteger();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByDoubleAndRound() {
+		return SBDR;
+	}
+
+	private final Procedure3<Double, GaussianIntUnboundedMember, GaussianIntUnboundedMember> SBD =
+			new Procedure3<Double, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public void call(Double factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
+			BigInteger r = a.r();
+			BigInteger i = a.i();
+			BigDecimal scale = new BigDecimal(factor);
+			r = new BigDecimal(r).multiply(scale).toBigInteger();
+			i = new BigDecimal(i).multiply(scale).toBigInteger();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scaleByDouble() {
+		return SBD;
+	}
+
+	@Override
+	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scale() {
+		return MUL;
+	}
+}

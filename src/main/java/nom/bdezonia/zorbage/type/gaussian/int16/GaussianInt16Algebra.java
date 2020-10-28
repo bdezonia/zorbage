@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.gaussian.int16;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
@@ -36,7 +37,13 @@ import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.Scale;
+import nom.bdezonia.zorbage.algebra.ScaleByDouble;
+import nom.bdezonia.zorbage.algebra.ScaleByDoubleAndRound;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrecAndRound;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -50,6 +57,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
  * 
@@ -65,6 +73,12 @@ public class GaussianInt16Algebra
 		Conjugate<GaussianInt16Member>,
 		ScaleByOneHalf<GaussianInt16Member>,
 		ScaleByTwo<GaussianInt16Member>,
+		Scale<GaussianInt16Member, GaussianInt16Member>,
+		ScaleByDouble<GaussianInt16Member>,
+		ScaleByDoubleAndRound<GaussianInt16Member>,
+		ScaleByHighPrec<GaussianInt16Member>,
+		ScaleByHighPrecAndRound<GaussianInt16Member>,
+		ScaleByRational<GaussianInt16Member>,
 		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>
 {
 	@Override
@@ -467,5 +481,105 @@ public class GaussianInt16Algebra
 	@Override
 	public Procedure2<GaussianInt16Member, HighPrecisionMember> abs() {
 		return ABS;
+	}
+
+	private final Procedure3<RationalMember, GaussianInt16Member, GaussianInt16Member> SBR =
+			new Procedure3<RationalMember, GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(RationalMember factor, GaussianInt16Member a, GaussianInt16Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = BigInteger.valueOf(r).multiply(factor.n()).divide(factor.d()).intValue();
+			i = BigInteger.valueOf(i).multiply(factor.n()).divide(factor.d()).intValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, GaussianInt16Member, GaussianInt16Member> scaleByRational() {
+		return SBR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianInt16Member, GaussianInt16Member> SBHPR =
+			new Procedure3<HighPrecisionMember, GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianInt16Member a, GaussianInt16Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = BigDecimal.valueOf(r).multiply(factor.v()).add(G.ONE_HALF).intValue();
+			i = BigDecimal.valueOf(i).multiply(factor.v()).add(G.ONE_HALF).intValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianInt16Member, GaussianInt16Member> scaleByHighPrecAndRound() {
+		return SBHPR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianInt16Member, GaussianInt16Member> SBHP =
+			new Procedure3<HighPrecisionMember, GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianInt16Member a, GaussianInt16Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = BigDecimal.valueOf(r).multiply(factor.v()).intValue();
+			i = BigDecimal.valueOf(i).multiply(factor.v()).intValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianInt16Member, GaussianInt16Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<Double, GaussianInt16Member, GaussianInt16Member> SBDR =
+			new Procedure3<Double, GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(Double factor, GaussianInt16Member a, GaussianInt16Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = (int) Math.round(r * factor);
+			i = (int) Math.round(r * factor);
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianInt16Member, GaussianInt16Member> scaleByDoubleAndRound() {
+		return SBDR;
+	}
+
+	private final Procedure3<Double, GaussianInt16Member, GaussianInt16Member> SBD =
+			new Procedure3<Double, GaussianInt16Member, GaussianInt16Member>()
+	{
+		@Override
+		public void call(Double factor, GaussianInt16Member a, GaussianInt16Member b) {
+			int r = a.r();
+			int i = a.i();
+			r = (int) (r * factor);
+			i = (int) (r * factor);
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianInt16Member, GaussianInt16Member> scaleByDouble() {
+		return SBD;
+	}
+
+	@Override
+	public Procedure3<GaussianInt16Member, GaussianInt16Member, GaussianInt16Member> scale() {
+		return MUL;
 	}
 }

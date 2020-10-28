@@ -37,7 +37,13 @@ import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.Scale;
+import nom.bdezonia.zorbage.algebra.ScaleByDouble;
+import nom.bdezonia.zorbage.algebra.ScaleByDoubleAndRound;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.algebra.ScaleByHighPrecAndRound;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
+import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -50,6 +56,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 
 /**
@@ -66,6 +73,12 @@ public class GaussianInt64Algebra
 		Conjugate<GaussianInt64Member>,
 		ScaleByOneHalf<GaussianInt64Member>,
 		ScaleByTwo<GaussianInt64Member>,
+		Scale<GaussianInt64Member, GaussianInt64Member>,
+		ScaleByDouble<GaussianInt64Member>,
+		ScaleByDoubleAndRound<GaussianInt64Member>,
+		ScaleByHighPrec<GaussianInt64Member>,
+		ScaleByHighPrecAndRound<GaussianInt64Member>,
+		ScaleByRational<GaussianInt64Member>,
 		AbsoluteValue<GaussianInt64Member, HighPrecisionMember>
 {
 	@Override
@@ -477,5 +490,105 @@ public class GaussianInt64Algebra
 	@Override
 	public Procedure2<GaussianInt64Member, HighPrecisionMember> abs() {
 		return ABS;
+	}
+
+	private final Procedure3<RationalMember, GaussianInt64Member, GaussianInt64Member> SBR =
+			new Procedure3<RationalMember, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(RationalMember factor, GaussianInt64Member a, GaussianInt64Member b) {
+			long r = a.r();
+			long i = a.i();
+			r = BigInteger.valueOf(r).multiply(factor.n()).divide(factor.d()).longValue();
+			i = BigInteger.valueOf(i).multiply(factor.n()).divide(factor.d()).longValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+	
+	@Override
+	public Procedure3<RationalMember, GaussianInt64Member, GaussianInt64Member> scaleByRational() {
+		return SBR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianInt64Member, GaussianInt64Member> SBHPR =
+			new Procedure3<HighPrecisionMember, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianInt64Member a, GaussianInt64Member b) {
+			long r = a.r();
+			long i = a.i();
+			r = BigDecimal.valueOf(r).multiply(factor.v()).add(G.ONE_HALF).longValue();
+			i = BigDecimal.valueOf(i).multiply(factor.v()).add(G.ONE_HALF).longValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianInt64Member, GaussianInt64Member> scaleByHighPrecAndRound() {
+		return SBHPR;
+	}
+
+	private final Procedure3<HighPrecisionMember, GaussianInt64Member, GaussianInt64Member> SBHP =
+			new Procedure3<HighPrecisionMember, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(HighPrecisionMember factor, GaussianInt64Member a, GaussianInt64Member b) {
+			long r = a.r();
+			long i = a.i();
+			r = BigDecimal.valueOf(r).multiply(factor.v()).longValue();
+			i = BigDecimal.valueOf(i).multiply(factor.v()).longValue();
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<HighPrecisionMember, GaussianInt64Member, GaussianInt64Member> scaleByHighPrec() {
+		return SBHP;
+	}
+
+	private final Procedure3<Double, GaussianInt64Member, GaussianInt64Member> SBDR =
+			new Procedure3<Double, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(Double factor, GaussianInt64Member a, GaussianInt64Member b) {
+			long r = a.r();
+			long i = a.i();
+			r = (long) Math.round(r * factor);
+			i = (long) Math.round(r * factor);
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianInt64Member, GaussianInt64Member> scaleByDoubleAndRound() {
+		return SBDR;
+	}
+
+	private final Procedure3<Double, GaussianInt64Member, GaussianInt64Member> SBD =
+			new Procedure3<Double, GaussianInt64Member, GaussianInt64Member>()
+	{
+		@Override
+		public void call(Double factor, GaussianInt64Member a, GaussianInt64Member b) {
+			long r = a.r();
+			long i = a.i();
+			r = (long) (r * factor);
+			i = (long) (r * factor);
+			b.setR(r);
+			b.setI(i);
+		}
+	};
+
+	@Override
+	public Procedure3<Double, GaussianInt64Member, GaussianInt64Member> scaleByDouble() {
+		return SBD;
+	}
+
+	@Override
+	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> scale() {
+		return MUL;
 	}
 }
