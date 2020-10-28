@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.gaussian.int32;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
@@ -203,10 +204,14 @@ public class GaussianInt32Algebra
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member c) {
 			// for safety must use tmps
-			long r = ((long)a.r)*b.r - ((long)a.i)*b.i;
-			long i = ((long)a.i)*b.r + ((long)a.r)*b.i;
-			c.setR( (int) r );
-			c.setI( (int) i );
+			BigInteger ar = BigInteger.valueOf(a.r);
+			BigInteger ai = BigInteger.valueOf(a.i);
+			BigInteger br = BigInteger.valueOf(b.r);
+			BigInteger bi = BigInteger.valueOf(b.i);
+			BigInteger r = ar.multiply(br).subtract(ai.multiply(bi));
+			BigInteger i = ai.multiply(br).add(ar.multiply(bi));
+			c.setR( r.intValue() );
+			c.setI( i.intValue() );
 		}
 	};
 
@@ -252,9 +257,9 @@ public class GaussianInt32Algebra
 			if (tol.r < 0 || tol.i < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
 			// avoid overflow/underflow conditions by using longs
-			long r = Math.abs(((long) a.r) - b.r);
-			long i = Math.abs(((long) a.i) - b.i);
-			return r <= tol.r && i <= tol.i;
+			long dr = Math.abs(((long) a.r) - b.r);
+			long di = Math.abs(((long) a.i) - b.i);
+			return dr <= tol.r && di <= tol.i;
 		}
 	};
 

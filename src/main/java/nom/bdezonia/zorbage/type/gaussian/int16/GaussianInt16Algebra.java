@@ -203,10 +203,10 @@ public class GaussianInt16Algebra
 		@Override
 		public void call(GaussianInt16Member a, GaussianInt16Member b, GaussianInt16Member c) {
 			// for safety must use tmps
-			int r = ((int)a.r)*b.r - ((int)a.i*b.i);
-			int i = ((int)a.i)*b.r + ((int)a.r*b.i);
-			c.setR( r );
-			c.setI( i );
+			long r = ((long)a.r)*b.r - ((long)a.i*b.i);
+			long i = ((long)a.i)*b.r + ((long)a.r*b.i);
+			c.setR( (int) r );
+			c.setI( (int) i );
 		}
 	};
 
@@ -251,10 +251,10 @@ public class GaussianInt16Algebra
 		public Boolean call(GaussianInt16Member tol, GaussianInt16Member a, GaussianInt16Member b) {
 			if (tol.r < 0 || tol.i < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
-			// avoid overflow/underflow conditions by using longs
-			int r = Math.abs(((int) a.r) - b.r);
-			int i = Math.abs(((int) a.i) - b.i);
-			return r <= tol.r && i <= tol.i;
+			// avoid overflow/underflow conditions by using ints
+			int dr = Math.abs(((int) a.r) - b.r);
+			int di = Math.abs(((int) a.i) - b.i);
+			return dr <= tol.r && di <= tol.i;
 		}
 	};
 

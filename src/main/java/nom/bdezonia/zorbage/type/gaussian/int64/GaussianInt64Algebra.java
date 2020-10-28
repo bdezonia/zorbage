@@ -257,9 +257,9 @@ public class GaussianInt64Algebra
 			if (tol.r < 0 || tol.i < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
 			// avoid overflow/underflow conditions by using bigInts
-			BigInteger r = BigInteger.valueOf(a.r).subtract(BigInteger.valueOf(b.r)).abs();
-			BigInteger i = BigInteger.valueOf(a.i).subtract(BigInteger.valueOf(b.i)).abs();
-			return r.compareTo(BigInteger.valueOf(tol.r)) <= 0 && i.compareTo(BigInteger.valueOf(tol.i)) <= 0;
+			BigInteger dr = BigInteger.valueOf(a.r).subtract(BigInteger.valueOf(b.r)).abs();
+			BigInteger di = BigInteger.valueOf(a.i).subtract(BigInteger.valueOf(b.i)).abs();
+			return dr.compareTo(BigInteger.valueOf(tol.r)) <= 0 && di.compareTo(BigInteger.valueOf(tol.i)) <= 0;
 		}
 	};
 

@@ -252,9 +252,9 @@ public class GaussianInt8Algebra
 			if (tol.r < 0 || tol.i < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
 			// avoid overflow/underflow conditions by using ints
-			int r = Math.abs(((int) a.r) - b.r);
-			int i = Math.abs(((int) a.i) - b.i);
-			return r <= tol.r && i <= tol.i;
+			int dr = Math.abs(((int) a.r) - b.r);
+			int di = Math.abs(((int) a.i) - b.i);
+			return dr <= tol.r && di <= tol.i;
 		}
 	};
 

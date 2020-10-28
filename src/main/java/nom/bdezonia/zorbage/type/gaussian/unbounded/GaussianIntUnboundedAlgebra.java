@@ -249,7 +249,9 @@ public class GaussianIntUnboundedAlgebra
 		public Boolean call(GaussianIntUnboundedMember tol, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
 			if (tol.r.compareTo(BigInteger.ZERO) < 0 || tol.i.compareTo(BigInteger.ZERO) < 0)
 				throw new IllegalArgumentException("gaussian tolerances must have nonnegative components");
-			return a.r.subtract(b.r).compareTo(tol.r) <= 0 && a.i.subtract(b.i).compareTo(tol.i) <= 0;
+			BigInteger dr = a.r.subtract(b.r).abs();
+			BigInteger di = a.i.subtract(b.i).abs();
+			return dr.compareTo(tol.r) <= 0 && di.compareTo(tol.i) <= 0;
 		}
 	};
 
