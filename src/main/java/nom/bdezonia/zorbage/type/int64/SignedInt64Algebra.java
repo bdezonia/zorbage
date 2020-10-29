@@ -709,10 +709,10 @@ public class SignedInt64Algebra
 			new Procedure3<HighPrecisionMember, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, SignedInt64Member b, SignedInt64Member c) {
-			BigDecimal tmp = a.v();
-			tmp = tmp.multiply(new BigDecimal(b.v()));
-			c.setV(tmp.longValue());
+		public void call(HighPrecisionMember factor, SignedInt64Member a, SignedInt64Member b) {
+			BigDecimal tmp = factor.v();
+			tmp = tmp.multiply(new BigDecimal(a.v()));
+			b.setV(tmp.longValue());
 		}
 	};
 
@@ -725,15 +725,15 @@ public class SignedInt64Algebra
 			new Procedure3<HighPrecisionMember, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, SignedInt64Member b, SignedInt64Member c) {
-			BigDecimal tmp = a.v();
-			tmp = tmp.multiply(new BigDecimal(b.v()));
+		public void call(HighPrecisionMember factor, SignedInt64Member a, SignedInt64Member b) {
+			BigDecimal tmp = factor.v();
+			tmp = tmp.multiply(new BigDecimal(a.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
 			else
 				tmp = tmp.add(G.ONE_HALF);
-			c.setV(tmp.longValue());
+			b.setV(tmp.longValue());
 		}
 	};
 
@@ -746,11 +746,11 @@ public class SignedInt64Algebra
 			new Procedure3<RationalMember, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(RationalMember a, SignedInt64Member b, SignedInt64Member c) {
-			BigInteger tmp = BigInteger.valueOf(b.v());
-			tmp = tmp.multiply(a.n());
-			tmp = tmp.divide(a.d());
-			c.setV(tmp.longValue());
+		public void call(RationalMember factor, SignedInt64Member a, SignedInt64Member b) {
+			BigInteger tmp = BigInteger.valueOf(a.v());
+			tmp = tmp.multiply(factor.n());
+			tmp = tmp.divide(factor.d());
+			b.setV(tmp.longValue());
 		}
 	};
 
@@ -763,8 +763,9 @@ public class SignedInt64Algebra
 			new Procedure3<Double, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(Double a, SignedInt64Member b, SignedInt64Member c) {
-			c.setV((long)(a * b.v()));
+		public void call(Double factor, SignedInt64Member a, SignedInt64Member b) {
+			BigDecimal tmp = BigDecimal.valueOf(factor).multiply(BigDecimal.valueOf(a.v()));
+			b.setV(tmp.longValue());
 		}
 	};
 
@@ -777,8 +778,13 @@ public class SignedInt64Algebra
 			new Procedure3<Double, SignedInt64Member, SignedInt64Member>()
 	{
 		@Override
-		public void call(Double a, SignedInt64Member b, SignedInt64Member c) {
-			c.setV(Math.round(a * b.v()));
+		public void call(Double factor, SignedInt64Member a, SignedInt64Member b) {
+			BigDecimal tmp = BigDecimal.valueOf(factor).multiply(BigDecimal.valueOf(a.v()));
+			if (tmp.signum() < 0)
+				tmp = tmp.subtract(G.ONE_HALF);
+			else
+				tmp = tmp.add(G.ONE_HALF);
+			b.setV(tmp.longValue());
 		}
 	};
 

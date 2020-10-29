@@ -690,10 +690,10 @@ public class UnsignedInt64Algebra
 			new Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
-			BigDecimal tmp = a.v();
-			tmp = tmp.multiply(new BigDecimal(b.v()));
-			c.setV(tmp.toBigInteger());
+		public void call(HighPrecisionMember factor, UnsignedInt64Member a, UnsignedInt64Member b) {
+			BigDecimal tmp = factor.v();
+			tmp = tmp.multiply(new BigDecimal(a.v()));
+			b.setV(tmp.toBigInteger());
 		}
 	};
 
@@ -706,15 +706,15 @@ public class UnsignedInt64Algebra
 			new Procedure3<HighPrecisionMember, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
-			BigDecimal tmp = a.v();
-			tmp = tmp.multiply(new BigDecimal(b.v()));
+		public void call(HighPrecisionMember factor, UnsignedInt64Member a, UnsignedInt64Member b) {
+			BigDecimal tmp = factor.v();
+			tmp = tmp.multiply(new BigDecimal(a.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
 			else
 				tmp = tmp.add(G.ONE_HALF);
-			c.setV(tmp.toBigInteger());
+			b.setV(tmp.toBigInteger());
 		}
 	};
 
@@ -727,11 +727,11 @@ public class UnsignedInt64Algebra
 			new Procedure3<RationalMember, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
-		public void call(RationalMember a, UnsignedInt64Member b, UnsignedInt64Member c) {
-			BigInteger tmp = b.v();
-			tmp = tmp.multiply(a.n());
-			tmp = tmp.divide(a.d());
-			c.setV(tmp);
+		public void call(RationalMember factor, UnsignedInt64Member a, UnsignedInt64Member b) {
+			BigInteger tmp = a.v();
+			tmp = tmp.multiply(factor.n());
+			tmp = tmp.divide(factor.d());
+			b.setV(tmp);
 		}
 	};
 
@@ -744,10 +744,10 @@ public class UnsignedInt64Algebra
 			new Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
-		public void call(Double a, UnsignedInt64Member b, UnsignedInt64Member c) {
-			BigDecimal tmp = new BigDecimal(b.v());
-			tmp = tmp.multiply(BigDecimal.valueOf(a));
-			c.setV(tmp.toBigInteger());
+		public void call(Double factor, UnsignedInt64Member a, UnsignedInt64Member b) {
+			BigDecimal tmp = new BigDecimal(a.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(factor));
+			b.setV(tmp.toBigInteger());
 		}
 	};
 
@@ -760,15 +760,15 @@ public class UnsignedInt64Algebra
 			new Procedure3<Double, UnsignedInt64Member, UnsignedInt64Member>()
 	{
 		@Override
-		public void call(Double a, UnsignedInt64Member b, UnsignedInt64Member c) {
-			BigDecimal tmp = new BigDecimal(b.v());
-			tmp = tmp.multiply(BigDecimal.valueOf(a));
+		public void call(Double factor, UnsignedInt64Member a, UnsignedInt64Member b) {
+			BigDecimal tmp = new BigDecimal(a.v());
+			tmp = tmp.multiply(BigDecimal.valueOf(factor));
 			int signum = tmp.signum();
 			if (signum < 0)
 				tmp = tmp.subtract(G.ONE_HALF);
 			else
 				tmp = tmp.add(G.ONE_HALF);
-			c.setV(tmp.toBigInteger());
+			b.setV(tmp.toBigInteger());
 		}
 	};
 
