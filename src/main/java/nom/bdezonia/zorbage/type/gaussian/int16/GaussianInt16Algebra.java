@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
+import nom.bdezonia.zorbage.algorithm.EuclideanGcd;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -361,8 +362,7 @@ public class GaussianInt16Algebra
 	{
 		@Override
 		public void call(GaussianInt16Member a, GaussianInt16Member b, GaussianInt16Member c) {
-			throw new IllegalArgumentException("code not done yet");
-			//Gcd.compute(G.GAUSS16, a, b, c);
+			EuclideanGcd.compute(G.GAUSS16, G.INT32, a, b, c);
 		}
 	};
 	
