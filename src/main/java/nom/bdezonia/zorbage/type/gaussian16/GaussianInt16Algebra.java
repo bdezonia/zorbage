@@ -437,7 +437,7 @@ public class GaussianInt16Algebra
 				cd.setI(cd.i() + 0.5);
 			d.setR( (int) cd.r() );
 			d.setI( (int) cd.i() );
-			G.GAUSS16.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSS16.multiply().call(d, b, tmp);  // Order of ops doesn't matter since complex multiplication commutes
 			G.GAUSS16.subtract().call(a, tmp, m);
 		}
 	};

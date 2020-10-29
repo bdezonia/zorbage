@@ -414,7 +414,7 @@ public class GaussianIntUnboundedAlgebra
 				cd.setI(cd.i().add(G.ONE_HALF));
 			d.setR( cd.r().toBigInteger() );
 			d.setI( cd.i().toBigInteger() );
-			G.GAUSSU.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSSU.multiply().call(d, b, tmp);  // Order of ops doesn't matter since complex multiplication commutes
 			G.GAUSSU.subtract().call(a, tmp, m);
 		}
 	};

@@ -437,7 +437,7 @@ public class GaussianInt8Algebra
 				cd.setI(cd.i() + 0.5);
 			d.setR( (int) cd.r() );
 			d.setI( (int) cd.i() );
-			G.GAUSS8.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSS8.multiply().call(d, b, tmp);  // Order of ops doesn't matter since complex multiplication commutes
 			G.GAUSS8.subtract().call(a, tmp, m);
 		}
 	};
