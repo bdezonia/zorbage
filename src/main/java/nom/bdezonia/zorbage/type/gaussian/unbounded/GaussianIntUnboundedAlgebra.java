@@ -497,12 +497,18 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			BigInteger r = a.r();
-			BigInteger i = a.i();
-			r = new BigDecimal(r).multiply(factor.v()).add(G.ONE_HALF).toBigInteger();
-			i = new BigDecimal(i).multiply(factor.v()).add(G.ONE_HALF).toBigInteger();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = new BigDecimal(a.r()).multiply(factor.v());
+			BigDecimal bi = new BigDecimal(a.i()).multiply(factor.v());
+			if (br.signum() < 0)
+				br = br.subtract(G.ONE_HALF);
+			else
+				br = br.add(G.ONE_HALF);
+			if (bi.signum() < 0)
+				bi = bi.subtract(G.ONE_HALF);
+			else
+				bi = bi.add(G.ONE_HALF);
+			b.setR(br.toBigInteger());
+			b.setI(bi.toBigInteger());
 		}
 	};
 
@@ -516,12 +522,10 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			BigInteger r = a.r();
-			BigInteger i = a.i();
-			r = new BigDecimal(r).multiply(factor.v()).toBigInteger();
-			i = new BigDecimal(i).multiply(factor.v()).toBigInteger();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = new BigDecimal(a.r()).multiply(factor.v());
+			BigDecimal bi = new BigDecimal(a.i()).multiply(factor.v());
+			b.setR(br.toBigInteger());
+			b.setI(bi.toBigInteger());
 		}
 	};
 
@@ -535,13 +539,19 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(Double factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			BigInteger r = a.r();
-			BigInteger i = a.i();
 			BigDecimal scale = new BigDecimal(factor);
-			r = new BigDecimal(r).multiply(scale).add(G.ONE_HALF).toBigInteger();
-			i = new BigDecimal(i).multiply(scale).add(G.ONE_HALF).toBigInteger();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = new BigDecimal(a.r()).multiply(scale);
+			BigDecimal bi = new BigDecimal(a.i()).multiply(scale);
+			if (br.signum() < 0)
+				br = br.subtract(G.ONE_HALF);
+			else
+				br = br.add(G.ONE_HALF);
+			if (bi.signum() < 0)
+				bi = bi.subtract(G.ONE_HALF);
+			else
+				bi = bi.add(G.ONE_HALF);
+			b.setR(br.toBigInteger());
+			b.setI(bi.toBigInteger());
 		}
 	};
 
@@ -555,13 +565,11 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(Double factor, GaussianIntUnboundedMember a, GaussianIntUnboundedMember b) {
-			BigInteger r = a.r();
-			BigInteger i = a.i();
 			BigDecimal scale = new BigDecimal(factor);
-			r = new BigDecimal(r).multiply(scale).toBigInteger();
-			i = new BigDecimal(i).multiply(scale).toBigInteger();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = new BigDecimal(a.r()).multiply(scale);
+			BigDecimal bi = new BigDecimal(a.i()).multiply(scale);
+			b.setR(br.toBigInteger());
+			b.setI(bi.toBigInteger());
 		}
 	};
 

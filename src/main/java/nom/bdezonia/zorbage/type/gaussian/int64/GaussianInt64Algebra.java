@@ -54,9 +54,6 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Member;
-import nom.bdezonia.zorbage.type.gaussian.unbounded.GaussianIntUnboundedMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -452,20 +449,6 @@ public class GaussianInt64Algebra
 			G.GAUSS64.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
 			G.GAUSS64.subtract().call(a, tmp, m);
 		}
-		/* This works
-		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member d, GaussianInt64Member m) {
-			// rather than define a tricky integer only algo I will project into complex space and translate back.
-			GaussianInt64Member tmp = G.GAUSS64.construct();
-			ComplexFloat64Member ca = new ComplexFloat64Member(a.r(), a.i());
-			ComplexFloat64Member cb = new ComplexFloat64Member(b.r(), b.i());
-			ComplexFloat64Member cd = new ComplexFloat64Member();
-			G.CDBL.divide().call(ca, cb, cd);
-			d.setR( (long) Math.round(cd.r()) );
-			d.setI( (long) Math.round(cd.i()) );
-			G.GAUSS64.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
-			G.GAUSS64.subtract().call(a, tmp, m);
-		}
-		*/
 	};
 
 	@Override
@@ -546,12 +529,18 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(HighPrecisionMember factor, GaussianInt64Member a, GaussianInt64Member b) {
-			long r = a.r();
-			long i = a.i();
-			r = BigDecimal.valueOf(r).multiply(factor.v()).add(G.ONE_HALF).longValue();
-			i = BigDecimal.valueOf(i).multiply(factor.v()).add(G.ONE_HALF).longValue();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = BigDecimal.valueOf(a.r()).multiply(factor.v());
+			BigDecimal bi = BigDecimal.valueOf(a.i()).multiply(factor.v());
+			if (br.signum() < 0)
+				br = br.subtract(G.ONE_HALF);
+			else
+				br = br.add(G.ONE_HALF);
+			if (bi.signum() < 0)
+				bi = bi.subtract(G.ONE_HALF);
+			else
+				bi = bi.add(G.ONE_HALF);
+			b.setR(br.longValue());
+			b.setI(bi.longValue());
 		}
 	};
 
@@ -565,12 +554,10 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(HighPrecisionMember factor, GaussianInt64Member a, GaussianInt64Member b) {
-			long r = a.r();
-			long i = a.i();
-			r = BigDecimal.valueOf(r).multiply(factor.v()).longValue();
-			i = BigDecimal.valueOf(i).multiply(factor.v()).longValue();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = BigDecimal.valueOf(a.r()).multiply(factor.v());
+			BigDecimal bi = BigDecimal.valueOf(a.i()).multiply(factor.v());
+			b.setR(br.longValue());
+			b.setI(bi.longValue());
 		}
 	};
 
@@ -584,13 +571,19 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(Double factor, GaussianInt64Member a, GaussianInt64Member b) {
-			long r = a.r();
-			long i = a.i();
-			BigDecimal scale = BigDecimal.valueOf(factor);
-			r = BigDecimal.valueOf(r).multiply(scale).add(G.ONE_HALF).longValue();
-			i = BigDecimal.valueOf(i).multiply(scale).add(G.ONE_HALF).longValue();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal scale = new BigDecimal(factor);
+			BigDecimal br = new BigDecimal(a.r()).multiply(scale);
+			BigDecimal bi = new BigDecimal(a.i()).multiply(scale);
+			if (br.signum() < 0)
+				br = br.subtract(G.ONE_HALF);
+			else
+				br = br.add(G.ONE_HALF);
+			if (bi.signum() < 0)
+				bi = bi.subtract(G.ONE_HALF);
+			else
+				bi = bi.add(G.ONE_HALF);
+			b.setR(br.longValue());
+			b.setI(bi.longValue());
 		}
 	};
 
@@ -604,13 +597,11 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(Double factor, GaussianInt64Member a, GaussianInt64Member b) {
-			long r = a.r();
-			long i = a.i();
-			BigDecimal scale = BigDecimal.valueOf(factor);
-			r = BigDecimal.valueOf(r).multiply(scale).longValue();
-			i = BigDecimal.valueOf(i).multiply(scale).longValue();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal scale = new BigDecimal(factor);
+			BigDecimal br = new BigDecimal(a.r()).multiply(scale);
+			BigDecimal bi = new BigDecimal(a.i()).multiply(scale);
+			b.setR(br.longValue());
+			b.setI(bi.longValue());
 		}
 	};
 

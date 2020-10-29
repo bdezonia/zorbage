@@ -520,12 +520,18 @@ public class GaussianInt16Algebra
 	{
 		@Override
 		public void call(HighPrecisionMember factor, GaussianInt16Member a, GaussianInt16Member b) {
-			int r = a.r();
-			int i = a.i();
-			r = BigDecimal.valueOf(r).multiply(factor.v()).add(G.ONE_HALF).intValue();
-			i = BigDecimal.valueOf(i).multiply(factor.v()).add(G.ONE_HALF).intValue();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = BigDecimal.valueOf(a.r()).multiply(factor.v());
+			BigDecimal bi = BigDecimal.valueOf(a.i()).multiply(factor.v());
+			if (br.signum() < 0)
+				br = br.subtract(G.ONE_HALF);
+			else
+				br = br.add(G.ONE_HALF);
+			if (bi.signum() < 0)
+				bi = bi.subtract(G.ONE_HALF);
+			else
+				bi = bi.add(G.ONE_HALF);
+			b.setR(br.intValue());
+			b.setI(bi.intValue());
 		}
 	};
 
@@ -539,12 +545,10 @@ public class GaussianInt16Algebra
 	{
 		@Override
 		public void call(HighPrecisionMember factor, GaussianInt16Member a, GaussianInt16Member b) {
-			int r = a.r();
-			int i = a.i();
-			r = BigDecimal.valueOf(r).multiply(factor.v()).intValue();
-			i = BigDecimal.valueOf(i).multiply(factor.v()).intValue();
-			b.setR(r);
-			b.setI(i);
+			BigDecimal br = BigDecimal.valueOf(a.r()).multiply(factor.v());
+			BigDecimal bi = BigDecimal.valueOf(a.i()).multiply(factor.v());
+			b.setR(br.intValue());
+			b.setI(bi.intValue());
 		}
 	};
 
