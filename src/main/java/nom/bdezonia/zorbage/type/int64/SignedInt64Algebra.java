@@ -31,8 +31,8 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.SteinGcd;
+import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -380,7 +380,7 @@ public class SignedInt64Algebra
 	{
 		@Override
 		public void call(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-			Gcd.compute(G.INT64, a, b, c);
+			SteinGcd.compute(G.INT64, a, b, c);
 		}
 	};
 	
@@ -394,7 +394,7 @@ public class SignedInt64Algebra
 	{
 		@Override
 		public void call(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
-			Lcm.compute(G.INT64, a, b, c);
+			SteinLcm.compute(G.INT64, a, b, c);
 		}
 	};
 	

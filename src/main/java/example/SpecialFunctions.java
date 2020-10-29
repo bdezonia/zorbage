@@ -36,8 +36,8 @@ import nom.bdezonia.zorbage.algorithm.ExponentialCalculation;
 import nom.bdezonia.zorbage.algorithm.Factorial;
 import nom.bdezonia.zorbage.algorithm.Fibonacci;
 import nom.bdezonia.zorbage.algorithm.Gaussian;
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.SteinGcd;
+import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.Permutations;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScientificNotation;
@@ -188,7 +188,7 @@ class SpecialFunctions {
 		SignedInt64Member b = G.INT64.construct("404223");
 		SignedInt64Member result = G.INT64.construct();
 		
-		Gcd.compute(G.INT64, a, b, result);
+		SteinGcd.compute(G.INT64, a, b, result);
 	}
 	
 	// least common multiple
@@ -199,7 +199,7 @@ class SpecialFunctions {
 		SignedInt64Member b = G.INT64.construct("404223");
 		SignedInt64Member result = G.INT64.construct();
 		
-		Lcm.compute(G.INT64, a, b, result);
+		SteinLcm.compute(G.INT64, a, b, result);
 	}
 	
 	// zorbage has a built in flexible rounding algorithm

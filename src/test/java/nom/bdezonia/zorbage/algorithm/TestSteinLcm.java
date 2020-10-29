@@ -38,25 +38,26 @@ import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
  * @author Barry DeZonia
  *
  */
-public class TestGcd {
+public class TestSteinLcm {
 
+	// example designed from playing with:
+	//   https://www.calculatorsoup.com/calculators/math/lcm.php
+	
 	@Test
 	public void test() {
-		UnsignedInt32Member a = G.UINT32.construct("1342094600");
-		UnsignedInt32Member b = G.UINT32.construct("164031600");
+		UnsignedInt32Member a = G.UINT32.construct("18462");
+		UnsignedInt32Member b = G.UINT32.construct("702");
 		UnsignedInt32Member result = G.UINT32.construct();
-		Gcd.compute(G.UINT32, a, b, result);
-		assertEquals(200,result.v());
+		SteinLcm.compute(G.UINT32, a, b, result);
+		assertEquals(2160054,result.v());
 	}
 	
 	@Test
 	public void test2() {
 		SignedInt16Member a = G.INT16.construct("-32768");
-		SignedInt16Member b = G.INT16.construct("16");
+		SignedInt16Member b = G.INT16.construct("4");
 		SignedInt16Member result = G.INT16.construct();
-		Gcd.compute(G.INT16, a, b, result);
-		assertEquals(16, result.v());
-		Gcd.compute(G.INT16, b, a, result);
-		assertEquals(16, result.v());
+		SteinLcm.compute(G.INT16, a, b, result);
+		assertEquals(-32768,result.v());
 	}
 }

@@ -31,8 +31,8 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.SteinGcd;
+import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -377,7 +377,7 @@ public class SignedInt9Algebra
 	{
 		@Override
 		public void call(SignedInt9Member a, SignedInt9Member b, SignedInt9Member c) {
-			Gcd.compute(G.INT9, a, b, c);
+			SteinGcd.compute(G.INT9, a, b, c);
 		}
 	};
 	
@@ -391,7 +391,7 @@ public class SignedInt9Algebra
 	{
 		@Override
 		public void call(SignedInt9Member a, SignedInt9Member b, SignedInt9Member c) {
-			Lcm.compute(G.INT9, a, b, c);
+			SteinLcm.compute(G.INT9, a, b, c);
 		}
 	};
 	

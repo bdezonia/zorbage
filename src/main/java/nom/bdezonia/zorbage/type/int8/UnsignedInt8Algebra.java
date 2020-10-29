@@ -31,8 +31,8 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.SteinGcd;
+import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -354,7 +354,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-			Gcd.compute(G.UINT8, a, b, c);
+			SteinGcd.compute(G.UINT8, a, b, c);
 		}
 	};
 	
@@ -368,7 +368,7 @@ public class UnsignedInt8Algebra
 	{
 		@Override
 		public void call(UnsignedInt8Member a, UnsignedInt8Member b, UnsignedInt8Member c) {
-			Lcm.compute(G.UINT8, a, b, c);
+			SteinLcm.compute(G.UINT8, a, b, c);
 		}
 	};
 	

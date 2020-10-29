@@ -45,12 +45,12 @@ import nom.bdezonia.zorbage.algebra.Unity;
  * @author Barry DeZonia
  *
  */
-public class Gcd {
+public class SteinGcd {
 	
 	/**
 	 * Do not instantiate. Private constructor for utility class.
 	 */
-	private Gcd() {}
+	private SteinGcd() {}
 	
 	/**
 	 * Sets the result to the greatest common divisor of a and b. Result is always nonnegative.

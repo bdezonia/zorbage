@@ -31,8 +31,8 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.Gcd;
-import nom.bdezonia.zorbage.algorithm.Lcm;
+import nom.bdezonia.zorbage.algorithm.SteinGcd;
+import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
@@ -352,7 +352,7 @@ public class UnsignedInt12Algebra
 	{
 		@Override
 		public void call(UnsignedInt12Member a, UnsignedInt12Member b, UnsignedInt12Member c) {
-			Gcd.compute(G.UINT12, a, b, c);
+			SteinGcd.compute(G.UINT12, a, b, c);
 		}
 	};
 	
@@ -366,7 +366,7 @@ public class UnsignedInt12Algebra
 	{
 		@Override
 		public void call(UnsignedInt12Member a, UnsignedInt12Member b, UnsignedInt12Member c) {
-			Lcm.compute(G.UINT12, a, b, c);
+			SteinLcm.compute(G.UINT12, a, b, c);
 		}
 	};
 	

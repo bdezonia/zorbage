@@ -44,12 +44,12 @@ import nom.bdezonia.zorbage.algebra.Unity;
  * @author Barry DeZonia
  *
  */
-public class Lcm {
+public class SteinLcm {
 	
 	/**
 	 * Do not instantiate. Private constructor for utility class.
 	 */
-	private Lcm() {}
+	private SteinLcm() {}
 	
 	/**
 	 * Sets the result to the least common multiple of a and b. Result is always nonnegative.
@@ -68,7 +68,7 @@ public class Lcm {
 		U a1 = algebra.construct();
 		U b1 = algebra.construct();
 		U tmp = algebra.construct();
-		Gcd.compute(algebra, a, b, gcd);
+		SteinGcd.compute(algebra, a, b, gcd);
 		// try to avoid overflow by factoring out gcd before multiply
 		algebra.div().call(a, gcd, a1);
 		algebra.div().call(b, gcd, b1);
