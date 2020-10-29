@@ -54,6 +54,10 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Member;
+import nom.bdezonia.zorbage.type.gaussian.unbounded.GaussianIntUnboundedMember;
+import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
@@ -399,9 +403,8 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member d) {
-			throw new IllegalArgumentException("code not done yet");
-			//GaussianInt16Member m = G.GAUSS16.construct();
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			GaussianInt64Member m = G.GAUSS64.construct();
+			divMod().call(a, b, d, m);
 		}
 	};
 	
@@ -415,12 +418,10 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member m) {
-			throw new IllegalArgumentException("code not done yet");
-			//GaussianInt16Member d = G.GAUSS16.construct();
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			GaussianInt64Member d = G.GAUSS64.construct();
+			divMod().call(a, b, d, m);
 		}
 	};
-	
 
 	@Override
 	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> mod() {
@@ -432,11 +433,40 @@ public class GaussianInt64Algebra
 	{
 		@Override
 		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member d, GaussianInt64Member m) {
-			throw new IllegalArgumentException("code not done yet");
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			// rather than define a tricky integer only algo I will project into complex space and translate back.
+			GaussianInt64Member tmp = G.GAUSS64.construct();
+			ComplexHighPrecisionMember ca = new ComplexHighPrecisionMember(BigDecimal.valueOf(a.r()), BigDecimal.valueOf(a.i()));
+			ComplexHighPrecisionMember cb = new ComplexHighPrecisionMember(BigDecimal.valueOf(b.r()), BigDecimal.valueOf(b.i()));
+			ComplexHighPrecisionMember cd = new ComplexHighPrecisionMember();
+			G.CHP.divide().call(ca, cb, cd);
+			if (cd.r().signum() < 0)
+				cd.setR(cd.r().subtract(G.ONE_HALF));
+			else
+				cd.setR(cd.r().add(G.ONE_HALF));
+			if (cd.i().signum() < 0)
+				cd.setI(cd.i().subtract(G.ONE_HALF));
+			else
+				cd.setI(cd.i().add(G.ONE_HALF));
+			d.setR( cd.r().longValue() );
+			d.setI( cd.i().longValue() );
+			G.GAUSS64.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSS64.subtract().call(a, tmp, m);
 		}
+		/* This works
+		public void call(GaussianInt64Member a, GaussianInt64Member b, GaussianInt64Member d, GaussianInt64Member m) {
+			// rather than define a tricky integer only algo I will project into complex space and translate back.
+			GaussianInt64Member tmp = G.GAUSS64.construct();
+			ComplexFloat64Member ca = new ComplexFloat64Member(a.r(), a.i());
+			ComplexFloat64Member cb = new ComplexFloat64Member(b.r(), b.i());
+			ComplexFloat64Member cd = new ComplexFloat64Member();
+			G.CDBL.divide().call(ca, cb, cd);
+			d.setR( (long) Math.round(cd.r()) );
+			d.setI( (long) Math.round(cd.i()) );
+			G.GAUSS64.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSS64.subtract().call(a, tmp, m);
+		}
+		*/
 	};
-	
 
 	@Override
 	public Procedure4<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> divMod() {

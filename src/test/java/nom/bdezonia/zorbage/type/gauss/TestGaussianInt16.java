@@ -331,29 +331,34 @@ public class TestGaussianInt16 {
 		GaussianInt16Member d = G.GAUSS16.construct();
 		GaussianInt16Member m = G.GAUSS16.construct();
 		
-		try {
-			G.GAUSS16.div().call(a, b, d);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method div()");
-			assertTrue(true);
-		}
+		a.setR(18);
+		a.setI(-1);
+		b.setR(11);
+		b.setI(7);
 
-		try {
-			G.GAUSS16.divMod().call(a, b, d, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method divMod()");
-			assertTrue(true);
-		}
+		G.GAUSS16.zero().call(d);
+		G.GAUSS16.zero().call(m);
+		G.GAUSS16.div().call(a, b, d);
 		
-		try {
-			G.GAUSS16.mod().call(a, b, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method mod()");
-			assertTrue(true);
-		}
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+
+		G.GAUSS16.zero().call(d);
+		G.GAUSS16.zero().call(m);
+		G.GAUSS16.mod().call(a, b, m);
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
+
+		G.GAUSS16.zero().call(d);
+		G.GAUSS16.zero().call(m);
+		G.GAUSS16.divMod().call(a, b, d, m);
+		
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
 		
 		try {
 			G.GAUSS16.gcd().call(a, b, c);

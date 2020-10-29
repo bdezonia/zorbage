@@ -54,6 +54,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
@@ -394,9 +395,8 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member d) {
-			throw new IllegalArgumentException("code not done yet");
-			//GaussianInt16Member m = G.GAUSS16.construct();
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			GaussianInt32Member m = G.GAUSS32.construct();
+			divMod().call(a, b, d, m);
 		}
 	};
 	
@@ -410,13 +410,11 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member m) {
-			throw new IllegalArgumentException("code not done yet");
-			//GaussianInt16Member d = G.GAUSS16.construct();
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			GaussianInt32Member d = G.GAUSS32.construct();
+			divMod().call(a, b, d, m);
 		}
 	};
 	
-
 	@Override
 	public Procedure3<GaussianInt32Member, GaussianInt32Member, GaussianInt32Member> mod() {
 		return MOD;
@@ -427,11 +425,26 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member d, GaussianInt32Member m) {
-			throw new IllegalArgumentException("code not done yet");
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			// rather than define a tricky integer only algo I will project into complex space and translate back.
+			GaussianInt32Member tmp = G.GAUSS32.construct();
+			ComplexFloat64Member ca = new ComplexFloat64Member(a.r(), a.i());
+			ComplexFloat64Member cb = new ComplexFloat64Member(b.r(), b.i());
+			ComplexFloat64Member cd = new ComplexFloat64Member();
+			G.CDBL.divide().call(ca, cb, cd);
+			if (cd.r() < 0)
+				cd.setR(cd.r() - 0.5);
+			else
+				cd.setR(cd.r() + 0.5);
+			if (cd.i() < 0)
+				cd.setI(cd.i() - 0.5);
+			else
+				cd.setI(cd.i() + 0.5);
+			d.setR( (int) cd.r() );
+			d.setI( (int) cd.i() );
+			G.GAUSS32.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSS32.subtract().call(a, tmp, m);
 		}
 	};
-	
 
 	@Override
 	public Procedure4<GaussianInt32Member, GaussianInt32Member, GaussianInt32Member, GaussianInt32Member> divMod() {

@@ -285,8 +285,10 @@ public class ComplexHighPrecisionAlgebra
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
 			// for safety must use tmps
 			BigDecimal mod2 = getModulus2(b);
-			BigDecimal r = a.r().multiply(b.r()).add(a.i().multiply(b.i())).divide(mod2, HighPrecisionAlgebra.getContext());
-			BigDecimal i = a.i().multiply(b.r()).subtract(a.r().multiply(b.i())).divide(mod2, HighPrecisionAlgebra.getContext());
+			BigDecimal r = a.r().multiply(b.r()).add(a.i().multiply(b.i()));
+			BigDecimal i = a.i().multiply(b.r()).subtract(a.r().multiply(b.i()));
+			r = r.divide(mod2, HighPrecisionAlgebra.getContext());
+			i = i.divide(mod2, HighPrecisionAlgebra.getContext());
 			c.setR( r );
 			c.setI( i );
 		}

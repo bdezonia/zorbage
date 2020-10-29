@@ -52,6 +52,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
@@ -367,9 +368,8 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember d) {
-			throw new IllegalArgumentException("code not done yet");
-			//GaussianInt16Member m = G.GAUSS16.construct();
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			GaussianIntUnboundedMember m = G.GAUSSU.construct();
+			divMod().call(a, b, d, m);
 		}
 	};
 	
@@ -383,13 +383,11 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember m) {
-			throw new IllegalArgumentException("code not done yet");
-			//GaussianInt16Member d = G.GAUSS16.construct();
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			GaussianIntUnboundedMember d = G.GAUSSU.construct();
+			divMod().call(a, b, d, m);
 		}
 	};
 	
-
 	@Override
 	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> mod() {
 		return MOD;
@@ -400,11 +398,26 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember d, GaussianIntUnboundedMember m) {
-			throw new IllegalArgumentException("code not done yet");
-			//DivMod.compute(G.GAUSS16, a, b, d, m);
+			// rather than define a tricky integer only algo I will project into complex space and translate back.
+			GaussianIntUnboundedMember tmp = G.GAUSSU.construct();
+			ComplexHighPrecisionMember ca = new ComplexHighPrecisionMember(new BigDecimal(a.r()), new BigDecimal(a.i()));
+			ComplexHighPrecisionMember cb = new ComplexHighPrecisionMember(new BigDecimal(b.r()), new BigDecimal(b.i()));
+			ComplexHighPrecisionMember cd = new ComplexHighPrecisionMember();
+			G.CHP.divide().call(ca, cb, cd);
+			if (cd.r().signum() < 0)
+				cd.setR(cd.r().subtract(G.ONE_HALF));
+			else
+				cd.setR(cd.r().add(G.ONE_HALF));
+			if (cd.i().signum() < 0)
+				cd.setI(cd.i().subtract(G.ONE_HALF));
+			else
+				cd.setI(cd.i().add(G.ONE_HALF));
+			d.setR( cd.r().toBigInteger() );
+			d.setI( cd.i().toBigInteger() );
+			G.GAUSSU.multiply().call(d, b, tmp);  // TODO: is the order of 1st two args reversed here?
+			G.GAUSSU.subtract().call(a, tmp, m);
 		}
 	};
-	
 
 	@Override
 	public Procedure4<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> divMod() {
@@ -418,7 +431,7 @@ public class GaussianIntUnboundedAlgebra
 		public Boolean call(GaussianIntUnboundedMember a) {
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
-			return norm.v().and(BigInteger.ONE) == BigInteger.ZERO;
+			return norm.v().and(BigInteger.ONE).equals(BigInteger.ZERO);
 		}
 	};
 
@@ -434,7 +447,7 @@ public class GaussianIntUnboundedAlgebra
 		public Boolean call(GaussianIntUnboundedMember a) {
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
-			return norm.v().and(BigInteger.ONE) == BigInteger.ONE;
+			return norm.v().and(BigInteger.ONE).equals(BigInteger.ONE);
 		}
 	};
 

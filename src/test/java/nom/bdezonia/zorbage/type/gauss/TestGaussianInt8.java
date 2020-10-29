@@ -331,29 +331,34 @@ public class TestGaussianInt8 {
 		GaussianInt8Member d = G.GAUSS8.construct();
 		GaussianInt8Member m = G.GAUSS8.construct();
 		
-		try {
-			G.GAUSS8.div().call(a, b, d);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method div()");
-			assertTrue(true);
-		}
+		a.setR(18);
+		a.setI(-1);
+		b.setR(11);
+		b.setI(7);
 
-		try {
-			G.GAUSS8.divMod().call(a, b, d, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method divMod()");
-			assertTrue(true);
-		}
+		G.GAUSS8.zero().call(d);
+		G.GAUSS8.zero().call(m);
+		G.GAUSS8.div().call(a, b, d);
 		
-		try {
-			G.GAUSS8.mod().call(a, b, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method mod()");
-			assertTrue(true);
-		}
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+
+		G.GAUSS8.zero().call(d);
+		G.GAUSS8.zero().call(m);
+		G.GAUSS8.mod().call(a, b, m);
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
+
+		G.GAUSS8.zero().call(d);
+		G.GAUSS8.zero().call(m);
+		G.GAUSS8.divMod().call(a, b, d, m);
+		
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
 		
 		try {
 			G.GAUSS8.gcd().call(a, b, c);

@@ -331,29 +331,34 @@ public class TestGaussianInt32 {
 		GaussianInt32Member d = G.GAUSS32.construct();
 		GaussianInt32Member m = G.GAUSS32.construct();
 		
-		try {
-			G.GAUSS32.div().call(a, b, d);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method div()");
-			assertTrue(true);
-		}
+		a.setR(18);
+		a.setI(-1);
+		b.setR(11);
+		b.setI(7);
 
-		try {
-			G.GAUSS32.divMod().call(a, b, d, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method divMod()");
-			assertTrue(true);
-		}
+		G.GAUSS32.zero().call(d);
+		G.GAUSS32.zero().call(m);
+		G.GAUSS32.div().call(a, b, d);
 		
-		try {
-			G.GAUSS32.mod().call(a, b, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method mod()");
-			assertTrue(true);
-		}
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+
+		G.GAUSS32.zero().call(d);
+		G.GAUSS32.zero().call(m);
+		G.GAUSS32.mod().call(a, b, m);
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
+
+		G.GAUSS32.zero().call(d);
+		G.GAUSS32.zero().call(m);
+		G.GAUSS32.divMod().call(a, b, d, m);
+		
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
 		
 		try {
 			G.GAUSS32.gcd().call(a, b, c);

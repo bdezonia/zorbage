@@ -331,29 +331,34 @@ public class TestGaussianInt64 {
 		GaussianInt64Member d = G.GAUSS64.construct();
 		GaussianInt64Member m = G.GAUSS64.construct();
 		
-		try {
-			G.GAUSS64.div().call(a, b, d);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method div()");
-			assertTrue(true);
-		}
+		a.setR(18L);
+		a.setI(-1L);
+		b.setR(11L);
+		b.setI(7L);
 
-		try {
-			G.GAUSS64.divMod().call(a, b, d, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method divMod()");
-			assertTrue(true);
-		}
+		G.GAUSS64.zero().call(d);
+		G.GAUSS64.zero().call(m);
+		G.GAUSS64.div().call(a, b, d);
 		
-		try {
-			G.GAUSS64.mod().call(a, b, m);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method mod()");
-			assertTrue(true);
-		}
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+
+		G.GAUSS64.zero().call(d);
+		G.GAUSS64.zero().call(m);
+		G.GAUSS64.mod().call(a, b, m);
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
+
+		G.GAUSS64.zero().call(d);
+		G.GAUSS64.zero().call(m);
+		G.GAUSS64.divMod().call(a, b, d, m);
+		
+		assertEquals(1, d.r());
+		assertEquals(-1, d.i());
+		
+		assertEquals(0, m.r());
+		assertEquals(3, m.i());
 		
 		try {
 			G.GAUSS64.gcd().call(a, b, c);
