@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.gaussian.int16;
+package nom.bdezonia.zorbage.type.gaussian16;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.gaussian.int16;
+package nom.bdezonia.zorbage.type.gaussianu;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -41,8 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.storage.coder.ShortCoder;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
+import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
@@ -55,37 +55,37 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
  * @author Barry DeZonia
  *
  */
-public class GaussianInt16Member
+public class GaussianIntUnboundedMember
 	implements
-		ShortCoder,
-		Allocatable<GaussianInt16Member>, Duplicatable<GaussianInt16Member>,
-		Settable<GaussianInt16Member>, Gettable<GaussianInt16Member>,
-		UniversalRepresentation, NumberMember<GaussianInt16Member>,
+		BigIntegerCoder,
+		Allocatable<GaussianIntUnboundedMember>, Duplicatable<GaussianIntUnboundedMember>,
+		Settable<GaussianIntUnboundedMember>, Gettable<GaussianIntUnboundedMember>,
+		UniversalRepresentation, NumberMember<GaussianIntUnboundedMember>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt16Member>,
-		SetComplex<Integer>, GetComplex<SignedInt16Member>
+		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
+		SetComplex<BigInteger>, GetComplex<UnboundedIntMember>
 {
-	short r;
-	short i;
+	BigInteger r;
+	BigInteger i;
 	
-	public GaussianInt16Member() {
-		r = i = 0;
+	public GaussianIntUnboundedMember() {
+		r = i = BigInteger.ZERO;
 	}
 	
-	public GaussianInt16Member(short r, short i) {
+	public GaussianIntUnboundedMember(BigInteger r, BigInteger i) {
 		this.r = r;
 		this.i = i;
 	}
 	
-	public GaussianInt16Member(GaussianInt16Member other) {
+	public GaussianIntUnboundedMember(GaussianIntUnboundedMember other) {
 		set(other);
 	}
 	
-	public GaussianInt16Member(String str) {
+	public GaussianIntUnboundedMember(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		OctonionRepresentation val = rep.firstValue();
-		setR(val.r().intValue());
-		setI(val.i().intValue());
+		setR(val.r().toBigInteger());
+		setI(val.i().toBigInteger());
 	}
 	
 	@Override
@@ -98,37 +98,37 @@ public class GaussianInt16Member
 		return 0;
 	}
 
-	public int r() { return r; }
+	public BigInteger r() { return r; }
 	
-	public int i() { return i; }
+	public BigInteger i() { return i; }
 	
 	@Override
-	public void setR(Integer val) {
-		r = (short) (int) val;
+	public void setR(BigInteger val) {
+		r = val;
 	}
 
 	@Override
-	public void getR(SignedInt16Member v) {
+	public void getR(UnboundedIntMember v) {
 		v.setV(r);
 	}
 
 	@Override
-	public void setI(Integer val) {
-		i = (short) (int) val;
+	public void setI(BigInteger val) {
+		i = val;
 	}
 
 	@Override
-	public void getI(SignedInt16Member v) {
+	public void getI(UnboundedIntMember v) {
 		v.setV(i);
 	}
 
 	@Override
-	public void getV(GaussianInt16Member value) {
+	public void getV(GaussianIntUnboundedMember value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(GaussianInt16Member value) {
+	public void setV(GaussianIntUnboundedMember value) {
 		set(value);
 	}
 
@@ -136,8 +136,8 @@ public class GaussianInt16Member
 	public void toRep(TensorOctonionRepresentation rep) {
 		rep.setValue(
 				new OctonionRepresentation(
-					BigDecimal.valueOf(r()),
-					BigDecimal.valueOf(i())
+					new BigDecimal(r()),
+					new BigDecimal(i())
 				)
 			);
 	}
@@ -145,52 +145,52 @@ public class GaussianInt16Member
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionRepresentation v = rep.getValue();
-		setR(v.r().intValue());
-		setI(v.i().intValue());
+		setR(v.r().toBigInteger());
+		setI(v.i().toBigInteger());
 	}
 
 	@Override
-	public void get(GaussianInt16Member other) {
+	public void get(GaussianIntUnboundedMember other) {
 		other.r = r;
 		other.i = i;
 	}
 
 	@Override
-	public void set(GaussianInt16Member other) {
+	public void set(GaussianIntUnboundedMember other) {
 		r = other.r;
 		i = other.i;
 	}
 
 	@Override
-	public GaussianInt16Member duplicate() {
-		return new GaussianInt16Member(this);
+	public GaussianIntUnboundedMember duplicate() {
+		return new GaussianIntUnboundedMember(this);
 	}
 
 	@Override
-	public GaussianInt16Member allocate() {
-		return new GaussianInt16Member();
+	public GaussianIntUnboundedMember allocate() {
+		return new GaussianIntUnboundedMember();
 	}
 
 	@Override
-	public int shortCount() {
+	public int bigIntegerCount() {
 		return 2;
 	}
 
 	@Override
-	public void fromShortArray(short[] arr, int index) {
+	public void fromBigIntegerArray(BigInteger[] arr, int index) {
 		r = arr[index+0];
 		i = arr[index+1];
 	}
 
 	@Override
-	public void toShortArray(short[] arr, int index) {
+	public void toBigIntegerArray(BigInteger[] arr, int index) {
 		arr[index+0] = r;
 		arr[index+1] = i;
 	}
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.SHORT;
+		return PrimitiveRepresentation.BIGINTEGER;
 	}
 
 	@Override
@@ -201,65 +201,65 @@ public class GaussianInt16Member
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(BigInteger.valueOf(v));
 		else
-			this.setI((int) v);
+			this.setI(BigInteger.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(BigInteger.valueOf(v));
 		else
-			this.setI((int) v);
+			this.setI(BigInteger.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(BigInteger.valueOf(v));
 		else
-			this.setI((int) v);
+			this.setI(BigInteger.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(BigInteger.valueOf(v));
 		else
-			this.setI((int) v);
+			this.setI(BigInteger.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(BigDecimal.valueOf(v).toBigInteger());
 		else
-			this.setI((int) v);
+			this.setI(BigDecimal.valueOf(v).toBigInteger());
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		if (component == 0)
-			this.setR((int) v);
+			this.setR(BigDecimal.valueOf(v).toBigInteger());
 		else
-			this.setI((int) v);
+			this.setI(BigDecimal.valueOf(v).toBigInteger());
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		if (component == 0)
-			this.setR(v.intValue());
+			this.setR(v);
 		else
-			this.setI(v.intValue());
+			this.setI(v);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		if (component == 0)
-			this.setR(v.intValue());
+			this.setR(v.toBigInteger());
 		else
-			this.setI(v.intValue());
+			this.setI(v.toBigInteger());
 	}
 
 	@Override
@@ -283,9 +283,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(BigInteger.valueOf(v));
 			else
-				this.setI((int) v);
+				this.setI(BigInteger.valueOf(v));
 		}
 	}
 
@@ -310,9 +310,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(BigInteger.valueOf(v));
 			else
-				this.setI((int) v);
+				this.setI(BigInteger.valueOf(v));
 		}
 	}
 
@@ -337,9 +337,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(BigInteger.valueOf(v));
 			else
-				this.setI((int) v);
+				this.setI(BigInteger.valueOf(v));
 		}
 	}
 
@@ -364,9 +364,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(BigInteger.valueOf(v));
 			else
-				this.setI((int) v);
+				this.setI(BigInteger.valueOf(v));
 		}
 	}
 
@@ -391,9 +391,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(BigDecimal.valueOf(v).toBigInteger());
 			else
-				this.setI((int) v);
+				this.setI(BigDecimal.valueOf(v).toBigInteger());
 		}
 	}
 
@@ -418,9 +418,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR((int) v);
+				this.setR(BigDecimal.valueOf(v).toBigInteger());
 			else
-				this.setI((int) v);
+				this.setI(BigDecimal.valueOf(v).toBigInteger());
 		}
 	}
 
@@ -445,9 +445,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v.intValue());
+				this.setR(v);
 			else
-				this.setI(v.intValue());
+				this.setI(v);
 		}
 	}
 
@@ -472,9 +472,9 @@ public class GaussianInt16Member
 		}
 		else {
 			if (component == 0)
-				this.setR(v.intValue());
+				this.setR(v.toBigInteger());
 			else
-				this.setI(v.intValue());
+				this.setI(v.toBigInteger());
 		}
 	}
 
@@ -483,8 +483,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (byte) r();
-		if (component == 1) return (byte) i();
+		if (component == 0) return r().byteValue();
+		if (component == 1) return i().byteValue();
 		return 0;
 	}
 
@@ -493,8 +493,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return (short) r();
-		if (component == 1) return (short) i();
+		if (component == 0) return r().shortValue();
+		if (component == 1) return i().shortValue();
 		return 0;
 	}
 
@@ -503,8 +503,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r();
-		if (component == 1) return i();
+		if (component == 0) return r().intValue();
+		if (component == 1) return i().intValue();
 		return 0;
 	}
 
@@ -513,8 +513,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r();
-		if (component == 1) return i();
+		if (component == 0) return r().longValue();
+		if (component == 1) return i().longValue();
 		return 0;
 	}
 
@@ -523,8 +523,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r();
-		if (component == 1) return i();
+		if (component == 0) return r().floatValue();
+		if (component == 1) return i().floatValue();
 		return 0;
 	}
 
@@ -533,8 +533,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r();
-		if (component == 1) return i();
+		if (component == 0) return r().doubleValue();
+		if (component == 1) return i().doubleValue();
 		return 0;
 	}
 
@@ -543,8 +543,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
-		if (component == 1) return BigDecimal.valueOf(i()).toBigInteger();
+		if (component == 0) return r();
+		if (component == 1) return i();
 		return BigInteger.ZERO;
 	}
 
@@ -553,8 +553,8 @@ public class GaussianInt16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(r());
-		if (component == 1) return BigDecimal.valueOf(i());
+		if (component == 0) return new BigDecimal(r());
+		if (component == 1) return new BigDecimal(i());
 		return BigDecimal.ZERO;
 	}
 
@@ -576,8 +576,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (byte) r();
-			else return (byte) i();
+			if (component == 0) return r().byteValue();
+			else return i().byteValue();
 		}
 	}
 
@@ -599,8 +599,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return (short) r();
-			else return (short) i();
+			if (component == 0) return r().shortValue();
+			else return i().shortValue();
 		}
 	}
 
@@ -622,8 +622,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r();
-			else return i();
+			if (component == 0) return r().intValue();
+			else return i().intValue();
 		}
 	}
 
@@ -645,8 +645,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r();
-			else return i();
+			if (component == 0) return r().longValue();
+			else return i().longValue();
 		}
 	}
 
@@ -668,8 +668,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r();
-			else return i();
+			if (component == 0) return r().floatValue();
+			else return i().floatValue();
 		}
 	}
 
@@ -691,8 +691,8 @@ public class GaussianInt16Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r();
-			else return i();
+			if (component == 0) return r().doubleValue();
+			else return i().doubleValue();
 		}
 	}
 
@@ -714,8 +714,8 @@ public class GaussianInt16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
-			else return BigDecimal.valueOf(i()).toBigInteger();
+			if (component == 0) return r();
+			else return i();
 		}
 	}
 
@@ -737,16 +737,16 @@ public class GaussianInt16Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			if (component == 0) return BigDecimal.valueOf(r());
-			else return BigDecimal.valueOf(i());
+			if (component == 0) return new BigDecimal(r());
+			else return new BigDecimal(i());
 		}
 	}
 
 	@Override
 	public void primitiveInit() {
-		r = i = 0;
+		r = i = BigInteger.ZERO;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -770,8 +770,8 @@ public class GaussianInt16Member
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o instanceof GaussianInt16Member) {
-			return G.GAUSS16.isEqual().call(this, (GaussianInt16Member) o);
+		if (o instanceof GaussianIntUnboundedMember) {
+			return G.GAUSSU.isEqual().call(this, (GaussianIntUnboundedMember) o);
 		}
 		return false;
 	}

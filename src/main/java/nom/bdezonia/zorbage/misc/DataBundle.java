@@ -85,11 +85,11 @@ import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMembe
 import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
-import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Member;
-import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Member;
-import nom.bdezonia.zorbage.type.gaussian.int64.GaussianInt64Member;
-import nom.bdezonia.zorbage.type.gaussian.int8.GaussianInt8Member;
-import nom.bdezonia.zorbage.type.gaussian.unbounded.GaussianIntUnboundedMember;
+import nom.bdezonia.zorbage.type.gaussian16.GaussianInt16Member;
+import nom.bdezonia.zorbage.type.gaussian32.GaussianInt32Member;
+import nom.bdezonia.zorbage.type.gaussian64.GaussianInt64Member;
+import nom.bdezonia.zorbage.type.gaussian8.GaussianInt8Member;
+import nom.bdezonia.zorbage.type.gaussianu.GaussianIntUnboundedMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionCartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;

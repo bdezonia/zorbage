@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.gaussian.int8;
+package nom.bdezonia.zorbage.type.gaussian32;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -41,8 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.storage.coder.ByteCoder;
-import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.storage.coder.IntCoder;
+import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
@@ -55,33 +55,33 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
  * @author Barry DeZonia
  *
  */
-public class GaussianInt8Member
+public class GaussianInt32Member
 	implements
-		ByteCoder,
-		Allocatable<GaussianInt8Member>, Duplicatable<GaussianInt8Member>,
-		Settable<GaussianInt8Member>, Gettable<GaussianInt8Member>,
-		UniversalRepresentation, NumberMember<GaussianInt8Member>,
+		IntCoder,
+		Allocatable<GaussianInt32Member>, Duplicatable<GaussianInt32Member>,
+		Settable<GaussianInt32Member>, Gettable<GaussianInt32Member>,
+		UniversalRepresentation, NumberMember<GaussianInt32Member>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt8Member>,
-		SetComplex<Integer>, GetComplex<SignedInt8Member>
+		SetReal<Integer>, GetReal<SignedInt32Member>,
+		SetComplex<Integer>, GetComplex<SignedInt32Member>
 {
-	byte r;
-	byte i;
+	int r;
+	int i;
 	
-	public GaussianInt8Member() {
+	public GaussianInt32Member() {
 		r = i = 0;
 	}
 	
-	public GaussianInt8Member(int r, int i) {
-		this.r = (byte) r;
-		this.i = (byte) i;
+	public GaussianInt32Member(int r, int i) {
+		this.r = r;
+		this.i = i;
 	}
 	
-	public GaussianInt8Member(GaussianInt8Member other) {
+	public GaussianInt32Member(GaussianInt32Member other) {
 		set(other);
 	}
 	
-	public GaussianInt8Member(String str) {
+	public GaussianInt32Member(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().intValue());
@@ -104,31 +104,31 @@ public class GaussianInt8Member
 	
 	@Override
 	public void setR(Integer val) {
-		r = (byte) (int) val;
+		r = val;
 	}
 
 	@Override
-	public void getR(SignedInt8Member v) {
+	public void getR(SignedInt32Member v) {
 		v.setV(r);
 	}
 
 	@Override
 	public void setI(Integer val) {
-		i = (byte) (int) val;
+		i = val;
 	}
 
 	@Override
-	public void getI(SignedInt8Member v) {
+	public void getI(SignedInt32Member v) {
 		v.setV(i);
 	}
 
 	@Override
-	public void getV(GaussianInt8Member value) {
+	public void getV(GaussianInt32Member value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(GaussianInt8Member value) {
+	public void setV(GaussianInt32Member value) {
 		set(value);
 	}
 
@@ -150,47 +150,47 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void get(GaussianInt8Member other) {
+	public void get(GaussianInt32Member other) {
 		other.r = r;
 		other.i = i;
 	}
 
 	@Override
-	public void set(GaussianInt8Member other) {
+	public void set(GaussianInt32Member other) {
 		r = other.r;
 		i = other.i;
 	}
 
 	@Override
-	public GaussianInt8Member duplicate() {
-		return new GaussianInt8Member(this);
+	public GaussianInt32Member duplicate() {
+		return new GaussianInt32Member(this);
 	}
 
 	@Override
-	public GaussianInt8Member allocate() {
-		return new GaussianInt8Member();
+	public GaussianInt32Member allocate() {
+		return new GaussianInt32Member();
 	}
 
 	@Override
-	public int byteCount() {
+	public int intCount() {
 		return 2;
 	}
 
 	@Override
-	public void fromByteArray(byte[] arr, int index) {
+	public void fromIntArray(int[] arr, int index) {
 		r = arr[index+0];
 		i = arr[index+1];
 	}
 
 	@Override
-	public void toByteArray(byte[] arr, int index) {
+	public void toIntArray(int[] arr, int index) {
 		arr[index+0] = r;
 		arr[index+1] = i;
 	}
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.BYTE;
+		return PrimitiveRepresentation.INT;
 	}
 
 	@Override
@@ -770,8 +770,8 @@ public class GaussianInt8Member
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o instanceof GaussianInt8Member) {
-			return G.GAUSS8.isEqual().call(this, (GaussianInt8Member) o);
+		if (o instanceof GaussianInt32Member) {
+			return G.GAUSS32.isEqual().call(this, (GaussianInt32Member) o);
 		}
 		return false;
 	}
