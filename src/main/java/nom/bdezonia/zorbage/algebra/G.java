@@ -143,8 +143,6 @@ import nom.bdezonia.zorbage.type.rgb.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.rgb.RgbAlgebra;
 import nom.bdezonia.zorbage.type.unbounded.UnboundedIntAlgebra;
 
-import java.math.BigDecimal;
-
 /**
  * G is the container for the global set of defined Algebras.
  *
@@ -154,8 +152,6 @@ import java.math.BigDecimal;
 public class G {
 
 	private G() {}
-
-	public static final BigDecimal ONE_HALF = BigDecimal.valueOf(0.5);
 
 	public static final UnboundedIntAlgebra UNBOUND = new UnboundedIntAlgebra();
 

@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -738,9 +739,9 @@ public class SignedInt11Algebra
 			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
-				tmp = tmp.subtract(G.ONE_HALF);
+				tmp = tmp.subtract(C.ONE_HALF);
 			else
-				tmp = tmp.add(G.ONE_HALF);
+				tmp = tmp.add(C.ONE_HALF);
 			c.setV(tmp.intValue());
 		}
 	};

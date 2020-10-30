@@ -32,10 +32,10 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 
 /**
@@ -173,7 +173,7 @@ public class ResampleNN {
 				coords[i] = coords[i].divide(BigDecimal.valueOf(outputDims[i]-1),HighPrecisionAlgebra.getContext());
 				coords[i] = coords[i].multiply(BigDecimal.valueOf(inputDims[i]-1));
 				// force rounding to nearest neighbor
-				coords[i] = coords[i].add(G.ONE_HALF);
+				coords[i] = coords[i].add(C.ONE_HALF);
 			}
 			
 			// get the base coord
